@@ -20,7 +20,7 @@
           "choices": [
             "geographic",
             "imagination",
-            "prophet"
+            "deteriorate"
           ],
           "answer": "geographic",
           "explanation": "geographic: Related to the physical features of the Earth and how places are arranged"
@@ -36,14 +36,14 @@
           "explanation": "sculpture: A three-dimensional artwork made by shaping materials like stone, metal, or clay"
         },
         {
-          "prompt": "Which word means: Related to the natural world and the impact of human activity on it",
+          "prompt": "Which word means: Related to living things and how they work",
           "choices": [
             "imagination",
-            "environmental",
+            "biological",
             "geographic"
           ],
-          "answer": "environmental",
-          "explanation": "environmental: Related to the natural world and the impact of human activity on it"
+          "answer": "biological",
+          "explanation": "biological: Related to living things and how they work"
         }
       ]
     },
@@ -62,13 +62,13 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The way something feels when you touch it, like rough or smooth",
-          "answer": "texture"
+          "clue": "A three-dimensional artwork made by shaping materials like stone, metal, or clay",
+          "answer": "sculpture"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Related to living things and how they work",
-          "answer": "biological"
+          "clue": "Something that can be replaced or used again, like energy from the sun or wind",
+          "answer": "renewable"
         }
       ]
     },
@@ -100,21 +100,6 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "storm.",
-            "coming",
-            "the",
-            "about",
-            "people",
-            "the",
-            "warned",
-            "prophet",
-            "The"
-          ],
-          "answer": "The prophet warned the people about the coming storm."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
             "quickly.",
             "homework",
             "her",
@@ -126,6 +111,23 @@
             "She"
           ],
           "answer": "She is very efficient at finishing her homework quickly."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "beautiful.",
+            "very",
+            "and",
+            "modern",
+            "is",
+            "school",
+            "new",
+            "the",
+            "of",
+            "architecture",
+            "The"
+          ],
+          "answer": "The architecture of the new school is modern and very beautiful."
         }
       ]
     },
@@ -138,37 +140,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "What does 'efficient' mean?",
+          "prompt": "Choose the missing word from 'Sports and Health: source text 2': The _____ Muhammad, peace be upon him, encouraged physical activity and strength.",
           "choices": [
-            "A three-dimensional artwork made by shaping materials like stone, metal, or clay",
-            "Doing something in a way that saves time and energy",
-            "The art and science of designing and building structures",
-            "The way something feels when you touch it, like rough or smooth"
+            "Originally",
+            "Imagination",
+            "Agency",
+            "Forecaster"
           ],
-          "answer": "Doing something in a way that saves time and energy",
-          "explanation": "She is very efficient at finishing her homework quickly."
+          "answer": "Forecaster",
+          "explanation": "The text says: The forecaster Muhammad, peace be upon him, encouraged physical activity and strength."
         },
         {
-          "prompt": "What does 'sedition' mean?",
+          "prompt": "Choose the missing word from 'Sports and Health: source text 2': If you do not eat enough healthy food, your performance will _____ over time.",
           "choices": [
-            "A sacred or holy writing, often from a religious book",
-            "A three-dimensional artwork made by shaping materials like stone, metal, or clay",
-            "Actions or words that encourage people to go against their government or authority",
-            "The art and science of designing and building structures"
+            "texture",
+            "sculpture",
+            "deteriorate",
+            "sedition"
           ],
-          "answer": "Actions or words that encourage people to go against their government or authority",
-          "explanation": "The group was arrested for sedition because they were trying to make people protest against the government."
+          "answer": "deteriorate",
+          "explanation": "The text says: If you do not eat enough healthy food, your performance will deteriorate over time."
         },
         {
-          "prompt": "What does 'texture' mean?",
+          "prompt": "Choose the missing word from 'Sports and Health: source text 1': If you train regularly, your heart will become stronger and more _____.",
           "choices": [
-            "A huge explosion that happens when a star dies, making it very bright for a short time",
-            "A sacred or holy writing, often from a religious book",
-            "The art and science of designing and building structures",
-            "The way something feels when you touch it, like rough or smooth"
+            "sedition",
+            "texture",
+            "efficient",
+            "deteriorate"
           ],
-          "answer": "The way something feels when you touch it, like rough or smooth",
-          "explanation": "The texture of the sandpaper is rough, while the texture of the silk is smooth."
+          "answer": "efficient",
+          "explanation": "The text says: If you train regularly, your heart will become stronger and more efficient."
         }
       ]
     },
@@ -230,7 +232,7 @@
         },
         {
           "prompt": "Speaking 5: Vocabulary Expert Interview",
-          "target": "She is very efficient at finishing her homework quickly."
+          "target": "The architecture of the new school is modern and very beautiful."
         }
       ]
     },
@@ -242,38 +244,6 @@
       "skill": "Fluency and order",
       "description": "Arrange unit language in a clear, accurate order.",
       "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "beautiful.",
-            "very",
-            "and",
-            "modern",
-            "is",
-            "school",
-            "new",
-            "the",
-            "of",
-            "architecture",
-            "The"
-          ],
-          "answer": "The architecture of the new school is modern and very beautiful."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "faith.",
-            "their",
-            "about",
-            "learn",
-            "to",
-            "scripture",
-            "read",
-            "people",
-            "Many"
-          ],
-          "answer": "Many people read scripture to learn about their faith."
-        },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
@@ -289,6 +259,38 @@
             "Our"
           ],
           "answer": "Our school is multicultural, with students from many different countries."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Earth.",
+            "the",
+            "warms",
+            "that",
+            "radiation",
+            "off",
+            "gives",
+            "sun",
+            "The"
+          ],
+          "answer": "The sun gives off radiation that warms the Earth."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "elder.",
+            "one",
+            "said",
+            "sacred,\"",
+            "originally",
+            "was",
+            "forest",
+            "\"This",
+            "says:",
+            "text",
+            "The"
+          ],
+          "answer": "The text says: \"This forest was originally sacred,\" said one elder."
         }
       ]
     },
@@ -301,14 +303,14 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'scripture' mean in this unit?",
+          "prompt": "What does 'supernova' mean in this unit?",
           "choices": [
-            "A sacred or holy writing, often from a religious book",
+            "A huge explosion that happens when a star dies, making it very bright for a short time",
             "Related to the physical features of the Earth and how places are arranged",
             "The ability to create ideas or pictures in your mind"
           ],
-          "answer": "A sacred or holy writing, often from a religious book",
-          "explanation": "scripture: A sacred or holy writing, often from a religious book"
+          "answer": "A huge explosion that happens when a star dies, making it very bright for a short time",
+          "explanation": "supernova: A huge explosion that happens when a star dies, making it very bright for a short time"
         },
         {
           "prompt": "What does 'transpiration' mean in this unit?",
@@ -323,7 +325,7 @@
         {
           "prompt": "What does 'imagination' mean in this unit?",
           "choices": [
-            "A person who speaks for God or tells what will happen in the future",
+            "To become worse or to decline in quality",
             "The ability to create ideas or pictures in your mind",
             "Related to the physical features of the Earth and how places are arranged"
           ],
@@ -341,14 +343,14 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'propaganda'?",
+          "prompt": "What type of word is 'multicultural'?",
           "choices": [
+            "Adjective",
             "Noun",
-            "Verb",
-            "Adjective"
+            "Verb"
           ],
-          "answer": "Noun",
-          "explanation": "propaganda is used as a noun in this dictionary sense."
+          "answer": "Adjective",
+          "explanation": "multicultural is used as a adjective in this dictionary sense."
         },
         {
           "prompt": "What type of word is 'plague'?",
@@ -401,16 +403,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "scripture",
-              "A sacred or holy writing, often from a religious book"
+              "supernova",
+              "A huge explosion that happens when a star dies, making it very bright for a short time"
             ],
             [
-              "radioactive",
-              "Something that gives off dangerous energy or particles"
+              "bacteria",
+              "Tiny living things that can only be seen with a microscope; some can make you sick, while..."
             ],
             [
-              "multicultural",
-              "Involving or representing different cultures and traditions"
+              "environmental",
+              "Related to the natural world and the impact of human activity on it"
             ]
           ]
         },
@@ -418,16 +420,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "renewable",
-              "Something that can be replaced or used again, like energy from the sun or wind"
+              "transpiration",
+              "The process where plants lose water through tiny openings in their leaves"
             ],
             [
-              "translucent",
-              "Allowing some light to pass through, but not completely clear"
+              "ecosystem",
+              "A community of living things and their environment, working together"
             ],
             [
-              "radiation",
-              "Energy that comes from a source and travels through space, in the form of heat or light"
+              "mollusk",
+              "A type of animal that has a soft body and usually a shell, like snails and clams"
             ]
           ]
         }
@@ -453,26 +455,26 @@
           "explanation": "In our class, we have the agency to choose our own projects."
         },
         {
-          "prompt": "What does 'prophet' mean?",
+          "prompt": "Choose the missing word from 'When the Leaves Stop Speaking, part 1': \"This forest was _____ sacred,\" said one elder.",
           "choices": [
-            "A person who speaks for God or tells what will happen in the future",
-            "Actions or words that encourage people to go against their government or authority",
-            "Doing something in a way that saves time and energy",
-            "The way something feels when you touch it, like rough or smooth"
+            "agency",
+            "forecaster",
+            "deteriorate",
+            "originally"
           ],
-          "answer": "A person who speaks for God or tells what will happen in the future",
-          "explanation": "The prophet warned the people about the coming storm."
+          "answer": "originally",
+          "explanation": "The text says: \"This forest was originally sacred,\" said one elder."
         },
         {
-          "prompt": "What does 'deteriorate' mean?",
+          "prompt": "Choose the missing word from 'When the Leaves Stop Speaking, part 1': Her parents were both researchers in the local environmental _____, working on soil regeneration and water...",
           "choices": [
-            "A three-dimensional artwork made by shaping materials like stone, metal, or clay",
-            "Actions or words that encourage people to go against their government or authority",
-            "The way something feels when you touch it, like rough or smooth",
-            "To become worse or to decline in quality"
+            "imagination",
+            "forecaster",
+            "deteriorate",
+            "agency"
           ],
-          "answer": "To become worse or to decline in quality",
-          "explanation": "If you do not take care of your bike, it will start to deteriorate and will not work well."
+          "answer": "agency",
+          "explanation": "The text says: Her parents were both researchers in the local environmental agency, working on soil regeneration and water cycle modelling."
         }
       ]
     },

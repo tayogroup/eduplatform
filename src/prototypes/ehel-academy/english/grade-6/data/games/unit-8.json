@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A special way of doing something that is done regularly or at certain times.",
+          "prompt": "Which word means: Lasting forever; never ending.",
           "choices": [
-            "ritual",
             "eternal",
-            "pagan"
+            "pagan",
+            "crucified"
           ],
-          "answer": "ritual",
-          "explanation": "ritual: A special way of doing something that is done regularly or at certain times."
+          "answer": "eternal",
+          "explanation": "eternal: Lasting forever; never ending."
         },
         {
-          "prompt": "Which word means: A type of government where a king or queen rules the country.",
+          "prompt": "Which word means: A strong feeling of fear or being very scared.",
           "choices": [
-            "ritual",
             "eternal",
-            "monarchy"
+            "pagan",
+            "terror"
           ],
-          "answer": "monarchy",
-          "explanation": "monarchy: A type of government where a king or queen rules the country."
+          "answer": "terror",
+          "explanation": "terror: A strong feeling of fear or being very scared."
         },
         {
-          "prompt": "Which word means: A perfect place where everything is good and everyone is happy.",
+          "prompt": "Which word means: Related to electricity or using electricity.",
           "choices": [
-            "eternal",
-            "utopia",
-            "ritual"
+            "pagan",
+            "electrical",
+            "eternal"
           ],
-          "answer": "utopia",
-          "explanation": "utopia: A perfect place where everything is good and everyone is happy."
+          "answer": "electrical",
+          "explanation": "electrical: Related to electricity or using electricity."
         }
       ]
     },
@@ -57,13 +57,13 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person who follows and learns from a teacher or leader.",
-          "answer": "disciple"
+          "clue": "A time when something becomes popular or important again.",
+          "answer": "revival"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Related to a system in the past where people worked for a lord in exchange for land and protection.",
-          "answer": "feudal"
+          "clue": "A strong feeling of fear or being very scared.",
+          "answer": "terror"
         },
         {
           "prompt": "Build the word that matches the clue.",
@@ -80,23 +80,6 @@
       "skill": "Sentence building",
       "description": "Put unit words into the correct sentence order.",
       "rounds": [
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "together.",
-            "breakfast",
-            "eating",
-            "of",
-            "ritual",
-            "a",
-            "has",
-            "family",
-            "my",
-            "morning,",
-            "Every"
-          ],
-          "answer": "Every morning, my family has a ritual of eating breakfast together."
-        },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
@@ -117,18 +100,33 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "history.",
-            "Chinese",
-            "in",
-            "period",
-            "famous",
-            "a",
-            "was",
-            "dynasty",
-            "Ming",
+            "sail.",
+            "set",
+            "they",
+            "before",
+            "fleet",
+            "the",
+            "to",
+            "orders",
+            "gave",
+            "admiral",
             "The"
           ],
-          "answer": "The Ming dynasty was a famous period in Chinese history."
+          "answer": "The admiral gave orders to the fleet before they set sail."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "terror.",
+            "with",
+            "children",
+            "the",
+            "filled",
+            "thunder",
+            "loud",
+            "The"
+          ],
+          "answer": "The loud thunder filled the children with terror."
         }
       ]
     },
@@ -141,37 +139,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "What does 'crucified' mean?",
+          "prompt": "Choose the missing word from 'The Scroll of Selma, part 1': But a _____ led by the Confederacy sought to destroy them.",
           "choices": [
-            "A series of rulers from the same family or group over a long time.",
-            "A type of government where a king or queen rules the country.",
-            "Related to a system in the past where people worked for a lord in exchange for land and protection.",
-            "To be killed by being nailed to a cross, a method used a long time ago."
+            "revival",
+            "catholic",
+            "crucified",
+            "admiral"
           ],
-          "answer": "To be killed by being nailed to a cross, a method used a long time ago.",
-          "explanation": "In history class, we learned that some people were crucified for their beliefs."
+          "answer": "revival",
+          "explanation": "The text says: But a revival led by the Confederacy sought to destroy them."
         },
         {
-          "prompt": "What does 'admiral' mean?",
+          "prompt": "Choose the missing word from 'The Scroll of Selma, part 1': The symbols were strange — part _____, part familiar.",
           "choices": [
-            "A high-ranking officer in the navy who commands ships and sailors.",
-            "A strong feeling of fear or being very scared.",
-            "A type of government where a king or queen rules the country.",
-            "Related to a system in the past where people worked for a lord in exchange for land and protection."
+            "monarchy",
+            "rehearsal",
+            "pagan",
+            "dynasty"
           ],
-          "answer": "A high-ranking officer in the navy who commands ships and sailors.",
-          "explanation": "The admiral gave orders to the fleet before they set sail."
+          "answer": "pagan",
+          "explanation": "The text says: The symbols were strange — part pagan, part familiar."
         },
         {
-          "prompt": "What does 'dynasty' mean?",
+          "prompt": "Choose the missing word from 'The Scroll of Selma, part 1': \"Maybe _____ influence mixed with native rituals,\" said another.",
           "choices": [
-            "A series of rulers from the same family or group over a long time.",
-            "A strong feeling of fear or being very scared.",
-            "Related to a person's race or ethnic background.",
-            "Related to a system in the past where people worked for a lord in exchange for land and protection."
+            "Dynasty",
+            "Monarchy",
+            "Catholic",
+            "Admiral"
           ],
-          "answer": "A series of rulers from the same family or group over a long time.",
-          "explanation": "The Ming dynasty was a famous period in Chinese history."
+          "answer": "Catholic",
+          "explanation": "The text says: \"Maybe Catholic influence mixed with native rituals,\" said another."
         }
       ]
     },
@@ -225,11 +223,11 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Vocabulary Expert Interview",
-          "target": "Every morning, my family has a ritual of eating breakfast together."
+          "target": "In ancient times, some people were pagan and worshipped different gods."
         },
         {
           "prompt": "Speaking 3: Four-Minute Unit Talk",
-          "target": "In ancient times, some people were pagan and worshipped different gods."
+          "target": "The admiral gave orders to the fleet before they set sail."
         },
         {
           "prompt": "Speaking 5: Explain and Respond",
@@ -245,22 +243,6 @@
       "skill": "Fluency and order",
       "description": "Arrange unit language in a clear, accurate order.",
       "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "cultures.",
-            "different",
-            "about",
-            "learning",
-            "by",
-            "diversity",
-            "racial",
-            "celebrates",
-            "school",
-            "The"
-          ],
-          "answer": "The school celebrates racial diversity by learning about different cultures."
-        },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
@@ -281,19 +263,35 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "kind.",
-            "being",
-            "is",
-            "friend",
-            "good",
-            "a",
-            "of",
-            "characteristics",
+            "lights.",
             "the",
-            "of",
-            "One"
+            "power",
+            "help",
+            "house",
+            "the",
+            "in",
+            "wires",
+            "electrical",
+            "The"
           ],
-          "answer": "One of the characteristics of a good friend is being kind."
+          "answer": "The electrical wires in the house help power the lights."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "great-grandfather.",
+            "my",
+            "to",
+            "respects",
+            "our",
+            "pay",
+            "to",
+            "cemetery",
+            "the",
+            "visited",
+            "We"
+          ],
+          "answer": "We visited the cemetery to pay our respects to my great-grandfather."
         }
       ]
     },
@@ -306,34 +304,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'racial' mean in this unit?",
+          "prompt": "What does 'legacy' mean in this unit?",
           "choices": [
-            "Related to a person's race or ethnic background.",
-            "A special way of doing something that is done regularly or at certain times.",
+            "Something that is passed down from the past, like traditions, stories, or values.",
+            "Lasting forever; never ending.",
+            "A person who follows a religion that is not one of the main world religions, often believing in many gods."
+          ],
+          "answer": "Something that is passed down from the past, like traditions, stories, or values.",
+          "explanation": "legacy: Something that is passed down from the past, like traditions, stories, or values."
+        },
+        {
+          "prompt": "What does 'characteristics' mean in this unit?",
+          "choices": [
+            "Lasting forever; never ending.",
+            "A person who follows a religion that is not one of the main world religions, often believing in many gods.",
+            "The special qualities or features that make someone or something different."
+          ],
+          "answer": "The special qualities or features that make someone or something different.",
+          "explanation": "characteristics: The special qualities or features that make someone or something different."
+        },
+        {
+          "prompt": "What does 'pagan' mean in this unit?",
+          "choices": [
+            "To be killed by being nailed to a cross, a method used a long time ago.",
+            "A person who follows a religion that is not one of the main world religions, often believing in many gods.",
             "Lasting forever; never ending."
           ],
-          "answer": "Related to a person's race or ethnic background.",
-          "explanation": "racial: Related to a person's race or ethnic background."
-        },
-        {
-          "prompt": "What does 'archeological' mean in this unit?",
-          "choices": [
-            "A special way of doing something that is done regularly or at certain times.",
-            "Lasting forever; never ending.",
-            "Related to the study of ancient cultures by looking at their buildings, tools, and objects."
-          ],
-          "answer": "Related to the study of ancient cultures by looking at their buildings, tools, and objects.",
-          "explanation": "archeological: Related to the study of ancient cultures by looking at their buildings, tools, and objects."
-        },
-        {
-          "prompt": "What does 'eternal' mean in this unit?",
-          "choices": [
-            "A person who follows a religion that is not one of the main world religions, often believing in many gods.",
-            "Lasting forever; never ending.",
-            "A special way of doing something that is done regularly or at certain times."
-          ],
-          "answer": "Lasting forever; never ending.",
-          "explanation": "eternal: Lasting forever; never ending."
+          "answer": "A person who follows a religion that is not one of the main world religions, often believing in many gods.",
+          "explanation": "pagan: A person who follows a religion that is not one of the main world religions, often believing in many gods."
         }
       ]
     },
@@ -346,14 +344,14 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'commercial'?",
+          "prompt": "What type of word is 'spartan'?",
           "choices": [
+            "Adjective",
             "Noun",
-            "Verb",
-            "Adjective"
+            "Verb"
           ],
-          "answer": "Noun",
-          "explanation": "commercial is used as a noun in this dictionary sense."
+          "answer": "Adjective",
+          "explanation": "spartan is used as a adjective in this dictionary sense."
         },
         {
           "prompt": "What type of word is 'cyanide'?",
@@ -366,14 +364,14 @@
           "explanation": "cyanide is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'admiral'?",
+          "prompt": "What type of word is 'dynasty'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "admiral is used as a noun in this dictionary sense."
+          "explanation": "dynasty is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -389,16 +387,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "eternal",
-              "Lasting forever; never ending."
+              "pagan",
+              "A person who follows a religion that is not one of the main world religions, often..."
             ],
             [
-              "Catholic",
-              "A member of the Christian church that is led by the Pope."
+              "admiral",
+              "A high-ranking officer in the navy who commands ships and sailors."
             ],
             [
-              "dynasty",
-              "A series of rulers from the same family or group over a long time."
+              "feudal",
+              "Related to a system in the past where people worked for a lord in exchange for land and..."
             ]
           ]
         },
@@ -406,16 +404,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "terror",
-              "A strong feeling of fear or being very scared."
+              "legacy",
+              "Something that is passed down from the past, like traditions, stories, or values."
             ],
             [
-              "suburbs",
-              "An area where people live that is outside of a big city, usually with houses and parks."
+              "commercial",
+              "A short video or audio message that promotes a product or service."
             ],
             [
-              "hospitable",
-              "Friendly and welcoming to guests or strangers."
+              "utopia",
+              "A perfect place where everything is good and everyone is happy."
             ]
           ]
         },
@@ -423,16 +421,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "archeological",
-              "Related to the study of ancient cultures by looking at their buildings, tools, and..."
+              "characteristics",
+              "The special qualities or features that make someone or something different."
             ],
             [
-              "cemetery",
-              "A place where people are buried after they die."
+              "cartoonist",
+              "A person who creates cartoons, which are funny drawings or animations."
             ],
             [
-              "Paris",
-              "The capital city of France, known for its art, fashion, and famous landmarks like the..."
+              "Merrimack",
+              "The name of a river in the United States; it can also refer to a town or a school."
             ]
           ]
         }
@@ -458,26 +456,26 @@
           "explanation": "The revival of the old film made many people want to watch it again."
         },
         {
-          "prompt": "What does 'pagan' mean?",
+          "prompt": "Choose the missing word from 'The Scroll of Selma, part 1': There, a _____ was performed daily beneath the Great Tree.",
           "choices": [
-            "A high-ranking officer in the navy who commands ships and sailors.",
-            "A person who follows a religion that is not one of the main world religions, often believing in many gods.",
-            "A series of rulers from the same family or group over a long time.",
-            "To be killed by being nailed to a cross, a method used a long time ago."
+            "catholic",
+            "crucified",
+            "admiral",
+            "rehearsal"
           ],
-          "answer": "A person who follows a religion that is not one of the main world religions, often believing in many gods.",
-          "explanation": "In ancient times, some people were pagan and worshipped different gods."
+          "answer": "rehearsal",
+          "explanation": "The text says: There, a rehearsal was performed daily beneath the Great Tree."
         },
         {
-          "prompt": "What does 'Catholic' mean?",
+          "prompt": "Choose the missing word from 'The Scroll of Selma, part 1': A few lines had survived in full: \"In the Year of _____ Fire, the Monk of Selma led his disciples to the Valley of...",
           "choices": [
-            "A high-ranking officer in the navy who commands ships and sailors.",
-            "A member of the Christian church that is led by the Pope.",
-            "A series of rulers from the same family or group over a long time.",
-            "A type of government where a king or queen rules the country."
+            "Eternal",
+            "Admiral",
+            "Dynasty",
+            "Monarchy"
           ],
-          "answer": "A member of the Christian church that is led by the Pope.",
-          "explanation": "My friend is Catholic, and she goes to church every Sunday."
+          "answer": "Eternal",
+          "explanation": "The text says: A few lines had survived in full: \"In the Year of Eternal Fire, the Monk of Selma led his disciples to the Valley of Memory."
         }
       ]
     },
@@ -490,7 +488,7 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "What does 'ritual' mean?",
+          "prompt": "What does 'rehearsal' mean?",
           "choices": [
             "A person who follows a religion that is not one of the main world religions, often believing in many gods.",
             "A special way of doing something that is done regularly or at certain times.",
@@ -498,10 +496,10 @@
             "Lasting forever; never ending."
           ],
           "answer": "A special way of doing something that is done regularly or at certain times.",
-          "explanation": "Every morning, my family has a ritual of eating breakfast together."
+          "explanation": "Every morning, my family has a rehearsal of eating breakfast together."
         },
         {
-          "prompt": "What does 'disciple' mean?",
+          "prompt": "What does 'apprentice' mean?",
           "choices": [
             "A member of the Christian church that is led by the Pope.",
             "A person who follows a religion that is not one of the main world religions, often believing in many gods.",
@@ -509,7 +507,7 @@
             "A time when something becomes popular or important again."
           ],
           "answer": "A person who follows and learns from a teacher or leader.",
-          "explanation": "The disciple listened carefully to the wise words of his teacher."
+          "explanation": "The apprentice listened carefully to the wise words of his teacher."
         },
         {
           "prompt": "What does 'eternal' mean?",

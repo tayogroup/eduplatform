@@ -20,20 +20,20 @@
           "choices": [
             "shop",
             "school",
-            "mosque"
+            "park"
           ],
           "answer": "shop",
           "explanation": "shop: A place in town where we buy food and things."
         },
         {
-          "prompt": "Which word means: A person who helps you get better when you are ill.",
+          "prompt": "Which word means: The person who sells you things inside a shop.",
           "choices": [
             "shop",
             "school",
-            "doctor"
+            "shopkeeper"
           ],
-          "answer": "doctor",
-          "explanation": "doctor: A person who helps you get better when you are ill."
+          "answer": "shopkeeper",
+          "explanation": "shopkeeper: The person who sells you things inside a shop."
         },
         {
           "prompt": "Which word means: To start moving, like when the light turns green.",
@@ -62,8 +62,8 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The person who sells you things inside a shop.",
-          "answer": "shopkeeper"
+          "clue": "Someone you like to play with and help every day.",
+          "answer": "friend"
         },
         {
           "prompt": "Build the word that matches the clue.",
@@ -96,27 +96,26 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "Friday.",
-            "on",
-            "mosque",
+            "park.",
             "the",
-            "at",
-            "pray",
+            "in",
+            "football",
+            "play",
             "We"
           ],
-          "answer": "We pray at the mosque on Friday."
+          "answer": "We play football in the park."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "chest.",
-            "my",
-            "to",
-            "listens",
-            "doctor",
+            "change.",
+            "his",
+            "Musa",
+            "gives",
+            "shopkeeper",
             "The"
           ],
-          "answer": "The doctor listens to my chest."
+          "answer": "The shopkeeper gives Musa his change."
         }
       ]
     },
@@ -176,7 +175,7 @@
           "choices": [
             "Stop",
             "The doctor, Faduma",
-            "The mosque"
+            "The library"
           ],
           "answer": "Stop",
           "explanation": "Review the unit text evidence: Stop"
@@ -195,11 +194,11 @@
           "prompt": "Which quiet place did Amal and Mum visit last of all?",
           "choices": [
             "Stop",
-            "The mosque",
+            "The library",
             "He said sorry and put it in the bin"
           ],
-          "answer": "The mosque",
-          "explanation": "Review the unit text evidence: The mosque"
+          "answer": "The library",
+          "explanation": "Review the unit text evidence: The library"
         }
       ]
     },
@@ -236,13 +235,14 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "there.",
-            "over",
+            "house.",
+            "our",
+            "near",
             "is",
-            "mosque",
+            "park",
             "The"
           ],
-          "answer": "The mosque is over there."
+          "answer": "The park is near our house."
         },
         {
           "prompt": "Put this unit sentence in order.",
@@ -288,19 +288,19 @@
           "explanation": "neighbour: A person who lives in the house next to yours."
         },
         {
-          "prompt": "What does 'green' mean in this unit?",
+          "prompt": "What does 'yellow' mean in this unit?",
           "choices": [
             "A place in town where we buy food and things.",
             "The place where children come to learn and play together.",
-            "The colour of grass, and of the light meaning go."
+            "The bright colour of lemons and the middle traffic light."
           ],
-          "answer": "The colour of grass, and of the light meaning go.",
-          "explanation": "green: The colour of grass, and of the light meaning go."
+          "answer": "The bright colour of lemons and the middle traffic light.",
+          "explanation": "yellow: The bright colour of lemons and the middle traffic light."
         },
         {
           "prompt": "What does 'school' mean in this unit?",
           "choices": [
-            "The building where Muslims gather to pray together.",
+            "A green place in town with grass, trees and swings.",
             "The place where children come to learn and play together.",
             "A place in town where we buy food and things."
           ],
@@ -318,14 +318,14 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'far'?",
+          "prompt": "What type of word is 'next to'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Adjective",
-          "explanation": "far is used as a adjective in this dictionary sense."
+          "explanation": "next to is used as a adjective in this dictionary sense."
         },
         {
           "prompt": "What type of word is 'quiet'?",
@@ -338,14 +338,14 @@
           "explanation": "quiet is used as a adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'bus stop'?",
+          "prompt": "What type of word is 'teacher'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "bus stop is used as a noun in this dictionary sense."
+          "explanation": "teacher is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -365,12 +365,12 @@
               "The place where children come to learn and play together."
             ],
             [
-              "park",
-              "A green place in town with grass, trees and swings."
+              "road",
+              "A long hard path where cars and buses drive."
             ],
             [
-              "teacher",
-              "A person who helps children learn new things at school."
+              "doctor",
+              "A person who helps you get better when you are ill."
             ]
           ]
         },
@@ -378,12 +378,12 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "friend",
-              "Someone you like to play with and help every day."
+              "neighbour",
+              "A person who lives in the house next to yours."
             ],
             [
-              "there",
-              "This word means in that place, away from you."
+              "near",
+              "Close to something, only a short walk away."
             ],
             [
               "stop",
@@ -424,10 +424,10 @@
             "the hospital",
             "the shop",
             "the park",
-            "the mosque"
+            "the library"
           ],
           "answer": "the shop",
-          "explanation": "We buy food at the shop; you cannot buy bread at a hospital, a park or a mosque."
+          "explanation": "We buy food at the shop; you cannot buy bread at a hospital, a park or a library."
         },
         {
           "prompt": "Where do you wait to get on a bus?",
@@ -435,7 +435,7 @@
             "the hospital",
             "the school",
             "the bus stop",
-            "the mosque"
+            "the library"
           ],
           "answer": "the bus stop",
           "explanation": "Buses pick people up at the bus stop; the other places are not for waiting for a bus."
@@ -484,15 +484,15 @@
           "explanation": "Doctors and nurses work at the hospital; we go to the park to play, the shop to buy and the school to learn."
         },
         {
-          "prompt": "Where do Muslims go to pray together?",
+          "prompt": "Where do you go to borrow a book?",
           "choices": [
-            "the mosque",
+            "the library",
             "the park",
             "the bus stop",
             "the market"
           ],
-          "answer": "the mosque",
-          "explanation": "The mosque is the place for prayer; the market, park and bus stop are for shopping, playing and waiting."
+          "answer": "the library",
+          "explanation": "The library is where books are kept and borrowed; the market is for shopping, the park for playing and the bus stop for waiting."
         }
       ]
     }

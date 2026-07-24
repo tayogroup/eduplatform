@@ -36,14 +36,14 @@
           "explanation": "textile: A type of cloth or fabric made by weaving threads together."
         },
         {
-          "prompt": "Which word means: Related to a mother or motherhood.",
+          "prompt": "Which word means: Related to a father or a father figure.",
           "choices": [
             "bamboo",
-            "maternal",
+            "paternal",
             "nook"
           ],
-          "answer": "maternal",
-          "explanation": "maternal: Related to a mother or motherhood."
+          "answer": "paternal",
+          "explanation": "paternal: Related to a father or a father figure."
         }
       ]
     },
@@ -62,8 +62,8 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A special book that many people read to learn about God and important stories.",
-          "answer": "bible"
+          "clue": "A type of cloth or fabric made by weaving threads together.",
+          "answer": "textile"
         },
         {
           "prompt": "Build the word that matches the clue.",
@@ -116,18 +116,16 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "dinner.",
-            "before",
-            "homework",
-            "our",
-            "finish",
-            "to",
-            "time",
-            "ample",
-            "have",
-            "We"
+            "fruit.",
+            "edible",
+            "with",
+            "feeders",
+            "the",
+            "filled",
+            "rangers",
+            "The"
           ],
-          "answer": "We have ample time to finish our homework before dinner."
+          "answer": "The rangers filled the feeders with edible fruit."
         }
       ]
     },
@@ -140,37 +138,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "What does 'manual' mean?",
+          "prompt": "Choose the missing word from 'Lights, Camera, Action…: source text 2': The sun has just risen over the _____ forest.",
           "choices": [
-            "A book that gives instructions on how to do something.",
-            "A special book that many people read to learn about God and important stories.",
-            "A type of cloth or fabric made by weaving threads together.",
-            "More than enough; plenty of something."
+            "manual",
+            "capsule",
+            "bamboo",
+            "textbook"
           ],
-          "answer": "A book that gives instructions on how to do something.",
-          "explanation": "I read the manual to learn how to set up the camera."
+          "answer": "bamboo",
+          "explanation": "The text says: The sun has just risen over the bamboo forest."
         },
         {
-          "prompt": "What does 'capsule' mean?",
+          "prompt": "Choose the missing word from 'Nookwatch: The Forest Mission, part 3': “Even _____ land can lose life.” At lunchtime, the group discussed a new case.",
           "choices": [
-            "A small container that holds something inside, like medicine or equipment.",
-            "A special book that many people read to learn about God and important stories.",
-            "More than enough; plenty of something.",
-            "Safe to eat; something you can eat."
+            "fertile",
+            "bamboo",
+            "groove",
+            "textbook"
           ],
-          "answer": "A small container that holds something inside, like medicine or equipment.",
-          "explanation": "The vet kept the medicine in a capsule for the sick lemur."
+          "answer": "fertile",
+          "explanation": "The text says: “Even fertile land can lose life.” At lunchtime, the group discussed a new case."
         },
         {
-          "prompt": "What does 'textile' mean?",
+          "prompt": "Choose the missing word from 'Lights, Camera, Action…: source text 2': We read the animal-care _____ last night.",
           "choices": [
-            "A type of cloth or fabric made by weaving threads together.",
-            "More than enough; plenty of something.",
-            "Safe to eat; something you can eat.",
-            "Strong and lasting a long time without breaking."
+            "manual",
+            "textile",
+            "marble",
+            "nook"
           ],
-          "answer": "A type of cloth or fabric made by weaving threads together.",
-          "explanation": "The baby gibbon had thick fur like a soft textile coat."
+          "answer": "manual",
+          "explanation": "The text says: We read the animal-care manual last night."
         }
       ]
     },
@@ -247,45 +245,45 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "animals.",
-            "endangered",
-            "protect",
-            "we",
-            "that",
-            "critical",
-            "is",
-            "It"
-          ],
-          "answer": "It is critical that we protect endangered animals."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "instinct.",
-            "paternal",
-            "with",
-            "watch",
-            "kept",
-            "monkey",
-            "male",
-            "The"
-          ],
-          "answer": "The male monkey kept watch with paternal instinct."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "fences.",
+            "students.",
             "the",
-            "check",
             "to",
-            "patrols",
-            "informal",
-            "organised",
-            "students",
+            "abnormal",
+            "looked",
+            "footprints",
+            "twisted",
             "The"
           ],
-          "answer": "The students organised informal patrols to check the fences."
+          "answer": "The twisted footprints looked abnormal to the students."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "are.",
+            "traps",
+            "hunting",
+            "harmful",
+            "how",
+            "about",
+            "denial",
+            "in",
+            "are",
+            "people",
+            "Some"
+          ],
+          "answer": "Some people are in denial about how harmful hunting traps are."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "responsibility.",
+            "constitutional",
+            "a",
+            "is",
+            "wildlife",
+            "Protecting"
+          ],
+          "answer": "Protecting wildlife is a constitutional responsibility."
         }
       ]
     },
@@ -298,24 +296,24 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'ample' mean in this unit?",
+          "prompt": "What does 'edible' mean in this unit?",
           "choices": [
-            "More than enough; plenty of something.",
+            "Safe to eat; something you can eat.",
             "A small, cosy corner or space where you can relax or hide.",
             "A tall plant with hard, hollow stems that grows in warm places."
           ],
-          "answer": "More than enough; plenty of something.",
-          "explanation": "ample: More than enough; plenty of something."
+          "answer": "Safe to eat; something you can eat.",
+          "explanation": "edible: Safe to eat; something you can eat."
         },
         {
-          "prompt": "What does 'denial' mean in this unit?",
+          "prompt": "What does 'neutral' mean in this unit?",
           "choices": [
             "A small, cosy corner or space where you can relax or hide.",
             "A tall plant with hard, hollow stems that grows in warm places.",
-            "When someone refuses to believe something is true."
+            "Not taking sides or not showing strong feelings."
           ],
-          "answer": "When someone refuses to believe something is true.",
-          "explanation": "denial: When someone refuses to believe something is true."
+          "answer": "Not taking sides or not showing strong feelings.",
+          "explanation": "neutral: Not taking sides or not showing strong feelings."
         },
         {
           "prompt": "What does 'bamboo' mean in this unit?",
@@ -338,24 +336,24 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'abnormal'?",
+          "prompt": "What type of word is 'economical'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Adjective",
-          "explanation": "abnormal is used as a adjective in this dictionary sense."
+          "explanation": "economical is used as a adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'assemble'?",
+          "prompt": "What type of word is 'style'?",
           "choices": [
-            "Noun",
+            "Verb",
             "Adjective",
-            "Verb"
+            "Noun"
           ],
-          "answer": "Verb",
-          "explanation": "assemble is used as a verb in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "style is used as a noun in this dictionary sense."
         },
         {
           "prompt": "What type of word is 'manual'?",
@@ -398,16 +396,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "ample",
-              "More than enough; plenty of something."
+              "edible",
+              "Safe to eat; something you can eat."
             ],
             [
               "critical",
               "Very important or necessary; or describing a serious situation."
             ],
             [
-              "economical",
-              "Something that saves money or uses resources wisely."
+              "maternal",
+              "Related to a mother or motherhood."
             ]
           ]
         },
@@ -415,8 +413,8 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "denial",
-              "When someone refuses to believe something is true."
+              "neutral",
+              "Not taking sides or not showing strong feelings."
             ],
             [
               "constitutional",
@@ -450,26 +448,26 @@
           "explanation": "The old tree had deep grooves in its bark where insects lived."
         },
         {
-          "prompt": "What does 'fertile' mean?",
+          "prompt": "Choose the missing word from 'Lights, Camera, Action…: source text 2': Today, our oldest lemur is missing from his sleeping _____.",
           "choices": [
-            "A book that gives instructions on how to do something.",
-            "A small container that holds something inside, like medicine or equipment.",
-            "A type of cloth or fabric made by weaving threads together.",
-            "Able to produce many plants or crops; good for growing things."
+            "manual",
+            "capsule",
+            "nook",
+            "textbook"
           ],
-          "answer": "Able to produce many plants or crops; good for growing things.",
-          "explanation": "The farmer was happy because the soil was very fertile."
+          "answer": "nook",
+          "explanation": "The text says: Today, our oldest lemur is missing from his sleeping nook."
         },
         {
-          "prompt": "What does 'textbook' mean?",
+          "prompt": "Choose the missing word from 'Lights, Camera, Action…: source text 1': You will also learn about compound nouns — words made by combining two smaller words to create a new...",
           "choices": [
-            "A book that students use to learn about a subject in school.",
-            "A small container that holds something inside, like medicine or equipment.",
-            "A special book that many people read to learn about God and important stories.",
-            "A type of cloth or fabric made by weaving threads together."
+            "capsule",
+            "textile",
+            "woodland",
+            "manual"
           ],
-          "answer": "A book that students use to learn about a subject in school.",
-          "explanation": "I opened my textbook to read about animals in science class."
+          "answer": "woodland",
+          "explanation": "The text says: You will also learn about compound nouns — words made by combining two smaller words to create a new meaning, such as woodland or textbook."
         }
       ]
     },

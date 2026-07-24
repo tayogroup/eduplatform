@@ -19,7 +19,7 @@
           "prompt": "Which word means: Not allowed by law or rules",
           "choices": [
             "illegal",
-            "entry",
+            "instrument",
             "originally"
           ],
           "answer": "illegal",
@@ -29,21 +29,21 @@
           "prompt": "Which word means: A leader who has complete power and makes all the rules without asking others.",
           "choices": [
             "illegal",
-            "entry",
+            "instrument",
             "dictator"
           ],
           "answer": "dictator",
           "explanation": "dictator: A leader who has complete power and makes all the rules without asking others."
         },
         {
-          "prompt": "Which word means: The ability to make good choices and decisions based on knowledge and experience.",
+          "prompt": "Which word means: In a strong and steady way; not easily moved or changed.",
           "choices": [
-            "entry",
-            "wisdom",
+            "instrument",
+            "firmly",
             "illegal"
           ],
-          "answer": "wisdom",
-          "explanation": "wisdom: The ability to make good choices and decisions based on knowledge and experience."
+          "answer": "firmly",
+          "explanation": "firmly: In a strong and steady way; not easily moved or changed."
         }
       ]
     },
@@ -57,8 +57,8 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person who follows the teachings of Jesus Christ",
-          "answer": "christian"
+          "clue": "The act of going into a place, or the way to get in",
+          "answer": "entry"
         },
         {
           "prompt": "Build the word that matches the clue.",
@@ -67,8 +67,8 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The ability to make good choices and decisions based on knowledge and experience.",
-          "answer": "wisdom"
+          "clue": "In a strong and steady way; not easily moved or changed.",
+          "answer": "firmly"
         }
       ]
     },
@@ -97,17 +97,17 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "concert.",
-            "the",
-            "to",
-            "entry",
-            "for",
-            "ticket",
+            "instrument.",
+            "musical",
             "a",
-            "need",
-            "You"
+            "is",
+            "which",
+            "piano,",
+            "the",
+            "plays",
+            "She"
           ],
-          "answer": "You need a ticket for entry to the concert."
+          "answer": "She plays the piano, which is a musical instrument."
         },
         {
           "prompt": "Build the complete model sentence.",
@@ -224,7 +224,7 @@
         },
         {
           "prompt": "Research vocabulary in context",
-          "target": "You need a ticket for entry to the concert."
+          "target": "She plays the piano, which is a musical instrument."
         },
         {
           "prompt": "Question-and-answer defence",
@@ -258,35 +258,29 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "rehearsal.",
-            "the",
-            "during",
-            "script",
-            "the",
-            "from",
-            "lines",
-            "their",
-            "read",
-            "actors",
-            "The"
+            "presents.",
+            "birthday",
+            "her",
+            "opened",
+            "eagerly",
+            "She"
           ],
-          "answer": "The actors read their lines from the script during the rehearsal."
+          "answer": "She eagerly opened her birthday presents."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "clouds.",
-            "the",
-            "above",
-            "stratosphere,",
-            "the",
-            "in",
-            "high",
-            "flew",
-            "airplane",
-            "The"
+            "flowers.",
+            "between",
+            "pollen",
+            "moving",
+            "by",
+            "pollination",
+            "with",
+            "help",
+            "Bees"
           ],
-          "answer": "The airplane flew high in the stratosphere, above the clouds."
+          "answer": "Bees help with pollination by moving pollen between flowers."
         }
       ]
     },
@@ -303,30 +297,30 @@
           "choices": [
             "A narrow body of water between two pieces of land.",
             "Not allowed by law or rules",
-            "The act of going into a place, or the way to get in"
+            "A tool or device used to make music or do a specific job"
           ],
           "answer": "A narrow body of water between two pieces of land.",
           "explanation": "straits: A narrow body of water between two pieces of land."
         },
         {
-          "prompt": "What does 'text' mean in this unit?",
+          "prompt": "What does 'script' mean in this unit?",
           "choices": [
             "Not allowed by law or rules",
-            "The act of going into a place, or the way to get in",
-            "The written words in a book, article, or message."
+            "A tool or device used to make music or do a specific job",
+            "A written text for a play, movie, or show that tells what the characters say and do."
           ],
-          "answer": "The written words in a book, article, or message.",
-          "explanation": "text: The written words in a book, article, or message."
+          "answer": "A written text for a play, movie, or show that tells what the characters say and do.",
+          "explanation": "script: A written text for a play, movie, or show that tells what the characters say and do."
         },
         {
-          "prompt": "What does 'entry' mean in this unit?",
+          "prompt": "What does 'instrument' mean in this unit?",
           "choices": [
             "At the beginning or in the first place",
-            "The act of going into a place, or the way to get in",
+            "A tool or device used to make music or do a specific job",
             "Not allowed by law or rules"
           ],
-          "answer": "The act of going into a place, or the way to get in",
-          "explanation": "entry: The act of going into a place, or the way to get in"
+          "answer": "A tool or device used to make music or do a specific job",
+          "explanation": "instrument: A tool or device used to make music or do a specific job"
         }
       ]
     },
@@ -339,24 +333,24 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'eagerly'?",
+          "prompt": "What type of word is 'humble'?",
           "choices": [
-            "Verb",
+            "Adjective",
             "Noun",
-            "Adjective"
+            "Verb"
           ],
-          "answer": "Verb",
-          "explanation": "eagerly is used as a verb in this dictionary sense."
+          "answer": "Adjective",
+          "explanation": "humble is used as a adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'excavation'?",
+          "prompt": "What type of word is 'pollination'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Noun",
-          "explanation": "excavation is used as a noun in this dictionary sense."
+          "explanation": "pollination is used as a noun in this dictionary sense."
         },
         {
           "prompt": "What type of word is 'agency'?",
@@ -382,16 +376,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "entry",
-              "The act of going into a place, or the way to get in"
+              "instrument",
+              "A tool or device used to make music or do a specific job"
             ],
             [
-              "originally",
-              "At the beginning or in the first place"
+              "imagination",
+              "The ability to create ideas or pictures in your mind"
             ],
             [
-              "threat",
-              "Something that can cause harm or danger."
+              "treacherous",
+              "Dangerous and not safe, often because it is not what it seems."
             ]
           ]
         },
@@ -416,16 +410,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "text",
-              "The written words in a book, article, or message."
+              "script",
+              "A written text for a play, movie, or show that tells what the characters say and do."
             ],
             [
-              "pollination",
-              "The process of transferring pollen from one flower to another to help plants make seeds."
+              "conduction",
+              "The way heat or electricity moves through a material."
             ],
             [
-              "ritual",
-              "A special way of doing something that is done regularly or at certain times."
+              "excavation",
+              "The process of digging in the ground to find things like fossils or old buildings."
             ]
           ]
         }
@@ -494,7 +488,7 @@
           "explanation": "It is illegal to steal someone else's property."
         },
         {
-          "prompt": "What does 'Christian' mean?",
+          "prompt": "What does 'citizen' mean?",
           "choices": [
             "A person who follows the teachings of Jesus Christ",
             "A pleasing combination of things that work well together; peace",
@@ -502,7 +496,7 @@
             "Gave or provided something that was needed"
           ],
           "answer": "A person who follows the teachings of Jesus Christ",
-          "explanation": "My friend is a Christian and goes to church every Sunday."
+          "explanation": "My friend is a citizen and goes to church every Sunday."
         },
         {
           "prompt": "What does 'geographic' mean?",

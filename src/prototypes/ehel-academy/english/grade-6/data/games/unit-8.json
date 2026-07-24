@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Lasting forever; never ending.",
+          "prompt": "Which word means: A practice session in which performers work through a play, concert or show before the real event.",
           "choices": [
+            "rehearsal",
             "eternal",
-            "pagan",
-            "crucified"
+            "ancestral"
           ],
-          "answer": "eternal",
-          "explanation": "eternal: Lasting forever; never ending."
+          "answer": "rehearsal",
+          "explanation": "rehearsal: A practice session in which performers work through a play, concert or show before the real event."
         },
         {
-          "prompt": "Which word means: A strong feeling of fear or being very scared.",
+          "prompt": "Which word means: A type of government where a king or queen rules the country.",
           "choices": [
+            "rehearsal",
             "eternal",
-            "pagan",
-            "terror"
+            "monarchy"
           ],
-          "answer": "terror",
-          "explanation": "terror: A strong feeling of fear or being very scared."
+          "answer": "monarchy",
+          "explanation": "monarchy: A type of government where a king or queen rules the country."
         },
         {
-          "prompt": "Which word means: Related to electricity or using electricity.",
+          "prompt": "Which word means: A perfect place where everything is good and everyone is happy.",
           "choices": [
-            "pagan",
-            "electrical",
-            "eternal"
+            "eternal",
+            "utopia",
+            "rehearsal"
           ],
-          "answer": "electrical",
-          "explanation": "electrical: Related to electricity or using electricity."
+          "answer": "utopia",
+          "explanation": "utopia: A perfect place where everything is good and everyone is happy."
         }
       ]
     },
@@ -57,13 +57,13 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A time when something becomes popular or important again.",
-          "answer": "revival"
+          "clue": "A young person who learns a trade or skill by working beside an experienced worker.",
+          "answer": "apprentice"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A strong feeling of fear or being very scared.",
-          "answer": "terror"
+          "clue": "Related to a system in the past where people worked for a lord in exchange for land and protection.",
+          "answer": "feudal"
         },
         {
           "prompt": "Build the word that matches the clue.",
@@ -83,50 +83,56 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "gods.",
-            "different",
-            "worshipped",
-            "and",
-            "pagan",
+            "hall.",
+            "school",
+            "the",
+            "in",
+            "rehearsal",
+            "a",
+            "holds",
+            "club",
+            "drama",
+            "the",
+            "Monday,",
+            "Every"
+          ],
+          "answer": "Every Monday, the drama club holds a rehearsal in the school hall."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "ruler.",
+            "the",
+            "opposing",
+            "for",
+            "exiled",
             "were",
-            "people",
+            "leaders",
             "some",
-            "times,",
-            "ancient",
+            "that",
+            "learned",
+            "we",
+            "class,",
+            "history",
             "In"
           ],
-          "answer": "In ancient times, some people were pagan and worshipped different gods."
+          "answer": "In history class, we learned that some leaders were exiled for opposing the ruler."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "sail.",
-            "set",
-            "they",
-            "before",
-            "fleet",
-            "the",
-            "to",
-            "orders",
-            "gave",
-            "admiral",
+            "cultures.",
+            "different",
+            "about",
+            "learning",
+            "by",
+            "diversity",
+            "racial",
+            "celebrates",
+            "school",
             "The"
           ],
-          "answer": "The admiral gave orders to the fleet before they set sail."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "terror.",
-            "with",
-            "children",
-            "the",
-            "filled",
-            "thunder",
-            "loud",
-            "The"
-          ],
-          "answer": "The loud thunder filled the children with terror."
+          "answer": "The school celebrates racial diversity by learning about different cultures."
         }
       ]
     },
@@ -139,37 +145,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'The Scroll of Selma, part 1': But a _____ led by the Confederacy sought to destroy them.",
+          "prompt": "Which sentence is written in the past simple passive?",
           "choices": [
-            "revival",
-            "catholic",
-            "crucified",
-            "admiral"
+            "The team discovered the scroll.",
+            "The team is still discovering the old scroll in the cemetery.",
+            "The scroll was discovered by the team.",
+            "The team will discover the scroll."
           ],
-          "answer": "revival",
-          "explanation": "The text says: But a revival led by the Confederacy sought to destroy them."
+          "answer": "The scroll was discovered by the team.",
+          "explanation": "The passive uses was or were with a past participle: was discovered."
         },
         {
-          "prompt": "Choose the missing word from 'The Scroll of Selma, part 1': The symbols were strange — part _____, part familiar.",
+          "prompt": "Which adverb of frequency means 'about half the time'?",
           "choices": [
-            "monarchy",
-            "rehearsal",
-            "pagan",
-            "dynasty"
+            "frequently",
+            "usually",
+            "never",
+            "sometimes"
           ],
-          "answer": "pagan",
-          "explanation": "The text says: The symbols were strange — part pagan, part familiar."
+          "answer": "sometimes",
+          "explanation": "Sometimes means an action happens about half the time."
         },
         {
-          "prompt": "Choose the missing word from 'The Scroll of Selma, part 1': \"Maybe _____ influence mixed with native rituals,\" said another.",
+          "prompt": "In the passage, what does a 'discerning viewer' do?",
           "choices": [
-            "Dynasty",
-            "Monarchy",
-            "Catholic",
-            "Admiral"
+            "Believes every single message that is shown on the television screen.",
+            "Thinks carefully about what they watch.",
+            "Only watches cartoons and commercials.",
+            "Never watches any documentaries."
           ],
-          "answer": "Catholic",
-          "explanation": "The text says: \"Maybe Catholic influence mixed with native rituals,\" said another."
+          "answer": "Thinks carefully about what they watch.",
+          "explanation": "The passage says a discerning viewer thinks carefully about what they watch."
         }
       ]
     },
@@ -182,34 +188,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "How is storytelling in films similar to storytelling around a fire?",
+          "prompt": "What three grammar skills does the introduction say this unit will teach you?",
           "choices": [
-            "Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts.",
-            "A special way of doing something that is done regularly or at certain times.",
-            "A person who follows and learns from a teacher or leader."
+            "The unit teaches participle adjectives, the past simple passive, and adverbs of time and frequency.",
+            "The scroll was found sealed in a jar, hidden deep in a cemetery from an ancient dynasty.",
+            "They were told not to touch the artefacts, not to step inside the cemetery, and to observe only."
           ],
-          "answer": "Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts."
+          "answer": "The unit teaches participle adjectives, the past simple passive, and adverbs of time and frequency.",
+          "explanation": "Review the unit text evidence: The unit teaches participle adjectives, the past simple passive, and adverbs of time and frequency."
         },
         {
-          "prompt": "What was the earliest form of entertainment described in the passage?",
+          "prompt": "According to the introduction, what will you be able to write by the end of the unit?",
           "choices": [
-            "A special way of doing something that is done regularly or at certain times.",
-            "A person who follows and learns from a teacher or leader.",
-            "Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts."
+            "The scroll was found sealed in a jar, hidden deep in a cemetery from an ancient dynasty.",
+            "Because entertainment also shapes how people see the world and can change how they think and feel.",
+            "By the end of the unit you will be able to write a confident, well-structured film review."
           ],
-          "answer": "Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts."
+          "answer": "By the end of the unit you will be able to write a confident, well-structured film review.",
+          "explanation": "Review the unit text evidence: By the end of the unit you will be able to write a confident, well-structured film review."
         },
         {
-          "prompt": "Why does the passage say that commercials are different from other forms of media?",
+          "prompt": "Why does the introduction say entertainment is not only about relaxation?",
           "choices": [
-            "A person who follows and learns from a teacher or leader.",
-            "Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts.",
-            "A special way of doing something that is done regularly or at certain times."
+            "A documentary uses real people, places and events, while a drama invents its characters.",
+            "Because entertainment also shapes how people see the world and can change how they think and feel.",
+            "She meant that a legacy holds both good and bad, so we should not favour only one side."
           ],
-          "answer": "Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts."
+          "answer": "Because entertainment also shapes how people see the world and can change how they think and feel.",
+          "explanation": "Review the unit text evidence: Because entertainment also shapes how people see the world and can change how they think and feel."
         }
       ]
     },
@@ -222,16 +228,16 @@
       "description": "Listen, record, review and submit useful unit language.",
       "rounds": [
         {
-          "prompt": "Speaking 1: Vocabulary Expert Interview",
-          "target": "In ancient times, some people were pagan and worshipped different gods."
+          "prompt": "Speaking 1: Media Habits Interview",
+          "target": "With a partner, ask and answer five questions about your media habits."
         },
         {
-          "prompt": "Speaking 3: Four-Minute Unit Talk",
-          "target": "The admiral gave orders to the fleet before they set sail."
+          "prompt": "Speaking 3: Documentary or Drama?",
+          "target": "Explain the difference between a documentary and a drama."
         },
         {
-          "prompt": "Speaking 5: Explain and Respond",
-          "target": "Explain one important unit idea, give a reason with because, and respond to two follow-up questions."
+          "prompt": "Speaking 5: Retell a Scene from the Story",
+          "target": "The school celebrates racial diversity by learning about different cultures."
         }
       ]
     },
@@ -246,52 +252,58 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "toy.",
-            "new",
-            "a",
-            "about",
-            "TV",
-            "on",
-            "commercial",
-            "funny",
-            "a",
-            "saw",
-            "I"
-          ],
-          "answer": "I saw a funny commercial on TV about a new toy."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "lights.",
+            "site.",
+            "ancient",
             "the",
-            "power",
-            "help",
-            "house",
-            "the",
-            "in",
-            "wires",
-            "electrical",
+            "at",
+            "digging",
+            "while",
+            "pottery",
+            "old",
+            "found",
+            "team",
+            "archeological",
             "The"
           ],
-          "answer": "The electrical wires in the house help power the lights."
+          "answer": "The archeological team found old pottery while digging at the ancient site."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "great-grandfather.",
-            "my",
-            "to",
-            "respects",
-            "our",
-            "pay",
-            "to",
-            "cemetery",
+            "food.",
+            "delicious",
             "the",
-            "visited",
-            "We"
+            "enjoy",
+            "and",
+            "Tower",
+            "Eiffel",
+            "the",
+            "see",
+            "to",
+            "Paris",
+            "visit",
+            "tourists",
+            "Many"
           ],
-          "answer": "We visited the cemetery to pay our respects to my great-grandfather."
+          "answer": "Many tourists visit Paris to see the Eiffel Tower and enjoy the delicious food."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "something.",
+            "buy",
+            "to",
+            "you",
+            "persuade",
+            "to",
+            "made",
+            "advertisement",
+            "an",
+            "is",
+            "commercial",
+            "A"
+          ],
+          "answer": "A commercial is an advertisement made to persuade you to buy something."
         }
       ]
     },
@@ -304,34 +316,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'legacy' mean in this unit?",
+          "prompt": "What does 'racial' mean in this unit?",
           "choices": [
-            "Something that is passed down from the past, like traditions, stories, or values.",
-            "Lasting forever; never ending.",
-            "A person who follows a religion that is not one of the main world religions, often believing in many gods."
+            "Related to a person's race or ethnic background.",
+            "A practice session in which performers work through a play, concert or show before the real event.",
+            "Lasting for all time and never coming to an end."
           ],
-          "answer": "Something that is passed down from the past, like traditions, stories, or values.",
-          "explanation": "legacy: Something that is passed down from the past, like traditions, stories, or values."
+          "answer": "Related to a person's race or ethnic background.",
+          "explanation": "racial: Related to a person's race or ethnic background."
         },
         {
-          "prompt": "What does 'characteristics' mean in this unit?",
+          "prompt": "What does 'archeological' mean in this unit?",
           "choices": [
-            "Lasting forever; never ending.",
-            "A person who follows a religion that is not one of the main world religions, often believing in many gods.",
-            "The special qualities or features that make someone or something different."
+            "A practice session in which performers work through a play, concert or show before the real event.",
+            "Lasting for all time and never coming to an end.",
+            "Related to the study of ancient cultures by looking at their buildings, tools, and objects."
           ],
-          "answer": "The special qualities or features that make someone or something different.",
-          "explanation": "characteristics: The special qualities or features that make someone or something different."
+          "answer": "Related to the study of ancient cultures by looking at their buildings, tools, and objects.",
+          "explanation": "archeological: Related to the study of ancient cultures by looking at their buildings, tools, and objects."
         },
         {
-          "prompt": "What does 'pagan' mean in this unit?",
+          "prompt": "What does 'eternal' mean in this unit?",
           "choices": [
-            "To be killed by being nailed to a cross, a method used a long time ago.",
-            "A person who follows a religion that is not one of the main world religions, often believing in many gods.",
-            "Lasting forever; never ending."
+            "Belonging to, or handed down from, family members who lived long ago.",
+            "Lasting for all time and never coming to an end.",
+            "A practice session in which performers work through a play, concert or show before the real event."
           ],
-          "answer": "A person who follows a religion that is not one of the main world religions, often believing in many gods.",
-          "explanation": "pagan: A person who follows a religion that is not one of the main world religions, often believing in many gods."
+          "answer": "Lasting for all time and never coming to an end.",
+          "explanation": "eternal: Lasting for all time and never coming to an end."
         }
       ]
     },
@@ -344,14 +356,14 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'spartan'?",
+          "prompt": "What type of word is 'commercial'?",
           "choices": [
-            "Adjective",
             "Noun",
-            "Verb"
+            "Verb",
+            "Adjective"
           ],
-          "answer": "Adjective",
-          "explanation": "spartan is used as a adjective in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "commercial is used as a noun in this dictionary sense."
         },
         {
           "prompt": "What type of word is 'cyanide'?",
@@ -364,14 +376,14 @@
           "explanation": "cyanide is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'dynasty'?",
+          "prompt": "What type of word is 'admiral'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "dynasty is used as a noun in this dictionary sense."
+          "explanation": "admiral is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -387,16 +399,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "pagan",
-              "A person who follows a religion that is not one of the main world religions, often..."
+              "eternal",
+              "Lasting for all time and never coming to an end."
             ],
             [
-              "admiral",
-              "A high-ranking officer in the navy who commands ships and sailors."
+              "classical",
+              "Belonging to a long, respected tradition of art, music or writing from the distant past."
             ],
             [
-              "feudal",
-              "Related to a system in the past where people worked for a lord in exchange for land and..."
+              "dynasty",
+              "A series of rulers from the same family or group over a long time."
             ]
           ]
         },
@@ -404,16 +416,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "legacy",
-              "Something that is passed down from the past, like traditions, stories, or values."
+              "terror",
+              "A strong feeling of fear or being very scared."
             ],
             [
-              "commercial",
-              "A short video or audio message that promotes a product or service."
+              "suburbs",
+              "An area where people live that is outside of a big city, usually with houses and parks."
             ],
             [
-              "utopia",
-              "A perfect place where everything is good and everyone is happy."
+              "hospitable",
+              "Friendly and welcoming to guests or strangers."
             ]
           ]
         },
@@ -421,16 +433,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "characteristics",
-              "The special qualities or features that make someone or something different."
+              "archeological",
+              "Related to the study of ancient cultures by looking at their buildings, tools, and..."
             ],
             [
-              "cartoonist",
-              "A person who creates cartoons, which are funny drawings or animations."
+              "cemetery",
+              "A place where people are buried after they die."
             ],
             [
-              "Merrimack",
-              "The name of a river in the United States; it can also refer to a town or a school."
+              "Paris",
+              "The capital city of France, known for its art, fashion, and famous landmarks like the..."
             ]
           ]
         }
@@ -445,37 +457,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "What does 'revival' mean?",
+          "prompt": "Which word means 'simple and without comfort or luxury'?",
           "choices": [
-            "A high-ranking officer in the navy who commands ships and sailors.",
-            "A member of the Christian church that is led by the Pope.",
-            "A time when something becomes popular or important again.",
-            "To be killed by being nailed to a cross, a method used a long time ago."
+            "hospitable",
+            "classical",
+            "ancestral",
+            "spartan"
           ],
-          "answer": "A time when something becomes popular or important again.",
-          "explanation": "The revival of the old film made many people want to watch it again."
+          "answer": "spartan",
+          "explanation": "A spartan room is plain and bare, with no luxuries."
         },
         {
-          "prompt": "Choose the missing word from 'The Scroll of Selma, part 1': There, a _____ was performed daily beneath the Great Tree.",
+          "prompt": "What does 'utopia' mean?",
           "choices": [
-            "catholic",
-            "crucified",
-            "admiral",
-            "rehearsal"
+            "A high-ranking officer in the navy who gives orders to a whole fleet of ships.",
+            "An imagined perfect place where everyone is happy.",
+            "A young person who learns a trade from an expert.",
+            "A time when something becomes popular again."
           ],
-          "answer": "rehearsal",
-          "explanation": "The text says: There, a rehearsal was performed daily beneath the Great Tree."
+          "answer": "An imagined perfect place where everyone is happy.",
+          "explanation": "A utopia is an imagined world where everything is perfect."
         },
         {
-          "prompt": "Choose the missing word from 'The Scroll of Selma, part 1': A few lines had survived in full: \"In the Year of _____ Fire, the Monk of Selma led his disciples to the Valley of...",
+          "prompt": "Choose the correct word: The special effects in the film were ______.",
           "choices": [
-            "Eternal",
-            "Admiral",
-            "Dynasty",
-            "Monarchy"
+            "amazing",
+            "amazed",
+            "amaze",
+            "amazement"
           ],
-          "answer": "Eternal",
-          "explanation": "The text says: A few lines had survived in full: \"In the Year of Eternal Fire, the Monk of Selma led his disciples to the Valley of Memory."
+          "answer": "amazing",
+          "explanation": "The effects cause the feeling, so we use the -ing form: amazing."
         }
       ]
     },
@@ -488,37 +500,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "What does 'rehearsal' mean?",
+          "prompt": "What does the word 'admiral' mean?",
           "choices": [
-            "A person who follows a religion that is not one of the main world religions, often believing in many gods.",
-            "A special way of doing something that is done regularly or at certain times.",
-            "A time when something becomes popular or important again.",
-            "Lasting forever; never ending."
+            "A series of rulers from the same family over a long time.",
+            "A high-ranking naval officer who commands ships and sailors.",
+            "A short advertising message that tries to persuade you to buy a product or service.",
+            "An area outside a big city where people live in houses."
           ],
-          "answer": "A special way of doing something that is done regularly or at certain times.",
-          "explanation": "Every morning, my family has a rehearsal of eating breakfast together."
+          "answer": "A high-ranking naval officer who commands ships and sailors.",
+          "explanation": "An admiral commands ships and sailors in the navy."
         },
         {
-          "prompt": "What does 'apprentice' mean?",
+          "prompt": "Which word means a series of rulers from the same family over a long time?",
           "choices": [
-            "A member of the Christian church that is led by the Pope.",
-            "A person who follows a religion that is not one of the main world religions, often believing in many gods.",
-            "A person who follows and learns from a teacher or leader.",
-            "A time when something becomes popular or important again."
+            "monarchy",
+            "legacy",
+            "dynasty",
+            "revival"
           ],
-          "answer": "A person who follows and learns from a teacher or leader.",
-          "explanation": "The apprentice listened carefully to the wise words of his teacher."
+          "answer": "dynasty",
+          "explanation": "A dynasty is a line of rulers from one family, such as the Ming dynasty."
         },
         {
-          "prompt": "What does 'eternal' mean?",
+          "prompt": "What is a commercial?",
           "choices": [
-            "A member of the Christian church that is led by the Pope.",
-            "A person who follows a religion that is not one of the main world religions, often believing in many gods.",
-            "Lasting forever; never ending.",
-            "To be killed by being nailed to a cross, a method used a long time ago."
+            "A short video or audio message that promotes a product.",
+            "An imagined perfect place where everyone lives happily and without any conflict.",
+            "A place where people are buried after they die.",
+            "An area outside a big city."
           ],
-          "answer": "Lasting forever; never ending.",
-          "explanation": "The love between a parent and child is often seen as eternal."
+          "answer": "A short video or audio message that promotes a product.",
+          "explanation": "A commercial is an advertisement made to persuade you to buy something."
         }
       ]
     }

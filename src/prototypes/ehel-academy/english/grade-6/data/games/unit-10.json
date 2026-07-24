@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Not allowed by law or rules",
+          "prompt": "Which word means: Not allowed by the law or by the rules everyone agrees to follow.",
           "choices": [
             "illegal",
-            "instrument",
+            "entry",
             "originally"
           ],
           "answer": "illegal",
-          "explanation": "illegal: Not allowed by law or rules"
+          "explanation": "illegal: Not allowed by the law or by the rules everyone agrees to follow."
         },
         {
-          "prompt": "Which word means: A leader who has complete power and makes all the rules without asking others.",
+          "prompt": "Which word means: A ruler who holds complete power and makes every rule without asking anyone.",
           "choices": [
             "illegal",
-            "instrument",
+            "entry",
             "dictator"
           ],
           "answer": "dictator",
-          "explanation": "dictator: A leader who has complete power and makes all the rules without asking others."
+          "explanation": "dictator: A ruler who holds complete power and makes every rule without asking anyone."
         },
         {
-          "prompt": "Which word means: In a strong and steady way; not easily moved or changed.",
+          "prompt": "Which word means: Good sense and deep understanding gained from experience and careful thought.",
           "choices": [
-            "instrument",
-            "firmly",
+            "entry",
+            "wisdom",
             "illegal"
           ],
-          "answer": "firmly",
-          "explanation": "firmly: In a strong and steady way; not easily moved or changed."
+          "answer": "wisdom",
+          "explanation": "wisdom: Good sense and deep understanding gained from experience and careful thought."
         }
       ]
     },
@@ -57,18 +57,18 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The act of going into a place, or the way to get in",
-          "answer": "entry"
+          "clue": "A person who legally belongs to a country and shares its rights and duties.",
+          "answer": "explorer"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A leader who has complete power and makes all the rules without asking others.",
+          "clue": "A ruler who holds complete power and makes every rule without asking anyone.",
           "answer": "dictator"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "In a strong and steady way; not easily moved or changed.",
-          "answer": "firmly"
+          "clue": "Good sense and deep understanding gained from experience and careful thought.",
+          "answer": "wisdom"
         }
       ]
     },
@@ -83,47 +83,61 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "property.",
-            "else's",
-            "someone",
-            "steal",
-            "to",
-            "illegal",
+            "illegal.",
             "is",
-            "It"
+            "essay",
+            "classmate's",
+            "a",
+            "copying",
+            "why",
+            "explained",
+            "Amal",
+            "review,",
+            "1",
+            "Unit",
+            "our",
+            "In"
           ],
-          "answer": "It is illegal to steal someone else's property."
+          "answer": "In our Unit 1 review, Amal explained why copying a classmate's essay is illegal."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "instrument.",
-            "musical",
+            "care.",
+            "great",
+            "with",
+            "income",
+            "meager",
             "a",
-            "is",
-            "which",
-            "piano,",
-            "the",
-            "plays",
-            "She"
-          ],
-          "answer": "She plays the piano, which is a musical instrument."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "storm.",
-            "coming",
+            "managing",
+            "family",
             "a",
-            "of",
-            "threat",
-            "a",
-            "are",
-            "clouds",
-            "dark",
+            "showed",
+            "review",
+            "5",
+            "Unit",
             "The"
           ],
-          "answer": "The dark clouds are a threat of a coming storm."
+          "answer": "The Unit 5 review showed a family managing a meager income with great care."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "judge.",
+            "the",
+            "before",
+            "honestly",
+            "speak",
+            "to",
+            "asked",
+            "was",
+            "1",
+            "Unit",
+            "in",
+            "citizen",
+            "Each"
+          ],
+          "answer": "Each citizen in Unit 1 was asked to speak honestly before the judge."
         }
       ]
     },
@@ -138,35 +152,35 @@
         {
           "prompt": "What does 'straits' mean?",
           "choices": [
-            "A group of people travelling together, often across a desert.",
-            "A narrow body of water between two pieces of land.",
-            "A short trip or journey, usually for fun or learning.",
-            "An area of land that belongs to a person, group, or country."
+            "A person who travels to new places to discover things",
+            "A narrow strip of sea joining two larger areas of water",
+            "A group of people and animals travelling together across a desert",
+            "The act of going into a place, or the way inside"
           ],
-          "answer": "A narrow body of water between two pieces of land.",
-          "explanation": "The ships passed through the straits to get to the other side of the island."
+          "answer": "A narrow strip of sea joining two larger areas of water",
+          "explanation": "Straits are a narrow strip of sea between two areas of water."
         },
         {
           "prompt": "What does 'explorer' mean?",
           "choices": [
-            "A group of people travelling together, often across a desert.",
-            "A person who travels to new places to discover things.",
-            "An area of land that belongs to a person, group, or country.",
-            "The process of finding your way from one place to another."
+            "A short journey made for pleasure, discovery or learning",
+            "A group of people and animals travelling together across a desert",
+            "A narrow strip of sea joining two larger areas of water",
+            "A person who travels to new places to discover things"
           ],
-          "answer": "A person who travels to new places to discover things.",
-          "explanation": "The explorer found a new island in the ocean."
+          "answer": "A person who travels to new places to discover things",
+          "explanation": "An explorer travels to new places to discover things."
         },
         {
           "prompt": "What does 'humble' mean?",
           "choices": [
-            "Easily affected by things around you, like feelings or physical things.",
-            "In a strong and steady way; not easily moved or changed.",
-            "Not enough; very small in amount or quality.",
-            "Not thinking that you are better than others; modest."
+            "Modest, and not thinking you are better than other people",
+            "To treat people cruelly and unfairly, keeping them powerless",
+            "A ruler who holds complete power and makes every rule alone",
+            "The power to make your own choices and take action"
           ],
-          "answer": "Not thinking that you are better than others; modest.",
-          "explanation": "Even though he won the race, he remained humble and thanked his friends for their support."
+          "answer": "Modest, and not thinking you are better than other people",
+          "explanation": "A humble person is modest and not boastful."
         }
       ]
     },
@@ -179,34 +193,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What is the central idea of this text?",
+          "prompt": "What lesson does the story of Dina the weaver begin to teach?",
           "choices": [
-            "Accept an accurate response supported by the selected review text.",
-            "Not allowed by law or rules",
-            "A person who follows the teachings of Jesus Christ"
+            "That guarding your skill or knowledge only for yourself, like a well kept from everyone, can leave you helpless when trouble...",
+            "Because training makes the heart stronger and more efficient, so it pumps more blood with each beat and works less hard at rest.",
+            "That money is only a tool, and what really counts is making wise, balanced choices such as saving, budgeting and sharing with..."
           ],
-          "answer": "Accept an accurate response supported by the selected review text.",
-          "explanation": "Review the unit text evidence: Accept an accurate response supported by the selected review text."
+          "answer": "That guarding your skill or knowledge only for yourself, like a well kept from everyone, can leave you helpless when trouble...",
+          "explanation": "Review the unit text evidence: That guarding your skill or knowledge only for yourself, like a well kept from everyone, can leave you helpless when trouble..."
         },
         {
-          "prompt": "What is the central idea of this text?",
+          "prompt": "What does the sport passage say happens if you do not eat enough healthy food?",
           "choices": [
-            "Not allowed by law or rules",
-            "A person who follows the teachings of Jesus Christ",
-            "Accept an accurate response supported by the selected review text."
+            "Because training makes the heart stronger and more efficient, so it pumps more blood with each beat and works less hard at rest.",
+            "One part for saving, one part for spending on needs or things you enjoy, and one part for giving to charity or helping your...",
+            "Your performance will deteriorate over time, because your body lacks the fuel it needs to perform well."
           ],
-          "answer": "Accept an accurate response supported by the selected review text.",
-          "explanation": "Review the unit text evidence: Accept an accurate response supported by the selected review text."
+          "answer": "Your performance will deteriorate over time, because your body lacks the fuel it needs to perform well.",
+          "explanation": "Review the unit text evidence: Your performance will deteriorate over time, because your body lacks the fuel it needs to perform well."
         },
         {
-          "prompt": "What is the central idea of this text?",
+          "prompt": "What is the central message of the Money Matters text?",
           "choices": [
-            "A person who follows the teachings of Jesus Christ",
-            "Accept an accurate response supported by the selected review text.",
-            "Not allowed by law or rules"
+            "Both suggest that hoarding selfishly, whether it is weaving skill or money, is unwise, and that sharing with others makes a...",
+            "That money is only a tool, and what really counts is making wise, balanced choices such as saving, budgeting and sharing with...",
+            "Your performance will deteriorate over time, because your body lacks the fuel it needs to perform well."
           ],
-          "answer": "Accept an accurate response supported by the selected review text.",
-          "explanation": "Review the unit text evidence: Accept an accurate response supported by the selected review text."
+          "answer": "That money is only a tool, and what really counts is making wise, balanced choices such as saving, budgeting and sharing with...",
+          "explanation": "Review the unit text evidence: That money is only a tool, and what really counts is making wise, balanced choices such as saving, budgeting and sharing with..."
         }
       ]
     },
@@ -224,7 +238,7 @@
         },
         {
           "prompt": "Research vocabulary in context",
-          "target": "She plays the piano, which is a musical instrument."
+          "target": "The Unit 5 review showed a family managing a meager income with great care."
         },
         {
           "prompt": "Question-and-answer defence",
@@ -243,44 +257,54 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "ocean.",
-            "the",
-            "in",
-            "island",
-            "new",
-            "a",
-            "found",
-            "explorer",
+            "him.",
+            "question",
+            "to",
+            "dared",
+            "that",
+            "newspaper",
+            "every",
+            "silenced",
+            "dictator",
+            "harsh",
             "The"
           ],
-          "answer": "The explorer found a new island in the ocean."
+          "answer": "The harsh dictator silenced every newspaper that dared to question him."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "presents.",
-            "birthday",
-            "her",
-            "opened",
-            "eagerly",
-            "She"
-          ],
-          "answer": "She eagerly opened her birthday presents."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "flowers.",
-            "between",
-            "pollen",
-            "moving",
-            "by",
-            "pollination",
+            "workshop.",
+            "the",
+            "joined",
+            "who",
+            "apprentice",
+            "every",
             "with",
-            "help",
-            "Bees"
+            "wisdom",
+            "his",
+            "shared",
+            "carpenter",
+            "old",
+            "The"
           ],
-          "answer": "Bees help with pollination by moving pollen between flowers."
+          "answer": "The old carpenter shared his wisdom with every apprentice who joined the workshop."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "made.",
+            "carpenter",
+            "master",
+            "the",
+            "move",
+            "every",
+            "watched",
+            "apprentice",
+            "eager",
+            "The"
+          ],
+          "answer": "The eager apprentice watched every move the master carpenter made."
         }
       ]
     },
@@ -295,32 +319,32 @@
         {
           "prompt": "What does 'straits' mean in this unit?",
           "choices": [
-            "A narrow body of water between two pieces of land.",
-            "Not allowed by law or rules",
-            "A tool or device used to make music or do a specific job"
+            "A narrow strip of sea that joins two larger areas of water together.",
+            "Not allowed by the law or by the rules everyone agrees to follow.",
+            "The act of going into a place, or the way that leads inside it."
           ],
-          "answer": "A narrow body of water between two pieces of land.",
-          "explanation": "straits: A narrow body of water between two pieces of land."
+          "answer": "A narrow strip of sea that joins two larger areas of water together.",
+          "explanation": "straits: A narrow strip of sea that joins two larger areas of water together."
         },
         {
-          "prompt": "What does 'script' mean in this unit?",
+          "prompt": "What does 'text' mean in this unit?",
           "choices": [
-            "Not allowed by law or rules",
-            "A tool or device used to make music or do a specific job",
-            "A written text for a play, movie, or show that tells what the characters say and do."
+            "Not allowed by the law or by the rules everyone agrees to follow.",
+            "The act of going into a place, or the way that leads inside it.",
+            "A piece of written work, such as a passage, article or message, that you read."
           ],
-          "answer": "A written text for a play, movie, or show that tells what the characters say and do.",
-          "explanation": "script: A written text for a play, movie, or show that tells what the characters say and do."
+          "answer": "A piece of written work, such as a passage, article or message, that you read.",
+          "explanation": "text: A piece of written work, such as a passage, article or message, that you read."
         },
         {
-          "prompt": "What does 'instrument' mean in this unit?",
+          "prompt": "What does 'entry' mean in this unit?",
           "choices": [
-            "At the beginning or in the first place",
-            "A tool or device used to make music or do a specific job",
-            "Not allowed by law or rules"
+            "At the very beginning, or in the first place before anything changed.",
+            "The act of going into a place, or the way that leads inside it.",
+            "Not allowed by the law or by the rules everyone agrees to follow."
           ],
-          "answer": "A tool or device used to make music or do a specific job",
-          "explanation": "instrument: A tool or device used to make music or do a specific job"
+          "answer": "The act of going into a place, or the way that leads inside it.",
+          "explanation": "entry: The act of going into a place, or the way that leads inside it."
         }
       ]
     },
@@ -333,24 +357,24 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'humble'?",
+          "prompt": "What type of word is 'eagerly'?",
           "choices": [
-            "Adjective",
+            "Verb",
             "Noun",
-            "Verb"
+            "Adjective"
           ],
-          "answer": "Adjective",
-          "explanation": "humble is used as a adjective in this dictionary sense."
+          "answer": "Verb",
+          "explanation": "eagerly is used as a verb in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'pollination'?",
+          "prompt": "What type of word is 'excavation'?",
           "choices": [
             "Verb",
             "Adjective",
             "Noun"
           ],
           "answer": "Noun",
-          "explanation": "pollination is used as a noun in this dictionary sense."
+          "explanation": "excavation is used as a noun in this dictionary sense."
         },
         {
           "prompt": "What type of word is 'agency'?",
@@ -376,16 +400,16 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "instrument",
-              "A tool or device used to make music or do a specific job"
+              "entry",
+              "The act of going into a place, or the way that leads inside it."
             ],
             [
-              "imagination",
-              "The ability to create ideas or pictures in your mind"
+              "originally",
+              "At the very beginning, or in the first place before anything changed."
             ],
             [
-              "treacherous",
-              "Dangerous and not safe, often because it is not what it seems."
+              "threat",
+              "Something that could cause harm, danger or trouble to living things."
             ]
           ]
         },
@@ -394,15 +418,15 @@
           "pairs": [
             [
               "straits",
-              "A narrow body of water between two pieces of land."
+              "A narrow strip of sea that joins two larger areas of water together."
             ],
             [
               "caravan",
-              "A group of people travelling together, often across a desert."
+              "A group of people and animals travelling together, often across a wide desert."
             ],
             [
               "meager",
-              "Not enough; very small in amount or quality."
+              "Very small in amount or quality, and clearly not enough for what is needed."
             ]
           ]
         },
@@ -410,16 +434,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "script",
-              "A written text for a play, movie, or show that tells what the characters say and do."
+              "text",
+              "A piece of written work, such as a passage, article or message, that you read."
             ],
             [
-              "conduction",
-              "The way heat or electricity moves through a material."
+              "pollination",
+              "The moving of pollen between flowers so that plants can make seeds and fruit."
             ],
             [
-              "excavation",
-              "The process of digging in the ground to find things like fossils or old buildings."
+              "rehearsal",
+              "A practice performance held before the real event so that everything runs smoothly."
             ]
           ]
         }
@@ -436,35 +460,35 @@
         {
           "prompt": "What does 'originally' mean?",
           "choices": [
-            "A person who speaks for God or tells what will happen in the future",
-            "At the beginning or in the first place",
-            "The ability to make choices and take action",
-            "To become worse or to decline in quality"
+            "The power to form fresh pictures and ideas in your mind",
+            "The power to make your own choices and take action",
+            "A person who travels to new places to discover things",
+            "At the beginning, or in the first place"
           ],
-          "answer": "At the beginning or in the first place",
-          "explanation": "Originally, the story was written as a book before it became a movie."
+          "answer": "At the beginning, or in the first place",
+          "explanation": "Originally means at the very beginning."
         },
         {
           "prompt": "What does 'threat' mean?",
           "choices": [
-            "A difficult situation that causes suffering or trouble.",
-            "A leader who has complete power and makes all the rules without asking others.",
-            "Something that can cause harm or danger.",
-            "To treat someone in a cruel or unfair way, making them feel weak or powerless."
+            "Something that could cause harm or danger",
+            "Dangerous and unsafe, often because it is not what it seems",
+            "To treat people cruelly and unfairly, keeping them powerless",
+            "A narrow strip of sea joining two larger areas of water"
           ],
-          "answer": "Something that can cause harm or danger.",
-          "explanation": "The dark clouds are a threat of a coming storm."
+          "answer": "Something that could cause harm or danger",
+          "explanation": "A threat is something that could cause harm or danger."
         },
         {
           "prompt": "What does 'treacherous' mean?",
           "choices": [
-            "A difficult situation that causes suffering or trouble.",
-            "Dangerous and not safe, often because it is not what it seems.",
-            "To treat someone badly or unfairly because of their beliefs or identity.",
-            "To treat someone in a cruel or unfair way, making them feel weak or powerless."
+            "Something that could cause harm or danger",
+            "Modest, and not thinking you are better than other people",
+            "Dangerous and unsafe, often because it is not what it seems",
+            "A short journey made for pleasure, discovery or learning"
           ],
-          "answer": "Dangerous and not safe, often because it is not what it seems.",
-          "explanation": "The path through the mountains was treacherous after the rains."
+          "answer": "Dangerous and unsafe, often because it is not what it seems",
+          "explanation": "Treacherous ground is dangerous and not what it seems."
         }
       ]
     },
@@ -479,35 +503,35 @@
         {
           "prompt": "What does 'illegal' mean?",
           "choices": [
-            "A tool or device used to make music or do a specific job",
-            "Gave or provided something that was needed",
-            "Not allowed by law or rules",
-            "The act of going into a place, or the way to get in"
+            "Not allowed by the law or by the rules",
+            "The act of going into a place, or the way inside",
+            "A tool or device used to make music or do a job",
+            "The power to form fresh pictures and ideas in your mind"
           ],
-          "answer": "Not allowed by law or rules",
-          "explanation": "It is illegal to steal someone else's property."
+          "answer": "Not allowed by the law or by the rules",
+          "explanation": "Something illegal breaks the law or the agreed rules."
         },
         {
           "prompt": "What does 'citizen' mean?",
           "choices": [
-            "A person who follows the teachings of Jesus Christ",
-            "A pleasing combination of things that work well together; peace",
-            "A tool or device used to make music or do a specific job",
-            "Gave or provided something that was needed"
+            "The power to make your own choices and take action",
+            "Connected to the physical features of the Earth and how places lie",
+            "A person who legally belongs to a country and shares its rights",
+            "At the beginning, or in the first place"
           ],
-          "answer": "A person who follows the teachings of Jesus Christ",
-          "explanation": "My friend is a citizen and goes to church every Sunday."
+          "answer": "A person who legally belongs to a country and shares its rights",
+          "explanation": "A citizen belongs to a country and shares its rights and duties."
         },
         {
           "prompt": "What does 'geographic' mean?",
           "choices": [
-            "A person who speaks for God or tells what will happen in the future",
-            "Related to the physical features of the Earth and how places are arranged",
-            "The ability to create ideas or pictures in your mind",
-            "The ability to make choices and take action"
+            "Something that could cause harm or danger",
+            "Connected to the physical features of the Earth and how places lie",
+            "A ruler who holds complete power and makes every rule alone",
+            "A group of people and animals travelling together across a desert"
           ],
-          "answer": "Related to the physical features of the Earth and how places are arranged",
-          "explanation": "The geographic features of our country include mountains, rivers, and valleys."
+          "answer": "Connected to the physical features of the Earth and how places lie",
+          "explanation": "Geographic features are the physical features of the Earth."
         }
       ]
     }

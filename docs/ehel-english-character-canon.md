@@ -62,6 +62,28 @@ Adults exist to be a job, not a personality. Reuse these rather than inventing:
 
 Firefighters other than Leila, and Amal's parents, stay unnamed.
 
+## Per-unit story characters
+
+The cast above is the **recurring** one — Amal and her circle, and the standing
+community adults a child meets again and again across the year. They hold their
+role for the whole course.
+
+A single unit's story (a desert expedition, an ancient legend, a courtroom
+drama) often needs one-off characters that never reappear. Those may take any
+name from the neutral dictionary's secular list, subject to two rules only:
+
+1. **Within the unit, one name = one person = one role** — the collision that
+   keeps recurring in the shipped files (a hero renamed mid-story, a leader
+   flipping between two names) is the thing to prevent.
+2. **Never reuse a recurring-cast name for a one-off** — a story lawyer must not
+   be "Amal" or "Doctor Sarah", because those names already belong to someone.
+
+A one-off name may be reused for a *different* one-off role in another unit (a
+reader does not expect the Unit 4 explorer to be the Unit 6 journalist), so
+these are **not** pinned to a single role course-wide. Names seen in this use so
+far: Zara (legend heroine, G5 U4), Amara / Tariq / Mama Dina (careers and
+expedition roles, G6). Keep them internally consistent within their own unit.
+
 ## Do not use
 
 Faith-marked, or burnt by a prior collision:

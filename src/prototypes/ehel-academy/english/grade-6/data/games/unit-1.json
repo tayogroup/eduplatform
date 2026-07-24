@@ -19,31 +19,31 @@
           "prompt": "Which word means: Not allowed by law or rules",
           "choices": [
             "illegal",
-            "instrument",
-            "harmony"
+            "entry",
+            "supplied"
           ],
           "answer": "illegal",
           "explanation": "illegal: Not allowed by law or rules"
         },
         {
-          "prompt": "Which word means: A big change in the form or shape of something",
+          "prompt": "Which word means: A person who moves to a new region to live there and build a home",
           "choices": [
             "illegal",
-            "instrument",
-            "metamorphosis"
+            "entry",
+            "nomad"
           ],
-          "answer": "metamorphosis",
-          "explanation": "metamorphosis: A big change in the form or shape of something"
+          "answer": "nomad",
+          "explanation": "nomad: A person who moves to a new region to live there and build a home"
         },
         {
-          "prompt": "Which word means: The act of being set free from control or restrictions",
+          "prompt": "Which word means: The official approval of something, like a law or agreement",
           "choices": [
-            "instrument",
-            "emancipation",
+            "entry",
+            "ratification",
             "illegal"
           ],
-          "answer": "emancipation",
-          "explanation": "emancipation: The act of being set free from control or restrictions"
+          "answer": "ratification",
+          "explanation": "ratification: The official approval of something, like a law or agreement"
         }
       ]
     },
@@ -57,8 +57,8 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The act of going into a place, or the way to get in",
-          "answer": "entry"
+          "clue": "A person who legally belongs to a country and shares its rights and duties",
+          "answer": "explorer"
         },
         {
           "prompt": "Build the word that matches the clue.",
@@ -67,8 +67,8 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Showed or bounced back an image or light; thought carefully",
-          "answer": "reflected"
+          "clue": "A room or space used for a special purpose",
+          "answer": "chamber"
         }
       ]
     },
@@ -111,18 +111,17 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "deciding.",
-            "before",
-            "evidence",
-            "the",
-            "all",
-            "to",
-            "carefully",
-            "listened",
-            "juror",
+            "butterfly.",
+            "a",
+            "into",
+            "metamorphosis",
+            "a",
+            "through",
+            "went",
+            "caterpillar",
             "The"
           ],
-          "answer": "The juror listened carefully to all the evidence before deciding."
+          "answer": "The caterpillar went through a metamorphosis into a butterfly."
         }
       ]
     },
@@ -135,37 +134,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'Voices in the Chamber, part 2': \"This is an _____ my father uses to measure wood.",
+          "prompt": "In 'Voices in the Chamber, part 2', complete Kian's line: This is an _____ my father uses to measure wood.",
           "choices": [
             "entry",
-            "supplied",
-            "harmony",
+            "blockade",
+            "confederation",
             "instrument"
           ],
           "answer": "instrument",
-          "explanation": "The text says: \"This is an instrument my father uses to measure wood."
+          "explanation": "Kian holds up an instrument and uses it as a symbol in his speech about fair laws."
         },
         {
-          "prompt": "Choose the missing word from 'Voices in the Chamber, part 1': At home, Father said, \"We've been _____ with little, and asked to give much.\" Mother added, \"These laws — none of...",
+          "prompt": "In 'Voices in the Chamber, part 1', complete Father's line: We've been _____ with little, and asked to give much.",
           "choices": [
-            "censor",
+            "censored",
             "supplied",
+            "reflected",
+            "ratified"
+          ],
+          "answer": "supplied",
+          "explanation": "Father complains, 'We've been supplied with little, and asked to give much.'"
+        },
+        {
+          "prompt": "In 'Voices in the Chamber, part 2', complete Kian's line: It's not _____ if we are not heard.",
+          "choices": [
+            "warfare",
+            "disgrace",
             "harmony",
             "perspective"
           ],
-          "answer": "supplied",
-          "explanation": "The text says: At home, Father said, \"We've been supplied with little, and asked to give much.\" Mother added, \"These laws — none of them reflect our voice.\" Noah couldn't sleep that night."
-        },
-        {
-          "prompt": "Choose the missing word from 'Voices in the Chamber, part 2': \"It's not _____ if we are not heard.\" He lifted a cloth-wrapped item and unrolled it on the desk.",
-          "choices": [
-            "nationalism",
-            "relationship",
-            "confederation",
-            "harmony"
-          ],
           "answer": "harmony",
-          "explanation": "The text says: \"It's not harmony if we are not heard.\" He lifted a cloth-wrapped item and unrolled it on the desk."
+          "explanation": "Kian insists that real harmony cannot exist while the people are ignored."
         }
       ]
     },
@@ -178,34 +177,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What was Nadia known for in her village, and why did merchants visit her?",
+          "prompt": "What was Dina known for across the region, and why did merchants travel to her village?",
           "choices": [
-            "Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts.",
-            "Not allowed by law or rules",
-            "A person who follows the teachings of Jesus Christ"
+            "She was famous for her beautiful woven cloths, so merchants travelled from distant towns just to buy them.",
+            "He meant that talent or knowledge kept only for yourself grows stale and useless, like still, trapped water.",
+            "It is a classroom debate in which each group must argue for or against ratifying a new trade law."
           ],
-          "answer": "Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts."
+          "answer": "She was famous for her beautiful woven cloths, so merchants travelled from distant towns just to buy them.",
+          "explanation": "Review the unit text evidence: She was famous for her beautiful woven cloths, so merchants travelled from distant towns just to buy them."
         },
         {
-          "prompt": "Why do you think the villagers chose to help Nadia even though she had always refused to share her skills with them?",
+          "prompt": "What did the monsoon storm do to Dina's workshop and loom?",
           "choices": [
-            "Not allowed by law or rules",
-            "A person who follows the teachings of Jesus Christ",
-            "Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts."
+            "He meant that talent or knowledge kept only for yourself grows stale and useless, like still, trapped water.",
+            "He uses it to argue that, just as you cannot build with a tool you do not understand, the officials make laws without...",
+            "The powerful wind snapped her wooden loom and scattered her silk threads, and the rain left her workshop in ruins."
           ],
-          "answer": "Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts."
+          "answer": "The powerful wind snapped her wooden loom and scattered her silk threads, and the rain left her workshop in ruins.",
+          "explanation": "Review the unit text evidence: The powerful wind snapped her wooden loom and scattered her silk threads, and the rain left her workshop in ruins."
         },
         {
-          "prompt": "Formula: Have / Has + subject + past participle + ?",
+          "prompt": "What is the mock parliament event, and what does the teacher ask each group of students to do?",
           "choices": [
-            "A person who follows the teachings of Jesus Christ",
-            "Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts.",
-            "Not allowed by law or rules"
+            "He means Kian has begun to take an active, responsible part in his community instead of staying a silent onlooker.",
+            "It is a classroom debate in which each group must argue for or against ratifying a new trade law.",
+            "The powerful wind snapped her wooden loom and scattered her silk threads, and the rain left her workshop in ruins."
           ],
-          "answer": "Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts."
+          "answer": "It is a classroom debate in which each group must argue for or against ratifying a new trade law.",
+          "explanation": "Review the unit text evidence: It is a classroom debate in which each group must argue for or against ratifying a new trade law."
         }
       ]
     },
@@ -222,12 +221,12 @@
           "target": "It is illegal to steal someone else's property."
         },
         {
-          "prompt": "Speaking 3: Vocabulary Expert Interview",
+          "prompt": "Speaking 3: Discuss a Moral Dilemma",
           "target": "The choir sang in harmony, making beautiful music."
         },
         {
-          "prompt": "Speaking 5: Four-Minute Unit Talk",
-          "target": "The juror listened carefully to all the evidence before deciding."
+          "prompt": "Speaking 5: Vocabulary Expert Interview",
+          "target": "The caterpillar went through a metamorphosis into a butterfly."
         }
       ]
     },
@@ -242,31 +241,36 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "it.",
-            "around",
-            "trees",
-            "beautiful",
+            "car.",
+            "toy",
             "the",
-            "reflected",
-            "lake",
+            "power",
+            "to",
+            "voltage",
+            "high",
+            "a",
+            "has",
+            "battery",
             "The"
           ],
-          "answer": "The lake reflected the beautiful trees around it."
+          "answer": "The battery has a high voltage to power the toy car."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "celebrations.",
-            "national",
-            "during",
-            "proud",
-            "feel",
-            "people",
-            "make",
-            "can",
-            "Nationalism"
+            "challenge.",
+            "every",
+            "overcome",
+            "her",
+            "helped",
+            "race",
+            "the",
+            "finish",
+            "to",
+            "determination",
+            "Her"
           ],
-          "answer": "Nationalism can make people feel proud during national celebrations."
+          "answer": "Her determination to finish the race helped her overcome every challenge."
         },
         {
           "prompt": "Put this unit sentence in order.",
@@ -294,34 +298,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'inventor' mean in this unit?",
+          "prompt": "What does 'juror' mean in this unit?",
           "choices": [
-            "A person who creates something new",
+            "A person chosen to help decide a court case",
             "Not allowed by law or rules",
-            "A tool or device used to make music or do a specific job"
+            "The act of going into a place, or the way to get in"
           ],
-          "answer": "A person who creates something new",
-          "explanation": "inventor: A person who creates something new"
+          "answer": "A person chosen to help decide a court case",
+          "explanation": "juror: A person chosen to help decide a court case"
         },
         {
           "prompt": "What does 'nationalism' mean in this unit?",
           "choices": [
             "Not allowed by law or rules",
-            "A tool or device used to make music or do a specific job",
+            "The act of going into a place, or the way to get in",
             "The belief that your country is important and worth being proud of"
           ],
           "answer": "The belief that your country is important and worth being proud of",
           "explanation": "nationalism: The belief that your country is important and worth being proud of"
         },
         {
-          "prompt": "What does 'instrument' mean in this unit?",
+          "prompt": "What does 'entry' mean in this unit?",
           "choices": [
-            "A pleasing combination of things that work well together; peace",
-            "A tool or device used to make music or do a specific job",
+            "Gave or provided something that was needed",
+            "The act of going into a place, or the way to get in",
             "Not allowed by law or rules"
           ],
-          "answer": "A tool or device used to make music or do a specific job",
-          "explanation": "instrument: A tool or device used to make music or do a specific job"
+          "answer": "The act of going into a place, or the way to get in",
+          "explanation": "entry: The act of going into a place, or the way to get in"
         }
       ]
     },
@@ -334,14 +338,14 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'reflected'?",
+          "prompt": "What type of word is 'chamber'?",
           "choices": [
-            "Verb",
             "Noun",
+            "Verb",
             "Adjective"
           ],
-          "answer": "Verb",
-          "explanation": "reflected is used as a verb in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "chamber is used as a noun in this dictionary sense."
         },
         {
           "prompt": "What type of word is 'parliament'?",
@@ -377,8 +381,8 @@
           "prompt": "Match vocabulary set 1.",
           "pairs": [
             [
-              "instrument",
-              "A tool or device used to make music or do a specific job"
+              "entry",
+              "The act of going into a place, or the way to get in"
             ],
             [
               "harmony",
@@ -394,16 +398,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "inventor",
-              "A person who creates something new"
+              "juror",
+              "A person chosen to help decide a court case"
             ],
             [
-              "voltage",
-              "The amount of electrical energy pushing through wires"
+              "reflect",
+              "To think carefully about something; to show an image"
             ],
             [
-              "ratification",
-              "The official approval of something, like a law or agreement"
+              "reflected",
+              "Showed or bounced back an image or light; thought carefully"
             ]
           ]
         },
@@ -411,16 +415,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "nationalism",
-              "The belief that your country is important and worth being proud of"
+              "determination",
+              "The quality of trying hard even when something is difficult"
             ],
             [
-              "provisions",
-              "Supplies or food needed for a journey or purpose"
+              "confederation",
+              "A group of states working together while keeping their own governments"
             ],
             [
-              "disgrace",
-              "A feeling of shame or loss of respect"
+              "liberator",
+              "A person who helps free others from control or oppression"
             ]
           ]
         }
@@ -435,37 +439,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "What does 'instrument' mean?",
+          "prompt": "What does the word 'blockade' mean?",
           "choices": [
-            "A pleasing combination of things that work well together; peace",
-            "A tool or device used to make music or do a specific job",
-            "A way of looking at or thinking about something",
-            "To remove or hide parts of something considered inappropriate"
+            "A careful way of looking at or thinking about a problem",
+            "An action to stop people or goods getting in or out",
+            "The quality of trying hard even when it is difficult",
+            "A large group who make a country's laws"
           ],
-          "answer": "A tool or device used to make music or do a specific job",
-          "explanation": "She plays the piano, which is a musical instrument."
+          "answer": "An action to stop people or goods getting in or out",
+          "explanation": "The villagers feared a blockade of the coast if they dared to resist the officials."
         },
         {
-          "prompt": "Choose the missing word from 'Voices in the Chamber, part 1': People said _____ taxes were coming.",
+          "prompt": "In 'Voices in the Chamber, part 1', complete the line: People said _____ taxes were coming.",
           "choices": [
             "illegal",
-            "censor",
-            "warfare",
-            "settler"
+            "harmony",
+            "juror",
+            "provisions"
           ],
           "answer": "illegal",
-          "explanation": "The text says: People said illegal taxes were coming."
+          "explanation": "The passage reads, 'People said illegal taxes were coming.'"
         },
         {
-          "prompt": "Choose the missing word from 'Voices in the Chamber, part 2': \"I would invite _____ elders, Muslim clerics, boatmakers, and farmers.",
+          "prompt": "In 'Voices in the Chamber, part 2', complete Father's line: You have become a _____ today, Kian, not merely a student.",
           "choices": [
-            "Entry",
+            "inventor",
+            "juror",
             "citizen",
-            "settler",
-            "Illegal"
+            "settler"
           ],
           "answer": "citizen",
-          "explanation": "The text says: \"I would invite citizen elders, Muslim clerics, boatmakers, and farmers."
+          "explanation": "Kian's father tells him he has become a citizen, meaning he now takes an active part in the community."
         }
       ]
     },
@@ -478,37 +482,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "What does 'illegal' mean?",
+          "prompt": "What does the word 'illegal' mean?",
           "choices": [
-            "A tool or device used to make music or do a specific job",
-            "Gave or provided something that was needed",
+            "A tool or device used to do a particular job",
+            "The official approval of a brand-new law",
             "Not allowed by law or rules",
-            "The act of going into a place, or the way to get in"
+            "A connection or bond between two people"
           ],
           "answer": "Not allowed by law or rules",
-          "explanation": "It is illegal to steal someone else's property."
+          "explanation": "'Illegal' describes an action that breaks the law, like the unfair taxes the villagers feared."
         },
         {
-          "prompt": "What does 'citizen' mean?",
+          "prompt": "What does the word 'parliament' mean?",
           "choices": [
-            "A person who follows the teachings of Jesus Christ",
-            "A pleasing combination of things that work well together; peace",
-            "A tool or device used to make music or do a specific job",
-            "Gave or provided something that was needed"
+            "A group of people who make the laws for a country",
+            "A short story that teaches a clear moral lesson",
+            "The activity of fighting during a war",
+            "A room that is kept for a special purpose"
           ],
-          "answer": "A person who follows the teachings of Jesus Christ",
-          "explanation": "My friend is a citizen and goes to church every Sunday."
+          "answer": "A group of people who make the laws for a country",
+          "explanation": "In the story, the parliament finally ratifies a fairer trade law after the hearings."
         },
         {
-          "prompt": "What does 'entry' mean?",
+          "prompt": "What does the word 'harmony' mean?",
           "choices": [
-            "A pleasing combination of things that work well together; peace",
-            "A way of looking at or thinking about something",
-            "Gave or provided something that was needed",
-            "The act of going into a place, or the way to get in"
+            "The official approval of a law or treaty",
+            "A person chosen to help decide a court case",
+            "An action that stops goods entering or leaving",
+            "A pleasing sense of peace and agreement"
           ],
-          "answer": "The act of going into a place, or the way to get in",
-          "explanation": "You need a ticket for entry to the concert."
+          "answer": "A pleasing sense of peace and agreement",
+          "explanation": "Kian argues that forced harmony is not real harmony if the people are not heard."
         }
       ]
     }

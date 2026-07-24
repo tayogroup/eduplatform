@@ -16,34 +16,34 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: Related to the physical features of the Earth and how places are arranged",
+          "prompt": "Which word means: Relating to the physical features of the Earth, such as mountains, rivers and where places lie.",
           "choices": [
             "geographic",
             "imagination",
-            "deteriorate"
+            "observation"
           ],
           "answer": "geographic",
-          "explanation": "geographic: Related to the physical features of the Earth and how places are arranged"
+          "explanation": "geographic: Relating to the physical features of the Earth, such as mountains, rivers and where places lie."
         },
         {
-          "prompt": "Which word means: A three-dimensional artwork made by shaping materials like stone, metal, or clay",
+          "prompt": "Which word means: A solid, three-dimensional artwork shaped from materials like stone, clay or metal.",
           "choices": [
             "geographic",
             "imagination",
             "sculpture"
           ],
           "answer": "sculpture",
-          "explanation": "sculpture: A three-dimensional artwork made by shaping materials like stone, metal, or clay"
+          "explanation": "sculpture: A solid, three-dimensional artwork shaped from materials like stone, clay or metal."
         },
         {
-          "prompt": "Which word means: Related to living things and how they work",
+          "prompt": "Which word means: Connected to the natural world and how human actions affect it.",
           "choices": [
             "imagination",
-            "biological",
+            "environmental",
             "geographic"
           ],
-          "answer": "biological",
-          "explanation": "biological: Related to living things and how they work"
+          "answer": "environmental",
+          "explanation": "environmental: Connected to the natural world and how human actions affect it."
         }
       ]
     },
@@ -57,17 +57,17 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "At the beginning or in the first place",
+          "clue": "At the very beginning, or in the first place before anything changed.",
           "answer": "originally"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A three-dimensional artwork made by shaping materials like stone, metal, or clay",
+          "clue": "A solid, three-dimensional artwork shaped from materials like stone, clay or metal.",
           "answer": "sculpture"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Something that can be replaced or used again, like energy from the sun or wind",
+          "clue": "Able to be replaced or used again, like energy from the sun or the wind.",
           "answer": "renewable"
         }
       ]
@@ -83,51 +83,54 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "valleys.",
-            "and",
-            "rivers,",
-            "mountains,",
-            "include",
-            "country",
-            "our",
-            "of",
-            "features",
-            "geographic",
-            "The"
-          ],
-          "answer": "The geographic features of our country include mountains, rivers, and valleys."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "quickly.",
-            "homework",
-            "her",
-            "finishing",
-            "at",
-            "efficient",
-            "very",
-            "is",
-            "She"
-          ],
-          "answer": "She is very efficient at finishing her homework quickly."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "beautiful.",
-            "very",
-            "and",
-            "modern",
-            "is",
-            "school",
-            "new",
+            "river.",
             "the",
             "of",
-            "architecture",
-            "The"
+            "line",
+            "winding",
+            "the",
+            "followed",
+            "border",
+            "geographic",
+            "the",
+            "map,",
+            "the",
+            "On"
           ],
-          "answer": "The architecture of the new school is modern and very beautiful."
+          "answer": "On the map, the geographic border followed the winding line of the river."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "texture.",
+            "their",
+            "of",
+            "because",
+            "different",
+            "completely",
+            "feel",
+            "glass",
+            "and",
+            "Wool"
+          ],
+          "answer": "Wool and glass feel completely different because of their texture."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "lands.",
+            "many",
+            "from",
+            "music",
+            "with",
+            "square",
+            "the",
+            "filled",
+            "festival",
+            "multicultural",
+            "A"
+          ],
+          "answer": "A multicultural festival filled the square with music from many lands."
         }
       ]
     },
@@ -140,37 +143,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'Sports and Health: source text 2': The _____ Daniel, peace be upon him, encouraged physical activity and strength.",
+          "prompt": "Choose the correct rewrite of 'Unless you don't hurry, we will be late.'",
           "choices": [
-            "Originally",
-            "Imagination",
-            "Agency",
-            "Forecaster"
+            "Unless you hurry, we will be late.",
+            "Unless you don't hurry, we will be late.",
+            "If you don't hurry, we won't be late.",
+            "Unless you will hurry, we will be late."
           ],
-          "answer": "Forecaster",
-          "explanation": "The text says: The forecaster Daniel, peace be upon him, encouraged physical activity and strength."
+          "answer": "Unless you hurry, we will be late.",
+          "explanation": "'Unless' already means 'if not', so adding another negative or 'will' after it is wrong."
         },
         {
-          "prompt": "Choose the missing word from 'Sports and Health: source text 2': If you do not eat enough healthy food, your performance will _____ over time.",
+          "prompt": "What does the word 'transpiration' mean?",
           "choices": [
-            "texture",
-            "sculpture",
-            "deteriorate",
-            "sedition"
+            "The death of a large, exploding star",
+            "The way plants release water through their leaves",
+            "A serious disease that spreads quickly and makes people ill",
+            "The feeling of a rough or smooth surface"
           ],
-          "answer": "deteriorate",
-          "explanation": "The text says: If you do not eat enough healthy food, your performance will deteriorate over time."
+          "answer": "The way plants release water through their leaves",
+          "explanation": "Transpiration is how plants lose water through their leaves; the distractors define supernova, plague and texture."
         },
         {
-          "prompt": "Choose the missing word from 'Sports and Health: source text 1': If you train regularly, your heart will become stronger and more _____.",
+          "prompt": "Which sentence uses a modal verb to give advice in the First Conditional?",
           "choices": [
-            "sedition",
-            "texture",
-            "efficient",
-            "deteriorate"
+            "If it snows, we will stay home.",
+            "If it snows, we might stay home.",
+            "If it snows, we should wear warm clothes.",
+            "If it snows, we can stay home."
           ],
-          "answer": "efficient",
-          "explanation": "The text says: If you train regularly, your heart will become stronger and more efficient."
+          "answer": "If it snows, we should wear warm clothes.",
+          "explanation": "'Should' gives advice, while 'will', 'might' and 'can' show certainty, possibility and permission."
         }
       ]
     },
@@ -183,34 +186,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What happens to your heart when you exercise regularly?",
+          "prompt": "According to the passage, what happens to your heart if you train regularly?",
           "choices": [
-            "Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts.",
-            "Related to the physical features of the Earth and how places are arranged",
-            "At the beginning or in the first place"
+            "It becomes stronger and more efficient, pumping more blood with each beat, so it works less hard at rest.",
+            "Opinions often use words like 'best', 'worst', 'should' or 'I think'.",
+            "Posters, a display, a written report and a painted model of the forest's root system."
           ],
-          "answer": "Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts."
+          "answer": "It becomes stronger and more efficient, pumping more blood with each beat, so it works less hard at rest.",
+          "explanation": "Review the unit text evidence: It becomes stronger and more efficient, pumping more blood with each beat, so it works less hard at rest."
         },
         {
-          "prompt": "efficient (paragraph 2): What does it mean when we say the heart becomes more efficient?",
+          "prompt": "Why might a company use propaganda in an advertisement?",
           "choices": [
-            "Related to the physical features of the Earth and how places are arranged",
-            "At the beginning or in the first place",
-            "Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts."
+            "Opinions often use words like 'best', 'worst', 'should' or 'I think'.",
+            "It agrees to ban further clearing near the grove and funds clean-up crews and radiation containment.",
+            "To share only the facts that make its product look good while hiding the rest."
           ],
-          "answer": "Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts."
+          "answer": "To share only the facts that make its product look good while hiding the rest.",
+          "explanation": "Review the unit text evidence: To share only the facts that make its product look good while hiding the rest."
         },
         {
-          "prompt": "multicultural (paragraph 7): How does the word multicultural relate to the role of sport?",
+          "prompt": "What does Amal create to help people care about the forest?",
           "choices": [
-            "At the beginning or in the first place",
-            "Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts.",
-            "Related to the physical features of the Earth and how places are arranged"
+            "She means that protecting and restoring the forest starts when people believe change is possible and choose to act.",
+            "Posters, a display, a written report and a painted model of the forest's root system.",
+            "To share only the facts that make its product look good while hiding the rest."
           ],
-          "answer": "Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-explained response supported by relevant evidence from the selected text or texts."
+          "answer": "Posters, a display, a written report and a painted model of the forest's root system.",
+          "explanation": "Review the unit text evidence: Posters, a display, a written report and a painted model of the forest's root system."
         }
       ]
     },
@@ -224,15 +227,15 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Sports Interview Role-Play",
-          "target": "The geographic features of our country include mountains, rivers, and valleys."
+          "target": "On the map, the geographic border followed the winding line of the river."
         },
         {
-          "prompt": "Speaking 3: Fact or Opinion? Listening Game",
-          "target": "Your teacher or AI Tutor will read out a list of statements about sports and health."
+          "prompt": "Speaking 3: Fact or Opinion Listening Game",
+          "target": "Your teacher or, with an adult present, your AI tutor will read out statements about sport, health and the environment."
         },
         {
-          "prompt": "Speaking 5: Vocabulary Expert Interview",
-          "target": "The architecture of the new school is modern and very beautiful."
+          "prompt": "Speaking 5: Science and Tradition Discussion",
+          "target": "In a small group, discuss the story 'When the Leaves Stop Speaking'."
         }
       ]
     },
@@ -247,50 +250,55 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "countries.",
-            "different",
-            "many",
-            "from",
-            "students",
-            "with",
-            "multicultural,",
-            "is",
-            "school",
-            "Our"
-          ],
-          "answer": "Our school is multicultural, with students from many different countries."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "Earth.",
+            "grow.",
+            "plants",
+            "helps",
+            "and",
+            "Earth",
             "the",
             "warms",
-            "that",
             "radiation",
-            "off",
-            "gives",
-            "sun",
+            "sun's",
             "The"
           ],
-          "answer": "The sun gives off radiation that warms the Earth."
+          "answer": "The sun's radiation warms the Earth and helps plants grow."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "elder.",
-            "one",
-            "said",
-            "sacred,\"",
-            "originally",
-            "was",
-            "forest",
-            "\"This",
-            "says:",
-            "text",
+            "welcoming.",
+            "and",
+            "bright",
+            "modern,",
+            "is",
+            "centre",
+            "sports",
+            "new",
+            "the",
+            "of",
+            "architecture",
             "The"
           ],
-          "answer": "The text says: \"This forest was originally sacred,\" said one elder."
+          "answer": "The architecture of the new sports centre is modern, bright and welcoming."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "fertile.",
+            "region",
+            "whole",
+            "the",
+            "keep",
+            "helps",
+            "that",
+            "water",
+            "release",
+            "leaves",
+            "the",
+            "transpiration,",
+            "Through"
+          ],
+          "answer": "Through transpiration, the leaves release water that helps keep the whole region fertile."
         }
       ]
     },
@@ -303,34 +311,34 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'supernova' mean in this unit?",
+          "prompt": "What does 'text' mean in this unit?",
           "choices": [
-            "A huge explosion that happens when a star dies, making it very bright for a short time",
-            "Related to the physical features of the Earth and how places are arranged",
-            "The ability to create ideas or pictures in your mind"
+            "A piece of writing that you can read closely, study and discuss.",
+            "Relating to the physical features of the Earth, such as mountains, rivers and where places lie.",
+            "The power to form new ideas or pictures in your mind that are not in front of you."
           ],
-          "answer": "A huge explosion that happens when a star dies, making it very bright for a short time",
-          "explanation": "supernova: A huge explosion that happens when a star dies, making it very bright for a short time"
+          "answer": "A piece of writing that you can read closely, study and discuss.",
+          "explanation": "text: A piece of writing that you can read closely, study and discuss."
         },
         {
           "prompt": "What does 'transpiration' mean in this unit?",
           "choices": [
-            "Related to the physical features of the Earth and how places are arranged",
-            "The ability to create ideas or pictures in your mind",
-            "The process where plants lose water through tiny openings in their leaves"
+            "Relating to the physical features of the Earth, such as mountains, rivers and where places lie.",
+            "The power to form new ideas or pictures in your mind that are not in front of you.",
+            "The way plants release water into the air through tiny openings in their leaves."
           ],
-          "answer": "The process where plants lose water through tiny openings in their leaves",
-          "explanation": "transpiration: The process where plants lose water through tiny openings in their leaves"
+          "answer": "The way plants release water into the air through tiny openings in their leaves.",
+          "explanation": "transpiration: The way plants release water into the air through tiny openings in their leaves."
         },
         {
           "prompt": "What does 'imagination' mean in this unit?",
           "choices": [
-            "To become worse or to decline in quality",
-            "The ability to create ideas or pictures in your mind",
-            "Related to the physical features of the Earth and how places are arranged"
+            "The act of watching something carefully to notice details and learn about it.",
+            "The power to form new ideas or pictures in your mind that are not in front of you.",
+            "Relating to the physical features of the Earth, such as mountains, rivers and where places lie."
           ],
-          "answer": "The ability to create ideas or pictures in your mind",
-          "explanation": "imagination: The ability to create ideas or pictures in your mind"
+          "answer": "The power to form new ideas or pictures in your mind that are not in front of you.",
+          "explanation": "imagination: The power to form new ideas or pictures in your mind that are not in front of you."
         }
       ]
     },
@@ -343,14 +351,14 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'multicultural'?",
+          "prompt": "What type of word is 'propaganda'?",
           "choices": [
-            "Adjective",
             "Noun",
-            "Verb"
+            "Verb",
+            "Adjective"
           ],
-          "answer": "Adjective",
-          "explanation": "multicultural is used as a adjective in this dictionary sense."
+          "answer": "Noun",
+          "explanation": "propaganda is used as a noun in this dictionary sense."
         },
         {
           "prompt": "What type of word is 'plague'?",
@@ -387,15 +395,15 @@
           "pairs": [
             [
               "imagination",
-              "The ability to create ideas or pictures in your mind"
+              "The power to form new ideas or pictures in your mind that are not in front of you."
             ],
             [
               "deteriorate",
-              "To become worse or to decline in quality"
+              "To slowly become worse or drop in quality or condition."
             ],
             [
               "texture",
-              "The way something feels when you touch it, like rough or smooth"
+              "The way a surface feels when you touch it, such as rough, smooth or bumpy."
             ]
           ]
         },
@@ -403,16 +411,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "supernova",
-              "A huge explosion that happens when a star dies, making it very bright for a short time"
+              "text",
+              "A piece of writing that you can read closely, study and discuss."
             ],
             [
-              "bacteria",
-              "Tiny living things that can only be seen with a microscope; some can make you sick, while..."
+              "radioactive",
+              "Giving off dangerous, invisible energy or tiny particles that can harm living things."
             ],
             [
-              "environmental",
-              "Related to the natural world and the impact of human activity on it"
+              "multicultural",
+              "Including many different cultures, traditions and ways of life together."
             ]
           ]
         },
@@ -420,16 +428,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "transpiration",
-              "The process where plants lose water through tiny openings in their leaves"
+              "renewable",
+              "Able to be replaced or used again, like energy from the sun or the wind."
             ],
             [
-              "ecosystem",
-              "A community of living things and their environment, working together"
+              "translucent",
+              "Letting some light pass through without being completely see-through."
             ],
             [
-              "mollusk",
-              "A type of animal that has a soft body and usually a shell, like snails and clams"
+              "radiation",
+              "Energy that travels out from a source as heat, light or invisible rays."
             ]
           ]
         }
@@ -444,37 +452,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "What does 'agency' mean?",
+          "prompt": "In the First Conditional, which tense belongs in the if-clause?",
           "choices": [
-            "Actions or words that encourage people to go against their government or authority",
-            "Doing something in a way that saves time and energy",
-            "The ability to make choices and take action",
-            "To become worse or to decline in quality"
+            "The future with 'will'",
+            "The past simple",
+            "The present continuous",
+            "The present simple"
           ],
-          "answer": "The ability to make choices and take action",
-          "explanation": "In our class, we have the agency to choose our own projects."
+          "answer": "The present simple",
+          "explanation": "Even though we mean the future, the if-clause uses the present simple, as in 'If she trains...'."
         },
         {
-          "prompt": "Choose the missing word from 'When the Leaves Stop Speaking, part 1': \"This forest was _____ sacred,\" said one elder.",
+          "prompt": "Which word means the same as 'if not'?",
           "choices": [
-            "agency",
-            "forecaster",
-            "deteriorate",
-            "originally"
+            "because",
+            "unless",
+            "although",
+            "whenever"
           ],
-          "answer": "originally",
-          "explanation": "The text says: \"This forest was originally sacred,\" said one elder."
+          "answer": "unless",
+          "explanation": "'Unless' carries the meaning 'if not', so it replaces a negative if-clause."
         },
         {
-          "prompt": "Choose the missing word from 'When the Leaves Stop Speaking, part 1': Her parents were both researchers in the local environmental _____, working on soil regeneration and water...",
+          "prompt": "What does the word 'renewable' describe?",
           "choices": [
-            "imagination",
-            "forecaster",
-            "deteriorate",
-            "agency"
+            "Something dangerous that gives off energy",
+            "Something that spreads fear and lies",
+            "Something that can be replaced or used again",
+            "Something you cannot see through at all"
           ],
-          "answer": "agency",
-          "explanation": "The text says: Her parents were both researchers in the local environmental agency, working on soil regeneration and water cycle modelling."
+          "answer": "Something that can be replaced or used again",
+          "explanation": "Renewable resources, like sun and wind, can be used again; the distractors describe radioactive, propaganda and opaque things."
         }
       ]
     },
@@ -487,37 +495,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "What does 'geographic' mean?",
+          "prompt": "Which word means 'to slowly become worse in quality'?",
           "choices": [
-            "A person who speaks for God or tells what will happen in the future",
-            "Related to the physical features of the Earth and how places are arranged",
-            "The ability to create ideas or pictures in your mind",
-            "The ability to make choices and take action"
+            "restoration",
+            "deteriorate",
+            "renewable",
+            "efficient"
           ],
-          "answer": "Related to the physical features of the Earth and how places are arranged",
-          "explanation": "The geographic features of our country include mountains, rivers, and valleys."
+          "answer": "deteriorate",
+          "explanation": "'Deteriorate' means to decline or grow worse; the others describe repair, reuse or working well."
         },
         {
-          "prompt": "What does 'originally' mean?",
+          "prompt": "What does the word 'ecosystem' mean?",
           "choices": [
-            "A person who speaks for God or tells what will happen in the future",
-            "At the beginning or in the first place",
-            "The ability to make choices and take action",
-            "To become worse or to decline in quality"
+            "A huge explosion when a star dies",
+            "A three-dimensional artwork made from stone or clay",
+            "A community of living things that depend on each other",
+            "Energy that travels as heat or light"
           ],
-          "answer": "At the beginning or in the first place",
-          "explanation": "Originally, the story was written as a book before it became a movie."
+          "answer": "A community of living things that depend on each other",
+          "explanation": "An ecosystem is a web of living things and their surroundings; the distractors define supernova, sculpture and radiation."
         },
         {
-          "prompt": "What does 'imagination' mean?",
+          "prompt": "Which sentence is a correct First Conditional?",
           "choices": [
-            "A person who speaks for God or tells what will happen in the future",
-            "Doing something in a way that saves time and energy",
-            "The ability to create ideas or pictures in your mind",
-            "To become worse or to decline in quality"
+            "If it rains, we will cancel the match.",
+            "If it will rain, we will cancel the match.",
+            "If it rains, we cancelled the match.",
+            "If it rained, we will cancel the match."
           ],
-          "answer": "The ability to create ideas or pictures in your mind",
-          "explanation": "With her imagination, she can turn a simple box into a spaceship."
+          "answer": "If it rains, we will cancel the match.",
+          "explanation": "The if-clause needs the present simple and the result needs 'will' plus the base verb; the others break that pattern."
         }
       ]
     }

@@ -52,6 +52,17 @@ const MOJIBAKE = /�|Ã[©¨¤¢°½¼ ]|â€[™œ“”]|Â[ °]/;
 // Words spelled with a leading vowel but pronounced with a consonant sound —
 // "a unicorn / a European / a one-off" are correct, not errors.
 const CONSONANT_SOUND = /^(uni|use|user|useful|usual|uniform|unit|unicorn|europ|euro|ewe|one|once|u)$/;
+// An article introduces a noun phrase, so it is NEVER followed by a function
+// word. When it appears to be, we're looking at a word LIST ("cards for I, see,
+// a and can") or phoneme notation ("/a/ as in apple"), not a grammar error.
+const NEVER_AFTER_ARTICLE = new Set([
+  "and", "or", "but", "if", "as", "is", "am", "are", "was", "were", "be", "been",
+  "of", "to", "in", "on", "at", "by", "for", "from", "with", "into", "onto",
+  "the", "a", "an", "it", "its", "i", "he", "she", "they", "we", "you", "us",
+  "our", "his", "her", "their", "your", "my", "me", "him", "them", "that",
+  "this", "these", "those", "who", "which", "when", "where", "why", "how",
+  "also", "again", "away", "up", "out", "off", "over", "under", "after", "each",
+]);
 // Tokenised so we never mistake a letter-label ("Version A or") or a vowel that
 // merely sits inside a word ("du'a of") for the indefinite article. The article
 // is a STANDALONE "a" (lowercase anywhere; capital only at a sentence start),
@@ -60,13 +71,18 @@ function articleHits(s) {
   const out = [];
   const toks = String(s).split(/\s+/);
   for (let i = 0; i < toks.length - 1; i++) {
-    const art = toks[i].replace(/^[^A-Za-z]+|[^A-Za-z]+$/g, "");   // strip surrounding punctuation only
+    // The article is a CLEAN standalone token. Reject "/a/" (phoneme notation)
+    // and "a," (a letter in an enumeration like "a, e, i, o, u") — an article is
+    // never slash-wrapped nor comma-terminated. Only quotes/brackets may wrap it.
+    if (!/^["'“‘(\[]*[aA][)\]"'”’]*$/.test(toks[i])) continue;
+    const art = toks[i].replace(/[^A-Za-z]/g, "");                  // now safely just "a"/"A"
     if (art !== "a" && art !== "A") continue;                       // internal-apostrophe words (du'a) never equal "a"
     if (art === "A" && !(i === 0 || /[.!?:;"”’)]$/.test(toks[i - 1] || ""))) continue; // capital A = article only at sentence start
     const w = toks[i + 1].replace(/[^A-Za-z'’-]/g, "").toLowerCase();
     if (!/^[aeiou]/.test(w)) continue;
     const head = w.replace(/[^a-z].*/, "");
     if (CONSONANT_SOUND.test(head) || /^(uni|use|usu|one|onc|euro|ewe)/.test(w)) continue;
+    if (NEVER_AFTER_ARTICLE.has(head)) continue;   // word list / notation, not an article
     out.push(`${art} ${w}`);
   }
   return out;

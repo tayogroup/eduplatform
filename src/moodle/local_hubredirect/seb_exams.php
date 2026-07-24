@@ -99,7 +99,7 @@ if ($tablesready && data_submitted() && optional_param('action', '', PARAM_ALPHA
             'mode' => $mode,
             'proctoring' => $proctoring,
             'duration_minutes' => $duration,
-            'quitpassword' => $quitpassword !== '' ? $quitpassword : 'ehel-unlock',
+            'quitpassword' => $quitpassword,
             'window_start' => $windowstart,
             'window_end' => $windowend,
             'status' => 'active',
@@ -233,7 +233,7 @@ echo $OUTPUT->header();
           <div class="pqsm-field"><label for="pqsm-duration">Duration (minutes)</label><input class="pqsm-input" id="pqsm-duration" name="duration" type="number" min="5" max="240" value="30"></div>
           <div class="pqsm-field"><label for="pqsm-wstart">Window opens</label><input class="pqsm-input" id="pqsm-wstart" name="window_start" type="datetime-local"></div>
           <div class="pqsm-field"><label for="pqsm-wend">Window closes</label><input class="pqsm-input" id="pqsm-wend" name="window_end" type="datetime-local"></div>
-          <div class="pqsm-field" id="pqsm-quit-field"><label for="pqsm-quit">Emergency exit password (Safe Exam Browser only)</label><input class="pqsm-input" id="pqsm-quit" name="quitpassword" type="text" placeholder="ehel-unlock"></div>
+          <div class="pqsm-field" id="pqsm-quit-field"><label for="pqsm-quit">Emergency exit password (Safe Exam Browser only)</label><input class="pqsm-input" id="pqsm-quit" name="quitpassword" type="text" placeholder="Leave blank for no password"></div>
           <div class="pqsm-field" id="pqsm-proctor-field" style="display:none">
             <label class="pqsm-check" style="align-items:flex-start"><input type="checkbox" name="proctoring" value="1" style="margin-top:3px"> <span>Camera + audio proctoring <em style="color:var(--pqh-faint);font-style:normal;display:block;font-weight:500;font-size:11.5px">Adults only. Takes webcam snapshots and flags voices for staff review, with student consent. Never applies to managed child accounts.</em></span></label>
           </div>

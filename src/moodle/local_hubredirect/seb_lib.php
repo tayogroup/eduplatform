@@ -82,7 +82,15 @@ function pqh_seb_mode_label(string $mode): string {
 // ---------------------------------------------------------------------------
 
 function pqh_seb_proctor_retention_days(): int {
-    return 30;
+    // Configurable, but never longer than a hard 90-day safeguarding ceiling
+    // and never below 1 day. Default 30. Webcam frames are children-adjacent
+    // biometric data — the scheduled data_retention task enforces this even
+    // when no staff page is opened (the old purge was opportunistic-only).
+    $days = (int)get_config('local_prequran', 'seb_proctor_retention_days');
+    if ($days <= 0) {
+        $days = 30;
+    }
+    return max(1, min(90, $days));
 }
 
 function pqh_seb_proctor_table_ready(): bool {
@@ -170,13 +178,20 @@ function pqh_seb_proctor_summary(int $examid, int $userid): array {
     ];
 }
 
-function pqh_seb_proctor_items(int $examid, int $userid, string $type): array {
+/**
+ * Proctor evidence items of a type. $fields lets a caller that does not render
+ * the frame omit the imagedata LONGTEXT (a snapshot blob is capped ~254KB, so
+ * pulling '*' for 500 rows can load ~127MB into PHP for nothing). The webcam
+ * review path passes the blob explicitly; the voice/metadata paths must not.
+ */
+function pqh_seb_proctor_items(int $examid, int $userid, string $type,
+        string $fields = 'id,examid,userid,type,detail,timecreated', int $limit = 500): array {
     global $DB;
     if (!pqh_seb_proctor_table_ready()) {
         return [];
     }
     return array_values($DB->get_records('local_prequran_seb_proctor',
-        ['examid' => $examid, 'userid' => $userid, 'type' => $type], 'timecreated ASC', '*', 0, 500));
+        ['examid' => $examid, 'userid' => $userid, 'type' => $type], 'timecreated ASC', $fields, 0, $limit));
 }
 
 function pqh_seb_exam_url(int $examid): moodle_url {
@@ -332,6 +347,32 @@ function pqh_seb_plist_value($value): string {
     return '<string>' . htmlspecialchars((string)$value, ENT_XML1) . '</string>';
 }
 
+/**
+ * Hosts SEB must always be allowed to reach, whatever an individual exam adds.
+ * The learning apps are served from the Bunny pull zone and the consumer login
+ * host, so if either is missing SEB opens and then blocks the page it was told
+ * to start on.
+ */
+function pqh_seb_default_allow_expressions(): array {
+    global $CFG;
+    $host = parse_url((string)$CFG->wwwroot, PHP_URL_HOST) ?: '';
+    $rules = [
+        'ehelacademy.org/*',
+        '*.ehelacademy.org/*',
+        'ehelacademy.b-cdn.net/*',
+        '*.b-cdn.net/*',
+    ];
+    if ($host !== '') {
+        array_unshift($rules, $host . '/*');
+    }
+    return $rules;
+}
+
+/**
+ * Per-exam allow expressions. The platform defaults are always MERGED in (they
+ * used to be replaced wholesale by a custom allowjson, which silently dropped
+ * the CDN rule and left the exam unable to load its own content).
+ */
 function pqh_seb_exam_allow_expressions(stdClass $exam): array {
     $extra = [];
     $json = trim((string)($exam->allowjson ?? ''));
@@ -341,25 +382,41 @@ function pqh_seb_exam_allow_expressions(stdClass $exam): array {
             $extra = array_values(array_filter(array_map('strval', $decoded)));
         }
     }
-    if (!$extra) {
-        $extra = ['*.b-cdn.net/*'];
-    }
-    return $extra;
+    return array_values(array_unique(array_merge(pqh_seb_default_allow_expressions(), $extra)));
 }
 
-function pqh_seb_config_xml(stdClass $exam): string {
-    global $CFG;
-    $host = parse_url($CFG->wwwroot, PHP_URL_HOST) ?: '';
+/** True when the current request is coming from inside Safe Exam Browser. */
+function pqh_seb_request_is_seb(): bool {
+    if (pqh_seb_header_hash() !== '') {
+        return true;
+    }
+    $ua = (string)($_SERVER['HTTP_USER_AGENT'] ?? '');
+    return $ua !== '' && stripos($ua, 'SEB/') !== false;
+}
 
+/** Wrap a settings array as a SEB .seb plist document. */
+function pqh_seb_plist_document(array $config): string {
+    return '<?xml version="1.0" encoding="UTF-8"?>'
+        . '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">'
+        . '<plist version="1.0">'
+        . pqh_seb_plist_value($config)
+        . '</plist>';
+}
+
+/** Turn allow expressions into SEB URLFilterRules entries. */
+function pqh_seb_filter_rules(array $expressions): array {
     $rules = [];
-    foreach (array_merge([$host . '/*'], pqh_seb_exam_allow_expressions($exam)) as $expression) {
+    foreach (array_values(array_unique($expressions)) as $expression) {
         $rules[] = [
             'action' => 1,
             'active' => true,
             'expression' => (string)$expression,
         ];
     }
+    return $rules;
+}
 
+function pqh_seb_config_xml(stdClass $exam): string {
     $config = [
         'originatorVersion' => 'EduPlatform_SEB_2.0',
         'startURL' => pqh_seb_exam_url((int)$exam->id)->out(false),
@@ -367,20 +424,60 @@ function pqh_seb_config_xml(stdClass $exam): string {
         'quitURL' => pqh_seb_quit_url((int)$exam->id),
         'quitURLConfirm' => false,
         'allowQuit' => true,
-        'hashedQuitPassword' => hash('sha256', (string)($exam->quitpassword !== '' ? $exam->quitpassword : 'ehel-unlock')),
         'URLFilterEnable' => true,
         'URLFilterEnableContentFilter' => false,
-        'URLFilterRules' => $rules,
+        'URLFilterRules' => pqh_seb_filter_rules(pqh_seb_exam_allow_expressions($exam)),
         'browserWindowAllowReload' => true,
         'showReloadButton' => true,
         'showTime' => true,
     ];
 
-    return '<?xml version="1.0" encoding="UTF-8"?>'
-        . '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">'
-        . '<plist version="1.0">'
-        . pqh_seb_plist_value($config)
-        . '</plist>';
+    // A non-empty exit password locks quitting behind it; a blank password
+    // lets the student quit freely (no shared default). The Finish & unlock
+    // quit URL works either way.
+    $quitpassword = trim((string)($exam->quitpassword ?? ''));
+    if ($quitpassword !== '') {
+        $config['hashedQuitPassword'] = hash('sha256', $quitpassword);
+    }
+
+    return pqh_seb_plist_document($config);
+}
+
+/**
+ * A .seb config that starts on a COURSE launch instead of an exam. SEB opens
+ * $starturl in its own browser session (so the learner signs in inside SEB),
+ * course_launch.php then detects the SEB request and hands them the app.
+ * Reuses the same filter rules, so the CDN-hosted app loads.
+ */
+function pqh_seb_course_config_xml(string $coursekey, string $starturl, string $quiturl): string {
+    $config = [
+        'originatorVersion' => 'EduPlatform_SEB_2.0',
+        'startURL' => $starturl,
+        'sendBrowserExamKey' => true,
+        'quitURL' => $quiturl,
+        'quitURLConfirm' => false,
+        'allowQuit' => true,
+        'hashedQuitPassword' => hash('sha256', pqh_seb_course_quit_password()),
+        'URLFilterEnable' => true,
+        'URLFilterEnableContentFilter' => false,
+        'URLFilterRules' => pqh_seb_filter_rules(pqh_seb_default_allow_expressions()),
+        'browserWindowAllowReload' => true,
+        'showReloadButton' => true,
+        'showTime' => true,
+    ];
+
+    return pqh_seb_plist_document($config);
+}
+
+/** Quit password for course (non-exam) SEB sessions. */
+function pqh_seb_course_quit_password(): string {
+    $configured = trim((string)get_config('local_prequran', 'course_seb_quit_password'));
+    return $configured !== '' ? $configured : 'ehel-unlock';
+}
+
+/** Is SEB launching enabled for enrolled-course launches? */
+function pqh_seb_course_launch_enabled(): bool {
+    return trim((string)get_config('local_prequran', 'course_seb_launch_mode')) === 'enabled';
 }
 
 function pqh_seb_engine_ready(): bool {
@@ -482,12 +579,55 @@ function pqh_seb_attempt_reset(stdClass $exam, int $studentid): void {
         return;
     }
     $DB->delete_records('local_prequran_seb_attempt', ['id' => (int)$attempt->id]);
+    // Preserve any recorded mark + integrity verdict in the audit trail — a
+    // reset used to erase the only record of a scored/flagged attempt.
     pqh_seb_audit('seb_attempt_reset', (int)$exam->id, [
         'studentid' => $studentid,
         'previous_status' => (string)$attempt->status,
         'previous_started' => (int)$attempt->timestarted,
         'previous_finished' => (int)$attempt->timefinished,
+        'previous_score_percent' => (string)($attempt->score_percent ?? ''),
+        'previous_verdict' => (string)($attempt->integrity_verdict ?? 'unset'),
     ]);
+}
+
+/**
+ * Record a mark + integrity verdict on a finished SEB attempt. The attempt
+ * previously carried NO score at all; scoring happened only in the external
+ * embed with no path back. Verdict: unset/pass/review/void. Returns true.
+ */
+function pqh_seb_record_result(stdClass $exam, int $studentid, string $scorepoints, string $maxpoints,
+        string $verdict, string $note, int $actorid): bool {
+    global $DB;
+    $attempt = pqh_seb_attempt((int)$exam->id, $studentid);
+    if (!$attempt) {
+        throw new moodle_exception('nopermissions', 'error', '', 'No attempt exists for that student yet.');
+    }
+    $verdict = in_array($verdict, ['unset', 'pass', 'review', 'void'], true) ? $verdict : 'unset';
+    $sp = (float)preg_replace('/[^0-9.]/', '', $scorepoints);
+    $mp = (float)preg_replace('/[^0-9.]/', '', $maxpoints);
+    if ($mp <= 0) {
+        $mp = 100.0;
+    }
+    $percent = $scorepoints === '' ? '' : (string)round(max(0.0, min(100.0, $sp / $mp * 100)), 2);
+    $DB->update_record('local_prequran_seb_attempt', (object)[
+        'id' => (int)$attempt->id,
+        'score_points' => $scorepoints === '' ? '' : (string)$sp,
+        'max_points' => (string)$mp,
+        'score_percent' => $percent,
+        'integrity_verdict' => $verdict,
+        'verdict_note' => core_text::substr(trim($note), 0, 1000),
+        'gradedby' => $actorid,
+        'gradedat' => time(),
+        'timemodified' => time(),
+    ]);
+    pqh_seb_audit('seb_result_recorded', (int)$exam->id, [
+        'studentid' => $studentid,
+        'score_percent' => $percent,
+        'verdict' => $verdict,
+        'actorid' => $actorid,
+    ]);
+    return true;
 }
 
 function pqh_seb_exams_for_manager(int $userid, int $workspaceid): array {

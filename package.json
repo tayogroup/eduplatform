@@ -131,6 +131,8 @@
     "env:production:dry-run": "npm run validate:units && npm run check:alphabet && npm run build:bunny:production && npm run verify:bunny:production && npm run deploy:production:dry-run",
     "normalize:unit": "node tools/normalize-unit-config.js alphabet",
     "test": "npm run check:alphabet",
+    "validate:curriculum-units": "node tools/validate-unit.mjs src/prototypes/ehel-academy/english/grade-*/data/units/*.json",
+    "validate:frameworks": "node tools/validate-curriculum-framework.mjs",
     "validate:units": "node tools/validate-unit-config.js",
     "verify:bunny": "node tools/verify-bunny-output.js",
     "verify:bunny:integration": "node tools/verify-bunny-output.js --base-path=/pre_quraan_integration/",

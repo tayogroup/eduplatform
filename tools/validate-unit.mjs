@@ -442,7 +442,11 @@ function validate(file) {
     N(`cambridge note: curriculumFramework "${d.curriculumFramework}" doesn't mention stage ${camb.stage}`);
 
   // collect every objective code the unit claims, wherever it is declared
-  const CODE_RE = /^([1-9])(R[wvgsia]|W[wvgscpa]|SL[msgpr])\.(\d{2})$/;
+  // Two formats, because the two frameworks number differently:
+  //   Primary 0058         <stage><subStrand>.<nn>   e.g. 1Rw.01
+  //   Lower Secondary 0861 <stage><subStrand><n>     e.g. 7Ro1   (no dot)
+  // The dot keeps them unambiguous, so one alternation is safe.
+  const CODE_RE = /^(?:([1-9])(R[wvgsia]|W[wvgscpa]|SL[msgpr])\.(\d{2})|([78])(Ro|Rx|Ri|Rw|Rv|Wo|Wa|Wt|Wp|Ws|SL)(\d{1,2}))$/;
   const claimed = [];
   for (const [pth, s] of allStrings(d)) {
     if (/cambridgeObjectives?|objectiveCodes?|learningObjectiveCodes?/i.test(pth) && CODE_RE.test(s.trim())) claimed.push([pth, s.trim()]);
@@ -464,7 +468,12 @@ function validate(file) {
     F(unknown.length === 0, "cambridge: unknown objective code", unknown.slice(0, 3).map(([p, c]) => `${c} @ ${p}`).join(", "));
     F(wrongStage.length === 0, "cambridge: objective from the wrong stage", wrongStage.slice(0, 3).map(([p, c]) => `${c} (unit is stage ${stageKey}) @ ${p}`).join(", "));
     const uniq = [...new Set(claimed.map(([, c]) => c))].filter((c) => validCodes.has(c));
-    if (!claimed.length) {
+    if (!stageObjs.length) {
+      // The framework file exists but doesn't publish this stage — e.g. 0861 ships
+      // Stage 7 only, so Grade 8 has nothing to map to. Demanding a mapping here
+      // would be demanding the impossible, so it stays a note even under --strict.
+      N(`cambridge note: framework ${camb.code} has no Stage ${stageKey} objectives (file covers ${Object.keys(fw.objectivesByStage || {}).join(", ") || "no stages"}) — mapping cannot be evidenced until that stage is published`);
+    } else if (!claimed.length) {
       N(`cambridge: unit declares Stage ${stageKey} but maps 0 learning objectives — alignment is unevidenced (${stageObjs.length} objectives available for this stage). Add cambridgeObjectives:["${stageObjs[0]?.code || "1Rw.01"}", …] to each outcome.`);
       if (STRICT) F(false, "cambridge (strict): no objectives mapped", `0 of ${stageObjs.length} stage-${stageKey} objectives referenced`);
     } else {

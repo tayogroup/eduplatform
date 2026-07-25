@@ -442,11 +442,11 @@ function validate(file) {
     N(`cambridge note: curriculumFramework "${d.curriculumFramework}" doesn't mention stage ${camb.stage}`);
 
   // collect every objective code the unit claims, wherever it is declared
-  // Two formats, because the two frameworks number differently:
-  //   Primary 0058         <stage><subStrand>.<nn>   e.g. 1Rw.01
-  //   Lower Secondary 0861 <stage><subStrand><n>     e.g. 7Ro1   (no dot)
-  // The dot keeps them unambiguous, so one alternation is safe.
-  const CODE_RE = /^(?:([1-9])(R[wvgsia]|W[wvgscpa]|SL[msgpr])\.(\d{2})|([78])(Ro|Rx|Ri|Rw|Rv|Wo|Wa|Wt|Wp|Ws|SL)(\d{1,2}))$/;
+  // One format for both frameworks: Primary 0058 and Lower Secondary 0861 share
+  // the <stage><subStrand>.<nn> scheme, e.g. 1Rw.01 and 7Ra.01. (An earlier
+  // alternation for a `7Ro1` shape has been removed — that came from a Stage 7
+  // planning template, not from the 0861 framework, and is not a real code.)
+  const CODE_RE = /^([1-9])(R[wvgsia]|W[wvgscpa]|SL[msgpr])\.(\d{2})$/;
   const claimed = [];
   for (const [pth, s] of allStrings(d)) {
     if (/cambridgeObjectives?|objectiveCodes?|learningObjectiveCodes?/i.test(pth) && CODE_RE.test(s.trim())) claimed.push([pth, s.trim()]);

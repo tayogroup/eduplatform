@@ -172,6 +172,30 @@ function validate(file) {
   for (const s of ["comprehension", "quizzes", "grammar", "speaking", "writing", "activities"]) for (const it of get(s)) if (it.outcomeId && !outIds.has(it.outcomeId)) outMiss++;
   if (outMiss) N(`xref note: ${outMiss} items have an outcomeId that doesn't resolve to an outcome`);
 
+  // An outcomeId that resolves can still name the WRONG outcome. Items are often
+  // linked positionally (activity N -> outcome N), so e.g. an activity reading
+  // "Bounce it, roll it and catch it" cites the body-parts outcome instead of the
+  // ball-actions one. Flag only a total miss: no content-word overlap with the
+  // outcome it cites, while a different outcome in the unit matches strongly.
+  // A NOTE, not a FAIL — an integrated task can legitimately evidence several
+  // outcomes, so the call belongs to a curriculum reviewer.
+  const outText = new Map(get("outcomes").filter((o) => o && typeof o === "object")
+    .map((o) => [o.outcomeId, String(o.learningOutcome || o.statement || "").toLowerCase()]));
+  if ([...outText.values()].some(Boolean)) {
+    const words = (s) => [...new Set(String(s || "").toLowerCase().match(/[a-z']{5,}/g) || [])];
+    let mis = 0; const misEg = [];
+    for (const s of ["grammar", "speaking", "writing", "activities"]) for (const it of get(s)) {
+      if (!outText.has(it.outcomeId)) continue;
+      const w = words([it.title, it.instructions, it.instructionsAndItems, it.explanation, it.ruleAndExamples].join(" "));
+      if (w.length < 3) continue;
+      const score = (id) => w.filter((x) => (outText.get(id) || "").includes(x)).length;
+      const mine = score(it.outcomeId);
+      const best = Math.max(...[...outText.keys()].map(score));
+      if (mine === 0 && best >= 3) { mis++; if (misEg.length < 3) misEg.push(it.title || it.outcomeId); }
+    }
+    if (mis) N(`outcome-link note: ${mis} item(s) cite an outcome they share no wording with — e.g. ${misEg.join("; ")}`);
+  }
+
   // ═══ 1. TEXT MECHANICS (global) ═══
   let moji = 0, placeholders = 0, tabs = 0, nbsp = 0, trailing = 0;
   const artFail = [], artNote = [];

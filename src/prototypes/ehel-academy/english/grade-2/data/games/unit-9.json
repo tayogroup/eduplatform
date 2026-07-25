@@ -20,30 +20,30 @@
           "choices": [
             "library",
             "shopping center",
-            "underground"
+            "ferry"
           ],
           "answer": "library",
           "explanation": "library: A building where you can read books and borrow them to take home."
         },
         {
-          "prompt": "Which word means: A busy place where people buy and sell food and other things.",
+          "prompt": "Which word means: A flying machine that can go straight up and hover in one place.",
           "choices": [
             "library",
             "shopping center",
-            "market"
+            "helicopter"
           ],
-          "answer": "market",
-          "explanation": "market: A busy place where people buy and sell food and other things."
+          "answer": "helicopter",
+          "explanation": "helicopter: A flying machine that can go straight up and hover in one place."
         },
         {
-          "prompt": "Which word means: Words that tell you which way to go.",
+          "prompt": "Which word means: A slow sea animal with a hard shell on its back.",
           "choices": [
             "shopping center",
-            "directions",
+            "turtle",
             "library"
           ],
-          "answer": "directions",
-          "explanation": "directions: Words that tell you which way to go."
+          "answer": "turtle",
+          "explanation": "turtle: A slow sea animal with a hard shell on its back."
         }
       ]
     },
@@ -62,13 +62,13 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A flying machine that can go straight up and hover in one place.",
-          "answer": "helicopter"
+          "clue": "A drawing that shows you where places are.",
+          "answer": "map"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A sea animal with eight long arms and no bones at all.",
-          "answer": "octopus"
+          "clue": "So good or so surprising that you want to tell everybody.",
+          "answer": "amazing"
         }
       ]
     },
@@ -100,29 +100,30 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "museum.",
+            "helicopter.",
+            "a",
+            "from",
+            "city",
+            "whole",
             "the",
-            "to",
-            "underground",
-            "the",
-            "took",
+            "saw",
             "We"
           ],
-          "answer": "We took the underground to the museum."
+          "answer": "We saw the whole city from a helicopter."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "market.",
-            "the",
-            "at",
-            "fish",
-            "and",
-            "fruit",
-            "buys",
-            "Mum"
+            "shell.",
+            "its",
+            "into",
+            "head",
+            "its",
+            "pulled",
+            "turtle",
+            "The"
           ],
-          "answer": "Mum buys fruit and fish at the market."
+          "answer": "The turtle pulled its head into its shell."
         }
       ]
     },
@@ -244,44 +245,45 @@
           "tokens": [
             "morning.",
             "every",
-            "school",
-            "to",
-            "bus",
-            "the",
-            "take",
-            "We"
+            "o'clock",
+            "nine",
+            "at",
+            "opens",
+            "library",
+            "city",
+            "Our"
           ],
-          "answer": "We take the bus to school every morning."
+          "answer": "Our city library opens at nine o'clock every morning."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "market.",
+            "hospital.",
             "the",
-            "to",
-            "directions",
-            "us",
-            "gave",
-            "woman",
-            "kind",
+            "of",
+            "roof",
+            "the",
+            "on",
+            "lands",
+            "helicopter",
+            "The"
+          ],
+          "answer": "The helicopter lands on the roof of the hospital."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "time.",
+            "long",
+            "very",
+            "a",
+            "for",
+            "live",
+            "can",
+            "turtle",
             "A"
           ],
-          "answer": "A kind woman gave us directions to the market."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "walk.",
-            "they",
-            "when",
-            "side",
-            "to",
-            "side",
-            "from",
-            "waddle",
-            "Penguins"
-          ],
-          "answer": "Penguins waddle from side to side when they walk."
+          "answer": "A turtle can live for a very long time."
         }
       ]
     },
@@ -294,29 +296,29 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'traffic' mean in this unit?",
+          "prompt": "What does 'map' mean in this unit?",
           "choices": [
-            "All the cars, buses and lorries moving on the roads.",
+            "A drawing that shows you where places are.",
             "A building where you can read books and borrow them to take home.",
             "A large building with many different shops inside it."
           ],
-          "answer": "All the cars, buses and lorries moving on the roads.",
-          "explanation": "traffic: All the cars, buses and lorries moving on the roads."
+          "answer": "A drawing that shows you where places are.",
+          "explanation": "map: A drawing that shows you where places are."
         },
         {
-          "prompt": "What does 'octopus' mean in this unit?",
+          "prompt": "What does 'amazing' mean in this unit?",
           "choices": [
             "A building where you can read books and borrow them to take home.",
             "A large building with many different shops inside it.",
-            "A sea animal with eight long arms and no bones at all."
+            "So good or so surprising that you want to tell everybody."
           ],
-          "answer": "A sea animal with eight long arms and no bones at all.",
-          "explanation": "octopus: A sea animal with eight long arms and no bones at all."
+          "answer": "So good or so surprising that you want to tell everybody.",
+          "explanation": "amazing: So good or so surprising that you want to tell everybody."
         },
         {
           "prompt": "What does 'shopping center' mean in this unit?",
           "choices": [
-            "A train that runs in tunnels below the city streets.",
+            "A boat that carries people and cars across water.",
             "A large building with many different shops inside it.",
             "A building where you can read books and borrow them to take home."
           ],
@@ -334,34 +336,34 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'map'?",
+          "prompt": "What type of word is 'octopus'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
           "answer": "Noun",
-          "explanation": "map is used as a noun in this dictionary sense."
+          "explanation": "octopus is used as a noun in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'turtle'?",
+          "prompt": "What type of word is 'huge'?",
           "choices": [
+            "Noun",
             "Verb",
-            "Adjective",
-            "Noun"
+            "Adjective"
           ],
-          "answer": "Noun",
-          "explanation": "turtle is used as a noun in this dictionary sense."
+          "answer": "Adjective",
+          "explanation": "huge is used as a adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'Ferris wheel'?",
+          "prompt": "What type of word is 'market'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Ferris wheel is used as a noun in this dictionary sense."
+          "explanation": "market is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -381,12 +383,12 @@
               "A train that runs in tunnels below the city streets."
             ],
             [
-              "ferry",
-              "A boat that carries people and cars across water."
+              "Ferris wheel",
+              "A very big wheel at a park that you ride for fun."
             ],
             [
-              "market",
-              "A busy place where people buy and sell food and other things."
+              "helicopter",
+              "A flying machine that can go straight up and hover in one place."
             ]
           ]
         },
@@ -394,16 +396,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "helicopter",
-              "A flying machine that can go straight up and hover in one place."
-            ],
-            [
               "map",
               "A drawing that shows you where places are."
             ],
             [
-              "directions",
-              "Words that tell you which way to go."
+              "aquarium",
+              "A building where sea animals live in big glass tanks."
+            ],
+            [
+              "penguin",
+              "A black-and-white bird that swims well but cannot fly."
             ]
           ]
         },
@@ -411,16 +413,16 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "octopus",
-              "A sea animal with eight long arms and no bones at all."
+              "amazing",
+              "So good or so surprising that you want to tell everybody."
             ],
             [
-              "turtle",
-              "A slow sea animal with a hard shell on its back."
+              "clever",
+              "Quick to learn new things and to solve problems."
             ],
             [
-              "library",
-              "A building where you can read books and borrow them to take home."
+              "scary",
+              "Making you feel afraid, even when you are quite safe."
             ]
           ]
         }

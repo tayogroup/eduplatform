@@ -62,13 +62,13 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Easily annoyed and often complaining, like a child.",
-          "answer": "petulant"
+          "clue": "To make someone very annoyed or frustrated.",
+          "answer": "exasperate"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The distance around the edge of a circle.",
-          "answer": "circumference"
+          "clue": "To exchange goods or services for other goods without using money.",
+          "answer": "barter"
         }
       ]
     },
@@ -100,34 +100,41 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "happy.",
-            "feel",
-            "her",
-            "around",
-            "everyone",
-            "makes",
-            "disposition",
-            "cheerful",
-            "Her"
+            "practice.",
+            "of",
+            "lot",
+            "a",
+            "takes",
+            "that",
+            "activity",
+            "strenuous",
+            "a",
+            "is",
+            "marathon",
+            "a",
+            "Running"
           ],
-          "answer": "Her cheerful disposition makes everyone around her feel happy."
+          "answer": "Running a marathon is a strenuous activity that takes a lot of practice."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "cream.",
-            "ice",
-            "vanilla",
-            "or",
-            "chocolate",
-            "choosing",
-            "between",
-            "waver",
+            "more.",
+            "with",
+            "pitcher",
+            "the",
+            "replenish",
             "to",
-            "started",
-            "She"
+            "needed",
+            "we",
+            "juice,",
+            "the",
+            "all",
+            "drank",
+            "we",
+            "After"
           ],
-          "answer": "She started to waver between choosing chocolate or vanilla ice cream."
+          "answer": "After we drank all the juice, we needed to replenish the pitcher with more."
         }
       ]
     },
@@ -140,37 +147,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "What does 'strenuous' mean?",
+          "prompt": "Choose the missing word from 'The Rebellion of Silence, part 1': His tone was cautious but _____, each sentence carefully justified.",
           "choices": [
-            "Requiring a lot of effort and energy.",
-            "To be unsure about something or to change your mind.",
-            "To decrease or become less, especially in strength or intensity.",
-            "To fill something up again or make it full after it has been used."
+            "emphatic",
+            "unsightly",
+            "petulant",
+            "strenuous"
           ],
-          "answer": "Requiring a lot of effort and energy.",
-          "explanation": "Running a marathon is a strenuous activity that takes a lot of practice."
+          "answer": "emphatic",
+          "explanation": "The text says: His tone was cautious but emphatic, each sentence carefully justified."
         },
         {
-          "prompt": "What does 'conclusion' mean?",
+          "prompt": "Choose the missing word from 'The Rebellion of Silence, part 2': But silence is not always peace. It is sometimes the _____ in freedom.",
           "choices": [
-            "The final part of something where you summarise or decide what it means.",
-            "To decrease or become less, especially in strength or intensity.",
-            "To fill something up again or make it full after it has been used.",
-            "To make someone very annoyed or frustrated."
+            "reprieve",
+            "habitation",
+            "defect",
+            "circumference"
           ],
-          "answer": "The final part of something where you summarise or decide what it means.",
-          "explanation": "At the end of the story, the conclusion helped me understand the main message."
+          "answer": "defect",
+          "explanation": "The text says: But silence is not always peace. It is sometimes the defect in freedom."
         },
         {
-          "prompt": "What does 'waver' mean?",
+          "prompt": "Choose the missing word from 'The Rebellion of Silence, part 2': But it also brought a new _____: student-run discussion clubs, approved by the board under strict guidelines.",
           "choices": [
-            "Easily annoyed and often complaining, like a child.",
-            "To be unsure about something or to change your mind.",
-            "To fill something up again or make it full after it has been used.",
-            "To make someone very annoyed or frustrated."
+            "barter",
+            "initiative",
+            "connoisseur",
+            "conclusion"
           ],
-          "answer": "To be unsure about something or to change your mind.",
-          "explanation": "She started to waver between choosing chocolate or vanilla ice cream."
+          "answer": "initiative",
+          "explanation": "The text says: But it also brought a new initiative: student-run discussion clubs, approved by the board under strict guidelines."
         }
       ]
     },
@@ -183,34 +190,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "Try asking: Which of these learning objectives do I need to focus on most? Can you give me a quick quiz on one of them?",
+          "prompt": "According to the information text, how did news and speeches travel across East Africa by 1948, and from which cities?",
           "choices": [
-            "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-            "Kind and gentle; not harmful or dangerous.",
-            "A temporary break from something difficult or unpleasant."
+            "Radios crackled with news and speeches from Nairobi, Accra and Dar es Salaam, carrying arguments across borders faster than any...",
+            "He found his classmate Tariq and three others around a candle, sharing a cache of newspapers and pamphlets hidden in a biscuit...",
+            "You shift the tense one step back, adjust the pronouns, and drop the question mark when reporting a question."
           ],
-          "answer": "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts."
+          "answer": "Radios crackled with news and speeches from Nairobi, Accra and Dar es Salaam, carrying arguments across borders faster than any...",
+          "explanation": "Review the unit text evidence: Radios crackled with news and speeches from Nairobi, Accra and Dar es Salaam, carrying arguments across borders faster than any..."
         },
         {
-          "prompt": "Have you ever been told to stay quiet about something you felt strongly about? How did it make you feel?",
+          "prompt": "What did Jamal discover behind the old assembly hall one evening, and who was gathered there?",
           "choices": [
-            "Kind and gentle; not harmful or dangerous.",
-            "A temporary break from something difficult or unpleasant.",
-            "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts."
+            "His title was On the Edge of Thought, and he told the hall that silence is not always peace but sometimes the defect in freedom.",
+            "He wavers and asks what will happen if they are caught, but something bold in Tariq's voice kindles a flame inside him, so he...",
+            "He found his classmate Tariq and three others around a candle, sharing a cache of newspapers and pamphlets hidden in a biscuit..."
           ],
-          "answer": "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts."
+          "answer": "He found his classmate Tariq and three others around a candle, sharing a cache of newspapers and pamphlets hidden in a biscuit...",
+          "explanation": "Review the unit text evidence: He found his classmate Tariq and three others around a candle, sharing a cache of newspapers and pamphlets hidden in a biscuit..."
         },
         {
-          "prompt": "Why did Headmaster Adam ban debate and political discussion at Ibrahim Boys' School?",
+          "prompt": "According to the toolkit, what three changes do you make when you turn direct speech into reported speech?",
           "choices": [
-            "A temporary break from something difficult or unpleasant.",
-            "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-            "Kind and gentle; not harmful or dangerous."
+            "Because Amara is the strict, conservative head prefect, her presence gives the movement weight and credibility even though she...",
+            "You shift the tense one step back, adjust the pronouns, and drop the question mark when reporting a question.",
+            "His title was On the Edge of Thought, and he told the hall that silence is not always peace but sometimes the defect in freedom."
           ],
-          "answer": "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts."
+          "answer": "You shift the tense one step back, adjust the pronouns, and drop the question mark when reporting a question.",
+          "explanation": "Review the unit text evidence: You shift the tense one step back, adjust the pronouns, and drop the question mark when reporting a question."
         }
       ]
     },
@@ -223,16 +230,16 @@
       "description": "Listen, record, review and submit useful unit language.",
       "rounds": [
         {
-          "prompt": "Speaking 1: Story Retelling",
+          "prompt": "Speaking 1: The Rebellion of Silence Retold",
           "target": "The teacher's benign smile made the students feel comfortable in class."
         },
         {
           "prompt": "Speaking 3: Reported Speech Role-Play",
-          "target": "Her cheerful disposition makes everyone around her feel happy."
+          "target": "I believe in learning and questions."
         },
         {
           "prompt": "Speaking 5: Vocabulary Expert Interview",
-          "target": "She started to waver between choosing chocolate or vanilla ice cream."
+          "target": "After we drank all the juice, we needed to replenish the pitcher with more."
         }
       ]
     },
@@ -247,18 +254,20 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "kingdom.",
-            "the",
-            "from",
-            "thief",
-            "the",
-            "banish",
-            "to",
-            "decided",
-            "king",
+            "friendship.",
+            "about",
+            "think",
+            "I",
+            "how",
+            "on",
+            "impact",
+            "profound",
+            "a",
+            "had",
+            "book",
             "The"
           ],
-          "answer": "The king decided to banish the thief from the kingdom."
+          "answer": "The book had a profound impact on how I think about friendship."
         },
         {
           "prompt": "Put this unit sentence in order.",
@@ -279,19 +288,21 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "dirty.",
-            "look",
-            "neighbourhood",
-            "the",
-            "made",
-            "street",
-            "the",
-            "on",
-            "rubbish",
-            "unsightly",
-            "The"
+            "freedom.",
+            "more",
+            "have",
+            "should",
+            "students",
+            "believing",
+            "education,",
+            "about",
+            "views",
+            "liberal",
+            "has",
+            "teacher",
+            "My"
           ],
-          "answer": "The unsightly rubbish on the street made the neighbourhood look dirty."
+          "answer": "My teacher has liberal views about education, believing students should have more freedom."
         }
       ]
     },
@@ -430,7 +441,7 @@
             ],
             [
               "connoisseur",
-              "An expert who has trained their senses to recognise and judge quality in a particular field, such as art, food or music."
+              "An expert who has trained their senses to recognise and judge quality in a particular..."
             ]
           ]
         }
@@ -445,37 +456,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "What does 'disposition' mean?",
+          "prompt": "What does 'petulant' mean?",
           "choices": [
-            "A hidden store of things, often used to keep items safe.",
-            "A person's usual mood or way of thinking.",
-            "Requiring a lot of effort and energy.",
-            "The final part of something where you summarise or decide what it means."
+            "Extremely happy or excited.",
+            "Easily annoyed and often complaining, like a child.",
+            "Someone who prefers traditional values and is cautious about change.",
+            "Requiring a lot of effort and energy."
           ],
-          "answer": "A person's usual mood or way of thinking.",
-          "explanation": "Her cheerful disposition makes everyone around her feel happy."
+          "answer": "Easily annoyed and often complaining, like a child.",
+          "explanation": "A petulant person is easily annoyed and complains like a sulky child, which is why a petulant reply weakens an argument."
         },
         {
-          "prompt": "What does 'systematic' mean?",
+          "prompt": "Choose the missing word from 'The Rebellion of Silence, part 1': Among the Form 4 students was Jamal, a boy with a quiet _____ and a habit of observing more than speaking.",
           "choices": [
-            "Done according to a plan or system; organised and methodical.",
-            "Requiring a lot of effort and energy.",
-            "The final part of something where you summarise or decide what it means.",
-            "To be unsure about something or to change your mind."
+            "circumference",
+            "disposition",
+            "reprieve",
+            "counterargument"
           ],
-          "answer": "Done according to a plan or system; organised and methodical.",
-          "explanation": "She used a systematic approach to solve the maths problems step by step."
+          "answer": "disposition",
+          "explanation": "The text says: Among the Form 4 students was Jamal, a boy with a quiet disposition and a habit of observing more than speaking."
         },
         {
-          "prompt": "What does 'cache' mean?",
+          "prompt": "Choose the missing word from 'The Rebellion of Silence, part 1': They were sharing a _____ of newspapers and pamphlets hidden in a biscuit tin.",
           "choices": [
-            "A hidden store of things, often used to keep items safe.",
-            "The final part of something where you summarise or decide what it means.",
-            "To be unsure about something or to change your mind.",
-            "To decrease or become less, especially in strength or intensity."
+            "defect",
+            "habitation",
+            "conclusion",
+            "cache"
           ],
-          "answer": "A hidden store of things, often used to keep items safe.",
-          "explanation": "The hikers found a cache of supplies hidden in the forest."
+          "answer": "cache",
+          "explanation": "The text says: They were sharing a cache of newspapers and pamphlets hidden in a biscuit tin."
         }
       ]
     },
@@ -496,29 +507,29 @@
             "Kind and gentle; not harmful or dangerous."
           ],
           "answer": "Kind and gentle; not harmful or dangerous.",
-          "explanation": "The teacher's benign smile made the students feel comfortable in class."
+          "explanation": "Benign describes someone or something kind, gentle and harmless, like the smile classmates saw in the quiet boy at the back of the room."
         },
         {
           "prompt": "What does 'reprieve' mean?",
           "choices": [
             "A hidden store of things, often used to keep items safe.",
-            "A person's usual mood or way of thinking.",
+            "The distance around the edge of a circle.",
             "A temporary break from something difficult or unpleasant.",
-            "Done according to a plan or system; organised and methodical."
+            "An argument that opposes or disagrees with another argument."
           ],
           "answer": "A temporary break from something difficult or unpleasant.",
-          "explanation": "After studying hard for exams, I took a reprieve by playing video games for an hour."
+          "explanation": "A reprieve is a temporary break from something difficult, such as a quiet weekend in the middle of an exam season."
         },
         {
-          "prompt": "What does 'defect' mean?",
+          "prompt": "What does 'connoisseur' mean?",
           "choices": [
-            "A hidden store of things, often used to keep items safe.",
-            "A problem or fault in something that makes it not work properly.",
-            "Done according to a plan or system; organised and methodical.",
-            "Requiring a lot of effort and energy."
+            "A person who knows a lot about something and can judge its quality.",
+            "The ability to start something on your own without being told.",
+            "A place where people or animals live.",
+            "The quality or character of a sound, or the way someone speaks."
           ],
-          "answer": "A problem or fault in something that makes it not work properly.",
-          "explanation": "The toy had a defect, so it did not work when we tried to use it."
+          "answer": "A person who knows a lot about something and can judge its quality.",
+          "explanation": "A connoisseur has studied a subject so closely that they can judge quality with confidence, like an expert taster of fine teas."
         }
       ]
     }

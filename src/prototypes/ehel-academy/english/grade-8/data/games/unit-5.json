@@ -83,52 +83,56 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "heard.",
+            "crowd.",
+            "large",
+            "the",
+            "saw",
             "she",
-            "story",
-            "every",
-            "believed",
-            "she",
-            "that",
-            "naive",
-            "so",
+            "when",
+            "speech",
+            "her",
+            "in",
+            "falter",
+            "to",
+            "began",
+            "She"
+          ],
+          "answer": "She began to falter in her speech when she saw the large crowd."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "hard.",
+            "were",
+            "subjects",
+            "the",
+            "when",
+            "even",
+            "exams,",
+            "her",
+            "for",
+            "studying",
+            "in",
+            "persistent",
             "was",
             "She"
           ],
-          "answer": "She was so naive that she believed every story she heard."
+          "answer": "She was persistent in studying for her exams, even when the subjects were hard."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "game.",
-            "the",
-            "win",
+            "scores.",
+            "test",
+            "previous",
+            "her",
+            "surpass",
             "to",
-            "tactic",
-            "clever",
-            "a",
-            "used",
-            "team",
-            "The"
+            "hard",
+            "worked",
+            "She"
           ],
-          "answer": "The team used a clever tactic to win the game."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "amiss.",
-            "was",
-            "something",
-            "knew",
-            "I",
-            "window,",
-            "broken",
-            "the",
-            "saw",
-            "I",
-            "When"
-          ],
-          "answer": "When I saw the broken window, I knew something was amiss."
+          "answer": "She worked hard to surpass her previous test scores."
         }
       ]
     },
@@ -141,37 +145,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "What does 'persistent' mean?",
+          "prompt": "Choose the missing word from 'Shifting Currents, part 1': \"They think it is clean,\" he muttered, pausing to pick up a straw. \"But it is a _____ beauty.\"",
           "choices": [
-            "continuing to do something even when it is difficult or when others give up",
-            "dark or serious in mood; not cheerful",
-            "not willing to change your mind or opinion about something",
-            "to change something slightly to make it better or more suitable"
+            "deceptive",
+            "pristine",
+            "somber",
+            "terse"
           ],
-          "answer": "continuing to do something even when it is difficult or when others give up",
-          "explanation": "She was persistent in studying for her exams, even when the subjects were hard."
+          "answer": "deceptive",
+          "explanation": "The surface looks clean but is not, so the beauty deceives the viewer."
         },
         {
-          "prompt": "What does 'transition' mean?",
+          "prompt": "Choose the missing word from 'Shifting Currents, part 2': \"This is the _____ result of ignorance, not evil. And we have the power to change it.\"",
           "choices": [
-            "a change from one state or condition to another",
-            "not willing to change your mind or opinion about something",
-            "to change something slightly to make it better or more suitable",
-            "to do better than someone or something; to go beyond a limit or expectation"
+            "naive",
+            "credible",
+            "threadbare",
+            "egregious"
           ],
-          "answer": "a change from one state or condition to another",
-          "explanation": "The transition from middle school to high school can be exciting and challenging."
+          "answer": "egregious",
+          "explanation": "Egregious fits because Tariq is naming a shockingly bad outcome caused by habit, not by malice."
         },
         {
-          "prompt": "What does 'somber' mean?",
+          "prompt": "Choose the missing word from 'Natural Resources Under Pressure': When the amount taken from the sea begins to _____ what the sea can replace, populations of fish shrink year after...",
           "choices": [
-            "dark or serious in mood; not cheerful",
-            "to change something slightly to make it better or more suitable",
-            "to do better than someone or something; to go beyond a limit or expectation",
-            "to make use of something or to help someone in a situation"
+            "subside",
+            "falter",
+            "surpass",
+            "modify"
           ],
-          "answer": "dark or serious in mood; not cheerful",
-          "explanation": "The sky was somber and grey, making everyone feel a little sad."
+          "answer": "surpass",
+          "explanation": "Surpass means to go beyond a limit: the catch exceeds what the sea can replace."
         }
       ]
     },
@@ -184,34 +188,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "Try asking: Can you explain what a learning objective is and why it helps me study?",
+          "prompt": "In 'How Scientists Read a Coastline', why do scientists collect water samples at several points along the shore instead of just one?",
           "choices": [
-            "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-            "to hesitate or lose strength when doing something",
-            "clean, fresh, and in its original condition; not spoiled or damaged"
+            "Because a single sample can mislead: water near the harbour may be filthy while water near the headland is clean, so several...",
+            "She announces that 'The first units will be installed by December', using the future passive voice.",
+            "The grandfather now accepts that questioning old habits protects the community he loves rather than insulting it, and Tariq..."
           ],
-          "answer": "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts."
+          "answer": "Because a single sample can mislead: water near the harbour may be filthy while water near the headland is clean, so several...",
+          "explanation": "Review the unit text evidence: Because a single sample can mislead: water near the harbour may be filthy while water near the headland is clean, so several..."
         },
         {
-          "prompt": "Try asking: Can you explain complex noun phrases using examples from the story?",
+          "prompt": "At the end of part 2, what does the mayor announce about the purification units, and which grammar pattern does she use?",
           "choices": [
-            "to hesitate or lose strength when doing something",
-            "clean, fresh, and in its original condition; not spoiled or damaged",
-            "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts."
+            "He realises the same word can mean different things to different people: 'clean' meant something different to his grandfather,...",
+            "Because a community only follows uncomfortable numbers when it trusts the researchers; presenters should stay adamant about the...",
+            "She announces that 'The first units will be installed by December', using the future passive voice."
           ],
-          "answer": "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts."
+          "answer": "She announces that 'The first units will be installed by December', using the future passive voice.",
+          "explanation": "Review the unit text evidence: She announces that 'The first units will be installed by December', using the future passive voice."
         },
         {
-          "prompt": "Do you think it is disrespectful to question traditional practices? Why or why not?",
+          "prompt": "In part 1, why does the grandfather resist the students' campaign, and what does he believe the sea will do?",
           "choices": [
-            "clean, fresh, and in its original condition; not spoiled or damaged",
-            "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-            "to hesitate or lose strength when doing something"
+            "Because a single sample can mislead: water near the harbour may be filthy while water near the headland is clean, so several...",
+            "He feels his generation respected the sea without needing science, saying the antonym of respect is carelessness rather than...",
+            "He realises the same word can mean different things to different people: 'clean' meant something different to his grandfather,..."
           ],
-          "answer": "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts."
+          "answer": "He feels his generation respected the sea without needing science, saying the antonym of respect is carelessness rather than...",
+          "explanation": "Review the unit text evidence: He feels his generation respected the sea without needing science, saying the antonym of respect is carelessness rather than..."
         }
       ]
     },
@@ -225,15 +229,15 @@
       "rounds": [
         {
           "prompt": "Speaking 1: Story Discussion",
-          "target": "She was so naive that she believed every story she heard."
+          "target": "She began to falter in her speech when she saw the large crowd."
         },
         {
           "prompt": "Speaking 3: Role Play",
-          "target": "The team used a clever tactic to win the game."
+          "target": "Role-play one of these scenarios with a partner or with your AI tutor: 1) Tariq and the shopkeeper: Tariq persuades a shopkeeper to stop..."
         },
         {
           "prompt": "Speaking 5: Vocabulary Expert Interview",
-          "target": "When I saw the broken window, I knew something was amiss."
+          "target": "She worked hard to surpass her previous test scores."
         }
       ]
     },
@@ -248,52 +252,48 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "problem.",
-            "maths",
+            "paintings.",
+            "two",
             "the",
-            "to",
-            "answer",
-            "precise",
-            "a",
-            "for",
-            "asked",
-            "teacher",
-            "The"
+            "between",
+            "difference",
+            "the",
+            "discern",
+            "could",
+            "She"
           ],
-          "answer": "The teacher asked for a precise answer to the maths problem."
+          "answer": "She could discern the difference between the two paintings."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
             "students.",
-            "their",
-            "in",
-            "reading",
-            "of",
-            "love",
-            "a",
-            "instill",
-            "to",
-            "try",
-            "Teachers"
+            "among",
+            "kindness",
+            "and",
+            "respect",
+            "emphasises",
+            "doctrine",
+            "school's",
+            "The"
           ],
-          "answer": "Teachers try to instill a love of reading in their students."
+          "answer": "The school's doctrine emphasises respect and kindness among students."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "everything.",
-            "remember",
-            "to",
-            "lecture",
+            "teacher.",
             "the",
-            "during",
-            "notes",
-            "copious",
-            "took",
-            "She"
+            "surprised",
+            "test",
+            "the",
+            "on",
+            "mistake",
+            "egregious",
+            "student's",
+            "The"
           ],
-          "answer": "She took copious notes during the lecture to remember everything."
+          "answer": "The student's egregious mistake on the test surprised the teacher."
         }
       ]
     },
@@ -449,35 +449,35 @@
         {
           "prompt": "What does 'naive' mean?",
           "choices": [
-            "a change from one state or condition to another",
-            "a plan or method used to achieve a goal",
-            "continuing to do something even when it is difficult or when others give up",
-            "lacking experience or sophistication; easily fooled or deceived"
+            "sad and gloomy; not cheerful or happy",
+            "lacking experience or sophistication; easily fooled or deceived",
+            "a set of beliefs or ideas that are taught by a group or organisation",
+            "thinking you are better than others; proud and unfriendly"
           ],
           "answer": "lacking experience or sophistication; easily fooled or deceived",
-          "explanation": "She was so naive that she believed every story she heard."
+          "explanation": "Tariq says some resisters are simply naive about the science: inexperienced, not wicked."
         },
         {
-          "prompt": "What does 'antonym' mean?",
+          "prompt": "Choose the missing word from 'Shifting Currents, part 2': Tariq rehearsed his speech with _____ effort.",
           "choices": [
-            "a change from one state or condition to another",
-            "a word that means the opposite of another word",
-            "continuing to do something even when it is difficult or when others give up",
-            "dark or serious in mood; not cheerful"
+            "somber",
+            "persistent",
+            "threadbare",
+            "copious"
           ],
-          "answer": "a word that means the opposite of another word",
-          "explanation": "The antonym of 'hot' is 'cold'."
+          "answer": "persistent",
+          "explanation": "Rehearsing again and again, adjusting his tone each time, shows effort that continues despite difficulty."
         },
         {
-          "prompt": "What does 'tactic' mean?",
+          "prompt": "Choose the missing word from 'Shifting Currents, part 1': The _____ of respect is not science—it is carelessness.",
           "choices": [
-            "a change from one state or condition to another",
-            "a plan or method used to achieve a goal",
-            "dark or serious in mood; not cheerful",
-            "not willing to change your mind or opinion about something"
+            "doctrine",
+            "dialect",
+            "antonym",
+            "tactic"
           ],
-          "answer": "a plan or method used to achieve a goal",
-          "explanation": "The team used a clever tactic to win the game."
+          "answer": "antonym",
+          "explanation": "Grandfather corrects the debate: the true opposite of respect is carelessness, so the missing word names an opposite."
         }
       ]
     },
@@ -493,34 +493,34 @@
           "prompt": "What does 'falter' mean?",
           "choices": [
             "a word that means the opposite of another word",
-            "lacking experience or sophistication; easily fooled or deceived",
             "making someone believe something that is not true; misleading",
-            "to hesitate or lose strength when doing something"
+            "to hesitate or lose strength when doing something",
+            "lacking experience or sophistication; easily fooled or deceived"
           ],
           "answer": "to hesitate or lose strength when doing something",
-          "explanation": "She began to falter in her speech when she saw the large crowd."
+          "explanation": "In the story, Tariq faltered when he spoke to older residents: his courage briefly lost strength."
         },
         {
           "prompt": "What does 'pristine' mean?",
           "choices": [
-            "a plan or method used to achieve a goal",
-            "a word that means the opposite of another word",
             "clean, fresh, and in its original condition; not spoiled or damaged",
-            "lacking experience or sophistication; easily fooled or deceived"
+            "a plan or method used to achieve a goal",
+            "a feeling of strong dislike or lack of respect for someone or something",
+            "dark or serious in mood; not cheerful"
           ],
           "answer": "clean, fresh, and in its original condition; not spoiled or damaged",
-          "explanation": "The lake was so pristine that we could see all the fish swimming in it."
+          "explanation": "The sea only looked pristine at first glance; the word describes an unspoiled, original condition."
         },
         {
           "prompt": "What does 'deceptive' mean?",
           "choices": [
-            "a plan or method used to achieve a goal",
-            "a word that means the opposite of another word",
-            "continuing to do something even when it is difficult or when others give up",
+            "very large in amount or quantity",
+            "using few words, often in a way that seems rude or unfriendly",
+            "a change from one state or condition to another",
             "making someone believe something that is not true; misleading"
           ],
           "answer": "making someone believe something that is not true; misleading",
-          "explanation": "The magician's tricks were so deceptive that the audience could not figure them out."
+          "explanation": "Tariq calls the calm blue surface a deceptive beauty because it misleads people about the decay below."
         }
       ]
     }

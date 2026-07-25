@@ -16,19 +16,19 @@
       "description": "Match each unit word to its approved child-friendly meaning.",
       "rounds": [
         {
-          "prompt": "Which word means: A strong effort to achieve something important, often related to a cause or belief.",
+          "prompt": "Which word means: A strong, organised effort to achieve something important for a cause.",
           "choices": [
-            "crusade",
+            "campaign",
             "assail",
             "stamina"
           ],
-          "answer": "crusade",
-          "explanation": "crusade: A strong effort to achieve something important, often related to a cause or belief."
+          "answer": "campaign",
+          "explanation": "campaign: A strong, organised effort to achieve something important for a cause."
         },
         {
           "prompt": "Which word means: Very eager or enthusiastic about something.",
           "choices": [
-            "crusade",
+            "campaign",
             "assail",
             "avid"
           ],
@@ -40,7 +40,7 @@
           "choices": [
             "assail",
             "antics",
-            "crusade"
+            "campaign"
           ],
           "answer": "antics",
           "explanation": "antics: Funny or silly actions or behaviours that people do."
@@ -83,16 +83,20 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "that?",
-            "by",
-            "mean",
-            "you",
-            "what",
-            "clarify",
-            "you",
-            "Can"
+            "library.",
+            "school",
+            "their",
+            "for",
+            "money",
+            "raise",
+            "to",
+            "campaign",
+            "a",
+            "launched",
+            "students",
+            "The"
           ],
-          "answer": "Can you clarify what you mean by that?"
+          "answer": "The students launched a campaign to raise money for their school library."
         },
         {
           "prompt": "Build the complete model sentence.",
@@ -114,19 +118,18 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "week.",
-            "every",
-            "book",
-            "a",
-            "finishes",
-            "who",
-            "reader",
-            "avid",
-            "an",
-            "is",
-            "She"
+            "gear.",
+            "safety",
+            "without",
+            "climb",
+            "to",
+            "him",
+            "of",
+            "foolhardy",
+            "was",
+            "It"
           ],
-          "answer": "She is an avid reader who finishes a book every week."
+          "answer": "It was foolhardy of him to climb without safety gear."
         }
       ]
     },
@@ -139,37 +142,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "What does 'uncanny' mean?",
+          "prompt": "Choose the missing word from 'Why Stories Shape the World': Every festival season, the streets of the old harbour quarter _____ with poets, drummers and film crews.",
           "choices": [
-            "Able to be shaped or bent easily without breaking.",
-            "Connected to the topic or situation being discussed.",
-            "Strange or mysterious, often in a way that is unsettling.",
-            "Very eager or enthusiastic about something."
+            "teem",
+            "jut",
+            "waft",
+            "recuperate"
           ],
-          "answer": "Strange or mysterious, often in a way that is unsettling.",
-          "explanation": "She had an uncanny ability to guess what people were thinking."
+          "answer": "teem",
+          "explanation": "The passage reads: Every festival season, the streets of the old harbour quarter teem with poets, drummers and film crews."
         },
         {
-          "prompt": "What does 'teem' mean?",
+          "prompt": "Choose the missing word from 'The Edge of the Infinite, part 1': Imani, a seventeen-year-old with an avid curiosity and endless _____, had been writing since she was ten.",
           "choices": [
-            "Able to be shaped or bent easily without breaking.",
-            "Taking unnecessary risks without thinking about consequences.",
-            "To be full of or to have a lot of something.",
-            "Very eager or enthusiastic about something."
+            "jargon",
+            "commotion",
+            "antics",
+            "stamina"
           ],
-          "answer": "To be full of or to have a lot of something.",
-          "explanation": "The garden was teeming with colourful flowers in the spring."
+          "answer": "stamina",
+          "explanation": "The passage reads: Imani, a seventeen-year-old with an avid curiosity and endless stamina, had been writing since she was ten."
         },
         {
-          "prompt": "What does 'relevant' mean?",
+          "prompt": "Choose the missing word from 'The Edge of the Infinite, part 2': Because it was _____ to support the planet, and it was foolish not to.",
           "choices": [
-            "Connected to the topic or situation being discussed.",
-            "Taking unnecessary risks without thinking about consequences.",
-            "To stick out or extend beyond something else.",
-            "Very eager or enthusiastic about something."
+            "ominous",
+            "feasible",
+            "infinite",
+            "malleable"
           ],
-          "answer": "Connected to the topic or situation being discussed.",
-          "explanation": "The teacher said our homework was relevant to what we were learning."
+          "answer": "feasible",
+          "explanation": "The passage reads: Because it was feasible to support the planet, and it was foolish not to."
         }
       ]
     },
@@ -182,34 +185,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "Try asking: What is the difference between telling a story and reporting what someone said?",
+          "prompt": "Before printing presses reached the coast, what kinds of knowledge did Somali oral poetry preserve, according to Why Stories Shape the World?",
           "choices": [
-            "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-            "A strong effort to achieve something important, often related to a cause or belief.",
-            "To make something clear or easier to understand."
+            "It preserved family histories, trade routes and hard-won warnings about drought.",
+            "It is called The Flood That Forgot No One, a tale about a girl who learns to speak the ocean's language after her island sinks.",
+            "He decides to stay behind, saying he has lived by the sea and will die by the sea, and the sea replies, \"Then let me take you.\""
           ],
-          "answer": "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts."
+          "answer": "It preserved family histories, trade routes and hard-won warnings about drought.",
+          "explanation": "Review the unit text evidence: It preserved family histories, trade routes and hard-won warnings about drought."
         },
         {
-          "prompt": "To form a question, move have or has before the subject: Have you been waiting long? / Has he been working all day?",
+          "prompt": "According to Why Stories Shape the World, why does a story often succeed where a decree or a spreadsheet fails?",
           "choices": [
-            "A strong effort to achieve something important, often related to a cause or belief.",
-            "To make something clear or easier to understand.",
-            "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts."
+            "It is called The Flood That Forgot No One, a tale about a girl who learns to speak the ocean's language after her island sinks.",
+            "Because such communities carry their history in spoken word alone, the told story may be the only copy left after a flood, a war...",
+            "A decree can force obedience but cannot order anyone to care, and facts in a spreadsheet rarely motivate; a story lets listeners..."
           ],
-          "answer": "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts."
+          "answer": "A decree can force obedience but cannot order anyone to care, and facts in a spreadsheet rarely motivate; a story lets listeners...",
+          "explanation": "Review the unit text evidence: A decree can force obedience but cannot order anyone to care, and facts in a spreadsheet rarely motivate; a story lets listeners..."
         },
         {
-          "prompt": "Why do you think storytelling is important in Somali and East African cultures?",
+          "prompt": "Why does Why Stories Shape the World insist the storyteller is never a subordinate figure in a community without written archives?",
           "choices": [
-            "To make something clear or easier to understand.",
-            "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-            "A strong effort to achieve something important, often related to a cause or belief."
+            "It steps further back than the past simple to show which event happened first, as in Imani had already left the stage when the...",
+            "Because such communities carry their history in spoken word alone, the told story may be the only copy left after a flood, a war...",
+            "It is called Feasible Futures, and it aims to show not just loss but resilience, solutions and ways forward."
           ],
-          "answer": "Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts.",
-          "explanation": "Review the unit text evidence: Accept an accurate, well-reasoned response supported by relevant evidence from the selected text or texts."
+          "answer": "Because such communities carry their history in spoken word alone, the told story may be the only copy left after a flood, a war...",
+          "explanation": "Review the unit text evidence: Because such communities carry their history in spoken word alone, the told story may be the only copy left after a flood, a war..."
         }
       ]
     },
@@ -226,8 +229,8 @@
           "target": "After reading The Edge of the Infinite, practise retelling the story in your own words."
         },
         {
-          "prompt": "Speaking 3: My Storytelling Crusade",
-          "target": "Think about a cause or topic that matters to you."
+          "prompt": "Speaking 3: My Storytelling Campaign",
+          "target": "Think about a cause that matters to you: protecting the environment, supporting education in your community, preserving cultural traditions, or..."
         },
         {
           "prompt": "Speaking 5: Explain and Respond",
@@ -246,49 +249,55 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "beach.",
+            "kitchen.",
             "the",
-            "at",
-            "evening",
-            "balmy",
-            "a",
-            "enjoyed",
-            "We"
+            "through",
+            "wafted",
+            "cookies",
+            "fresh",
+            "of",
+            "smell",
+            "The"
           ],
-          "answer": "We enjoyed a balmy evening at the beach."
+          "answer": "The smell of fresh cookies wafted through the kitchen."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "recuperate.",
-            "to",
-            "weeks",
-            "few",
-            "a",
-            "needed",
-            "she",
-            "illness,",
+            "subordinate.",
             "her",
-            "After"
+            "am",
+            "I",
+            "and",
+            "leader,",
+            "the",
+            "is",
+            "Maya",
+            "project,",
+            "our",
+            "In"
           ],
-          "answer": "After her illness, she needed a few weeks to recuperate."
+          "answer": "In our project, Maya is the leader, and I am her subordinate."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "game.",
-            "soccer",
-            "my",
-            "to",
-            "coming",
+            "together.",
+            "work",
+            "we",
+            "if",
+            "week",
+            "next",
             "by",
-            "support",
-            "their",
-            "showed",
-            "friends",
-            "My"
+            "project",
+            "the",
+            "finish",
+            "to",
+            "feasible",
+            "is",
+            "It"
           ],
-          "answer": "My friends showed their support by coming to my soccer game."
+          "answer": "It is feasible to finish the project by next week if we work together."
         }
       ]
     },
@@ -304,7 +313,7 @@
           "prompt": "What does 'jut' mean in this unit?",
           "choices": [
             "To stick out or extend beyond something else.",
-            "A strong effort to achieve something important, often related to a cause or belief.",
+            "A strong, organised effort to achieve something important for a cause.",
             "To attack someone or something violently or with strong words."
           ],
           "answer": "To stick out or extend beyond something else.",
@@ -313,7 +322,7 @@
         {
           "prompt": "What does 'affluent' mean in this unit?",
           "choices": [
-            "A strong effort to achieve something important, often related to a cause or belief.",
+            "A strong, organised effort to achieve something important for a cause.",
             "To attack someone or something violently or with strong words.",
             "Having a lot of money and wealth."
           ],
@@ -325,7 +334,7 @@
           "choices": [
             "The ability to keep going and not get tired easily.",
             "To attack someone or something violently or with strong words.",
-            "A strong effort to achieve something important, often related to a cause or belief."
+            "A strong, organised effort to achieve something important for a cause."
           ],
           "answer": "To attack someone or something violently or with strong words.",
           "explanation": "assail: To attack someone or something violently or with strong words."
@@ -444,35 +453,35 @@
         {
           "prompt": "What does 'infinite' mean?",
           "choices": [
-            "Something that has no limits or end; it goes on forever.",
             "Strange or mysterious, often in a way that is unsettling.",
-            "The ability to keep going and not get tired easily.",
-            "To be full of or to have a lot of something."
+            "Pleasantly warm and comfortable, often describing nice weather.",
+            "Something that has no limits or end; it goes on forever.",
+            "Having a lot of money and wealth."
           ],
           "answer": "Something that has no limits or end; it goes on forever.",
-          "explanation": "The universe is so big that it seems infinite."
+          "explanation": "Infinite describes something without limits or end, like the seemingly infinite universe."
         },
         {
-          "prompt": "What does 'motivate' mean?",
+          "prompt": "Choose the missing word from 'The Grammar of a Good Story': Choose the tense deliberately, and even a simple sentence about tea can _____ a reader.",
           "choices": [
-            "Connected to the topic or situation being discussed.",
-            "Strange or mysterious, often in a way that is unsettling.",
-            "To be full of or to have a lot of something.",
-            "To make someone want to do something or work harder."
+            "recuperate",
+            "engross",
+            "abet",
+            "jut"
           ],
-          "answer": "To make someone want to do something or work harder.",
-          "explanation": "The teacher tried to motivate the students by giving them fun projects."
+          "answer": "engross",
+          "explanation": "The passage reads: Choose the tense deliberately, and even a simple sentence about tea can engross a reader."
         },
         {
-          "prompt": "What does 'stamina' mean?",
+          "prompt": "Choose the missing word from 'The Edge of the Infinite, part 1': \"Your metaphor's too _____ — what does the fire actually represent?\"",
           "choices": [
-            "Able to be shaped or bent easily without breaking.",
-            "Connected to the topic or situation being discussed.",
-            "The ability to keep going and not get tired easily.",
-            "To be full of or to have a lot of something."
+            "uncanny",
+            "balmy",
+            "malleable",
+            "ominous"
           ],
-          "answer": "The ability to keep going and not get tired easily.",
-          "explanation": "Running every day helped her build her stamina for the marathon."
+          "answer": "malleable",
+          "explanation": "The passage reads: \"Your metaphor's too malleable — what does the fire actually represent?\""
         }
       ]
     },
@@ -485,37 +494,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "What does 'crusade' mean?",
+          "prompt": "What does 'campaign' mean?",
           "choices": [
-            "A strong effort to achieve something important, often related to a cause or belief.",
-            "Something that has no limits or end; it goes on forever.",
-            "To attack someone or something violently or with strong words.",
-            "To make someone want to do something or work harder."
+            "The ability to keep going and not get tired easily.",
+            "A planned series of actions carried out over time to achieve an important goal.",
+            "Special words or expressions used by a particular group.",
+            "Suggesting that something bad is going to happen."
           ],
-          "answer": "A strong effort to achieve something important, often related to a cause or belief.",
-          "explanation": "The students started a crusade to raise money for their school library."
+          "answer": "A planned series of actions carried out over time to achieve an important goal.",
+          "explanation": "A campaign is a planned, organised effort for a cause, like the students' campaign to raise money for their school library."
         },
         {
           "prompt": "What does 'clarify' mean?",
           "choices": [
-            "Something that has no limits or end; it goes on forever.",
-            "The ability to keep going and not get tired easily.",
-            "To make someone want to do something or work harder.",
+            "To stick out or extend beyond something else.",
+            "To help someone do something wrong or illegal.",
+            "To move gently through the air, often describing smells or sounds.",
             "To make something clear or easier to understand."
           ],
           "answer": "To make something clear or easier to understand.",
-          "explanation": "Can you clarify what you mean by that?"
+          "explanation": "To clarify is to make an idea clearer for your listener, as in: can you clarify what you mean by that?"
         },
         {
           "prompt": "What does 'assail' mean?",
           "choices": [
-            "Strange or mysterious, often in a way that is unsettling.",
-            "The ability to keep going and not get tired easily.",
             "To attack someone or something violently or with strong words.",
-            "To make someone want to do something or work harder."
+            "To completely focus on something and not notice anything else.",
+            "To make someone want to do something or work harder.",
+            "To be full of or to have a lot of something."
           ],
           "answer": "To attack someone or something violently or with strong words.",
-          "explanation": "The pressure assailed everyone during finals week."
+          "explanation": "Pressure, doubts or critics can assail a person; the word means to attack with force or with strong words."
         }
       ]
     }

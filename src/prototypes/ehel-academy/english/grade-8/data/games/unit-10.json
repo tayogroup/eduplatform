@@ -62,13 +62,13 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To become smaller, less strong, or less important over time.",
-          "answer": "wane"
+          "clue": "To express thoughts and ideas clearly and effectively.",
+          "answer": "articulate"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "making someone believe something that is not true; misleading",
-          "answer": "deceptive"
+          "clue": "A place where someone is going or something is being sent",
+          "answer": "destination"
         }
       ]
     },
@@ -83,49 +83,56 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "crates.",
-            "old",
-            "using",
-            "road",
+            "story.",
             "the",
-            "across",
-            "barricade",
+            "of",
+            "summary",
+            "concise",
             "a",
-            "built",
-            "protesters",
+            "write",
+            "to",
+            "us",
+            "asked",
+            "teacher",
             "The"
           ],
-          "answer": "The protesters built a barricade across the road using old crates."
+          "answer": "The teacher asked us to write a concise summary of the story."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "longevity.",
-            "your",
-            "improve",
-            "can",
-            "food",
-            "healthy",
-            "Eating"
-          ],
-          "answer": "Eating healthy food can improve your longevity."
-        },
-        {
-          "prompt": "Build the complete model sentence.",
-          "tokens": [
-            "discussion.",
-            "class",
-            "the",
-            "during",
-            "opinion",
-            "her",
-            "articulate",
+            "victory.",
+            "their",
+            "celebrate",
+            "and",
+            "exult",
             "to",
-            "able",
-            "was",
-            "She"
+            "began",
+            "team",
+            "the",
+            "game,",
+            "the",
+            "winning",
+            "After"
           ],
-          "answer": "She was able to articulate her opinion during the class discussion."
+          "answer": "After winning the game, the team began to exult and celebrate their victory."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "celebration.",
+            "big",
+            "a",
+            "with",
+            "year",
+            "every",
+            "anniversary",
+            "school's",
+            "our",
+            "commemorate",
+            "We"
+          ],
+          "answer": "We commemorate our school's anniversary every year with a big celebration."
         }
       ]
     },
@@ -138,37 +145,37 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "What does 'aptitude' mean?",
+          "prompt": "Which sentence is a correct second conditional?",
           "choices": [
-            "A natural ability to do something well.",
-            "A situation or event that produces a large amount of something good.",
-            "Having the ability to achieve things in a clever and often deceptive way.",
-            "The force or speed of something moving, especially when it is getting faster."
+            "If the bay was cleaner, more fish will return.",
+            "If the bay were cleaner, more fish would return.",
+            "If the bay is cleaner, more fish would return.",
+            "If the bay would be cleaner, more fish returned."
           ],
-          "answer": "A natural ability to do something well.",
-          "explanation": "She has a great aptitude for learning new languages quickly."
+          "answer": "If the bay were cleaner, more fish would return.",
+          "explanation": "The second conditional imagines the present: if plus past ('were'), then would plus the base verb, as in Units 3 and 4."
         },
         {
-          "prompt": "What does 'adversary' mean?",
+          "prompt": "In 'The officials tried to play down the pollution report', what does 'play down' mean?",
           "choices": [
-            "A person or group that opposes or fights against another.",
-            "A situation or event that produces a large amount of something good.",
-            "Something that is given up or allowed in order to reach an agreement.",
-            "The force or speed of something moving, especially when it is getting faster."
+            "to refuse to talk about something ever again",
+            "to make something seem less important",
+            "to practise before a serious match",
+            "to celebrate a result loudly"
           ],
-          "answer": "A person or group that opposes or fights against another.",
-          "explanation": "In the competition, each team tried to outsmart their adversary to win."
+          "answer": "to make something seem less important",
+          "explanation": "Play down means to minimise: the officials wanted the report to seem smaller than it was, a phrasal verb from the Unit 7 pattern set."
         },
         {
-          "prompt": "What does 'falter' mean?",
+          "prompt": "Choose the missing word from 'Review text 3': The park wardens hoped the new signs would ______ visitors from leaving the marked trails.",
           "choices": [
-            "a word that means the opposite of another word",
-            "lacking experience or sophistication; easily fooled or deceived",
-            "making someone believe something that is not true; misleading",
-            "to hesitate or lose strength when doing something"
+            "commemorate",
+            "exult",
+            "deter",
+            "falter"
           ],
-          "answer": "to hesitate or lose strength when doing something",
-          "explanation": "She began to falter in her speech when she saw the large crowd."
+          "answer": "deter",
+          "explanation": "Review text 3 says the wardens hoped the new signs would deter visitors from leaving the marked trails; deter means to make someone decide not to act."
         }
       ]
     },
@@ -181,34 +188,34 @@
       "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What is the central idea of this text?",
+          "prompt": "According to Review text 1, what did the Fact-Checker's Toolkit train readers to do before sharing a story?",
           "choices": [
-            "Accept an accurate response supported by the selected review text.",
-            "Using few words to say something clearly.",
-            "A structure used to block people or vehicles from passing."
+            "To ask four questions first: who wrote this, when was it written, what evidence supports it, and who benefits if I believe it.",
+            "The movement started small, stayed visible and handed every neighbour a job worth doing, so results like new bins and clean-ups...",
+            "Two days later another essay appeared by someone else, then more followed, printed by hand and passed under desks until a..."
           ],
-          "answer": "Accept an accurate response supported by the selected review text.",
-          "explanation": "Review the unit text evidence: Accept an accurate response supported by the selected review text."
+          "answer": "To ask four questions first: who wrote this, when was it written, what evidence supports it, and who benefits if I believe it.",
+          "explanation": "Review the unit text evidence: To ask four questions first: who wrote this, when was it written, what evidence supports it, and who benefits if I believe it."
         },
         {
-          "prompt": "What is the central idea of this text?",
+          "prompt": "What single lesson does Review text 3 draw from both Marka's shoreline and the Simien Highlands expedition?",
           "choices": [
-            "Using few words to say something clearly.",
-            "A structure used to block people or vehicles from passing.",
-            "Accept an accurate response supported by the selected review text."
+            "The movement started small, stayed visible and handed every neighbour a job worth doing, so results like new bins and clean-ups...",
+            "Language is power, and power demands evidence, fairness and craft.",
+            "Places recover when people take patient responsibility: bring counts rather than impressions, compare fairly and refuse to rush..."
           ],
-          "answer": "Accept an accurate response supported by the selected review text.",
-          "explanation": "Review the unit text evidence: Accept an accurate response supported by the selected review text."
+          "answer": "Places recover when people take patient responsibility: bring counts rather than impressions, compare fairly and refuse to rush...",
+          "explanation": "Review the unit text evidence: Places recover when people take patient responsibility: bring counts rather than impressions, compare fairly and refuse to rush..."
         },
         {
-          "prompt": "What is the central idea of this text?",
+          "prompt": "What does Review text 5 name as the one steady lesson running through all nine units of the year?",
           "choices": [
-            "A structure used to block people or vehicles from passing.",
-            "Accept an accurate response supported by the selected review text.",
-            "Using few words to say something clearly."
+            "He admitted he could not prove it, so he refused to accuse anyone; he called the behaviour repugnant and led his cast to rewrite...",
+            "Language is power, and power demands evidence, fairness and craft.",
+            "Nadir's pitch was slick and polished but thin on evidence, while the winners rehearsed, spoke with calm authority and brought..."
           ],
-          "answer": "Accept an accurate response supported by the selected review text.",
-          "explanation": "Review the unit text evidence: Accept an accurate response supported by the selected review text."
+          "answer": "Language is power, and power demands evidence, fairness and craft.",
+          "explanation": "Review the unit text evidence: Language is power, and power demands evidence, fairness and craft."
         }
       ]
     },
@@ -222,15 +229,15 @@
       "rounds": [
         {
           "prompt": "Portfolio evidence conference",
-          "target": "Explain four portfolio choices and support each choice with precise evidence."
+          "target": "Present four pieces of work from Units 1 to 9 and justify each choice with precise evidence of growth."
         },
         {
           "prompt": "Research vocabulary in context",
-          "target": "Eating healthy food can improve your longevity."
+          "target": "Speak for two minutes about your inquiry topic using at least eight of the thirty review words accurately."
         },
         {
           "prompt": "Question-and-answer defence",
-          "target": "six audience questions with relevant evidence, source awareness and thoughtful clarification."
+          "target": "Defend your conclusions while a partner asks five challenge questions, at least one about source reliability and one about a counterargument."
         }
       ]
     },
@@ -245,18 +252,18 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "hill.",
+            "chickens.",
+            "some",
+            "stole",
+            "and",
+            "farmer",
             "the",
-            "down",
-            "rolled",
-            "it",
-            "as",
-            "momentum",
-            "gained",
-            "car",
+            "tricked",
+            "fox",
+            "cunning",
             "The"
           ],
-          "answer": "The car gained momentum as it rolled down the hill."
+          "answer": "The cunning fox tricked the farmer and stole some chickens."
         },
         {
           "prompt": "Put this unit sentence in order.",
@@ -427,8 +434,8 @@
               "A temporary break from something difficult or unpleasant."
             ],
             [
-              "crusade",
-              "A strong effort to achieve something important, often related to a cause or belief."
+              "campaign",
+              "A strong, organised effort to achieve something important for a cause."
             ]
           ]
         }
@@ -443,37 +450,37 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "What does 'loathe' mean?",
+          "prompt": "The mayor said, 'The first units will be installed by December.' Which reported version is correct?",
           "choices": [
-            "To block something so that it cannot move or be seen.",
-            "To come between two people or groups to help settle a problem or stop something bad.",
-            "To feel strong dislike or hatred for something or someone.",
-            "To pretend to have something or to be something that you are not."
+            "The mayor said that the first units would be installed by December.",
+            "The mayor said that the first units will been installed by December.",
+            "The mayor said that the first units would being installed by December.",
+            "The mayor said that the first units are install by December."
           ],
-          "answer": "To feel strong dislike or hatred for something or someone.",
-          "explanation": "I loathe doing homework on weekends when the weather is beautiful."
+          "answer": "The mayor said that the first units would be installed by December.",
+          "explanation": "Reported speech steps 'will be installed' back to 'would be installed', keeping the passive intact, as practised with Unit 5's story."
         },
         {
-          "prompt": "What does 'stifle' mean?",
+          "prompt": "Which sentence uses the past perfect correctly?",
           "choices": [
-            "To express thoughts and ideas clearly and effectively.",
-            "To make something happen faster; to hurry.",
-            "To remember and honour someone or something, often with a ceremony.",
-            "To stop something from happening or developing; to hold back."
+            "By morning, a network of writers was form at Kambazi School.",
+            "By morning, a network of writers has formed at Kambazi School.",
+            "By morning, a network of writers had forming at Kambazi School.",
+            "By morning, a network of writers had formed at Kambazi School."
           ],
-          "answer": "To stop something from happening or developing; to hold back.",
-          "explanation": "The teacher tried to stifle the noise in the classroom by asking everyone to be quiet."
+          "answer": "By morning, a network of writers had formed at Kambazi School.",
+          "explanation": "'By morning' sets a past deadline, so the earlier event takes had plus the past participle: had formed, as in Unit 7."
         },
         {
-          "prompt": "What does 'wane' mean?",
+          "prompt": "Imani ______ her closing story since the opening round of the StoryForge. Which form completes the sentence?",
           "choices": [
-            "To become smaller, less strong, or less important over time.",
-            "To express thoughts and ideas clearly and effectively.",
-            "To make something happen faster; to hurry.",
-            "Verb: to publicly support or recommend. Noun: a person who supports a cause."
+            "has been shaping",
+            "has shaped being",
+            "is been shaping",
+            "have been shaping"
           ],
-          "answer": "To become smaller, less strong, or less important over time.",
-          "explanation": "As the evening went on, the excitement at the party began to wane."
+          "answer": "has been shaping",
+          "explanation": "'Since the opening round' measures unfinished duration, so the present perfect continuous fits: has been shaping, from Unit 8."
         }
       ]
     },
@@ -486,37 +493,37 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "What does 'concise' mean?",
+          "prompt": "Which review word from Unit 1 means 'using few words to say something clearly'?",
           "choices": [
-            "A statement that explains the meaning of a word.",
-            "A strong feeling of enthusiasm and eagerness.",
-            "The length of time that a person or thing lives or lasts.",
-            "Using few words to say something clearly."
+            "temperate",
+            "concise",
+            "gullible",
+            "plausible"
           ],
-          "answer": "Using few words to say something clearly.",
-          "explanation": "The teacher asked us to write a concise summary of the story."
+          "answer": "concise",
+          "explanation": "Concise writing keeps only the words that earn their place, like the questioning club's one-line rule in Unit 1."
         },
         {
-          "prompt": "What does 'barricade' mean?",
+          "prompt": "Which sentence compares two climbers correctly?",
           "choices": [
-            "A statement that explains the meaning of a word.",
-            "A structure used to block people or vehicles from passing.",
-            "The length of time that a person or thing lives or lasts.",
-            "To give or set aside a certain amount for a specific purpose."
+            "Zara climbed more carefully than the lone climber.",
+            "Zara climbed most carefully than the lone climber.",
+            "Zara climbed more carefully of the lone climber.",
+            "Zara climbed the most carefully than the lone climber."
           ],
-          "answer": "A structure used to block people or vehicles from passing.",
-          "explanation": "The protesters built a barricade across the road using old crates."
+          "answer": "Zara climbed more carefully than the lone climber.",
+          "explanation": "Two actions compared take a comparative adverb with 'than': more carefully than. Superlatives need three or more."
         },
         {
-          "prompt": "What does 'exult' mean?",
+          "prompt": "Which sentence is in the present continuous passive?",
           "choices": [
-            "To come between two people or groups to help settle a problem or stop something bad.",
-            "To feel very happy and excited, especially because of a success or victory.",
-            "To pretend to have something or to be something that you are not.",
-            "To take control of something, especially a position of power, without the right to do so."
+            "New bins are affixed along the beach paths every season.",
+            "Volunteers are affixing new bins along the beach paths.",
+            "New bins are being affixed along the beach paths.",
+            "New bins will be affixed along the beach paths soon."
           ],
-          "answer": "To feel very happy and excited, especially because of a success or victory.",
-          "explanation": "After winning the game, the team began to exult and celebrate their victory."
+          "answer": "New bins are being affixed along the beach paths.",
+          "explanation": "The present continuous passive is are or is plus being plus a past participle, as in Unit 3's clean-up scenes."
         }
       ]
     }

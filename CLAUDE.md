@@ -45,8 +45,22 @@ Real uploads are `npm run deploy:integration|staging|production`. **Never run a 
 - **Generated bundle**: never edit `runtime.bundle.js` directly (`docs/generated-bundle-policy.md`).
 - **Stable filenames**: active JS/CSS filenames never contain versions, dates, or `locked`. Versions live in git tags (`alphabet-v1.0.0`, `shared-v1.0.0`) and manifests (`docs/naming-versioning.md`).
 - **Unit config schema**: `unit.config.js` must pass `npm run validate:units`; schema documented in `docs/unit-config-schema.md`.
+- **Two unit validators, different targets**: `validate:units` checks `unit.config.js` schemas under `src/units/`; `validate:curriculum-units` checks Cambridge objective mappings under `src/prototypes/ehel-academy/`. Neither covers the other's files.
 - **Secrets**: `.env` holds Bunny storage keys and TTS API keys — never commit it or copy values into source. E2e credentials are `EDUPLATFORM_*` env vars (template: `.env.e2e.example`).
 - Windows environment; some docs write commands as `npm.cmd run ...` — plain `npm run ...` works in both shells.
+
+## Curriculum validation
+
+Before merging a change to a Cambridge framework file (`src/curriculum/cambridge-english-*.json`) or to unit objective mappings, both of these must exit 0:
+
+```bash
+npm run validate:frameworks
+npm run validate:curriculum-units -- --strict-cambridge
+```
+
+`validate:frameworks` checks a framework file against itself: text misextracted from the source PDF, numbering gaps within a sub-strand, `counts` disagreeing with the arrays. `validate:curriculum-units --strict-cambridge` checks that every objective a unit claims exists in the stage that unit declares.
+
+A framework failure usually means the extracted JSON is wrong, not the unit. The frameworks are parsed out of Cambridge's PDFs and the source documents are not in the repo, so fix the framework before re-pointing any mapping at it.
 
 ## Git
 

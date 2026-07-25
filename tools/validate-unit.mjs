@@ -31,9 +31,12 @@ if (!args.length) {
 }
 const files = args.flatMap((a) => {
   if (a.includes("*")) {
-    const dir = path.dirname(a);
-    const rx = new RegExp("^" + path.basename(a).replace(/[.]/g, "\\.").replace(/\*/g, ".*") + "$");
-    return fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => rx.test(f)).sort().map((f) => path.join(dir, f)) : [];
+    // globSync also expands wildcards in DIRECTORY segments (grade-*/data/units/*.json).
+    // The old dirname+readdir expansion returned [] for those, so the run loop validated
+    // nothing and still exited 0 — a green gate that had checked no files at all.
+    const hits = fs.globSync(a).sort();
+    if (!hits.length) { console.error(`no files matched: ${a}`); process.exit(2); }
+    return hits;
   }
   return [a];
 });
@@ -429,8 +432,10 @@ function validate(file) {
   // Objective code = <stage><reportingCode>.<nn>, e.g. 1Rw.01 (Cambridge Primary
   // English 0058). Validates that the unit's declared stage matches its grade,
   // that every objective it claims is REAL and belongs to THAT stage, and reports
-  // strand coverage. Frameworks not shipped as JSON (e.g. 0861 Lower Secondary)
-  // are skipped with a note rather than guessed at.
+  // strand coverage. Both English frameworks ship as JSON — 0058 covers stages
+  // 1-6 and 0861 covers stages 7-9 — so every stage this platform teaches can be
+  // checked. A code with no framework file at all is still skipped with a note.
+  // The framework files themselves are checked by tools/validate-curriculum-framework.mjs.
   const camb = d.cambridge || {};
   const gradeNum = Number(String(d.unit?.gradeId || "").replace(/\D/g, "")) || null;
   F(!isBlank(camb.level) && !isBlank(String(camb.code ?? "")), "cambridge: missing level/code", "");
@@ -452,10 +457,15 @@ function validate(file) {
     if (/cambridgeObjectives?|objectiveCodes?|learningObjectiveCodes?/i.test(pth) && CODE_RE.test(s.trim())) claimed.push([pth, s.trim()]);
   }
   const fwPath = path.join(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1")), "..", "src", "curriculum", `cambridge-english-${camb.code}.json`);
-  let fw = null;
-  if (fs.existsSync(fwPath)) { try { fw = JSON.parse(fs.readFileSync(fwPath, "utf8")); } catch { /* ignore */ } }
+  let fw = null, fwError = null;
+  // A framework that is PRESENT but unreadable is a different situation from one
+  // that was never shipped: swallowing the parse error made a corrupt file look
+  // like an absent one, which downgraded every objective check below to a note.
+  if (fs.existsSync(fwPath)) { try { fw = JSON.parse(fs.readFileSync(fwPath, "utf8")); } catch (e) { fwError = e.message; } }
 
-  if (!fw) {
+  if (fwError) {
+    F(false, "cambridge: framework file present but unparseable", `src/curriculum/cambridge-english-${camb.code}.json — ${fwError}`);
+  } else if (!fw) {
     N(`cambridge note: no framework file for code ${camb.code} (expected src/curriculum/cambridge-english-${camb.code}.json) — objective validation skipped`);
     if (claimed.length) N(`cambridge note: ${claimed.length} objective code(s) claimed but not verifiable without the framework`);
   } else {
@@ -469,10 +479,14 @@ function validate(file) {
     F(wrongStage.length === 0, "cambridge: objective from the wrong stage", wrongStage.slice(0, 3).map(([p, c]) => `${c} (unit is stage ${stageKey}) @ ${p}`).join(", "));
     const uniq = [...new Set(claimed.map(([, c]) => c))].filter((c) => validCodes.has(c));
     if (!stageObjs.length) {
-      // The framework file exists but doesn't publish this stage — e.g. 0861 ships
-      // Stage 7 only, so Grade 8 has nothing to map to. Demanding a mapping here
-      // would be demanding the impossible, so it stays a note even under --strict.
-      N(`cambridge note: framework ${camb.code} has no Stage ${stageKey} objectives (file covers ${Object.keys(fw.objectivesByStage || {}).join(", ") || "no stages"}) — mapping cannot be evidenced until that stage is published`);
+      // Between them the two frameworks publish every stage the platform teaches,
+      // so an empty stage list means the unit or the framework is wrong — not that
+      // Cambridge hasn't published yet. This has to FAIL: a note here would let a
+      // typo'd stage ("07" passes the numeric grade check above) or a renamed
+      // objectivesByStage key void every objective check silently, and it would do
+      // so even under --strict-cambridge, which is the opposite of what that flag is for.
+      F(false, "cambridge: framework has no objectives for this unit's stage",
+        `${camb.code} covers stage(s) ${Object.keys(fw.objectivesByStage || {}).join(", ") || "none"} — unit declares stage ${stageKey}`);
     } else if (!claimed.length) {
       N(`cambridge: unit declares Stage ${stageKey} but maps 0 learning objectives — alignment is unevidenced (${stageObjs.length} objectives available for this stage). Add cambridgeObjectives:["${stageObjs[0]?.code || "1Rw.01"}", …] to each outcome.`);
       if (STRICT) F(false, "cambridge (strict): no objectives mapped", `0 of ${stageObjs.length} stage-${stageKey} objectives referenced`);

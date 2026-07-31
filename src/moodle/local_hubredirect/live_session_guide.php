@@ -16,6 +16,8 @@ $PAGE->add_body_class('pqh-live-guide-page');
 $videourl = pqh_live_session_explainer_media_url()->out(false);
 $dashboardurl = (new moodle_url('/local/hubredirect/dashboard.php'))->out(false);
 
+pqh_enforce_role_domain(pqh_requested_consumer_context(), pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
+
 echo $OUTPUT->header();
 ?>
 <style>

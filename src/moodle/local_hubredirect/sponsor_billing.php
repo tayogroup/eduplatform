@@ -18,6 +18,7 @@ if ($workspaceid > 0) {
 if ($workspaceid <= 0 || !pqfin_sponsor_billing_visible($workspaceid, (int)$USER->id, $consumercontext)) {
     pqh_access_denied('Sponsor billing is not available for this workspace.', new moodle_url('/local/hubredirect/dashboard.php'), 'Sponsor billing unavailable');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $invoices = pqfin_invoice_rows_for_sponsor($workspaceid, (int)$USER->id, $consumercontext);

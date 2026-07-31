@@ -88,6 +88,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                     'lang' => $CFG->lang ?? 'en',
                 ];
                 $newuserid = (int)user_create_user($newuser, true, false);
+                // Staff-conveyed temp password: first login must replace it.
+                set_user_preference('auth_forcepasswordchange', 1, $newuserid);
             } else {
                 $newuserid = (int)$user->id;
             }

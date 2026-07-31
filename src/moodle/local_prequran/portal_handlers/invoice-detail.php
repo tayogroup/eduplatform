@@ -179,6 +179,13 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 $btext('sponsortermsnote', '')
             );
             $message = 'Sponsor commitment recorded.';
+        } else if ($action === 'apply_coupon') {
+            $applyid = pqfin_apply_coupon_to_invoice($invoiceid, $consumercontext, $userid, $braw('couponcode', ''));
+            $message = 'Coupon applied to the invoice.';
+            $extra['applyid'] = (int)$applyid;
+        } else if ($action === 'reverse_discount') {
+            pqfin_reverse_discount_apply($bint('applyid', 0), $consumercontext, $userid, $btext('reversereason', ''));
+            $message = 'Discount reversed and invoice recalculated.';
         } else if ($action === 'create_marketplace_payout') {
             pqfin_create_marketplace_payout_for_invoice(
                 $invoiceid,
@@ -409,6 +416,16 @@ $sponsoroptions = [];
 foreach ($sponsoraccounts as $sponsor) {
     $sponsoroptions[] = ['id' => (int)$sponsor->id, 'displayname' => (string)$sponsor->displayname];
 }
+$discountout = [];
+foreach (pqfin_discount_applies_for_invoice($invoiceid) as $apply) {
+    $discountout[] = [
+        'id' => (int)$apply->id,
+        'sourcetype' => (string)$apply->sourcetype,
+        'amount' => (string)$apply->amount,
+        'status' => (string)$apply->status,
+        'timecreated' => (int)$apply->timecreated,
+    ];
+}
 
 echo json_encode([
     'ok' => true, 'ready' => true,
@@ -444,6 +461,8 @@ echo json_encode([
     'scholarshipawards' => $awardout,
     'sponsorcommitments' => $commitmentout,
     'marketplacepayouts' => $payoutout,
+    'discountapplies' => $discountout,
+    'couponschemaready' => pqfin_coupon_schema_ready(),
     'sponsoraccounts' => $sponsoroptions,
     'paymentmethods' => pqfin_payment_method_options(),
     'schemaready' => pqfin_schema_ready(),

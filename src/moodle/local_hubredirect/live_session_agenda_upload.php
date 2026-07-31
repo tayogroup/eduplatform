@@ -98,7 +98,7 @@ if (!pqh_table_exists_safe('local_prequran_live_session')) {
     pqlagu_stop('Live session tables are not installed.', 'Agenda upload unavailable');
 }
 if (!pqlagu_has_required_fields()) {
-    pqlagu_stop('Run the local_prequran Moodle upgrade before uploading session agenda slides.', 'Agenda upload unavailable');
+    pqlagu_stop('Run the local_prequran upgrade before uploading session agenda slides.', 'Agenda upload unavailable');
 }
 
 $session = $sessionid > 0 ? $DB->get_record('local_prequran_live_session', ['id' => $sessionid], '*', IGNORE_MISSING) : false;

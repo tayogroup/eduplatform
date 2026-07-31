@@ -108,10 +108,16 @@ function pqmrl_role(int $userid): string {
     if (pqmrl_has_teacher_role($userid)) {
         return 'teacher';
     }
-    foreach (['local_prequran_comm_consent', 'local_prequran_live_consent'] as $table) {
+    // Only LIVE consent rows make someone a parent — revoked links
+    // (consented=0/granted=0 via the parent-links unlink action) don't count.
+    $consentchecks = [
+        'local_prequran_comm_consent' => ['guardianid' => $userid, 'consented' => 1],
+        'local_prequran_live_consent' => ['guardianid' => $userid, 'granted' => 1],
+    ];
+    foreach ($consentchecks as $table => $conditions) {
         if (pqmrl_table_exists($table)
                 && pqmrl_table_has_field($table, 'guardianid')
-                && $DB->record_exists($table, ['guardianid' => $userid])) {
+                && $DB->record_exists($table, $conditions)) {
             return 'parent';
         }
     }
@@ -162,11 +168,17 @@ function pqmrl_student_in_allowed_workspace(int $studentid): bool {
 function pqmrl_parent_children(int $parentid): array {
     global $DB;
     $children = [];
-    foreach (['local_prequran_comm_consent', 'local_prequran_live_consent'] as $table) {
+    // Revoked links (unlink action) are excluded — a parent whose consent was
+    // withdrawn loses report visibility of that child.
+    $consentfilters = [
+        'local_prequran_comm_consent' => ['guardianid' => $parentid, 'consented' => 1],
+        'local_prequran_live_consent' => ['guardianid' => $parentid, 'granted' => 1],
+    ];
+    foreach ($consentfilters as $table => $conditions) {
         if (!pqmrl_table_exists($table) || !pqmrl_table_has_field($table, 'guardianid') || !pqmrl_table_has_field($table, 'studentid')) {
             continue;
         }
-        $rows = $DB->get_records($table, ['guardianid' => $parentid]);
+        $rows = $DB->get_records($table, $conditions);
         foreach ($rows as $row) {
             $studentid = (int)$row->studentid;
             if ($studentid > 0) {

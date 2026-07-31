@@ -182,6 +182,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             if ($workspaceid > 0 && !$workspaceallowed) {
                 throw new invalid_parameter_exception('This workspace does not belong to the active consumer.');
             }
+            $schoolcontextforusername = $workspaceid > 0 ? pqh_consumer_context_by_workspace($workspaceid) : null;
+            $schoolslugforusername = (string)($schoolcontextforusername->consumerslug ?? $pqsiconsumercontext->consumerslug ?? '');
             $existingstudentid = $bodyint('existing_studentid', 0);
             if ($existingstudentid > 0 && $pqsiisindependentteacher && !$pqsiisoperationsuser) {
                 throw new invalid_parameter_exception('Use Find existing student to request access to an existing learner. Existing profiles cannot be transferred through intake.');
@@ -873,7 +875,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                     $data['student_display_name'] = $displayname;
                 }
             } else {
-                $studentusername = pqsil_unique_username($bodyusername('student_username') ?: 'student.' . $firstname . '.' . $lastname);
+                $studentusername = pqsil_unique_username('student.' . $firstname . '.' . $lastname);
                 $studentmoodleemail = $studentemail !== '' ? pqsil_moodle_email_from_contact($studentemail, 'student') : $studentusername . '@eduplatform.local';
 
                 [$studentid, $studentpassword] = pqsil_create_user($firstname, $lastname, $studentmoodleemail, $studentusername, true);
@@ -882,6 +884,13 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
 
             $studentuser = core_user::get_user($studentid);
             if ($studentuser) {
+                if ($existingstudentid <= 0) {
+                    $standardusername = pqh_generate_standard_username($schoolslugforusername, 'student', $studentaccountid);
+                    if ($standardusername !== '' && !$DB->record_exists('user', ['username' => $standardusername, 'mnethostid' => $CFG->mnet_localhost_id])) {
+                        $studentuser->username = $standardusername;
+                        $studentusername = $standardusername;
+                    }
+                }
                 if (core_text::strlen($country) <= 2) {
                     $studentuser->country = core_text::strtoupper($country);
                 }
@@ -906,11 +915,22 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                     $parts = preg_split('/\s+/', trim($parentname));
                     $parentfirst = $parts && isset($parts[0]) && $parts[0] !== '' ? $parts[0] : 'Parent';
                     $parentlast = $parts && count($parts) > 1 ? trim(implode(' ', array_slice($parts, 1))) : 'Guardian';
-                    $parentusername = pqsil_unique_username($bodyusername('parent_username') ?: $parentcontact);
+                    $parentusername = pqsil_unique_username($parentcontact);
                     [$parentid, $parentpassword] = pqsil_create_user($parentfirst, $parentlast, $parentmoodleemail, $parentusername, false);
                     $parentcreated = true;
                 }
                 $parentaccountid = pqh_assign_account_id($parentid, 'parent');
+                if ($parentcreated) {
+                    $standardparentusername = pqh_generate_standard_username($schoolslugforusername, 'parent', $parentaccountid);
+                    if ($standardparentusername !== '' && !$DB->record_exists('user', ['username' => $standardparentusername, 'mnethostid' => $CFG->mnet_localhost_id])) {
+                        $parentuserforrename = core_user::get_user($parentid);
+                        if ($parentuserforrename) {
+                            $parentuserforrename->username = $standardparentusername;
+                            user_update_user($parentuserforrename, false, false);
+                            $parentusername = $standardparentusername;
+                        }
+                    }
+                }
             }
 
             $enrollmentapproved = $parentid <= 0 || pqsil_enrollment_already_approved($studentid, $parentid);
@@ -1117,6 +1137,17 @@ if ($getworkspaceid > 0) {
     $bootform['workspaceid'] = (string)$getworkspaceid;
 }
 
+// Geo reference data (country/city/timezone) now ships from the CDN
+// (platform/data/*.json) and is merged client-side; trim it from this bootstrap.
+// $pqsioptions above stays intact for server-side POST validation.
+$pqsipublicoptions = $pqsioptions;
+unset(
+    $pqsipublicoptions['countries'],
+    $pqsipublicoptions['cities'],
+    $pqsipublicoptions['country_cities'],
+    $pqsipublicoptions['timezones'],
+    $pqsipublicoptions['country_timezones']
+);
 echo json_encode([
     'ok' => true,
     'ready' => $ready,
@@ -1137,6 +1168,6 @@ echo json_encode([
     'requestid' => $getrequestid,
     'workspaceid' => $getworkspaceid,
     'form' => $bootform,
-    'options' => $pqsioptions,
+    'options' => $pqsipublicoptions,
 ], JSON_UNESCAPED_SLASHES);
 exit;

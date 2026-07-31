@@ -212,6 +212,8 @@ $PAGE->set_title('Parent Trust Compliance Review Pack');
 $PAGE->set_heading('Parent Trust Compliance Review Pack');
 $PAGE->add_body_class('pqh-parent-trust-pack-page');
 
+pqh_enforce_role_domain($pqlptrpconsumercontext, pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
+
 echo $OUTPUT->header();
 ?>
 <style>

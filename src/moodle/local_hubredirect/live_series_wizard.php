@@ -290,6 +290,8 @@ $params = array_merge($urlparams, [
     'recording_enabled' => $recording ? 1 : 0,
 ]);
 
+pqh_enforce_role_domain($consumercontext, $pqlswworkspaceid, (int)$USER->id);
+
 echo $OUTPUT->header();
 ?>
 <style>

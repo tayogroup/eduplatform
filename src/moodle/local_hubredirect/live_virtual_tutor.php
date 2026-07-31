@@ -417,6 +417,9 @@ if (!$canview) {
         'Virtual Tutor access not available'
     );
 }
+if ($workspaceid > 0) {
+    pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
+}
 
 if ($embed && !$panel) {
     $popupurl = pqlvt_url('/local/hubredirect/live_virtual_tutor.php', $urlparams, [

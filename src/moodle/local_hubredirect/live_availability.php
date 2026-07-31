@@ -241,6 +241,7 @@ if (!$canmanageavailability && !$isavailabilityteacher) {
         'Teacher availability access required'
     );
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $ready = pqlav_table_exists('local_prequran_live_availability');
 $requestedteacherid = optional_param('teacherid', 0, PARAM_INT);

@@ -119,6 +119,7 @@ if ($documentid !== '') {
     $recentdocs = pqct_recent_official_transcript_docs($studentid, $workspaceid, 8);
     $mode = 'draft';
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $header = $payload['header'] ?? [];
 $student = $header['student'] ?? [];
@@ -237,7 +238,7 @@ body.pqcto-page #page,body.pqcto-page #page-content,body.pqcto-page #region-main
         <tbody>
           <?php foreach ($lines as $line): ?>
             <tr>
-              <td><span class="pqcto-name"><?php echo s((string)($line['course']['title'] ?? 'Course')); ?></span><span class="pqcto-muted"><?php echo s((string)($line['course']['key'] ?? '')); ?> / Moodle #<?php echo (int)($line['course']['moodlecourseid'] ?? 0); ?></span></td>
+              <td><span class="pqcto-name"><?php echo s((string)($line['course']['title'] ?? 'Course')); ?></span><span class="pqcto-muted"><?php echo s((string)($line['course']['key'] ?? '')); ?> / Course #<?php echo (int)($line['course']['moodlecourseid'] ?? 0); ?></span></td>
               <td><span class="pqcto-pill"><?php echo s(pqcto_status_label((string)($line['status']['normalized'] ?? 'unknown'))); ?></span></td>
               <td><?php echo s(pqcto_snapshot_value($line, 'grade')); ?></td>
               <td><?php echo s(pqcto_snapshot_value($line, 'completion')); ?></td>

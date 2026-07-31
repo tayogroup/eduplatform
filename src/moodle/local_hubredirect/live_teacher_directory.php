@@ -24,6 +24,7 @@ pqh_require_academy_operations(
     $dashboardurl,
     'Teacher directory access required'
 );
+pqh_enforce_role_domain($consumercontext, pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
 
 function pqltd_table_exists(string $table): bool {
     global $DB;

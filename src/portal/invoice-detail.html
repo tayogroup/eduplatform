@@ -257,6 +257,11 @@
       h += `<h3>Marketplace payout readiness</h3><table><thead><tr><th>Payout</th><th>Teacher</th><th>Gross</th><th>Platform fee</th><th>Net payout</th><th>Status</th></tr></thead><tbody>` +
         d.marketplacepayouts.map((p) => `<tr><td>${esc(p.payoutnumber)}<span class="muted">Request #${p.requestid}</span></td><td>#${p.teacherid}${d.names[p.teacherid] ? " " + esc(d.names[p.teacherid]) : ""}</td><td>${esc(p.currency + " " + p.grossamount)}</td><td>${esc(p.platformfee)}</td><td>${esc(p.payoutamount)}</td><td><span class="pill">${esc(words(p.status))}</span></td></tr>`).join("") + "</tbody></table>";
     }
+    if ((d.discountapplies || []).length) {
+      h += `<h3>Coupon &amp; grant discounts</h3><table><thead><tr><th>Type</th><th>Amount</th><th>Status</th><th>Applied</th><th></th></tr></thead><tbody>` +
+        d.discountapplies.map((a) => `<tr><td>${esc(words(a.sourcetype))}</td><td>${esc(a.amount)}</td><td><span class="pill">${esc(a.status)}</span></td><td>${new Date(a.timecreated * 1000).toLocaleDateString()}</td>
+          <td>${a.status === "applied" ? `<form class="act" data-do="reverse_discount" data-confirm="Reverse this discount? The invoice balance is recalculated."><input type="hidden" name="applyid" value="${a.id}"><input type="hidden" name="reversereason" value="Reversed from invoice detail"><button type="submit">Reverse</button></form>` : ""}</td></tr>`).join("") + "</tbody></table>";
+    }
     return h;
   }
 
@@ -349,6 +354,11 @@
         ${field("Platform fee", input("payoutplatformfee", "0.00"))}
         ${field("Notes", input("payoutnotes", "", "Payout basis or review note"))}
         <button type="submit">Mark payout ready</button></form>`;
+    }
+    if (d.couponschemaready && ["draft", "issued", "sent", "partially_paid"].includes(s)) {
+      h += `<form class="act" data-do="apply_coupon"><h3 style="margin-top:0">Apply coupon</h3>
+        ${field("Coupon code", input("couponcode", "", "Code managed in the Finance Monetization console"))}
+        <button type="submit">Apply coupon</button></form>`;
     }
     if (d.correctionschemaready && s !== "void") {
       h += `<form class="act" data-do="create_credit_note" data-confirm="Create this credit note against the invoice balance?"><h3 style="margin-top:0">Credit note</h3>

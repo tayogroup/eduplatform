@@ -11,6 +11,7 @@ $workspaceid = pqh_current_workspace_id((int)$USER->id, $requestedworkspaceid);
 if ($workspaceid <= 0 || !pqh_user_can_teach_in_workspace((int)$USER->id, $workspaceid)) {
     pqh_access_denied('Learning path access requires teacher or workspace administrator access.', new moodle_url('/local/hubredirect/workspace_dashboard.php'), 'Learning path access denied');
 }
+pqh_enforce_role_domain(pqh_requested_consumer_context(), $workspaceid, (int)$USER->id);
 $canmanage = pqh_user_can_manage_workspace((int)$USER->id, $workspaceid);
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $urlparams = ['workspaceid' => $workspaceid];
@@ -22,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         require_sesskey();
         if (!$ready) {
-            throw new invalid_parameter_exception('Learning path tables are not installed yet. Run Moodle upgrade.');
+            throw new invalid_parameter_exception('Learning path tables are not installed yet. Run the platform upgrade.');
         }
         $action = optional_param('action', '', PARAM_ALPHANUMEXT);
         $now = time();
@@ -183,7 +184,7 @@ echo '<style>.pqlp-wrap{max-width:1180px;margin:0 auto}.pqlp-top{display:flex;ju
 echo '<div class="pqlp-wrap"><div class="pqlp-top"><div><h2>Student Progress And Learning Path</h2><div class="pqlp-muted">' . s($workspace->name) . ' placement, advancement rules, mastery, skill maps, recommendations, comments, and intervention plans.</div></div><a class="pqlp-btn pqlp-btn--light" href="' . (new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams))->out(false) . '">Workspace</a></div>';
 if ($notice !== '') { echo '<div class="pqlp-notice">' . s($notice) . '</div>'; }
 if ($error !== '') { echo '<div class="pqlp-error">' . s($error) . '</div>'; }
-if (!$ready) { echo '<div class="pqlp-error">Learning path schema is not ready. Run the Moodle local_prequran upgrade.</div>'; }
+if (!$ready) { echo '<div class="pqlp-error">Learning path schema is not ready. Run the local_prequran upgrade.</div>'; }
 echo '<div class="pqlp-grid"><section class="pqlp-panel">';
 if ($canmanage) {
     echo '<h3>Skill Map</h3><form method="post"><input type="hidden" name="sesskey" value="' . s(sesskey()) . '"><input type="hidden" name="action" value="save_skill">';

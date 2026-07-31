@@ -135,6 +135,9 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Support Reports');
 $PAGE->set_heading('Support Reports');
 
+if ($workspaceid > 0) {
+    pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
+}
 $open = $ready ? (int)$DB->count_records_select('local_prequran_support_ticket', "status NOT IN ('resolved', 'closed')" . ($workspaceid > 0 ? ' AND workspaceid = ?' : ''), $workspaceid > 0 ? [$workspaceid] : []) : 0;
 $unassigned = $ready ? (int)$DB->count_records_select('local_prequran_support_ticket', "status NOT IN ('resolved', 'closed') AND assigneeid = 0" . ($workspaceid > 0 ? ' AND workspaceid = ?' : ''), $workspaceid > 0 ? [$workspaceid] : []) : 0;
 $breached = $ready ? (int)$DB->count_records_select('local_prequran_support_ticket', "status NOT IN ('resolved', 'closed') AND sla_resolution_due > 0 AND sla_resolution_due < ?" . ($workspaceid > 0 ? ' AND workspaceid = ?' : ''), $workspaceid > 0 ? [time(), $workspaceid] : [time()]) : 0;

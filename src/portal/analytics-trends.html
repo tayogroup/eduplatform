@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analytics trends · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .note{color:var(--muted);font-size:12px;margin:8px 0 0}
+  form.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+  .field{display:grid;gap:4px}
+  .field label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2)}
+  .field input{min-height:36px;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font:inherit;background:#fff;width:150px}
+  button{min-height:36px;border:0;border-radius:8px;padding:0 14px;font:800 14px/1 system-ui;background:var(--blue2);color:#fff;cursor:pointer}
+  button.ghost{background:var(--sky);color:var(--blue)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .chartwrap{overflow-x:auto}
+  svg.chart{width:100%;min-width:520px;height:auto;display:block}
+  .grid{stroke:var(--line);stroke-width:1}
+  .axis{stroke:#b9c7d6;stroke-width:1}
+  .line{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+  .ylab{fill:var(--muted);font-size:10px;text-anchor:end}
+  .xlab{fill:var(--muted);font-size:10px;text-anchor:middle}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--ink2)}
+  .legend .lg i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);background:var(--sky);white-space:nowrap}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .name{font-weight:800}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2);white-space:nowrap}
+  .pill.good{background:#e1f2ff;color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .barcell{display:flex;align-items:center;gap:8px;min-width:130px}
+  .barwrap{flex:1;min-width:56px;height:8px;background:var(--sky);border-radius:999px;overflow:hidden}
+  .barwrap>i{display:block;height:100%;background:var(--blue2);border-radius:999px}
+  .barnum{min-width:44px;text-align:right;font-variant-numeric:tabular-nums;font-weight:800}
+  .empty{border:1px dashed var(--line);border-radius:10px;padding:26px;text-align:center;color:var(--muted);font-weight:700}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Analytics trends</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of analytics_trends.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Analytics trends</h1><p class="sub">Nightly snapshots over time, per-cohort performance and curriculum coverage — read-only.</p></div>
+  <div class="panel">
+    <form class="filters" id="filters">
+      <div class="field"><label for="wsid">Workspace ID (override)</label><input id="wsid" type="number" min="0" step="1" placeholder="current"></div>
+      <button type="button" class="ghost" id="refresh">Refresh</button>
+    </form>
+  </div>
+  <div id="status" class="status">Loading analytics…</div>
+
+  <div class="panel" id="trend-panel" hidden>
+    <h2>Trends over time</h2>
+    <div id="trend-body"></div>
+    <p class="note" id="trend-note" hidden></p>
+  </div>
+
+  <div class="panel scroll" id="courses-panel" hidden>
+    <h2>Course performance</h2>
+    <div id="courses-body"></div>
+  </div>
+
+  <div class="panel scroll" id="curriculum-panel" hidden>
+    <h2>Curriculum coverage</h2>
+    <div id="curriculum-body"></div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const num = (v) => (v === null || v === undefined || v === "" || isNaN(Number(v))) ? null : Number(v);
+  const pctCell = (v) => { const n = num(v); return n === null ? "—" : n + "%"; };
+  const shortDate = (ts) => { const n = Number(ts); if (!n) return "—"; const d = new Date(n * 1000); return isNaN(d.getTime()) ? "—" : d.toLocaleDateString(undefined, { day: "numeric", month: "short" }); };
+  const fullDate = (ts) => { const n = Number(ts); if (!n) return "—"; const d = new Date(n * 1000); return isNaN(d.getTime()) ? "—" : d.toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" }); };
+
+  if (qs.get("workspaceid")) $("#wsid").value = qs.get("workspaceid");
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => {
+    const p = new URLSearchParams({ report: "analytics-trends", token });
+    const w = ($("#wsid").value || "").trim(); if (w) p.set("workspaceid", w);
+    const c = qs.get("consumer"); if (c) p.set("consumer", c);
+    return endpoint + "?" + p;
+  };
+
+  async function load() {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading analytics…";
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  // Pure inline SVG line chart — no library, no external requests. Three series over the snapshot dates.
+  function lineChart(trend) {
+    const W = 760, H = 300, padL = 44, padR = 18, padT = 14, padB = 36;
+    const plotW = W - padL - padR, plotH = H - padT - padB, n = trend.length;
+    const xFor = (i) => n <= 1 ? padL + plotW / 2 : padL + (i / (n - 1)) * plotW;
+    const yFor = (v) => padT + (1 - Math.max(0, Math.min(100, v)) / 100) * plotH;
+
+    let grid = "";
+    for (let g = 0; g <= 100; g += 25) {
+      const y = yFor(g);
+      grid += `<line class="grid" x1="${padL}" y1="${y.toFixed(1)}" x2="${(padL + plotW).toFixed(1)}" y2="${y.toFixed(1)}"/>`;
+      grid += `<text class="ylab" x="${padL - 8}" y="${(y + 3).toFixed(1)}">${g}%</text>`;
+    }
+    const axis = `<line class="axis" x1="${padL}" y1="${padT}" x2="${padL}" y2="${(padT + plotH).toFixed(1)}"/>`
+      + `<line class="axis" x1="${padL}" y1="${(padT + plotH).toFixed(1)}" x2="${(padL + plotW).toFixed(1)}" y2="${(padT + plotH).toFixed(1)}"/>`;
+
+    const step = Math.max(1, Math.ceil(n / 8));
+    let xlab = "";
+    for (let i = 0; i < n; i += step) xlab += `<text class="xlab" x="${xFor(i).toFixed(1)}" y="${H - 12}">${esc(shortDate(trend[i].date))}</text>`;
+
+    const series = [["pass_rate", "#2a6cb0", "Pass rate"], ["attendance_rate", "#b97e12", "Attendance"], ["unit_completion_rate", "#5a3fa0", "Unit completion"]];
+    let paths = "";
+    for (const [key, color] of series) {
+      const segs = []; let seg = [];
+      trend.forEach((p, i) => {
+        const v = num(p[key]);
+        if (v === null) { if (seg.length) { segs.push(seg); seg = []; } }
+        else seg.push([xFor(i), yFor(v)]);
+      });
+      if (seg.length) segs.push(seg);
+      for (const s of segs) {
+        if (s.length > 1) paths += `<polyline class="line" style="stroke:${color}" points="${s.map((p) => p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" ")}"/>`;
+        paths += s.map((p) => `<circle style="fill:${color}" cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.6"/>`).join("");
+      }
+    }
+    const legend = series.map(([k, c, l]) => `<span class="lg"><i style="background:${c}"></i>${l}</span>`).join("");
+    return `<div class="chartwrap"><svg class="chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Pass rate, attendance and unit completion over time">${grid}${axis}${paths}${xlab}</svg></div><div class="legend">${legend}</div>`;
+  }
+
+  function render(d) {
+    const trend = d.trend || [];
+    if (!trend.length) {
+      $("#trend-body").innerHTML = `<div class="empty">${d.snapshot_mode !== "enabled"
+        ? "Nightly analytics snapshots are off — enable analytics_snapshot_mode to start collecting the trend."
+        : "No snapshots captured yet — the first appears after tonight's run."}</div>`;
+      $("#trend-note").hidden = true;
+    } else {
+      const table = `<div class="scroll"><table><thead><tr>`
+        + `<th>Date</th><th class="num">Pass %</th><th class="num">Attendance %</th><th class="num">Completion %</th><th class="num">Graded students</th>`
+        + `</tr></thead><tbody>`
+        + trend.map((p) => `<tr>`
+          + `<td>${esc(fullDate(p.date))}</td>`
+          + `<td class="num">${pctCell(p.pass_rate)}</td>`
+          + `<td class="num">${pctCell(p.attendance_rate)}</td>`
+          + `<td class="num">${pctCell(p.unit_completion_rate)}</td>`
+          + `<td class="num">${Number(p.graded_students) || 0}</td>`
+          + `</tr>`).join("")
+        + `</tbody></table></div>`;
+      $("#trend-body").innerHTML = lineChart(trend) + table;
+      const thr = num(d.pass_threshold);
+      if (thr !== null) { $("#trend-note").hidden = false; $("#trend-note").textContent = `Pass threshold: ${thr}%. Snapshots ordered oldest to newest.`; }
+      else $("#trend-note").hidden = true;
+    }
+    $("#trend-panel").hidden = false;
+
+    const courses = d.courses || [];
+    $("#courses-body").innerHTML = !courses.length
+      ? `<div class="empty">No course performance rows yet.</div>`
+      : `<table><thead><tr><th>Course</th><th class="num">Students</th><th class="num">Avg grade</th><th>Pass rate</th></tr></thead><tbody>`
+        + courses.map((c) => {
+          const pr = num(c.pass_rate);
+          const bar = pr === null ? `<span class="muted">—</span>`
+            : `<div class="barcell"><div class="barwrap"><i style="width:${Math.max(0, Math.min(100, pr))}%"></i></div><span class="barnum">${pr}%</span></div>`;
+          return `<tr>`
+            + `<td><span class="name">${esc(c.title)}</span></td>`
+            + `<td class="num">${Number(c.students) || 0}</td>`
+            + `<td class="num">${pctCell(c.avg_grade)}</td>`
+            + `<td>${bar}</td>`
+            + `</tr>`;
+        }).join("")
+        + `</tbody></table>`;
+    $("#courses-panel").hidden = false;
+
+    const curriculum = d.curriculum || [];
+    $("#curriculum-body").innerHTML = !curriculum.length
+      ? `<div class="empty">Curriculum metadata appears after catalog sync runs.</div>`
+      : `<table><thead><tr><th>Course</th><th>Subject</th><th>Stage</th><th>Level</th><th>Cambridge code</th><th>Framework</th><th class="num">Units</th></tr></thead><tbody>`
+        + curriculum.map((r) => `<tr>`
+          + `<td><span class="name">${esc(r.course)}</span></td>`
+          + `<td>${esc(r.subject || "—")}</td>`
+          + `<td>${esc(r.stage || "—")}</td>`
+          + `<td>${esc(r.level || "—")}</td>`
+          + `<td>${r.cambridge_code ? `<span class="pill good">${esc(r.cambridge_code)}</span>` : `<span class="muted">—</span>`}</td>`
+          + `<td>${esc(r.framework || "—")}</td>`
+          + `<td class="num">${Number(r.unitcount) || 0}</td>`
+          + `</tr>`).join("")
+        + `</tbody></table>`;
+    $("#curriculum-panel").hidden = false;
+
+    $("#status").hidden = true;
+  }
+
+  $("#filters").addEventListener("submit", (e) => { e.preventDefault(); load(); });
+  $("#refresh").addEventListener("click", load);
+  load();
+})();
+</script>
+</body>
+</html>

@@ -22,6 +22,11 @@ $PAGE->set_title('Parent Workspace');
 $PAGE->set_heading('Parent Workspace');
 $PAGE->add_body_class('pqw-parent-page');
 
+$pqwpworkspaceid = pqh_current_workspace_id((int)$USER->id);
+if ($pqwpworkspaceid > 0) {
+    pqh_enforce_role_domain($consumercontext, $pqwpworkspaceid, (int)$USER->id);
+}
+
 function pqwp_parent_children(int $parentid): array {
     global $DB;
     $ids = [];
@@ -232,36 +237,72 @@ echo $OUTPUT->header();
 <style>
 body.pqw-parent-page header,body.pqw-parent-page footer,body.pqw-parent-page nav.navbar,body.pqw-parent-page #page-header,body.pqw-parent-page #page-footer,body.pqw-parent-page .drawer,body.pqw-parent-page .drawer-toggles,body.pqw-parent-page .block-region,body.pqw-parent-page [data-region="drawer"],body.pqw-parent-page [data-region="right-hand-drawer"]{display:none!important}
 body.pqw-parent-page #page,body.pqw-parent-page #page-content,body.pqw-parent-page #region-main,body.pqw-parent-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
-.pqwp-shell{min-height:100vh;padding:28px 18px 56px;background:#f6f8fb;color:#173044;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}.pqwp-wrap{max-width:1180px;margin:0 auto}.pqwp-top,.pqwp-panel{padding:18px;border:1px solid rgba(23,48,68,.12);border-radius:8px;background:#fff;box-shadow:0 12px 28px rgba(23,48,68,.06)}.pqwp-top{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin-bottom:14px}.pqwp-title{margin:0;color:#221b22;font-size:29px;font-weight:950;line-height:1.1}.pqwp-sub{margin:7px 0 0;color:#5e7280;font-size:14px;font-weight:800}.pqwp-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.pqwp-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 12px;border:0;border-radius:8px;background:#2f6f4e;color:#fff!important;text-decoration:none;font-size:13px;font-weight:950;cursor:pointer}.pqwp-btn--light{background:#eef4f6;color:#173044!important;border:1px solid rgba(23,48,68,.12)}.pqwp-select{min-height:38px;border:1px solid rgba(23,48,68,.18);border-radius:8px;background:#fbfdff;color:#173044;font-size:13px;font-weight:850;padding:0 10px}.pqwp-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}.pqwp-metric{padding:14px;border:1px solid rgba(23,48,68,.12);border-radius:8px;background:#fff}.pqwp-metric strong{display:block;color:#221b22;font-size:25px;font-weight:950;line-height:1}.pqwp-metric span{display:block;margin-top:5px;color:#5e7280;font-size:12px;font-weight:900}.pqwp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.pqwp-panel h2{margin:0 0 12px;color:#221b22;font-size:22px;font-weight:950}.pqwp-table{width:100%;border-collapse:separate;border-spacing:0}.pqwp-table th,.pqwp-table td{padding:10px;border-bottom:1px solid rgba(23,48,68,.1);text-align:left;vertical-align:top;font-size:13px}.pqwp-table th{color:#5e7280;font-size:12px;font-weight:950;text-transform:uppercase}.pqwp-name{display:block;color:#221b22;font-size:14px;font-weight:950}.pqwp-muted{display:block;margin-top:3px;color:#728391;font-size:12px;font-weight:800}.pqwp-pill{display:inline-flex;min-height:25px;align-items:center;margin:0 5px 5px 0;padding:0 8px;border-radius:999px;background:#eef4f6;color:#173044;font-size:12px;font-weight:950}.pqwp-empty{padding:18px;border:1px dashed rgba(23,48,68,.22);border-radius:8px;color:#5e7280;font-weight:900;background:#fff}.pqwp-note{padding:12px;border-bottom:1px solid rgba(23,48,68,.1)}.pqwp-note:last-child{border-bottom:0}
-@media(max-width:900px){.pqwp-top,.pqwp-grid{grid-template-columns:1fr}.pqwp-actions{justify-content:flex-start}.pqwp-metrics{grid-template-columns:1fr}}
+.pqwp-shell{min-height:100vh;padding:28px 18px 56px;background:#fff;color:#173044;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6}.pqwp-wrap{max-width:1360px;margin:0 auto}.pqwp-top,.pqwp-panel{padding:18px;border:1px solid rgba(23,48,68,.12);border-radius:8px;background:#fff;box-shadow:0 12px 28px rgba(23,48,68,.06)}.pqwp-top{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin-bottom:14px}.pqwp-title{margin:0;color:#221b22;font-size:29px;font-weight:950;line-height:1.1}.pqwp-sub{margin:7px 0 0;color:#5e7280;font-size:14px;font-weight:800}.pqwp-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.pqwp-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 12px;border:0;border-radius:8px;background:#2f6f4e;color:#fff!important;text-decoration:none;font-size:13px;font-weight:950;cursor:pointer}.pqwp-btn--light{background:#eef4f6;color:#173044!important;border:1px solid rgba(23,48,68,.12)}.pqwp-select{min-height:38px;border:1px solid rgba(23,48,68,.18);border-radius:8px;background:#fbfdff;color:#173044;font-size:13px;font-weight:850;padding:0 10px}.pqwp-layout{display:grid;grid-template-columns:1fr 300px;gap:14px;align-items:start}.pqwp-side{display:grid;gap:14px;align-content:start}.pqwp-quicklinks{display:grid;gap:8px}.pqwp-quicklinks .pqwp-btn{width:100%}.pqwp-ataglance{display:grid;gap:8px}.pqwp-ataglance>div{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:10px 12px;border-radius:8px;background:#fbfdff;border:1px solid rgba(23,48,68,.08)}.pqwp-ataglance strong{color:#221b22;font-size:17px;font-weight:950;white-space:nowrap}.pqwp-ataglance span{color:#5e7280;font-size:11.5px;font-weight:850;text-align:right}.pqwp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.pqwp-panel h2{margin:0 0 12px;color:#221b22;font-size:22px;font-weight:950}.pqwp-table{width:100%;border-collapse:separate;border-spacing:0}.pqwp-table th,.pqwp-table td{padding:10px;border-bottom:1px solid rgba(23,48,68,.1);text-align:left;vertical-align:top;font-size:13px}.pqwp-table th{color:#5e7280;font-size:12px;font-weight:950;text-transform:uppercase}.pqwp-name{display:block;color:#221b22;font-size:14px;font-weight:950}.pqwp-muted{display:block;margin-top:3px;color:#728391;font-size:12px;font-weight:800}.pqwp-pill{display:inline-flex;min-height:25px;align-items:center;margin:0 5px 5px 0;padding:0 8px;border-radius:999px;background:#eef4f6;color:#173044;font-size:12px;font-weight:950}.pqwp-empty{padding:18px;border:1px dashed rgba(23,48,68,.22);border-radius:8px;color:#5e7280;font-weight:900;background:#fff}.pqwp-note{padding:12px;border-bottom:1px solid rgba(23,48,68,.1)}.pqwp-note:last-child{border-bottom:0}
+.pqwp-side .pqwp-panel{background:#e3f4ff}
+@media(max-width:1180px){.pqwp-layout{grid-template-columns:1fr}.pqwp-side{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}}
+@media(max-width:900px){.pqwp-top,.pqwp-grid{grid-template-columns:1fr}.pqwp-actions{justify-content:flex-start}}
+@media(max-width:680px){.pqwp-side{grid-template-columns:1fr}}
 <?php echo pqh_workspace_header_css(); ?>
+/* ============================================================
+   Workspace design system: same modern layer as the student
+   workplace - tokens, blue top band, light rail, quiet surfaces.
+   ============================================================ */
+.pqwp-shell{
+  --pqh-ink:#0f2237;--pqh-muted:#5b6b7c;--pqh-faint:#8494a5;
+  --pqh-line:#e4e9ef;--pqh-bg:#f4f6f9;--pqh-surface:#ffffff;
+  --pqh-tint:#edf3fc;--pqh-tint-2:#e0ebfa;--pqh-primary:#2166d1;
+  --pqh-primary-ink:#17498f;--pqh-r:14px;
+  --pqh-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14);
+  background:#fff;color:var(--pqh-ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6}
+.pqwp-shell .pqh-appbar{background:linear-gradient(90deg,#cfe9ff 0%,#e3f4ff 50%,#f2fbff 100%)}
+.pqwp-shell .pqh-gnav{background:none}
+.pqwp-top.pqh-workspace-top{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;box-shadow:none!important;border-radius:var(--pqh-r)!important;padding:20px 22px!important}
+.pqwp-title,.pqwp-title.pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
+.pqwp-sub,.pqwp-sub.pqh-workspace-sub{color:var(--pqh-muted)!important;font-weight:500!important;opacity:1}
+.pqwp-select,.pqh-workspace-actions select{border:1px solid var(--pqh-line)!important;border-radius:10px!important;background:var(--pqh-surface)!important;color:var(--pqh-ink)!important;font-weight:550!important}
+.pqwp-panel{background:var(--pqh-surface);border:1px solid var(--pqh-line)!important;border-radius:var(--pqh-r);box-shadow:var(--pqh-shadow)}
+.pqwp-panel h2{color:var(--pqh-ink);font-size:17px;font-weight:750;letter-spacing:-.01em}
+.pqwp-btn{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;color:var(--pqh-ink)!important;font-weight:650!important;border-radius:10px!important;box-shadow:none!important}
+.pqwp-btn:hover{background:var(--pqh-tint)!important;border-color:var(--pqh-tint-2)!important;text-decoration:none!important}
+.pqwp-ataglance>div{background:var(--pqh-bg);border-color:var(--pqh-line)}
+.pqwp-ataglance strong{color:var(--pqh-ink)}
+.pqwp-ataglance span{color:var(--pqh-faint)}
+.pqwp-pill{background:var(--pqh-tint);color:var(--pqh-primary-ink);font-weight:650;border-radius:8px}
+.pqwp-muted{color:var(--pqh-muted);font-weight:500}
+.pqwp-name{color:var(--pqh-ink);font-weight:650}
+.pqwp-table th{color:var(--pqh-faint);font-weight:700}
+.pqwp-table th,.pqwp-table td{border-color:var(--pqh-line)}
+.pqwp-empty{background:var(--pqh-surface);border:1px dashed var(--pqh-line);border-radius:var(--pqh-r);color:var(--pqh-muted);font-weight:550}
+<?php echo pqh_design_shell_css('.pqwp-shell'); ?>
 </style>
 <main class="pqwp-shell">
+<?php
+echo pqh_design_shell_html('pqwp-shell', 'workspace', [
+    'title' => 'Parent Workspace',
+    'appbar' => [
+        ['Dashboard', new moodle_url('/local/hubredirect/dashboard.php', ['childid' => $childid] + $urlparams)],
+        ['School Hub', new moodle_url('/local/hubredirect/consumer_landing.php', $urlparams)],
+        ['Back', 'BACK', $dashboardurl],
+    ],
+]);
+?>
   <div class="pqwp-wrap">
     <section class="pqwp-top pqh-workspace-top">
       <div>
         <h1 class="pqwp-title pqh-workspace-title">Parent Workspace</h1>
         <p class="pqwp-sub pqh-workspace-sub"><?php echo s(fullname($child)); ?> - assigned materials, attendance, and teacher notes.</p>
       </div>
-      <form class="pqwp-actions pqh-workspace-actions" method="get">
-        <?php if (count($children) > 1): ?>
+      <?php if (count($children) > 1): ?>
+        <form class="pqwp-actions pqh-workspace-actions" method="get">
           <select class="pqwp-select" name="childid" onchange="this.form.submit()">
             <?php foreach ($children as $option): ?><option value="<?php echo (int)$option->id; ?>"<?php echo (int)$option->id === $childid ? ' selected' : ''; ?>><?php echo s($option->name); ?></option><?php endforeach; ?>
           </select>
-        <?php endif; ?>
-        <button class="pqwp-btn pqwp-btn--light" type="button" onclick="window.history.back()">Back</button>
-        <a class="pqwp-btn pqwp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php', ['childid' => $childid]))->out(false); ?>">Dashboard</a>
-        <a class="pqwp-btn pqwp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/parent_billing.php', ['childid' => $childid] + $urlparams))->out(false); ?>">Billing</a>
-        <a class="pqwp-btn pqwp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_summaries.php', ['childid' => $childid]))->out(false); ?>">Live summaries</a>
-        <a class="pqwp-btn pqh-workspace-logout" href="<?php echo (new moodle_url('/local/hubredirect/logout.php'))->out(false); ?>">Logout</a>
-      </form>
+        </form>
+      <?php endif; ?>
     </section>
-    <section class="pqwp-metrics">
-      <div class="pqwp-metric"><strong><?php echo count($materials); ?></strong><span>assigned materials</span></div>
-      <div class="pqwp-metric"><strong><?php echo (int)$attendance['present']; ?>/<?php echo (int)$attendance['total']; ?></strong><span>attendance present/total</span></div>
-      <div class="pqwp-metric"><strong><?php echo count($notes); ?></strong><span>parent-visible notes</span></div>
-      <div class="pqwp-metric"><strong><?php echo count($recordings); ?></strong><span>approved recordings</span></div>
-    </section>
+
+    <div class="pqwp-layout">
+      <div class="pqwp-main">
     <section class="pqwp-grid">
       <article class="pqwp-panel">
         <h2>Assigned Materials</h2>
@@ -293,6 +334,44 @@ body.pqw-parent-page #page,body.pqw-parent-page #page-content,body.pqw-parent-pa
           <?php foreach ($notes as $note): ?><div class="pqwp-note"><span class="pqwp-name"><?php echo s((string)($note->title ?? 'Session #' . (int)$note->sessionid)); ?></span><span class="pqwp-muted"><?php echo s(userdate((int)$note->timemodified, get_string('strftimedatetimeshort'))); ?><?php echo !empty($note->followup_status) ? ' / follow-up: ' . s((string)$note->followup_status) : ''; ?></span><?php if (!empty($note->parent_summary)): ?><p><?php echo s((string)$note->parent_summary); ?></p><?php endif; ?><?php if (!empty($note->strengths)): ?><p><strong>Strengths:</strong> <?php echo s((string)$note->strengths); ?></p><?php endif; ?><?php if (!empty($note->needs_practice)): ?><p><strong>Needs practice:</strong> <?php echo s((string)$note->needs_practice); ?></p><?php endif; ?><?php if (!empty($note->homework)): ?><p><strong>Homework:</strong> <?php echo s((string)$note->homework); ?></p><?php endif; ?></div><?php endforeach; ?>
         <?php endif; ?>
       </article>
+    </section>
+      </div>
+
+      <aside class="pqwp-side" aria-label="Parent quick reference">
+        <section class="pqwp-panel">
+          <h2>At a Glance</h2>
+          <div class="pqwp-ataglance">
+            <div><span>Assigned materials</span><strong><?php echo count($materials); ?></strong></div>
+            <div><span>Attendance present/total</span><strong><?php echo (int)$attendance['present']; ?>/<?php echo (int)$attendance['total']; ?></strong></div>
+            <div><span>Parent-visible notes</span><strong><?php echo count($notes); ?></strong></div>
+            <div><span>Approved recordings</span><strong><?php echo count($recordings); ?></strong></div>
+          </div>
+        </section>
+
+        <section class="pqwp-panel">
+          <h2>Quick Actions</h2>
+          <div class="pqwp-quicklinks">
+            <a class="pqwp-btn pqwp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/parent_billing.php', ['childid' => $childid] + $urlparams))->out(false); ?>">Billing</a>
+            <a class="pqwp-btn pqwp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_summaries.php', ['childid' => $childid]))->out(false); ?>">Live summaries</a>
+          </div>
+        </section>
+      </aside>
+    </div>
+
+    <section class="pqwp-panel" style="margin-top:14px">
+      <h2>Live Class Tools</h2>
+      <div class="pqwp-quicklinks" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+        <a class="pqwp-btn pqwp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_summaries.php', $urlparams + ['childid' => $childid]))->out(false); ?>">Live summaries</a>
+        <a class="pqwp-btn pqwp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_recordings.php', $urlparams + ['childid' => $childid]))->out(false); ?>">Live recordings</a>
+        <a class="pqwp-btn pqwp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust.php', $urlparams + ['childid' => $childid]))->out(false); ?>">Parent live hub</a>
+        <a class="pqwp-btn pqwp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_schedule.php', $urlparams + ['childid' => $childid]))->out(false); ?>">Live schedule</a>
+        <a class="pqwp-btn pqwp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_calendar.php', $urlparams + ['childid' => $childid]))->out(false); ?>">Live calendar</a>
+        <a class="pqwp-btn pqwp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_schedule.php', $urlparams + ['childid' => $childid]))->out(false); ?>">Class series schedule</a>
+        <a class="pqwp-btn pqwp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_trust.php', $urlparams + ['childid' => $childid]))->out(false); ?>">Trust center</a>
+        <a class="pqwp-btn pqwp-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $urlparams))->out(false); ?>">Live sessions</a>
+        <a class="pqwp-btn pqwp-btn--light" href="<?php echo pqh_live_session_explainer_url()->out(false); ?>" target="_blank" rel="noopener">Watch live-session guide</a>
+        <?php echo pqh_live_session_agenda_template_link('pqwp-btn pqwp-btn--light'); ?>
+      </div>
     </section>
   </div>
 </main>

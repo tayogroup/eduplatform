@@ -108,7 +108,7 @@ if (!$verified) {
         <span class="pqsx-pill">Requires Safe Exam Browser</span>
       </div>
       <?php if (!pqh_seb_engine_ready()): ?>
-        <div class="pqsx-warn">The Moodle SEB engine (quizaccess_seb) is not available on this installation, so exam verification cannot run. Please ask support to restore the core plugin.</div>
+        <div class="pqsx-warn">The SEB engine (quizaccess_seb) is not available on this installation, so exam verification cannot run. Please ask support to restore the core plugin.</div>
       <?php endif; ?>
       <?php if (trim((string)$exam->embedurl) === '' && $ismanager): ?>
         <div class="pqsx-warn">This exam has no content URL yet. Edit it in the exam manager before students take it.</div>

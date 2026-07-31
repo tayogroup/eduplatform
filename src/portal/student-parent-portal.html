@@ -37,6 +37,14 @@
   a.child.active{background:var(--sky)}
   .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
   .status.error{background:var(--red-bg);color:var(--red)}
+  .pqsp-bar{height:8px;max-width:240px;margin-top:6px;border-radius:999px;background:var(--sky);overflow:hidden}
+  .pqsp-bar-fill{height:100%;border-radius:999px;background:var(--blue2)}
+  .field{margin-bottom:10px}
+  .field label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin-bottom:3px}
+  .field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .field textarea{min-height:64px;resize:vertical}
+  form.dispute button{margin-top:8px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form.dispute button:disabled{opacity:.55;cursor:wait}
 </style>
 </head>
 <body>
@@ -47,12 +55,25 @@
 <main class="wrap">
   <div class="panel"><h1 id="title">Student And Parent Portal</h1><p class="sub" id="subtitle">Classes, billing, grades, and documents for your student.</p></div>
   <div id="status" class="status">Loading portal…</div>
+  <div class="panel" id="pendinglinks-panel" hidden><h2>Confirm guardian links</h2><p class="sub" style="margin-bottom:10px">The academy linked you as parent/guardian of the students below. Confirm each link to activate it and see their information.</p><div id="pendinglinks"></div></div>
   <div class="panel" id="chooser-panel" hidden><h2>Your linked students</h2><div class="chooser" id="chooser"></div></div>
   <div class="grid" id="grid" hidden>
     <div class="panel"><h2>Enrolled Courses / Classes</h2><table><thead><tr><th>Class</th><th>When</th><th>Attendance</th></tr></thead><tbody id="sessions"></tbody></table></div>
     <div class="panel"><h2>Invoices And Payments</h2><table><tbody id="billing"></tbody></table></div>
     <div class="panel"><h2>Payment Plans</h2><table><tbody id="plans"></tbody></table></div>
     <div class="panel"><h2>Grades</h2><table><tbody id="grades"></tbody></table></div>
+    <div class="panel"><h2>Course progress</h2><table><tbody id="courseprogress"></tbody></table></div>
+    <div class="panel" id="reportcards-panel" hidden><h2>Report cards</h2><table><tbody id="reportcards"></tbody></table></div>
+    <div class="panel"><h2>Conduct &amp; Merits</h2><table><tbody id="behaviour"></tbody></table></div>
+    <div class="panel" id="lessondisputes-panel"><h2>Tutor &amp; lesson concerns</h2>
+      <table><tbody id="lessondisputes"></tbody></table>
+      <form class="dispute" id="dispute-form" style="margin-top:12px">
+        <div class="field"><label>Concern type</label><select id="dispute-type-select" name="dispute_type"></select></div>
+        <div class="field"><label>Describe the concern</label><textarea id="dispute-desc" name="description" placeholder="Tell the academy what happened with the tutor or lesson."></textarea></div>
+        <button type="submit">Raise concern</button>
+      </form>
+      <p class="muted">The academy reviews tutor and lesson concerns and responds through the portal.</p>
+    </div>
     <div class="panel"><h2>Secure Downloads</h2><table><tbody id="documents"></tbody></table></div>
     <div class="panel"><h2>Self-Service</h2><div id="selfservice"></div><p class="muted">These links open the Moodle pages (your login session is still valid there).</p></div>
   </div>
@@ -92,9 +113,37 @@
 
   const emptyRow = (cols, text) => `<tr><td colspan="${cols}" class="muted">${esc(text)}</td></tr>`;
 
+  const fmtDate = (ts) => { const n = Number(ts); if (!n) return "—"; const dt = new Date(n * 1000); return isNaN(dt.getTime()) ? "—" : dt.toLocaleDateString(); };
+
   function render(d) {
     $("#title").textContent = "Student And Parent Portal";
     $("#subtitle").textContent = (d.workspacename || "") + " / " + ((d.student && d.student.name) || "Student");
+
+    const pendinglinks = d.pendinglinks || [];
+    if (pendinglinks.length > 0) {
+      $("#pendinglinks").innerHTML = pendinglinks.map((l) =>
+        `<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding:8px 0"><strong>${esc(l.name || ("Student #" + l.studentid))}</strong><button type="button" class="linkbtn" data-confirm-link="${Number(l.studentid)}" style="cursor:pointer;border:none;margin:0">Confirm link</button></div>`
+      ).join("");
+      $("#pendinglinks-panel").hidden = false;
+      document.querySelectorAll("[data-confirm-link]").forEach((b) => b.addEventListener("click", async () => {
+        const name = b.closest("div").querySelector("strong").textContent;
+        if (!window.confirm("Confirm you are the parent/guardian of " + name + "?")) return;
+        b.disabled = true;
+        try {
+          const r = await fetch(endpoint + "?" + new URLSearchParams(params()), {
+            method: "POST",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify({ do: "confirm_parent_link", studentid: Number(b.dataset.confirmLink) }),
+          });
+          const res = await r.json().catch(() => ({}));
+          if (!r.ok || !res.ok) throw new Error(res.error || ("HTTP " + r.status));
+          $("#status").className = "status"; $("#status").hidden = false; $("#status").textContent = res.message || "Link confirmed.";
+          load();
+        } catch (e) { b.disabled = false; window.alert("Could not confirm: " + e.message); }
+      }));
+    } else {
+      $("#pendinglinks-panel").hidden = true;
+    }
 
     const children = d.children || [];
     if (children.length > 1) {
@@ -120,8 +169,53 @@
     ).join("") || emptyRow(2, "No payment plan is visible for this student.");
 
     $("#grades").innerHTML = (d.grades || []).map((g) =>
-      `<tr><td><strong>Offering #${Number(g.offeringid)}</strong><div class="muted">${esc(String(g.final_percent) + "%")}</div></td><td><span class="pill">${esc((g.letter_grade || "") + " / " + (g.status || ""))}</span></td></tr>`
+      `<tr><td><strong>Offering #${Number(g.offeringid)}</strong><div class="muted">${esc(String(g.final_percent) + "%")}</div></td><td><span class="pill">${esc((g.letter_grade || "") + " / " + (g.status || ""))}</span><br><button type="button" class="linkbtn" data-dispute="${Number(g.id)}" style="cursor:pointer;border:none;margin-top:4px">Query this grade</button></td></tr>`
     ).join("") || emptyRow(2, "No published course grades yet.");
+    document.querySelectorAll("[data-dispute]").forEach((b) => b.addEventListener("click", async () => {
+      const reason = window.prompt("What seems wrong with this grade? The teaching team will review and respond.");
+      if (!reason || reason.trim().length < 10) { if (reason !== null) window.alert("Please describe the issue in at least a sentence."); return; }
+      b.disabled = true;
+      try {
+        const r = await fetch(endpoint + "?" + new URLSearchParams(params()), {
+          method: "POST",
+          headers: { "Content-Type": "text/plain" },
+          body: JSON.stringify({ do: "open_grade_dispute", coursegradeid: Number(b.dataset.dispute), reason: reason.trim() }),
+        });
+        const res = await r.json().catch(() => ({}));
+        if (!r.ok || !res.ok) throw new Error(res.error || ("HTTP " + r.status));
+        window.alert(res.message || "Grade query submitted.");
+      } catch (e) { window.alert("Could not submit: " + e.message); }
+      b.disabled = false;
+    }));
+
+    $("#courseprogress").innerHTML = (d.courseprogress || []).map((c) => {
+      const label = esc(c.subject) + (Number(c.stage) > 0 ? " · Stage " + esc(c.stage) : "");
+      const pct = Math.max(0, Math.min(100, Number(c.percent) || 0));
+      return `<tr><td><strong>${label}</strong><div class="pqsp-bar"><div class="pqsp-bar-fill" style="width:${pct}%"></div></div></td><td class="muted">${esc((c.units_completed ?? 0) + " / " + (c.units_total ?? 0) + " units · " + pct + "%")}</td></tr>`;
+    }).join("") || emptyRow(2, "No course progress recorded yet.");
+
+    const reportcards = d.reportcards || [];
+    if (reportcards.length > 0) {
+      $("#reportcards").innerHTML = reportcards.map((rc) =>
+        `<tr><td><strong>${esc(rc.term)}</strong><div class="muted">Overall ${esc(rc.overall_grade)}% · Attendance ${esc(rc.attendance_rate)}% · ${esc(rc.conduct || "—")}</div><div class="muted">Issued ${esc(fmtDate(rc.issuedat))}</div></td><td>${rc.pdf_url ? `<a class="linkbtn" href="${esc(rc.pdf_url)}">Download PDF</a>` : '<span class="muted">No PDF yet</span>'}</td></tr>`
+      ).join("");
+      $("#reportcards-panel").hidden = false;
+    } else {
+      $("#reportcards").innerHTML = emptyRow(2, "No report cards yet.");
+      $("#reportcards-panel").hidden = true;
+    }
+
+    $("#behaviour").innerHTML = (d.behaviour || []).map((b) => {
+      const merit = /merit/.test(b.record_type || "");
+      return `<tr><td><span class="pill ${merit ? "good" : "warn"}">${esc(b.record_type || "—")}</span></td><td><strong>${esc(b.title || "—")}</strong><div class="muted">${esc((b.category || "") + " · " + fmtDate(b.incident_date))}</div><div class="muted">${esc(b.description || "")}</div></td></tr>`;
+    }).join("") || emptyRow(2, "Nothing recorded.");
+
+    const disputetypes = d.disputetypes || {};
+    $("#dispute-type-select").innerHTML = Object.keys(disputetypes).map((k) => `<option value="${esc(k)}">${esc(disputetypes[k])}</option>`).join("");
+    const disputePill = (s) => { const m = String(s || "").toLowerCase(); const cls = /open/.test(m) ? "warn" : /resolv/.test(m) ? "good" : ""; return `<span class="pill ${cls}">${esc(s || "—")}</span>`; };
+    $("#lessondisputes").innerHTML = (d.lessondisputes || []).map((dp) =>
+      `<tr><td><strong>${esc(dp.disputenumber || "—")}</strong><div class="muted">${esc((disputetypes[dp.dispute_type] || dp.dispute_type || "") + " · " + fmtDate(dp.timecreated))}</div>${dp.resolution ? `<div class="muted">Resolution: ${esc(dp.resolution)}</div>` : ""}</td><td>${disputePill(dp.status)}</td></tr>`
+    ).join("") || emptyRow(2, "No tutor or lesson concerns raised yet.");
 
     $("#documents").innerHTML = (d.documents || []).map((doc) =>
       `<tr><td><strong>${esc(doc.title)}</strong><div class="muted">${esc((doc.document_type || "") + " / " + (doc.verification_status || ""))}</div></td><td>${doc.download_url ? `<a class="linkbtn" href="${esc(doc.download_url)}">Download</a>` : '<span class="muted">Registry row</span>'}</td></tr>`
@@ -137,6 +231,28 @@
     $("#grid").hidden = false;
     $("#status").hidden = true;
   }
+
+  $("#dispute-form").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const dispute_type = f.dispute_type.value;
+    const description = f.description.value.trim();
+    if (!dispute_type) { window.alert("Please choose a concern type."); return; }
+    if (description.length < 10) { window.alert("Please describe the concern in at least a sentence."); return; }
+    const btn = f.querySelector("button"); btn.disabled = true;
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams(params()), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({ do: "raise_lesson_dispute", dispute_type, description }),
+      });
+      const res = await r.json().catch(() => ({}));
+      if (!r.ok || !res.ok) throw new Error(res.error || ("HTTP " + r.status));
+      $("#status").className = "status"; $("#status").hidden = false; $("#status").textContent = res.message || "Concern submitted.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      load();
+    } catch (e) { window.alert("Could not submit: " + e.message); btn.disabled = false; }
+  });
 
   load();
 })();

@@ -118,6 +118,21 @@
             <div id="assign-note" class="muted" style="margin-bottom:8px"></div>
             <button class="btn" type="submit" id="assign-btn">Assign student</button>
           </form>
+          <hr>
+          <h2>Offboard teacher</h2>
+          <form id="form-offboard-teacher">
+            <div class="field"><label>Teacher leaving</label><select name="teacherid" id="offboard-teacher" required></select></div>
+            <div class="field"><label>Replacement (optional)</label><select name="replacement_teacherid" id="offboard-replacement"><option value="0">No replacement — flag for manual cover</option></select></div>
+            <div class="muted" style="margin-bottom:8px">Deactivates membership and all student assignments; hands class groups and future sessions to the replacement (or flags them). Course access is removed by the nightly reconcile.</div>
+            <button class="btn" type="submit" id="offboard-btn">Offboard teacher</button>
+          </form>
+          <hr>
+          <h2>Withdraw student</h2>
+          <form id="form-withdraw-student">
+            <div class="field"><label>Student leaving</label><select name="studentid" id="withdraw-student" required></select></div>
+            <div class="muted" style="margin-bottom:8px">Deactivates membership, teacher assignments and class-group places; releases future session seats; withdraws open enrolment requests and SUSPENDS Moodle enrolments (grades preserved). Parent links stay as history — revoke them on Student Parent Links.</div>
+            <button class="btn" type="submit" id="withdraw-btn">Withdraw student</button>
+          </form>
         </div>
         <div class="panel">
           <h2>Link parent to student</h2>
@@ -127,6 +142,14 @@
             <div id="link-note" class="muted" style="margin-bottom:8px"></div>
             <button class="btn" type="submit" id="link-btn">Link parent</button>
           </form>
+          <hr>
+          <h2>Reset a member's password</h2>
+          <form id="form-reset-password">
+            <div class="field"><label>Member (students, parents, teachers)</label><select name="targetuserid" id="reset-user" required></select></div>
+            <div class="muted" style="margin-bottom:8px">Sets a temporary password shown once below; the member must change it at next login, and all their active sessions and portal links are signed out. Owners/admins and platform accounts use standard recovery instead.</div>
+            <button class="btn" type="submit" id="reset-btn">Reset password</button>
+          </form>
+          <div id="reset-result" class="status saved" hidden style="margin-top:10px"></div>
         </div>
       </div>
       <div class="grid2">
@@ -259,6 +282,11 @@
 
     const opt = (m) => `<option value="${m.userid}">${esc(m.fullname + " - " + m.account_label + " - #" + m.userid)}</option>`;
     $("#assign-teacher").innerHTML = d.teachers.map(opt).join("");
+    $("#offboard-teacher").innerHTML = d.teachers.map(opt).join("");
+    $("#offboard-replacement").innerHTML = '<option value="0">No replacement — flag for manual cover</option>' + d.teachers.map(opt).join("");
+    $("#offboard-btn").disabled = !d.teachers.length;
+    $("#withdraw-student").innerHTML = d.students.map(opt).join("");
+    $("#withdraw-btn").disabled = !d.students.length;
     const unassigned = d.students.filter((s) => !d.assignedstudentmap[s.userid]);
     $("#assign-student").innerHTML = unassigned.map(opt).join("");
     let note = "";
@@ -270,6 +298,11 @@
     $("#link-parent").innerHTML = d.parents.map(opt).join("");
     $("#link-student").innerHTML = d.students.map(opt).join("");
     $("#link-note").textContent = (!d.parents.length || !d.students.length) ? "Add at least one active parent and one active student before linking." : "";
+
+    // Password reset targets non-manager members only (owners/admins use core recovery).
+    const resettable = d.students.concat(d.parents, d.teachers.filter((t) => !["owner", "admin", "platform_admin"].includes(t.workspace_role)));
+    $("#reset-user").innerHTML = resettable.map(opt).join("");
+    $("#reset-btn").disabled = !resettable.length;
     $("#link-btn").disabled = !d.parents.length || !d.students.length;
   }
 
@@ -373,10 +406,51 @@
     const f = ev.currentTarget;
     post({ do: "assign_student", teacherid: Number(f.teacherid.value), studentid: Number(f.studentid.value) }, $("#assign-btn"));
   });
+  $("#form-offboard-teacher").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const f = ev.currentTarget;
+    const tid = Number(f.teacherid.value), rid = Number(f.replacement_teacherid.value);
+    if (!tid) return;
+    if (!window.confirm("Offboard this teacher? Their membership and all student assignments will be deactivated" + (rid ? " and handed to the replacement." : " — class groups and future sessions will need manual cover."))) return;
+    post({ do: "offboard_teacher", teacherid: tid, replacement_teacherid: rid }, $("#offboard-btn"), "Offboarding…");
+  });
+  $("#form-withdraw-student").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const sid = Number(ev.currentTarget.studentid.value);
+    if (!sid) return;
+    if (!window.confirm("Withdraw this student? Membership, assignments and future session seats close; Moodle enrolments are suspended with grades preserved.")) return;
+    post({ do: "offboard_student", studentid: sid }, $("#withdraw-btn"), "Withdrawing…");
+  });
   $("#form-link-parent").addEventListener("submit", (ev) => {
     ev.preventDefault();
     const f = ev.currentTarget;
     post({ do: "link_parent_student", parentid: Number(f.parentid.value), studentid: Number(f.studentid.value) }, $("#link-btn"), "Linking…");
+  });
+  $("#form-reset-password").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const uid = Number(ev.currentTarget.targetuserid.value);
+    if (!uid) return;
+    if (!window.confirm("Reset this member's password? A temporary password is shown once; the member must change it at next login and is signed out everywhere.")) return;
+    $("#reset-result").hidden = true;
+    const btn = $("#reset-btn"), old = btn.textContent;
+    btn.disabled = true; btn.textContent = "Resetting…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "workspace-people", token }), {
+        method: "POST", headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({ workspaceid: Number(workspaceid), do: "reset_member_password", targetuserid: uid }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#reset-result").hidden = false;
+      $("#reset-result").className = "status saved";
+      $("#reset-result").textContent = "Temporary password for " + d.resetusername + ": " + d.resetpassword + "  (share securely; shown only once)";
+    } catch (e) {
+      $("#reset-result").hidden = false;
+      $("#reset-result").className = "status error";
+      $("#reset-result").textContent = "Could not reset: " + e.message;
+    } finally {
+      btn.disabled = false; btn.textContent = old;
+    }
   });
   $("#form-bulk-import").addEventListener("submit", (ev) => {
     ev.preventDefault();

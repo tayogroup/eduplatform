@@ -169,6 +169,11 @@ echo json_encode([
     'events' => $events,
     'offerings' => $offerings,
     'supporturl' => $CFG->wwwroot . '/local/hubredirect/academic_calendar.php?workspaceid=' . $workspaceid,
+    // Subscribe URL (ICS) — token-gated per workspace so it can be added to
+    // Google/Outlook Calendar without a login. Shown to admins to copy/share.
+    'ics_feed_url' => $CFG->wwwroot . '/local/hubredirect/calendar_feed.php?'
+        . http_build_query(['workspaceid' => $workspaceid,
+            'token' => substr(hash_hmac('sha256', 'acadfeed|' . $workspaceid, (string)($CFG->passwordsaltmain ?? '')), 0, 32)]),
     'names' => pqpd_names($nameids),
 ], JSON_UNESCAPED_SLASHES);
 exit;

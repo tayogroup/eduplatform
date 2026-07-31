@@ -176,6 +176,48 @@ if ($ready) {
         100
     ));
 
+    // Learner ratings (student voice) blended into the QA rollup. Weight is
+    // qa_learner_rating_weight percent (default 30): blended = QA avg x (1-w)
+    // + rating-as-percent x w. Sessions without ratings leave the QA avg as is.
+    $ratingweightraw = get_config('local_prequran', 'qa_learner_rating_weight');
+    $ratingweight = ($ratingweightraw === false || $ratingweightraw === '') ? 30 : max(0, min(100, (int)$ratingweightraw));
+    $ratingrows = [];
+    try {
+        if ($DB->get_manager()->table_exists(new xmldb_table('local_prequran_session_rating'))) {
+            $ratingrows = $DB->get_records_sql(
+                "SELECT r.teacherid,
+                        ROUND(AVG(r.rating), 2) AS avg_rating,
+                        COUNT(1) AS rating_count
+                   FROM {local_prequran_session_rating} r
+                   JOIN {local_prequran_live_session} s ON s.id = r.sessionid
+                  WHERE {$wheresql}
+               GROUP BY r.teacherid",
+                $params
+            );
+        }
+    } catch (Throwable $e) {
+        $ratingrows = [];
+    }
+    $overallratingsum = 0.0; $overallratingcount = 0;
+    foreach ($teacherrows as $t) {
+        $rr = $ratingrows[(int)$t->teacherid] ?? null;
+        $t->learner_rating_avg = $rr ? (float)$rr->avg_rating : null;
+        $t->learner_rating_count = $rr ? (int)$rr->rating_count : 0;
+        if ($rr) {
+            $overallratingsum += (float)$rr->avg_rating * (int)$rr->rating_count;
+            $overallratingcount += (int)$rr->rating_count;
+        }
+        $qaavg = $t->avg_score !== null ? (float)$t->avg_score : null;
+        if ($t->learner_rating_avg !== null && $qaavg !== null) {
+            $t->blended_score = (int)round($qaavg * (100 - $ratingweight) / 100
+                + ($t->learner_rating_avg / 5 * 100) * $ratingweight / 100);
+        } else if ($t->learner_rating_avg !== null) {
+            $t->blended_score = (int)round($t->learner_rating_avg / 5 * 100);
+        } else {
+            $t->blended_score = $qaavg !== null ? (int)round($qaavg) : null;
+        }
+    }
+
     $trendrows = array_values($DB->get_records_sql(
         "SELECT YEAR(FROM_UNIXTIME(s.scheduled_start)) AS y,
                 MONTH(FROM_UNIXTIME(s.scheduled_start)) AS m,
@@ -265,6 +307,11 @@ echo json_encode([
     ],
     'metrics' => $metrics,
     'teachers' => $teacherrows,
+    'learner_ratings' => [
+        'weight' => isset($ratingweight) ? $ratingweight : 30,
+        'avg' => (isset($overallratingcount) && $overallratingcount > 0) ? round($overallratingsum / $overallratingcount, 2) : null,
+        'count' => isset($overallratingcount) ? $overallratingcount : 0,
+    ],
     'trend' => $trendrows,
     'concerns' => $concerns,
     'risks' => $riskrows,

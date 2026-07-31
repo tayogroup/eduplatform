@@ -10,9 +10,14 @@ defined('MOODLE_INTERNAL') || die();
 function pqwppl_parent_children(int $parentid): array {
     global $DB;
     $ids = [];
-    foreach (['local_prequran_comm_consent', 'local_prequran_live_consent'] as $table) {
+    // Revoked links (consented=0/granted=0) are excluded.
+    foreach (['local_prequran_comm_consent' => 'consented', 'local_prequran_live_consent' => 'granted'] as $table => $consentfield) {
         if (pqh_table_exists_safe($table)) {
-            foreach ($DB->get_records($table, ['guardianid' => $parentid], 'timemodified DESC', 'id,studentid') as $row) {
+            $conditions = ['guardianid' => $parentid];
+            if (pqh_table_has_field_safe($table, $consentfield)) {
+                $conditions[$consentfield] = 1;
+            }
+            foreach ($DB->get_records($table, $conditions, 'timemodified DESC', 'id,studentid') as $row) {
                 $ids[(int)$row->studentid] = (int)$row->studentid;
             }
         }
@@ -60,8 +65,16 @@ function pqwppl_parent_can_access_child(int $parentid, int $studentid): bool {
     if (is_siteadmin($parentid)) {
         return true;
     }
-    foreach (['local_prequran_comm_consent', 'local_prequran_live_consent'] as $table) {
-        if (pqh_table_exists_safe($table) && $DB->record_exists($table, ['guardianid' => $parentid, 'studentid' => $studentid])) {
+    // Revoked links (consented=0/granted=0) grant nothing.
+    foreach (['local_prequran_comm_consent' => 'consented', 'local_prequran_live_consent' => 'granted'] as $table => $consentfield) {
+        if (!pqh_table_exists_safe($table)) {
+            continue;
+        }
+        $conditions = ['guardianid' => $parentid, 'studentid' => $studentid];
+        if (pqh_table_has_field_safe($table, $consentfield)) {
+            $conditions[$consentfield] = 1;
+        }
+        if ($DB->record_exists($table, $conditions)) {
             return true;
         }
     }

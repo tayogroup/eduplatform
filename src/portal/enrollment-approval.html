@@ -69,6 +69,7 @@
       <textarea id="approval_notes" placeholder="Optional"></textarea>
       <div style="margin-top:14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
         <button type="submit" id="approve-btn">Approve enrollment</button>
+        <button type="button" id="decline-btn" style="background:#8a2b2b">Decline</button>
         <span class="saved" id="saved"></span>
       </div>
     </form>
@@ -123,6 +124,27 @@
     $("#status").hidden = true;
     $("#card").hidden = false;
   }
+
+  $("#decline-btn").addEventListener("click", async () => {
+    if (!window.confirm("Decline this enrollment? Lessons stay paused and the academy team is notified. You can approve later if you change your mind.")) return;
+    const saved = $("#saved");
+    const btn = $("#decline-btn");
+    btn.disabled = true; saved.textContent = "Saving…";
+    try {
+      const r = await fetch(url(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=UTF-8" },
+        body: JSON.stringify({ do: "decline", studentid: Number(studentid), approval_notes: $("#approval_notes").value }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#approve-form").hidden = true;
+      $("#done").textContent = d.message || "Enrollment declined.";
+      $("#done").hidden = false;
+    } catch (err) {
+      btn.disabled = false; saved.textContent = "Failed: " + err.message;
+    }
+  });
 
   $("#approve-form").addEventListener("submit", async (e) => {
     e.preventDefault();

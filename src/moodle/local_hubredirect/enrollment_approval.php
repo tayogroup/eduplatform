@@ -171,6 +171,7 @@ if (!$islinkedparent && !is_siteadmin((int)$USER->id)) {
         'Enrollment approval access required'
     );
 }
+pqh_enforce_role_domain($consumercontext, pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
 
 $message = '';
 $error = '';

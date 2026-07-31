@@ -166,6 +166,17 @@ if ($method === 'GET') {
     }
 
     $formtime = time();
+    // Country/city/timezone reference data is delivered statically from the CDN
+    // (platform/data/*.json) and merged client-side, so it is trimmed here. The
+    // full $options remains available for server-side POST validation below.
+    $publicoptions = $options;
+    unset(
+        $publicoptions['countries'],
+        $publicoptions['cities'],
+        $publicoptions['country_cities'],
+        $publicoptions['timezones'],
+        $publicoptions['country_timezones']
+    );
     echo json_encode([
         'ok' => true,
         'ready' => $ready,
@@ -191,7 +202,7 @@ if ($method === 'GET') {
             'faith_language_label' => $faithlanguagelabel,
             'faith_practice_label' => $faithpracticelabel,
         ],
-        'options' => $options,
+        'options' => $publicoptions,
         'fieldlabels' => $fieldlabels,
     ], JSON_UNESCAPED_SLASHES);
     exit;

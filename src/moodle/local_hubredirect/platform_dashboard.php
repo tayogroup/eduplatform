@@ -99,6 +99,9 @@ $landingurl = new moodle_url('/local/hubredirect/platform_landing.php');
 $settingsurl = new moodle_url('/local/hubredirect/platform_settings.php');
 $rosterurl = new moodle_url('/local/hubredirect/platform_user_roster.php');
 $courserosterurl = new moodle_url('/local/hubredirect/platform_course_roster.php');
+$usefullinksurl = new moodle_url('/local/hubredirect/useful_system_links.php');
+
+pqh_enforce_role_domain(pqh_requested_consumer_context(), pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
 
 echo $OUTPUT->header();
 ?>
@@ -126,6 +129,7 @@ body.pqpd-page #page,body.pqpd-page #page-content,body.pqpd-page #region-main,bo
         <a class="pqpd-btn pqpd-btn--gold" href="<?php echo $consumeradminurl->out(false); ?>">Manage consumers</a>
         <a class="pqpd-btn" href="<?php echo $onboardingurl->out(false); ?>">Onboard institution</a>
         <a class="pqpd-btn" href="<?php echo $diagnosticsurl->out(false); ?>">Diagnostics</a>
+        <a class="pqpd-btn" href="<?php echo $usefullinksurl->out(false); ?>">Useful links</a>
       </nav>
     </section>
 
@@ -214,6 +218,7 @@ body.pqpd-page #page,body.pqpd-page #page-content,body.pqpd-page #region-main,bo
             <a class="pqpd-btn" href="<?php echo $onboardingurl->out(false); ?>">Create institution workspace</a>
             <a class="pqpd-btn" href="<?php echo (new moodle_url('/local/hubredirect/institution_test_matrix.php'))->out(false); ?>">Open test matrix</a>
             <a class="pqpd-btn" href="<?php echo $diagnosticsurl->out(false); ?>">Run diagnostics</a>
+            <a class="pqpd-btn" href="<?php echo $usefullinksurl->out(false); ?>">Useful system links</a>
           </div>
         </section>
       </aside>

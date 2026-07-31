@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marketplace ops · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .note{color:var(--muted);font-size:12px;margin:8px 0 0}
+  .hdrnote{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .field{margin-bottom:10px}
+  .field label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin-bottom:3px}
+  .field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .field textarea{min-height:64px;resize:vertical}
+  .row3{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:560px){.row3{grid-template-columns:1fr}}
+  form button{margin-top:8px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form button:disabled{opacity:.55;cursor:wait}
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top;font-size:13px}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  td strong{font-size:14px}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2);white-space:nowrap}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .pill.good{background:#e1f2ff;color:var(--blue2)}
+  .pill.muted-pill{background:var(--sky);color:var(--muted)}
+  .stars{color:var(--amber);font-weight:900;letter-spacing:1px}
+  button.btn{display:inline-block;padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--blue2);text-decoration:none;font-weight:800;font-size:12px;cursor:pointer;margin:2px 2px 2px 0}
+  .resolve-row td{background:var(--sky)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Marketplace ops</small></div>
+  <div class="note" id="mode-note">Token-authenticated · workspace admin controls</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Marketplace operations</h1><p class="sub" id="subtitle">Moderate tutor reviews and resolve lesson disputes for your workspace.</p></div>
+  <div id="status" class="status">Loading marketplace ops…</div>
+  <div id="content" hidden>
+    <div class="panel">
+      <h2>Review moderation</h2>
+      <div class="hdrnote"><span class="muted">Moderation mode:</span> <span class="pill" id="mod-mode">—</span></div>
+      <table><thead><tr><th>Teacher</th><th>Rating</th><th>Comment</th><th>Moderation</th><th>Actions</th></tr></thead><tbody id="reviews-body"></tbody></table>
+    </div>
+    <div class="panel">
+      <h2>Lesson disputes</h2>
+      <table><thead><tr><th>Dispute</th><th>Student</th><th>Teacher</th><th>Type</th><th>Description</th><th>Status</th><th></th></tr></thead><tbody id="disputes-body"></tbody></table>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const base = () => new URLSearchParams({ report: "marketplace-ops", token });
+  const getUrl = () => endpoint + "?" + base().toString();
+
+  let DATA = {};
+  let expandedDispute = null;
+
+  async function load() {
+    try {
+      const r = await fetch(getUrl());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const opt = (val, label, sel) => `<option value="${esc(val)}"${sel ? " selected" : ""}>${esc(label)}</option>`;
+  const optionsFrom = (map, sel) => Object.keys(map || {}).map((k) => opt(k, map[k], String(sel) === String(k))).join("");
+
+  const starStr = (n) => { const r = Math.max(0, Math.min(5, Math.round(Number(n) || 0))); return "★".repeat(r) + "☆".repeat(5 - r); };
+  const nameOf = (id) => (DATA.names && DATA.names[id]) || ("#" + id);
+  const fmtDate = (ts) => { const n = Number(ts); if (!n) return "—"; const dt = new Date(n * 1000); return isNaN(dt.getTime()) ? "—" : dt.toLocaleDateString(); };
+
+  const modPill = (s) => { const m = String(s || "").toLowerCase(); const cls = /approv/.test(m) ? "good" : /pend/.test(m) ? "warn" : /reject/.test(m) ? "muted-pill" : ""; return `<span class="pill ${cls}">${esc(s || "—")}</span>`; };
+  const disputePill = (s) => { const m = String(s || "").toLowerCase(); const cls = /open/.test(m) ? "warn" : /resolv/.test(m) ? "good" : /dismiss/.test(m) ? "muted-pill" : ""; return `<span class="pill ${cls}">${esc(s || "—")}</span>`; };
+  const typeLabel = (k) => (DATA.dispute_type_options && DATA.dispute_type_options[k]) || k || "—";
+
+  function render(d) {
+    DATA = d;
+    if (d.ready === false) {
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = "Marketplace ops schema is not ready. Run Moodle upgrade.";
+      return;
+    }
+
+    $("#mod-mode").textContent = d.moderation_mode || "—";
+    $("#mod-mode").className = "pill " + (/manual/.test(String(d.moderation_mode || "").toLowerCase()) ? "warn" : "good");
+
+    const reviews = d.reviews || [];
+    $("#reviews-body").innerHTML = reviews.length ? reviews.map((rv) => {
+      const acts = [];
+      acts.push(`<button type="button" class="btn" data-mod="approve" data-id="${Number(rv.id)}">Approve</button>`);
+      acts.push(`<button type="button" class="btn" data-mod="reject" data-id="${Number(rv.id)}">Reject</button>`);
+      if (Number(rv.hidden)) acts.push(`<button type="button" class="btn" data-mod="unhide" data-id="${Number(rv.id)}">Unhide</button>`);
+      else acts.push(`<button type="button" class="btn" data-mod="hide" data-id="${Number(rv.id)}">Hide</button>`);
+      return `<tr>
+        <td><strong>${esc(nameOf(rv.teacherid))}</strong><div class="muted">${esc(fmtDate(rv.timecreated))}</div></td>
+        <td><span class="stars">${starStr(rv.rating)}</span></td>
+        <td>${rv.comment ? esc(rv.comment) : `<span class="muted">—</span>`}${rv.tutor_reply ? `<div class="muted">Reply: ${esc(rv.tutor_reply)}</div>` : ""}</td>
+        <td>${modPill(rv.moderation_status)}${Number(rv.hidden) ? ` <span class="pill muted-pill">Hidden</span>` : ""}</td>
+        <td>${acts.join(" ")}</td>
+      </tr>`;
+    }).join("") : `<tr><td colspan="5" class="muted">No reviews to moderate.</td></tr>`;
+    document.querySelectorAll("[data-mod]").forEach((b) => b.addEventListener("click", () =>
+      post({ do: "moderate_review", ratingid: Number(b.dataset.id), decision: b.dataset.mod }, b)));
+
+    const outcomeOpts = Object.assign({}, d.dispute_outcome_options || {}, { dismissed: "Dismissed" });
+    const disputes = d.disputes || [];
+    $("#disputes-body").innerHTML = disputes.length ? disputes.map((dp) => {
+      const open = expandedDispute != null && Number(expandedDispute) === Number(dp.id);
+      const main = `<tr>
+        <td><strong>${esc(dp.disputenumber || "—")}</strong><div class="muted">${esc(fmtDate(dp.timecreated))}</div></td>
+        <td>${esc(nameOf(dp.studentid))}</td>
+        <td>${esc(nameOf(dp.teacherid))}</td>
+        <td><span class="pill">${esc(typeLabel(dp.dispute_type))}</span></td>
+        <td>${dp.description ? esc(dp.description) : `<span class="muted">—</span>`}${dp.resolution ? `<div class="muted">Resolution: ${esc(dp.resolution)}</div>` : ""}</td>
+        <td>${disputePill(dp.status)}</td>
+        <td><button type="button" class="btn" data-toggle="${Number(dp.id)}">${open ? "Close" : "Resolve"}</button></td>
+      </tr>`;
+      if (!open) return main;
+      const form = `<tr class="resolve-row"><td colspan="7">
+        <form data-resolve="${Number(dp.id)}">
+          <div class="row3">
+            <div class="field"><label>Status</label><select name="status">${optionsFrom({ open: "Open", reviewing: "Reviewing", resolved: "Resolved", dismissed: "Dismissed" }, dp.status)}</select></div>
+            <div class="field"><label>Resolution type</label><select name="resolution_type">${optionsFrom(outcomeOpts, dp.resolution_type)}</select></div>
+          </div>
+          <div class="field"><label>Resolution notes</label><textarea name="resolution">${esc(dp.resolution || "")}</textarea></div>
+          <button type="submit">Save resolution</button>
+        </form>
+      </td></tr>`;
+      return main + form;
+    }).join("") : `<tr><td colspan="7" class="muted">No lesson disputes.</td></tr>`;
+
+    document.querySelectorAll("[data-toggle]").forEach((b) => b.addEventListener("click", () => {
+      const id = Number(b.dataset.toggle);
+      expandedDispute = (expandedDispute != null && Number(expandedDispute) === id) ? null : id;
+      render(DATA);
+    }));
+    document.querySelectorAll("form[data-resolve]").forEach((f) => f.addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      const p = formPayload(f, { do: "resolve_dispute", disputeid: Number(f.dataset.resolve) });
+      post(p, f.querySelector("button"));
+    }));
+
+    $("#content").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  async function post(payload, btn) {
+    const original = btn ? btn.textContent : "";
+    if (btn) { btn.disabled = true; btn.textContent = "Saving…"; }
+    try {
+      const r = await fetch(endpoint + "?" + base().toString(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Saved.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await load();
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = original; }
+    }
+  }
+
+  function formPayload(form, extra) {
+    const p = Object.assign({}, extra);
+    new FormData(form).forEach((v, k) => { p[k] = v; });
+    return p;
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

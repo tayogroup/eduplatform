@@ -765,6 +765,7 @@ if ($ready) {
     }
 }
 
+pqh_enforce_role_domain($currentconsumercontext, pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
 echo $OUTPUT->header();
 ?>
 <style>

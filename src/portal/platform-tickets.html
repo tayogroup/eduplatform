@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Platform tickets · EduPlatform portal</title>
+<style>
+  :root{--bg:#eef3f9;--card:#ffffff;--line:#d7e0ec;--ink:#17253a;--ink2:#5b6b82;--blue:#1d4f8f;--blue2:#2a6cb0;--warn:#a05a1f;--bad:#8a1f1f;--ok:#1f6b4a}
+  *{box-sizing:border-box}
+  body{margin:0;font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+  header{background:linear-gradient(120deg,var(--blue),var(--blue2));color:#fff;padding:14px 20px}
+  .brand{font-weight:900}.brand small{display:block;font-weight:600;opacity:.85}
+  main{max-width:1100px;margin:0 auto;padding:18px 20px 60px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0;font-size:22px}h2{margin:0 0 10px;font-size:16px}
+  .sub{color:var(--ink2);margin:4px 0 0;font-size:13px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;color:var(--ink2);font-size:11px;text-transform:uppercase;padding:6px 8px;border-bottom:1px solid var(--line)}
+  td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:800;background:#e1ecf7;color:var(--blue2)}
+  .pill.warn{background:#f7ecd9;color:var(--warn)}.pill.bad{background:#f7dede;color:var(--bad)}.pill.ok{background:#dff0e7;color:var(--ok)}
+  label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:8px 0 4px}
+  input,select,textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font:inherit;background:var(--card);color:var(--ink)}
+  textarea{min-height:80px;resize:vertical}
+  button{margin-top:10px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:10px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  button.light{background:none;color:var(--ink2);border:1px solid var(--line)}
+  button:disabled{opacity:.55;cursor:wait}
+  .muted{color:var(--ink2)}
+  .status{padding:12px 14px;border-radius:8px;margin-bottom:14px;font-size:14px}
+  .status.error{background:#f7dede;color:var(--bad)}.status.saved{background:#dff0e7;color:var(--ok)}
+  .msg{border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin-bottom:8px}
+  .msg.platform{background:#eef4fb}
+  .msg .meta{font-size:11px;color:var(--ink2);margin-bottom:3px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:800px){.grid2{grid-template-columns:1fr}}
+  a{color:var(--blue2)}
+</style>
+</head>
+<body>
+<header><div class="brand">EduPlatform Portal<small>Platform tickets — cross-consumer board</small></div></header>
+<main>
+  <div class="panel"><h1>Platform tickets</h1><p class="sub">Tenant support: system problems raised by consumer schools' technical teams. First-response and resolution SLAs are enforced — overdue rows glow red.</p></div>
+  <div id="status" class="status" hidden></div>
+  <div class="panel" id="detail-panel" hidden>
+    <h2 id="detail-title">Ticket</h2>
+    <p class="sub"><a href="#" id="back-link">&larr; Board</a></p>
+    <div id="detail-body"></div>
+    <div id="detail-messages"></div>
+    <div class="grid2">
+      <form id="reply-form">
+        <label for="replybody">Reply to the school (stamps first response)</label>
+        <textarea id="replybody" maxlength="2000" required></textarea>
+        <button type="submit">Send reply</button>
+      </form>
+      <form id="update-form">
+        <label for="u-status">Status</label><select id="u-status"></select>
+        <label for="u-resolution">Resolution (required to resolve/close)</label>
+        <textarea id="u-resolution" maxlength="2000" placeholder="What was wrong + what was done — the school relays this to their users"></textarea>
+        <button type="submit">Update ticket</button>
+      </form>
+    </div>
+  </div>
+  <div class="panel" id="board-panel" hidden>
+    <h2>All tenant tickets</h2>
+    <table><thead><tr><th>Ticket</th><th>School</th><th>Priority</th><th>Status</th><th>First response</th><th>Resolution due</th></tr></thead><tbody id="tickets"></tbody></table>
+  </div>
+  <div class="panel" id="notice-panel" hidden>
+    <h2>Outage / status notices</h2>
+    <p class="sub" style="margin-bottom:8px">Broadcasts to every school's technical contacts — use during incidents so schools don't open duplicate tickets. Active notices appear on their Platform Support pages.</p>
+    <div id="notices"></div>
+    <form id="notice-form">
+      <label for="n-subject">Subject</label><input id="n-subject" maxlength="200" required>
+      <label for="n-severity">Severity</label>
+      <select id="n-severity"><option value="info">Info</option><option value="degraded">Degraded</option><option value="outage">Outage</option></select>
+      <label for="n-body">Body</label><textarea id="n-body" maxlength="2000" required placeholder="What is affected, what we know, next update ETA…"></textarea>
+      <button type="submit">Broadcast notice</button>
+    </form>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").trim();
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString() : "—";
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Missing endpoint/token — open via the portal launch link."; return; }
+  let ticketid = Number(qs.get("ticketid") || 0);
+
+  const params = () => {
+    const p = new URLSearchParams({ report: "platform-tickets", token });
+    if (ticketid > 0) p.set("ticketid", String(ticketid));
+    return p;
+  };
+  const post = async (payload) => {
+    const r = await fetch(endpoint + "?" + params(), { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(payload) });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+    return d;
+  };
+  const flash = (cls, text) => { $("#status").className = "status " + cls; $("#status").hidden = false; $("#status").textContent = text; window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const statusPill = (s) => `<span class="pill ${s === "resolved" || s === "closed" ? "ok" : (s === "waiting_on_school" ? "warn" : "")}">${esc(String(s).replace(/_/g, " "))}</span>`;
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + params());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { flash("error", "Could not load: " + e.message); }
+  }
+
+  function render(d) {
+    const names = d.names || {};
+    const detail = ticketid > 0 ? (d.tickets || []).find((t) => t.id === ticketid && t.messages) : null;
+    if (detail) {
+      $("#detail-title").textContent = detail.ticketnumber + " — " + detail.subject;
+      $("#detail-body").innerHTML = `<p><strong>${esc(detail.consumername)}</strong> ${statusPill(detail.status)} <span class="pill ${detail.priority === "urgent" ? "bad" : detail.priority === "high" ? "warn" : ""}">${esc(detail.priority)}</span>
+        <span class="muted">requester: ${esc(names[detail.requesterid] || detail.requesterid)} · assignee: ${esc(names[detail.assigneeid] || "unassigned")}${detail.internal_ref ? " · school ref: " + esc(detail.internal_ref) : ""}</span></p>
+        <div class="msg"><div class="meta">Opened ${esc(when(detail.timecreated))}</div>${esc(detail.description || "")}</div>
+        ${detail.resolution ? `<div class="msg platform"><div class="meta">Resolution</div>${esc(detail.resolution)}</div>` : ""}`;
+      $("#detail-messages").innerHTML = (detail.messages || []).map((m) =>
+        `<div class="msg ${m.side === "platform" ? "platform" : ""}"><div class="meta">${m.side === "platform" ? "EduPlatform — " : "School — "}${esc(names[m.senderid] || ("User " + m.senderid))} · ${esc(when(m.timecreated))}</div>${esc(m.body)}</div>`).join("");
+      $("#u-status").innerHTML = (d.statuses || []).map((s) => `<option value="${esc(s)}"${s === detail.status ? " selected" : ""}>${esc(s.replace(/_/g, " "))}</option>`).join("");
+      $("#detail-panel").hidden = false; $("#board-panel").hidden = true; $("#notice-panel").hidden = true;
+    } else {
+      $("#tickets").innerHTML = (d.tickets || []).map((t) =>
+        `<tr><td><a href="${location.pathname}?${new URLSearchParams(Object.assign(Object.fromEntries(qs), { ticketid: t.id }))}"><strong>${esc(t.ticketnumber)}</strong></a><div class="muted">${esc(t.subject)}</div></td>
+        <td>${esc(t.consumername)}</td>
+        <td><span class="pill ${t.priority === "urgent" ? "bad" : t.priority === "high" ? "warn" : ""}">${esc(t.priority)}</span></td>
+        <td>${statusPill(t.status)}</td>
+        <td>${t.first_overdue ? '<span class="pill bad">OVERDUE</span>' : `<span class="muted">${esc(when(t.sla_first_due))}</span>`}</td>
+        <td>${t.resolve_overdue ? '<span class="pill bad">OVERDUE</span>' : `<span class="muted">${esc(when(t.sla_resolve_due))}</span>`}</td></tr>`).join("")
+        || `<tr><td colspan="6" class="muted">No tenant tickets. Quiet day.</td></tr>`;
+      $("#notices").innerHTML = (d.notices || []).map((n) =>
+        `<div class="msg"><div class="meta">${esc(n.severity)} · ${esc(when(n.timecreated))} · ${esc(n.status)}</div><strong>${esc(n.subject)}</strong><br>${esc(n.body)}
+        ${n.status === "active" ? `<br><button type="button" class="light" data-resolve="${Number(n.id)}">Mark resolved</button>` : ""}</div>`).join("");
+      document.querySelectorAll("[data-resolve]").forEach((b) => b.addEventListener("click", async () => {
+        b.disabled = true;
+        try { await post({ do: "resolve_notice", noticeid: Number(b.dataset.resolve) }); load(); }
+        catch (e) { flash("error", e.message); b.disabled = false; }
+      }));
+      $("#detail-panel").hidden = true; $("#board-panel").hidden = false; $("#notice-panel").hidden = false;
+    }
+    $("#status").hidden = true;
+  }
+
+  $("#back-link").addEventListener("click", (e) => { e.preventDefault(); ticketid = 0; qs.delete("ticketid"); history.replaceState(null, "", location.pathname + "?" + qs); load(); });
+  $("#reply-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = e.currentTarget.querySelector("button"); btn.disabled = true;
+    try { const d = await post({ do: "reply_ticket", ticketid, replybody: $("#replybody").value.trim() }); flash("saved", d.message); $("#replybody").value = ""; load(); }
+    catch (err) { flash("error", "Could not send: " + err.message); }
+    btn.disabled = false;
+  });
+  $("#update-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = e.currentTarget.querySelector("button"); btn.disabled = true;
+    try { const d = await post({ do: "update_ticket", ticketid, status: $("#u-status").value, resolution: $("#u-resolution").value.trim() }); flash("saved", d.message); load(); }
+    catch (err) { flash("error", "Could not update: " + err.message); }
+    btn.disabled = false;
+  });
+  $("#notice-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!window.confirm("Broadcast this notice to every school's technical contacts?")) return;
+    const btn = e.currentTarget.querySelector("button"); btn.disabled = true;
+    try { const d = await post({ do: "broadcast_notice", subject: $("#n-subject").value.trim(), noticebody: $("#n-body").value.trim(), severity: $("#n-severity").value }); flash("saved", d.message); $("#notice-form").reset(); load(); }
+    catch (err) { flash("error", "Could not broadcast: " + err.message); }
+    btn.disabled = false;
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

@@ -101,6 +101,28 @@ function itemsForUnit(unit, grade) {
           },
         });
       });
+      // One clip narrating the word's definition (entry.childMeaning) -- distinct
+      // from the practice-sentence clips above, which only ever model usage.
+      if (entry.childMeaning) {
+        const id = `${entry.vocabularyId}-meaning`;
+        const source = `./${dir}/${id}.mp3`;
+        const prevMeaning = entry.meaningAudio || {};
+        items.push({
+          id, ref: entry, title: entry.vocabularyId,
+          text: narration(entry.childMeaning),
+          source,
+          output: path.join(ENGLISH, dir, `${id}.mp3`),
+          done: prevMeaning.available === true && prevMeaning.source === source,
+          apply() {
+            entry.meaningAudio = {
+              source, normal: source, slow: source,
+              provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
+              slowPlaybackRate: prevMeaning.slowPlaybackRate ?? 0.76,
+              available: true, status: "Generated",
+            };
+          },
+        });
+      }
     }
     return items;
   }

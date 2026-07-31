@@ -35,6 +35,8 @@ if ($workspaceid > 0) {
 
 $brandname = trim((string)($consumercontext->consumername ?? '')) ?: 'EduPlatform';
 
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
+
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/local/hubredirect/support.php', $contextparams + [
     'studentid' => $studentid,

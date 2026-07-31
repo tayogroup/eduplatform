@@ -87,9 +87,17 @@ if ($ready) {
 // Project each row down to exactly the fields the page renders (name fallback,
 // pqtml_short truncation, profile/request URLs) — the query selects tp.* for
 // verbatim parity but vetting/contact columns must not reach the client.
+require_once($CFG->dirroot . '/local/hubredirect/marketplace_core_portallib.php');
+// Optional price filter (only applied when the tutor has a structured rate).
+$maxrate = optional_param('maxrate', 0, PARAM_INT);
 $cards = [];
 foreach ($teachers as $teacher) {
     $name = trim((string)$teacher->teacher_display_name) !== '' ? (string)$teacher->teacher_display_name : fullname($teacher);
+    $rate = (float)preg_replace('/[^0-9.]/', '', (string)($teacher->hourly_rate ?? ''));
+    if ($maxrate > 0 && $rate > 0 && $rate > $maxrate) {
+        continue;
+    }
+    $rep = pqmk_tutor_reputation((int)$teacher->userid, 0);
     $cards[] = [
         'userid' => (int)$teacher->userid,
         'name' => $name,
@@ -98,6 +106,11 @@ foreach ($teachers as $teacher) {
         'courses' => (string)$teacher->courses_taught !== '' ? pqtml_short((string)$teacher->courses_taught, 130) : '',
         'skills' => (string)$teacher->marketplace_skills !== '' ? pqtml_short((string)$teacher->marketplace_skills, 150) : '',
         'bio' => (string)$teacher->marketplace_bio !== '' ? pqtml_short((string)$teacher->marketplace_bio) : '',
+        'hourly_rate' => (string)($teacher->hourly_rate ?? ''),
+        'rate_currency' => (string)($teacher->rate_currency ?? 'USD'),
+        'trial_available' => (int)($teacher->trial_available ?? 0) === 1,
+        'rating_avg' => $rep['avg'],
+        'rating_count' => $rep['count'],
         'profileurl' => pqh_teacher_public_profile_url($teacher, $consumercontext)->out(false),
         'requesturl' => (new moodle_url('/local/hubredirect/teacher_marketplace_request.php', ['teacherid' => (int)$teacher->userid] + $consumerparams))->out(false),
     ];

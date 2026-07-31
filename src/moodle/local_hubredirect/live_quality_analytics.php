@@ -363,6 +363,8 @@ $PAGE->set_title('QA Analytics');
 $PAGE->set_heading('QA Analytics');
 $PAGE->add_body_class('pqh-live-qa-analytics-page');
 
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
+
 echo $OUTPUT->header();
 ?>
 <style>

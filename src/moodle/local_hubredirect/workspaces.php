@@ -78,14 +78,14 @@ function pqw_upsert_consumer_for_workspace(int $workspaceid, string $workspace_n
     global $DB, $USER;
 
     if (!pqh_consumer_schema_ready()) {
-        throw new invalid_parameter_exception('Consumer/domain tables are not ready. Run the local_prequran Moodle upgrade first.');
+        throw new Exception('Consumer/domain tables are not ready. Run the local_prequran Moodle upgrade first.');
     }
     if ($workspaceid <= 0) {
-        throw new invalid_parameter_exception('Workspace is required before creating a consumer.');
+        throw new Exception('Workspace is required before creating a consumer.');
     }
     $slug = pqw_clean_slug($slug !== '' ? $slug : $workspace_name);
     if (!pqw_consumer_slug_available($slug)) {
-        throw new invalid_parameter_exception('Consumer slug is already used.');
+        throw new Exception('Consumer slug is already used.');
     }
 
     $now = time();
@@ -169,7 +169,7 @@ function pqw_upsert_consumer_for_workspace(int $workspaceid, string $workspace_n
     ];
     if ($existing) {
         if (!pqw_consumer_slug_available($slug, (int)$existing->id)) {
-            throw new invalid_parameter_exception('Consumer slug is already used.');
+            throw new Exception('Consumer slug is already used.');
         }
         $record->id = (int)$existing->id;
         $record->timecreated = (int)$existing->timecreated;
@@ -250,10 +250,10 @@ function pqw_upsert_org_group(string $slug, string $name, string $grouptype, int
     global $DB, $USER;
 
     if (!pqh_org_group_schema_ready()) {
-        throw new invalid_parameter_exception('Organization group tables are not ready. Run the local_prequran Moodle upgrade first.');
+        throw new Exception('Organization group tables are not ready. Run the local_prequran Moodle upgrade first.');
     }
     if (!array_key_exists($grouptype, pqh_org_group_types())) {
-        throw new invalid_parameter_exception('Invalid organization group type.');
+        throw new Exception('Invalid organization group type.');
     }
 
     $now = time();
@@ -270,7 +270,7 @@ function pqw_upsert_org_group(string $slug, string $name, string $grouptype, int
         'timemodified' => $now,
     ];
     if ($record->name === '') {
-        throw new invalid_parameter_exception('Organization group name is required.');
+        throw new Exception('Organization group name is required.');
     }
 
     if ($existing) {
@@ -426,7 +426,7 @@ function pqw_normalize_operating_model_link(stdClass $group, string $relationshi
 
     if ($slug === 'owned-schools' || $grouptype === 'owned_group') {
         if ($relationship !== 'owned_branch') {
-            throw new invalid_parameter_exception('Owned Schools must use the Owned branch relationship.');
+            throw new Exception('Owned Schools must use the Owned branch relationship.');
         }
         if ($inheritsensitive && !in_array('operations', $scopes, true)) {
             $scopes[] = 'operations';
@@ -435,7 +435,7 @@ function pqw_normalize_operating_model_link(stdClass $group, string $relationshi
 
     if ($slug === 'franchise-schools' || $grouptype === 'franchise_network') {
         if ($relationship !== 'franchise_member') {
-            throw new invalid_parameter_exception('Franchise Schools must use the Franchise member relationship.');
+            throw new Exception('Franchise Schools must use the Franchise member relationship.');
         }
         $inheritsensitive = 0;
         if (!in_array('governance', $scopes, true)) {
@@ -457,21 +457,21 @@ function pqw_upsert_org_group_workspace_link(
     global $DB, $USER;
 
     if (!pqh_org_group_schema_ready()) {
-        throw new invalid_parameter_exception('Organization group tables are not ready. Run the local_prequran Moodle upgrade first.');
+        throw new Exception('Organization group tables are not ready. Run the local_prequran Moodle upgrade first.');
     }
     $group = $DB->get_record('local_prequran_org_group', ['id' => $groupid, 'status' => 'active'], '*', IGNORE_MISSING);
     if (!$group) {
-        throw new invalid_parameter_exception('Organization group was not found.');
+        throw new Exception('Organization group was not found.');
     }
     if (!$DB->record_exists('local_prequran_workspace', ['id' => $workspaceid])) {
-        throw new invalid_parameter_exception('Workspace was not found.');
+        throw new Exception('Workspace was not found.');
     }
     if (!array_key_exists($relationship, pqh_org_group_relationship_types())) {
-        throw new invalid_parameter_exception('Invalid organization relationship.');
+        throw new Exception('Invalid organization relationship.');
     }
     $accessscopes = array_filter(explode(',', $accessscope));
     if ($accessscopes !== array_intersect($accessscopes, array_keys(pqw_org_access_scope_options()))) {
-        throw new invalid_parameter_exception('Invalid access scope.');
+        throw new Exception('Invalid access scope.');
     }
     [$accessscope, $inheritsensitive] = pqw_normalize_operating_model_link($group, $relationship, $accessscope, $inheritsensitive);
 
@@ -535,17 +535,17 @@ function pqw_upsert_org_group_user_link(int $groupid, int $userid, string $role,
     global $DB, $USER;
 
     if (!pqh_org_group_schema_ready()) {
-        throw new invalid_parameter_exception('Organization group tables are not ready. Run the local_prequran Moodle upgrade first.');
+        throw new Exception('Organization group tables are not ready. Run the local_prequran Moodle upgrade first.');
     }
     if (!$DB->record_exists('local_prequran_org_group', ['id' => $groupid, 'status' => 'active'])) {
-        throw new invalid_parameter_exception('Organization group was not found.');
+        throw new Exception('Organization group was not found.');
     }
     $user = core_user::get_user($userid, '*', IGNORE_MISSING);
     if (!$user || !empty($user->deleted)) {
-        throw new invalid_parameter_exception('User was not found.');
+        throw new Exception('User was not found.');
     }
     if (!array_key_exists($role, pqw_org_group_role_options())) {
-        throw new invalid_parameter_exception('Invalid organization group role.');
+        throw new Exception('Invalid organization group role.');
     }
 
     $now = time();
@@ -623,10 +623,10 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 'returnurl' => optional_param('return_url', '', PARAM_URL),
             ];
             if ($name === '') {
-                throw new invalid_parameter_exception('Workspace name is required.');
+                throw new Exception('Workspace name is required.');
             }
             if (!array_key_exists($type, pqh_workspace_types())) {
-                throw new invalid_parameter_exception('Invalid workspace type.');
+                throw new Exception('Invalid workspace type.');
             }
             $owner = $ownerneedle !== '' ? pqw_find_user($ownerneedle) : null;
             $ownerid = $owner ? (int)$owner->id : 0;
@@ -665,14 +665,14 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $role = optional_param('workspace_role', 'teacher', PARAM_ALPHANUMEXT);
             $needle = trim(optional_param('member', '', PARAM_TEXT));
             if (!$DB->record_exists('local_prequran_workspace', ['id' => $workspaceid])) {
-                throw new invalid_parameter_exception('Workspace was not found.');
+                throw new Exception('Workspace was not found.');
             }
             if (!array_key_exists($role, pqh_workspace_roles())) {
-                throw new invalid_parameter_exception('Invalid workspace role.');
+                throw new Exception('Invalid workspace role.');
             }
             $member = pqw_find_user($needle);
             if (!$member) {
-                throw new invalid_parameter_exception('User was not found by ID, email, or username.');
+                throw new Exception('User was not found by ID, email, or username.');
             }
             pqw_upsert_member($workspaceid, (int)$member->id, $role, (int)$USER->id);
             $message = 'Workspace member added.';
@@ -680,7 +680,7 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $workspaceid = optional_param('consumer_workspaceid', 0, PARAM_INT);
             $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', IGNORE_MISSING);
             if (!$workspace) {
-                throw new invalid_parameter_exception('Workspace was not found.');
+                throw new Exception('Workspace was not found.');
             }
             $consumerslug = trim(optional_param('consumer_slug_existing', '', PARAM_ALPHANUMEXT));
             $supportemail = trim(optional_param('supportemail_existing', '', PARAM_EMAIL));
@@ -726,6 +726,28 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
         } else if ($action === 'seed_operating_model') {
             [$ownedid, $franchiseid] = pqw_seed_operating_model_groups();
             $message = 'Operating model groups are ready: Owned Schools #' . $ownedid . ' and Franchise Schools #' . $franchiseid . '.';
+        } else if ($action === 'create_org_group') {
+            $groupname = trim(optional_param('org_group_name', '', PARAM_TEXT));
+            $grouptype = optional_param('org_group_type', 'owned_group', PARAM_ALPHANUMEXT);
+            $parentconsumerid = optional_param('org_parent_consumerid', 0, PARAM_INT);
+            if ($groupname === '') {
+                throw new Exception('Group name is required.');
+            }
+            if ($parentconsumerid <= 0) {
+                throw new Exception('Choose the parent consumer this group belongs to.');
+            }
+            $newgroupid = pqw_upsert_org_group(
+                '',
+                $groupname,
+                $grouptype,
+                $parentconsumerid,
+                [
+                    'default_workspace_relationship' => $grouptype === 'franchise_network' ? 'franchise_member' : 'owned_branch',
+                    'default_access_scope' => $grouptype === 'franchise_network' ? 'governance' : 'operations',
+                    'inherit_sensitive_access' => $grouptype !== 'franchise_network',
+                ]
+            );
+            $message = 'Group "' . $groupname . '" is ready (#' . $newgroupid . ').';
         } else if ($action === 'link_org_workspace') {
             $groupid = optional_param('org_groupid', 0, PARAM_INT);
             $workspaceid = optional_param('org_workspaceid', 0, PARAM_INT);
@@ -742,11 +764,11 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $needle = trim(optional_param('org_user', '', PARAM_TEXT));
             $notes = trim(optional_param('org_user_notes', '', PARAM_TEXT));
             if ($userid <= 0 && $needle === '') {
-                throw new invalid_parameter_exception('Select an eligible user or enter a manual user ID, email, or username.');
+                throw new Exception('Select an eligible user or enter a manual user ID, email, or username.');
             }
             $member = $userid > 0 ? core_user::get_user($userid, '*', IGNORE_MISSING) : pqw_find_user($needle);
             if (!$member) {
-                throw new invalid_parameter_exception('User was not found by ID, email, or username.');
+                throw new Exception('User was not found by ID, email, or username.');
             }
             pqw_upsert_org_group_user_link($groupid, (int)$member->id, $role, $notes);
             $message = 'Institution group user added.';
@@ -774,6 +796,12 @@ $orggroups = [];
 $orggroupmembers = [];
 $orggroupusers = [];
 $eligibleorgusers = [];
+$allconsumers = pqh_consumer_schema_ready() ? array_values($DB->get_records(
+    'local_prequran_consumer',
+    ['status' => 'active'],
+    'name ASC',
+    'id, name, slug'
+)) : [];
 $institutiondashboard = [
     'owned_workspaces' => 0,
     'franchise_workspaces' => 0,
@@ -1071,8 +1099,22 @@ body.pqw-workspaces-page #page,body.pqw-workspaces-page #page-content,body.pqw-w
               <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
               <input type="hidden" name="action" value="seed_operating_model">
               <h3>Operating groups</h3>
-              <p class="pqw-muted">Creates or refreshes one owned group and one franchise network.</p>
+              <p class="pqw-muted">Creates or refreshes one owned group and one franchise network. Their parent consumer is not set here -- use "Create a group" below for a group with a specific parent consumer, such as one academy owning its own schools.</p>
               <button class="pqw-btn" type="submit">Create operating groups</button>
+            </form>
+
+            <form method="post">
+              <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+              <input type="hidden" name="action" value="create_org_group">
+              <h3>Create a group</h3>
+              <p class="pqw-muted">Name it, choose owned vs. franchise, and pick the consumer it belongs to -- e.g. "Ehel Academy Schools" owned by Ehel Academy.</p>
+              <div class="pqw-field"><label>Group name</label><input class="pqw-input" name="org_group_name" placeholder="Ehel Academy Schools" required></div>
+              <div class="pqw-inline pqw-inline--two">
+                <div class="pqw-field"><label>Group type</label><select class="pqw-select" name="org_group_type"><?php foreach (pqh_org_group_types() as $grouptypekey => $grouptypelabel): ?><option value="<?php echo s($grouptypekey); ?>"><?php echo s($grouptypelabel); ?></option><?php endforeach; ?></select></div>
+                <div class="pqw-field"><label>Parent consumer</label><select class="pqw-select" name="org_parent_consumerid" required><option value="0">Choose consumer</option><?php foreach ($allconsumers as $parentconsumer): ?><option value="<?php echo (int)$parentconsumer->id; ?>"><?php echo s((string)$parentconsumer->name); ?> (<?php echo s((string)$parentconsumer->slug); ?>)</option><?php endforeach; ?></select></div>
+              </div>
+              <button class="pqw-btn" type="submit" <?php echo !$allconsumers ? 'disabled' : ''; ?>>Create group</button>
+              <?php if (!$allconsumers): ?><p class="pqw-muted">No active consumers found yet -- create the parent consumer first.</p><?php endif; ?>
             </form>
 
             <form method="post">

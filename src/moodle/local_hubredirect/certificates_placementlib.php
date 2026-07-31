@@ -194,4 +194,66 @@ function pqcp_apply_placement_result(stdClass $session, int $actorid): void {
             $DB->insert_record('local_prequran_student_path', $record);
         }
     }
+    // Keep the CLASS-MATCHING profile level in sync: placement previously wrote
+    // only student_path, leaving student_profile.current_level (which drives
+    // grouping/recommendations) to diverge from the assessed level.
+    if ((int)$session->studentid > 0
+            && trim((string)$session->recommended_level) !== ''
+            && pqh_table_exists_safe('local_prequran_student_profile')
+            && pqh_table_has_field_safe('local_prequran_student_profile', 'current_level')) {
+        $profile = $DB->get_record('local_prequran_student_profile', ['userid' => (int)$session->studentid], 'id,current_level', IGNORE_MISSING);
+        if ($profile && (string)$profile->current_level !== (string)$session->recommended_level) {
+            $DB->update_record('local_prequran_student_profile', (object)[
+                'id' => (int)$profile->id,
+                'current_level' => (string)$session->recommended_level,
+                'timemodified' => $now,
+            ]);
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Public certificate verification (parity with transcript_verify.php): a
+// third party holding an award number + verification code can confirm the
+// certificate is genuine and current, WITHOUT a login and without exposing
+// anything beyond masked identifiers + status.
+// ---------------------------------------------------------------------------
+
+function pqcp_certificate_secret(): string {
+    global $CFG;
+    $secret = (string)($CFG->passwordsaltmain ?? '');
+    if ($secret === '') {
+        $secret = (string)($CFG->wwwroot ?? 'eduplatform-certificate-verification');
+    }
+    return $secret;
+}
+
+/** Deterministic 32-char code bound to the immutable identity of the award. */
+function pqcp_certificate_verification_code(stdClass $award): string {
+    $number = (string)($award->awardnumber ?? '');
+    if ($number === '') {
+        return '';
+    }
+    $basis = $number . '|' . (int)($award->studentid ?? 0) . '|' . (int)($award->issuedat ?? 0)
+        . '|' . (int)($award->workspaceid ?? 0);
+    return substr(hash_hmac('sha256', $basis, pqcp_certificate_secret()), 0, 32);
+}
+
+function pqcp_verify_certificate_code(?stdClass $award, string $code): bool {
+    $code = trim($code);
+    if (!$award || $code === '') {
+        return false;
+    }
+    $expected = pqcp_certificate_verification_code($award);
+    return $expected !== '' && hash_equals($expected, $code);
+}
+
+function pqcp_load_public_award(string $awardnumber): ?stdClass {
+    global $DB;
+    $awardnumber = trim($awardnumber);
+    if ($awardnumber === '' || !pqh_table_exists_safe('local_prequran_completion_award')) {
+        return null;
+    }
+    $award = $DB->get_record('local_prequran_completion_award', ['awardnumber' => $awardnumber], '*', IGNORE_MISSING);
+    return $award ?: null;
 }

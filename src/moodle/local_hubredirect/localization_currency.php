@@ -18,6 +18,7 @@ if ($workspaceid <= 0 || (!pqh_user_can_manage_workspace((int)$USER->id, $worksp
 if (!pqml_schema_ready()) {
     pqh_access_denied('Localization schema is not ready. Run the local_prequran upgrade first.', new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams), 'Localization schema pending');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $notice = '';

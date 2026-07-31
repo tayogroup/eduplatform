@@ -23,6 +23,7 @@ if ($workspaceid <= 0 || !pqfin_user_can_manage_workspace_finance((int)$USER->id
 }
 
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 $message = optional_param('created', 0, PARAM_INT) === 1 ? 'Draft invoice created.' : '';
 $error = '';
 
@@ -100,7 +101,7 @@ body.pqinv-page #page,body.pqinv-page #page-content,body.pqinv-page #region-main
   </section>
   <?php if ($message !== ''): ?><div class="pqinv-alert pqinv-alert--ok"><?php echo s($message); ?></div><?php endif; ?>
   <?php if ($error !== ''): ?><div class="pqinv-alert pqinv-alert--err"><?php echo s($error); ?></div><?php endif; ?>
-  <?php if (!pqfin_invoice_schema_ready()): ?><div class="pqinv-alert pqinv-alert--err">Invoice schema is not ready. Run the local_prequran Moodle upgrade.</div><?php endif; ?>
+  <?php if (!pqfin_invoice_schema_ready()): ?><div class="pqinv-alert pqinv-alert--err">Invoice schema is not ready. Run the local_prequran upgrade.</div><?php endif; ?>
   <div class="pqinv-grid">
     <aside class="pqinv-panel">
       <h2 class="pqinv-title" style="font-size:20px">Create Draft</h2>

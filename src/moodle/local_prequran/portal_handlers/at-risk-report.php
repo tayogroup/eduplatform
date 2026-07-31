@@ -154,20 +154,33 @@ $teachers = [];
 if ($population && pqh_table_exists_safe('local_prequran_teacher_student')) {
     [$insql, $inparams] = $DB->get_in_or_equal(array_values($population), SQL_PARAMS_NAMED, 'parrt');
     $trs = $DB->get_records_select('local_prequran_teacher_student', "studentid $insql AND status = 'active'", $inparams, '', 'id, studentid, teacherid');
+    // Resolve every teacher name in ONE query (was a per-row core_user::get_user).
+    $teacherids = [];
     foreach ($trs as $tr) {
         if (!isset($teachers[(int)$tr->studentid])) {
-            $tuser = core_user::get_user((int)$tr->teacherid, 'id, firstname, lastname', IGNORE_MISSING);
-            $teachers[(int)$tr->studentid] = $tuser ? fullname($tuser) : 'Teacher #' . (int)$tr->teacherid;
+            $teacherids[(int)$tr->teacherid] = (int)$tr->teacherid;
+        }
+    }
+    $teachernames = $teacherids ? pqpd_names(array_values($teacherids)) : [];
+    foreach ($trs as $tr) {
+        if (!isset($teachers[(int)$tr->studentid])) {
+            $tid = (int)$tr->teacherid;
+            $teachers[(int)$tr->studentid] = $teachernames[$tid] ?? ('Teacher #' . $tid);
         }
     }
 }
 $reviewed = [];
 $notes = [];
+$flagged = [];
 if ($population && pqh_table_exists_safe('local_prequran_live_audit')) {
     [$insql, $inparams] = $DB->get_in_or_equal(array_values($population), SQL_PARAMS_NAMED, 'parrr');
     $inparams['since'] = $now - $window;
+    // Also read at_risk_flagged — the wellness-scan task writes these nightly
+    // but NO report rendered them (write-only until now). $flagged[sid] carries
+    // the last automated flag time + signal list so this live report shows the
+    // scheduled scan's findings, not just manual reviews.
     $auditrows = $DB->get_records_select('local_prequran_live_audit',
-        "targettype = 'student' AND targetid $insql AND action IN ('atrisk_reviewed', 'atrisk_note') AND timecreated >= :since",
+        "targettype = 'student' AND targetid $insql AND action IN ('atrisk_reviewed', 'atrisk_note', 'at_risk_flagged') AND timecreated >= :since",
         $inparams, 'timecreated DESC', 'id, targetid, action, details, timecreated');
     foreach ($auditrows as $row) {
         $sid = (int)$row->targetid;
@@ -177,6 +190,14 @@ if ($population && pqh_table_exists_safe('local_prequran_live_audit')) {
         if ($row->action === 'atrisk_note' && !isset($notes[$sid])) {
             $decoded = json_decode((string)$row->details, true);
             $notes[$sid] = (string)($decoded['note'] ?? '');
+        }
+        if ($row->action === 'at_risk_flagged' && !isset($flagged[$sid])) {
+            $decoded = json_decode((string)$row->details, true);
+            $signals = $decoded['signals'] ?? ($decoded['reasons'] ?? []);
+            $flagged[$sid] = [
+                'at' => (int)$row->timecreated,
+                'signals' => is_array($signals) ? array_values($signals) : [],
+            ];
         }
     }
 }
@@ -202,10 +223,18 @@ foreach ($population as $sid) {
     if ($missed >= $missedthreshold) {
         $reasons[] = $missed . ' classes missed';
     }
+    // Fold in the nightly wellness-scan flag: a student the scan caught (e.g.
+    // for missing homework — a signal the live rules here don't check) now
+    // surfaces even if the live thresholds alone did not trigger.
+    $scan = $flagged[$sid] ?? null;
+    if ($scan) {
+        $scansignals = $scan['signals'] ? implode(', ', array_map('strval', $scan['signals'])) : 'wellness scan';
+        $reasons[] = 'Wellness scan: ' . $scansignals;
+    }
     if (!$reasons) {
         continue;
     }
-    $level = (count($reasons) >= 2 || ($inactivefor !== null && $inactivefor >= 2 * $inactivedays) || $inactivefor === null) ? 'high' : 'medium';
+    $level = ($scan || count($reasons) >= 2 || ($inactivefor !== null && $inactivefor >= 2 * $inactivedays) || $inactivefor === null) ? 'high' : 'medium';
     if ($risklevelfilter !== '' && $risklevelfilter !== $level) {
         continue;
     }
@@ -226,6 +255,7 @@ foreach ($population as $sid) {
         'missed' => $missed,
         'reviewedat' => $reviewed[$sid] ?? 0,
         'note' => $notes[$sid] ?? '',
+        'scanflaggedat' => $flagged[$sid]['at'] ?? 0,
         // Deep-links into the Moodle live pages (the page renders these via the
         // shared pqh_live_*_link() helpers, defined in dashboard.php and not
         // loaded here — built inline as absolute URLs instead of copying them).
@@ -263,6 +293,7 @@ echo json_encode([
         'medium' => $mediumcount,
         'monitored' => count($population),
         'reviewedweek' => $reviewedweek,
+        'scanflagged' => count($flagged),
     ],
     'students' => $atrisk,
 ], JSON_UNESCAPED_SLASHES);

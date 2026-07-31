@@ -528,6 +528,8 @@ $teacher = core_user::get_user((int)$session->teacherid);
 $completionstate = pqlr_completion_state($sessionid, $students);
 $cancomplete = !empty($completionstate['complete']);
 
+pqh_enforce_role_domain($consumercontext, $requestedworkspaceid, (int)$USER->id);
+
 echo $OUTPUT->header();
 ?>
 <style>

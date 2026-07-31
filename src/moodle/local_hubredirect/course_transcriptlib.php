@@ -286,7 +286,7 @@ function pqct_official_issue_blockers(array $payload): array {
     foreach (($payload['lines'] ?? []) as $line) {
         $status = (string)($line['status']['normalized'] ?? '');
         if (in_array($status, ['approved_pending_sync', 'requested', 'approved'], true)) {
-            $blockers[] = 'Sync all approved enrollments into Moodle before official issue.';
+            $blockers[] = 'Sync all approved enrollments before official issue.';
             break;
         }
     }
@@ -1234,9 +1234,9 @@ function pqct_normalize_line_status($request, ?stdClass $moodleenrol, array $com
                 $warnings[] = pqct_warning(
                     'moodle_enrolled_timestamp_missing',
                     'warning',
-                    'Moodle enrollment is active but the local enrollment timestamp is missing.',
+                    'Enrollment is active but the local enrollment timestamp is missing.',
                     $context,
-                    'Backfill or retry Moodle sync after confirming the enrollment.'
+                    'Backfill or retry the sync after confirming the enrollment.'
                 );
             }
             return 'enrolled';
@@ -1244,9 +1244,9 @@ function pqct_normalize_line_status($request, ?stdClass $moodleenrol, array $com
         $warnings[] = pqct_warning(
             'approved_pending_moodle_sync',
             'blocker',
-            'The request is approved locally but active Moodle enrollment was not found.',
+            'The request is approved locally but an active enrollment was not found.',
             $context,
-            'Retry Moodle sync or repair the linked Moodle manual enrollment.'
+            'Retry the sync or repair the linked manual enrollment.'
         );
         return 'approved_pending_sync';
     }
@@ -1255,9 +1255,9 @@ function pqct_normalize_line_status($request, ?stdClass $moodleenrol, array $com
             $warnings[] = pqct_warning(
                 'local_enrolled_without_active_moodle_enrollment',
                 'blocker',
-                'The local request is marked enrolled but active Moodle enrollment was not found.',
+                'The local request is marked enrolled but an active enrollment was not found.',
                 $context,
-                'Repair Moodle enrollment or adjust the local request status.'
+                'Repair the enrollment or adjust the local request status.'
             );
             return 'enrolled';
         }
@@ -1330,7 +1330,7 @@ function pqct_resolve_student_transcript(int $studentid, int $workspaceid, ?stdC
         $warnings[] = pqct_warning(
             'student_account_no_missing',
             'warning',
-            'The student does not have the expected account number in Moodle idnumber.',
+            'The student does not have the expected account number recorded.',
             ['studentid' => $studentid],
             'Repair the student account number before official issue if the workspace requires it.'
         );
@@ -1427,26 +1427,26 @@ function pqct_resolve_student_transcript(int $studentid, int $workspaceid, ?stdC
             $linewarnings[] = pqct_warning(
                 'moodle_course_missing',
                 'blocker',
-                'The course offering is not linked to an existing Moodle course.',
+                'The course offering is not linked to an existing course.',
                 ['requestid' => (int)$request->id, 'offeringid' => (int)$request->offeringid, 'moodlecourseid' => $courseid],
-                'Link or create the Moodle course before official transcript issue.'
+                'Link or create the course before official transcript issue.'
             );
         } else if ((int)($request->moodle_visible ?? 0) !== 1) {
             $linewarnings[] = pqct_warning(
                 'moodle_course_hidden',
                 'warning',
-                'The linked Moodle course is hidden.',
+                'The linked course is hidden.',
                 ['requestid' => (int)$request->id, 'offeringid' => (int)$request->offeringid, 'moodlecourseid' => $courseid],
                 'Confirm whether hidden courses are intended to appear on transcripts.'
             );
         }
         if (!$grade['recorded']) {
-            $linewarnings[] = pqct_warning('grade_not_recorded', 'warning', 'No published local or Moodle course final grade was found.', ['requestid' => (int)$request->id, 'moodlecourseid' => $courseid]);
+            $linewarnings[] = pqct_warning('grade_not_recorded', 'warning', 'No published local or course final grade was found.', ['requestid' => (int)$request->id, 'moodlecourseid' => $courseid]);
         } else if ($grade['hidden'] || $grade['locked']) {
-            $linewarnings[] = pqct_warning('grade_hidden_or_locked', 'warning', 'The Moodle course grade is hidden or locked.', ['requestid' => (int)$request->id, 'moodlecourseid' => $courseid]);
+            $linewarnings[] = pqct_warning('grade_hidden_or_locked', 'warning', 'The course grade is hidden or locked.', ['requestid' => (int)$request->id, 'moodlecourseid' => $courseid]);
         }
         if (!$completion['recorded'] && !$progress['recorded']) {
-            $linewarnings[] = pqct_warning('completion_not_recorded', 'warning', 'No Moodle or local completion evidence was found.', ['requestid' => (int)$request->id, 'moodlecourseid' => $courseid]);
+            $linewarnings[] = pqct_warning('completion_not_recorded', 'warning', 'No course or local completion evidence was found.', ['requestid' => (int)$request->id, 'moodlecourseid' => $courseid]);
         }
 
         $normalizedstatus = pqct_normalize_line_status($request, $moodleenrol, $completion, $progress, $grade, $linewarnings);
@@ -1500,7 +1500,7 @@ function pqct_resolve_student_transcript(int $studentid, int $workspaceid, ?stdC
         $warnings[] = pqct_warning(
             'moodle_only_enrollment',
             'blocker',
-            'An active Moodle enrollment exists in a linked offering course without a matching local approved/enrolled request.',
+            'An active enrollment exists in a linked offering course without a matching local approved/enrolled request.',
             ['studentid' => $studentid, 'workspaceid' => $workspaceid, 'offeringid' => (int)$row['offeringid'], 'moodlecourseid' => (int)$row['moodlecourseid']],
             'Create or reconcile the local course request before official issue.'
         );

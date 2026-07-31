@@ -36,6 +36,7 @@ if ($workspaceid > 0) {
 if ($workspaceid <= 0 || !pqh_user_can_manage_workspace((int)$USER->id, $workspaceid)) {
     pqh_access_denied('Only workspace admins can manage transcript controls.', new moodle_url('/local/hubredirect/workspace_dashboard.php', $baseparams), 'Transcript controls access required');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 if ($studentid <= 0 && $documentid !== '') {
     $doc = pqct_load_official_transcript_doc($documentid, (int)$USER->id);
     if ($doc) {

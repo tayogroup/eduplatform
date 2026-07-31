@@ -13,6 +13,9 @@ if ($workspaceid <= 0 && (int)($consumercontext->workspaceid ?? 0) > 0) {
     $workspaceid = (int)$consumercontext->workspaceid;
 }
 $workspaceid = pqh_current_workspace_id((int)$USER->id, $workspaceid);
+if ($workspaceid > 0) {
+    pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
+}
 $contextparams = [];
 if (!empty($consumercontext->consumerslug)) {
     $contextparams['consumer'] = (string)$consumercontext->consumerslug;

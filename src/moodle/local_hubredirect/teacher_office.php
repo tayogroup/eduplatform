@@ -35,6 +35,7 @@ $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid],
 if (!$workspace) {
     pqh_access_denied('Choose a valid workspace before opening Document Studio.', $returnurl, 'Document Studio unavailable');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $message = '';
 $error = '';
@@ -105,7 +106,7 @@ body.pqh-office-studio-page #page,body.pqh-office-studio-page #page-content,body
         <a class="pqho-btn pqho-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/workspace_materials.php', $urlparams))->out(false); ?>">Material library</a>
       </nav>
     </section>
-    <?php if ($docserver === ''): ?><div class="pqho-alert">ONLYOFFICE is not configured yet. Set the document server URL in the PreQuraan Moodle plugin settings.</div><?php endif; ?>
+    <?php if ($docserver === ''): ?><div class="pqho-alert">ONLYOFFICE is not configured yet. Set the document server URL in the PreQuraan plugin settings.</div><?php endif; ?>
     <?php if ($error !== ''): ?><div class="pqho-alert"><?php echo s($error); ?></div><?php endif; ?>
     <section class="pqho-grid">
       <article class="pqho-panel">

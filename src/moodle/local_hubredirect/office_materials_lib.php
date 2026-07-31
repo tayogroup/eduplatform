@@ -253,7 +253,7 @@ function pqho_signed_material_context_allowed(stdClass $material, ?stdClass $con
 function pqho_create_material(int $workspaceid, int $userid, string $type, string $title = '', string $coursekey = '', int $studentid = 0): int {
     global $DB;
     if (!pqh_table_exists_safe('local_prequran_workspace_material')) {
-        throw new invalid_parameter_exception('Workspace material table is not ready. Run the local_prequran Moodle upgrade.');
+        throw new invalid_parameter_exception('Workspace material table is not ready. Run the local_prequran platform upgrade.');
     }
     if (!class_exists('ZipArchive') && in_array($type, ['word', 'excel', 'powerpoint'], true)) {
         throw new invalid_parameter_exception('PHP ZipArchive is required to create Office documents.');

@@ -71,6 +71,7 @@
               <option value="create_new">Create new Moodle course</option>
             </select><div class="muted">Create new will place the Moodle course in this institution's Moodle category and enable manual enrollment.</div></div>
           </div>
+          <div><label>Custom course title</label><input type="text" name="custom_course_title" placeholder="e.g. Grade 3 English"><div class="muted">Only used when Course track is set to Custom / other subject.</div></div>
           <div><label>Linked Moodle course</label><select name="moodlecourseid"></select><div class="muted" id="moodle-help"></div></div>
           <div><label>Title</label><input type="text" name="title" placeholder="Pre-Quraan beginner group"></div>
           <div><label>Summary</label><textarea name="summary"></textarea></div>
@@ -217,7 +218,7 @@
     fillSelect(f.visibility, Object.entries(d.options.visibilities || {}), form.visibility);
     fillSelect(f.tax_behavior, Object.entries(d.options.tax_behaviors || {}), form.tax_behavior);
     fillSelect(f.payment_required_timing, (d.options.payment_timings || []).map((v) => [v, words(v).replace(/\b\w/g, (c) => c.toUpperCase())]), form.payment_required_timing);
-    ["title", "summary", "syllabus", "prerequisites", "startdate", "enddate", "capacity", "tuition_amount", "pricing_currency", "registration_fee", "materials_fee", "refund_policy_label"].forEach((k) => { f[k].value = form[k] || ""; });
+    ["title", "summary", "syllabus", "prerequisites", "startdate", "enddate", "capacity", "tuition_amount", "pricing_currency", "registration_fee", "materials_fee", "refund_policy_label", "custom_course_title"].forEach((k) => { f[k].value = form[k] || ""; });
     f.installment_eligible.checked = form.installment_eligible === "1";
     f.scholarship_eligible.checked = form.scholarship_eligible === "1";
   }
@@ -260,6 +261,14 @@
         <form class="inlineform" data-do="review_drop" data-requestid="${Number(r.id)}">${noteInput}
         <div class="actions"><button name="decision" value="approved" type="submit">Approve drop</button>
         <button name="decision" value="rejected" type="submit" class="light">Reject drop</button></div></form>`;
+    }
+    if (r.status === "waitlisted") {
+      // Auto-promotes when a seat frees; the buttons retry promotion now
+      // (re-runs the approval with a live capacity check) or reject off the list.
+      return `<span class="muted">Waitlisted — auto-promotes when a seat frees.</span>
+        <form class="inlineform" data-do="review_request" data-requestid="${Number(r.id)}">${noteInput}
+        <div class="actions"><button name="decision" value="approved" type="submit">Try promote now</button>
+        <button name="decision" value="rejected" type="submit" class="light">Reject</button></div></form>`;
     }
     return `<span class="muted">${esc(r.admin_notes || "")}</span>`;
   };
@@ -347,7 +356,7 @@
     ev.preventDefault();
     const f = ev.currentTarget;
     const body = { do: "save_offering" };
-    ["offeringid", "course_link_mode", "course_key", "moodlecourseid", "title", "summary", "syllabus", "prerequisites",
+    ["offeringid", "course_link_mode", "course_key", "custom_course_title", "moodlecourseid", "title", "summary", "syllabus", "prerequisites",
      "startdate", "enddate", "capacity", "tuition_amount", "pricing_currency", "registration_fee", "materials_fee",
      "tax_behavior", "refund_policy_label", "payment_required_timing", "visibility", "status"].forEach((k) => { body[k] = f[k].value; });
     body.installment_eligible = f.installment_eligible.checked ? 1 : 0;

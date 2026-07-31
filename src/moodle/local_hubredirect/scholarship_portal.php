@@ -16,6 +16,7 @@ if ($workspaceid <= 0 || (!$canmanage && !in_array($role, ['student', 'parent'],
 if (!pqss_schema_ready()) {
     pqh_access_denied('Scholarship application schema is not ready. Run the local_prequran upgrade first.', new moodle_url('/local/hubredirect/workspace_dashboard.php', ['workspaceid' => $workspaceid]), 'Scholarship schema pending');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $urlparams = ['workspaceid' => $workspaceid];

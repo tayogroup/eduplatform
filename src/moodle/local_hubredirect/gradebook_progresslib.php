@@ -92,41 +92,80 @@ function pqgp_weighted_course_grade(int $workspaceid, int $offeringid, int $stud
     $weighted = 0.0;
     $weighttotal = 0.0;
     $details = [];
+    // Implicit "uncategorized" bucket: homework auto-assessments and any grade
+    // whose assessment has categoryid=0 previously scored NOTHING toward the
+    // course grade (the weighted sum only walked named categories) — so a
+    // homework-only course had NO course grade at all. This bucket folds them
+    // in at a configurable weight (gradebook_uncategorized_weight, default 100;
+    // set 0 to keep the legacy exclude-uncategorized behaviour).
+    $uncatweight = pqgp_money_float((string)(get_config('local_prequran', 'gradebook_uncategorized_weight')));
+    if ((string)get_config('local_prequran', 'gradebook_uncategorized_weight') === '') {
+        $uncatweight = 100.0;
+    }
+    $buckets = [];
     foreach ($categories as $category) {
-        $grades = $DB->get_records_sql(
-            "SELECT g.id, g.score_percent
+        $buckets[] = ['id' => (int)$category->id, 'title' => (string)$category->title,
+            'weight' => max(0.0, pqgp_money_float((string)$category->weight_percent)),
+            'drop' => max(0, (int)pqgp_money_float((string)$category->drop_lowest_count))];
+    }
+    if ($uncatweight > 0) {
+        $buckets[] = ['id' => 0, 'title' => 'Homework & uncategorized', 'weight' => $uncatweight, 'drop' => 0];
+    }
+    foreach ($buckets as $bucket) {
+        // Per-assessment weight_override (previously a dead stored field): a
+        // grade's assessment can carry its own weight WITHIN the category so
+        // one heavy exam outweighs a quiz. Blank/0 override => weight 1 (the
+        // legacy simple-average behaviour).
+        // Practice assessments never count toward the course grade (formative
+        // still counts — best practice is that formative work can be weighted;
+        // only explicit practice/ungraded is excluded). The column is absent on
+        // pre-v16 schemas, so COALESCE keeps legacy rows counting.
+        $rows = $DB->get_records_sql(
+            "SELECT g.id, g.score_percent, a.weight_override
                FROM {local_prequran_grade} g
                JOIN {local_prequran_assessment} a ON a.id = g.assessmentid
               WHERE g.workspaceid = :workspaceid
                 AND g.offeringid = :offeringid
                 AND g.studentid = :studentid
                 AND a.categoryid = :categoryid
-                AND g.status IN ('reviewed','published')",
-            ['workspaceid' => $workspaceid, 'offeringid' => $offeringid, 'studentid' => $studentid, 'categoryid' => (int)$category->id]
+                AND g.status IN ('reviewed','published')
+                AND COALESCE(a.grade_impact, 'summative') <> 'practice'",
+            ['workspaceid' => $workspaceid, 'offeringid' => $offeringid, 'studentid' => $studentid, 'categoryid' => (int)$bucket['id']]
         );
-        $scores = [];
-        foreach ($grades as $grade) {
-            if ((string)$grade->score_percent !== '') {
-                $scores[] = pqgp_money_float((string)$grade->score_percent);
+        $pairs = [];
+        foreach ($rows as $row) {
+            if ((string)$row->score_percent === '') {
+                continue;
             }
+            $ow = pqgp_money_float((string)$row->weight_override);
+            $pairs[] = ['score' => pqgp_money_float((string)$row->score_percent), 'w' => $ow > 0 ? $ow : 1.0];
         }
-        sort($scores);
-        $drop = max(0, (int)pqgp_money_float((string)$category->drop_lowest_count));
-        while ($drop > 0 && count($scores) > 1) {
-            array_shift($scores);
+        // drop_lowest removes the N lowest raw scores before weighting.
+        usort($pairs, static function ($a, $b) {
+            return $a['score'] <=> $b['score'];
+        });
+        $drop = $bucket['drop'];
+        while ($drop > 0 && count($pairs) > 1) {
+            array_shift($pairs);
             $drop--;
         }
-        $categorypercent = $scores ? array_sum($scores) / count($scores) : null;
-        $weight = max(0.0, pqgp_money_float((string)$category->weight_percent));
+        $wsum = 0.0;
+        $swsum = 0.0;
+        foreach ($pairs as $p) {
+            $wsum += $p['w'];
+            $swsum += $p['score'] * $p['w'];
+        }
+        $categorypercent = $wsum > 0 ? $swsum / $wsum : null;
+        $weight = $bucket['weight'];
         if ($categorypercent !== null && $weight > 0) {
             $weighted += $categorypercent * $weight;
             $weighttotal += $weight;
         }
         $details[] = [
-            'categoryid' => (int)$category->id,
-            'title' => (string)$category->title,
+            'categoryid' => (int)$bucket['id'],
+            'title' => (string)$bucket['title'],
             'weight' => $weight,
-            'score_count' => count($scores),
+            'score_count' => count($pairs),
             'percent' => $categorypercent,
         ];
     }
@@ -198,11 +237,57 @@ function pqgp_recommend_next_course(int $workspaceid, int $studentid, string $cu
         $rule = $DB->get_record('local_prequran_adv_rule', ['workspaceid' => $workspaceid, 'from_level' => $currentlevel, 'status' => 'active'], '*', IGNORE_MULTIPLE);
     }
     if ($rule && (float)$summary['average'] >= pqgp_money_float((string)$rule->required_mastery_percent)) {
+        // Best-practice fix: the rule's grade and attendance thresholds were
+        // stored but never checked — honor them when data exists. Missing data
+        // never blocks (pilot workspaces without attendance/grades keep the
+        // mastery-only behaviour).
+        $blockers = [];
+
+        $gradethreshold = pqgp_money_float((string)($rule->required_grade_percent ?? '0'));
+        if ($gradethreshold > 0 && pqh_table_exists_safe('local_prequran_course_grade')) {
+            $grades = $DB->get_records('local_prequran_course_grade',
+                ['workspaceid' => $workspaceid, 'studentid' => $studentid], '', 'id,final_percent');
+            if ($grades) {
+                $sum = 0.0; $n = 0;
+                foreach ($grades as $g) {
+                    $sum += pqgp_money_float((string)$g->final_percent);
+                    $n++;
+                }
+                if ($n > 0 && ($sum / $n) < $gradethreshold) {
+                    $blockers[] = 'course grade average ' . round($sum / $n) . '% below required ' . round($gradethreshold) . '%';
+                }
+            }
+        }
+
+        $attthreshold = pqgp_money_float((string)($rule->required_attendance_percent ?? '0'));
+        if ($attthreshold > 0 && pqh_table_exists_safe('local_prequran_live_attendance')) {
+            $since = time() - (90 * DAYSECS);
+            $total = (int)$DB->count_records_select('local_prequran_live_attendance',
+                'studentid = :sid AND timecreated > :since', ['sid' => $studentid, 'since' => $since]);
+            if ($total > 0) {
+                $present = (int)$DB->count_records_select('local_prequran_live_attendance',
+                    "studentid = :sid AND timecreated > :since AND attendance_status IN ('present', 'late', 'excused', 'makeup_completed')",
+                    ['sid' => $studentid, 'since' => $since]);
+                $rate = $present / $total * 100;
+                if ($rate < $attthreshold) {
+                    $blockers[] = 'attendance ' . round($rate) . '% below required ' . round($attthreshold) . '% (90d)';
+                }
+            }
+        }
+
+        if (!$blockers) {
+            return [
+                'status' => 'ready_to_advance',
+                'next_level' => (string)$rule->to_level,
+                'course_key' => (string)$rule->recommended_course_key,
+                'reason' => 'Mastery, grade and attendance meet the advancement rule.',
+            ];
+        }
         return [
-            'status' => 'ready_to_advance',
-            'next_level' => (string)$rule->to_level,
+            'status' => 'continue_practice',
+            'next_level' => $currentlevel,
             'course_key' => (string)$rule->recommended_course_key,
-            'reason' => 'Mastery average meets advancement rule.',
+            'reason' => 'Mastery met, but: ' . implode('; ', $blockers) . '.',
         ];
     }
     return [

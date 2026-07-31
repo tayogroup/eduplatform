@@ -76,6 +76,26 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         // -- write: legacy POST branch (verbatim via the lib) --
         pqpsl_update_foundation_consumer($consumer);
         $consumer = pqpsl_foundation_consumer();
+        // Governance: foundation routing/branding changes now leave a trail
+        // (this handler previously had no audit at all).
+        try {
+            if ($DB->get_manager()->table_exists(new xmldb_table('local_prequran_course_audit'))) {
+                $DB->insert_record('local_prequran_course_audit', (object)[
+                    'consumerid' => (int)$consumer->id, 'workspaceid' => 0, 'offeringid' => 0, 'requestid' => 0,
+                    'studentid' => 0, 'actorid' => (int)$USER->id,
+                    'action' => 'platform_settings_saved', 'targettype' => 'consumer_config',
+                    'targetid' => (int)$consumer->id,
+                    'details' => json_encode([
+                        'defaultpublicpath' => (string)($consumer->defaultpublicpath ?? ''),
+                        'defaultdashboardpath' => (string)($consumer->defaultdashboardpath ?? ''),
+                        'supportemail' => (string)($consumer->supportemail ?? ''),
+                    ], JSON_UNESCAPED_SLASHES),
+                    'timecreated' => time(),
+                ]);
+            }
+        } catch (Throwable $auditerror) {
+            // Audit must never break the save.
+        }
         echo json_encode([
             'ok' => true,
             'message' => 'EduPlatform foundation settings updated.',

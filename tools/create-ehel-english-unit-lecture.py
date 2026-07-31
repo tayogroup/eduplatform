@@ -118,8 +118,8 @@ def build_slides(unit: dict, dictionary: dict) -> list[dict]:
         {
             "kicker": "YOUR LEARNING PATH",
             "title": "You are ready to begin",
-            "bullets": ["Vocabulary and dictionary", "Reading and comprehension", "Grammar, speaking and writing", "Activities, quiz and live sessions"],
-            "narration": "You are ready to begin. Start with the vocabulary lab, continue through reading and comprehension, apply the grammar focus, and complete the speaking and writing practices. Use AI English for hints and feedback, and bring your questions to the live sessions.",
+            "bullets": ["Vocabulary and dictionary", "Reading and comprehension", "Grammar, speaking and writing", "Activities, quiz and optional live sessions"],
+            "narration": "You are ready to begin. Start with the vocabulary lab, continue through reading and comprehension, apply the grammar focus, and complete the speaking and writing practices. Use AI English for hints and feedback any time, and bring your questions to a live session too if you join one.",
         },
     ]
 

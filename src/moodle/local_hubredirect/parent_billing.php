@@ -20,6 +20,7 @@ if ($workspaceid > 0) {
 if ($workspaceid <= 0) {
     pqh_access_denied('Parent billing is not available for this workspace.', new moodle_url('/local/hubredirect/dashboard.php'), 'Billing unavailable');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 $childids = [];
 foreach (['local_prequran_comm_consent', 'local_prequran_live_consent'] as $table) {
     if (pqh_table_exists_safe($table)) {

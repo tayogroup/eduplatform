@@ -51,9 +51,14 @@ if ($workspaceid > 0) {
 // Resolve the parent's linked students exactly as the page does (consent tables
 // + parent comm threads), then narrow to a single child if childid is given.
 $childids = [];
-foreach (['local_prequran_comm_consent', 'local_prequran_live_consent'] as $table) {
+// Revoked links (consented=0/granted=0) are excluded — no billing visibility.
+foreach (['local_prequran_comm_consent' => 'consented', 'local_prequran_live_consent' => 'granted'] as $table => $consentfield) {
     if (pqh_table_exists_safe($table)) {
-        foreach ($DB->get_records($table, ['guardianid' => $userid], '', 'id,studentid') as $row) {
+        $conditions = ['guardianid' => $userid];
+        if (pqh_table_has_field_safe($table, $consentfield)) {
+            $conditions[$consentfield] = 1;
+        }
+        foreach ($DB->get_records($table, $conditions, '', 'id,studentid') as $row) {
             $childids[(int)$row->studentid] = (int)$row->studentid;
         }
     }

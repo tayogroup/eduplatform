@@ -11,6 +11,7 @@ $workspaceid = pqh_current_workspace_id((int)$USER->id, $requestedworkspaceid);
 if ($workspaceid <= 0 || !pqh_user_can_teach_in_workspace((int)$USER->id, $workspaceid)) {
     pqh_access_denied('Gradebook access requires teacher or workspace administrator access.', new moodle_url('/local/hubredirect/workspace_dashboard.php'), 'Gradebook access denied');
 }
+pqh_enforce_role_domain(pqh_requested_consumer_context(), $workspaceid, (int)$USER->id);
 $canmanage = pqh_user_can_manage_workspace((int)$USER->id, $workspaceid);
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $urlparams = ['workspaceid' => $workspaceid];
@@ -22,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         require_sesskey();
         if (!$ready) {
-            throw new invalid_parameter_exception('Gradebook tables are not installed yet. Run Moodle upgrade.');
+            throw new invalid_parameter_exception('Gradebook tables are not installed yet. Run the platform upgrade.');
         }
         $action = optional_param('action', '', PARAM_ALPHANUMEXT);
         $now = time();
@@ -168,7 +169,7 @@ echo '<style>.pqgb-wrap{max-width:1180px;margin:0 auto}.pqgb-top{display:flex;ju
 echo '<div class="pqgb-wrap"><div class="pqgb-top"><div><h2>Gradebook And Assessment</h2><div class="pqgb-muted">' . s($workspace->name) . ' assignments, quizzes, exams, oral evaluations, weighted categories, review, publishing, disputes, corrections, and audit.</div></div><a class="pqgb-btn pqgb-btn--light" href="' . (new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams))->out(false) . '">Workspace</a></div>';
 if ($notice !== '') { echo '<div class="pqgb-notice">' . s($notice) . '</div>'; }
 if ($error !== '') { echo '<div class="pqgb-error">' . s($error) . '</div>'; }
-if (!$ready) { echo '<div class="pqgb-error">Gradebook schema is not ready. Run the Moodle local_prequran upgrade.</div>'; }
+if (!$ready) { echo '<div class="pqgb-error">Gradebook schema is not ready. Run the local_prequran upgrade.</div>'; }
 echo '<div class="pqgb-grid"><section class="pqgb-panel">';
 if ($canmanage) {
     echo '<h3>Weighted Category</h3><form method="post"><input type="hidden" name="sesskey" value="' . s(sesskey()) . '"><input type="hidden" name="action" value="save_category"><div class="pqgb-field"><label>Offering</label><select class="pqgb-select" name="offeringid">';

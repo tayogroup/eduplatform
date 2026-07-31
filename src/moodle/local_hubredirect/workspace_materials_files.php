@@ -23,11 +23,28 @@ function pqwm_uploaded_file(array $upload): ?array {
     if ($filename === '') {
         $filename = 'material';
     }
+    // Size + extension allow-list (previously ANY mimetype / any size was
+    // accepted). Size cap from workspace_material_maxbytes (default 50 MB);
+    // extensions to a documents/media allow-list — never executables/scripts.
+    $size = (int)($upload['size'] ?? 0);
+    $maxbytes = (int)get_config('local_prequran', 'workspace_material_maxbytes');
+    if ($maxbytes <= 0) {
+        $maxbytes = 50 * 1024 * 1024;
+    }
+    if ($size > $maxbytes) {
+        throw new invalid_parameter_exception('That file is too large (limit ' . round($maxbytes / 1048576) . ' MB).');
+    }
+    $allowed = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'odt', 'ods', 'odp', 'txt', 'rtf', 'csv',
+        'png', 'jpg', 'jpeg', 'gif', 'webp', 'svg', 'mp3', 'm4a', 'wav', 'ogg', 'mp4', 'webm', 'mov', 'epub', 'zip'];
+    $ext = strtolower((string)pathinfo($filename, PATHINFO_EXTENSION));
+    if ($ext === '' || !in_array($ext, $allowed, true)) {
+        throw new invalid_parameter_exception('That file type is not permitted for workspace materials.');
+    }
     return [
         'tmpname' => (string)$upload['tmp_name'],
         'filename' => $filename,
         'mimetype' => trim((string)($upload['type'] ?? '')) ?: 'application/octet-stream',
-        'size' => (int)($upload['size'] ?? 0),
+        'size' => $size,
     ];
 }
 
@@ -208,7 +225,7 @@ function pqwm_stream_bunny_material(stdClass $material): void {
 function pqwm_insert_material(int $workspaceid): void {
     global $DB, $USER;
     if (!pqh_table_exists_safe('local_prequran_workspace_material')) {
-        throw new invalid_parameter_exception('Workspace material table is not ready. Run the local_prequran Moodle upgrade.');
+        throw new invalid_parameter_exception('Workspace material table is not ready. Run the local_prequran upgrade.');
     }
     $title = trim(optional_param('title', '', PARAM_TEXT));
     if ($title === '') {

@@ -24,6 +24,9 @@ if ($workspaceid <= 0 && !is_siteadmin((int)$USER->id)) {
 if ($workspaceid > 0 && !pqfin_user_can_manage_workspace_finance((int)$USER->id, $workspaceid)) {
     pqh_access_denied('Only workspace finance admins can view finance operations.', new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams), 'Finance operations access required');
 }
+if ($workspaceid > 0) {
+    pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
+}
 
 $reports = [
     'aging' => 'Invoice aging',

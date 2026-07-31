@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Course syllabus · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:0 0 6px;font-size:14px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:1fr 360px;gap:16px;align-items:start}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .muted{color:var(--muted);font-size:12px}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .toolbar{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
+  .toolbar .field{margin-bottom:0}
+  .field{margin-bottom:10px}
+  .field label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin-bottom:3px}
+  .field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .field textarea{min-height:70px;resize:vertical}
+  .field textarea.big{min-height:130px}
+  button.primary{background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer;margin-right:6px}
+  button.primary:disabled{opacity:.55;cursor:wait}
+  button.btn{display:inline-block;padding:7px 13px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--blue2);font-weight:800;font-size:12px;cursor:pointer;margin:2px 4px 2px 0}
+  hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top;font-size:13px}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2);white-space:nowrap}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.good{background:#e1f2ff;color:var(--blue2)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .unit{border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-bottom:8px}
+  .unit ul{margin:6px 0 0;padding-left:18px}
+  .unit li{font-size:13px;margin-bottom:3px}
+  .gen{background:var(--sky);border-radius:8px;padding:8px 11px;font-size:12px;color:var(--ink2);margin-bottom:12px}
+  @media print{.top,.toolbar,.editor,button,.gen{display:none!important}.panel{border:0;padding:0}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Course syllabus</small></div>
+  <div class="note" id="mode-note">Token-authenticated</div>
+</div></header>
+<main class="wrap">
+  <div id="status" class="status">Loading…</div>
+
+  <div class="panel">
+    <h1 id="title">Course syllabus</h1>
+    <p class="sub" id="subtitle"></p>
+    <div class="toolbar" style="margin-top:12px">
+      <div class="field"><label for="course">Course</label><select id="course"></select></div>
+      <div class="field"><label for="year">Academic year</label><select id="year"></select></div>
+      <div><button class="btn" id="printbtn">Print</button></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div>
+      <div class="panel" id="view"></div>
+    </div>
+    <div>
+      <div class="panel editor" id="editor"></div>
+      <div class="panel editor" id="admin"></div>
+    </div>
+  </div>
+</main>
+<script>
+(function(){
+  var params = new URLSearchParams(location.search);
+  var token = (params.get('token') || '').replace(/[^A-Za-z0-9._-]/g, '');
+  // portal_launch.php passes the Moodle host in ?endpoint= because this page is
+  // served from the Bunny CDN, where a relative 'portal_data.php' is a 404.
+  var endpoint = (params.get('endpoint') || '').trim() || 'portal_data.php';
+  // Forwarded by portal_launch.php and required by the handler to resolve the
+  // workspace; dropping them made every request fall back to the wrong scope.
+  var scope = '&workspaceid=' + encodeURIComponent(params.get('workspaceid') || '0')
+    + '&consumer=' + encodeURIComponent(params.get('consumer') || '');
+  var state = null;
+
+  function esc(v){ return String(v == null ? '' : v).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function say(msg, kind){ var el = document.getElementById('status');
+    el.className = 'status' + (kind ? ' ' + kind : ''); el.textContent = msg; }
+  function dt(ts){ if(!ts) return '—'; var d = new Date(ts*1000);
+    return d.toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'}); }
+
+  function load(){
+    var cid = document.getElementById('course').value || '';
+    var yr = document.getElementById('year').value || '';
+    var url = endpoint + '?report=syllabus&token=' + encodeURIComponent(token) + scope
+      + (cid ? '&courseid=' + encodeURIComponent(cid) : '')
+      + (yr ? '&year=' + encodeURIComponent(yr) : '');
+    say('Loading…');
+    fetch(url, {credentials:'same-origin'}).then(function(r){ return r.json(); }).then(function(d){
+      if(!d || !d.ok){ say((d && d.error) || 'Could not load the syllabus.', 'error'); return; }
+      state = d; render(); say('Syllabus for ' + d.year_label + '.');
+    }).catch(function(){ say('Could not reach the server.', 'error'); });
+  }
+
+  function post(payload, done){
+    payload.token = token;
+    payload.courseid = Number(document.getElementById('course').value || 0);
+    payload.year = Number(document.getElementById('year').value || 0);
+    fetch(endpoint + '?report=syllabus&token=' + encodeURIComponent(token) + scope, {
+      method:'POST', credentials:'same-origin',
+      headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
+    }).then(function(r){ return r.json(); }).then(function(d){
+      if(!d || !d.ok){ say((d && d.error) || 'That did not save.', 'error'); return; }
+      say(d.message || 'Saved.', 'saved'); load(); if(done) done();
+    }).catch(function(){ say('Could not reach the server.', 'error'); });
+  }
+
+  function renderSelectors(){
+    var sel = document.getElementById('course');
+    if(!sel.options.length){
+      sel.innerHTML = (state.courses||[]).map(function(c){
+        return '<option value="'+c.courseid+'">'+esc(c.title)+'</option>'; }).join('');
+      sel.value = String(state.selected_courseid || '');
+      sel.addEventListener('change', load);
+    }
+    var ys = document.getElementById('year');
+    if(!ys.options.length){
+      var now = state.year, out = [];
+      for(var y = now + 1; y >= now - 3; y--){
+        out.push('<option value="'+y+'">'+y+'-'+String(y+1).slice(2)+'</option>');
+      }
+      ys.innerHTML = out.join('');
+      ys.value = String(now);
+      ys.addEventListener('change', load);
+    }
+  }
+
+  function statusPill(s){
+    var cls = s === 'approved' ? 'good' : (s === 'in_review' ? 'warn' : (s === 'retired' ? 'bad' : ''));
+    return '<span class="pill '+cls+'">'+esc((state.status_options||{})[s] || s)+'</span>';
+  }
+
+  function render(){
+    renderSelectors();
+    var s = state.syllabus, g = state.generated || {}, v = document.getElementById('view');
+    var courseName = '';
+    (state.courses||[]).forEach(function(c){ if(String(c.courseid) === String(state.selected_courseid)) courseName = c.title; });
+    document.getElementById('title').textContent = courseName || 'Course syllabus';
+    document.getElementById('subtitle').textContent = 'Academic year ' + state.year_label
+      + (s ? ' · last updated ' + dt(s.timemodified) : ' · no syllabus written yet');
+
+    var h = '';
+    h += '<div style="margin-bottom:12px">' + (s ? statusPill(s.status) : '<span class="pill">Not started</span>');
+    if(s && s.status === 'approved'){
+      h += ' <span class="pill good">Approved ' + dt(s.approvedat) + '</span>';
+      var nm = (state.names||{})[s.approvedby];
+      if(nm) h += ' <span class="muted">by ' + esc(nm) + '</span>';
+    }
+    if(s && s.visibility) h += ' <span class="pill">' + esc((state.visibility_options||{})[s.visibility] || s.visibility) + '</span>';
+    h += '</div>';
+
+    if(s && s.review_note){
+      h += '<div class="gen"><strong>Reviewer note:</strong> ' + esc(s.review_note) + '</div>';
+    }
+
+    // ---- authored half ----
+    if(s && s.overview){ h += '<h2>About this course</h2><p>' + esc(s.overview).replace(/\n/g,'<br>') + '</p>'; }
+    if(s && s.teacher_intro){ h += '<h2>Your teacher</h2><p>' + esc(s.teacher_intro).replace(/\n/g,'<br>') + '</p>'; }
+
+    var pol = state.policies || {}, blocks = state.policy_blocks || {}, anypol = false;
+    Object.keys(blocks).forEach(function(k){ if((pol[k]||'').trim()) anypol = true; });
+    if(anypol){
+      h += '<h2>Course policies</h2>';
+      Object.keys(blocks).forEach(function(k){
+        if(!(pol[k]||'').trim()) return;
+        h += '<h3>' + esc(blocks[k]) + '</h3><p>' + esc(pol[k]).replace(/\n/g,'<br>') + '</p>';
+      });
+    }
+    if(!s || !s.overview){
+      h += '<div class="gen">The narrative part of this syllabus has not been written yet. '
+        + 'Everything below is generated from the course itself and is always current.</div>';
+    }
+
+    // ---- generated half ----
+    h += '<hr><div class="gen">Everything below is generated from this course — units, outcomes, '
+      + 'deadlines and term dates update themselves and are never typed by hand.</div>';
+
+    if(g.alignment){
+      var a = g.alignment;
+      h += '<h2>Curriculum alignment</h2><table><tbody>';
+      if(a.subject) h += '<tr><th>Subject</th><td>' + esc(a.subject) + '</td></tr>';
+      if(a.stage) h += '<tr><th>Stage</th><td>' + esc(a.stage) + '</td></tr>';
+      if(a.level) h += '<tr><th>Level</th><td>' + esc(a.level) + '</td></tr>';
+      if(a.cambridge_code) h += '<tr><th>Cambridge code</th><td>' + esc(a.cambridge_code) + '</td></tr>';
+      if(a.framework) h += '<tr><th>Framework</th><td>' + esc(a.framework) + '</td></tr>';
+      h += '</tbody></table>';
+    }
+
+    if((g.units||[]).length){
+      h += '<h2 style="margin-top:16px">What your child will learn</h2>';
+      g.units.forEach(function(u){
+        h += '<div class="unit"><strong>Unit ' + esc(u.number) + ' · ' + esc(u.title) + '</strong>';
+        if((u.objectives||[]).length){
+          h += '<ul>';
+          u.objectives.forEach(function(o){
+            h += '<li>' + esc(o.outcome);
+            if(o.bloom) h += ' <span class="pill">' + esc(o.bloom) + '</span>';
+            h += '</li>';
+          });
+          h += '</ul>';
+        }
+        h += '</div>';
+      });
+      if(g.unit_source === 'gradebook'){
+        h += '<p class="muted">Learning outcomes have not been mapped for this course yet.</p>';
+      }
+    }
+
+    if((g.assessments||[]).length){
+      h += '<h2 style="margin-top:16px">Assessment schedule</h2><table><thead><tr>'
+        + '<th>Task</th><th>Due</th><th>Points</th></tr></thead><tbody>';
+      g.assessments.forEach(function(x){
+        h += '<tr><td>' + esc(x.title) + '</td><td>' + dt(x.duedate) + '</td><td>' + esc(x.maxpoints) + '</td></tr>';
+      });
+      h += '</tbody></table>';
+    }
+
+    if((g.terms||[]).length){
+      h += '<h2 style="margin-top:16px">Term dates</h2><table><thead><tr>'
+        + '<th>Term</th><th>Starts</th><th>Ends</th></tr></thead><tbody>';
+      g.terms.forEach(function(t){
+        h += '<tr><td>' + esc(t.title) + '</td><td>' + dt(t.startdate) + '</td><td>' + dt(t.enddate) + '</td></tr>';
+      });
+      h += '</tbody></table>';
+    }
+
+    v.innerHTML = h;
+    renderEditor();
+    renderAdmin();
+  }
+
+  function renderEditor(){
+    var el = document.getElementById('editor');
+    if(!state.can_author){ el.innerHTML = ''; el.style.display = 'none'; return; }
+    el.style.display = '';
+    var s = state.syllabus || {}, pol = state.policies || {}, blocks = state.policy_blocks || {};
+    var h = '<h2>Write the syllabus</h2><p class="muted">You write the words; the schedule below the '
+      + 'syllabus builds itself.</p>';
+    h += '<div class="field"><label>Course overview</label><textarea id="f-overview" class="big">'
+      + esc(s.overview || '') + '</textarea></div>';
+    h += '<div class="field"><label>About your teacher</label><textarea id="f-teacher">'
+      + esc(s.teacher_intro || '') + '</textarea></div>';
+    Object.keys(blocks).forEach(function(k){
+      h += '<div class="field"><label>' + esc(blocks[k]) + '</label><textarea id="f-pol-' + esc(k) + '">'
+        + esc(pol[k] || '') + '</textarea></div>';
+    });
+    h += '<div class="field"><label>Contact</label><input id="f-contact" value="' + esc(s.contact || '') + '"></div>';
+    h += '<button class="primary" id="savebtn">Save draft</button>';
+    if(s.status === 'draft' || s.status === 'retired' || !s.status){
+      h += '<button class="btn" id="submitbtn">Send for approval</button>';
+    }
+    el.innerHTML = h;
+
+    document.getElementById('savebtn').addEventListener('click', function(){
+      var payload = {do:'save',
+        overview: document.getElementById('f-overview').value,
+        teacher_intro: document.getElementById('f-teacher').value,
+        contact: document.getElementById('f-contact').value};
+      Object.keys(blocks).forEach(function(k){
+        payload['policy_' + k] = document.getElementById('f-pol-' + k).value;
+      });
+      post(payload);
+    });
+    var sb = document.getElementById('submitbtn');
+    if(sb) sb.addEventListener('click', function(){ post({do:'submit'}); });
+  }
+
+  function renderAdmin(){
+    var el = document.getElementById('admin');
+    if(!state.can_approve){ el.innerHTML = ''; el.style.display = 'none'; return; }
+    el.style.display = '';
+    var s = state.syllabus || {};
+    var h = '<h2>School administrator</h2>';
+    if(s.status === 'in_review'){
+      h += '<p class="muted">This syllabus is waiting for your approval.</p>'
+        + '<div class="field"><label>Note to the teacher (optional)</label><textarea id="f-note"></textarea></div>'
+        + '<button class="primary" id="approvebtn">Approve</button>'
+        + '<button class="btn" id="rejectbtn">Return for changes</button>';
+    } else if(s.status === 'approved'){
+      h += '<p class="muted">Approved. Editing it returns it to draft and it will need approving again.</p>'
+        + '<button class="btn" id="retirebtn">Retire</button>';
+    } else {
+      h += '<p class="muted">Nothing is waiting for approval on this course.</p>';
+    }
+    h += '<hr><div class="field"><label>Who may see this syllabus</label><select id="f-vis">'
+      + Object.keys(state.visibility_options||{}).map(function(k){
+          return '<option value="'+esc(k)+'"'+(s.visibility===k?' selected':'')+'>'
+            + esc(state.visibility_options[k]) + '</option>'; }).join('')
+      + '</select></div><button class="btn" id="visbtn">Update visibility</button>'
+      + '<p class="muted">A public syllabus is readable by anyone, including families who have not '
+      + 'enrolled. Only an approved syllabus is ever published.</p>';
+    el.innerHTML = h;
+
+    var ab = document.getElementById('approvebtn');
+    if(ab) ab.addEventListener('click', function(){
+      post({do:'approve', note: (document.getElementById('f-note')||{}).value || ''}); });
+    var rb = document.getElementById('rejectbtn');
+    if(rb) rb.addEventListener('click', function(){
+      var n = (document.getElementById('f-note')||{}).value || '';
+      if(!n.trim()){ say('Add a note so the teacher knows what to change.', 'error'); return; }
+      post({do:'reject', note:n}); });
+    var tb = document.getElementById('retirebtn');
+    if(tb) tb.addEventListener('click', function(){ post({do:'retire'}); });
+    var vb = document.getElementById('visbtn');
+    if(vb) vb.addEventListener('click', function(){
+      post({do:'visibility', visibility: document.getElementById('f-vis').value}); });
+  }
+
+  document.getElementById('printbtn').addEventListener('click', function(){ window.print(); });
+
+  if(!token){ say('This page needs a launch token.', 'error'); }
+  else { load(); }
+})();
+</script>
+</body>
+</html>

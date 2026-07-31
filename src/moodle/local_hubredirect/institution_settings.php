@@ -39,6 +39,7 @@ if (!pqh_consumer_schema_ready()) {
         'Institution settings unavailable'
     );
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $consumer = pqhi_consumer_for_workspace($workspaceid, (string)($consumercontext->consumerslug ?? ''));
 $message = optional_param('saved', 0, PARAM_INT) === 1 ? 'Institution settings saved.' : '';

@@ -778,6 +778,8 @@ if ($childid > 0) {
 $acknowledged = optional_param('acknowledged', 0, PARAM_INT);
 $supportlogged = optional_param('supportlogged', 0, PARAM_INT);
 
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
+
 echo $OUTPUT->header();
 ?>
 <style>
@@ -795,87 +797,97 @@ body.pqh-live-parent-trust-page #page,
 body.pqh-live-parent-trust-page #page-content,
 body.pqh-live-parent-trust-page #region-main,
 body.pqh-live-parent-trust-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
-.pqlpt-shell{min-height:100vh;padding:34px 18px 58px;background:linear-gradient(180deg,#f1fff4 0,#f6f9fc 42%,#fff 100%);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#173044}
+.pqlpt-shell{min-height:100vh;padding:34px 18px 58px;background:#fff;color:#0f2237;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6}
 .pqlpt-wrap{max-width:1120px;margin:0 auto}
-.pqlpt-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px;padding:24px;border-radius:16px;background:linear-gradient(135deg,#eaffea 0,#fff 54%,#fff7e7 100%);border:1px solid rgba(111,78,50,.13);box-shadow:0 16px 38px rgba(105,76,45,.08)}
-.pqlpt-title{margin:0;font-size:34px;line-height:1.08;font-weight:950;color:#241b24}
-.pqlpt-subtitle{margin:8px 0 0;font-size:15px;font-weight:800;color:#586c78}
-.pqlpt-kicker{margin:0 0 8px;font-size:12px;font-weight:950;text-transform:uppercase;color:#7b5a3a;letter-spacing:0}
+.pqlpt-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px;padding:22px;border-radius:14px;background:#fff;border:1px solid #e4e9ef;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14)}
+.pqlpt-title{margin:0;font-size:26px;line-height:1.1;font-weight:800;color:#0f2237;letter-spacing:-.02em}
+.pqlpt-subtitle{margin:8px 0 0;font-size:14px;font-weight:500;color:#5b6b7c}
+.pqlpt-kicker{margin:0 0 8px;font-size:13px;font-weight:700;text-transform:uppercase;color:#5b6b7c;letter-spacing:.04em}
 .pqlpt-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.pqlpt-btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 15px;border-radius:9px;border:1px solid rgba(23,48,68,.14);background:#2f7d4f;color:#fff!important;text-decoration:none!important;font-size:14px;font-weight:900;box-shadow:none}
-.pqlpt-btn--light{background:#eef5f7;color:#0d2b42!important}
-.pqlpt-btn--warm{background:#7b5230;color:#fff!important}
+.pqlpt-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 15px;border-radius:10px;border:1px solid #e4e9ef;background:#fff;color:#0f2237!important;text-decoration:none!important;font-size:13px;font-weight:650;box-shadow:none}
+.pqlpt-btn:hover{background:#edf3fc;border-color:#e0ebfa;text-decoration:none!important}
+.pqlpt-btn--light{background:#edf3fc;color:#17498f!important;border:1px solid #e0ebfa}
+.pqlpt-btn--warm{background:#2166d1;color:#fff!important;border-color:#2166d1}
 .pqlpt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0}
-.pqlpt-metric,.pqlpt-card{background:#fff;border:1px solid rgba(23,48,68,.1);border-radius:14px;box-shadow:0 14px 34px rgba(23,48,68,.07)}
+.pqlpt-metric,.pqlpt-card{background:#fff;border:1px solid #e4e9ef;border-radius:14px;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14)}
 .pqlpt-metric{padding:16px}
-.pqlpt-metric strong{display:block;font-size:28px;font-weight:950;color:#7b5230}
-.pqlpt-metric span{display:block;margin-top:6px;font-size:13px;font-weight:900;color:#586c78}
+.pqlpt-metric strong{display:block;font-size:24px;font-weight:750;color:#0f2237}
+.pqlpt-metric span{display:block;margin-top:6px;font-size:12px;font-weight:600;color:#5b6b7c}
 .pqlpt-layout{display:grid;grid-template-columns:1.4fr .9fr;gap:16px}
 .pqlpt-card{padding:18px;margin-bottom:16px}
-.pqlpt-card h2{margin:0 0 12px;font-size:21px;font-weight:950;color:#241b24}
-.pqlpt-item{padding:14px;border:1px solid rgba(23,48,68,.1);border-radius:12px;background:#fbfdf9;margin-top:10px}
-.pqlpt-item h3{margin:0;font-size:18px;font-weight:950;color:#173044}
-.pqlpt-meta{margin:6px 0 0;font-size:13px;font-weight:800;color:#586c78}
-.pqlpt-pill{display:inline-flex;align-items:center;min-height:32px;padding:0 12px;border-radius:999px;background:#eef5f7;font-size:12px;font-weight:950;color:#173044}
-.pqlpt-pill--warn{background:#fff2d5;color:#7b5230}
-.pqlpt-pill--ok{background:#eafaef;color:#245c35}
-.pqlpt-pill--hot{background:#ffe7e0;color:#8b2c1f}
+.pqlpt-card h2{margin:0 0 12px;font-size:19px;font-weight:750;color:#0f2237;letter-spacing:-.01em}
+.pqlpt-item{padding:14px;border:1px solid #e4e9ef;border-radius:12px;background:#f7f4ec;margin-top:10px}
+.pqlpt-item h3{margin:0;font-size:17px;font-weight:750;color:#0f2237}
+.pqlpt-meta{margin:6px 0 0;font-size:13px;font-weight:600;color:#5b6b7c}
+.pqlpt-pill{display:inline-flex;align-items:center;min-height:32px;padding:0 12px;border-radius:8px;background:#edf3fc;font-size:12px;font-weight:650;color:#17498f}
+.pqlpt-pill--warn{background:#faf1dd;color:#b7791f}
+.pqlpt-pill--ok{background:#e8f4ec;color:#2e7d4f}
+.pqlpt-pill--hot{background:#fbe9e7;color:#c0392b}
 .pqlpt-row{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
-.pqlpt-empty,.pqlpt-notice{padding:18px;border:1px dashed rgba(23,48,68,.18);border-radius:12px;background:#fff;font-size:15px;font-weight:850;color:#586c78}
-.pqlpt-notice{margin-bottom:16px;border-style:solid;background:#eafaef;color:#245c35}
+.pqlpt-empty,.pqlpt-notice{padding:18px;border:1px dashed #e4e9ef;border-radius:12px;background:#fff;font-size:14px;font-weight:550;color:#5b6b7c}
+.pqlpt-notice{margin-bottom:16px;border-style:solid;background:#e8f4ec;color:#2e7d4f}
 .pqlpt-alerts{display:grid;gap:10px;margin:0 0 16px}
-.pqlpt-alert{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;border-radius:12px;border:1px solid rgba(123,82,48,.16);background:#fff8e9;color:#5f452b;font-size:14px;font-weight:900}
-.pqlpt-alert strong{font-weight:950;color:#241b24}
+.pqlpt-alert{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;border-radius:12px;border:1px solid #f0dfc0;background:#fffaf1;color:#b7791f;font-size:14px;font-weight:650}
+.pqlpt-alert strong{font-weight:750;color:#0f2237}
 .pqlpt-priority{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:0 0 16px}
 .pqlpt-priority a,.pqlpt-priority form{margin:0}
 .pqlpt-priority form button{width:100%}
 .pqlpt-select{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:14px}
-.pqlpt-student{display:block;padding:15px;border:1px solid rgba(23,48,68,.12);border-radius:12px;background:#fff;color:#173044!important;text-decoration:none!important;font-weight:950}
-.pqlpt-student span{display:block;margin-top:5px;color:#586c78;font-size:13px;font-weight:800}
+.pqlpt-student{display:block;padding:15px;border:1px solid #e4e9ef;border-radius:12px;background:#fff;color:#0f2237!important;text-decoration:none!important;font-weight:700}
+.pqlpt-student span{display:block;margin-top:5px;color:#5b6b7c;font-size:13px;font-weight:600}
 .pqlpt-mini{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
 .pqlpt-live-activity{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
-.pqlpt-live-activity div{padding:10px;border-radius:10px;background:#fff;border:1px solid rgba(23,48,68,.08)}
-.pqlpt-live-activity strong{display:block;font-size:16px;font-weight:950;color:#7b5230}
-.pqlpt-live-activity span{display:block;margin-top:3px;font-size:11px;font-weight:900;color:#586c78}
-.pqlpt-field{padding:12px;border-radius:10px;background:#f8fbf5;border:1px solid rgba(23,48,68,.08)}
-.pqlpt-field strong{display:block;font-size:12px;font-weight:950;text-transform:uppercase;color:#40291e}
-.pqlpt-field p{margin:6px 0 0;font-size:14px;font-weight:800;color:#415665}
-.pqlpt-support{margin:0 0 16px;padding:18px;border-radius:14px;border:1px solid rgba(47,125,79,.22);background:#f6fff8;box-shadow:0 14px 34px rgba(23,48,68,.06)}
-.pqlpt-support h2{margin:0 0 6px;font-size:21px;font-weight:950;color:#173044}
-.pqlpt-support__text{margin:0 0 12px;font-size:14px;font-weight:850;color:#586c78}
+.pqlpt-live-activity div{padding:10px;border-radius:10px;background:#f7f4ec;border:1px solid #e4e9ef}
+.pqlpt-live-activity strong{display:block;font-size:16px;font-weight:750;color:#0f2237}
+.pqlpt-live-activity span{display:block;margin-top:3px;font-size:11px;font-weight:600;color:#5b6b7c}
+.pqlpt-field{padding:12px;border-radius:10px;background:#f7f4ec;border:1px solid #e4e9ef}
+.pqlpt-field strong{display:block;font-size:12px;font-weight:700;text-transform:uppercase;color:#0f2237}
+.pqlpt-field p{margin:6px 0 0;font-size:14px;font-weight:500;color:#5b6b7c}
+.pqlpt-support{margin:0 0 16px;padding:18px;border-radius:14px;border:1px solid rgba(46,125,79,.14);background:#e8f4ec;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14)}
+.pqlpt-support h2{margin:0 0 6px;font-size:19px;font-weight:750;color:#0f2237}
+.pqlpt-support__text{margin:0 0 12px;font-size:14px;font-weight:500;color:#5b6b7c}
 .pqlpt-support__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
-.pqlpt-support__metric{padding:12px;border-radius:10px;background:#fff;border:1px solid rgba(23,48,68,.08)}
-.pqlpt-support__metric strong{display:block;font-size:22px;font-weight:950;color:#7b5230}
-.pqlpt-support__metric span{font-size:12px;font-weight:900;color:#586c78}
-.pqlpt-support__copy{width:100%;box-sizing:border-box;min-height:40px;margin:6px 0 12px;padding:8px 10px;border-radius:9px;border:1px solid rgba(23,48,68,.14);background:#fff;color:#173044;font-size:13px;font-weight:800}
-.pqlpt-support__list{margin:8px 0 0;padding-left:18px;color:#415665;font-size:13px;font-weight:800}
+.pqlpt-support__metric{padding:12px;border-radius:10px;background:#fff;border:1px solid #e4e9ef}
+.pqlpt-support__metric strong{display:block;font-size:20px;font-weight:750;color:#2e7d4f}
+.pqlpt-support__metric span{font-size:12px;font-weight:600;color:#5b6b7c}
+.pqlpt-support__copy{width:100%;box-sizing:border-box;min-height:40px;margin:6px 0 12px;padding:8px 10px;border-radius:9px;border:1px solid #e4e9ef;background:#fff;color:#0f2237;font-size:13px;font-weight:600}
+.pqlpt-support__list{margin:8px 0 0;padding-left:18px;color:#5b6b7c;font-size:13px;font-weight:600}
 .pqlpt-support__list li{margin:4px 0}
-.pqlpt-support__form{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;padding:14px;border:1px solid rgba(23,48,68,.1);border-radius:12px;background:#fff}
-.pqlpt-support__form label{display:block;margin:0 0 5px;font-size:12px;font-weight:950;color:#415665}
-.pqlpt-support__input,.pqlpt-support__textarea{width:100%;box-sizing:border-box;border:1px solid rgba(23,48,68,.14);border-radius:9px;background:#fff;color:#173044;font-size:13px;font-weight:800}
+.pqlpt-support__form{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;padding:14px;border:1px solid #e4e9ef;border-radius:12px;background:#fff}
+.pqlpt-support__form label{display:block;margin:0 0 5px;font-size:12px;font-weight:700;color:#5b6b7c}
+.pqlpt-support__input,.pqlpt-support__textarea{width:100%;box-sizing:border-box;border:1px solid #e4e9ef;border-radius:9px;background:#fff;color:#0f2237;font-size:13px;font-weight:600}
 .pqlpt-support__input{min-height:40px;padding:0 10px}
 .pqlpt-support__textarea{min-height:84px;padding:9px 10px;resize:vertical}
 .pqlpt-support__wide{grid-column:1/-1}
 @media(max-width:920px){.pqlpt-layout{grid-template-columns:1fr}.pqlpt-grid{grid-template-columns:1fr 1fr}.pqlpt-top{display:block}.pqlpt-actions{margin-top:14px}}
-@media(max-width:620px){.pqlpt-shell{padding:18px 10px 42px}.pqlpt-top,.pqlpt-card{padding:16px}.pqlpt-grid,.pqlpt-mini,.pqlpt-live-activity,.pqlpt-support__grid,.pqlpt-support__form{grid-template-columns:1fr}.pqlpt-support__wide{grid-column:auto}.pqlpt-row,.pqlpt-alert{display:block}.pqlpt-title{font-size:27px}.pqlpt-btn{width:100%;margin-top:8px}.pqlpt-pill{margin-top:10px}.pqlpt-item h3{font-size:17px;overflow-wrap:anywhere}.pqlpt-meta,.pqlpt-field p{overflow-wrap:anywhere}}
+@media(max-width:620px){.pqlpt-shell{padding:18px 10px 42px}.pqlpt-top,.pqlpt-card{padding:16px}.pqlpt-grid,.pqlpt-mini,.pqlpt-live-activity,.pqlpt-support__grid,.pqlpt-support__form{grid-template-columns:1fr}.pqlpt-support__wide{grid-column:auto}.pqlpt-row,.pqlpt-alert{display:block}.pqlpt-title{font-size:22px}.pqlpt-btn{width:100%;margin-top:8px}.pqlpt-pill{margin-top:10px}.pqlpt-item h3{font-size:16px;overflow-wrap:anywhere}.pqlpt-meta,.pqlpt-field p{overflow-wrap:anywhere}}
 <?php echo pqh_dashboard_header_css(); ?>
-<?php echo pqh_design_system_css('.pqlpt-shell'); ?>
+/* ---- EduPlatform design system layer: same tokens as the
+   student/teacher dashboard - light paper background, blue
+   appbar/gnav tint, quiet white surfaces, single blue accent. ---- */
+.pqlpt-shell{
+  --pqh-ink:#0f2237;--pqh-muted:#5b6b7c;--pqh-faint:#8494a5;--pqh-line:#e4e9ef;--pqh-bg:#f7f4ec;--pqh-surface:#fff;
+  --pqh-tint:#edf3fc;--pqh-tint-2:#e0ebfa;--pqh-primary:#2166d1;--pqh-primary-ink:#17498f;
+  background:#fff!important;color:var(--pqh-ink)}
+.pqlpt-shell .pqh-appbar{background:linear-gradient(90deg,#cfe9ff 0%,#e3f4ff 50%,#f2fbff 100%)}
+.pqlpt-shell .pqh-workspace-top{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;box-shadow:none!important;border-radius:14px!important}
+.pqlpt-shell .pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
+.pqlpt-shell .pqh-workspace-sub{color:var(--pqh-muted)!important;font-weight:500!important;opacity:1}
+.pqlpt-shell .pqh-workspace-actions a,.pqlpt-shell .pqh-workspace-actions button,.pqlpt-btn{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;color:var(--pqh-ink)!important;font-weight:650!important;border-radius:10px!important;box-shadow:none!important}
+.pqlpt-shell .pqh-workspace-actions a:hover,.pqlpt-shell .pqh-workspace-actions button:hover,.pqlpt-btn:hover{background:var(--pqh-tint)!important;border-color:var(--pqh-tint-2)!important;text-decoration:none!important}
+.pqlpt-shell .pqh-workspace-actions a.pqh-workspace-logout{background:var(--pqh-ink)!important;border-color:var(--pqh-ink)!important;color:#fff!important}
+.pqlpt-shell [class*="-card"],.pqlpt-shell [class*="-panel"]{background:var(--pqh-surface);border-color:var(--pqh-line)!important;border-radius:14px;box-shadow:0 1px 2px rgba(15,34,55,.05)}
+.pqlpt-shell h1,.pqlpt-shell h2,.pqlpt-shell h3{color:var(--pqh-ink)}
 <?php echo pqh_design_shell_css('.pqlpt-shell'); ?>
 </style>
 <main class="pqlpt-shell">
-<?php echo pqh_design_shell_html('pqlpt-shell'); ?>
+<?php echo pqh_design_shell_html('pqlpt-shell', 'live', pqh_live_page_shell_opts('Parent Live Hub', $urlparams, $childid)); ?>
   <div class="pqlpt-wrap">
     <section class="pqlpt-top pqh-workspace-top">
       <div>
         <p class="pqlpt-kicker">Parent trust dashboard</p>
         <h1 class="pqlpt-title pqh-workspace-title">Live-class hub for <?php echo s($childname); ?></h1>
         <p class="pqlpt-subtitle pqh-workspace-sub">Upcoming classes, teacher feedback, recordings, homework, follow-ups, and schedule acknowledgements in one place.</p>
-      </div>
-      <div class="pqlpt-actions pqh-workspace-actions">
-        <?php echo pqh_live_session_explainer_link(); ?>
-        <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo pqlpt_url('/local/hubredirect/live_schedule.php', $urlparams, $childid > 0 ? ['childid' => $childid] : [])->out(false); ?>">Schedule</a>
-        <a class="pqlpt-btn pqlpt-btn--light" href="<?php echo pqlpt_url('/local/hubredirect/live_summaries.php', $urlparams, $childid > 0 ? ['childid' => $childid] : [])->out(false); ?>">Summaries</a>
-        <a class="pqlpt-btn pqlpt-btn--warm" href="<?php echo pqlpt_url($workspaceid > 0 ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php', $urlparams)->out(false); ?>">Dashboard</a>
       </div>
     </section>
 

@@ -166,6 +166,15 @@ if ($ispost) {
             } else {
                 $DB->insert_record('local_prequran_grade', $record);
             }
+            // Keep the rolled-up course grade fresh (stale-grade fix — this
+            // path previously never recalculated).
+            if ((int)$record->offeringid > 0 && function_exists('pqgp_recalculate_course_grade')) {
+                try {
+                    pqgp_recalculate_course_grade($workspaceid, (int)$record->offeringid, $studentid, $userid);
+                } catch (Throwable $recalcerror) {
+                    // Never block the grade write.
+                }
+            }
             if ((string)$record->status === 'published') {
                 $scorefloat = (float)$score;
                 pqtprl_notify_parent_update(

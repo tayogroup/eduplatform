@@ -6,6 +6,7 @@ require_login();
 require_once(__DIR__ . '/institutionlib.php');
 
 pqh_require_platform_operations('Only platform administrators can create consumer apps.');
+pqh_enforce_role_domain(pqh_current_consumer_context(), pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
 
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url(new moodle_url('/local/hubredirect/consumer_wizard.php'));
@@ -19,12 +20,18 @@ function pqcw_clean_route(string $path, string $fallback): string {
     if ($path === '') {
         return $fallback;
     }
+    $bare = ltrim($path, '/');
+    if (strpos($bare, '/') === false
+            && substr($bare, -4) !== '.php'
+            && preg_match('/^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$/i', $bare)) {
+        throw new Exception('"' . $bare . '" looks like a domain, not a Moodle path. Enter domains in the domain fields above -- this field takes a local route such as /local/hubredirect/consumer_landing.php.');
+    }
     if ($path[0] !== '/') {
         $path = '/' . $path;
     }
     $path = clean_param($path, PARAM_LOCALURL);
     if ($path === '' || strpos($path, '//') === 0 || preg_match('/^\/?https?:/i', $path)) {
-        throw new invalid_parameter_exception('Use local Moodle paths only, such as /local/hubredirect/consumer_landing.php.');
+        throw new Exception('Use local Moodle paths only, such as /local/hubredirect/consumer_landing.php.');
     }
     return $path;
 }
@@ -43,11 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     try {
         if (!pqh_table_exists_safe('local_prequran_workspace') || !pqh_table_exists_safe('local_prequran_workspace_member') || !pqh_consumer_schema_ready()) {
-            throw new invalid_parameter_exception('Workspace and consumer tables are not ready.');
+            throw new Exception('Workspace and consumer tables are not ready.');
         }
         $type = optional_param('consumer_type', 'institution', PARAM_ALPHANUMEXT);
         if (!array_key_exists($type, pqhi_consumer_type_options())) {
-            throw new invalid_parameter_exception('Choose a valid consumer type.');
+            throw new Exception('Choose a valid consumer type.');
         }
         $institutiontype = pqhi_clean_institution_type(optional_param('institution_type', 'primary_education', PARAM_ALPHANUMEXT));
         $faithsubcategory = $type === 'institution' && $institutiontype === 'faith_based_education'
@@ -71,7 +78,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
         $name = trim(optional_param('name', '', PARAM_TEXT));
         if ($name === '') {
-            throw new invalid_parameter_exception('Consumer name is required.');
+            throw new Exception('Consumer name is required.');
+        }
+        $publicdomain = pqhi_normalize_domain(optional_param('publicdomain', '', PARAM_TEXT));
+        $appdomain = pqhi_normalize_domain(optional_param('appdomain', '', PARAM_TEXT));
+        if ($websiteprofile['website_mode'] === 'hosted' && $publicdomain === '') {
+            throw new Exception('EduPlatform-hosted public domain is required when Website mode is Hosted -- this is the domain visitors use to reach the landing page.');
+        }
+        if ($appdomain === '') {
+            throw new Exception('Learning portal domain is required in every hosting mode.');
         }
         $slug = pqhi_clean_slug(optional_param('slug', $name, PARAM_TEXT));
         $routes = pqhi_default_routes_for_consumer($type);
@@ -81,16 +96,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'adminusername' => optional_param('adminusername', '', PARAM_ALPHANUMEXT),
             'adminfirstname' => optional_param('adminfirstname', '', PARAM_TEXT),
             'adminlastname' => optional_param('adminlastname', '', PARAM_TEXT),
+            'schoolslug' => $slug,
         ], (int)$USER->id);
         if (!empty($admin->deleted) || !empty($admin->suspended)) {
-            throw new invalid_parameter_exception('Choose an active Moodle user for the first admin.');
+            throw new Exception('Choose an active Moodle user for the first admin.');
         }
 
         $workspaceid = optional_param('workspaceid', 0, PARAM_INT);
         if ($workspaceid > 0) {
             $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', IGNORE_MISSING);
             if (!$workspace) {
-                throw new invalid_parameter_exception('Linked workspace was not found.');
+                throw new Exception('Linked workspace was not found.');
             }
         } else {
             $workspaceid = pqhi_create_workspace_for_consumer($name, $slug, $type, (int)$admin->id, [
@@ -143,8 +159,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         pqhi_upsert_workspace_member($workspaceid, (int)$admin->id, 'owner', (int)$USER->id, 'Created by consumer wizard.');
         pqhi_upsert_workspace_member($workspaceid, (int)$admin->id, 'admin', (int)$USER->id, 'Created by consumer wizard.');
-        $publicdomain = pqhi_normalize_domain(optional_param('publicdomain', '', PARAM_TEXT));
-        $appdomain = pqhi_normalize_domain(optional_param('appdomain', '', PARAM_TEXT));
         if ($websiteprofile['website_mode'] !== 'hosted') {
             $publicdomain = '';
         }
@@ -179,7 +193,51 @@ echo $OUTPUT->header();
 <style>
 body.pqcwiz-page header,body.pqcwiz-page footer,body.pqcwiz-page nav.navbar,body.pqcwiz-page #page-header,body.pqcwiz-page #page-footer,body.pqcwiz-page .drawer,body.pqcwiz-page .drawer-toggles,body.pqcwiz-page .block-region,body.pqcwiz-page [data-region="drawer"],body.pqcwiz-page [data-region="right-hand-drawer"]{display:none!important}
 body.pqcwiz-page #page,body.pqcwiz-page #page-content,body.pqcwiz-page #region-main,body.pqcwiz-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
-.pqcwiz-shell{min-height:100vh;padding:28px 18px 56px;background:#f6f8fb;color:#173044;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}.pqcwiz-wrap{max-width:1180px;margin:0 auto}.pqcwiz-top,.pqcwiz-panel{padding:18px;border:1px solid rgba(23,48,68,.12);border-radius:8px;background:#fff;box-shadow:0 12px 28px rgba(23,48,68,.06)}.pqcwiz-top{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin-bottom:14px}.pqcwiz-title{margin:0;color:#221b22;font-size:30px;font-weight:950}.pqcwiz-sub{margin:7px 0 0;color:#5e7280;font-size:14px;font-weight:800}.pqcwiz-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.pqcwiz-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 12px;border:0;border-radius:8px;background:#2f6f4e;color:#fff!important;text-decoration:none;font-size:13px;font-weight:950;cursor:pointer}.pqcwiz-btn--light{background:#eef4f6;color:#173044!important;border:1px solid rgba(23,48,68,.12)}.pqcwiz-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}.pqcwiz-formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.pqcwiz-field{display:grid;gap:5px;margin-bottom:8px}.pqcwiz-field--wide{grid-column:1/-1}.pqcwiz-field label{font-size:12px;font-weight:950;color:#415665;text-transform:uppercase}.pqcwiz-input,.pqcwiz-select,.pqcwiz-textarea{width:100%;border:1px solid rgba(23,48,68,.18);border-radius:8px;background:#fbfdff;color:#173044;font-size:13px;font-weight:800;box-sizing:border-box}.pqcwiz-input,.pqcwiz-select{min-height:40px;padding:0 10px}.pqcwiz-textarea{min-height:82px;padding:10px}.pqcwiz-alert{padding:12px 14px;margin-bottom:12px;border-radius:8px;font-weight:850}.pqcwiz-alert--ok{background:#edf9ef;color:#245c35}.pqcwiz-alert--bad{background:#fff0ed;color:#883526}.pqcwiz-step{display:grid;grid-template-columns:32px 1fr;gap:9px;margin-bottom:13px}.pqcwiz-step b:first-child{display:grid;place-items:center;height:30px;border-radius:8px;background:#edf9ef;color:#245c35}.pqcwiz-step strong{display:block;color:#221b22}.pqcwiz-step span{display:block;color:#5e7280;font-size:12px;font-weight:800}.pqcwiz-note{padding:12px;border:1px dashed rgba(23,48,68,.2);border-radius:8px;color:#5e7280;font-weight:850}
+.pqcwiz-shell{
+  --paper:#f7f4ec;--paper-raised:#fffdf8;--ink:#16261f;--ink-soft:#4d6358;--ink-faint:#7c8d81;
+  --line:#ddd5bf;--line-strong:#c9bd9d;--green:#2f6f4e;--green-soft:#e4efe6;--gold:#a5741e;--gold-soft:#f4e6c8;
+  --slate:#3f5872;--slate-soft:#e4eaf0;--header-blue:#1f6feb;--header-blue-ink:#ffffff;--header-blue-ink-soft:#dbe9ff;--label-brown:#6b4423;--red:#9a3d2d;--red-soft:#f6e2dc;
+  --serif:Iowan Old Style,Palatino Linotype,Palatino,Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  min-height:100vh;padding:28px 18px 56px;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+@media (prefers-color-scheme: dark){
+  .pqcwiz-shell{
+    --paper:#121d17;--paper-raised:#16241c;--ink:#e8e3d3;--ink-soft:#9fb0a4;--ink-faint:#6d7f73;
+    --line:#2a3a30;--line-strong:#3a4c40;--green:#74c096;--green-soft:#1c3327;--gold:#dcaa54;--gold-soft:#3a301a;
+    --slate:#8ba7c4;--slate-soft:#1e2c3a;--header-blue:#2f7bf0;--header-blue-ink:#ffffff;--header-blue-ink-soft:#dbe9ff;--label-brown:#c99361;--red:#e08876;--red-soft:#3a2420;
+  }
+}
+.pqcwiz-wrap{max-width:1180px;margin:0 auto}
+.pqcwiz-top,.pqcwiz-panel{padding:18px;border:1px solid var(--line);border-radius:10px;background:var(--paper-raised);box-shadow:0 12px 28px rgba(22,38,31,.06)}
+.pqcwiz-top{background:var(--header-blue);border-color:var(--header-blue)}
+.pqcwiz-top{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin-bottom:14px}
+.pqcwiz-top .pqcwiz-title{color:var(--header-blue-ink)}
+.pqcwiz-top .pqcwiz-sub{color:var(--header-blue-ink-soft)}
+.pqcwiz-title{margin:0;font-family:var(--serif);font-size:33px;font-weight:600;letter-spacing:-.01em}
+.pqcwiz-sub{margin:7px 0 0;font-size:17px;font-weight:500}
+.pqcwiz-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.pqcwiz-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border:0;border-radius:8px;background:var(--green);color:#fff!important;text-decoration:none;font-family:var(--sans);font-size:16px;font-weight:600;cursor:pointer}
+.pqcwiz-btn--light{background:var(--paper-raised);color:var(--ink-soft)!important;border:1px solid var(--line-strong)}
+.pqcwiz-top .pqcwiz-btn--light{background:var(--header-blue-ink);color:var(--header-blue)!important;border-color:transparent}
+.pqcwiz-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+.pqcwiz-formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.pqcwiz-field{display:grid;gap:5px;margin-bottom:8px}
+.pqcwiz-field--wide{grid-column:1/-1}
+.pqcwiz-field label{font-family:var(--mono);font-size:15px;font-weight:600;letter-spacing:.05em;color:var(--label-brown);text-transform:uppercase}
+.pqcwiz-input,.pqcwiz-select,.pqcwiz-textarea{width:100%;border:1px solid var(--line);border-radius:8px;background:var(--paper-raised);color:var(--ink);font-family:var(--sans);font-size:16.5px;box-sizing:border-box}
+.pqcwiz-input,.pqcwiz-select{min-height:40px;padding:0 10px}
+.pqcwiz-textarea{min-height:82px;padding:10px}
+.pqcwiz-alert{padding:12px 14px;margin-bottom:12px;border-radius:8px;font-weight:600}
+.pqcwiz-alert--ok{background:var(--green-soft);color:var(--ink)}
+.pqcwiz-alert--bad{background:var(--red-soft);color:var(--red)}
+.pqcwiz-step{display:grid;grid-template-columns:32px 1fr;gap:9px;margin-bottom:13px}
+.pqcwiz-step b:first-child{display:grid;place-items:center;height:30px;border-radius:8px;background:var(--green-soft);color:var(--green);font-family:var(--serif)}
+.pqcwiz-step strong{display:block;color:var(--ink);font-weight:600}
+.pqcwiz-step span{display:block;color:var(--ink-soft);font-size:15px;font-weight:500}
+.pqcwiz-note{padding:12px 14px;border:1px dashed var(--line-strong);border-radius:10px;background:var(--slate-soft);color:var(--ink-soft);font-weight:500;font-size:16px}
+.pqcwiz-help{display:block;margin-top:4px;padding:4px 8px;border-radius:6px;background:var(--slate-soft);color:var(--ink-faint);font-size:14.5px;font-weight:500;line-height:1.4}
 @media(max-width:900px){.pqcwiz-top,.pqcwiz-grid,.pqcwiz-formgrid{grid-template-columns:1fr}.pqcwiz-actions{justify-content:flex-start}}
 </style>
 <main class="pqcwiz-shell">
@@ -200,48 +258,48 @@ body.pqcwiz-page #page,body.pqcwiz-page #page-content,body.pqcwiz-page #region-m
       <form class="pqcwiz-panel" method="post">
         <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
         <div class="pqcwiz-formgrid">
-          <div class="pqcwiz-field"><label>Consumer type</label><select class="pqcwiz-select" name="consumer_type"><?php foreach (pqhi_consumer_type_options() as $value => $label): ?><option value="<?php echo s($value); ?>"<?php echo $requestedtype === $value ? ' selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select></div>
-          <div class="pqcwiz-field"><label>Institution type</label><select class="pqcwiz-select" name="institution_type"><?php foreach (pqhi_institution_type_options() as $value => $label): ?><option value="<?php echo s($value); ?>"<?php echo $requestedinstitutiontype === $value ? ' selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select></div>
-          <div class="pqcwiz-field pqhi-faith-subcategory-field"><label>Faith sub-category</label><select class="pqcwiz-select" name="faith_subcategory"><option value="">Select</option><?php foreach (pqhi_faith_subcategory_options() as $value => $label): ?><option value="<?php echo s($value); ?>"<?php echo $requestedfaithsubcategory === $value ? ' selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select></div>
-          <div class="pqcwiz-field"><label>Teaching method</label><select class="pqcwiz-select" name="teaching_method"><?php foreach (pqhi_teaching_method_options() as $value => $label): ?><option value="<?php echo s($value); ?>"<?php echo $requestedteachingmethod === $value ? ' selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select></div>
-          <div class="pqcwiz-field"><label>Operator type</label><select class="pqcwiz-select" name="operator_type"><?php foreach (pqhi_operator_type_options() as $value => $label): ?><option value="<?php echo s($value); ?>"<?php echo $requestedoperatortype === $value ? ' selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select></div>
-          <div class="pqcwiz-field"><label>Name</label><input class="pqcwiz-input" name="name" required></div>
-          <div class="pqcwiz-field"><label>Slug</label><input class="pqcwiz-input" name="slug" placeholder="auto if blank"></div>
-          <div class="pqcwiz-field"><label>Link workspace</label><select class="pqcwiz-select" name="workspaceid"><option value="0">Create new workspace</option><?php foreach ($workspaces as $workspace): ?><option value="<?php echo (int)$workspace->id; ?>">#<?php echo (int)$workspace->id; ?> <?php echo s((string)$workspace->name); ?></option><?php endforeach; ?></select></div>
-          <div class="pqcwiz-field pqcwiz-field--wide"><label>Existing first admin</label><input class="pqcwiz-input" name="adminuser" placeholder="Moodle user ID, username, or email"></div>
-          <div class="pqcwiz-field"><label>New admin first name</label><input class="pqcwiz-input" name="adminfirstname"></div>
-          <div class="pqcwiz-field"><label>New admin last name</label><input class="pqcwiz-input" name="adminlastname"></div>
-          <div class="pqcwiz-field"><label>New admin email</label><input class="pqcwiz-input" name="adminemail"></div>
-          <div class="pqcwiz-field"><label>New admin username</label><input class="pqcwiz-input" name="adminusername"></div>
-          <div class="pqcwiz-field pqcwiz-field--wide"><label>Website hosting mode</label><select class="pqcwiz-select" name="website_mode"><?php foreach (pqhi_website_mode_options() as $value => $label): ?><option value="<?php echo s($value); ?>"<?php echo $requestedwebsitemode === $value ? ' selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select></div>
-          <div class="pqcwiz-field pqhi-hosted-website-field"><label>EduPlatform-hosted public domain</label><input class="pqcwiz-input" name="publicdomain" placeholder="school.example.org"></div>
-          <div class="pqcwiz-field pqhi-external-website-field"><label>Existing website URL</label><input class="pqcwiz-input" name="externalwebsiteurl" placeholder="https://www.example.org"></div>
-          <div class="pqcwiz-field"><label>Learning portal domain</label><input class="pqcwiz-input" name="appdomain" placeholder="learn.example.org"></div>
-          <div class="pqcwiz-field"><label>Portal label</label><input class="pqcwiz-input" name="portallabel" value="Learning portal"></div>
-          <div class="pqcwiz-field"><label>Portal domain management</label><select class="pqcwiz-select" name="domainmanagement"><?php foreach (pqhi_domain_management_options() as $value => $label): ?><option value="<?php echo s($value); ?>"><?php echo s($label); ?></option><?php endforeach; ?></select></div>
-          <div class="pqcwiz-field"><label>Branding source</label><select class="pqcwiz-select" name="brandingsource"><?php foreach (pqhi_branding_source_options() as $value => $label): ?><option value="<?php echo s($value); ?>"><?php echo s($label); ?></option><?php endforeach; ?></select></div>
-          <div class="pqcwiz-field"><label>Public intake location</label><select class="pqcwiz-select" name="intakelocation"><?php foreach (pqhi_intake_location_options() as $value => $label): ?><option value="<?php echo s($value); ?>"><?php echo s($label); ?></option><?php endforeach; ?></select></div>
-          <div class="pqcwiz-field"><label>Website integration</label><select class="pqcwiz-select" name="integrationmethod"><?php foreach (pqhi_integration_method_options() as $value => $label): ?><option value="<?php echo s($value); ?>"><?php echo s($label); ?></option><?php endforeach; ?></select></div>
-          <div class="pqcwiz-field"><label>Return URL after intake</label><input class="pqcwiz-input" name="returnurl" placeholder="https://www.example.org/thank-you"></div>
-          <div class="pqcwiz-field"><label>Support email</label><input class="pqcwiz-input" name="supportemail"></div>
-          <div class="pqcwiz-field"><label>Logo URL</label><input class="pqcwiz-input" name="logourl"></div>
-          <div class="pqcwiz-field"><label>Initials</label><input class="pqcwiz-input" name="brandinitials" maxlength="6"></div>
-          <div class="pqcwiz-field"><label>Plan code</label><input class="pqcwiz-input" name="plancode" value="pilot"></div>
-          <div class="pqcwiz-field"><label>Primary color</label><input class="pqcwiz-input" name="primarycolor" value="#2f6f4e"></div>
-          <div class="pqcwiz-field"><label>Accent color</label><input class="pqcwiz-input" name="accentcolor" value="#d99a26"></div>
-          <div class="pqcwiz-field"><label>Surface color</label><input class="pqcwiz-input" name="surfacecolor" value="#f4f8fb"></div>
-          <div class="pqcwiz-field"><label>Student limit</label><input class="pqcwiz-input" name="studentlimit" value="0"></div>
-          <div class="pqcwiz-field"><label>Teacher limit</label><input class="pqcwiz-input" name="teacherlimit" value="0"></div>
-          <div class="pqcwiz-field"><label>Session limit</label><input class="pqcwiz-input" name="sessionlimit" value="0"></div>
-          <div class="pqcwiz-field"><label>Storage MB</label><input class="pqcwiz-input" name="storagelimit" value="0"></div>
-          <div class="pqcwiz-field pqcwiz-field--wide"><label>Default public path</label><input class="pqcwiz-input" name="defaultpublicpath" placeholder="/local/hubredirect/consumer_landing.php"></div>
-          <div class="pqcwiz-field pqcwiz-field--wide"><label>Default dashboard path</label><input class="pqcwiz-input" name="defaultdashboardpath" placeholder="/local/hubredirect/workspace_dashboard.php"></div>
-          <div class="pqcwiz-field pqcwiz-field--wide"><label>Default login path</label><input class="pqcwiz-input" name="defaultloginpath" placeholder="/local/hubredirect/consumer_login.php"></div>
-          <div class="pqcwiz-field pqcwiz-field--wide"><label>Hero image URL</label><input class="pqcwiz-input" name="heroimage"></div>
-          <div class="pqcwiz-field pqcwiz-field--wide"><label>Landing headline</label><input class="pqcwiz-input" name="headline"></div>
-          <div class="pqcwiz-field pqcwiz-field--wide"><label>Landing subtitle</label><textarea class="pqcwiz-textarea" name="subtitle"></textarea></div>
-          <div class="pqcwiz-field pqcwiz-field--wide"><label>Landing body</label><textarea class="pqcwiz-textarea" name="bodycopy"></textarea></div>
-          <div class="pqcwiz-field pqcwiz-field--wide"><label>Initial courses</label><input class="pqcwiz-input" name="initialcourses" value="Pre-Quraan"></div>
+          <div class="pqcwiz-field"><label>Consumer type</label><select class="pqcwiz-select" name="consumer_type"><?php foreach (pqhi_consumer_type_options() as $value => $label): ?><option value="<?php echo s($value); ?>"<?php echo $requestedtype === $value ? ' selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select><span class="pqcwiz-help">Academy = a platform-wide brand like Quraan Academy. Institution = a school with its own admin, students, and teachers. Marketplace = a public teacher-discovery surface. Teacher workspace = one independent tutor's own space.</span></div>
+          <div class="pqcwiz-field"><label>Institution type</label><select class="pqcwiz-select" name="institution_type"><?php foreach (pqhi_institution_type_options() as $value => $label): ?><option value="<?php echo s($value); ?>"<?php echo $requestedinstitutiontype === $value ? ' selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select><span class="pqcwiz-help">Only takes effect when Consumer type is Institution. Choosing Religious / faith-based unlocks the sub-category field below it.</span></div>
+          <div class="pqcwiz-field pqhi-faith-subcategory-field"><label>Faith sub-category</label><select class="pqcwiz-select" name="faith_subcategory"><option value="">Select</option><?php foreach (pqhi_faith_subcategory_options() as $value => $label): ?><option value="<?php echo s($value); ?>"<?php echo $requestedfaithsubcategory === $value ? ' selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select><span class="pqcwiz-help">Only shown, and only saved, when Institution type is Religious / faith-based.</span></div>
+          <div class="pqcwiz-field"><label>Teaching method</label><select class="pqcwiz-select" name="teaching_method"><?php foreach (pqhi_teaching_method_options() as $value => $label): ?><option value="<?php echo s($value); ?>"<?php echo $requestedteachingmethod === $value ? ' selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select><span class="pqcwiz-help">How this institution actually teaches — in person, homeschool-style, fully online, or a mix. Descriptive only; doesn't change routing.</span></div>
+          <div class="pqcwiz-field"><label>Operator type</label><select class="pqcwiz-select" name="operator_type"><?php foreach (pqhi_operator_type_options() as $value => $label): ?><option value="<?php echo s($value); ?>"<?php echo $requestedoperatortype === $value ? ' selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select><span class="pqcwiz-help">Who legally runs the institution — government, nonprofit, private, or hybrid. Used for reporting, not access control.</span></div>
+          <div class="pqcwiz-field"><label>Name</label><input class="pqcwiz-input" name="name" required><span class="pqcwiz-help">The consumer's display name — shown in branding, emails, and the workspace header.</span></div>
+          <div class="pqcwiz-field"><label>Slug</label><input class="pqcwiz-input" name="slug" placeholder="auto if blank"><span class="pqcwiz-help">A short, URL-safe identifier used in links and reports. Leave blank to generate one from the name.</span></div>
+          <div class="pqcwiz-field"><label>Link workspace</label><select class="pqcwiz-select" name="workspaceid"><option value="0">Create new workspace</option><?php foreach ($workspaces as $workspace): ?><option value="<?php echo (int)$workspace->id; ?>">#<?php echo (int)$workspace->id; ?> <?php echo s((string)$workspace->name); ?></option><?php endforeach; ?></select><span class="pqcwiz-help">Attach this consumer to a workspace that already exists, or leave as "Create new workspace" to start from scratch.</span></div>
+          <div class="pqcwiz-field pqcwiz-field--wide"><label>Existing first admin</label><input class="pqcwiz-input" name="adminuser" placeholder="Moodle user ID, username, or email"><span class="pqcwiz-help">A Moodle user who should own this consumer. Leave blank to create a brand-new admin account from the four fields below instead.</span></div>
+          <div class="pqcwiz-field"><label>New admin first name</label><input class="pqcwiz-input" name="adminfirstname"><span class="pqcwiz-help">Only used when Existing first admin above is left blank.</span></div>
+          <div class="pqcwiz-field"><label>New admin last name</label><input class="pqcwiz-input" name="adminlastname"><span class="pqcwiz-help">Only used when Existing first admin above is left blank.</span></div>
+          <div class="pqcwiz-field"><label>New admin email</label><input class="pqcwiz-input" name="adminemail"><span class="pqcwiz-help">Where this admin's account credentials and notifications are sent.</span></div>
+          <div class="pqcwiz-field"><label>New admin username</label><input class="pqcwiz-input" name="adminusername"><span class="pqcwiz-help">Leave blank to generate one automatically from the name/email.</span></div>
+          <div class="pqcwiz-field pqcwiz-field--wide"><label>Website hosting mode</label><select class="pqcwiz-select" name="website_mode"><?php foreach (pqhi_website_mode_options() as $value => $label): ?><option value="<?php echo s($value); ?>"<?php echo $requestedwebsitemode === $value ? ' selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select><span class="pqcwiz-help">Choosing this is not about who owns the domain name — you can point your own domain at EduPlatform either way. It's about who serves the actual landing page content. Pick <strong>Hosted</strong> if you want EduPlatform to build and serve that page (the normal choice — works fine even on a domain you registered yourself, e.g. yourschool.org). Only pick <strong>External</strong> if the landing page content already lives on a separate, already-built website (Wix, Squarespace, another host) that you just want to link to the learning portal. Picking External when you actually want Hosted is the most common setup mistake — if in doubt, choose Hosted.</span></div>
+          <div class="pqcwiz-field pqhi-hosted-website-field"><label>EduPlatform-hosted public domain</label><input class="pqcwiz-input" name="publicdomain" placeholder="school.example.org"><span class="pqcwiz-help">Required in Hosted mode. The domain visitors type in to reach this school's landing page — it can be a domain you already own. This is a domain name only (e.g. school.example.org), never a path.</span></div>
+          <div class="pqcwiz-field pqhi-external-website-field"><label>Existing website URL</label><input class="pqcwiz-input" name="externalwebsiteurl" placeholder="https://www.example.org"><span class="pqcwiz-help">Only relevant in External or External-with-embeds mode: the full URL of the already-built website the landing page lives on. If you don't have a separate already-built site, switch Website hosting mode to Hosted instead of filling this in.</span></div>
+          <div class="pqcwiz-field"><label>Learning portal domain</label><input class="pqcwiz-input" name="appdomain" placeholder="learn.example.org"><span class="pqcwiz-help">Where dashboards and course access live. Needed in every hosting mode, even when the landing page is external.</span></div>
+          <div class="pqcwiz-field"><label>Portal label</label><input class="pqcwiz-input" name="portallabel" value="Learning portal"><span class="pqcwiz-help">What the portal is called in navigation and emails, e.g. "Learning portal" or "Student portal".</span></div>
+          <div class="pqcwiz-field"><label>Portal domain management</label><select class="pqcwiz-select" name="domainmanagement"><?php foreach (pqhi_domain_management_options() as $value => $label): ?><option value="<?php echo s($value); ?>"><?php echo s($label); ?></option><?php endforeach; ?></select><span class="pqcwiz-help">Who manages DNS for the domains above — informational only, doesn't change how EduPlatform routes traffic.</span></div>
+          <div class="pqcwiz-field"><label>Branding source</label><select class="pqcwiz-select" name="brandingsource"><?php foreach (pqhi_branding_source_options() as $value => $label): ?><option value="<?php echo s($value); ?>"><?php echo s($label); ?></option><?php endforeach; ?></select><span class="pqcwiz-help">Use EduPlatform's own colors/logo below, or match the external website's look instead. Forced to EduPlatform settings when hosting mode is Hosted.</span></div>
+          <div class="pqcwiz-field"><label>Public intake location</label><select class="pqcwiz-select" name="intakelocation"><?php foreach (pqhi_intake_location_options() as $value => $label): ?><option value="<?php echo s($value); ?>"><?php echo s($label); ?></option><?php endforeach; ?></select><span class="pqcwiz-help">Where a new family actually applies: an EduPlatform-hosted form, a page on their own site, or embedded directly into it. Forced to embedded when hosting mode is External with embeds.</span></div>
+          <div class="pqcwiz-field"><label>Website integration</label><select class="pqcwiz-select" name="integrationmethod"><?php foreach (pqhi_integration_method_options() as $value => $label): ?><option value="<?php echo s($value); ?>"><?php echo s($label); ?></option><?php endforeach; ?></select><span class="pqcwiz-help">How their site connects to EduPlatform: plain links, embedded widgets, or a full API integration. Forced to embedded when hosting mode is External with embeds.</span></div>
+          <div class="pqcwiz-field"><label>Return URL after intake</label><input class="pqcwiz-input" name="returnurl" placeholder="https://www.example.org/thank-you"><span class="pqcwiz-help">Where EduPlatform sends a visitor back to on their own site once an intake form is submitted, e.g. a "thank you" page.</span></div>
+          <div class="pqcwiz-field"><label>Support email</label><input class="pqcwiz-input" name="supportemail"><span class="pqcwiz-help">Shown to families and used as the reply-to address on outgoing notifications.</span></div>
+          <div class="pqcwiz-field"><label>Logo URL</label><input class="pqcwiz-input" name="logourl"><span class="pqcwiz-help">Shown in the header, emails, and landing page — unless Branding source above is set to match the external website.</span></div>
+          <div class="pqcwiz-field"><label>Initials</label><input class="pqcwiz-input" name="brandinitials" maxlength="6"><span class="pqcwiz-help">A short fallback shown wherever there's no room for the full logo, e.g. "EA" for Ehel Academy.</span></div>
+          <div class="pqcwiz-field"><label>Plan code</label><input class="pqcwiz-input" name="plancode" value="pilot"><span class="pqcwiz-help">An internal label for billing/plan tracking — doesn't enforce any limit by itself.</span></div>
+          <div class="pqcwiz-field"><label>Primary color</label><input class="pqcwiz-input" name="primarycolor" value="#2f6f4e"><span class="pqcwiz-help">The main accent color across this consumer's branded dashboard, login, and landing page.</span></div>
+          <div class="pqcwiz-field"><label>Accent color</label><input class="pqcwiz-input" name="accentcolor" value="#d99a26"><span class="pqcwiz-help">The secondary highlight color, used alongside the primary color.</span></div>
+          <div class="pqcwiz-field"><label>Surface color</label><input class="pqcwiz-input" name="surfacecolor" value="#f4f8fb"><span class="pqcwiz-help">The background tone behind cards and panels in the branded pages.</span></div>
+          <div class="pqcwiz-field"><label>Student limit</label><input class="pqcwiz-input" name="studentlimit" value="0"><span class="pqcwiz-help">0 means unlimited. Set a real number to cap enrollment for this plan.</span></div>
+          <div class="pqcwiz-field"><label>Teacher limit</label><input class="pqcwiz-input" name="teacherlimit" value="0"><span class="pqcwiz-help">0 means unlimited. Set a real number to cap staff seats for this plan.</span></div>
+          <div class="pqcwiz-field"><label>Session limit</label><input class="pqcwiz-input" name="sessionlimit" value="0"><span class="pqcwiz-help">0 means unlimited. Set a real number to cap concurrent or monthly live sessions.</span></div>
+          <div class="pqcwiz-field"><label>Storage MB</label><input class="pqcwiz-input" name="storagelimit" value="0"><span class="pqcwiz-help">0 means unlimited. Set a real number to cap uploaded materials and recordings.</span></div>
+          <div class="pqcwiz-field pqcwiz-field--wide"><label>Default public path</label><input class="pqcwiz-input" name="defaultpublicpath" placeholder="/local/hubredirect/consumer_landing.php"><span class="pqcwiz-help">A Moodle route (a path starting with /), not a domain — leave this blank for almost every consumer. It only overrides which internal page the public domain above points to; it never affects which domain visitors type in.</span></div>
+          <div class="pqcwiz-field pqcwiz-field--wide"><label>Default dashboard path</label><input class="pqcwiz-input" name="defaultdashboardpath" placeholder="/local/hubredirect/workspace_dashboard.php"><span class="pqcwiz-help">Where a signed-in member lands after login. Leave blank to use the built-in default for its consumer type.</span></div>
+          <div class="pqcwiz-field pqcwiz-field--wide"><label>Default login path</label><input class="pqcwiz-input" name="defaultloginpath" placeholder="/local/hubredirect/consumer_login.php"><span class="pqcwiz-help">The branded sign-in page for this consumer. Leave blank to use the built-in default.</span></div>
+          <div class="pqcwiz-field pqcwiz-field--wide"><label>Hero image URL</label><input class="pqcwiz-input" name="heroimage"><span class="pqcwiz-help">The large image shown in the landing page's hero section.</span></div>
+          <div class="pqcwiz-field pqcwiz-field--wide"><label>Landing headline</label><input class="pqcwiz-input" name="headline"><span class="pqcwiz-help">The landing page's main heading. Defaults to the consumer name above if left blank.</span></div>
+          <div class="pqcwiz-field pqcwiz-field--wide"><label>Landing subtitle</label><textarea class="pqcwiz-textarea" name="subtitle"></textarea><span class="pqcwiz-help">A short supporting line shown directly under the headline.</span></div>
+          <div class="pqcwiz-field pqcwiz-field--wide"><label>Landing body</label><textarea class="pqcwiz-textarea" name="bodycopy"></textarea><span class="pqcwiz-help">The main paragraph of marketing copy on the landing page.</span></div>
+          <div class="pqcwiz-field pqcwiz-field--wide"><label>Initial courses</label><input class="pqcwiz-input" name="initialcourses" value="Pre-Quraan"><span class="pqcwiz-help">A comma-separated starting course list shown on the landing page — descriptive copy, not a live catalog link.</span></div>
         </div>
         <button class="pqcwiz-btn" type="submit">Create consumer</button>
       </form>

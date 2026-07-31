@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
 require_once(__DIR__ . '/course_transcriptlib.php');
+require_once(__DIR__ . '/accesslib.php');
 
 function pqctv_label(string $value): string {
     $value = trim($value);
@@ -56,7 +57,9 @@ global $OUTPUT, $PAGE;
 $documentid = trim(required_param('documentid', PARAM_TEXT));
 $code = trim(optional_param('code', '', PARAM_ALPHANUMEXT));
 $token = trim(optional_param('token', '', PARAM_ALPHANUMEXT));
-$limited = pqctv_rate_limited();
+// IP-keyed limit works even for a cookieless client (the $_SESSION limiter
+// below does not); either tripping stops the request.
+$limited = pqh_ip_rate_limited('transcript_verify', 30, 60) || pqctv_rate_limited();
 $doc = $limited ? null : pqct_load_public_transcript_doc($documentid);
 $verified = !$limited && $doc && pqct_verify_official_transcript_code($doc, $code, $token);
 $payload = $verified ? pqct_official_doc_payload($doc) : [];

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finance monetization · EduPlatform portal</title>
+<style>
+  :root{--bg:#eef3f9;--card:#ffffff;--line:#d7e0ec;--ink:#17253a;--ink2:#5b6b82;--blue:#1d4f8f;--blue2:#2a6cb0;--warn:#a05a1f;--bad:#8a1f1f;--ok:#1f6b4a}
+  *{box-sizing:border-box}
+  body{margin:0;font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+  header{background:linear-gradient(120deg,var(--blue),var(--blue2));color:#fff;padding:14px 20px}
+  .brand{font-weight:900}.brand small{display:block;font-weight:600;opacity:.85}
+  main{max-width:1160px;margin:0 auto;padding:18px 20px 60px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0;font-size:22px}h2{margin:0 0 10px;font-size:16px}h3{margin:16px 0 6px;font-size:14px}
+  .sub{color:var(--ink2);margin:4px 0 0;font-size:13px}
+  .tablewrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;color:var(--ink2);font-size:11px;text-transform:uppercase;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+  td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:800;background:#e1ecf7;color:var(--blue2);white-space:nowrap}
+  .pill.warn{background:#f7ecd9;color:var(--warn)}.pill.bad{background:#f7dede;color:var(--bad)}.pill.ok{background:#dff0e7;color:var(--ok)}
+  .pill.off{background:#e7ebf1;color:var(--ink2)}
+  label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:8px 0 4px}
+  input,select,textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font:inherit;background:var(--card);color:var(--ink)}
+  textarea{min-height:70px;resize:vertical}
+  button{margin-top:10px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:10px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  button:disabled{opacity:.55;cursor:wait}
+  button.sm{margin:0;padding:6px 12px;font-size:12px}
+  button.ghost{background:#e1ecf7;color:var(--blue2)}
+  .muted{color:var(--ink2)}
+  .status{padding:12px 14px;border-radius:8px;margin-bottom:14px;font-size:14px}
+  .status.error{background:#f7dede;color:var(--bad)}.status.saved{background:#dff0e7;color:var(--ok)}
+  .notice{border-left:4px solid var(--warn);padding:8px 12px;margin-bottom:8px;background:#fdf6ec;border-radius:0 8px 8px 0}
+  .info{border-left:4px solid var(--blue2);padding:8px 12px;margin-bottom:10px;background:#eef4fb;border-radius:0 8px 8px 0;font-size:13px}
+  .rowact{display:flex;gap:6px;align-items:center;min-width:320px}
+  .rowact select{width:150px;padding:6px 8px;font-size:12px}
+  .rowact input{width:200px;padding:6px 8px;font-size:12px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0 14px}
+  .batchbar{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}
+  .batchbar .grow{flex:1;min-width:220px}
+  .batchbar label{margin-top:0}
+  .wsbar{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin-top:10px}
+  .wsbar div{width:160px}
+  .wsbar label{margin-top:0}
+  a{color:var(--blue2)}
+  .num{white-space:nowrap}
+</style>
+</head>
+<body>
+<header><div class="brand">EduPlatform Portal<small>Finance monetization — payouts, batches, coupons &amp; scholarships</small></div></header>
+<main>
+  <div class="panel">
+    <h1>Finance monetization</h1>
+    <p class="sub">School finance console: review and disburse marketplace teacher payouts (individually or in batches), and manage discount coupons and scholarship grants.</p>
+    <div class="wsbar">
+      <div><label for="wsid">Workspace ID (override)</label><input id="wsid" type="number" min="0" step="1" placeholder="current"></div>
+      <button type="button" class="ghost" id="reload" style="margin-top:0">Reload</button>
+    </div>
+  </div>
+  <div id="status" class="status" hidden></div>
+
+  <div class="panel" id="payouts-panel" hidden>
+    <h2>Marketplace payouts</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th></th><th>Payout</th><th>Teacher</th><th>Invoice</th><th>Gross</th><th>Platform fee</th><th>Payout</th><th>Status</th><th>Batch</th><th>Reference</th><th>Approved</th><th>Paid</th><th>Action</th></tr></thead>
+        <tbody id="payouts"></tbody>
+      </table>
+    </div>
+    <div class="batchbar" id="batchbar">
+      <div class="grow"><label for="batch-notes">Batch notes (optional)</label><input id="batch-notes" maxlength="255" placeholder="e.g. July disbursement run"></div>
+      <button type="button" id="create-batch" style="margin-top:0">Create batch from selected</button>
+    </div>
+  </div>
+
+  <div class="panel" id="batches-panel" hidden>
+    <h2>Payout batches</h2>
+    <div id="batches-notice"></div>
+    <div class="tablewrap" id="batches-wrap">
+      <table>
+        <thead><tr><th>Batch</th><th>Status</th><th>Payouts</th><th>Gross</th><th>Fees</th><th>Net</th><th>Paid reference</th><th>Created</th><th>Paid</th><th>Action</th></tr></thead>
+        <tbody id="batches"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel" id="coupons-panel" hidden>
+    <h2>Coupons</h2>
+    <div id="coupons-notice"></div>
+    <div class="tablewrap" id="coupons-wrap">
+      <table>
+        <thead><tr><th>Code</th><th>Description</th><th>Type</th><th>Value</th><th>Redemptions</th><th>Per-student limit</th><th>Valid from</th><th>Valid until</th><th>Status</th><th></th></tr></thead>
+        <tbody id="coupons"></tbody>
+      </table>
+    </div>
+    <h3 id="coupon-form-title">New / edit coupon</h3>
+    <form id="coupon-form">
+      <input type="hidden" id="c-id" value="0">
+      <div class="grid">
+        <div><label for="c-code">Code</label><input id="c-code" maxlength="50" required placeholder="e.g. WELCOME10"></div>
+        <div><label for="c-desc">Description</label><input id="c-desc" maxlength="255" placeholder="Shown to staff only"></div>
+        <div><label for="c-type">Discount type</label><select id="c-type"><option value="fixed">Fixed amount</option><option value="percent">Percent</option></select></div>
+        <div><label for="c-value">Discount value</label><input id="c-value" type="number" min="0" step="0.01" required placeholder="e.g. 10.00"></div>
+        <div><label for="c-max">Max redemptions (0 = unlimited)</label><input id="c-max" type="number" min="0" step="1" value="0"></div>
+        <div><label for="c-perstudent">Per-student limit (0 = unlimited)</label><input id="c-perstudent" type="number" min="0" step="1" value="0"></div>
+        <div><label for="c-from">Valid from</label><input id="c-from" type="date"></div>
+        <div><label for="c-until">Valid until</label><input id="c-until" type="date"></div>
+        <div><label for="c-status">Status</label><select id="c-status"><option value="active">Active</option><option value="disabled">Disabled</option></select></div>
+      </div>
+      <label for="c-notes">Notes</label>
+      <textarea id="c-notes" maxlength="1000" placeholder="Internal notes…"></textarea>
+      <button type="submit">Save coupon</button>
+      <button type="button" class="ghost" id="c-reset">Clear form</button>
+      <p class="sub">Staff apply codes on the invoice page (Invoice detail &rarr; Apply coupon).</p>
+    </form>
+  </div>
+
+  <div class="panel" id="grants-panel" hidden>
+    <h2>Scholarship grants</h2>
+    <div id="autoapply-banner"></div>
+    <div id="grants-notice"></div>
+    <div class="tablewrap" id="grants-wrap">
+      <table>
+        <thead><tr><th>Grant</th><th>Student</th><th>Name</th><th>Discount</th><th>Source</th><th>Status</th><th>Start</th><th>End</th><th></th></tr></thead>
+        <tbody id="grants"></tbody>
+      </table>
+    </div>
+    <h3 id="grant-form-title">New / edit grant</h3>
+    <form id="grant-form">
+      <input type="hidden" id="g-id" value="0">
+      <div class="grid">
+        <div><label for="g-student">Student ID</label><input id="g-student" type="number" min="1" step="1" required placeholder="Moodle user id"><span class="sub">Moodle user id</span></div>
+        <div><label for="g-name">Name</label><input id="g-name" maxlength="255" required placeholder="e.g. 2026 Hafiz scholarship"></div>
+        <div><label for="g-type">Discount type</label><select id="g-type"><option value="percent">Percent</option><option value="fixed">Fixed amount</option></select></div>
+        <div><label for="g-value">Discount value</label><input id="g-value" type="number" min="0" step="0.01" required placeholder="e.g. 50.00"></div>
+        <div><label for="g-source">Source</label><select id="g-source"><option value="internal">Internal</option><option value="sponsor">Sponsor</option></select></div>
+        <div><label for="g-status">Status</label><select id="g-status"><option value="active">Active</option><option value="ended">Ended</option></select></div>
+        <div><label for="g-start">Start date</label><input id="g-start" type="date"></div>
+        <div><label for="g-end">End date</label><input id="g-end" type="date"></div>
+      </div>
+      <label for="g-notes">Notes</label>
+      <textarea id="g-notes" maxlength="1000" placeholder="Internal notes…"></textarea>
+      <button type="submit">Save grant</button>
+      <button type="button" class="ghost" id="g-reset">Clear form</button>
+    </form>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleDateString() : "—";
+  const ts2date = (t) => t ? new Date(t * 1000).toISOString().slice(0, 10) : "";
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Missing endpoint/token — open via the portal launch link."; return; }
+  if (qs.get("workspaceid")) $("#wsid").value = qs.get("workspaceid").replace(/[^0-9]/g, "");
+
+  let data = null;
+
+  const params = () => {
+    const p = new URLSearchParams({ report: "finance-monetization", token });
+    const ws = ($("#wsid").value || "").trim();
+    if (ws && Number(ws) > 0) p.set("workspaceid", ws);
+    return p;
+  };
+  const post = async (payload) => {
+    const r = await fetch(endpoint + "?" + params(), { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(payload) });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+    return d;
+  };
+  const flash = (cls, text) => { $("#status").className = "status " + cls; $("#status").hidden = false; $("#status").textContent = text; window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const act = async (btn, payload, okfallback) => {
+    btn.disabled = true;
+    try { const d = await post(payload); flash("saved", d.message || okfallback); await load(); }
+    catch (e) { flash("error", e.message); }
+    btn.disabled = false;
+  };
+
+  // Blue-led palette: paid = tiny green pill only (matches the ok pill of the house pages);
+  // pending/review = amber, void/cancelled = red, everything else blue/grey.
+  const pill = (s) => {
+    const v = String(s || "").toLowerCase();
+    let cls = "";
+    if (/void|cancel/.test(v)) cls = "bad";
+    else if (/ready_for_review|draft/.test(v)) cls = "warn";
+    else if (/^paid$/.test(v)) cls = "ok";
+    else if (/disabled|ended/.test(v)) cls = "off";
+    return `<span class="pill ${cls}">${esc(v.replace(/_/g, " "))}</span>`;
+  };
+  const money = (amount, currency) => `<span class="num">${esc(amount)} ${esc(currency)}</span>`;
+  const name = (id) => (data && data.names && data.names[id]) || ("User " + id);
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + params());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      data = d;
+      render(d);
+    } catch (e) { flash("error", "Could not load: " + e.message); }
+  }
+
+  function render(d) {
+    const upgrade = `<div class="notice">This feature's database tables are missing. Run the plugin upgrade (Site administration &rarr; Notifications) and reload.</div>`;
+    const trans = d.payouttransitions || {};
+    const batchReady = d.batchschemaready !== false;
+
+    // 1) Marketplace payouts
+    $("#payouts").innerHTML = (d.payouts || []).map((p) => {
+      const selectable = batchReady && (p.status === "ready_for_review" || p.status === "approved") && Number(p.batchid) === 0;
+      const next = trans[p.status] || [];
+      const actions = next.length
+        ? `<div class="rowact">
+            <select data-role="ns" data-id="${esc(p.id)}">${next.map((s) => `<option value="${esc(s)}">${esc(s.replace(/_/g, " "))}</option>`).join("")}</select>
+            <input data-role="ref" data-id="${esc(p.id)}" maxlength="100" placeholder="Disbursement reference (required to mark paid)">
+            <button type="button" class="sm" data-role="apply" data-id="${esc(p.id)}">Apply</button>
+          </div>`
+        : `<span class="muted">—</span>`;
+      return `<tr>
+        <td>${selectable ? `<input type="checkbox" style="width:auto" data-role="pick" value="${esc(p.id)}">` : ""}</td>
+        <td><strong>${esc(p.payoutnumber)}</strong></td>
+        <td>${esc(name(p.teacherid))}</td>
+        <td class="muted">#${esc(p.invoiceid)}</td>
+        <td>${money(p.grossamount, p.currency)}</td>
+        <td>${money(p.platformfee, p.currency)}</td>
+        <td>${money(p.payoutamount, p.currency)}</td>
+        <td>${pill(p.status)}</td>
+        <td class="muted">${Number(p.batchid) > 0 ? "#" + esc(p.batchid) : "—"}</td>
+        <td class="muted">${esc(p.reference || "") || "—"}</td>
+        <td class="muted">${esc(when(p.approvedat))}</td>
+        <td class="muted">${esc(when(p.paidat))}</td>
+        <td>${actions}</td>
+      </tr>`;
+    }).join("") || `<tr><td colspan="13" class="muted">No marketplace payouts yet.</td></tr>`;
+    $("#batchbar").hidden = !batchReady;
+    $("#payouts-panel").hidden = false;
+
+    // 2) Payout batches
+    if (!batchReady) {
+      $("#batches-notice").innerHTML = upgrade; $("#batches-wrap").hidden = true;
+    } else {
+      $("#batches-notice").innerHTML = ""; $("#batches-wrap").hidden = false;
+      $("#batches").innerHTML = (d.batches || []).map((b) => {
+        let actions = `<span class="muted">—</span>`;
+        if (b.status === "draft") {
+          actions = `<div class="rowact"><button type="button" class="sm" data-role="b-approve" data-id="${esc(b.id)}">Approve</button><button type="button" class="sm ghost" data-role="b-cancel" data-id="${esc(b.id)}">Cancel</button></div>`;
+        } else if (b.status === "approved") {
+          actions = `<div class="rowact"><input data-role="b-ref" data-id="${esc(b.id)}" maxlength="100" placeholder="Disbursement reference (required)"><button type="button" class="sm" data-role="b-paid" data-id="${esc(b.id)}">Mark paid</button><button type="button" class="sm ghost" data-role="b-cancel" data-id="${esc(b.id)}">Cancel</button></div>`;
+        }
+        return `<tr>
+          <td><strong>${esc(b.batchnumber)}</strong></td>
+          <td>${pill(b.status)}</td>
+          <td>${esc(b.payoutcount)}</td>
+          <td>${money(b.totalgross, b.currency)}</td>
+          <td>${money(b.totalfee, b.currency)}</td>
+          <td>${money(b.totalnet, b.currency)}</td>
+          <td class="muted">${esc(b.paidreference || "") || "—"}</td>
+          <td class="muted">${esc(when(b.timecreated))}</td>
+          <td class="muted">${esc(when(b.paidat))}</td>
+          <td>${actions}</td>
+        </tr>`;
+      }).join("") || `<tr><td colspan="10" class="muted">No payout batches yet. Select payouts above and create one.</td></tr>`;
+    }
+    $("#batches-panel").hidden = false;
+
+    // 3) Coupons
+    if (d.couponschemaready === false) {
+      $("#coupons-notice").innerHTML = upgrade; $("#coupons-wrap").hidden = true;
+    } else {
+      $("#coupons-notice").innerHTML = ""; $("#coupons-wrap").hidden = false;
+      $("#coupons").innerHTML = (d.coupons || []).map((c) => `<tr>
+        <td><strong>${esc(c.code)}</strong></td>
+        <td>${esc(c.description || "")}</td>
+        <td class="muted">${esc(c.discounttype)}</td>
+        <td class="num">${esc(c.discountvalue)}${c.discounttype === "percent" ? " %" : ""}</td>
+        <td class="num">${esc(c.redemptioncount)} / ${Number(c.maxredemptions) > 0 ? esc(c.maxredemptions) : "&#8734;"}</td>
+        <td class="num">${Number(c.perstudentlimit) > 0 ? esc(c.perstudentlimit) : "&#8734;"}</td>
+        <td class="muted">${esc(when(c.validfrom))}</td>
+        <td class="muted">${esc(when(c.validuntil))}</td>
+        <td>${pill(c.status)}</td>
+        <td><button type="button" class="sm ghost" data-role="c-edit" data-id="${esc(c.id)}">Edit</button></td>
+      </tr>`).join("") || `<tr><td colspan="10" class="muted">No coupons yet — create one below.</td></tr>`;
+    }
+    $("#coupons-panel").hidden = false;
+
+    // 4) Scholarship grants
+    $("#autoapply-banner").innerHTML = d.scholarshipautoapply === "enabled"
+      ? `<div class="info">Auto-apply is ON: active grants discount every new enrollment invoice.</div>`
+      : `<div class="info">Auto-apply is OFF (workspace finance policy scholarship_auto_apply). Grants are stored but not applied to new invoices.</div>`;
+    if (d.grantschemaready === false) {
+      $("#grants-notice").innerHTML = upgrade; $("#grants-wrap").hidden = true;
+    } else {
+      $("#grants-notice").innerHTML = ""; $("#grants-wrap").hidden = false;
+      $("#grants").innerHTML = (d.grants || []).map((g) => `<tr>
+        <td><strong>${esc(g.grantnumber)}</strong></td>
+        <td>${esc(name(g.studentid))} <span class="muted">#${esc(g.studentid)}</span></td>
+        <td>${esc(g.name)}</td>
+        <td class="num">${esc(g.discountvalue)}${g.discounttype === "percent" ? " %" : ""} <span class="muted">(${esc(g.discounttype)})</span></td>
+        <td class="muted">${esc(g.source)}</td>
+        <td>${pill(g.status)}</td>
+        <td class="muted">${esc(when(g.startdate))}</td>
+        <td class="muted">${esc(when(g.enddate))}</td>
+        <td><button type="button" class="sm ghost" data-role="g-edit" data-id="${esc(g.id)}">Edit</button></td>
+      </tr>`).join("") || `<tr><td colspan="9" class="muted">No scholarship grants yet — create one below.</td></tr>`;
+    }
+    $("#grants-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  // --- Payout actions (delegated) ---
+  $("#payouts").addEventListener("click", (e) => {
+    const btn = e.target.closest('button[data-role="apply"]');
+    if (!btn) return;
+    const id = btn.dataset.id;
+    const newstatus = document.querySelector(`select[data-role="ns"][data-id="${id}"]`).value;
+    const reference = document.querySelector(`input[data-role="ref"][data-id="${id}"]`).value.trim();
+    if (newstatus === "paid" && !reference) { flash("error", "A disbursement reference is required to mark a payout paid."); return; }
+    act(btn, { do: "payout_status", payoutid: Number(id), newstatus, reference }, "Payout updated.");
+  });
+
+  $("#create-batch").addEventListener("click", (e) => {
+    const ids = Array.from(document.querySelectorAll('input[data-role="pick"]:checked')).map((c) => Number(c.value));
+    if (!ids.length) { flash("error", "Select at least one payout (unbatched, ready for review or approved) first."); return; }
+    act(e.currentTarget, { do: "create_batch", payoutids: ids, notes: $("#batch-notes").value.trim() }, "Batch created.");
+  });
+
+  // --- Batch actions (delegated) ---
+  $("#batches").addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-role]");
+    if (!btn) return;
+    const id = Number(btn.dataset.id);
+    if (btn.dataset.role === "b-approve") act(btn, { do: "batch_status", batchid: id, newstatus: "approved", reference: "" }, "Batch approved.");
+    else if (btn.dataset.role === "b-cancel") act(btn, { do: "batch_status", batchid: id, newstatus: "cancelled", reference: "" }, "Batch cancelled.");
+    else if (btn.dataset.role === "b-paid") {
+      const reference = document.querySelector(`input[data-role="b-ref"][data-id="${id}"]`).value.trim();
+      if (!reference) { flash("error", "A disbursement reference is required to mark a batch paid."); return; }
+      act(btn, { do: "batch_status", batchid: id, newstatus: "paid", reference }, "Batch marked paid.");
+    }
+  });
+
+  // --- Coupon edit + form ---
+  $("#coupons").addEventListener("click", (e) => {
+    const btn = e.target.closest('button[data-role="c-edit"]');
+    if (!btn) return;
+    const c = (data.coupons || []).find((x) => String(x.id) === btn.dataset.id);
+    if (!c) return;
+    $("#c-id").value = c.id; $("#c-code").value = c.code || ""; $("#c-desc").value = c.description || "";
+    $("#c-type").value = c.discounttype || "fixed"; $("#c-value").value = c.discountvalue || "";
+    $("#c-max").value = c.maxredemptions ?? 0; $("#c-perstudent").value = c.perstudentlimit ?? 0;
+    $("#c-from").value = ts2date(c.validfrom); $("#c-until").value = ts2date(c.validuntil);
+    $("#c-status").value = c.status || "active"; $("#c-notes").value = c.notes || "";
+    $("#coupon-form-title").textContent = "Edit coupon — " + (c.code || ("#" + c.id));
+    $("#coupon-form").scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+  const resetCoupon = () => { $("#coupon-form").reset(); $("#c-id").value = "0"; $("#coupon-form-title").textContent = "New / edit coupon"; };
+  $("#c-reset").addEventListener("click", resetCoupon);
+  $("#coupon-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = e.currentTarget.querySelector('button[type="submit"]'); btn.disabled = true;
+    try {
+      const d = await post({
+        do: "save_coupon",
+        couponid: Number($("#c-id").value || 0),
+        code: $("#c-code").value.trim(),
+        description: $("#c-desc").value.trim(),
+        discounttype: $("#c-type").value,
+        discountvalue: $("#c-value").value,
+        maxredemptions: Number($("#c-max").value || 0),
+        perstudentlimit: Number($("#c-perstudent").value || 0),
+        validfrom: $("#c-from").value,
+        validuntil: $("#c-until").value,
+        status: $("#c-status").value,
+        notes: $("#c-notes").value.trim()
+      });
+      flash("saved", d.message || "Coupon saved."); resetCoupon(); load();
+    } catch (err) { flash("error", "Could not save coupon: " + err.message); }
+    btn.disabled = false;
+  });
+
+  // --- Grant edit + form ---
+  $("#grants").addEventListener("click", (e) => {
+    const btn = e.target.closest('button[data-role="g-edit"]');
+    if (!btn) return;
+    const g = (data.grants || []).find((x) => String(x.id) === btn.dataset.id);
+    if (!g) return;
+    $("#g-id").value = g.id; $("#g-student").value = g.studentid || ""; $("#g-name").value = g.name || "";
+    $("#g-type").value = g.discounttype || "percent"; $("#g-value").value = g.discountvalue || "";
+    $("#g-source").value = g.source || "internal"; $("#g-status").value = g.status || "active";
+    $("#g-start").value = ts2date(g.startdate); $("#g-end").value = ts2date(g.enddate);
+    $("#g-notes").value = g.notes || "";
+    $("#grant-form-title").textContent = "Edit grant — " + (g.grantnumber || ("#" + g.id));
+    $("#grant-form").scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+  const resetGrant = () => { $("#grant-form").reset(); $("#g-id").value = "0"; $("#grant-form-title").textContent = "New / edit grant"; };
+  $("#g-reset").addEventListener("click", resetGrant);
+  $("#grant-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = e.currentTarget.querySelector('button[type="submit"]'); btn.disabled = true;
+    try {
+      const d = await post({
+        do: "save_grant",
+        grantid: Number($("#g-id").value || 0),
+        studentid: Number($("#g-student").value || 0),
+        name: $("#g-name").value.trim(),
+        discounttype: $("#g-type").value,
+        discountvalue: $("#g-value").value,
+        source: $("#g-source").value,
+        status: $("#g-status").value,
+        startdate: $("#g-start").value,
+        enddate: $("#g-end").value,
+        notes: $("#g-notes").value.trim()
+      });
+      flash("saved", d.message || "Grant saved."); resetGrant(); load();
+    } catch (err) { flash("error", "Could not save grant: " + err.message); }
+    btn.disabled = false;
+  });
+
+  $("#reload").addEventListener("click", load);
+  $("#wsid").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); load(); } });
+
+  load();
+})();
+</script>
+</body>
+</html>

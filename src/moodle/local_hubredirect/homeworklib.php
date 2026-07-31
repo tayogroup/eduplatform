@@ -389,6 +389,23 @@ function pqhh_publish_grade(stdClass $homework, stdClass $submission, int $grade
         $values->timecreated = $now;
         $DB->insert_record('local_prequran_grade', $values);
     }
+
+    // Keep the rolled-up course grade FRESH: this write previously left a
+    // published course grade stale until someone re-saved through the
+    // gradebook page (integrity gap — the transcript reads course_grade).
+    if ((int)($homework->offeringid ?? 0) > 0 && (int)($homework->workspaceid ?? 0) > 0) {
+        if (!function_exists('pqgp_recalculate_course_grade')) {
+            global $CFG;
+            @include_once($CFG->dirroot . '/local/hubredirect/gradebook_progresslib.php');
+        }
+        if (function_exists('pqgp_recalculate_course_grade')) {
+            try {
+                pqgp_recalculate_course_grade((int)$homework->workspaceid, (int)$homework->offeringid, (int)$submission->studentid, $graderid);
+            } catch (Throwable $recalcerror) {
+                // Recalc failure must not block the grade write itself.
+            }
+        }
+    }
 }
 
 function pqhh_status_label(string $status): string {

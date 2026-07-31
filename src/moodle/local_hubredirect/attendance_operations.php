@@ -14,6 +14,7 @@ if ($workspaceid <= 0 || !pqh_user_can_teach_in_workspace((int)$USER->id, $works
 }
 $canmanage = pqh_user_can_manage_workspace((int)$USER->id, $workspaceid);
 $consumercontext = pqh_current_consumer_context();
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $urlparams = ['workspaceid' => $workspaceid];
 $ready = pqh_table_exists_safe('local_prequran_live_attendance') && pqh_table_exists_safe('local_prequran_att_rule');
@@ -127,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         require_sesskey();
         if (!$ready) {
-            throw new invalid_parameter_exception('Attendance operations tables are not installed yet. Run Moodle upgrade.');
+            throw new invalid_parameter_exception('Attendance operations tables are not installed yet. Run the platform upgrade.');
         }
         $action = optional_param('action', '', PARAM_ALPHANUMEXT);
         $now = time();
@@ -280,7 +281,7 @@ echo '<style>.pqatt-wrap{max-width:1180px;margin:0 auto}.pqatt-top{display:flex;
 echo '<div class="pqatt-wrap"><div class="pqatt-top"><div><h2>Attendance And Participation</h2><div class="pqatt-muted">' . s($workspace->name) . ' session attendance, late/excused/absence/make-up tracking, reports, standing, and finance hold actions.</div></div><div><a class="pqatt-btn pqatt-btn--light" href="' . (new moodle_url('/local/hubredirect/attendance_operations.php', $urlparams + ['export' => 'csv']))->out(false) . '">Export CSV</a> <a class="pqatt-btn pqatt-btn--light" href="' . (new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams))->out(false) . '">Workspace</a></div></div>';
 if ($notice !== '') { echo '<div class="pqatt-notice">' . s($notice) . '</div>'; }
 if ($error !== '') { echo '<div class="pqatt-error">' . s($error) . '</div>'; }
-if (!$ready) { echo '<div class="pqatt-error">Attendance operations schema is not ready. Run the Moodle local_prequran upgrade.</div>'; }
+if (!$ready) { echo '<div class="pqatt-error">Attendance operations schema is not ready. Run the local_prequran upgrade.</div>'; }
 echo '<div class="pqatt-grid"><section class="pqatt-panel"><h3>Mark Attendance</h3><form method="post"><input type="hidden" name="sesskey" value="' . s(sesskey()) . '"><input type="hidden" name="action" value="mark_attendance">';
 echo '<div class="pqatt-field"><label>Session</label><select class="pqatt-select" name="sessionid">';
 foreach ($sessions as $session) { echo '<option value="' . (int)$session->id . '">' . s($session->title . ' / ' . userdate((int)$session->scheduled_start, get_string('strftimedatetimeshort'))) . '</option>'; }

@@ -26,6 +26,9 @@
   .pill.published{background:#e1f2ff;color:var(--blue2)}
   .pill.draft{background:var(--bg);color:var(--muted)}
   .pill.reviewed{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .modrow{margin-top:6px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  .modbtn{background:var(--sky);color:var(--blue);border:1px solid var(--line);border-radius:7px;padding:5px 11px;font-weight:800;font-size:12px;cursor:pointer}
   form.gb{margin:0 0 6px;padding:12px;border:1px dashed var(--line);border-radius:8px;background:var(--bg)}
   form.gb+form.gb{margin-top:12px}
   form.gb label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:8px 0 3px}
@@ -78,6 +81,12 @@
           </select>
           <label>Title</label><input name="title">
           <label>Max points</label><input name="max_points" value="100">
+          <label>Grade impact</label><select name="grade_impact">
+            <option value="summative">Summative</option>
+            <option value="formative">Formative</option>
+            <option value="practice">Practice (not graded)</option>
+          </select>
+          <label>Max attempts (0 = unlimited)</label><input name="max_attempts" value="0">
           <label>Weight override</label><input name="weight_override">
           <label>Due date (YYYY-MM-DD)</label><input name="duedate">
           <label>Status</label><input name="status" value="draft">
@@ -128,6 +137,11 @@
         <h2>Audit trail</h2>
         <table><thead><tr><th>Action</th><th>Target</th><th>Time</th></tr></thead><tbody id="audits"></tbody></table>
       </div>
+      <div class="panel">
+        <h2>Grade Queries / Disputes</h2>
+        <p class="sub" style="margin-bottom:8px">Opened by parents/students from their portal. Resolve via the dispute form above (reference the student and grade).</p>
+        <table><thead><tr><th>Student</th><th>Opened by</th><th>Reason</th><th>Status</th><th>Opened</th></tr></thead><tbody id="disputes"></tbody></table>
+      </div>
     </section>
   </div>
 </main>
@@ -147,6 +161,11 @@
   let DATA = null;
 
   const statusPill = (s) => `<span class="pill ${/publish/.test(s) ? "published" : /review/.test(s) ? "reviewed" : "draft"}">${esc(s || "")}</span>`;
+  const cap = (s) => String(s || "").charAt(0).toUpperCase() + String(s || "").slice(1);
+  // Grade-impact label: summative = plain (no pill), formative = subtle, practice = muted.
+  const impactPill = (s) => (!s || s === "summative") ? "" : ` <span class="pill ${s === "practice" ? "draft" : ""}">${esc(cap(s))}</span>`;
+  // Moderation status: pending = warn, moderated = good, returned = bad, not_required = hidden.
+  const modPill = (s) => (!s || s === "not_required") ? "" : `<span class="pill ${s === "moderated" ? "published" : s === "returned" ? "bad" : "reviewed"}">${esc(cap(s))}</span>`;
 
   function fillSelect(sel, rows, valueKey, labelFn) {
     sel.innerHTML = rows.map((r) => `<option value="${esc(r[valueKey])}">${esc(labelFn(r))}</option>`).join("");
@@ -178,12 +197,21 @@
       </tr>`).join("") : `<tr><td colspan="4" class="muted">No course grades calculated yet.</td></tr>`;
 
     const gr = d.grades || [];
+    // grade_impact lives on assessments; join to grade rows by assessment title.
+    const impactByTitle = {};
+    (d.assessments || []).forEach((a) => { impactByTitle[a.title] = a.grade_impact; });
     $("#grades").innerHTML = gr.length ? gr.map((r) => `
       <tr>
         <td><strong>${esc(r.name)}</strong><div class="muted">Grade #${esc(r.id)}</div></td>
-        <td>${esc(r.assessment_title)} / ${esc(r.assessment_type)}</td>
+        <td>${esc(r.assessment_title)} / ${esc(r.assessment_type)}${impactPill(impactByTitle[r.assessment_title])}</td>
         <td>${esc(r.score_percent)}% / ${esc(r.letter_grade)}</td>
-        <td>${statusPill(r.status)}</td>
+        <td>${statusPill(r.status)}${d.moderation_required ? `<div class="modrow">${modPill(r.moderation_status)}${
+          r.moderation_status === "pending"
+            ? (Number(r.gradedby) === Number(d.userid)
+                ? `<span class="muted">Awaiting another marker</span>`
+                : `<button type="button" class="modbtn" data-modid="${esc(r.id)}" data-decision="approved">Approve</button><button type="button" class="modbtn" data-modid="${esc(r.id)}" data-decision="returned">Return</button>`)
+            : ""
+        }</div>` : ""}</td>
       </tr>`).join("") : `<tr><td colspan="4" class="muted">No grade entries yet.</td></tr>`;
 
     const au = d.audits || [];
@@ -194,7 +222,19 @@
         <td>${esc(when(r.timecreated))}</td>
       </tr>`).join("") : `<tr><td colspan="3" class="muted">No audit entries yet.</td></tr>`;
 
+    const dp = d.disputes || [];
+    $("#disputes").innerHTML = dp.length ? dp.map((r) => `
+      <tr>
+        <td>${esc(names[r.studentid] || ("Student #" + r.studentid))}${r.coursegradeid ? `<div class="muted">Course grade #${Number(r.coursegradeid)}</div>` : ""}</td>
+        <td>${esc(names[r.requesterid] || ("User #" + r.requesterid))}</td>
+        <td>${esc(r.reason || "")}${r.resolution ? `<div class="muted">Resolution: ${esc(r.resolution)}</div>` : ""}</td>
+        <td><span class="pill${String(r.status) === "open" ? "" : " ok"}">${esc(r.status)}</span></td>
+        <td>${esc(when(r.timecreated))}</td>
+      </tr>`).join("") : `<tr><td colspan="5" class="muted">No grade queries. Parents/students open them from their portal.</td></tr>`;
+
     document.querySelectorAll("#coursegrades button").forEach((b) => b.addEventListener("click", () => publish(b)));
+    document.querySelectorAll(".modbtn").forEach((b) => b.addEventListener("click", () =>
+      post({ do: "moderate_grade", gradeid: Number(b.dataset.modid), decision: b.dataset.decision, moderation_note: "" }, "Moderation recorded.", b)));
   }
 
   async function load() {

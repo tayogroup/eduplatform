@@ -172,7 +172,13 @@
     $("#charts").innerHTML = charts.join("");
 
     const T = data.teachers || [];
-    $("#teachers").innerHTML = `<thead><tr><th>Teacher</th><th>Sessions</th><th>Reviewed</th><th>Avg Score</th><th>Pass Rate</th><th>QA Issues</th><th>Alert</th><th>Coaching Open</th><th>Coaching Done</th><th>Overdue</th><th>Leadership</th></tr></thead><tbody>` +
+    const ratingCell = (t) => t.learner_rating_avg === null || t.learner_rating_avg === undefined
+      ? '<span class="muted">—</span>'
+      : `${Number(t.learner_rating_avg).toFixed(1)}★ <span class="muted">(${Number(t.learner_rating_count)})</span>`;
+    const blendedCell = (t) => t.blended_score === null || t.blended_score === undefined
+      ? '<span class="muted">—</span>'
+      : `<span class="pill ${Number(t.blended_score) >= 85 ? "ok" : (Number(t.blended_score) < 75 ? "bad" : "warn")}">${Number(t.blended_score)}%</span>`;
+    $("#teachers").innerHTML = `<thead><tr><th>Teacher</th><th>Sessions</th><th>Reviewed</th><th>Avg Score</th><th>Learner ★</th><th>Blended</th><th>Pass Rate</th><th>QA Issues</th><th>Alert</th><th>Coaching Open</th><th>Coaching Done</th><th>Overdue</th><th>Leadership</th></tr></thead><tbody>` +
       (T.map((t) => {
         const issues = Number(t.needs_coaching_count) + Number(t.serious_issue_count);
         const alert = alertFor(t);
@@ -180,13 +186,15 @@
           <td>${esc(teacherName(t.teacherid))} <span class="code">#${Number(t.teacherid)}</span></td>
           <td>${Number(t.session_count)}</td><td>${Number(t.reviewed_count)}</td>
           <td>${scorePill(t)}</td>
+          <td>${ratingCell(t)}</td>
+          <td>${blendedCell(t)}</td>
           <td>${pct(t.passed_count, t.reviewed_count)}%</td>
           <td>${issues}${Number(t.serious_issue_count) > 0 ? " serious" : ""}</td>
           <td><span class="pill ${alert === "OK" ? "ok" : "bad"}">${esc(alert)}</span></td>
           <td>${Number(t.coaching_open_count)}</td><td>${Number(t.coaching_completed_count)}</td>
           <td>${Number(t.coaching_overdue_count)}</td><td>${Number(t.leadership_open_count)}</td>
         </tr>`;
-      }).join("") || `<tr><td colspan="11">No teacher QA rows in this range.</td></tr>`) + "</tbody>";
+      }).join("") || `<tr><td colspan="13">No teacher QA rows in this range.</td></tr>`) + "</tbody>";
     $("#teachers-panel").hidden = false;
 
     const R = data.trend || [];

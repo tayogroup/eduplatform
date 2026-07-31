@@ -1,0 +1,42 @@
+In src/moodle/local_hubredirect/workspace_dashboard.php (the "admin dashboard") and
+src/moodle/local_hubredirect/admin_workspace.php (the "admin workspace"), make these changes:
+
+1. In workspace_dashboard.php's "Public Workspace Links" panel (.pqwd-public section), remove
+   the Landing, Profile, Inquiry, Login, and Workspace URL links. Keep Student intake, Course
+   catalog, and Teacher onboarding. Remove the now-unused $landingurl/$profileurl/$inquiryurl/
+   $loginurl/$workspaceurl variables and update the panel's description text to match what's left.
+
+2. Fix the Course catalog link going to the login page instead of the catalog: it's built with
+   pqwd_domain_url(), which routes through the consumer's *primary domain* - correct for public,
+   no-login pages like Landing/Login, but course_catalog_browse.php calls require_login(), so
+   crossing to that other domain means no session cookie is present there and Moodle bounces to
+   login. Build it as a plain same-domain moodle_url() instead (same pattern already used
+   correctly in admin_workspace.php).
+
+3. Move the Diagnostics, Test matrix, Institution settings, and Onboard institution links out of
+   workspace_dashboard.php's Public Workspace Links panel and into admin_workspace.php. Before
+   adding, check whether admin_workspace.php already has an equivalent card/nav item (it likely
+   already has "Institution Settings" and "Role Test Matrix" cards) - don't duplicate those; only
+   add the ones genuinely missing (e.g. Diagnostics, Onboard Institution), gated the same way
+   (canacademyops) as the originals.
+
+4. Remove "Dashboard" from workspace_dashboard.php's own top menu (appbar) and its own left rail
+   (gnav) - it's a pure self-link on that page. Use the shell's 'appbar' override (drop the
+   Dashboard entry) plus 'hideitems' => ['dashboard'] on the pqh_design_shell_html() call.
+
+5. In workspace_dashboard.php's header block (.pqwd-top.pqh-workspace-top), remove the
+   title/logo/subtitle block entirely, but keep the workspace-switcher "schools" <select> dropdown,
+   positioned on the right (e.g. margin-left:auto on its wrapping <form>). Clean up any now-dead
+   variables (brand name/logo/color/initials) that only fed the removed title markup.
+
+Caveats learned while doing this:
+- pqh_design_shell_html() is shared by ~30 pages; always use its 'appbar'/'hideitems'/'navitems'
+  overrides for page-specific menu changes rather than editing the shared defaults in
+  accesslib.php, so other pages aren't affected.
+- Before deleting a variable, grep the whole file for every other usage - some of these files
+  compute branding variables (brandcolor/brandlogo/etc.) that are only consumed by the exact
+  block being removed, and removing the dead code is expected, not optional cleanup.
+- After removing/adding links, re-read the section's own descriptive/subtitle text (e.g. "Use
+  these to test the landing page, login, and intake flows...") - it often references items that
+  just moved and needs updating too.
+- Verify with `php -l` on both files after edits.

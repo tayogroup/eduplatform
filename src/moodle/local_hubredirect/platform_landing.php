@@ -84,7 +84,7 @@ body.pqh-platform-landing-page #page,body.pqh-platform-landing-page #page-conten
       <div>
         <p class="pqpl-kicker">Platform foundation</p>
         <h1>Run branded education workspaces from one operating layer.</h1>
-        <p class="pqpl-hero-copy">EduPlatform gives academies, institutions, marketplaces, and teacher-led programs a shared Moodle foundation with domain routing, workspace isolation, role-aware dashboards, live-session operations, communications, reporting, SQA, and deployment controls.</p>
+        <p class="pqpl-hero-copy">EduPlatform gives academies, institutions, marketplaces, and teacher-led programs a shared platform foundation with domain routing, workspace isolation, role-aware dashboards, live-session operations, communications, reporting, SQA, and deployment controls.</p>
         <div class="pqpl-actions">
           <?php if ($isplatformadmin): ?>
             <a class="pqpl-btn pqpl-btn--gold" href="<?php echo $adminurl->out(false); ?>">Open platform admin</a>

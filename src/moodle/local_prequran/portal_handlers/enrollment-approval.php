@@ -40,16 +40,30 @@ if (!$islinkedparent && !is_siteadmin($userid)) {
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     $body = json_decode((string)file_get_contents('php://input'), true);
     $do = is_array($body) ? (string)($body['do'] ?? '') : '';
-    if ($do !== 'approve') {
+    if (!in_array($do, ['approve', 'decline'], true)) {
         pqpd_fail(400, 'Unknown enrollment-approval action.');
     }
     if (!$islinkedparent) {
         pqpd_fail(403, 'This action must be completed by the linked parent or guardian.');
     }
+    $notes = trim(clean_param((string)($body['approval_notes'] ?? ''), PARAM_TEXT));
+    if ($do === 'decline') {
+        // Refusal is a recordable state, not an error (best practice: the
+        // approval gate has two exits). The launcher stays blocked exactly as
+        // for pending_parent; the academy sees the decline in the audit trail
+        // and can follow up. Re-approval later remains possible.
+        pqea_decline_enrollment($studentid, $userid, $notes);
+        echo json_encode([
+            'ok' => true,
+            'message' => 'Enrollment declined. The academy team has been notified and lessons stay paused. You can approve later if you change your mind.',
+            'studentid' => $studentid,
+            'status' => 'declined',
+        ], JSON_UNESCAPED_SLASHES);
+        exit;
+    }
     if (empty($body['approve_enrollment'])) {
         pqpd_fail(400, 'Please tick the declaration before approving enrollment.');
     }
-    $notes = trim(clean_param((string)($body['approval_notes'] ?? ''), PARAM_TEXT));
     pqea_upsert_enrollment_approval($studentid, $userid, $notes);
     echo json_encode([
         'ok' => true,

@@ -21,6 +21,7 @@ if ($workspaceid > 0) {
 if ($workspaceid <= 0 || !pqfin_user_can_manage_workspace_finance((int)$USER->id, $workspaceid)) {
     pqh_access_denied('Only workspace admins can view student finance profiles.', new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams), 'Finance access required');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $message = '';
@@ -121,7 +122,7 @@ body.pqfin-page #page,body.pqfin-page #page-content,body.pqfin-page #region-main
   <?php if ($message !== ''): ?><div class="pqfin-alert pqfin-alert--ok"><?php echo s($message); ?></div><?php endif; ?>
   <?php if ($error !== ''): ?><div class="pqfin-alert pqfin-alert--err"><?php echo s($error); ?></div><?php endif; ?>
   <?php if (!pqfin_schema_ready()): ?>
-    <div class="pqfin-alert pqfin-alert--err">Student finance schema is not ready. Run the local_prequran Moodle upgrade.</div>
+    <div class="pqfin-alert pqfin-alert--err">Student finance schema is not ready. Run the local_prequran platform upgrade.</div>
   <?php endif; ?>
   <div class="pqfin-grid">
     <aside class="pqfin-panel">
@@ -206,7 +207,7 @@ body.pqfin-page #page,body.pqfin-page #page-content,body.pqfin-page #region-main
         <div class="pqfin-card">
           <h3>Finance holds</h3>
           <?php if (!pqfin_hold_schema_ready()): ?>
-            <div class="pqfin-empty">Finance hold schema is not ready. Run the local_prequran Moodle upgrade.</div>
+            <div class="pqfin-empty">Finance hold schema is not ready. Run the local_prequran platform upgrade.</div>
           <?php elseif (!$holds): ?>
             <div class="pqfin-empty">No finance holds recorded for this student.</div>
           <?php else: ?>

@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fee schedule · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:1fr 380px;gap:16px;align-items:start}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+  .muted{color:var(--muted);font-size:12px}
+  .note{color:var(--muted);font-size:12px;margin:8px 0 0}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .field{margin-bottom:10px}
+  .field label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin-bottom:3px}
+  .field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .field textarea{min-height:64px;resize:vertical}
+  .field .hint{font-weight:600;color:var(--muted);font-size:11px;margin-top:2px}
+  form button{margin-top:8px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form button.ghost{background:var(--card);color:var(--blue2);border:1px solid var(--line);margin-left:8px}
+  form button:disabled{opacity:.55;cursor:wait}
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top;font-size:13px}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  td strong{font-size:14px}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2);white-space:nowrap}
+  .pill.good{background:#e1f2ff;color:var(--blue2)}
+  .pill.muted-pill{background:var(--sky);color:var(--muted)}
+  button.btn{display:inline-block;padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--blue2);font-weight:800;font-size:12px;cursor:pointer}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Fee schedule</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of fee_schedule.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Fee schedule</h1><p class="sub" id="subtitle">Reusable price templates for tuition, registration, and materials — apply them when creating offerings or invoices.</p></div>
+  <div id="status" class="status">Loading fee schedules…</div>
+  <div class="grid" id="grid" hidden>
+    <div>
+      <div class="panel">
+        <h2>Fee schedules</h2>
+        <table><thead><tr><th>Schedule</th><th>Applies to</th><th>Year</th><th>Tuition / Reg / Materials</th><th>Discounts</th><th>Status</th><th></th></tr></thead><tbody id="schedules-body"></tbody></table>
+      </div>
+    </div>
+    <div>
+      <div class="panel">
+        <h2 id="form-title">New fee schedule</h2>
+        <form id="schedule-form">
+          <input type="hidden" name="id" id="f-id">
+          <div class="field"><label>Title</label><input name="title" id="f-title"></div>
+          <div class="field"><label>Applies to</label><select name="applies_to" id="f-applies_to">
+            <option value="grade">grade</option><option value="level">level</option><option value="program">program</option><option value="all">all</option>
+          </select></div>
+          <div class="field"><label>Applies value</label><input name="applies_value" id="f-applies_value"><div class="hint">e.g. Grade 3, Primary, Quran Program</div></div>
+          <div class="field"><label>Academic year</label><input name="academic_year" id="f-academic_year" placeholder="2026-27"></div>
+          <div class="field"><label>Currency</label><input name="currency" id="f-currency" value="USD"></div>
+          <div class="field"><label>Tuition amount</label><input name="tuition_amount" id="f-tuition_amount" inputmode="decimal"></div>
+          <div class="field"><label>Registration fee</label><input name="registration_fee" id="f-registration_fee" inputmode="decimal"></div>
+          <div class="field"><label>Materials fee</label><input name="materials_fee" id="f-materials_fee" inputmode="decimal"></div>
+          <div class="field"><label>Sibling discount (%)</label><input name="sibling_discount_percent" id="f-sibling_discount_percent" inputmode="decimal"></div>
+          <div class="field"><label>Early payment discount (%)</label><input name="early_payment_discount_percent" id="f-early_payment_discount_percent" inputmode="decimal"></div>
+          <div class="field"><label>Status</label><select name="status" id="f-status">
+            <option value="active">active</option><option value="archived">archived</option>
+          </select></div>
+          <div class="field"><label>Notes</label><textarea name="notes" id="f-notes"></textarea></div>
+          <button type="submit">Save fee schedule</button>
+          <button type="button" class="ghost" id="reset-btn">New / clear</button>
+        </form>
+        <p class="note">A fee schedule is a reusable price template; apply it when creating course offerings/invoices.</p>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const base = () => new URLSearchParams({ report: "fee-schedule", token });
+  const getUrl = () => endpoint + "?" + base().toString();
+
+  let DATA = {};
+
+  async function load() {
+    try {
+      const r = await fetch(getUrl());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const money = (v, cur) => (v == null || v === "") ? "—" : (esc(v) + " " + esc(cur || ""));
+  const pct = (v) => (v == null || v === "") ? "—" : (esc(v) + "%");
+  const statusClass = (s) => /active/.test(s || "") ? "good" : /archiv/.test(s || "") ? "muted-pill" : "";
+
+  function render(d) {
+    DATA = d;
+    if (d.ready === false) {
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = "Fee schedule schema is not ready. Run Moodle upgrade.";
+    } else {
+      $("#status").hidden = true;
+    }
+
+    const schedules = d.schedules || [];
+    $("#schedules-body").innerHTML = schedules.length ? schedules.map((s) =>
+      `<tr>
+        <td><strong>${esc(s.title)}</strong><div class="muted">${esc(s.schedule_code || "")}</div></td>
+        <td>${esc(s.applies_to || "")}${s.applies_value ? ": " + esc(s.applies_value) : ""}</td>
+        <td>${esc(s.academic_year || "")}</td>
+        <td>${money(s.tuition_amount, s.currency)}<div class="muted">Reg ${money(s.registration_fee, s.currency)} · Mat ${money(s.materials_fee, s.currency)}</div></td>
+        <td>Sibling ${pct(s.sibling_discount_percent)}<div class="muted">Early ${pct(s.early_payment_discount_percent)}</div></td>
+        <td><span class="pill ${statusClass(s.status)}">${esc(s.status)}</span></td>
+        <td><button type="button" class="btn" data-edit="${s.id}">Edit</button></td>
+      </tr>`
+    ).join("") : `<tr><td colspan="7" class="muted">No fee schedules yet. Create one on the right.</td></tr>`;
+
+    document.querySelectorAll("[data-edit]").forEach((b) => b.addEventListener("click", () => fillForm(Number(b.dataset.edit))));
+
+    $("#grid").hidden = false;
+  }
+
+  const fields = ["id","title","applies_to","applies_value","academic_year","currency","tuition_amount","registration_fee","materials_fee","sibling_discount_percent","early_payment_discount_percent","status","notes"];
+
+  function fillForm(id) {
+    const s = (DATA.schedules || []).find((x) => Number(x.id) === Number(id));
+    if (!s) return;
+    fields.forEach((f) => { const el = $("#f-" + f); if (el) el.value = (s[f] ?? ""); });
+    $("#form-title").textContent = "Edit: " + (s.title || ("#" + s.id));
+    $("#schedule-form").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+  function clearForm() {
+    fields.forEach((f) => { const el = $("#f-" + f); if (el) el.value = ""; });
+    $("#f-currency").value = "USD";
+    $("#f-applies_to").value = "grade";
+    $("#f-status").value = "active";
+    $("#form-title").textContent = "New fee schedule";
+  }
+
+  async function post(payload, btn, okText) {
+    const original = btn ? btn.textContent : "";
+    if (btn) { btn.disabled = true; btn.textContent = "Saving…"; }
+    try {
+      const r = await fetch(endpoint + "?" + base().toString(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = okText || (d.message || "Saved.");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      clearForm();
+      await load();
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = original; }
+    }
+  }
+
+  function formPayload(form, extra) {
+    const p = Object.assign({}, extra);
+    new FormData(form).forEach((v, k) => { p[k] = v; });
+    return p;
+  }
+
+  $("#schedule-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    post(formPayload(ev.currentTarget, { do: "save" }), ev.currentTarget.querySelector("button"), "Fee schedule saved.");
+  });
+  $("#reset-btn").addEventListener("click", clearForm);
+
+  load();
+})();
+</script>
+</body>
+</html>

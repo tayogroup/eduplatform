@@ -579,20 +579,428 @@ if ($hassiteconfig) {
         'Static sources the catalog-sync and cohort-sync scheduled tasks read to create courses, grade items, and pilot enrolments.'
     ));
 
-    $settings->add(new admin_setting_configtext(
+    $settings->add(new admin_setting_configtextarea(
         'local_prequran/catalog_source_url',
-        'Ehel catalog URL',
-        'catalog.json that the catalog-sync task reads to create categories, courses (by idnumber) and grade items. Leave blank to disable the task.',
+        'Catalog URLs (one per school)',
+        'catalog.json URLs the catalog-sync task reads to create categories, courses (by idnumber) and grade items — ONE PER LINE, one per consumer school (Ehel Academy, Quraan Academy, …). Leave blank to disable the task.',
         'https://ehelacademy.b-cdn.net/Ehel%20Primary/catalog.json',
-        PARAM_URL
+        PARAM_RAW_TRIMMED
+    ));
+
+    $settings->add(new admin_setting_configtextarea(
+        'local_prequran/cohorts_source_url',
+        'Cohort roster URLs (one per school)',
+        'cohorts.json URLs the cohort-sync task reads to enrol learners into the synced courses — ONE PER LINE, one per consumer school. Leave blank to disable the task.',
+        'https://ehelacademy.b-cdn.net/Ehel%20Primary/cohorts.json',
+        PARAM_RAW_TRIMMED
     ));
 
     $settings->add(new admin_setting_configtext(
-        'local_prequran/cohorts_source_url',
-        'Ehel cohorts URL',
-        'cohorts.json that the cohort-sync task reads to enrol pilot learners into the synced courses. Leave blank to disable the task.',
-        'https://ehelacademy.b-cdn.net/Ehel%20Primary/cohorts.json',
-        PARAM_URL
+        'local_prequran/term_start',
+        'Academic term start (YYYY-MM-DD)',
+        'When set, catalog-sync stamps this as the start date on the Ehel courses it manages (create + drift-update). Blank = do not manage course dates.',
+        '',
+        PARAM_RAW_TRIMMED
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/term_end',
+        'Academic term end (YYYY-MM-DD)',
+        'When set, catalog-sync stamps this as the end date on the Ehel courses it manages. Blank = no end date.',
+        '',
+        PARAM_RAW_TRIMMED
+    ));
+
+    $reconcilemodes = ['' => 'Off', 'report' => 'Report only (log, change nothing)', 'enforce' => 'Enforce'];
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/teacher_reconcile_mode',
+        'Teacher enrolment reconcile',
+        'Nightly diff of expected vs actual teacher enrolments on offering-linked courses (fixes one-way drift: removed teacher↔student assignments never unenrolled the teacher). Start with Report and read the task log before enforcing.',
+        '',
+        $reconcilemodes
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/parent_observer_mode',
+        'Parent observer role sync',
+        'Nightly assignment of the ehel_parent role in each student\'s user context for every guardian↔student consent pair (the native Moodle equivalent of Canvas observers). Start with Report.',
+        '',
+        $reconcilemodes
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/finance_hold_suspend_mode',
+        'Finance-hold enrolment suspension',
+        'Nightly: students with an ACTIVE finance hold (policy actions below) get their course enrolments SUSPENDED — roster row and grades kept, access closed (Canvas "inactive"). Cleared holds auto-restore only suspensions this task applied. Start with Report.',
+        '',
+        $reconcilemodes
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/finance_hold_suspend_policyactions',
+        'Hold policy actions that suspend access',
+        'Comma-separated finance-hold policyaction values that should suspend course access (e.g. suspend_access,blocker). Holds with other policy actions (warning_only, certificate blocks) never touch enrolment.',
+        'suspend_access',
+        PARAM_RAW_TRIMMED
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/enrol_conclude_mode',
+        'Term-end enrolment conclude',
+        'Nightly: enrolled requests whose offering end date passed (plus grace) are concluded — Moodle enrolment suspended (grades and roster kept, access closed) and the request marked completed. The Canvas end-of-term pattern. Start with Report.',
+        '',
+        $reconcilemodes
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/enrol_conclude_grace',
+        'Conclude grace period (days)',
+        'Days after the offering end date before an enrolment is concluded.',
+        '7',
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'local_prequran/teacher_require_vetting_for_assignment',
+        'Require approved vetting for student assignment',
+        'When on, a teacher must have vetting_status = approved before they can be assigned a student (workspace-people and teacher-administration). Teachers with REJECTED vetting are always blocked regardless of this setting.',
+        0
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/teacher_vetting_mode',
+        'Teacher vetting expiry sweep',
+        'Nightly: approved vettings older than the window below flip back to needs_update so they resurface in the review queue (periodic re-vetting). Also reports marketplace-published teachers whose vetting lapsed. Start with Report.',
+        '',
+        $reconcilemodes
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/teacher_vetting_expiry_days',
+        'Vetting validity window (days)',
+        'How long an approved vetting stays valid before re-review is required.',
+        '365',
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/qa_learner_rating_weight',
+        'Learner rating weight in QA blend (%)',
+        'How much the learner star-rating average (as a percentage) counts in the blended teacher score on Quality Analytics. 0 = QA checklist only; 100 = ratings only. Default 30.',
+        '30',
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/student_risk_mode',
+        'Student at-risk scan',
+        'Nightly early-warning scan of active students: login inactivity, unexcused absences (30d), missing homework. Enforce writes at_risk_flagged audit rows (visible in the at-risk report history), deduped weekly. Start with Report.',
+        '',
+        $reconcilemodes
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/homework_reminder_mode',
+        'Homework due/missed reminders',
+        'Nightly: homework due within 24h → reminder to the student and linked parents; homework newly overdue (48h window) → missed notice. Deduped per submission; parents with revoked links are excluded. Start with Report.',
+        '',
+        $reconcilemodes
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/risk_inactive_days',
+        'At-risk: inactivity threshold (days)',
+        'Flag students who have not logged in for this many days.',
+        '14',
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/risk_absence_count',
+        'At-risk: absence threshold (30 days)',
+        'Flag students with at least this many recorded absences in the last 30 days.',
+        '3',
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/risk_missing_homework',
+        'At-risk: missing homework threshold',
+        'Flag students with at least this many past-due unsubmitted homework items.',
+        '3',
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/risk_grade_decline',
+        'At-risk: grade-decline threshold (points)',
+        'Flag a student when their latest published course grade drops by at least this many points versus their previous published grade in the same course. 0 disables the grade-decline signal.',
+        '0',
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/risk_grade_low',
+        'At-risk: low-grade threshold (percent)',
+        'Flag a student whose latest published course grade is below this percent. 0 disables the low-grade signal.',
+        '0',
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/parent_digest_mode',
+        'Weekly parent digest',
+        'Once a week, linked parents receive a per-child snapshot: upcoming live classes, attendance, homework due/overdue, new teacher notes. Honors revoked links and the parent_email_enabled opt-out. Start with Report.',
+        '',
+        $reconcilemodes
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/parent_digest_day',
+        'Parent digest day (1=Mon … 7=Sun)',
+        'ISO weekday on which the weekly parent digest goes out.',
+        '1',
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/admin_review_mode',
+        'Privileged-access review',
+        'Nightly governance sweep: siteadmins/school_principals with no active workspace membership (offboarded-but-still-privileged), suspended accounts holding manager roles, and failing scheduled tasks. Never revokes anything itself — flags for human review. Start with Report.',
+        '',
+        $reconcilemodes
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/classroom_hygiene_mode',
+        'Classroom hygiene sweep',
+        'Nightly: no-show sessions (never started, stuck in scheduled) moved to review, stale awaiting-review sessions re-flagged weekly, zero-attendance ended sessions flagged, late starts and short-notice cancels reported, grading-SLA reminders sent to teachers. Start with Report.',
+        '',
+        $reconcilemodes
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/grading_sla_days',
+        'Homework grading SLA (days)',
+        'Submissions sitting in "Awaiting review" longer than this trigger a teacher reminder (classroom hygiene sweep, deduped every 3 days).',
+        '3',
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/session_cancel_notice_hours',
+        'Session cancellation notice window (hours)',
+        'Cancelling or rescheduling a session closer to its start than this is recorded as a SHORT-NOTICE change (audited per teacher; reported by the hygiene sweep). Changes are never blocked — emergencies happen.',
+        '24',
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/finance_dunning_mode',
+        'Finance dunning (invoice reminders)',
+        'Nightly: due-soon and overdue invoice notices to families (existing templates + secure links), stale payment-plan recalcs, abandoned checkout-session expiry, and hold-candidate reporting. Start with Report.',
+        '',
+        $reconcilemodes
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/dunning_due_soon_days',
+        'Due-soon reminder window (days)',
+        'Families are reminded when an unpaid invoice is due within this many days (once per invoice).',
+        '3',
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/dunning_overdue_repeat_days',
+        'Overdue reminder repeat (days)',
+        'Overdue invoice notices repeat at this interval while a balance remains.',
+        '7',
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/identity_offboard_mode',
+        'Identity offboard mode',
+        'Off: offboarding leaves the Moodle account loginable (legacy). Report: offboarding audits account-suspension candidates and the nightly reconcile lists active memberships held by suspended/deleted accounts. Enforce: offboarding SUSPENDS the account when the person has no active presence elsewhere (sessions killed, portal tokens revoked), and the reconcile deactivates dead-account memberships. Platform-privileged accounts are never touched.',
+        '',
+        $reconcilemodes
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/gradebook_uncategorized_weight',
+        'Uncategorized grade weight',
+        'Weight (percent) applied to homework and any grade whose assessment has no category, folded into the weighted course grade. Default 100 makes homework count; set 0 to exclude uncategorized grades (legacy behaviour). Named categories keep their own configured weights.',
+        '100',
+        PARAM_RAW_TRIMMED
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/achievement_notify_mode',
+        'Achievement notifications',
+        'Off: publishing a course grade or issuing a certificate sends nothing (legacy). Enforce: the student and their consented parents are notified of the milestone. Best-effort; never blocks the write.',
+        '',
+        ['' => 'Off', 'enforce' => 'Notify student + parents']
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/course_seb_launch_mode',
+        'Launch enrolled courses in Safe Exam Browser',
+        'Enabled: starting a course you are enrolled in hands over a .seb config, so the course opens inside Safe Exam Browser instead of a normal tab. '
+        . 'Off: courses open directly in the browser (legacy). '
+        . 'NOTE: SEB must be installed on the device and there is no Android build — with this enabled, learners on Android phones/tablets cannot open a course at all. '
+        . 'The allow-list already covers the consumer host and the CDN that serves the app.',
+        'enabled',
+        ['' => 'Off (open in browser)', 'enabled' => 'Enabled (open in SEB)']
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/course_seb_quit_password',
+        'Course SEB quit password',
+        'Leave BLANK (default) so learners can quit Safe Exam Browser freely — a course is a lesson, not an exam. '
+        . 'Set a password only if you deliberately want to stop learners leaving mid-lesson. Exams are unaffected: they keep their own per-exam quit password.',
+        '',
+        PARAM_RAW_TRIMMED
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/live_seb_launch_mode',
+        'Launch live classes in Safe Exam Browser',
+        'Enabled: joining a scheduled live class hands the room to Safe Exam Browser instead of opening it in the ordinary browser. '
+        . 'Applies to learners only — teachers and observers keep the normal browser join. '
+        . 'The live-class config never carries a quit password: a learner must always be able to leave a class. '
+        . 'Same device caveat as courses: SEB must be installed and there is no Android build.',
+        '',
+        ['' => 'Off (join in browser)', 'enabled' => 'Enabled (join in SEB)']
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/course_seb_lock_mode',
+        'Conditional exit lock for course SEB sessions',
+        'Enabled: the learner CANNOT quit Safe Exam Browser manually during a lesson. They are released automatically on whichever comes first — the learning-time target, no outstanding homework, or the hard cap. '
+        . 'Requires a quit password to be set (staff can always release with it). '
+        . 'SAFETY: do not enable until the lesson app can reach the release endpoint, or a learner will have no exit path at all. '
+        . 'This locks children into a kiosk browser — review your safeguarding position before switching it on.',
+        '',
+        ['' => 'Off (learner may quit freely)', 'enabled' => 'Enabled (conditional exit)']
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/course_seb_learn_minutes',
+        'Learning minutes that earn release',
+        'Minutes of lesson time after which the learner may exit. Default 120, capped at 480.',
+        '120',
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/course_seb_max_minutes',
+        'Hard cap — always release after (minutes)',
+        'The safety net: release ALWAYS happens by this point regardless of the condition, so a failed check cannot strand a learner. Default 180. Never lower than the learning target.',
+        '180',
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/seb_proctor_retention_days',
+        'Proctor snapshot retention (days)',
+        'How long webcam snapshot frames from proctored exams are kept before the nightly data-retention task deletes them. Clamped to 1–90; default 30. These are children-adjacent biometric frames — keep this as short as your review workflow allows.',
+        '30',
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/audit_retention_days',
+        'Operational audit retention (days)',
+        'When greater than 0, the nightly data-retention task trims operational course-audit rows older than this many days. 0 keeps them forever. Financial, grade, safeguarding and governance audit trails are never trimmed by this setting.',
+        '0',
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configpasswordunmask(
+        'local_prequran/intake_form_secret',
+        'Public-intake form secret',
+        'Dedicated HMAC key for the public intake anti-abuse form tokens. Set this so rotating the launch-token signing key does not affect intake, and vice versa. Leave blank to keep sharing the launch secret (legacy behaviour).',
+        ''
+    ));
+
+    $settings->add(new admin_setting_configpasswordunmask(
+        'local_prequran/finance_payment_webhook_secret_global',
+        'Global payment webhook secret',
+        'Secret used to verify payment webhooks that carry no resolvable checkout session. Without it, session-less webhooks fail verification (the safe default) — a caller can no longer have the payload choose which workspace secret validates it.',
+        ''
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/marketplace_commission_percent',
+        'Marketplace commission percent',
+        'Default platform commission percentage applied to a tutor marketplace payout when no explicit fee is entered. A per-tutor override (teacher profile) takes precedence. 0 = no automatic commission (fees stay manual).',
+        '0',
+        PARAM_RAW_TRIMMED
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/workspace_material_maxbytes',
+        'Workspace material upload size limit (bytes)',
+        'Maximum size for a teacher-uploaded workspace material. Default 52428800 (50 MB). Uploads are also restricted to a documents/media file-type allow-list.',
+        '52428800',
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/marketplace_review_moderation_mode',
+        'Marketplace review moderation',
+        'Auto: written tutor reviews publish immediately (star-only ratings always do). Manual: a written review starts pending and only appears on the public tutor profile after a manager approves it.',
+        'auto',
+        ['auto' => 'Auto-publish written reviews', 'manual' => 'Require approval before publishing']
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/grade_moderation_mode',
+        'Grade moderation mode',
+        'Off: a grade can be published by the marker alone (legacy — the "reviewed" status is the same teacher self-attesting). Require: each counting grade must be signed off by an INDEPENDENT second marker before the course grade can be published.',
+        '',
+        ['' => 'Off (single marker)', 'require' => 'Require independent moderation']
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/analytics_snapshot_mode',
+        'Analytics snapshot mode',
+        'Off: dashboards recompute live only; no history is captured. Enabled: a nightly per-workspace snapshot (grade distribution, pass rate, attendance, completion) is stored so metrics can be trended over time.',
+        '',
+        ['' => 'Off', 'enabled' => 'Capture nightly snapshots']
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/completion_award_mode',
+        'Completion-award scan mode',
+        'Off: no automatic certificate candidates. Report: the nightly scan logs students with a published passing course grade but no certificate. Enforce: the scan creates DRAFT award candidates for registrar review (never auto-issued).',
+        '',
+        $reconcilemodes
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/completion_award_pass_percent',
+        'Completion-award pass percent',
+        'Minimum published course grade percent that makes a student a completion-certificate candidate.',
+        '60',
+        PARAM_RAW_TRIMMED
+    ));
+
+    $settings->add(new admin_setting_configselect(
+        'local_prequran/parent_link_confirm_mode',
+        'Guardian link mode',
+        'Off: admin-created parent links activate instantly (legacy). Notify: links activate instantly and the parent is notified a link was made in their name. Confirm: links start PENDING (no visibility, no consents) until the parent confirms on the Student & Parent Portal.',
+        '',
+        ['' => 'Instant (no notification)', 'notify' => 'Instant + notify the parent', 'confirm' => 'Pending until the parent confirms']
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/platform_fee_percent',
+        'Platform fee percent (settlement default)',
+        'Default platform fee percentage applied when generating EduPlatform settlement statements for consumer schools. 0 keeps statements informational (no fee). Editable per statement while draft.',
+        '0',
+        PARAM_RAW_TRIMMED
     ));
 
     $settings->add(new admin_setting_configtextarea(

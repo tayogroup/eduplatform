@@ -59,42 +59,30 @@ function pqpir_consumer_initial(string $brandname): string {
     return strtoupper(core_text::substr($clean, 0, 1));
 }
 
-function pqpir_public_header(stdClass $consumercontext, array $params): string {
+function pqpir_public_header(stdClass $consumercontext): string {
     $brandname = trim((string)($consumercontext->consumername ?? 'EduPlatform'));
     if ($brandname === '') {
         $brandname = 'EduPlatform';
     }
 
-    $baseparams = ['consumer' => (string)($consumercontext->consumerslug ?? '')];
-    if ($baseparams['consumer'] === '') {
-        $baseparams = $params;
-    }
-    if ((int)($consumercontext->workspaceid ?? 0) > 0) {
-        $baseparams['workspaceid'] = (int)$consumercontext->workspaceid;
-    } else if (!empty($params['workspaceid'])) {
-        $baseparams['workspaceid'] = (int)$params['workspaceid'];
-    }
+    // No nav links here on purpose -- this is the enrollment form itself, so
+    // the header stays branding-only (logo + name) to keep the visitor
+    // focused on completing the form instead of navigating away mid-flow.
+    // Not a link to consumer_landing.php: that page now requires login, and
+    // this form is filled out by anonymous prospective families with no account.
+    // Show the institution's own logo when one is configured, falling back to
+    // the initial tile for consumers that have not uploaded one yet.
+    $brandlogo = trim((string)($consumercontext->logourl ?? ''));
 
-    $links = [
-        'Home' => new moodle_url('/local/hubredirect/consumer_landing.php', $baseparams),
-        'Student Intake' => new moodle_url('/local/hubredirect/public_intake.php', $baseparams),
-        'Profile' => new moodle_url('/local/hubredirect/institution_profile.php', $baseparams),
-        'Contact' => new moodle_url('/local/hubredirect/institution_inquiry.php', $baseparams),
-        'Workspace' => new moodle_url('/local/hubredirect/workspace_dashboard.php', $baseparams),
-    ];
-    $loginurl = new moodle_url('/local/hubredirect/consumer_login.php', $baseparams);
-
-    $html = '<header class="pqpir-navshell">';
-    $html .= '<a class="pqpir-navbrand" href="' . s($links['Home']->out(false)) . '">';
-    $html .= '<span class="pqpir-navmark">' . s(pqpir_consumer_initial($brandname)) . '</span>';
+    $html = '<span class="pqpir-navbrand">';
+    if ($brandlogo !== '') {
+        $html .= '<span class="pqpir-navmark pqpir-navmark--img">'
+            . '<img src="' . s($brandlogo) . '" alt="' . s($brandname) . '"></span>';
+    } else {
+        $html .= '<span class="pqpir-navmark">' . s(pqpir_consumer_initial($brandname)) . '</span>';
+    }
     $html .= '<span class="pqpir-navname">' . s($brandname) . '</span>';
-    $html .= '</a><nav class="pqpir-navlinks" aria-label="' . s($brandname) . ' public navigation">';
-    foreach ($links as $label => $url) {
-        $active = ($label === 'Student Intake') ? ' pqpir-navlink--active' : '';
-        $html .= '<a class="pqpir-navlink' . $active . '" href="' . s($url->out(false)) . '">' . s($label) . '</a>';
-    }
-    $html .= '<a class="pqpir-navlink pqpir-navlink--primary" href="' . s($loginurl->out(false)) . '">Log in</a>';
-    $html .= '</nav></header>';
+    $html .= '</span>';
 
     return $html;
 }
@@ -116,6 +104,10 @@ function pqpir_placement_level_options(array $options): array {
 }
 
 function pqpir_field_label(string $name): string {
+    global $isprimaryeducation;
+    if ($name === 'course_type' && !empty($isprimaryeducation)) {
+        return 'Grade level';
+    }
     $labels = [
         'form_security' => 'Form security',
         'parent_name' => 'Parent/guardian name',
@@ -245,6 +237,9 @@ function pqpir_field_label(string $name): string {
         'country' => 'Country',
         'city' => 'City',
         'city_other' => 'City not listed',
+        'district' => 'District',
+        'division' => 'Division',
+        'estate' => 'Estate',
         'timezone' => 'Time zone',
         'primary_language' => 'Primary language',
         'preferred_teaching_language' => 'Preferred teaching language',
@@ -492,7 +487,23 @@ function pqpir_teacher_preference_label(?stdClass $teacher): string {
     if ($name === '') {
         $name = trim((string)$teacher->firstname . ' ' . (string)$teacher->lastname);
     }
-    return $name . ' (' . pqh_account_no_label($teacher) . ', Moodle ID ' . (int)$teacher->userid . ')';
+    return $name . ' (' . pqh_account_no_label($teacher) . ', User ID ' . (int)$teacher->userid . ')';
+}
+
+function pqpir_parent_guardian_fields(array $form, array $errors, array $options): string {
+    ob_start();
+    ?>
+            <div class="pqpir-grid">
+              <div class="pqpir-field<?php echo isset($errors['parent_name']) ? ' pqpir-field--error' : ''; ?>"><label>Parent/guardian name</label><input class="pqpir-input" name="parent_name" value="<?php echo s(pqpir_value($form, 'parent_name')); ?>"><?php echo pqpir_error($errors, 'parent_name'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['parent_relationship']) ? ' pqpir-field--error' : ''; ?>"><label>Relationship to student</label><?php echo pqpir_select('parent_relationship', $options['parent_relationships'] ?? [], $form, $errors); ?></div>
+              <div class="pqpir-field pqpir-parent-relationship-other<?php echo isset($errors['parent_relationship_other']) ? ' pqpir-field--error' : ''; ?>"><label>Describe relationship</label><input class="pqpir-input" name="parent_relationship_other" value="<?php echo s(pqpir_value($form, 'parent_relationship_other')); ?>"><?php echo pqpir_error($errors, 'parent_relationship_other'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['parent_email']) ? ' pqpir-field--error' : ''; ?>"><label>Parent/guardian email or phone</label><input class="pqpir-input" name="parent_email" value="<?php echo s(pqpir_value($form, 'parent_email')); ?>"><?php echo pqpir_error($errors, 'parent_email'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['parent_phone']) ? ' pqpir-field--error' : ''; ?>"><label>Parent/guardian phone / WhatsApp</label><input class="pqpir-input" name="parent_phone" value="<?php echo s(pqpir_value($form, 'parent_phone')); ?>"><?php echo pqpir_error($errors, 'parent_phone'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['emergency_contact_name']) ? ' pqpir-field--error' : ''; ?>"><label>Emergency contact name</label><input class="pqpir-input" name="emergency_contact_name" value="<?php echo s(pqpir_value($form, 'emergency_contact_name')); ?>"><?php echo pqpir_error($errors, 'emergency_contact_name'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['emergency_contact_phone']) ? ' pqpir-field--error' : ''; ?>"><label>Emergency contact phone</label><input class="pqpir-input" name="emergency_contact_phone" value="<?php echo s(pqpir_value($form, 'emergency_contact_phone')); ?>"><?php echo pqpir_error($errors, 'emergency_contact_phone'); ?></div>
+            </div>
+    <?php
+    return (string)ob_get_clean();
 }
 
 $context = context_system::instance();
@@ -512,6 +523,32 @@ if ($requestedworkspaceid > 0 && (int)($consumercontext->workspaceid ?? 0) !== $
         $consumercontext = $workspacecontext;
     }
 }
+
+// On a parent domain (e.g. the Ehel Academy umbrella site) that owns child
+// schools, the visitor must pick which actual school the request is for
+// before the rest of the form (course offerings, institution-specific
+// fields) can be scoped correctly.
+$domainbasecontext = pqh_current_consumer_context();
+$childschoolchoices = pqh_org_group_child_schools((int)$domainbasecontext->consumerid);
+$selectedchildworkspaceid = 0;
+if ($childschoolchoices) {
+    foreach ($childschoolchoices as $childschool) {
+        if ((int)$childschool->workspaceid > 0 && (int)$childschool->workspaceid === (int)$consumercontext->workspaceid) {
+            $selectedchildworkspaceid = (int)$consumercontext->workspaceid;
+            break;
+        }
+    }
+}
+$needsschoolselection = $childschoolchoices && $selectedchildworkspaceid <= 0;
+$respondentrole = optional_param('respondent_role', '', PARAM_ALPHA);
+$overeighteenanswer = $respondentrole === 'student' ? optional_param('over18', '', PARAM_ALPHA) : '';
+// Parent/guardian is required and shown first when a parent is filling the
+// form or the student confirmed being under 18; it is skipped entirely once
+// the student confirms being an adult. Unanswered (no child-school picker
+// shown) falls back to the existing per-institution placement.
+$parentguardianfirst = $respondentrole === 'parent' || ($respondentrole === 'student' && $overeighteenanswer === 'no');
+$parentguardianrequired = !($respondentrole === 'student' && $overeighteenanswer === 'yes');
+
 pqh_apply_consumer_embed_headers($consumercontext);
 $consumerparams = ['consumer' => (string)$consumercontext->consumerslug];
 if ((int)$consumercontext->workspaceid > 0) {
@@ -683,6 +720,9 @@ $form = [
     'country' => '',
     'city' => '',
     'city_other' => '',
+    'district' => '',
+    'division' => '',
+    'estate' => '',
     'timezone' => 'Africa/Nairobi',
     'primary_language' => '',
     'preferred_teaching_language' => '',
@@ -699,7 +739,7 @@ $form = [
     'consent_notes' => '',
 ];
 
-if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($ready && !$needsschoolselection && $_SERVER['REQUEST_METHOD'] === 'POST') {
     require_sesskey();
     $postedformtime = optional_param('formtime', 0, PARAM_INT);
     $postedtoken = optional_param('formtoken', '', PARAM_ALPHANUMEXT);
@@ -832,6 +872,9 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
         'country' => pqpir_trim('country'),
         'city' => pqpir_trim('city'),
         'city_other' => pqpir_trim('city_other'),
+        'district' => pqpir_limit_text(pqpir_trim('district'), 120),
+        'division' => pqpir_limit_text(pqpir_trim('division'), 120),
+        'estate' => pqpir_limit_text(pqpir_trim('estate'), 120),
         'timezone' => pqpir_trim('timezone', 'Africa/Nairobi'),
         'primary_language' => pqpir_trim('primary_language'),
         'preferred_teaching_language' => pqpir_trim('preferred_teaching_language'),
@@ -854,7 +897,18 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $consumerparams['teacherid'] = (int)$teacherpreference->userid;
     }
 
+    $postedrespondentrole = optional_param('respondent_role', '', PARAM_ALPHA);
+    $postedover18 = optional_param('over18', '', PARAM_ALPHA);
     $isadultstudent = (int)$form['age_years'] >= 18;
+    if ($postedrespondentrole === 'parent') {
+        $isadultstudent = false;
+    } else if ($postedrespondentrole === 'student') {
+        if ($postedover18 === 'yes') {
+            $isadultstudent = true;
+        } else if ($postedover18 === 'no') {
+            $isadultstudent = false;
+        }
+    }
 
     $elapsed = time() - $postedformtime;
     if ($honeypot !== '') {
@@ -877,7 +931,6 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
         'student_firstname' => 'Please enter the student first name.',
         'student_middle_name' => 'Please enter the student middle name.',
         'student_lastname' => 'Please enter the student last name.',
-        'course_type' => 'Please select the course.',
         'country' => 'Please select the country.',
         'city' => 'Please select the city.',
         'timezone' => 'Please select the time zone.',
@@ -890,6 +943,9 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
         if (($field === 'age_years' && (int)$form[$field] <= 0) || ($field === 'session_count' && ((int)$form[$field] < 1 || (int)$form[$field] > 5)) || (!in_array($field, ['age_years', 'session_count'], true) && pqpir_value($form, $field) === '')) {
             $errors[$field] = $errormessage;
         }
+    }
+    if (pqpir_value($form, 'course_type') === '') {
+        $errors['course_type'] = $isprimaryeducation ? 'Please select the grade level.' : 'Please select the course.';
     }
     if ($isprimaryeducation) {
         foreach ([
@@ -1110,7 +1166,11 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
     if (($isprimaryeducation || pqpir_value($form, 'special_needs') !== '') && !in_array(pqpir_value($form, 'special_needs'), ['yes', 'no'], true)) {
         $errors['special_needs'] = 'Please select Yes or No for Special Needs.';
     }
-    if (!array_key_exists(pqpir_value($form, 'course_type'), $options['course_types'] ?? [])) {
+    if ($isprimaryeducation) {
+        if (!array_key_exists(pqpir_value($form, 'course_type'), $options['primary_grade_selection_levels'] ?? [])) {
+            $errors['course_type'] = 'Please select a valid grade level.';
+        }
+    } else if (!array_key_exists(pqpir_value($form, 'course_type'), $options['course_types'] ?? [])) {
         $errors['course_type'] = 'Please select a valid course.';
     }
     if (!array_key_exists(pqpir_value($form, 'student_access_type'), $options['student_access_types'] ?? [])) {
@@ -1122,7 +1182,7 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!array_key_exists(pqpir_value($form, 'preferred_teaching_language'), $options['primary_languages'] ?? [])) {
         $errors['preferred_teaching_language'] = 'Please select a valid preferred teaching language.';
     }
-    if (pqpir_value($form, 'current_level') === 'level_3' && !array_key_exists(pqpir_value($form, 'tajweed_sub_level'), $options['tajweed_sub_levels'] ?? [])) {
+    if (!$isprimaryeducation && pqpir_value($form, 'current_level') === 'level_3' && !array_key_exists(pqpir_value($form, 'tajweed_sub_level'), $options['tajweed_sub_levels'] ?? [])) {
         $errors['tajweed_sub_level'] = 'Please select Beginner, Middle, or Advanced for Level 3.';
     }
     if (!$form['slots']) {
@@ -1346,6 +1406,9 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             'adult_learning_confidence',
             'adult_support_needs',
             'adult_notes',
+            'district',
+            'division',
+            'estate',
         ] as $extrafield) {
             if (pqpir_table_has_column('local_prequran_intake_request', $extrafield)) {
                 $requestrecord->{$extrafield} = pqpir_value($form, $extrafield);
@@ -1381,23 +1444,104 @@ echo $OUTPUT->header();
 echo ehp_styles();
 ?>
 <style>
-body.pqh-public-intake-page header:not(.pqpir-navshell),body.pqh-public-intake-page header#page-header,body.pqh-public-intake-page header.navbar,body.pqh-public-intake-page .navbar,body.pqh-public-intake-page .navbar.fixed-top,body.pqh-public-intake-page .primary-navigation,body.pqh-public-intake-page .secondary-navigation,body.pqh-public-intake-page .moremenu,body.pqh-public-intake-page footer,body.pqh-public-intake-page nav.navbar,body.pqh-public-intake-page #page-header,body.pqh-public-intake-page #page-footer,body.pqh-public-intake-page .drawer,body.pqh-public-intake-page .drawer-toggles,body.pqh-public-intake-page .block-region,body.pqh-public-intake-page [data-region="drawer"],body.pqh-public-intake-page [data-region="right-hand-drawer"]{display:none!important}
+body.pqh-public-intake-page header,body.pqh-public-intake-page header#page-header,body.pqh-public-intake-page header.navbar,body.pqh-public-intake-page .navbar,body.pqh-public-intake-page .navbar.fixed-top,body.pqh-public-intake-page .primary-navigation,body.pqh-public-intake-page .secondary-navigation,body.pqh-public-intake-page .moremenu,body.pqh-public-intake-page footer,body.pqh-public-intake-page nav.navbar,body.pqh-public-intake-page #page-header,body.pqh-public-intake-page #page-footer,body.pqh-public-intake-page .drawer,body.pqh-public-intake-page .drawer-toggles,body.pqh-public-intake-page .block-region,body.pqh-public-intake-page [data-region="drawer"],body.pqh-public-intake-page [data-region="right-hand-drawer"]{display:none!important}
 body.pqh-public-intake-page{padding-top:0!important}
 body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body.pqh-public-intake-page #page-content,body.pqh-public-intake-page #region-main,body.pqh-public-intake-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important;background:transparent!important}
-.pqpir-shell{--pq-sky:#aee9ff;--pq-sky-soft:#e7f5ff;--pq-sun:#fff2cf;--pq-pink:#ffe1f4;--pq-green:#66d992;--pq-green-soft:#e8fff0;--pq-orange:#d99a26;--pq-orange-soft:#fff3e6;--pq-ink:#0f2230;--pq-ink-2:#234457;--pq-muted:#516a7a;--pq-stroke:rgba(15,34,48,.13);--pq-shadow:0 18px 46px rgba(15,34,48,.14);position:fixed;inset:0;z-index:2147483000;overflow:auto;min-height:100vh;padding:0 0 64px;background:radial-gradient(circle at 8% 6%,rgba(255,225,244,.72) 0,transparent 32%),radial-gradient(circle at 92% 2%,rgba(174,233,255,.78) 0,transparent 34%),linear-gradient(180deg,rgba(255,255,255,.93) 0,rgba(246,251,255,.94) 50%,rgba(255,249,239,.96) 100%),url("/local/hubredirect/pix/landing-welcome.jpg") center/cover fixed no-repeat;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--pq-ink)}
-.pqpir-wrap{max-width:1160px;margin:0 auto;padding:18px 18px 0}.pqpir-hero,.pqpir-panel{background:rgba(255,255,255,.92);border:1px solid var(--pq-stroke);border-radius:10px;box-shadow:var(--pq-shadow);backdrop-filter:blur(8px)}.pqpir-hero{position:relative;overflow:hidden;min-height:280px;padding:42px 36px;margin-bottom:18px;background:linear-gradient(90deg,rgba(8,31,24,.92),rgba(15,61,46,.72) 54%,rgba(15,61,46,.34)),url("/local/hubredirect/pix/landing-welcome.jpg") center/cover no-repeat;color:#fff}.pqpir-hero:before{display:none}.pqpir-brand{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px;color:#ffd88c;font-size:13px;font-weight:950;text-transform:uppercase}.pqpir-brand-mark{display:none}.pqpir-title{margin:0;font-size:44px;line-height:1.06;font-weight:950;color:#fff;letter-spacing:0;text-shadow:0 8px 28px rgba(0,0,0,.28)}.pqpir-sub{max-width:840px;margin:14px 0 0;color:rgba(255,255,255,.88);font-size:17px;font-weight:800;line-height:1.65}.pqpir-panel{padding:26px}.pqpir-panel h2{margin:0 0 16px;font-size:26px;line-height:1.1;font-weight:950;color:var(--pq-ink)}.pqpir-panel h3{display:inline-flex;align-items:center;margin:22px 0 12px;padding:7px 11px;border-radius:999px;background:var(--pq-orange-soft);border:1px solid rgba(217,154,38,.22);font-size:15px;font-weight:950;color:#6f4e32}.pqpir-muted{color:var(--pq-muted);font-size:12px}.pqpir-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.pqpir-field{display:grid;gap:7px;margin-bottom:12px;align-content:start;align-self:start}.pqpir-field label{font-size:13px;font-weight:950;color:var(--pq-ink-2)}.pqpir-pref{padding:13px 15px;margin:0 0 16px;border:1px solid rgba(47,111,78,.18);border-radius:10px;background:#edf9ef;color:#245c35;font-weight:950}.pqpir-city-other{display:none}.pqpir-city-other--visible{display:grid}.pqpir-input{width:100%;min-height:48px;border:2px solid #d9e7f7;border-radius:10px;padding:10px 12px;font:800 15px/1.2 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:#fff;color:var(--pq-ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.8);transition:border-color .15s ease,box-shadow .15s ease,background .15s ease}.pqpir-input:focus{outline:0;border-color:#7cc7ff;box-shadow:0 0 0 4px rgba(34,193,232,.14)}.pqpir-multi{min-height:136px}.pqpir-textarea{min-height:96px;line-height:1.45}.pqpir-error{font-size:12px;font-weight:950;color:#a33a2c}.pqpir-field--error .pqpir-input,.pqpir-field--error .pqpir-calendar{border-color:#d6543f;background:#fff8f6;box-shadow:0 0 0 4px rgba(214,84,63,.08)}.pqpir-alert{padding:15px 18px;border-radius:10px;margin-bottom:14px;font-weight:950;border:2px solid transparent}.pqpir-alert ul{margin:8px 0 0;padding-left:22px}.pqpir-alert--ok{background:linear-gradient(135deg,#e8fff0,#f7fff9);border-color:#b9f5c7;color:#0f5c3a}.pqpir-alert--bad{background:linear-gradient(135deg,#fff3e6,#fff8f6);border-color:#ffd6a5;color:#8a3a06}.pqpir-calendar{overflow:auto;border:2px solid #d9e7f7;border-radius:10px;background:#fff}.pqpir-calendar table{width:100%;border-collapse:separate;border-spacing:0;min-width:850px}.pqpir-calendar th,.pqpir-calendar td{border-bottom:1px solid rgba(15,34,48,.1);border-right:1px solid rgba(15,34,48,.08);padding:10px;text-align:center;font-weight:900}.pqpir-calendar th{background:linear-gradient(135deg,#e3faff,#f7fcff);color:var(--pq-ink-2);font-size:12px}.pqpir-calendar td:first-child{text-align:left;color:var(--pq-ink);background:#fffdf6}.pqpir-calendar tr:nth-child(even) td:first-child{background:#f8fff8}.pqpir-slot{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:10px;background:#eef7ff;border:1px solid #d9e7f7}.pqpir-slot input{width:19px;height:19px;accent-color:var(--pq-orange)}.pqpir-checkrow{display:flex;gap:10px;align-items:flex-start;margin:10px 0 13px;font-size:14px;font-weight:950;color:var(--pq-ink)}.pqpir-checkrow input{width:20px;height:20px;accent-color:#22c55e}.pqpir-level-guide{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:4px 0 14px}.pqpir-level-card{padding:12px;border:1px solid rgba(15,34,48,.12);border-radius:10px;background:#fffdf6}.pqpir-level-card strong{display:block;margin-bottom:6px;color:var(--pq-ink);font-size:13px}.pqpir-level-card p{margin:4px 0;color:var(--pq-muted);font-size:12px;font-weight:850;line-height:1.35}.pqpir-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border:0;border-radius:10px;background:#d99a26;color:#1b1409!important;text-decoration:none;font-size:16px;font-weight:950;cursor:pointer;box-shadow:0 12px 22px rgba(217,154,38,.25)}.pqpir-btn:hover{filter:saturate(1.05) brightness(.98)}.pqpir-empty{padding:18px;border:2px dashed rgba(15,34,48,.2);border-radius:10px;color:var(--pq-muted);font-weight:950;background:#fffdf6}.pqpir-trap{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
-@media(max-width:760px){.pqpir-grid,.pqpir-level-guide{grid-template-columns:1fr}.pqpir-title{font-size:30px}.pqpir-shell{padding:0 0 44px}.pqpir-wrap{padding:12px 10px 0}.pqpir-hero,.pqpir-panel{border-radius:18px}.pqpir-hero{padding:24px 18px}.pqpir-panel{padding:18px}.pqpir-sub{font-size:15px}}
-.pqpir-navshell{max-width:1160px;margin:0 auto;padding:22px 18px 0;display:flex;align-items:center;justify-content:space-between;gap:18px}.pqpir-navbrand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--pq-ink)!important;min-width:0}.pqpir-navmark{width:44px;height:44px;border-radius:10px;background:#3f7a50;color:#fff;display:grid;place-items:center;font-size:18px;font-weight:950;flex:0 0 auto}.pqpir-navname{font-size:19px;font-weight:950;line-height:1.1;white-space:normal}.pqpir-navlinks{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;align-items:center}.pqpir-navlink{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 16px;border-radius:10px;background:#f2f7f5;border:1px solid rgba(15,34,48,.12);color:var(--pq-ink)!important;text-decoration:none;font-weight:950;box-shadow:0 5px 14px rgba(15,34,48,.08)}.pqpir-navlink--active{background:#e9f8ef;border-color:rgba(63,122,80,.22)}.pqpir-navlink--primary{background:#d99a26;border-color:#d99a26;color:#1b1409!important}@media(max-width:760px){.pqpir-navshell{align-items:flex-start;flex-direction:column}.pqpir-navlinks{justify-content:flex-start}.pqpir-navlink{min-height:40px;padding:0 13px}}
+.pqpir-shell{--pq-blue:#2f6f4e;--pq-blue-dark:#1f5138;--pq-blue-soft:#e4efe6;--pq-ink:#1c2b22;--pq-ink-2:#33463a;--pq-muted:#5c7267;--pq-line:#e3dcc8;--pq-line-strong:#c9bd9d;--pq-paper:#f7f4ec;--pq-card:#fffdf8;--pq-green:#2f6f4e;--pq-gold:#a5741e;--pq-gold-soft:#f4e6c8;--pq-hero-bg:#dbeafe;--pq-red:#9a3d2d;--pq-label:#2f5fad;--pq-serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--pq-sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;--pq-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;position:fixed;inset:0;z-index:2147483000;overflow:auto;min-height:100vh;padding:0 0 64px;background:var(--pq-paper);font-family:var(--pq-sans);color:var(--pq-ink);-webkit-font-smoothing:antialiased}
+@media(prefers-color-scheme:dark){.pqpir-shell{--pq-blue:#7fc79e;--pq-blue-dark:#63a883;--pq-blue-soft:#1c3327;--pq-ink:#e8e3d3;--pq-ink-2:#cdd7c9;--pq-muted:#9fb0a4;--pq-line:#2a3a30;--pq-line-strong:#3a4c40;--pq-paper:#121d17;--pq-card:#16241c;--pq-green:#7fc79e;--pq-gold:#dcaa54;--pq-gold-soft:#3a301a;--pq-hero-bg:#1c2e47;--pq-red:#e08876;--pq-label:#8ab4e8}}
+.pqpir-wrap{max-width:920px;margin:0 auto;padding:18px 18px 0}.pqpir-hero,.pqpir-panel{background:var(--pq-card);border:1px solid var(--pq-line);border-radius:14px;box-shadow:0 2px 10px rgba(22,38,30,.06)}.pqpir-hero{padding:28px 32px;margin-bottom:16px}.pqpir-brand{display:inline-flex;align-items:center;gap:10px;margin-bottom:10px;color:var(--pq-blue);font-family:var(--pq-mono);font-size:11.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase}.pqpir-brand-mark{display:none}.pqpir-title{margin:0;font-family:var(--pq-serif);font-size:clamp(28px,4vw,38px);line-height:1.12;font-weight:600;color:var(--pq-ink);letter-spacing:-.01em}.pqpir-sub{margin:8px 0 0;color:var(--pq-muted);font-size:14.5px;font-weight:400;line-height:1.6}.pqpir-panel{padding:26px;margin-bottom:16px;overflow:hidden}.pqpir-panel h2{margin:0 0 18px;font-size:22px;line-height:1.2;font-weight:700;color:var(--pq-ink)}.pqpir-panel h3{display:block;margin:8px 0 24px;padding:0 0 16px;border-bottom:2px solid var(--pq-line-strong);background:none;color:var(--pq-ink);font-family:var(--pq-serif);font-size:24px;line-height:1.2;font-weight:600;letter-spacing:-.01em}.pqpir-panel h3:first-of-type{margin-top:0}.pqpir-panel h3 .pqpir-muted{display:block;margin-top:6px;font-family:var(--pq-sans);font-size:13px;font-weight:600;text-transform:none;letter-spacing:0}.pqpir-muted{color:var(--pq-muted);font-size:12px}.pqpir-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 20px}.pqpir-field{display:grid;gap:6px;margin-bottom:16px;align-content:start;align-self:start}.pqpir-field label{font-size:13px;font-weight:600;color:var(--pq-label)}.pqpir-pref{padding:12px 15px;margin:0 0 16px;border:1px solid rgba(47,158,92,.25);border-radius:8px;background:#eefaf1;color:#1d6b3c;font-weight:600;font-size:13.5px}.pqpir-city-other{display:none}.pqpir-city-other--visible{display:grid}.pqpir-input{width:100%;min-height:44px;border:1px solid var(--pq-line-strong);border-radius:8px;padding:10px 13px;font:400 14.5px/1.3 var(--pq-sans);background:var(--pq-card);color:var(--pq-ink);transition:border-color .15s ease,box-shadow .15s ease}.pqpir-input::placeholder{color:#a3adb8}.pqpir-input:focus{outline:0;border-color:var(--pq-blue);box-shadow:0 0 0 3px rgba(47,111,78,.15)}.pqpir-multi{min-height:120px}.pqpir-textarea{min-height:90px;line-height:1.5}.pqpir-error{font-size:12px;font-weight:600;color:var(--pq-red)}.pqpir-field--error .pqpir-input,.pqpir-field--error .pqpir-calendar{border-color:var(--pq-red);background:#fef6f5}.pqpir-alert{padding:13px 18px;border-radius:8px;margin-bottom:14px;font-weight:600;font-size:14px;border:1px solid transparent}.pqpir-alert ul{margin:8px 0 0;padding-left:22px}.pqpir-alert--ok{background:#eefaf1;border-color:#bfe8cb;color:#1d6b3c}.pqpir-alert--bad{background:#fdeeec;border-color:#f3c3bc;color:#a3382a}.pqpir-calendar{overflow:auto;border:1px solid var(--pq-line);border-radius:8px;background:var(--pq-card)}.pqpir-calendar table{width:100%;border-collapse:separate;border-spacing:0;min-width:850px}.pqpir-calendar th,.pqpir-calendar td{border-bottom:1px solid var(--pq-line);border-right:1px solid var(--pq-line);padding:10px;text-align:center;font-weight:600}.pqpir-calendar th{background:var(--pq-blue-soft);color:var(--pq-blue-dark);font-size:12px}.pqpir-calendar td:first-child{text-align:left;color:var(--pq-ink);background:var(--pq-paper)}.pqpir-calendar tr:nth-child(even) td:first-child{background:#eef1f5}.pqpir-slot{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:7px;background:var(--pq-blue-soft);border:1px solid var(--pq-line-strong)}.pqpir-slot input{width:17px;height:17px;accent-color:var(--pq-blue)}.pqpir-checkrow{display:flex;gap:10px;align-items:flex-start;margin:10px 0 13px;font-size:13.5px;font-weight:500;color:var(--pq-ink)}.pqpir-checkrow input{width:18px;height:18px;accent-color:var(--pq-blue)}.pqpir-level-guide{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:4px 0 14px}.pqpir-level-card{padding:12px;border:1px solid var(--pq-line);border-radius:8px;background:var(--pq-paper)}.pqpir-level-card strong{display:block;margin-bottom:5px;color:var(--pq-ink);font-size:13px}.pqpir-level-card p{margin:4px 0;color:var(--pq-muted);font-size:12px;font-weight:400;line-height:1.4}.pqpir-btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 24px;border:0;border-radius:8px;background:var(--pq-blue);color:#fff!important;text-decoration:none;font-size:15px;font-weight:600;cursor:pointer;box-shadow:0 1px 2px rgba(47,111,78,.3)}.pqpir-btn:hover{background:var(--pq-blue-dark)}.pqpir-btn[hidden]{display:none!important}.pqpir-btn-ghost{background:transparent;color:var(--pq-ink)!important;border:1px solid var(--pq-line-strong);box-shadow:none}.pqpir-btn-ghost:hover{background:var(--pq-paper)}.pqpir-empty{padding:18px;border:1px dashed var(--pq-line-strong);border-radius:8px;color:var(--pq-muted);font-weight:500;background:var(--pq-paper)}.pqpir-trap{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+@media(max-width:760px){.pqpir-grid,.pqpir-level-guide{grid-template-columns:1fr}.pqpir-title{font-size:24px}.pqpir-wrap{padding:12px 10px 0}.pqpir-hero{padding:20px 18px}.pqpir-panel{padding:18px}.pqpir-panel h3{font-size:19px;margin:4px 0 18px;padding:0 0 12px}.pqpir-sub{font-size:14px}}
+.pqpir-navbrand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--pq-ink)!important;min-width:0;margin-bottom:16px}.pqpir-navmark{width:40px;height:40px;border-radius:8px;background:var(--pq-blue);color:#fff;display:grid;place-items:center;font-size:16px;font-weight:700;flex:0 0 auto}.pqpir-navmark--img{width:58px;height:58px;padding:0;background:none;border:0;border-radius:0}.pqpir-navmark--img img{display:block;width:100%;height:100%;object-fit:contain}.pqpir-navname{font-size:17px;font-weight:700;line-height:1.1;white-space:normal}
 <?php echo pqh_dashboard_header_css(); ?>
+.pqpir-shell .pqh-workspace-top{background:var(--pq-hero-bg)!important;border:1px solid var(--pq-line)!important;box-shadow:0 2px 10px rgba(22,38,30,.06)!important;padding:28px 32px!important;border-radius:14px!important}
+.pqpir-shell .pqh-workspace-title{color:var(--pq-ink)!important;font-size:28px!important;font-weight:700!important;letter-spacing:0!important;text-shadow:none!important}
+.pqpir-shell .pqh-workspace-sub{color:var(--pq-muted)!important;font-size:14.5px!important;font-weight:400!important;opacity:1!important}
+.pqpir-school-pick-form{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px}.pqpir-school-pick-option{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14.5px;color:var(--pq-ink);cursor:pointer}.pqpir-school-pick-option input{width:18px;height:18px;accent-color:var(--pq-blue)}.pqpir-school-pick-hint{margin:10px 0 0}.pqpir-school-pick-age{margin-top:16px;padding-top:16px;border-top:1px solid var(--pq-line)}.pqpir-school-pick-question{font-weight:600;font-size:14.5px;color:var(--pq-ink)}
+
+/* Multi-page horizontal wizard */
+.pqpir-wizard{padding:0;overflow:hidden}
+.pqpir-wizard-inner{padding:26px 30px 0}
+.pqpir-progress{margin-bottom:22px}
+.pqpir-progress-label{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px 16px;font-family:var(--pq-mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--pq-blue);margin-bottom:10px}
+.pqpir-progress-label span:last-child{color:var(--pq-muted);letter-spacing:.03em}
+.pqpir-progress-track{height:4px;border-radius:999px;background:var(--pq-line);overflow:hidden}
+.pqpir-progress-fill{height:100%;width:0;background:var(--pq-blue);border-radius:999px;transition:width .35s ease}
+.pqpir-viewport{position:relative;overflow:hidden}
+.pqpir-track{display:flex;width:100%;transition:transform .45s cubic-bezier(.16,1,.3,1);transform:translateX(calc(var(--pq-step,0) * -100%))}
+.pqpir-page{flex:0 0 100%;min-width:0;box-sizing:border-box;padding:4px 66px 6px}
+.pqpir-page[aria-hidden="true"]{visibility:hidden}
+.pqpir-nav-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border-radius:50%;border:1px solid var(--pq-line-strong);background:var(--pq-card);color:var(--pq-ink);cursor:pointer;box-shadow:0 2px 8px rgba(22,38,30,.1);transition:background .15s ease,border-color .15s ease,color .15s ease}
+.pqpir-nav-arrow:hover{background:var(--pq-blue);border-color:var(--pq-blue);color:#fff}
+.pqpir-nav-arrow svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pqpir-nav-arrow[hidden]{display:none!important}
+.pqpir-nav-back{left:10px}
+.pqpir-nav-next{right:10px}
+.pqpir-wizard-foot{display:flex;align-items:center;justify-content:flex-end;padding:22px 30px 28px;margin-top:6px;border-top:1px solid var(--pq-line)}
+.pqpir-wizard-foot .pqpir-btn{min-width:112px}
+@media(max-width:760px){.pqpir-wizard-inner{padding:18px 18px 0}.pqpir-page{padding:2px 46px 4px}.pqpir-nav-arrow{width:34px;height:34px}.pqpir-nav-arrow svg{width:16px;height:16px}.pqpir-nav-back{left:4px}.pqpir-nav-next{right:4px}.pqpir-wizard-foot{padding:18px 18px 20px}.pqpir-wizard-foot .pqpir-btn{min-width:0;flex:1}}
 </style>
 <main class="pqpir-shell">
-  <?php echo pqpir_public_header($consumercontext, $consumerparams); ?>
   <div class="pqpir-wrap">
     <section class="pqpir-hero pqh-workspace-top">
-      <div class="pqpir-brand"><span class="pqpir-brand-mark"><?php echo s(pqpir_consumer_initial($brandname)); ?></span><span>Enrollment</span></div>
+      <?php echo pqpir_public_header($consumercontext); ?>
       <h1 class="pqpir-title pqh-workspace-title">Request Enrollment</h1>
       <p class="pqpir-sub pqh-workspace-sub">Share the prospective student's details, preferred weekly session count, and available live-session hours. The <?php echo s($brandname); ?> team will review placement and confirm the best class options.</p>
     </section>
+
+    <?php if ($childschoolchoices): ?>
+      <section class="pqpir-panel pqpir-school-pick">
+        <h2>Which school is this for?</h2>
+        <form method="get" action="<?php echo s((new moodle_url('/local/hubredirect/public_intake.php'))->out(false)); ?>" class="pqpir-school-pick-form">
+          <?php if ($teacherpreference): ?><input type="hidden" name="teacherid" value="<?php echo (int)$teacherpreference->userid; ?>"><?php endif; ?>
+          <?php foreach ($childschoolchoices as $childschool): ?>
+            <label class="pqpir-school-pick-option">
+              <input type="radio" name="workspaceid" value="<?php echo (int)$childschool->workspaceid; ?>"<?php echo ((int)$childschool->workspaceid === $selectedchildworkspaceid) ? ' checked' : ''; ?> onchange="this.form.submit();">
+              <span><?php echo s((string)$childschool->consumername); ?></span>
+            </label>
+          <?php endforeach; ?>
+          <noscript><button type="submit" class="pqpir-btn">Continue</button></noscript>
+        </form>
+        <?php if ($needsschoolselection): ?><p class="pqpir-muted pqpir-school-pick-hint">Select a school above to continue.</p><?php endif; ?>
+      </section>
+    <?php endif; ?>
+
+    <?php if (!$needsschoolselection): ?>
+      <section class="pqpir-panel pqpir-school-pick">
+        <form method="get" action="<?php echo s((new moodle_url('/local/hubredirect/public_intake.php'))->out(false)); ?>" class="pqpir-school-pick-form pqpir-school-pick-age">
+          <input type="hidden" name="consumer" value="<?php echo s((string)$consumercontext->consumerslug); ?>">
+          <?php if ((int)$consumercontext->workspaceid > 0): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$consumercontext->workspaceid; ?>"><?php endif; ?>
+          <?php if ($teacherpreference): ?><input type="hidden" name="teacherid" value="<?php echo (int)$teacherpreference->userid; ?>"><?php endif; ?>
+          <span class="pqpir-school-pick-question">Are you a student or a parent?</span>
+          <label class="pqpir-school-pick-option">
+            <input type="radio" name="respondent_role" value="student"<?php echo $respondentrole === 'student' ? ' checked' : ''; ?> onchange="this.form.submit();">
+            <span>Student</span>
+          </label>
+          <label class="pqpir-school-pick-option">
+            <input type="radio" name="respondent_role" value="parent"<?php echo $respondentrole === 'parent' ? ' checked' : ''; ?> onchange="this.form.submit();">
+            <span>Parent</span>
+          </label>
+          <noscript><button type="submit" class="pqpir-btn">Continue</button></noscript>
+        </form>
+        <?php if ($respondentrole === 'student'): ?>
+        <form method="get" action="<?php echo s((new moodle_url('/local/hubredirect/public_intake.php'))->out(false)); ?>" class="pqpir-school-pick-form pqpir-school-pick-age">
+          <input type="hidden" name="consumer" value="<?php echo s((string)$consumercontext->consumerslug); ?>">
+          <?php if ((int)$consumercontext->workspaceid > 0): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$consumercontext->workspaceid; ?>"><?php endif; ?>
+          <?php if ($teacherpreference): ?><input type="hidden" name="teacherid" value="<?php echo (int)$teacherpreference->userid; ?>"><?php endif; ?>
+          <input type="hidden" name="respondent_role" value="student">
+          <span class="pqpir-school-pick-question">Are you over 18?</span>
+          <label class="pqpir-school-pick-option">
+            <input type="radio" name="over18" value="yes"<?php echo $overeighteenanswer === 'yes' ? ' checked' : ''; ?> onchange="this.form.submit();">
+            <span>Yes</span>
+          </label>
+          <label class="pqpir-school-pick-option">
+            <input type="radio" name="over18" value="no"<?php echo $overeighteenanswer === 'no' ? ' checked' : ''; ?> onchange="this.form.submit();">
+            <span>No</span>
+          </label>
+          <noscript><button type="submit" class="pqpir-btn">Continue</button></noscript>
+        </form>
+        <?php endif; ?>
+      </section>
+    <?php endif; ?>
 
     <?php if ($message !== ''): ?><div class="pqpir-alert pqpir-alert--ok"><?php echo s($message); ?></div><?php endif; ?>
     <?php if ($errors): ?>
@@ -1411,9 +1555,10 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
 
     <?php if (!$ready): ?>
       <section class="pqpir-panel"><div class="pqpir-empty">The live-class request form is not ready yet. Please contact <?php echo s($brandname); ?> support.</div></section>
+    <?php elseif ($needsschoolselection): ?>
+      <?php // The rest of the form is intentionally hidden until a school is picked above. ?>
     <?php else: ?>
-      <section class="pqpir-panel">
-        <h2>Student Information</h2>
+      <section class="pqpir-panel pqpir-wizard">
         <form method="post" novalidate>
           <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
           <input type="hidden" name="consumer" value="<?php echo s((string)$consumercontext->consumerslug); ?>">
@@ -1421,11 +1566,29 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
           <input type="hidden" name="formtime" value="<?php echo (int)$formtime; ?>">
           <input type="hidden" name="formtoken" value="<?php echo s($formtoken); ?>">
           <?php if ($teacherpreference): ?><input type="hidden" name="teacherid" value="<?php echo (int)$teacherpreference->userid; ?>"><?php endif; ?>
+          <?php if ($respondentrole !== ''): ?><input type="hidden" name="respondent_role" value="<?php echo s($respondentrole); ?>"><?php endif; ?>
+          <?php if ($overeighteenanswer !== ''): ?><input type="hidden" name="over18" value="<?php echo s($overeighteenanswer); ?>"><?php endif; ?>
           <div class="pqpir-trap" aria-hidden="true">
             <label>Website <input name="website" tabindex="-1" autocomplete="off"></label>
           </div>
-          <?php if ($teacherpreferencelabel !== ''): ?><div class="pqpir-pref">Preferred teacher: <?php echo s($teacherpreferencelabel); ?></div><?php endif; ?>
-
+          <div class="pqpir-wizard-inner">
+            <h2>Student Information</h2>
+            <?php if ($teacherpreferencelabel !== ''): ?><div class="pqpir-pref">Preferred teacher: <?php echo s($teacherpreferencelabel); ?></div><?php endif; ?>
+            <div class="pqpir-progress">
+              <div class="pqpir-progress-label"><span data-wizard-step-text>Step 1</span><span data-wizard-step-title></span></div>
+              <div class="pqpir-progress-track"><div class="pqpir-progress-fill" data-wizard-fill></div></div>
+            </div>
+          </div>
+          <div class="pqpir-viewport">
+          <button type="button" class="pqpir-nav-arrow pqpir-nav-back" data-wizard-back aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></button>
+          <button type="button" class="pqpir-nav-arrow pqpir-nav-next" data-wizard-next aria-label="Next"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg></button>
+          <div class="pqpir-track" data-wizard-track>
+          <div class="pqpir-page">
+          <?php if ($parentguardianfirst): ?>
+          <h3>Parent / guardian</h3>
+          <?php echo pqpir_parent_guardian_fields($form, $errors, $options); ?>
+          </div><div class="pqpir-page">
+          <?php endif; ?>
           <h3>Basic learner information</h3>
           <div class="pqpir-grid">
             <div class="pqpir-field<?php echo isset($errors['student_firstname']) ? ' pqpir-field--error' : ''; ?>"><label>First name</label><input class="pqpir-input" name="student_firstname" value="<?php echo s(pqpir_value($form, 'student_firstname')); ?>"><?php echo pqpir_error($errors, 'student_firstname'); ?></div>
@@ -1436,6 +1599,7 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
           </div>
 
           <?php if ($isprimaryeducation): ?>
+            </div><div class="pqpir-page">
             <h3>Primary education details</h3>
             <div class="pqpir-grid">
               <div class="pqpir-field<?php echo isset($errors['date_of_birth']) ? ' pqpir-field--error' : ''; ?>"><label>Date of birth</label><input class="pqpir-input" name="date_of_birth" type="date" value="<?php echo s(pqpir_value($form, 'date_of_birth')); ?>"><?php echo pqpir_error($errors, 'date_of_birth'); ?></div>
@@ -1453,31 +1617,16 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
               <div class="pqpir-field<?php echo isset($errors['special_needs']) ? ' pqpir-field--error' : ''; ?>"><label>Special learning needs / accommodations</label><select class="pqpir-input" name="special_needs"><option value="">Select</option><option value="no"<?php echo pqpir_selected($form, 'special_needs', 'no'); ?>>No</option><option value="yes"<?php echo pqpir_selected($form, 'special_needs', 'yes'); ?>>Yes</option></select><?php echo pqpir_error($errors, 'special_needs'); ?></div>
             </div>
             <div class="pqpir-field<?php echo isset($errors['medical_safety_notes']) ? ' pqpir-field--error' : ''; ?>"><label>Medical/allergy/safety notes</label><textarea class="pqpir-input pqpir-textarea" name="medical_safety_notes"><?php echo s(pqpir_value($form, 'medical_safety_notes')); ?></textarea><?php echo pqpir_error($errors, 'medical_safety_notes'); ?></div>
+          <?php endif; ?>
 
-            <h3>Parent / guardian</h3>
-            <div class="pqpir-grid">
-              <div class="pqpir-field<?php echo isset($errors['parent_name']) ? ' pqpir-field--error' : ''; ?>"><label>Parent/guardian name</label><input class="pqpir-input" name="parent_name" value="<?php echo s(pqpir_value($form, 'parent_name')); ?>"><?php echo pqpir_error($errors, 'parent_name'); ?></div>
-              <div class="pqpir-field<?php echo isset($errors['parent_relationship']) ? ' pqpir-field--error' : ''; ?>"><label>Relationship to student</label><?php echo pqpir_select('parent_relationship', $options['parent_relationships'] ?? [], $form, $errors); ?></div>
-              <div class="pqpir-field pqpir-parent-relationship-other<?php echo isset($errors['parent_relationship_other']) ? ' pqpir-field--error' : ''; ?>"><label>Describe relationship</label><input class="pqpir-input" name="parent_relationship_other" value="<?php echo s(pqpir_value($form, 'parent_relationship_other')); ?>"><?php echo pqpir_error($errors, 'parent_relationship_other'); ?></div>
-              <div class="pqpir-field<?php echo isset($errors['parent_email']) ? ' pqpir-field--error' : ''; ?>"><label>Parent/guardian email or phone</label><input class="pqpir-input" name="parent_email" value="<?php echo s(pqpir_value($form, 'parent_email')); ?>"><?php echo pqpir_error($errors, 'parent_email'); ?></div>
-              <div class="pqpir-field<?php echo isset($errors['parent_phone']) ? ' pqpir-field--error' : ''; ?>"><label>Parent/guardian phone / WhatsApp</label><input class="pqpir-input" name="parent_phone" value="<?php echo s(pqpir_value($form, 'parent_phone')); ?>"><?php echo pqpir_error($errors, 'parent_phone'); ?></div>
-              <div class="pqpir-field<?php echo isset($errors['emergency_contact_name']) ? ' pqpir-field--error' : ''; ?>"><label>Emergency contact name</label><input class="pqpir-input" name="emergency_contact_name" value="<?php echo s(pqpir_value($form, 'emergency_contact_name')); ?>"><?php echo pqpir_error($errors, 'emergency_contact_name'); ?></div>
-              <div class="pqpir-field<?php echo isset($errors['emergency_contact_phone']) ? ' pqpir-field--error' : ''; ?>"><label>Emergency contact phone</label><input class="pqpir-input" name="emergency_contact_phone" value="<?php echo s(pqpir_value($form, 'emergency_contact_phone')); ?>"><?php echo pqpir_error($errors, 'emergency_contact_phone'); ?></div>
-            </div>
-          <?php else: ?>
-            <h3>Parent / guardian <span class="pqpir-muted">(required only when the student is under 18)</span></h3>
-            <div class="pqpir-grid">
-              <div class="pqpir-field<?php echo isset($errors['parent_name']) ? ' pqpir-field--error' : ''; ?>"><label>Parent/guardian name</label><input class="pqpir-input" name="parent_name" value="<?php echo s(pqpir_value($form, 'parent_name')); ?>"><?php echo pqpir_error($errors, 'parent_name'); ?></div>
-              <div class="pqpir-field<?php echo isset($errors['parent_relationship']) ? ' pqpir-field--error' : ''; ?>"><label>Relationship to student</label><?php echo pqpir_select('parent_relationship', $options['parent_relationships'] ?? [], $form, $errors); ?></div>
-              <div class="pqpir-field pqpir-parent-relationship-other<?php echo isset($errors['parent_relationship_other']) ? ' pqpir-field--error' : ''; ?>"><label>Describe relationship</label><input class="pqpir-input" name="parent_relationship_other" value="<?php echo s(pqpir_value($form, 'parent_relationship_other')); ?>"><?php echo pqpir_error($errors, 'parent_relationship_other'); ?></div>
-              <div class="pqpir-field<?php echo isset($errors['parent_email']) ? ' pqpir-field--error' : ''; ?>"><label>Parent/guardian email or phone</label><input class="pqpir-input" name="parent_email" value="<?php echo s(pqpir_value($form, 'parent_email')); ?>"><?php echo pqpir_error($errors, 'parent_email'); ?></div>
-              <div class="pqpir-field<?php echo isset($errors['parent_phone']) ? ' pqpir-field--error' : ''; ?>"><label>Parent/guardian phone / WhatsApp</label><input class="pqpir-input" name="parent_phone" value="<?php echo s(pqpir_value($form, 'parent_phone')); ?>"><?php echo pqpir_error($errors, 'parent_phone'); ?></div>
-              <div class="pqpir-field<?php echo isset($errors['emergency_contact_name']) ? ' pqpir-field--error' : ''; ?>"><label>Emergency contact name</label><input class="pqpir-input" name="emergency_contact_name" value="<?php echo s(pqpir_value($form, 'emergency_contact_name')); ?>"><?php echo pqpir_error($errors, 'emergency_contact_name'); ?></div>
-              <div class="pqpir-field<?php echo isset($errors['emergency_contact_phone']) ? ' pqpir-field--error' : ''; ?>"><label>Emergency contact phone</label><input class="pqpir-input" name="emergency_contact_phone" value="<?php echo s(pqpir_value($form, 'emergency_contact_phone')); ?>"><?php echo pqpir_error($errors, 'emergency_contact_phone'); ?></div>
-            </div>
+          <?php if ($parentguardianrequired && !$parentguardianfirst): ?>
+            </div><div class="pqpir-page">
+            <h3>Parent / guardian<?php if (!$isprimaryeducation): ?> <span class="pqpir-muted">(required only when the student is under 18)</span><?php endif; ?></h3>
+            <?php echo pqpir_parent_guardian_fields($form, $errors, $options); ?>
           <?php endif; ?>
 
           <?php if ($isadultlearning): ?>
+            </div><div class="pqpir-page">
             <h3>Adult learning details</h3>
             <div class="pqpir-grid">
               <div class="pqpir-field<?php echo isset($errors['adult_learning_area']) ? ' pqpir-field--error' : ''; ?>"><label>Learning area of interest</label><?php echo pqpir_select('adult_learning_area', $options['adult_learning_areas'] ?? [], $form, $errors); ?></div>
@@ -1503,6 +1652,7 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
           <?php endif; ?>
 
           <?php if ($isprofessionaldevelopment): ?>
+            </div><div class="pqpir-page">
             <h3>Professional development details</h3>
             <div class="pqpir-grid">
               <div class="pqpir-field<?php echo isset($errors['professional_area']) ? ' pqpir-field--error' : ''; ?>"><label>Professional development area</label><?php echo pqpir_select('professional_area', $options['professional_development_areas'] ?? [], $form, $errors); ?></div>
@@ -1530,6 +1680,7 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
           <?php endif; ?>
 
           <?php if ($istechnicaltraining): ?>
+            </div><div class="pqpir-page">
             <h3>Technical training details</h3>
             <div class="pqpir-grid">
               <div class="pqpir-field<?php echo isset($errors['technical_program']) ? ' pqpir-field--error' : ''; ?>"><label>Training program or trade</label><?php echo pqpir_select('technical_program', $options['technical_programs'] ?? [], $form, $errors); ?></div>
@@ -1555,6 +1706,7 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
           <?php endif; ?>
 
           <?php if ($ishighereducation): ?>
+            </div><div class="pqpir-page">
             <h3>Higher education details</h3>
             <div class="pqpir-grid">
               <div class="pqpir-field<?php echo isset($errors['higher_application_level']) ? ' pqpir-field--error' : ''; ?>"><label>Application level</label><?php echo pqpir_select('higher_application_level', $options['higher_application_levels'] ?? [], $form, $errors); ?></div>
@@ -1579,6 +1731,7 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
           <?php endif; ?>
 
           <?php if ($isislamicstudies): ?>
+            </div><div class="pqpir-page">
             <h3>Islamic studies details</h3>
             <div class="pqpir-grid">
               <div class="pqpir-field<?php echo isset($errors['islamic_program_interest']) ? ' pqpir-field--error' : ''; ?>"><label>Islamic program interest</label><?php echo pqpir_select('islamic_program_interest', $options['islamic_program_interests'] ?? [], $form, $errors); ?></div>
@@ -1596,6 +1749,7 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
           <?php endif; ?>
 
           <?php if ($ischristianstudies): ?>
+            </div><div class="pqpir-page">
             <h3>Christian studies details</h3>
             <div class="pqpir-grid">
               <div class="pqpir-field<?php echo isset($errors['christian_program_interest']) ? ' pqpir-field--error' : ''; ?>"><label>Christian program interest</label><?php echo pqpir_select('christian_program_interest', $options['christian_program_interests'] ?? [], $form, $errors); ?></div>
@@ -1609,20 +1763,33 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
             <div class="pqpir-field<?php echo isset($errors['christian_notes']) ? ' pqpir-field--error' : ''; ?>"><label>Additional Christian studies notes</label><textarea class="pqpir-input pqpir-textarea" name="christian_notes"><?php echo s(pqpir_value($form, 'christian_notes')); ?></textarea><?php echo pqpir_error($errors, 'christian_notes'); ?></div>
           <?php endif; ?>
 
+          </div><div class="pqpir-page">
           <h3>Program and learning preferences</h3>
           <div class="pqpir-grid">
-            <div class="pqpir-field<?php echo isset($errors['course_type']) ? ' pqpir-field--error' : ''; ?>"><label>Course</label><?php echo pqpir_select('course_type', $options['course_types'] ?? [], $form, $errors); ?><?php if (empty($options['course_types'])): ?><div class="pqpir-muted">No public courses are available for this institution yet.</div><?php endif; ?></div>
+            <?php if ($isprimaryeducation): ?>
+              <div class="pqpir-field<?php echo isset($errors['course_type']) ? ' pqpir-field--error' : ''; ?>"><label>Grade level</label><?php echo pqpir_select('course_type', $options['primary_grade_selection_levels'] ?? [], $form, $errors); ?></div>
+            <?php else: ?>
+              <div class="pqpir-field<?php echo isset($errors['course_type']) ? ' pqpir-field--error' : ''; ?>"><label>Course</label><?php echo pqpir_select('course_type', $options['course_types'] ?? [], $form, $errors); ?><?php if (empty($options['course_types'])): ?><div class="pqpir-muted">No public courses are available for this institution yet.</div><?php endif; ?></div>
+            <?php endif; ?>
             <div class="pqpir-field<?php echo isset($errors['country']) ? ' pqpir-field--error' : ''; ?>"><label>Country</label><?php echo pqpir_select('country', $options['countries'] ?? [], $form, $errors); ?></div>
             <div class="pqpir-field<?php echo isset($errors['city']) ? ' pqpir-field--error' : ''; ?>"><label>City</label><?php echo pqpir_select('city', $options['cities'] ?? [], $form, $errors); ?></div>
             <div class="pqpir-field pqpir-city-other<?php echo isset($errors['city_other']) ? ' pqpir-field--error' : ''; ?>"><label>City not listed</label><input class="pqpir-input" name="city_other" value="<?php echo s(pqpir_value($form, 'city_other')); ?>"><?php echo pqpir_error($errors, 'city_other'); ?></div>
+            <?php if ($isprimaryeducation): ?>
+              <div class="pqpir-field<?php echo isset($errors['district']) ? ' pqpir-field--error' : ''; ?>"><label>District</label><input class="pqpir-input" name="district" value="<?php echo s(pqpir_value($form, 'district')); ?>"><?php echo pqpir_error($errors, 'district'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['division']) ? ' pqpir-field--error' : ''; ?>"><label>Division</label><input class="pqpir-input" name="division" value="<?php echo s(pqpir_value($form, 'division')); ?>"><?php echo pqpir_error($errors, 'division'); ?></div>
+              <div class="pqpir-field<?php echo isset($errors['estate']) ? ' pqpir-field--error' : ''; ?>"><label>Estate</label><input class="pqpir-input" name="estate" value="<?php echo s(pqpir_value($form, 'estate')); ?>"><?php echo pqpir_error($errors, 'estate'); ?></div>
+            <?php endif; ?>
             <div class="pqpir-field<?php echo isset($errors['primary_language']) ? ' pqpir-field--error' : ''; ?>"><label>Primary language</label><?php echo pqpir_select('primary_language', $options['primary_languages'] ?? [], $form, $errors); ?></div>
             <div class="pqpir-field<?php echo isset($errors['preferred_teaching_language']) ? ' pqpir-field--error' : ''; ?>"><label>Preferred teaching language</label><?php echo pqpir_select('preferred_teaching_language', $options['primary_languages'] ?? [], $form, $errors); ?></div>
             <div class="pqpir-field"><label>Other languages</label><?php echo pqpir_multi_select('other_languages', $options['other_languages'] ?? [], $form, $errors); ?></div>
             <div class="pqpir-field<?php echo isset($errors['current_level']) ? ' pqpir-field--error' : ''; ?>"><label>Placement level</label><?php echo pqpir_select('current_level', pqpir_placement_level_options($options), $form, $errors); ?></div>
-            <div class="pqpir-field<?php echo isset($errors['tajweed_sub_level']) ? ' pqpir-field--error' : ''; ?>"><label>Tajweed sub-level</label><?php echo pqpir_select('tajweed_sub_level', $options['tajweed_sub_levels'] ?? [], $form, $errors, 'Select when Level 3'); ?></div>
+            <?php if (!$isprimaryeducation): ?>
+              <div class="pqpir-field<?php echo isset($errors['tajweed_sub_level']) ? ' pqpir-field--error' : ''; ?>"><label>Tajweed sub-level</label><?php echo pqpir_select('tajweed_sub_level', $options['tajweed_sub_levels'] ?? [], $form, $errors, 'Select when Level 3'); ?></div>
+            <?php endif; ?>
             <div class="pqpir-field<?php echo isset($errors['learning_base']) ? ' pqpir-field--error' : ''; ?>"><label>Learning background</label><?php echo pqpir_select('learning_base', $options['learning_bases'] ?? [], $form, $errors); ?></div>
           </div>
 
+          </div><div class="pqpir-page">
           <h3>Preferred weekly live-session number of sessions and hours</h3>
           <div class="pqpir-grid">
             <div class="pqpir-field<?php echo isset($errors['session_count']) ? ' pqpir-field--error' : ''; ?>">
@@ -1654,6 +1821,7 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
             <?php echo pqpir_error($errors, 'slots'); ?>
           </div>
 
+          </div><div class="pqpir-page">
           <h3>Notes and consent</h3>
           <div class="pqpir-field"><label>Parent preferences</label><textarea class="pqpir-input pqpir-textarea" name="parent_preferences"><?php echo s(pqpir_value($form, 'parent_preferences')); ?></textarea></div>
           <label class="pqpir-checkrow"><input type="checkbox" name="parent_email_enabled" value="1"<?php echo pqpir_checked($form, 'parent_email_enabled'); ?>><span>Send parent email notifications when the parent contact is a valid email address.</span></label>
@@ -1661,7 +1829,11 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
           <label class="pqpir-checkrow"><input type="checkbox" name="recording_consent" value="1"<?php echo pqpir_checked($form, 'recording_consent'); ?>><span>Student or parent/guardian consents to class recording when recording policy allows.</span></label>
           <div class="pqpir-field"><label>Consent notes/comment</label><textarea class="pqpir-input pqpir-textarea" name="consent_notes"><?php echo s(pqpir_value($form, 'consent_notes')); ?></textarea></div>
 
-          <button class="pqpir-btn" type="submit">Submit live-class request</button>
+          <p class="pqpir-muted" style="margin:14px 0 10px">Submitting an Enrolment Request does not mean you are being enrolled at the school, nor does it obligate you to enrol. <?php echo s($brandname); ?> will review your request and follow up with next steps.</p>
+          </div></div></div>
+          <div class="pqpir-wizard-foot">
+            <button class="pqpir-btn" type="submit" data-wizard-submit>Submit Enrolment Request</button>
+          </div>
         </form>
       </section>
     <?php endif; ?>
@@ -1736,6 +1908,90 @@ body.pqh-public-intake-page #page-wrapper,body.pqh-public-intake-page #page,body
   refreshTimezones();
   refreshCities();
   refreshParentRelationship();
+})();
+</script>
+<script>
+(function() {
+  var wizard = document.querySelector('.pqpir-wizard');
+  if (!wizard) {
+    return;
+  }
+  var form = wizard.querySelector('form') || wizard;
+  var track = wizard.querySelector('[data-wizard-track]');
+  var pages = Array.prototype.slice.call(wizard.querySelectorAll('.pqpir-page'));
+  var backBtn = wizard.querySelector('[data-wizard-back]');
+  var nextBtn = wizard.querySelector('[data-wizard-next]');
+  var submitBtn = wizard.querySelector('[data-wizard-submit]');
+  var fill = wizard.querySelector('[data-wizard-fill]');
+  var stepText = wizard.querySelector('[data-wizard-step-text]');
+  var stepTitle = wizard.querySelector('[data-wizard-step-title]');
+  if (!track || pages.length < 2 || !backBtn || !nextBtn || !submitBtn) {
+    return;
+  }
+
+  var current = 0;
+  var errorField = wizard.querySelector('.pqpir-field--error, .pqpir-error');
+  if (errorField) {
+    var errorPage = errorField.closest('.pqpir-page');
+    var errorIndex = errorPage ? pages.indexOf(errorPage) : -1;
+    if (errorIndex >= 0) {
+      current = errorIndex;
+    }
+  }
+
+  function pageTitle(page) {
+    var heading = page.querySelector('h3');
+    return heading ? heading.textContent.trim() : '';
+  }
+
+  function render() {
+    track.style.setProperty('--pq-step', current);
+    pages.forEach(function(page, index) {
+      page.setAttribute('aria-hidden', index === current ? 'false' : 'true');
+    });
+    if (fill) {
+      fill.style.width = (((current + 1) / pages.length) * 100) + '%';
+    }
+    if (stepText) {
+      stepText.textContent = 'Step ' + (current + 1) + ' of ' + pages.length;
+    }
+    if (stepTitle) {
+      stepTitle.textContent = pageTitle(pages[current]);
+    }
+    var isLast = current === pages.length - 1;
+    backBtn.hidden = current === 0;
+    nextBtn.hidden = isLast;
+    submitBtn.hidden = !isLast;
+  }
+
+  function go(delta) {
+    var target = current + delta;
+    if (target < 0 || target >= pages.length) {
+      return;
+    }
+    current = target;
+    render();
+    wizard.scrollIntoView({behavior: 'smooth', block: 'start'});
+  }
+
+  backBtn.addEventListener('click', function() { go(-1); });
+  nextBtn.addEventListener('click', function() { go(1); });
+
+  form.addEventListener('keydown', function(event) {
+    if (event.key !== 'Enter') {
+      return;
+    }
+    var tag = (event.target && event.target.tagName || '').toLowerCase();
+    if (tag === 'textarea' || event.target === submitBtn) {
+      return;
+    }
+    if (current !== pages.length - 1) {
+      event.preventDefault();
+      go(1);
+    }
+  });
+
+  render();
 })();
 </script>
 <?php

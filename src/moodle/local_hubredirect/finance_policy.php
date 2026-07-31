@@ -34,6 +34,7 @@ if ($workspaceid <= 0 || !pqfin_user_can_manage_workspace_finance((int)$USER->id
 if (!pqfin_policy_schema_ready()) {
     pqh_access_denied('Finance policy tables are not ready yet. Run the local_prequran plugin upgrade first.', new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams), 'Finance policy unavailable');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $allowed = pqfin_policy_allowed_values();

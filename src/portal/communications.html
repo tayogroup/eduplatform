@@ -59,6 +59,18 @@
 <main class="wrap">
   <div class="panel"><h1 id="title">Messages</h1><p class="sub" id="subtitle">Parent-teacher and independent teacher conversations.</p></div>
   <div id="status" class="status">Loading messages…</div>
+  <div class="panel" id="compose-panel" hidden>
+    <h2>New message</h2>
+    <form class="reply" id="compose-form" style="margin-top:8px">
+      <label for="compose-recipient">To</label>
+      <select id="compose-recipient" style="width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font:inherit;background:var(--card);color:var(--ink);margin-bottom:8px"></select>
+      <label for="compose-subject">Subject</label>
+      <input id="compose-subject" maxlength="120" style="width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font:inherit;background:var(--card);color:var(--ink);margin-bottom:8px">
+      <label for="compose-body">Message</label>
+      <textarea id="compose-body" maxlength="1000" required placeholder="Type your message…"></textarea>
+      <button type="submit">Send message</button>
+    </form>
+  </div>
   <div class="panel" id="list-panel" hidden><h2>Conversations</h2><div class="threads" id="threads"></div></div>
   <div class="panel" id="thread-panel" hidden>
     <a class="back" id="back-link" href="#">&larr; All conversations</a>
@@ -120,6 +132,13 @@
       </a>`).join("") || "<div class='muted'><strong>No messages yet.</strong><br>When a parent or teacher starts a marketplace conversation, it will appear here.</div>";
     $("#list-panel").hidden = false;
     $("#thread-panel").hidden = true;
+    // Canvas-style compose: role-derived recipients from the server.
+    if (d.cancompose && (d.composeoptions || []).length) {
+      $("#compose-recipient").innerHTML = d.composeoptions.map((o) => `<option value="${esc(o.id)}">${esc(o.label)}</option>`).join("");
+      $("#compose-panel").hidden = false;
+    } else {
+      $("#compose-panel").hidden = true;
+    }
     $("#status").hidden = true;
   }
 
@@ -136,14 +155,29 @@
         <div class="meta">${esc(names[m.senderid] || m.sendername || "EduPlatform")} · ${esc(when(m.timecreated))}</div>
         <div class="body">${esc(m.body)}</div>
       </article>`).join("") || "<div class='muted'>No messages are visible in this thread yet.</div>";
-    $("#reply-slot").innerHTML = d.canreply ? `
+    $("#reply-slot").innerHTML = (d.canreply ? `
       <form class="reply" id="reply-form">
         <label for="replybody">Reply</label>
         <textarea id="replybody" name="replybody" maxlength="1000" required placeholder="Type a message…"></textarea>
         <button type="submit">Send reply</button>
-      </form>` : "";
+      </form>` : "") + `
+      <p style="margin-top:10px"><button type="button" id="close-thread-btn" style="background:none;border:1px solid var(--line);border-radius:8px;padding:8px 14px;cursor:pointer;color:var(--ink2);font:inherit;font-size:12px">Close &amp; archive this thread</button></p>`;
     const f = $("#reply-form");
     if (f) f.addEventListener("submit", sendReply);
+    const cb = $("#close-thread-btn");
+    if (cb) cb.addEventListener("click", async () => {
+      if (!window.confirm("Close and archive this thread? It disappears from everyone's inbox (history is kept).")) return;
+      cb.disabled = true;
+      try {
+        const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "communications", token }), {
+          method: "POST", headers: { "Content-Type": "text/plain" },
+          body: JSON.stringify({ do: "close_thread", threadid }),
+        });
+        const res = await r.json().catch(() => ({}));
+        if (!r.ok || !res.ok) throw new Error(res.error || ("HTTP " + r.status));
+        location.href = threadUrl(0);
+      } catch (e) { cb.disabled = false; window.alert("Could not close: " + e.message); }
+    });
     $("#thread-panel").hidden = false;
     $("#list-panel").hidden = true;
     $("#status").hidden = true;
@@ -176,6 +210,34 @@
       $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not send: " + e.message;
     }
   }
+
+  $("#compose-form").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const btn = ev.currentTarget.querySelector("button[type=submit]");
+    const bodytext = $("#compose-body").value.trim();
+    if (!bodytext) return;
+    btn.disabled = true; btn.textContent = "Sending…";
+    try {
+      const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "communications", token }), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          do: "compose",
+          recipients: [$("#compose-recipient").value],
+          subject: $("#compose-subject").value.trim(),
+          messagebody: bodytext,
+        }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#compose-body").value = ""; $("#compose-subject").value = "";
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Message sent.";
+      load();
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not send: " + e.message;
+    }
+    btn.disabled = false; btn.textContent = "Send message";
+  });
 
   load();
 })();

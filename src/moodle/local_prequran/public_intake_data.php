@@ -172,6 +172,18 @@ if ($method === 'GET') {
     }
 
     $formtime = time();
+    // Country/city/timezone reference data is delivered statically from the CDN
+    // (platform/data/*.json) and merged client-side, so it is trimmed from this
+    // bootstrap (saves ~135KB/load). The full $options is still used below for
+    // server-side POST validation — do not reassign it.
+    $publicoptions = $options;
+    unset(
+        $publicoptions['countries'],
+        $publicoptions['cities'],
+        $publicoptions['country_cities'],
+        $publicoptions['timezones'],
+        $publicoptions['country_timezones']
+    );
     echo json_encode([
         'ok' => true,
         'ready' => $ready,
@@ -194,7 +206,7 @@ if ($method === 'GET') {
             'is_islamic_studies' => $isislamicstudies,
             'is_christian_studies' => $ischristianstudies,
         ],
-        'options' => $options,
+        'options' => $publicoptions,
         'courses' => $options['course_types'],
         'placement_levels' => pqpirl_placement_level_options($options),
         'teacherpref' => $teacherpreference ? [

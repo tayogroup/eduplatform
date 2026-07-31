@@ -26,6 +26,7 @@ if ($workspaceid <= 0 || pqh_user_workspace_role((int)$USER->id, $workspaceid) =
         'Course catalog unavailable'
     );
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $role = pqh_user_workspace_role((int)$USER->id, $workspaceid);
@@ -195,6 +196,13 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
         if (pqco_open_seats($offering, $counts) <= 0) {
             throw new invalid_parameter_exception('This course offering has no open seats.');
         }
+        // Mirrors the dropdown guard: a student already sitting in the linked
+        // Moodle course has nothing to request, even when no request row was
+        // ever created for them (bulk import, manual enrol).
+        if ((int)($offering->moodlecourseid ?? 0) > 0
+                && pqco_user_has_active_moodle_enrolment($studentid, (int)$offering->moodlecourseid)) {
+            throw new invalid_parameter_exception('This student is already enrolled in that course.');
+        }
         $now = time();
         $existing = $DB->get_record('local_prequran_course_enrol_req', [
             'offeringid' => $offeringid,
@@ -349,7 +357,7 @@ body.pqcb-page #page,body.pqcb-page #page-content,body.pqcb-page #region-main,bo
                         <button class="pqcb-btn pqcb-btn--light" type="submit">Request drop</button>
                       </form>
                     <?php elseif ((string)$request->status === 'approved'): ?>
-                      <span class="pqcb-muted">Course access is pending Moodle sync.</span>
+                      <span class="pqcb-muted">Course access is pending sync.</span>
                     <?php else: ?>
                       <span class="pqcb-muted">No action needed</span>
                     <?php endif; ?>
@@ -390,8 +398,22 @@ body.pqcb-page #page,body.pqcb-page #page-content,body.pqcb-page #region-main,bo
 
             <?php if ($requeststudents): ?>
               <?php
+                // "Already has this course" cannot be answered from the request
+                // table alone: a learner enrolled straight into the Moodle
+                // course (bulk import, manual enrol) has no course_enrol_req
+                // row at all, so the catalog was offering them a course they
+                // were already sitting in. Check the real enrolment too.
+                $offeringcourseid = (int)($offering->moodlecourseid ?? 0);
+                $pqcbenrolled = [];
+                foreach ($requeststudents as $studentcheck) {
+                    $pqcbenrolled[(int)$studentcheck->id] = $offeringcourseid > 0
+                        && pqco_user_has_active_moodle_enrolment((int)$studentcheck->id, $offeringcourseid);
+                }
                 $hasrequestable = false;
                 foreach ($requeststudents as $studentcheck) {
+                    if (!empty($pqcbenrolled[(int)$studentcheck->id])) {
+                        continue;
+                    }
                     $existingrequest = $requestmap[(int)$offering->id . ':' . (int)$studentcheck->id] ?? null;
                     if (!$existingrequest || in_array((string)$existingrequest->status, ['rejected', 'cancelled', 'dropped'], true)) {
                         $hasrequestable = true;
@@ -399,6 +421,27 @@ body.pqcb-page #page,body.pqcb-page #page-content,body.pqcb-page #region-main,bo
                     }
                 }
               ?>
+              <?php if (!$hasrequestable): ?>
+                <?php
+                  // Every linked student is already enrolled or already has a
+                  // live request. Rendering the form here left an empty Student
+                  // dropdown beside a Request enrollment button, which reads as
+                  // "you may request this" for a course they are already in.
+                  $pqcballenrolled = true;
+                  foreach ($requeststudents as $studentcheck) {
+                      if (empty($pqcbenrolled[(int)$studentcheck->id])) {
+                          $pqcballenrolled = false;
+                          break;
+                      }
+                  }
+                ?>
+                <div class="pqcb-detail">
+                  <strong><?php echo $pqcballenrolled ? 'Already enrolled' : 'Request already submitted'; ?></strong>
+                  <span class="pqcb-text"><?php echo $pqcballenrolled
+                      ? 'Nothing to request here — see this course on the student dashboard.'
+                      : 'This course is already enrolled or awaiting a decision for every linked student. The status table above shows where each one stands.'; ?></span>
+                </div>
+              <?php else: ?>
               <form method="post">
                 <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
                 <input type="hidden" name="action" value="request_enrollment">
@@ -406,15 +449,26 @@ body.pqcb-page #page,body.pqcb-page #page-content,body.pqcb-page #region-main,bo
                 <div class="pqcb-field"><label>Student</label><select class="pqcb-select" name="studentid">
                   <?php foreach ($requeststudents as $student): ?>
                     <?php $request = $requestmap[(int)$offering->id . ':' . (int)$student->id] ?? null; ?>
-                    <?php $disabled = $request && in_array((string)$request->status, ['pending', 'approved', 'enrolled', 'drop_requested'], true); ?>
-                    <option value="<?php echo (int)$student->id; ?>" <?php echo $disabled ? 'disabled' : ''; ?>><?php echo s(fullname($student)); ?> - <?php echo s(pqh_account_no_label($student)); ?><?php echo $request ? ' - ' . s(pqco_request_status_label((string)$request->status)) : ''; ?></option>
+                    <?php $isenrolled = !empty($pqcbenrolled[(int)$student->id]); ?>
+                    <?php $disabled = $isenrolled || ($request && in_array((string)$request->status, ['pending', 'approved', 'enrolled', 'drop_requested'], true)); ?>
+                    <?php
+                      // Omit rather than disable: a disabled FIRST option leaves
+                      // the select rendering blank, which is what made this look
+                      // like a broken empty dropdown. Their state is already on
+                      // the status table above.
+                      if ($disabled) {
+                          continue;
+                      }
+                    ?>
+                    <option value="<?php echo (int)$student->id; ?>"><?php echo s(fullname($student)); ?> - <?php echo s(pqh_account_no_label($student)); ?></option>
                   <?php endforeach; ?>
                 </select></div>
                 <div class="pqcb-field"><label>Optional note</label><input class="pqcb-input" name="request_notes" placeholder="Schedule, placement, or parent note"></div>
                 <div class="pqcb-actions pqh-workspace-actions" style="margin-top:10px">
-                  <button class="pqcb-btn" type="submit" <?php echo !$canrequestoffering || !$hasrequestable ? 'disabled' : ''; ?>>Request enrollment</button>
+                  <button class="pqcb-btn" type="submit" <?php echo !$canrequestoffering ? 'disabled' : ''; ?>>Request enrollment</button>
                 </div>
               </form>
+              <?php endif; ?>
             <?php elseif (!$canrequestenrollment): ?>
               <div class="pqcb-detail"><strong>Staff preview</strong><span class="pqcb-text"><?php echo $canmanage ? 'Use Manage offerings to publish changes or review requests.' : 'Enrollment requests are submitted by students or parents.'; ?></span></div>
             <?php endif; ?>

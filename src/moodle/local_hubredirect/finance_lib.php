@@ -76,7 +76,13 @@ function pqfin_normalize_currency(string $currency): string {
 }
 
 function pqfin_user_can_manage_workspace_finance(int $userid, int $workspaceid): bool {
-    return $userid > 0 && $workspaceid > 0 && pqh_user_can_manage_workspace($userid, $workspaceid);
+    if ($userid <= 0 || $workspaceid <= 0) {
+        return false;
+    }
+    if (pqh_user_can_manage_workspace($userid, $workspaceid)) {
+        return true;
+    }
+    return pqh_user_workspace_role($userid, $workspaceid) === 'finance';
 }
 
 function pqfin_account_type_label(string $type): string {
@@ -112,6 +118,7 @@ function pqfin_policy_allowed_values(): array {
         'late_fee_behavior' => ['disabled'],
         'automatic_access_lockout' => ['disabled'],
         'invoice_issue_timing' => ['manual', 'on_enrollment_request', 'on_admin_approval'],
+        'scholarship_auto_apply' => ['disabled', 'enabled'],
     ];
 }
 
@@ -133,6 +140,7 @@ function pqfin_default_policy(): array {
         'certificate_hold_behavior' => 'warning_only',
         'late_fee_behavior' => 'disabled',
         'automatic_access_lockout' => 'disabled',
+        'scholarship_auto_apply' => 'disabled',
     ];
 }
 
@@ -1763,6 +1771,19 @@ function pqfin_validate_secure_link(string $purpose, int $targetid, string $toke
         'targetid' => $targetid,
         'tokenhash' => pqfin_secure_link_token_hash($token),
     ], '*', IGNORE_MISSING);
+    // Use-count cap: emailed links are login-bypassing — a leaked URL must not
+    // be a permanent open door. 200 uses is far beyond legitimate family use.
+    if ($link && (int)$link->usecount >= 200) {
+        pqfin_audit('finance_secure_link_rejected', (int)$link->workspaceid, (int)$link->studentid, (int)$link->id, [
+            'targettype' => 'finance_link',
+            'consumerid' => (int)$link->consumerid,
+            'invoiceid' => (int)$link->invoiceid,
+            'paymentid' => (int)$link->paymentid,
+            'purpose' => $purpose,
+            'reason' => 'use_limit_reached',
+        ]);
+        return false;
+    }
     if (!$link || (string)$link->status !== 'active' || (int)$link->revokedat > 0 || ((int)$link->expiresat > 0 && (int)$link->expiresat < time())) {
         if ($link) {
             pqfin_audit('finance_secure_link_rejected', (int)$link->workspaceid, (int)$link->studentid, (int)$link->id, [
@@ -2320,8 +2341,20 @@ function pqfin_gateway_signature_valid(string $payload, string $signature, strin
 }
 
 function pqfin_gateway_config_for_webhook(array $payload): array {
-    $workspaceid = max(0, (int)($payload['workspaceid'] ?? $payload['workspace_id'] ?? 0));
-    return pqfin_effective_gateway_config($workspaceid, pqh_consumer_context_by_workspace($workspaceid));
+    // SECURITY: a session-less webhook must NOT let the payload choose which
+    // workspace's secret validates it (that lets a caller pick a secret they
+    // may know). Verify session-less events against the SITE-GLOBAL secret
+    // (plugin config `finance_payment_webhook_secret_global`, else the
+    // workspace-0/site gateway config). The payload workspaceid is ignored for
+    // secret selection; if no global secret is set the returned secret is empty
+    // and signature verification will simply fail (reject), which is the safe
+    // default for an unbound event.
+    $config = pqfin_effective_gateway_config(0, null);
+    $globalsecret = trim((string)get_config('local_prequran', 'finance_payment_webhook_secret_global'));
+    if ($globalsecret !== '') {
+        $config['webhooksecret'] = $globalsecret;
+    }
+    return $config;
 }
 
 function pqfin_record_provider_payment($session, array $payload, int $webhookid): int {
@@ -2330,7 +2363,13 @@ function pqfin_record_provider_payment($session, array $payload, int $webhookid)
     $invoice = $DB->get_record('local_prequran_invoice', ['id' => (int)$session->invoiceid], '*', MUST_EXIST);
     $transactionid = trim((string)($payload['transaction_id'] ?? $payload['providertransactionid'] ?? $payload['payment_intent'] ?? ''));
     if ($transactionid === '') {
-        $transactionid = 'webhook-' . $webhookid;
+        // Stable fallback: key on the idempotency identity, not the webhook row
+        // id — otherwise every duplicate delivery mints a fresh reference and
+        // the dedupe below can never match.
+        $idem = trim((string)($payload['idempotency_key'] ?? $payload['event_id'] ?? $payload['id'] ?? ''));
+        $transactionid = $idem !== ''
+            ? 'idem-' . core_text::substr(hash('sha256', (int)$session->id . '|' . $idem), 0, 40)
+            : 'webhook-' . $webhookid;
     }
     $existing = $DB->get_record('local_prequran_payment', [
         'workspaceid' => (int)$invoice->workspaceid,
@@ -2340,7 +2379,22 @@ function pqfin_record_provider_payment($session, array $payload, int $webhookid)
     if ($existing) {
         return (int)$existing->id;
     }
-    $amount = pqfin_cents_to_money(max(0, pqfin_money_to_cents((string)($payload['amount'] ?? $session->amount))));
+    // SECURITY: the recorded amount is verified against the SESSION (what we
+    // asked the gateway to charge) — a validly-signed webhook could previously
+    // record ANY amount straight from its own payload.
+    $payloadcents = max(0, pqfin_money_to_cents((string)($payload['amount'] ?? $session->amount)));
+    $sessioncents = max(0, pqfin_money_to_cents((string)$session->amount));
+    if ($sessioncents > 0 && $payloadcents !== $sessioncents) {
+        pqfin_audit('payment_amount_mismatch', (int)$invoice->workspaceid, (int)$invoice->studentid, $webhookid, [
+            'targettype' => 'payment_webhook',
+            'invoiceid' => (int)$invoice->id,
+            'sessionid' => (int)$session->id,
+            'payload_amount' => pqfin_cents_to_money($payloadcents),
+            'session_amount' => pqfin_cents_to_money($sessioncents),
+        ]);
+        $payloadcents = min($payloadcents, $sessioncents);
+    }
+    $amount = pqfin_cents_to_money($payloadcents);
     $now = time();
     $payment = (object)[
         'consumerid' => (int)$invoice->consumerid,
@@ -2350,7 +2404,9 @@ function pqfin_record_provider_payment($session, array $payload, int $webhookid)
         'receiptnumber' => '',
         'paymentmethod' => 'hosted_gateway',
         'status' => 'recorded',
-        'currency' => (string)($payload['currency'] ?? $invoice->currency),
+        // Currency is the INVOICE's, never the payload's (a signed webhook must
+        // not switch a USD invoice to a payment recorded in another currency).
+        'currency' => (string)$invoice->currency,
         'amount' => $amount,
         'allocatedamount' => $amount,
         'unallocatedamount' => '0.00',
@@ -2420,11 +2476,19 @@ function pqfin_process_gateway_webhook(string $payloadjson, string $signature): 
     if (!is_array($payload)) {
         throw new invalid_parameter_exception('Invalid webhook JSON.');
     }
-    $config = pqfin_gateway_config_for_webhook($payload);
-    $signatureok = pqfin_gateway_signature_valid($payloadjson, $signature, (string)($config['webhooksecret'] ?? ''));
     $eventid = trim((string)($payload['event_id'] ?? $payload['id'] ?? ''));
     $eventtype = trim((string)($payload['event_type'] ?? $payload['type'] ?? 'payment.pending'));
     $localsessionid = trim((string)($payload['session_id'] ?? $payload['localsessionid'] ?? ''));
+    // SECURITY: bind the verification secret to the SESSION's workspace (a
+    // server-side fact), never to the payload's own workspaceid — previously a
+    // caller could pick which workspace's secret validated their payload.
+    $sessionforconfig = $localsessionid !== ''
+        ? $DB->get_record('local_prequran_pay_session', ['localsessionid' => $localsessionid], '*', IGNORE_MISSING)
+        : null;
+    $config = $sessionforconfig
+        ? pqfin_effective_gateway_config((int)$sessionforconfig->workspaceid, pqh_consumer_context_by_workspace((int)$sessionforconfig->workspaceid))
+        : pqfin_gateway_config_for_webhook($payload);
+    $signatureok = pqfin_gateway_signature_valid($payloadjson, $signature, (string)($config['webhooksecret'] ?? ''));
     $idempotencykey = trim((string)($payload['idempotency_key'] ?? $eventid));
     if ($idempotencykey === '') {
         $idempotencykey = hash('sha256', $payloadjson);
@@ -2436,9 +2500,7 @@ function pqfin_process_gateway_webhook(string $payloadjson, string $signature): 
     if ($existing && in_array((string)$existing->processingstatus, ['processed', 'duplicate'], true)) {
         return ['status' => 'duplicate', 'webhookid' => (int)$existing->id, 'paymentid' => (int)$existing->paymentid];
     }
-    $session = $localsessionid !== ''
-        ? $DB->get_record('local_prequran_pay_session', ['localsessionid' => $localsessionid], '*', IGNORE_MISSING)
-        : null;
+    $session = $sessionforconfig;
     $mapped = pqfin_gateway_status_map($eventtype, (string)($payload['status'] ?? ''));
     $now = time();
     $webhook = (object)[
@@ -2973,6 +3035,22 @@ function pqfin_create_marketplace_payout_for_invoice(
         throw new invalid_parameter_exception('Payout readiness requires a paid amount or gross amount.');
     }
     $feecents = max(0, pqfin_money_to_cents($platformfee));
+    // Auto-derive the platform commission from the configured rate when the
+    // caller supplied no explicit fee — the marketplace commission percent was
+    // previously a dead field and every payout fee had to be typed by hand.
+    if ($feecents === 0 && trim($platformfee) === '') {
+        global $CFG;
+        $commissionlib = $CFG->dirroot . '/local/hubredirect/marketplace_core_portallib.php';
+        if (is_readable($commissionlib)) {
+            require_once($commissionlib);
+        }
+        if (function_exists('pqmk_commission_percent')) {
+            $pct = pqmk_commission_percent((int)$invoice->workspaceid, $teacherid);
+            if ($pct > 0) {
+                $feecents = (int)floor($grosscents * $pct / 100);
+            }
+        }
+    }
     if ($feecents > $grosscents) {
         throw new invalid_parameter_exception('Platform fee cannot exceed gross payout basis.');
     }
@@ -3365,7 +3443,10 @@ function pqfin_record_manual_payment_for_invoice(
     if (!pqh_record_belongs_to_consumer_context($invoice, $consumercontext, 'workspaceid')) {
         throw new invalid_parameter_exception('Invoice is outside this workspace.');
     }
-    if (!in_array((string)$invoice->status, ['issued', 'sent', 'partially_paid', 'paid'], true)) {
+    if (!in_array((string)$invoice->status, ['issued', 'sent', 'partially_paid'], true)) {
+        if ((string)$invoice->status === 'paid') {
+            throw new invalid_parameter_exception('This invoice is already fully paid. Record an overpayment against the correct open invoice, or use a credit note/refund for corrections.');
+        }
         throw new invalid_parameter_exception('Payments can only be recorded against issued invoices.');
     }
     $amountcents = pqfin_money_to_cents($amount);
@@ -3633,6 +3714,43 @@ function pqfin_record_refund_for_payment(
     $refund->id = $refundid;
     $refund->refundnumber = pqfin_generate_refund_number($refundid, (int)$payment->workspaceid);
     $DB->update_record('local_prequran_refund', $refund);
+    // ACCOUNTING FIX: a refund must reopen the invoice balance. Previously the
+    // refund was a pure cash-out ledger row — the invoice stayed "paid" unless
+    // an admin separately reversed the payment, and the two could diverge.
+    // Reduce this payment's active allocations by the refunded amount (invoice-
+    // scoped when an invoice was given) and recalculate the affected invoices.
+    $remaining = $amountcents;
+    $allocconditions = ['paymentid' => $paymentid, 'status' => 'active'];
+    if ($invoice) {
+        $allocconditions['invoiceid'] = (int)$invoice->id;
+    }
+    $touchedinvoices = [];
+    foreach ($DB->get_records('local_prequran_payment_alloc', $allocconditions, 'id ASC') as $alloc) {
+        if ($remaining <= 0) {
+            break;
+        }
+        $alloccents = pqfin_money_to_cents((string)$alloc->amount);
+        $reduce = min($alloccents, $remaining);
+        if ($reduce <= 0) {
+            continue;
+        }
+        $newcents = $alloccents - $reduce;
+        $DB->update_record('local_prequran_payment_alloc', (object)[
+            'id' => (int)$alloc->id,
+            'amount' => pqfin_cents_to_money($newcents),
+            'status' => $newcents > 0 ? 'active' : 'refunded',
+            'timemodified' => $now,
+        ]);
+        $remaining -= $reduce;
+        $touchedinvoices[(int)$alloc->invoiceid] = (int)$alloc->invoiceid;
+    }
+    foreach ($touchedinvoices as $touchedid) {
+        try {
+            pqfin_recalculate_invoice_totals($touchedid, $actorid);
+        } catch (Throwable $recalcerror) {
+            // The refund row stands even if a recalc hiccups; audited below.
+        }
+    }
     pqfin_audit('refund_recorded', (int)$payment->workspaceid, (int)$payment->studentid, $refundid, [
         'targettype' => 'refund',
         'consumerid' => (int)$payment->consumerid,
@@ -3935,6 +4053,35 @@ function pqfin_create_invoice_from_enrollment_request(int $requestid, int $works
         'invoiceid' => $invoiceid,
         'actorid' => $actorid,
     ]);
+    // Standing scholarship grants: when the workspace policy opts in, apply the
+    // student's active grants as line discounts before the invoice can issue.
+    try {
+        $grantpolicy = pqfin_workspace_finance_policy($workspaceid, $context);
+        if ((string)($grantpolicy['policy']['scholarship_auto_apply'] ?? 'disabled') === 'enabled') {
+            pqfin_apply_scholar_grants_to_invoice($invoiceid, $context, $actorid);
+        }
+    } catch (Throwable $granterror) {
+        pqfin_audit('scholarship_auto_apply_failed', $workspaceid, (int)$request->studentid, $invoiceid, [
+            'targettype' => 'invoice',
+            'invoiceid' => $invoiceid,
+            'error' => core_text::substr($granterror->getMessage(), 0, 200),
+        ]);
+    }
+    // Wire the previously-DEAD invoice_issue_timing policy: when the workspace
+    // policy says invoices issue on enrollment request, issue (and notify the
+    // family) immediately instead of leaving a silent draft.
+    try {
+        $policy = pqfin_workspace_finance_policy($workspaceid, $context);
+        if ((string)($policy['policy']['invoice_issue_timing'] ?? 'manual') === 'on_enrollment_request') {
+            pqfin_issue_invoice($invoiceid, $context, $actorid);
+        }
+    } catch (Throwable $issueerror) {
+        pqfin_audit('invoice_auto_issue_failed', $workspaceid, (int)$request->studentid, $invoiceid, [
+            'targettype' => 'invoice',
+            'invoiceid' => $invoiceid,
+            'error' => core_text::substr($issueerror->getMessage(), 0, 200),
+        ]);
+    }
     return $invoiceid;
 }
 
@@ -4326,4 +4473,918 @@ function pqfin_student_finance_profile(int $studentid, int $workspaceid, $consum
         }
     }
     return ['finance' => $finance ?: null, 'billingaccount' => $account ?: null, 'warnings' => $warnings];
+}
+
+// ---------------------------------------------------------------------------
+// Monetization layer: coupons, standing scholarship grants, marketplace payout
+// lifecycle + batch runs, and EduPlatform<->consumer settlement statements.
+// Disbursement and settlement payment are RECORDED here, never executed —
+// money always moves outside the platform.
+// ---------------------------------------------------------------------------
+
+function pqfin_coupon_schema_ready(): bool {
+    return pqh_table_exists_safe('local_prequran_coupon')
+        && pqh_table_exists_safe('local_prequran_discount_apply');
+}
+
+function pqfin_scholar_grant_schema_ready(): bool {
+    return pqh_table_exists_safe('local_prequran_scholar_grant')
+        && pqh_table_exists_safe('local_prequran_discount_apply');
+}
+
+function pqfin_payout_batch_schema_ready(): bool {
+    return pqh_table_exists_safe('local_prequran_payout_batch');
+}
+
+function pqfin_platform_stmt_schema_ready(): bool {
+    return pqh_table_exists_safe('local_prequran_platform_stmt');
+}
+
+function pqfin_normalize_coupon_code(string $code): string {
+    $code = strtoupper(trim($code));
+    return preg_replace('/[^A-Z0-9_-]/', '', $code);
+}
+
+function pqfin_save_coupon(int $workspaceid, $consumercontext, int $actorid, array $data): int {
+    global $DB;
+
+    if (!pqfin_coupon_schema_ready()) {
+        throw new invalid_parameter_exception('Coupon schema is not ready. Run the local_prequran upgrade first.');
+    }
+    $code = pqfin_normalize_coupon_code((string)($data['code'] ?? ''));
+    if ($code === '' || core_text::strlen($code) < 3) {
+        throw new invalid_parameter_exception('Coupon codes need at least 3 letters/numbers.');
+    }
+    $discounttype = (string)($data['discounttype'] ?? 'fixed');
+    if (!in_array($discounttype, ['fixed', 'percent'], true)) {
+        throw new invalid_parameter_exception('Coupon discount type must be fixed or percent.');
+    }
+    $valuecents = pqfin_money_to_cents((string)($data['discountvalue'] ?? '0'));
+    if ($valuecents <= 0) {
+        throw new invalid_parameter_exception('Coupon discount value must be greater than zero.');
+    }
+    if ($discounttype === 'percent' && $valuecents > 10000) {
+        throw new invalid_parameter_exception('Percent coupons cannot exceed 100.');
+    }
+    $couponid = (int)($data['couponid'] ?? 0);
+    $existing = $DB->get_record('local_prequran_coupon', ['workspaceid' => $workspaceid, 'code' => $code]);
+    if ($existing && (int)$existing->id !== $couponid) {
+        throw new invalid_parameter_exception('That coupon code already exists in this workspace.');
+    }
+    $now = time();
+    $record = (object)[
+        'consumerid' => (int)($consumercontext->consumerid ?? 0),
+        'workspaceid' => $workspaceid,
+        'code' => $code,
+        'description' => core_text::substr(trim((string)($data['description'] ?? '')), 0, 255),
+        'discounttype' => $discounttype,
+        'discountvalue' => pqfin_cents_to_money($valuecents),
+        'currency' => pqfin_default_currency(),
+        'maxredemptions' => max(0, (int)($data['maxredemptions'] ?? 0)),
+        'perstudentlimit' => max(0, (int)($data['perstudentlimit'] ?? 1)),
+        'validfrom' => max(0, (int)($data['validfrom'] ?? 0)),
+        'validuntil' => max(0, (int)($data['validuntil'] ?? 0)),
+        'status' => in_array((string)($data['status'] ?? 'active'), ['active', 'disabled'], true)
+            ? (string)($data['status'] ?? 'active') : 'active',
+        'notes' => trim((string)($data['notes'] ?? '')),
+        'modifiedby' => $actorid,
+        'timemodified' => $now,
+    ];
+    if ($couponid > 0) {
+        $current = $DB->get_record('local_prequran_coupon', ['id' => $couponid], '*', MUST_EXIST);
+        if ((int)$current->workspaceid !== $workspaceid) {
+            throw new invalid_parameter_exception('Coupon is outside this workspace.');
+        }
+        $record->id = $couponid;
+        $record->redemptioncount = (int)$current->redemptioncount;
+        $DB->update_record('local_prequran_coupon', $record);
+    } else {
+        $record->redemptioncount = 0;
+        $record->metadatajson = pqfin_metadata(['source' => 'finance_monetization']);
+        $record->createdby = $actorid;
+        $record->timecreated = $now;
+        $couponid = (int)$DB->insert_record('local_prequran_coupon', $record);
+    }
+    pqfin_audit($record->id ?? 0 ? 'coupon_updated' : 'coupon_created', $workspaceid, 0, $couponid, [
+        'targettype' => 'coupon',
+        'code' => $code,
+        'discounttype' => $discounttype,
+        'discountvalue' => pqfin_cents_to_money($valuecents),
+        'status' => (string)$record->status,
+        'actorid' => $actorid,
+    ]);
+    return $couponid;
+}
+
+function pqfin_coupons_for_workspace(int $workspaceid, int $limit = 200): array {
+    global $DB;
+
+    if (!pqfin_coupon_schema_ready()) {
+        return [];
+    }
+    return array_values($DB->get_records('local_prequran_coupon', ['workspaceid' => $workspaceid],
+        'status ASC, timemodified DESC', '*', 0, $limit));
+}
+
+/**
+ * Distribute a discount (in cents) across an invoice's active lines by raising
+ * each line's discountamount, capped at the line's remaining chargeable value.
+ * Returns [appliedcents, linebreakdown[]].
+ */
+function pqfin_spread_line_discount(int $invoiceid, int $discountcents, int $actorid): array {
+    global $DB;
+
+    $lines = $DB->get_records('local_prequran_invoice_line',
+        ['invoiceid' => $invoiceid, 'status' => 'active'], 'linesequence ASC');
+    $remaining = $discountcents;
+    $breakdown = [];
+    foreach ($lines as $line) {
+        if ($remaining <= 0) {
+            break;
+        }
+        $qty = max(1, (int)round((float)$line->quantity));
+        $chargecents = pqfin_money_to_cents((string)$line->unitamount) * $qty
+            - pqfin_money_to_cents((string)$line->discountamount);
+        if ($chargecents <= 0) {
+            continue;
+        }
+        $take = min($remaining, $chargecents);
+        $newdiscount = pqfin_money_to_cents((string)$line->discountamount) + $take;
+        $DB->update_record('local_prequran_invoice_line', (object)[
+            'id' => (int)$line->id,
+            'discountamount' => pqfin_cents_to_money($newdiscount),
+            'modifiedby' => $actorid,
+            'timemodified' => time(),
+        ]);
+        $breakdown[] = ['lineid' => (int)$line->id, 'cents' => $take];
+        $remaining -= $take;
+    }
+    return [$discountcents - $remaining, $breakdown];
+}
+
+function pqfin_revert_line_discount(array $breakdown, int $actorid): void {
+    global $DB;
+
+    foreach ($breakdown as $item) {
+        $line = $DB->get_record('local_prequran_invoice_line', ['id' => (int)($item['lineid'] ?? 0)]);
+        if (!$line) {
+            continue;
+        }
+        $newdiscount = max(0, pqfin_money_to_cents((string)$line->discountamount) - (int)($item['cents'] ?? 0));
+        $DB->update_record('local_prequran_invoice_line', (object)[
+            'id' => (int)$line->id,
+            'discountamount' => pqfin_cents_to_money($newdiscount),
+            'modifiedby' => $actorid,
+            'timemodified' => time(),
+        ]);
+    }
+}
+
+function pqfin_apply_coupon_to_invoice(int $invoiceid, $consumercontext, int $actorid, string $code): int {
+    global $DB;
+
+    if (!pqfin_coupon_schema_ready()) {
+        throw new invalid_parameter_exception('Coupon schema is not ready. Run the local_prequran upgrade first.');
+    }
+    $invoice = $DB->get_record('local_prequran_invoice', ['id' => $invoiceid], '*', MUST_EXIST);
+    if (!pqh_record_belongs_to_consumer_context($invoice, $consumercontext, 'workspaceid')) {
+        throw new invalid_parameter_exception('Invoice is outside this workspace.');
+    }
+    if (!in_array((string)$invoice->status, ['draft', 'issued', 'sent', 'partially_paid'], true)) {
+        throw new invalid_parameter_exception('Coupons can only be applied to open invoices (not paid, void, or disputed).');
+    }
+    $code = pqfin_normalize_coupon_code($code);
+    $coupon = $DB->get_record('local_prequran_coupon',
+        ['workspaceid' => (int)$invoice->workspaceid, 'code' => $code]);
+    if (!$coupon || (string)$coupon->status !== 'active') {
+        throw new invalid_parameter_exception('That coupon code is not active in this workspace.');
+    }
+    $now = time();
+    if ((int)$coupon->validfrom > 0 && $now < (int)$coupon->validfrom) {
+        throw new invalid_parameter_exception('That coupon is not valid yet.');
+    }
+    if ((int)$coupon->validuntil > 0 && $now > (int)$coupon->validuntil) {
+        throw new invalid_parameter_exception('That coupon has expired.');
+    }
+    if ((int)$coupon->maxredemptions > 0 && (int)$coupon->redemptioncount >= (int)$coupon->maxredemptions) {
+        throw new invalid_parameter_exception('That coupon has reached its redemption limit.');
+    }
+    if ($DB->record_exists('local_prequran_discount_apply', [
+        'sourcetype' => 'coupon', 'sourceid' => (int)$coupon->id,
+        'invoiceid' => $invoiceid, 'status' => 'applied',
+    ])) {
+        throw new invalid_parameter_exception('That coupon is already applied to this invoice.');
+    }
+    if ((int)$coupon->perstudentlimit > 0) {
+        $studentuses = (int)$DB->count_records('local_prequran_discount_apply', [
+            'sourcetype' => 'coupon', 'sourceid' => (int)$coupon->id,
+            'studentid' => (int)$invoice->studentid, 'status' => 'applied',
+        ]);
+        if ($studentuses >= (int)$coupon->perstudentlimit) {
+            throw new invalid_parameter_exception('This student has already used that coupon.');
+        }
+    }
+    $valuecents = pqfin_money_to_cents((string)$coupon->discountvalue);
+    if ((string)$coupon->discounttype === 'percent') {
+        $subtotalcents = pqfin_money_to_cents((string)$invoice->subtotal);
+        $discountcents = (int)floor($subtotalcents * $valuecents / 10000);
+    } else {
+        $discountcents = $valuecents;
+    }
+    if ($discountcents <= 0) {
+        throw new invalid_parameter_exception('That coupon computes to a zero discount on this invoice.');
+    }
+    [$appliedcents, $breakdown] = pqfin_spread_line_discount($invoiceid, $discountcents, $actorid);
+    if ($appliedcents <= 0) {
+        throw new invalid_parameter_exception('This invoice has no remaining chargeable amount to discount.');
+    }
+    $applyid = (int)$DB->insert_record('local_prequran_discount_apply', (object)[
+        'sourcetype' => 'coupon',
+        'sourceid' => (int)$coupon->id,
+        'consumerid' => (int)$invoice->consumerid,
+        'workspaceid' => (int)$invoice->workspaceid,
+        'invoiceid' => $invoiceid,
+        'studentid' => (int)$invoice->studentid,
+        'currency' => (string)$invoice->currency,
+        'amount' => pqfin_cents_to_money($appliedcents),
+        'status' => 'applied',
+        'linejson' => pqfin_metadata(['lines' => $breakdown, 'code' => $code]),
+        'createdby' => $actorid,
+        'modifiedby' => $actorid,
+        'timecreated' => $now,
+        'timemodified' => $now,
+    ]);
+    $DB->set_field('local_prequran_coupon', 'redemptioncount',
+        (int)$coupon->redemptioncount + 1, ['id' => (int)$coupon->id]);
+    pqfin_recalculate_invoice_totals($invoiceid, $actorid);
+    pqfin_audit('coupon_applied', (int)$invoice->workspaceid, (int)$invoice->studentid, $applyid, [
+        'targettype' => 'coupon',
+        'invoiceid' => $invoiceid,
+        'code' => $code,
+        'amount' => pqfin_cents_to_money($appliedcents),
+        'actorid' => $actorid,
+    ]);
+    return $applyid;
+}
+
+function pqfin_reverse_discount_apply(int $applyid, $consumercontext, int $actorid, string $reason = ''): void {
+    global $DB;
+
+    $apply = $DB->get_record('local_prequran_discount_apply', ['id' => $applyid], '*', MUST_EXIST);
+    if (!pqh_record_belongs_to_consumer_context($apply, $consumercontext, 'workspaceid')) {
+        throw new invalid_parameter_exception('Discount application is outside this workspace.');
+    }
+    if ((string)$apply->status !== 'applied') {
+        throw new invalid_parameter_exception('Only applied discounts can be reversed.');
+    }
+    $meta = json_decode((string)$apply->linejson, true);
+    pqfin_revert_line_discount((array)($meta['lines'] ?? []), $actorid);
+    $DB->update_record('local_prequran_discount_apply', (object)[
+        'id' => $applyid,
+        'status' => 'reversed',
+        'modifiedby' => $actorid,
+        'timemodified' => time(),
+    ]);
+    if ((string)$apply->sourcetype === 'coupon') {
+        $coupon = $DB->get_record('local_prequran_coupon', ['id' => (int)$apply->sourceid]);
+        if ($coupon) {
+            $DB->set_field('local_prequran_coupon', 'redemptioncount',
+                max(0, (int)$coupon->redemptioncount - 1), ['id' => (int)$coupon->id]);
+        }
+    }
+    pqfin_recalculate_invoice_totals((int)$apply->invoiceid, $actorid);
+    pqfin_audit('discount_apply_reversed', (int)$apply->workspaceid, (int)$apply->studentid, $applyid, [
+        'targettype' => 'coupon',
+        'invoiceid' => (int)$apply->invoiceid,
+        'sourcetype' => (string)$apply->sourcetype,
+        'amount' => (string)$apply->amount,
+        'reason' => core_text::substr($reason, 0, 200),
+        'actorid' => $actorid,
+    ]);
+}
+
+function pqfin_discount_applies_for_invoice(int $invoiceid): array {
+    global $DB;
+
+    if (!pqh_table_exists_safe('local_prequran_discount_apply')) {
+        return [];
+    }
+    return array_values($DB->get_records('local_prequran_discount_apply',
+        ['invoiceid' => $invoiceid], 'timecreated DESC'));
+}
+
+function pqfin_save_scholar_grant(int $workspaceid, $consumercontext, int $actorid, array $data): int {
+    global $DB;
+
+    if (!pqfin_scholar_grant_schema_ready()) {
+        throw new invalid_parameter_exception('Scholarship grant schema is not ready. Run the local_prequran upgrade first.');
+    }
+    $studentid = (int)($data['studentid'] ?? 0);
+    if ($studentid <= 0) {
+        throw new invalid_parameter_exception('Choose a student for the scholarship grant.');
+    }
+    if (pqh_table_exists_safe('local_prequran_workspace_member')
+            && !$DB->record_exists_select('local_prequran_workspace_member',
+                "workspaceid = :ws AND userid = :uid AND status = 'active'",
+                ['ws' => $workspaceid, 'uid' => $studentid])) {
+        throw new invalid_parameter_exception('That student is not an active member of this workspace.');
+    }
+    $discounttype = (string)($data['discounttype'] ?? 'percent');
+    if (!in_array($discounttype, ['fixed', 'percent'], true)) {
+        throw new invalid_parameter_exception('Grant discount type must be fixed or percent.');
+    }
+    $valuecents = pqfin_money_to_cents((string)($data['discountvalue'] ?? '0'));
+    if ($valuecents <= 0) {
+        throw new invalid_parameter_exception('Grant discount value must be greater than zero.');
+    }
+    if ($discounttype === 'percent' && $valuecents > 10000) {
+        throw new invalid_parameter_exception('Percent grants cannot exceed 100.');
+    }
+    $now = time();
+    $grantid = (int)($data['grantid'] ?? 0);
+    $record = (object)[
+        'consumerid' => (int)($consumercontext->consumerid ?? 0),
+        'workspaceid' => $workspaceid,
+        'studentid' => $studentid,
+        'name' => core_text::substr(trim((string)($data['name'] ?? 'Scholarship')), 0, 255),
+        'discounttype' => $discounttype,
+        'discountvalue' => pqfin_cents_to_money($valuecents),
+        'source' => in_array((string)($data['source'] ?? 'internal'), ['internal', 'sponsor'], true)
+            ? (string)($data['source'] ?? 'internal') : 'internal',
+        'sponsoraccountid' => max(0, (int)($data['sponsoraccountid'] ?? 0)),
+        'status' => in_array((string)($data['status'] ?? 'active'), ['active', 'ended'], true)
+            ? (string)($data['status'] ?? 'active') : 'active',
+        'startdate' => max(0, (int)($data['startdate'] ?? 0)),
+        'enddate' => max(0, (int)($data['enddate'] ?? 0)),
+        'notes' => trim((string)($data['notes'] ?? '')),
+        'modifiedby' => $actorid,
+        'timemodified' => $now,
+    ];
+    if ($grantid > 0) {
+        $current = $DB->get_record('local_prequran_scholar_grant', ['id' => $grantid], '*', MUST_EXIST);
+        if ((int)$current->workspaceid !== $workspaceid) {
+            throw new invalid_parameter_exception('Scholarship grant is outside this workspace.');
+        }
+        $record->id = $grantid;
+        $DB->update_record('local_prequran_scholar_grant', $record);
+    } else {
+        $record->grantnumber = '';
+        $record->metadatajson = pqfin_metadata(['source' => 'finance_monetization']);
+        $record->createdby = $actorid;
+        $record->timecreated = $now;
+        $grantid = (int)$DB->insert_record('local_prequran_scholar_grant', $record);
+        $DB->set_field('local_prequran_scholar_grant', 'grantnumber',
+            'SGR-' . gmdate('Ymd') . '-W' . $workspaceid . '-' . str_pad((string)$grantid, 6, '0', STR_PAD_LEFT),
+            ['id' => $grantid]);
+    }
+    pqfin_audit('scholar_grant_saved', $workspaceid, $studentid, $grantid, [
+        'targettype' => 'scholar_grant',
+        'discounttype' => $discounttype,
+        'discountvalue' => pqfin_cents_to_money($valuecents),
+        'status' => (string)$record->status,
+        'actorid' => $actorid,
+    ]);
+    return $grantid;
+}
+
+function pqfin_scholar_grants_for_workspace(int $workspaceid, int $limit = 300): array {
+    global $DB;
+
+    if (!pqfin_scholar_grant_schema_ready()) {
+        return [];
+    }
+    return array_values($DB->get_records('local_prequran_scholar_grant', ['workspaceid' => $workspaceid],
+        'status ASC, timemodified DESC', '*', 0, $limit));
+}
+
+function pqfin_apply_scholar_grants_to_invoice(int $invoiceid, $consumercontext, int $actorid): int {
+    global $DB;
+
+    if (!pqfin_scholar_grant_schema_ready()) {
+        return 0;
+    }
+    $invoice = $DB->get_record('local_prequran_invoice', ['id' => $invoiceid], '*', MUST_EXIST);
+    $now = time();
+    $grants = $DB->get_records('local_prequran_scholar_grant', [
+        'workspaceid' => (int)$invoice->workspaceid,
+        'studentid' => (int)$invoice->studentid,
+        'status' => 'active',
+    ], 'id ASC');
+    $appliedtotal = 0;
+    foreach ($grants as $grant) {
+        if ((int)$grant->startdate > 0 && $now < (int)$grant->startdate) {
+            continue;
+        }
+        if ((int)$grant->enddate > 0 && $now > (int)$grant->enddate) {
+            continue;
+        }
+        if ($DB->record_exists('local_prequran_discount_apply', [
+            'sourcetype' => 'scholar_grant', 'sourceid' => (int)$grant->id,
+            'invoiceid' => $invoiceid, 'status' => 'applied',
+        ])) {
+            continue;
+        }
+        $valuecents = pqfin_money_to_cents((string)$grant->discountvalue);
+        if ((string)$grant->discounttype === 'percent') {
+            $subtotalcents = pqfin_money_to_cents((string)$invoice->subtotal);
+            $discountcents = (int)floor($subtotalcents * $valuecents / 10000);
+        } else {
+            $discountcents = $valuecents;
+        }
+        if ($discountcents <= 0) {
+            continue;
+        }
+        [$appliedcents, $breakdown] = pqfin_spread_line_discount($invoiceid, $discountcents, $actorid);
+        if ($appliedcents <= 0) {
+            continue;
+        }
+        $applyid = (int)$DB->insert_record('local_prequran_discount_apply', (object)[
+            'sourcetype' => 'scholar_grant',
+            'sourceid' => (int)$grant->id,
+            'consumerid' => (int)$invoice->consumerid,
+            'workspaceid' => (int)$invoice->workspaceid,
+            'invoiceid' => $invoiceid,
+            'studentid' => (int)$invoice->studentid,
+            'currency' => (string)$invoice->currency,
+            'amount' => pqfin_cents_to_money($appliedcents),
+            'status' => 'applied',
+            'linejson' => pqfin_metadata(['lines' => $breakdown, 'grantnumber' => (string)$grant->grantnumber]),
+            'createdby' => $actorid,
+            'modifiedby' => $actorid,
+            'timecreated' => $now,
+            'timemodified' => $now,
+        ]);
+        pqfin_audit('scholarship_grant_applied', (int)$invoice->workspaceid, (int)$invoice->studentid, $applyid, [
+            'targettype' => 'scholar_grant',
+            'invoiceid' => $invoiceid,
+            'grantnumber' => (string)$grant->grantnumber,
+            'amount' => pqfin_cents_to_money($appliedcents),
+            'actorid' => $actorid,
+        ]);
+        $appliedtotal += $appliedcents;
+        $invoice = $DB->get_record('local_prequran_invoice', ['id' => $invoiceid], '*', MUST_EXIST);
+    }
+    if ($appliedtotal > 0) {
+        pqfin_recalculate_invoice_totals($invoiceid, $actorid);
+    }
+    return $appliedtotal;
+}
+
+// --- Marketplace payout lifecycle + batch runs ------------------------------
+
+function pqfin_payout_allowed_transitions(): array {
+    return [
+        'ready_for_review' => ['approved', 'void'],
+        'approved' => ['paid', 'void', 'ready_for_review'],
+    ];
+}
+
+function pqfin_update_marketplace_payout_status(
+    int $payoutid,
+    $consumercontext,
+    int $actorid,
+    string $newstatus,
+    string $reference = '',
+    string $note = '',
+    int $workspaceid = 0
+): void {
+    global $DB;
+
+    $payout = $DB->get_record('local_prequran_market_payout', ['id' => $payoutid], '*', MUST_EXIST);
+    if (!pqh_record_belongs_to_consumer_context($payout, $consumercontext, 'workspaceid')) {
+        throw new invalid_parameter_exception('Payout is outside this workspace.');
+    }
+    // Exact-workspace gate: in a multi-workspace consumer, a finance admin of one
+    // workspace must not act on another workspace's payout (matches create_payout_batch).
+    if ($workspaceid > 0 && (int)$payout->workspaceid !== $workspaceid) {
+        throw new invalid_parameter_exception('Payout belongs to a different workspace.');
+    }
+    $current = (string)$payout->status;
+    $allowed = pqfin_payout_allowed_transitions()[$current] ?? [];
+    if (!in_array($newstatus, $allowed, true)) {
+        throw new invalid_parameter_exception('Payout ' . $payout->payoutnumber . ' cannot move from '
+            . $current . ' to ' . $newstatus . '.');
+    }
+    if ($newstatus === 'paid' && trim($reference) === '') {
+        throw new invalid_parameter_exception('Marking a payout paid requires a disbursement reference (bank/transfer id).');
+    }
+    $now = time();
+    $update = (object)[
+        'id' => $payoutid,
+        'status' => $newstatus,
+        'readiness_status' => $newstatus,
+        'modifiedby' => $actorid,
+        'timemodified' => $now,
+    ];
+    if ($newstatus === 'approved') {
+        $update->approvedby = $actorid;
+        $update->approvedat = $now;
+    } else if ($newstatus === 'paid') {
+        $update->paidat = $now;
+        $update->reference = core_text::substr(trim($reference), 0, 120);
+    } else if ($newstatus === 'void') {
+        $update->voidedat = $now;
+    } else if ($newstatus === 'ready_for_review') {
+        $update->approvedby = 0;
+        $update->approvedat = 0;
+    }
+    if (trim($note) !== '') {
+        $update->notes = trim((string)$payout->notes . "\n" . '[' . gmdate('Y-m-d') . '] ' . trim($note));
+    }
+    $DB->update_record('local_prequran_market_payout', $update);
+    pqfin_audit('marketplace_payout_' . $newstatus, (int)$payout->workspaceid, (int)$payout->studentid, $payoutid, [
+        'targettype' => 'marketplace_payout',
+        'payoutnumber' => (string)$payout->payoutnumber,
+        'from' => $current,
+        'to' => $newstatus,
+        'reference' => core_text::substr(trim($reference), 0, 120),
+        'actorid' => $actorid,
+    ]);
+}
+
+function pqfin_create_payout_batch(int $workspaceid, $consumercontext, int $actorid, array $payoutids, string $notes = ''): int {
+    global $DB;
+
+    if (!pqfin_payout_batch_schema_ready()) {
+        throw new invalid_parameter_exception('Payout batch schema is not ready. Run the local_prequran upgrade first.');
+    }
+    $payoutids = array_values(array_unique(array_filter(array_map('intval', $payoutids))));
+    if (count($payoutids) === 0) {
+        throw new invalid_parameter_exception('Choose at least one payout for the batch.');
+    }
+    $gross = 0;
+    $fee = 0;
+    $net = 0;
+    $currency = '';
+    $rows = [];
+    foreach ($payoutids as $pid) {
+        $payout = $DB->get_record('local_prequran_market_payout', ['id' => $pid], '*', MUST_EXIST);
+        if ((int)$payout->workspaceid !== $workspaceid
+            || !pqh_record_belongs_to_consumer_context($payout, $consumercontext, 'workspaceid')) {
+            throw new invalid_parameter_exception('Payout ' . $payout->payoutnumber . ' is outside this workspace.');
+        }
+        if (!in_array((string)$payout->status, ['ready_for_review', 'approved'], true)) {
+            throw new invalid_parameter_exception('Payout ' . $payout->payoutnumber . ' is ' . $payout->status
+                . ' and cannot join a batch.');
+        }
+        if ((int)($payout->batchid ?? 0) > 0) {
+            throw new invalid_parameter_exception('Payout ' . $payout->payoutnumber . ' is already in a batch.');
+        }
+        if ($currency === '') {
+            $currency = (string)$payout->currency;
+        } else if ($currency !== (string)$payout->currency) {
+            throw new invalid_parameter_exception('All payouts in a batch must share one currency.');
+        }
+        $gross += pqfin_money_to_cents((string)$payout->grossamount);
+        $fee += pqfin_money_to_cents((string)$payout->platformfee);
+        $net += pqfin_money_to_cents((string)$payout->payoutamount);
+        $rows[] = $payout;
+    }
+    $now = time();
+    $batch = (object)[
+        'consumerid' => (int)($consumercontext->consumerid ?? 0),
+        'workspaceid' => $workspaceid,
+        'batchnumber' => '',
+        'status' => 'draft',
+        'currency' => $currency,
+        'totalgross' => pqfin_cents_to_money($gross),
+        'totalfee' => pqfin_cents_to_money($fee),
+        'totalnet' => pqfin_cents_to_money($net),
+        'payoutcount' => count($rows),
+        'notes' => trim($notes),
+        'metadatajson' => pqfin_metadata(['payoutids' => $payoutids]),
+        'approvedby' => 0,
+        'approvedat' => 0,
+        'paidby' => 0,
+        'paidat' => 0,
+        'paidreference' => '',
+        'cancelledat' => 0,
+        'createdby' => $actorid,
+        'modifiedby' => $actorid,
+        'timecreated' => $now,
+        'timemodified' => $now,
+    ];
+    $batchid = (int)$DB->insert_record('local_prequran_payout_batch', $batch);
+    $DB->set_field('local_prequran_payout_batch', 'batchnumber',
+        'PBT-' . gmdate('Ymd') . '-W' . $workspaceid . '-' . str_pad((string)$batchid, 6, '0', STR_PAD_LEFT),
+        ['id' => $batchid]);
+    foreach ($rows as $payout) {
+        $DB->update_record('local_prequran_market_payout', (object)[
+            'id' => (int)$payout->id,
+            'batchid' => $batchid,
+            'modifiedby' => $actorid,
+            'timemodified' => $now,
+        ]);
+    }
+    pqfin_audit('payout_batch_created', $workspaceid, 0, $batchid, [
+        'targettype' => 'payout_batch',
+        'payoutcount' => count($rows),
+        'totalnet' => pqfin_cents_to_money($net),
+        'actorid' => $actorid,
+    ]);
+    return $batchid;
+}
+
+function pqfin_transition_payout_batch(
+    int $batchid,
+    $consumercontext,
+    int $actorid,
+    string $newstatus,
+    string $reference = '',
+    int $workspaceid = 0
+): void {
+    global $DB;
+
+    $batch = $DB->get_record('local_prequran_payout_batch', ['id' => $batchid], '*', MUST_EXIST);
+    if (!pqh_record_belongs_to_consumer_context($batch, $consumercontext, 'workspaceid')) {
+        throw new invalid_parameter_exception('Payout batch is outside this workspace.');
+    }
+    if ($workspaceid > 0 && (int)$batch->workspaceid !== $workspaceid) {
+        throw new invalid_parameter_exception('Payout batch belongs to a different workspace.');
+    }
+    $current = (string)$batch->status;
+    $allowed = [
+        'draft' => ['approved', 'cancelled'],
+        'approved' => ['paid', 'cancelled'],
+    ];
+    if (!in_array($newstatus, $allowed[$current] ?? [], true)) {
+        throw new invalid_parameter_exception('Batch ' . $batch->batchnumber . ' cannot move from '
+            . $current . ' to ' . $newstatus . '.');
+    }
+    if ($newstatus === 'paid' && trim($reference) === '') {
+        throw new invalid_parameter_exception('Marking a batch paid requires the disbursement reference for the run.');
+    }
+    $now = time();
+    $update = (object)[
+        'id' => $batchid,
+        'status' => $newstatus,
+        'modifiedby' => $actorid,
+        'timemodified' => $now,
+    ];
+    if ($newstatus === 'approved') {
+        $update->approvedby = $actorid;
+        $update->approvedat = $now;
+    } else if ($newstatus === 'paid') {
+        $update->paidby = $actorid;
+        $update->paidat = $now;
+        $update->paidreference = core_text::substr(trim($reference), 0, 120);
+    } else if ($newstatus === 'cancelled') {
+        $update->cancelledat = $now;
+    }
+    $DB->update_record('local_prequran_payout_batch', $update);
+    $payouts = $DB->get_records('local_prequran_market_payout', ['batchid' => $batchid]);
+    foreach ($payouts as $payout) {
+        try {
+            if ($newstatus === 'approved' && (string)$payout->status === 'ready_for_review') {
+                pqfin_update_marketplace_payout_status((int)$payout->id, $consumercontext, $actorid, 'approved',
+                    '', '', $workspaceid);
+            } else if ($newstatus === 'paid' && (string)$payout->status === 'approved') {
+                pqfin_update_marketplace_payout_status((int)$payout->id, $consumercontext, $actorid, 'paid',
+                    (string)$update->paidreference, '', $workspaceid);
+            } else if ($newstatus === 'cancelled') {
+                $DB->update_record('local_prequran_market_payout', (object)[
+                    'id' => (int)$payout->id,
+                    'batchid' => 0,
+                    'modifiedby' => $actorid,
+                    'timemodified' => $now,
+                ]);
+            }
+        } catch (Throwable $cascadeerror) {
+            pqfin_audit('payout_batch_cascade_failed', (int)$batch->workspaceid, 0, (int)$payout->id, [
+                'targettype' => 'payout_batch',
+                'batchid' => $batchid,
+                'payoutid' => (int)$payout->id,
+                'error' => core_text::substr($cascadeerror->getMessage(), 0, 200),
+            ]);
+        }
+    }
+    pqfin_audit('payout_batch_' . $newstatus, (int)$batch->workspaceid, 0, $batchid, [
+        'targettype' => 'payout_batch',
+        'batchnumber' => (string)$batch->batchnumber,
+        'from' => $current,
+        'to' => $newstatus,
+        'reference' => core_text::substr(trim($reference), 0, 120),
+        'actorid' => $actorid,
+    ]);
+}
+
+function pqfin_payout_batches_for_workspace(int $workspaceid, int $limit = 100): array {
+    global $DB;
+
+    if (!pqfin_payout_batch_schema_ready()) {
+        return [];
+    }
+    return array_values($DB->get_records('local_prequran_payout_batch', ['workspaceid' => $workspaceid],
+        'timecreated DESC', '*', 0, $limit));
+}
+
+function pqfin_payouts_for_workspace(int $workspaceid, string $status = '', int $limit = 300): array {
+    global $DB;
+
+    if (!pqh_table_exists_safe('local_prequran_market_payout')) {
+        return [];
+    }
+    $params = ['workspaceid' => $workspaceid];
+    if ($status !== '') {
+        $params['status'] = $status;
+    }
+    return array_values($DB->get_records('local_prequran_market_payout', $params,
+        'timecreated DESC', '*', 0, $limit));
+}
+
+// --- EduPlatform <-> consumer settlement statements -------------------------
+
+function pqfin_platform_fee_percent_default(): string {
+    $value = trim((string)get_config('local_prequran', 'platform_fee_percent'));
+    return pqfin_cents_to_money(pqfin_money_to_cents($value === '' ? '0' : $value));
+}
+
+function pqfin_generate_platform_statement(
+    int $consumerid,
+    int $periodstart,
+    int $periodend,
+    int $actorid,
+    string $feepercent = '',
+    string $notes = ''
+): int {
+    global $DB;
+
+    if (!pqfin_platform_stmt_schema_ready()) {
+        throw new invalid_parameter_exception('Settlement statement schema is not ready. Run the local_prequran upgrade first.');
+    }
+    if ($periodstart <= 0 || $periodend <= $periodstart) {
+        throw new invalid_parameter_exception('Statement period end must come after the period start.');
+    }
+    $consumer = $DB->get_record('local_prequran_consumer', ['id' => $consumerid], '*', MUST_EXIST);
+    if ((string)$consumer->consumer_type === 'platform_foundation') {
+        throw new invalid_parameter_exception('The EduPlatform foundation does not bill itself.');
+    }
+    $existing = $DB->get_record_select('local_prequran_platform_stmt',
+        "consumerid = :consumerid AND periodstart = :ps AND periodend = :pe AND status <> 'void'",
+        ['consumerid' => $consumerid, 'ps' => $periodstart, 'pe' => $periodend]);
+    if ($existing) {
+        throw new invalid_parameter_exception('Statement ' . $existing->statementnumber
+            . ' already covers that period for this consumer (void it first to regenerate).');
+    }
+    $context = pqh_consumer_context_from_records($consumer);
+    $workspaceids = pqh_consumer_context_workspace_ids($context);
+    $grosscents = 0;
+    $paymentcount = 0;
+    $byworkspace = [];
+    $bymethod = [];
+    if (count($workspaceids) > 0) {
+        [$insql, $inparams] = $DB->get_in_or_equal($workspaceids, SQL_PARAMS_NAMED, 'ws');
+        $payments = $DB->get_records_select('local_prequran_payment',
+            "workspaceid $insql AND status = :status AND reversedat = 0
+             AND receivedat >= :ps AND receivedat < :pe
+             AND paymentmethod NOT IN ('internal_scholarship', 'admin_adjustment')",
+            $inparams + ['status' => 'recorded', 'ps' => $periodstart, 'pe' => $periodend]);
+        foreach ($payments as $payment) {
+            $cents = pqfin_money_to_cents((string)$payment->amount);
+            if ($cents <= 0) {
+                continue;
+            }
+            $grosscents += $cents;
+            $paymentcount++;
+            $wskey = (string)(int)$payment->workspaceid;
+            $byworkspace[$wskey] = ($byworkspace[$wskey] ?? 0) + $cents;
+            $mkey = (string)$payment->paymentmethod;
+            $bymethod[$mkey] = ($bymethod[$mkey] ?? 0) + $cents;
+        }
+    }
+    $feepercent = trim($feepercent) === '' ? pqfin_platform_fee_percent_default() : $feepercent;
+    $feepercentcents = min(10000, max(0, pqfin_money_to_cents($feepercent)));
+    $feecents = (int)floor($grosscents * $feepercentcents / 10000);
+    $now = time();
+    $stmt = (object)[
+        'consumerid' => $consumerid,
+        'statementnumber' => '',
+        'periodstart' => $periodstart,
+        'periodend' => $periodend,
+        'currency' => pqfin_default_currency(),
+        'grosscollected' => pqfin_cents_to_money($grosscents),
+        'feepercent' => pqfin_cents_to_money($feepercentcents),
+        'feeamount' => pqfin_cents_to_money($feecents),
+        'adjustment' => '0.00',
+        'adjustmentnote' => '',
+        'netdue' => pqfin_cents_to_money($feecents),
+        'status' => 'draft',
+        'paymentcount' => $paymentcount,
+        'detailjson' => pqfin_metadata([
+            'workspaceids' => $workspaceids,
+            'byworkspace' => $byworkspace,
+            'bymethod' => $bymethod,
+        ]),
+        'notes' => trim($notes),
+        'metadatajson' => pqfin_metadata(['source' => 'platform_billing']),
+        'issuedat' => 0,
+        'sentat' => 0,
+        'paidat' => 0,
+        'paidreference' => '',
+        'voidedat' => 0,
+        'createdby' => $actorid,
+        'modifiedby' => $actorid,
+        'timecreated' => $now,
+        'timemodified' => $now,
+    ];
+    $stmtid = (int)$DB->insert_record('local_prequran_platform_stmt', $stmt);
+    $DB->set_field('local_prequran_platform_stmt', 'statementnumber',
+        'PST-' . gmdate('Ym', $periodstart) . '-C' . $consumerid . '-' . str_pad((string)$stmtid, 6, '0', STR_PAD_LEFT),
+        ['id' => $stmtid]);
+    pqfin_audit('platform_statement_generated', (int)($consumer->primaryworkspaceid ?? 0), 0, $stmtid, [
+        'targettype' => 'platform_statement',
+        'consumerid' => $consumerid,
+        'grosscollected' => pqfin_cents_to_money($grosscents),
+        'feeamount' => pqfin_cents_to_money($feecents),
+        'paymentcount' => $paymentcount,
+        'actorid' => $actorid,
+    ]);
+    return $stmtid;
+}
+
+function pqfin_update_platform_statement(int $stmtid, int $actorid, array $data): void {
+    global $DB;
+
+    $stmt = $DB->get_record('local_prequran_platform_stmt', ['id' => $stmtid], '*', MUST_EXIST);
+    if ((string)$stmt->status !== 'draft') {
+        throw new invalid_parameter_exception('Only draft statements can be edited. Void and regenerate instead.');
+    }
+    $grosscents = pqfin_money_to_cents((string)$stmt->grosscollected);
+    $feepercentcents = min(10000, max(0, pqfin_money_to_cents((string)($data['feepercent'] ?? $stmt->feepercent))));
+    $feecents = (int)floor($grosscents * $feepercentcents / 10000);
+    $adjustcents = pqfin_money_to_cents((string)($data['adjustment'] ?? $stmt->adjustment));
+    $DB->update_record('local_prequran_platform_stmt', (object)[
+        'id' => $stmtid,
+        'feepercent' => pqfin_cents_to_money($feepercentcents),
+        'feeamount' => pqfin_cents_to_money($feecents),
+        'adjustment' => pqfin_cents_to_money($adjustcents),
+        'adjustmentnote' => core_text::substr(trim((string)($data['adjustmentnote'] ?? $stmt->adjustmentnote)), 0, 255),
+        'netdue' => pqfin_cents_to_money(max(0, $feecents + $adjustcents)),
+        'notes' => trim((string)($data['notes'] ?? $stmt->notes)),
+        'modifiedby' => $actorid,
+        'timemodified' => time(),
+    ]);
+    pqfin_audit('platform_statement_updated', 0, 0, $stmtid, [
+        'targettype' => 'platform_statement',
+        'consumerid' => (int)$stmt->consumerid,
+        'feepercent' => pqfin_cents_to_money($feepercentcents),
+        'actorid' => $actorid,
+    ]);
+}
+
+function pqfin_transition_platform_statement(int $stmtid, int $actorid, string $newstatus, string $reference = ''): void {
+    global $DB;
+
+    $stmt = $DB->get_record('local_prequran_platform_stmt', ['id' => $stmtid], '*', MUST_EXIST);
+    $current = (string)$stmt->status;
+    $allowed = [
+        'draft' => ['issued', 'void'],
+        'issued' => ['paid', 'void'],
+    ];
+    if (!in_array($newstatus, $allowed[$current] ?? [], true)) {
+        throw new invalid_parameter_exception('Statement ' . $stmt->statementnumber . ' cannot move from '
+            . $current . ' to ' . $newstatus . '.');
+    }
+    if ($newstatus === 'paid' && trim($reference) === '') {
+        throw new invalid_parameter_exception('Marking a statement paid requires the settlement payment reference.');
+    }
+    $now = time();
+    $update = (object)[
+        'id' => $stmtid,
+        'status' => $newstatus,
+        'modifiedby' => $actorid,
+        'timemodified' => $now,
+    ];
+    if ($newstatus === 'issued') {
+        $update->issuedat = $now;
+    } else if ($newstatus === 'paid') {
+        $update->paidat = $now;
+        $update->paidreference = core_text::substr(trim($reference), 0, 120);
+    } else if ($newstatus === 'void') {
+        $update->voidedat = $now;
+    }
+    $DB->update_record('local_prequran_platform_stmt', $update);
+    pqfin_audit('platform_statement_' . $newstatus, 0, 0, $stmtid, [
+        'targettype' => 'platform_statement',
+        'consumerid' => (int)$stmt->consumerid,
+        'statementnumber' => (string)$stmt->statementnumber,
+        'from' => $current,
+        'to' => $newstatus,
+        'reference' => core_text::substr(trim($reference), 0, 120),
+        'actorid' => $actorid,
+    ]);
+}
+
+function pqfin_platform_statements(int $consumerid = 0, int $limit = 200): array {
+    global $DB;
+
+    if (!pqfin_platform_stmt_schema_ready()) {
+        return [];
+    }
+    $params = [];
+    if ($consumerid > 0) {
+        $params['consumerid'] = $consumerid;
+    }
+    return array_values($DB->get_records('local_prequran_platform_stmt', $params,
+        'periodstart DESC, id DESC', '*', 0, $limit));
 }

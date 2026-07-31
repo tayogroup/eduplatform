@@ -84,7 +84,7 @@ function pqtil_existing_user(int $userid): stdClass {
         'mnethostid' => $CFG->mnet_localhost_id,
     ], '*', IGNORE_MISSING);
     if (!$user) {
-        throw new invalid_parameter_exception('Choose a valid existing Moodle teacher account.');
+        throw new invalid_parameter_exception('Choose a valid existing teacher account.');
     }
     return $user;
 }
@@ -103,7 +103,14 @@ function pqtil_find_user_by_email(string $email): ?stdClass {
 }
 
 function pqtil_create_user(string $firstname, string $lastname, string $email, string $username, bool $emailstop): array {
-    global $CFG;
+    global $CFG, $DB;
+
+    if ($email !== '' && !str_ends_with(strtolower($email), '@eduplatform.local')
+            && $DB->record_exists_select('user', 'LOWER(email) = LOWER(:email) AND deleted = 0 AND mnethostid = :mnet',
+                ['email' => $email, 'mnet' => $CFG->mnet_localhost_id])) {
+        throw new invalid_parameter_exception('The email ' . $email
+            . ' already belongs to an existing account. Link that account instead of creating a duplicate.');
+    }
 
     $password = generate_password(12);
     $user = (object)[
@@ -123,6 +130,8 @@ function pqtil_create_user(string $firstname, string $lastname, string $email, s
     ];
 
     $userid = (int)user_create_user($user, true, false);
+    // Staff-conveyed temp password: the first login must replace it.
+    set_user_preference('auth_forcepasswordchange', 1, $userid);
     return [$userid, $password];
 }
 
@@ -722,7 +731,7 @@ function pqtil_slot_summary(array $slots, array $days, array $hours, int $sessio
 
 function pqtil_field_label(string $name): string {
     $labels = [
-        'existing_teacherid' => 'Existing Moodle teacher ID',
+        'existing_teacherid' => 'Existing teacher ID',
         'teacher_requestid' => 'Teacher application ID',
         'teacher_firstname' => 'First name',
         'teacher_lastname' => 'Last name',

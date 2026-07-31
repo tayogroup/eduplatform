@@ -237,6 +237,8 @@ foreach ($devices as $device) {
     }
 }
 
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
+
 $context = context_system::instance();
 $PAGE->set_context($context);
 $PAGE->set_url($pageurl);

@@ -285,6 +285,83 @@ function local_prequran_consumer_redirect_url(stdClass $consumer, bool $dashboar
     return new moodle_url($path, $params);
 }
 
+/**
+ * If the current domain belongs to a parent consumer (an org_group owner,
+ * e.g. an academy that owns several schools) and the logged-in user isn't
+ * actually a member of that parent's own workspace, check whether they
+ * belong to exactly one of the child schools linked under it instead. This
+ * lets students/teachers/parents log in through the parent's own domain and
+ * land straight in their real school's workspace rather than hitting an
+ * access-denied page for a workspace they were never a member of.
+ */
+function local_prequran_org_group_child_dashboard_url(stdClass $consumer, int $userid): ?moodle_url {
+    global $DB;
+    $consumerid = (int)($consumer->consumerid ?? 0);
+    if ($consumerid <= 0 || $userid <= 0
+            || !local_prequran_table_exists_safely('local_prequran_org_group')
+            || !local_prequran_table_exists_safely('local_prequran_org_group_member')
+            || !local_prequran_table_exists_safely('local_prequran_workspace_member')) {
+        return null;
+    }
+    try {
+        $rows = $DB->get_fieldset_sql(
+            "SELECT gm.memberid
+               FROM {local_prequran_org_group_member} gm
+               JOIN {local_prequran_org_group} g ON g.id = gm.groupid
+               JOIN {local_prequran_workspace_member} wm ON wm.workspaceid = gm.memberid
+              WHERE g.parentconsumerid = :consumerid
+                AND g.status = :groupstatus
+                AND gm.member_type = :membertype
+                AND gm.status = :memberstatus
+                AND wm.userid = :userid
+                AND wm.status = :wmstatus
+           ORDER BY gm.id ASC",
+            [
+                'consumerid' => $consumerid,
+                'groupstatus' => 'active',
+                'membertype' => 'workspace',
+                'memberstatus' => 'active',
+                'userid' => $userid,
+                'wmstatus' => 'active',
+            ]
+        );
+    } catch (Throwable $e) {
+        return null;
+    }
+    $childworkspaceid = $rows ? (int)reset($rows) : 0;
+    if ($childworkspaceid <= 0) {
+        return null;
+    }
+    return new moodle_url('/local/hubredirect/workspace_dashboard.php', ['workspaceid' => $childworkspaceid]);
+}
+
+/**
+ * Dashboard destination for a logged-in user under the given domain context,
+ * preferring a linked child school's workspace over the parent's own
+ * (generic/empty, for the user) dashboard when they only actually belong to
+ * the child. See local_prequran_org_group_child_dashboard_url().
+ */
+function local_prequran_effective_dashboard_url(?stdClass $consumer, int $userid): ?moodle_url {
+    global $DB;
+    if (!$consumer) {
+        return null;
+    }
+    $parentworkspaceid = (int)($consumer->workspaceid ?? 0);
+    $belongstoparent = $parentworkspaceid > 0 && local_prequran_table_exists_safely('local_prequran_workspace_member')
+        && $DB->record_exists('local_prequran_workspace_member', [
+            'workspaceid' => $parentworkspaceid,
+            'userid' => $userid,
+            'status' => 'active',
+        ]);
+    if (!$belongstoparent) {
+        $childurl = local_prequran_org_group_child_dashboard_url($consumer, $userid);
+        if ($childurl) {
+            return $childurl;
+        }
+    }
+    return local_prequran_consumer_redirect_url($consumer, true);
+}
+
 function local_prequran_consumer_login_url(stdClass $consumer, bool $sessionexpired = false): moodle_url {
     $path = local_prequran_consumer_copy_value($consumer, 'default_login_path', '/local/hubredirect/consumer_login.php');
     $path = '/' . ltrim(trim(str_replace('\\', '/', $path)), '/');
@@ -375,7 +452,7 @@ function local_prequran_before_http_headers(): void {
     }
 
     if ($consumercontext && ($isloginpage || $ismydashboard || $ishomepage)) {
-        $dashboardurl = local_prequran_consumer_redirect_url($consumercontext, true);
+        $dashboardurl = local_prequran_effective_dashboard_url($consumercontext, (int)$USER->id);
         if ($dashboardurl) {
             redirect($dashboardurl);
         }
@@ -386,7 +463,7 @@ function local_prequran_before_http_headers(): void {
     }
 
     if ($isloginpage) {
-        redirect($consumercontext ? local_prequran_consumer_redirect_url($consumercontext, true) : new moodle_url('/local/hubredirect/dashboard.php'));
+        redirect($consumercontext ? local_prequran_effective_dashboard_url($consumercontext, (int)$USER->id) : new moodle_url('/local/hubredirect/dashboard.php'));
     }
 
     if (!local_prequran_should_redirect_moodle_page($path, $script)) {
@@ -395,10 +472,10 @@ function local_prequran_before_http_headers(): void {
 
     $role = local_prequran_dashboard_redirect_role((int)$USER->id);
     if ($role === 'teacher' || $role === 'parent' || $role === 'student') {
-        redirect($consumercontext ? local_prequran_consumer_redirect_url($consumercontext, true) : new moodle_url('/local/hubredirect/dashboard.php'));
+        redirect($consumercontext ? local_prequran_effective_dashboard_url($consumercontext, (int)$USER->id) : new moodle_url('/local/hubredirect/dashboard.php'));
     }
 
-    redirect($consumercontext ? local_prequran_consumer_redirect_url($consumercontext, true) : new moodle_url('/local/hubredirect/dashboard.php'));
+    redirect($consumercontext ? local_prequran_effective_dashboard_url($consumercontext, (int)$USER->id) : new moodle_url('/local/hubredirect/dashboard.php'));
 }
 
 /**

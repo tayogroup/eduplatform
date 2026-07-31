@@ -281,7 +281,14 @@ function pqpirl_contact_keys(array $contacts): array {
 // NOT verbatim (session-bound in legacy): stateless HMAC keyed with the
 // existing server-side launch secret; no sesskey, no cookies.
 function pqpirl_security_token(int $formtime): string {
-    $secret = (string)get_config('local_prequran', 'progress_launch_secret');
+    // Dedicated intake secret so rotating the auth-token signing key
+    // (progress_launch_secret) does not silently break public-intake
+    // anti-abuse, and vice versa. Falls back to the launch secret when the
+    // dedicated key is unset — no behaviour change until an admin sets it.
+    $secret = (string)get_config('local_prequran', 'intake_form_secret');
+    if ($secret === '') {
+        $secret = (string)get_config('local_prequran', 'progress_launch_secret');
+    }
     return hash_hmac('sha256', $formtime . '|public_intake', $secret);
 }
 
@@ -443,5 +450,5 @@ function pqpirl_teacher_preference_label(?stdClass $teacher): string {
     if ($name === '') {
         $name = trim((string)$teacher->firstname . ' ' . (string)$teacher->lastname);
     }
-    return $name . ' (' . pqh_account_no_label($teacher) . ', Moodle ID ' . (int)$teacher->userid . ')';
+    return $name . ' (' . pqh_account_no_label($teacher) . ', User ID ' . (int)$teacher->userid . ')';
 }

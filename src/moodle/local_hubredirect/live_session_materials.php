@@ -335,6 +335,9 @@ if ($workspaceid > 0 && (int)$session->teacherid !== (int)$USER->id
         'Workspace materials access required'
     );
 }
+if ($workspaceid > 0) {
+    pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
+}
 
 $notice = '';
 if ($action === 'whiteboard') {

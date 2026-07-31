@@ -541,6 +541,28 @@
     }
   }
 
+  // Country/city/timezone reference data is served statically from the CDN
+  // (../data/*.json, same origin as this page — no CORS), not re-sent inline by
+  // Moodle. Merge it into the bootstrap options before the form renders; on any
+  // failure keep whatever the server provided so dropdowns still populate.
+  async function hydrateGeoOptions(opts) {
+    opts = opts || {};
+    try {
+      const [cc, ct] = await Promise.all([
+        fetch("../data/country_cities.json").then((r) => (r.ok ? r.json() : null)),
+        fetch("../data/country_timezones.json").then((r) => (r.ok ? r.json() : null)),
+      ]);
+      if (cc && ct) {
+        opts.countries = Object.assign({}, ct.countries || {}, { Other: "Other" });
+        opts.cities = Object.assign({}, cc.cities || {}, { Other: "Other city not listed" });
+        opts.country_cities = cc.country_cities || {};
+        opts.timezones = ct.timezones || {};
+        opts.country_timezones = ct.country_timezones || {};
+      }
+    } catch (e) { /* keep server-provided options as fallback */ }
+    return opts;
+  }
+
   async function load() {
     try {
       const r = await fetch(url());
@@ -548,6 +570,7 @@
       const d = await r.json();
       if (!d.ok) throw new Error(d.error || "unknown");
       D = d;
+      D.options = await hydrateGeoOptions(D.options);
       formtime = d.formtime;
       formtoken = d.formtoken;
       const c = d.consumer || {};

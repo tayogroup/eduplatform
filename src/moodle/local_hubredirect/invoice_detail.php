@@ -29,6 +29,7 @@ $invoice = pqfin_invoice_belongs_to_workspace($invoiceid, $workspaceid, $consume
 if (!$invoice) {
     pqh_access_denied('Invoice is outside this workspace or no longer exists.', new moodle_url('/local/hubredirect/invoices.php', $urlparams), 'Invoice unavailable');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $message = optional_param('created', 0, PARAM_INT) === 1 ? 'Draft invoice created.' : '';
 $error = '';
@@ -283,7 +284,7 @@ body.pqinvdet-page #page,body.pqinvdet-page #page-content,body.pqinvdet-page #re
           <div class="pqid-formgrid" style="grid-template-columns:1fr 1fr 1fr 1fr auto">
             <div class="pqid-field"><label>Offering ID</label><input class="pqid-input" name="offeringid" value="<?php echo $editline ? (int)$editline->offeringid : 0; ?>"></div>
             <div class="pqid-field"><label>Request ID</label><input class="pqid-input" name="requestid" value="<?php echo $editline ? (int)$editline->requestid : 0; ?>"></div>
-            <div class="pqid-field"><label>Moodle course</label><input class="pqid-input" name="moodlecourseid" value="<?php echo $editline ? (int)$editline->moodlecourseid : 0; ?>"></div>
+            <div class="pqid-field"><label>Course</label><input class="pqid-input" name="moodlecourseid" value="<?php echo $editline ? (int)$editline->moodlecourseid : 0; ?>"></div>
             <div class="pqid-field"><label>Teacher ID</label><input class="pqid-input" name="teacherid" value="<?php echo $editline ? (int)$editline->teacherid : 0; ?>"></div>
             <div class="pqid-field"><label>&nbsp;</label><button class="pqid-btn pqid-btn--primary" type="submit"><?php echo $editline ? 'Save line' : 'Add line'; ?></button></div>
           </div>
@@ -371,7 +372,7 @@ body.pqinvdet-page #page,body.pqinvdet-page #page-content,body.pqinvdet-page #re
       <?php endif; ?>
       <h2 class="pqid-title" style="font-size:20px;margin-top:18px">Payment Plans And Scheduled Installments</h2>
       <?php if (!pqfin_payment_plan_schema_ready()): ?>
-        <div class="pqid-empty">Payment plan schema is not ready. Run the local_prequran Moodle upgrade.</div>
+        <div class="pqid-empty">Payment plan schema is not ready. Run the local_prequran upgrade.</div>
       <?php elseif (!$paymentplans): ?>
         <div class="pqid-empty">No payment plan has been scheduled for this invoice.</div>
       <?php endif; ?>
@@ -416,7 +417,7 @@ body.pqinvdet-page #page,body.pqinvdet-page #page-content,body.pqinvdet-page #re
       <?php endforeach; ?>
       <h2 class="pqid-title" style="font-size:20px;margin-top:18px">Scholarships, Sponsorships, And Marketplace Payout Readiness</h2>
       <?php if (!pqfin_assistance_schema_ready()): ?>
-        <div class="pqid-empty">Scholarship, sponsorship, and payout readiness schema is not ready. Run the local_prequran Moodle upgrade.</div>
+        <div class="pqid-empty">Scholarship, sponsorship, and payout readiness schema is not ready. Run the local_prequran upgrade.</div>
       <?php elseif (!$scholarshipawards && !$sponsorcommitments && !$marketplacepayouts): ?>
         <div class="pqid-empty">No scholarship awards, sponsor commitments, or marketplace payout readiness records have been added yet.</div>
       <?php endif; ?>
@@ -543,7 +544,7 @@ body.pqinvdet-page #page,body.pqinvdet-page #page-content,body.pqinvdet-page #re
           <button class="pqid-btn pqid-btn--primary" type="submit">Record payment</button>
         </form>
       <?php elseif (!pqfin_payment_schema_ready()): ?>
-        <div class="pqid-empty" style="margin-top:14px">Payment schema is not ready. Run the local_prequran Moodle upgrade.</div>
+        <div class="pqid-empty" style="margin-top:14px">Payment schema is not ready. Run the local_prequran upgrade.</div>
       <?php endif; ?>
       <?php if (pqfin_payment_plan_schema_ready() && !$activepaymentplan && in_array((string)$invoice->status, ['issued', 'sent', 'partially_paid'], true) && pqfin_money_to_cents((string)$invoice->balancedue) > 0): ?>
         <form method="post" style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(23,48,68,.1)">
@@ -632,7 +633,7 @@ body.pqinvdet-page #page,body.pqinvdet-page #page-content,body.pqinvdet-page #re
           <button class="pqid-btn" type="submit">Mark invoice disputed</button>
         </form>
       <?php elseif (!pqfin_correction_schema_ready()): ?>
-        <div class="pqid-empty" style="margin-top:14px">Correction schema is not ready. Run the local_prequran Moodle upgrade.</div>
+        <div class="pqid-empty" style="margin-top:14px">Correction schema is not ready. Run the local_prequran upgrade.</div>
       <?php endif; ?>
       <?php if (in_array((string)$invoice->status, ['draft', 'issued', 'sent'], true)): ?>
         <form method="post" style="margin-top:14px">

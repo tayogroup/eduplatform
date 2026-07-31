@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Engagement report · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .note{color:var(--muted);font-size:12px;margin:8px 0 0}
+  form.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+  .field{display:grid;gap:4px}
+  .field label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2)}
+  .field input,.field select{min-height:36px;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font:inherit;background:#fff}
+  .field input{width:150px}
+  button{min-height:36px;border:0;border-radius:8px;padding:0 14px;font:800 14px/1 system-ui;background:var(--blue2);color:#fff;cursor:pointer}
+  button.ghost{background:var(--sky);color:var(--blue)}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:16px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .kpi strong{display:block;font-size:24px;font-variant-numeric:tabular-nums}
+  .kpi span{font-size:12px;color:var(--muted)}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);background:var(--sky);white-space:nowrap}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  tr:hover td{background:#fafcfe}
+  .name{font-weight:800}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2);white-space:nowrap}
+  .pill.good{background:#e1f2ff;color:var(--blue2)}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .empty{border:1px dashed var(--line);border-radius:10px;padding:26px;text-align:center;color:var(--muted);font-weight:700}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Engagement report</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of engagement_report.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Engagement report</h1><p class="sub">Which students logged in, attended a class, or attempted a quiz within the window — least-engaged first.</p></div>
+  <div class="panel">
+    <form class="filters" id="filters">
+      <div class="field"><label for="win">Window</label>
+        <select id="win"><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="90">Last 90 days</option></select></div>
+      <div class="field"><label for="wsid">Workspace ID (override)</label><input id="wsid" type="number" min="0" step="1" placeholder="current"></div>
+      <button type="button" class="ghost" id="refresh">Refresh</button>
+    </form>
+  </div>
+  <div id="status" class="status">Loading engagement…</div>
+  <section id="kpis" class="kpis" hidden></section>
+  <div class="panel" id="report-panel" hidden>
+    <div class="scroll" id="table"></div>
+    <p class="note">Engagement = logged in, attended a class, or attempted a quiz within the window.</p>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const dt = (ts) => { const n = Number(ts); if (!n) return "Never"; const d = new Date(n * 1000); return isNaN(d.getTime()) ? "Never" : d.toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" }); };
+
+  // Window: query param default 30; snap to an allowed option.
+  const allowed = ["7", "30", "90"];
+  let win = qs.get("windowdays");
+  win = allowed.includes(String(win)) ? String(win) : "30";
+  $("#win").value = win;
+  if (qs.get("workspaceid")) $("#wsid").value = qs.get("workspaceid");
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const url = () => {
+    const p = new URLSearchParams({ report: "engagement-report", token, windowdays: $("#win").value || "30" });
+    const w = ($("#wsid").value || "").trim(); if (w) p.set("workspaceid", w);
+    const c = qs.get("consumer"); if (c) p.set("consumer", c);
+    return endpoint + "?" + p;
+  };
+
+  async function load() {
+    $("#status").hidden = false; $("#status").className = "status"; $("#status").textContent = "Loading engagement…";
+    try {
+      const r = await fetch(url());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function render(d) {
+    if (d.windowdays && allowed.includes(String(d.windowdays))) $("#win").value = String(d.windowdays);
+    const wd = Number(d.windowdays) || Number($("#win").value) || 30;
+
+    const M = d.metrics || {};
+    const rate = (M.engagement_rate === null || M.engagement_rate === undefined) ? "—" : Number(M.engagement_rate) + "%";
+    $("#kpis").hidden = false;
+    $("#kpis").innerHTML = [
+      [Number(M.students) || 0, "Total students"],
+      [Number(M.engaged) || 0, `Engaged · ${wd}d`],
+      [rate, "Engagement rate"],
+    ].map(([v, l]) => `<div class="kpi"><strong>${esc(v)}</strong><span>${esc(l)}</span></div>`).join("");
+
+    const rows = d.students || [];
+    $("#table").innerHTML = !rows.length
+      ? `<div class="empty">No students found for this window.</div>`
+      : `<table><thead><tr>`
+        + `<th>Student</th><th>Last active</th><th class="num">Days inactive</th><th class="num">Live sessions</th><th class="num">Quiz attempts</th><th class="num">Quiz minutes</th><th>Engagement</th>`
+        + `</tr></thead><tbody>`
+        + rows.map((s) => {
+          const di = (s.days_inactive === null || s.days_inactive === undefined) ? "—" : Number(s.days_inactive);
+          const pill = s.engaged ? `<span class="pill good">Engaged</span>` : `<span class="pill warn">Inactive</span>`;
+          return `<tr>`
+            + `<td><span class="name">${esc(s.name)}</span><br><span class="muted">#${Number(s.studentid) || 0}</span></td>`
+            + `<td>${esc(dt(s.last_active))}</td>`
+            + `<td class="num">${di}</td>`
+            + `<td class="num">${Number(s.sessions) || 0}</td>`
+            + `<td class="num">${Number(s.quiz_attempts) || 0}</td>`
+            + `<td class="num">${Number(s.quiz_minutes) || 0}</td>`
+            + `<td>${pill}</td>`
+            + `</tr>`;
+        }).join("")
+        + `</tbody></table>`;
+    $("#report-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  $("#filters").addEventListener("submit", (e) => { e.preventDefault(); load(); });
+  $("#win").addEventListener("change", load);
+  $("#refresh").addEventListener("click", load);
+  load();
+})();
+</script>
+</body>
+</html>

@@ -260,10 +260,38 @@ function pqpti_url_ok(string $url): bool {
 }
 
 $consumercontext = pqh_requested_consumer_context();
+$requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
+if ($requestedworkspaceid > 0 && (int)($consumercontext->workspaceid ?? 0) !== $requestedworkspaceid) {
+    $workspacecontext = pqh_consumer_context_by_workspace($requestedworkspaceid);
+    if ($workspacecontext) {
+        $consumercontext = $workspacecontext;
+    }
+}
+
+// On a parent domain (e.g. the Ehel Academy umbrella site) that owns child
+// schools, the applicant must pick which actual school they're applying to
+// before the rest of the form (course types, institution-specific fields)
+// can be scoped correctly. Same pattern as public_intake.php's picker.
+$domainbasecontext = pqh_current_consumer_context();
+$childschoolchoices = pqh_org_group_child_schools((int)$domainbasecontext->consumerid);
+$selectedchildworkspaceid = 0;
+if ($childschoolchoices) {
+    foreach ($childschoolchoices as $childschool) {
+        if ((int)$childschool->workspaceid > 0 && (int)$childschool->workspaceid === (int)$consumercontext->workspaceid) {
+            $selectedchildworkspaceid = (int)$consumercontext->workspaceid;
+            break;
+        }
+    }
+}
+$needsschoolselection = $childschoolchoices && $selectedchildworkspaceid <= 0;
+
 $consumerreturnurl = trim((string)($consumercontext->returnurl ?? ''));
 pqh_apply_consumer_embed_headers($consumercontext);
 $options['course_types'] = pqco_workspace_course_options($consumercontext, [], true);
 $consumerparams = ['consumer' => (string)$consumercontext->consumerslug];
+if ((int)$consumercontext->workspaceid > 0) {
+    $consumerparams['workspaceid'] = (int)$consumercontext->workspaceid;
+}
 $brandname = (string)$consumercontext->consumername;
 $institutiontype = pqhi_clean_institution_type((string)($consumercontext->institution_type ?? ''), '');
 $faithsubcategory = pqhi_clean_faith_subcategory((string)($consumercontext->faith_subcategory ?? ''));
@@ -421,7 +449,7 @@ $form = [
     'notes' => '',
 ];
 
-if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($ready && !$needsschoolselection && $_SERVER['REQUEST_METHOD'] === 'POST') {
     require_sesskey();
     $postedformtime = optional_param('formtime', 0, PARAM_INT);
     $postedtoken = optional_param('formtoken', '', PARAM_ALPHANUMEXT);
@@ -906,48 +934,117 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($consumerreturnurl !== '' && preg_match('#^https?://#i', $consumerreturnurl)) {
             redirect($consumerreturnurl);
         }
-        redirect(new moodle_url('/local/hubredirect/consumer_landing.php', array_merge($consumerparams, ['teacher_submitted' => 1])));
+        // Redirect to self (post-redirect-GET) rather than consumer_landing.php --
+        // that page now requires login, but an anonymous applicant with no
+        // account must still see their confirmation.
+        redirect(new moodle_url('/local/hubredirect/public_teacher_intake.php', array_merge($consumerparams, ['submitted' => 1])));
     }
 }
 
 if (optional_param('submitted', 0, PARAM_BOOL)) {
-    if ($consumerreturnurl !== '' && preg_match('#^https?://#i', $consumerreturnurl)) {
-        redirect($consumerreturnurl);
-    }
-    redirect(new moodle_url('/local/hubredirect/consumer_landing.php', array_merge($consumerparams, ['teacher_submitted' => 1])));
+    $message = 'Thank you. Your application was received and will be reviewed.';
 }
 
 echo $OUTPUT->header();
 ?>
 <style>
-body.pqh-public-teacher-intake-page header,body.pqh-public-teacher-intake-page footer,body.pqh-public-teacher-intake-page nav.navbar,body.pqh-public-teacher-intake-page #page-header,body.pqh-public-teacher-intake-page #page-footer,body.pqh-public-teacher-intake-page .drawer,body.pqh-public-teacher-intake-page .drawer-toggles,body.pqh-public-teacher-intake-page .block-region,body.pqh-public-teacher-intake-page [data-region="drawer"],body.pqh-public-teacher-intake-page [data-region="right-hand-drawer"]{display:none!important}
-body.pqh-public-teacher-intake-page #page,body.pqh-public-teacher-intake-page #page-content,body.pqh-public-teacher-intake-page #region-main,body.pqh-public-teacher-intake-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
-.pqpti-shell{min-height:100vh;padding:0 0 56px;background:linear-gradient(180deg,#f6fbff 0,#fffaf0 100%);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#173044}
-.pqpti-wrap{max-width:1120px;margin:0 auto;padding:18px}
-.pqpti-hero{min-height:300px;padding:46px 34px;margin-bottom:18px;border-radius:8px;background:linear-gradient(90deg,rgba(9,37,32,.94),rgba(16,74,60,.72)),url("/local/hubredirect/pix/landing-welcome.jpg") center/cover no-repeat;color:#fff}
-.pqpti-brand{display:inline-flex;margin-bottom:13px;color:#ffd88c;font-size:13px;font-weight:950;text-transform:uppercase}
-.pqpti-title{max-width:820px;margin:0;font-size:44px;line-height:1.05;font-weight:950;color:#fff;letter-spacing:0}
-.pqpti-sub{max-width:780px;margin:13px 0 0;color:rgba(255,255,255,.9);font-size:17px;font-weight:800;line-height:1.58}
-.pqpti-panel{padding:24px;background:#fff;border:1px solid rgba(23,48,68,.12);border-radius:8px;box-shadow:0 14px 34px rgba(23,48,68,.08)}
-.pqpti-panel h2{margin:0 0 15px;font-size:24px;line-height:1.1;font-weight:950;color:#241b24}
-.pqpti-panel h3{display:inline-flex;margin:20px 0 12px;padding:7px 11px;border-radius:999px;background:#fff3e6;border:1px solid rgba(217,154,38,.22);font-size:15px;font-weight:950;color:#6f4e32}
-.pqpti-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;align-items:start}
-.pqpti-field{display:grid;gap:7px;margin-bottom:12px;align-content:start}.pqpti-field--tight{gap:0}.pqpti-field label{margin:0;font-size:13px;font-weight:950;color:#234457}.pqpti-hint{color:#6b7e8b;font-weight:800}
-.pqpti-input,.pqpti-textarea{width:100%;min-height:46px;border:2px solid #d9e7f7;border-radius:8px;padding:10px 12px;font:800 15px/1.2 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:#fff;color:#173044}
-.pqpti-textarea{min-height:112px;line-height:1.45}.pqpti-input:focus,.pqpti-textarea:focus{outline:0;border-color:#7cc7ff;box-shadow:0 0 0 4px rgba(34,193,232,.14)}
-.pqpti-choicegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.pqpti-choice{display:flex;gap:8px;align-items:center;min-height:40px;padding:8px 10px;border:1px solid rgba(23,48,68,.12);border-radius:8px;background:#fbfdff;font-size:13px;font-weight:850}.pqpti-choice input{width:18px;height:18px;accent-color:#2f6f4e}
-.pqpti-calendar{overflow:auto;border:2px solid #d9e7f7;border-radius:8px;background:#fff}.pqpti-calendar table{width:100%;border-collapse:separate;border-spacing:0;min-width:840px}.pqpti-calendar th,.pqpti-calendar td{border-bottom:1px solid rgba(15,34,48,.1);border-right:1px solid rgba(15,34,48,.08);padding:9px;text-align:center;font-weight:900}.pqpti-calendar th{background:#f0fbff;color:#234457;font-size:12px}.pqpti-calendar td:first-child{text-align:left;background:#fffdf6}.pqpti-slot{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:8px;background:#eef7ff}.pqpti-slot input{width:18px;height:18px;accent-color:#d99a26}
-.pqpti-alert{padding:14px 16px;border-radius:8px;margin-bottom:14px;font-weight:950}.pqpti-alert--ok{background:#edf9ef;color:#245c35}.pqpti-alert--bad{background:#fff0ed;color:#883526}.pqpti-alert ul{margin:8px 0 0;padding-left:20px}
-.pqpti-error{font-size:12px;font-weight:950;color:#a33a2c}.pqpti-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border:0;border-radius:8px;background:#d99a26;color:#1b1409!important;text-decoration:none;font-size:16px;font-weight:950;cursor:pointer}.pqpti-empty{padding:18px;border:2px dashed rgba(15,34,48,.2);border-radius:8px;color:#516a7a;font-weight:950;background:#fffdf6}.pqpti-trap{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
-@media(max-width:760px){.pqpti-grid,.pqpti-choicegrid{grid-template-columns:1fr}.pqpti-title{font-size:32px}.pqpti-wrap{padding:12px}.pqpti-hero{padding:26px 18px}.pqpti-panel{padding:18px}}
+body.pqh-public-teacher-intake-page header,body.pqh-public-teacher-intake-page header#page-header,body.pqh-public-teacher-intake-page header.navbar,body.pqh-public-teacher-intake-page .navbar,body.pqh-public-teacher-intake-page .navbar.fixed-top,body.pqh-public-teacher-intake-page .primary-navigation,body.pqh-public-teacher-intake-page .secondary-navigation,body.pqh-public-teacher-intake-page .moremenu,body.pqh-public-teacher-intake-page footer,body.pqh-public-teacher-intake-page nav.navbar,body.pqh-public-teacher-intake-page #page-header,body.pqh-public-teacher-intake-page #page-footer,body.pqh-public-teacher-intake-page .drawer,body.pqh-public-teacher-intake-page .drawer-toggles,body.pqh-public-teacher-intake-page .block-region,body.pqh-public-teacher-intake-page [data-region="drawer"],body.pqh-public-teacher-intake-page [data-region="right-hand-drawer"]{display:none!important}
+body.pqh-public-teacher-intake-page{padding-top:0!important}
+body.pqh-public-teacher-intake-page #page-wrapper,body.pqh-public-teacher-intake-page #page,body.pqh-public-teacher-intake-page #page-content,body.pqh-public-teacher-intake-page #region-main,body.pqh-public-teacher-intake-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important;background:transparent!important}
+.pqpti-shell{--pq-blue:#2f6f4e;--pq-blue-dark:#1f5138;--pq-blue-soft:#e4efe6;--pq-ink:#1c2b22;--pq-ink-2:#33463a;--pq-muted:#5c7267;--pq-line:#e3dcc8;--pq-line-strong:#c9bd9d;--pq-paper:#f7f4ec;--pq-card:#fffdf8;--pq-green:#2f6f4e;--pq-gold:#a5741e;--pq-gold-soft:#f4e6c8;--pq-hero-bg:#dbeafe;--pq-red:#9a3d2d;--pq-label:#2f5fad;--pq-serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--pq-sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;--pq-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;position:fixed;inset:0;z-index:2147483000;overflow:auto;min-height:100vh;padding:0 0 64px;background:var(--pq-paper);font-family:var(--pq-sans);color:var(--pq-ink);-webkit-font-smoothing:antialiased}
+@media(prefers-color-scheme:dark){.pqpti-shell{--pq-blue:#7fc79e;--pq-blue-dark:#63a883;--pq-blue-soft:#1c3327;--pq-ink:#e8e3d3;--pq-ink-2:#cdd7c9;--pq-muted:#9fb0a4;--pq-line:#2a3a30;--pq-line-strong:#3a4c40;--pq-paper:#121d17;--pq-card:#16241c;--pq-green:#7fc79e;--pq-gold:#dcaa54;--pq-gold-soft:#3a301a;--pq-hero-bg:#1c2e47;--pq-red:#e08876;--pq-label:#8ab4e8}}
+.pqpti-wrap{max-width:920px;margin:0 auto;padding:18px 18px 0}
+.pqpti-hero,.pqpti-panel{background:var(--pq-card);border:1px solid var(--pq-line);border-radius:14px;box-shadow:0 2px 10px rgba(22,38,30,.06)}
+.pqpti-hero{padding:28px 32px;margin-bottom:16px}
+.pqpti-navbrand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--pq-ink)!important;min-width:0;margin-bottom:16px}
+.pqpti-navmark{width:40px;height:40px;border-radius:8px;background:var(--pq-blue);color:#fff;display:grid;place-items:center;font-size:16px;font-weight:700;flex:0 0 auto}
+.pqpti-navmark--img{width:58px;height:58px;padding:0;background:none;border:0;border-radius:0}
+.pqpti-navmark--img img{display:block;width:100%;height:100%;object-fit:contain}
+.pqpti-navname{font-size:17px;font-weight:700;line-height:1.1;white-space:normal}
+.pqpti-title{margin:0;font-family:var(--pq-serif);font-size:clamp(28px,4vw,38px);line-height:1.12;font-weight:600;color:var(--pq-ink);letter-spacing:-.01em}
+.pqpti-sub{margin:8px 0 0;color:var(--pq-muted);font-size:14.5px;font-weight:400;line-height:1.6}
+.pqpti-panel{padding:26px;margin-bottom:16px;overflow:hidden}
+.pqpti-panel h2{margin:0 0 18px;font-size:22px;line-height:1.2;font-weight:700;color:var(--pq-ink)}
+.pqpti-panel h3{display:block;margin:8px 0 24px;padding:0 0 16px;border-bottom:2px solid var(--pq-line-strong);background:none;color:var(--pq-ink);font-family:var(--pq-serif);font-size:24px;line-height:1.2;font-weight:600;letter-spacing:-.01em}
+.pqpti-panel h3:first-of-type{margin-top:0}
+.pqpti-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 20px;align-items:start}
+.pqpti-field{display:grid;gap:6px;margin-bottom:16px;align-content:start;align-self:start}.pqpti-field--tight{gap:0}.pqpti-field--wide{grid-column:1/-1}.pqpti-field label{margin:0;font-size:13px;font-weight:600;color:var(--pq-label)}.pqpti-hint{color:var(--pq-muted);font-size:12px;font-weight:400}
+.pqpti-input,.pqpti-textarea{width:100%;min-height:44px;border:1px solid var(--pq-line-strong);border-radius:8px;padding:10px 13px;font:400 14.5px/1.3 var(--pq-sans);background:var(--pq-card);color:var(--pq-ink);transition:border-color .15s ease,box-shadow .15s ease}
+.pqpti-input::placeholder,.pqpti-textarea::placeholder{color:#a3adb8}
+.pqpti-textarea{min-height:90px;line-height:1.5}.pqpti-input:focus,.pqpti-textarea:focus{outline:0;border-color:var(--pq-blue);box-shadow:0 0 0 3px rgba(47,111,78,.15)}
+.pqpti-choicegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.pqpti-choice{display:flex;gap:10px;align-items:center;min-height:40px;padding:10px 12px;border:1px solid var(--pq-line);border-radius:8px;background:var(--pq-paper);font-size:13.5px;font-weight:500;color:var(--pq-ink)}.pqpti-choice input{width:18px;height:18px;accent-color:var(--pq-blue)}
+.pqpti-calendar{overflow:auto;border:1px solid var(--pq-line);border-radius:8px;background:var(--pq-card)}.pqpti-calendar table{width:100%;border-collapse:separate;border-spacing:0;min-width:840px}.pqpti-calendar th,.pqpti-calendar td{border-bottom:1px solid var(--pq-line);border-right:1px solid var(--pq-line);padding:10px;text-align:center;font-weight:600}.pqpti-calendar th{background:var(--pq-blue-soft);color:var(--pq-blue-dark);font-size:12px}.pqpti-calendar td:first-child{text-align:left;color:var(--pq-ink);background:var(--pq-paper)}.pqpti-calendar tr:nth-child(even) td:first-child{background:#eef1f5}.pqpti-slot{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:7px;background:var(--pq-blue-soft);border:1px solid var(--pq-line-strong)}.pqpti-slot input{width:17px;height:17px;accent-color:var(--pq-blue)}
+.pqpti-alert{padding:13px 18px;border-radius:8px;margin-bottom:14px;font-weight:600;font-size:14px;border:1px solid transparent}.pqpti-alert--ok{background:#eefaf1;border-color:#bfe8cb;color:#1d6b3c}.pqpti-alert--bad{background:#fdeeec;border-color:#f3c3bc;color:#a3382a}.pqpti-alert ul{margin:8px 0 0;padding-left:22px}
+.pqpti-error{font-size:12px;font-weight:600;color:var(--pq-red)}
+.pqpti-field--error .pqpti-input,.pqpti-field--error .pqpti-textarea,.pqpti-field--error .pqpti-calendar{border-color:var(--pq-red);background:#fef6f5}
+.pqpti-btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 24px;border:0;border-radius:8px;background:var(--pq-blue);color:#fff!important;text-decoration:none;font-size:15px;font-weight:600;cursor:pointer;box-shadow:0 1px 2px rgba(47,111,78,.3)}.pqpti-btn:hover{background:var(--pq-blue-dark)}
+.pqpti-empty{padding:18px;border:1px dashed var(--pq-line-strong);border-radius:8px;color:var(--pq-muted);font-weight:500;background:var(--pq-paper)}
+.pqpti-trap{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+.pqpti-school-pick-form{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px}.pqpti-school-pick-option{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14.5px;color:var(--pq-ink);cursor:pointer}.pqpti-school-pick-option input{width:18px;height:18px;accent-color:var(--pq-blue)}.pqpti-school-pick-hint{margin:10px 0 0}
+@media(max-width:760px){.pqpti-grid,.pqpti-choicegrid{grid-template-columns:1fr}.pqpti-title{font-size:24px}.pqpti-wrap{padding:12px 10px 0}.pqpti-hero{padding:20px 18px}.pqpti-panel{padding:18px}.pqpti-panel h3{font-size:19px;margin:4px 0 18px;padding:0 0 12px}.pqpti-sub{font-size:14px}}
+<?php echo pqh_dashboard_header_css(); ?>
+.pqpti-shell .pqh-workspace-top{background:var(--pq-hero-bg)!important;border:1px solid var(--pq-line)!important;box-shadow:0 2px 10px rgba(22,38,30,.06)!important;padding:28px 32px!important;border-radius:14px!important}
+.pqpti-shell .pqh-workspace-title{color:var(--pq-ink)!important;font-size:28px!important;font-weight:700!important;letter-spacing:0!important;text-shadow:none!important}
+.pqpti-shell .pqh-workspace-sub{color:var(--pq-muted)!important;font-size:14.5px!important;font-weight:400!important;opacity:1!important}
+
+/* Multi-page horizontal wizard */
+.pqpti-wizard{padding:0;overflow:hidden}
+.pqpti-wizard-inner{padding:26px 30px 0}
+.pqpti-progress{margin-bottom:22px}
+.pqpti-progress-label{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px 16px;font-family:var(--pq-mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--pq-blue);margin-bottom:10px}
+.pqpti-progress-label span:last-child{color:var(--pq-muted);letter-spacing:.03em}
+.pqpti-progress-track{height:4px;border-radius:999px;background:var(--pq-line);overflow:hidden}
+.pqpti-progress-fill{height:100%;width:0;background:var(--pq-blue);border-radius:999px;transition:width .35s ease}
+.pqpti-viewport{position:relative;overflow:hidden}
+.pqpti-track{display:flex;width:100%;transition:transform .45s cubic-bezier(.16,1,.3,1);transform:translateX(calc(var(--pq-step,0) * -100%))}
+.pqpti-page{flex:0 0 100%;min-width:0;box-sizing:border-box;padding:4px 66px 6px}
+.pqpti-page[aria-hidden="true"]{visibility:hidden}
+.pqpti-nav-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border-radius:50%;border:1px solid var(--pq-line-strong);background:var(--pq-card);color:var(--pq-ink);cursor:pointer;box-shadow:0 2px 8px rgba(22,38,30,.1);transition:background .15s ease,border-color .15s ease,color .15s ease}
+.pqpti-nav-arrow:hover{background:var(--pq-blue);border-color:var(--pq-blue);color:#fff}
+.pqpti-nav-arrow svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pqpti-nav-arrow[hidden]{display:none!important}
+.pqpti-nav-back{left:10px}
+.pqpti-nav-next{right:10px}
+.pqpti-wizard-foot{display:flex;align-items:center;justify-content:flex-end;padding:22px 30px 28px;margin-top:6px;border-top:1px solid var(--pq-line)}
+.pqpti-wizard-foot .pqpti-btn{min-width:112px}
+.pqpti-btn[hidden]{display:none!important}
+@media(max-width:760px){.pqpti-wizard-inner{padding:18px 18px 0}.pqpti-page{padding:2px 46px 4px}.pqpti-nav-arrow{width:34px;height:34px}.pqpti-nav-arrow svg{width:16px;height:16px}.pqpti-nav-back{left:4px}.pqpti-nav-next{right:4px}.pqpti-wizard-foot{padding:18px 18px 20px}.pqpti-wizard-foot .pqpti-btn{min-width:0;flex:1}}
 </style>
 <main class="pqpti-shell">
   <div class="pqpti-wrap">
-    <section class="pqpti-hero">
-      <div class="pqpti-brand"><?php echo s($brandname); ?></div>
-      <h1 class="pqpti-title">Educator / Tutor Application</h1>
-      <p class="pqpti-sub">Share the subjects you teach, the schools or workspaces you want to support, your service model, profile summary, and weekly availability. The team will review your application before workspace access or marketplace visibility is created.</p>
+    <section class="pqpti-hero pqh-workspace-top">
+      <span class="pqpti-navbrand">
+        <?php
+        // Show the institution's own logo when one is configured, falling back
+        // to the initial tile for consumers that have not uploaded one yet.
+        $pqptibrandlogo = trim((string)($consumercontext->logourl ?? ''));
+        ?>
+        <?php if ($pqptibrandlogo !== ''): ?>
+          <span class="pqpti-navmark pqpti-navmark--img"><img src="<?php echo s($pqptibrandlogo); ?>" alt="<?php echo s($brandname); ?>"></span>
+        <?php else: ?>
+          <span class="pqpti-navmark"><?php echo s(pqh_consumer_brand_initials($consumercontext, 'E')); ?></span>
+        <?php endif; ?>
+        <span class="pqpti-navname"><?php echo s($brandname); ?></span>
+      </span>
+      <h1 class="pqpti-title pqh-workspace-title">Educator / Tutor Application</h1>
+      <p class="pqpti-sub pqh-workspace-sub">Share the subjects you teach, the schools or workspaces you want to support, your service model, profile summary, and weekly availability. The team will review your application before workspace access or marketplace visibility is created.</p>
     </section>
+
+    <?php if ($childschoolchoices): ?>
+      <section class="pqpti-panel pqpti-school-pick">
+        <h2>Which school is this for?</h2>
+        <form method="get" action="<?php echo s((new moodle_url('/local/hubredirect/public_teacher_intake.php'))->out(false)); ?>" class="pqpti-school-pick-form">
+          <?php foreach ($childschoolchoices as $childschool): ?>
+            <label class="pqpti-school-pick-option">
+              <input type="radio" name="workspaceid" value="<?php echo (int)$childschool->workspaceid; ?>"<?php echo ((int)$childschool->workspaceid === $selectedchildworkspaceid) ? ' checked' : ''; ?> onchange="this.form.submit();">
+              <span><?php echo s((string)$childschool->consumername); ?></span>
+            </label>
+          <?php endforeach; ?>
+          <noscript><button type="submit" class="pqpti-btn">Continue</button></noscript>
+        </form>
+        <?php if ($needsschoolselection): ?><p class="pqpti-muted pqpti-school-pick-hint">Select a school above to continue.</p><?php endif; ?>
+      </section>
+    <?php endif; ?>
 
     <?php if ($message !== ''): ?><div class="pqpti-alert pqpti-alert--ok"><?php echo s($message); ?></div><?php endif; ?>
     <?php if ($errors): ?>
@@ -959,15 +1056,29 @@ body.pqh-public-teacher-intake-page #page,body.pqh-public-teacher-intake-page #p
 
     <?php if (!$ready): ?>
       <section class="pqpti-panel"><div class="pqpti-empty">The teacher application form is not ready yet. Please contact <?php echo s($brandname); ?> support.</div></section>
+    <?php elseif ($needsschoolselection): ?>
+      <?php // The rest of the form is intentionally hidden until a school is picked above. ?>
     <?php else: ?>
-      <section class="pqpti-panel">
-        <h2>Application Details</h2>
+      <section class="pqpti-panel pqpti-wizard">
         <form method="post" novalidate>
           <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
           <input type="hidden" name="consumer" value="<?php echo s((string)$consumercontext->consumerslug); ?>">
+          <?php if ((int)$consumercontext->workspaceid > 0): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$consumercontext->workspaceid; ?>"><?php endif; ?>
           <input type="hidden" name="formtime" value="<?php echo (int)$formtime; ?>">
           <input type="hidden" name="formtoken" value="<?php echo s($formtoken); ?>">
           <div class="pqpti-trap" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off"></label></div>
+          <div class="pqpti-wizard-inner">
+            <h2>Application Details</h2>
+            <div class="pqpti-progress">
+              <div class="pqpti-progress-label"><span data-wizard-step-text>Step 1</span><span data-wizard-step-title></span></div>
+              <div class="pqpti-progress-track"><div class="pqpti-progress-fill" data-wizard-fill></div></div>
+            </div>
+          </div>
+          <div class="pqpti-viewport">
+          <button type="button" class="pqpti-nav-arrow pqpti-nav-back" data-wizard-back aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></button>
+          <button type="button" class="pqpti-nav-arrow pqpti-nav-next" data-wizard-next aria-label="Next"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg></button>
+          <div class="pqpti-track" data-wizard-track>
+          <div class="pqpti-page">
 
           <h3>Basic teacher information</h3>
           <div class="pqpti-grid">
@@ -981,6 +1092,7 @@ body.pqh-public-teacher-intake-page #page,body.pqh-public-teacher-intake-page #p
             <div class="pqpti-field"><label>Other languages</label><?php echo pqpti_checkboxes('other_languages', $options['other_languages'] ?? [], $form, $errors); ?></div>
           </div>
 
+          </div><div class="pqpti-page">
           <h3>Location</h3>
           <div class="pqpti-grid">
             <div class="pqpti-field"><label>Country</label><?php echo pqpti_select('country', $options['countries'] ?? [], $form, $errors); ?></div>
@@ -989,6 +1101,7 @@ body.pqh-public-teacher-intake-page #page,body.pqh-public-teacher-intake-page #p
             <div class="pqpti-field"><label>Time zone</label><?php echo pqpti_select('timezone', $options['timezones'] ?? [], $form, $errors); ?></div>
           </div>
 
+          </div><div class="pqpti-page">
           <?php if ($isprimaryeducation): ?>
             <h3>Primary education teaching details</h3>
             <div class="pqpti-grid">
@@ -1003,6 +1116,7 @@ body.pqh-public-teacher-intake-page #page,body.pqh-public-teacher-intake-page #p
               <div class="pqpti-field"><label>Background-check status</label><?php echo pqpti_select('primary_background_check', $options['primary_background_check_statuses'] ?? [], $form, $errors); ?></div>
             </div>
             <div class="pqpti-field"><label>Additional primary teaching notes</label><textarea class="pqpti-textarea" name="primary_teacher_notes"><?php echo s(pqpti_value($form, 'primary_teacher_notes')); ?></textarea></div>
+          </div><div class="pqpti-page">
           <?php endif; ?>
 
           <?php if ($ishighereducation): ?>
@@ -1019,6 +1133,7 @@ body.pqh-public-teacher-intake-page #page,body.pqh-public-teacher-intake-page #p
             </div>
             <div class="pqpti-field"><label>Publications or research output</label><textarea class="pqpti-textarea" name="higher_teacher_publications"><?php echo s(pqpti_value($form, 'higher_teacher_publications')); ?></textarea></div>
             <div class="pqpti-field"><label>Additional higher-education teaching notes</label><textarea class="pqpti-textarea" name="higher_teacher_notes"><?php echo s(pqpti_value($form, 'higher_teacher_notes')); ?></textarea></div>
+          </div><div class="pqpti-page">
           <?php endif; ?>
 
           <?php if ($istechnicaltraining): ?>
@@ -1036,6 +1151,7 @@ body.pqh-public-teacher-intake-page #page,body.pqh-public-teacher-intake-page #p
             </div>
             <div class="pqpti-field"><label>Trade licences or professional certifications</label><textarea class="pqpti-textarea" name="technical_teacher_licenses"><?php echo s(pqpti_value($form, 'technical_teacher_licenses')); ?></textarea></div>
             <div class="pqpti-field"><label>Additional technical-training teaching notes</label><textarea class="pqpti-textarea" name="technical_teacher_notes"><?php echo s(pqpti_value($form, 'technical_teacher_notes')); ?></textarea></div>
+          </div><div class="pqpti-page">
           <?php endif; ?>
 
           <?php if ($isadultlearning): ?>
@@ -1052,6 +1168,7 @@ body.pqh-public-teacher-intake-page #page,body.pqh-public-teacher-intake-page #p
               <div class="pqpti-field"><label>Supporting attendance or access barriers</label><?php echo pqpti_select('adult_teacher_barrier_support', $options['adult_teacher_barrier_support_levels'] ?? [], $form, $errors); ?></div>
             </div>
             <div class="pqpti-field"><label>Additional adult-learning teaching notes</label><textarea class="pqpti-textarea" name="adult_teacher_notes"><?php echo s(pqpti_value($form, 'adult_teacher_notes')); ?></textarea></div>
+          </div><div class="pqpti-page">
           <?php endif; ?>
 
           <?php if ($isprofessionaldevelopment): ?>
@@ -1069,6 +1186,7 @@ body.pqh-public-teacher-intake-page #page,body.pqh-public-teacher-intake-page #p
             <div class="pqpti-field"><label>Professional credentials or certifications</label><textarea class="pqpti-textarea" name="professional_teacher_credentials"><?php echo s(pqpti_value($form, 'professional_teacher_credentials')); ?></textarea></div>
             <div class="pqpti-field"><label>Relevant workplace results or case studies</label><textarea class="pqpti-textarea" name="professional_teacher_case_studies"><?php echo s(pqpti_value($form, 'professional_teacher_case_studies')); ?></textarea></div>
             <div class="pqpti-field"><label>Additional professional-development teaching notes</label><textarea class="pqpti-textarea" name="professional_teacher_notes"><?php echo s(pqpti_value($form, 'professional_teacher_notes')); ?></textarea></div>
+          </div><div class="pqpti-page">
           <?php endif; ?>
 
           <?php if ($isfaithbased): ?>
@@ -1085,21 +1203,23 @@ body.pqh-public-teacher-intake-page #page,body.pqh-public-teacher-intake-page #p
             </div>
             <div class="pqpti-field"><label>Faith-study qualification, authorisation, or teaching credential</label><textarea class="pqpti-textarea" name="faith_teacher_qualification"><?php echo s(pqpti_value($form, 'faith_teacher_qualification')); ?></textarea><?php echo pqpti_error($errors, 'faith_teacher_qualification'); ?></div>
             <div class="pqpti-field"><label>Additional faith-based teaching notes</label><textarea class="pqpti-textarea" name="faith_teacher_notes"><?php echo s(pqpti_value($form, 'faith_teacher_notes')); ?></textarea></div>
+          </div><div class="pqpti-page">
           <?php endif; ?>
 
           <h3>Teaching Services</h3>
           <div class="pqpti-grid">
             <div class="pqpti-field"><label>How do you want to teach?</label><?php echo pqpti_radio_cards('teacher_work_models', $options['teacher_work_models'] ?? [], $form, $errors); ?></div>
-            <div class="pqpti-field"><label>Service modes</label><?php echo pqpti_checkboxes('service_modes', $options['service_modes'] ?? [], $form, $errors); ?></div>
-            <div class="pqpti-field"><label>Subjects you can teach</label><?php echo pqpti_checkboxes('subject_areas', $options['subject_areas'] ?? [], $form, $errors); ?></div>
+            <div class="pqpti-field pqpti-field--wide"><label>Service modes</label><?php echo pqpti_checkboxes('service_modes', $options['service_modes'] ?? [], $form, $errors); ?></div>
+            <div class="pqpti-field pqpti-field--wide"><label>Subjects you can teach</label><?php echo pqpti_checkboxes('subject_areas', $options['subject_areas'] ?? [], $form, $errors); ?></div>
             <div class="pqpti-field pqpti-field--tight"><label>Language subject</label><?php echo pqpti_select('subject_language', $options['subject_languages'] ?? [], $form, $errors, 'Select language'); ?></div>
             <div class="pqpti-field pqpti-field--tight"><label>Other subjects or specialties</label><textarea class="pqpti-textarea" name="subject_other" placeholder="Examples: biology, chemistry, accounting, robotics, Quran ijazah track, special curriculum"><?php echo s(pqpti_value($form, 'subject_other')); ?></textarea><?php echo pqpti_error($errors, 'subject_other'); ?></div>
-            <div class="pqpti-field"><label>Learner levels</label><?php echo pqpti_checkboxes('age_groups', $options['age_groups'] ?? [], $form, $errors); ?></div>
+            <div class="pqpti-field pqpti-field--wide"><label>Learner levels</label><?php echo pqpti_checkboxes('age_groups', $options['age_groups'] ?? [], $form, $errors); ?></div>
             <div class="pqpti-field"><label>Teaching levels</label><?php echo pqpti_checkboxes('general_levels', $options['general_levels'] ?? [], $form, $errors); ?></div>
             <div class="pqpti-field"><label>School / workspace preferences</label><textarea class="pqpti-textarea" name="workspace_preferences" placeholder="Independent teachers: describe your current students, clients, school, or workspace needs. Marketplace teachers: describe the learners or clients you hope to be matched with."><?php echo s(pqpti_value($form, 'workspace_preferences')); ?></textarea><?php echo pqpti_error($errors, 'workspace_preferences'); ?></div>
             <div class="pqpti-field"><label>Desired services / notes</label><textarea class="pqpti-textarea" name="desired_services" placeholder="Describe the exact services you want to offer, including any school, tutoring, marketplace, live session, or subject-specific goals"><?php echo s(pqpti_value($form, 'desired_services')); ?></textarea></div>
           </div>
 
+          </div><div class="pqpti-page">
           <h3>Qualifications and experience</h3>
           <div class="pqpti-grid">
             <div class="pqpti-field"><label>Teaching or training experience</label><?php echo pqpti_select('teaching_experience_range', $options['teaching_experience_ranges'] ?? [], $form, $errors); ?></div>
@@ -1118,6 +1238,7 @@ body.pqh-public-teacher-intake-page #page,body.pqh-public-teacher-intake-page #p
             <div class="pqpti-field"><label>Curriculum and materials</label><textarea class="pqpti-textarea" name="curriculum_materials" placeholder="Books, curriculum, worksheets, slides, assessments, or custom material used"><?php echo s(pqpti_value($form, 'curriculum_materials')); ?></textarea><?php echo pqpti_error($errors, 'curriculum_materials'); ?></div>
           </div>
 
+          </div><div class="pqpti-page">
           <h3>Teaching preferences and readiness</h3>
           <div class="pqpti-grid">
             <div class="pqpti-field"><label>Preferred teaching format</label><?php echo pqpti_select('preferred_teaching_format', $options['preferred_teaching_formats'] ?? [], $form, $errors); ?></div>
@@ -1129,6 +1250,7 @@ body.pqh-public-teacher-intake-page #page,body.pqh-public-teacher-intake-page #p
           </div>
           <div class="pqpti-field"><label>Accessibility or workplace support needs</label><textarea class="pqpti-textarea" name="teacher_support_needs"><?php echo s(pqpti_value($form, 'teacher_support_needs')); ?></textarea></div>
 
+          </div><div class="pqpti-page">
           <h3>Online Presence</h3>
           <div class="pqpti-grid">
             <div class="pqpti-field"><label>Online teaching brand/profile name</label><input class="pqpti-input" name="online_profile_name" value="<?php echo s(pqpti_value($form, 'online_profile_name')); ?>" placeholder="Example: MasterArabic Online"><?php echo pqpti_error($errors, 'online_profile_name'); ?></div>
@@ -1140,6 +1262,7 @@ body.pqh-public-teacher-intake-page #page,body.pqh-public-teacher-intake-page #p
             <div class="pqpti-field"><label>Social proof / reviews</label><textarea class="pqpti-textarea" name="social_proof" placeholder="Follower/community signal, testimonials, results, screenshots to review, or references"><?php echo s(pqpti_value($form, 'social_proof')); ?></textarea><?php echo pqpti_error($errors, 'social_proof'); ?></div>
           </div>
 
+          </div><div class="pqpti-page">
           <h3>Weekly Availability</h3>
           <div class="pqpti-field">
             <label>Select all recurring times that could work</label>
@@ -1161,16 +1284,104 @@ body.pqh-public-teacher-intake-page #page,body.pqh-public-teacher-intake-page #p
             <?php echo pqpti_error($errors, 'availability'); ?>
           </div>
 
+          </div><div class="pqpti-page">
           <h3>Additional Notes</h3>
           <div class="pqpti-field"><label>How did you hear about us?</label><input class="pqpti-input" name="referral_source" value="<?php echo s(pqpti_value($form, 'referral_source')); ?>"></div>
           <div class="pqpti-field"><label><input type="checkbox" name="verification_consent" value="1"<?php echo pqpti_value($form, 'verification_consent') === '1' ? ' checked' : ''; ?>> I consent to verification of my qualifications and professional references.</label><?php echo pqpti_error($errors, 'verification_consent'); ?></div>
           <div class="pqpti-field"><label>Anything else the review team should know?</label><textarea class="pqpti-textarea" name="notes"><?php echo s(pqpti_value($form, 'notes')); ?></textarea></div>
 
-          <button class="pqpti-btn" type="submit">Submit teacher application</button>
+          </div></div></div>
+          <div class="pqpti-wizard-foot">
+            <button class="pqpti-btn" type="submit" data-wizard-submit>Submit teacher application</button>
+          </div>
         </form>
       </section>
     <?php endif; ?>
   </div>
 </main>
+<script>
+(function() {
+  var wizard = document.querySelector('.pqpti-wizard');
+  if (!wizard) {
+    return;
+  }
+  var form = wizard.querySelector('form') || wizard;
+  var track = wizard.querySelector('[data-wizard-track]');
+  var pages = Array.prototype.slice.call(wizard.querySelectorAll('.pqpti-page'));
+  var backBtn = wizard.querySelector('[data-wizard-back]');
+  var nextBtn = wizard.querySelector('[data-wizard-next]');
+  var submitBtn = wizard.querySelector('[data-wizard-submit]');
+  var fill = wizard.querySelector('[data-wizard-fill]');
+  var stepText = wizard.querySelector('[data-wizard-step-text]');
+  var stepTitle = wizard.querySelector('[data-wizard-step-title]');
+  if (!track || pages.length < 2 || !backBtn || !nextBtn || !submitBtn) {
+    return;
+  }
+
+  var current = 0;
+  var errorField = wizard.querySelector('.pqpti-field--error, .pqpti-error');
+  if (errorField) {
+    var errorPage = errorField.closest('.pqpti-page');
+    var errorIndex = errorPage ? pages.indexOf(errorPage) : -1;
+    if (errorIndex >= 0) {
+      current = errorIndex;
+    }
+  }
+
+  function pageTitle(page) {
+    var heading = page.querySelector('h3');
+    return heading ? heading.textContent.trim() : '';
+  }
+
+  function render() {
+    track.style.setProperty('--pq-step', current);
+    pages.forEach(function(page, index) {
+      page.setAttribute('aria-hidden', index === current ? 'false' : 'true');
+    });
+    if (fill) {
+      fill.style.width = (((current + 1) / pages.length) * 100) + '%';
+    }
+    if (stepText) {
+      stepText.textContent = 'Step ' + (current + 1) + ' of ' + pages.length;
+    }
+    if (stepTitle) {
+      stepTitle.textContent = pageTitle(pages[current]);
+    }
+    var isLast = current === pages.length - 1;
+    backBtn.hidden = current === 0;
+    nextBtn.hidden = isLast;
+    submitBtn.hidden = !isLast;
+  }
+
+  function go(delta) {
+    var target = current + delta;
+    if (target < 0 || target >= pages.length) {
+      return;
+    }
+    current = target;
+    render();
+    wizard.scrollIntoView({behavior: 'smooth', block: 'start'});
+  }
+
+  backBtn.addEventListener('click', function() { go(-1); });
+  nextBtn.addEventListener('click', function() { go(1); });
+
+  form.addEventListener('keydown', function(event) {
+    if (event.key !== 'Enter') {
+      return;
+    }
+    var tag = (event.target && event.target.tagName || '').toLowerCase();
+    if (tag === 'textarea' || event.target === submitBtn) {
+      return;
+    }
+    if (current !== pages.length - 1) {
+      event.preventDefault();
+      go(1);
+    }
+  });
+
+  render();
+})();
+</script>
 <?php
 echo $OUTPUT->footer();

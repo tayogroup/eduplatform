@@ -6,7 +6,14 @@
 // this tool only scaffolds the cohort→course structure from catalog.json and
 // PRESERVES any members already filled in on rerun.
 //
-// Usage: node tools/generate-ehel-cohorts.js [--out <path>] [--catalog <path>]
+// Usage: node tools/generate-ehel-cohorts.js [--out <path>] [--catalog <path>] [--year <YYYY>]
+//
+// --year stamps the academic year into each cohort idnumber
+// (ehel-pilot-gNN-<year>) and name — the Canvas-terms pattern: next year's
+// Stage 3 intake is a NEW cohort, so a returning student's history stays on
+// last year's cohort instead of being overwritten. Omit --year to keep any
+// year already stamped in the existing cohorts.json (or none for legacy ids).
+// Rosters are preserved across a year change (matched by grade).
 
 const fs = require("fs");
 const path = require("path");
@@ -20,9 +27,19 @@ const OUT = path.resolve(arg("--out", path.join(EHEL, "cohorts.json")));
 if (!fs.existsSync(CATALOG)) { console.error(`catalog not found: ${CATALOG} (run generate-ehel-catalog.js first)`); process.exit(1); }
 const catalog = JSON.parse(fs.readFileSync(CATALOG, "utf8"));
 
-// Preserve rosters already authored into an existing cohorts.json.
+// Preserve rosters already authored into an existing cohorts.json. Keyed by
+// GRADE (not idnumber) so members survive an academic-year re-stamp.
 const existing = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, "utf8")) : { cohorts: [] };
-const priorMembers = new Map((existing.cohorts || []).map((c) => [c.idnumber, c.members || []]));
+const priorMembers = new Map();
+for (const c of existing.cohorts || []) {
+  const m = /^ehel-pilot-g(\d{2})/.exec(c.idnumber || "");
+  if (m) priorMembers.set(Number(m[1]), c.members || []);
+}
+
+// Academic year: --year wins, else whatever the existing file was stamped with.
+const yearArg = arg("--year", "");
+const YEAR = /^\d{4}$/.test(yearArg) ? Number(yearArg)
+  : (Number.isInteger(existing.academicYear) ? existing.academicYear : null);
 
 // Group catalog courses by grade → one cohort per grade.
 const byGrade = new Map();
@@ -35,22 +52,24 @@ const pad2 = (n) => String(n).padStart(2, "0");
 const cohorts = [...byGrade.values()]
   .sort((a, b) => a.stage - b.stage)
   .map((g) => {
-    const idnumber = `ehel-pilot-g${pad2(g.stage)}`;
+    const idnumber = YEAR ? `ehel-pilot-g${pad2(g.stage)}-${YEAR}` : `ehel-pilot-g${pad2(g.stage)}`;
+    const yearLabel = YEAR ? ` (${YEAR}–${String(YEAR + 1).slice(-2)})` : "";
     return {
       idnumber,
-      name: `Ehel Pilot — Stage ${g.stage}`,
+      name: `Ehel Pilot — Stage ${g.stage}${yearLabel}`,
       grade: g.stage,
       level: g.level,
       courses: g.courses.sort(),
       // Roster: fill with { "username" or "email", "firstname", "lastname" }.
       // The task adds EXISTING users only (no account creation) and reports misses.
-      members: priorMembers.get(idnumber) || [],
+      members: priorMembers.get(g.stage) || [],
     };
   });
 
 const out = {
   catalog: "ehel-academy",
   contract: "1.0",
+  ...(YEAR ? { academicYear: YEAR } : {}),
   memberSchema: { required: "username OR email", optional: ["firstname", "lastname"] },
   cohorts,
 };

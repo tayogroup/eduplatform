@@ -17,6 +17,7 @@ if ($workspaceid <= 0 || (!pqh_user_can_manage_workspace((int)$USER->id, $worksp
 if (!pqdo_schema_ready()) {
     pqh_access_denied('Bulk import/export schema is not ready. Run the local_prequran upgrade first.', new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams), 'Bulk tools schema pending');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $dataset = optional_param('dataset', 'members', PARAM_ALPHANUMEXT);
 if (optional_param('export', '', PARAM_ALPHA) === 'csv') {

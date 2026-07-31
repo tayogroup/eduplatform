@@ -45,12 +45,99 @@ $workspaceid = pqh_current_workspace_id($userid, $workspaceid);
 
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     $body = json_decode((string)file_get_contents('php://input'), true);
-    if (!is_array($body) || (string)($body['do'] ?? '') !== 'reply') {
+    $do = is_array($body) ? (string)($body['do'] ?? '') : '';
+    if (!in_array($do, ['reply', 'compose', 'close_thread', 'oversight_view'], true)) {
         pqpd_fail(400, 'Unknown communications action.');
     }
     if (!pqcomml_direct_tables_ready()) {
         pqpd_fail(503, 'Communication tables are not ready yet.');
     }
+    $myrole = pqcomml_comm_role((int)$USER->id, $workspaceid);
+
+    // ---- do: compose (Canvas Inbox compose — role-aware recipients) ----------
+    if ($do === 'compose') {
+        if ($myrole === '') {
+            pqpd_fail(403, 'Your account has no messaging role in this workspace.');
+        }
+        $recipients = array_map('strval', array_values((array)($body['recipients'] ?? [])));
+        $subject = trim(clean_param((string)($body['subject'] ?? ''), PARAM_TEXT));
+        $messagetext = pqcomml_direct_clean_body((string)($body['messagebody'] ?? ''));
+        if ($messagetext === '') {
+            pqpd_fail(400, 'Type a message first.');
+        }
+        if (in_array($myrole, ['parent', 'student'], true)) {
+            $messagetext = pqcomml_filter_contact_details($messagetext);
+            if ($messagetext === '') {
+                pqpd_fail(400, 'Your message contained only links or contact details, which are removed on this channel. Please describe your question in words.');
+            }
+        }
+        try {
+            $newthreadid = pqcomml_compose_thread($workspaceid, (int)$USER->id, $myrole, $recipients, $subject, $messagetext);
+        } catch (Throwable $composeerror) {
+            pqpd_fail(400, $composeerror->getMessage());
+        }
+        echo json_encode(['ok' => true, 'message' => 'Message sent — recipients have been notified.', 'threadid' => $newthreadid], JSON_UNESCAPED_SLASHES);
+        exit;
+    }
+
+    // ---- do: close_thread ----------------------------------------------------
+    if ($do === 'close_thread') {
+        $closethread = $DB->get_record('local_prequran_comm_thread', ['id' => (int)($body['threadid'] ?? 0)], '*', IGNORE_MISSING);
+        if (!$closethread || !pqcomml_direct_can_read($closethread, (int)$USER->id, $workspaceid)) {
+            pqpd_fail(403, 'You cannot manage this communication thread.');
+        }
+        try {
+            pqcomml_close_thread($closethread, (int)$USER->id, $myrole);
+        } catch (Throwable $closeerror) {
+            pqpd_fail(403, $closeerror->getMessage());
+        }
+        echo json_encode(['ok' => true, 'message' => 'Thread closed and archived.'], JSON_UNESCAPED_SLASHES);
+        exit;
+    }
+
+    // ---- do: oversight_view (audited safeguarding access to ANY thread) ------
+    if ($do === 'oversight_view') {
+        if (!pqcomml_oversight_allowed((int)$USER->id)) {
+            pqpd_fail(403, 'Oversight access requires academy operations rights.');
+        }
+        $othread = $DB->get_record('local_prequran_comm_thread', ['id' => (int)($body['threadid'] ?? 0)], '*', IGNORE_MISSING);
+        if (!$othread) {
+            pqpd_fail(400, 'Choose a valid thread.');
+        }
+        $now = time();
+        if (pqcomml_table_exists('local_prequran_comm_audit')) {
+            $DB->insert_record('local_prequran_comm_audit', (object)[
+                'threadid' => (int)$othread->id, 'messageid' => 0, 'actorid' => (int)$USER->id,
+                'action' => 'oversight_viewed',
+                'details' => json_encode(['type' => (string)$othread->type, 'reason' => trim(clean_param((string)($body['reason'] ?? ''), PARAM_TEXT))], JSON_UNESCAPED_SLASHES),
+                'timecreated' => $now,
+            ]);
+        }
+        if (function_exists('pqh_live_security_audit')) {
+            pqh_live_security_audit(0, 'comm_oversight_viewed', 'comm_thread', (int)$othread->id,
+                ['type' => (string)$othread->type]);
+        }
+        $omessages = array_values($DB->get_records('local_prequran_comm_message',
+            ['threadid' => (int)$othread->id, 'status' => 'visible'], 'timecreated ASC, id ASC', '*', 0, 200));
+        $orows = [];
+        foreach ($omessages as $m) {
+            $orows[] = [
+                'sendername' => pqcomml_direct_user_name((int)$m->senderid),
+                'body' => (string)$m->body,
+                'timecreated' => (int)$m->timecreated,
+            ];
+        }
+        echo json_encode([
+            'ok' => true,
+            'oversight' => true,
+            'subject' => (string)$othread->subject,
+            'type' => (string)$othread->type,
+            'messages' => $orows,
+            'notice' => 'This oversight access has been logged in the communication audit trail.',
+        ], JSON_UNESCAPED_SLASHES);
+        exit;
+    }
+
     $threadid = (int)($body['threadid'] ?? 0);
     if ($threadid <= 0) {
         pqpd_fail(400, 'Choose a message thread before sending a reply.');
@@ -63,6 +150,11 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         pqpd_fail(403, 'You cannot reply to this communication thread.');
     }
     $replybody = pqcomml_direct_clean_body((string)($body['replybody'] ?? ''));
+    // Contact-exchange filter for parent/student-authored bodies (the student
+    // support channel always had this; the parent↔teacher channel did not).
+    if (in_array($myrole, ['parent', 'student'], true)) {
+        $replybody = pqcomml_filter_contact_details($replybody);
+    }
     if ($replybody === '') {
         pqpd_fail(400, 'Type a message first.');
     }
@@ -103,9 +195,12 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         ]);
     }
     $transaction->allow_commit();
+    // Canvas behaviour: every conversation message NOTIFIES the counterpart
+    // (replies were previously silent — the other party never knew).
+    pqcomml_notify_thread_participants($directthread, (int)$USER->id, $replybody);
     echo json_encode([
         'ok' => true,
-        'message' => 'Message sent.',
+        'message' => 'Message sent — the other participants have been notified.',
         'threadid' => (int)$directthread->id,
         'messageid' => $messageid,
     ], JSON_UNESCAPED_SLASHES);
@@ -187,17 +282,18 @@ if ($threadid > 0) {
 // lookup the page runs while rendering. The unread flag is derived from the
 // data the page maintains: the participant's lastreadmessageid (which the
 // legacy write advances on reply) versus the latest visible message.
+// Canvas Inbox: one unified list across every conversation type the user
+// participates in (was parent_teacher-only).
 $candidateleads = $DB->get_records_sql(
     "SELECT t.*
        FROM {local_prequran_comm_thread} t
        JOIN {local_prequran_comm_participant} p ON p.threadid = t.id
       WHERE p.userid = :userid
-        AND t.type = :type
+        AND t.type IN ('parent_teacher', 'student_teacher', 'student_helpdesk', 'staff_direct', 'announcement')
         AND t.status <> :archived
    ORDER BY t.lastmessageat DESC, t.id DESC",
     [
         'userid' => (int)$USER->id,
-        'type' => 'parent_teacher',
         'archived' => 'archived',
     ],
     0,
@@ -252,10 +348,18 @@ foreach ($directthreads as $thread) {
     ];
 }
 
+// Compose options: role-derived permitted recipients (Canvas compose).
+$myrole = pqcomml_comm_role((int)$USER->id, $workspaceid);
+$composeoptions = $myrole !== '' ? pqcomml_compose_recipients((int)$USER->id, $workspaceid, $myrole) : [];
+
 echo json_encode([
     'ok' => true,
     'mode' => 'list',
     'userid' => (int)$USER->id,
+    'myrole' => $myrole,
+    'cancompose' => !empty($composeoptions),
+    'canoversight' => pqcomml_oversight_allowed((int)$USER->id),
+    'composeoptions' => $composeoptions,
     'threads' => $threads,
     'names' => pqpd_names($nameids),
 ], JSON_UNESCAPED_SLASHES);

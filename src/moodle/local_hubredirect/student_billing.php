@@ -29,6 +29,7 @@ if ((int)$USER->id !== $studentid && !pqfin_user_can_manage_workspace_finance((i
 if (!pqfin_student_billing_visible($workspaceid, $studentid, (int)$USER->id, $consumercontext)) {
     pqh_access_denied('Student billing visibility is disabled for this workspace.', new moodle_url('/local/hubredirect/dashboard.php'), 'Billing hidden');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $student = core_user::get_user($studentid, 'id,firstname,lastname,email,idnumber', MUST_EXIST);

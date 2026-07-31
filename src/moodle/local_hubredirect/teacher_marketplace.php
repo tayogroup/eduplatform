@@ -137,7 +137,7 @@ body.pqh-teacher-marketplace-page #page,body.pqh-teacher-marketplace-page #page-
     </section>
     <section class="pqtm-note"><?php echo s($brandname); ?> performs initial marketplace review and controls which profiles are visible. Visibility is not a guarantee of fit, outcome, or assignment. Families should review profiles, communicate with teachers or tutors, and make the final selection for their child or for themselves.</section>
     <?php if (!$ready): ?>
-      <div class="pqtm-empty">Teacher marketplace schema is not ready yet. Please run the local_prequran Moodle upgrade.</div>
+      <div class="pqtm-empty">Teacher marketplace schema is not ready yet. Please run the local_prequran upgrade.</div>
     <?php else: ?>
       <form class="pqtm-filter" method="get">
         <input type="hidden" name="consumer" value="<?php echo s((string)$consumercontext->consumerslug); ?>">

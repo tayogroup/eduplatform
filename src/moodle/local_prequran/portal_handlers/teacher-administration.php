@@ -82,6 +82,18 @@ if ($ispost) {
             }
             $teacherid = (int)($body['teacherid'] ?? 0);
             $studentid = (int)($body['studentid'] ?? 0);
+            // Vetting gate (mirror of workspace-people assign_student): rejected always
+            // blocks; unvetted blocks when teacher_require_vetting_for_assignment is on.
+            $vetting = '';
+            if (pqh_table_exists_safe('local_prequran_teacher_profile')) {
+                $vetting = (string)$DB->get_field('local_prequran_teacher_profile', 'vetting_status', ['userid' => $teacherid], IGNORE_MISSING);
+            }
+            if ($vetting === 'rejected') {
+                throw new invalid_parameter_exception('This teacher\'s vetting was rejected - student assignment is blocked.');
+            }
+            if ((int)get_config('local_prequran', 'teacher_require_vetting_for_assignment') === 1 && $vetting !== 'approved') {
+                throw new invalid_parameter_exception('Teacher vetting must be approved before student assignment (current status: ' . ($vetting !== '' ? $vetting : 'not_reviewed') . ').');
+            }
             $existing = $DB->get_record('local_prequran_teacher_student', ['workspaceid' => $workspaceid, 'teacherid' => $teacherid, 'studentid' => $studentid], '*', IGNORE_MISSING);
             $record = (object)[
                 'workspaceid' => $workspaceid,
@@ -102,6 +114,12 @@ if ($ispost) {
             }
             pqops_recalculate_teacher_load($workspaceid, $teacherid);
             $notice = 'Teacher-student assignment saved.';
+            // Workload signal: surface OVERLOADED as a warning (soft stop, never blocks).
+            $loadrow = $DB->get_record('local_prequran_teacher_load',
+                ['workspaceid' => $workspaceid, 'teacherid' => $teacherid], '*', IGNORE_MISSING);
+            if ($loadrow && (string)($loadrow->load_status ?? '') === 'overloaded') {
+                $notice .= ' WARNING: this teacher is now OVERLOADED.';
+            }
         } else if ($do === 'substitute') {
             // -- write: substitute (legacy action=substitute, verbatim) --
             $sessionid = (int)($body['sessionid'] ?? 0);
@@ -129,6 +147,113 @@ if ($ispost) {
             $session->timemodified = $now;
             $DB->update_record('local_prequran_live_session', $session);
             $notice = 'Substitute workflow saved.';
+        } else if ($do === 'bulk_substitute') {
+            // Best-practice leave/absence cover: swap ALL of a teacher's future
+            // scheduled sessions (optionally date-bounded) to a substitute in one
+            // action, writing the same audited sub_request rows the single-session
+            // substitute produces. Assignments/groups are untouched (temporary cover);
+            // use offboard_teacher on workspace-people for permanent departures.
+            $origid = (int)($body['original_teacherid'] ?? 0);
+            $subid = (int)($body['substitute_teacherid'] ?? 0);
+            $reason = clean_param((string)($body['reason'] ?? ''), PARAM_TEXT);
+            $handoff = clean_param((string)($body['handoff_notes'] ?? ''), PARAM_TEXT);
+            $fromts = pqops_time_from_date(clean_param((string)($body['from_date'] ?? ''), PARAM_TEXT));
+            $tots = pqops_time_from_date(clean_param((string)($body['to_date'] ?? ''), PARAM_TEXT));
+            if ($origid <= 0 || $subid <= 0) {
+                throw new invalid_parameter_exception('Choose the covered teacher and the substitute.');
+            }
+            if ($origid === $subid) {
+                throw new invalid_parameter_exception('Substitute must be a different teacher.');
+            }
+            $select = "workspaceid = :ws AND teacherid = :tid AND status = 'scheduled' AND scheduled_start >= :fromts";
+            $params = ['ws' => $workspaceid, 'tid' => $origid, 'fromts' => max($fromts, $now)];
+            if ($tots > 0) {
+                $select .= ' AND scheduled_start < :tots';
+                $params['tots'] = $tots + DAYSECS; // Inclusive of the whole to-date day.
+            }
+            $sessions = $DB->get_records_select('local_prequran_live_session', $select, $params, 'scheduled_start ASC');
+            foreach ($sessions as $session) {
+                $DB->insert_record('local_prequran_sub_request', (object)[
+                    'workspaceid' => $workspaceid,
+                    'sessionid' => (int)$session->id,
+                    'original_teacherid' => $origid,
+                    'substitute_teacherid' => $subid,
+                    'status' => 'approved',
+                    'reason' => $reason !== '' ? $reason : 'Bulk substitute cover.',
+                    'handoff_notes' => $handoff,
+                    'requestedby' => (int)$USER->id,
+                    'approvedby' => (int)$USER->id,
+                    'approvedat' => $now,
+                    'timecreated' => $now,
+                    'timemodified' => $now,
+                ]);
+                $session->substitute_teacherid = $subid;
+                $session->teacherid = $subid;
+                $session->timemodified = $now;
+                $DB->update_record('local_prequran_live_session', $session);
+            }
+            pqops_recalculate_teacher_load($workspaceid, $origid);
+            pqops_recalculate_teacher_load($workspaceid, $subid);
+            $notice = 'Bulk substitute: ' . count($sessions) . ' future session(s) reassigned to the substitute.';
+        } else if ($do === 'save_certificate') {
+            // Record a teacher certificate/credential with real dates (best
+            // practice: compliance carries an expiry, not just a status string).
+            if (!pqh_table_exists_safe('local_prequran_teacher_cert')) {
+                throw new invalid_parameter_exception('Certificate table is not ready. Run the Moodle plugin upgrade for local_prequran first.');
+            }
+            $teacherid = (int)($body['teacherid'] ?? 0);
+            if ($teacherid <= 0) {
+                throw new invalid_parameter_exception('Choose a teacher for the certificate.');
+            }
+            $certstatus = clean_param((string)($body['status'] ?? 'pending_review'), PARAM_ALPHANUMEXT);
+            if (!in_array($certstatus, ['pending_review', 'verified'], true)) {
+                $certstatus = 'pending_review';
+            }
+            $record = (object)[
+                'consumerid' => 0,
+                'workspaceid' => $workspaceid,
+                'teacherid' => $teacherid,
+                'cert_type' => clean_param((string)($body['cert_type'] ?? 'other'), PARAM_ALPHANUMEXT),
+                'title' => clean_param((string)($body['title'] ?? ''), PARAM_TEXT),
+                'reference' => clean_param((string)($body['reference'] ?? ''), PARAM_TEXT),
+                'issuer' => clean_param((string)($body['issuer'] ?? ''), PARAM_TEXT),
+                'status' => $certstatus,
+                'issuedat' => pqops_time_from_date(clean_param((string)($body['issued_date'] ?? ''), PARAM_TEXT)),
+                'expiresat' => pqops_time_from_date(clean_param((string)($body['expiry_date'] ?? ''), PARAM_TEXT)),
+                'evidence_url' => clean_param((string)($body['evidence_url'] ?? ''), PARAM_URL),
+                'notes' => clean_param((string)($body['notes'] ?? ''), PARAM_TEXT),
+                'verifiedby' => $certstatus === 'verified' ? (int)$USER->id : 0,
+                'verifiedat' => $certstatus === 'verified' ? $now : 0,
+                'createdby' => (int)$USER->id,
+                'timecreated' => $now,
+                'timemodified' => $now,
+            ];
+            if ((string)$record->title === '') {
+                throw new invalid_parameter_exception('Give the certificate a title.');
+            }
+            if ((int)$record->expiresat > 0 && (int)$record->issuedat > 0 && (int)$record->expiresat <= (int)$record->issuedat) {
+                throw new invalid_parameter_exception('Expiry date must be after the issue date.');
+            }
+            $DB->insert_record('local_prequran_teacher_cert', $record);
+            $notice = 'Certificate recorded (' . $record->status . ').'
+                . ((int)$record->expiresat > 0 ? '' : ' NOTE: no expiry date set - the expiry sweep will never flag it.');
+        } else if ($do === 'verify_certificate') {
+            // Verification decision on a recorded certificate.
+            if (!pqh_table_exists_safe('local_prequran_teacher_cert')) {
+                throw new invalid_parameter_exception('Certificate table is not ready.');
+            }
+            $cert = $DB->get_record('local_prequran_teacher_cert',
+                ['id' => (int)($body['certid'] ?? 0), 'workspaceid' => $workspaceid], '*', MUST_EXIST);
+            $decision = clean_param((string)($body['decision'] ?? ''), PARAM_ALPHANUMEXT);
+            if (!in_array($decision, ['verified', 'rejected'], true)) {
+                throw new invalid_parameter_exception('Choose verify or reject.');
+            }
+            $cert->status = $decision;
+            $cert->verifiedby = (int)$USER->id;
+            $cert->verifiedat = $now;
+            $cert->timemodified = $now;
+            $DB->update_record('local_prequran_teacher_cert', $cert);
+            $notice = 'Certificate ' . $decision . '.';
         } else if ($do === 'approve_payout') {
             // -- write: approve_payout (legacy action=approve_payout, verbatim) --
             $payout = $DB->get_record('local_prequran_market_payout', ['id' => (int)($body['payoutid'] ?? 0), 'workspaceid' => $workspaceid], '*', MUST_EXIST);
@@ -196,6 +321,16 @@ foreach ($contracts as $row) {
     $nameids[] = (int)($row->teacherid ?? 0);
 }
 
+// Teacher certificates (expiry-dated compliance register), soonest expiry first.
+$certificates = [];
+if (pqh_table_exists_safe('local_prequran_teacher_cert')) {
+    $certificates = array_values($DB->get_records('local_prequran_teacher_cert',
+        ['workspaceid' => $workspaceid], 'expiresat ASC, timemodified DESC'));
+    foreach ($certificates as $row) {
+        $nameids[] = (int)$row->teacherid;
+    }
+}
+
 echo json_encode([
     'ok' => true,
     'ready' => pqops_ready(),
@@ -208,6 +343,7 @@ echo json_encode([
     'sessions' => $sessions,
     'subrequests' => $subrequests,
     'payouts' => $payouts,
+    'certificates' => $certificates,
     'names' => pqpd_names($nameids),
 ], JSON_UNESCAPED_SLASHES);
 exit;

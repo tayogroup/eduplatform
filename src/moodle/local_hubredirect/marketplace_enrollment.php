@@ -295,12 +295,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $now = time();
         $identitynote = $loggedin
-            ? 'Enrollment completed by verified Moodle user #' . $requesterid . '.'
+            ? 'Enrollment completed by verified account #' . $requesterid . '.'
             : 'Guest enrollment submitted. Verify contact and link or create the requester/learner identity before enabling communication.';
         if (!$loggedin && validate_email((string)$form['contact'])) {
             $matcheduserid = (int)$DB->get_field('user', 'id', ['email' => core_text::strtolower((string)$form['contact']), 'deleted' => 0], IGNORE_MISSING);
             if ($matcheduserid > 0) {
-                $identitynote .= ' Existing Moodle email match: user #' . $matcheduserid . '; reuse this identity.';
+                $identitynote .= ' Existing email match: user #' . $matcheduserid . '; reuse this identity.';
             }
         }
         if ($existing) {

@@ -259,6 +259,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 $workspaceid = $contextworkspaceid;
             }
             $form['workspaceid'] = $workspaceid > 0 ? (string)$workspaceid : '';
+            $schoolcontextforusername = $workspaceid > 0 ? pqh_consumer_context_by_workspace($workspaceid) : null;
+            $schoolslugforusername = (string)($schoolcontextforusername->consumerslug ?? $consumercontext->consumerslug ?? '');
             $firstname = $form['teacher_firstname'];
             $lastname = $form['teacher_lastname'];
             $displayname = $form['teacher_display_name'] !== '' ? $form['teacher_display_name'] : trim($firstname . ' ' . $lastname);
@@ -615,9 +617,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                     $teacherusername = (string)$existinguser->username;
                     $existingteacher = true;
                 } else {
-                    // Legacy: optional_param('teacher_username', '', PARAM_USERNAME) from the form post.
-                    $requestedusername = clean_param((string)($body['teacher_username'] ?? ''), PARAM_USERNAME);
-                    $teacherusername = pqtil_unique_username($requestedusername ?: 'teacher.' . $firstname . '.' . $lastname);
+                    $teacherusername = pqtil_unique_username('teacher.' . $firstname . '.' . $lastname);
                     [$teacherid, $teacherpassword] = pqtil_create_user($firstname, $lastname, $teacheremail, $teacherusername, !pqtil_contact_is_email($preferredcontact));
                 }
             }
@@ -625,6 +625,13 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
 
             $teacheruser = core_user::get_user($teacherid);
             if ($teacheruser) {
+                if (!$existingteacher) {
+                    $standardteacherusername = pqh_generate_standard_username($schoolslugforusername, 'teacher', $teacheraccountid);
+                    if ($standardteacherusername !== '' && !$DB->record_exists('user', ['username' => $standardteacherusername, 'mnethostid' => $CFG->mnet_localhost_id])) {
+                        $teacheruser->username = $standardteacherusername;
+                        $teacherusername = $standardteacherusername;
+                    }
+                }
                 if (core_text::strlen($form['country']) <= 2) {
                     $teacheruser->country = core_text::strtoupper($form['country']);
                 }
@@ -1213,13 +1220,24 @@ $sourceonline = array_filter($sourceonline, static function(string $value): bool
     return trim($value) !== '';
 });
 
+// Geo reference data (country/city/timezone) now ships from the CDN
+// (platform/data/*.json) and is merged client-side; trim it from this bootstrap.
+// $pqtioptions above stays intact for server-side POST validation.
+$pqtipublicoptions = $pqtioptions;
+unset(
+    $pqtipublicoptions['countries'],
+    $pqtipublicoptions['cities'],
+    $pqtipublicoptions['country_cities'],
+    $pqtipublicoptions['timezones'],
+    $pqtipublicoptions['country_timezones']
+);
 echo json_encode([
     'ok' => true,
     'ready' => $ready,
     'missingprofilecolumns' => $missingprofilecolumns,
     'loaderror' => $error,
     'form' => $form,
-    'options' => $pqtioptions,
+    'options' => $pqtipublicoptions,
     'institution' => [
         'type' => $pqtiinstitutiontype,
         'faith_subcategory' => $pqtifaithsubcategory,

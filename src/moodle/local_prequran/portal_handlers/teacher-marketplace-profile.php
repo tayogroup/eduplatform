@@ -167,7 +167,24 @@ if ($teacher) {
             'website_url' => pqtmpl_public_url($marketing, 'website_or_booking_url'),
             'demo_url' => pqtmpl_public_url($marketing, 'demo_video_url'),
         ],
+        // Structured pricing + trial (previously only a free-text blob).
+        'pricing' => [
+            'hourly_rate' => (string)($teacher->hourly_rate ?? ''),
+            'currency' => (string)($teacher->rate_currency ?? 'USD'),
+            'session_minutes' => (int)($teacher->session_length_minutes ?? 0),
+            'trial_available' => (int)($teacher->trial_available ?? 0) === 1,
+            'trial_rate' => (string)($teacher->trial_rate ?? ''),
+        ],
         'canonicalurl' => $canonicalprofileurl,
+    ];
+    // Public reputation: average stars, count, and moderated written reviews —
+    // the session_rating.comment was captured but never shown anywhere.
+    require_once($CFG->dirroot . '/local/hubredirect/marketplace_core_portallib.php');
+    $rep = pqmk_tutor_reputation($teacherid, 20);
+    $teacherout['reputation'] = [
+        'avg' => $rep['avg'],
+        'count' => $rep['count'],
+        'reviews' => $rep['reviews'],
     ];
 }
 

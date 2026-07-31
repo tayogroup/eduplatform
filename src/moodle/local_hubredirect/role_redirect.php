@@ -53,6 +53,9 @@ if ($workspaceid > 0) {
     if (in_array($role, ['teacher', 'assistant_teacher'], true)) {
         redirect(new moodle_url('/local/hubredirect/teacher_workspace.php', $params));
     }
+    if ($role === 'finance') {
+        redirect(new moodle_url('/local/hubredirect/finance_operations.php', $params));
+    }
     if (in_array($role, ['owner', 'admin', 'platform_admin', 'coordinator', 'auditor'], true)) {
         redirect(new moodle_url('/local/hubredirect/workspace_dashboard.php', $params));
     }

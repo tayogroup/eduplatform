@@ -27,7 +27,7 @@ $returnurl = $isstudenteditor
     : new moodle_url('/local/hubredirect/teacher_office.php', $urlparams);
 
 if (!pqh_table_exists_safe('local_prequran_workspace_material')) {
-    pqh_access_denied('Workspace material table is not ready. Run the local_prequran Moodle upgrade.', $returnurl, 'Document editor unavailable');
+    pqh_access_denied('Workspace material table is not ready. Run the local_prequran platform upgrade.', $returnurl, 'Document editor unavailable');
 }
 $material = $materialid > 0 ? $DB->get_record('local_prequran_workspace_material', ['id' => $materialid, 'status' => 'active'], '*', IGNORE_MISSING) : false;
 if (!$material) {
@@ -56,6 +56,8 @@ if (!pqho_material_editor_supported($material)) {
 if (!$readonly) {
     $material = pqho_repair_starter_material_if_needed($material);
 }
+
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $docserver = rtrim(trim((string)get_config('local_prequran', 'onlyoffice_document_server_url')), '/');
 $filename = pqh_workspace_material_filename($material);
@@ -99,7 +101,7 @@ body.pqh-office-editor-page #page,body.pqh-office-editor-page #page-content,body
   </section>
   <section class="pqhoe-frame">
     <?php if ($docserver === ''): ?>
-      <div class="pqhoe-empty">ONLYOFFICE is not configured yet. Set the document server URL in the PreQuraan Moodle plugin settings.</div>
+      <div class="pqhoe-empty">ONLYOFFICE is not configured yet. Set the document server URL in the PreQuraan plugin settings.</div>
     <?php else: ?>
       <div id="pqh-onlyoffice-editor" style="width:100%;height:100%"></div>
       <?php

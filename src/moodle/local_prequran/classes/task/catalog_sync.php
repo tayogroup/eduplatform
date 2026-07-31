@@ -18,8 +18,23 @@ defined('MOODLE_INTERNAL') || die();
 
 class catalog_sync extends \core\task\scheduled_task {
 
+    /** @var int Term start timestamp (0 = not managed). */
+    private $termstart = 0;
+    /** @var int Term end timestamp (0 = not managed). */
+    private $termend = 0;
+
     public function get_name(): string {
         return get_string('task_catalog_sync', 'local_prequran');
+    }
+
+    /** Parse a YYYY-MM-DD admin setting into a timestamp; 0 when blank/invalid. */
+    private function parse_term_date(string $value): int {
+        $value = trim($value);
+        if ($value === '' || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $value)) {
+            return 0;
+        }
+        $ts = strtotime($value . ' 00:00:00');
+        return $ts === false ? 0 : $ts;
     }
 
     public function execute(): void {
@@ -28,34 +43,48 @@ class catalog_sync extends \core\task\scheduled_task {
         require_once($CFG->libdir . '/gradelib.php');
         require_once($CFG->libdir . '/filelib.php');
 
-        $url = trim((string)get_config('local_prequran', 'catalog_source_url'));
-        if ($url === '') {
+        // MULTI-SCHOOL: the setting accepts one catalog.json URL PER LINE —
+        // one per consumer school (Ehel Academy, Quraan Academy, …). Single-URL
+        // configs keep working unchanged.
+        $urlsetting = trim((string)get_config('local_prequran', 'catalog_source_url'));
+        if ($urlsetting === '') {
             mtrace('Catalog sync skipped: local_prequran/catalog_source_url is not set.');
             return;
         }
+        $urls = array_values(array_filter(array_map('trim', preg_split('/[\r\n]+/', $urlsetting))));
 
-        // Cache-bust so the task always reads the freshest catalog.
-        $fetchurl = $url . (strpos($url, '?') === false ? '?' : '&') . 'cb=' . time();
-        $raw = download_file_content($fetchurl);
-        $catalog = json_decode((string)$raw, true);
-        if (!is_array($catalog) || empty($catalog['courses'])) {
-            mtrace('Catalog sync failed: could not parse a catalog with courses from ' . $url);
-            return;
-        }
+        // Academic-term dates (Canvas-style term stamping): when the admin sets
+        // term_start/term_end, managed courses carry real start/end dates so
+        // year-over-year rollover and reporting have a term boundary to key on.
+        // Blank settings = dates are not managed (legacy behaviour).
+        $this->termstart = $this->parse_term_date((string)get_config('local_prequran', 'term_start'));
+        $this->termend = $this->parse_term_date((string)get_config('local_prequran', 'term_end'));
 
-        $cats = 0; $courses = 0; $items = 0;
+        $cats = 0; $courses = 0; $items = 0; $sources = 0;
         $catcache = [];
-        foreach ($catalog['courses'] as $c) {
-            if (empty($c['idnumber'])) {
+        foreach ($urls as $url) {
+            // Cache-bust so the task always reads the freshest catalog.
+            $fetchurl = $url . (strpos($url, '?') === false ? '?' : '&') . 'cb=' . time();
+            $raw = download_file_content($fetchurl);
+            $catalog = json_decode((string)$raw, true);
+            if (!is_array($catalog) || empty($catalog['courses'])) {
+                mtrace('Catalog sync: could not parse a catalog with courses from ' . $url . ' - skipping this source.');
                 continue;
             }
-            $categoryid = $this->ensure_category_path($c['categoryPath'] ?? ['Ehel Academy'], $catcache, $cats);
-            $courseid = $this->ensure_course($c, $categoryid, $courses);
-            if ($courseid) {
-                $items += $this->ensure_grade_items($courseid, $c);
+            $sources++;
+            foreach ($catalog['courses'] as $c) {
+                if (empty($c['idnumber'])) {
+                    continue;
+                }
+                $categoryid = $this->ensure_category_path($c['categoryPath'] ?? ['Ehel Academy'], $catcache, $cats);
+                $courseid = $this->ensure_course($c, $categoryid, $courses);
+                if ($courseid) {
+                    $items += $this->ensure_grade_items($courseid, $c);
+                    $this->ensure_curriculum_map($courseid, $c);
+                }
             }
         }
-        mtrace("Catalog sync: {$cats} categories created, {$courses} courses created/updated, {$items} grade items ensured.");
+        mtrace("Catalog sync: {$sources}/" . count($urls) . " sources, {$cats} categories created, {$courses} courses created/updated, {$items} grade items ensured.");
     }
 
     /** Get-or-create each level of a category path; returns the leaf category id. */
@@ -102,6 +131,8 @@ class catalog_sync extends \core\task\scheduled_task {
             if ((string)$existing->fullname !== (string)$c['fullname']) { $update->fullname = (string)$c['fullname']; $changed = true; }
             if ((int)$existing->category !== $categoryid) { $update->category = $categoryid; $changed = true; }
             if ((string)$existing->summary !== (string)($c['summary'] ?? '')) { $update->summary = (string)($c['summary'] ?? ''); $update->summaryformat = FORMAT_HTML; $changed = true; }
+            if ($this->termstart > 0 && (int)$existing->startdate !== $this->termstart) { $update->startdate = $this->termstart; $changed = true; }
+            if ($this->termend > 0 && (int)$existing->enddate !== $this->termend) { $update->enddate = $this->termend; $changed = true; }
             if ($changed) {
                 update_course($update);
             }
@@ -112,7 +143,7 @@ class catalog_sync extends \core\task\scheduled_task {
         if ($DB->record_exists('course', ['shortname' => $shortname])) {
             $shortname .= '-' . substr(md5($idnumber), 0, 6);
         }
-        $course = create_course((object)[
+        $new = (object)[
             'fullname' => (string)$c['fullname'],
             'shortname' => $shortname,
             'idnumber' => $idnumber,
@@ -121,7 +152,14 @@ class catalog_sync extends \core\task\scheduled_task {
             'summaryformat' => FORMAT_HTML,
             'format' => 'topics',
             'visible' => 1,
-        ]);
+        ];
+        if ($this->termstart > 0) {
+            $new->startdate = $this->termstart;
+        }
+        if ($this->termend > 0) {
+            $new->enddate = $this->termend;
+        }
+        $course = create_course($new);
         $this->ensure_manual_enrol((int)$course->id);
         $courses++;
         return (int)$course->id;
@@ -145,6 +183,50 @@ class catalog_sync extends \core\task\scheduled_task {
      * unit (iteminstance = unit number) plus a course-level assessment item
      * (iteminstance 0, used by both English "final" and math/science "capstone").
      * Coordinates and itemname match push_gradebook() exactly so no duplicate
+     * Persist the curriculum metadata the light-touch course sync drops on the
+     * floor (cambridgeCode, subject, stage, level, unit list) so transcripts
+     * and reports can reference the framework the course teaches. Idempotent
+     * upsert keyed by courseid; skipped if the table is not present.
+     */
+    private function ensure_curriculum_map(int $courseid, array $c): void {
+        global $DB;
+        if (!$DB->get_manager()->table_exists(new \xmldb_table('local_prequran_curriculum_map'))) {
+            return;
+        }
+        $now = time();
+        $units = [];
+        foreach (($c['units'] ?? []) as $u) {
+            $units[] = [
+                'number' => (int)($u['number'] ?? 0),
+                'idnumber' => (string)($u['idnumber'] ?? ''),
+                'title' => (string)($u['title'] ?? ''),
+                'termId' => (string)($u['termId'] ?? ''),
+            ];
+        }
+        $record = (object)[
+            'courseid' => $courseid,
+            'idnumber' => \core_text::substr((string)($c['idnumber'] ?? ''), 0, 120),
+            'subject' => \core_text::substr((string)($c['subject'] ?? ''), 0, 120),
+            'subject_key' => \core_text::substr((string)($c['subjectKey'] ?? ''), 0, 40),
+            'stage' => (int)($c['stage'] ?? 0),
+            'level' => \core_text::substr((string)($c['level'] ?? ''), 0, 100),
+            'cambridge_code' => \core_text::substr((string)($c['cambridgeCode'] ?? ''), 0, 40),
+            'framework' => \core_text::substr((string)($c['curriculumFramework'] ?? ''), 0, 255),
+            'unitcount' => (int)($c['unitCount'] ?? count($units)),
+            'unitsjson' => json_encode($units, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+            'timemodified' => $now,
+        ];
+        $existing = $DB->get_record('local_prequran_curriculum_map', ['courseid' => $courseid], 'id', IGNORE_MISSING);
+        if ($existing) {
+            $record->id = (int)$existing->id;
+            $DB->update_record('local_prequran_curriculum_map', $record);
+        } else {
+            $record->timecreated = $now;
+            $DB->insert_record('local_prequran_curriculum_map', $record);
+        }
+    }
+
+    /**
      * items are created on the first grade write.
      */
     private function ensure_grade_items(int $courseid, array $c): int {

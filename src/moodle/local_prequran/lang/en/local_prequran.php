@@ -66,3 +66,26 @@ $string['task_finance_api_hardening'] = 'Finance API hardening and scale control
 $string['task_support_sla_monitor'] = 'Support SLA warning and breach monitor';
 $string['task_catalog_sync'] = 'Ehel Academy catalog sync';
 $string['task_cohort_sync'] = 'Ehel Academy cohort enrolment sync';
+$string['task_enrolment_reconcile'] = 'Ehel Academy enrolment reconcile (teachers + parent observers)';
+$string['task_student_wellness_scan'] = 'Ehel Academy student wellness scan (at-risk + homework reminders)';
+$string['task_classroom_hygiene'] = 'Ehel Academy classroom hygiene (no-shows, stale reviews, grading SLA)';
+$string['task_finance_dunning'] = 'Ehel Academy finance dunning (due-soon/overdue notices, plan + session hygiene)';
+$string['task_completion_award_scan'] = 'Ehel Academy completion-award candidate scan (passing grade, no certificate yet)';
+$string['task_analytics_snapshot'] = 'Ehel Academy nightly analytics snapshot (grade distribution, pass rate, attendance, completion)';
+$string['task_data_retention'] = 'Ehel Academy data retention sweep (expired webcam proctoring frames + optional audit trimming)';
+
+// Privacy (GDPR) subsystem metadata.
+$string['privacy:metadata:userid'] = 'The ID of the user the record concerns.';
+$string['privacy:metadata:local_prequran_student_profile'] = 'Student profile details captured at intake (name, contact, level, consent flags).';
+$string['privacy:metadata:local_prequran_teacher_profile'] = 'Teacher profile, vetting and marketplace details.';
+$string['privacy:metadata:local_prequran_finance'] = 'Billing accounts, invoices and payment records associated with a user.';
+$string['privacy:metadata:local_prequran_consent'] = 'Parent/guardian consent and communication permission records.';
+$string['privacy:metadata:local_prequran_live'] = 'Live session participation and attendance records.';
+$string['privacy:metadata:local_prequran_progress'] = 'Learning progress state per course and unit.';
+$string['privacy:metadata:local_prequran_seb_proctor'] = 'Webcam snapshot frames captured during proctored exams (adults only).';
+$string['privacy:metadata:local_prequran_grade'] = 'Assessment and course grades recorded for a student.';
+$string['privacy:metadata:bbb'] = 'Live session data shared with the BigBlueButton conferencing provider.';
+$string['privacy:metadata:bbb:fullname'] = 'The user full name is sent to BigBlueButton to label them in the live room.';
+$string['privacy:metadata:gateway'] = 'Billing contact data shared with the hosted payment gateway to process payments.';
+$string['privacy:metadata:gateway:email'] = 'The billing email is sent to the payment gateway for receipts.';
+$string['messageprovider:achievement_update'] = 'Achievement updates (certificate earned, course grade published)';

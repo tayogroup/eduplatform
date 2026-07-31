@@ -30,6 +30,7 @@ $pqhbrandname = trim((string)($pqhconsumercontext->consumername ?? ''));
 if ($pqhbrandname === '') {
     $pqhbrandname = 'EduPlatform';
 }
+$pqhbrandlogo = trim((string)($pqhconsumercontext->logourl ?? ''));
 $pqhcopy = json_decode((string)($pqhconsumercontext->copyjson ?? ''), true);
 if (!is_array($pqhcopy)) {
     $pqhcopy = [];
@@ -1550,14 +1551,17 @@ function pqh_pre_quraan_course_home_link(int $studentid = 0): moodle_url {
 }
 
 function pqh_course_launch_link(string $coursekey, int $studentid = 0): moodle_url {
-    $coursekey = pqh_normalize_course_key($coursekey);
-    if ($coursekey === '') {
-        $coursekey = 'pre_quraan';
-    }
-    if ($coursekey === 'pre_quraan') {
+    // pqh_normalize_course_key() only ever resolves the seven built-in catalog
+    // subjects; every institution course ("moodle_34", custom-subject slugs)
+    // normalises to ''. Defaulting that to 'pre_quraan' silently launched the
+    // Pre-Quraan app for learners who had never been near it -- so an unmatched
+    // key is now passed through untouched to course_launch.php, which already
+    // resolves moodle_<id> keys and enforces enrolment before redirecting.
+    $catalogkey = pqh_normalize_course_key($coursekey);
+    if ($catalogkey === 'pre_quraan') {
         return pqh_pre_quraan_course_home_link($studentid);
     }
-    $params = ['course' => $coursekey];
+    $params = ['course' => $catalogkey !== '' ? $catalogkey : trim($coursekey)];
     if ($studentid > 0) {
         $params['studentid'] = $studentid;
     }
@@ -2029,7 +2033,7 @@ function pqh_step_progress_cleanup_sql(string $environment): string {
         . "SELECT 'stepprog' AS table_name, COUNT(*) AS rows_count\n"
         . "FROM {$stepprog}\n"
         . "WHERE BINARY environment = BINARY '{$environment}';\n\n"
-        . "-- Legacy Moodle user preference snapshots are not environment-scoped.\n"
+        . "-- Legacy user preference snapshots are not environment-scoped.\n"
         . "-- On quraantest/staging databases this removes Pre-Quraan state snapshots for that non-production site.\n"
         . "SELECT 'user_preferences' AS table_name, COUNT(*) AS rows_count\n"
         . "FROM {$preferences}\n"
@@ -2120,6 +2124,17 @@ $teacherenrolledcourses = $role === 'teacher'
     ? pqh_user_moodle_course_cards((int)$USER->id, $teacherstudentcoursescope['moodlecourseids'], $teacherstudentcoursescope['coursekeys'])
     : [];
 $selectedchildcourses = $selectedchild ? pqh_user_courses((int)$selectedchild['studentid']) : [];
+if ($selectedchild) {
+    // Same merge the student branch does above: pqh_user_courses() keeps only
+    // keys present in the fixed course catalog, so a child enrolled purely in
+    // institution courses came back empty and the parent saw no courses at all
+    // while the child's own dashboard listed them.
+    $selectedchildcourses += pqh_user_moodle_course_cards(
+        (int)$selectedchild['studentid'],
+        [],
+        array_keys($selectedchildcourses)
+    );
+}
 $progress = $selectedchild ? pqh_progress_summary((int)$selectedchild['studentid']) : pqh_progress_summary((int)$USER->id);
 $messages = pqh_message_summary((int)$USER->id);
 $focus = $selectedchild ? pqh_focus_summary((int)$selectedchild['studentid']) : pqh_focus_summary((int)$USER->id);
@@ -2130,6 +2145,9 @@ $selectedenrollmentstatus = $selectedchild ? pqh_enrollment_approval_status((int
 $currentstudentenrollmentstatus = $role === 'student' ? pqh_enrollment_approval_status((int)$USER->id) : '';
 $currentworkspaceid = pqh_current_workspace_id((int)$USER->id);
 $hasworkspace = $currentworkspaceid > 0;
+if ($hasworkspace) {
+    pqh_enforce_role_domain($pqhconsumercontext, $currentworkspaceid, (int)$USER->id);
+}
 $teacherliveoverview = $role === 'teacher' ? pqh_teacher_live_overview((int)$USER->id, $hasworkspace ? $currentworkspaceid : 0) : [];
 // Teacher dashboard prototype data: KPI counters, per-course grading
 // queues, submission-status mix, and a five-week attendance trend.
@@ -2349,7 +2367,8 @@ $pqhbackfallback = new moodle_url('/local/hubredirect/dashboard.php', $pqhpagepa
 $pqhismarketplace = pqh_consumer_feature_enabled($pqhconsumercontext, 'teacher_marketplace');
 $pqhshowcoursepanel = !($pqhismarketplace && in_array($role, ['admin', 'school_principal'], true));
 $pqhherokicker = ($role === 'school_principal' ? 'School principal' : ($role === 'sqa_tester' ? 'SQA tester' : ucfirst($role))) . ' dashboard';
-$pqhherotitle = 'Welcome, ' . fullname($USER);
+$pqhaccountno = pqh_account_no_value($USER);
+$pqhherotitle = 'Welcome, ' . fullname($USER) . ($pqhaccountno !== '' ? ' (' . $pqhaccountno . ')' : '');
 $pqhherosubtitle = 'A simple home for messages, progress, lessons, and next steps.';
 if ($pqhismarketplace && $role === 'admin') {
     $pqhherokicker = $pqhbrandname . ' marketplace admin';
@@ -2358,6 +2377,13 @@ if ($pqhismarketplace && $role === 'admin') {
 } else if ($pqhismarketplace) {
     $pqhherokicker = $pqhbrandname . ' marketplace';
     $pqhherosubtitle = 'Connect learners with independent teachers, tutoring support, and flexible learning services.';
+}
+if ($role === 'teacher') {
+    $pqhherotitle = 'Teacher Dashboard';
+}
+$pqhheropagetitle = $pqhherotitle;
+if ($role === 'teacher') {
+    $pqhheropagetitle = 'Welcome back, ' . $USER->firstname . ($pqhaccountno !== '' ? ' (' . $pqhaccountno . ')' : '');
 }
 
 echo $OUTPUT->header();
@@ -2418,7 +2444,7 @@ body.pqh-dashboard-page .drawers {
 body.pqh-dashboard-page #region-main {
   border: 0 !important;
 }
-.pqh-shell{--pqh-scale:1;--pqh-base:14px;--pqh-small:12px;--pqh-tiny:10px;--pqh-title-size:30px;--pqh-section-size:22px;--pqh-panel-size:20px;--pqh-card-title-size:18px;--pqh-metric-size:32px;min-height:100vh;background:linear-gradient(180deg,#edfdf1 0,#fff 46%)}
+.pqh-shell{--pqh-scale:1;--pqh-base:15px;--pqh-small:12px;--pqh-tiny:10px;--pqh-title-size:24px;--pqh-section-size:22px;--pqh-panel-size:20px;--pqh-card-title-size:18px;--pqh-metric-size:32px;min-height:100vh;background:linear-gradient(180deg,#edfdf1 0,#fff 46%)}
 .pqh-shell.pqh-font-large{--pqh-scale:1.15;--pqh-base:16px;--pqh-small:14px;--pqh-tiny:12px;--pqh-title-size:36px;--pqh-section-size:26px;--pqh-panel-size:24px;--pqh-card-title-size:21px;--pqh-metric-size:38px}
 .pqh-shell.pqh-font-xlarge{--pqh-scale:1.3;--pqh-base:18px;--pqh-small:16px;--pqh-tiny:13px;--pqh-title-size:42px;--pqh-section-size:30px;--pqh-panel-size:27px;--pqh-card-title-size:24px;--pqh-metric-size:44px}
 .pqh-topbar{min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px max(20px,calc((100vw - 1180px)/2));background:linear-gradient(135deg,#c8f3c1 0%,#e7ffe2 58%,#fff3d9 100%);border-bottom:1px solid rgba(63,138,85,.24);box-shadow:0 10px 24px rgba(63,138,85,.08)}
@@ -2464,6 +2490,7 @@ body.pqh-dashboard-page #region-main {
 .pqh-quick-card:nth-child(even){background:#6f4e32;box-shadow:0 14px 30px rgba(111,78,50,.16)}
 .pqh-quick-card strong{display:block;font-size:15px;font-weight:950}.pqh-quick-card span{display:block;margin-top:4px;color:rgba(255,255,255,.78);font-size:12px;font-weight:800}
 .pqh-course-panel{margin:0 0 18px;padding:18px;border-radius:14px;background:#fff;border:1px solid rgba(111,78,50,.13);box-shadow:0 10px 24px rgba(105,76,45,.07)}
+.pqh-course-panel[aria-label="Student details"]{background:#e3f4ff}
 .pqh-course-panel__head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px}
 .pqh-course-panel__head h2{margin:0;color:#4d3522;font-size:22px;font-weight:950}
 .pqh-course-panel__head p{margin:5px 0 0;color:#64745a;font-size:13px;font-weight:750}
@@ -2608,8 +2635,10 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
   --pqh-tint:#edf3fc;--pqh-tint-2:#e0ebfa;--pqh-primary:#2166d1;
   --pqh-primary-ink:#17498f;--pqh-r:14px;
   --pqh-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14);
-  background:var(--pqh-bg);min-height:100vh;color:var(--pqh-ink)}
+  background:#fff;min-height:100vh;color:var(--pqh-ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:15px}
 <?php echo pqh_design_shell_css('.pqh-shell'); ?>
+.pqh-shell .pqh-appbar{background:linear-gradient(90deg,#cfe9ff 0%,#e3f4ff 50%,#f2fbff 100%)}
 .pqh-brand-mark{background:linear-gradient(115deg,#2166d1,#4d8be0)!important;color:#fff!important;border-radius:10px}
 .pqh-font-control{color:var(--pqh-faint)}
 .pqh-font-control a{color:var(--pqh-muted);border-radius:7px}
@@ -2697,7 +2726,7 @@ body.pqh-dashboard-page .pq-comm-reply{padding:14px;border-radius:12px;border-co
 .pqh-progress-meter{height:8px;background:var(--pqh-tint);border:0;border-radius:999px}
 .pqh-progress-meter span{background:linear-gradient(90deg,var(--pqh-primary),#4d8be0)}
 /* ---- sidebar ---- */
-.pqh-dashboard-sidebar{gap:12px}
+.pqh-dashboard-sidebar{gap:12px;background:var(--pqh-tint);border-radius:var(--pqh-r);padding:14px}
 .pqh-dashboard-sidebar .pqh-card{padding:16px}
 .pqh-dashboard-sidebar .pqh-card h3{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--pqh-faint);font-weight:750}
 .pqh-dashboard-sidebar .pqh-metric{font-size:26px}
@@ -2727,7 +2756,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 .pqh-todo__ico--risk{background:#fbe9e7;color:#c0392b}
 .pqh-todo__ico--ok{background:#e8f4ec;color:#2e7d4f}
 .pqh-todo__body{min-width:0;flex:1}
-.pqh-todo__body strong{display:block;font-size:13px;font-weight:700;color:var(--pqh-ink)}
+.pqh-todo__body strong{display:block;font-size:12.5px;font-weight:700;color:var(--pqh-ink)}
 .pqh-todo__body span{display:block;color:var(--pqh-muted);font-size:11.5px;font-weight:500}
 .pqh-todo__item .pqh-btn{min-height:30px;padding:0 12px;font-size:12px}
 /* ---- Phase 2: young-learner mode + weekly summary ---- */
@@ -2775,8 +2804,8 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 .pqh-notif__item span{display:block;color:#5b6b7c;font-size:11.5px;font-weight:500}
 @media(max-width:560px){.pqh-notif__panel{position:fixed;left:10px;right:10px;top:64px;width:auto}}
 /* ---- neutralize the consumer-theme header gradient (green) on this page ---- */
-.pqh-hero.pqh-workspace-top{background:linear-gradient(120deg,#d7e6f9 0%,#e9f1fc 60%,#f3f8fe 100%)!important;border:1px solid #c5d9f1!important;box-shadow:none!important;border-radius:var(--pqh-r)!important;padding:20px 22px!important}
-.pqh-hero .pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
+.pqh-hero.pqh-workspace-top{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;box-shadow:none!important;border-radius:var(--pqh-r)!important;padding:20px 22px!important}
+.pqh-hero .pqh-workspace-title{color:var(--pqh-ink)!important;font-size:24px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
 .pqh-hero .pqh-workspace-sub{color:var(--pqh-muted)!important;font-weight:500!important;opacity:1}
 .pqh-brand-mark{background:var(--pqh-primary)!important}
 .pqh-workspace-actions a,.pqh-workspace-actions button{background:var(--pqh-surface)!important;border-color:var(--pqh-line)!important;color:var(--pqh-ink)!important;font-weight:650!important;box-shadow:none!important}
@@ -2838,11 +2867,23 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 <main class="pqh-shell pqh-font-<?php echo s($pqhfontsize); ?><?php echo $pqhdensity === 'compact' ? ' pqh-compact' : ''; ?>">
 <?php $pqhdashboardhomeurl = new moodle_url('/local/hubredirect/dashboard.php', $pqhpageparams); ?>
 <nav class="pqh-gnav" aria-label="Global navigation">
-  <a class="pqh-gnav__brand" href="<?php echo $pqhdashboardhomeurl->out(false); ?>" title="<?php echo s($pqhbrandname); ?>"><span class="pqh-gnav__mark"><?php echo s($pqhbrandinitials); ?></span><span class="pqh-gnav__name"><?php echo s($pqhbrandname); ?></span></a>
+  <a class="pqh-gnav__brand" href="<?php echo $pqhdashboardhomeurl->out(false); ?>" title="<?php echo s($pqhbrandname); ?>"><span class="pqh-gnav__mark<?php echo $pqhbrandlogo !== '' ? ' pqh-gnav__mark--img' : ''; ?>"><?php echo $pqhbrandlogo !== '' ? '<img src="' . s($pqhbrandlogo) . '" alt="' . s($pqhbrandname) . '">' : s($pqhbrandinitials); ?></span><span class="pqh-gnav__name"><?php echo s($pqhbrandname); ?></span></a>
+  <?php if ($role === 'teacher'): ?>
+  <a class="pqh-gnav__item" href="<?php echo (new moodle_url('/local/hubredirect/teacher_workspace.php', $pqhpageparams))->out(false); ?>">
+    <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="5" rx="1"/><path d="M4 9v10M20 9v10M2 19h20"/></svg>
+    <span class="pqh-gnav__label">Workspace</span>
+  </a>
+  <?php elseif ($role === 'parent'): ?>
+  <a class="pqh-gnav__item" href="<?php echo (new moodle_url('/local/hubredirect/workspace_parent.php', $pqhpageparams))->out(false); ?>">
+    <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="5" rx="1"/><path d="M4 9v10M20 9v10M2 19h20"/></svg>
+    <span class="pqh-gnav__label">Workspace</span>
+  </a>
+  <?php else: ?>
   <a class="pqh-gnav__item is-active" href="<?php echo $pqhdashboardhomeurl->out(false); ?>">
     <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
     <span class="pqh-gnav__label">Dashboard</span>
   </a>
+  <?php endif; ?>
   <a class="pqh-gnav__item" href="#pqh-courses">
     <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
     <span class="pqh-gnav__label">Courses</span>
@@ -2856,10 +2897,18 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
       <span class="pqh-gnav__label">Schedule</span>
     </a>
+    <a class="pqh-gnav__item" href="<?php echo (new moodle_url('/local/hubredirect/consumer_landing.php', $pqhpageparams))->out(false); ?>">
+      <svg viewBox="0 0 24 24"><path d="M3 9.5 12 3l9 6.5"/><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></svg>
+      <span class="pqh-gnav__label">School Hub</span>
+    </a>
   <?php elseif (in_array($role, ['parent'], true) && $selectedchild): ?>
     <a class="pqh-gnav__item" href="<?php echo (new moodle_url('/local/hubredirect/live_calendar.php', ['childid' => (int)$selectedchild['studentid']]))->out(false); ?>">
       <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
       <span class="pqh-gnav__label">Calendar</span>
+    </a>
+    <a class="pqh-gnav__item" href="<?php echo (new moodle_url('/local/hubredirect/consumer_landing.php', $pqhpageparams))->out(false); ?>">
+      <svg viewBox="0 0 24 24"><path d="M3 9.5 12 3l9 6.5"/><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></svg>
+      <span class="pqh-gnav__label">School Hub</span>
     </a>
   <?php endif; ?>
   <?php if ($role === 'student'): ?>
@@ -2867,9 +2916,17 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
       <span class="pqh-gnav__label">Messages</span>
     </a>
+    <a class="pqh-gnav__item js-pqh-open-comm" data-opencomm="announcements" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id, 'opencomm' => 'announcements'])->out(false); ?>">
+      <svg viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 13v-2z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+      <span class="pqh-gnav__label">Announcements</span>
+    </a>
     <a class="pqh-gnav__item" data-pq-support-action="open" href="<?php echo pqh_hub_link('support.php', ['studentid' => (int)$USER->id])->out(false); ?>">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
-      <span class="pqh-gnav__label">Help Desk</span>
+      <span class="pqh-gnav__label">Manage tickets</span>
+    </a>
+    <a class="pqh-gnav__item" data-pq-support-action="new" href="<?php echo pqh_hub_link('support.php', ['studentid' => (int)$USER->id, 'new' => 1])->out(false); ?>">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+      <span class="pqh-gnav__label">Create a ticket</span>
     </a>
   <?php elseif ($role === 'teacher'): ?>
     <?php
@@ -2947,18 +3004,21 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 })();
 </script>
 <div class="pqh-appbar">
-  <div class="pqh-appbar__brand"><?php echo s($pqhherotitle); ?></div>
+  <div class="pqh-appbar__brand"><svg class="pqh-appbar__brand-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span><?php echo s($pqhherotitle); ?></span></div>
   <div class="pqh-appbar__nav" aria-label="Dashboard actions">
-    <button class="pqh-back" type="button" data-fallback="<?php echo s($pqhbackfallback->out(false)); ?>">Back</button>
     <?php if ($role === 'teacher'): ?>
-      <a class="pqh-top-action" href="<?php echo pqh_live_teacher_link($hasworkspace ? $currentworkspaceid : 0, $selectedchild ? (int)$selectedchild['studentid'] : 0)->out(false); ?>">Teacher workspace</a>
+      <a class="pqh-top-action" href="<?php echo (new moodle_url('/local/hubredirect/teacher_workspace.php', $pqhpageparams))->out(false); ?>">Workspace</a>
+      <a class="pqh-top-action" href="<?php echo (new moodle_url('/local/hubredirect/consumer_landing.php', $pqhpageparams))->out(false); ?>">School Hub</a>
+      <button class="pqh-back" type="button" data-fallback="<?php echo s($pqhbackfallback->out(false)); ?>">Back</button>
+    <?php elseif ($role === 'parent'): ?>
+      <a class="pqh-top-action" href="<?php echo (new moodle_url('/local/hubredirect/workspace_parent.php', $pqhpageparams))->out(false); ?>">Workspace</a>
+      <a class="pqh-top-action" href="<?php echo (new moodle_url('/local/hubredirect/consumer_landing.php', $pqhpageparams))->out(false); ?>">School Hub</a>
+      <button class="pqh-back" type="button" data-fallback="<?php echo s($pqhbackfallback->out(false)); ?>">Back</button>
+    <?php else: ?>
+      <button class="pqh-back" type="button" data-fallback="<?php echo s($pqhbackfallback->out(false)); ?>">Back</button>
     <?php endif; ?>
     <?php if ($role === 'student'): ?>
       <a class="pqh-top-action" href="<?php echo (new moodle_url('/local/hubredirect/student_workplace.php', $hasworkspace ? ['workspaceid' => $currentworkspaceid] : []))->out(false); ?>">Student Workplace</a>
-      <a class="pqh-top-action js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id, 'opencomm' => 'messages'])->out(false); ?>">Messages</a>
-      <a class="pqh-top-action js-pqh-open-comm" data-opencomm="announcements" href="<?php echo pqh_hub_link('communications.php', ['studentid' => (int)$USER->id, 'opencomm' => 'announcements'])->out(false); ?>">Announcements</a>
-      <a class="pqh-top-action" data-pq-support-action="open" href="<?php echo pqh_hub_link('support.php', ['studentid' => (int)$USER->id])->out(false); ?>">Manage tickets</a>
-      <a class="pqh-top-action" data-pq-support-action="new" href="<?php echo pqh_hub_link('support.php', ['studentid' => (int)$USER->id, 'new' => 1])->out(false); ?>">Create a ticket</a>
     <?php endif; ?>
     <?php if ($pqhnotifany): ?>
       <span class="pqh-notif">
@@ -2988,7 +3048,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
   <section class="pqh-hero pqh-workspace-top">
     <div>
       <p class="pqh-kicker"><?php echo s($pqhherokicker); ?></p>
-      <h1 class="pqh-title pqh-workspace-title"><?php echo s($pqhherotitle); ?></h1>
+      <h1 class="pqh-title pqh-workspace-title"><?php echo s($pqhheropagetitle); ?></h1>
       <p class="pqh-subtitle pqh-workspace-sub"><?php echo s($pqhherosubtitle); ?></p>
     </div>
     <?php if ($children): ?>
@@ -3141,7 +3201,15 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       }
       if (!$pqhyoungcontinue && $currentstudentcourses) {
           $pqhyfirst = reset($currentstudentcourses);
-          $pqhyoungcontinue = pqh_course_launch_link((string)($pqhyfirst['key'] ?? 'pre_quraan'), (int)$USER->id);
+          // Fall back to the learner's own first course, never to Pre-Quraan:
+          // a young learner enrolled only in institution courses was being sent
+          // into the Pre-Quraan app by the old '?? pre_quraan' default. If the
+          // card carries no key at all, offer no Continue link rather than a
+          // link to somebody else's course.
+          $pqhyfirstkey = trim((string)($pqhyfirst['key'] ?? ''));
+          if ($pqhyfirstkey !== '') {
+              $pqhyoungcontinue = pqh_course_launch_link($pqhyfirstkey, (int)$USER->id);
+          }
       }
       $pqhyoungdone = (int)($progress['completed'] ?? 0);
       $pqhyoungstars = str_repeat('★', max(1, min(5, $pqhyoungdone))) . str_repeat('☆', max(0, 5 - max(1, min(5, $pqhyoungdone))));
@@ -3230,6 +3298,40 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
     </section>
   <?php endif; ?>
 
+  <?php if ($role === 'parent' && $selectedchild): ?>
+    <?php
+      $pqhparentstudentinfo = pqh_student_basic_info((int)$selectedchild['studentid'], $selectedchild);
+      $pqhparentstudentid = (int)$selectedchild['studentid'];
+      $pqhparentstudentuser = $pqhparentstudentid > 0
+          ? core_user::get_user($pqhparentstudentid, 'id,firstname,lastname,email,username,idnumber', IGNORE_MISSING)
+          : null;
+      $pqhparentstudentprofile = ($pqhparentstudentid > 0 && pqh_table_exists('local_prequran_student_profile'))
+          ? $DB->get_record('local_prequran_student_profile', ['userid' => $pqhparentstudentid], '*', IGNORE_MISSING)
+          : null;
+    ?>
+    <section class="pqh-course-panel" aria-label="Student details">
+      <div class="pqh-course-panel__head">
+        <div>
+          <h2>Student Details</h2>
+        </div>
+        <?php if (!empty($pqhparentstudentinfo['special_care'])): ?>
+          <span class="pqh-special-care" title="Special care">+ Special care</span>
+        <?php endif; ?>
+      </div>
+      <div class="pqh-student-profile">
+        <span class="pqh-student-profile__item"><b>Email</b><span><?php echo s($pqhparentstudentuser ? (string)$pqhparentstudentuser->email : 'Not set'); ?></span></span>
+        <span class="pqh-student-profile__item"><b>Account No.</b><span><?php echo s($pqhparentstudentuser ? (pqh_account_no_value($pqhparentstudentuser) ?: 'pending repair') : 'Not set'); ?></span></span>
+        <span class="pqh-student-profile__item"><b>Username</b><span><?php echo s($pqhparentstudentuser ? (string)$pqhparentstudentuser->username : 'Not set'); ?></span></span>
+        <span class="pqh-student-profile__item"><b>Level</b><span><?php echo s((string)($pqhparentstudentprofile->current_level ?? '')); ?></span></span>
+        <span class="pqh-student-profile__item"><b>Status</b><span><?php echo s((string)($pqhparentstudentprofile->status ?? 'active')); ?></span></span>
+        <span class="pqh-student-profile__item"><b>Age band</b><span><?php echo s((string)($pqhparentstudentprofile->age_band ?? '')); ?></span></span>
+        <span class="pqh-student-profile__item"><b>Language</b><span><?php echo s((string)($pqhparentstudentprofile->language ?? ($pqhparentstudentprofile->primary_language ?? ''))); ?></span></span>
+        <span class="pqh-student-profile__item"><b>Country</b><span><?php echo s((string)($pqhparentstudentprofile->country ?? '')); ?></span></span>
+        <span class="pqh-student-profile__item pqh-student-profile__item--wide"><b>Enrollment approval</b><span><?php echo s((string)($pqhparentstudentprofile->enrollment_approval_status ?? '')); ?></span></span>
+      </div>
+    </section>
+  <?php endif; ?>
+
   <?php if ($role === 'teacher' && $selectedchild): ?>
     <?php $selectedstudentinfo = pqh_student_basic_info((int)$selectedchild['studentid'], $selectedchild); ?>
     <section class="pqh-course-panel" aria-label="Selected student information">
@@ -3258,11 +3360,11 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       if ($role === 'student') {
           $coursepanelsections[] = [
               'title' => 'My courses',
-              'subtitle' => 'Only Moodle-enrolled courses appear here.',
+              'subtitle' => 'Only enrolled courses appear here.',
               'courses' => $currentstudentcourses,
               'studentid' => (int)$USER->id,
               'support' => pqh_student_course_support_context((int)$USER->id),
-              'empty' => 'No active Moodle course enrollment was found for your account yet.',
+              'empty' => 'No active course enrollment was found for your account yet.',
               'launchmode' => 'student_context',
           ];
       } else if ($role === 'teacher' && $teacherenrolledcourses) {
@@ -3272,7 +3374,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
               'courses' => $teacherenrolledcourses,
               'studentid' => 0,
               'support' => [],
-              'empty' => 'No teacher-only Moodle course enrollment was found for your account yet.',
+              'empty' => 'No teacher-only course enrollment was found for your account yet.',
               'launchmode' => 'moodle_direct',
           ];
       }
@@ -3283,7 +3385,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
               'courses' => $selectedchildcourses,
               'studentid' => (int)$selectedchild['studentid'],
               'support' => pqh_student_course_support_context((int)$selectedchild['studentid']),
-              'empty' => 'No active Moodle course enrollment was found for this student yet.',
+              'empty' => 'No active course enrollment was found for this student yet.',
               'launchmode' => 'student_context',
           ];
       }
@@ -3649,7 +3751,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
     <section class="pqh-grid" aria-label="SQA tester dashboard">
       <article class="pqh-card pqh-card--wide">
         <h3>SQA Testing Workspace</h3>
-        <p>Run release smoke checks, record Alphabet lesson evidence, review reports, and verify system readiness without Moodle administration privileges.</p>
+        <p>Run release smoke checks, record Alphabet lesson evidence, review reports, and verify system readiness without platform administration privileges.</p>
         <div class="pqh-actions pqh-workspace-actions">
           <a class="pqh-btn" href="<?php echo pqh_hub_link('sqa_test_artifacts.php', ['artifact' => 'alphabet-tracker'])->out(false); ?>">Open Alphabet test tracker</a>
           <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('sqa_test_artifacts.php', ['artifact' => 'library'])->out(false); ?>">Admin/SQA docs</a>
@@ -4207,7 +4309,7 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
     <section class="pqh-grid" aria-label="School principal dashboard">
       <article class="pqh-card pqh-card--wide">
         <h3>Academy Operations</h3>
-        <p>Manage courses, live learning, people, reports, and follow-up without Moodle site administration tools.</p>
+        <p>Manage courses, live learning, people, reports, and follow-up without platform administration tools.</p>
         <div class="pqh-actions pqh-workspace-actions">
           <a class="pqh-btn" href="<?php echo pqh_live_admin_link()->out(false); ?>">Open academy operations</a>
           <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_live_sessions_link($hasworkspace ? $currentworkspaceid : 0)->out(false); ?>">Live sessions</a>
@@ -4220,7 +4322,16 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
         <h3>Courses</h3>
         <p>Create and maintain academy course tracks, enrollment flows, and learner placement support.</p>
         <div class="pqh-actions pqh-workspace-actions">
-          <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_course_launch_link('pre_quraan')->out(false); ?>">Pre-Quraan course home</a>
+          <?php
+            // Pre-Quraan is one institution's subject, not a platform feature.
+            // Offer it only where it could apply -- a faith-based institution,
+            // or an unset/platform-level context -- so a K-12, languages,
+            // technical or professional school is not told to open it.
+            $pqhprincipalinstitutiontype = trim((string)($pqhconsumercontext->institution_type ?? ''));
+          ?>
+          <?php if ($pqhprincipalinstitutiontype === '' || $pqhprincipalinstitutiontype === 'faith_based_education'): ?>
+            <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_course_launch_link('pre_quraan')->out(false); ?>">Pre-Quraan course home</a>
+          <?php endif; ?>
           <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('intake_requests.php')->out(false); ?>">Inquiry queue</a>
           <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_hub_link('student_intake.php')->out(false); ?>">Student intake</a>
           <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_referrers_link()->out(false); ?>">Referrers</a>

@@ -67,6 +67,7 @@ $workspaceid = pqh_current_workspace_id((int)$USER->id, optional_param('workspac
 if ($workspaceid <= 0 || !pqh_user_can_manage_workspace((int)$USER->id, $workspaceid)) {
     pqh_access_denied('Roles and permissions require workspace administrator access.', new moodle_url('/local/hubredirect/workspace_dashboard.php'), 'Permission access denied');
 }
+pqh_enforce_role_domain(pqh_requested_consumer_context(), $workspaceid, (int)$USER->id);
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $urlparams = ['workspaceid' => $workspaceid];
 $notice = '';

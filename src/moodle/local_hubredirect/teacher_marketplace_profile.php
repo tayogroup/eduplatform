@@ -423,7 +423,7 @@ body.pqh-teacher-marketplace-profile-page #page,body.pqh-teacher-marketplace-pro
     <?php if ($message !== ''): ?><div class="pqtmp-alert pqtmp-alert--ok"><?php echo s($message); ?><?php if ($createdthreadid > 0): ?> <a href="<?php echo (new moodle_url('/local/hubredirect/communications.php', $consumerparams + ['threadid' => $createdthreadid, 'opencomm' => 'messages']))->out(false) . '#threadid=' . (int)$createdthreadid; ?>">Open message thread</a><?php endif; ?></div><?php endif; ?>
     <?php if ($error !== ''): ?><div class="pqtmp-alert pqtmp-alert--bad"><?php echo s($error); ?></div><?php endif; ?>
     <?php if (!$ready): ?>
-      <div class="pqtmp-empty">Teacher marketplace schema is not ready yet. Please run the local_prequran Moodle upgrade.</div>
+      <div class="pqtmp-empty">Teacher marketplace schema is not ready yet. Please run the local_prequran upgrade.</div>
     <?php elseif (!$teacher): ?>
       <div class="pqtmp-empty">This teacher profile is not available.</div>
     <?php else: ?>

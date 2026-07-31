@@ -107,7 +107,12 @@ function pqco_workspace_course_options(stdClass $consumercontext, array $fallbac
         if (pqco_offering_has_ended($offering)) {
             continue;
         }
-        $key = pqh_normalize_course_key((string)$offering->course_key);
+        // The stored course_key is already a resolved slug at write time (a
+        // catalog key, or a slug derived from a custom title) — do not run it
+        // through pqh_normalize_course_key() again: that helper only ever
+        // returns non-empty for a catalog match, so it would silently drop
+        // every custom-subject offering from these options.
+        $key = trim((string)$offering->course_key);
         if ($key === '') {
             continue;
         }
@@ -117,17 +122,40 @@ function pqco_workspace_course_options(stdClass $consumercontext, array $fallbac
     return $options;
 }
 
-function pqco_moodle_courses(): array {
+/**
+ * Courses selectable as the "Linked course" on an offering.
+ *
+ * Pass a workspace id to restrict the list to that institution's own course
+ * categories. Left unscoped this returns every course on the site, which on a
+ * shared Moodle lets one school attach another school's course to its offering
+ * -- and buries its own courses among hundreds of unrelated ones.
+ *
+ * A workspace with no category binding still gets the full list: an empty
+ * dropdown would block offering creation entirely, which is worse than a broad
+ * one. Bind the category (idnumber pqco_consumer_<consumerid>) to scope it.
+ */
+function pqco_moodle_courses(int $workspaceid = 0): array {
     global $DB;
+
+    $where = 'id <> :siteid';
+    $params = ['siteid' => SITEID];
+    if ($workspaceid > 0) {
+        $categoryids = pqh_workspace_course_category_ids($workspaceid);
+        if ($categoryids) {
+            [$insql, $inparams] = $DB->get_in_or_equal($categoryids, SQL_PARAMS_NAMED, 'linkcat');
+            $where .= " AND category {$insql}";
+            $params += $inparams;
+        }
+    }
 
     $courses = [];
     try {
         $rows = $DB->get_records_sql(
             "SELECT id, fullname, shortname, idnumber, visible
                FROM {course}
-              WHERE id <> :siteid
+              WHERE {$where}
            ORDER BY fullname ASC",
-            ['siteid' => SITEID]
+            $params
         );
     } catch (Throwable $e) {
         return [];
@@ -234,16 +262,25 @@ function pqco_ensure_manual_enrolment_enabled(int $courseid): bool {
 function pqco_create_moodle_course_for_offering($consumercontext, $workspace, array $form, array $catalog): int {
     global $CFG;
 
-    $coursekey = pqh_normalize_course_key((string)($form['course_key'] ?? ''));
-    if ($coursekey === '' || !isset($catalog[$coursekey])) {
+    // The caller (course_offerings.php) has already resolved course_key —
+    // for catalog tracks it's a recognized catalog key; for a custom/other
+    // subject it's a slug derived from the admin's own title and will never
+    // match the static catalog. Do not re-run it through
+    // pqh_normalize_course_key() here: that helper only ever returns a
+    // non-empty value for a catalog match, so it would silently wipe out
+    // every custom course key back to ''.
+    $coursekey = trim((string)($form['course_key'] ?? ''));
+    if ($coursekey === '') {
+        return 0;
+    }
+    $title = trim((string)($form['title'] ?? ''));
+    if ($title === '') {
+        $title = (string)($catalog[$coursekey]['title'] ?? '');
+    }
+    if ($title === '') {
         return 0;
     }
     require_once($CFG->dirroot . '/course/lib.php');
-
-    $title = trim((string)($form['title'] ?? ''));
-    if ($title === '') {
-        $title = (string)$catalog[$coursekey]['title'];
-    }
     $categoryid = pqco_consumer_category_id($consumercontext, $workspace);
     $workspaceid = (int)($workspace->id ?? 0);
     $shortnamebase = implode('_', array_filter([
@@ -310,10 +347,12 @@ function pqco_request_status_label(string $status): string {
         'pending' => 'Pending approval',
         'approved' => 'Approved - pending sync',
         'enrolled' => 'Enrolled',
+        'waitlisted' => 'Waitlisted - offering full',
         'drop_requested' => 'Drop requested',
         'dropped' => 'Dropped',
         'rejected' => 'Rejected',
         'cancelled' => 'Cancelled',
+        'completed' => 'Completed - term ended',
     ];
     return $labels[$status] ?? ucfirst(str_replace('_', ' ', $status));
 }
@@ -704,7 +743,7 @@ function pqco_append_profile_course(int $studentid, string $coursekey): void {
     $DB->update_record('local_prequran_student_profile', $profile);
 }
 
-function pqco_enrol_user_in_moodle_course(int $userid, int $courseid, string $roleshortname): bool {
+function pqco_enrol_user_in_moodle_course(int $userid, int $courseid, string $roleshortname, int $timestart = 0, int $timeend = 0): bool {
     global $CFG, $DB;
 
     if ($userid <= 0 || $courseid <= 0) {
@@ -730,12 +769,74 @@ function pqco_enrol_user_in_moodle_course(int $userid, int $courseid, string $ro
         return false;
     }
     $roleid = (int)$DB->get_field('role', 'id', ['shortname' => $roleshortname], IGNORE_MISSING);
-    $manual->enrol_user($manualinstance, $userid, $roleid ?: null, time(), 0, ENROL_USER_ACTIVE);
+    $manual->enrol_user($manualinstance, $userid, $roleid ?: null, $timestart > 0 ? $timestart : time(), max(0, $timeend), ENROL_USER_ACTIVE);
     return true;
 }
 
-function pqco_enrol_student_in_moodle_course(int $studentid, int $courseid): bool {
-    return pqco_enrol_user_in_moodle_course($studentid, $courseid, 'student');
+/**
+ * Enrol a student; when the offering (or any object carrying startdate/enddate)
+ * is passed, the enrolment is DATE-BOUNDED: access opens at the offering start
+ * and Moodle itself closes it a day after the offering end (same +DAYSECS grace
+ * pqco_offering_has_ended uses). Best practice (Canvas section dates): the
+ * participation window lives on the enrolment, enforced automatically.
+ */
+function pqco_enrol_student_in_moodle_course(int $studentid, int $courseid, $offering = null): bool {
+    $timestart = 0;
+    $timeend = 0;
+    if (is_object($offering)) {
+        $start = (int)($offering->startdate ?? 0);
+        $end = (int)($offering->enddate ?? 0);
+        if ($start > 0) {
+            $timestart = $start;
+        }
+        if ($end > 0) {
+            $timeend = $end + DAYSECS;
+        }
+    }
+    return pqco_enrol_user_in_moodle_course($studentid, $courseid, 'student', $timestart, $timeend);
+}
+
+/**
+ * Suspend (NOT unenrol) a student's manual enrolment — the Canvas "inactive"
+ * state: stays on the roster, loses access, keeps every grade. The reversible
+ * lever for finance holds and term conclusion; unenrol stays reserved for real
+ * exits (drops). Returns true when a status change was applied.
+ */
+function pqco_suspend_student_in_moodle_course(int $userid, int $courseid): bool {
+    return pqco_set_student_enrol_status($userid, $courseid, ENROL_USER_SUSPENDED);
+}
+
+/** Reactivate a previously suspended manual enrolment. */
+function pqco_restore_student_in_moodle_course(int $userid, int $courseid): bool {
+    return pqco_set_student_enrol_status($userid, $courseid, ENROL_USER_ACTIVE);
+}
+
+function pqco_set_student_enrol_status(int $userid, int $courseid, int $status): bool {
+    global $CFG, $DB;
+
+    if ($userid <= 0 || $courseid <= 0) {
+        return false;
+    }
+    require_once($CFG->libdir . '/enrollib.php');
+    $manual = enrol_get_plugin('manual');
+    if (!$manual) {
+        return false;
+    }
+    foreach (enrol_get_instances($courseid, false) as $instance) {
+        if ((string)$instance->enrol !== 'manual') {
+            continue;
+        }
+        $ue = $DB->get_record('user_enrolments', ['enrolid' => $instance->id, 'userid' => $userid]);
+        if (!$ue) {
+            continue;
+        }
+        if ((int)$ue->status === $status) {
+            return false; // Already in the requested state.
+        }
+        $manual->update_user_enrol($instance, $userid, $status);
+        return true;
+    }
+    return false;
 }
 
 function pqco_teacher_ids_for_student(int $studentid, int $workspaceid = 0): array {

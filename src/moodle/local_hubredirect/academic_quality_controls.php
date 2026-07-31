@@ -31,6 +31,7 @@ if (!$workspace) {
         'Academic quality controls unavailable'
     );
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 function pqaqc_table_ready(string $table): bool {
     global $DB;

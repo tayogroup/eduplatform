@@ -28,7 +28,10 @@ pqh_seb_proctor_purge();
 
 $student = core_user::get_user($studentid);
 $studentname = $student ? fullname($student) : ('Student ' . $studentid);
-$snapshots = pqh_seb_proctor_items($examid, $studentid, 'snapshot');
+// Snapshots render the frame inline, so this is the only caller that needs the
+// imagedata LONGTEXT; voice flags only show a timestamp (lightweight default).
+$snapshots = pqh_seb_proctor_items($examid, $studentid, 'snapshot',
+    'id,examid,userid,type,detail,imagedata,timecreated');
 $voices = pqh_seb_proctor_items($examid, $studentid, 'voice');
 $summary = pqh_seb_proctor_summary($examid, $studentid);
 $resultsurl = pqh_seb_results_url($examid);

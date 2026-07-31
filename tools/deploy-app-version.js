@@ -71,7 +71,7 @@ function shellSubjectModule(subject) {
 }
 function shellCore() {
   return fs.readFileSync(path.join(EHEL, "shell", "course-app.js"), "utf8")
-    .replace(/\.\.\/shared\/(course-shell|progress-client)\.js(\?v=[^"']*)?/g, "./$1.js");
+    .replace(/\.\.\/shared\/(course-shell|progress-client|seb-session|lesson-gate)\.js(\?v=[^"']*)?/g, "./$1.js");
 }
 
 // Build the deploy list. Each item is {remote, buf, always?} — always-upload items
@@ -97,7 +97,7 @@ function buildItems() {
     if (SHELL) {
       items.push({ remote: `app/${subject}/${TAG}/course-ui.js`, buf: Buffer.from(shellSubjectModule(subject)) });
       items.push({ remote: `app/${subject}/${TAG}/course-app.js`, buf: Buffer.from(shellCore()) });
-      for (const name of ["course-shell.js", "progress-client.js"]) {
+      for (const name of ["course-shell.js", "progress-client.js", "seb-session.js", "lesson-gate.js"]) {
         items.push({ remote: `app/${subject}/${TAG}/${name}`, buf: fs.readFileSync(path.join(EHEL, "shared", name)) });
       }
     }

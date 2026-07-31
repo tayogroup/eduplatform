@@ -30,7 +30,7 @@
   .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
   .kpi strong{display:block;font-size:24px;font-variant-numeric:tabular-nums}
   .kpi span{font-size:12px;color:var(--muted)}
-  .kpi.high strong{color:var(--red)} .kpi.medium strong{color:var(--amber)}
+  .kpi.high strong{color:var(--red)} .kpi.medium strong{color:var(--amber)} .kpi.scan strong{color:#5a3fa0}
   .scroll{overflow-x:auto}
   table{width:100%;border-collapse:collapse;font-size:13px}
   th,td{padding:8px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
@@ -42,6 +42,7 @@
   .pill.high{background:var(--red-bg);color:var(--red)}
   .pill.medium{background:var(--amber-bg);color:var(--amber)}
   .pill.ok{background:var(--sky);color:var(--blue2)}
+  .pill.scan{background:#eae6f6;color:#5a3fa0}
   .reason{display:inline-block;margin:2px 4px 0 0;padding:1px 8px;border-radius:999px;background:var(--bg);border:1px solid var(--line);color:var(--ink2);font-size:11px;font-weight:700}
   .acts{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
   .acts a{display:inline-flex;align-items:center;min-height:29px;padding:0 10px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--blue);font-size:12px;font-weight:800;text-decoration:none}
@@ -121,6 +122,7 @@
       ["medium", M.medium ?? 0, "Medium risk"],
       ["", M.monitored ?? 0, "Students monitored"],
       ["", M.reviewedweek ?? 0, "Reviewed · 7d"],
+      ["scan", M.scanflagged ?? 0, "Scan-flagged"],
     ].map(([cls, v, l]) => `<div class="kpi ${cls}"><strong>${v}</strong><span>${l}</span></div>`).join("");
 
     const rows = data.students || [];
@@ -134,7 +136,7 @@
         <td><span class="name">${esc(s.name)}</span><br><span class="mut">${s.account ? "#" + esc(s.account) : "No account no."}</span></td>
         <td class="mut">${esc(s.teacher)}</td>
         <td>${levelPill(s.level)}</td>
-        <td>${(s.reasons || []).map((r) => `<span class="reason">${esc(r)}</span>`).join("")}${s.note ? `<br><span class="mut">Note: ${esc(s.note)}</span>` : ""}</td>
+        <td>${(s.reasons || []).map((r) => `<span class="reason">${esc(r)}</span>`).join("")}${Number(s.scanflaggedat) > 0 ? `<span class="pill scan">Auto-flagged ${esc(dt(s.scanflaggedat))}</span>` : ""}${s.note ? `<br><span class="mut">Note: ${esc(s.note)}</span>` : ""}</td>
         <td class="mut">${esc(dt(s.lastaccess))}</td>
         <td class="mut">${s.rate !== null && s.rate !== undefined ? s.rate + "%" : "—"}</td>
         <td class="mut">${Number(s.missed) || 0}</td>

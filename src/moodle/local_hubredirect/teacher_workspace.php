@@ -405,6 +405,7 @@ if ($requestedworkspaceid > 0) {
         );
     }
     $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', IGNORE_MISSING);
+    pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 }
 $urlparams = [];
 if (!empty($consumercontext->consumerslug)) {
@@ -714,7 +715,7 @@ body.pqh-live-teacher-page #page,
 body.pqh-live-teacher-page #page-content,
 body.pqh-live-teacher-page #region-main,
 body.pqh-live-teacher-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
-.pqltch-shell{min-height:100vh;padding:28px 18px 54px;background:#f5f8fb;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#173044}
+.pqltch-shell{min-height:100vh;padding:28px 18px 54px;background:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#173044}
 .pqltch-wrap{max-width:1180px;margin:0 auto}
 .pqltch-top{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:18px;padding:20px;border:1px solid rgba(23,48,68,.12);background:#fff;border-radius:10px}
 .pqltch-title{margin:0;font-size:28px;line-height:1.12;font-weight:950}
@@ -739,12 +740,12 @@ body.pqh-live-teacher-page .main-inner{margin:0!important;padding:0!important;ma
    ============================================================ */
 .pqltch-shell{
   --pqh-ink:#0f2237;--pqh-muted:#5b6b7c;--pqh-faint:#8494a5;
-  --pqh-line:#e4e9ef;--pqh-bg:#f4f6f9;--pqh-surface:#ffffff;
+  --pqh-line:#e4e9ef;--pqh-bg:#f7f4ec;--pqh-surface:#ffffff;
   --pqh-tint:#edf3fc;--pqh-tint-2:#e0ebfa;--pqh-primary:#2166d1;
   --pqh-primary-ink:#17498f;--pqh-r:14px;
   --pqh-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14);
-  background:var(--pqh-bg);color:var(--pqh-ink)}
-.pqltch-top.pqh-workspace-top{background:linear-gradient(120deg,#d7e6f9 0%,#e9f1fc 60%,#f3f8fe 100%)!important;border:1px solid #c5d9f1!important;box-shadow:none!important;border-radius:var(--pqh-r)!important;padding:20px 22px!important}
+  background:#fff;color:var(--pqh-ink)}
+.pqltch-top.pqh-workspace-top{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;box-shadow:none!important;border-radius:var(--pqh-r)!important;padding:20px 22px!important}
 .pqltch-title,.pqltch-title.pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
 .pqltch-sub,.pqltch-sub.pqh-workspace-sub{color:var(--pqh-muted)!important;font-weight:500!important;opacity:1}
 .pqltch-btn,.pqh-workspace-actions a,.pqh-workspace-actions button{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;color:var(--pqh-ink)!important;font-weight:650!important;border-radius:10px!important;box-shadow:none!important}
@@ -758,13 +759,34 @@ body.pqh-live-teacher-page .main-inner{margin:0!important;padding:0!important;ma
 .pqltch-alert{background:var(--pqh-tint);color:var(--pqh-primary-ink);border:1px solid var(--pqh-tint-2);font-weight:600;border-radius:11px}
 .pqltch-empty{background:var(--pqh-surface);border:1px dashed var(--pqh-line);border-radius:var(--pqh-r);color:var(--pqh-muted);font-weight:550}
 .pqltch-col{display:grid;gap:14px;align-content:start}
+.pqltch-col--side{background:var(--pqh-tint);border-radius:var(--pqh-r);padding:14px}
 <?php echo pqh_design_shell_css('.pqltch-shell'); ?>
+.pqltch-shell .pqh-appbar{background:linear-gradient(90deg,#cfe9ff 0%,#e3f4ff 50%,#f2fbff 100%)}
 </style>
 <main class="pqltch-shell">
 <?php
 echo pqh_design_shell_html('pqltch-shell', 'workspace', [
     'title' => 'Teacher Workspace',
-    'extrahtml' => '<button type="button" data-pq-support-action="open">Manage tickets</button><button type="button" data-pq-support-action="new">Create a ticket</button>',
+    'appbar' => [
+        ['Dashboard', new moodle_url('/local/hubredirect/teacher_dashboard.php', $urlparams)],
+        ['School Hub', new moodle_url('/local/hubredirect/consumer_landing.php', $urlparams)],
+        ['Back', 'BACK', new moodle_url('/local/hubredirect/teacher_workspace.php', $urlparams)],
+    ],
+    'hideitems' => ['workspace'],
+    'navitems' => [
+        [
+            'label' => 'Manage tickets',
+            'url' => new moodle_url('/local/hubredirect/support.php', ['workspaceid' => $workspaceid, 'teacherid' => (int)$USER->id]),
+            'icon' => '<circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>',
+            'attrs' => 'data-pq-support-action="open"',
+        ],
+        [
+            'label' => 'Create a ticket',
+            'url' => new moodle_url('/local/hubredirect/support.php', ['workspaceid' => $workspaceid, 'teacherid' => (int)$USER->id, 'new' => 1]),
+            'icon' => '<circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/>',
+            'attrs' => 'data-pq-support-action="new"',
+        ],
+    ],
 ]);
 ?>
   <div class="pqltch-wrap">
@@ -822,7 +844,7 @@ echo pqh_design_shell_html('pqltch-shell', 'workspace', [
           </div>
         </article>
         </div>
-        <div class="pqltch-col">
+        <div class="pqltch-col pqltch-col--side">
         <?php if ($selectedchild): ?>
           <article class="pqltch-tool-group">
             <h2><?php echo s($selectedchild['name']); ?> Tools</h2>

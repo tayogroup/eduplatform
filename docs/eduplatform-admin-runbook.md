@@ -10,6 +10,15 @@ This runbook covers the recurring setup and verification steps for EduPlatform f
 4. Add or verify the host in `local_prequran_consumer_domain` with the correct consumer, domain type, status, and primary flag.
 5. Wait for AutoSSL, then test the exact host over HTTPS.
 
+## Add Role-Portal Subdomains For A School
+
+Keeps logged-in users on a role-specific subdomain (`students.`/`teachers.`/`parents.`/`admins.`/`finance.` + the school's existing domain) on every page, not just a one-time redirect at login. Enforced by `pqh_enforce_role_domain()` in `accesslib.php`, gated on an active `local_prequran_consumer_domain` row per role — unconfigured schools are unaffected (safe no-op).
+
+1. Insert the 5 role-portal domain rows for the school (`domain_type` = `student_portal`/`teacher_portal`/`parent_portal`/`admin_portal`/`finance_portal`), with `status = 'pending'`. See `local_prequran/sql/add_ehel_k12_role_portal_domains.sql` and `add_ehel_languages_role_portal_domains.sql` for the pattern (one script per school, each deriving consumerid/workspaceid/createdby from that school's existing domain row rather than hardcoding IDs). Ehel Academy's two current schools (K-12, Languages) both have a script; repeat the same pattern for any future Ehel Academy school, keyed off that school's own existing domain.
+2. Follow the normal **Add A Domain** steps (1-3, 5 above) for each of the 5 hostnames: DNS, no cPanel redirect, allowed-hosts config, AutoSSL.
+3. Only once DNS + AutoSSL are confirmed working for a hostname, flip its row to `status = 'active'`. Do this per-hostname as each is verified — do not activate all 5 at once if they weren't all provisioned together.
+4. Test by logging in as a user with that role in that workspace and confirming the address bar moves to the role subdomain, and that a POST (e.g. submitting a form) does not get interrupted mid-submission.
+
 ## Mirror Quraan Academy Hosting For EduForTomorrow
 
 `quraanacademy.info` is the current working reference for a hosted consumer domain. To configure EduForTomorrow the same way, apply the same hosting shape to these hosts:

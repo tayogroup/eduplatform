@@ -222,7 +222,7 @@ function pqdo_backup_findings(int $workspaceid): array {
     $counts = pqdo_migration_inventory($workspaceid);
     $findings = [];
     $findings[] = ['key' => 'database_inventory', 'status' => min($counts) < 0 ? 'warning' : 'ok', 'summary' => 'Workspace data tables inventoried.'];
-    $findings[] = ['key' => 'moodle_dataroot', 'status' => !empty($CFG->dataroot) && is_readable($CFG->dataroot) ? 'ok' : 'warning', 'summary' => 'Moodle dataroot readable check.'];
+    $findings[] = ['key' => 'moodle_dataroot', 'status' => !empty($CFG->dataroot) && is_readable($CFG->dataroot) ? 'ok' : 'warning', 'summary' => 'Platform dataroot readable check.'];
     $findings[] = ['key' => 'transcript_documents', 'status' => (($counts['local_prequran_transcript_doc'] ?? 0) >= 0) ? 'ok' : 'warning', 'summary' => 'Transcript document registry table exists.'];
     $findings[] = ['key' => 'recent_backup_record', 'status' => pqh_table_exists_safe('local_prequran_backup_check') && $DB->record_exists_select('local_prequran_backup_check', 'workspaceid = ? AND timecreated > ?', [$workspaceid, time() - 86400 * 30]) ? 'ok' : 'warning', 'summary' => 'Backup/DR check recorded in the last 30 days.'];
     return [$counts, $findings];

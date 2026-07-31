@@ -18,13 +18,14 @@ if ($workspaceid > 0) {
 if ($workspaceid <= 0 || !pqh_user_can_manage_workspace((int)$USER->id, $workspaceid)) {
     pqh_access_denied('Only workspace admins can view course sync reports.', new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams), 'Course report access required');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url(new moodle_url('/local/hubredirect/course_sync_report.php', $urlparams));
 $PAGE->set_pagelayout('standard');
-$PAGE->set_title('Course Moodle Sync Report');
-$PAGE->set_heading('Course Moodle Sync Report');
+$PAGE->set_title('Course Sync Report');
+$PAGE->set_heading('Course Sync Report');
 $PAGE->add_body_class('pqcsr-page');
 
 $pending = [];
@@ -66,10 +67,10 @@ if (pqco_table_ready()) {
 
 function pqcsr_manual_label($row): string {
     if ((int)($row->moodlecourseid ?? 0) <= 0 || empty($row->moodle_fullname)) {
-        return 'Missing Moodle course';
+        return 'Missing course';
     }
     if ((int)($row->moodle_visible ?? 0) !== 1) {
-        return 'Moodle course hidden';
+        return 'Course hidden';
     }
     if (empty($row->manualenrolid)) {
         return 'Manual enrollment missing';
@@ -89,15 +90,15 @@ body.pqcsr-page #page,body.pqcsr-page #page-content,body.pqcsr-page #region-main
 </style>
 <main class="pqcsr-shell"><div class="pqcsr-wrap">
   <section class="pqcsr-top">
-    <div><h1 class="pqcsr-title"><?php echo s($workspace->name); ?> Moodle Sync Report</h1><p class="pqcsr-sub">Approved requests waiting for Moodle enrollment and offerings with linked-course setup issues.</p></div>
+    <div><h1 class="pqcsr-title"><?php echo s($workspace->name); ?> Sync Report</h1><p class="pqcsr-sub">Approved requests waiting for enrollment and offerings with linked-course setup issues.</p></div>
     <nav class="pqcsr-actions"><a class="pqcsr-btn" href="<?php echo (new moodle_url('/local/hubredirect/course_offerings.php', $urlparams))->out(false); ?>">Course offerings</a><a class="pqcsr-btn" href="<?php echo (new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams))->out(false); ?>">Workspace dashboard</a></nav>
   </section>
-  <section class="pqcsr-panel"><h2>Requests Needing Moodle Sync</h2>
-    <?php if (!$pending): ?><div class="pqcsr-empty">No approved requests are waiting for Moodle sync.</div><?php else: ?>
-      <table class="pqcsr-table"><thead><tr><th>Student</th><th>Offering</th><th>Approved</th><th>Moodle Setup</th><th>Action</th></tr></thead><tbody>
+  <section class="pqcsr-panel"><h2>Requests Needing Sync</h2>
+    <?php if (!$pending): ?><div class="pqcsr-empty">No approved requests are waiting for sync.</div><?php else: ?>
+      <table class="pqcsr-table"><thead><tr><th>Student</th><th>Offering</th><th>Approved</th><th>Setup</th><th>Action</th></tr></thead><tbody>
       <?php foreach ($pending as $row): ?><tr>
         <td><span class="pqcsr-name"><?php echo s(fullname($row)); ?></span><span class="pqcsr-muted"><?php echo s(pqh_account_no_label($row)); ?> / <?php echo s((string)$row->email); ?></span></td>
-        <td><span class="pqcsr-name"><?php echo s((string)$row->offering_title); ?></span><span class="pqcsr-muted"><?php echo s((string)$row->course_key); ?> / Moodle #<?php echo (int)$row->moodlecourseid; ?></span></td>
+        <td><span class="pqcsr-name"><?php echo s((string)$row->offering_title); ?></span><span class="pqcsr-muted"><?php echo s((string)$row->course_key); ?> / Course #<?php echo (int)$row->moodlecourseid; ?></span></td>
         <td><?php echo (int)$row->approvedat > 0 ? s(userdate((int)$row->approvedat, get_string('strftimedatetimeshort'))) : ''; ?></td>
         <td><span class="pqcsr-pill"><?php echo s(pqcsr_manual_label($row)); ?></span></td>
         <td><a class="pqcsr-btn" href="<?php echo (new moodle_url('/local/hubredirect/course_offerings.php', $urlparams + ['request_status' => 'approved', 'request_offeringid' => (int)$row->offeringid]))->out(false); ?>">Retry from requests</a></td>
@@ -105,11 +106,11 @@ body.pqcsr-page #page,body.pqcsr-page #page-content,body.pqcsr-page #region-main
     <?php endif; ?>
   </section>
   <section class="pqcsr-panel"><h2>Offering Link Issues</h2>
-    <?php if (!$linkissues): ?><div class="pqcsr-empty">All linked Moodle courses look ready.</div><?php else: ?>
-      <table class="pqcsr-table"><thead><tr><th>Offering</th><th>Moodle Course</th><th>Status</th><th>Action</th></tr></thead><tbody>
+    <?php if (!$linkissues): ?><div class="pqcsr-empty">All linked courses look ready.</div><?php else: ?>
+      <table class="pqcsr-table"><thead><tr><th>Offering</th><th>Course</th><th>Status</th><th>Action</th></tr></thead><tbody>
       <?php foreach ($linkissues as $row): ?><tr>
         <td><span class="pqcsr-name"><?php echo s((string)$row->title); ?></span><span class="pqcsr-muted"><?php echo s((string)$row->course_key); ?> / Offering #<?php echo (int)$row->offeringid; ?></span></td>
-        <td><?php echo (int)$row->moodlecourseid > 0 ? 'Moodle #' . (int)$row->moodlecourseid . ' ' . s((string)$row->moodle_fullname) : 'Not linked'; ?></td>
+        <td><?php echo (int)$row->moodlecourseid > 0 ? 'Course #' . (int)$row->moodlecourseid . ' ' . s((string)$row->moodle_fullname) : 'Not linked'; ?></td>
         <td><span class="pqcsr-pill"><?php echo s(pqcsr_manual_label($row)); ?></span></td>
         <td><a class="pqcsr-btn" href="<?php echo (new moodle_url('/local/hubredirect/course_offerings.php', $urlparams + ['editid' => (int)$row->offeringid]))->out(false); ?>">Edit offering</a></td>
       </tr><?php endforeach; ?></tbody></table>

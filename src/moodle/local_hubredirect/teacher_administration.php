@@ -12,6 +12,7 @@ if ($workspaceid <= 0 || !pqh_user_can_manage_workspace((int)$USER->id, $workspa
     pqh_access_denied('Teacher administration requires workspace administrator access.', new moodle_url('/local/hubredirect/workspace_dashboard.php'), 'Teacher administration denied');
 }
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
+pqh_enforce_role_domain(pqh_current_consumer_context(), $workspaceid, (int)$USER->id);
 $urlparams = ['workspaceid' => $workspaceid];
 $notice = '';
 $error = '';
@@ -20,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         require_sesskey();
         if (!pqops_ready()) {
-            throw new invalid_parameter_exception('Operations tables are not ready. Run Moodle upgrade.');
+            throw new invalid_parameter_exception('Operations tables are not ready. Run the pending platform upgrade.');
         }
         $action = optional_param('action', '', PARAM_ALPHANUMEXT);
         $now = time();
@@ -142,7 +143,7 @@ echo '<style>.pqops{max-width:1180px;margin:0 auto}.pqops-top{display:flex;justi
 echo '<div class="pqops"><div class="pqops-top"><div><h2>Teacher Administration</h2><div class="pqops-muted">' . s($workspace->name) . ' availability, load, contracts, assignments, substitutes, and marketplace payout readiness.</div></div><a class="pqops-btn pqops-btn--light" href="' . (new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams))->out(false) . '">Workspace</a></div>';
 if ($notice !== '') { echo '<div class="pqops-notice">' . s($notice) . '</div>'; }
 if ($error !== '') { echo '<div class="pqops-error">' . s($error) . '</div>'; }
-if (!pqops_ready()) { echo '<div class="pqops-error">Operations schema is not ready. Run Moodle upgrade.</div>'; }
+if (!pqops_ready()) { echo '<div class="pqops-error">Operations schema is not ready. Run the pending platform upgrade.</div>'; }
 echo '<div class="pqops-grid"><section class="pqops-panel"><h3>Contract / Rates</h3><form method="post"><input type="hidden" name="sesskey" value="' . s(sesskey()) . '"><input type="hidden" name="action" value="save_contract"><div class="pqops-field"><label>Teacher</label><select class="pqops-select" name="teacherid">';
 foreach ($teachers as $teacher) { echo '<option value="' . (int)$teacher->id . '">' . s(fullname($teacher) . ' / ' . $teacher->email) . '</option>'; }
 echo '</select></div>';

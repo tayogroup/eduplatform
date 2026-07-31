@@ -29,6 +29,7 @@ pqh_require_academy_operations(
     new moodle_url($dashboardpath, $urlparams),
     'Live admin access required'
 );
+pqh_enforce_role_domain($consumercontext, pqh_current_workspace_id((int)$USER->id, $requestedworkspaceid), (int)$USER->id);
 
 $context = context_system::instance();
 $PAGE->set_context($context);

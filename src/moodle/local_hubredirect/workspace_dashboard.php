@@ -4,6 +4,7 @@ declare(strict_types=1);
 require_once(__DIR__ . '/../../config.php');
 require_login();
 require_once(__DIR__ . '/accesslib.php');
+require_once(__DIR__ . '/course_offeringlib.php');
 
 $requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
 $explicitworkspaceid = $requestedworkspaceid;
@@ -42,6 +43,7 @@ if (!$workspace) {
         'Workspace not found'
     );
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 if ((int)($consumercontext->workspaceid ?? 0) !== $workspaceid && pqh_consumer_schema_ready()) {
     $workspaceconsumer = pqh_consumer_context_by_workspace($workspaceid);
@@ -49,19 +51,6 @@ if ((int)($consumercontext->workspaceid ?? 0) !== $workspaceid && pqh_consumer_s
         $consumercontext = $workspaceconsumer;
     }
 }
-$brandname = trim((string)($consumercontext->consumername ?? '')) !== '' ? (string)$consumercontext->consumername : (string)$workspace->name;
-$brandlogo = trim((string)($consumercontext->logourl ?? ''));
-$brandtheme = pqh_consumer_theme($consumercontext);
-$brandcopy = json_decode((string)($consumercontext->copyjson ?? ''), true);
-$brandcopy = is_array($brandcopy) ? $brandcopy : [];
-$brandcolor = (string)$brandtheme['primary_color'];
-$brandinitialsource = preg_replace('/[^a-z0-9]/i', '', $brandname);
-$copyinitial = trim((string)($brandcopy['brand_initials'] ?? ''));
-$brandinitial = $copyinitial !== '' ? strtoupper(substr($copyinitial, 0, 6)) : strtoupper(substr((string)$brandinitialsource, 0, 1));
-if ($brandinitial === '') {
-    $brandinitial = 'W';
-}
-
 $role = pqh_user_workspace_role((int)$USER->id, $workspaceid);
 if ($role === '') {
     $userconsumer = pqh_user_primary_consumer_context((int)$USER->id);
@@ -96,8 +85,19 @@ $context = context_system::instance();
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/local/hubredirect/workspace_dashboard.php', ['workspaceid' => $workspaceid]));
 $PAGE->set_pagelayout('standard');
-$PAGE->set_title('Workspace Dashboard');
-$PAGE->set_heading('Workspace Dashboard');
+// Name the school in the browser tab and heading, the way dashboard.php
+// already does. A bare "Workspace Dashboard" gives no clue which workspace
+// is on screen -- and under a parent academy that owns several schools, the
+// switcher above can move between them without the title changing at all.
+// Prefer the workspace's own name (what the app bar shows) over the
+// domain's consumer name, since the two diverge once a workspace is picked.
+$pqwdbrandname = trim((string)($workspace->name ?? ''));
+if ($pqwdbrandname === '') {
+    $pqwdbrandname = trim((string)($consumercontext->consumername ?? ''));
+}
+$pqwdpagetitle = $pqwdbrandname !== '' ? $pqwdbrandname . ' Workspace Dashboard' : 'Workspace Dashboard';
+$PAGE->set_title($pqwdpagetitle);
+$PAGE->set_heading($pqwdpagetitle);
 $PAGE->add_body_class('pqw-dashboard-page');
 
 function pqwd_user_name(int $userid): string {
@@ -140,7 +140,14 @@ function pqwd_workspace_students(int $workspaceid, int $soloteacherid = 0): arra
     }
 
     if (pqh_table_exists_safe('local_prequran_student_profile') && pqh_table_has_field_safe('local_prequran_student_profile', 'workspaceid')) {
-        $rows = $DB->get_records('local_prequran_student_profile', ['workspaceid' => $workspaceid], 'timemodified DESC', 'id,userid,student_display_name,current_level,status');
+        // current_grade only exists once the primary-education intake schema
+        // upgrade has run, so ask for it only when the column is really there.
+        $profilefields = 'id,userid,student_display_name,current_level,status';
+        $hasgrade = pqh_table_has_field_safe('local_prequran_student_profile', 'current_grade');
+        if ($hasgrade) {
+            $profilefields .= ',current_grade';
+        }
+        $rows = $DB->get_records('local_prequran_student_profile', ['workspaceid' => $workspaceid], 'timemodified DESC', $profilefields);
         foreach ($rows as $row) {
             $studentid = (int)$row->userid;
             if ($studentid <= 0) {
@@ -151,6 +158,7 @@ function pqwd_workspace_students(int $workspaceid, int $soloteacherid = 0): arra
                 'source' => 'profile',
                 'name' => trim((string)$row->student_display_name) !== '' ? (string)$row->student_display_name : pqwd_user_name($studentid),
                 'level' => (string)($row->current_level ?? ''),
+                'grade' => $hasgrade ? (string)($row->current_grade ?? '') : '',
                 'status' => (string)($row->status ?? ''),
                 'accountno' => pqh_account_no_value($studentid),
             ];
@@ -239,23 +247,89 @@ function pqwd_student_course_labels(array $studentids): array {
     return array_map('array_values', $labels);
 }
 
-function pqwd_recent_members(int $workspaceid): array {
+/**
+ * Every member of the workspace, in every status -- the Workspace Members
+ * panel carries the same search/role/status filters as workspace_people.php,
+ * and those can only be honest if they filter the full roster rather than a
+ * truncated "most recently changed" preview.
+ */
+function pqwd_all_members(int $workspaceid): array {
     global $DB;
     if (!pqh_table_exists_safe('local_prequran_workspace_member')) {
         return [];
     }
     return array_values($DB->get_records_sql(
         "SELECT wm.id, wm.userid, wm.workspace_role, wm.status, wm.timecreated, wm.timemodified,
-                u.firstname, u.lastname, u.email, u.idnumber
+                u.firstname, u.lastname, u.email, u.username, u.idnumber
            FROM {local_prequran_workspace_member} wm
            JOIN {user} u ON u.id = wm.userid
           WHERE wm.workspaceid = :workspaceid
-            AND wm.status = :status
-       ORDER BY wm.timemodified DESC, wm.id DESC",
-        ['workspaceid' => $workspaceid, 'status' => 'active'],
-        0,
-        12
+       ORDER BY wm.status ASC, wm.workspace_role ASC, u.lastname ASC, u.firstname ASC, wm.userid ASC",
+        ['workspaceid' => $workspaceid]
     ));
+}
+
+/**
+ * Every course offering in the workspace, in every status, with seat counts
+ * and the linked Moodle course name -- the Workspace Courses report carries
+ * the same search/status/visibility filters as Workspace People, so it needs
+ * the full list rather than a published-only subset.
+ */
+function pqwd_workspace_courses(int $workspaceid): array {
+    global $DB;
+    if ($workspaceid <= 0 || !pqco_table_ready()) {
+        return [];
+    }
+    try {
+        $offerings = array_values($DB->get_records(
+            'local_prequran_course_offering',
+            ['workspaceid' => $workspaceid],
+            'startdate DESC, title ASC'
+        ));
+    } catch (Throwable $e) {
+        return [];
+    }
+    if (!$offerings) {
+        return [];
+    }
+
+    $counts = pqco_offering_counts(array_map(static function($offering): int {
+        return (int)$offering->id;
+    }, $offerings));
+
+    $moodlenames = [];
+    $courseids = array_values(array_unique(array_filter(array_map(static function($offering): int {
+        return (int)($offering->moodlecourseid ?? 0);
+    }, $offerings))));
+    if ($courseids) {
+        [$insql, $params] = $DB->get_in_or_equal($courseids, SQL_PARAMS_NAMED, 'cid');
+        foreach ($DB->get_records_select('course', "id {$insql}", $params, '', 'id,fullname') as $row) {
+            $moodlenames[(int)$row->id] = (string)$row->fullname;
+        }
+    }
+
+    $courses = [];
+    foreach ($offerings as $offering) {
+        $capacity = (int)($offering->capacity ?? 0);
+        $enrolled = (int)($counts[(int)$offering->id] ?? 0);
+        $moodlecourseid = (int)($offering->moodlecourseid ?? 0);
+        $courses[] = [
+            'id' => (int)$offering->id,
+            'title' => trim((string)($offering->title ?? '')),
+            'coursekey' => trim((string)($offering->course_key ?? '')),
+            'status' => trim((string)($offering->status ?? '')) !== '' ? trim((string)$offering->status) : 'draft',
+            'visibility' => trim((string)($offering->visibility ?? '')) !== '' ? trim((string)$offering->visibility) : 'workspace',
+            'capacity' => $capacity,
+            'enrolled' => $enrolled,
+            'openseats' => $capacity > 0 ? max(0, $capacity - $enrolled) : 0,
+            'unlimited' => $capacity <= 0,
+            'startdate' => (int)($offering->startdate ?? 0),
+            'enddate' => (int)($offering->enddate ?? 0),
+            'moodlecourseid' => $moodlecourseid,
+            'moodlecoursename' => $moodlenames[$moodlecourseid] ?? '',
+        ];
+    }
+    return $courses;
 }
 
 function pqwd_upcoming_sessions(int $workspaceid, int $limit = 8): array {
@@ -333,8 +407,9 @@ if ($soloteacherid <= 0 && $issoloteacherworkspace && $role === 'teacher') {
 }
 $students = pqwd_workspace_students($workspaceid, $soloteacherid);
 $studentteachers = pqwd_student_teacher_labels($workspaceid);
-$studentcourses = pqwd_student_course_labels(array_column(array_slice($students, 0, 20), 'studentid'));
-$members = pqwd_recent_members($workspaceid);
+$studentcourses = pqwd_student_course_labels(array_column($students, 'studentid'));
+$members = pqwd_all_members($workspaceid);
+$courses = pqwd_workspace_courses($workspaceid);
 $sessions = pqwd_upcoming_sessions($workspaceid);
 $domains = pqwd_workspace_domains($workspaceid);
 $canmanage = pqh_user_can_manage_workspace((int)$USER->id, $workspaceid);
@@ -369,8 +444,83 @@ if ($canteach && !$canmanage) {
     $students = array_values(array_filter($students, static function(array $student) use ($teacherscopedids): bool {
         return isset($teacherscopedids[(int)$student['studentid']]);
     }));
-    $studentcourses = pqwd_student_course_labels(array_column(array_slice($students, 0, 20), 'studentid'));
+    $studentcourses = pqwd_student_course_labels(array_column($students, 'studentid'));
 }
+// Workspace People: one roster combining workspace_member rows with the
+// student list, so staff search one table instead of scanning two that
+// overlap. Members supply role/status/updated for everyone; the student
+// list adds learners who only exist as a student profile (no member row)
+// and supplies the teacher/level/links detail for the ones it covers.
+// $students is already teacher-scoped above when the viewer is a teacher
+// rather than an admin, so enriching from it preserves that scoping --
+// plain member rows stay visible exactly as they were before.
+$people = [];
+foreach ($members as $pqwdmember) {
+    $pqwduserid = (int)$pqwdmember->userid;
+    $people[$pqwduserid] = [
+        'userid' => $pqwduserid,
+        'name' => fullname($pqwdmember),
+        'accountlabel' => pqh_account_no_label($pqwdmember),
+        'accountno' => pqh_account_no_value($pqwdmember),
+        'email' => (string)($pqwdmember->email ?? ''),
+        'username' => (string)($pqwdmember->username ?? ''),
+        'role' => (string)$pqwdmember->workspace_role,
+        'status' => (string)$pqwdmember->status,
+        'timemodified' => (int)$pqwdmember->timemodified,
+        'isstudent' => (string)$pqwdmember->workspace_role === 'student',
+        'level' => '',
+        'grade' => '',
+        'hasdetail' => false,
+    ];
+}
+foreach ($students as $pqwdstudent) {
+    $pqwduserid = (int)$pqwdstudent['studentid'];
+    if ($pqwduserid <= 0) {
+        continue;
+    }
+    if (!isset($people[$pqwduserid])) {
+        $pqwdaccountno = (string)($pqwdstudent['accountno'] ?? '');
+        $people[$pqwduserid] = [
+            'userid' => $pqwduserid,
+            'name' => (string)$pqwdstudent['name'],
+            'accountlabel' => $pqwdaccountno !== '' ? 'Account No. ' . $pqwdaccountno : 'Account No. pending repair',
+            'accountno' => $pqwdaccountno,
+            'email' => '',
+            'username' => '',
+            'role' => 'student',
+            // Student profiles can carry an empty status; left as-is it renders
+            // a blank pill and a blank entry in the Status filter.
+            'status' => trim((string)($pqwdstudent['status'] ?? '')) !== ''
+                ? trim((string)$pqwdstudent['status'])
+                : 'active',
+            'timemodified' => 0,
+            'isstudent' => true,
+            'level' => '',
+            'grade' => '',
+            'hasdetail' => false,
+        ];
+    }
+    $people[$pqwduserid]['isstudent'] = true;
+    $people[$pqwduserid]['hasdetail'] = true;
+    $people[$pqwduserid]['level'] = (string)($pqwdstudent['level'] ?? '');
+    $people[$pqwduserid]['grade'] = (string)($pqwdstudent['grade'] ?? '');
+}
+$pqwdroleorder = ['owner' => 1, 'admin' => 2, 'coordinator' => 3, 'teacher' => 4, 'assistant_teacher' => 5, 'parent' => 6, 'student' => 7];
+uasort($people, static function(array $a, array $b) use ($pqwdroleorder): int {
+    $astatus = $a['status'] === 'active' ? 0 : 1;
+    $bstatus = $b['status'] === 'active' ? 0 : 1;
+    if ($astatus !== $bstatus) {
+        return $astatus <=> $bstatus;
+    }
+    $arole = $pqwdroleorder[$a['role']] ?? 8;
+    $brole = $pqwdroleorder[$b['role']] ?? 8;
+    if ($arole !== $brole) {
+        return $arole <=> $brole;
+    }
+    return strcasecmp($a['name'], $b['name']);
+});
+$people = array_values($people);
+
 $canmanageofferings = $canmanage || (
     (string)($workspace->workspace_type ?? '') === 'solo_teacher'
     && pqh_has_independent_teacher_profile((int)$USER->id)
@@ -385,7 +535,7 @@ if (trim((string)($consumercontext->consumerslug ?? '')) !== '') {
 // consumer types; the workspace dashboard is the management view for
 // owners, admins, and platform operators.
 if (!$canmanage && !$canacademyops
-        && in_array($role, ['teacher', 'assistant_teacher', 'student'], true)) {
+        && in_array($role, ['teacher', 'assistant_teacher', 'student', 'parent'], true)) {
     redirect(new moodle_url('/local/hubredirect/dashboard.php', $consumerparams));
 }
 $workspaceparams = $consumerparams + ['workspaceid' => $workspaceid];
@@ -396,21 +546,12 @@ foreach ($domains as $domainrow) {
         break;
     }
 }
-$landingurl = pqwd_domain_url($primarydomain, '/local/hubredirect/consumer_landing.php', $workspaceparams);
-$loginurl = pqwd_domain_url($primarydomain, '/local/hubredirect/consumer_login.php', $workspaceparams);
 $studentintakeurl = pqwd_domain_url($primarydomain, '/local/hubredirect/public_intake.php', $workspaceparams);
 $teacheronboardingurl = pqwd_domain_url($primarydomain, '/local/hubredirect/teacher_intake.php', $workspaceparams);
-$workspaceurl = pqwd_domain_url($primarydomain, '/local/hubredirect/workspace_dashboard.php', $workspaceparams);
-$coursecatalogurl = pqwd_domain_url($primarydomain, '/local/hubredirect/course_catalog_browse.php', $workspaceparams);
-$profileurl = pqwd_domain_url($primarydomain, '/local/hubredirect/institution_profile.php', $workspaceparams);
-$inquiryurl = pqwd_domain_url($primarydomain, '/local/hubredirect/institution_inquiry.php', $workspaceparams);
-$diagnosticsurl = new moodle_url('/local/hubredirect/consumer_diagnostics.php', $consumerparams);
-$brandediturl = new moodle_url('/local/hubredirect/institution_settings.php', $workspaceparams);
-$sampledataurl = new moodle_url('/local/hubredirect/institution_sample_data.php', $workspaceparams);
-$testmatrixurl = new moodle_url('/local/hubredirect/institution_test_matrix.php', $workspaceparams);
-$platformconsumersurl = new moodle_url('/local/hubredirect/platform_consumers.php');
-$workspacesadminurl = new moodle_url('/local/hubredirect/workspaces.php', ['editworkspaceid' => $workspaceid]);
-$onboardingurl = new moodle_url('/local/hubredirect/institution_onboarding.php');
+// Not a public/custom-domain page - it requires login, so it must stay on
+// the current (already-authenticated) domain rather than routing through
+// the consumer's primary domain, which would force a fresh login there.
+$coursecatalogurl = new moodle_url('/local/hubredirect/course_catalog_browse.php', $workspaceparams);
 $metrics = [
     'students' => count($students),
     'teachers' => ($rolecounts['teacher'] ?? 0) + ($rolecounts['assistant_teacher'] ?? 0),
@@ -486,7 +627,7 @@ echo $OUTPUT->header();
 <style>
 body.pqw-dashboard-page header,body.pqw-dashboard-page footer,body.pqw-dashboard-page nav.navbar,body.pqw-dashboard-page #page-header,body.pqw-dashboard-page #page-footer,body.pqw-dashboard-page .drawer,body.pqw-dashboard-page .drawer-toggles,body.pqw-dashboard-page .block-region,body.pqw-dashboard-page [data-region="drawer"],body.pqw-dashboard-page [data-region="right-hand-drawer"]{display:none!important}
 body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-dashboard-page #region-main,body.pqw-dashboard-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
-.pqwd-shell{min-height:100vh;padding:28px 18px 56px;background:#f6f8fb;color:#173044;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}.pqwd-wrap{max-width:1280px;margin:0 auto}.pqwd-top,.pqwd-panel{padding:18px;border:1px solid rgba(23,48,68,.12);border-radius:8px;background:#fff;box-shadow:0 12px 28px rgba(23,48,68,.06)}.pqwd-top{display:grid;grid-template-columns:minmax(300px,1fr) minmax(520px,auto);gap:14px;align-items:center;margin-bottom:14px}.pqwd-top>div{min-width:0}.pqwd-title{margin:0;color:#221b22;font-size:29px;font-weight:950;line-height:1.1;overflow-wrap:anywhere}.pqwd-sub{margin:7px 0 0;color:#5e7280;font-size:14px;font-weight:800;line-height:1.45}.pqwd-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;min-width:0}.pqwd-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 12px;border:0;border-radius:8px;background:#2f6f4e;color:#fff!important;text-decoration:none;font-size:13px;font-weight:950;line-height:1.15;text-align:center;cursor:pointer;white-space:normal}.pqwd-btn--light{background:#eef4f6;color:#173044!important;border:1px solid rgba(23,48,68,.12)}.pqwd-btn--compact{min-height:32px;padding:0 10px;font-size:12px}.pqwd-select{min-height:38px;border:1px solid rgba(23,48,68,.18);border-radius:8px;background:#fbfdff;color:#173044;font-size:13px;font-weight:850;padding:0 10px;max-width:100%}.pqwd-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px;margin-bottom:14px}.pqwd-metric{padding:14px;border:1px solid rgba(23,48,68,.12);border-radius:8px;background:#fff}.pqwd-metric strong{display:block;color:#221b22;font-size:25px;font-weight:950;line-height:1}.pqwd-metric span{display:block;margin-top:5px;color:#5e7280;font-size:12px;font-weight:900}.pqwd-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}.pqwd-panel h2{margin:0 0 12px;color:#221b22;font-size:22px;font-weight:950;line-height:1.15}.pqwd-panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.pqwd-panel-head h2{margin:0}.pqwd-table{width:100%;border-collapse:separate;border-spacing:0}.pqwd-table th,.pqwd-table td{padding:10px;border-bottom:1px solid rgba(23,48,68,.1);text-align:left;vertical-align:top;font-size:13px}.pqwd-table th{color:#5e7280;font-size:12px;font-weight:950;text-transform:uppercase}.pqwd-name{display:block;color:#221b22;font-size:14px;font-weight:950}.pqwd-muted{display:block;margin-top:3px;color:#728391;font-size:12px;font-weight:800;line-height:1.4}.pqwd-pill{display:inline-flex;min-height:25px;align-items:center;margin:0 5px 5px 0;padding:0 8px;border-radius:999px;background:#eef4f6;color:#173044;font-size:12px;font-weight:950;line-height:1.2}.pqwd-empty{padding:18px;border:1px dashed rgba(23,48,68,.22);border-radius:8px;color:#5e7280;font-weight:900;background:#fff}.pqwd-cardlinks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:14px}.pqwd-link{display:block;min-height:86px;padding:14px;border-radius:8px;background:#f7fbf8;border:1px solid rgba(47,111,78,.16);color:#173044!important;text-decoration:none}.pqwd-link strong{display:block;color:#221b22;font-size:15px;font-weight:950}.pqwd-link span{display:block;margin-top:5px;color:#5e7280;font-size:12px;font-weight:850;line-height:1.35}.pqwd-row-actions{display:flex;gap:6px;flex-wrap:wrap}.pqwd-public{display:grid;grid-template-columns:minmax(280px,.85fr) minmax(460px,1.15fr);gap:18px;align-items:start;margin-bottom:14px;background:linear-gradient(90deg,#f7fbf8,#fff9ed)}.pqwd-public>div{min-width:0}.pqwd-public-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:8px;justify-content:stretch;align-items:start}.pqwd-public-links .pqwd-btn{width:100%;min-height:42px}.pqwd-code{display:inline-block;margin-top:6px;padding:4px 7px;border-radius:6px;background:#eef4f6;color:#173044;font-size:12px;font-weight:900;overflow-wrap:anywhere}.pqwd-domain-list{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.pqwd-shell{min-height:100vh;padding:28px 18px 56px;background:#fff;color:#173044;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6}.pqwd-wrap{max-width:1280px;margin:0 auto}.pqwd-top,.pqwd-panel{padding:18px;border:1px solid rgba(23,48,68,.12);border-radius:8px;background:#fff;box-shadow:0 12px 28px rgba(23,48,68,.06)}.pqwd-top{display:grid;grid-template-columns:minmax(300px,1fr) minmax(520px,auto);gap:14px;align-items:center;margin-bottom:14px}.pqwd-top>div{min-width:0}.pqwd-title{margin:0;color:#221b22;font-size:29px;font-weight:950;line-height:1.1;overflow-wrap:anywhere}.pqwd-sub{margin:7px 0 0;color:#5e7280;font-size:14px;font-weight:800;line-height:1.45}.pqwd-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;min-width:0}.pqwd-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 12px;border:0;border-radius:8px;background:#2f6f4e;color:#fff!important;text-decoration:none;font-size:13px;font-weight:950;line-height:1.15;text-align:center;cursor:pointer;white-space:normal}.pqwd-btn--light{background:#eef4f6;color:#173044!important;border:1px solid rgba(23,48,68,.12)}.pqwd-btn--compact{min-height:32px;padding:0 10px;font-size:12px}.pqwd-select{min-height:38px;border:1px solid rgba(23,48,68,.18);border-radius:8px;background:#fbfdff;color:#173044;font-size:13px;font-weight:850;padding:0 10px;max-width:100%}.pqwd-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px;margin-bottom:14px}.pqwd-metric{padding:14px;border:1px solid rgba(23,48,68,.12);border-radius:8px;background:#fff}.pqwd-metric strong{display:block;color:#221b22;font-size:25px;font-weight:950;line-height:1}.pqwd-metric span{display:block;margin-top:5px;color:#5e7280;font-size:12px;font-weight:900}.pqwd-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}.pqwd-panel h2{margin:0 0 12px;color:#221b22;font-size:22px;font-weight:950;line-height:1.15}.pqwd-panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.pqwd-panel-head h2{margin:0}.pqwd-table{width:100%;border-collapse:separate;border-spacing:0}.pqwd-table th,.pqwd-table td{padding:10px;border-bottom:1px solid rgba(23,48,68,.1);text-align:left;vertical-align:top;font-size:13px}.pqwd-table th{color:#5e7280;font-size:12px;font-weight:950;text-transform:uppercase}.pqwd-name{display:block;color:#221b22;font-size:14px;font-weight:950}.pqwd-muted{display:block;margin-top:3px;color:#728391;font-size:12px;font-weight:800;line-height:1.4}.pqwd-pill{display:inline-flex;min-height:25px;align-items:center;margin:0 5px 5px 0;padding:0 8px;border-radius:999px;background:#eef4f6;color:#173044;font-size:12px;font-weight:950;line-height:1.2}.pqwd-empty{padding:18px;border:1px dashed rgba(23,48,68,.22);border-radius:8px;color:#5e7280;font-weight:900;background:#fff}.pqwd-cardlinks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:14px}.pqwd-link{display:block;min-height:86px;padding:14px;border-radius:8px;background:#f7fbf8;border:1px solid rgba(47,111,78,.16);color:#173044!important;text-decoration:none}.pqwd-link strong{display:block;color:#221b22;font-size:15px;font-weight:950}.pqwd-link span{display:block;margin-top:5px;color:#5e7280;font-size:12px;font-weight:850;line-height:1.35}.pqwd-row-actions{display:flex;gap:6px;flex-wrap:wrap}.pqwd-public{display:grid;grid-template-columns:minmax(280px,.85fr) minmax(460px,1.15fr);gap:18px;align-items:start;margin-bottom:14px;background:linear-gradient(90deg,#f7fbf8,#fff9ed)}.pqwd-public>div{min-width:0}.pqwd-public-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:8px;justify-content:stretch;align-items:start}.pqwd-public-links .pqwd-btn{width:100%;min-height:42px}.pqwd-code{display:inline-block;margin-top:6px;padding:4px 7px;border-radius:6px;background:#eef4f6;color:#173044;font-size:12px;font-weight:900;overflow-wrap:anywhere}.pqwd-domain-list{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
 @media(max-width:1180px){.pqwd-top,.pqwd-public{grid-template-columns:1fr}.pqwd-actions,.pqwd-public-links{justify-content:flex-start}.pqwd-public-links{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.pqwd-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.pqwd-grid{grid-template-columns:1fr}}
 @media(max-width:760px){.pqwd-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.pqwd-actions .pqwd-select{grid-column:1/-1}.pqwd-metrics,.pqwd-cardlinks,.pqwd-public-links{grid-template-columns:1fr}.pqwd-title{font-size:25px}.pqwd-table,.pqwd-table tbody,.pqwd-table tr,.pqwd-table td{display:block;width:100%}.pqwd-table thead{display:none}.pqwd-table tr{border-bottom:1px solid rgba(23,48,68,.12)}.pqwd-table td{border:0}.pqwd-table td::before{content:attr(data-label);display:block;margin-bottom:4px;color:#5e7280;font-size:11px;font-weight:950;text-transform:uppercase}}
 <?php echo pqh_workspace_header_css(); ?>
@@ -560,14 +701,15 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
    ============================================================ */
 .pqwd-shell{
   --pqh-ink:#0f2237;--pqh-muted:#5b6b7c;--pqh-faint:#8494a5;
-  --pqh-line:#e4e9ef;--pqh-bg:#f4f6f9;--pqh-surface:#ffffff;
+  --pqh-line:#e4e9ef;--pqh-bg:#f7f4ec;--pqh-surface:#ffffff;
   --pqh-tint:#edf3fc;--pqh-tint-2:#e0ebfa;--pqh-primary:#2166d1;
   --pqh-primary-ink:#17498f;--pqh-r:14px;
   --pqh-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14);
-  background:var(--pqh-bg);color:var(--pqh-ink);padding:0 0 56px 76px}
+  background:#fff;color:var(--pqh-ink);padding:0 0 56px 76px}
+.pqwd-shell .pqh-appbar{background:linear-gradient(90deg,#cfe9ff 0%,#e3f4ff 50%,#f2fbff 100%)}
 .pqwd-wrap{padding:24px 24px 0}
 .pqwd-topbar__brand .pqh-brand-mark img{display:block;width:100%;height:100%;object-fit:cover}
-.pqwd-top.pqh-workspace-top{background:linear-gradient(120deg,#d7e6f9 0%,#e9f1fc 60%,#f3f8fe 100%)!important;border:1px solid #c5d9f1!important;box-shadow:none!important;border-radius:var(--pqh-r)!important;padding:20px 22px!important}
+.pqwd-top.pqh-workspace-top{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;box-shadow:none!important;border-radius:var(--pqh-r)!important;padding:20px 22px!important}
 .pqwd-title,.pqwd-title.pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
 .pqwd-sub,.pqwd-sub.pqh-workspace-sub{color:var(--pqh-muted)!important;font-weight:500!important;opacity:1}
 .pqh-brand-mark{background:linear-gradient(115deg,#2166d1,#4d8be0)!important;color:#fff!important}
@@ -592,6 +734,39 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
 .pqwd-table th,.pqwd-table td{border-color:var(--pqh-line)}
 .pqwd-empty{background:var(--pqh-surface);border:1px dashed var(--pqh-line);border-radius:var(--pqh-r);color:var(--pqh-muted);font-weight:550}
 .pqwd-select{border:1px solid var(--pqh-line)!important;border-radius:10px!important;background:var(--pqh-surface)!important;color:var(--pqh-ink)!important;font-weight:550!important}
+.pqwd-input{width:100%;min-height:38px;border:1px solid var(--pqh-line);border-radius:10px;padding:0 10px;background:var(--pqh-surface);color:var(--pqh-ink);font-size:13px;font-weight:550}
+.pqwd-field{display:grid;gap:5px;margin-bottom:0}
+.pqwd-field label{color:var(--pqh-faint);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.pqwd-toolbar--filters{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:end;margin:8px 0 12px}
+.pqwd-toolbar--filters .pqwd-field{min-width:150px}
+.pqwd-toolbar--filters .pqwd-field:first-child{flex:1 1 240px}
+.pqwd-toolbar--filters>.pqwd-muted{align-self:center;margin-left:auto}
+.pqwd-pill--inactive{background:#fbe9e7;color:#c0392b}
+.pqwd-row-hidden{display:none}
+.pqwd-person{display:flex;align-items:center;gap:8px}
+.pqwd-person .pqwd-name{font-size:13px;font-weight:500}
+.pqwd-infobtn{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;padding:0;border:1px solid var(--pqh-line);border-radius:50%;background:var(--pqh-surface);color:var(--pqh-muted);cursor:pointer}
+.pqwd-infobtn:hover{background:var(--pqh-tint);border-color:var(--pqh-tint-2);color:var(--pqh-primary-ink)}
+.pqwd-infobtn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.pqwd-modal[hidden]{display:none}
+.pqwd-modal{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(15,34,55,.45)}
+.pqwd-modal__box{width:min(520px,100%);max-height:85vh;overflow:auto;padding:20px 22px;border:1px solid var(--pqh-line,#e4e9ef);border-radius:14px;background:var(--pqh-surface,#fff);box-shadow:0 24px 60px -20px rgba(15,34,55,.5)}
+.pqwd-modal__head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+.pqwd-modal__head h3{margin:0;color:var(--pqh-ink,#0f2237);font-size:18px;font-weight:750}
+.pqwd-modal__close{flex:0 0 auto;width:30px;height:30px;border:1px solid var(--pqh-line,#e4e9ef);border-radius:8px;background:var(--pqh-surface,#fff);color:var(--pqh-muted,#5b6b7c);font-size:16px;line-height:1;cursor:pointer}
+.pqwd-modal__close:hover{background:var(--pqh-tint,#edf3fc)}
+.pqwd-modal__grid{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:13px}
+.pqwd-modal__grid dt{color:var(--pqh-faint,#8494a5);font-weight:700;text-transform:uppercase;font-size:11px;letter-spacing:.04em;align-self:center}
+.pqwd-modal__grid dd{margin:0;color:var(--pqh-ink,#0f2237);font-weight:550;overflow-wrap:anywhere}
+.pqwd-modal__block{margin-top:16px}
+.pqwd-modal__block[hidden]{display:none}
+.pqwd-modal__block h4{margin:0 0 8px;color:var(--pqh-faint,#8494a5);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.pqwd-modal__block table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
+.pqwd-modal__block th{padding:6px 8px;border-bottom:1px solid var(--pqh-line,#e4e9ef);color:var(--pqh-faint,#8494a5);font-size:11px;font-weight:700;text-transform:uppercase;text-align:left}
+.pqwd-modal__block td{padding:7px 8px;border-bottom:1px solid var(--pqh-line,#e4e9ef);color:var(--pqh-ink,#0f2237);font-weight:550;vertical-align:top}
+.pqwd-modal__block td:first-child,.pqwd-modal__block th:first-child{width:34px;color:var(--pqh-faint,#8494a5)}
+.pqwd-modal__actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+@media(max-width:560px){.pqwd-modal__grid{grid-template-columns:1fr;gap:2px 0}.pqwd-modal__grid dd{margin-bottom:8px}}
 .pqwd-bars{display:flex;align-items:flex-end;gap:10px;height:130px;padding-top:8px}
 .pqwd-bars>div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-width:0;height:100%}
 .pqwd-bars i{width:100%;max-width:38px;border-radius:7px 7px 0 0;background:var(--pqh-tint-2)}
@@ -611,42 +786,20 @@ body.pqw-dashboard-page #page,body.pqw-dashboard-page #page-content,body.pqw-das
 </style>
 <main class="pqwd-shell">
 <?php
-$pqwdshelllinks = [];
-if ($canmanage) {
-    $pqwdshelllinks[] = ['Manage people', new moodle_url('/local/hubredirect/workspace_people.php', $workspaceparams)];
-    $pqwdshelllinks[] = ['Settings', $brandediturl];
-}
-if ($canacademyops) {
-    $pqwdshelllinks[] = ['Manage workspaces', $workspacesadminurl];
-    $pqwdshelllinks[] = ['Platform consumers', $platformconsumersurl];
-}
 $pqwdshellextra = '<button type="button" onclick="window.history.back()">Back</button>';
-if ($canteach) {
-    $pqwdshellextra .= '<button type="button" data-pq-support-action="open">Manage tickets</button>'
-        . '<button type="button" data-pq-support-action="new">Create a ticket</button>';
-}
-echo pqh_design_shell_html('pqwd-shell', 'workspace', [
+echo pqh_design_shell_html('pqwd-shell', 'dashboard', [
     'title' => (string)$workspace->name,
-    'links' => $pqwdshelllinks,
+    'appbar' => [
+        ['Workspace', new moodle_url('/local/hubredirect/admin_workspace.php', $workspaceparams)],
+        ['School Hub', new moodle_url('/local/hubredirect/consumer_landing.php', $workspaceparams)],
+    ],
+    'hideitems' => ['dashboard'],
     'extrahtml' => $pqwdshellextra,
 ]);
 ?>
   <div class="pqwd-wrap">
     <section class="pqwd-top pqh-workspace-top">
-      <div>
-        <h1 class="pqwd-title pqh-workspace-title">
-          <span class="pqh-brand-mark" style="background: <?php echo s($brandcolor); ?>;">
-            <?php if ($brandlogo !== ''): ?>
-              <img src="<?php echo s($brandlogo); ?>" alt="<?php echo s($brandname); ?>">
-            <?php else: ?>
-              <?php echo s($brandinitial); ?>
-            <?php endif; ?>
-          </span>
-          <span><?php echo s($workspace->name); ?></span>
-        </h1>
-        <p class="pqwd-sub pqh-workspace-sub"><?php echo s(pqh_workspace_types()[$workspace->workspace_type] ?? $workspace->workspace_type); ?> workspace - your role: <?php echo s($role === 'platform_admin' ? 'platform admin' : ($role)); ?></p>
-      </div>
-      <form class="pqwd-actions pqh-workspace-actions" method="get" aria-label="Workspace switcher">
+      <form class="pqwd-actions pqh-workspace-actions" method="get" aria-label="Workspace switcher" style="margin-left:auto">
         <?php if (count($workspaces) > 1): ?>
           <select class="pqwd-select" name="workspaceid" onchange="this.form.submit()">
             <?php foreach ($workspaces as $candidate): ?>
@@ -661,7 +814,7 @@ echo pqh_design_shell_html('pqwd-shell', 'workspace', [
     <section class="pqwd-panel pqwd-public" aria-label="Public and custom-domain links">
       <div>
         <h2>Public Workspace Links</h2>
-        <span class="pqwd-muted">Use these to test the institution domain, landing page, login, and intake flows.</span>
+        <span class="pqwd-muted">Use these to test the institution domain, course catalog, and intake flows.</span>
         <span class="pqwd-code"><?php echo s($primarydomain !== '' ? $primarydomain : $CFG->wwwroot); ?></span>
         <div class="pqwd-domain-list">
           <?php foreach ($domains as $domainrow): ?>
@@ -671,20 +824,9 @@ echo pqh_design_shell_html('pqwd-shell', 'workspace', [
         </div>
       </div>
       <div class="pqwd-public-links">
-        <a class="pqwd-btn pqwd-btn--light" href="<?php echo $landingurl->out(false); ?>">Landing</a>
-        <a class="pqwd-btn pqwd-btn--light" href="<?php echo $profileurl->out(false); ?>">Profile</a>
-        <a class="pqwd-btn pqwd-btn--light" href="<?php echo $inquiryurl->out(false); ?>">Inquiry</a>
-        <a class="pqwd-btn pqwd-btn--light" href="<?php echo $loginurl->out(false); ?>">Login</a>
         <a class="pqwd-btn pqwd-btn--light" href="<?php echo $studentintakeurl->out(false); ?>">Student intake</a>
         <a class="pqwd-btn pqwd-btn--light" href="<?php echo $coursecatalogurl->out(false); ?>">Course catalog</a>
         <a class="pqwd-btn pqwd-btn--light" href="<?php echo $teacheronboardingurl->out(false); ?>">Teacher onboarding</a>
-        <a class="pqwd-btn pqwd-btn--light" href="<?php echo $workspaceurl->out(false); ?>">Workspace URL</a>
-        <?php if ($canacademyops): ?>
-          <a class="pqwd-btn pqwd-btn--light" href="<?php echo $diagnosticsurl->out(false); ?>">Diagnostics</a>
-          <a class="pqwd-btn pqwd-btn--light" href="<?php echo $testmatrixurl->out(false); ?>">Test matrix</a>
-          <a class="pqwd-btn" href="<?php echo $brandediturl->out(false); ?>">Institution settings</a>
-          <a class="pqwd-btn pqwd-btn--light" href="<?php echo $onboardingurl->out(false); ?>">Onboard institution</a>
-        <?php endif; ?>
       </div>
     </section>
     <?php endif; ?>
@@ -733,124 +875,14 @@ echo pqh_design_shell_html('pqwd-shell', 'workspace', [
       </div>
     </section>
 
-    <section class="pqwd-cardlinks" aria-label="Workspace actions">
-      <?php if ($canteach): ?>
-        <?php if ($canmanageofferings): ?>
-          <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/teacher_marketing.php', $workspaceparams))->out(false); ?>"><strong>Market My Services</strong><span>Manage your public profile, service offers, pricing, and online presence.</span></a>
-          <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/teacher_student_connect.php', $workspaceparams))->out(false); ?>"><strong>Find or Invite Student</strong><span>Search for an existing learner first, or invite a new student into this independent teaching workspace.</span></a>
-          <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/course_offerings.php', $workspaceparams))->out(false); ?>"><strong>Course Offerings</strong><span>Create courses or tutoring services, set dates, seats, syllabus, pricing, and review enrollment requests.</span></a>
-        <?php endif; ?>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/teacher_workspace.php', $workspaceparams))->out(false); ?>"><strong>Teacher Workspace</strong><span>Today's classes, attendance, notes, and post-class review.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/teacher_portal.php', $workspaceparams))->out(false); ?>"><strong>Teacher Portal</strong><span>Today's classes, roster, attendance, grades, notes, homework, and progress updates.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/workspace_reports.php', $workspaceparams))->out(false); ?>"><strong>Workspace Reports</strong><span>Institution-level teacher load, session, attendance, material, and quiz summaries.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/at_risk_report.php', $workspaceparams))->out(false); ?>"><strong>At-Risk Students</strong><span>Early-warning report with configurable rules, intervention notes, and CSV export.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/workspace_materials.php', $workspaceparams))->out(false); ?>"><strong>Material Library</strong><span>Review resources, assignment progress, and completed student materials.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $workspaceparams))->out(false); ?>"><strong>Live Sessions</strong><span>Open upcoming classes, join/start rooms, review notes, recordings, homework, and reminders.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/communications_center.php', $workspaceparams))->out(false); ?>"><strong>Communications Center</strong><span>Message parents, students, and teachers, manage cases, and review student thread history.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/gradebook_assessment.php', $workspaceparams))->out(false); ?>"><strong>Gradebook</strong><span>Enter and review assessment grades, oral recitation marks, publishing, disputes, corrections, and audit history.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/learning_path.php', $workspaceparams))->out(false); ?>"><strong>Learning Path</strong><span>Track placement, mastery, skill maps, recommended next courses, comments, and interventions.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/course_transcript.php', $workspaceparams))->out(false); ?>"><strong>Unofficial Transcripts</strong><span>Review live transcript previews for assigned students.</span></a>
-      <?php endif; ?>
-      <?php if ($canmanage): ?>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/workspace_people.php', $workspaceparams))->out(false); ?>"><strong>People & Assignments</strong><span>Add students, add teachers, and assign students to teachers inside this workspace.</span></a>
-        <a class="pqwd-link" href="<?php echo $brandediturl->out(false); ?>"><strong>Institution Settings</strong><span>Edit logo, initials, colors, domains, support email, landing text, and default courses.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/course_offerings.php', $workspaceparams))->out(false); ?>"><strong>Course Offerings</strong><span>Create institution course seats, link Moodle courses, set dates, syllabus, prerequisites, and approve enrollment requests.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/admissions.php', $workspaceparams))->out(false); ?>"><strong>Admissions Pipeline</strong><span>Review applications, documents, placement assessments, decisions, waitlists, and student conversion.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/scholarship_portal.php', $workspaceparams))->out(false); ?>"><strong>Scholarship Applications</strong><span>Manage scholarship intake, family/student requests, review decisions, waitlists, awards, and finance conversion.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/sponsor_donor_portal.php', $workspaceparams))->out(false); ?>"><strong>Sponsor & Donor Portal</strong><span>Review donor pledges, sponsor commitments, invoice allocations, donor privacy, and sponsorship readiness.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/placement_tests.php', $workspaceparams))->out(false); ?>"><strong>Placement Tests</strong><span>Define placement tests, schedule assessments, score readiness, and apply level/course recommendations.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/academic_calendar.php', $workspaceparams))->out(false); ?>"><strong>Academic Calendar</strong><span>Manage terms, holidays, blackout dates, enrollment windows, course schedules, and deadlines.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/attendance_operations.php', $workspaceparams))->out(false); ?>"><strong>Attendance Operations</strong><span>Track late, excused, absent, make-up, reports, academic standing actions, and finance holds.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/gradebook_assessment.php', $workspaceparams))->out(false); ?>"><strong>Gradebook & Assessment</strong><span>Configure weighted categories, assessments, grade review, publishing, disputes, corrections, and transcript grades.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/learning_path.php', $workspaceparams))->out(false); ?>"><strong>Student Learning Paths</strong><span>Manage placement, advancement rules, mastery tracking, skill maps, next-course recommendations, and interventions.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/teacher_administration.php', $workspaceparams))->out(false); ?>"><strong>Teacher Administration</strong><span>Manage availability, load, contracts, rates, assignments, substitutes, and marketplace payout readiness.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/live_ops.php', $workspaceparams))->out(false); ?>"><strong>Live Operations</strong><span>Monitor scheduling, capacity, room readiness, recordings, parent visibility, reminders, and diagnostics.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/communications_center.php', $workspaceparams))->out(false); ?>"><strong>Communications Center</strong><span>Manage messaging, announcements, templates, consent, delivery logs, and student case histories.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/admin_workflow.php', $workspaceparams))->out(false); ?>"><strong>Admin Workflow</strong><span>Run admissions, finance, registrar, teacher, and support queues with approvals, escalations, notes, and audit history.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/document_management.php', $workspaceparams))->out(false); ?>"><strong>Document Management</strong><span>Upload, verify, expire, download, and audit student documents, IDs, certificates, consent forms, and generated PDFs.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/certificates_awards.php', $workspaceparams))->out(false); ?>"><strong>Certificates & Awards</strong><span>Create templates, issue completion awards, generate certificate PDFs, revoke awards, and audit changes.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/roles_permissions.php', $workspaceparams))->out(false); ?>"><strong>Roles & Tenant Controls</strong><span>Manage registrar, finance, teacher, parent, sponsor, and support capabilities, isolation audits, and support access.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/mobile_api_readiness.php', $workspaceparams))->out(false); ?>"><strong>Mobile & API Readiness</strong><span>Review REST endpoint health, service inventory, token readiness, mobile client profiles, and readiness snapshots.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/localization_currency.php', $workspaceparams))->out(false); ?>"><strong>Localization & Currency</strong><span>Manage tenant locale, regional display formats, enabled currencies, exchange rates, and tax-region policy.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/bulk_import_export.php', $workspaceparams))->out(false); ?>"><strong>Bulk Import/Export</strong><span>Validate member CSVs, commit bulk workspace imports, export operational datasets, and review processing history.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/data_migration_tools.php', $workspaceparams))->out(false); ?>"><strong>Data Migration Tools</strong><span>Run scoped inventory, record dry-run validations, mapping notes, rollback plans, and migration audit history.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/backup_dr_checks.php', $workspaceparams))->out(false); ?>"><strong>Backup & DR Checks</strong><span>Track backup evidence, restore-test dates, disaster recovery readiness findings, runbooks, and recurring checks.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/compliance_governance.php', $workspaceparams))->out(false); ?>"><strong>Compliance & Governance</strong><span>Manage retention, privacy workflows, consent history, export/delete/anonymize review, and full audit reports.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/executive_dashboard.php', $workspaceparams))->out(false); ?>"><strong>Executive Dashboard</strong><span>Review enrollment funnel, revenue, AR aging, retention, utilization, student progress, and course profitability.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/finance_operations.php', $workspaceparams))->out(false); ?>"><strong>Finance Operations</strong><span>Review open invoices, overdue balances, payments, exceptions, holds, reconciliation reports, and CSV exports.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/course_seat_report.php', $workspaceparams))->out(false); ?>"><strong>Course Seat Report</strong><span>Review capacity, open seats, utilization, pending requests, and dropped enrollments.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/course_student_history.php', $workspaceparams))->out(false); ?>"><strong>Student Course History</strong><span>See each student's course request, approval, sync, and drop history.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/course_transcript.php', $workspaceparams))->out(false); ?>"><strong>Unofficial Transcripts</strong><span>Preview transcript headers, course lines, warnings, and admin diagnostics.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/transcript_readiness.php', $workspaceparams))->out(false); ?>"><strong>Transcript Readiness</strong><span>Find transcript blockers, warnings, repair links, and export data-quality CSVs.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/course_transcript_official.php', $workspaceparams))->out(false); ?>"><strong>Official Transcript Drafts</strong><span>Open the issue workflow after selecting a student from transcript previews.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/transcript_controls.php', $workspaceparams))->out(false); ?>"><strong>Transcript Controls</strong><span>Manage transcript holds, correction records, revocation, and reissue workflows.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/course_transcript_export.php', $workspaceparams + ['type' => 'documents', 'format' => 'csv']))->out(false); ?>"><strong>Issued Transcript CSV</strong><span>Export issued transcript document IDs, hashes, policy, and issue metadata.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/transcript_policy.php', $workspaceparams))->out(false); ?>"><strong>Transcript Policy</strong><span>Configure completion, grade, attendance, display, and official issue rules.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/course_sync_report.php', $workspaceparams))->out(false); ?>"><strong>Moodle Sync Report</strong><span>Find approved requests needing Moodle sync and linked-course setup issues.</span></a>
-        <a class="pqwd-link" href="<?php echo $sampledataurl->out(false); ?>"><strong>Validation Data</strong><span>Create sample students, teachers, sessions, attendance, materials, and report data for end-to-end testing.</span></a>
-        <a class="pqwd-link" href="<?php echo $testmatrixurl->out(false); ?>"><strong>Role Test Matrix</strong><span>Test guest, institution admin, teacher, parent, student, and platform admin flows on the custom domain.</span></a>
-        <a class="pqwd-link" href="<?php echo $profileurl->out(false); ?>"><strong>Public Institution Profile</strong><span>Preview the public profile and inquiry path for this institution.</span></a>
-        <?php if ($canacademyops): ?>
-          <a class="pqwd-link" href="<?php echo $platformconsumersurl->out(false); ?>"><strong>Platform Consumers</strong><span>Manage institution consumers, domains, workspace status, support email, and debug links.</span></a>
-          <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/student_intake.php', $workspaceparams))->out(false); ?>"><strong>Student Intake</strong><span>Create new Moodle student and parent accounts directly inside this workspace.</span></a>
-          <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/teacher_intake.php', $workspaceparams))->out(false); ?>"><strong>Teacher Onboarding</strong><span>Create or link teacher accounts and add them to this workspace.</span></a>
-        <?php else: ?>
-          <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/workspace_people.php', $workspaceparams))->out(false); ?>"><strong>Add Existing Users</strong><span>Add existing Moodle students, parents, and teachers to this workspace.</span></a>
-        <?php endif; ?>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/workspace_sessions.php', $workspaceparams))->out(false); ?>"><strong>Live Sessions</strong><span>Create, start, join, and review live sessions for this workspace.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/workspace_series.php', $workspaceparams))->out(false); ?>"><strong>Recurring Series</strong><span>Edit, reschedule, and cancel recurring workspace classes.</span></a>
-      <?php endif; ?>
-      <?php if ($role === 'student'): ?>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/course_catalog_browse.php', $workspaceparams))->out(false); ?>"><strong>Course Catalog</strong><span>Browse available institution courses and request enrollment.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/scholarship_portal.php', $workspaceparams))->out(false); ?>"><strong>Scholarship Applications</strong><span>Submit and track scholarship requests for eligible courses, hardship aid, or donor-funded support.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/course_transcript.php', $workspaceparams + ['studentid' => (int)$USER->id]))->out(false); ?>"><strong>Unofficial Transcript</strong><span>Review your live course record, grades, completion, attendance, and warnings.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/student_parent_portal.php', $workspaceparams + ['studentid' => (int)$USER->id]))->out(false); ?>"><strong>My Portal</strong><span>Review courses, invoices, payments, attendance, grades, transcripts, payment plans, and secure downloads.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/workspace_student.php', $workspaceparams + ['studentid' => (int)$USER->id]))->out(false); ?>"><strong>My Student Profile</strong><span>Review assigned teachers, materials, attendance, notes, and learning progress.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php', $workspaceparams))->out(false); ?>"><strong>My Live Sessions</strong><span>Open upcoming classes and live-session links for this workspace.</span></a>
-      <?php endif; ?>
-      <?php if ($role === 'parent'): ?>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/course_catalog_browse.php', $workspaceparams))->out(false); ?>"><strong>Course Catalog</strong><span>Review available seats, dates, syllabus, prerequisites, and request enrollment for linked students.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/scholarship_portal.php', $workspaceparams))->out(false); ?>"><strong>Scholarship Applications</strong><span>Submit and track scholarship requests for linked students, invoices, eligible courses, and donor-funded support.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/student_parent_portal.php', $workspaceparams))->out(false); ?>"><strong>Family Portal</strong><span>Review enrolled courses, invoices, payments, attendance, grades, transcripts, payment plans, and secure downloads.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/course_transcript.php', $workspaceparams))->out(false); ?>"><strong>Unofficial Transcripts</strong><span>Review live course records for linked children.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/workspace_parent.php', $workspaceparams))->out(false); ?>"><strong>Parent View</strong><span>Review linked students, attendance, notes, materials, and recordings.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/live_trust.php', $workspaceparams))->out(false); ?>"><strong>Live Class Safety</strong><span>Open parent-facing live-session visibility, consent, and recording controls.</span></a>
-      <?php endif; ?>
-      <?php if ($role === 'sponsor'): ?>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/sponsor_donor_portal.php', $workspaceparams))->out(false); ?>"><strong>Sponsor & Donor Portal</strong><span>Submit pledges, review sponsored learner invoices, donor privacy, commitments, and allocation status.</span></a>
-        <a class="pqwd-link" href="<?php echo (new moodle_url('/local/hubredirect/sponsor_billing.php', $workspaceparams))->out(false); ?>"><strong>Sponsor Billing</strong><span>Open the focused invoice and commitment billing view.</span></a>
-      <?php endif; ?>
+    <?php if ($canmanage || $canteach): ?>
+    <section class="pqwd-panel" style="margin-bottom:14px">
+      <h2>Daily Tools</h2>
+      <p class="pqwd-muted" style="margin:0 0 12px">Course offerings, admissions, gradebook, reports, finance, compliance, and every other day-to-day operating tool now live in the Admin Workspace.</p>
+      <a class="pqwd-btn" href="<?php echo (new moodle_url('/local/hubredirect/admin_workspace.php', $workspaceparams))->out(false); ?>">Open Admin Workspace</a>
     </section>
 
-    <?php if ($canmanage || $canteach): ?>
-    <section class="pqwd-grid">
-      <article class="pqwd-panel">
-        <h2>Students</h2>
-        <?php if (!$students): ?>
-          <div class="pqwd-empty">No students are linked to this workspace yet.</div>
-        <?php else: ?>
-          <table class="pqwd-table">
-            <thead><tr><th>Student</th><th>Teacher</th><th>Courses enrolled</th><th>Level</th><th>Status</th><th>Links</th></tr></thead>
-            <tbody>
-              <?php foreach (array_slice($students, 0, 20) as $student): ?>
-                <tr>
-                  <td data-label="Student"><span class="pqwd-name"><?php echo s($student['name']); ?></span><span class="pqwd-muted">Account No. <?php echo s((string)($student['accountno'] ?? '') !== '' ? (string)$student['accountno'] : 'pending repair'); ?> / User #<?php echo (int)$student['studentid']; ?></span></td>
-                  <td data-label="Teacher"><?php echo s(implode(', ', $studentteachers[(int)$student['studentid']] ?? [])); ?></td>
-                  <td data-label="Courses enrolled"><?php $coursenames = $studentcourses[(int)$student['studentid']] ?? []; echo $coursenames ? s(implode(', ', $coursenames)) : '<span class="pqwd-muted">none</span>'; ?></td>
-                  <td data-label="Level"><?php echo s((string)($student['level'] ?? '')); ?></td>
-                  <td data-label="Status"><span class="pqwd-pill"><?php echo s((string)($student['status'] ?? 'active')); ?></span></td>
-                  <td data-label="Links">
-                    <a class="pqwd-btn pqwd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/workspace_student.php', ['workspaceid' => $workspaceid, 'studentid' => (int)$student['studentid']]))->out(false); ?>">Profile</a>
-                    <a class="pqwd-btn pqwd-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/managed_reports.php', ['studentid' => (int)$student['studentid']]))->out(false); ?>">Report</a>
-                  </td>
-                </tr>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
-        <?php endif; ?>
-      </article>
-
-      <article class="pqwd-panel">
+    <section class="pqwd-panel" style="margin-bottom:14px">
         <div class="pqwd-panel-head">
           <h2>Upcoming Sessions</h2>
           <?php $sessionsurl = $canmanage
@@ -880,27 +912,252 @@ echo pqh_design_shell_html('pqwd-shell', 'workspace', [
             </tbody>
           </table>
         <?php endif; ?>
-      </article>
+    </section>
 
-      <article class="pqwd-panel">
-        <h2>Workspace Members</h2>
-        <?php if (!$members): ?>
-          <div class="pqwd-empty">No active members found.</div>
-        <?php else: ?>
-          <table class="pqwd-table">
-            <thead><tr><th>Member</th><th>Role</th><th>Updated</th></tr></thead>
-            <tbody>
-              <?php foreach ($members as $member): ?>
-                <tr>
-                  <td data-label="Member"><span class="pqwd-name"><?php echo s(fullname($member)); ?></span><span class="pqwd-muted"><?php echo s(pqh_account_no_label($member)); ?> / <?php echo s($member->email); ?></span></td>
-                  <td data-label="Role"><span class="pqwd-pill"><?php echo s($member->workspace_role); ?></span></td>
-                  <td data-label="Updated"><?php echo s(userdate((int)$member->timemodified, get_string('strftimedatetimeshort'))); ?></td>
-                </tr>
+    <section class="pqwd-panel">
+      <h2>Workspace People</h2>
+      <?php if (!$people): ?>
+        <div class="pqwd-empty">No students or members are linked to this workspace yet.</div>
+      <?php else: ?>
+        <?php
+          $pqwdroleoptions = [];
+          $pqwdstatusoptions = [];
+          foreach ($people as $personopt) {
+              $roleopt = (string)$personopt['role'];
+              $pqwdroleoptions[$roleopt] = pqh_workspace_roles()[$roleopt] ?? ucwords(str_replace('_', ' ', $roleopt));
+              $pqwdstatusoptions[(string)$personopt['status']] = ucwords(str_replace('_', ' ', (string)$personopt['status']));
+          }
+          asort($pqwdroleoptions);
+          ksort($pqwdstatusoptions);
+        ?>
+        <div class="pqwd-toolbar pqwd-toolbar--filters">
+          <div class="pqwd-field">
+            <label for="pqwd-member-filter">Search people</label>
+            <input class="pqwd-input" id="pqwd-member-filter" type="search" placeholder="Name, email, role, status, teacher, course, or user ID">
+          </div>
+          <div class="pqwd-field">
+            <label for="pqwd-member-role-filter">Role</label>
+            <select class="pqwd-select" id="pqwd-member-role-filter">
+              <option value="">All roles</option>
+              <?php foreach ($pqwdroleoptions as $rolevalue => $rolelabel): ?>
+                <option value="<?php echo s(strtolower((string)$rolevalue)); ?>"><?php echo s($rolelabel); ?></option>
               <?php endforeach; ?>
-            </tbody>
-          </table>
-        <?php endif; ?>
-      </article>
+            </select>
+          </div>
+          <div class="pqwd-field">
+            <label for="pqwd-member-status-filter">Status</label>
+            <select class="pqwd-select" id="pqwd-member-status-filter">
+              <option value="">All statuses</option>
+              <?php foreach ($pqwdstatusoptions as $statusvalue => $statuslabel): ?>
+                <option value="<?php echo s(strtolower((string)$statusvalue)); ?>"><?php echo s($statuslabel); ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+          <span class="pqwd-muted"><?php echo count($people); ?> <?php echo count($people) === 1 ? 'person' : 'people'; ?></span>
+        </div>
+        <table class="pqwd-table" id="pqwd-member-table">
+          <thead><tr><th>Person</th><th>Role</th><th>Status</th><th>Level</th><th>Updated</th><th>Links</th></tr></thead>
+          <tbody>
+            <?php foreach ($people as $person): ?>
+              <?php
+                $personid = (int)$person['userid'];
+                $personrole = (string)$person['role'];
+                $personrolelabel = pqh_workspace_roles()[$personrole] ?? ucwords(str_replace('_', ' ', $personrole));
+                $personisactive = (string)$person['status'] === 'active';
+                $personteachers = $person['isstudent'] ? ($studentteachers[$personid] ?? []) : [];
+                $personcourses = $person['isstudent'] ? ($studentcourses[$personid] ?? []) : [];
+                $persongrade = (string)$person['grade'];
+                $personaccountno = (string)$person['accountno'] !== '' ? (string)$person['accountno'] : 'pending repair';
+                // Compact identity line: name / account no. / grade. Everything
+                // else (email, username, user id, teacher, courses, level) moves
+                // into the details dialog behind the info button.
+                $personsummary = (string)$person['name'] . ' / ' . $personaccountno
+                    . ' / ' . ($persongrade !== '' ? $persongrade : '--');
+                $personhaystack = strtolower(trim(
+                    (string)$person['accountno'] . ' #' . $personid . ' ' . (string)$person['name'] . ' '
+                    . (string)$person['email'] . ' ' . (string)$person['username'] . ' '
+                    . $personrolelabel . ' ' . (string)$person['status'] . ' '
+                    . implode(' ', $personteachers) . ' ' . implode(' ', $personcourses) . ' '
+                    . (string)$person['level'] . ' ' . $persongrade
+                ));
+                // Only real values go into the dialog -- the JS drops any empty
+                // row, so an admin with no student record gets a short list
+                // rather than a wall of "--" placeholder rows.
+                $persondetails = [
+                    'title' => (string)$person['name'],
+                    'rows' => [
+                        ['Account No.', (string)$person['accountno']],
+                        ['Grade', $persongrade],
+                        ['Level', (string)$person['level']],
+                        ['Role', $personrolelabel],
+                        ['Status', (string)$person['status']],
+                        ['User ID', '#' . $personid],
+                        ['Username', (string)$person['username']],
+                        ['Email', (string)$person['email']],
+                        ['Teacher', $personteachers ? implode(', ', $personteachers) : ''],
+                        ['Updated', (int)$person['timemodified'] > 0
+                            ? userdate((int)$person['timemodified'], get_string('strftimedatetimeshort'))
+                            : ''],
+                    ],
+                    // Enrolled courses get their own table block at the foot of
+                    // the dialog rather than a comma-run inside a definition
+                    // row -- a learner on six courses was unreadable that way.
+                    'table' => $personcourses ? [
+                        'caption' => 'Courses enrolled',
+                        'columns' => ['#', 'Course'],
+                        'rows' => array_map(static function(int $index, string $coursename): array {
+                            return [(string)($index + 1), $coursename];
+                        }, array_keys(array_values($personcourses)), array_values($personcourses)),
+                    ] : null,
+                    'actions' => $person['hasdetail'] ? [
+                        ['Profile', (new moodle_url('/local/hubredirect/workspace_student.php', ['workspaceid' => $workspaceid, 'studentid' => $personid]))->out(false)],
+                        ['Report', (new moodle_url('/local/hubredirect/managed_reports.php', ['studentid' => $personid]))->out(false)],
+                    ] : [],
+                ];
+              ?>
+              <tr data-filter="<?php echo s($personhaystack); ?>" data-role="<?php echo s(strtolower($personrole)); ?>" data-status="<?php echo s(strtolower((string)$person['status'])); ?>">
+                <td data-label="Person">
+                  <div class="pqwd-person">
+                    <span class="pqwd-name"><?php echo s($personsummary); ?></span>
+                    <button type="button" class="pqwd-infobtn" data-detail="<?php echo s(json_encode($persondetails, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)); ?>" aria-label="More information about <?php echo s((string)$person['name']); ?>" title="More information">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
+                    </button>
+                  </div>
+                </td>
+                <td data-label="Role"><span class="pqwd-pill"><?php echo s($personrolelabel); ?></span></td>
+                <td data-label="Status"><span class="pqwd-pill<?php echo $personisactive ? '' : ' pqwd-pill--inactive'; ?>"><?php echo s((string)$person['status']); ?></span></td>
+                <td data-label="Level"><?php echo (string)$person['level'] !== '' ? s((string)$person['level']) : '<span class="pqwd-muted">—</span>'; ?></td>
+                <td data-label="Updated"><?php echo (int)$person['timemodified'] > 0 ? s(userdate((int)$person['timemodified'], get_string('strftimedatetimeshort'))) : '<span class="pqwd-muted">—</span>'; ?></td>
+                <td data-label="Links">
+                  <?php if ($person['hasdetail']): ?>
+                    <div class="pqwd-row-actions">
+                      <a class="pqwd-btn pqwd-btn--light pqwd-btn--compact" href="<?php echo (new moodle_url('/local/hubredirect/workspace_student.php', ['workspaceid' => $workspaceid, 'studentid' => $personid]))->out(false); ?>">Profile</a>
+                      <a class="pqwd-btn pqwd-btn--light pqwd-btn--compact" href="<?php echo (new moodle_url('/local/hubredirect/managed_reports.php', ['studentid' => $personid]))->out(false); ?>">Report</a>
+                    </div>
+                  <?php else: ?>
+                    <span class="pqwd-muted">—</span>
+                  <?php endif; ?>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      <?php endif; ?>
+    </section>
+
+    <section class="pqwd-panel" style="margin-top:14px">
+      <h2>Workspace Courses</h2>
+      <?php if (!$courses): ?>
+        <div class="pqwd-empty">No course offerings have been created for this workspace yet.</div>
+      <?php else: ?>
+        <?php
+          $pqwdcoursestatusoptions = [];
+          $pqwdcoursevisibilityoptions = [];
+          foreach ($courses as $courseopt) {
+              $statusopt = (string)$courseopt['status'];
+              $visibilityopt = (string)$courseopt['visibility'];
+              $pqwdcoursestatusoptions[$statusopt] = pqco_status_options()[$statusopt] ?? ucwords(str_replace('_', ' ', $statusopt));
+              $pqwdcoursevisibilityoptions[$visibilityopt] = pqco_visibility_options()[$visibilityopt] ?? ucwords(str_replace('_', ' ', $visibilityopt));
+          }
+          asort($pqwdcoursestatusoptions);
+          asort($pqwdcoursevisibilityoptions);
+        ?>
+        <div class="pqwd-toolbar pqwd-toolbar--filters">
+          <div class="pqwd-field">
+            <label for="pqwd-course-filter">Search courses</label>
+            <input class="pqwd-input" id="pqwd-course-filter" type="search" placeholder="Title, course key, status, visibility, or Moodle course">
+          </div>
+          <div class="pqwd-field">
+            <label for="pqwd-course-status-filter">Status</label>
+            <select class="pqwd-select" id="pqwd-course-status-filter">
+              <option value="">All statuses</option>
+              <?php foreach ($pqwdcoursestatusoptions as $statusvalue => $statuslabel): ?>
+                <option value="<?php echo s(strtolower((string)$statusvalue)); ?>"><?php echo s($statuslabel); ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+          <div class="pqwd-field">
+            <label for="pqwd-course-visibility-filter">Visibility</label>
+            <select class="pqwd-select" id="pqwd-course-visibility-filter">
+              <option value="">All visibility</option>
+              <?php foreach ($pqwdcoursevisibilityoptions as $visibilityvalue => $visibilitylabel): ?>
+                <option value="<?php echo s(strtolower((string)$visibilityvalue)); ?>"><?php echo s($visibilitylabel); ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+          <span class="pqwd-muted"><?php echo count($courses); ?> course<?php echo count($courses) === 1 ? '' : 's'; ?></span>
+        </div>
+        <table class="pqwd-table" id="pqwd-course-table">
+          <thead><tr><th>Course</th><th>Status</th><th>Visibility</th><th>Seats</th><th>Enrolled</th><th>Starts</th><th>Links</th></tr></thead>
+          <tbody>
+            <?php foreach ($courses as $course): ?>
+              <?php
+                $coursestatus = (string)$course['status'];
+                $coursevisibility = (string)$course['visibility'];
+                $coursestatuslabel = pqco_status_options()[$coursestatus] ?? ucwords(str_replace('_', ' ', $coursestatus));
+                $coursevisibilitylabel = pqco_visibility_options()[$coursevisibility] ?? ucwords(str_replace('_', ' ', $coursevisibility));
+                $coursetitle = $course['title'] !== '' ? $course['title'] : ($course['coursekey'] !== '' ? $course['coursekey'] : 'Untitled offering');
+                $coursestart = (int)$course['startdate'] > 0 ? userdate((int)$course['startdate'], get_string('strftimedate')) : '';
+                $courseend = (int)$course['enddate'] > 0 ? userdate((int)$course['enddate'], get_string('strftimedate')) : '';
+                $courseseats = $course['unlimited'] ? 'Unlimited' : ((int)$course['openseats'] . ' of ' . (int)$course['capacity'] . ' open');
+                // Same compact identity line as Workspace People: title / key /
+                // start date, with the rest behind the info button.
+                $coursesummary = $coursetitle . ' / ' . ($course['coursekey'] !== '' ? $course['coursekey'] : '--')
+                    . ' / ' . ($coursestart !== '' ? $coursestart : '--');
+                $coursehaystack = strtolower(trim(
+                    $coursetitle . ' ' . $course['coursekey'] . ' ' . $coursestatuslabel . ' '
+                    . $coursevisibilitylabel . ' ' . (string)$course['moodlecoursename'] . ' '
+                    . $coursestart . ' ' . $courseend . ' #' . (int)$course['id']
+                ));
+                $coursedetails = [
+                    'title' => $coursetitle,
+                    'rows' => [
+                        ['Course key', $course['coursekey']],
+                        ['Status', $coursestatuslabel],
+                        ['Visibility', $coursevisibilitylabel],
+                        ['Capacity', $course['unlimited'] ? 'Unlimited' : (string)(int)$course['capacity']],
+                        ['Open seats', $course['unlimited'] ? 'Unlimited' : (string)(int)$course['openseats']],
+                        ['Enrolled', (string)(int)$course['enrolled']],
+                        ['Starts', $coursestart],
+                        ['Ends', $courseend],
+                        ['Moodle course', (string)$course['moodlecoursename']],
+                        ['Offering ID', '#' . (int)$course['id']],
+                    ],
+                    'actions' => array_values(array_filter([
+                        ['Manage offering', (new moodle_url('/local/hubredirect/course_offerings.php', $workspaceparams))->out(false)],
+                        (int)$course['moodlecourseid'] > 0
+                            ? ['Open Moodle course', (new moodle_url('/course/view.php', ['id' => (int)$course['moodlecourseid']]))->out(false)]
+                            : null,
+                    ])),
+                ];
+              ?>
+              <tr data-filter="<?php echo s($coursehaystack); ?>" data-status="<?php echo s(strtolower($coursestatus)); ?>" data-visibility="<?php echo s(strtolower($coursevisibility)); ?>">
+                <td data-label="Course">
+                  <div class="pqwd-person">
+                    <span class="pqwd-name"><?php echo s($coursesummary); ?></span>
+                    <button type="button" class="pqwd-infobtn" data-detail="<?php echo s(json_encode($coursedetails, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)); ?>" aria-label="More information about <?php echo s($coursetitle); ?>" title="More information">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
+                    </button>
+                  </div>
+                </td>
+                <td data-label="Status"><span class="pqwd-pill<?php echo $coursestatus === 'published' ? '' : ' pqwd-pill--inactive'; ?>"><?php echo s($coursestatuslabel); ?></span></td>
+                <td data-label="Visibility"><span class="pqwd-pill"><?php echo s($coursevisibilitylabel); ?></span></td>
+                <td data-label="Seats"><?php echo s($courseseats); ?></td>
+                <td data-label="Enrolled"><?php echo (int)$course['enrolled']; ?></td>
+                <td data-label="Starts"><?php echo $coursestart !== '' ? s($coursestart) : '<span class="pqwd-muted">—</span>'; ?></td>
+                <td data-label="Links">
+                  <div class="pqwd-row-actions">
+                    <a class="pqwd-btn pqwd-btn--light pqwd-btn--compact" href="<?php echo (new moodle_url('/local/hubredirect/course_offerings.php', $workspaceparams))->out(false); ?>">Manage</a>
+                    <?php if ((int)$course['moodlecourseid'] > 0): ?>
+                      <a class="pqwd-btn pqwd-btn--light pqwd-btn--compact" href="<?php echo (new moodle_url('/course/view.php', ['id' => (int)$course['moodlecourseid']]))->out(false); ?>">Course</a>
+                    <?php endif; ?>
+                  </div>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      <?php endif; ?>
     </section>
     <?php else: ?>
       <section class="pqwd-panel">
@@ -911,7 +1168,189 @@ echo pqh_design_shell_html('pqwd-shell', 'workspace', [
       </section>
     <?php endif; ?>
   </div>
+  <?php
+  // Must live inside .pqwd-shell: every --pqh-* design token is declared on
+  // that element, and custom properties only inherit to descendants. Sitting
+  // outside it, the dialog's background/border/text colours all resolved to
+  // nothing and it rendered fully transparent over the table.
+  ?>
+  <div class="pqwd-modal" id="pqwd-detail-modal" role="dialog" aria-modal="true" aria-labelledby="pqwd-detail-modal-title" hidden>
+    <div class="pqwd-modal__box">
+      <div class="pqwd-modal__head">
+        <h3 id="pqwd-detail-modal-title">Details</h3>
+        <button type="button" class="pqwd-modal__close" data-pqwd-modal-close aria-label="Close">&times;</button>
+      </div>
+      <dl class="pqwd-modal__grid" id="pqwd-detail-modal-body"></dl>
+      <div class="pqwd-modal__block" id="pqwd-detail-modal-table"></div>
+      <div class="pqwd-modal__actions" id="pqwd-detail-modal-actions"></div>
+    </div>
+  </div>
 </main>
+<script>
+(function() {
+  var filter = document.getElementById('pqwd-member-filter');
+  var roleSelect = document.getElementById('pqwd-member-role-filter');
+  var statusSelect = document.getElementById('pqwd-member-status-filter');
+  var table = document.getElementById('pqwd-member-table');
+  if (!filter || !table) {
+    return;
+  }
+  function apply() {
+    var needle = filter.value.toLowerCase().trim();
+    var role = roleSelect ? roleSelect.value : '';
+    var status = statusSelect ? statusSelect.value : '';
+    table.querySelectorAll('tbody tr').forEach(function(row) {
+      var haystack = row.getAttribute('data-filter') || '';
+      var matchesText = needle === '' || haystack.indexOf(needle) !== -1;
+      var matchesRole = role === '' || row.getAttribute('data-role') === role;
+      var matchesStatus = status === '' || row.getAttribute('data-status') === status;
+      row.classList.toggle('pqwd-row-hidden', !(matchesText && matchesRole && matchesStatus));
+    });
+  }
+  filter.addEventListener('input', apply);
+  if (roleSelect) {
+    roleSelect.addEventListener('change', apply);
+  }
+  if (statusSelect) {
+    statusSelect.addEventListener('change', apply);
+  }
+}());
+(function() {
+  var filter = document.getElementById('pqwd-course-filter');
+  var statusSelect = document.getElementById('pqwd-course-status-filter');
+  var visibilitySelect = document.getElementById('pqwd-course-visibility-filter');
+  var table = document.getElementById('pqwd-course-table');
+  if (!filter || !table) {
+    return;
+  }
+  function apply() {
+    var needle = filter.value.toLowerCase().trim();
+    var status = statusSelect ? statusSelect.value : '';
+    var visibility = visibilitySelect ? visibilitySelect.value : '';
+    table.querySelectorAll('tbody tr').forEach(function(row) {
+      var haystack = row.getAttribute('data-filter') || '';
+      var matchesText = needle === '' || haystack.indexOf(needle) !== -1;
+      var matchesStatus = status === '' || row.getAttribute('data-status') === status;
+      var matchesVisibility = visibility === '' || row.getAttribute('data-visibility') === visibility;
+      row.classList.toggle('pqwd-row-hidden', !(matchesText && matchesStatus && matchesVisibility));
+    });
+  }
+  filter.addEventListener('input', apply);
+  if (statusSelect) {
+    statusSelect.addEventListener('change', apply);
+  }
+  if (visibilitySelect) {
+    visibilitySelect.addEventListener('change', apply);
+  }
+}());
+(function() {
+  var modal = document.getElementById('pqwd-detail-modal');
+  var body = document.getElementById('pqwd-detail-modal-body');
+  var block = document.getElementById('pqwd-detail-modal-table');
+  var actions = document.getElementById('pqwd-detail-modal-actions');
+  var title = document.getElementById('pqwd-detail-modal-title');
+  if (!modal || !body || !block || !actions || !title) {
+    return;
+  }
+  var lastTrigger = null;
+  function close() {
+    modal.hidden = true;
+    if (lastTrigger) {
+      lastTrigger.focus();
+      lastTrigger = null;
+    }
+  }
+  // Payload shape is deliberately generic -- {title, rows:[[label,value]],
+  // actions:[[label,url]]} -- so Workspace People and Workspace Courses share
+  // one dialog instead of each shipping its own field list.
+  function open(trigger) {
+    var data;
+    try {
+      data = JSON.parse(trigger.getAttribute('data-detail') || '{}');
+    } catch (e) {
+      return;
+    }
+    lastTrigger = trigger;
+    title.textContent = data.title || 'Details';
+    body.textContent = '';
+    (data.rows || []).forEach(function(row) {
+      if (!row || row.length < 2 || !row[1]) {
+        return;
+      }
+      var dt = document.createElement('dt');
+      dt.textContent = row[0];
+      var dd = document.createElement('dd');
+      dd.textContent = row[1];
+      body.appendChild(dt);
+      body.appendChild(dd);
+    });
+    block.textContent = '';
+    block.hidden = true;
+    if (data.table && data.table.rows && data.table.rows.length) {
+      var heading = document.createElement('h4');
+      heading.textContent = data.table.caption || '';
+      block.appendChild(heading);
+      var tbl = document.createElement('table');
+      if (data.table.columns && data.table.columns.length) {
+        var thead = document.createElement('thead');
+        var headrow = document.createElement('tr');
+        data.table.columns.forEach(function(label) {
+          var th = document.createElement('th');
+          th.textContent = label;
+          headrow.appendChild(th);
+        });
+        thead.appendChild(headrow);
+        tbl.appendChild(thead);
+      }
+      var tbody = document.createElement('tbody');
+      data.table.rows.forEach(function(cells) {
+        var tr = document.createElement('tr');
+        (cells || []).forEach(function(cell) {
+          var td = document.createElement('td');
+          td.textContent = cell;
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+      tbl.appendChild(tbody);
+      block.appendChild(tbl);
+      block.hidden = false;
+    }
+    actions.textContent = '';
+    (data.actions || []).forEach(function(action) {
+      if (!action || action.length < 2 || !action[1]) {
+        return;
+      }
+      var link = document.createElement('a');
+      link.className = 'pqwd-btn pqwd-btn--light pqwd-btn--compact';
+      link.href = action[1];
+      link.textContent = action[0];
+      actions.appendChild(link);
+    });
+    modal.hidden = false;
+    var closer = modal.querySelector('[data-pqwd-modal-close]');
+    if (closer) {
+      closer.focus();
+    }
+  }
+  document.addEventListener('click', function(event) {
+    var trigger = event.target.closest ? event.target.closest('.pqwd-infobtn') : null;
+    if (trigger) {
+      event.preventDefault();
+      open(trigger);
+      return;
+    }
+    if (event.target === modal || (event.target.closest && event.target.closest('[data-pqwd-modal-close]'))) {
+      close();
+    }
+  });
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape' && !modal.hidden) {
+      close();
+    }
+  });
+}());
+</script>
 <?php
 if ($canteach) {
     echo pqh_embedded_support_html($workspaceid, (int)$USER->id, (int)$USER->id, 'student_helpdesk', $consumercontext);

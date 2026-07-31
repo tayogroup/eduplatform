@@ -327,7 +327,7 @@ if ($action === 'ics') {
     $brandname = trim((string)($consumercontext->consumername ?? '')) ?: 'EduPlatform';
     $brandslug = pqlcal_ics_token((string)($consumercontext->consumerslug ?? $brandname));
     $domainhost = parse_url($CFG->wwwroot, PHP_URL_HOST) ?: pqh_request_host();
-    $description = $brandname . ' live review class. Join from Moodle: ' . $joinurl->out(false);
+    $description = $brandname . ' live review class. Join from the dashboard: ' . $joinurl->out(false);
     $ics = "BEGIN:VCALENDAR\r\n";
     $ics .= "VERSION:2.0\r\n";
     $ics .= "PRODID:-//" . pqlcal_ics_escape($brandname) . "//Live Classes//EN\r\n";
@@ -373,6 +373,8 @@ foreach ($sessions as $session) {
     $eventsbyday[$key][] = $session;
 }
 
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
+
 echo $OUTPUT->header();
 ?>
 <style>
@@ -390,40 +392,56 @@ body.pqh-live-calendar-page #page,
 body.pqh-live-calendar-page #page-content,
 body.pqh-live-calendar-page #region-main,
 body.pqh-live-calendar-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
-.pqlcal-shell{min-height:100vh;padding:34px 18px 54px;background:#f5f8fb;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#173044}
+.pqlcal-shell{min-height:100vh;padding:34px 18px 54px;background:#fff;color:#0f2237;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6}
 .pqlcal-wrap{max-width:1120px;margin:0 auto}
-.pqlcal-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;padding:22px;border-radius:12px;background:#fff;border:1px solid rgba(23,48,68,.12);box-shadow:0 14px 32px rgba(23,48,68,.06)}
-.pqlcal-title{margin:0;font-size:30px;line-height:1.1;font-weight:950}
-.pqlcal-sub{margin:8px 0 0;color:#5e7280;font-size:15px;font-weight:750}
+.pqlcal-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;padding:22px;border-radius:14px;background:#fff;border:1px solid #e4e9ef;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14)}
+.pqlcal-title{margin:0;font-size:26px;line-height:1.1;font-weight:800;color:#0f2237;letter-spacing:-.02em}
+.pqlcal-sub{margin:8px 0 0;color:#5b6b7c;font-size:14px;font-weight:500}
 .pqlcal-actions{display:flex;flex-wrap:wrap;gap:9px}
-.pqlcal-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 12px;border-radius:8px;background:#2f6f4e;color:#fff!important;text-decoration:none;font-size:13px;font-weight:950}
-.pqlcal-btn--light{background:#eef4f6;color:#173044!important;border:1px solid rgba(23,48,68,.12)}
+.pqlcal-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 12px;border-radius:10px;background:#fff;border:1px solid #e4e9ef;color:#0f2237!important;text-decoration:none;font-size:13px;font-weight:650}
+.pqlcal-btn:hover{background:#edf3fc;border-color:#e0ebfa;text-decoration:none}
+.pqlcal-btn--light{background:#edf3fc;color:#17498f!important;border:1px solid #e0ebfa}
 .pqlcal-students{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.pqlcal-student,.pqlcal-empty{padding:16px;border-radius:10px;background:#fff;border:1px solid rgba(23,48,68,.12);box-shadow:0 10px 24px rgba(23,48,68,.05);color:#173044!important;text-decoration:none;font-weight:950}
-.pqlcal-student span{display:block;margin-top:4px;color:#5e7280;font-size:12px;font-weight:800}
+.pqlcal-student,.pqlcal-empty{padding:16px;border-radius:10px;background:#fff;border:1px solid #e4e9ef;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14);color:#0f2237!important;text-decoration:none;font-weight:700}
+.pqlcal-student span{display:block;margin-top:4px;color:#5b6b7c;font-size:12px;font-weight:600}
 .pqlcal-calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
-.pqlcal-dayname{font-size:12px;font-weight:950;color:#5e7280;text-align:center;text-transform:uppercase}
-.pqlcal-day{min-height:130px;padding:10px;border:1px solid rgba(23,48,68,.12);border-radius:10px;background:#fff;box-shadow:0 8px 18px rgba(23,48,68,.04)}
-.pqlcal-day--muted{background:#f8fafc;color:#8796a1}
-.pqlcal-date{font-size:13px;font-weight:950;margin-bottom:8px}
-.pqlcal-event{display:block;margin:7px 0;padding:8px;border-radius:8px;background:#edf9ef;border:1px solid rgba(47,111,78,.15);text-decoration:none;color:#173044!important}
-.pqlcal-event strong{display:block;font-size:12px;font-weight:950}
-.pqlcal-event span{display:block;margin-top:3px;font-size:11px;font-weight:800;color:#5e7280}
+.pqlcal-dayname{font-size:12px;font-weight:700;color:#5b6b7c;text-align:center;text-transform:uppercase}
+.pqlcal-day{min-height:130px;padding:10px;border:1px solid #e4e9ef;border-radius:10px;background:#fff}
+.pqlcal-day--muted{background:#f7f4ec;color:#8494a5}
+.pqlcal-date{font-size:13px;font-weight:750;margin-bottom:8px;color:#0f2237}
+.pqlcal-event{display:block;margin:7px 0;padding:8px;border-radius:8px;background:#edf3fc;border:1px solid #e0ebfa;text-decoration:none;color:#0f2237!important}
+.pqlcal-event strong{display:block;font-size:12px;font-weight:700}
+.pqlcal-event span{display:block;margin-top:3px;font-size:11px;font-weight:600;color:#5b6b7c}
 .pqlcal-list{margin-top:18px;display:grid;gap:12px}
-.pqlcal-card{padding:16px;border:1px solid rgba(23,48,68,.12);border-radius:10px;background:#fff;box-shadow:0 10px 24px rgba(23,48,68,.05)}
+.pqlcal-card{padding:16px;border:1px solid #e4e9ef;border-radius:10px;background:#fff;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14)}
 .pqlcal-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:8px}
-.pqlcal-card h2{margin:0;font-size:18px;font-weight:950}
-.pqlcal-meta{margin:5px 0 0;color:#5e7280;font-size:13px;font-weight:800}
-.pqlcal-pill{display:inline-flex;align-items:center;min-height:28px;padding:0 9px;border-radius:999px;background:#eef4f6;color:#173044;font-size:12px;font-weight:950}
-.pqlcal-pill--ok{background:#edf9ef;color:#245c35}
-.pqlcal-pill--warn{background:#fff4dc;color:#7b5a3a}
-@media(max-width:820px){.pqlcal-top,.pqlcal-head{display:block}.pqlcal-actions{margin-top:12px}.pqlcal-calendar{display:grid;grid-template-columns:1fr}.pqlcal-dayname{display:none}.pqlcal-day{min-height:auto}.pqlcal-title{font-size:25px}}
+.pqlcal-card h2{margin:0;font-size:17px;font-weight:750;color:#0f2237}
+.pqlcal-meta{margin:5px 0 0;color:#5b6b7c;font-size:13px;font-weight:600}
+.pqlcal-pill{display:inline-flex;align-items:center;min-height:28px;padding:0 9px;border-radius:8px;background:#edf3fc;color:#17498f;font-size:12px;font-weight:650}
+.pqlcal-pill--ok{background:#e8f4ec;color:#2e7d4f}
+.pqlcal-pill--warn{background:#faf1dd;color:#b7791f}
+@media(max-width:820px){.pqlcal-top,.pqlcal-head{display:block}.pqlcal-actions{margin-top:12px}.pqlcal-calendar{display:grid;grid-template-columns:1fr}.pqlcal-dayname{display:none}.pqlcal-day{min-height:auto}.pqlcal-title{font-size:22px}}
 <?php echo pqh_dashboard_header_css(); ?>
-<?php echo pqh_design_system_css('.pqlcal-shell'); ?>
+/* ---- EduPlatform design system layer: same tokens as the
+   student/teacher dashboard - light paper background, blue
+   appbar/gnav tint, quiet white surfaces, single blue accent. ---- */
+.pqlcal-shell{
+  --pqh-ink:#0f2237;--pqh-muted:#5b6b7c;--pqh-faint:#8494a5;--pqh-line:#e4e9ef;--pqh-bg:#f7f4ec;--pqh-surface:#fff;
+  --pqh-tint:#edf3fc;--pqh-tint-2:#e0ebfa;--pqh-primary:#2166d1;--pqh-primary-ink:#17498f;
+  background:#fff!important;color:var(--pqh-ink)}
+.pqlcal-shell .pqh-appbar{background:linear-gradient(90deg,#cfe9ff 0%,#e3f4ff 50%,#f2fbff 100%)}
+.pqlcal-shell .pqh-workspace-top{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;box-shadow:none!important;border-radius:14px!important}
+.pqlcal-shell .pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
+.pqlcal-shell .pqh-workspace-sub{color:var(--pqh-muted)!important;font-weight:500!important;opacity:1}
+.pqlcal-shell .pqh-workspace-actions a,.pqlcal-shell .pqh-workspace-actions button,.pqlcal-btn{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;color:var(--pqh-ink)!important;font-weight:650!important;border-radius:10px!important;box-shadow:none!important}
+.pqlcal-shell .pqh-workspace-actions a:hover,.pqlcal-shell .pqh-workspace-actions button:hover,.pqlcal-btn:hover{background:var(--pqh-tint)!important;border-color:var(--pqh-tint-2)!important;text-decoration:none!important}
+.pqlcal-shell .pqh-workspace-actions a.pqh-workspace-logout{background:var(--pqh-ink)!important;border-color:var(--pqh-ink)!important;color:#fff!important}
+.pqlcal-shell [class*="-card"],.pqlcal-shell [class*="-panel"]{background:var(--pqh-surface);border-color:var(--pqh-line)!important;border-radius:14px;box-shadow:0 1px 2px rgba(15,34,55,.05)}
+.pqlcal-shell h1,.pqlcal-shell h2,.pqlcal-shell h3{color:var(--pqh-ink)}
 <?php echo pqh_design_shell_css('.pqlcal-shell'); ?>
 </style>
 <main class="pqlcal-shell">
-<?php echo pqh_design_shell_html('pqlcal-shell'); ?>
+<?php echo pqh_design_shell_html('pqlcal-shell', 'live', pqh_live_page_shell_opts('Live Calendar', $urlparams, $childid)); ?>
   <div class="pqlcal-wrap">
     <section class="pqlcal-top pqh-workspace-top">
       <div>

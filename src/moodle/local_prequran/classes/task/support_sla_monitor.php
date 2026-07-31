@@ -46,6 +46,9 @@ class support_sla_monitor extends \core\task\scheduled_task {
                 if (!$this->event_exists((int)$ticket->id, 'sla_breached')) {
                     $this->write_event($ticket, 'sla_breached', (string)$due, (string)$now, ['due' => $due]);
                     $breached++;
+                    // Best practice: a breach reaches a HUMAN, not just a queue
+                    // reassignment. One message per ticket (event dedup above).
+                    $this->notify_admins_of_breach($ticket);
                 }
                 $queueid = (int)($ticket->escalationqueueid ?? 0);
                 if ($queueid > 0 && (int)$ticket->assignmentgroupid !== $queueid) {
@@ -63,6 +66,88 @@ class support_sla_monitor extends \core\task\scheduled_task {
         }
 
         mtrace('Support SLA monitor checked ' . $checked . ' ticket(s), warned ' . $warned . ', breached ' . $breached . '.');
+
+        // LAYER-2 platform tickets (consumer tech team <-> EduPlatform): the
+        // first-response deadline is ENFORCED here — a tenant ticket with no
+        // platform reply past sla_first_due alerts the whole platform team.
+        if ($DB->get_manager()->table_exists(new \xmldb_table('local_prequran_platform_ticket'))) {
+            $pnow = time();
+            $firstoverdue = $DB->get_records_select('local_prequran_platform_ticket',
+                "status IN ('open', 'in_progress') AND firstrespondedat = 0 AND sla_first_due > 0
+                 AND sla_first_due < :now AND sla_first_alerted = 0", ['now' => $pnow]);
+            foreach ($firstoverdue as $pt) {
+                $this->notify_admins_platform('PLATFORM SLA: no first response on ' . (string)$pt->ticketnumber,
+                    'Platform ticket ' . (string)$pt->ticketnumber . ' ("' . (string)$pt->subject . '", priority '
+                    . (string)$pt->priority . ') has had NO first response and its deadline ('
+                    . userdate((int)$pt->sla_first_due) . ') has passed. A consumer technical team is waiting.');
+                $DB->update_record('local_prequran_platform_ticket', (object)[
+                    'id' => (int)$pt->id, 'sla_first_alerted' => 1, 'timemodified' => $pnow,
+                ]);
+                mtrace('  PLATFORM first-response overdue: ' . $pt->ticketnumber);
+            }
+            $resolveoverdue = $DB->get_records_select('local_prequran_platform_ticket',
+                "status IN ('open', 'in_progress', 'waiting_on_school') AND sla_resolve_due > 0
+                 AND sla_resolve_due < :now AND sla_resolve_alerted = 0", ['now' => $pnow]);
+            foreach ($resolveoverdue as $pt) {
+                $this->notify_admins_platform('PLATFORM SLA: resolution overdue on ' . (string)$pt->ticketnumber,
+                    'Platform ticket ' . (string)$pt->ticketnumber . ' ("' . (string)$pt->subject . '", priority '
+                    . (string)$pt->priority . ') passed its resolution deadline (' . userdate((int)$pt->sla_resolve_due) . ').');
+                $DB->update_record('local_prequran_platform_ticket', (object)[
+                    'id' => (int)$pt->id, 'sla_resolve_alerted' => 1, 'timemodified' => $pnow,
+                ]);
+                mtrace('  PLATFORM resolution overdue: ' . $pt->ticketnumber);
+            }
+        }
+    }
+
+    /** Alert every site admin about a platform-tier SLA event. */
+    private function notify_admins_platform(string $subject, string $body): void {
+        foreach (get_admins() as $admin) {
+            try {
+                $message = new \core\message\message();
+                $message->component = 'local_prequran';
+                $message->name = 'live_session_update';
+                $message->userfrom = \core_user::get_noreply_user();
+                $message->userto = $admin;
+                $message->subject = $subject;
+                $message->fullmessage = $body;
+                $message->fullmessageformat = FORMAT_PLAIN;
+                $message->fullmessagehtml = '';
+                $message->smallmessage = $subject;
+                $message->notification = 1;
+                $message->courseid = SITEID;
+                message_send($message);
+            } catch (\Throwable $e) {
+                mtrace('  platform SLA notification failed for admin ' . $admin->id . ': ' . $e->getMessage());
+            }
+        }
+    }
+
+    /** SLA breach → Moodle message to every site admin (best-effort). */
+    private function notify_admins_of_breach($ticket): void {
+        $label = (string)($ticket->subject ?? $ticket->title ?? '');
+        $subject = 'Support SLA BREACHED: ticket #' . (int)$ticket->id . ($label !== '' ? ' — ' . $label : '');
+        $body = 'Support ticket #' . (int)$ticket->id . ($label !== '' ? ' ("' . $label . '")' : '')
+            . ' passed its SLA resolution deadline and was auto-escalated. Review it in the support console.';
+        foreach (get_admins() as $admin) {
+            try {
+                $message = new \core\message\message();
+                $message->component = 'local_prequran';
+                $message->name = 'live_session_update';
+                $message->userfrom = \core_user::get_noreply_user();
+                $message->userto = $admin;
+                $message->subject = $subject;
+                $message->fullmessage = $body;
+                $message->fullmessageformat = FORMAT_PLAIN;
+                $message->fullmessagehtml = '';
+                $message->smallmessage = $subject;
+                $message->notification = 1;
+                $message->courseid = SITEID;
+                message_send($message);
+            } catch (\Throwable $e) {
+                mtrace('  SLA breach notification failed for admin ' . $admin->id . ': ' . $e->getMessage());
+            }
+        }
     }
 
     private function event_exists(int $ticketid, string $eventtype): bool {

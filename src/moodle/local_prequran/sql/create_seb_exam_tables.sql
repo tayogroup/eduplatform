@@ -44,6 +44,15 @@ CREATE TABLE IF NOT EXISTS mdlgx_local_prequran_seb_attempt (
     sebverified TINYINT(1) NOT NULL DEFAULT 0,
     focus_breaks BIGINT(10) NOT NULL DEFAULT 0,
     status VARCHAR(20) NOT NULL DEFAULT 'in_progress',
+    -- v202607230016: teacher-recorded mark + integrity verdict (the attempt
+    -- previously carried no score at all; verdict: unset/pass/review/void).
+    score_points VARCHAR(40) NOT NULL DEFAULT '',
+    max_points VARCHAR(40) NOT NULL DEFAULT '',
+    score_percent VARCHAR(40) NOT NULL DEFAULT '',
+    integrity_verdict VARCHAR(20) NOT NULL DEFAULT 'unset',
+    verdict_note TEXT NULL,
+    gradedby BIGINT(10) NOT NULL DEFAULT 0,
+    gradedat BIGINT(10) NOT NULL DEFAULT 0,
     timecreated BIGINT(10) NOT NULL DEFAULT 0,
     timemodified BIGINT(10) NOT NULL DEFAULT 0,
     PRIMARY KEY (id),

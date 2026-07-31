@@ -52,6 +52,9 @@ if ($workspaceid <= 0 && !empty($session->workspaceid)) {
 if (!pqh_live_session_user_can_manage_agenda($session, (int)$USER->id)) {
     pqh_access_denied('Only the session teacher and academy admins can edit agenda slides.', $returnurl, 'Live-session agenda access required');
 }
+if ($workspaceid > 0) {
+    pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
+}
 
 if ($templatevariant !== '') {
     try {
@@ -120,7 +123,7 @@ body.pqh-agenda-editor-page .main-inner{margin:0!important;padding:0!important;m
   </section>
   <section class="pqh-editor-frame">
     <?php if ($docserver === ''): ?>
-      <div class="pqh-editor-empty">Online agenda editing is not configured yet. Set the ONLYOFFICE document server URL in the PreQuraan Moodle plugin settings.</div>
+      <div class="pqh-editor-empty">Online agenda editing is not configured yet. Set the ONLYOFFICE document server URL in the PreQuraan plugin settings.</div>
     <?php else: ?>
       <div id="pqh-onlyoffice-editor" style="width:100%;height:100%"></div>
       <?php

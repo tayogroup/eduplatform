@@ -19,6 +19,7 @@ require_once($CFG->dirroot . '/local/hubredirect/account_ids.php');
 require_once($CFG->dirroot . '/local/hubredirect/accesslib.php');
 require_once($CFG->dirroot . '/local/hubredirect/institutionlib.php');
 require_once($CFG->dirroot . '/local/hubredirect/workspace_people_portallib.php');
+require_once($CFG->dirroot . '/local/hubredirect/operations_layerlib.php');
 
 $userid = (int)($claims['sub'] ?? 0);
 
@@ -120,8 +121,84 @@ if ($ispost) {
             if (!pqwpl_is_workspace_member($workspaceid, $studentid, ['student'])) {
                 throw new invalid_parameter_exception('Student is not an active student member of this workspace.');
             }
+            // Vetting gate (best practice: safeguarding checks precede student contact).
+            // Rejected vetting always blocks; unvetted blocks only when the site opts in.
+            $vetting = pqwpl_teacher_vetting_status($teacherid);
+            if ($vetting === 'rejected') {
+                throw new invalid_parameter_exception('This teacher\'s vetting was rejected - student assignment is blocked.');
+            }
+            if ((int)get_config('local_prequran', 'teacher_require_vetting_for_assignment') === 1 && $vetting !== 'approved') {
+                throw new invalid_parameter_exception('Teacher vetting must be approved before student assignment (current status: ' . ($vetting !== '' ? $vetting : 'not_reviewed') . ').');
+            }
             pqwpl_upsert_assignment($workspaceid, $teacherid, $studentid, (int)$USER->id);
             $message = 'Student assigned to teacher.';
+            // Workload signal: recompute load and surface OVERLOADED as a warning (soft stop).
+            if (function_exists('pqops_recalculate_teacher_load')) {
+                pqops_recalculate_teacher_load($workspaceid, $teacherid);
+                $loadrow = $DB->get_record('local_prequran_teacher_load',
+                    ['workspaceid' => $workspaceid, 'teacherid' => $teacherid], '*', IGNORE_MISSING);
+                if ($loadrow && (string)($loadrow->load_status ?? '') === 'overloaded') {
+                    $message .= ' WARNING: this teacher is now OVERLOADED - review their load in Teacher Administration.';
+                }
+            }
+        } else if ($do === 'offboard_teacher') {
+            // Full lifecycle exit with cascade (see pqwpl_offboard_teacher).
+            $teacherid = (int)($body['teacherid'] ?? 0);
+            $replacementid = (int)($body['replacement_teacherid'] ?? 0);
+            if ($teacherid <= 0) {
+                throw new invalid_parameter_exception('Choose a teacher to offboard.');
+            }
+            if ($teacherid === (int)$USER->id) {
+                throw new invalid_parameter_exception('You cannot offboard yourself.');
+            }
+            $summary = pqwpl_offboard_teacher($workspaceid, $teacherid, $replacementid, (int)$USER->id);
+            $message = 'Teacher offboarded: ' . $summary['memberships'] . ' membership(s) deactivated, '
+                . $summary['assignments'] . ' student assignment(s) closed'
+                . ($replacementid > 0
+                    ? ', ' . $summary['reassigned'] . ' reassigned, ' . $summary['groups_reassigned'] . ' class group(s) and '
+                        . $summary['sessions_reassigned'] . ' future session(s) handed to the replacement.'
+                    : '.')
+                . ($summary['groups_orphaned'] > 0 ? ' ' . $summary['groups_orphaned'] . ' class group(s) now need a teacher.' : '')
+                . ($summary['sessions_needing_substitute'] > 0 ? ' ' . $summary['sessions_needing_substitute'] . ' future session(s) need a substitute (Teacher Administration).' : '')
+                . ' Moodle course access is cleaned up by the nightly enrolment reconcile.'
+                . ' Account: ' . (string)($summary['account'] ?? 'n/a');
+        } else if ($do === 'reset_member_password') {
+            // Staff password reset (temp password + forced change + sessions and
+            // portal tokens revoked). Refuses privileged/manager-tier targets —
+            // see pqwpl_reset_member_password.
+            $targetuserid = (int)($body['targetuserid'] ?? 0);
+            if ($targetuserid <= 0) {
+                throw new invalid_parameter_exception('Choose a member to reset.');
+            }
+            if ($targetuserid === (int)$USER->id) {
+                throw new invalid_parameter_exception('Use the standard password change for your own account.');
+            }
+            [$resetusername, $resetpassword] = pqwpl_reset_member_password($workspaceid, $targetuserid, (int)$USER->id);
+            $message = 'Temporary password set for ' . $resetusername
+                . '. They must change it at first login; all their sessions and portal links were signed out.';
+            $extra['resetusername'] = $resetusername;
+            $extra['resetpassword'] = $resetpassword;
+        } else if ($do === 'offboard_student') {
+            // Full student withdrawal cascade (see pqwpl_offboard_student):
+            // membership + assignments + group memberships inactive, future
+            // session seats removed, open enrol requests withdrawn with the
+            // Moodle enrolment SUSPENDED (grades kept). Parent links stay as
+            // history — revoke separately on Student Parent Links.
+            $studentid = (int)($body['studentid'] ?? 0);
+            if ($studentid <= 0) {
+                throw new invalid_parameter_exception('Choose a student to withdraw.');
+            }
+            if ($studentid === (int)$USER->id) {
+                throw new invalid_parameter_exception('You cannot withdraw yourself.');
+            }
+            $summary = pqwpl_offboard_student($workspaceid, $studentid, (int)$USER->id);
+            $message = 'Student withdrawn: ' . $summary['memberships'] . ' membership(s) deactivated, '
+                . $summary['assignments'] . ' teacher assignment(s) closed, '
+                . $summary['groups'] . ' class-group membership(s) closed, '
+                . $summary['future_sessions'] . ' future session seat(s) released, '
+                . $summary['requests_withdrawn'] . ' enrolment request(s) withdrawn, '
+                . $summary['enrolments_suspended'] . ' Moodle enrolment(s) suspended (grades preserved).'
+                . ' Account: ' . (string)($summary['account'] ?? 'n/a');
         } else if ($do === 'link_parent_student') {
             // -- write: link_parent_student (legacy action=link_parent_student, verbatim) --
             $parentid = (int)($body['parentid'] ?? 0);
@@ -157,7 +234,7 @@ if ($ispost) {
         'ok' => true,
         'message' => $message,
         'workspaceid' => $workspaceid,
-    ], JSON_UNESCAPED_SLASHES);
+    ] + (isset($extra) && is_array($extra) ? $extra : []), JSON_UNESCAPED_SLASHES);
     exit;
 }
 

@@ -22,7 +22,7 @@
   .btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border:0;border-radius:8px;background:var(--blue2);color:#fff;text-decoration:none;font-size:13px;font-weight:900;cursor:pointer}
   .btn.light{background:var(--sky);color:var(--blue);border:1px solid var(--line)}
   .disclaimer{color:var(--ink2);font-size:13px;line-height:1.5}
-  form.filter{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:10px}
+  form.filter{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:10px}
   form.filter input{width:100%;min-height:40px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
   .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
   .card{border:1px solid var(--line);border-radius:10px;padding:16px;background:var(--card)}
@@ -30,6 +30,9 @@
   .meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
   .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2)}
   .pill.reviewed{background:var(--amber-bg);color:var(--amber)}
+  .stars{color:var(--amber);font-weight:900}
+  .card .rating,.card .rate{margin:6px 0 0;color:var(--ink2);font-size:13px}
+  .card .rate strong{color:var(--blue)}
   .card p{margin:6px 0 0;color:var(--ink2);font-size:13px;line-height:1.5}
   .card .actions{margin-top:12px}
   .muted{color:var(--muted);font-size:12px}
@@ -57,6 +60,7 @@
       <input name="q" placeholder="Search skills, bio, or experience">
       <input name="course" placeholder="Course">
       <input name="language" placeholder="Language">
+      <input name="maxrate" type="number" min="0" step="1" placeholder="Max price">
       <button class="btn" type="submit">Search</button>
     </form>
   </div>
@@ -77,13 +81,13 @@
 
   const url = (filters) => endpoint + "?" + new URLSearchParams({
     report: "teacher-marketplace", token, consumer,
-    q: filters.q || "", course: filters.course || "", language: filters.language || "",
+    q: filters.q || "", course: filters.course || "", language: filters.language || "", maxrate: filters.maxrate || "",
   });
 
   async function load(filters) {
     $("#status").className = "status"; $("#status").hidden = false; $("#status").textContent = "Loading marketplace…";
     try {
-      const r = await fetch(url(filters || { q: qs.get("q") || "", course: qs.get("course") || "", language: qs.get("language") || "" }));
+      const r = await fetch(url(filters || { q: qs.get("q") || "", course: qs.get("course") || "", language: qs.get("language") || "", maxrate: qs.get("maxrate") || "" }));
       if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
       const d = await r.json();
       if (!d.ok) throw new Error(d.error || "unknown");
@@ -97,8 +101,11 @@
       <div class="meta">
         ${t.primary_language ? `<span class="pill">${esc(t.primary_language)}</span>` : ""}
         ${t.timezone ? `<span class="pill">${esc(t.timezone)}</span>` : ""}
+        ${Number(t.trial_available) ? `<span class="pill">Trial available</span>` : ""}
         <span class="pill reviewed">Academy reviewed</span>
       </div>
+      ${Number(t.rating_count) > 0 ? `<p class="rating"><span class="stars">★</span> ${Number(t.rating_avg).toFixed(1)} <span class="muted">(${esc(t.rating_count)})</span></p>` : ""}
+      ${t.hourly_rate ? `<p class="rate"><strong>${esc(t.rate_currency || "USD")} ${esc(t.hourly_rate)}/hr</strong></p>` : ""}
       ${t.courses ? `<p><strong>Courses:</strong> ${esc(t.courses)}</p>` : ""}
       ${t.skills ? `<p><strong>Skills:</strong> ${esc(t.skills)}</p>` : ""}
       ${t.bio ? `<p>${esc(t.bio)}</p>` : ""}
@@ -129,7 +136,7 @@
     $("#not-ready").hidden = true;
     $("#filter-panel").hidden = false;
     const f = $("#filter");
-    f.q.value = d.filters.q || ""; f.course.value = d.filters.course || ""; f.language.value = d.filters.language || "";
+    f.q.value = d.filters.q || ""; f.course.value = d.filters.course || ""; f.language.value = d.filters.language || ""; f.maxrate.value = d.filters.maxrate || "";
     const teachers = d.teachers || [];
     $("#no-results").hidden = teachers.length > 0;
     $("#teachers").innerHTML = teachers.map(card).join("");
@@ -139,7 +146,7 @@
   $("#filter").addEventListener("submit", (ev) => {
     ev.preventDefault();
     const f = ev.currentTarget;
-    load({ q: f.q.value.trim(), course: f.course.value.trim(), language: f.language.value.trim() });
+    load({ q: f.q.value.trim(), course: f.course.value.trim(), language: f.language.value.trim(), maxrate: f.maxrate.value.trim() });
   });
 
   load();

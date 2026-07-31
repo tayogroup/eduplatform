@@ -9,6 +9,7 @@ pqh_require_academy_operations('Only academy operations users can view teacher p
 
 $pqltpconsumercontext = pqh_requested_consumer_context();
 $pqltpbrandname = trim((string)($pqltpconsumercontext->consumername ?? 'EduPlatform')) ?: 'EduPlatform';
+pqh_enforce_role_domain($pqltpconsumercontext, pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
 
 function pqltp_table_exists(string $table): bool {
     global $DB;

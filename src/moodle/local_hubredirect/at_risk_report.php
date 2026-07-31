@@ -32,6 +32,7 @@ $canteach = $workspaceid > 0 && pqh_user_can_teach_in_workspace((int)$USER->id, 
 if (!$canmanage && !$canteach) {
     pqh_access_denied('Only workspace managers and teachers can open the at-risk report.', new moodle_url('/local/hubredirect/dashboard.php', $urlparams), 'At-risk report access required');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 // ---- configurable rules ----
 $inactivedays = max(3, min(90, optional_param('inactivedays', 14, PARAM_INT)));

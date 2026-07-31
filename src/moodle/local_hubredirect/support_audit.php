@@ -168,6 +168,9 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_title('Support Audit Review');
 $PAGE->set_heading('Support Audit Review');
 
+if ($workspaceid > 0) {
+    pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
+}
 echo $OUTPUT->header();
 ?>
 <style>

@@ -109,6 +109,10 @@ if ($ispost) {
         foreach ([
             'room_provider' => clean_param((string)($body['room_provider'] ?? 'bbb'), PARAM_ALPHANUMEXT),
             'room_url' => clean_param((string)($body['room_url'] ?? ''), PARAM_URL),
+            // Per-session AV policy (BBB rooms): webcam policy + waiting room.
+            'webcam_policy' => in_array((string)($body['webcam_policy'] ?? 'locked'), ['locked', 'moderator', 'all'], true)
+                ? (string)($body['webcam_policy'] ?? 'locked') : 'locked',
+            'waiting_room' => !empty($body['waiting_room']) ? 1 : 0,
             'reschedule_status' => $existing ? 'rescheduled' : 'none',
             'rescheduled_from' => $existing ? (int)$existing->scheduled_start : 0,
             'reminder_offset_minutes' => (int)($body['reminder_offset_minutes'] ?? 60),

@@ -6,11 +6,30 @@ defined('MOODLE_INTERNAL') || die();
 function local_hubredirect_pluginfile($course, $cm, $context, string $filearea, array $args, bool $forcedownload, array $options = []): bool {
     global $DB, $USER;
 
-    if (!in_array($filearea, ['workspace_material', 'pq_document'], true) || (int)$context->contextlevel !== CONTEXT_SYSTEM) {
+    if (!in_array($filearea, ['workspace_material', 'pq_document', 'student_photo', 'teacher_photo'], true)
+            || (int)$context->contextlevel !== CONTEXT_SYSTEM) {
         return false;
     }
     require_login();
     require_once(__DIR__ . '/accesslib.php');
+
+    if ($filearea === 'student_photo' || $filearea === 'teacher_photo') {
+        $itemid = isset($args[0]) ? (int)array_shift($args) : 0;
+        $filename = array_pop($args);
+        if ($itemid <= 0 || !$filename) {
+            return false;
+        }
+        if (!pqh_user_shares_active_workspace((int)$USER->id, $itemid) && !is_siteadmin($USER)) {
+            return false;
+        }
+        $fs = get_file_storage();
+        $file = $fs->get_file($context->id, 'local_hubredirect', $filearea, $itemid, '/', $filename);
+        if (!$file || $file->is_directory()) {
+            return false;
+        }
+        send_stored_file($file, 0, 0, true, $options);
+        return true;
+    }
 
     if ($filearea === 'pq_document') {
         $documentid = isset($args[0]) ? (int)array_shift($args) : 0;

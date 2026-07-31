@@ -53,7 +53,47 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     };
 
     try {
+        // Governance hardening: every tenant/domain write is audited, and the
+        // destructive ones (archive/pause a consumer, change its routing slug,
+        // disable a live domain, flip the primary domain) require an explicit
+        // confirm_dangerous flag from the page — no more one-POST outages.
+        $pcaudit = static function (string $action, int $targetid, array $details) use ($DB, $USER): void {
+            try {
+                if (!$DB->get_manager()->table_exists(new xmldb_table('local_prequran_course_audit'))) {
+                    return;
+                }
+                $DB->insert_record('local_prequran_course_audit', (object)[
+                    'consumerid' => (int)($details['consumerid'] ?? 0), 'workspaceid' => (int)($details['workspaceid'] ?? 0),
+                    'offeringid' => 0, 'requestid' => 0, 'studentid' => 0,
+                    'actorid' => (int)$USER->id, 'action' => substr($action, 0, 80),
+                    'targettype' => 'consumer_config', 'targetid' => $targetid,
+                    'details' => json_encode($details, JSON_UNESCAPED_SLASHES),
+                    'timecreated' => time(),
+                ]);
+            } catch (Throwable $auditerror) {
+                // Audit must never break the write.
+            }
+        };
+        $confirmed = !empty($body['confirm_dangerous']);
+
         if ($do === 'update_consumer') {
+            // Destructive-change gate: compare against the stored record BEFORE writing.
+            $targetconsumerid = $bparam('consumerid', 0, PARAM_INT);
+            $before = $DB->get_record('local_prequran_consumer', ['id' => $targetconsumerid], 'id,slug,status', IGNORE_MISSING);
+            $newslug = $bparam('consumer_slug', '', PARAM_TEXT);
+            $newstatus = $bparam('consumer_status', 'active', PARAM_ALPHANUMEXT);
+            if ($before) {
+                $dangers = [];
+                if ($newslug !== '' && (string)$before->slug !== '' && $newslug !== (string)$before->slug) {
+                    $dangers[] = 'slug change ' . $before->slug . ' -> ' . $newslug . ' (breaks existing links)';
+                }
+                if ((string)$before->status === 'active' && in_array($newstatus, ['archived', 'paused'], true)) {
+                    $dangers[] = 'status active -> ' . $newstatus . ' (takes the tenant offline)';
+                }
+                if ($dangers && !$confirmed) {
+                    pqpd_fail(400, 'CONFIRMATION REQUIRED: ' . implode('; ', $dangers) . '. Re-submit with the confirmation box ticked to proceed.');
+                }
+            }
             // -- write 1: legacy action=update_consumer (verbatim call order) --
             pqpcl_update_consumer(
                 $bparam('consumerid', 0, PARAM_INT),
@@ -87,18 +127,47 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                     $bparam('workspace_status', 'active', PARAM_ALPHANUMEXT)
                 );
             }
+            $pcaudit('consumer_updated', $targetconsumerid, [
+                'consumerid' => $targetconsumerid,
+                'slug' => $newslug, 'status' => $newstatus,
+                'previous_slug' => $before ? (string)$before->slug : '',
+                'previous_status' => $before ? (string)$before->status : '',
+            ]);
             echo json_encode(['ok' => true, 'message' => 'Consumer settings and workspace status updated.'], JSON_UNESCAPED_SLASHES);
             exit;
         }
 
         if ($do === 'update_domain') {
+            $targetdomainid = $bparam('domainid', 0, PARAM_INT);
+            $domainbefore = $DB->get_record('local_prequran_consumer_domain', ['id' => $targetdomainid], 'id,consumerid,domain,status,isprimary', IGNORE_MISSING);
+            $newdomainstatus = $bparam('domain_status', 'active', PARAM_ALPHANUMEXT);
+            $newisprimary = $bparam('isprimary', 0, PARAM_INT);
+            if ($domainbefore) {
+                $dangers = [];
+                if ((string)$domainbefore->status !== 'disabled' && $newdomainstatus === 'disabled') {
+                    $dangers[] = 'disabling domain ' . $domainbefore->domain . ' (may take a live host offline)';
+                }
+                if ((int)$domainbefore->isprimary === 0 && $newisprimary === 1) {
+                    $dangers[] = 'making ' . $domainbefore->domain . ' primary (demotes the current primary domain)';
+                }
+                if ($dangers && !$confirmed) {
+                    pqpd_fail(400, 'CONFIRMATION REQUIRED: ' . implode('; ', $dangers) . '. Re-submit with the confirmation box ticked to proceed.');
+                }
+            }
             // -- write 2: legacy action=update_domain --
             pqpcl_update_domain(
-                $bparam('domainid', 0, PARAM_INT),
-                $bparam('domain_status', 'active', PARAM_ALPHANUMEXT),
+                $targetdomainid,
+                $newdomainstatus,
                 $bparam('domain_type', 'public', PARAM_ALPHANUMEXT),
-                $bparam('isprimary', 0, PARAM_INT)
+                $newisprimary
             );
+            $pcaudit('consumer_domain_updated', $targetdomainid, [
+                'consumerid' => $domainbefore ? (int)$domainbefore->consumerid : 0,
+                'domain' => $domainbefore ? (string)$domainbefore->domain : '',
+                'status' => $newdomainstatus, 'isprimary' => $newisprimary,
+                'previous_status' => $domainbefore ? (string)$domainbefore->status : '',
+                'previous_isprimary' => $domainbefore ? (int)$domainbefore->isprimary : 0,
+            ]);
             echo json_encode(['ok' => true, 'message' => 'Domain updated.'], JSON_UNESCAPED_SLASHES);
             exit;
         }
@@ -112,6 +181,12 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 $bparam('domain_type', 'public', PARAM_ALPHANUMEXT),
                 $bparam('isprimary', 0, PARAM_INT)
             );
+            $pcaudit('consumer_domain_added', $bparam('consumerid', 0, PARAM_INT), [
+                'consumerid' => $bparam('consumerid', 0, PARAM_INT),
+                'domain' => $bparam('domain', '', PARAM_HOST),
+                'domain_type' => $bparam('domain_type', 'public', PARAM_ALPHANUMEXT),
+                'isprimary' => $bparam('isprimary', 0, PARAM_INT),
+            ]);
             echo json_encode(['ok' => true, 'message' => 'Domain added or refreshed.'], JSON_UNESCAPED_SLASHES);
             exit;
         }
@@ -123,6 +198,11 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 $bparam('linkworkspaceid', 0, PARAM_INT),
                 $bparam('owneruserid', 0, PARAM_INT)
             );
+            $pcaudit('consumer_workspace_linked', $bparam('consumerid', 0, PARAM_INT), [
+                'consumerid' => $bparam('consumerid', 0, PARAM_INT),
+                'workspaceid' => $bparam('linkworkspaceid', 0, PARAM_INT),
+                'owneruserid' => $bparam('owneruserid', 0, PARAM_INT),
+            ]);
             echo json_encode(['ok' => true, 'message' => 'Primary workspace linked.'], JSON_UNESCAPED_SLASHES);
             exit;
         }
@@ -133,6 +213,11 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 $bparam('consumerid', 0, PARAM_INT),
                 $bparam('owneruserid', 0, PARAM_INT)
             );
+            $pcaudit('consumer_workspace_created', $bparam('consumerid', 0, PARAM_INT), [
+                'consumerid' => $bparam('consumerid', 0, PARAM_INT),
+                'workspaceid' => (int)$workspaceid,
+                'owneruserid' => $bparam('owneruserid', 0, PARAM_INT),
+            ]);
             echo json_encode(['ok' => true, 'message' => 'Workspace #' . $workspaceid . ' created and linked.', 'workspaceid' => $workspaceid], JSON_UNESCAPED_SLASHES);
             exit;
         }

@@ -37,6 +37,7 @@ if (!$workspace) {
         'Workspace not found'
     );
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 function pqws_select_fields(string $table, array $wanted): string {
     $fields = [];
@@ -410,7 +411,7 @@ function pqws_update_own_material_status(int $workspaceid, int $studentid): void
         throw new invalid_parameter_exception('Only the assigned student can update this material progress from the student page.');
     }
     if (!pqh_table_has_field_safe('local_prequran_workspace_mat_assign', 'workflow_status')) {
-        throw new invalid_parameter_exception('Material assignment workflow fields are not ready. Run the local_prequran Moodle upgrade.');
+        throw new invalid_parameter_exception('Material assignment workflow fields are not ready. Run the local_prequran upgrade.');
     }
     $assignmentid = optional_param('assignmentid', 0, PARAM_INT);
     $workflow = optional_param('workflow_status', '', PARAM_ALPHANUMEXT);
@@ -509,72 +510,82 @@ echo $OUTPUT->header();
 <style>
 body.pqw-student-page header,body.pqw-student-page footer,body.pqw-student-page nav.navbar,body.pqw-student-page #page-header,body.pqw-student-page #page-footer,body.pqw-student-page .drawer,body.pqw-student-page .drawer-toggles,body.pqw-student-page .block-region,body.pqw-student-page [data-region="drawer"],body.pqw-student-page [data-region="right-hand-drawer"]{display:none!important}
 body.pqw-student-page #page,body.pqw-student-page #page-content,body.pqw-student-page #region-main,body.pqw-student-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
-.pqws-shell{min-height:100vh;padding:28px 18px 56px;background:#f6f8fb;color:#173044;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}.pqws-wrap{max-width:1280px;margin:0 auto}.pqws-top,.pqws-panel{padding:18px;border:1px solid rgba(23,48,68,.12);border-radius:8px;background:#fff;box-shadow:0 12px 28px rgba(23,48,68,.06)}.pqws-top{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin-bottom:14px}.pqws-title{margin:0;color:#221b22;font-size:29px;font-weight:950;line-height:1.1}.pqws-sub{margin:7px 0 0;color:#5e7280;font-size:14px;font-weight:800}.pqws-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.pqws-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 12px;border:0;border-radius:8px;background:#2f6f4e;color:#fff!important;text-decoration:none;font-size:13px;font-weight:950}.pqws-btn--light{background:#eef4f6;color:#173044!important;border:1px solid rgba(23,48,68,.12)}.pqws-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}.pqws-metric{padding:14px;border:1px solid rgba(23,48,68,.12);border-radius:8px;background:#fff}.pqws-metric strong{display:block;color:#221b22;font-size:25px;font-weight:950;line-height:1}.pqws-metric span{display:block;margin-top:5px;color:#5e7280;font-size:12px;font-weight:900}.pqws-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.pqws-panel h2{margin:0 0 12px;color:#221b22;font-size:22px;font-weight:950}.pqws-table{width:100%;border-collapse:separate;border-spacing:0}.pqws-table th,.pqws-table td{padding:10px;border-bottom:1px solid rgba(23,48,68,.1);text-align:left;vertical-align:top;font-size:13px}.pqws-table th{color:#5e7280;font-size:12px;font-weight:950;text-transform:uppercase}.pqws-name{display:block;color:#221b22;font-size:14px;font-weight:950}.pqws-muted{display:block;margin-top:3px;color:#728391;font-size:12px;font-weight:800}.pqws-pill{display:inline-flex;min-height:25px;align-items:center;margin:0 5px 5px 0;padding:0 8px;border-radius:999px;background:#eef4f6;color:#173044;font-size:12px;font-weight:950}.pqws-empty{padding:18px;border:1px dashed rgba(23,48,68,.22);border-radius:8px;color:#5e7280;font-weight:900;background:#fff}.pqws-profile{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.pqws-profile div{padding:10px;border-radius:8px;background:#fbfdff;border:1px solid rgba(23,48,68,.08)}.pqws-profile strong{display:block;color:#5e7280;font-size:11px;font-weight:950;text-transform:uppercase}.pqws-profile span{display:block;margin-top:4px;color:#173044;font-size:13px;font-weight:850}.pqws-note{padding:12px;border-bottom:1px solid rgba(23,48,68,.1)}.pqws-note:last-child{border-bottom:0}.pqws-alert{padding:12px 14px;margin-bottom:12px;border-radius:8px;font-weight:850}.pqws-alert--ok{background:#edf9ef;color:#245c35}.pqws-alert--bad{background:#fff0ed;color:#883526}.pqws-status-form{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-@media(max-width:980px){.pqws-top,.pqws-grid{grid-template-columns:1fr}.pqws-actions{justify-content:flex-start}.pqws-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.pqws-profile{grid-template-columns:1fr}}
-@media(max-width:680px){.pqws-metrics{grid-template-columns:1fr}.pqws-table,.pqws-table tbody,.pqws-table tr,.pqws-table td{display:block;width:100%}.pqws-table thead{display:none}.pqws-table tr{border-bottom:1px solid rgba(23,48,68,.12)}.pqws-table td{border:0}.pqws-table td::before{content:attr(data-label);display:block;margin-bottom:4px;color:#5e7280;font-size:11px;font-weight:950;text-transform:uppercase}}
+.pqws-shell{min-height:100vh;padding:28px 18px 56px;background:#fff;color:#173044;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6}.pqws-wrap{max-width:1360px;margin:0 auto}.pqws-top,.pqws-panel{padding:18px;border:1px solid rgba(23,48,68,.12);border-radius:8px;background:#fff;box-shadow:0 12px 28px rgba(23,48,68,.06)}.pqws-top{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin-bottom:14px}.pqws-title{margin:0;color:#221b22;font-size:29px;font-weight:950;line-height:1.1}.pqws-sub{margin:7px 0 0;color:#5e7280;font-size:14px;font-weight:800}.pqws-layout{display:grid;grid-template-columns:1fr 300px;gap:14px;align-items:start}.pqws-side{display:grid;gap:14px;align-content:start}.pqws-quicklinks{display:grid;gap:8px}.pqws-quicklinks .pqws-btn{width:100%}.pqws-ataglance{display:grid;gap:8px}.pqws-ataglance>div{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:10px 12px;border-radius:8px;background:#fbfdff;border:1px solid rgba(23,48,68,.08)}.pqws-ataglance strong{color:#221b22;font-size:17px;font-weight:950;white-space:nowrap}.pqws-ataglance span{color:#5e7280;font-size:11.5px;font-weight:850;text-align:right}.pqws-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 12px;border:0;border-radius:8px;background:#2f6f4e;color:#fff!important;text-decoration:none;font-size:13px;font-weight:950}.pqws-btn--light{background:#eef4f6;color:#173044!important;border:1px solid rgba(23,48,68,.12)}.pqws-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.pqws-panel h2{margin:0 0 12px;color:#221b22;font-size:22px;font-weight:950}.pqws-table{width:100%;border-collapse:separate;border-spacing:0}.pqws-table th,.pqws-table td{padding:10px;border-bottom:1px solid rgba(23,48,68,.1);text-align:left;vertical-align:top;font-size:13px}.pqws-table th{color:#5e7280;font-size:12px;font-weight:950;text-transform:uppercase}.pqws-name{display:block;color:#221b22;font-size:14px;font-weight:950}.pqws-muted{display:block;margin-top:3px;color:#728391;font-size:12px;font-weight:800}.pqws-pill{display:inline-flex;min-height:25px;align-items:center;margin:0 5px 5px 0;padding:0 8px;border-radius:999px;background:#eef4f6;color:#173044;font-size:12px;font-weight:950}.pqws-empty{padding:18px;border:1px dashed rgba(23,48,68,.22);border-radius:8px;color:#5e7280;font-weight:900;background:#fff}.pqws-details-full{margin-bottom:14px}.pqws-profile{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}.pqws-profile div{padding:10px;border-radius:8px;background:#fbfdff;border:1px solid rgba(23,48,68,.08)}.pqws-profile strong{display:block;color:#5e7280;font-size:11px;font-weight:950;text-transform:uppercase}.pqws-profile span{display:block;margin-top:4px;color:#173044;font-size:13px;font-weight:850}.pqws-note{padding:12px;border-bottom:1px solid rgba(23,48,68,.1)}.pqws-note:last-child{border-bottom:0}.pqws-alert{padding:12px 14px;margin-bottom:12px;border-radius:8px;font-weight:850}.pqws-alert--ok{background:#edf9ef;color:#245c35}.pqws-alert--bad{background:#fff0ed;color:#883526}.pqws-status-form{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+@media(max-width:1180px){.pqws-layout{grid-template-columns:1fr}.pqws-side{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}}
+@media(max-width:980px){.pqws-top,.pqws-grid{grid-template-columns:1fr}.pqws-profile{grid-template-columns:1fr}}
+@media(max-width:680px){.pqws-side{grid-template-columns:1fr}.pqws-table,.pqws-table tbody,.pqws-table tr,.pqws-table td{display:block;width:100%}.pqws-table thead{display:none}.pqws-table tr{border-bottom:1px solid rgba(23,48,68,.12)}.pqws-table td{border:0}.pqws-table td::before{content:attr(data-label);display:block;margin-bottom:4px;color:#5e7280;font-size:11px;font-weight:950;text-transform:uppercase}}
 <?php echo pqh_workspace_header_css(); ?>
+/* ============================================================
+   Workspace design system: same modern layer as the dashboard -
+   tokens, blue top band, light rail, quiet surfaces.
+   ============================================================ */
+.pqws-shell{
+  --pqh-ink:#0f2237;--pqh-muted:#5b6b7c;--pqh-faint:#8494a5;
+  --pqh-line:#e4e9ef;--pqh-bg:#f7f4ec;--pqh-surface:#ffffff;
+  --pqh-tint:#edf3fc;--pqh-tint-2:#e0ebfa;--pqh-primary:#2166d1;
+  --pqh-primary-ink:#17498f;--pqh-r:14px;
+  --pqh-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14);
+  background:#fff;color:var(--pqh-ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;padding:0 0 56px 76px}
+.pqws-shell .pqh-appbar{background:linear-gradient(90deg,#cfe9ff 0%,#e3f4ff 50%,#f2fbff 100%)}
+.pqws-wrap{padding:24px 24px 0}
+.pqws-top.pqh-workspace-top{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;box-shadow:none!important;border-radius:var(--pqh-r)!important;padding:20px 22px!important}
+.pqws-title,.pqws-title.pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
+.pqws-sub,.pqws-sub.pqh-workspace-sub{color:var(--pqh-muted)!important;font-weight:500!important;opacity:1}
+.pqws-panel,.pqws-metric{background:var(--pqh-surface);border:1px solid var(--pqh-line)!important;border-radius:var(--pqh-r);box-shadow:var(--pqh-shadow)}
+.pqws-panel h2{color:var(--pqh-ink);font-size:17px;font-weight:750;letter-spacing:-.01em}
+.pqws-btn{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;color:var(--pqh-ink)!important;font-weight:650!important;border-radius:10px!important;box-shadow:none!important}
+.pqws-btn:hover{background:var(--pqh-tint)!important;border-color:var(--pqh-tint-2)!important;text-decoration:none!important}
+.pqws-ataglance>div{background:var(--pqh-bg);border-color:var(--pqh-line)}
+.pqws-ataglance strong{color:var(--pqh-ink)}
+.pqws-ataglance span{color:var(--pqh-faint)}
+.pqws-pill{background:var(--pqh-tint);color:var(--pqh-primary-ink);font-weight:650;border-radius:8px}
+.pqws-muted{color:var(--pqh-muted);font-weight:500}
+.pqws-name{color:var(--pqh-ink);font-weight:650}
+.pqws-table th{color:var(--pqh-faint);font-weight:700}
+.pqws-table th,.pqws-table td{border-color:var(--pqh-line)}
+.pqws-empty{background:var(--pqh-surface);border:1px dashed var(--pqh-line);border-radius:var(--pqh-r);color:var(--pqh-muted);font-weight:550}
+<?php echo pqh_design_shell_css('.pqws-shell'); ?>
 </style>
 <main class="pqws-shell">
+<?php
+echo pqh_design_shell_html('pqws-shell', 'workspace', [
+    'title' => $studentname,
+    'appbar' => [
+        ['Workspace dashboard', new moodle_url('/local/hubredirect/workspace_dashboard.php', ['workspaceid' => $workspaceid])],
+        ['Back', 'BACK', new moodle_url('/local/hubredirect/workspace_dashboard.php', ['workspaceid' => $workspaceid])],
+    ],
+]);
+?>
   <div class="pqws-wrap">
     <section class="pqws-top pqh-workspace-top">
       <div>
         <h1 class="pqws-title pqh-workspace-title"><?php echo s($studentname); ?></h1>
-        <p class="pqws-sub pqh-workspace-sub"><?php echo s($workspace->name); ?> student profile - <?php echo s(pqh_account_no_label($studentuser)); ?> - Moodle user #<?php echo (int)$studentid; ?></p>
+        <p class="pqws-sub pqh-workspace-sub"><?php echo s($workspace->name); ?> student profile - <?php echo s(pqh_account_no_label($studentuser)); ?> - User #<?php echo (int)$studentid; ?></p>
       </div>
-      <nav class="pqws-actions pqh-workspace-actions" aria-label="Student profile navigation">
-        <button class="pqws-btn pqws-btn--light" type="button" onclick="window.history.back()">Back</button>
-        <a class="pqws-btn pqws-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/workspace_dashboard.php', ['workspaceid' => $workspaceid]))->out(false); ?>">Workspace dashboard</a>
-        <a class="pqws-btn pqws-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/student_billing.php', ['workspaceid' => $workspaceid, 'studentid' => $studentid]))->out(false); ?>">Billing</a>
-        <?php if ($canmanage): ?><a class="pqws-btn pqws-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/workspace_people.php', ['workspaceid' => $workspaceid]))->out(false); ?>">People</a><?php endif; ?>
-        <?php if ($canteach): ?><a class="pqws-btn pqws-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/workspace_materials.php', ['workspaceid' => $workspaceid]))->out(false); ?>">Materials</a><?php endif; ?>
-        <?php if ($canteach): ?><a class="pqws-btn pqws-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/workspace_reports.php', ['workspaceid' => $workspaceid, 'studentid' => $studentid]))->out(false); ?>">Workspace report</a><?php endif; ?>
-        <a class="pqws-btn pqws-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/managed_reports.php', ['studentid' => $studentid]))->out(false); ?>">Student report</a>
-        <a class="pqws-btn pqh-workspace-logout" href="<?php echo (new moodle_url('/local/hubredirect/logout.php'))->out(false); ?>">Logout</a>
-      </nav>
     </section>
     <?php if ($message !== ''): ?><div class="pqws-alert pqws-alert--ok"><?php echo s($message); ?></div><?php endif; ?>
     <?php if ($error !== ''): ?><div class="pqws-alert pqws-alert--bad"><?php echo s($error); ?></div><?php endif; ?>
 
-    <section class="pqws-metrics" aria-label="Student metrics">
-      <div class="pqws-metric"><strong><?php echo (int)$lessons['completed']; ?>/<?php echo (int)$lessons['total']; ?></strong><span>lessons completed</span></div>
-      <div class="pqws-metric"><strong><?php echo (int)$quiz['completed']; ?>/<?php echo (int)$quiz['total']; ?></strong><span>quiz attempts completed</span></div>
-      <div class="pqws-metric"><strong><?php echo (int)$quiz['best']; ?>%</strong><span>best quiz score</span></div>
-      <div class="pqws-metric"><strong><?php echo (int)$attendance['present']; ?>/<?php echo (int)$attendance['total']; ?></strong><span>live attendance</span></div>
-    </section>
+    <article class="pqws-panel pqws-details-full">
+      <h2>Student Details</h2>
+      <div class="pqws-profile">
+        <div><strong>Email</strong><span><?php echo s((string)$studentuser->email); ?></span></div>
+        <div><strong>Account No.</strong><span><?php echo s(pqh_account_no_value($studentuser) ?: 'pending repair'); ?></span></div>
+        <div><strong>Username</strong><span><?php echo s((string)$studentuser->username); ?></span></div>
+        <div><strong>Level</strong><span><?php echo s((string)($profile->current_level ?? '')); ?></span></div>
+        <div><strong>Status</strong><span><?php echo s((string)($profile->status ?? 'active')); ?></span></div>
+        <div><strong>Age band</strong><span><?php echo s((string)($profile->age_band ?? '')); ?></span></div>
+        <div><strong>Language</strong><span><?php echo s((string)($profile->language ?? ($profile->primary_language ?? ''))); ?></span></div>
+        <div><strong>Country</strong><span><?php echo s((string)($profile->country ?? '')); ?></span></div>
+        <div><strong>Enrollment approval</strong><span><?php echo s((string)($profile->enrollment_approval_status ?? '')); ?></span></div>
+      </div>
+    </article>
 
-    <section class="pqws-grid">
-      <article class="pqws-panel">
-        <h2>Student Details</h2>
-        <div class="pqws-profile">
-          <div><strong>Email</strong><span><?php echo s((string)$studentuser->email); ?></span></div>
-          <div><strong>Account No.</strong><span><?php echo s(pqh_account_no_value($studentuser) ?: 'pending repair'); ?></span></div>
-          <div><strong>Username</strong><span><?php echo s((string)$studentuser->username); ?></span></div>
-          <div><strong>Level</strong><span><?php echo s((string)($profile->current_level ?? '')); ?></span></div>
-          <div><strong>Status</strong><span><?php echo s((string)($profile->status ?? 'active')); ?></span></div>
-          <div><strong>Age band</strong><span><?php echo s((string)($profile->age_band ?? '')); ?></span></div>
-          <div><strong>Language</strong><span><?php echo s((string)($profile->language ?? ($profile->primary_language ?? ''))); ?></span></div>
-          <div><strong>Country</strong><span><?php echo s((string)($profile->country ?? '')); ?></span></div>
-          <div><strong>Enrollment approval</strong><span><?php echo s((string)($profile->enrollment_approval_status ?? '')); ?></span></div>
-        </div>
-      </article>
-
-      <article class="pqws-panel">
-        <h2>Teachers & Parents</h2>
-        <?php if (!$teachers): ?><div class="pqws-empty">No active teacher assignment found.</div><?php else: ?>
-          <?php foreach ($teachers as $teacher): ?>
-            <span class="pqws-pill"><?php echo s(fullname($teacher)); ?> - <?php echo s(pqh_account_no_label($teacher)); ?><?php echo !empty($teacher->email) ? ' - ' . s($teacher->email) : ''; ?></span>
-          <?php endforeach; ?>
-        <?php endif; ?>
-        <h2 style="margin-top:18px">Linked Parents</h2>
-        <?php if (!$guardians): ?><div class="pqws-empty">No linked parent or guardian found.</div><?php else: ?>
-          <?php foreach ($guardians as $guardian): ?>
-            <span class="pqws-pill"><?php echo s(fullname($guardian)); ?> - <?php echo s(pqh_account_no_label($guardian)); ?><?php echo !empty($guardian->email) ? ' - ' . s($guardian->email) : ''; ?></span>
-          <?php endforeach; ?>
-        <?php endif; ?>
-      </article>
-
-      <article class="pqws-panel">
-        <h2>Live Consent</h2>
+    <div class="pqws-layout">
+      <div class="pqws-main">
+        <section class="pqws-grid">
+          <article class="pqws-panel">
+            <h2>Live Consent</h2>
         <?php if (!$consents): ?><div class="pqws-empty">No live consent rows found.</div><?php else: ?>
           <table class="pqws-table">
             <thead><tr><th>Type</th><th>Guardian</th><th>Status</th><th>Updated</th></tr></thead>
@@ -693,7 +704,47 @@ body.pqw-student-page #page,body.pqw-student-page #page-content,body.pqw-student
           <?php endforeach; ?>
         <?php endif; ?>
       </article>
-    </section>
+        </section>
+      </div>
+
+      <aside class="pqws-side" aria-label="Student quick reference">
+        <section class="pqws-panel">
+          <h2>At a Glance</h2>
+          <div class="pqws-ataglance">
+            <div><span>Lessons completed</span><strong><?php echo (int)$lessons['completed']; ?>/<?php echo (int)$lessons['total']; ?></strong></div>
+            <div><span>Quiz attempts completed</span><strong><?php echo (int)$quiz['completed']; ?>/<?php echo (int)$quiz['total']; ?></strong></div>
+            <div><span>Best quiz score</span><strong><?php echo (int)$quiz['best']; ?>%</strong></div>
+            <div><span>Live attendance</span><strong><?php echo (int)$attendance['present']; ?>/<?php echo (int)$attendance['total']; ?></strong></div>
+          </div>
+        </section>
+
+        <section class="pqws-panel">
+          <h2>Quick Actions</h2>
+          <div class="pqws-quicklinks">
+            <a class="pqws-btn pqws-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/student_billing.php', ['workspaceid' => $workspaceid, 'studentid' => $studentid]))->out(false); ?>">Billing</a>
+            <?php if ($canmanage): ?><a class="pqws-btn pqws-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/workspace_people.php', ['workspaceid' => $workspaceid]))->out(false); ?>">People</a><?php endif; ?>
+            <?php if ($canteach): ?><a class="pqws-btn pqws-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/workspace_materials.php', ['workspaceid' => $workspaceid]))->out(false); ?>">Materials</a><?php endif; ?>
+            <?php if ($canteach): ?><a class="pqws-btn pqws-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/workspace_reports.php', ['workspaceid' => $workspaceid, 'studentid' => $studentid]))->out(false); ?>">Workspace report</a><?php endif; ?>
+            <a class="pqws-btn pqws-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/managed_reports.php', ['studentid' => $studentid]))->out(false); ?>">Student report</a>
+          </div>
+        </section>
+
+        <section class="pqws-panel">
+          <h2>Teachers &amp; Parents</h2>
+          <?php if (!$teachers): ?><div class="pqws-empty">No active teacher assignment found.</div><?php else: ?>
+            <?php foreach ($teachers as $teacher): ?>
+              <span class="pqws-pill"><?php echo s(fullname($teacher)); ?> - <?php echo s(pqh_account_no_label($teacher)); ?><?php echo !empty($teacher->email) ? ' - ' . s($teacher->email) : ''; ?></span>
+            <?php endforeach; ?>
+          <?php endif; ?>
+          <h2 style="margin-top:18px">Linked Parents</h2>
+          <?php if (!$guardians): ?><div class="pqws-empty">No linked parent or guardian found.</div><?php else: ?>
+            <?php foreach ($guardians as $guardian): ?>
+              <span class="pqws-pill"><?php echo s(fullname($guardian)); ?> - <?php echo s(pqh_account_no_label($guardian)); ?><?php echo !empty($guardian->email) ? ' - ' . s($guardian->email) : ''; ?></span>
+            <?php endforeach; ?>
+          <?php endif; ?>
+        </section>
+      </aside>
+    </div>
   </div>
 </main>
 <?php

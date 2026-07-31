@@ -11,6 +11,7 @@ if ($workspaceid <= 0 || !pqh_user_can_manage_workspace((int)$USER->id, $workspa
     pqh_access_denied('Admin workflow requires workspace administrator access.', new moodle_url('/local/hubredirect/workspace_dashboard.php'), 'Workflow access denied');
 }
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
+pqh_enforce_role_domain(pqh_current_consumer_context(), $workspaceid, (int)$USER->id);
 $urlparams = ['workspaceid' => $workspaceid];
 $notice = '';
 $error = '';

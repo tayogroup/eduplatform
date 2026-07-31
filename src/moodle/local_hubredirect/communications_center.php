@@ -63,6 +63,7 @@ if ($workspaceid <= 0 || !pqh_user_can_teach_in_workspace((int)$USER->id, $works
 }
 $canmanage = pqh_user_can_manage_workspace((int)$USER->id, $workspaceid);
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
+pqh_enforce_role_domain(pqh_current_consumer_context(), $workspaceid, (int)$USER->id);
 $urlparams = ['workspaceid' => $workspaceid];
 $notice = '';
 $error = '';
@@ -71,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         require_sesskey();
         if (!pqops_comm_tables_ready()) {
-            throw new invalid_parameter_exception('Communication tables are not ready. Run Moodle upgrade.');
+            throw new invalid_parameter_exception('Communication tables are not ready. Run the platform upgrade.');
         }
         $action = optional_param('action', '', PARAM_ALPHANUMEXT);
         $now = time();
@@ -230,7 +231,7 @@ echo '<style>.pqcom{max-width:1180px;margin:0 auto}.pqcom-top{display:flex;justi
 echo '<div class="pqcom"><div class="pqcom-top"><div><h2>Communications Center</h2><div class="pqcom-muted">' . s($workspace->name) . ' messaging, announcements, templates, consent, delivery logs, and student case history.</div></div><a class="pqcom-btn pqcom-btn--light" href="' . (new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams))->out(false) . '">Workspace</a></div>';
 if ($notice !== '') { echo '<div class="pqcom-notice">' . s($notice) . '</div>'; }
 if ($error !== '') { echo '<div class="pqcom-error">' . s($error) . '</div>'; }
-if (!pqops_comm_tables_ready()) { echo '<div class="pqcom-error">Communications schema is not ready. Run Moodle upgrade.</div>'; }
+if (!pqops_comm_tables_ready()) { echo '<div class="pqcom-error">Communications schema is not ready. Run the platform upgrade.</div>'; }
 echo '<div class="pqcom-grid"><section class="pqcom-panel"><h3>Message Thread</h3><form method="post"><input type="hidden" name="sesskey" value="' . s(sesskey()) . '"><input type="hidden" name="action" value="send_message"><div class="pqcom-field"><label>Student</label><select class="pqcom-select" name="studentid">';
 foreach ($students as $student) { echo '<option value="' . (int)$student->id . '">' . s(pqcom_name($student)) . '</option>'; }
 echo '</select></div><div class="pqcom-field"><label>Parent</label><select class="pqcom-select" name="parentid"><option value="0">None</option>';

@@ -35,16 +35,27 @@ function pqpd_fail(int $code, string $message): void {
     exit;
 }
 
+/**
+ * Auth failures were previously SILENT — token forgery / brute-force attempts
+ * left no trace anywhere. One error_log line per failure (server log, not DB,
+ * so scanners cannot bloat tables); greppable prefix for fail2ban/WAF rules.
+ */
+function pqpd_auth_fail(int $code, string $message, string $reason): void {
+    error_log('local_prequran portal auth failure [' . $reason . '] ip=' . ($_SERVER['REMOTE_ADDR'] ?? '?')
+        . ' report=' . ($_GET['report'] ?? '?') . ' ua=' . substr((string)($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 120));
+    pqpd_fail($code, $message);
+}
+
 $token = (string)($_GET['token'] ?? '');
 if ($token === '' && preg_match('/Bearer\s+(\S+)/i', (string)($_SERVER['HTTP_AUTHORIZATION'] ?? ''), $m)) {
     $token = $m[1];
 }
 if ($token === '') {
-    pqpd_fail(401, 'Missing portal token.');
+    pqpd_auth_fail(401, 'Missing portal token.', 'missing_token');
 }
 $claims = pqpg_verify_token($token);
 if ($claims === null) {
-    pqpd_fail(401, 'Invalid or expired portal token.');
+    pqpd_auth_fail(401, 'Invalid or expired portal token.', 'invalid_token');
 }
 $scope = preg_replace('/^portal:/', '', (string)($claims['course'] ?? ''));
 $report = optional_param('report', 'summary', PARAM_ALPHANUMEXT);
@@ -58,7 +69,7 @@ $scopeok = isset($reportscopes[$report])
     ? $scope === $reportscopes[$report]
     : ($scope === $report && is_file($handlerfile));
 if (!$scopeok) {
-    pqpd_fail(403, 'This token does not grant access to that report.');
+    pqpd_auth_fail(403, 'This token does not grant access to that report.', 'scope_mismatch');
 }
 
 // Become the token's user (as the WS server does): the report libraries read
@@ -66,15 +77,21 @@ if (!$scopeok) {
 // would otherwise be nobody — silently emptying every scoped list.
 $tokenuserrec = core_user::get_user((int)($claims['sub'] ?? 0));
 if (!$tokenuserrec || !empty($tokenuserrec->deleted) || !empty($tokenuserrec->suspended)) {
-    pqpd_fail(401, 'Launch-token user is not available.');
+    pqpd_auth_fail(401, 'Launch-token user is not available.', 'user_unavailable');
 }
 \core\session\manager::set_user($tokenuserrec);
 
-// API endpoints must answer JSON even when something breaks — surface the real
-// error instead of Moodle's HTML error page.
+// API endpoints must answer JSON even when something breaks — but the exception
+// class, message, and source file:line are only exposed to the client when the
+// site is in developer-debug mode. In production the client gets a generic
+// message while the full detail still goes to the server error log.
 set_exception_handler(function (Throwable $e) {
+    global $CFG;
     http_response_code(500);
-    echo json_encode(['ok' => false, 'error' => get_class($e) . ': ' . $e->getMessage() . ' @ ' . basename($e->getFile()) . ':' . $e->getLine()]);
+    $detail = get_class($e) . ': ' . $e->getMessage() . ' @ ' . basename($e->getFile()) . ':' . $e->getLine();
+    error_log('local_prequran portal_data: ' . $detail);
+    $dev = !empty($CFG->debugdeveloper);
+    echo json_encode(['ok' => false, 'error' => $dev ? $detail : 'The request could not be completed.']);
     exit;
 });
 

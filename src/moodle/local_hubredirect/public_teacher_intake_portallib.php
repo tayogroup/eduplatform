@@ -223,7 +223,12 @@ function pqptil_application_backup_text(array $application): string {
 // existing server-side launch secret; no sesskey, no passwordsaltmain, no
 // cookies. Mirrors public_intake_portallib's pqpirl_security_token.
 function pqptil_security_token(int $formtime): string {
-    $secret = (string)get_config('local_prequran', 'progress_launch_secret');
+    // Dedicated intake secret (see pqpirl_security_token); falls back to the
+    // launch secret when unset so nothing breaks until an admin sets it.
+    $secret = (string)get_config('local_prequran', 'intake_form_secret');
+    if ($secret === '') {
+        $secret = (string)get_config('local_prequran', 'progress_launch_secret');
+    }
     return hash_hmac('sha256', $formtime . '|public_teacher_intake', $secret);
 }
 

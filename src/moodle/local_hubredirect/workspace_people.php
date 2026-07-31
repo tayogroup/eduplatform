@@ -34,6 +34,7 @@ if (!$workspace) {
         'Workspace people unavailable'
     );
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 $context = context_system::instance();
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/local/hubredirect/workspace_people.php', $urlparams));
@@ -100,10 +101,10 @@ function pqwp_create_moodle_user(string $firstname, string $lastname, string $em
     $email = clean_param(trim($email), PARAM_EMAIL);
     $username = clean_param(trim($username), PARAM_USERNAME);
     if ($firstname === '' || $lastname === '') {
-        throw new invalid_parameter_exception('First name and last name are required to create a Moodle user.');
+        throw new Exception('First name and last name are required to create a user account.');
     }
     if ($email === '' || !validate_email($email)) {
-        throw new invalid_parameter_exception('A valid email address is required to create a Moodle user.');
+        throw new Exception('A valid email address is required to create a user account.');
     }
     if ($username === '') {
         $username = pqwp_unique_username($email);
@@ -215,25 +216,25 @@ function pqwp_active_manager_count(int $workspaceid): int {
 function pqwp_set_member_status(int $workspaceid, int $memberid, string $status, int $actorid): string {
     global $DB;
     if (!in_array($status, ['active', 'inactive'], true)) {
-        throw new invalid_parameter_exception('Invalid member status.');
+        throw new Exception('Invalid member status.');
     }
     $member = $DB->get_record('local_prequran_workspace_member', [
         'id' => $memberid,
         'workspaceid' => $workspaceid,
     ], '*', IGNORE_MISSING);
     if (!$member) {
-        throw new invalid_parameter_exception('Workspace member was not found.');
+        throw new Exception('Workspace member was not found.');
     }
     if ($status === 'inactive'
         && (int)$member->userid === $actorid
         && in_array((string)$member->workspace_role, ['owner', 'admin'], true)) {
-        throw new invalid_parameter_exception('You cannot deactivate your own workspace management access.');
+        throw new Exception('You cannot deactivate your own workspace management access.');
     }
     if ($status === 'inactive'
         && (string)$member->status === 'active'
         && in_array((string)$member->workspace_role, ['owner', 'admin'], true)
         && pqwp_active_manager_count($workspaceid) <= 1) {
-        throw new invalid_parameter_exception('At least one active owner or admin must remain in the workspace.');
+        throw new Exception('At least one active owner or admin must remain in the workspace.');
     }
     $member->status = $status;
     $member->timemodified = time();
@@ -260,7 +261,7 @@ function pqwp_is_workspace_member(int $workspaceid, int $userid, array $roles): 
 function pqwp_upsert_assignment(int $workspaceid, int $teacherid, int $studentid, int $assignedby): void {
     global $DB;
     if (!pqh_table_exists_safe('local_prequran_teacher_student')) {
-        throw new invalid_parameter_exception('Teacher-student assignment table is not ready. Run the local_prequran Moodle upgrade.');
+        throw new Exception('Teacher-student assignment table is not ready. Run the local_prequran upgrade.');
     }
     $now = time();
     $conditions = [
@@ -316,17 +317,42 @@ function pqwp_assignments(int $workspaceid): array {
     ));
 }
 
-function pqwp_candidate_users(int $limit = 80): array {
+function pqwp_candidate_users(int $workspaceid, int $limit = 80): array {
     global $DB, $CFG;
+    if (!pqh_table_exists_safe('local_prequran_workspace_member')) {
+        return array_values($DB->get_records_sql(
+            "SELECT id, username, email, firstname, lastname, idnumber
+               FROM {user}
+              WHERE deleted = 0
+                AND suspended = 0
+                AND mnethostid = :mnethostid
+                AND id > 1
+           ORDER BY id DESC",
+            ['mnethostid' => $CFG->mnet_localhost_id],
+            0,
+            $limit
+        ));
+    }
     return array_values($DB->get_records_sql(
-        "SELECT id, username, email, firstname, lastname, idnumber
-           FROM {user}
-          WHERE deleted = 0
-            AND suspended = 0
-            AND mnethostid = :mnethostid
-            AND id > 1
-       ORDER BY id DESC",
-        ['mnethostid' => $CFG->mnet_localhost_id],
+        "SELECT u.id, u.username, u.email, u.firstname, u.lastname, u.idnumber
+           FROM {user} u
+          WHERE u.deleted = 0
+            AND u.suspended = 0
+            AND u.mnethostid = :mnethostid
+            AND u.id > 1
+            AND NOT EXISTS (
+                SELECT 1
+                  FROM {local_prequran_workspace_member} wm
+                 WHERE wm.userid = u.id
+                   AND wm.status = :memberstatus
+                   AND wm.workspaceid <> :workspaceid
+            )
+       ORDER BY u.id DESC",
+        [
+            'mnethostid' => $CFG->mnet_localhost_id,
+            'memberstatus' => 'active',
+            'workspaceid' => $workspaceid,
+        ],
         0,
         $limit
     ));
@@ -403,10 +429,10 @@ function pqwp_pending_invites(stdClass $workspace): array {
 function pqwp_add_pending_invite(stdClass $workspace, string $email, string $role, int $createdby, string $name = '', string $parentemail = '', string $teacheremail = ''): void {
     $email = clean_param(trim($email), PARAM_EMAIL);
     if ($email === '' || !validate_email($email)) {
-        throw new invalid_parameter_exception('Pending invites require a valid email address.');
+        throw new Exception('Pending invites require a valid email address.');
     }
     if (!array_key_exists($role, pqh_workspace_roles())) {
-        throw new invalid_parameter_exception('Invalid invite role.');
+        throw new Exception('Invalid invite role.');
     }
     $settings = pqwp_workspace_settings($workspace);
     $pending = is_array($settings['pending_invites'] ?? null) ? $settings['pending_invites'] : [];
@@ -441,10 +467,10 @@ function pqwp_clear_pending_invite(stdClass $workspace, string $invitekey): bool
 function pqwp_upsert_parent_link(int $workspaceid, int $studentid, int $parentid, int $createdby): void {
     global $DB;
     if (!pqwp_is_workspace_member($workspaceid, $studentid, ['student'])) {
-        throw new invalid_parameter_exception('Student is not an active student member of this workspace.');
+        throw new Exception('Student is not an active student member of this workspace.');
     }
     if (!pqwp_is_workspace_member($workspaceid, $parentid, ['parent'])) {
-        throw new invalid_parameter_exception('Parent is not an active parent member of this workspace.');
+        throw new Exception('Parent is not an active parent member of this workspace.');
     }
     $now = time();
     if (pqh_table_exists_safe('local_prequran_comm_consent')) {
@@ -606,17 +632,17 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $selecteduserid = optional_param('member_userid', 0, PARAM_INT);
             $needle = trim(optional_param('member', '', PARAM_TEXT));
             if (!array_key_exists($role, pqh_workspace_roles())) {
-                throw new invalid_parameter_exception('Invalid workspace role.');
+                throw new Exception('Invalid workspace role.');
             }
             if (!in_array($role, ['owner', 'admin', 'teacher', 'assistant_teacher', 'coordinator', 'registrar', 'finance', 'support', 'auditor', 'sponsor', 'parent', 'student'], true)) {
-                throw new invalid_parameter_exception('That role cannot be added from this page.');
+                throw new Exception('That role cannot be added from this page.');
             }
             $member = $selecteduserid > 0 ? core_user::get_user($selecteduserid, '*', IGNORE_MISSING) : pqwp_find_user($needle);
             if (!$member) {
-                throw new invalid_parameter_exception('Choose a user from the dropdown or enter a valid user ID, email, or username.');
+                throw new Exception('Choose a user from the dropdown or enter a valid user ID, email, or username.');
             }
             if (!empty($member->deleted) || !empty($member->suspended)) {
-                throw new invalid_parameter_exception('That Moodle user is deleted or suspended.');
+                throw new Exception('That user account is deleted or suspended.');
             }
             pqwp_upsert_member($workspaceid, (int)$member->id, $role, (int)$USER->id);
             $message = 'Workspace member added.';
@@ -627,13 +653,13 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = clean_param(trim(optional_param('new_email', '', PARAM_EMAIL)), PARAM_EMAIL);
             $username = clean_param(trim(optional_param('new_username', '', PARAM_USERNAME)), PARAM_USERNAME);
             if (!array_key_exists($role, pqh_workspace_roles())) {
-                throw new invalid_parameter_exception('Invalid workspace role.');
+                throw new Exception('Invalid workspace role.');
             }
             if (!in_array($role, ['owner', 'admin', 'coordinator', 'registrar', 'finance', 'support', 'auditor', 'sponsor', 'parent'], true)) {
-                throw new invalid_parameter_exception('Use student intake for students and teacher intake for teachers.');
+                throw new Exception('Use student intake for students and teacher intake for teachers.');
             }
             if ($email === '' || !validate_email($email)) {
-                throw new invalid_parameter_exception('Enter a valid email address for the new workspace member.');
+                throw new Exception('Enter a valid email address for the new workspace member.');
             }
             $member = pqwp_find_user($email);
             if (!$member && $username !== '') {
@@ -644,7 +670,7 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $createdpassword = '';
             if ($member) {
                 if (!empty($member->deleted) || !empty($member->suspended)) {
-                    throw new invalid_parameter_exception('A Moodle user with that email exists but is deleted or suspended.');
+                    throw new Exception('A user account with that email exists but is deleted or suspended.');
                 }
             } else {
                 [$userid, $createdusername, $createdpassword, $createdidnumber] = pqwp_create_moodle_user($firstname, $lastname, $email, $username, $role);
@@ -653,16 +679,16 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             pqwp_upsert_member($workspaceid, (int)$member->id, $role, (int)$USER->id);
             $message = $created
-                ? 'Moodle user created and added to workspace. User ID ' . (int)$member->id . ', Account No. ' . $createdidnumber . ', username ' . $createdusername . ', temporary password ' . $createdpassword . '.'
-                : 'Existing Moodle user #' . (int)$member->id . ' added to workspace.';
+                ? 'User account created and added to workspace. User ID ' . (int)$member->id . ', Account No. ' . $createdidnumber . ', username ' . $createdusername . ', temporary password ' . $createdpassword . '.'
+                : 'Existing user #' . (int)$member->id . ' added to workspace.';
         } else if ($action === 'assign_student') {
             $teacherid = optional_param('teacherid', 0, PARAM_INT);
             $studentid = optional_param('studentid', 0, PARAM_INT);
             if (!pqwp_is_workspace_member($workspaceid, $teacherid, ['teacher', 'assistant_teacher', 'owner', 'admin'])) {
-                throw new invalid_parameter_exception('Teacher is not an active teaching member of this workspace.');
+                throw new Exception('Teacher is not an active teaching member of this workspace.');
             }
             if (!pqwp_is_workspace_member($workspaceid, $studentid, ['student'])) {
-                throw new invalid_parameter_exception('Student is not an active student member of this workspace.');
+                throw new Exception('Student is not an active student member of this workspace.');
             }
             pqwp_upsert_assignment($workspaceid, $teacherid, $studentid, (int)$USER->id);
             $message = 'Student assigned to teacher.';
@@ -707,14 +733,15 @@ $pendinginvites = pqwp_pending_invites($workspace);
 $assignmentmap = pqwp_assignment_map($assignments);
 $assignedstudentmap = pqwp_assigned_student_map($assignments);
 $membershipmap = pqwp_membership_map([$teachers, $students, $parents]);
-$candidateusers = pqwp_candidate_users();
+$isplatformoperator = pqh_can_manage_academy_operations((int)$USER->id);
+$candidateusers = $isplatformoperator ? pqwp_candidate_users($workspaceid) : [];
 
 echo $OUTPUT->header();
 ?>
 <style>
 body.pqw-people-page header,body.pqw-people-page footer,body.pqw-people-page nav.navbar,body.pqw-people-page #page-header,body.pqw-people-page #page-footer,body.pqw-people-page .drawer,body.pqw-people-page .drawer-toggles,body.pqw-people-page .block-region,body.pqw-people-page [data-region="drawer"],body.pqw-people-page [data-region="right-hand-drawer"]{display:none!important}
 body.pqw-people-page #page,body.pqw-people-page #page-content,body.pqw-people-page #region-main,body.pqw-people-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
-.pqwp-shell{min-height:100vh;padding:28px 18px 56px;background:#f6f8fb;color:#173044;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}.pqwp-wrap{max-width:1280px;margin:0 auto}.pqwp-top,.pqwp-panel{padding:18px;border:1px solid rgba(23,48,68,.12);border-radius:8px;background:#fff;box-shadow:0 12px 28px rgba(23,48,68,.06)}.pqwp-top{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin-bottom:14px}.pqwp-title{margin:0;color:#221b22;font-size:29px;font-weight:950;line-height:1.1}.pqwp-sub{margin:7px 0 0;color:#5e7280;font-size:14px;font-weight:800}.pqwp-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.pqwp-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 12px;border:0;border-radius:8px;background:#2f6f4e;color:#fff!important;text-decoration:none;font-size:13px;font-weight:950;cursor:pointer}.pqwp-btn--light{background:#eef4f6;color:#173044!important;border:1px solid rgba(23,48,68,.12)}.pqwp-btn--danger{background:#fff0ed;color:#883526!important;border:1px solid rgba(136,53,38,.2)}.pqwp-btn[disabled],.pqwp-btn--done{background:#eef4f6;color:#5e7280!important;border:1px solid rgba(23,48,68,.12);cursor:default}.pqwp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}.pqwp-field{display:grid;gap:5px;margin-bottom:10px}.pqwp-field label{font-size:12px;font-weight:950;color:#415665;text-transform:uppercase}.pqwp-input,.pqwp-select,.pqwp-textarea{width:100%;min-height:38px;border:1px solid rgba(23,48,68,.18);border-radius:8px;padding:0 10px;background:#fbfdff;color:#173044;font-size:13px;font-weight:800}.pqwp-textarea{min-height:132px;padding:10px;line-height:1.45}.pqwp-alert{padding:12px 14px;margin-bottom:12px;border-radius:8px;font-weight:850}.pqwp-alert--ok{background:#edf9ef;color:#245c35}.pqwp-alert--bad{background:#fff0ed;color:#883526}.pqwp-table{width:100%;border-collapse:separate;border-spacing:0}.pqwp-table th,.pqwp-table td{padding:10px;border-bottom:1px solid rgba(23,48,68,.1);text-align:left;vertical-align:top;font-size:13px}.pqwp-table th{color:#5e7280;font-size:12px;font-weight:950;text-transform:uppercase}.pqwp-name{display:block;color:#221b22;font-size:14px;font-weight:950}.pqwp-muted{display:block;margin-top:3px;color:#728391;font-size:12px;font-weight:800}.pqwp-pill{display:inline-flex;min-height:25px;align-items:center;margin:0 5px 5px 0;padding:0 8px;border-radius:999px;background:#eef4f6;color:#173044;font-size:12px;font-weight:950}.pqwp-pill--inactive{background:#fff0ed;color:#883526}.pqwp-empty{padding:18px;border:1px dashed rgba(23,48,68,.22);border-radius:8px;color:#5e7280;font-weight:900;background:#fff}.pqwp-stack{display:grid;gap:14px}.pqwp-toolbar{display:grid;grid-template-columns:minmax(220px,420px) auto;gap:10px;align-items:end;margin:8px 0 12px}.pqwp-role-actions{display:flex;gap:8px;flex-wrap:wrap}.pqwp-row-hidden{display:none}.pqwp-summary{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:14px}.pqwp-summary-card{padding:14px;border:1px solid rgba(23,48,68,.12);border-radius:8px;background:#fff}.pqwp-summary-card strong{display:block;color:#221b22;font-size:25px;font-weight:950;line-height:1}.pqwp-summary-card span{display:block;margin-top:5px;color:#5e7280;font-size:12px;font-weight:900}
+.pqwp-shell{min-height:100vh;padding:28px 18px 56px;background:#f6f8fb;color:#173044;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}.pqwp-wrap{max-width:1280px;margin:0 auto}.pqwp-top,.pqwp-panel{padding:18px;border:1px solid rgba(23,48,68,.12);border-radius:8px;background:#fff;box-shadow:0 12px 28px rgba(23,48,68,.06)}.pqwp-top{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin-bottom:14px}.pqwp-title{margin:0;color:#221b22;font-size:29px;font-weight:950;line-height:1.1}.pqwp-sub{margin:7px 0 0;color:#5e7280;font-size:14px;font-weight:800}.pqwp-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.pqwp-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 12px;border:0;border-radius:8px;background:#2f6f4e;color:#fff!important;text-decoration:none;font-size:13px;font-weight:950;cursor:pointer}.pqwp-btn--light{background:#eef4f6;color:#173044!important;border:1px solid rgba(23,48,68,.12)}.pqwp-btn--danger{background:#fff0ed;color:#883526!important;border:1px solid rgba(136,53,38,.2)}.pqwp-btn[disabled],.pqwp-btn--done{background:#eef4f6;color:#5e7280!important;border:1px solid rgba(23,48,68,.12);cursor:default}.pqwp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}.pqwp-field{display:grid;gap:5px;margin-bottom:10px}.pqwp-field label{font-size:12px;font-weight:950;color:#415665;text-transform:uppercase}.pqwp-input,.pqwp-select,.pqwp-textarea{width:100%;min-height:38px;border:1px solid rgba(23,48,68,.18);border-radius:8px;padding:0 10px;background:#fbfdff;color:#173044;font-size:13px;font-weight:800}.pqwp-textarea{min-height:132px;padding:10px;line-height:1.45}.pqwp-alert{padding:12px 14px;margin-bottom:12px;border-radius:8px;font-weight:850}.pqwp-alert--ok{background:#edf9ef;color:#245c35}.pqwp-alert--bad{background:#fff0ed;color:#883526}.pqwp-table{width:100%;border-collapse:separate;border-spacing:0}.pqwp-table th,.pqwp-table td{padding:10px;border-bottom:1px solid rgba(23,48,68,.1);text-align:left;vertical-align:top;font-size:13px}.pqwp-table th{color:#5e7280;font-size:12px;font-weight:950;text-transform:uppercase}.pqwp-name{display:block;color:#221b22;font-size:14px;font-weight:950}.pqwp-muted{display:block;margin-top:3px;color:#728391;font-size:12px;font-weight:800}.pqwp-pill{display:inline-flex;min-height:25px;align-items:center;margin:0 5px 5px 0;padding:0 8px;border-radius:999px;background:#eef4f6;color:#173044;font-size:12px;font-weight:950}.pqwp-pill--inactive{background:#fff0ed;color:#883526}.pqwp-empty{padding:18px;border:1px dashed rgba(23,48,68,.22);border-radius:8px;color:#5e7280;font-weight:900;background:#fff}.pqwp-stack{display:grid;gap:14px}.pqwp-toolbar{display:grid;grid-template-columns:minmax(220px,420px) auto;gap:10px;align-items:end;margin:8px 0 12px}.pqwp-toolbar--filters{display:flex;flex-wrap:wrap;gap:10px 14px}.pqwp-toolbar--filters .pqwp-field{margin-bottom:0;min-width:160px}.pqwp-toolbar--filters .pqwp-field:first-child{flex:1 1 260px}.pqwp-toolbar--filters>.pqwp-muted{align-self:center;margin-left:auto}.pqwp-role-actions{display:flex;gap:8px;flex-wrap:wrap}.pqwp-row-hidden{display:none}.pqwp-summary{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:14px}.pqwp-summary-card{padding:14px;border:1px solid rgba(23,48,68,.12);border-radius:8px;background:#fff}.pqwp-summary-card strong{display:block;color:#221b22;font-size:25px;font-weight:950;line-height:1}.pqwp-summary-card span{display:block;margin-top:5px;color:#5e7280;font-size:12px;font-weight:900}
 @media(max-width:980px){.pqwp-top,.pqwp-grid,.pqwp-summary{grid-template-columns:1fr}.pqwp-actions{justify-content:flex-start}.pqwp-table,.pqwp-table tbody,.pqwp-table tr,.pqwp-table td{display:block;width:100%}.pqwp-table thead{display:none}.pqwp-table tr{border-bottom:1px solid rgba(23,48,68,.12)}.pqwp-table td{border:0}.pqwp-table td::before{content:attr(data-label);display:block;margin-bottom:4px;color:#5e7280;font-size:11px;font-weight:950;text-transform:uppercase}}
 <?php echo pqh_workspace_header_css(); ?>
 </style>
@@ -723,7 +750,7 @@ body.pqw-people-page #page,body.pqw-people-page #page-content,body.pqw-people-pa
     <section class="pqwp-top pqh-workspace-top">
       <div>
         <h1 class="pqwp-title pqh-workspace-title"><?php echo s($workspace->name); ?> People</h1>
-        <p class="pqwp-sub pqh-workspace-sub">Add existing Moodle users, create non-student workspace accounts, and assign students to teachers.</p>
+        <p class="pqwp-sub pqh-workspace-sub">Add existing users, create non-student workspace accounts, and assign students to teachers.</p>
       </div>
       <nav class="pqwp-actions pqh-workspace-actions" aria-label="Workspace people navigation">
         <button class="pqwp-btn pqwp-btn--light" type="button" onclick="window.history.back()">Back</button>
@@ -737,7 +764,7 @@ body.pqw-people-page #page,body.pqw-people-page #page-content,body.pqw-people-pa
     <?php if ($error !== ''): ?><div class="pqwp-alert pqwp-alert--bad"><?php echo s($error); ?></div><?php endif; ?>
 
     <?php if (!$ready): ?>
-      <div class="pqwp-empty">Workspace membership tables are not ready. Run the local_prequran Moodle upgrade first.</div>
+      <div class="pqwp-empty">Workspace membership tables are not ready. Run the local_prequran upgrade first.</div>
     <?php else: ?>
       <section class="pqwp-summary" aria-label="Workspace people summary">
         <div class="pqwp-summary-card"><strong><?php echo count($teachers); ?></strong><span>teaching members</span></div>
@@ -752,13 +779,17 @@ body.pqw-people-page #page,body.pqw-people-page #page-content,body.pqw-people-pa
           <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
           <input type="hidden" name="action" value="add_member">
           <h2>Add Existing User</h2>
+          <?php if ($isplatformoperator): ?>
           <div class="pqwp-field"><label>Choose user</label><select class="pqwp-select" name="member_userid">
-            <option value="0">Choose recent active Moodle user</option>
+            <option value="0">Choose recent active account</option>
             <?php foreach ($candidateusers as $candidate): ?>
               <option value="<?php echo (int)$candidate->id; ?>"><?php echo s(pqh_account_no_label($candidate) . ' - #' . (int)$candidate->id . ' - ' . fullname($candidate) . ' - ' . ($candidate->email ?: $candidate->username)); ?></option>
             <?php endforeach; ?>
           </select></div>
           <div class="pqwp-field"><label>Or enter user ID, email, or username</label><input class="pqwp-input" name="member" placeholder="Optional if user is selected above"></div>
+          <?php else: ?>
+          <div class="pqwp-field"><label>Enter user ID, email, or username</label><input class="pqwp-input" name="member" placeholder="e.g. jane@example.org" required></div>
+          <?php endif; ?>
           <div class="pqwp-field"><label>Workspace Role</label><select class="pqwp-select" name="workspace_role">
             <?php foreach (['student', 'teacher', 'assistant_teacher', 'admin', 'owner', 'coordinator', 'registrar', 'finance', 'support', 'auditor', 'sponsor', 'parent'] as $rolekey): ?>
               <option value="<?php echo s($rolekey); ?>"><?php echo s(pqh_workspace_roles()[$rolekey] ?? $rolekey); ?></option>
@@ -770,8 +801,8 @@ body.pqw-people-page #page,body.pqw-people-page #page-content,body.pqw-people-pa
         <form class="pqwp-panel" method="post">
           <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
           <input type="hidden" name="action" value="create_member">
-          <h2>Create Moodle User</h2>
-          <p class="pqwp-muted">For admins, coordinators, auditors, owners, and parents who do not already have a Moodle account. Use student or teacher intake for learner/teacher profiles.</p>
+          <h2>Create User Account</h2>
+          <p class="pqwp-muted">For admins, coordinators, auditors, owners, and parents who do not already have an account. Use student or teacher intake for learner/teacher profiles.</p>
           <div class="pqwp-field"><label>First name</label><input class="pqwp-input" name="new_firstname" required></div>
           <div class="pqwp-field"><label>Last name</label><input class="pqwp-input" name="new_lastname" required></div>
           <div class="pqwp-field"><label>Email</label><input class="pqwp-input" type="email" name="new_email" required></div>
@@ -900,14 +931,50 @@ body.pqw-people-page #page,body.pqw-people-page #page-content,body.pqw-people-pa
         <?php if (!$allmembers): ?>
           <div class="pqwp-empty">No workspace members have been added yet.</div>
         <?php else: ?>
-          <table class="pqwp-table">
+          <?php
+            $memberroleoptions = [];
+            $memberstatusoptions = [];
+            foreach ($allmembers as $memberrowopt) {
+                $memberroleoptions[(string)$memberrowopt->workspace_role] = pqwp_role_label((string)$memberrowopt->workspace_role);
+                $memberstatusoptions[(string)$memberrowopt->status] = ucwords(str_replace('_', ' ', (string)$memberrowopt->status));
+            }
+            asort($memberroleoptions);
+            ksort($memberstatusoptions);
+          ?>
+          <div class="pqwp-toolbar pqwp-toolbar--filters">
+            <div class="pqwp-field">
+              <label for="pqwp-member-filter">Search members</label>
+              <input class="pqwp-input" id="pqwp-member-filter" type="search" placeholder="Name, email, role, status, or user ID">
+            </div>
+            <div class="pqwp-field">
+              <label for="pqwp-member-role-filter">Role</label>
+              <select class="pqwp-select" id="pqwp-member-role-filter">
+                <option value="">All roles</option>
+                <?php foreach ($memberroleoptions as $rolevalue => $rolelabel): ?>
+                  <option value="<?php echo s(strtolower($rolevalue)); ?>"><?php echo s($rolelabel); ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+            <div class="pqwp-field">
+              <label for="pqwp-member-status-filter">Status</label>
+              <select class="pqwp-select" id="pqwp-member-status-filter">
+                <option value="">All statuses</option>
+                <?php foreach ($memberstatusoptions as $statusvalue => $statuslabel): ?>
+                  <option value="<?php echo s(strtolower($statusvalue)); ?>"><?php echo s($statuslabel); ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+            <span class="pqwp-muted"><?php echo count($allmembers); ?> member<?php echo count($allmembers) === 1 ? '' : 's'; ?></span>
+          </div>
+          <table class="pqwp-table" id="pqwp-member-table">
             <thead><tr><th>Member</th><th>Role</th><th>Status</th><th>Updated</th><th>Actions</th></tr></thead>
             <tbody>
               <?php foreach ($allmembers as $memberrow): ?>
                 <?php $isactive = (string)$memberrow->status === 'active'; ?>
-                <tr>
+                <?php $memberrolelabel = pqwp_role_label((string)$memberrow->workspace_role); ?>
+                <tr data-filter="<?php echo s(strtolower(pqh_account_no_value($memberrow) . ' #' . (int)$memberrow->userid . ' ' . fullname($memberrow) . ' ' . ($memberrow->email ?? '') . ' ' . ($memberrow->username ?? '') . ' ' . $memberrolelabel . ' ' . (string)$memberrow->status)); ?>" data-role="<?php echo s(strtolower((string)$memberrow->workspace_role)); ?>" data-status="<?php echo s(strtolower((string)$memberrow->status)); ?>">
                   <td data-label="Member"><span class="pqwp-name"><?php echo s(fullname($memberrow)); ?></span><span class="pqwp-muted"><?php echo s(pqh_account_no_label($memberrow)); ?> / #<?php echo (int)$memberrow->userid; ?> / <?php echo s($memberrow->email ?: $memberrow->username); ?></span></td>
-                  <td data-label="Role"><span class="pqwp-pill"><?php echo s(pqwp_role_label((string)$memberrow->workspace_role)); ?></span></td>
+                  <td data-label="Role"><span class="pqwp-pill"><?php echo s($memberrolelabel); ?></span></td>
                   <td data-label="Status"><span class="pqwp-pill <?php echo $isactive ? '' : 'pqwp-pill--inactive'; ?>"><?php echo s((string)$memberrow->status); ?></span></td>
                   <td data-label="Updated"><?php echo s(userdate((int)$memberrow->timemodified, get_string('strftimedatetimeshort'))); ?></td>
                   <td data-label="Actions">
@@ -926,10 +993,11 @@ body.pqw-people-page #page,body.pqw-people-page #page-content,body.pqw-people-pa
         <?php endif; ?>
       </section>
 
+      <?php if ($isplatformoperator): ?>
       <section class="pqwp-panel">
-        <h2>Recent Moodle Users</h2>
+        <h2>Recent User Accounts</h2>
         <?php if (!$candidateusers): ?>
-          <div class="pqwp-empty">No active Moodle users were found.</div>
+          <div class="pqwp-empty">No active accounts were found.</div>
         <?php else: ?>
           <div class="pqwp-toolbar">
             <div class="pqwp-field">
@@ -980,6 +1048,7 @@ body.pqw-people-page #page,body.pqw-people-page #page-content,body.pqw-people-pa
           </table>
         <?php endif; ?>
       </section>
+      <?php endif; ?>
 
       <section class="pqwp-grid">
         <article class="pqwp-panel">
@@ -1026,7 +1095,7 @@ body.pqw-people-page #page,body.pqw-people-page #page-content,body.pqw-people-pa
       <section class="pqwp-panel">
         <h2>Teacher-Student Assignments</h2>
         <?php if (!pqh_table_exists_safe('local_prequran_teacher_student')): ?>
-          <div class="pqwp-empty">Teacher-student assignment table is not ready. Run the local_prequran Moodle upgrade first.</div>
+          <div class="pqwp-empty">Teacher-student assignment table is not ready. Run the local_prequran upgrade first.</div>
         <?php elseif (!$assignments): ?>
           <div class="pqwp-empty">No active teacher-student assignments yet.</div>
         <?php else: ?>
@@ -1062,6 +1131,34 @@ body.pqw-people-page #page,body.pqw-people-page #page-content,body.pqw-people-pa
       row.classList.toggle('pqwp-row-hidden', needle !== '' && haystack.indexOf(needle) === -1);
     });
   });
+}());
+(function() {
+  var filter = document.getElementById('pqwp-member-filter');
+  var roleSelect = document.getElementById('pqwp-member-role-filter');
+  var statusSelect = document.getElementById('pqwp-member-status-filter');
+  var table = document.getElementById('pqwp-member-table');
+  if (!filter || !table) {
+    return;
+  }
+  function apply() {
+    var needle = filter.value.toLowerCase().trim();
+    var role = roleSelect ? roleSelect.value : '';
+    var status = statusSelect ? statusSelect.value : '';
+    table.querySelectorAll('tbody tr').forEach(function(row) {
+      var haystack = row.getAttribute('data-filter') || '';
+      var matchesText = needle === '' || haystack.indexOf(needle) !== -1;
+      var matchesRole = role === '' || row.getAttribute('data-role') === role;
+      var matchesStatus = status === '' || row.getAttribute('data-status') === status;
+      row.classList.toggle('pqwp-row-hidden', !(matchesText && matchesRole && matchesStatus));
+    });
+  }
+  filter.addEventListener('input', apply);
+  if (roleSelect) {
+    roleSelect.addEventListener('change', apply);
+  }
+  if (statusSelect) {
+    statusSelect.addEventListener('change', apply);
+  }
 }());
 </script>
 <?php

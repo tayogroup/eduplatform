@@ -343,6 +343,8 @@ if ($ready && $export === 'plans') {
     pqlip_csv('quraan-teacher-improvement-plans.csv', ['sessionid', 'title', 'teacherid', 'teacher', 'mentorid', 'students', 'qa_status', 'qa_score', 'leadership_status', 'plan_status', 'priority', 'assigned_at', 'acknowledged_at', 'due_date', 'completed_at', 'goals', 'actions', 'completion_notes'], $rows);
 }
 
+pqh_enforce_role_domain($consumercontext, (int)($urlparams['workspaceid'] ?? 0), (int)$USER->id);
+
 echo $OUTPUT->header();
 ?>
 <style>

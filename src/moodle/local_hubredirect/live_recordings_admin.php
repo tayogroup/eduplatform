@@ -460,6 +460,8 @@ $lastqueue = pqlra_table_exists('local_prequran_live_audit')
     )
     : false;
 
+pqh_enforce_role_domain($consumercontext, pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
+
 echo $OUTPUT->header();
 ?>
 <style>

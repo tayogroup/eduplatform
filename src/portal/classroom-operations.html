@@ -69,7 +69,9 @@
           <div class="field"><label>Lesson ID</label><input name="lessonid" type="text"></div>
           <div class="field"><label>Unit ID</label><input name="unitid" type="text"></div>
           <div class="field"><label>Room link (Zoom/BBB/Meet/internal)</label><input name="room_url" type="text"></div>
-          <div class="field"><label>Room provider</label><select name="room_provider"><option value="bbb">BBB</option><option value="zoom">Zoom</option><option value="meet">Google Meet</option><option value="internal">Internal room</option></select></div>
+          <div class="field"><label>Room provider</label><select name="room_provider"><option value="bbb">BBB</option><option value="zoom">Zoom</option><option value="meet">Google Meet</option><option value="teams">Microsoft Teams</option><option value="internal">Internal room</option></select></div>
+          <div class="field"><label>Webcam policy</label><select name="webcam_policy"><option value="locked">Students' cameras off</option><option value="moderator">Only teacher's camera</option><option value="all">Students may enable camera</option></select></div>
+          <div class="field check"><input type="checkbox" name="waiting_room" id="waiting_room"><label for="waiting_room" style="margin:0">Waiting room</label></div>
           <div class="field"><label>Reminder minutes before</label><input name="reminder_offset_minutes" type="text" placeholder="60"></div>
           <div class="field"><label>Status</label><input name="status" type="text" value="scheduled"></div>
           <div class="field"><label>Description</label><textarea name="description"></textarea></div>
@@ -246,6 +248,8 @@
       unitid: f.unitid.value,
       room_url: f.room_url.value,
       room_provider: f.room_provider.value,
+      webcam_policy: f.webcam_policy.value,
+      waiting_room: f.waiting_room.checked ? 1 : 0,
       reminder_offset_minutes: num(f.reminder_offset_minutes.value) || 60,
       status: f.status.value || "scheduled",
       description: f.description.value,

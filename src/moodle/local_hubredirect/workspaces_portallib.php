@@ -70,7 +70,7 @@ function pqwsl_upsert_consumer_for_workspace(int $workspaceid, string $workspace
     global $DB, $USER;
 
     if (!pqh_consumer_schema_ready()) {
-        throw new invalid_parameter_exception('Consumer/domain tables are not ready. Run the local_prequran Moodle upgrade first.');
+        throw new invalid_parameter_exception('Consumer/domain tables are not ready. Run the local_prequran upgrade first.');
     }
     if ($workspaceid <= 0) {
         throw new invalid_parameter_exception('Workspace is required before creating a consumer.');
@@ -242,7 +242,7 @@ function pqwsl_upsert_org_group(string $slug, string $name, string $grouptype, i
     global $DB, $USER;
 
     if (!pqh_org_group_schema_ready()) {
-        throw new invalid_parameter_exception('Organization group tables are not ready. Run the local_prequran Moodle upgrade first.');
+        throw new invalid_parameter_exception('Organization group tables are not ready. Run the local_prequran upgrade first.');
     }
     if (!array_key_exists($grouptype, pqh_org_group_types())) {
         throw new invalid_parameter_exception('Invalid organization group type.');
@@ -449,7 +449,7 @@ function pqwsl_upsert_org_group_workspace_link(
     global $DB, $USER;
 
     if (!pqh_org_group_schema_ready()) {
-        throw new invalid_parameter_exception('Organization group tables are not ready. Run the local_prequran Moodle upgrade first.');
+        throw new invalid_parameter_exception('Organization group tables are not ready. Run the local_prequran upgrade first.');
     }
     $group = $DB->get_record('local_prequran_org_group', ['id' => $groupid, 'status' => 'active'], '*', IGNORE_MISSING);
     if (!$group) {
@@ -527,7 +527,7 @@ function pqwsl_upsert_org_group_user_link(int $groupid, int $userid, string $rol
     global $DB, $USER;
 
     if (!pqh_org_group_schema_ready()) {
-        throw new invalid_parameter_exception('Organization group tables are not ready. Run the local_prequran Moodle upgrade first.');
+        throw new invalid_parameter_exception('Organization group tables are not ready. Run the local_prequran upgrade first.');
     }
     if (!$DB->record_exists('local_prequran_org_group', ['id' => $groupid, 'status' => 'active'])) {
         throw new invalid_parameter_exception('Organization group was not found.');

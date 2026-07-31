@@ -56,6 +56,7 @@ if ($ispost) {
         $do = clean_param((string)($body['do'] ?? ''), PARAM_ALPHANUMEXT);
         $now = time();
         $message = '';
+        $extra = [];
         if ($do === 'save_template') {
             // -- write: save_template (legacy action=save_template, verbatim) --
             $templateid = (int)($body['templateid'] ?? 0);
@@ -129,6 +130,48 @@ if ($ispost) {
                 $DB->update_record('local_prequran_completion_award', $record);
             }
             $message = 'Completion award saved and certificate PDF registered.';
+            // Public verification: surface the shareable code + verify URL so a
+            // third party can confirm the certificate at certificate_verify.php.
+            $verifycode = pqcp_certificate_verification_code($record);
+            $extra['awardnumber'] = (string)$record->awardnumber;
+            $extra['verifycode'] = $verifycode;
+            $extra['verifyurl'] = $CFG->wwwroot . '/local/hubredirect/certificate_verify.php?'
+                . http_build_query(['awardnumber' => (string)$record->awardnumber, 'code' => $verifycode]);
+            // Milestone notification (gated achievement_notify_mode; best-effort).
+            if ((string)($record->status ?? '') !== 'revoked'
+                    && (string)get_config('local_prequran', 'achievement_notify_mode') === 'enforce') {
+                @include_once($CFG->dirroot . '/local/prequran/notificationlib.php');
+                if (function_exists('local_prequran_notify_achievement_family')) {
+                    $sent = local_prequran_notify_achievement_family(
+                        (int)$record->studentid,
+                        'Certificate earned: ' . (string)$record->title,
+                        'A certificate has been issued: ' . (string)$record->title
+                            . ' (' . (string)$record->awardnumber . '). It can be verified publicly with the certificate number and code.',
+                        new moodle_url('/local/prequran/portal_launch.php', ['report' => 'student-parent-portal', 'workspaceid' => $workspaceid, 'studentid' => (int)$record->studentid]),
+                        'Family portal',
+                        'certificate_earned'
+                    );
+                    if ($sent > 0) {
+                        $message .= ' ' . $sent . ' notification(s) sent to the family.';
+                    }
+                }
+            }
+            // Sanity check (best practice: certificates should reflect the
+            // gradebook, not free-typed numbers): compare the typed final grade
+            // against the student's PUBLISHED course grade for this offering.
+            if (pqh_table_exists_safe('local_prequran_course_grade') && (int)$record->offeringid > 0) {
+                $actualgrade = $DB->get_record('local_prequran_course_grade', [
+                    'workspaceid' => $workspaceid, 'offeringid' => (int)$record->offeringid,
+                    'studentid' => (int)$record->studentid, 'status' => 'published',
+                ], 'id,final_percent', IGNORE_MISSING);
+                $typed = (float)preg_replace('/[^0-9.]/', '', (string)$record->final_grade);
+                if ($actualgrade && $typed > 0 && abs((float)$actualgrade->final_percent - $typed) > 10) {
+                    $message .= ' WARNING: the typed final grade (' . $record->final_grade
+                        . ') differs from the published course grade (' . $actualgrade->final_percent . '%) by more than 10 points — double-check before sharing.';
+                } else if (!$actualgrade && $typed > 0) {
+                    $message .= ' NOTE: no published course grade exists for this student/offering to verify the typed grade against.';
+                }
+            }
         } else if ($do === 'revoke_award') {
             // -- write: revoke_award (legacy action=revoke_award, verbatim) --
             $award = $DB->get_record('local_prequran_completion_award', ['id' => (int)($body['awardid'] ?? 0), 'workspaceid' => $workspaceid], '*', MUST_EXIST);
@@ -150,7 +193,7 @@ if ($ispost) {
         'ok' => true,
         'message' => $message,
         'workspaceid' => $workspaceid,
-    ], JSON_UNESCAPED_SLASHES);
+    ] + (isset($extra) && is_array($extra) ? $extra : []), JSON_UNESCAPED_SLASHES);
     exit;
 }
 
@@ -197,6 +240,10 @@ foreach ($awards as $award) {
         'pdf_url' => (int)$award->generateddocid > 0
             ? $CFG->wwwroot . '/local/hubredirect/document_pdf.php?generatedid=' . (int)$award->generateddocid
             : '',
+        // Public verification: shareable code + URL (parity with transcripts).
+        'verifycode' => pqcp_certificate_verification_code($award),
+        'verify_url' => $CFG->wwwroot . '/local/hubredirect/certificate_verify.php?'
+            . http_build_query(['awardnumber' => (string)$award->awardnumber, 'code' => pqcp_certificate_verification_code($award)]),
     ];
 }
 $auditsout = [];

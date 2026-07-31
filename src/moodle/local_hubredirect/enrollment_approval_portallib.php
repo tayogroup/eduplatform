@@ -30,12 +30,15 @@ function pqea_parent_is_linked(int $studentid, int $parentid): bool {
     if ($studentid <= 0 || $parentid <= 0) {
         return false;
     }
+    // Revoked links (consented=0/granted=0) cannot approve or decline.
     if (pqea_table_exists('local_prequran_comm_consent')
-        && $DB->record_exists('local_prequran_comm_consent', ['studentid' => $studentid, 'guardianid' => $parentid])) {
+        && $DB->record_exists('local_prequran_comm_consent', ['studentid' => $studentid, 'guardianid' => $parentid, 'consented' => 1])) {
         return true;
     }
     if (pqea_table_exists('local_prequran_live_consent')
-        && $DB->record_exists('local_prequran_live_consent', ['studentid' => $studentid, 'guardianid' => $parentid])) {
+        && $DB->record_exists_select('local_prequran_live_consent',
+            "studentid = :sid AND guardianid = :gid AND granted = 1 AND consent_type <> 'enrollment_approval'",
+            ['sid' => $studentid, 'gid' => $parentid])) {
         return true;
     }
     return false;
@@ -135,6 +138,74 @@ function pqea_upsert_enrollment_approval(int $studentid, int $parentid, string $
             'targettype' => 'student',
             'targetid' => $studentid,
             'details' => json_encode(['source' => 'parent_portal'], JSON_UNESCAPED_SLASHES),
+            'timecreated' => $now,
+        ]);
+    }
+}
+
+/**
+ * Decline enrollment (the refusal path that never existed — approval was
+ * write-once granted=1). Mirrors pqea_upsert_enrollment_approval: records
+ * granted=0 on the enrollment_approval consent, stamps the student profile
+ * 'declined' (which blocks the managed-student lesson launcher exactly like
+ * pending_parent), and audits. Admins see the decline in the intake/audit
+ * views and can follow up; re-approval later remains possible.
+ */
+function pqea_decline_enrollment(int $studentid, int $parentid, string $notes): void {
+    global $DB;
+
+    $now = time();
+    if (pqea_table_exists('local_prequran_live_consent')) {
+        $existing = $DB->get_record('local_prequran_live_consent', [
+            'studentid' => $studentid,
+            'guardianid' => $parentid,
+            'consent_type' => 'enrollment_approval',
+        ], '*', IGNORE_MISSING);
+        if ($existing) {
+            $DB->update_record('local_prequran_live_consent', (object)[
+                'id' => (int)$existing->id,
+                'granted' => 0,
+                'consent_source' => 'parent_portal_decline',
+                'details' => $notes,
+                'timemodified' => $now,
+            ]);
+        } else {
+            $DB->insert_record('local_prequran_live_consent', (object)[
+                'studentid' => $studentid,
+                'guardianid' => $parentid,
+                'consent_type' => 'enrollment_approval',
+                'granted' => 0,
+                'version' => '1',
+                'consent_source' => 'parent_portal_decline',
+                'details' => $notes,
+                'timecreated' => $now,
+                'timemodified' => $now,
+            ]);
+        }
+    }
+
+    if (pqea_table_exists('local_prequran_student_profile')) {
+        $profile = $DB->get_record('local_prequran_student_profile', ['userid' => $studentid], 'id', IGNORE_MISSING);
+        if ($profile) {
+            $DB->update_record('local_prequran_student_profile', (object)[
+                'id' => (int)$profile->id,
+                'enrollment_approval_status' => 'declined',
+                'enrollment_approvedby' => $parentid,
+                'enrollment_approvedat' => $now,
+                'enrollment_approval_notes' => $notes,
+                'timemodified' => $now,
+            ]);
+        }
+    }
+
+    if (pqea_table_exists('local_prequran_live_audit')) {
+        $DB->insert_record('local_prequran_live_audit', (object)[
+            'sessionid' => 0,
+            'actorid' => $parentid,
+            'action' => 'enrollment_declined',
+            'targettype' => 'student',
+            'targetid' => $studentid,
+            'details' => json_encode(['source' => 'parent_portal', 'notes' => $notes], JSON_UNESCAPED_SLASHES),
             'timecreated' => $now,
         ]);
     }

@@ -14,12 +14,17 @@ function pqsppl_child_ids(int $workspaceid, int $userid): array {
     if (pqh_user_workspace_role($userid, $workspaceid) === 'student') {
         $ids[$userid] = $userid;
     }
-    foreach (['local_prequran_comm_consent', 'local_prequran_live_consent'] as $table) {
+    // Revoked links (consented=0/granted=0 via the parent-links unlink action)
+    // are excluded — a revoked parent must not see the child's data here.
+    foreach (['local_prequran_comm_consent' => 'consented', 'local_prequran_live_consent' => 'granted'] as $table => $consentfield) {
         if (!pqh_table_exists_safe($table) || !pqh_table_has_field_safe($table, 'guardianid')) {
             continue;
         }
         $params = ['guardianid' => $userid];
         $where = 'guardianid = :guardianid';
+        if (pqh_table_has_field_safe($table, $consentfield)) {
+            $where .= " AND {$consentfield} = 1";
+        }
         if (pqh_table_has_field_safe($table, 'workspaceid')) {
             $where .= ' AND (workspaceid = :workspaceid OR workspaceid = 0)';
             $params['workspaceid'] = $workspaceid;

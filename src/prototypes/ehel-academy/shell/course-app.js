@@ -17,6 +17,10 @@
 
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as sharedPageHeader, sectionNavigation } from "../shared/course-shell.js?v=20260721a";
 import { createProgressClient } from "../shared/progress-client.js?v=20260722a";
+// Self-mounting: renders the countdown/finish bar only on an SEB launch.
+import "../shared/seb-session.js?v=20260724a";
+// Welcome gate (adopted from PreQuraan): one tap into fullscreen, every launch.
+import { mountLessonGate } from "../shared/lesson-gate.js?v=20260724a";
 
 const pad2 = (n) => String(n).padStart(2, "0");
 
@@ -26,6 +30,10 @@ export function createCourseApp(config) {
   const params = new URLSearchParams(location.search);
   const stageNumber = Number(params.get(config.param) || params.get("stage") || params.get("grade") || document.documentElement.dataset[config.param] || document.documentElement.dataset.stage || document.documentElement.dataset.grade || 2);
   const unitNumber = Number(params.get("unit") ?? (config.defaultUnit ? config.defaultUnit(stageNumber) : 1));
+
+  // Welcome gate: mounted immediately, before any data load, so the learner sees
+  // it instantly rather than after a fetch.
+  mountLessonGate({ subjectKey: config.subjectKey, stage: stageNumber });
 
   const stageRootUrl = new URL(`./grade-${stageNumber}/`, location.href);
   const IS_LOCAL_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);

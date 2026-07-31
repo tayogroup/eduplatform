@@ -12,6 +12,7 @@ if ($workspaceid <= 0 || !pqh_user_has_workspace_capability((int)$USER->id, $wor
     pqh_access_denied('Teacher portal requires teacher workspace access.', new moodle_url('/local/hubredirect/workspace_dashboard.php'), 'Teacher portal denied');
 }
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
+pqh_enforce_role_domain(pqh_current_consumer_context(), $workspaceid, (int)$USER->id);
 $urlparams = ['workspaceid' => $workspaceid];
 $notice = '';
 $error = '';

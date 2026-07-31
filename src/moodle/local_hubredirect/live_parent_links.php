@@ -378,6 +378,8 @@ $PAGE->set_title('Student Parent Links');
 $PAGE->set_heading('Student Parent Links');
 $PAGE->add_body_class('pqh-parent-links-page');
 
+pqh_enforce_role_domain(pqh_current_consumer_context(), pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
+
 echo $OUTPUT->header();
 ?>
 <style>

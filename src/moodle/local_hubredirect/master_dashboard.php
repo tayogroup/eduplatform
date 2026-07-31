@@ -28,6 +28,7 @@ if (!is_siteadmin((int)$USER->id)) {
         'Master dashboard access required'
     );
 }
+pqh_enforce_role_domain($consumercontext, pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
 
 $context = context_system::instance();
 $PAGE->set_context($context);

@@ -44,6 +44,7 @@ if (!pqh_table_exists_safe('local_prequran_transcript_policy')) {
         'Transcript policy unavailable'
     );
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $allowed = pqct_policy_allowed_values();

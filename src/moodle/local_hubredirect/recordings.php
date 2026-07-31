@@ -280,6 +280,8 @@ body.pqh-recordings-page .main-inner{margin:0!important;padding:0!important;max-
     exit;
 }
 
+pqh_enforce_role_domain(pqh_requested_consumer_context(), pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
+
 $childid = optional_param('childid', 0, PARAM_INT);
 if ($childid <= 0) {
     pqr_render_student_picker(pqr_recording_student_rows((int)$USER->id));

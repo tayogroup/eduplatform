@@ -11,6 +11,7 @@ if ($workspaceid <= 0 || !pqh_user_has_workspace_capability((int)$USER->id, $wor
     pqh_access_denied('Certificates and awards require registrar or administrator access.', new moodle_url('/local/hubredirect/workspace_dashboard.php'), 'Certificate access denied');
 }
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
+pqh_enforce_role_domain(pqh_current_consumer_context(), $workspaceid, (int)$USER->id);
 $urlparams = ['workspaceid' => $workspaceid];
 $notice = '';
 $error = '';
@@ -19,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         require_sesskey();
         if (!pqcp_ready()) {
-            throw new invalid_parameter_exception('Certificate tables are not ready. Run Moodle upgrade.');
+            throw new invalid_parameter_exception('Certificate tables are not ready. Run the platform upgrade.');
         }
         $action = optional_param('action', '', PARAM_ALPHANUMEXT);
         $now = time();
@@ -127,7 +128,7 @@ echo '<style>.pqcert{max-width:1180px;margin:0 auto}.pqcert-top{display:flex;jus
 echo '<div class="pqcert"><div class="pqcert-top"><div><h2>Certificates And Completion Awards</h2><div class="pqcert-muted">' . s($workspace->name) . ' certificate templates, completion awards, generated PDFs, revocation, and audit history.</div></div><a class="pqcert-btn pqcert-btn--light" href="' . (new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams))->out(false) . '">Workspace</a></div>';
 if ($notice !== '') { echo '<div class="pqcert-notice">' . s($notice) . '</div>'; }
 if ($error !== '') { echo '<div class="pqcert-error">' . s($error) . '</div>'; }
-if (!pqcp_ready()) { echo '<div class="pqcert-error">Certificate schema is not ready. Run Moodle upgrade.</div>'; }
+if (!pqcp_ready()) { echo '<div class="pqcert-error">Certificate schema is not ready. Run the platform upgrade.</div>'; }
 echo '<div class="pqcert-grid"><section class="pqcert-panel"><h3>Certificate Template</h3><form method="post"><input type="hidden" name="sesskey" value="' . s(sesskey()) . '"><input type="hidden" name="action" value="save_template">';
 foreach ([['templateid','Template ID for update'],['template_key','Template key'],['title','Title'],['award_type','Award type'],['status','Status'],['accent','Accent color'],['seal','Seal text']] as $field) { echo '<div class="pqcert-field"><label>' . s($field[1]) . '</label><input class="pqcert-input" name="' . s($field[0]) . '"></div>'; }
 echo '<div class="pqcert-field"><label>Body template</label><textarea class="pqcert-textarea" name="body_template"></textarea></div><button class="pqcert-btn">Save Template</button></form><hr><h3>Issue Award</h3><form method="post"><input type="hidden" name="sesskey" value="' . s(sesskey()) . '"><input type="hidden" name="action" value="issue_award"><div class="pqcert-field"><label>Award ID for update</label><input class="pqcert-input" name="awardid"></div><div class="pqcert-field"><label>Student</label><select class="pqcert-select" name="studentid">';
@@ -137,7 +138,7 @@ foreach ($templates as $template) { echo '<option value="' . (int)$template->id 
 echo '</select></div><div class="pqcert-field"><label>Course offering</label><select class="pqcert-select" name="offeringid"><option value="0">No offering</option>';
 foreach ($offerings as $offering) { echo '<option value="' . (int)$offering->id . '">' . s($offering->title) . '</option>'; }
 echo '</select></div>';
-foreach ([['courseid','Moodle course ID'],['awardnumber','Award number'],['award_type','Award type'],['title','Award title'],['status','Status'],['completion_percent','Completion percent'],['final_grade','Final grade'],['issuedat','Issued date']] as $field) { echo '<div class="pqcert-field"><label>' . s($field[1]) . '</label><input class="pqcert-input" name="' . s($field[0]) . '"></div>'; }
+foreach ([['courseid','Course ID'],['awardnumber','Award number'],['award_type','Award type'],['title','Award title'],['status','Status'],['completion_percent','Completion percent'],['final_grade','Final grade'],['issuedat','Issued date']] as $field) { echo '<div class="pqcert-field"><label>' . s($field[1]) . '</label><input class="pqcert-input" name="' . s($field[0]) . '"></div>'; }
 echo '<div class="pqcert-field"><label>Evidence</label><textarea class="pqcert-textarea" name="evidence"></textarea></div><button class="pqcert-btn">Issue Award</button></form></section><section class="pqcert-panel"><h3>Awards</h3><table class="pqcert-table"><thead><tr><th>Award</th><th>Student</th><th>Status</th><th>PDF / Revoke</th></tr></thead><tbody>';
 foreach ($awards as $award) {
     $pdf = (int)$award->generateddocid > 0 ? (new moodle_url('/local/hubredirect/document_pdf.php', ['generatedid' => (int)$award->generateddocid]))->out(false) : '';

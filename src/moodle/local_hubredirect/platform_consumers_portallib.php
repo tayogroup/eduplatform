@@ -17,7 +17,15 @@ function pqpcl_domain_status_options(): array {
 }
 
 function pqpcl_domain_type_options(): array {
-    return ['public' => 'Public', 'app' => 'App'];
+    return [
+        'public' => 'Public',
+        'app' => 'App',
+        'student_portal' => 'Student portal',
+        'teacher_portal' => 'Teacher portal',
+        'parent_portal' => 'Parent portal',
+        'admin_portal' => 'Admin portal',
+        'finance_portal' => 'Finance portal',
+    ];
 }
 
 function pqpcl_clean_local_path(string $path, string $fallback): string {

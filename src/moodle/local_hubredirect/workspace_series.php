@@ -37,6 +37,7 @@ if (!$workspace) {
         'Recurring workspace sessions unavailable'
     );
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 $context = context_system::instance();
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/local/hubredirect/workspace_series.php', $urlparams));
@@ -397,7 +398,7 @@ body.pqw-series-page #page,body.pqw-series-page #page-content,body.pqw-series-pa
     <?php if ($message !== ''): ?><div class="pqwser-alert pqwser-alert--ok"><?php echo s($message); ?></div><?php endif; ?>
     <?php if ($error !== ''): ?><div class="pqwser-alert pqwser-alert--bad"><?php echo s($error); ?></div><?php endif; ?>
     <?php if (!pqwser_ready()): ?>
-      <section class="pqwser-panel"><div class="pqwser-empty">Recurring live-session tables are not ready. Run the local_prequran Moodle upgrade first.</div></section>
+      <section class="pqwser-panel"><div class="pqwser-empty">Recurring live-session tables are not ready. Run the local_prequran upgrade first.</div></section>
     <?php else: ?>
       <?php if (!$selectedseries): ?>
         <section class="pqwser-panel">

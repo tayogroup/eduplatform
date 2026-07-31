@@ -36,6 +36,7 @@ $role = $workspaceid > 0 ? pqh_user_workspace_role((int)$USER->id, $workspaceid)
 if ($workspaceid <= 0 || !in_array($role, ['platform_admin', 'owner', 'admin', 'student', 'parent', 'sponsor'], true)) {
     pqh_access_denied('Student and parent portal requires student, parent, sponsor, or workspace administrator access.', new moodle_url('/local/hubredirect/workspace_dashboard.php'), 'Portal access denied');
 }
+pqh_enforce_role_domain(pqh_requested_consumer_context(), $workspaceid, (int)$USER->id);
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $childids = pqsp_child_ids($workspaceid, (int)$USER->id);
 if (pqh_user_can_manage_workspace((int)$USER->id, $workspaceid) && optional_param('studentid', 0, PARAM_INT) > 0) {

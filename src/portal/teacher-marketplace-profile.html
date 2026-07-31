@@ -26,6 +26,13 @@
   .pills{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}
   .pill{display:inline-block;padding:4px 12px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--blue2)}
   .pill.reviewed{background:var(--amber-bg);color:var(--amber)}
+  .stars{color:var(--amber);font-weight:900;letter-spacing:1px}
+  .rep-head{font-size:15px;font-weight:900;color:var(--blue);margin:0 0 10px}
+  .review{border-top:1px solid var(--line);padding:10px 0}
+  .review:first-child{border-top:0}
+  .review .rmeta{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+  .review .rtext{margin:0;color:var(--ink2);font-size:14px;line-height:1.5}
+  .review .rreply{margin:6px 0 0;padding:8px 12px;border-left:3px solid var(--line);background:var(--sky);color:var(--ink2);font-size:13px;border-radius:0 8px 8px 0}
   .text{margin:0;color:var(--ink2);font-size:14px;line-height:1.55;white-space:pre-line}
   .social{display:grid;gap:8px;margin-bottom:12px}
   .social-row{display:grid;grid-template-columns:145px minmax(0,1fr);gap:10px;align-items:start}
@@ -57,6 +64,15 @@
           <p class="text" id="bio" hidden></p>
         </div>
         <div id="panels"></div>
+        <div class="panel" id="pricing-panel" hidden>
+          <h2>Pricing</h2>
+          <div class="social" id="pricing"></div>
+        </div>
+        <div class="panel" id="reviews-panel" hidden>
+          <h2>Reviews</h2>
+          <p class="rep-head" id="rep-head"></p>
+          <div id="reviews"></div>
+        </div>
         <div class="panel" id="online-panel" hidden>
           <h2>Online presence</h2>
           <div class="social" id="social"></div>
@@ -130,6 +146,34 @@
     $("#panels").innerHTML = (t.panels || []).map((p) =>
       `<div class="panel"><h2>${esc(p.heading)}</h2><p class="text">${esc(p.content)}</p></div>`
     ).join("");
+
+    const starStr = (n) => { const r = Math.max(0, Math.min(5, Math.round(Number(n) || 0))); return "★".repeat(r) + "☆".repeat(5 - r); };
+    const fmtDate = (ts) => { const n = Number(ts); if (!n) return ""; const dt = new Date(n * 1000); return isNaN(dt.getTime()) ? "" : dt.toLocaleDateString(); };
+    const priceRow = (label, value) => `<div class="social-row"><span class="social-label">${esc(label)}</span><span class="social-value">${value}</span></div>`;
+
+    const pr = t.pricing || {};
+    const prRows = [];
+    if (pr.hourly_rate) prRows.push(priceRow("Hourly rate", `<strong>${esc(pr.currency || "USD")} ${esc(pr.hourly_rate)}</strong>/hr`));
+    if (pr.session_minutes) prRows.push(priceRow("Session length", esc(pr.session_minutes) + " minutes"));
+    if (Number(pr.trial_available)) prRows.push(priceRow("Trial", Number(pr.trial_rate) > 0 ? esc(pr.currency || "USD") + " " + esc(pr.trial_rate) : "Free trial available"));
+    if (prRows.length) { $("#pricing").innerHTML = prRows.join(""); $("#pricing-panel").hidden = false; }
+
+    const rep = t.reputation || {};
+    const revs = rep.reviews || [];
+    if (Number(rep.count) > 0 || revs.length) {
+      $("#rep-head").innerHTML = Number(rep.count) > 0
+        ? `<span class="stars">★</span> ${Number(rep.avg).toFixed(1)} <span class="muted">(${esc(rep.count)})</span>`
+        : "No ratings yet";
+      $("#reviews").innerHTML = revs.length ? revs.map((rv) => {
+        const dt = fmtDate(rv.timecreated);
+        return `<div class="review">
+          <div class="rmeta"><span class="stars">${starStr(rv.rating)}</span>${dt ? `<span class="muted">${esc(dt)}</span>` : ""}</div>
+          ${rv.comment ? `<p class="rtext">${esc(rv.comment)}</p>` : `<p class="rtext muted">No written comment.</p>`}
+          ${rv.tutor_reply ? `<div class="rreply"><strong>Teacher reply:</strong> ${esc(rv.tutor_reply)}</div>` : ""}
+        </div>`;
+      }).join("") : `<p class="text muted">No written reviews yet.</p>`;
+      $("#reviews-panel").hidden = false;
+    }
 
     const o = t.online || {};
     const socialRows = [];

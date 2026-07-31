@@ -18,6 +18,7 @@ if ($workspaceid > 0) {
 if ($workspaceid <= 0 || !pqfin_user_can_manage_workspace_finance((int)$USER->id, $workspaceid)) {
     pqh_access_denied('Only workspace finance admins can configure hosted payments.', new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams), 'Payment settings access required');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $message = optional_param('saved', 0, PARAM_INT) ? 'Payment gateway settings saved.' : '';
 $error = '';
@@ -65,7 +66,7 @@ body.pqpayset-page #page,body.pqpayset-page #page-content,body.pqpayset-page #re
   </section>
   <?php if ($message !== ''): ?><div class="pqpays-alert pqpays-alert--ok"><?php echo s($message); ?></div><?php endif; ?>
   <?php if ($error !== ''): ?><div class="pqpays-alert pqpays-alert--err"><?php echo s($error); ?></div><?php endif; ?>
-  <?php if (!pqfin_gateway_schema_ready()): ?><div class="pqpays-alert pqpays-alert--err">Payment gateway schema is not ready. Run the local_prequran Moodle upgrade.</div><?php endif; ?>
+  <?php if (!pqfin_gateway_schema_ready()): ?><div class="pqpays-alert pqpays-alert--err">Payment gateway schema is not ready. Run the local_prequran platform upgrade.</div><?php endif; ?>
   <section class="pqpays-panel">
     <form method="post" class="pqpays-grid">
       <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">

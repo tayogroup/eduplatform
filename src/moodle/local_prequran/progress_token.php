@@ -29,13 +29,12 @@ $endpoint = $CFG->wwwroot . '/local/prequran/progress_gateway.php';
 $launchparams = 'pwsEndpoint=' . urlencode($endpoint) . '&pwsToken=' . urlencode($token) . '&studentid=' . $target;
 
 // Build the ready-to-click app URL from the course key (ehel-{eng|math|sci}-gNN).
+// Uses the shared decomposition so course_launch.php and this endpoint agree.
 $launchurl = '';
-if (preg_match('/^ehel-(eng|math|sci)-g(\d{2})$/', $course, $m)) {
-    $subjectdir = ['eng' => 'english', 'math' => 'mathematics', 'sci' => 'science'][$m[1]];
-    $stage = (int)$m[2];
-    $levelparam = $m[1] === 'eng' ? 'grade' : 'stage'; // english routes by ?grade=
-    $launchurl = 'https://ehelacademy.b-cdn.net/Ehel%20Primary/app/' . $subjectdir . '/index.html'
-        . '?' . $levelparam . '=' . $stage . '&unit=1&' . $launchparams;
+$pqbase = pqpg_ehel_app_base($course);
+if ($pqbase !== null) {
+    $launchurl = $pqbase['appurl'] . '?' . $pqbase['levelparam'] . '=' . $pqbase['stage']
+        . '&unit=1&' . $launchparams;
 }
 
 // ?format=launch → a tiny page with a clickable link, so the ~350-char token

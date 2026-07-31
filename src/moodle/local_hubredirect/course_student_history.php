@@ -21,6 +21,7 @@ if ($workspaceid > 0) {
 if ($workspaceid <= 0 || !pqh_user_can_manage_workspace((int)$USER->id, $workspaceid)) {
     pqh_access_denied('Only workspace admins can view student course history.', new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams), 'Course report access required');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $PAGE->set_context(context_system::instance());
@@ -78,11 +79,11 @@ body.pqcsh-page #page,body.pqcsh-page #page-content,body.pqcsh-page #region-main
   </form>
   <section class="pqcsh-panel">
     <?php if (!$rows): ?><div class="pqcsh-empty">No course history found.</div><?php else: ?>
-      <table class="pqcsh-table"><thead><tr><th>Student</th><th>Course</th><th>Status</th><th>Requested</th><th>Approved</th><th>Moodle</th><th>Dropped</th><th>Notes</th></tr></thead><tbody>
+      <table class="pqcsh-table"><thead><tr><th>Student</th><th>Course</th><th>Status</th><th>Requested</th><th>Approved</th><th>Enrolled</th><th>Dropped</th><th>Notes</th></tr></thead><tbody>
       <?php foreach ($rows as $row): ?>
         <tr>
           <td><span class="pqcsh-name"><?php echo s(fullname($row)); ?></span><span class="pqcsh-muted"><?php echo s(pqh_account_no_label($row)); ?> / <?php echo s((string)$row->email); ?></span><a class="pqcsh-btn" href="<?php echo pqct_transcript_url((int)$row->studentid, $workspaceid, $consumercontext)->out(false); ?>">Transcript</a><a class="pqcsh-btn" href="<?php echo (new moodle_url('/local/hubredirect/student_finance.php', $urlparams + ['studentid' => (int)$row->studentid]))->out(false); ?>">Finance</a></td>
-          <td><span class="pqcsh-name"><?php echo s((string)$row->offering_title); ?></span><span class="pqcsh-muted"><?php echo s((string)$row->course_key); ?> / Moodle #<?php echo (int)$row->moodlecourseid; ?></span></td>
+          <td><span class="pqcsh-name"><?php echo s((string)$row->offering_title); ?></span><span class="pqcsh-muted"><?php echo s((string)$row->course_key); ?> / Course #<?php echo (int)$row->moodlecourseid; ?></span></td>
           <td><span class="pqcsh-pill"><?php echo s(pqco_request_status_label((string)$row->status)); ?></span></td>
           <td><?php echo (int)$row->timecreated > 0 ? s(userdate((int)$row->timecreated, get_string('strftimedatetimeshort'))) : ''; ?></td>
           <td><?php echo (int)$row->approvedat > 0 ? s(userdate((int)$row->approvedat, get_string('strftimedatetimeshort'))) : ''; ?></td>

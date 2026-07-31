@@ -31,6 +31,7 @@ if (!$workspace) {
         'Workspace reports unavailable'
     );
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 $canmanage = pqh_user_can_manage_workspace((int)$USER->id, $workspaceid);
 $context = context_system::instance();
 $PAGE->set_context($context);

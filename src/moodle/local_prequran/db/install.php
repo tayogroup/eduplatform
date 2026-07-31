@@ -9,6 +9,7 @@ function xmldb_local_prequran_install(): void {
     require_once($CFG->dirroot . '/local/prequran/db/upgradelib.php');
     xmldb_local_prequran_ensure_school_principal_role();
     xmldb_local_prequran_ensure_sqa_tester_role();
+    xmldb_local_prequran_ensure_parent_observer_role();
     xmldb_local_prequran_ensure_live_schema();
     xmldb_local_prequran_ensure_workspace_schema();
     xmldb_local_prequran_ensure_consumer_schema();
@@ -56,6 +57,22 @@ function xmldb_local_prequran_install(): void {
     xmldb_local_prequran_ensure_sqa_tracker_schema();
     xmldb_local_prequran_ensure_safenet_schema();
     xmldb_local_prequran_ensure_safenet_schedule_fields();
+
+    xmldb_local_prequran_ensure_teacher_cert_schema();
+    xmldb_local_prequran_ensure_session_rating_schema();
+    xmldb_local_prequran_ensure_platform_support_schema();
+    xmldb_local_prequran_ensure_monetization_schema();
+    xmldb_local_prequran_ensure_identity_schema();
+    xmldb_local_prequran_ensure_lms_schema();
+    xmldb_local_prequran_ensure_assessment_analytics_schema();
+    xmldb_local_prequran_ensure_infra_schema();
+    xmldb_local_prequran_ensure_institution_records_schema();
+    xmldb_local_prequran_ensure_records_completeness_schema();
+    xmldb_local_prequran_ensure_marketplace_core_schema();
+    xmldb_local_prequran_ensure_live_learning_schema();
+    xmldb_local_prequran_ensure_content_authoring_schema();
+    xmldb_local_prequran_ensure_exam_capture_schema();
+    xmldb_local_prequran_ensure_syllabus_schema();
 
     require_once($CFG->dirroot . '/local/prequran/db/progresslib.php');
     xmldb_local_prequran_ensure_progress_schema();

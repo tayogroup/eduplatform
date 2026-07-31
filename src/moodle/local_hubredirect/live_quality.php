@@ -368,6 +368,8 @@ $auditrows = array_values($DB->get_records_sql(
     20
 ));
 
+pqh_enforce_role_domain($consumercontext, $requestedworkspaceid, (int)$USER->id);
+
 echo $OUTPUT->header();
 ?>
 <style>

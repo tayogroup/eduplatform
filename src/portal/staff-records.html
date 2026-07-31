@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Staff records · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:380px 1fr;gap:16px;align-items:start}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+  .muted{color:var(--muted);font-size:12px}
+  .note{color:var(--muted);font-size:12px;margin:8px 0 0}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .field{margin-bottom:10px}
+  .field label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin-bottom:3px}
+  .field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .field textarea{min-height:64px;resize:vertical}
+  form button{margin-top:8px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form button:disabled{opacity:.55;cursor:wait}
+  form button.secondary{background:var(--card);color:var(--blue2);border:1px solid var(--line);margin-left:6px}
+  hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top;font-size:13px}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  td strong{font-size:14px}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2);white-space:nowrap}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .pill.good{background:#e1f2ff;color:var(--blue2)}
+  .pill.muted-pill{background:var(--sky);color:var(--muted)}
+  a.btn,button.btn{display:inline-block;padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--sky);color:var(--blue2);text-decoration:none;font-weight:800;font-size:12px;cursor:pointer;margin:2px 2px 2px 0}
+  button.btn{background:var(--card)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Staff records</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of staff_records.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Staff HR records</h1><p class="sub" id="subtitle">Maintain human-resources records for every staff member — employment terms, department, payroll reference, emergency contacts and qualifications.</p></div>
+  <div id="status" class="status">Loading staff records…</div>
+  <div class="grid" id="grid" hidden>
+    <div>
+      <div class="panel">
+        <h2 id="form-title">New HR record</h2>
+        <form id="record-form">
+          <div class="field"><label>Staff member</label><select name="userid" id="record-user"></select></div>
+          <div class="field"><label>Role / job title</label><input name="role_title" id="record-role-title"></div>
+          <div class="field"><label>Employment type</label><select name="employment_type" id="record-employment"></select></div>
+          <div class="field"><label>Department</label><input name="department" id="record-department"></div>
+          <div class="field"><label>Start date</label><input type="date" name="start_date" id="record-start"></div>
+          <div class="field"><label>End date</label><input type="date" name="end_date" id="record-end"></div>
+          <div class="field"><label>Payroll reference</label><input name="payroll_ref" id="record-payroll"></div>
+          <div class="field"><label>Emergency contact name</label><input name="emergency_contact_name" id="record-ec-name"></div>
+          <div class="field"><label>Emergency contact phone</label><input name="emergency_contact_phone" id="record-ec-phone"></div>
+          <div class="field"><label>Qualifications</label><textarea name="qualifications" id="record-qualifications"></textarea></div>
+          <div class="field"><label>Status</label><select name="status" id="record-status"></select></div>
+          <div class="field"><label>Notes</label><textarea name="notes" id="record-notes"></textarea></div>
+          <button type="submit" id="record-save">Save HR record</button>
+          <button type="button" class="secondary" id="record-reset">New / clear</button>
+        </form>
+        <p class="note">HR records cover all staff including non-teaching roles (registrar, finance, support).</p>
+      </div>
+    </div>
+    <div>
+      <div class="panel">
+        <h2>Staff HR records</h2>
+        <table><thead><tr><th>Staff #</th><th>Name</th><th>Role</th><th>Type</th><th>Department</th><th>Start</th><th>Status</th><th>Actions</th></tr></thead><tbody id="records-body"></tbody></table>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const base = () => new URLSearchParams({ report: "staff-records", token });
+  const getUrl = () => endpoint + "?" + base().toString();
+
+  let DATA = {};
+  let editingId = null;
+
+  async function load() {
+    try {
+      const r = await fetch(getUrl());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const opt = (val, label, sel) => `<option value="${esc(val)}"${sel ? " selected" : ""}>${esc(label)}</option>`;
+  const optionsFrom = (map) => Object.keys(map || {}).map((k) => opt(k, map[k])).join("");
+
+  const nameOf = (userid) => (DATA.names && DATA.names[userid]) || ("Staff #" + userid);
+  const employmentLabel = (key) => (DATA.employment_options && DATA.employment_options[key]) || key || "—";
+  const fmtDate = (ts) => { const n = Number(ts); if (!n) return "—"; const dt = new Date(n * 1000); return isNaN(dt.getTime()) ? "—" : dt.toLocaleDateString(); };
+  const toInputDate = (ts) => { const n = Number(ts); if (!n) return ""; const dt = new Date(n * 1000); if (isNaN(dt.getTime())) return ""; return dt.toISOString().slice(0, 10); };
+  const statusClass = (s) => /on_leave/.test(s || "") ? "warn" : /ended/.test(s || "") ? "muted-pill" : /active/.test(s || "") ? "good" : "";
+
+  const STATUS_OPTIONS = { active: "Active", on_leave: "On leave", ended: "Ended" };
+
+  function render(d) {
+    DATA = d;
+    if (d.ready === false) {
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = "Staff records schema is not ready. Run Moodle upgrade.";
+    } else {
+      $("#status").hidden = true;
+    }
+
+    const members = d.members || [];
+    $("#record-user").innerHTML = members.map((m) => opt(m.id, m.name + " — " + (m.role || ""))).join("");
+    $("#record-employment").innerHTML = optionsFrom(d.employment_options);
+    $("#record-status").innerHTML = optionsFrom(STATUS_OPTIONS);
+
+    const records = d.records || [];
+    $("#records-body").innerHTML = records.length ? records.map((rec) =>
+      `<tr>
+        <td><strong>${esc(rec.staff_number || "—")}</strong></td>
+        <td>${esc(nameOf(rec.userid))}</td>
+        <td>${esc(rec.role_title || "—")}</td>
+        <td>${esc(employmentLabel(rec.employment_type))}</td>
+        <td>${esc(rec.department || "—")}</td>
+        <td>${esc(fmtDate(rec.start_date))}</td>
+        <td><span class="pill ${statusClass(rec.status)}">${esc(rec.status || "—")}</span></td>
+        <td><button type="button" class="btn" data-edit="${rec.id}">Edit</button></td>
+      </tr>`
+    ).join("") : `<tr><td colspan="8" class="muted">No HR records yet. Add one from the panel on the left.</td></tr>`;
+
+    document.querySelectorAll("[data-edit]").forEach((b) => b.addEventListener("click", () => openEditor(Number(b.dataset.edit))));
+
+    $("#grid").hidden = false;
+
+    if (editingId != null) {
+      const still = records.find((rec) => Number(rec.id) === Number(editingId));
+      if (still) openEditor(editingId); else resetForm();
+    }
+  }
+
+  function openEditor(recordid) {
+    const rec = (DATA.records || []).find((r) => Number(r.id) === Number(recordid));
+    if (!rec) return;
+    editingId = recordid;
+    $("#form-title").textContent = "Edit HR record — " + nameOf(rec.userid);
+    $("#record-user").value = rec.userid;
+    $("#record-role-title").value = rec.role_title || "";
+    $("#record-employment").value = rec.employment_type || "";
+    $("#record-department").value = rec.department || "";
+    $("#record-start").value = toInputDate(rec.start_date);
+    $("#record-end").value = toInputDate(rec.end_date);
+    $("#record-payroll").value = rec.payroll_ref || "";
+    $("#record-ec-name").value = rec.emergency_contact_name || "";
+    $("#record-ec-phone").value = rec.emergency_contact_phone || "";
+    $("#record-qualifications").value = rec.qualifications || "";
+    $("#record-status").value = rec.status || "active";
+    $("#record-notes").value = rec.notes || "";
+    $("#record-form").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function resetForm() {
+    editingId = null;
+    $("#form-title").textContent = "New HR record";
+    $("#record-form").reset();
+  }
+
+  async function post(payload, btn, okText) {
+    const original = btn ? btn.textContent : "";
+    if (btn) { btn.disabled = true; btn.textContent = "Saving…"; }
+    try {
+      const r = await fetch(endpoint + "?" + base().toString(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = okText || (d.message || "Saved.");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await load();
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = original; }
+    }
+  }
+
+  function formPayload(form, extra) {
+    const p = Object.assign({}, extra);
+    new FormData(form).forEach((v, k) => { p[k] = v; });
+    return p;
+  }
+
+  $("#record-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    post(formPayload(ev.currentTarget, { do: "save" }), $("#record-save"), DATA.message || "HR record saved.");
+  });
+  $("#record-reset").addEventListener("click", () => resetForm());
+
+  load();
+})();
+</script>
+</body>
+</html>

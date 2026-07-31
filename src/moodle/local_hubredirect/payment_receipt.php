@@ -36,6 +36,9 @@ if ($invoice && !$securelink && !pqfin_user_can_view_hosted_invoice($invoice, (i
         && !pqfin_user_can_manage_workspace_finance((int)$USER->id, (int)$payment->workspaceid)) {
     pqh_access_denied('Receipt is not available for this account.', new moodle_url('/local/hubredirect/dashboard.php'), 'Receipt access required');
 }
+if (!$securelink) {
+    pqh_enforce_role_domain($consumercontext, (int)$payment->workspaceid, (int)$USER->id);
+}
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => (int)$payment->workspaceid], '*', IGNORE_MISSING);
 $account = $DB->get_record('local_prequran_billing_account', ['id' => (int)$payment->billingaccountid], '*', IGNORE_MISSING);
 $student = (int)$payment->studentid > 0 ? core_user::get_user((int)$payment->studentid, 'id,firstname,lastname,email,idnumber', IGNORE_MISSING) : null;

@@ -24,7 +24,15 @@ function pqpc_domain_status_options(): array {
 }
 
 function pqpc_domain_type_options(): array {
-    return ['public' => 'Public', 'app' => 'App'];
+    return [
+        'public' => 'Public',
+        'app' => 'App',
+        'student_portal' => 'Student portal',
+        'teacher_portal' => 'Teacher portal',
+        'parent_portal' => 'Parent portal',
+        'admin_portal' => 'Admin portal',
+        'finance_portal' => 'Finance portal',
+    ];
 }
 
 function pqpc_clean_local_path(string $path, string $fallback): string {
@@ -364,6 +372,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $consumers = pqpc_consumer_rows();
 $domains = pqpc_domains_by_consumer($consumers);
 $workspaceoptions = pqpc_workspace_options();
+
+pqh_enforce_role_domain(pqh_requested_consumer_context(), pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
 
 echo $OUTPUT->header();
 ?>

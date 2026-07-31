@@ -22,6 +22,7 @@ if (!$session) {
 if ((int)$session->teacherid !== (int)$USER->id && !is_siteadmin() && !pqh_can_manage_academy_operations((int)$USER->id)) {
     pqh_access_denied('Only the session teacher or an administrator can create demo participants.', $backurl, 'Demo participants access required');
 }
+pqh_enforce_role_domain(pqh_current_consumer_context(), (int)($session->workspaceid ?? 0), (int)$USER->id);
 
 $secret = trim((string)get_config('local_prequran', 'bbb_shared_secret'));
 $roomready = $secret !== '' && !empty($session->bbb_created) && trim((string)$session->bbb_meeting_id) !== '';

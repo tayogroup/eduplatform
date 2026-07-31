@@ -12,6 +12,7 @@ $workspaceid = pqh_current_workspace_id((int)$USER->id, $requestedworkspaceid);
 if ($workspaceid <= 0 || !pqh_user_can_manage_workspace((int)$USER->id, $workspaceid)) {
     pqh_access_denied('Admissions management requires workspace administrator access.', new moodle_url('/local/hubredirect/workspace_dashboard.php'), 'Admissions access denied');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $context = context_system::instance();
@@ -29,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         require_sesskey();
         $action = optional_param('action', '', PARAM_ALPHANUMEXT);
         if (!pqadm_schema_ready()) {
-            throw new invalid_parameter_exception('Admissions tables are not installed yet. Run Moodle upgrade.');
+            throw new invalid_parameter_exception('Admissions tables are not installed yet. Run the platform upgrade.');
         }
         if ($action === 'save_application') {
             $applicationid = optional_param('applicationid', 0, PARAM_INT);
@@ -124,7 +125,7 @@ if ($error !== '') {
     echo '<div class="pqadm-error">' . s($error) . '</div>';
 }
 if (!pqadm_schema_ready()) {
-    echo '<div class="pqadm-error">Admissions schema is not ready. Run the Moodle local_prequran upgrade.</div>';
+    echo '<div class="pqadm-error">Admissions schema is not ready. Run the local_prequran upgrade.</div>';
 }
 $studentprofile = $edit ? (json_decode((string)$edit->student_profile_json, true) ?: []) : [];
 $familyprofile = $edit ? (json_decode((string)$edit->family_profile_json, true) ?: []) : [];

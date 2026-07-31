@@ -304,6 +304,32 @@ function pqh_org_group_schema_ready(): bool {
         && pqh_table_exists_safe('local_prequran_org_group_member');
 }
 
+function pqh_org_group_types(): array {
+    return [
+        'owned_group' => 'Owned schools',
+        'franchise_network' => 'Franchise network',
+    ];
+}
+
+function pqh_org_group_relationship_types(): array {
+    return [
+        'owned_branch' => 'Owned branch',
+        'franchise_member' => 'Franchise member',
+    ];
+}
+
+/**
+ * Parse a stored comma-separated access_scope column value back into its
+ * individual scope keys, dropping anything that is no longer a valid scope
+ * (see pqw_org_access_scope_options() in workspaces.php for the option list
+ * this validates against).
+ */
+function pqh_org_group_access_scopes(string $accessscope): array {
+    $allowed = ['governance', 'operations', 'audit', 'shared_support'];
+    $scopes = array_filter(array_map('trim', explode(',', $accessscope)));
+    return array_values(array_intersect($scopes, $allowed));
+}
+
 function pqh_fallback_consumer_context(string $host = ''): stdClass {
     global $CFG;
     $platformhost = pqh_normalize_consumer_host((string)(parse_url((string)($CFG->wwwroot ?? ''), PHP_URL_HOST) ?: ''));
@@ -564,6 +590,115 @@ function pqh_consumer_context_by_workspace(int $workspaceid): ?stdClass {
     return $context;
 }
 
+/**
+ * Active child schools linked under a parent consumer's owned org_group
+ * (for example the K-12 and Languages schools owned by the Ehel Academy
+ * parent consumer). Used to let a visitor on the parent's own domain pick
+ * which actual school a public request is for.
+ *
+ * @return stdClass[] consumer contexts, in the order they were linked
+ */
+function pqh_org_group_child_schools(int $parentconsumerid): array {
+    global $DB;
+    if ($parentconsumerid <= 0 || !pqh_org_group_schema_ready() || !pqh_consumer_schema_ready()) {
+        return [];
+    }
+    try {
+        $rows = $DB->get_records_sql(
+            "SELECT c.*, gm.id AS gm_id
+               FROM {local_prequran_org_group_member} gm
+               JOIN {local_prequran_org_group} g ON g.id = gm.groupid
+               JOIN {local_prequran_consumer} c ON c.primaryworkspaceid = gm.memberid
+              WHERE g.parentconsumerid = :parentconsumerid
+                AND g.status = :groupstatus
+                AND g.group_type = :grouptype
+                AND gm.member_type = :membertype
+                AND gm.relationship_type = :relationship
+                AND gm.status = :memberstatus
+                AND c.status = :consumerstatus
+           ORDER BY gm.id ASC",
+            [
+                'parentconsumerid' => $parentconsumerid,
+                'groupstatus' => 'active',
+                'grouptype' => 'owned_group',
+                'membertype' => 'workspace',
+                'relationship' => 'owned_branch',
+                'memberstatus' => 'active',
+                'consumerstatus' => 'active',
+            ]
+        );
+    } catch (Throwable $e) {
+        return [];
+    }
+    $schools = [];
+    foreach ($rows as $row) {
+        $schools[] = pqh_consumer_context_from_records($row, null);
+    }
+    return $schools;
+}
+
+/**
+ * Course category ids owned by a workspace's institution: the category bound
+ * to the consumer by idnumber (pqco_consumer_<consumerid>, the key
+ * pqco_consumer_category_id() writes), or one simply named after the consumer
+ * or workspace, plus every descendant category.
+ *
+ * Returns [] when nothing matches. Callers must read that as "this workspace
+ * has no category binding" and fall back to their own scoping -- NOT as "this
+ * workspace owns no courses", which would empty their listings.
+ */
+function pqh_workspace_course_category_ids(int $workspaceid): array {
+    global $DB;
+
+    if ($workspaceid <= 0 || !pqh_table_exists_safe('course_categories')) {
+        return [];
+    }
+
+    $context = pqh_consumer_context_by_workspace($workspaceid);
+    $consumerid = (int)($context->consumerid ?? 0);
+    $consumername = trim((string)($context->consumername ?? ''));
+    $workspacename = '';
+    try {
+        $workspacename = trim((string)$DB->get_field('local_prequran_workspace', 'name', ['id' => $workspaceid], IGNORE_MISSING));
+    } catch (Throwable $e) {
+        $workspacename = '';
+    }
+    if ($consumername === '') {
+        $consumername = $workspacename;
+    }
+    if ($consumerid <= 0 && $consumername === '') {
+        return [];
+    }
+
+    $categoryids = [];
+    try {
+        $roots = $DB->get_records_select(
+            'course_categories',
+            'idnumber = :idnumber OR name = :consumername OR name = :workspacename',
+            [
+                'idnumber' => $consumerid > 0 ? 'pqco_consumer_' . $consumerid : '__none__',
+                'consumername' => $consumername !== '' ? $consumername : '__none__',
+                'workspacename' => $workspacename !== '' ? $workspacename : '__none__',
+            ],
+            '',
+            'id,path'
+        );
+        foreach ($roots as $root) {
+            $categoryids[(int)$root->id] = (int)$root->id;
+            $path = (string)($root->path ?? '');
+            if ($path === '') {
+                continue;
+            }
+            foreach ($DB->get_records_select('course_categories', $DB->sql_like('path', ':path'), ['path' => $path . '/%'], '', 'id') as $child) {
+                $categoryids[(int)$child->id] = (int)$child->id;
+            }
+        }
+    } catch (Throwable $e) {
+        return [];
+    }
+    return array_values($categoryids);
+}
+
 function pqh_user_primary_workspace_id(int $userid): int {
     global $CFG, $DB;
     if ($userid <= 0) {
@@ -711,6 +846,95 @@ function pqh_user_consumer_dashboard_url(stdClass $context): moodle_url {
         return new moodle_url('https://' . $domain . '/' . ltrim($path, '/'), $params);
     }
     return new moodle_url('/' . ltrim($path, '/'), $params);
+}
+
+/**
+ * Which consumer_domain domain_type a workspace role should live on after
+ * login, e.g. 'teacher'/'assistant_teacher' -> 'teacher_portal'. Roles with
+ * no mapping (registrar, support, sponsor, unassigned) return '' so callers
+ * can treat that as "no role-domain enforcement for this user."
+ */
+function pqh_role_portal_domain_type(string $role): string {
+    $map = [
+        'student' => 'student_portal',
+        'parent' => 'parent_portal',
+        'teacher' => 'teacher_portal',
+        'assistant_teacher' => 'teacher_portal',
+        'owner' => 'admin_portal',
+        'admin' => 'admin_portal',
+        'platform_admin' => 'admin_portal',
+        'coordinator' => 'admin_portal',
+        'auditor' => 'admin_portal',
+        'finance' => 'finance_portal',
+    ];
+    return $map[$role] ?? '';
+}
+
+/**
+ * The active consumer_domain host registered for a given consumer + role
+ * portal domain_type (e.g. consumerid for Ehel K-12 + 'admin_portal' ->
+ * 'admins.k-12.ehelacademy.org'), or '' if none is configured yet.
+ */
+function pqh_role_portal_domain(int $consumerid, string $domaintype): string {
+    global $DB;
+    if ($consumerid <= 0 || $domaintype === '' || !pqh_consumer_schema_ready()) {
+        return '';
+    }
+    $domain = $DB->get_field_select(
+        'local_prequran_consumer_domain',
+        'domain',
+        'consumerid = :consumerid AND domain_type = :domaintype AND status = :status',
+        ['consumerid' => $consumerid, 'domaintype' => $domaintype, 'status' => 'active'],
+        IGNORE_MULTIPLE
+    );
+    return pqh_normalize_consumer_host((string)$domain);
+}
+
+/**
+ * Keep a logged-in user on their role's portal subdomain for the current
+ * consumer, on every page that calls this -- not just a one-time redirect
+ * at login. Resolves the user's workspace role, looks up the matching
+ * role-portal domain for this consumer, and redirects (preserving the exact
+ * path and query string) if the current host doesn't already match.
+ *
+ * Safe no-op when: not a GET request (never interrupts a POST submission),
+ * the role has no portal mapping, or the consumer hasn't had that role's
+ * domain configured yet (so unprovisioned schools are unaffected).
+ */
+function pqh_enforce_role_domain(stdClass $consumercontext, int $workspaceid = 0, int $userid = 0): void {
+    global $USER;
+    if ((string)($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET') {
+        return;
+    }
+    $userid = $userid > 0 ? $userid : (int)($USER->id ?? 0);
+    if ($userid <= 0) {
+        return;
+    }
+    if ($workspaceid <= 0) {
+        $workspaceid = pqh_current_workspace_id($userid);
+    }
+    if ($workspaceid <= 0) {
+        return;
+    }
+    $role = pqh_user_workspace_role($userid, $workspaceid);
+    $domaintype = pqh_role_portal_domain_type($role);
+    if ($domaintype === '') {
+        return;
+    }
+    $consumerid = (int)($consumercontext->consumerid ?? 0);
+    $roledomain = pqh_role_portal_domain($consumerid, $domaintype);
+    if ($roledomain === '') {
+        return;
+    }
+    $currenthost = pqh_request_host();
+    if ($currenthost === '' || $currenthost === $roledomain) {
+        return;
+    }
+    $requesturi = (string)($_SERVER['REQUEST_URI'] ?? '');
+    if ($requesturi === '') {
+        return;
+    }
+    redirect(new moodle_url('https://' . $roledomain . $requesturi));
 }
 
 function pqh_resolve_consumer_context(?string $host = null): stdClass {
@@ -939,6 +1163,137 @@ function pqh_user_can_teach_in_workspace(int $userid, int $workspaceid): bool {
     }
     $role = pqh_user_workspace_role($userid, $workspaceid);
     return in_array($role, ['platform_admin', 'owner', 'admin', 'teacher', 'assistant_teacher'], true);
+}
+
+/**
+ * Clean one segment of a standardized username down to lowercase letters and
+ * digits only -- dots are reserved as the separator between segments, so no
+ * segment may contain one itself.
+ */
+function pqh_username_segment(string $value): string {
+    $value = core_text::strtolower(trim($value));
+    return (string)preg_replace('/[^a-z0-9]+/', '', $value);
+}
+
+/**
+ * One-letter role tag used in standardized usernames: s=student, t=teacher,
+ * p=parent, a=admin.
+ */
+function pqh_username_role_char(string $accounttype): string {
+    $chars = ['student' => 's', 'teacher' => 't', 'parent' => 'p', 'admin' => 'a'];
+    return $chars[$accounttype] ?? '';
+}
+
+/**
+ * Standardized username: schoolslug.<rolechar><accountid> -- e.g.
+ * ehelprimary.s32849 for a student, ehelprimary.t10234 for a teacher. The
+ * account id is the platform's own already-unique 5-digit "Account No."
+ * (user.idnumber), so the result is guaranteed unique by construction -- no
+ * collision-retry loop needed. Returns '' if schoolslug or accountid is
+ * missing (caller should keep whatever username it already had in that case).
+ */
+function pqh_generate_standard_username(string $schoolslug, string $accounttype, string $accountid): string {
+    $school = pqh_username_segment($schoolslug);
+    $account = pqh_username_segment($accountid);
+    if ($school === '' || $account === '') {
+        return '';
+    }
+    $role = pqh_username_role_char($accounttype);
+    return core_text::substr($school . '.' . $role . $account, 0, 100);
+}
+
+/**
+ * True if $viewerid and $targetid both hold an active membership row in at
+ * least one of the same workspaces -- used to gate profile-photo viewing
+ * (staff of a student's/teacher's own workspace, without needing to know
+ * which specific workspace up front).
+ */
+function pqh_user_shares_active_workspace(int $viewerid, int $targetid): bool {
+    global $DB;
+    if ($viewerid <= 0 || $targetid <= 0 || !pqh_table_exists_safe('local_prequran_workspace_member')) {
+        return false;
+    }
+    if ($viewerid === $targetid) {
+        return true;
+    }
+    return $DB->record_exists_sql(
+        "SELECT 1
+           FROM {local_prequran_workspace_member} a
+           JOIN {local_prequran_workspace_member} b ON b.workspaceid = a.workspaceid
+          WHERE a.userid = :viewerid
+            AND a.status = :astatus
+            AND b.userid = :targetid
+            AND b.status = :bstatus",
+        ['viewerid' => $viewerid, 'astatus' => 'active', 'targetid' => $targetid, 'bstatus' => 'active']
+    );
+}
+
+/**
+ * Validate a raw $_FILES[...] entry as a profile photo. Returns null when no
+ * file was submitted (a normal, non-error case on these forms), a clean info
+ * array when a valid image was uploaded, or throws when something was
+ * submitted but isn't usable.
+ */
+function pqh_uploaded_photo_info(array $upload): ?array {
+    if ((int)($upload['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) {
+        return null;
+    }
+    if ((int)($upload['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK
+            || empty($upload['tmp_name']) || !is_uploaded_file((string)$upload['tmp_name'])) {
+        throw new Exception('The uploaded photo could not be read. Try again with a JPG, PNG, or WEBP file.');
+    }
+    $maxbytes = 5 * 1024 * 1024;
+    if ((int)($upload['size'] ?? 0) > $maxbytes) {
+        throw new Exception('Photo is too large -- the limit is 5 MB.');
+    }
+    $imageinfo = @getimagesize((string)$upload['tmp_name']);
+    $allowed = [IMAGETYPE_JPEG => 'jpg', IMAGETYPE_PNG => 'png', IMAGETYPE_WEBP => 'webp'];
+    if (!$imageinfo || !isset($allowed[$imageinfo[2]])) {
+        throw new Exception('Photo must be a JPG, PNG, or WEBP image.');
+    }
+    return [
+        'tmpname' => (string)$upload['tmp_name'],
+        'filename' => 'photo.' . $allowed[$imageinfo[2]],
+        'mimetype' => (string)$imageinfo['mime'],
+    ];
+}
+
+/**
+ * Store a validated profile photo (see pqh_uploaded_photo_info) under the
+ * shared local_hubredirect file areas, replacing any existing photo for the
+ * same $itemid. $filearea is one of 'student_photo' / 'teacher_photo'.
+ */
+function pqh_store_profile_photo(string $filearea, int $itemid, array $upload, int $actorid): stored_file {
+    $context = context_system::instance();
+    $fs = get_file_storage();
+    $fs->delete_area_files($context->id, 'local_hubredirect', $filearea, $itemid);
+    return $fs->create_file_from_pathname([
+        'contextid' => $context->id,
+        'component' => 'local_hubredirect',
+        'filearea' => $filearea,
+        'itemid' => $itemid,
+        'filepath' => '/',
+        'filename' => (string)$upload['filename'],
+        'mimetype' => (string)$upload['mimetype'],
+        'userid' => $actorid,
+    ], (string)$upload['tmpname']);
+}
+
+/**
+ * Public URL for a stored profile photo, or '' if none has been uploaded.
+ */
+function pqh_profile_photo_url(string $filearea, int $itemid): string {
+    if ($itemid <= 0) {
+        return '';
+    }
+    $context = context_system::instance();
+    $fs = get_file_storage();
+    foreach ($fs->get_area_files($context->id, 'local_hubredirect', $filearea, $itemid, 'filename', false) as $file) {
+        return moodle_url::make_pluginfile_url(
+            $context->id, 'local_hubredirect', $filearea, $itemid, '/', $file->get_filename(), false
+        )->out(false);
+    }
+    return '';
 }
 
 function pqh_user_can_create_live_sessions(int $userid, int $workspaceid = 0): bool {
@@ -1261,12 +1616,15 @@ function pqh_design_shell_css(string $scope): string {
 {$scope}{padding:0 0 54px 248px!important;transition:padding .18s ease}
 {$scope}.pqh-rail-min{padding-left:72px!important}
 {$scope}>[class*="-wrap"]{padding:24px 24px 0;max-width:1440px}
-.pqh-gnav{position:fixed;left:0;top:0;bottom:0;width:248px;z-index:80;display:flex;flex-direction:column;gap:2px;padding:14px 10px;background:#fff;border-right:1px solid #e4e9ef;overflow-y:auto;transition:width .18s ease}
+.pqh-gnav{position:fixed;left:0;top:0;bottom:0;width:248px;z-index:80;display:flex;flex-direction:column;gap:2px;padding:14px 10px;background:none;border-right:1px solid #e4e9ef;overflow-y:auto;transition:width .18s ease}
 {$scope}.pqh-rail-min .pqh-gnav{width:72px}
 .pqh-gnav__brand{display:flex;align-items:center;gap:10px;padding:4px 8px 14px;text-decoration:none!important;background:transparent!important;border:0}
-.pqh-gnav__mark{flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;background:linear-gradient(115deg,#2166d1,#4d8be0);color:#fff!important;font:800 14px/1 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;box-shadow:0 6px 14px -6px rgba(33,102,209,.5)}
+.pqh-gnav__mark{flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;background:linear-gradient(115deg,#2166d1,#4d8be0);color:#fff!important;font:800 14px/1 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;box-shadow:0 6px 14px -6px rgba(33,102,209,.5);overflow:hidden}
+.pqh-gnav__mark img{display:block;width:100%;height:100%;object-fit:cover}
+.pqh-gnav__mark--img{width:58px;height:58px;background:#fff;box-shadow:none;padding:3px}
+.pqh-gnav__mark--img img{object-fit:contain}
 .pqh-gnav__name{font:800 15px/1.2 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#0f2237;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pqh-gnav__item{display:flex;flex-direction:row;align-items:center;gap:11px;padding:9px 10px;border:0;border-radius:9px;background:transparent!important;color:#5b6b7c!important;font:600 13px/1.3 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-align:left;white-space:nowrap;width:100%;text-decoration:none!important;cursor:pointer;box-shadow:none!important}
+.pqh-gnav__item{display:flex;flex-direction:row;align-items:center;gap:11px;padding:9px 10px;border:0;border-radius:9px;background:#f4f6f9!important;color:#5b6b7c!important;font:600 13px/1.3 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-align:left;white-space:nowrap;width:100%;text-decoration:none!important;cursor:pointer;box-shadow:none!important}
 .pqh-gnav__item svg{flex:0 0 auto;width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .pqh-gnav__item:hover{background:#edf3fc!important;color:#17498f!important;text-decoration:none!important}
 .pqh-gnav__item.is-active{background:#edf3fc!important;color:#2166d1!important;font-weight:700}
@@ -1278,12 +1636,15 @@ function pqh_design_shell_css(string $scope): string {
 {$scope}.pqh-rail-min .pqh-gnav__brand{justify-content:center;padding-left:0;padding-right:0}
 .pqh-appbar{position:sticky;top:0;z-index:70;display:flex;align-items:center;gap:12px;height:60px;padding:0 22px;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid #e4e9ef;box-shadow:none}
 .pqh-appbar__brand{display:flex;align-items:center;gap:10px;color:#0f2237;font-size:16px;font-weight:750;letter-spacing:-.01em;margin-right:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pqh-appbar__brand-icon{width:22px;height:22px;stroke:#2166d1;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
 .pqh-appbar__mark{display:none}
 .pqh-appbar__nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-.pqh-appbar__nav a,.pqh-appbar__nav button{display:inline-flex;align-items:center;min-height:36px;padding:0 12px;border:1px solid transparent!important;border-radius:9px;background:transparent!important;color:#5b6b7c!important;font-size:12.5px;font-weight:650!important;text-decoration:none!important;cursor:pointer;box-shadow:none!important}
+.pqh-appbar__nav a,.pqh-appbar__nav button{display:inline-flex;align-items:center;min-height:36px;padding:0 12px;border:1px solid transparent!important;border-radius:9px;background:transparent!important;color:#5b6b7c!important;font-size:13.5px;font-weight:650!important;text-decoration:none!important;cursor:pointer;box-shadow:none!important}
 .pqh-appbar__nav a:hover,.pqh-appbar__nav button:hover{background:#edf3fc!important;color:#17498f!important}
 .pqh-appbar__nav .pqh-appbar__logout{background:#2166d1!important;color:#fff!important;font-weight:700!important;box-shadow:0 6px 14px -8px rgba(33,102,209,.55)!important}
 .pqh-appbar__nav .pqh-appbar__logout:hover{background:#17498f!important;color:#fff!important}
+.pqh-appbar__nav a.pqh-appbar__icon{padding:0;width:36px;justify-content:center}
+.pqh-appbar__nav a.pqh-appbar__icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 @media(max-width:900px){{$scope},{$scope}.pqh-rail-min{padding-left:0!important}.pqh-gnav{display:none}.pqh-appbar{height:auto;min-height:60px;padding:8px 14px;flex-wrap:wrap}}
 CSS;
 }
@@ -1364,6 +1725,7 @@ function pqh_design_shell_html(string $shellclass, string $active = '', array $o
     global $USER;
     $ctx = pqh_requested_consumer_context();
     $brand = trim((string)($ctx->consumername ?? '')) ?: 'EduPlatform';
+    $brandlogo = trim((string)($ctx->logourl ?? ''));
     $initials = strtoupper(substr(preg_replace('/[^a-z0-9]/i', '', $brand) ?: 'EP', 0, 2));
     $params = [];
     if (trim((string)($ctx->consumerslug ?? '')) !== '') {
@@ -1375,20 +1737,23 @@ function pqh_design_shell_html(string $shellclass, string $active = '', array $o
     }
     $icons = [
         'dashboard' => '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
-        'workspace' => '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>',
+        'workspace' => '<rect x="2" y="4" width="20" height="5" rx="1"/><path d="M4 9v10M20 9v10M2 19h20"/>',
         'live' => '<rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/>',
         'schedule' => '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+        'hub' => '<path d="M3 9.5 12 3l9 6.5"/><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/>',
     ];
     $viewer = pqh_shell_viewer_kind((int)$USER->id);
     if ($viewer === 'student') {
         $items = [
             'dashboard' => ['Dashboard', new moodle_url('/local/hubredirect/student_dashboard.php', $params), $icons['dashboard']],
             'workspace' => ['Workplace', new moodle_url('/local/hubredirect/student_workplace.php', $params), $icons['workspace']],
+            'hub' => ['School Hub', new moodle_url('/local/hubredirect/consumer_landing.php', $params), $icons['hub']],
             'schedule' => ['Schedule', new moodle_url('/local/hubredirect/live_schedule.php', $params + ['childid' => (int)$USER->id]), $icons['schedule']],
         ];
         $appbar = [
             ['Dashboard', $items['dashboard'][1]],
             ['Student workplace', $items['workspace'][1]],
+            ['School Hub', $items['hub'][1]],
         ];
     } else if ($viewer === 'parent') {
         $items = [
@@ -1403,25 +1768,43 @@ function pqh_design_shell_html(string $shellclass, string $active = '', array $o
         $staffhome = (is_siteadmin((int)$USER->id) || pqh_is_school_principal((int)$USER->id))
             ? '/local/hubredirect/dashboard.php'
             : '/local/hubredirect/teacher_dashboard.php';
+        // One staff rail serves both workspace managers and teachers, but
+        // teacher_workspace.php gates on pqltch_is_teacher() -- a workspace
+        // owner/admin who has never taught fails it and lands on "Teacher
+        // workspace access required". Send those viewers to the admin
+        // workspace instead, which is what workspace_dashboard.php's own top
+        // bar already links to. Anyone holding a teacher profile keeps the
+        // teaching view.
+        $staffworkspacepath = '/local/hubredirect/teacher_workspace.php';
+        if ($ws > 0 && !pqh_has_teacher_profile((int)$USER->id)
+                && pqh_user_can_manage_workspace((int)$USER->id, $ws)) {
+            $staffworkspacepath = '/local/hubredirect/admin_workspace.php';
+        }
         $items = [
             'dashboard' => ['Dashboard', new moodle_url($staffhome, $params), $icons['dashboard']],
-            'workspace' => ['Workspace', new moodle_url('/local/hubredirect/teacher_workspace.php', $params), $icons['workspace']],
-            'live' => ['Live', new moodle_url('/local/hubredirect/live_sessions.php', $params), $icons['live']],
+            'workspace' => ['Workspace', new moodle_url($staffworkspacepath, $params), $icons['workspace']],
+            'hub' => ['School Hub', new moodle_url('/local/hubredirect/consumer_landing.php', $params), $icons['hub']],
+            'live' => ['Live sessions', new moodle_url('/local/hubredirect/live_sessions.php', $params), $icons['live']],
             'schedule' => ['Schedule', new moodle_url('/local/hubredirect/live_schedule.php', $params), $icons['schedule']],
         ];
         $appbar = [
             ['Dashboard', $items['dashboard'][1]],
-            ['Teacher workspace', $items['workspace'][1]],
-            ['Live sessions', $items['live'][1]],
+            ['Workspace', $items['workspace'][1]],
         ];
     }
     $logouturl = (new moodle_url('/local/hubredirect/logout.php'))->out(false);
     $title = trim((string)($opts['title'] ?? '')) ?: $brand;
     $html = '<nav class="pqh-gnav" aria-label="Global navigation">';
     $html .= '<a class="pqh-gnav__brand" href="' . $items['dashboard'][1]->out(false) . '" title="' . s($brand) . '">'
-        . '<span class="pqh-gnav__mark">' . s($initials) . '</span>'
+        . '<span class="pqh-gnav__mark' . ($brandlogo !== '' ? ' pqh-gnav__mark--img' : '') . '">' . ($brandlogo !== '' ? '<img src="' . s($brandlogo) . '" alt="' . s($brand) . '">' : s($initials)) . '</span>'
         . '<span class="pqh-gnav__name">' . s($brand) . '</span></a>';
-    foreach ($items as $key => $item) {
+    $gnavitems = $items;
+    if (!empty($opts['hideitems']) && is_array($opts['hideitems'])) {
+        foreach ($opts['hideitems'] as $hidekey) {
+            unset($gnavitems[$hidekey]);
+        }
+    }
+    foreach ($gnavitems as $key => $item) {
         $html .= '<a class="pqh-gnav__item' . ($key === $active ? ' is-active' : '') . '" href="' . $item[1]->out(false) . '">'
             . '<svg viewBox="0 0 24 24">' . $item[2] . '</svg><span class="pqh-gnav__label">' . s($item[0]) . '</span></a>';
     }
@@ -1438,9 +1821,26 @@ function pqh_design_shell_html(string $shellclass, string $active = '', array $o
     $html .= '<a class="pqh-gnav__item" href="' . $logouturl . '"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg><span class="pqh-gnav__label">Logout</span></a>';
     $html .= '<button class="pqh-gnav__item" id="pqh-rail-toggle" type="button" aria-label="Collapse or expand navigation"><svg viewBox="0 0 24 24"><path d="m11 17-5-5 5-5M18 17l-5-5 5-5"/></svg><span class="pqh-gnav__label">Collapse</span></button>';
     $html .= '</div></nav>';
-    $html .= '<div class="pqh-appbar"><div class="pqh-appbar__brand">' . s($title) . '</div><div class="pqh-appbar__nav">';
+    $titleicon = $icons[$active] ?? '';
+    $brandhtml = $titleicon !== ''
+        ? '<svg class="pqh-appbar__brand-icon" viewBox="0 0 24 24" aria-hidden="true">' . $titleicon . '</svg><span>' . s($title) . '</span>'
+        : s($title);
+    if (!empty($opts['appbar']) && is_array($opts['appbar'])) {
+        $appbar = $opts['appbar'];
+    }
+    $html .= '<div class="pqh-appbar"><div class="pqh-appbar__brand">' . $brandhtml . '</div><div class="pqh-appbar__nav">';
     foreach ($appbar as $link) {
-        $html .= '<a href="' . $link[1]->out(false) . '">' . s($link[0]) . '</a>';
+        if ($link[1] === 'BACK') {
+            $fallback = ($link[2] ?? null) instanceof moodle_url ? $link[2]->out(false) : $items['dashboard'][1]->out(false);
+            $html .= '<button class="pqh-back" type="button" data-fallback="' . s($fallback) . '">' . s($link[0]) . '</button>';
+            continue;
+        }
+        $icon = (string)($link[2] ?? '');
+        if ($icon !== '') {
+            $html .= '<a class="pqh-appbar__icon" href="' . $link[1]->out(false) . '" title="' . s($link[0]) . '" aria-label="' . s($link[0]) . '"><svg viewBox="0 0 24 24">' . $icon . '</svg></a>';
+        } else {
+            $html .= '<a href="' . $link[1]->out(false) . '">' . s($link[0]) . '</a>';
+        }
     }
     if (!empty($opts['links']) && is_array($opts['links'])) {
         foreach ($opts['links'] as $link) {
@@ -1455,8 +1855,81 @@ function pqh_design_shell_html(string $shellclass, string $active = '', array $o
     $html .= '</div></div>';
     $html .= '<script>(function(){var shell=document.querySelector(".' . $shellclass . '");var toggle=document.getElementById("pqh-rail-toggle");var key="pqh_rail_min";'
         . 'try{if(window.localStorage.getItem(key)==="1"){shell.classList.add("pqh-rail-min");}}catch(e){}'
-        . 'if(toggle){toggle.addEventListener("click",function(){var x=shell.classList.toggle("pqh-rail-min");try{window.localStorage.setItem(key,x?"1":"0");}catch(e){}});}})();</script>';
+        . 'if(toggle){toggle.addEventListener("click",function(){var x=shell.classList.toggle("pqh-rail-min");try{window.localStorage.setItem(key,x?"1":"0");}catch(e){}});}'
+        . 'document.querySelectorAll(".pqh-back").forEach(function(b){b.addEventListener("click",function(){'
+        . 'if(window.history&&window.history.length>1){window.history.back();return;}'
+        . 'window.location.href=b.getAttribute("data-fallback")||"/";});});})();</script>';
     return $html;
+}
+
+/**
+ * Shared shell options for the live-class pages (summaries, recordings,
+ * parent hub, schedule, calendar, series schedule, trust centre, sessions).
+ * They all present the same destinations, so the top bar and left rail are
+ * defined once here rather than repeated in every page.
+ *
+ * Every shared-shell default gnav item is hidden deliberately: the staff
+ * viewer adds workspace/hub/live on top of the parent viewer's
+ * dashboard/schedule, so leaving any default in place duplicates one of the
+ * custom items below for at least one role.
+ *
+ * @param string $title page name shown beside the live icon in the top bar
+ * @param array $urlparams consumer/workspace params the page already resolved
+ * @param int $childid selected student, when the page tracks one (0 to omit)
+ */
+function pqh_live_page_shell_opts(string $title, array $urlparams = [], int $childid = 0): array {
+    global $USER;
+
+    $childparams = $childid > 0 ? ['childid' => $childid] : [];
+    $isstaff = pqh_shell_viewer_kind((int)$USER->id) === 'staff';
+
+    $dashboardurl = new moodle_url('/local/hubredirect/dashboard.php', $urlparams + $childparams);
+    $workspaceurl = $isstaff
+        ? new moodle_url('/local/hubredirect/teacher_workspace.php', $urlparams)
+        : new moodle_url('/local/hubredirect/workspace_parent.php', $urlparams + $childparams);
+    $huburl = new moodle_url('/local/hubredirect/consumer_landing.php', $urlparams);
+
+    return [
+        'title' => $title,
+        'appbar' => [
+            ['Dashboard', $dashboardurl],
+            ['Workspace', $workspaceurl],
+            ['School Hub', $huburl],
+        ],
+        'hideitems' => ['dashboard', 'workspace', 'hub', 'live', 'schedule'],
+        'navitems' => [
+            [
+                'label' => 'Dashboard',
+                'url' => $dashboardurl,
+                'icon' => '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+            ],
+            [
+                'label' => 'Workspace',
+                'url' => $workspaceurl,
+                'icon' => '<rect x="2" y="4" width="20" height="5" rx="1"/><path d="M4 9v10M20 9v10M2 19h20"/>',
+            ],
+            [
+                'label' => 'School Hub',
+                'url' => $huburl,
+                'icon' => '<path d="M3 9.5 12 3l9 6.5"/><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/>',
+            ],
+            [
+                'label' => 'Schedule',
+                'url' => new moodle_url('/local/hubredirect/live_schedule.php', $urlparams + $childparams),
+                'icon' => '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+            ],
+            [
+                'label' => 'Calendar',
+                'url' => new moodle_url('/local/hubredirect/live_calendar.php', $urlparams + $childparams),
+                'icon' => '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>',
+            ],
+            [
+                'label' => 'Live sessions',
+                'url' => new moodle_url('/local/hubredirect/live_sessions.php', $urlparams),
+                'icon' => '<rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/>',
+            ],
+        ],
+    ];
 }
 
 function pqh_live_session_explainer_media_url(): moodle_url {
@@ -2049,4 +2522,38 @@ function pqh_embedded_support_html(
     return '<link rel="stylesheet" href="' . s($cssurl) . '">'
         . '<script>' . $script . '</script>'
         . '<script src="' . s($jsurl) . '"></script>';
+}
+
+/**
+ * Session-independent, IP-keyed rate limiter for cookieless public endpoints
+ * (the verification pages previously threw their $_SESSION counter away on
+ * every cookie-less request). Records a hit for (bucket, hashed remote addr)
+ * and returns true when the caller has exceeded $max hits in the trailing
+ * window. Best-effort: if the backing table is absent it fails OPEN (never
+ * blocks a legitimate user because of an ops gap) — the secret code remains
+ * the real barrier.
+ */
+function pqh_ip_rate_limited(string $bucket, int $max = 30, int $windowsecs = 60): bool {
+    global $DB;
+
+    try {
+        if (!$DB->get_manager()->table_exists(new xmldb_table('local_prequran_rate_hit'))) {
+            return false;
+        }
+        $now = time();
+        $ip = (string)(getremoteaddr() ?? '');
+        $iphash = hash('sha256', $ip . '|' . ($GLOBALS['CFG']->passwordsaltmain ?? ''));
+        $bucket = core_text::substr($bucket, 0, 60);
+        // Opportunistic prune of anything older than an hour keeps the table small.
+        $DB->delete_records_select('local_prequran_rate_hit', 'timecreated < :cut', ['cut' => $now - HOURSECS]);
+        $count = (int)$DB->count_records_select('local_prequran_rate_hit',
+            'bucket = :b AND iphash = :h AND timecreated >= :since',
+            ['b' => $bucket, 'h' => $iphash, 'since' => $now - $windowsecs]);
+        $DB->insert_record('local_prequran_rate_hit', (object)[
+            'bucket' => $bucket, 'iphash' => $iphash, 'timecreated' => $now,
+        ]);
+        return $count >= $max;
+    } catch (Throwable $e) {
+        return false;
+    }
 }

@@ -383,7 +383,7 @@ function pqws_update_own_material_status(int $workspaceid, int $studentid): void
         throw new invalid_parameter_exception('Only the assigned student can update this material progress from the student page.');
     }
     if (!pqh_table_has_field_safe('local_prequran_workspace_mat_assign', 'workflow_status')) {
-        throw new invalid_parameter_exception('Material assignment workflow fields are not ready. Run the local_prequran Moodle upgrade.');
+        throw new invalid_parameter_exception('Material assignment workflow fields are not ready. Run the local_prequran upgrade.');
     }
     $assignmentid = optional_param('assignmentid', 0, PARAM_INT);
     $workflow = optional_param('workflow_status', '', PARAM_ALPHANUMEXT);

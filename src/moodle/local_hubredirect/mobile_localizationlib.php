@@ -77,10 +77,10 @@ function pqml_readiness_checks(int $workspaceid, int $clientid = 0): array {
     $enabled = !empty($CFG->enablewebservices);
     $checks[] = [
         'key' => 'moodle_webservices',
-        'label' => 'Moodle web services',
+        'label' => 'Web services',
         'status' => $enabled ? 'ok' : 'warning',
         'severity' => $enabled ? 'low' : 'high',
-        'summary' => $enabled ? 'Moodle web services are enabled.' : 'CFG enablewebservices is not enabled.',
+        'summary' => $enabled ? 'Web services are enabled.' : 'CFG enablewebservices is not enabled.',
     ];
     $service = false;
     if (pqh_table_exists_safe('external_services')) {

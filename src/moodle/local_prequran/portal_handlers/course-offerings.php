@@ -40,7 +40,7 @@ if (!$workspace || !pqcoal_user_can_manage_offerings($userid, $workspaceid, $wor
 
 $ready = pqco_table_ready();
 $catalog = pqh_course_catalog();
-$moodlecourses = pqco_moodle_courses();
+$moodlecourses = pqco_moodle_courses($workspaceid);
 
 // ---- writes ------------------------------------------------------------------
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
@@ -70,10 +70,16 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     $error = '';
     try {
         if ($action === 'save_offering') {
+            $rawcoursekey = $balpha('course_key');
+            $iscustomcourse = $rawcoursekey === '__custom__';
+            $customcoursetitle = $btext('custom_course_title');
             $form = [
                 'offeringid' => (string)$bint('offeringid'),
                 'course_link_mode' => $balpha('course_link_mode', 'existing'),
-                'course_key' => pqh_normalize_course_key($balpha('course_key')),
+                'course_key' => $iscustomcourse
+                    ? pqco_slug_segment($customcoursetitle, 'custom_' . time())
+                    : pqh_normalize_course_key($rawcoursekey),
+                'custom_course_title' => $customcoursetitle,
                 'moodlecourseid' => (string)$bint('moodlecourseid'),
                 'title' => $btext('title'),
                 'summary' => $btext('summary'),
@@ -94,14 +100,23 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 'visibility' => $balpha('visibility', 'workspace'),
                 'status' => $balpha('status', 'draft'),
             ];
-            if ($form['course_key'] === '' || !isset($catalog[$form['course_key']])) {
-                pqcoal_validation_error('Choose a valid course track.');
+            if ($iscustomcourse) {
+                if ($customcoursetitle === '') {
+                    pqcoal_validation_error('Enter a title for the custom course.');
+                }
+                if ($form['title'] === '') {
+                    $form['title'] = $customcoursetitle;
+                }
+            } else {
+                if ($form['course_key'] === '' || !isset($catalog[$form['course_key']])) {
+                    pqcoal_validation_error('Choose a valid course track.');
+                }
+                if ($form['title'] === '') {
+                    $form['title'] = (string)$catalog[$form['course_key']]['title'];
+                }
             }
             if (!in_array($form['course_link_mode'], ['existing', 'create_new'], true)) {
                 pqcoal_validation_error('Choose whether to link an existing Moodle course or create a new one.');
-            }
-            if ($form['title'] === '') {
-                $form['title'] = (string)$catalog[$form['course_key']]['title'];
             }
             if ($form['course_link_mode'] === 'create_new') {
                 $createdcourseid = pqco_create_moodle_course_for_offering($consumercontext, $workspace, $form, $catalog);
@@ -109,7 +124,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                     pqcoal_validation_error('The Moodle course could not be created. Check Moodle course category permissions and try again.');
                 }
                 $form['moodlecourseid'] = (string)$createdcourseid;
-                $moodlecourses = pqco_moodle_courses();
+                $moodlecourses = pqco_moodle_courses($workspaceid);
                 $message = 'Moodle course created and linked to this offering.';
             }
             if ((int)$form['moodlecourseid'] <= 0 || !isset($moodlecourses[(int)$form['moodlecourseid']])) {
@@ -359,6 +374,13 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 $workspaceid,
                 $urlparams
             );
+            if ($decision === 'approved') {
+                // A seat just freed — promote the oldest waitlisted request(s).
+                $promoted = pqcoal_promote_waitlisted((int)$request->offeringid, $workspaceid, $consumercontext);
+                if ($promoted > 0) {
+                    $message .= ' ' . $promoted . ' waitlisted request' . ($promoted === 1 ? '' : 's') . ' auto-promoted.';
+                }
+            }
             echo json_encode(['ok' => true, 'message' => $message], JSON_UNESCAPED_SLASHES);
             exit;
         } else if ($action === 'drop_enrollment') {
@@ -409,12 +431,18 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 $workspaceid,
                 $urlparams
             );
-            echo json_encode(['ok' => true, 'message' => 'Enrollment dropped and Moodle unenrollment attempted.'], JSON_UNESCAPED_SLASHES);
+            // A seat just freed — promote the oldest waitlisted request(s).
+            $dropmessage = 'Enrollment dropped and Moodle unenrollment attempted.';
+            $promoted = pqcoal_promote_waitlisted((int)$request->offeringid, $workspaceid, $consumercontext);
+            if ($promoted > 0) {
+                $dropmessage .= ' ' . $promoted . ' waitlisted request' . ($promoted === 1 ? '' : 's') . ' auto-promoted.';
+            }
+            echo json_encode(['ok' => true, 'message' => $dropmessage], JSON_UNESCAPED_SLASHES);
             exit;
         } else if ($action === 'retry_moodle_enrollment') {
             $requestid = $bint('requestid');
             $request = $DB->get_record_sql(
-                "SELECT r.*, o.title AS offering_title, o.moodlecourseid, o.course_key
+                "SELECT r.*, o.title AS offering_title, o.moodlecourseid, o.course_key, o.startdate, o.enddate
                    FROM {local_prequran_course_enrol_req} r
                    JOIN {local_prequran_course_offering} o ON o.id = r.offeringid
                   WHERE r.id = :requestid
@@ -429,7 +457,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                 pqcoal_validation_error('Only approved requests pending Moodle sync can be synced to Moodle.');
             }
             $urlparams = ['workspaceid' => $workspaceid];
-            if (!pqco_enrol_student_in_moodle_course((int)$request->studentid, (int)$request->moodlecourseid)) {
+            if (!pqco_enrol_student_in_moodle_course((int)$request->studentid, (int)$request->moodlecourseid, $request)) {
                 pqco_notify_workspace_admins(
                     $workspaceid,
                     'Course Moodle sync failed',
@@ -515,6 +543,7 @@ $form = [
     'offeringid' => '0',
     'course_link_mode' => 'existing',
     'course_key' => 'pre_quraan',
+    'custom_course_title' => '',
     'moodlecourseid' => '0',
     'title' => '',
     'summary' => '',
@@ -538,7 +567,7 @@ $form = [
 if ($editid > 0) {
     $edit = $DB->get_record('local_prequran_course_offering', ['id' => $editid, 'workspaceid' => $workspaceid], '*', IGNORE_MISSING);
     if ($edit) {
-        $form = pqcoal_offering_record_for_form($edit);
+        $form = pqcoal_offering_record_for_form($edit, $catalog);
     }
 }
 
@@ -634,6 +663,7 @@ $catalogout = [];
 foreach ($catalog as $key => $course) {
     $catalogout[] = ['key' => (string)$key, 'title' => (string)($course['title'] ?? $key)];
 }
+$catalogout[] = ['key' => '__custom__', 'title' => 'Custom / other subject'];
 $moodlecoursesout = [];
 foreach ($moodlecourses as $courseid => $label) {
     $moodlecoursesout[] = ['id' => (int)$courseid, 'label' => (string)$label];
@@ -670,7 +700,7 @@ echo json_encode([
         'visibilities' => pqco_visibility_options(),
         'payment_timings' => array_values(array_merge(['workspace_policy'], pqfin_policy_allowed_values()['payment_required_timing'])),
         'tax_behaviors' => ['not_configured' => 'Not configured', 'included' => 'Included in price', 'added_later' => 'Added later', 'exempt' => 'Exempt'],
-        'request_statuses' => ['pending', 'approved', 'enrolled', 'drop_requested', 'dropped', 'rejected', 'cancelled'],
+        'request_statuses' => ['pending', 'approved', 'enrolled', 'waitlisted', 'drop_requested', 'dropped', 'rejected', 'cancelled', 'completed'],
     ],
     'invoice_schema_ready' => pqfin_invoice_schema_ready(),
     'offerings' => $offerings,

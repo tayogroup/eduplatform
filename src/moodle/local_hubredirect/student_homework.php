@@ -15,6 +15,7 @@ if ($workspaceid <= 0 || !pqho_user_is_student_in_workspace((int)$USER->id, $wor
 if (!pqhh_ready()) {
     pqh_access_denied('Homework is waiting for the EduPlatform database upgrade.', new moodle_url('/local/hubredirect/student_workplace.php', $urlparams), 'Homework setup required');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $notice = '';
 $error = '';

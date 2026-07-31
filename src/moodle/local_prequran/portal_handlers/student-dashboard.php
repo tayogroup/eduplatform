@@ -18,7 +18,67 @@ require_once($CFG->dirroot . '/local/hubredirect/student_dashboard_portallib.php
 $userid = (int)($claims['sub'] ?? 0);
 
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
-    pqpd_fail(400, 'The student dashboard has no write actions.');
+    // The one write on the student home: rate_session — learner voice feeding
+    // the teacher QA analytics (see quality-analytics blended score). Guards:
+    // only sessions the student PARTICIPATED in, only past non-cancelled ones,
+    // one rating per (session, rater) — re-rating updates the row.
+    $body = json_decode((string)file_get_contents('php://input'), true);
+    $do = clean_param((string)(is_array($body) ? ($body['do'] ?? '') : ''), PARAM_ALPHANUMEXT);
+    if ($do !== 'rate_session') {
+        pqpd_fail(400, 'The student dashboard supports only the rate_session action.');
+    }
+    if (!$DB->get_manager()->table_exists(new xmldb_table('local_prequran_session_rating'))) {
+        pqpd_fail(400, 'Session ratings are not ready. Run the Moodle plugin upgrade for local_prequran first.');
+    }
+    $sessionid = (int)($body['sessionid'] ?? 0);
+    $rating = (int)($body['rating'] ?? 0);
+    $comment = trim(clean_param((string)($body['comment'] ?? ''), PARAM_TEXT));
+    if ($rating < 1 || $rating > 5) {
+        pqpd_fail(400, 'Rating must be between 1 and 5.');
+    }
+    $session = $DB->get_record('local_prequran_live_session', ['id' => $sessionid], '*', IGNORE_MISSING);
+    if (!$session || (string)$session->status === 'cancelled') {
+        pqpd_fail(400, 'That class could not be found.');
+    }
+    if ((int)$session->scheduled_start > time()) {
+        pqpd_fail(400, 'You can rate a class after it has taken place.');
+    }
+    $participant = $DB->record_exists('local_prequran_live_participant', ['sessionid' => $sessionid, 'userid' => $userid]);
+    if (!$participant) {
+        pqpd_fail(403, 'Only participants of a class can rate it.');
+    }
+    $now = time();
+    $existing = $DB->get_record('local_prequran_session_rating', ['sessionid' => $sessionid, 'raterid' => $userid], '*', IGNORE_MISSING);
+    if ($existing) {
+        $existing->rating = $rating;
+        $existing->comment = $comment;
+        $existing->timemodified = $now;
+        $DB->update_record('local_prequran_session_rating', $existing);
+    } else {
+        // Review moderation: when the school requires manual approval, a new
+        // written review starts 'pending' and is hidden from the public profile
+        // until a manager approves it. A blank comment (star-only) is always
+        // approved. Column absent on pre-v21 schemas -> field-guarded.
+        $ratingrow = (object)[
+            'consumerid' => 0,
+            'workspaceid' => (int)($session->workspaceid ?? 0),
+            'sessionid' => $sessionid,
+            'teacherid' => (int)($session->teacherid ?? 0),
+            'raterid' => $userid,
+            'rater_role' => 'student',
+            'rating' => $rating,
+            'comment' => $comment,
+            'timecreated' => $now,
+            'timemodified' => $now,
+        ];
+        if ($DB->get_manager()->field_exists(new xmldb_table('local_prequran_session_rating'), new xmldb_field('moderation_status'))) {
+            $manual = (string)get_config('local_prequran', 'marketplace_review_moderation_mode') === 'manual';
+            $ratingrow->moderation_status = ($manual && $comment !== '') ? 'pending' : 'approved';
+        }
+        $DB->insert_record('local_prequran_session_rating', $ratingrow);
+    }
+    echo json_encode(['ok' => true, 'message' => 'Thanks — your rating was saved.'], JSON_UNESCAPED_SLASHES);
+    exit;
 }
 
 // -- access: the page is students-only; staff are redirected to the combined
@@ -223,11 +283,32 @@ foreach ($feedbackrows as $fb) {
     ];
 }
 
+// Recent past classes this student attended, with their existing rating —
+// drives the "Rate your recent classes" panel.
+$ratablesessions = [];
+try {
+    if ($DB->get_manager()->table_exists(new xmldb_table('local_prequran_session_rating'))) {
+        $ratablesessions = array_values($DB->get_records_sql(
+            "SELECT ls.id, ls.title, ls.scheduled_start, r.rating AS myrating
+               FROM {local_prequran_live_session} ls
+               JOIN {local_prequran_live_participant} p ON p.sessionid = ls.id
+          LEFT JOIN {local_prequran_session_rating} r ON r.sessionid = ls.id AND r.raterid = :me
+              WHERE p.userid = :me2 AND ls.status <> 'cancelled'
+                AND ls.scheduled_start < :now AND ls.scheduled_start > :cutoff
+           ORDER BY ls.scheduled_start DESC",
+            ['me' => $userid, 'me2' => $userid, 'now' => $now, 'cutoff' => $now - (60 * DAYSECS)], 0, 10
+        ));
+    }
+} catch (Throwable $e) {
+    $ratablesessions = [];
+}
+
 echo json_encode([
     'ok' => true, 'ready' => true,
     'firstname' => (string)$USER->firstname,
     'consumer' => (string)($consumercontext->consumerslug ?? ''),
     'workspaceid' => $studentworkspaceid,
+    'ratable_sessions' => $ratablesessions,
     'urls' => [
         'homework' => $homeworkurl->out(false),
         'schedule' => $scheduleurl->out(false),

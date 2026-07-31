@@ -137,6 +137,9 @@ if ($workspaceid <= 0 && !empty($session->workspaceid)) {
     $workspaceid = (int)$session->workspaceid;
     $urlparams['workspaceid'] = $workspaceid;
 }
+if ($workspaceid > 0) {
+    pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
+}
 
 $studentid = pqlroom_primary_studentid($sessionid);
 $joinparams = [

@@ -51,7 +51,16 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         } else if ((int)$student->id === (int)$parent->id) {
             pqpd_fail(400, 'Student and parent must be different Moodle user accounts.');
         }
-        $sourcekey = 'manual_parent_student_link';
+        // Guardian-link mode (parent_link_confirm_mode): '' = instant-active
+        // (legacy), 'notify' = active + the parent is told, 'confirm' = the
+        // link starts PENDING and grants nothing until the parent confirms it
+        // on their portal.
+        $linkmode = (string)get_config('local_prequran', 'parent_link_confirm_mode');
+        if ($linkmode === 'confirm') {
+            $linkliveconsent = 0;
+            $linkrecordingconsent = 0;
+        }
+        $sourcekey = $linkmode === 'confirm' ? 'pending_parent_confirm' : 'manual_parent_student_link';
         $details = $linknotes !== '' ? $linknotes : 'Manual admin link between existing Moodle student and existing Moodle parent/guardian.';
         $commstatus = pqlpl_upsert_comm_link((int)$student->id, (int)$parent->id, $sourcekey);
         if ($commstatus === 'communication consent table missing') {
@@ -68,19 +77,119 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             'Audio is always recorded for safeguarding, class quality, lesson review, parent/teacher review, quiz support, and academy compliance. ' . $details
         );
         $profilestatus = $linkupdateprofile ? pqlpl_update_student_profile_parent((int)$student->id, $parent) : 'not requested';
-        pqlpl_audit('student_parent_linked', (int)$student->id, (int)$parent->id, [
+        if ($linkmode === 'confirm') {
+            // Park the pair: consented=0 until the parent confirms on their
+            // portal. Field-existence guarded (comm_consent schema variants).
+            $commcolumns = $DB->get_columns('local_prequran_comm_consent');
+            $pair = $DB->get_record('local_prequran_comm_consent',
+                ['studentid' => (int)$student->id, 'guardianid' => (int)$parent->id], '*', IGNORE_MISSING);
+            if ($pair) {
+                $pending = (object)['id' => (int)$pair->id];
+                if (isset($commcolumns['consented'])) {
+                    $pending->consented = 0;
+                }
+                if (isset($commcolumns['source'])) {
+                    $pending->source = 'pending_parent_confirm';
+                }
+                if (isset($commcolumns['consent_source'])) {
+                    $pending->consent_source = 'pending_parent_confirm';
+                }
+                if (isset($commcolumns['timemodified'])) {
+                    $pending->timemodified = time();
+                }
+                $DB->update_record('local_prequran_comm_consent', $pending);
+            }
+        }
+        pqlpl_audit($linkmode === 'confirm' ? 'student_parent_link_pending' : 'student_parent_linked',
+            (int)$student->id, (int)$parent->id, [
             'comm' => $commstatus,
             'live_session' => $livestatus,
             'recording' => $recordingstatus,
             'audio_policy' => $audiostatus,
             'profile' => $profilestatus,
+            'mode' => $linkmode,
         ]);
-        $linkmessage = 'Linked ' . fullname($student) . ' (' . pqh_account_no_label($student) . ', student Moodle ID ' . (int)$student->id . ') to ' . fullname($parent) . ' (' . pqh_account_no_label($parent) . ', parent Moodle ID ' . (int)$parent->id . ').';
+        if ($linkmode === 'notify' || $linkmode === 'confirm') {
+            // The guardian must always learn a link was made in their name.
+            try {
+                $notice = new \core\message\message();
+                $notice->component = 'local_prequran';
+                $notice->name = 'live_session_update';
+                $notice->userfrom = core_user::get_noreply_user();
+                $notice->userto = $parent;
+                $notice->subject = 'You were linked as parent/guardian of ' . fullname($student);
+                $notice->fullmessage = 'The academy linked your account as parent/guardian of ' . fullname($student) . '.'
+                    . ($linkmode === 'confirm'
+                        ? ' The link is INACTIVE until you confirm it on your family portal (Student & Parent Portal).'
+                        : ' If this is not correct, contact your school immediately.');
+                $notice->fullmessageformat = FORMAT_PLAIN;
+                $notice->fullmessagehtml = '';
+                $notice->smallmessage = $notice->subject;
+                $notice->notification = 1;
+                $notice->courseid = SITEID;
+                message_send($notice);
+            } catch (Throwable $e) {
+                // Notification is best-effort; the link/audit already stand.
+            }
+        }
+        $linkmessage = ($linkmode === 'confirm' ? 'PENDING link created (parent must confirm on their portal): ' : 'Linked ')
+            . fullname($student) . ' (' . pqh_account_no_label($student) . ', student Moodle ID ' . (int)$student->id . ') to ' . fullname($parent) . ' (' . pqh_account_no_label($parent) . ', parent Moodle ID ' . (int)$parent->id . ').';
         echo json_encode([
             'ok' => true,
             'message' => $linkmessage,
             'studentid' => (int)$student->id,
             'parentid' => (int)$parent->id,
+        ], JSON_UNESCAPED_SLASHES);
+        exit;
+    }
+
+    // -- write: unlink (consent WITHDRAWAL — the revoke path the legacy page
+    // never had). Sets comm_consent.consented=0 and every live_consent row for
+    // the pair to granted=0. The pair then disappears from parent-observer
+    // reconcile, parent reporting access, and notification fan-out (all filter
+    // on consented/granted after this change). Rows are kept as dated history.
+    if ($do === 'unlink') {
+        $unlinkstudentid = (int)($body['link_studentid'] ?? 0);
+        $unlinkparentid = (int)($body['link_parentid'] ?? 0);
+        $unlinkreason = trim(clean_param((string)($body['link_notes'] ?? ''), PARAM_TEXT));
+        if ($unlinkstudentid <= 0 || $unlinkparentid <= 0) {
+            pqpd_fail(400, 'Choose the student and parent to unlink.');
+        }
+        $now = time();
+        $commrevoked = 0; $liverevoked = 0;
+        if ($DB->get_manager()->table_exists(new xmldb_table('local_prequran_comm_consent'))) {
+            $rows = $DB->get_records('local_prequran_comm_consent',
+                ['studentid' => $unlinkstudentid, 'guardianid' => $unlinkparentid]);
+            foreach ($rows as $row) {
+                if ((int)$row->consented === 1) {
+                    $DB->update_record('local_prequran_comm_consent', (object)[
+                        'id' => (int)$row->id, 'consented' => 0, 'timemodified' => $now,
+                    ]);
+                    $commrevoked++;
+                }
+            }
+        }
+        if ($DB->get_manager()->table_exists(new xmldb_table('local_prequran_live_consent'))) {
+            $rows = $DB->get_records('local_prequran_live_consent',
+                ['studentid' => $unlinkstudentid, 'guardianid' => $unlinkparentid]);
+            foreach ($rows as $row) {
+                if ((int)$row->granted === 1) {
+                    $DB->update_record('local_prequran_live_consent', (object)[
+                        'id' => (int)$row->id, 'granted' => 0, 'timemodified' => $now,
+                    ]);
+                    $liverevoked++;
+                }
+            }
+        }
+        pqlpl_audit('student_parent_unlinked', $unlinkstudentid, $unlinkparentid, [
+            'comm_revoked' => $commrevoked,
+            'live_revoked' => $liverevoked,
+            'reason' => $unlinkreason,
+        ]);
+        echo json_encode([
+            'ok' => true,
+            'message' => 'Parent link revoked: ' . $commrevoked . ' communication consent(s) and ' . $liverevoked
+                . ' live consent(s) withdrawn. The parent no longer appears in observer sync, reports, or notifications. Re-link any time to restore.',
         ], JSON_UNESCAPED_SLASHES);
         exit;
     }

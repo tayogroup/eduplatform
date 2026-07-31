@@ -441,6 +441,8 @@ if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'ack
 
 $acknotice = optional_param('acknowledged', 0, PARAM_BOOL) ? 'Schedule change acknowledged. Thank you.' : '';
 
+pqh_enforce_role_domain(pqh_requested_consumer_context(), pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
+
 echo $OUTPUT->header();
 ?>
 <style>
@@ -458,33 +460,41 @@ body.pqh-live-series-schedule-page #page,
 body.pqh-live-series-schedule-page #page-content,
 body.pqh-live-series-schedule-page #region-main,
 body.pqh-live-series-schedule-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
-.pqlps-shell{min-height:100vh;padding:34px 18px 54px;background:linear-gradient(180deg,#f1fff4 0,#fff 55%);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#173044}
-.pqlps-wrap{max-width:1080px;margin:0 auto}.pqlps-top,.pqlps-card,.pqlps-panel{background:#fff;border:1px solid rgba(111,78,50,.13);border-radius:14px;box-shadow:0 12px 28px rgba(105,76,45,.07)}
-.pqlps-top{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:18px;padding:22px;background:linear-gradient(135deg,#eaffea 0,#fff 56%,#fff7e7 100%)}
-.pqlps-kicker{margin:0 0 6px;color:#6f4e32;font-size:13px;font-weight:950;text-transform:uppercase;letter-spacing:.04em}.pqlps-title{margin:0;color:#4d3522;font-size:30px;line-height:1.1;font-weight:950}.pqlps-sub{margin:8px 0 0;color:#64745a;font-size:15px;font-weight:750}
-.pqlps-actions{display:flex;flex-wrap:wrap;gap:9px}.pqlps-btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 14px;border-radius:10px;background:#6f4e32;color:#fff!important;text-decoration:none;font-size:13px;font-weight:950}.pqlps-btn--light{background:#f4fff0;color:#4d3522!important;border:1px solid rgba(111,78,50,.16)}
-.pqlps-students{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.pqlps-student{padding:16px;border-radius:14px;background:#fff;border:1px solid rgba(111,78,50,.13);box-shadow:0 10px 24px rgba(105,76,45,.07);text-decoration:none;color:#4d3522!important;font-weight:950}.pqlps-student span{display:block;margin-top:4px;color:#64745a;font-size:12px;font-weight:800}
-.pqlps-list{display:grid;gap:14px}.pqlps-card{padding:18px}.pqlps-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:12px}.pqlps-card h2{margin:0;color:#4d3522;font-size:21px;font-weight:950}.pqlps-meta{margin:5px 0 0;color:#64745a;font-size:13px;font-weight:800}
-.pqlps-sessions{display:grid;gap:9px}.pqlps-session{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:12px;border:1px solid rgba(23,48,68,.1);border-radius:10px;background:#fbfdff}.pqlps-session--cancelled{background:#fff7f5}.pqlps-pill{display:inline-flex;align-items:center;min-height:28px;padding:0 9px;border-radius:999px;background:#eef4f6;color:#173044;font-size:12px;font-weight:950}.pqlps-pill--ok{background:#eaffea;color:#2f6f4e}.pqlps-pill--bad{background:#fff0ed;color:#883526}.pqlps-pill--warn{background:#fff4dc;color:#7b5a3a}
-.pqlps-history{margin-top:14px;padding:12px;border-radius:10px;background:#f7fafc;border:1px solid rgba(23,48,68,.1)}.pqlps-history h3{margin:0 0 8px;color:#4d3522;font-size:15px;font-weight:950}.pqlps-change{display:grid;grid-template-columns:155px 1fr;gap:8px;padding:7px 0;border-top:1px solid rgba(23,48,68,.08);font-size:12px;font-weight:800;color:#64745a}
-.pqlps-ack{margin-top:12px;padding:12px;border-radius:10px;background:#fff7e7;border:1px solid rgba(111,78,50,.16)}.pqlps-ack--done{background:#eaffea}.pqlps-ack form{margin-top:8px}.pqlps-notice{margin-bottom:14px;padding:12px 14px;border-radius:10px;background:#eaffea;border:1px solid rgba(47,111,78,.18);color:#2f6f4e;font-size:14px;font-weight:900}
-.pqlps-empty{padding:18px;border-radius:14px;background:#fff;border:1px dashed rgba(111,78,50,.22);color:#64745a;font-weight:850}
-@media(max-width:760px){.pqlps-top,.pqlps-head,.pqlps-session,.pqlps-change{display:block}.pqlps-actions{margin-top:12px}.pqlps-title{font-size:25px}}
+.pqlps-shell{min-height:100vh;padding:34px 18px 54px;background:#fff;color:#0f2237;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6}
+.pqlps-wrap{max-width:1080px;margin:0 auto}.pqlps-top,.pqlps-card,.pqlps-panel{background:#fff;border:1px solid #e4e9ef;border-radius:14px;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14)}
+.pqlps-top{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:18px;padding:22px}
+.pqlps-kicker{margin:0 0 6px;color:#5b6b7c;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}.pqlps-title{margin:0;color:#0f2237;font-size:26px;line-height:1.1;font-weight:800;letter-spacing:-.02em}.pqlps-sub{margin:8px 0 0;color:#5b6b7c;font-size:14px;font-weight:500}
+.pqlps-actions{display:flex;flex-wrap:wrap;gap:9px}.pqlps-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border-radius:10px;background:#fff;border:1px solid #e4e9ef;color:#0f2237!important;text-decoration:none;font-size:13px;font-weight:650}.pqlps-btn:hover{background:#edf3fc;border-color:#e0ebfa;text-decoration:none}.pqlps-btn--light{background:#edf3fc;color:#17498f!important;border:1px solid #e0ebfa}
+.pqlps-students{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.pqlps-student{padding:16px;border-radius:14px;background:#fff;border:1px solid #e4e9ef;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14);text-decoration:none;color:#0f2237!important;font-weight:700}.pqlps-student span{display:block;margin-top:4px;color:#5b6b7c;font-size:12px;font-weight:600}
+.pqlps-list{display:grid;gap:14px}.pqlps-card{padding:18px}.pqlps-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:12px}.pqlps-card h2{margin:0;color:#0f2237;font-size:19px;font-weight:750;letter-spacing:-.01em}.pqlps-meta{margin:5px 0 0;color:#5b6b7c;font-size:13px;font-weight:600}
+.pqlps-sessions{display:grid;gap:9px}.pqlps-session{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:12px;border:1px solid #e4e9ef;border-radius:10px;background:#f7f4ec}.pqlps-session--cancelled{background:#fbe9e7}.pqlps-pill{display:inline-flex;align-items:center;min-height:28px;padding:0 9px;border-radius:8px;background:#edf3fc;color:#17498f;font-size:12px;font-weight:650}.pqlps-pill--ok{background:#e8f4ec;color:#2e7d4f}.pqlps-pill--bad{background:#fbe9e7;color:#c0392b}.pqlps-pill--warn{background:#faf1dd;color:#b7791f}
+.pqlps-history{margin-top:14px;padding:12px;border-radius:10px;background:#f7f4ec;border:1px solid #e4e9ef}.pqlps-history h3{margin:0 0 8px;color:#0f2237;font-size:15px;font-weight:750}.pqlps-change{display:grid;grid-template-columns:155px 1fr;gap:8px;padding:7px 0;border-top:1px solid #e4e9ef;font-size:12px;font-weight:600;color:#5b6b7c}
+.pqlps-ack{margin-top:12px;padding:12px;border-radius:10px;background:#faf1dd;border:1px solid #f0dfc0}.pqlps-ack--done{background:#e8f4ec}.pqlps-ack form{margin-top:8px}.pqlps-notice{margin-bottom:14px;padding:12px 14px;border-radius:10px;background:#e8f4ec;border:1px solid rgba(46,125,79,.16);color:#2e7d4f;font-size:14px;font-weight:650}
+.pqlps-empty{padding:18px;border-radius:14px;background:#fff;border:1px dashed #e4e9ef;color:#5b6b7c;font-weight:550}
+@media(max-width:760px){.pqlps-top,.pqlps-head,.pqlps-session,.pqlps-change{display:block}.pqlps-actions{margin-top:12px}.pqlps-title{font-size:22px}}
 <?php echo pqh_dashboard_header_css(); ?>
-<?php echo pqh_design_system_css('.pqlps-shell'); ?>
+/* ---- EduPlatform design system layer: same tokens as the
+   student/teacher dashboard - light paper background, blue
+   appbar/gnav tint, quiet white surfaces, single blue accent. ---- */
+.pqlps-shell{
+  --pqh-ink:#0f2237;--pqh-muted:#5b6b7c;--pqh-faint:#8494a5;--pqh-line:#e4e9ef;--pqh-bg:#f7f4ec;--pqh-surface:#fff;
+  --pqh-tint:#edf3fc;--pqh-tint-2:#e0ebfa;--pqh-primary:#2166d1;--pqh-primary-ink:#17498f;
+  background:#fff!important;color:var(--pqh-ink)}
+.pqlps-shell .pqh-appbar{background:linear-gradient(90deg,#cfe9ff 0%,#e3f4ff 50%,#f2fbff 100%)}
+.pqlps-shell .pqh-workspace-top{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;box-shadow:none!important;border-radius:14px!important}
+.pqlps-shell .pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
+.pqlps-shell .pqh-workspace-sub{color:var(--pqh-muted)!important;font-weight:500!important;opacity:1}
+.pqlps-shell .pqh-workspace-actions a,.pqlps-shell .pqh-workspace-actions button,.pqlps-btn{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;color:var(--pqh-ink)!important;font-weight:650!important;border-radius:10px!important;box-shadow:none!important}
+.pqlps-shell .pqh-workspace-actions a:hover,.pqlps-shell .pqh-workspace-actions button:hover,.pqlps-btn:hover{background:var(--pqh-tint)!important;border-color:var(--pqh-tint-2)!important;text-decoration:none!important}
+.pqlps-shell .pqh-workspace-actions a.pqh-workspace-logout{background:var(--pqh-ink)!important;border-color:var(--pqh-ink)!important;color:#fff!important}
+.pqlps-shell [class*="-card"],.pqlps-shell [class*="-panel"]{background:var(--pqh-surface);border-color:var(--pqh-line)!important;border-radius:14px;box-shadow:0 1px 2px rgba(15,34,55,.05)}
+.pqlps-shell h1,.pqlps-shell h2,.pqlps-shell h3{color:var(--pqh-ink)}
 <?php echo pqh_design_shell_css('.pqlps-shell'); ?>
 </style>
 <main class="pqlps-shell">
-<?php echo pqh_design_shell_html('pqlps-shell'); ?><div class="pqlps-wrap">
+<?php echo pqh_design_shell_html('pqlps-shell', 'live', pqh_live_page_shell_opts('Class Series Schedule', [], $childid)); ?><div class="pqlps-wrap">
   <section class="pqlps-top pqh-workspace-top">
     <div><p class="pqlps-kicker">Recurring live classes</p><h1 class="pqlps-title pqh-workspace-title">Series schedule for <?php echo s($childname); ?></h1><p class="pqlps-sub pqh-workspace-sub">Latest class times, cancellations, summaries, recordings, and parent-safe change history.</p></div>
-    <div class="pqlps-actions pqh-workspace-actions">
-        <?php echo pqh_live_session_explainer_link(); ?>
-      <a class="pqlps-btn pqlps-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Parent live hub</a>
-      <a class="pqlps-btn pqlps-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_schedule.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Schedule</a>
-      <a class="pqlps-btn pqlps-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_calendar.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Calendar</a>
-      <a class="pqlps-btn" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Dashboard</a>
-    </div>
   </section>
 
   <?php if ($acknotice !== ''): ?><div class="pqlps-notice"><?php echo s($acknotice); ?></div><?php endif; ?>

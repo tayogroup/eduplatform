@@ -31,6 +31,7 @@ if (!$workspace) {
         'Workspace sessions unavailable'
     );
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 $context = context_system::instance();
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/local/hubredirect/workspace_sessions.php', $urlparams));
@@ -337,7 +338,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new invalid_parameter_exception('Selected teacher is not a teaching member of this workspace.');
         }
         if ($recurring && !pqwls_series_ready()) {
-            throw new invalid_parameter_exception('Recurring sessions require the live series database table. Run the local_prequran Moodle upgrade.');
+            throw new invalid_parameter_exception('Recurring sessions require the live series database table. Run the local_prequran upgrade.');
         }
         $payload = [
             'teacherid' => $teacherid,
@@ -357,7 +358,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $payload['end'] = (int)$sessionstart + ($duration * 60);
             $sessionid = pqwls_insert_live_session($workspaceid, $payload, $seriesid, $recurring ? $index + 1 : 0);
             if ($sessionid <= 0) {
-                throw new invalid_parameter_exception('Live session table is not ready. Run the local_prequran Moodle upgrade.');
+                throw new invalid_parameter_exception('Live session table is not ready. Run the local_prequran upgrade.');
             }
             pqwls_insert_participants($workspaceid, $sessionid, $selectedstudents);
             $created++;
@@ -421,7 +422,7 @@ body.pqw-sessions-page #page,body.pqw-sessions-page #page-content,body.pqw-sessi
         <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
         <h2>Create Session</h2>
         <?php if (!pqh_table_exists_safe('local_prequran_live_session')): ?>
-          <div class="pqwls-empty">Live session tables are not ready. Run the local_prequran Moodle upgrade first.</div>
+          <div class="pqwls-empty">Live session tables are not ready. Run the local_prequran upgrade first.</div>
         <?php else: ?>
           <div class="pqwls-field"><label>Title</label><input class="pqwls-input" name="title" required placeholder="Test Institute - Arabic Reading"></div>
           <div class="pqwls-field"><label>Teacher</label><select class="pqwls-select" name="teacherid" required>
@@ -431,7 +432,7 @@ body.pqw-sessions-page #page,body.pqw-sessions-page #page-content,body.pqw-sessi
           <div class="pqwls-field"><label>Duration minutes</label><input class="pqwls-input" name="duration_minutes" type="number" min="15" max="240" value="60"></div>
           <div class="pqwls-recurring">
             <label class="pqwls-check"><input type="checkbox" name="recurring_enabled" value="1" <?php echo pqwls_series_ready() ? '' : 'disabled'; ?>> Repeat weekly</label>
-            <?php if (!pqwls_series_ready()): ?><span class="pqwls-muted">Run the live-series Moodle upgrade before creating recurring sessions.</span><?php endif; ?>
+            <?php if (!pqwls_series_ready()): ?><span class="pqwls-muted">Run the live-series upgrade before creating recurring sessions.</span><?php endif; ?>
             <div class="pqwls-row">
               <div class="pqwls-field"><label>Number of classes</label><input class="pqwls-input" name="recurrence_count" type="number" min="1" max="52" value="4" <?php echo pqwls_series_ready() ? '' : 'disabled'; ?>></div>
               <div class="pqwls-field"><label>Pattern</label><input class="pqwls-input" value="Weekly on selected start day" disabled></div>

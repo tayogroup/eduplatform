@@ -16,6 +16,7 @@ if ($workspaceid <= 0 || (!$canmanage && $role !== 'sponsor')) {
 if (!pqss_schema_ready()) {
     pqh_access_denied('Sponsor/donor portal schema is not ready. Run the local_prequran upgrade first.', new moodle_url('/local/hubredirect/workspace_dashboard.php', ['workspaceid' => $workspaceid]), 'Sponsor portal schema pending');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $urlparams = ['workspaceid' => $workspaceid];

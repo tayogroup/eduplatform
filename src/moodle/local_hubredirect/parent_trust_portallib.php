@@ -36,9 +36,15 @@ function pqlptl_parent_can_access_child(int $parentid, int $studentid): bool {
     if (is_siteadmin($parentid)) {
         return true;
     }
-    if (pqlptl_table_exists('local_prequran_comm_consent')
-        && $DB->record_exists('local_prequran_comm_consent', ['guardianid' => $parentid, 'studentid' => $studentid])) {
-        return true;
+    // Revoked links (consented=0 via the unlink action) grant nothing.
+    if (pqlptl_table_exists('local_prequran_comm_consent')) {
+        $conditions = ['guardianid' => $parentid, 'studentid' => $studentid];
+        if (pqlptl_table_has_field('local_prequran_comm_consent', 'consented')) {
+            $conditions['consented'] = 1;
+        }
+        if ($DB->record_exists('local_prequran_comm_consent', $conditions)) {
+            return true;
+        }
     }
     if (pqlptl_table_exists('local_prequran_comm_participant') && pqlptl_table_exists('local_prequran_comm_thread')) {
         return $DB->record_exists_sql(
@@ -135,7 +141,12 @@ function pqlptl_parent_children(int $parentid): array {
     global $DB;
     $children = [];
     if (pqlptl_table_exists('local_prequran_comm_consent')) {
-        foreach ($DB->get_records('local_prequran_comm_consent', ['guardianid' => $parentid], 'timemodified DESC') as $row) {
+        // Revoked links (consented=0) are excluded.
+        $conditions = ['guardianid' => $parentid];
+        if (pqlptl_table_has_field('local_prequran_comm_consent', 'consented')) {
+            $conditions['consented'] = 1;
+        }
+        foreach ($DB->get_records('local_prequran_comm_consent', $conditions, 'timemodified DESC') as $row) {
             if ((int)$row->studentid > 0) {
                 $children[(int)$row->studentid] = (int)$row->studentid;
             }

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Platform billing · EduPlatform portal</title>
+<style>
+  :root{--bg:#eef3f9;--card:#ffffff;--line:#d7e0ec;--ink:#17253a;--ink2:#5b6b82;--blue:#1d4f8f;--blue2:#2a6cb0;--warn:#a05a1f;--bad:#8a1f1f;--ok:#1f6b4a}
+  *{box-sizing:border-box}
+  body{margin:0;font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+  header{background:linear-gradient(120deg,var(--blue),var(--blue2));color:#fff;padding:14px 20px}
+  .brand{font-weight:900}.brand small{display:block;font-weight:600;opacity:.85}
+  main{max-width:1250px;margin:0 auto;padding:18px 20px 60px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0;font-size:22px}h2{margin:0 0 10px;font-size:16px}
+  .sub{color:var(--ink2);margin:4px 0 0;font-size:13px}
+  .tablewrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;color:var(--ink2);font-size:11px;text-transform:uppercase;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+  td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:800;background:#e1ecf7;color:var(--blue2)}
+  .pill.warn{background:#f7ecd9;color:var(--warn)}.pill.bad{background:#f7dede;color:var(--bad)}.pill.ok{background:#dff0e7;color:var(--ok)}
+  label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:8px 0 4px}
+  input,select,textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font:inherit;background:var(--card);color:var(--ink)}
+  textarea{min-height:80px;resize:vertical}
+  button{margin-top:10px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:10px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  button.light{background:none;color:var(--ink2);border:1px solid var(--line)}
+  button.small{margin-top:4px;padding:6px 12px;font-size:12px}
+  button:disabled{opacity:.55;cursor:wait}
+  .muted{color:var(--ink2)}
+  .status{padding:12px 14px;border-radius:8px;margin-bottom:14px;font-size:14px}
+  .status.error{background:#f7dede;color:var(--bad)}.status.saved{background:#dff0e7;color:var(--ok)}
+  .help{font-size:11px;color:var(--ink2);margin:3px 0 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:900px){.grid2,.grid4{grid-template-columns:1fr}}
+  .editbox{margin-top:6px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#f6f9fd}
+  .editbox input{padding:6px 8px;font-size:12px}
+  .editbox label{margin:4px 0 2px;font-size:11px}
+  .num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .filterbar{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .filterbar label{margin:0;white-space:nowrap}
+  .filterbar select{max-width:340px}
+  a{color:var(--blue2)}
+</style>
+</head>
+<body>
+<header><div class="brand">EduPlatform Portal<small>Platform billing — settlement statements</small></div></header>
+<main>
+  <div class="panel"><h1>Platform Billing — Settlement Statements</h1><p class="sub">EduPlatform-side B2B board: generate, adjust, issue and settle per-school statements for platform fees on collected payments.</p></div>
+  <div id="status" class="status" hidden></div>
+
+  <div class="panel" id="generate-panel" hidden>
+    <h2>Generate statement</h2>
+    <form id="generate-form">
+      <div class="grid4">
+        <div>
+          <label for="g-consumer">School (consumer)</label>
+          <select id="g-consumer" required></select>
+        </div>
+        <div>
+          <label for="g-start">Period start</label>
+          <input id="g-start" type="date" required>
+        </div>
+        <div>
+          <label for="g-end">Period end</label>
+          <input id="g-end" type="date" required>
+          <p class="help">End date is inclusive</p>
+        </div>
+        <div>
+          <label for="g-feepercent">Fee percent</label>
+          <input id="g-feepercent" inputmode="decimal">
+          <p class="help">Blank = platform default; 0 keeps the statement informational</p>
+        </div>
+      </div>
+      <label for="g-notes">Notes</label>
+      <textarea id="g-notes" maxlength="2000" placeholder="Internal notes for this statement…"></textarea>
+      <button type="submit">Generate statement</button>
+      <p class="help">Gross = payments recorded in the period across the school's workspaces (cash-like methods only). Statements are drafts until issued; schools see issued statements on their Platform Support page.</p>
+    </form>
+  </div>
+
+  <div class="panel" id="statements-panel" hidden>
+    <h2>Statements</h2>
+    <div class="filterbar">
+      <label for="f-consumer">Filter by school</label>
+      <select id="f-consumer"><option value="">All schools</option></select>
+    </div>
+    <div class="tablewrap">
+    <table><thead><tr>
+      <th>Statement</th><th>School</th><th>Period</th><th>Gross</th><th>Fee %</th><th>Fee</th><th>Adjustment</th><th>Net due</th><th>Ccy</th><th>Pmts</th><th>Status</th><th>Paid ref</th><th>Dates</th><th>Actions</th>
+    </tr></thead><tbody id="statements"></tbody></table>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").trim().replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString() : "—";
+  const day = (t) => t ? new Date(t * 1000).toLocaleDateString() : "—";
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Missing endpoint/token — open via the portal launch link."; return; }
+  let filterconsumerid = Number(qs.get("consumerid") || 0);
+
+  const params = () => {
+    const p = new URLSearchParams({ report: "platform-billing", token });
+    if (filterconsumerid > 0) p.set("consumerid", String(filterconsumerid));
+    return p;
+  };
+  const post = async (payload) => {
+    const r = await fetch(endpoint + "?" + params(), { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(payload) });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+    return d;
+  };
+  const flash = (cls, text) => { $("#status").className = "status " + cls; $("#status").hidden = false; $("#status").textContent = text; window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const statusPill = (s) => `<span class="pill ${s === "paid" ? "ok" : s === "void" ? "bad" : s === "issued" ? "warn" : ""}">${esc(s)}</span>`;
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + params());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { flash("error", "Could not load: " + e.message); }
+  }
+
+  function render(d) {
+    const consumers = d.consumers || [];
+    const byId = {};
+    consumers.forEach((c) => { byId[c.id] = c; });
+    $("#g-consumer").innerHTML = consumers.map((c) => `<option value="${Number(c.id)}">${esc(c.name)} (${esc(c.slug)})</option>`).join("");
+    $("#g-feepercent").placeholder = String(d.feepercentdefault ?? "");
+    filterconsumerid = Number(d.filterconsumerid || filterconsumerid || 0);
+    $("#f-consumer").innerHTML = `<option value="">All schools</option>` + consumers.map((c) => `<option value="${Number(c.id)}"${Number(c.id) === filterconsumerid ? " selected" : ""}>${esc(c.name)} (${esc(c.slug)})</option>`).join("");
+
+    $("#statements").innerHTML = (d.statements || []).map((s) => {
+      const cname = byId[s.consumerid] ? byId[s.consumerid].name : ("Consumer " + s.consumerid);
+      const period = `${esc(day(s.periodstart))} – ${esc(day(s.periodend ? s.periodend - 86400 : 0))}`;
+      let actions = "";
+      if (s.status === "draft") {
+        actions = `<div class="editbox">
+          <label>Fee %</label><input data-e="feepercent" data-id="${Number(s.id)}" value="${esc(s.feepercent)}">
+          <label>Adjustment</label><input data-e="adjustment" data-id="${Number(s.id)}" value="${esc(s.adjustment)}">
+          <label>Adjustment note</label><input data-e="adjustmentnote" data-id="${Number(s.id)}" value="${esc(s.adjustmentnote)}" maxlength="200">
+          <label>Notes</label><input data-e="notes" data-id="${Number(s.id)}" value="${esc(s.notes)}" maxlength="2000">
+          <button type="button" class="small" data-save="${Number(s.id)}">Save</button>
+          <button type="button" class="small" data-issue="${Number(s.id)}">Issue</button>
+          <button type="button" class="small light" data-void="${Number(s.id)}">Void</button>
+        </div>`;
+      } else if (s.status === "issued") {
+        actions = `<div class="editbox">
+          <label>Payment reference</label><input data-e="reference" data-id="${Number(s.id)}" maxlength="200" placeholder="Bank ref / receipt no.">
+          <button type="button" class="small" data-paid="${Number(s.id)}">Mark paid</button>
+          <button type="button" class="small light" data-void="${Number(s.id)}">Void</button>
+        </div>`;
+      }
+      return `<tr>
+        <td><strong>${esc(s.statementnumber)}</strong></td>
+        <td>${esc(cname)}</td>
+        <td class="muted">${period}</td>
+        <td class="num">${esc(s.grosscollected)}</td>
+        <td class="num">${esc(s.feepercent)}%</td>
+        <td class="num">${esc(s.feeamount)}</td>
+        <td class="num" title="${esc(s.adjustmentnote)}">${esc(s.adjustment)}</td>
+        <td class="num"><strong>${esc(s.netdue)}</strong></td>
+        <td>${esc(s.currency)}</td>
+        <td class="num">${Number(s.paymentcount) || 0}</td>
+        <td>${statusPill(s.status)}</td>
+        <td class="muted">${esc(s.paidreference || "—")}</td>
+        <td class="muted">created ${esc(when(s.timecreated))}<br>issued ${esc(when(s.issuedat))}<br>paid ${esc(when(s.paidat))}</td>
+        <td>${actions}</td>
+      </tr>`;
+    }).join("") || `<tr><td colspan="14" class="muted">No statements${filterconsumerid > 0 ? " for this school" : ""} yet. Generate one above.</td></tr>`;
+
+    const field = (id, name) => { const el = document.querySelector(`[data-e="${name}"][data-id="${id}"]`); return el ? el.value.trim() : ""; };
+    const wire = (attr, fn) => document.querySelectorAll(`[data-${attr}]`).forEach((b) => b.addEventListener("click", async () => {
+      b.disabled = true;
+      try { await fn(Number(b.dataset[attr]), b); }
+      catch (e) { flash("error", e.message); b.disabled = false; }
+    }));
+    wire("save", async (id) => {
+      const d2 = await post({ do: "update_statement", stmtid: id, feepercent: field(id, "feepercent"), adjustment: field(id, "adjustment"), adjustmentnote: field(id, "adjustmentnote"), notes: field(id, "notes") });
+      flash("saved", d2.message); load();
+    });
+    wire("issue", async (id) => {
+      const d2 = await post({ do: "statement_status", stmtid: id, newstatus: "issued" });
+      flash("saved", d2.message); load();
+    });
+    wire("void", async (id, b) => {
+      if (!window.confirm("Void this statement? It will disappear from the school's Platform Support page and cannot be reinstated.")) { b.disabled = false; return; }
+      const d2 = await post({ do: "statement_status", stmtid: id, newstatus: "void" });
+      flash("saved", d2.message); load();
+    });
+    wire("paid", async (id, b) => {
+      const ref = field(id, "reference");
+      if (!ref) { flash("error", "A payment reference is required to mark the statement paid."); b.disabled = false; return; }
+      const d2 = await post({ do: "statement_status", stmtid: id, newstatus: "paid", reference: ref });
+      flash("saved", d2.message); load();
+    });
+
+    $("#generate-panel").hidden = false; $("#statements-panel").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  $("#f-consumer").addEventListener("change", () => {
+    filterconsumerid = Number($("#f-consumer").value || 0);
+    if (filterconsumerid > 0) qs.set("consumerid", String(filterconsumerid)); else qs.delete("consumerid");
+    history.replaceState(null, "", location.pathname + "?" + qs);
+    load();
+  });
+
+  $("#generate-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = e.currentTarget.querySelector("button"); btn.disabled = true;
+    try {
+      const d = await post({ do: "generate_statement", consumerid: Number($("#g-consumer").value), periodstart: $("#g-start").value, periodend: $("#g-end").value, feepercent: $("#g-feepercent").value.trim(), notes: $("#g-notes").value.trim() });
+      flash("saved", d.message); $("#g-notes").value = ""; load();
+    } catch (err) { flash("error", "Could not generate: " + err.message); }
+    btn.disabled = false;
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

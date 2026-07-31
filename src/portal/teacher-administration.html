@@ -85,6 +85,38 @@
         <div class="field"><label>Handoff notes</label><textarea name="handoff_notes"></textarea></div>
         <button class="btn" type="submit">Save Substitute</button>
       </form>
+      <hr>
+      <h2>Bulk Substitute (leave cover)</h2>
+      <form id="form-bulk-substitute">
+        <div class="field"><label>Covered teacher</label><select name="original_teacherid" data-list="teachers"></select></div>
+        <div class="field"><label>Substitute teacher</label><select name="substitute_teacherid" data-list="teachers"></select></div>
+        <div class="field"><label>From date (blank = now)</label><input name="from_date" type="date"></div>
+        <div class="field"><label>To date (blank = all future)</label><input name="to_date" type="date"></div>
+        <div class="field"><label>Reason</label><textarea name="reason"></textarea></div>
+        <div class="field"><label>Handoff notes</label><textarea name="handoff_notes"></textarea></div>
+        <button class="btn" type="submit">Reassign All Sessions In Range</button>
+      </form>
+      <hr>
+      <h2>Record Certificate</h2>
+      <form id="form-certificate">
+        <div class="field"><label>Teacher</label><select name="teacherid" data-list="teachers"></select></div>
+        <div class="field"><label>Type</label><select name="cert_type">
+          <option value="dbs_check">Background / DBS check</option>
+          <option value="safeguarding_training">Safeguarding training</option>
+          <option value="teaching_qualification">Teaching qualification</option>
+          <option value="first_aid">First aid</option>
+          <option value="other">Other</option>
+        </select></div>
+        <div class="field"><label>Title</label><input name="title" placeholder="e.g. Enhanced DBS certificate"></div>
+        <div class="field"><label>Reference no.</label><input name="reference"></div>
+        <div class="field"><label>Issuer</label><input name="issuer"></div>
+        <div class="field"><label>Issued</label><input name="issued_date" type="date"></div>
+        <div class="field"><label>Expires</label><input name="expiry_date" type="date"></div>
+        <div class="field"><label>Evidence link (optional)</label><input name="evidence_url" placeholder="https://…"></div>
+        <div class="field"><label>Record as</label><select name="status"><option value="pending_review">Pending review</option><option value="verified">Verified now</option></select></div>
+        <div class="field"><label>Notes</label><textarea name="notes"></textarea></div>
+        <button class="btn" type="submit">Save Certificate</button>
+      </form>
     </section>
     <section class="panel">
       <h2>Teacher Load</h2>
@@ -93,6 +125,8 @@
       <table><thead><tr><th>Teacher</th><th>Student</th><th>Status</th></tr></thead><tbody id="assignments"></tbody></table>
       <h2 class="mt">Marketplace Payout Readiness</h2>
       <table><thead><tr><th>Payout</th><th>Status</th><th>Approve</th></tr></thead><tbody id="payouts"></tbody></table>
+      <h2 class="mt">Certificates &amp; Compliance</h2>
+      <table><thead><tr><th>Teacher</th><th>Certificate</th><th>Status</th><th>Expires</th><th>Review</th></tr></thead><tbody id="certs"></tbody></table>
       <h2 class="mt">Contracts</h2>
       <table><thead><tr><th>Teacher</th><th>Type / rates</th><th>Status</th></tr></thead><tbody id="contracts"></tbody></table>
     </section>
@@ -165,6 +199,19 @@
       const note = document.querySelector(`[data-note="${b.dataset.approve}"]`);
       post({ do: "approve_payout", payoutid: Number(b.dataset.approve), status: "approved", readiness_status: "approved", review_note: note ? note.value : "" }, b);
     }));
+
+    // Certificates & compliance register (expiry-dated).
+    const dstr = (t) => Number(t) ? new Date(Number(t) * 1000).toISOString().slice(0, 10) : "—";
+    const certPill = (s) => s === "verified" ? "ok" : (s === "expired" || s === "rejected" ? "bad" : "warn");
+    $("#certs").innerHTML = (d.certificates || []).map((c) => `
+      <tr><td>${esc(nameOf(Number(c.teacherid)))}</td>
+      <td><strong>${esc(c.title || c.cert_type)}</strong><br><span class="muted">${esc(c.cert_type)}${c.reference ? " · " + esc(c.reference) : ""}${c.issuer ? " · " + esc(c.issuer) : ""}</span>${c.evidence_url ? `<br><a href="${esc(c.evidence_url)}" target="_blank" rel="noopener">evidence</a>` : ""}</td>
+      <td><span class="pill ${certPill(String(c.status))}">${esc(String(c.status).replace(/_/g, " "))}</span></td>
+      <td>${dstr(c.expiresat)}${Number(c.expiresat) && Number(c.expiresat) < (Date.now() / 1000 + 30 * 86400) && String(c.status) === "verified" ? ' <span class="pill warn">soon</span>' : ""}</td>
+      <td>${String(c.status) === "pending_review" ? `<button type="button" data-certverify="${Number(c.id)}">Verify</button> <button type="button" data-certreject="${Number(c.id)}">Reject</button>` : '<span class="muted">—</span>'}</td></tr>`).join("")
+      || '<tr><td colspan="5" class="muted">No certificates recorded in this workspace yet.</td></tr>';
+    document.querySelectorAll("[data-certverify]").forEach((b) => b.addEventListener("click", () => post({ do: "verify_certificate", certid: Number(b.dataset.certverify), decision: "verified" }, b)));
+    document.querySelectorAll("[data-certreject]").forEach((b) => b.addEventListener("click", () => post({ do: "verify_certificate", certid: Number(b.dataset.certreject), decision: "rejected" }, b)));
     if (!d.ready) setStatus("error", "Operations schema is not ready. Run Moodle upgrade.");
     else $("#status").hidden = true;
     $("#content").hidden = false;
@@ -236,6 +283,28 @@
     status: f.status.value,
     reason: f.reason.value,
     handoff_notes: f.handoff_notes.value,
+  }));
+  hook("form-bulk-substitute", (f) => ({
+    do: "bulk_substitute",
+    original_teacherid: Number(f.original_teacherid.value),
+    substitute_teacherid: Number(f.substitute_teacherid.value),
+    from_date: f.from_date.value,
+    to_date: f.to_date.value,
+    reason: f.reason.value,
+    handoff_notes: f.handoff_notes.value,
+  }));
+  hook("form-certificate", (f) => ({
+    do: "save_certificate",
+    teacherid: Number(f.teacherid.value),
+    cert_type: f.cert_type.value,
+    title: f.title.value,
+    reference: f.reference.value,
+    issuer: f.issuer.value,
+    issued_date: f.issued_date.value,
+    expiry_date: f.expiry_date.value,
+    evidence_url: f.evidence_url.value,
+    status: f.status.value,
+    notes: f.notes.value,
   }));
 
   load();

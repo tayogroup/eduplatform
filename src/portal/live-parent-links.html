@@ -70,6 +70,7 @@
         <div class="field wide"><label for="link_notes">Notes / source</label><textarea id="link_notes" placeholder="Reason, verification source, or approval notes"></textarea></div>
       </div>
       <button class="btn" type="submit">Create / refresh link</button>
+      <p class="sub" style="margin-top:10px">Depending on your site's guardian-link setting, new links may notify the parent or stay pending until the parent confirms them on their family portal.</p>
     </form>
   </div>
 
@@ -93,7 +94,7 @@
     <h2>Student parent links</h2>
     <div class="tablewrap">
       <table>
-        <thead><tr><th>Student</th><th>Parent / guardian</th><th>Source</th><th>Messaging</th><th>Live consent</th><th>Recording consent</th><th>Updated</th><th>Notes</th></tr></thead>
+        <thead><tr><th>Student</th><th>Parent / guardian</th><th>Source</th><th>Messaging</th><th>Live consent</th><th>Recording consent</th><th>Updated</th><th>Notes</th><th>Revoke</th></tr></thead>
         <tbody id="rows"></tbody>
       </table>
     </div>
@@ -139,6 +140,7 @@
       <td>${esc(row.recording_consent)}</td>
       <td>${esc(when(row.updated))}</td>
       <td><span class="code">${esc(row.notes)}</span></td>
+      <td>${row.parentid > 0 ? `<button type="button" class="pill warn" style="cursor:pointer;border:none" data-unlink-student="${Number(row.studentid)}" data-unlink-parent="${Number(row.parentid)}">Unlink</button>` : '<span class="code">—</span>'}</td>
     </tr>`;
   };
 
@@ -147,7 +149,21 @@
     $("#m-total").textContent = d.total || 0;
     $("#m-linked").textContent = d.linkedcount || 0;
     $("#m-profile").textContent = d.profilecount || 0;
-    $("#rows").innerHTML = rows.length ? rows.map(cell).join("") : `<tr><td colspan="8" class="muted">No student parent links match these filters.</td></tr>`;
+    $("#rows").innerHTML = rows.length ? rows.map(cell).join("") : `<tr><td colspan="9" class="muted">No student parent links match these filters.</td></tr>`;
+    document.querySelectorAll("[data-unlink-student]").forEach((b) => b.addEventListener("click", async () => {
+      if (!window.confirm("Revoke this parent link? The parent loses observer access, report visibility, and notifications for this student. You can re-link later.")) return;
+      b.disabled = true;
+      try {
+        const r = await fetch(endpoint + "?" + new URLSearchParams({ report: "live-parent-links", token }), {
+          method: "POST",
+          headers: { "Content-Type": "text/plain" },
+          body: JSON.stringify({ do: "unlink", link_studentid: Number(b.dataset.unlinkStudent), link_parentid: Number(b.dataset.unlinkParent) }),
+        });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+        load();
+      } catch (e) { b.disabled = false; window.alert("Unlink failed: " + e.message); }
+    }));
     $("#link-panel").hidden = false;
     $("#filter-panel").hidden = false;
     $("#metrics").hidden = false;

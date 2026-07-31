@@ -413,6 +413,8 @@ $stats = [
 $baseparams = array_filter($filters, static fn($value) => $value !== '' && $value !== 0);
 $csvurl = new moodle_url('/local/hubredirect/platform_user_roster.php', $baseparams + ['export' => 'csv']);
 
+pqh_enforce_role_domain(pqh_requested_consumer_context(), pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
+
 echo $OUTPUT->header();
 ?>
 <style>

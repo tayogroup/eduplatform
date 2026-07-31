@@ -385,6 +385,8 @@ $PAGE->set_title('Live Reports');
 $PAGE->set_heading('Live Reports');
 $PAGE->add_body_class('pqh-live-reports-page');
 
+pqh_enforce_role_domain(pqh_requested_consumer_context(), pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
+
 echo $OUTPUT->header();
 ?>
 <style>

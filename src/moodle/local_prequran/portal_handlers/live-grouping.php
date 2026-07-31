@@ -226,6 +226,19 @@ if ($ispost) {
                     && (int)$profile->workspaceid !== $workspaceid) {
                 throw new invalid_parameter_exception('Choose a student from the selected school workspace.');
             }
+            // Capacity ENFORCEMENT (was advisory-only ranking): a full group
+            // refuses new members. Updating an existing member stays allowed.
+            $alreadymember = $DB->record_exists('local_prequran_group_member',
+                ['groupid' => $groupid, 'studentid' => $studentid]);
+            $maxstudents = (int)($group->max_students ?? 0);
+            if (!$alreadymember && $maxstudents > 0) {
+                $activemembers = (int)$DB->count_records('local_prequran_group_member',
+                    ['groupid' => $groupid, 'assignment_status' => 'active']);
+                if ($activemembers >= $maxstudents) {
+                    throw new invalid_parameter_exception('This group is FULL (' . $activemembers . '/' . $maxstudents
+                        . ' active members). Raise max students on the group or choose another group.');
+                }
+            }
             [$score, $matchstatus, $details] = pqlgrp_match_score($profile, $group);
             $record = (object)[
                 'groupid' => $groupid,

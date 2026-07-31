@@ -428,6 +428,8 @@ usort($recent, function($a, $b) {
 $nextsession = $upcoming[0] ?? null;
 $moreupcoming = $nextsession ? array_slice($upcoming, 1) : [];
 
+pqh_enforce_role_domain(pqh_requested_consumer_context(), pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
+
 echo $OUTPUT->header();
 ?>
 <style>
@@ -445,39 +447,43 @@ body.pqh-live-schedule-page #page,
 body.pqh-live-schedule-page #page-content,
 body.pqh-live-schedule-page #region-main,
 body.pqh-live-schedule-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
-.pqlsch-shell{min-height:100vh;padding:34px 18px 54px;background:linear-gradient(180deg,#f1fff4 0,#fff 50%);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#173044}
+.pqlsch-shell{min-height:100vh;padding:34px 18px 54px;background:#fff;color:#0f2237;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6}
 .pqlsch-wrap{max-width:1040px;margin:0 auto}
-.pqlsch-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;padding:22px;border-radius:16px;background:linear-gradient(135deg,#eaffea 0,#fff 54%,#fff7e7 100%);border:1px solid rgba(111,78,50,.13);box-shadow:0 16px 38px rgba(105,76,45,.08)}
-.pqlsch-kicker{margin:0 0 6px;color:#6f4e32;font-size:13px;font-weight:950;text-transform:uppercase;letter-spacing:.04em}
-.pqlsch-title{margin:0;font-size:30px;line-height:1.1;font-weight:950;color:#4d3522}
-.pqlsch-subtitle{margin:8px 0 0;color:#64745a;font-size:15px;font-weight:750}
+.pqlsch-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;padding:22px;border-radius:14px;background:#fff;border:1px solid #e4e9ef;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14)}
+.pqlsch-kicker{margin:0 0 6px;color:#5b6b7c;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.pqlsch-title{margin:0;font-size:26px;line-height:1.1;font-weight:800;color:#0f2237;letter-spacing:-.02em}
+.pqlsch-subtitle{margin:8px 0 0;color:#5b6b7c;font-size:14px;font-weight:500}
 .pqlsch-actions{display:flex;flex-wrap:wrap;gap:9px}
-.pqlsch-btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 15px;border-radius:10px;background:#6f4e32;color:#fff!important;text-decoration:none;font-size:14px;font-weight:950}
-.pqlsch-btn--light{background:#f4fff0;color:#4d3522!important;border:1px solid rgba(111,78,50,.16)}
-.pqlsch-next{margin-bottom:16px;padding:20px;border-radius:14px;background:#fff;border:1px solid rgba(111,78,50,.13);box-shadow:0 10px 24px rgba(105,76,45,.07)}
-.pqlsch-next h2,.pqlsch-panel h2{margin:0 0 12px;color:#4d3522;font-size:20px;font-weight:950}
+.pqlsch-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 15px;border-radius:10px;background:#fff;border:1px solid #e4e9ef;color:#0f2237!important;text-decoration:none;font-size:13px;font-weight:650}
+.pqlsch-btn:hover{background:#edf3fc;border-color:#e0ebfa;text-decoration:none}
+.pqlsch-btn--light{background:#edf3fc;color:#17498f!important;border:1px solid #e0ebfa}
+.pqlsch-next{margin-bottom:16px;padding:20px;border-radius:14px;background:#fff;border:1px solid #e4e9ef;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14)}
+.pqlsch-next h2,.pqlsch-panel h2{margin:0 0 12px;color:#0f2237;font-size:19px;font-weight:750;letter-spacing:-.01em}
 .pqlsch-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.pqlsch-panel{padding:18px;border-radius:14px;background:#fff;border:1px solid rgba(111,78,50,.13);box-shadow:0 10px 24px rgba(105,76,45,.07)}
+.pqlsch-panel{padding:18px;border-radius:14px;background:#fff;border:1px solid #e4e9ef;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14)}
 .pqlsch-list{display:grid;gap:12px}
-.pqlsch-card{padding:16px;border-radius:12px;background:#fff;border:1px solid rgba(23,48,68,.12)}
+.pqlsch-card{padding:16px;border-radius:12px;background:#fff;border:1px solid #e4e9ef}
 .pqlsch-card__head{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px}
-.pqlsch-card h3{margin:0;color:#4d3522;font-size:18px;font-weight:950}
-.pqlsch-meta{margin:5px 0 0;color:#64745a;font-size:13px;font-weight:800}
-.pqlsch-pill{display:inline-flex;align-items:center;min-height:28px;padding:0 9px;border-radius:999px;background:#eef4f6;color:#173044;font-size:12px;font-weight:950}
-.pqlsch-pill--ok{background:#eaffea;color:#2f6f4e}
-.pqlsch-pill--warn{background:#fff4dc;color:#7b5a3a}
-.pqlsch-empty{padding:20px;border-radius:14px;background:#fff;border:1px dashed rgba(111,78,50,.22);color:#64745a;font-weight:850}
+.pqlsch-card h3{margin:0;color:#0f2237;font-size:17px;font-weight:750}
+.pqlsch-meta{margin:5px 0 0;color:#5b6b7c;font-size:13px;font-weight:600}
+.pqlsch-pill{display:inline-flex;align-items:center;min-height:28px;padding:0 9px;border-radius:8px;background:#edf3fc;color:#17498f;font-size:12px;font-weight:650}
+.pqlsch-pill--ok{background:#e8f4ec;color:#2e7d4f}
+.pqlsch-pill--warn{background:#faf1dd;color:#b7791f}
+.pqlsch-empty{padding:20px;border-radius:14px;background:#fff;border:1px dashed #e4e9ef;color:#5b6b7c;font-weight:550}
 .pqlsch-students{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.pqlsch-student{padding:16px;border-radius:14px;background:#fff;border:1px solid rgba(111,78,50,.13);box-shadow:0 10px 24px rgba(105,76,45,.07);text-decoration:none;color:#4d3522!important;font-weight:950}
-.pqlsch-student span{display:block;margin-top:4px;color:#64745a;font-size:12px;font-weight:800}
-@media(max-width:760px){.pqlsch-top{display:block}.pqlsch-actions{margin-top:14px}.pqlsch-grid{grid-template-columns:1fr}.pqlsch-card__head{display:block}.pqlsch-title{font-size:25px}}
+.pqlsch-student{padding:16px;border-radius:14px;background:#fff;border:1px solid #e4e9ef;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14);text-decoration:none;color:#0f2237!important;font-weight:700}
+.pqlsch-student span{display:block;margin-top:4px;color:#5b6b7c;font-size:12px;font-weight:600}
+@media(max-width:760px){.pqlsch-top{display:block}.pqlsch-actions{margin-top:14px}.pqlsch-grid{grid-template-columns:1fr}.pqlsch-card__head{display:block}.pqlsch-title{font-size:22px}}
 <?php echo pqh_dashboard_header_css(); ?>
-/* ---- EduPlatform design system layer (2026-07-19) ---- */
+/* ---- EduPlatform design system layer: same tokens as the
+   student/teacher dashboard - light paper background, blue
+   appbar/gnav tint, quiet white surfaces, single blue accent. ---- */
 .pqlsch-shell{
-  --pqh-ink:#0f2237;--pqh-muted:#5b6b7c;--pqh-faint:#8494a5;--pqh-line:#e4e9ef;--pqh-bg:#f4f6f9;--pqh-surface:#fff;
+  --pqh-ink:#0f2237;--pqh-muted:#5b6b7c;--pqh-faint:#8494a5;--pqh-line:#e4e9ef;--pqh-bg:#f7f4ec;--pqh-surface:#fff;
   --pqh-tint:#edf3fc;--pqh-tint-2:#e0ebfa;--pqh-primary:#2166d1;--pqh-primary-ink:#17498f;
-  background:var(--pqh-bg)!important;color:var(--pqh-ink)}
-.pqlsch-shell .pqh-workspace-top{background:linear-gradient(120deg,#d7e6f9 0%,#e9f1fc 60%,#f3f8fe 100%)!important;border:1px solid #c5d9f1!important;box-shadow:none!important;border-radius:14px!important}
+  background:#fff!important;color:var(--pqh-ink)}
+.pqlsch-shell .pqh-appbar{background:linear-gradient(90deg,#cfe9ff 0%,#e3f4ff 50%,#f2fbff 100%)}
+.pqlsch-shell .pqh-workspace-top{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;box-shadow:none!important;border-radius:14px!important}
 .pqlsch-shell .pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
 .pqlsch-shell .pqh-workspace-sub{color:var(--pqh-muted)!important;font-weight:500!important;opacity:1}
 .pqlsch-shell .pqh-workspace-actions a,.pqlsch-shell .pqh-workspace-actions button,.pqlsch-btn{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;color:var(--pqh-ink)!important;font-weight:650!important;border-radius:10px!important;box-shadow:none!important}
@@ -489,26 +495,13 @@ body.pqh-live-schedule-page .main-inner{margin:0!important;padding:0!important;m
 <?php echo pqh_design_shell_css('.pqlsch-shell'); ?>
 </style>
 <main class="pqlsch-shell">
-<?php echo pqh_design_shell_html('pqlsch-shell', 'schedule', ['title' => 'Live Schedule']); ?>
+<?php echo pqh_design_shell_html('pqlsch-shell', 'live', pqh_live_page_shell_opts('Live Schedule', [], $childid)); ?>
   <div class="pqlsch-wrap">
     <section class="pqlsch-top pqh-workspace-top">
       <div>
         <p class="pqlsch-kicker">Live class schedule</p>
         <h1 class="pqlsch-title pqh-workspace-title">Schedule for <?php echo s($childname); ?></h1>
         <p class="pqlsch-subtitle pqh-workspace-sub"><?php echo $isscheduleteacher ? 'See this teacher\'s upcoming review classes and recent class outcomes.' : 'See upcoming review classes, join availability, and recent class outcomes.'; ?></p>
-      </div>
-      <div class="pqlsch-actions pqh-workspace-actions">
-        <?php echo pqh_live_session_explainer_link(); ?>
-        <?php if (!$isscheduleteacher): ?>
-          <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_parent_trust.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Parent live hub</a>
-          <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series_schedule.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Class series</a>
-          <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_calendar.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Calendar</a>
-        <?php else: ?>
-          <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/teacher_workspace.php'))->out(false); ?>">Teacher workspace</a>
-          <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_series.php'))->out(false); ?>">Class series</a>
-        <?php endif; ?>
-        <a class="pqlsch-btn pqlsch-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/live_sessions.php'))->out(false); ?>">Live sessions</a>
-        <a class="pqlsch-btn" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php', $childid > 0 ? ['childid' => $childid] : []))->out(false); ?>">Dashboard</a>
       </div>
     </section>
 

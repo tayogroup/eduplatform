@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tutor storefront · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1040px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .muted{color:var(--muted);font-size:12px}
+  .note{color:var(--muted);font-size:12px;margin:8px 0 0}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .field{margin-bottom:10px}
+  .field label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin-bottom:3px}
+  .field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .field textarea{min-height:64px;resize:vertical}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:560px){.row2{grid-template-columns:1fr}}
+  form button{margin-top:8px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form button:disabled{opacity:.55;cursor:wait}
+  hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top;font-size:13px}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  td strong{font-size:14px}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2);white-space:nowrap}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .pill.good{background:#e1f2ff;color:var(--blue2)}
+  .pill.muted-pill{background:var(--sky);color:var(--muted)}
+  .rep{font-size:15px;font-weight:900;color:var(--blue)}
+  .stars{color:var(--amber);font-weight:900;letter-spacing:1px}
+  .tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:4px}
+  @media(max-width:560px){.tiles{grid-template-columns:1fr}}
+  .tile{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--sky)}
+  .tile .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2);font-weight:800}
+  .tile .big{font-size:20px;font-weight:900;color:var(--blue);margin-top:2px}
+  .review{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+  .review .head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+  .review .comment{color:var(--ink2);font-size:13px;line-height:1.5;margin:0 0 8px}
+  .review form button{margin-top:6px;padding:7px 14px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Tutor storefront</small></div>
+  <div class="note" id="mode-note">Token-authenticated · tutor self-service controls</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1 id="title">Tutor storefront</h1>
+    <p class="sub" id="subtitle">Set your pricing and trial offer, respond to reviews, and track your payouts.</p>
+    <p style="margin:10px 0 0"><span class="rep" id="reputation">No ratings yet</span></p>
+  </div>
+  <div id="status" class="status">Loading storefront…</div>
+  <div id="content" hidden>
+    <div class="panel">
+      <h2>Pricing &amp; trial</h2>
+      <form id="pricing-form">
+        <div class="row2">
+          <div class="field"><label>Hourly rate</label><input type="number" name="hourly_rate" id="p-rate" min="0" step="0.01"></div>
+          <div class="field"><label>Currency</label><input name="rate_currency" id="p-currency" maxlength="3" placeholder="USD"></div>
+        </div>
+        <div class="field"><label>Session length (minutes)</label><input type="number" name="session_length_minutes" id="p-session" min="0" step="1"></div>
+        <div class="field"><label><input type="checkbox" id="p-trial" style="width:auto;margin-right:6px">Offer a trial session</label></div>
+        <div class="field"><label>Trial rate</label><input type="number" name="trial_rate" id="p-trialrate" min="0" step="0.01"></div>
+        <button type="submit" id="pricing-save">Save pricing</button>
+      </form>
+      <p class="note">Leave the trial rate at 0 to offer a free trial. Pricing shows on your marketplace listing and profile.</p>
+    </div>
+
+    <div class="panel">
+      <h2>My reviews</h2>
+      <div id="reviews"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Earnings</h2>
+      <div class="tiles">
+        <div class="tile"><div class="lbl">Total gross</div><div class="big" id="e-gross">—</div></div>
+        <div class="tile"><div class="lbl">Total net</div><div class="big" id="e-net">—</div></div>
+        <div class="tile"><div class="lbl">Total paid</div><div class="big" id="e-paid">—</div></div>
+      </div>
+      <table><thead><tr><th>Payout</th><th>Gross</th><th>Fee</th><th>Net</th><th>Status</th><th>Paid</th></tr></thead><tbody id="payouts"></tbody></table>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const base = () => new URLSearchParams({ report: "tutor-storefront", token });
+  const getUrl = () => endpoint + "?" + base().toString();
+
+  let DATA = {};
+
+  async function load() {
+    try {
+      const r = await fetch(getUrl());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const starStr = (n) => { const r = Math.max(0, Math.min(5, Math.round(Number(n) || 0))); return "★".repeat(r) + "☆".repeat(5 - r); };
+  const repLine = (avg, count) => Number(count) > 0 ? `★ ${Number(avg).toFixed(1)} (${count})` : "No ratings yet";
+  const money = (amt, cur) => { const n = Number(amt); if (!isFinite(n)) return "—"; return (cur ? esc(cur) + " " : "") + n.toFixed(2); };
+  const fmtDate = (ts) => { const n = Number(ts); if (!n) return "—"; const dt = new Date(n * 1000); return isNaN(dt.getTime()) ? "—" : dt.toLocaleDateString(); };
+
+  const modPill = (s) => { const m = String(s || "").toLowerCase(); const cls = /approv/.test(m) ? "good" : /pend/.test(m) ? "warn" : /reject/.test(m) ? "muted-pill" : ""; return `<span class="pill ${cls}">${esc(s || "—")}</span>`; };
+  const payoutPill = (s) => { const m = String(s || "").toLowerCase(); const cls = /paid|complete/.test(m) ? "good" : /pend|process/.test(m) ? "warn" : /fail|reject|cancel/.test(m) ? "bad" : ""; return `<span class="pill ${cls}">${esc(s || "—")}</span>`; };
+
+  function render(d) {
+    DATA = d;
+    if (d.ready === false) {
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = "Tutor storefront schema is not ready. Run Moodle upgrade.";
+      return;
+    }
+
+    const rep = d.reputation || {};
+    $("#reputation").textContent = repLine(rep.avg, rep.count);
+
+    const p = d.pricing || {};
+    $("#p-rate").value = p.hourly_rate != null ? p.hourly_rate : "";
+    $("#p-currency").value = p.rate_currency || "USD";
+    $("#p-session").value = p.session_length_minutes != null ? p.session_length_minutes : "";
+    $("#p-trial").checked = !!Number(p.trial_available);
+    $("#p-trialrate").value = p.trial_rate != null ? p.trial_rate : "";
+
+    const reviews = d.reviews || [];
+    $("#reviews").innerHTML = reviews.length ? reviews.map((rv) =>
+      `<div class="review">
+        <div class="head">
+          <span class="stars">${starStr(rv.rating)}</span>
+          ${modPill(rv.moderation_status)}
+          ${Number(rv.hidden) ? `<span class="pill muted-pill">Hidden</span>` : ""}
+          <span class="muted">${esc(fmtDate(rv.timecreated))}</span>
+        </div>
+        ${rv.comment ? `<p class="comment">${esc(rv.comment)}</p>` : `<p class="comment muted">No written comment.</p>`}
+        <form data-reply="${Number(rv.id)}">
+          <div class="field"><label>Your reply</label><textarea name="reply">${esc(rv.tutor_reply || "")}</textarea></div>
+          <button type="submit">${rv.tutor_reply ? "Update reply" : "Post reply"}</button>
+        </form>
+      </div>`
+    ).join("") : `<div class="muted">No reviews yet.</div>`;
+    document.querySelectorAll("form[data-reply]").forEach((f) => f.addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      post({ do: "reply_review", ratingid: Number(f.dataset.reply), reply: f.reply.value }, f.querySelector("button"));
+    }));
+
+    const earn = d.earnings || {};
+    $("#e-gross").textContent = money(earn.total_gross, (earn.payouts && earn.payouts[0] && earn.payouts[0].currency) || "");
+    $("#e-net").textContent = money(earn.total_net, (earn.payouts && earn.payouts[0] && earn.payouts[0].currency) || "");
+    $("#e-paid").textContent = money(earn.total_paid, (earn.payouts && earn.payouts[0] && earn.payouts[0].currency) || "");
+
+    const payouts = earn.payouts || [];
+    $("#payouts").innerHTML = payouts.length ? payouts.map((po) =>
+      `<tr>
+        <td><strong>${esc(po.payoutnumber || "—")}</strong></td>
+        <td>${money(po.grossamount, po.currency)}</td>
+        <td>${money(po.platformfee, po.currency)}</td>
+        <td>${money(po.payoutamount, po.currency)}</td>
+        <td>${payoutPill(po.status)}</td>
+        <td>${esc(fmtDate(po.paidat))}</td>
+      </tr>`
+    ).join("") : `<tr><td colspan="6" class="muted">No payouts yet.</td></tr>`;
+
+    $("#content").hidden = false;
+    $("#status").hidden = true;
+  }
+
+  async function post(payload, btn) {
+    const original = btn ? btn.textContent : "";
+    if (btn) { btn.disabled = true; btn.textContent = "Saving…"; }
+    try {
+      const r = await fetch(endpoint + "?" + base().toString(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Saved.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await load();
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = original; }
+    }
+  }
+
+  function formPayload(form, extra) {
+    const p = Object.assign({}, extra);
+    new FormData(form).forEach((v, k) => { p[k] = v; });
+    return p;
+  }
+
+  $("#pricing-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const p = formPayload(ev.currentTarget, { do: "save_pricing" });
+    p.trial_available = $("#p-trial").checked ? 1 : 0;
+    post(p, $("#pricing-save"));
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

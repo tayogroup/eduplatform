@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Report cards · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:380px 1fr;gap:16px;align-items:start}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+  .muted{color:var(--muted);font-size:12px}
+  .note{color:var(--muted);font-size:12px;margin:8px 0 0}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .field{margin-bottom:10px}
+  .field label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin-bottom:3px}
+  .field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .field textarea{min-height:64px;resize:vertical}
+  form button{margin-top:8px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form button:disabled{opacity:.55;cursor:wait}
+  hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top;font-size:13px}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  td strong{font-size:14px}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2);white-space:nowrap}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .pill.good{background:#e1f2ff;color:var(--blue2)}
+  .pill.muted-pill{background:var(--sky);color:var(--muted)}
+  a.btn,button.btn{display:inline-block;padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--sky);color:var(--blue2);text-decoration:none;font-weight:800;font-size:12px;cursor:pointer;margin:2px 2px 2px 0}
+  button.btn{background:var(--card)}
+  .students-list{display:flex;flex-wrap:wrap;gap:8px}
+  .student-chip{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--card);font-size:12px}
+  .student-chip strong{display:block;font-size:13px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Report cards</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of report_cards.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel"><h1 id="title">Report cards</h1><p class="sub" id="subtitle">Build term report cards from published grades, annotate conduct and narratives, then publish PDFs.</p></div>
+  <div id="status" class="status">Loading report cards…</div>
+  <div class="grid" id="grid" hidden>
+    <div>
+      <div class="panel">
+        <h2>Build a report card</h2>
+        <form id="build-form">
+          <div class="field"><label>Student</label><select name="studentid" id="build-student"></select></div>
+          <div class="field"><label>Term</label><select name="termid" id="build-term"></select></div>
+          <button type="submit">Build / refresh from grades</button>
+        </form>
+        <p class="note">Pulls the latest published grades and attendance into a draft you can annotate.</p>
+      </div>
+      <div class="panel" id="editor-panel" hidden>
+        <h2 id="editor-title">Edit report card</h2>
+        <div id="editor-locked" class="status" hidden>This report card is published. Unpublish to edit.</div>
+        <div class="field"><label>Grades (from published results)</label>
+          <table><thead><tr><th>Course</th><th>Percent</th><th>Letter</th></tr></thead><tbody id="editor-grades"></tbody></table>
+        </div>
+        <form id="editor-form">
+          <input type="hidden" name="cardid" id="editor-cardid">
+          <div class="field"><label>Conduct</label><select name="conduct" id="editor-conduct"></select></div>
+          <div class="field"><label>Effort</label><select name="effort" id="editor-effort"></select></div>
+          <div class="field"><label>Teacher narrative</label><textarea name="teacher_narrative" id="editor-narrative"></textarea></div>
+          <div class="field"><label>Head teacher comment</label><textarea name="head_comment" id="editor-head"></textarea></div>
+          <button type="submit" id="editor-save">Save annotations</button>
+        </form>
+      </div>
+      <div class="panel">
+        <h2>Student status</h2>
+        <form id="status-form">
+          <div class="field"><label>Student</label><select name="studentid" id="status-student"></select></div>
+          <div class="field"><label>Enrolment status</label><select name="status" id="status-select"></select></div>
+          <div class="field"><label>Reason (optional)</label><input name="reason"></div>
+          <button type="submit">Save status</button>
+        </form>
+        <hr>
+        <h2>Students</h2>
+        <div class="students-list" id="students-list"></div>
+      </div>
+    </div>
+    <div>
+      <div class="panel">
+        <h2>Report cards</h2>
+        <table><thead><tr><th>Card</th><th>Student</th><th>Term</th><th>Overall</th><th>Attendance</th><th>Conduct</th><th>Status</th><th>Actions</th></tr></thead><tbody id="cards-body"></tbody></table>
+      </div>
+      <div class="panel">
+        <h2>Student demographics</h2>
+        <form id="demographics-form">
+          <div class="field"><label>Student</label><select name="studentid" id="demo-student"></select></div>
+          <div class="field"><label>Nationality</label><input name="nationality" id="demo-nationality"></div>
+          <div class="field"><label>Address line</label><input name="address_line" id="demo-address"></div>
+          <div class="field"><label>Postal code</label><input name="postal_code" id="demo-postal"></div>
+          <div class="field"><label>City</label><input name="city" id="demo-city"></div>
+          <div class="field"><label>Country</label><input name="country" id="demo-country"></div>
+          <div class="field"><label>Gender</label><input name="gender" id="demo-gender"></div>
+          <div class="field"><label>Date of birth</label><input type="date" name="date_of_birth" id="demo-dob"></div>
+          <div class="field"><label>Admission date</label><input type="date" name="admission_date" id="demo-admission"></div>
+          <button type="submit" id="demo-save">Save demographics</button>
+        </form>
+      </div>
+      <div class="panel">
+        <h2>Behaviour &amp; conduct</h2>
+        <table><thead><tr><th>Student</th><th>Type</th><th>Severity</th><th>Title</th><th>Date</th><th>Parent</th><th>Status</th></tr></thead><tbody id="behaviour-body"></tbody></table>
+        <hr>
+        <h3 style="margin:0 0 10px;font-size:14px">Record behaviour / conduct</h3>
+        <form id="behaviour-form">
+          <input type="hidden" name="behaviourid" id="beh-id">
+          <div class="field"><label>Student</label><select name="studentid" id="beh-student"></select></div>
+          <div class="field"><label>Record type</label><select name="record_type" id="beh-type"></select></div>
+          <div class="field"><label>Category</label><input name="category" id="beh-category"></div>
+          <div class="field"><label>Severity</label><select name="severity" id="beh-severity"></select></div>
+          <div class="field"><label>Title</label><input name="title" id="beh-title"></div>
+          <div class="field"><label>Description</label><textarea name="description" id="beh-description"></textarea></div>
+          <div class="field"><label>Action taken</label><textarea name="action_taken" id="beh-action"></textarea></div>
+          <div class="field"><label>Incident date</label><input type="date" name="incident_date" id="beh-date"></div>
+          <div class="field"><label><input type="checkbox" id="beh-parent" style="width:auto;margin-right:6px">Visible to parent/guardian</label></div>
+          <div class="field"><label>Status</label><select name="behaviour_status" id="beh-status"></select></div>
+          <button type="submit" id="beh-save">Save record</button>
+          <button type="button" class="btn" id="beh-reset">New / clear</button>
+        </form>
+        <p class="note">Safeguarding-severity records are visible to managers only.</p>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const base = () => new URLSearchParams({ report: "report-cards", token });
+  const getUrl = () => endpoint + "?" + base().toString();
+
+  let DATA = {};
+  let editingId = null;
+
+  async function load() {
+    try {
+      const r = await fetch(getUrl());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  const opt = (val, label, sel) => `<option value="${esc(val)}"${sel ? " selected" : ""}>${esc(label)}</option>`;
+  const optionsFrom = (map) => Object.keys(map || {}).map((k) => opt(k, map[k])).join("");
+
+  const termLabel = (termid) => {
+    const t = (DATA.terms || []).find((x) => String(x.id) === String(termid));
+    return t ? t.title : ("Term #" + termid);
+  };
+  const studentLabel = (studentid) => (DATA.names && DATA.names[studentid]) || ("Student #" + studentid);
+
+  const conductPill = (key) => {
+    const label = (DATA.conduct_options && DATA.conduct_options[key]) || key || "—";
+    return `<span class="pill">${esc(label)}</span>`;
+  };
+  const statusClass = (s) => /publish/.test(s || "") ? "good" : /draft/.test(s || "") ? "warn" : /archiv/.test(s || "") ? "muted-pill" : "";
+  const enrolClass = (s) => /suspend|withdraw|inactive/.test(s || "") ? "bad" : /pending|hold/.test(s || "") ? "warn" : /active|enrol/.test(s || "") ? "good" : "";
+
+  const fmtDate = (ts) => { const n = Number(ts); if (!n) return "—"; const dt = new Date(n * 1000); return isNaN(dt.getTime()) ? "—" : dt.toLocaleDateString(); };
+  const toInputDate = (ts) => { const n = Number(ts); if (!n) return ""; const dt = new Date(n * 1000); if (isNaN(dt.getTime())) return ""; return dt.toISOString().slice(0, 10); };
+  const recordTypeClass = (t) => /merit/.test(t || "") ? "good" : /incident/.test(t || "") ? "warn" : "muted-pill";
+  const severityClass = (s) => /safeguard/.test(s || "") ? "bad" : /high/.test(s || "") ? "warn" : "";
+  const severityLabel = (key) => (DATA.severity_options && DATA.severity_options[key]) || key || "—";
+
+  let editingBehaviourId = null;
+
+  function fillDemographics(studentid) {
+    const s = (DATA.students || []).find((x) => String(x.id) === String(studentid));
+    if (!s) return;
+    $("#demo-nationality").value = s.nationality || "";
+    $("#demo-address").value = s.address_line || "";
+    $("#demo-postal").value = s.postal_code || "";
+    $("#demo-city").value = s.city || "";
+    $("#demo-country").value = s.country || "";
+    $("#demo-gender").value = s.gender || "";
+    $("#demo-dob").value = toInputDate(s.date_of_birth);
+    $("#demo-admission").value = toInputDate(s.admission_date);
+  }
+
+  function resetBehaviourForm() {
+    editingBehaviourId = null;
+    $("#behaviour-form").reset();
+    $("#beh-id").value = "";
+  }
+
+  function openBehaviour(id) {
+    const b = (DATA.behaviour || []).find((x) => Number(x.id) === Number(id));
+    if (!b) return;
+    editingBehaviourId = id;
+    $("#beh-id").value = b.id;
+    $("#beh-student").value = b.studentid;
+    $("#beh-type").value = b.record_type || "";
+    $("#beh-category").value = b.category || "";
+    $("#beh-severity").value = b.severity || "";
+    $("#beh-title").value = b.title || "";
+    $("#beh-description").value = b.description || "";
+    $("#beh-action").value = b.action_taken || "";
+    $("#beh-date").value = toInputDate(b.incident_date);
+    $("#beh-parent").checked = !!Number(b.parent_visible);
+    $("#beh-status").value = b.status || "open";
+    $("#behaviour-form").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function render(d) {
+    DATA = d;
+    if (d.ready === false) {
+      $("#status").className = "status error"; $("#status").hidden = false;
+      $("#status").textContent = "Report card schema is not ready. Run Moodle upgrade.";
+    } else {
+      $("#status").hidden = true;
+    }
+
+    const students = d.students || [];
+    const studentOpts = students.map((s) => opt(s.id, s.name + " (" + (s.account || "") + ")")).join("");
+    $("#build-student").innerHTML = studentOpts;
+    $("#status-student").innerHTML = studentOpts;
+    $("#demo-student").innerHTML = studentOpts;
+    $("#beh-student").innerHTML = studentOpts;
+    $("#beh-type").innerHTML = optionsFrom({ incident: "Incident", merit: "Merit", note: "Note" });
+    $("#beh-severity").innerHTML = optionsFrom(d.severity_options);
+    $("#beh-status").innerHTML = optionsFrom({ open: "Open", resolved: "Resolved" });
+    $("#build-term").innerHTML = (d.terms || []).map((t) => opt(t.id, t.title + (t.term_code ? " (" + t.term_code + ")" : ""))).join("");
+    $("#status-select").innerHTML = optionsFrom(d.status_options);
+    $("#editor-conduct").innerHTML = optionsFrom(d.conduct_options);
+    $("#editor-effort").innerHTML = optionsFrom(d.conduct_options);
+
+    $("#students-list").innerHTML = students.length ? students.map((s) => {
+      const adm = s.admission_number
+        ? `<div class="muted">Adm: ${esc(s.admission_number)}</div>`
+        : `<button type="button" class="btn" data-assign-admission="${s.id}">Assign admission number</button>`;
+      return `<div class="student-chip"><strong>${esc(s.name)}</strong><div class="muted">${esc(s.account || "")}</div>${adm}<span class="pill ${enrolClass(s.enrolment_status)}">${esc(s.enrolment_status || "—")}</span></div>`;
+    }).join("") : `<div class="muted">No students found.</div>`;
+    document.querySelectorAll("[data-assign-admission]").forEach((b) => b.addEventListener("click", () => post({ do: "assign_admission_number", studentid: Number(b.dataset.assignAdmission) }, b, "Admission number assigned.")));
+
+    const cards = d.cards || [];
+    $("#cards-body").innerHTML = cards.length ? cards.map((c) => {
+      const draft = /draft/.test(c.status || "");
+      const published = /publish/.test(c.status || "");
+      const acts = [];
+      acts.push(`<button type="button" class="btn" data-edit="${c.id}">Edit</button>`);
+      if (draft) acts.push(`<button type="button" class="btn" data-publish="${c.id}">Publish</button>`);
+      if (published) acts.push(`<button type="button" class="btn" data-unpublish="${c.id}">Unpublish</button>`);
+      if (published && c.pdf_url) acts.push(`<a class="btn" href="${esc(c.pdf_url)}">PDF</a>`);
+      return `<tr>
+        <td><strong>${esc(c.cardnumber)}</strong></td>
+        <td>${esc(studentLabel(c.studentid))}</td>
+        <td>${esc(termLabel(c.termid))}</td>
+        <td>${esc((c.overall_grade ?? "—")) + (c.overall_grade != null ? "%" : "")}</td>
+        <td>${esc((c.attendance_rate ?? "—")) + (c.attendance_rate != null ? "%" : "")}</td>
+        <td>${conductPill(c.conduct)}</td>
+        <td><span class="pill ${statusClass(c.status)}">${esc(c.status)}</span></td>
+        <td>${acts.join(" ")}</td>
+      </tr>`;
+    }).join("") : `<tr><td colspan="8" class="muted">No report cards yet. Build one from the panel on the left.</td></tr>`;
+
+    document.querySelectorAll("[data-edit]").forEach((b) => b.addEventListener("click", () => openEditor(Number(b.dataset.edit))));
+    document.querySelectorAll("[data-publish]").forEach((b) => b.addEventListener("click", () => post({ do: "publish", cardid: Number(b.dataset.publish) }, b, "Report card published.")));
+    document.querySelectorAll("[data-unpublish]").forEach((b) => b.addEventListener("click", () => post({ do: "unpublish", cardid: Number(b.dataset.unpublish) }, b, "Report card unpublished.")));
+
+    const behaviour = d.behaviour || [];
+    $("#behaviour-body").innerHTML = behaviour.length ? behaviour.map((b) =>
+      `<tr>
+        <td>${esc(studentLabel(b.studentid))}</td>
+        <td><span class="pill ${recordTypeClass(b.record_type)}">${esc(b.record_type || "—")}</span></td>
+        <td>${b.severity ? `<span class="pill ${severityClass(b.severity)}">${esc(severityLabel(b.severity))}</span>` : `<span class="muted">—</span>`}</td>
+        <td><strong>${esc(b.title || "—")}</strong><div class="muted">${esc(b.category || "")}</div></td>
+        <td>${esc(fmtDate(b.incident_date))}</td>
+        <td>${Number(b.parent_visible) ? "✓" : "—"}</td>
+        <td><span class="pill ${/resolved/.test(b.status || "") ? "good" : "warn"}">${esc(b.status || "—")}</span> <button type="button" class="btn" data-edit-beh="${b.id}">Edit</button></td>
+      </tr>`
+    ).join("") : `<tr><td colspan="7" class="muted">No behaviour or conduct records yet.</td></tr>`;
+    document.querySelectorAll("[data-edit-beh]").forEach((b) => b.addEventListener("click", () => openBehaviour(Number(b.dataset.editBeh))));
+
+    fillDemographics($("#demo-student").value);
+
+    $("#grid").hidden = false;
+
+    if (editingId != null) {
+      const still = cards.find((c) => Number(c.id) === Number(editingId));
+      if (still) openEditor(editingId); else closeEditor();
+    }
+  }
+
+  function openEditor(cardid) {
+    const card = (DATA.cards || []).find((c) => Number(c.id) === Number(cardid));
+    if (!card) return;
+    editingId = cardid;
+    const published = /publish/.test(card.status || "");
+    $("#editor-panel").hidden = false;
+    $("#editor-title").textContent = "Edit report card " + (card.cardnumber || ("#" + card.id));
+    $("#editor-cardid").value = card.id;
+    $("#editor-grades").innerHTML = (card.grades || []).length ? (card.grades || []).map((g) =>
+      `<tr><td>${esc(g.course)}</td><td>${esc((g.percent ?? "—")) + (g.percent != null ? "%" : "")}</td><td>${esc(g.letter || "—")}</td></tr>`
+    ).join("") : `<tr><td colspan="3" class="muted">No grades on this card.</td></tr>`;
+    $("#editor-conduct").value = card.conduct || "";
+    $("#editor-effort").value = card.effort || "";
+    $("#editor-narrative").value = card.teacher_narrative || "";
+    $("#editor-head").value = card.head_comment || "";
+
+    $("#editor-locked").hidden = !published;
+    ["editor-conduct", "editor-effort", "editor-narrative", "editor-head", "editor-save"].forEach((id) => { $("#" + id).disabled = published; });
+    $("#editor-panel").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+  function closeEditor() { editingId = null; $("#editor-panel").hidden = true; }
+
+  async function post(payload, btn, okText) {
+    const original = btn ? btn.textContent : "";
+    if (btn) { btn.disabled = true; btn.textContent = "Saving…"; }
+    try {
+      const r = await fetch(endpoint + "?" + base().toString(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = okText || (d.message || "Saved.");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await load();
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = original; }
+    }
+  }
+
+  function formPayload(form, extra) {
+    const p = Object.assign({}, extra);
+    new FormData(form).forEach((v, k) => { p[k] = v; });
+    return p;
+  }
+
+  $("#build-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    post(formPayload(ev.currentTarget, { do: "build" }), ev.currentTarget.querySelector("button"), "Report card built from grades.");
+  });
+  $("#editor-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    post(formPayload(ev.currentTarget, { do: "save_narrative" }), ev.currentTarget.querySelector("button"), "Report card annotations saved.");
+  });
+  $("#status-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    post(formPayload(ev.currentTarget, { do: "set_student_status" }), ev.currentTarget.querySelector("button"), "Student status saved.");
+  });
+
+  $("#demo-student").addEventListener("change", (ev) => fillDemographics(ev.currentTarget.value));
+  $("#demographics-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    post(formPayload(ev.currentTarget, { do: "save_demographics" }), $("#demo-save"), "Student demographics saved.");
+  });
+
+  $("#behaviour-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const p = formPayload(ev.currentTarget, { do: "save_behaviour" });
+    p.parent_visible = $("#beh-parent").checked ? 1 : 0;
+    if (!p.behaviourid) delete p.behaviourid;
+    post(p, $("#beh-save"), "Behaviour record saved.");
+  });
+  $("#beh-reset").addEventListener("click", () => resetBehaviourForm());
+
+  load();
+})();
+</script>
+</body>
+</html>

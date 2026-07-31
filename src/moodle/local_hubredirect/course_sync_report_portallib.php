@@ -8,10 +8,10 @@ defined('MOODLE_INTERNAL') || die();
 
 function pqcsyncl_manual_label($row): string {
     if ((int)($row->moodlecourseid ?? 0) <= 0 || empty($row->moodle_fullname)) {
-        return 'Missing Moodle course';
+        return 'Missing course';
     }
     if ((int)($row->moodle_visible ?? 0) !== 1) {
-        return 'Moodle course hidden';
+        return 'Course hidden';
     }
     if (empty($row->manualenrolid)) {
         return 'Manual enrollment missing';

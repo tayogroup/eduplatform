@@ -18,6 +18,7 @@ if ($workspaceid > 0) {
 if ($workspaceid <= 0 || !pqh_user_can_manage_workspace((int)$USER->id, $workspaceid)) {
     pqh_access_denied('Only workspace admins can view course seat reports.', new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams), 'Course report access required');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $PAGE->set_context(context_system::instance());

@@ -30,11 +30,13 @@ class cohort_sync extends \core\task\scheduled_task {
         require_once($CFG->dirroot . '/enrol/cohort/locallib.php');
         require_once($CFG->libdir . '/filelib.php');
 
-        $url = trim((string)get_config('local_prequran', 'cohorts_source_url'));
-        if ($url === '') {
+        // MULTI-SCHOOL: one cohorts.json URL PER LINE (one per consumer school).
+        $urlsetting = trim((string)get_config('local_prequran', 'cohorts_source_url'));
+        if ($urlsetting === '') {
             mtrace('Cohort sync skipped: local_prequran/cohorts_source_url is not set.');
             return;
         }
+        $urls = array_values(array_filter(array_map('trim', preg_split('/[\r\n]+/', $urlsetting))));
 
         $studentrole = $DB->get_record('role', ['shortname' => 'student']);
         if (!$studentrole) {
@@ -42,10 +44,20 @@ class cohort_sync extends \core\task\scheduled_task {
             return;
         }
 
-        $fetchurl = $url . (strpos($url, '?') === false ? '?' : '&') . 'cb=' . time();
-        $roster = json_decode((string)download_file_content($fetchurl), true);
-        if (!is_array($roster) || empty($roster['cohorts'])) {
-            mtrace('Cohort sync failed: could not parse cohorts from ' . $url);
+        $allcohorts = [];
+        foreach ($urls as $url) {
+            $fetchurl = $url . (strpos($url, '?') === false ? '?' : '&') . 'cb=' . time();
+            $roster = json_decode((string)download_file_content($fetchurl), true);
+            if (!is_array($roster) || empty($roster['cohorts'])) {
+                mtrace('Cohort sync: could not parse cohorts from ' . $url . ' - skipping this source.');
+                continue;
+            }
+            foreach ($roster['cohorts'] as $c) {
+                $allcohorts[] = $c;
+            }
+        }
+        if (!$allcohorts) {
+            mtrace('Cohort sync failed: no cohorts from any configured source.');
             return;
         }
 
@@ -53,7 +65,7 @@ class cohort_sync extends \core\task\scheduled_task {
         $cohortsdone = 0; $added = 0; $missing = 0; $enrols = 0;
         $touchedcourses = [];
 
-        foreach ($roster['cohorts'] as $c) {
+        foreach ($allcohorts as $c) {
             if (empty($c['idnumber'])) {
                 continue;
             }

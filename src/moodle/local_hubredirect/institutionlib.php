@@ -4,6 +4,7 @@ declare(strict_types=1);
 defined('MOODLE_INTERNAL') || die();
 
 require_once(__DIR__ . '/accesslib.php');
+require_once(__DIR__ . '/account_ids.php');
 
 function pqhi_clean_slug(string $value): string {
     $slug = strtolower(trim($value));
@@ -51,9 +52,9 @@ function pqhi_clean_url(string $value): string {
 
 function pqhi_website_mode_options(): array {
     return [
-        'hosted' => 'EduPlatform hosted website',
-        'external' => 'External website with EduPlatform portal',
-        'external_with_embeds' => 'External website with embedded EduPlatform services',
+        'hosted' => 'Hosted — EduPlatform serves the landing page (works with your own domain)',
+        'external' => 'External — landing page already exists elsewhere, only link to the portal',
+        'external_with_embeds' => 'External with embeds — their existing site embeds EduPlatform forms/widgets',
     ];
 }
 
@@ -113,7 +114,7 @@ function pqhi_consumer_website_profile(array $data, ?stdClass $existing = null):
         (string)($data['external_website_url'] ?? ($existing->externalwebsiteurl ?? ''))
     );
     if ($websitemode !== 'hosted' && $externalwebsiteurl === '') {
-        throw new invalid_parameter_exception('Existing website URL is required for an external website consumer.');
+        throw new Exception('Existing website URL is required for an external website consumer.');
     }
     if ($websitemode === 'hosted') {
         $externalwebsiteurl = '';
@@ -258,6 +259,7 @@ function pqhi_institution_type_options(): array {
         'technical_training' => 'Technical training',
         'adult_learning' => 'Adult learning',
         'professional_development' => 'Professional development',
+        'language_education' => 'Languages',
         'faith_based_education' => 'Religious / faith-based',
     ];
 }
@@ -441,7 +443,7 @@ function pqhi_upsert_consumer_domain(int $consumerid, int $workspaceid, string $
     $now = time();
     $existing = $DB->get_record('local_prequran_consumer_domain', ['domain' => $domain], '*', IGNORE_MISSING);
     if ($existing && (int)$existing->consumerid !== $consumerid) {
-        throw new invalid_parameter_exception('Domain ' . $domain . ' is already assigned to another institution.');
+        throw new Exception('Domain ' . $domain . ' is already assigned to another institution.');
     }
     $record = (object)[
         'consumerid' => $consumerid,
@@ -505,7 +507,7 @@ function pqhi_consumer_slug_available(string $slug, int $consumerid = 0): bool {
 function pqhi_upsert_consumer(int $workspaceid, string $name, string $slug, int $ownerid, array $data, int $createdby): int {
     global $DB;
     if ($workspaceid <= 0 || !pqh_consumer_schema_ready()) {
-        throw new invalid_parameter_exception('Consumer/domain tables are not ready.');
+        throw new Exception('Consumer/domain tables are not ready.');
     }
     $slug = pqhi_clean_slug($slug !== '' ? $slug : $name);
     $existing = pqhi_consumer_for_workspace($workspaceid, $slug);
@@ -513,7 +515,7 @@ function pqhi_upsert_consumer(int $workspaceid, string $name, string $slug, int 
         $existing = $DB->get_record('local_prequran_consumer', ['primaryworkspaceid' => $workspaceid], '*', IGNORE_MISSING);
     }
     if (!pqhi_consumer_slug_available($slug, $existing ? (int)$existing->id : 0)) {
-        throw new invalid_parameter_exception('Institution slug is already used.');
+        throw new Exception('Institution slug is already used.');
     }
     $oldtheme = $existing ? pqhi_json_array((string)($existing->themejson ?? '')) : [];
     $oldcopy = $existing ? pqhi_json_array((string)($existing->copyjson ?? '')) : [];
@@ -589,7 +591,7 @@ function pqhi_upsert_consumer(int $workspaceid, string $name, string $slug, int 
 function pqhi_create_workspace_for_consumer(string $name, string $slug, string $consumertype, int $ownerid, array $data, int $createdby): int {
     global $DB;
     if (!pqh_table_exists_safe('local_prequran_workspace')) {
-        throw new invalid_parameter_exception('Workspace table is not ready.');
+        throw new Exception('Workspace table is not ready.');
     }
     $slug = pqhi_unique_workspace_slug($slug !== '' ? $slug : $name);
     $now = time();
@@ -633,15 +635,15 @@ function pqhi_create_workspace_for_consumer(string $name, string $slug, string $
 function pqhi_upsert_consumer_app(int $workspaceid, string $name, string $slug, string $consumertype, int $ownerid, array $data, int $createdby): int {
     global $DB;
     if (!pqh_consumer_schema_ready()) {
-        throw new invalid_parameter_exception('Consumer/domain tables are not ready.');
+        throw new Exception('Consumer/domain tables are not ready.');
     }
     $slug = pqhi_clean_slug($slug !== '' ? $slug : $name);
     if (!array_key_exists($consumertype, pqhi_consumer_type_options())) {
-        throw new invalid_parameter_exception('Choose a valid consumer type.');
+        throw new Exception('Choose a valid consumer type.');
     }
     $existing = $DB->get_record('local_prequran_consumer', ['slug' => $slug], '*', IGNORE_MISSING);
     if (!pqhi_consumer_slug_available($slug, $existing ? (int)$existing->id : 0)) {
-        throw new invalid_parameter_exception('Consumer slug is already used.');
+        throw new Exception('Consumer slug is already used.');
     }
     $routes = pqhi_default_routes_for_consumer($consumertype);
     $oldtheme = $existing ? pqhi_json_array((string)($existing->themejson ?? '')) : [];
@@ -733,7 +735,7 @@ function pqhi_find_or_create_admin_user(array $data, int $createdby): stdClass {
     $firstname = trim((string)($data['adminfirstname'] ?? ''));
     $lastname = trim((string)($data['adminlastname'] ?? ''));
     if ($email === '' || !validate_email($email) || $firstname === '' || $lastname === '') {
-        throw new invalid_parameter_exception('Enter an existing admin user, or provide first name, last name, and email to create one.');
+        throw new Exception('Enter an existing admin user, or provide first name, last name, and email to create one.');
     }
     require_once($CFG->dirroot . '/user/lib.php');
     $usernamebase = pqhi_clean_slug((string)($data['adminusername'] ?? strstr($email, '@', true) ?: $email));
@@ -745,7 +747,14 @@ function pqhi_find_or_create_admin_user(array $data, int $createdby): stdClass {
     }
     $password = function_exists('generate_password') ? generate_password(14) : random_string(14);
     $userid = create_user_record($username, $password, 'manual');
+    $accountid = pqh_assign_account_id((int)$userid, 'admin');
+    $schoolslug = trim((string)($data['schoolslug'] ?? ''));
+    $standardusername = pqh_generate_standard_username($schoolslug, 'admin', $accountid);
+    if ($standardusername !== '' && !$DB->record_exists('user', ['username' => $standardusername, 'mnethostid' => $CFG->mnet_localhost_id])) {
+        $username = $standardusername;
+    }
     $user = core_user::get_user((int)$userid, '*', MUST_EXIST);
+    $user->username = $username;
     $user->firstname = $firstname;
     $user->lastname = $lastname;
     $user->email = $email;

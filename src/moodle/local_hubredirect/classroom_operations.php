@@ -21,6 +21,7 @@ $recordingdefault = in_array(strtolower(trim((string)($consumercontext->consumer
 if (!empty($consumercontext->consumerslug)) {
     $urlparams['consumer'] = (string)$consumercontext->consumerslug;
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 // Keep old bookmarks working while routing users to the current live-session surfaces.
 if (!optional_param('legacy', 0, PARAM_INT)) {

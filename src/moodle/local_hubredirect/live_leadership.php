@@ -402,6 +402,8 @@ $PAGE->set_title('Leadership Reviews');
 $PAGE->set_heading('Leadership Reviews');
 $PAGE->add_body_class('pqh-live-leadership-page');
 
+pqh_enforce_role_domain($consumercontext, (int)($urlparams['workspaceid'] ?? 0), (int)$USER->id);
+
 echo $OUTPUT->header();
 ?>
 <style>

@@ -10,6 +10,7 @@ $workspaceid = pqh_current_workspace_id((int)$USER->id, optional_param('workspac
 if ($workspaceid <= 0 || !pqh_user_can_manage_workspace((int)$USER->id, $workspaceid)) {
     pqh_access_denied('Document management requires workspace administrator access.', new moodle_url('/local/hubredirect/workspace_dashboard.php'), 'Document access denied');
 }
+pqh_enforce_role_domain(pqh_current_consumer_context(), $workspaceid, (int)$USER->id);
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $urlparams = ['workspaceid' => $workspaceid];
 $notice = '';
@@ -19,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         require_sesskey();
         if (!pqwdoc_ready()) {
-            throw new invalid_parameter_exception('Document tables are not ready. Run Moodle upgrade.');
+            throw new invalid_parameter_exception('Document tables are not ready. Run the platform upgrade.');
         }
         $action = optional_param('action', '', PARAM_ALPHANUMEXT);
         $now = time();
@@ -178,7 +179,7 @@ echo '<style>.pqdoc{max-width:1180px;margin:0 auto}.pqdoc-top{display:flex;justi
 echo '<div class="pqdoc"><div class="pqdoc-top"><div><h2>Document Management</h2><div class="pqdoc-muted">' . s($workspace->name) . ' student documents, IDs, certificates, consent forms, secure downloads, verification, expiration, and generated PDF registry.</div></div><a class="pqdoc-btn pqdoc-btn--light" href="' . (new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams))->out(false) . '">Workspace</a></div>';
 if ($notice !== '') { echo '<div class="pqdoc-notice">' . s($notice) . '</div>'; }
 if ($error !== '') { echo '<div class="pqdoc-error">' . s($error) . '</div>'; }
-if (!pqwdoc_ready()) { echo '<div class="pqdoc-error">Document schema is not ready. Run Moodle upgrade.</div>'; }
+if (!pqwdoc_ready()) { echo '<div class="pqdoc-error">Document schema is not ready. Run the platform upgrade.</div>'; }
 echo '<div class="pqdoc-metrics"><div class="pqdoc-metric"><strong>' . count($documents) . '</strong><div class="pqdoc-muted">documents</div></div><div class="pqdoc-metric"><strong>' . (int)$expiring . '</strong><div class="pqdoc-muted">expiring in 30 days</div></div><div class="pqdoc-metric"><strong>' . count($generated) . '</strong><div class="pqdoc-muted">generated PDFs</div></div></div>';
 echo '<div class="pqdoc-grid"><section class="pqdoc-panel"><h3>Secure Upload</h3><form method="post" enctype="multipart/form-data"><input type="hidden" name="sesskey" value="' . s(sesskey()) . '"><input type="hidden" name="action" value="upload_document"><div class="pqdoc-field"><label>Student</label><select class="pqdoc-select" name="studentid"><option value="0">No student</option>';
 foreach ($students as $student) { echo '<option value="' . (int)$student->id . '">' . s(fullname($student)) . '</option>'; }

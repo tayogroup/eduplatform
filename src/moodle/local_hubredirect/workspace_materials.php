@@ -40,6 +40,7 @@ if (!$workspace) {
         'Workspace materials unavailable'
     );
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 $canmanage = pqh_user_can_manage_workspace((int)$USER->id, $workspaceid);
 $canteachmaterials = pqh_user_can_teach_in_workspace((int)$USER->id, $workspaceid);
 $isstudentmaterials = pqho_user_is_student_in_workspace((int)$USER->id, $workspaceid) && !$canteachmaterials && !$canmanage;
@@ -64,7 +65,7 @@ if ($isdownload) {
     $materialid = optional_param('materialid', 0, PARAM_INT);
     if (!pqh_table_exists_safe('local_prequran_workspace_material')) {
         pqh_access_denied(
-            'Workspace material table is not ready. Run the local_prequran Moodle upgrade.',
+            'Workspace material table is not ready. Run the local_prequran upgrade.',
             new moodle_url('/local/hubredirect/workspace_materials.php', $urlparams),
             'Workspace material unavailable'
         );
@@ -214,7 +215,7 @@ body.pqw-materials-page #page,body.pqw-materials-page #page-content,body.pqw-mat
           <input type="hidden" name="action" value="add_material">
           <h2>Add Material</h2>
           <?php if (!pqh_table_exists_safe('local_prequran_workspace_material')): ?>
-            <div class="pqwm-empty">Workspace material table is not ready. Run the local_prequran Moodle upgrade first.</div>
+            <div class="pqwm-empty">Workspace material table is not ready. Run the local_prequran upgrade first.</div>
           <?php else: ?>
             <div class="pqwm-field"><label>Title</label><input class="pqwm-input" name="title" required></div>
             <div class="pqwm-field"><label>Type</label><select class="pqwm-select" name="material_type"><option value="link">Link</option><option value="course">Course</option><option value="document">Document</option><option value="video">Video</option><option value="homework">Homework</option></select></div>
@@ -233,7 +234,7 @@ body.pqw-materials-page #page,body.pqw-materials-page #page-content,body.pqw-mat
           <input type="hidden" name="action" value="assign_material">
           <h2>Assign Material</h2>
           <?php if (!pqh_table_exists_safe('local_prequran_workspace_mat_assign')): ?>
-            <div class="pqwm-empty">Material assignment table is not ready. Run the local_prequran Moodle upgrade first.</div>
+            <div class="pqwm-empty">Material assignment table is not ready. Run the local_prequran upgrade first.</div>
           <?php elseif (!$materials): ?>
             <div class="pqwm-empty">Add a material before assigning it.</div>
           <?php elseif (!$students && !$teachers): ?>

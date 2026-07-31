@@ -142,12 +142,13 @@
     const awards = d.awards || [];
     $("#awards-body").innerHTML = awards.length ? awards.map((a) => {
       const pdf = a.pdf_url ? `<a class="btn" href="${esc(a.pdf_url)}">PDF</a>` : `<span class="muted">No PDF</span>`;
+      const verify = a.verify_url ? `<a class="btn" href="${esc(a.verify_url)}" target="_blank" rel="noopener">Verify link</a>` : "";
       const cls = /revoked/.test(a.status || "") ? "revoked" : /issued/.test(a.status || "") ? "issued" : "";
       return `<tr>
-        <td><strong>${esc(a.title)}</strong><div class="muted">${esc(a.awardnumber + " / " + a.award_type)}</div></td>
+        <td><strong>${esc(a.title)}</strong><div class="muted">${esc(a.awardnumber + " / " + a.award_type)}</div>${a.verifycode ? `<div class="muted">Verify code: ${esc(a.verifycode)}</div>` : ""}</td>
         <td>${esc(a.student_name)}</td>
         <td><span class="pill ${cls}">${esc(a.status)}</span><div class="muted">${esc(a.issuedat_label)}</div></td>
-        <td>${pdf}<form class="revoke-form" data-awardid="${a.id}"><div class="rev"><input name="revocation_reason" placeholder="Revocation reason"><button type="submit">Revoke</button></div></form></td>
+        <td>${pdf} ${verify}<form class="revoke-form" data-awardid="${a.id}"><div class="rev"><input name="revocation_reason" placeholder="Revocation reason"><button type="submit">Revoke</button></div></form></td>
       </tr>`;
     }).join("") : `<tr><td colspan="4" class="muted">No awards yet.</td></tr>`;
 

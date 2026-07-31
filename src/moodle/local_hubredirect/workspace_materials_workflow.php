@@ -114,7 +114,7 @@ function pqwm_notify_parent_material_reviewed(int $workspaceid, stdClass $assign
 function pqwm_upsert_assignment(int $workspaceid): void {
     global $DB, $USER;
     if (!pqh_table_exists_safe('local_prequran_workspace_mat_assign')) {
-        throw new invalid_parameter_exception('Workspace material assignment table is not ready. Run the local_prequran Moodle upgrade.');
+        throw new invalid_parameter_exception('Workspace material assignment table is not ready. Run the local_prequran upgrade.');
     }
     $materialid = optional_param('materialid', 0, PARAM_INT);
     $target = optional_param('target', '', PARAM_TEXT);
@@ -179,10 +179,10 @@ function pqwm_material_workflow_statuses(): array {
 function pqwm_update_assignment_workflow(int $workspaceid): void {
     global $DB, $USER;
     if (!pqh_table_exists_safe('local_prequran_workspace_mat_assign')) {
-        throw new invalid_parameter_exception('Workspace material assignment table is not ready. Run the local_prequran Moodle upgrade.');
+        throw new invalid_parameter_exception('Workspace material assignment table is not ready. Run the local_prequran upgrade.');
     }
     if (!pqh_table_has_field_safe('local_prequran_workspace_mat_assign', 'workflow_status')) {
-        throw new invalid_parameter_exception('Material assignment workflow fields are not ready. Run the local_prequran Moodle upgrade.');
+        throw new invalid_parameter_exception('Material assignment workflow fields are not ready. Run the local_prequran upgrade.');
     }
     $assignmentid = optional_param('assignmentid', 0, PARAM_INT);
     $workflow = optional_param('workflow_status', '', PARAM_ALPHANUMEXT);
@@ -230,7 +230,7 @@ function pqwm_update_assignment_workflow(int $workspaceid): void {
 function pqwm_set_material_status(int $workspaceid): void {
     global $DB, $USER;
     if (!pqh_table_exists_safe('local_prequran_workspace_material')) {
-        throw new invalid_parameter_exception('Workspace material table is not ready. Run the local_prequran Moodle upgrade.');
+        throw new invalid_parameter_exception('Workspace material table is not ready. Run the local_prequran upgrade.');
     }
     $materialid = optional_param('materialid', 0, PARAM_INT);
     $status = optional_param('status', '', PARAM_ALPHANUMEXT);
@@ -261,7 +261,7 @@ function pqwm_set_material_status(int $workspaceid): void {
 function pqwm_set_assignment_status(int $workspaceid): void {
     global $DB;
     if (!pqh_table_exists_safe('local_prequran_workspace_mat_assign')) {
-        throw new invalid_parameter_exception('Workspace material assignment table is not ready. Run the local_prequran Moodle upgrade.');
+        throw new invalid_parameter_exception('Workspace material assignment table is not ready. Run the local_prequran upgrade.');
     }
     $assignmentid = optional_param('assignmentid', 0, PARAM_INT);
     $status = optional_param('status', '', PARAM_ALPHANUMEXT);

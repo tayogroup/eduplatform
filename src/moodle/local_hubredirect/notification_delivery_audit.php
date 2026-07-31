@@ -255,6 +255,8 @@ $PAGE->add_body_class('pqnda-page');
 
 $passcount = count(array_filter($rows, static fn($row) => $row['status'] === 'PASS'));
 
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
+
 echo $OUTPUT->header();
 ?>
 <style>

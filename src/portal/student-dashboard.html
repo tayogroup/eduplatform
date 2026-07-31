@@ -88,6 +88,7 @@
     <div>
       <div class="panel"><h2>Up next</h2><p class="sub" style="margin-bottom:10px">Your week at a glance</p><div class="todo" id="todo"></div></div>
       <div class="panel"><h2>Recent feedback</h2><p class="sub" style="margin-bottom:10px">From your teachers</p><div id="feedback"></div></div>
+      <div class="panel"><h2>Rate your recent classes</h2><p class="sub" style="margin-bottom:10px">How was your live class? Your rating helps your teachers improve.</p><div id="rate-list"></div></div>
     </div>
   </div>
 </main>
@@ -183,6 +184,30 @@
         <span><strong>${esc(f.title)}</strong><span>“${esc(f.feedback)}”</span>
         <span class="muted">${esc(when(f.timemodified))}</span></span></div>`).join("")
       || "<div class='empty'>No feedback yet. Submit homework to hear from your teacher.</div>";
+
+    // Rate recent classes: 5 stars per past session; filled = your saved rating.
+    $("#rate-list").innerHTML = (d.ratable_sessions || []).map((s) => {
+      const stars = [1, 2, 3, 4, 5].map((n) =>
+        `<button type="button" class="star" data-session="${Number(s.id)}" data-rate="${n}" style="background:none;border:none;cursor:pointer;font-size:18px;padding:2px;color:${Number(s.myrating) >= n ? "#f0a500" : "#c9d4e5"}">★</button>`).join("");
+      return `<div class="fb"><span><strong>${esc(s.title || "Live class")}</strong>
+        <span class="muted">${esc(when(s.scheduled_start))}${Number(s.myrating) ? " · you rated " + Number(s.myrating) + "★" : ""}</span>
+        <span>${stars}</span></span></div>`;
+    }).join("") || "<div class='empty'>No recent live classes to rate yet.</div>";
+    document.querySelectorAll("#rate-list .star").forEach((b) => b.addEventListener("click", async () => {
+      b.disabled = true;
+      try {
+        const params = new URLSearchParams({ report: "student-dashboard", token });
+        const consumer = (qs.get("consumer") || "").trim();
+        if (consumer) params.set("consumer", consumer);
+        const r = await fetch(endpoint + "?" + params, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain" }, // simple CORS, no preflight
+          body: JSON.stringify({ do: "rate_session", sessionid: Number(b.dataset.session), rating: Number(b.dataset.rate) }),
+        });
+        const res = await r.json().catch(() => ({}));
+        if (res && res.ok) load(); else { b.disabled = false; }
+      } catch (e) { b.disabled = false; }
+    }));
 
     $("#cols").hidden = false;
     $("#status").hidden = true;

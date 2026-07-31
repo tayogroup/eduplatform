@@ -249,7 +249,7 @@ if ($canmanage && $ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             $accountid = pqh_assign_account_id($userid, 'referrer');
             if ($DB->record_exists('local_prequran_referrer', ['userid' => $userid])) {
-                throw new invalid_parameter_exception('This Moodle user is already registered as a referrer.');
+                throw new invalid_parameter_exception('This account is already registered as a referrer.');
             }
             $code = pqr_generate_code();
             $referrerid = (int)$DB->insert_record('local_prequran_referrer', (object)[
@@ -268,7 +268,7 @@ if ($canmanage && $ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 'timemodified' => time(),
             ]);
             pqr_send_notice($userid, $pqrbrandname . ' referrer account created', 'Your referrer account is ready. Use referrer code ' . $code . ' when referring students.');
-            $message = 'Referrer created. Referrer Code ' . $code . ', Moodle user ID ' . $userid . ', account ID ' . $accountid . ($password !== '' ? ', temporary password ' . $password : '') . '.';
+            $message = 'Referrer created. Referrer Code ' . $code . ', User ID ' . $userid . ', account ID ' . $accountid . ($password !== '' ? ', temporary password ' . $password : '') . '.';
         } else if ($action === 'update_referral') {
             $referralid = optional_param('referralid', 0, PARAM_INT);
             $referral = $DB->get_record('local_prequran_referral', ['id' => $referralid], '*', IGNORE_MISSING);
@@ -337,6 +337,8 @@ $PAGE->set_title('Referrers');
 $PAGE->set_heading('Referrers');
 $PAGE->add_body_class('pqr-referrers-page');
 
+pqh_enforce_role_domain($pqrconsumercontext, pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
+
 echo $OUTPUT->header();
 ?>
 <style>
@@ -363,7 +365,7 @@ body.pqr-referrers-page #page,body.pqr-referrers-page #page-content,body.pqr-ref
     <?php if ($message !== ''): ?><div class="pqr-alert pqr-alert--ok"><?php echo s($message); ?></div><?php endif; ?>
     <?php if ($error !== ''): ?><div class="pqr-alert pqr-alert--bad"><?php echo s($error); ?></div><?php endif; ?>
     <?php if (!$ready): ?>
-      <section class="pqr-panel"><div class="pqr-empty">Referral tables are not ready. Run the Moodle plugin upgrade for local_prequran first.</div></section>
+      <section class="pqr-panel"><div class="pqr-empty">Referral tables are not ready. Run the platform upgrade for local_prequran first.</div></section>
     <?php else: ?>
       <?php
         $approved = 0;

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Platform support · EduPlatform portal</title>
+<style>
+  :root{--bg:#eef3f9;--card:#ffffff;--line:#d7e0ec;--ink:#17253a;--ink2:#5b6b82;--blue:#1d4f8f;--blue2:#2a6cb0;--warn:#a05a1f;--bad:#8a1f1f;--ok:#1f6b4a}
+  *{box-sizing:border-box}
+  body{margin:0;font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+  header{background:linear-gradient(120deg,var(--blue),var(--blue2));color:#fff;padding:14px 20px}
+  .brand{font-weight:900}.brand small{display:block;font-weight:600;opacity:.85}
+  main{max-width:1000px;margin:0 auto;padding:18px 20px 60px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0;font-size:22px}h2{margin:0 0 10px;font-size:16px}
+  .sub{color:var(--ink2);margin:4px 0 0;font-size:13px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;color:var(--ink2);font-size:11px;text-transform:uppercase;padding:6px 8px;border-bottom:1px solid var(--line)}
+  td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:800;background:#e1ecf7;color:var(--blue2)}
+  .pill.warn{background:#f7ecd9;color:var(--warn)}.pill.bad{background:#f7dede;color:var(--bad)}.pill.ok{background:#dff0e7;color:var(--ok)}
+  label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin:8px 0 4px}
+  input,select,textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font:inherit;background:var(--card);color:var(--ink)}
+  textarea{min-height:90px;resize:vertical}
+  button{margin-top:10px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:10px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  button:disabled{opacity:.55;cursor:wait}
+  .muted{color:var(--ink2)}
+  .status{padding:12px 14px;border-radius:8px;margin-bottom:14px;font-size:14px}
+  .status.error{background:#f7dede;color:var(--bad)}.status.saved{background:#dff0e7;color:var(--ok)}
+  .notice{border-left:4px solid var(--warn);padding:8px 12px;margin-bottom:8px;background:#fdf6ec;border-radius:0 8px 8px 0}
+  .notice.outage{border-color:var(--bad);background:#fbeeee}
+  .msg{border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin-bottom:8px}
+  .msg.platform{background:#eef4fb}
+  .msg .meta{font-size:11px;color:var(--ink2);margin-bottom:3px}
+  a{color:var(--blue2)}
+</style>
+</head>
+<body>
+<header><div class="brand">EduPlatform Portal<small>Platform support — technical team</small></div></header>
+<main>
+  <div class="panel"><h1>Platform support</h1><p class="sub">For your school's technical team only: system problems (outages, sync, domains, platform bugs) that EduPlatform must fix. Your teachers, students and parents should use your school's own support — escalate here on their behalf when it's a platform issue.</p></div>
+  <div id="status" class="status" hidden></div>
+  <div class="panel" id="notices-panel" hidden><h2>Platform notices</h2><div id="notices"></div></div>
+  <div class="panel" id="detail-panel" hidden>
+    <h2 id="detail-title">Ticket</h2>
+    <p class="sub"><a href="#" id="back-link">&larr; All tickets</a></p>
+    <div id="detail-body"></div>
+    <div id="detail-messages"></div>
+    <form id="reply-form">
+      <label for="replybody">Reply to EduPlatform</label>
+      <textarea id="replybody" maxlength="2000" required placeholder="Add information or ask for an update…"></textarea>
+      <button type="submit">Send reply</button>
+    </form>
+  </div>
+  <div class="panel" id="open-panel" hidden>
+    <h2>Open a platform ticket</h2>
+    <form id="open-form">
+      <label for="t-subject">Subject</label>
+      <input id="t-subject" maxlength="200" required placeholder="e.g. Portal login failing for all our teachers since 09:00">
+      <label for="t-category">Category</label><select id="t-category"></select>
+      <label for="t-priority">Priority</label><select id="t-priority"></select>
+      <label for="t-ref">Your internal ticket reference (optional)</label>
+      <input id="t-ref" maxlength="100" placeholder="e.g. SUP-20260723-000042 — carries your triage context">
+      <label for="t-desc">Describe the system problem</label>
+      <textarea id="t-desc" maxlength="4000" required placeholder="What broke, since when, who is affected, what you already checked…"></textarea>
+      <button type="submit">Open ticket</button>
+    </form>
+  </div>
+  <div class="panel" id="list-panel" hidden>
+    <h2>Your school's platform tickets</h2>
+    <table><thead><tr><th>Ticket</th><th>Priority</th><th>Status</th><th>First response</th><th>Opened</th></tr></thead><tbody id="tickets"></tbody></table>
+  </div>
+  <div class="panel" id="stmt-panel" hidden>
+    <h2>Settlement statements</h2>
+    <p class="sub">Platform-fee statements issued to your school by EduPlatform. Payment is settled outside the platform; the reference appears here once recorded.</p>
+    <table><thead><tr><th>Statement</th><th>Period</th><th>Gross collected</th><th>Fee %</th><th>Fee</th><th>Adjustment</th><th>Net due</th><th>Status</th><th>Paid</th></tr></thead><tbody id="stmts"></tbody></table>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").trim();
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const when = (t) => t ? new Date(t * 1000).toLocaleString() : "—";
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Missing endpoint/token — open via the portal launch link."; return; }
+  let ticketid = Number(qs.get("ticketid") || 0);
+
+  const params = () => {
+    const p = new URLSearchParams({ report: "platform-support", token });
+    const ws = qs.get("workspaceid"); if (ws) p.set("workspaceid", ws);
+    if (ticketid > 0) p.set("ticketid", String(ticketid));
+    return p;
+  };
+  const post = async (payload) => {
+    const r = await fetch(endpoint + "?" + params(), { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(payload) });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+    return d;
+  };
+  const flash = (cls, text) => { $("#status").className = "status " + cls; $("#status").hidden = false; $("#status").textContent = text; window.scrollTo({ top: 0, behavior: "smooth" }); };
+
+  const statusPill = (t) => {
+    const cls = t.status === "resolved" || t.status === "closed" ? "ok" : (t.status === "waiting_on_school" ? "warn" : "");
+    return `<span class="pill ${cls}">${esc(t.status.replace(/_/g, " "))}</span>`;
+  };
+  const firstResp = (t) => t.firstresponded ? '<span class="pill ok">responded</span>'
+    : (t.sla_first_due * 1000 < Date.now() ? '<span class="pill bad">overdue</span>' : `<span class="muted">due ${esc(when(t.sla_first_due))}</span>`);
+
+  async function load() {
+    try {
+      const r = await fetch(endpoint + "?" + params());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { flash("error", "Could not load: " + e.message); }
+  }
+
+  function render(d) {
+    const names = d.names || {};
+    $("#notices").innerHTML = (d.notices || []).map((n) =>
+      `<div class="notice ${esc(n.severity)}"><strong>${esc(n.subject)}</strong> <span class="pill ${n.severity === "outage" ? "bad" : "warn"}">${esc(n.severity)}</span><br>${esc(n.body)}<br><span class="muted">${esc(when(n.timecreated))}</span></div>`).join("");
+    $("#notices-panel").hidden = !(d.notices || []).length;
+
+    const day = (t) => t ? new Date(t * 1000).toLocaleDateString() : "—";
+    $("#stmts").innerHTML = (d.statements || []).map((s) =>
+      `<tr><td>${esc(s.statementnumber)}</td>
+        <td>${esc(day(s.periodstart))} – ${esc(day(s.periodend > 0 ? s.periodend - 86400 : 0))}</td>
+        <td>${esc(s.grosscollected)} ${esc(s.currency)}</td>
+        <td>${esc(s.feepercent)}%</td>
+        <td>${esc(s.feeamount)}</td>
+        <td>${esc(s.adjustment)}</td>
+        <td><strong>${esc(s.netdue)} ${esc(s.currency)}</strong></td>
+        <td><span class="pill ${s.status === "paid" ? "ok" : "warn"}">${esc(s.status)}</span></td>
+        <td>${s.status === "paid" ? esc(day(s.paidat)) + (s.paidat ? "" : "") : "—"}</td></tr>`).join("");
+    $("#stmt-panel").hidden = !(d.statements || []).length;
+
+    $("#t-category").innerHTML = Object.entries(d.categories || {}).map(([v, l]) => `<option value="${esc(v)}">${esc(l)}</option>`).join("");
+    $("#t-priority").innerHTML = Object.entries(d.priorities || {}).map(([v, l]) => `<option value="${esc(v)}"${v === "normal" ? " selected" : ""}>${esc(l)}</option>`).join("");
+
+    const detail = ticketid > 0 ? (d.tickets || []).find((t) => t.id === ticketid && t.messages) : null;
+    if (detail) {
+      $("#detail-title").textContent = detail.ticketnumber + " — " + detail.subject;
+      $("#detail-body").innerHTML = `<p>${statusPill(detail)} <span class="pill">${esc(detail.priority)}</span> <span class="muted">assignee: ${esc(names[detail.assigneeid] || "unassigned")}</span></p>
+        <div class="msg"><div class="meta">${esc(names[detail.requesterid] || "You")} · ${esc(when(detail.timecreated))}</div>${esc(detail.description || "")}</div>
+        ${detail.resolution ? `<div class="msg platform"><div class="meta">Resolution</div>${esc(detail.resolution)}</div>` : ""}`;
+      $("#detail-messages").innerHTML = (detail.messages || []).map((m) =>
+        `<div class="msg ${m.side === "platform" ? "platform" : ""}"><div class="meta">${m.side === "platform" ? "EduPlatform — " : ""}${esc(names[m.senderid] || ("User " + m.senderid))} · ${esc(when(m.timecreated))}</div>${esc(m.body)}</div>`).join("");
+      $("#detail-panel").hidden = false; $("#open-panel").hidden = true; $("#list-panel").hidden = true;
+    } else {
+      $("#tickets").innerHTML = (d.tickets || []).map((t) =>
+        `<tr><td><a href="${location.pathname}?${new URLSearchParams(Object.assign(Object.fromEntries(qs), { ticketid: t.id }))}"><strong>${esc(t.ticketnumber)}</strong></a><div class="muted">${esc(t.subject)}</div></td>
+        <td><span class="pill ${t.priority === "urgent" ? "bad" : t.priority === "high" ? "warn" : ""}">${esc(t.priority)}</span></td>
+        <td>${statusPill(t)}</td><td>${firstResp(t)}</td><td class="muted">${esc(when(t.timecreated))}</td></tr>`).join("")
+        || `<tr><td colspan="5" class="muted">No platform tickets yet. Open one only for system problems EduPlatform must fix.</td></tr>`;
+      $("#detail-panel").hidden = true; $("#open-panel").hidden = false; $("#list-panel").hidden = false;
+    }
+    $("#status").hidden = true;
+  }
+
+  $("#back-link").addEventListener("click", (e) => { e.preventDefault(); ticketid = 0; qs.delete("ticketid"); history.replaceState(null, "", location.pathname + "?" + qs); load(); });
+  $("#open-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = e.currentTarget.querySelector("button"); btn.disabled = true;
+    try {
+      const d = await post({ do: "open_ticket", subject: $("#t-subject").value.trim(), description: $("#t-desc").value.trim(), category: $("#t-category").value, priority: $("#t-priority").value, internal_ref: $("#t-ref").value.trim() });
+      flash("saved", d.message); $("#open-form").reset(); load();
+    } catch (err) { flash("error", "Could not open ticket: " + err.message); }
+    btn.disabled = false;
+  });
+  $("#reply-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = e.currentTarget.querySelector("button"); btn.disabled = true;
+    try {
+      const d = await post({ do: "reply_ticket", ticketid, replybody: $("#replybody").value.trim() });
+      flash("saved", d.message); $("#replybody").value = ""; load();
+    } catch (err) { flash("error", "Could not send: " + err.message); }
+    btn.disabled = false;
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>

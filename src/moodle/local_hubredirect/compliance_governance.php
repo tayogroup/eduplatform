@@ -12,6 +12,7 @@ if ($workspaceid <= 0 || !pqh_user_has_workspace_capability((int)$USER->id, $wor
 }
 $canmanage = pqh_user_can_manage_workspace((int)$USER->id, $workspaceid) || pqh_user_has_workspace_capability((int)$USER->id, $workspaceid, 'support.manage');
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
+pqh_enforce_role_domain(pqh_current_consumer_context(), $workspaceid, (int)$USER->id);
 $urlparams = ['workspaceid' => $workspaceid];
 $notice = '';
 $error = '';
@@ -45,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new invalid_parameter_exception('Only administrators can change governance workflows.');
         }
         if (!pqgov_ready()) {
-            throw new invalid_parameter_exception('Governance tables are not ready. Run Moodle upgrade.');
+            throw new invalid_parameter_exception('Governance tables are not ready. Run the platform upgrade.');
         }
         $action = optional_param('action', '', PARAM_ALPHANUMEXT);
         $now = time();
@@ -190,7 +191,7 @@ echo '<style>.pqgov{max-width:1180px;margin:0 auto}.pqgov-top{display:flex;justi
 echo '<div class="pqgov"><div class="pqgov-top"><div><h2>Compliance, Audit, And Data Governance</h2><div class="pqgov-muted">' . s($workspace->name) . ' retention, privacy controls, consent history, export/delete/anonymize workflows, and full audit reports.</div></div><a class="pqgov-btn pqgov-btn--light" href="' . (new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams))->out(false) . '">Workspace</a></div>';
 if ($notice !== '') { echo '<div class="pqgov-notice">' . s($notice) . '</div>'; }
 if ($error !== '') { echo '<div class="pqgov-error">' . s($error) . '</div>'; }
-if (!pqgov_ready()) { echo '<div class="pqgov-error">Governance schema is not ready. Run Moodle upgrade.</div>'; }
+if (!pqgov_ready()) { echo '<div class="pqgov-error">Governance schema is not ready. Run the platform upgrade.</div>'; }
 echo '<form method="get" class="pqgov-panel"><input type="hidden" name="workspaceid" value="' . (int)$workspaceid . '"><div class="pqgov-field"><label>Start</label><input class="pqgov-input" name="start" value="' . s(date('Y-m-d', $start)) . '"></div><div class="pqgov-field"><label>End</label><input class="pqgov-input" name="end" value="' . s(date('Y-m-d', $end)) . '"></div><button class="pqgov-btn" type="submit">Apply Period</button> <a class="pqgov-btn pqgov-btn--light" href="' . (new moodle_url('/local/hubredirect/compliance_governance.php', $urlparams + ['start' => date('Y-m-d', $start), 'end' => date('Y-m-d', $end), 'export' => 'csv', 'sesskey' => sesskey()]))->out(false) . '">Export CSV</a></form>';
 echo '<div class="pqgov-metrics">';
 foreach ($summary as $key => $value) { echo '<div class="pqgov-metric"><strong>' . s((string)$value) . '</strong><span class="pqgov-muted">' . s(str_replace('_', ' ', $key)) . '</span></div>'; }

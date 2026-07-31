@@ -144,7 +144,7 @@ function pqsil_existing_user(int $userid): stdClass {
         'mnethostid' => $CFG->mnet_localhost_id,
     ], '*', IGNORE_MISSING);
     if (!$user) {
-        throw new invalid_parameter_exception('Choose a valid existing Moodle student account.');
+        throw new invalid_parameter_exception('Choose a valid existing student account.');
     }
     return $user;
 }
@@ -187,7 +187,16 @@ function pqsil_find_duplicate_profile(string $displayname, string $parentemail, 
 }
 
 function pqsil_create_user(string $firstname, string $lastname, string $email, string $username, bool $emailstop): array {
-    global $CFG;
+    global $CFG, $DB;
+
+    // Global dedup: a real (routable) email may belong to only one account —
+    // link the existing account instead of minting a lookalike.
+    if ($email !== '' && !str_ends_with(strtolower($email), '@eduplatform.local')
+            && $DB->record_exists_select('user', 'LOWER(email) = LOWER(:email) AND deleted = 0 AND mnethostid = :mnet',
+                ['email' => $email, 'mnet' => $CFG->mnet_localhost_id])) {
+        throw new invalid_parameter_exception('The email ' . $email
+            . ' already belongs to an existing account. Link that account instead of creating a duplicate.');
+    }
 
     $password = generate_password(12);
     $user = (object)[
@@ -207,6 +216,8 @@ function pqsil_create_user(string $firstname, string $lastname, string $email, s
     ];
 
     $userid = (int)user_create_user($user, true, false);
+    // Staff-conveyed temp password: the first login must replace it.
+    set_user_preference('auth_forcepasswordchange', 1, $userid);
     return [$userid, $password];
 }
 
@@ -239,7 +250,7 @@ function pqsil_send_parent_intake_email(stdClass $parent, stdClass $student, str
         $lines[] = '';
     }
     if ($parentcreated) {
-        $lines[] = 'A parent/guardian Moodle account has also been created for you. Please use the login details shared by the academy team.';
+        $lines[] = 'A parent/guardian account has also been created for you. Please use the login details shared by the academy team.';
         $lines[] = '';
     }
     $lines[] = 'Thank you,';
@@ -736,7 +747,7 @@ function pqsil_form_value(array $form, string $name): string {
 
 function pqsil_field_label(string $name): string {
     $labels = [
-        'existing_studentid' => 'Existing Moodle student ID',
+        'existing_studentid' => 'Existing student ID',
         'student_firstname' => 'First name',
         'student_middle_name' => 'Middle name',
         'student_lastname' => 'Last name',

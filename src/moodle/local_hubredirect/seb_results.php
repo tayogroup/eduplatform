@@ -34,6 +34,26 @@ if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'res
     redirect(new moodle_url($selfurl, ['reset' => 1]));
 }
 
+if (data_submitted() && optional_param('action', '', PARAM_ALPHANUMEXT) === 'recordresult') {
+    if (!confirm_sesskey()) {
+        pqh_access_denied('Please reload the results page and try again.', $selfurl, 'Exam action expired');
+    }
+    try {
+        pqh_seb_record_result(
+            $exam,
+            optional_param('studentid', 0, PARAM_INT),
+            trim(optional_param('score_points', '', PARAM_RAW_TRIMMED)),
+            trim(optional_param('max_points', (string)($exam->max_points ?? '100'), PARAM_RAW_TRIMMED)),
+            optional_param('integrity_verdict', 'unset', PARAM_ALPHANUMEXT),
+            optional_param('verdict_note', '', PARAM_TEXT),
+            (int)$USER->id
+        );
+        redirect(new moodle_url($selfurl, ['recorded' => 1]));
+    } catch (Throwable $e) {
+        pqh_access_denied($e->getMessage(), $selfurl, 'Could not record result');
+    }
+}
+
 $results = pqh_seb_exam_results($exam);
 $exammode = pqh_seb_exam_mode($exam);
 $examproctored = pqh_seb_exam_proctoring($exam);
@@ -71,7 +91,7 @@ if (optional_param('action', '', PARAM_ALPHANUMEXT) === 'export') {
     fputcsv($out, ['Exam', (string)$exam->title]);
     fputcsv($out, ['Mode', pqh_seb_mode_label($exammode)]);
     $integrityheader = $exammode === 'focus' ? 'Focus breaks' : 'SEB verified';
-    fputcsv($out, ['Student', 'Status', 'Started', 'Finished', 'Elapsed', $integrityheader]);
+    fputcsv($out, ['Student', 'Status', 'Started', 'Finished', 'Elapsed', $integrityheader, 'Score %', 'Verdict']);
     foreach ($results as $row) {
         $attempt = $row->attempt;
         if (!$attempt) {
@@ -88,6 +108,8 @@ if (optional_param('action', '', PARAM_ALPHANUMEXT) === 'export') {
             $attempt && (int)$attempt->timefinished > 0 ? userdate((int)$attempt->timefinished, get_string('strftimedatetimeshort')) : '',
             $elapsed($attempt),
             $integrity,
+            $attempt ? (string)($attempt->score_percent ?? '') : '',
+            $attempt ? (string)($attempt->integrity_verdict ?? 'unset') : '',
         ]);
     }
     fclose($out);
@@ -164,6 +186,7 @@ echo $OUTPUT->header();
       </div>
     </div>
     <?php if (optional_param('reset', 0, PARAM_INT) > 0): ?><div class="pqsr-alert">Attempt reset. The student can start the exam again.</div><?php endif; ?>
+    <?php if (optional_param('recorded', 0, PARAM_INT) > 0): ?><div class="pqsr-alert">Result recorded.</div><?php endif; ?>
     <div class="pqsr-stats">
       <div class="pqsr-stat"><strong><?php echo count($results); ?></strong><span>assigned</span></div>
       <div class="pqsr-stat"><strong><?php echo $submitted; ?></strong><span>submitted</span></div>
@@ -172,7 +195,7 @@ echo $OUTPUT->header();
     </div>
     <div class="pqsr-card">
       <table class="pqsr-table">
-        <thead><tr><th>Student</th><th>Status</th><th>Started</th><th>Finished</th><th>Elapsed</th><th>Integrity</th><th>Actions</th></tr></thead>
+        <thead><tr><th>Student</th><th>Status</th><th>Started</th><th>Finished</th><th>Elapsed</th><th>Integrity</th><th>Score &amp; verdict</th><th>Actions</th></tr></thead>
         <tbody>
         <?php foreach ($results as $row): ?>
           <?php
@@ -207,6 +230,29 @@ echo $OUTPUT->header();
               ?>
             </td>
             <td>
+              <?php
+                $vlabels = ['pass' => 'Pass', 'review' => 'Needs review', 'void' => 'Void', 'unset' => 'Not set'];
+                $verdict = $attempt ? (string)($attempt->integrity_verdict ?? 'unset') : 'unset';
+                $scorepct = $attempt ? (string)($attempt->score_percent ?? '') : '';
+              ?>
+              <?php if ($attempt): ?>
+                <div class="pqsr-muted"><?php echo $scorepct !== '' ? s($scorepct) . '%' : 'No mark'; ?> · <?php echo s($vlabels[$verdict] ?? 'Not set'); ?></div>
+                <form method="post" style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center">
+                  <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+                  <input type="hidden" name="action" value="recordresult">
+                  <input type="hidden" name="studentid" value="<?php echo (int)$row->studentid; ?>">
+                  <input type="text" name="score_points" value="<?php echo s((string)($attempt->score_points ?? '')); ?>" placeholder="Score" style="width:52px" inputmode="decimal">
+                  <span class="pqsr-muted">/</span>
+                  <input type="text" name="max_points" value="<?php echo s((string)($attempt->max_points ?? ($exam->max_points ?? '100'))); ?>" style="width:52px" inputmode="decimal">
+                  <select name="integrity_verdict">
+                    <?php foreach ($vlabels as $vk => $vl): ?><option value="<?php echo s($vk); ?>"<?php echo $verdict === $vk ? ' selected' : ''; ?>><?php echo s($vl); ?></option><?php endforeach; ?>
+                  </select>
+                  <input type="text" name="verdict_note" placeholder="Note (optional)" style="width:120px">
+                  <button class="pqsr-btn pqsr-btn--light" type="submit">Save</button>
+                </form>
+              <?php else: ?>-<?php endif; ?>
+            </td>
+            <td>
               <?php if ($examproctored && $attempt): ?>
                 <?php
                   $psum = pqh_seb_proctor_summary($examid, (int)$row->studentid);
@@ -229,7 +275,7 @@ echo $OUTPUT->header();
           </tr>
         <?php endforeach; ?>
         <?php if (!$results): ?>
-          <tr><td colspan="7" class="pqsr-muted">No students are assigned to this exam.</td></tr>
+          <tr><td colspan="8" class="pqsr-muted">No students are assigned to this exam.</td></tr>
         <?php endif; ?>
         </tbody>
       </table>

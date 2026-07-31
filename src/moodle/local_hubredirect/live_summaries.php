@@ -21,6 +21,9 @@ if ($workspaceid > 0) {
     $urlparams['workspaceid'] = $workspaceid;
 }
 $returnurl = new moodle_url($workspaceid > 0 ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php', $urlparams);
+if ($workspaceid > 0) {
+    pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
+}
 
 function pqls_url(string $path, array $urlparams, array $params = []): moodle_url {
     return new moodle_url($path, $urlparams + $params);
@@ -560,61 +563,65 @@ body.pqh-live-summaries-page #page,
 body.pqh-live-summaries-page #page-content,
 body.pqh-live-summaries-page #region-main,
 body.pqh-live-summaries-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
-body.pqh-live-summaries-page{background:#f4f7fb!important}
-.pqls-shell{min-height:100vh;padding:34px 18px 54px;background:linear-gradient(180deg,#f1fff4 0,#fff 50%);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#173044}
+body.pqh-live-summaries-page{background:#fff!important}
+.pqls-shell{min-height:100vh;padding:34px 18px 54px;background:#fff;color:#0f2237;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6}
 .pqls-wrap{max-width:1040px;margin:0 auto}
-.pqls-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;padding:22px;border-radius:16px;background:linear-gradient(135deg,#eaffea 0,#fff 54%,#fff7e7 100%);border:1px solid rgba(111,78,50,.13);box-shadow:0 16px 38px rgba(105,76,45,.08)}
-.pqls-kicker{margin:0 0 6px;color:#6f4e32;font-size:13px;font-weight:950;text-transform:uppercase;letter-spacing:.04em}
-.pqls-title{margin:0;font-size:30px;line-height:1.1;font-weight:950;color:#4d3522}
-.pqls-subtitle{margin:8px 0 0;color:#64745a;font-size:15px;font-weight:750}
+.pqls-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;padding:22px;border-radius:14px;background:#fff;border:1px solid #e4e9ef;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14)}
+.pqls-kicker{margin:0 0 6px;color:#5b6b7c;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.pqls-title{margin:0;font-size:26px;line-height:1.1;font-weight:800;color:#0f2237;letter-spacing:-.02em}
+.pqls-subtitle{margin:8px 0 0;color:#5b6b7c;font-size:14px;font-weight:500}
 .pqls-actions{display:flex;flex-wrap:wrap;gap:9px}
-.pqls-btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 15px;border-radius:10px;background:#6f4e32;color:#fff!important;text-decoration:none;font-size:14px;font-weight:950}
-.pqls-btn--light{background:#f4fff0;color:#4d3522!important;border:1px solid rgba(111,78,50,.16)}
+.pqls-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 15px;border-radius:10px;background:#fff;border:1px solid #e4e9ef;color:#0f2237!important;text-decoration:none;font-size:13px;font-weight:650}
+.pqls-btn:hover{background:#edf3fc;border-color:#e0ebfa;text-decoration:none}
+.pqls-btn--light{background:#edf3fc;color:#17498f!important;border:1px solid #e0ebfa}
 .pqls-list{display:grid;gap:14px}
-.pqls-card{padding:18px;border-radius:14px;background:#fff;border:1px solid rgba(111,78,50,.13);box-shadow:0 10px 24px rgba(105,76,45,.07)}
+.pqls-card{padding:18px;border-radius:14px;background:#fff;border:1px solid #e4e9ef;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14)}
 .pqls-card__head{display:flex;justify-content:space-between;gap:12px;margin-bottom:14px}
-.pqls-card h2{margin:0;color:#4d3522;font-size:20px;font-weight:950}
-.pqls-meta{margin:5px 0 0;color:#64745a;font-size:13px;font-weight:800}
-.pqls-pill{display:inline-flex;align-items:center;min-height:30px;padding:0 10px;border-radius:999px;background:#f4fff0;color:#3f8a55;font-size:12px;font-weight:950;white-space:nowrap}
-.pqls-pill--attention{background:#fff4dc;color:#7b5a3a}
+.pqls-card h2{margin:0;color:#0f2237;font-size:19px;font-weight:750;letter-spacing:-.01em}
+.pqls-meta{margin:5px 0 0;color:#5b6b7c;font-size:13px;font-weight:600}
+.pqls-pill{display:inline-flex;align-items:center;min-height:30px;padding:0 10px;border-radius:8px;background:#edf3fc;color:#17498f;font-size:12px;font-weight:650;white-space:nowrap}
+.pqls-pill--attention{background:#faf1dd;color:#b7791f}
 .pqls-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.pqls-field{padding:14px;border-radius:12px;background:#f8fbf6;border:1px solid rgba(111,78,50,.10)}
-.pqls-attention{margin-bottom:14px;padding:18px;border-radius:14px;background:#fffaf1;border:1px solid rgba(123,90,58,.18);box-shadow:0 10px 24px rgba(105,76,45,.07)}
-.pqls-attention h2{margin:0 0 10px;color:#6f4e32;font-size:20px;font-weight:950}
-.pqls-attention__item{padding:12px;border-radius:10px;background:#fff;border:1px solid rgba(111,78,50,.13);margin-top:10px}
-.pqls-attention__item strong{display:block;color:#4d3522;font-size:14px;font-weight:950}
-.pqls-attention__item p{margin:5px 0 0;color:#40586a;font-size:14px;font-weight:750;line-height:1.45;white-space:pre-wrap}
-.pqls-response{margin-top:12px;padding:12px;border-radius:10px;background:#fff;border:1px solid rgba(111,78,50,.13)}
+.pqls-field{padding:14px;border-radius:12px;background:#f7f4ec;border:1px solid #e4e9ef}
+.pqls-attention{margin-bottom:14px;padding:18px;border-radius:14px;background:#fffaf1;border:1px solid #f0dfc0;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14)}
+.pqls-attention h2{margin:0 0 10px;color:#b7791f;font-size:19px;font-weight:750}
+.pqls-attention__item{padding:12px;border-radius:10px;background:#fff;border:1px solid #e4e9ef;margin-top:10px}
+.pqls-attention__item strong{display:block;color:#0f2237;font-size:14px;font-weight:700}
+.pqls-attention__item p{margin:5px 0 0;color:#5b6b7c;font-size:14px;font-weight:500;line-height:1.45;white-space:pre-wrap}
+.pqls-response{margin-top:12px;padding:12px;border-radius:10px;background:#fff;border:1px solid #e4e9ef}
 .pqls-response__actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-.pqls-response textarea{width:100%;min-height:74px;margin-top:8px;padding:9px 10px;border:1px solid rgba(111,78,50,.18);border-radius:9px;font:800 14px/1.35 system-ui;color:#173044}
+.pqls-response textarea{width:100%;min-height:74px;margin-top:8px;padding:9px 10px;border:1px solid #e4e9ef;border-radius:9px;font:500 14px/1.35 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;color:#0f2237}
 .pqls-response button{border:0;cursor:pointer}
-.pqls-alert{margin-bottom:14px;padding:12px 14px;border-radius:12px;background:#edf9ef;color:#245c35;border:1px solid rgba(36,92,53,.16);font-weight:900}
-.pqls-field strong{display:block;margin-bottom:5px;color:#4d3522;font-size:13px;font-weight:950;text-transform:uppercase}
-.pqls-field p{margin:0;color:#40586a;font-size:14px;font-weight:700;line-height:1.45;white-space:pre-wrap}
+.pqls-alert{margin-bottom:14px;padding:12px 14px;border-radius:12px;background:#e8f4ec;color:#2e7d4f;border:1px solid rgba(46,125,79,.16);font-weight:650}
+.pqls-field strong{display:block;margin-bottom:5px;color:#0f2237;font-size:12px;font-weight:700;text-transform:uppercase}
+.pqls-field p{margin:0;color:#5b6b7c;font-size:14px;font-weight:500;line-height:1.45;white-space:pre-wrap}
 .pqls-field--wide{grid-column:1/-1}
 .pqls-activity{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 12px}
-.pqls-activity__item{padding:12px;border-radius:12px;background:#f8fbf6;border:1px solid rgba(111,78,50,.10)}
-.pqls-activity__item strong{display:block;color:#4d3522;font-size:18px;font-weight:950}
-.pqls-activity__item span{display:block;margin-top:3px;color:#64745a;font-size:12px;font-weight:850}
-.pqls-coach{margin:0 0 12px;padding:14px;border-radius:12px;background:#f3fff7;border:1px solid rgba(47,111,78,.14)}
-.pqls-coach h3{margin:0 0 8px;color:#2f6f4e;font-size:16px;font-weight:950}
+.pqls-activity__item{padding:12px;border-radius:12px;background:#f7f4ec;border:1px solid #e4e9ef}
+.pqls-activity__item strong{display:block;color:#0f2237;font-size:18px;font-weight:750}
+.pqls-activity__item span{display:block;margin-top:3px;color:#5b6b7c;font-size:12px;font-weight:600}
+.pqls-coach{margin:0 0 12px;padding:14px;border-radius:12px;background:#e8f4ec;border:1px solid rgba(46,125,79,.14)}
+.pqls-coach h3{margin:0 0 8px;color:#2e7d4f;font-size:16px;font-weight:750}
 .pqls-coach__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
-.pqls-coach__item{padding:10px;border-radius:10px;background:#fff;border:1px solid rgba(47,111,78,.1)}
-.pqls-coach__item strong{display:block;color:#2f6f4e;font-size:18px;font-weight:950}
-.pqls-coach__item span{display:block;margin-top:3px;color:#64745a;font-size:12px;font-weight:850}
-.pqls-coach p{margin:9px 0 0;color:#40586a;font-size:13px;font-weight:750;line-height:1.42}
-.pqls-empty{padding:24px;border-radius:14px;background:#fff;border:1px dashed rgba(111,78,50,.22);color:#64745a;font-weight:850}
+.pqls-coach__item{padding:10px;border-radius:10px;background:#fff;border:1px solid rgba(46,125,79,.12)}
+.pqls-coach__item strong{display:block;color:#2e7d4f;font-size:18px;font-weight:750}
+.pqls-coach__item span{display:block;margin-top:3px;color:#5b6b7c;font-size:12px;font-weight:600}
+.pqls-coach p{margin:9px 0 0;color:#5b6b7c;font-size:13px;font-weight:500;line-height:1.42}
+.pqls-empty{padding:24px;border-radius:14px;background:#fff;border:1px dashed #e4e9ef;color:#5b6b7c;font-weight:550}
 .pqls-students{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.pqls-student{padding:16px;border-radius:14px;background:#fff;border:1px solid rgba(111,78,50,.13);box-shadow:0 10px 24px rgba(105,76,45,.07);text-decoration:none;color:#4d3522!important;font-weight:950}
-.pqls-student span{display:block;margin-top:4px;color:#64745a;font-size:12px;font-weight:800}
-@media(max-width:720px){.pqls-top{display:block}.pqls-actions{margin-top:14px}.pqls-title{font-size:25px}.pqls-card__head{display:block}.pqls-pill{margin-top:10px}.pqls-grid,.pqls-activity,.pqls-coach__grid{grid-template-columns:1fr}}
+.pqls-student{padding:16px;border-radius:14px;background:#fff;border:1px solid #e4e9ef;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14);text-decoration:none;color:#0f2237!important;font-weight:700}
+.pqls-student span{display:block;margin-top:4px;color:#5b6b7c;font-size:12px;font-weight:600}
+@media(max-width:720px){.pqls-top{display:block}.pqls-actions{margin-top:14px}.pqls-title{font-size:22px}.pqls-card__head{display:block}.pqls-pill{margin-top:10px}.pqls-grid,.pqls-activity,.pqls-coach__grid{grid-template-columns:1fr}}
 <?php echo pqh_dashboard_header_css(); ?>
-/* ---- EduPlatform design system layer (2026-07-19) ---- */
+/* ---- EduPlatform design system layer: same tokens as the
+   student/teacher dashboard - light paper background, blue
+   appbar/gnav tint, quiet white surfaces, single blue accent. ---- */
 .pqls-shell{
-  --pqh-ink:#0f2237;--pqh-muted:#5b6b7c;--pqh-faint:#8494a5;--pqh-line:#e4e9ef;--pqh-bg:#f4f6f9;--pqh-surface:#fff;
+  --pqh-ink:#0f2237;--pqh-muted:#5b6b7c;--pqh-faint:#8494a5;--pqh-line:#e4e9ef;--pqh-bg:#f7f4ec;--pqh-surface:#fff;
   --pqh-tint:#edf3fc;--pqh-tint-2:#e0ebfa;--pqh-primary:#2166d1;--pqh-primary-ink:#17498f;
-  background:var(--pqh-bg)!important;color:var(--pqh-ink)}
-.pqls-shell .pqh-workspace-top{background:linear-gradient(120deg,#d7e6f9 0%,#e9f1fc 60%,#f3f8fe 100%)!important;border:1px solid #c5d9f1!important;box-shadow:none!important;border-radius:14px!important}
+  background:#fff!important;color:var(--pqh-ink)}
+.pqls-shell .pqh-appbar{background:linear-gradient(90deg,#cfe9ff 0%,#e3f4ff 50%,#f2fbff 100%)}
+.pqls-shell .pqh-workspace-top{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;box-shadow:none!important;border-radius:14px!important}
 .pqls-shell .pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
 .pqls-shell .pqh-workspace-sub{color:var(--pqh-muted)!important;font-weight:500!important;opacity:1}
 .pqls-shell .pqh-workspace-actions a,.pqls-shell .pqh-workspace-actions button,.pqls-btn{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;color:var(--pqh-ink)!important;font-weight:650!important;border-radius:10px!important;box-shadow:none!important}
@@ -626,19 +633,15 @@ body.pqh-live-summaries-page{background:#f4f7fb!important}
 <?php echo pqh_design_shell_css('.pqls-shell'); ?>
 </style>
 <main class="pqls-shell">
-<?php echo pqh_design_shell_html('pqls-shell'); ?>
+<?php
+echo pqh_design_shell_html('pqls-shell', 'live', pqh_live_page_shell_opts('Live Summaries', $urlparams, $childid));
+?>
   <div class="pqls-wrap">
     <section class="pqls-top pqh-workspace-top">
       <div>
         <p class="pqls-kicker">Live review summaries</p>
         <h1 class="pqls-title pqh-workspace-title">Teacher feedback for <?php echo s($childname); ?></h1>
         <p class="pqls-subtitle pqh-workspace-sub">Parent-visible class notes only. Private teacher notes are never shown here.</p>
-      </div>
-      <div class="pqls-actions pqh-workspace-actions">
-        <?php echo pqh_live_session_explainer_link(); ?>
-        <a class="pqls-btn pqls-btn--light" href="<?php echo pqls_url('/local/hubredirect/live_parent_trust.php', $urlparams, $childid > 0 ? ['childid' => $childid] : [])->out(false); ?>">Parent live hub</a>
-        <a class="pqls-btn pqls-btn--light" href="<?php echo pqls_url('/local/hubredirect/live_sessions.php', $urlparams)->out(false); ?>">Live sessions</a>
-        <a class="pqls-btn" href="<?php echo pqls_url($workspaceid > 0 ? '/local/hubredirect/workspace_dashboard.php' : '/local/hubredirect/dashboard.php', $urlparams, $childid > 0 ? ['childid' => $childid] : [])->out(false); ?>">Dashboard</a>
       </div>
     </section>
 

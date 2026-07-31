@@ -12,6 +12,7 @@ $workspaceid = pqh_current_workspace_id((int)$USER->id, $requestedworkspaceid);
 if ($workspaceid <= 0 || !pqh_user_can_manage_workspace((int)$USER->id, $workspaceid)) {
     pqh_access_denied('Academic calendar management requires workspace administrator access.', new moodle_url('/local/hubredirect/workspace_dashboard.php'), 'Calendar access denied');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $urlparams = ['workspaceid' => $workspaceid];
@@ -28,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         require_sesskey();
         if (!$ready) {
-            throw new invalid_parameter_exception('Academic calendar tables are not installed yet. Run Moodle upgrade.');
+            throw new invalid_parameter_exception('Academic calendar tables are not installed yet. Run the platform upgrade.');
         }
         $action = optional_param('action', '', PARAM_ALPHANUMEXT);
         $now = time();
@@ -118,7 +119,7 @@ echo '<style>.pqcal-wrap{max-width:1180px;margin:0 auto}.pqcal-top{display:flex;
 echo '<div class="pqcal-wrap"><div class="pqcal-top"><div><h2>Academic Calendar And Terms</h2><div class="pqcal-muted">' . s($workspace->name) . ' terms, holidays, blackout dates, enrollment windows, schedules, and deadlines.</div></div><a class="pqcal-btn pqcal-btn--light" href="' . (new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams))->out(false) . '">Workspace</a></div>';
 if ($notice !== '') { echo '<div class="pqcal-notice">' . s($notice) . '</div>'; }
 if ($error !== '') { echo '<div class="pqcal-error">' . s($error) . '</div>'; }
-if (!$ready) { echo '<div class="pqcal-error">Academic calendar schema is not ready. Run the Moodle local_prequran upgrade.</div>'; }
+if (!$ready) { echo '<div class="pqcal-error">Academic calendar schema is not ready. Run the local_prequran upgrade.</div>'; }
 echo '<div class="pqcal-grid"><section class="pqcal-panel"><h3>Term</h3><form method="post"><input type="hidden" name="sesskey" value="' . s(sesskey()) . '"><input type="hidden" name="action" value="save_term">';
 foreach ([['term_code','Term code'],['title','Title'],['term_type','Type'],['startdate','Start date'],['enddate','End date'],['enrollment_open','Enrollment opens'],['enrollment_close','Enrollment closes'],['add_drop_deadline','Add/drop deadline'],['withdrawal_deadline','Withdrawal deadline'],['refund_deadline','Refund deadline'],['status','Status']] as $field) {
     echo '<div class="pqcal-field"><label>' . s($field[1]) . '</label><input class="pqcal-input" name="' . s($field[0]) . '"></div>';

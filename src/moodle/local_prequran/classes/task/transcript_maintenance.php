@@ -69,6 +69,44 @@ class transcript_maintenance extends \core\task\scheduled_task {
             }
         }
 
+        // GRADE-AWARE staleness (previously grade-blind: a post-issue grade
+        // edit left the official transcript publicly verifying as Valid with
+        // outdated numbers).
+        if (pqh_table_exists_safe('local_prequran_course_grade')) {
+            $changed = $DB->record_exists_select(
+                'local_prequran_course_grade',
+                'workspaceid = :workspaceid AND studentid = :studentid AND timemodified > :issuedat',
+                ['workspaceid' => $workspaceid, 'studentid' => $studentid, 'issuedat' => $issuedat]
+            );
+            if ($changed) {
+                return 'course grade changed after transcript issue';
+            }
+        }
+        if (pqh_table_exists_safe('local_prequran_grade')) {
+            $changed = $DB->record_exists_select(
+                'local_prequran_grade',
+                'workspaceid = :workspaceid AND studentid = :studentid AND timemodified > :issuedat',
+                ['workspaceid' => $workspaceid, 'studentid' => $studentid, 'issuedat' => $issuedat]
+            );
+            if ($changed) {
+                return 'component grade changed after transcript issue';
+            }
+        }
+        if (pqh_table_exists_safe('local_prequran_transcript_override')) {
+            try {
+                $changed = $DB->record_exists_select(
+                    'local_prequran_transcript_override',
+                    'workspaceid = :workspaceid AND studentid = :studentid AND timemodified > :issuedat',
+                    ['workspaceid' => $workspaceid, 'studentid' => $studentid, 'issuedat' => $issuedat]
+                );
+                if ($changed) {
+                    return 'transcript correction recorded after transcript issue';
+                }
+            } catch (\Throwable $e) {
+                // Column layout differs on older schemas — skip this check.
+            }
+        }
+
         return '';
     }
 }

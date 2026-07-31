@@ -228,6 +228,8 @@ $child = $childid > 0 ? core_user::get_user($childid) : null;
 $childname = $child ? fullname($child) : ($childid > 0 ? 'Student ' . $childid : 'your student');
 $recordings = $childid > 0 ? pqlrp_visible_recordings($childid) : [];
 
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
+
 echo $OUTPUT->header();
 ?>
 <style>
@@ -245,42 +247,54 @@ body.pqh-live-recordings-parent-page #page,
 body.pqh-live-recordings-parent-page #page-content,
 body.pqh-live-recordings-parent-page #region-main,
 body.pqh-live-recordings-parent-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
-.pqlrp-shell{min-height:100vh;padding:34px 18px 54px;background:linear-gradient(180deg,#f1fff4 0,#fff 50%);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#173044}
+.pqlrp-shell{min-height:100vh;padding:34px 18px 54px;background:#fff;color:#0f2237;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6}
 .pqlrp-wrap{max-width:980px;margin:0 auto}
-.pqlrp-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;padding:22px;border-radius:16px;background:linear-gradient(135deg,#eaffea 0,#fff 54%,#fff7e7 100%);border:1px solid rgba(111,78,50,.13);box-shadow:0 16px 38px rgba(105,76,45,.08)}
-.pqlrp-kicker{margin:0 0 6px;color:#6f4e32;font-size:13px;font-weight:950;text-transform:uppercase;letter-spacing:.04em}
-.pqlrp-title{margin:0;font-size:30px;line-height:1.1;font-weight:950;color:#4d3522}
-.pqlrp-subtitle{margin:8px 0 0;color:#64745a;font-size:15px;font-weight:750}
+.pqlrp-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;padding:22px;border-radius:14px;background:#fff;border:1px solid #e4e9ef;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14)}
+.pqlrp-kicker{margin:0 0 6px;color:#5b6b7c;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.pqlrp-title{margin:0;font-size:26px;line-height:1.1;font-weight:800;color:#0f2237;letter-spacing:-.02em}
+.pqlrp-subtitle{margin:8px 0 0;color:#5b6b7c;font-size:14px;font-weight:500}
 .pqlrp-actions{display:flex;flex-wrap:wrap;gap:9px}
-.pqlrp-btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 15px;border-radius:10px;background:#6f4e32;color:#fff!important;text-decoration:none;font-size:14px;font-weight:950}
-.pqlrp-btn--light{background:#f4fff0;color:#4d3522!important;border:1px solid rgba(111,78,50,.16)}
+.pqlrp-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 15px;border-radius:10px;background:#fff;border:1px solid #e4e9ef;color:#0f2237!important;text-decoration:none;font-size:13px;font-weight:650}
+.pqlrp-btn:hover{background:#edf3fc;border-color:#e0ebfa;text-decoration:none}
+.pqlrp-btn--light{background:#edf3fc;color:#17498f!important;border:1px solid #e0ebfa}
 .pqlrp-list{display:grid;gap:14px}
-.pqlrp-card{padding:18px;border-radius:14px;background:#fff;border:1px solid rgba(111,78,50,.13);box-shadow:0 10px 24px rgba(105,76,45,.07)}
-.pqlrp-card h2{margin:0;color:#4d3522;font-size:20px;font-weight:950}
-.pqlrp-meta{margin:5px 0 0;color:#64745a;font-size:13px;font-weight:800}
+.pqlrp-card{padding:18px;border-radius:14px;background:#fff;border:1px solid #e4e9ef;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14)}
+.pqlrp-card h2{margin:0;color:#0f2237;font-size:19px;font-weight:750;letter-spacing:-.01em}
+.pqlrp-meta{margin:5px 0 0;color:#5b6b7c;font-size:13px;font-weight:600}
 .pqlrp-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
-.pqlrp-empty{padding:24px;border-radius:14px;background:#fff;border:1px dashed rgba(111,78,50,.22);color:#64745a;font-weight:850}
+.pqlrp-empty{padding:24px;border-radius:14px;background:#fff;border:1px dashed #e4e9ef;color:#5b6b7c;font-weight:550}
 .pqlrp-students{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.pqlrp-student{padding:16px;border-radius:14px;background:#fff;border:1px solid rgba(111,78,50,.13);box-shadow:0 10px 24px rgba(105,76,45,.07);text-decoration:none;color:#4d3522!important;font-weight:950}
-.pqlrp-student span{display:block;margin-top:4px;color:#64745a;font-size:12px;font-weight:800}
-@media(max-width:720px){.pqlrp-top{display:block}.pqlrp-title{font-size:25px}.pqlrp-actions{margin-top:12px}.pqlrp-btn{width:100%}}
+.pqlrp-student{padding:16px;border-radius:14px;background:#fff;border:1px solid #e4e9ef;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14);text-decoration:none;color:#0f2237!important;font-weight:700}
+.pqlrp-student span{display:block;margin-top:4px;color:#5b6b7c;font-size:12px;font-weight:600}
+@media(max-width:720px){.pqlrp-top{display:block}.pqlrp-title{font-size:22px}.pqlrp-actions{margin-top:12px}.pqlrp-btn{width:100%}}
 <?php echo pqh_dashboard_header_css(); ?>
-<?php echo pqh_design_system_css('.pqlrp-shell'); ?>
+/* ---- EduPlatform design system layer: same tokens as the
+   student/teacher dashboard - light paper background, blue
+   appbar/gnav tint, quiet white surfaces, single blue accent. ---- */
+.pqlrp-shell{
+  --pqh-ink:#0f2237;--pqh-muted:#5b6b7c;--pqh-faint:#8494a5;--pqh-line:#e4e9ef;--pqh-bg:#f7f4ec;--pqh-surface:#fff;
+  --pqh-tint:#edf3fc;--pqh-tint-2:#e0ebfa;--pqh-primary:#2166d1;--pqh-primary-ink:#17498f;
+  background:#fff!important;color:var(--pqh-ink)}
+.pqlrp-shell .pqh-appbar{background:linear-gradient(90deg,#cfe9ff 0%,#e3f4ff 50%,#f2fbff 100%)}
+.pqlrp-shell .pqh-workspace-top{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;box-shadow:none!important;border-radius:14px!important}
+.pqlrp-shell .pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
+.pqlrp-shell .pqh-workspace-sub{color:var(--pqh-muted)!important;font-weight:500!important;opacity:1}
+.pqlrp-shell .pqh-workspace-actions a,.pqlrp-shell .pqh-workspace-actions button,.pqlrp-btn{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;color:var(--pqh-ink)!important;font-weight:650!important;border-radius:10px!important;box-shadow:none!important}
+.pqlrp-shell .pqh-workspace-actions a:hover,.pqlrp-shell .pqh-workspace-actions button:hover,.pqlrp-btn:hover{background:var(--pqh-tint)!important;border-color:var(--pqh-tint-2)!important;text-decoration:none!important}
+.pqlrp-shell .pqh-workspace-actions a.pqh-workspace-logout{background:var(--pqh-ink)!important;border-color:var(--pqh-ink)!important;color:#fff!important}
+.pqlrp-shell [class*="-card"],.pqlrp-shell [class*="-panel"]{background:var(--pqh-surface);border-color:var(--pqh-line)!important;border-radius:14px;box-shadow:0 1px 2px rgba(15,34,55,.05)}
+.pqlrp-shell [class*="-pill"]{background:var(--pqh-tint)!important;color:var(--pqh-primary-ink)!important;border-radius:8px!important;font-weight:650!important}
+.pqlrp-shell h1,.pqlrp-shell h2,.pqlrp-shell h3{color:var(--pqh-ink)}
 <?php echo pqh_design_shell_css('.pqlrp-shell'); ?>
 </style>
 <main class="pqlrp-shell">
-<?php echo pqh_design_shell_html('pqlrp-shell'); ?>
+<?php echo pqh_design_shell_html('pqlrp-shell', 'live', pqh_live_page_shell_opts('Live Recordings', $urlparams, $childid)); ?>
   <div class="pqlrp-wrap">
     <section class="pqlrp-top pqh-workspace-top">
       <div>
         <p class="pqlrp-kicker">Approved recordings</p>
         <h1 class="pqlrp-title pqh-workspace-title">Live class recordings for <?php echo s($childname); ?></h1>
         <p class="pqlrp-subtitle pqh-workspace-sub">Only recordings reviewed and published by <?php echo s((string)($consumercontext->consumername ?? 'EduPlatform')); ?> are shown here.</p>
-      </div>
-      <div class="pqlrp-actions pqh-workspace-actions">
-        <?php echo pqh_live_session_explainer_link(); ?>
-        <a class="pqlrp-btn pqlrp-btn--light" href="<?php echo pqlrp_url('/local/hubredirect/live_parent_trust.php', $urlparams, $childid > 0 ? ['childid' => $childid] : [])->out(false); ?>">Parent live hub</a>
-        <a class="pqlrp-btn pqlrp-btn--light" href="<?php echo pqlrp_url('/local/hubredirect/live_trust.php', $urlparams, $childid > 0 ? ['childid' => $childid] : [])->out(false); ?>">Trust center</a>
       </div>
     </section>
 

@@ -597,6 +597,7 @@ if ($studentid > 0 && !in_array($studentid, $allowedids, true)) {
         'Report access denied'
     );
 }
+pqh_enforce_role_domain(pqh_requested_consumer_context(), pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
 $environment = strtolower(trim(optional_param('pq_env', 'production', PARAM_ALPHANUMEXT)));
 if (!in_array($environment, ['production', 'staging', 'integration'], true)) {
     $environment = 'production';
@@ -765,7 +766,7 @@ body.pqh-managed-report-page .main-inner{margin:0!important;padding:0!important;
               <tr>
                 <td data-label="Student">
                   <span class="pqmr-name"><?php echo s($row['name']); ?></span>
-                  <span class="pqmr-muted"><?php echo s(pqh_account_no_label((int)$row['studentid'])); ?> / Moodle user #<?php echo (int)$row['studentid']; ?><?php echo $row['groupname'] !== '' ? ' - ' . s($row['groupname']) : ''; ?></span>
+                  <span class="pqmr-muted"><?php echo s(pqh_account_no_label((int)$row['studentid'])); ?> / Account #<?php echo (int)$row['studentid']; ?><?php echo $row['groupname'] !== '' ? ' - ' . s($row['groupname']) : ''; ?></span>
                   <?php if ($identitydetail !== ''): ?><span class="pqmr-muted"><?php echo s($identitydetail); ?></span><?php endif; ?>
                 </td>
                 <td data-label="Progress">

@@ -756,6 +756,8 @@ if ($ready && $seriesrows) {
     }
 }
 
+pqh_enforce_role_domain($consumercontext, (int)($consumercontext->workspaceid ?? 0), (int)$USER->id);
+
 echo $OUTPUT->header();
 ?>
 <style>

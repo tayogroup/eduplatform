@@ -98,6 +98,7 @@ if ($workspaceid > 0) {
 if ($workspaceid <= 0) {
     pqh_access_denied('Choose an institution workspace before opening an unofficial transcript.', new moodle_url('/local/hubredirect/dashboard.php', $baseparams), 'Workspace required');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $students = pqct_students_for_transcript_viewer((int)$USER->id, $workspaceid);
 if ($studentid <= 0 && $students) {

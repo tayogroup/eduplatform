@@ -398,6 +398,7 @@ if (!pqlmon_is_teacher_or_admin($session)) {
         'Live monitor access required'
     );
 }
+pqh_enforce_role_domain($consumercontext, (int)($session->workspaceid ?? 0), (int)$USER->id);
 pqlmon_audit($sessionid, 'lesson_monitor_opened', 'session', $sessionid);
 
 $students = $DB->get_records_sql(

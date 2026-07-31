@@ -108,6 +108,11 @@ if ($ispost) {
                 'description' => $bclean('description', '', PARAM_TEXT),
                 'max_points' => $bclean('max_points', '100', PARAM_TEXT),
                 'weight_override' => $bclean('weight_override', '', PARAM_TEXT),
+                // Formative/summative/practice: practice never counts toward the
+                // course grade; formative and summative both do.
+                'grade_impact' => in_array($bclean('grade_impact', 'summative', PARAM_ALPHANUMEXT), ['summative', 'formative', 'practice'], true)
+                    ? $bclean('grade_impact', 'summative', PARAM_ALPHANUMEXT) : 'summative',
+                'max_attempts' => max(0, $bint('max_attempts')),
                 'duedate' => $duedateraw !== '' ? (strtotime($duedateraw . ' 00:00:00') ?: 0) : 0,
                 'publishdate' => 0,
                 'status' => $bclean('status', 'draft', PARAM_ALPHANUMEXT),
@@ -153,6 +158,17 @@ if ($ispost) {
                 'timecreated' => (int)($existing->timecreated ?? $now),
                 'timemodified' => $now,
             ];
+            // Moderation: when grade_moderation_mode=require, a freshly
+            // graded/edited row needs an INDEPENDENT second marker before it can
+            // be trusted. A new grade resets to 'pending'; a prior moderation is
+            // invalidated by re-grading (score may have changed).
+            if ((string)get_config('local_prequran', 'grade_moderation_mode') === 'require') {
+                $record->moderation_status = 'pending';
+                $record->moderatedby = 0;
+                $record->moderatedat = 0;
+            } else {
+                $record->moderation_status = 'not_required';
+            }
             if ($existing) {
                 $record->id = (int)$existing->id;
                 $DB->update_record('local_prequran_grade', $record);
@@ -162,14 +178,76 @@ if ($ispost) {
             }
             pqgp_audit($workspaceid, 'grade_saved', $existing ? (array)$existing : [], (array)$record, $userid, ['offeringid' => (int)$assessment->offeringid, 'assessmentid' => (int)$assessment->id, 'gradeid' => $gradeid, 'studentid' => $studentid], $bclean('correction_reason', '', PARAM_TEXT));
             pqgp_recalculate_course_grade($workspaceid, (int)$assessment->offeringid, $studentid, $userid, false);
-            echo json_encode(['ok' => true, 'message' => 'Grade saved and course grade recalculated.', 'id' => $gradeid], JSON_UNESCAPED_SLASHES);
+            echo json_encode(['ok' => true, 'message' => 'Grade saved and course grade recalculated.'
+                . ($record->moderation_status === 'pending' ? ' Awaiting independent moderation before publish.' : ''), 'id' => $gradeid], JSON_UNESCAPED_SLASHES);
+            exit;
+        }
+
+        // -- write: moderate_grade (independent second-marker sign-off) --------
+        if ($do === 'moderate_grade') {
+            $grow = $DB->get_record('local_prequran_grade', ['id' => $bint('gradeid'), 'workspaceid' => $workspaceid], '*', MUST_EXIST);
+            if ((int)$grow->gradedby === $userid) {
+                pqpd_fail(400, 'A grade must be moderated by someone other than the marker who entered it.');
+            }
+            $decision = $bclean('decision', 'approved', PARAM_ALPHANUMEXT);
+            if (!in_array($decision, ['approved', 'returned'], true)) {
+                pqpd_fail(400, 'Moderation decision must be approved or returned.');
+            }
+            $DB->update_record('local_prequran_grade', (object)[
+                'id' => (int)$grow->id,
+                'moderation_status' => $decision === 'approved' ? 'moderated' : 'returned',
+                'moderatedby' => $userid,
+                'moderatedat' => $now,
+                'moderation_note' => $bclean('moderation_note', '', PARAM_TEXT),
+                'timemodified' => $now,
+            ]);
+            pqgp_audit($workspaceid, 'grade_moderated', (array)$grow, ['moderation_status' => $decision], $userid, ['gradeid' => (int)$grow->id, 'studentid' => (int)$grow->studentid], $bclean('moderation_note', '', PARAM_TEXT));
+            echo json_encode(['ok' => true, 'message' => 'Grade ' . ($decision === 'approved' ? 'moderated and cleared for publish.' : 'returned to the marker.')], JSON_UNESCAPED_SLASHES);
             exit;
         }
 
         // -- write: publish_course_grade (legacy action=publish_course_grade) --
         if ($do === 'publish_course_grade') {
-            pqgp_recalculate_course_grade($workspaceid, $bint('offeringid'), $bint('studentid'), $userid, true);
-            echo json_encode(['ok' => true, 'message' => 'Course grade published for transcript use.'], JSON_UNESCAPED_SLASHES);
+            $pubofferingid = $bint('offeringid');
+            $pubstudentid = $bint('studentid');
+            // Moderation gate: when required, every counting grade feeding this
+            // course grade must be independently moderated first.
+            if ((string)get_config('local_prequran', 'grade_moderation_mode') === 'require') {
+                $unmoderated = (int)$DB->count_records_sql(
+                    "SELECT COUNT(g.id)
+                       FROM {local_prequran_grade} g
+                       JOIN {local_prequran_assessment} a ON a.id = g.assessmentid
+                      WHERE g.workspaceid = :ws AND g.offeringid = :oid AND g.studentid = :sid
+                        AND g.status IN ('reviewed','published')
+                        AND COALESCE(a.grade_impact, 'summative') <> 'practice'
+                        AND COALESCE(g.moderation_status, 'not_required') NOT IN ('moderated','not_required')",
+                    ['ws' => $workspaceid, 'oid' => $pubofferingid, 'sid' => $pubstudentid]);
+                if ($unmoderated > 0) {
+                    pqpd_fail(400, $unmoderated . ' grade(s) still await independent moderation — moderate them before publishing the course grade.');
+                }
+            }
+            $pubid = pqgp_recalculate_course_grade($workspaceid, $pubofferingid, $pubstudentid, $userid, true);
+            // Milestone notification: publishing a course grade is an academic
+            // event the family should learn about (previously silent). Gated by
+            // achievement_notify_mode; best-effort, never blocks the publish.
+            $notified = 0;
+            if ($pubid > 0 && (string)get_config('local_prequran', 'achievement_notify_mode') === 'enforce') {
+                @include_once($CFG->dirroot . '/local/prequran/notificationlib.php');
+                if (function_exists('local_prequran_notify_achievement_family')) {
+                    $grade = $DB->get_record('local_prequran_course_grade', ['id' => $pubid], 'final_percent,letter_grade', IGNORE_MISSING);
+                    $gradetext = $grade ? (((string)$grade->final_percent) . '%' . ((string)$grade->letter_grade !== '' ? ' (' . $grade->letter_grade . ')' : '')) : '';
+                    $notified = local_prequran_notify_achievement_family(
+                        $pubstudentid,
+                        'Course grade published',
+                        'A course grade has been published' . ($gradetext !== '' ? ': ' . $gradetext : '') . '.',
+                        new moodle_url('/local/prequran/portal_launch.php', ['report' => 'student-parent-portal', 'workspaceid' => $workspaceid, 'studentid' => $pubstudentid]),
+                        'Family portal',
+                        'course_grade_published'
+                    );
+                }
+            }
+            echo json_encode(['ok' => true, 'message' => 'Course grade published for transcript use.'
+                . ($notified > 0 ? ' ' . $notified . ' notification(s) sent.' : '')], JSON_UNESCAPED_SLASHES);
             exit;
         }
 
@@ -258,6 +336,8 @@ foreach ($assessments as $assessment) {
         'title' => (string)$assessment->title,
         'assessment_type' => (string)$assessment->assessment_type,
         'max_points' => (string)$assessment->max_points,
+        'grade_impact' => (string)($assessment->grade_impact ?? 'summative'),
+        'max_attempts' => (int)($assessment->max_attempts ?? 0),
         'duedate' => (int)($assessment->duedate ?? 0),
         'status' => (string)$assessment->status,
     ];
@@ -278,6 +358,8 @@ foreach ($grades as $grade) {
         'score_points' => (string)$grade->score_points,
         'letter_grade' => (string)$grade->letter_grade,
         'status' => (string)$grade->status,
+        'gradedby' => (int)($grade->gradedby ?? 0),
+        'moderation_status' => (string)($grade->moderation_status ?? 'not_required'),
     ];
 }
 $coursegradesout = [];
@@ -305,10 +387,25 @@ foreach ($audits as $audit) {
     ];
 }
 
+// Grade disputes/queries (previously write-only dead schema — parents/students
+// can now open them from the parent portal; teachers see them here).
+$disputesout = [];
+if (pqh_table_exists_safe('local_prequran_grade_dispute')) {
+    $disputesout = array_values($DB->get_records('local_prequran_grade_dispute',
+        ['workspaceid' => $workspaceid], "status ASC, timecreated DESC", '*', 0, 50));
+    foreach ($disputesout as $d) {
+        $nameids[] = (int)$d->studentid;
+        $nameids[] = (int)$d->requesterid;
+        $nameids[] = (int)$d->resolvedby;
+    }
+}
+
 echo json_encode([
     'ok' => true,
     'ready' => $ready,
     'canmanage' => (bool)$canmanage,
+    'userid' => $userid,
+    'moderation_required' => (string)get_config('local_prequran', 'grade_moderation_mode') === 'require',
     'workspace' => ['id' => $workspaceid, 'name' => (string)$workspace->name],
     'offerings' => $offeringsout,
     'categories' => $categoriesout,
@@ -317,6 +414,7 @@ echo json_encode([
     'grades' => $gradesout,
     'coursegrades' => $coursegradesout,
     'audits' => $auditsout,
+    'disputes' => $disputesout,
     'names' => pqpd_names($nameids),
 ], JSON_UNESCAPED_SLASHES);
 exit;

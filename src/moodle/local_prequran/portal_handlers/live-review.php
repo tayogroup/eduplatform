@@ -26,6 +26,37 @@ require_once($CFG->dirroot . '/local/prequran/notificationlib.php');
 require_once($CFG->dirroot . '/user/profile/lib.php');
 require_once($CFG->dirroot . '/local/hubredirect/live_review_portallib.php');
 
+if (!function_exists('pqlrvl_notify_session_change')) {
+    /**
+     * Cancel/reschedule fan-out: notify every ACTIVE student participant and
+     * their linked parents (revoked links + parent_email_enabled opt-out are
+     * honored inside notify_parent_ids_for_student). Best-effort — a send
+     * failure never blocks the schedule change itself.
+     */
+    function pqlrvl_notify_session_change(int $sessionid, $session, string $subject, string $message, string $eventtype): void {
+        global $DB;
+        try {
+            $participants = $DB->get_records('local_prequran_live_participant',
+                ['sessionid' => $sessionid, 'status' => 'active', 'role' => 'student'], '', 'id,userid,studentid');
+            $url = new moodle_url('/local/hubredirect/live_schedule.php');
+            $notified = [];
+            foreach ($participants as $p) {
+                $studentid = (int)($p->studentid ?: $p->userid);
+                if ($studentid <= 0 || isset($notified[$studentid])) {
+                    continue;
+                }
+                $notified[$studentid] = true;
+                local_prequran_notify_user_live_update($sessionid, $studentid, $subject, $message, $url, 'Open schedule', $eventtype, $studentid);
+                foreach (local_prequran_notify_parent_ids_for_student($studentid) as $parentid) {
+                    local_prequran_notify_user_live_update($sessionid, (int)$parentid, $subject, $message, $url, 'Open schedule', $eventtype, $studentid);
+                }
+            }
+        } catch (Throwable $notifyerror) {
+            // Notification failures must not block the cancel/reschedule.
+        }
+    }
+}
+
 $userid = (int)($claims['sub'] ?? 0);
 
 $ispost = (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST');
@@ -111,10 +142,31 @@ if ($ispost) {
         $session->timemodified = time();
         $DB->update_record('local_prequran_live_session', $session);
         pqlrvl_audit($sessionid, 'session_cancelled', 'session', $sessionid, ['oldstatus' => $oldstatus, 'reason' => $reason]);
+        // Late-notice tracking: a cancellation inside the notice window gets its
+        // own audit action (classroom_hygiene reports per-teacher counts).
+        $noticehours = (int)get_config('local_prequran', 'session_cancel_notice_hours');
+        if ($noticehours < 1) {
+            $noticehours = 24;
+        }
+        $noticemsg = '';
+        if ((int)$session->scheduled_start > time() && (int)$session->scheduled_start - time() < $noticehours * HOURSECS) {
+            $noticeleft = (int)round(((int)$session->scheduled_start - time()) / HOURSECS);
+            pqlrvl_audit($sessionid, 'session_cancelled_late', 'session', $sessionid,
+                ['notice_hours' => $noticeleft, 'policy_hours' => $noticehours]);
+            $noticemsg = ' NOTE: this was a short-notice cancellation (' . $noticeleft . 'h before start; policy is ' . $noticehours . 'h).';
+        }
+        // Best practice: cancelling a class TELLS the class. Notify every active
+        // student participant and their linked parents (previously only the
+        // audit trail knew).
+        pqlrvl_notify_session_change($sessionid, $session,
+            'Live class cancelled: ' . (string)$session->title,
+            'The live class "' . (string)$session->title . '" scheduled for ' . userdate((int)$session->scheduled_start)
+            . ' has been cancelled.' . ($reason !== '' ? ' Reason: ' . $reason : ''),
+            'live_session_cancelled');
         echo json_encode([
             'ok' => true,
             'result' => 'cancelled',
-            'message' => 'Session cancelled and audit history updated.',
+            'message' => 'Session cancelled, participants and parents notified.' . $noticemsg,
         ], JSON_UNESCAPED_SLASHES);
         exit;
     }
@@ -149,10 +201,25 @@ if ($ispost) {
             'newstart' => (int)$session->scheduled_start,
             'newend' => (int)$session->scheduled_end,
         ]);
+        // Late-notice tracking (mirror of cancel).
+        $noticehours = (int)get_config('local_prequran', 'session_cancel_notice_hours');
+        if ($noticehours < 1) {
+            $noticehours = 24;
+        }
+        if ($oldstart > time() && $oldstart - time() < $noticehours * HOURSECS) {
+            pqlrvl_audit($sessionid, 'session_rescheduled_late', 'session', $sessionid,
+                ['notice_hours' => (int)round(($oldstart - time()) / HOURSECS), 'policy_hours' => $noticehours]);
+        }
+        // Tell the class about the new time (previously silent).
+        pqlrvl_notify_session_change($sessionid, $session,
+            'Live class rescheduled: ' . (string)$session->title,
+            'The live class "' . (string)$session->title . '" has moved from ' . userdate($oldstart)
+            . ' to ' . userdate((int)$session->scheduled_start) . '. Please update your plans.',
+            'live_session_rescheduled');
         echo json_encode([
             'ok' => true,
             'result' => 'rescheduled',
-            'message' => 'Session rescheduled and returned to scheduled status.',
+            'message' => 'Session rescheduled, participants and parents notified.',
         ], JSON_UNESCAPED_SLASHES);
         exit;
     }

@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Content authoring · EduPlatform portal</title>
+<style>
+  :root{--ink:#12263a;--ink2:#3f5872;--muted:#6b7f93;--line:#d8e2ec;--bg:#f4f7fa;--card:#ffffff;--blue:#17324d;--blue2:#2a6cb0;--sky:#e8f1fa;--amber:#b97e12;--amber-bg:#fdf3df;--red:#b3392c;--red-bg:#fbe9e6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+  .top{background:var(--blue);color:#fff;padding:14px 0}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:17px}.brand small{display:block;font-weight:700;font-size:12px;color:#b9cbdd}
+  .top .note{font-size:12px;color:#b9cbdd}
+  main{padding:22px 0 48px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  h1{margin:0 0 2px;font-size:22px}
+  h2{margin:0 0 10px;font-size:16px}
+  h3{margin:0 0 10px;font-size:14px}
+  .sub{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:1fr 380px;gap:16px;align-items:start}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+  .muted{color:var(--muted);font-size:12px}
+  .note{color:var(--muted);font-size:12px;margin:8px 0 0}
+  .status{padding:12px 14px;border-radius:8px;background:var(--sky);color:var(--blue);font-weight:700;margin-bottom:16px}
+  .status.error{background:var(--red-bg);color:var(--red)}
+  .status.saved{background:#e1f2ff;color:var(--blue2)}
+  .toolbar{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-top:12px}
+  .toolbar .field{margin-bottom:0}
+  .toolbar .field input{width:auto;min-width:120px}
+  .field{margin-bottom:10px}
+  .field label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin-bottom:3px}
+  .field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+  .field textarea{min-height:64px;resize:vertical}
+  .field textarea.big{min-height:150px;font-family:ui-monospace,"Cascadia Code",Consolas,monospace;font-size:12px}
+  form button{margin-top:8px;background:var(--blue2);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-weight:900;font-size:13px;cursor:pointer}
+  form button:disabled{opacity:.55;cursor:wait}
+  hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top;font-size:13px}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink2)}
+  td strong{font-size:14px}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;background:var(--sky);color:var(--ink2);white-space:nowrap}
+  .pill.warn{background:var(--amber-bg);color:var(--amber)}
+  .pill.bad{background:var(--red-bg);color:var(--red)}
+  .pill.good{background:#e1f2ff;color:var(--blue2)}
+  .pill.muted-pill{background:var(--sky);color:var(--muted)}
+  a.btn,button.btn{display:inline-block;padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--sky);color:var(--blue2);text-decoration:none;font-weight:800;font-size:12px;cursor:pointer;margin:2px 2px 2px 0}
+  button.btn{background:var(--card)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">EduPlatform Portal<small>Content authoring</small></div>
+  <div class="note" id="mode-note">Token-authenticated · parallel-run of content_authoring.php</div>
+</div></header>
+<main class="wrap">
+  <div class="panel">
+    <h1 id="title">Content authoring</h1>
+    <p class="sub" id="subtitle">Curriculum learning objectives, coverage evidence, and the content review &amp; approval trail for this workspace.</p>
+    <div class="toolbar">
+      <div class="field"><label for="workspaceid">Workspace ID</label><input id="workspaceid" type="number" min="0" step="1" placeholder="current"></div>
+      <button class="btn" id="reload" type="button">Apply</button>
+    </div>
+  </div>
+  <div id="status" class="status">Loading content authoring…</div>
+  <div class="grid" id="grid" hidden>
+    <div>
+      <div class="panel">
+        <h2>Learning objectives</h2>
+        <div class="field"><label for="course-pick">Course</label><select id="course-pick"></select></div>
+        <p class="muted" id="course-empty" hidden>Select a course above to view and edit its learning objectives.</p>
+        <table id="obj-table" hidden><thead><tr><th>Unit</th><th>Code</th><th>Seq</th><th>Learning outcome</th><th>Bloom</th><th>Framework</th><th>Status</th><th>Actions</th></tr></thead><tbody id="obj-body"></tbody></table>
+      </div>
+      <div class="panel">
+        <h2>Objective coverage</h2>
+        <table><thead><tr><th>Course</th><th>Objectives</th><th>Units</th></tr></thead><tbody id="coverage-body"></tbody></table>
+      </div>
+      <div class="panel">
+        <h2>Content review &amp; approval</h2>
+        <table><thead><tr><th>Title</th><th>Type</th><th>Reference</th><th>Status</th><th>Version</th><th>Reviewer</th><th></th></tr></thead><tbody id="review-body"></tbody></table>
+      </div>
+    </div>
+    <div>
+      <div class="panel" id="obj-form-panel">
+        <h2 id="obj-form-title">Add learning objective</h2>
+        <p class="muted" id="obj-form-locked" hidden>Select a course to add or edit objectives.</p>
+        <form id="obj-form">
+          <input type="hidden" name="courseid" id="obj-courseid">
+          <input type="hidden" name="id" id="obj-id">
+          <div class="field"><label>Unit number</label><input type="number" name="unit_number" id="obj-unit" min="0" step="1"></div>
+          <div class="field"><label>Objective code</label><input name="objective_code" id="obj-code" placeholder="e.g. ENG.G1.5.2"></div>
+          <div class="field"><label>Sequence</label><input type="number" name="sequence" id="obj-seq" min="0" step="1"></div>
+          <div class="field"><label>Learning outcome</label><textarea name="learning_outcome" id="obj-outcome"></textarea></div>
+          <div class="field"><label>Bloom level</label><input name="bloom_level" id="obj-bloom" placeholder="e.g. Apply"></div>
+          <div class="field"><label>Evidence of learning</label><textarea name="evidence" id="obj-evidence"></textarea></div>
+          <div class="field"><label>Framework code</label><input name="framework_code" id="obj-framework" placeholder="e.g. Cambridge 0058"></div>
+          <div class="field"><label>Status</label><select name="status" id="obj-status"><option value="active">active</option><option value="retired">retired</option></select></div>
+          <button type="submit" id="obj-save">Save objective</button>
+          <button type="button" class="btn" id="obj-reset">New / clear</button>
+        </form>
+      </div>
+      <div class="panel">
+        <h2>Import objectives from content JSON</h2>
+        <form id="import-form">
+          <div class="field"><label>Course</label><select name="courseid" id="import-course"></select></div>
+          <div class="field"><label>Outcomes JSON</label><textarea class="big" name="outcomes_json" id="import-json" placeholder='{ "outcomes": [ { "outcomeId": "…", "learningOutcome": "…", "bloomLevel": "Apply", "evidenceOfLearning": "…" } ] }'></textarea></div>
+          <button type="submit" id="import-save">Import objectives</button>
+        </form>
+        <p class="note">Paste a unit JSON (with an outcomes[] array) or a bare JSON array of outcomes; each needs outcomeId + learningOutcome (bloomLevel/evidenceOfLearning optional).</p>
+      </div>
+      <div class="panel">
+        <h2 id="review-form-title">Record content review</h2>
+        <form id="review-form">
+          <div class="field"><label>Content type</label><select name="content_type" id="rev-type"></select></div>
+          <div class="field"><label>Content reference</label><input name="content_ref" id="rev-ref" placeholder="e.g. ehel-eng-g01 unit 5"></div>
+          <div class="field"><label>Title</label><input name="title" id="rev-title"></div>
+          <div class="field"><label>Review status</label><select name="review_status" id="rev-status"></select></div>
+          <div class="field"><label>Content version</label><input name="content_version" id="rev-version" placeholder="e.g. v1.2"></div>
+          <div class="field"><label>Notes</label><textarea name="notes" id="rev-notes"></textarea></div>
+          <button type="submit" id="rev-save">Save review</button>
+          <button type="button" class="btn" id="rev-reset">New / clear</button>
+        </form>
+        <p class="note">Every status change is recorded in the content approval trail.</p>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const qs = new URLSearchParams(location.search);
+  const endpoint = (qs.get("endpoint") || "").trim();
+  const token = (qs.get("token") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const fmtDate = (ts) => { const n = Number(ts); if (!n) return "—"; const dt = new Date(n * 1000); return isNaN(dt.getTime()) ? "—" : dt.toLocaleDateString(); };
+
+  if (!endpoint || !token) { $("#status").className = "status error"; $("#status").textContent = "Missing endpoint/token — open via the Moodle portal launch link."; return; }
+
+  const workspaceInput = $("#workspaceid");
+  if (qs.get("workspaceid")) workspaceInput.value = qs.get("workspaceid");
+  let selectedCourseId = (qs.get("courseid") || "").replace(/[^0-9]/g, "");
+
+  let DATA = {};
+  let editingObjectiveId = null;
+
+  const queryParams = () => {
+    const p = new URLSearchParams({ report: "content-authoring", token });
+    const ws = (workspaceInput.value || "").trim();
+    if (ws && Number(ws) > 0) p.set("workspaceid", ws);
+    if (selectedCourseId && Number(selectedCourseId) > 0) p.set("courseid", selectedCourseId);
+    return p;
+  };
+  const getUrl = () => endpoint + "?" + queryParams().toString();
+
+  const opt = (val, label, sel) => `<option value="${esc(val)}"${sel ? " selected" : ""}>${esc(label)}</option>`;
+  const optionsFrom = (map) => Object.keys(map || {}).map((k) => opt(k, map[k])).join("");
+
+  const objStatusClass = (s) => /retire/.test(s || "") ? "muted-pill" : "good";
+  const reviewStatusClass = (s) => {
+    if (/approv/.test(s || "")) return "good";
+    if (/needs.?revis|reject/.test(s || "")) return "bad";
+    if (/in.?review|pending/.test(s || "")) return "warn";
+    return "muted-pill"; // draft / retired / other
+  };
+  const nameFor = (id) => (id && DATA.names && DATA.names[id]) || "";
+
+  function reloadWithCourse(cid) {
+    const p = new URLSearchParams(location.search);
+    if (cid && Number(cid) > 0) p.set("courseid", cid); else p.delete("courseid");
+    const ws = (workspaceInput.value || "").trim();
+    if (ws && Number(ws) > 0) p.set("workspaceid", ws); else p.delete("workspaceid");
+    location.search = p.toString();
+  }
+
+  async function load() {
+    $("#status").className = "status"; $("#status").hidden = false; $("#status").textContent = "Loading content authoring…";
+    try {
+      const r = await fetch(getUrl());
+      if (!r.ok) throw new Error("HTTP " + r.status + " — " + (await r.text()).slice(0, 200));
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "unknown");
+      render(d);
+    } catch (e) { $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not load: " + e.message; }
+  }
+
+  function resetObjectiveForm() {
+    editingObjectiveId = null;
+    $("#obj-form").reset();
+    $("#obj-id").value = "";
+    $("#obj-courseid").value = selectedCourseId || "";
+    $("#obj-status").value = "active";
+    $("#obj-form-title").textContent = "Add learning objective";
+  }
+
+  function openObjective(id) {
+    const o = (DATA.objectives || []).find((x) => Number(x.id) === Number(id));
+    if (!o) return;
+    editingObjectiveId = id;
+    $("#obj-id").value = o.id;
+    $("#obj-courseid").value = selectedCourseId || "";
+    $("#obj-unit").value = o.unit_number ?? "";
+    $("#obj-code").value = o.objective_code || "";
+    $("#obj-seq").value = o.sequence ?? "";
+    $("#obj-outcome").value = o.learning_outcome || "";
+    $("#obj-bloom").value = o.bloom_level || "";
+    $("#obj-evidence").value = o.evidence || "";
+    $("#obj-framework").value = o.framework_code || "";
+    $("#obj-status").value = o.status || "active";
+    $("#obj-form-title").textContent = "Edit learning objective";
+    $("#obj-form").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function resetReviewForm() {
+    $("#review-form").reset();
+    $("#review-form-title").textContent = "Record content review";
+  }
+
+  function openReview(id) {
+    const rv = (DATA.reviews || []).find((x) => Number(x.id) === Number(id));
+    if (!rv) return;
+    $("#rev-type").value = rv.content_type || "";
+    $("#rev-ref").value = rv.content_ref || "";
+    $("#rev-title").value = rv.title || "";
+    $("#rev-status").value = rv.review_status || "";
+    $("#rev-version").value = rv.content_version || "";
+    $("#rev-notes").value = rv.notes || "";
+    $("#review-form-title").textContent = "Edit content review";
+    $("#review-form").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function render(d) {
+    DATA = d;
+    $("#status").hidden = true;
+    if (d.workspace && d.workspace.name) $("#title").textContent = "Content authoring — " + d.workspace.name;
+
+    if (d.selected_courseid != null && Number(d.selected_courseid) > 0) selectedCourseId = String(d.selected_courseid);
+    const hasCourse = selectedCourseId && Number(selectedCourseId) > 0;
+
+    // Course picker (only courses with a real courseid are pickable for objectives)
+    const pickable = (d.courses || []).filter((c) => Number(c.courseid) > 0);
+    const courseOpts = pickable.map((c) => opt(c.courseid, c.title, String(c.courseid) === String(selectedCourseId))).join("");
+    $("#course-pick").innerHTML = `<option value="">Select a course…</option>` + courseOpts;
+    $("#import-course").innerHTML = courseOpts || `<option value="">No courses available</option>`;
+    if (hasCourse) $("#import-course").value = selectedCourseId;
+
+    // Objectives table
+    const objectives = d.objectives || [];
+    $("#course-empty").hidden = hasCourse;
+    $("#obj-table").hidden = !hasCourse;
+    $("#obj-body").innerHTML = objectives.length ? objectives.map((o) =>
+      `<tr>
+        <td>${esc(o.unit_number ?? "—")}</td>
+        <td><strong>${esc(o.objective_code || "—")}</strong></td>
+        <td>${esc(o.sequence ?? "—")}</td>
+        <td>${esc(o.learning_outcome || "—")}</td>
+        <td>${o.bloom_level ? `<span class="pill">${esc(o.bloom_level)}</span>` : `<span class="muted">—</span>`}</td>
+        <td>${esc(o.framework_code || "—")}</td>
+        <td><span class="pill ${objStatusClass(o.status)}">${esc(o.status || "—")}</span></td>
+        <td><button type="button" class="btn" data-edit-obj="${o.id}">Edit</button></td>
+      </tr>`
+    ).join("") : `<tr><td colspan="8" class="muted">No objectives for this course yet — add or import them.</td></tr>`;
+    document.querySelectorAll("[data-edit-obj]").forEach((b) => b.addEventListener("click", () => openObjective(Number(b.dataset.editObj))));
+
+    // Objective form gating
+    $("#obj-courseid").value = hasCourse ? selectedCourseId : "";
+    $("#obj-form-locked").hidden = hasCourse;
+    ["obj-unit","obj-code","obj-seq","obj-outcome","obj-bloom","obj-evidence","obj-framework","obj-status","obj-save","obj-reset"].forEach((id) => { $("#" + id).disabled = !hasCourse; });
+
+    // Coverage
+    const coverage = d.coverage || [];
+    $("#coverage-body").innerHTML = coverage.length ? coverage.map((c) =>
+      `<tr>
+        <td><strong>${esc(c.course || "—")}</strong></td>
+        <td>${esc(c.objectives ?? 0)}</td>
+        <td>${esc(c.units ?? 0)}</td>
+      </tr>`
+    ).join("") : `<tr><td colspan="3" class="muted">No objectives yet — add or import them above.</td></tr>`;
+
+    // Review form option lists
+    $("#rev-type").innerHTML = optionsFrom({ unit: "Unit", course: "Course", lesson: "Lesson", quiz: "Quiz", material: "Material", other: "Other" });
+    $("#rev-status").innerHTML = optionsFrom(d.review_status_options);
+
+    // Reviews table
+    const reviews = d.reviews || [];
+    $("#review-body").innerHTML = reviews.length ? reviews.map((rv) => {
+      const who = nameFor(rv.reviewedby);
+      const reviewer = who ? `${esc(who)}<div class="muted">${esc(fmtDate(rv.reviewedat))}</div>` : `<span class="muted">—</span>`;
+      const label = (d.review_status_options && d.review_status_options[rv.review_status]) || rv.review_status || "—";
+      return `<tr>
+        <td><strong>${esc(rv.title || "—")}</strong></td>
+        <td><span class="pill">${esc(rv.content_type || "—")}</span></td>
+        <td>${esc(rv.content_ref || "—")}</td>
+        <td><span class="pill ${reviewStatusClass(rv.review_status)}">${esc(label)}</span></td>
+        <td>${esc(rv.content_version || "—")}</td>
+        <td>${reviewer}</td>
+        <td><button type="button" class="btn" data-edit-rev="${rv.id}">Edit</button></td>
+      </tr>`;
+    }).join("") : `<tr><td colspan="7" class="muted">No content reviews recorded yet.</td></tr>`;
+    document.querySelectorAll("[data-edit-rev]").forEach((b) => b.addEventListener("click", () => openReview(Number(b.dataset.editRev))));
+
+    if (editingObjectiveId != null) {
+      const still = objectives.find((o) => Number(o.id) === Number(editingObjectiveId));
+      if (still) openObjective(editingObjectiveId); else resetObjectiveForm();
+    } else if (hasCourse && !$("#obj-courseid").value) {
+      $("#obj-courseid").value = selectedCourseId;
+    }
+
+    $("#grid").hidden = false;
+  }
+
+  async function post(payload, btn, okText) {
+    const original = btn ? btn.textContent : "";
+    if (btn) { btn.disabled = true; btn.textContent = "Saving…"; }
+    try {
+      const r = await fetch(endpoint + "?" + queryParams().toString(), {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || okText || "Saved.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      await load();
+    } catch (e) {
+      $("#status").className = "status error"; $("#status").hidden = false; $("#status").textContent = "Could not save: " + e.message;
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = original; }
+    }
+  }
+
+  function formPayload(form, extra) {
+    const p = Object.assign({}, extra);
+    new FormData(form).forEach((v, k) => { p[k] = v; });
+    return p;
+  }
+
+  $("#course-pick").addEventListener("change", (ev) => reloadWithCourse(ev.currentTarget.value));
+
+  $("#obj-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const p = formPayload(ev.currentTarget, { do: "save_objective" });
+    if (!p.id) delete p.id;
+    post(p, $("#obj-save"), "Learning objective saved.");
+  });
+  $("#obj-reset").addEventListener("click", () => resetObjectiveForm());
+
+  $("#import-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    post(formPayload(ev.currentTarget, { do: "import_objectives" }), $("#import-save"), "Objectives imported.");
+  });
+
+  $("#review-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    post(formPayload(ev.currentTarget, { do: "save_review" }), $("#rev-save"), "Content review saved.");
+  });
+  $("#rev-reset").addEventListener("click", () => resetReviewForm());
+
+  $("#reload").addEventListener("click", load);
+  workspaceInput.addEventListener("keydown", (e) => { if (e.key === "Enter") load(); });
+
+  load();
+})();
+</script>
+</body>
+</html>

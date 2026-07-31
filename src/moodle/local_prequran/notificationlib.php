@@ -151,8 +151,25 @@ function local_prequran_notify_parent_ids_for_student(int $studentid): array {
         return [];
     }
 
+    // Respect the intake opt-out: parent_email_enabled=0 on the student's
+    // profile means "no parent notifications about this student". Previously
+    // this flag only suppressed the one-time intake email and was ignored by
+    // every subsequent send.
+    if (local_prequran_notify_table_exists('local_prequran_student_profile')) {
+        try {
+            $enabled = $DB->get_field('local_prequran_student_profile', 'parent_email_enabled', ['userid' => $studentid], IGNORE_MISSING);
+            if ($enabled !== false && $enabled !== null && (int)$enabled === 0) {
+                return [];
+            }
+        } catch (Throwable $e) {
+            // Column absent on older schemas — fan out as before.
+        }
+    }
+
+    // Revoked links (unlink action: consented=0/granted=0) are excluded —
+    // a parent who withdrew consent stops receiving notifications.
     if (local_prequran_notify_table_exists('local_prequran_comm_consent')) {
-        $rows = $DB->get_records('local_prequran_comm_consent', ['studentid' => $studentid]);
+        $rows = $DB->get_records('local_prequran_comm_consent', ['studentid' => $studentid, 'consented' => 1]);
         foreach ($rows as $row) {
             $guardianid = (int)$row->guardianid;
             if ($guardianid > 0) {
@@ -162,7 +179,7 @@ function local_prequran_notify_parent_ids_for_student(int $studentid): array {
     }
 
     if (local_prequran_notify_table_exists('local_prequran_live_consent')) {
-        $rows = $DB->get_records('local_prequran_live_consent', ['studentid' => $studentid]);
+        $rows = $DB->get_records('local_prequran_live_consent', ['studentid' => $studentid, 'granted' => 1]);
         foreach ($rows as $row) {
             $guardianid = (int)$row->guardianid;
             if ($guardianid > 0) {
@@ -682,4 +699,72 @@ function local_prequran_notify_parent_urgent_whatsapp_alert(
     }
 
     return $sent;
+}
+
+/**
+ * Notify a recipient of an academic milestone (certificate earned, course
+ * grade published, level advanced) via the achievement_update provider.
+ * Brand context is best-effort (no sessionid here). Returns true on send.
+ */
+function local_prequran_notify_achievement(
+    int $recipientid,
+    string $subject,
+    string $message,
+    moodle_url $url,
+    string $urlname,
+    string $eventtype,
+    int $studentid = 0
+): bool {
+    $recipient = core_user::get_user($recipientid);
+    if (!$recipient || !empty($recipient->deleted) || !empty($recipient->suspended)) {
+        return false;
+    }
+    $body = $message . "\n\nOpen: " . $url->out(false);
+    if ($studentid > 0 && $studentid !== $recipientid) {
+        $student = core_user::get_user($studentid);
+        $body = $message . "\n\nStudent: " . ($student ? fullname($student) : ('Student ' . $studentid)) . "\nOpen: " . $url->out(false);
+    }
+    $eventdata = new \core\message\message();
+    $eventdata->component = 'local_prequran';
+    $eventdata->name = 'achievement_update';
+    $eventdata->userfrom = local_prequran_notify_sender_user();
+    $eventdata->userto = $recipient;
+    $eventdata->subject = $subject;
+    $eventdata->fullmessage = $body;
+    $eventdata->fullmessageformat = FORMAT_PLAIN;
+    $eventdata->fullmessagehtml = nl2br(s($body));
+    $eventdata->smallmessage = $subject;
+    $eventdata->notification = 1;
+    $eventdata->contexturl = $url->out(false);
+    $eventdata->contexturlname = $urlname;
+    try {
+        return message_send($eventdata) ? true : false;
+    } catch (Throwable $e) {
+        return false;
+    }
+}
+
+/**
+ * Fan an achievement notification out to the student + their (consent-honoring,
+ * revocation-aware) parents. Best-effort; returns the count notified.
+ */
+function local_prequran_notify_achievement_family(
+    int $studentid,
+    string $subject,
+    string $message,
+    moodle_url $url,
+    string $urlname,
+    string $eventtype
+): int {
+    $count = 0;
+    if ($studentid > 0
+            && local_prequran_notify_achievement($studentid, $subject, $message, $url, $urlname, $eventtype, $studentid)) {
+        $count++;
+    }
+    foreach (local_prequran_notify_parent_ids_for_student($studentid) as $parentid) {
+        if (local_prequran_notify_achievement((int)$parentid, $subject, $message, $url, $urlname, $eventtype, $studentid)) {
+            $count++;
+        }
+    }
+    return $count;
 }

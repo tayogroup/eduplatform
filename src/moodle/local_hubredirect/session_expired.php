@@ -96,7 +96,7 @@ body.pqh-session-expired-page{background:#f4f7fb!important}
         <a class="pqhs-btn" href="<?php echo $loginurl->out(false); ?>">Log in again</a>
         <a class="pqhs-btn pqhs-btn--light" href="<?php echo $homeurl->out(false); ?>">Go to home</a>
       </div>
-      <p class="pqhs-note">If this keeps happening quickly, ask an administrator to review the Moodle session timeout setting.</p>
+      <p class="pqhs-note">If this keeps happening quickly, ask an administrator to review the session timeout setting.</p>
     </section>
   </div>
 </main>

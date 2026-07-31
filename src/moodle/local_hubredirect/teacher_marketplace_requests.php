@@ -180,6 +180,7 @@ if ($ready) {
     ));
 }
 
+pqh_enforce_role_domain($consumercontext, pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
 echo $OUTPUT->header();
 ?>
 <style>
@@ -206,7 +207,7 @@ body.pqh-teacher-marketplace-requests-page #page,body.pqh-teacher-marketplace-re
     <?php if ($message !== ''): ?><div class="pqtmr-alert pqtmr-alert--ok"><?php echo s($message); ?></div><?php endif; ?>
     <?php if ($error !== ''): ?><div class="pqtmr-alert pqtmr-alert--bad"><?php echo s($error); ?></div><?php endif; ?>
     <?php if (!$ready): ?>
-      <div class="pqtmr-empty">Teacher request schema is not ready yet. Please run the local_prequran Moodle upgrade.</div>
+      <div class="pqtmr-empty">Teacher request schema is not ready yet. Please run the local_prequran upgrade.</div>
     <?php elseif (!$requests): ?>
       <section class="pqtmr-panel">
         <h2>No Requests Yet</h2>

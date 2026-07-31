@@ -19,6 +19,7 @@ if ($workspaceid > 0) {
 if ($workspaceid <= 0 || !pqfin_user_can_manage_workspace_finance((int)$USER->id, $workspaceid)) {
     pqh_access_denied('Only workspace admins can view finance audit reports.', new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams), 'Finance audit access required');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $studentid = optional_param('studentid', 0, PARAM_INT);
 $billingaccountid = optional_param('billingaccountid', 0, PARAM_INT);

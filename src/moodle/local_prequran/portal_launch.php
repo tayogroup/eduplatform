@@ -58,6 +58,14 @@ $reports = [
     // platform-consumers' handler adds the foundation-domain stage.
     'live-create-wizard' => ['pqpl_any_authenticated', 'live-create-wizard.html'],
     'platform-consumers' => ['pqh_can_manage_academy_operations', 'platform-consumers.html'],
+    // Layer-2 tenant support: consumer tech teams (handler gates to workspace
+    // owners/admins) and the EduPlatform cross-consumer board.
+    'platform-support' => ['pqpl_any_authenticated', 'platform-support.html'],
+    'platform-tickets' => ['pqh_can_manage_academy_operations', 'platform-tickets.html'],
+    // Monetization: school-side payout/coupon/grant console + the EduPlatform
+    // settlement-statement board (handlers re-enforce the real gates).
+    'finance-monetization' => ['pqpl_any_authenticated', 'finance-monetization.html'],
+    'platform-billing' => ['pqh_can_manage_academy_operations', 'platform-billing.html'],
     'live-quality' => ['pqh_can_manage_academy_operations', 'live-quality.html'],
     'live-followups' => ['pqpl_any_authenticated', 'live-followups.html'],
     'recordings-admin' => ['pqh_can_manage_academy_operations', 'recordings-admin.html'],
@@ -179,6 +187,29 @@ $reports = [
     'classroom-operations' => ['pqpl_any_authenticated', 'classroom-operations.html'],
     'certificates-awards' => ['pqpl_any_authenticated', 'certificates-awards.html'],
     'academic-calendar' => ['pqpl_any_authenticated', 'academic-calendar.html'],
+    // Institution records: per-term report cards + reusable fee schedules
+    // (handlers re-enforce teacher/admin gates).
+    'report-cards' => ['pqpl_any_authenticated', 'report-cards.html'],
+    'fee-schedule' => ['pqpl_any_authenticated', 'fee-schedule.html'],
+    'staff-records' => ['pqpl_any_authenticated', 'staff-records.html'],
+    // Marketplace core: tutor self-service storefront + admin review/dispute ops
+    // (handlers re-enforce tutor-self and workspace-manager gates).
+    'tutor-storefront' => ['pqpl_any_authenticated', 'tutor-storefront.html'],
+    'marketplace-ops' => ['pqpl_any_authenticated', 'marketplace-ops.html'],
+    // Analytics reporting: nightly-snapshot trend viewer + per-course academic
+    // breakdown + curriculum coverage, and a student engagement report
+    // (handlers re-enforce workspace-manager / teacher gates).
+    'analytics-trends' => ['pqpl_any_authenticated', 'analytics-trends.html'],
+    'engagement-report' => ['pqpl_any_authenticated', 'engagement-report.html'],
+    // Live learning: in-session polls / exit tickets (handler branches by
+    // teacher vs student participant of the session).
+    'live-poll' => ['pqpl_any_authenticated', 'live-poll.html'],
+    // Content authoring: learning objectives + content review/approval register
+    // (handler re-enforces the workspace-manager gate).
+    'content-authoring' => ['pqpl_any_authenticated', 'content-authoring.html'],
+    // Syllabus: any authenticated member may READ; authoring and approval are
+    // gated inside the handler (teacher of the course / workspace manager).
+    'syllabus' => ['pqpl_any_authenticated', 'syllabus.html'],
     'admin-workflow' => ['pqpl_any_authenticated', 'admin-workflow.html'],
     // Wave 14 (final): billing/sponsor/consumer tail. Workspace-finance and
     // sponsor/parent gates live in the handlers with the legacy messages.

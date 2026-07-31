@@ -63,6 +63,10 @@ pqfin_audit($print ? 'invoice_print_viewed' : 'invoice_viewed', (int)$invoice->w
     'actorid' => $securelink ? 0 : (int)$USER->id,
 ]);
 
+if (!$securelink) {
+    pqh_enforce_role_domain($consumercontext, (int)$invoice->workspaceid, (int)$USER->id);
+}
+
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url(new moodle_url('/local/hubredirect/invoice_view.php', $urlparams + ($print ? ['print' => 1] : [])));
 $PAGE->set_pagelayout('standard');

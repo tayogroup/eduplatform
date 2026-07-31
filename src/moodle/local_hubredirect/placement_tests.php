@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         require_sesskey();
         if (!pqcp_ready()) {
-            throw new invalid_parameter_exception('Placement test tables are not ready. Run Moodle upgrade.');
+            throw new invalid_parameter_exception('Placement test tables are not ready. Run the platform upgrade.');
         }
         $action = optional_param('action', '', PARAM_ALPHANUMEXT);
         $now = time();
@@ -109,12 +109,14 @@ $applications = pqh_table_exists_safe('local_prequran_admission_app') ? array_va
 $sessions = pqh_table_exists_safe('local_prequran_place_session') ? array_values($DB->get_records_sql("SELECT s.*, t.title AS testtitle, u.firstname, u.lastname FROM {local_prequran_place_session} s LEFT JOIN {local_prequran_place_test} t ON t.id = s.testid LEFT JOIN {user} u ON u.id = s.studentid WHERE s.workspaceid = :workspaceid ORDER BY s.timemodified DESC", ['workspaceid' => $workspaceid], 0, 100)) : [];
 $audits = pqh_table_exists_safe('local_prequran_place_audit') ? array_values($DB->get_records('local_prequran_place_audit', ['workspaceid' => $workspaceid], 'timecreated DESC', '*', 0, 80)) : [];
 
+pqh_enforce_role_domain(pqh_requested_consumer_context(), $workspaceid, (int)$USER->id);
+
 echo $OUTPUT->header();
 echo '<style>.pqplace{max-width:1180px;margin:0 auto}.pqplace-top{display:flex;justify-content:space-between;margin-bottom:16px}.pqplace-grid{display:grid;grid-template-columns:360px 1fr;gap:16px}.pqplace-panel{border:1px solid #dfe7df;border-radius:8px;background:#fff;padding:16px}.pqplace-field{margin-bottom:10px}.pqplace-field label{display:block;font-size:12px;font-weight:800;color:#506050;margin-bottom:4px}.pqplace-input,.pqplace-select,.pqplace-textarea{width:100%;border:1px solid #ccd8cf;border-radius:7px;padding:9px}.pqplace-textarea{min-height:72px}.pqplace-btn{display:inline-flex;align-items:center;min-height:38px;padding:0 13px;border:1px solid #cfd8d0;border-radius:8px;background:#2f6f4e;color:#fff;font-weight:800;text-decoration:none}.pqplace-btn--light{background:#f7fbf8;color:#173044}.pqplace-table{width:100%;border-collapse:collapse}.pqplace-table th,.pqplace-table td{border-bottom:1px solid #e7eee8;padding:9px;text-align:left;vertical-align:top}.pqplace-pill{display:inline-flex;padding:3px 8px;border-radius:999px;background:#eef7ee;font-size:12px;font-weight:800}.pqplace-muted{color:#617064;font-size:12px}.pqplace-notice{padding:10px 12px;border-radius:8px;margin-bottom:12px;background:#edf8ef}.pqplace-error{padding:10px 12px;border-radius:8px;margin-bottom:12px;background:#fff0f0;color:#8a1f1f}@media(max-width:900px){.pqplace-grid,.pqplace-top{display:block}}</style>';
 echo '<div class="pqplace"><div class="pqplace-top"><div><h2>Placement Tests</h2><div class="pqplace-muted">' . s($workspace->name) . ' placement test setup, scheduling, scoring, recommendations, admissions updates, and learning-path placement.</div></div><a class="pqplace-btn pqplace-btn--light" href="' . (new moodle_url('/local/hubredirect/workspace_dashboard.php', $urlparams))->out(false) . '">Workspace</a></div>';
 if ($notice !== '') { echo '<div class="pqplace-notice">' . s($notice) . '</div>'; }
 if ($error !== '') { echo '<div class="pqplace-error">' . s($error) . '</div>'; }
-if (!pqcp_ready()) { echo '<div class="pqplace-error">Placement schema is not ready. Run Moodle upgrade.</div>'; }
+if (!pqcp_ready()) { echo '<div class="pqplace-error">Placement schema is not ready. Run the platform upgrade.</div>'; }
 echo '<div class="pqplace-grid"><section class="pqplace-panel"><h3>Test Definition</h3><form method="post"><input type="hidden" name="sesskey" value="' . s(sesskey()) . '"><input type="hidden" name="action" value="save_test">';
 foreach ([['testid','Test ID for update'],['test_key','Test key'],['title','Title'],['domain','Domain'],['level_band','Level band'],['delivery_mode','Delivery mode'],['status','Status']] as $field) { echo '<div class="pqplace-field"><label>' . s($field[1]) . '</label><input class="pqplace-input" name="' . s($field[0]) . '"></div>'; }
 echo '<div class="pqplace-field"><label>Instructions</label><textarea class="pqplace-textarea" name="instructions"></textarea></div><div class="pqplace-field"><label>Rubric</label><textarea class="pqplace-textarea" name="rubric"></textarea></div><button class="pqplace-btn">Save Test</button></form><hr><h3>Schedule / Score Session</h3><form method="post"><input type="hidden" name="sesskey" value="' . s(sesskey()) . '"><input type="hidden" name="action" value="save_session"><div class="pqplace-field"><label>Session ID for update</label><input class="pqplace-input" name="sessionid"></div><div class="pqplace-field"><label>Test</label><select class="pqplace-select" name="testid">';

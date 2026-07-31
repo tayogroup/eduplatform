@@ -20,11 +20,14 @@ function pqcoal_user_can_manage_offerings(int $userid, int $workspaceid, ?stdCla
         && pqh_user_workspace_role($userid, $workspaceid) === 'teacher';
 }
 
-function pqcoal_offering_record_for_form(stdClass $offering): array {
+function pqcoal_offering_record_for_form(stdClass $offering, array $catalog = []): array {
+    $coursekey = (string)($offering->course_key ?? '');
+    $iscustom = $coursekey !== '' && $catalog && !isset($catalog[$coursekey]);
     return [
         'offeringid' => (string)((int)($offering->id ?? 0)),
         'course_link_mode' => 'existing',
-        'course_key' => (string)($offering->course_key ?? ''),
+        'course_key' => $iscustom ? '__custom__' : $coursekey,
+        'custom_course_title' => $iscustom ? (string)($offering->title ?? '') : '',
         'moodlecourseid' => (string)((int)($offering->moodlecourseid ?? 0)),
         'title' => (string)($offering->title ?? ''),
         'summary' => (string)($offering->summary ?? ''),
@@ -70,12 +73,33 @@ function pqcoal_review_enrollment_request(int $requestid, string $decision, stri
     if (!$request) {
         pqcoal_validation_error('Choose a valid enrollment request.');
     }
-    if ((string)$request->status !== 'pending') {
-        pqcoal_validation_error('Only pending enrollment requests can be reviewed.');
+    if (!in_array((string)$request->status, ['pending', 'waitlisted'], true)) {
+        pqcoal_validation_error('Only pending or waitlisted enrollment requests can be reviewed.');
     }
     if (!in_array($decision, ['approved', 'rejected'], true)) {
         pqcoal_validation_error('Choose approve or reject.');
     }
+
+    // Seat decisions are serialized per offering so two concurrent approvals
+    // cannot both pass the capacity check (atomic capacity). Lock-backend
+    // failure degrades to the legacy unserialized behaviour rather than
+    // blocking approvals.
+    $seatlock = null;
+    if ($decision === 'approved') {
+        try {
+            $lockfactory = \core\lock\lock_config::get_lock_factory('local_prequran_offering_seats');
+            $seatlock = $lockfactory->get_lock('offering' . (int)$request->offeringid, 10);
+            if ($seatlock === false) {
+                $seatlock = null;
+                pqcoal_validation_error('Another seat decision for this offering is in progress. Try again in a moment.');
+            }
+        } catch (\moodle_exception $lockerror) {
+            throw $lockerror;
+        } catch (\Throwable $lockerror) {
+            $seatlock = null;
+        }
+    }
+    try {
 
     $updatedrequest = (object)[
         'id' => (int)$request->id,
@@ -99,9 +123,14 @@ function pqcoal_review_enrollment_request(int $requestid, string $decision, stri
             'id' => (int)$request->offeringid,
             'capacity' => (int)$request->capacity,
         ], $seatcounts) <= 0) {
-            pqcoal_validation_error('This course offering is full. Add seats or reject the request with an alternative note.');
-        }
-        if (pqco_enrol_student_in_moodle_course((int)$request->studentid, (int)$request->moodlecourseid)) {
+            // Full is a STATE, not an error (Canvas waitlist pattern): park the
+            // request; pqcoal_promote_waitlisted() re-runs this approval the
+            // moment a seat frees.
+            $updatedrequest->status = 'waitlisted';
+            $updatedrequest->approvedby = 0;
+            $updatedrequest->approvedat = 0;
+            $message = 'Offering is full - request placed on the waitlist. It auto-promotes when a seat frees; you can also add seats.';
+        } else if (pqco_enrol_student_in_moodle_course((int)$request->studentid, (int)$request->moodlecourseid, $request)) {
             pqco_append_profile_course((int)$request->studentid, (string)$request->course_key);
             $teacherenrolledcount = pqco_enrol_assigned_teachers_in_moodle_course(
                 (int)$request->studentid,
@@ -118,7 +147,7 @@ function pqcoal_review_enrollment_request(int $requestid, string $decision, stri
             );
             $updatedrequest->status = 'enrolled';
             $updatedrequest->moodleenrolledat = time();
-            $message = 'Enrollment approved and Moodle enrollment completed.';
+            $message = 'Enrollment approved and enrollment completed.';
             pqco_course_audit('moodle_enrollment_completed', 'course_enrol_req', (int)$request->id, [
                 'consumerid' => (int)($request->consumerid ?? $consumercontext->consumerid ?? 0),
                 'workspaceid' => $workspaceid,
@@ -129,11 +158,11 @@ function pqcoal_review_enrollment_request(int $requestid, string $decision, stri
                 'teacher_enrollment_count' => $teacherenrolledcount,
             ]);
         } else {
-            $message = 'Enrollment approved. Moodle auto-enrollment was not completed; check the linked Moodle course manual enrollment setup.';
+            $message = 'Enrollment approved. Auto-enrollment was not completed; check the linked course manual enrollment setup.';
             pqco_notify_workspace_admins(
                 $workspaceid,
-                'Course Moodle sync failed',
-                'A course enrollment was approved but Moodle enrollment did not complete for ' . (string)$request->offering_title . '.',
+                'Course sync failed',
+                'A course enrollment was approved but enrollment did not complete for ' . (string)$request->offering_title . '.',
                 new moodle_url('/local/hubredirect/course_offerings.php', ['workspaceid' => $workspaceid, 'request_status' => 'approved']),
                 'Open course requests',
                 'course_moodle_sync_failed',
@@ -150,7 +179,15 @@ function pqcoal_review_enrollment_request(int $requestid, string $decision, stri
     }
 
     $DB->update_record('local_prequran_course_enrol_req', $updatedrequest);
-    pqco_course_audit($decision === 'approved' ? 'enrollment_approved' : 'enrollment_rejected', 'course_enrol_req', (int)$request->id, [
+
+    } finally {
+        if ($seatlock) {
+            $seatlock->release();
+        }
+    }
+    $auditaction = $decision === 'rejected' ? 'enrollment_rejected'
+        : ((string)$updatedrequest->status === 'waitlisted' ? 'enrollment_waitlisted' : 'enrollment_approved');
+    pqco_course_audit($auditaction, 'course_enrol_req', (int)$request->id, [
         'consumerid' => (int)($request->consumerid ?? $consumercontext->consumerid ?? 0),
         'workspaceid' => $workspaceid,
         'offeringid' => (int)$request->offeringid,
@@ -178,16 +215,61 @@ function pqcoal_review_enrollment_request(int $requestid, string $decision, stri
             'Your enrollment for ' . (string)$request->offering_title . ' was approved and the course is ready to open.',
             $workspaceid
         );
+    } else if ($outcome === 'waitlisted') {
+        pqco_notify_request_outcome(
+            $request,
+            'course_enrollment_waitlisted',
+            'Course enrollment waitlisted',
+            (string)$request->offering_title . ' is currently full. Your request is on the waitlist and will be enrolled automatically as soon as a seat becomes available.',
+            $workspaceid
+        );
     } else {
         pqco_notify_request_outcome(
             $request,
             'course_enrollment_needs_followup',
             'Course enrollment approved - follow-up needed',
-            'Your enrollment for ' . (string)$request->offering_title . ' was approved. The academy is completing the Moodle course access setup.',
+            'Your enrollment for ' . (string)$request->offering_title . ' was approved. The academy is completing the course access setup.',
             $workspaceid
         );
     }
     return $message;
+}
+
+/**
+ * Promote the oldest waitlisted request(s) for an offering while seats are
+ * open. Called after any action that frees a seat (drop approved, admin drop).
+ * Reuses pqcoal_review_enrollment_request so promotion follows the EXACT
+ * approval path — capacity re-check under the seat lock, date-bounded Moodle
+ * enrolment, audit trail, notifications. Returns the number promoted.
+ */
+function pqcoal_promote_waitlisted(int $offeringid, int $workspaceid, $consumercontext): int {
+    global $DB;
+
+    $promoted = 0;
+    for ($i = 0; $i < 50; $i++) { // Hard bound; each iteration promotes at most one request.
+        $batch = $DB->get_records('local_prequran_course_enrol_req',
+            ['offeringid' => $offeringid, 'workspaceid' => $workspaceid, 'status' => 'waitlisted'],
+            'timecreated ASC', '*', 0, 1);
+        $next = $batch ? reset($batch) : null;
+        if (!$next) {
+            break;
+        }
+        try {
+            pqcoal_review_enrollment_request((int)$next->id, 'approved', 'Auto-promoted from waitlist (seat released).', $workspaceid, $consumercontext);
+        } catch (\Throwable $promoteerror) {
+            break; // Offering unpublished/ended or lock contention — stop quietly.
+        }
+        $after = (string)$DB->get_field('local_prequran_course_enrol_req', 'status', ['id' => (int)$next->id]);
+        if ($after === 'waitlisted') {
+            break; // Still full — capacity re-check said no; stop.
+        }
+        if (in_array($after, ['approved', 'enrolled'], true)) {
+            $promoted++;
+        } else {
+            break;
+        }
+    }
+    return $promoted;
 }
 
 function pqcoal_request_filters(): array {

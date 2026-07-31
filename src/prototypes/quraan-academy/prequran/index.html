@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" data-level="0">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#17324d">
+  <title>Quraan Academy · PreQuraan</title>
+  <!-- Installed (Add to Home screen / Install app) the manifest's display:fullscreen
+       launches PreQuraan with NO browser chrome at all — the only way a page can
+       start fullscreen, since requestFullscreen() always needs a user gesture. -->
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="PreQuraan">
+  <link rel="stylesheet" href="../../ehel-academy/english/shared/course-ui.css?v=qrn-20260723a">
+  <link rel="stylesheet" href="./prequran.css?v=qrn-20260724n">
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to lesson</a>
+  <header class="topbar">
+    <a class="brand" href="#overview" aria-label="Quraan Academy PreQuraan">
+      <span class="brand-mark">ق</span>
+      <span><strong>Quraan Academy</strong><small>PreQuraan</small></span>
+    </a>
+    <div class="unit-progress">
+      <span><strong id="progress-value">0%</strong> Unit progress</span>
+      <div class="progress-track" role="progressbar" aria-label="Unit progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progress-fill"></span></div>
+    </div>
+    <div class="top-actions">
+      <select id="stage-select" class="top-grade-picker" aria-label="Choose PreQuraan level"></select>
+      <select id="top-unit-select" class="top-unit-picker" aria-label="Choose PreQuraan unit"></select>
+      <button class="icon-button voice-toggle" id="voice-toggle" type="button" aria-label="Sound settings" title="Sound settings"><span aria-hidden="true">♪</span></button>
+      <button class="profile-button" type="button" aria-label="Learner profile"><span>QA</span><small>PreQuraan</small></button>
+    </div>
+  </header>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="course-context">
+        <span id="course-label">Preparing PreQuraan</span>
+        <label class="unit-picker-label" for="unit-select">Choose unit</label>
+        <select id="unit-select" class="unit-picker" aria-label="Choose PreQuraan unit"></select>
+        <p id="unit-title">Preparing course…</p>
+      </div>
+      <nav id="section-nav" aria-label="Unit sections"></nav>
+    </aside>
+
+    <main id="content" class="content" tabindex="-1">
+      <div id="loading" class="loading"><span></span><p>Preparing your PreQuraan lesson…</p></div>
+      <div id="app" hidden></div>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="./prequran.js?v=qrn-20260724n"></script>
+</body>
+</html>

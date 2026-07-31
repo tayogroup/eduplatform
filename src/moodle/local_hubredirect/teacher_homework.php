@@ -16,6 +16,7 @@ if ($workspaceid <= 0 || !pqhh_user_can_assign((int)$USER->id, $workspaceid)) {
 if (!pqhh_ready()) {
     pqh_access_denied('Homework is waiting for the EduPlatform database upgrade.', new moodle_url('/local/hubredirect/teacher_workspace.php', $urlparams), 'Homework setup required');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $students = pqhh_teacher_students((int)$USER->id, $workspaceid);
 $studentmap = [];

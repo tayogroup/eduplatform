@@ -107,10 +107,163 @@ function pqcl_course_main_menu_url(string $env, int $targetuserid, bool $managed
     return $base . '?' . http_build_query($params, '', '&', PHP_QUERY_RFC3986);
 }
 
-$coursekey = pqh_normalize_course_key(optional_param('course', '', PARAM_ALPHANUMEXT));
+// EHEL grade-aware Bunny launch (English/Math/Science per-grade catalog courses).
+// These are real Moodle courses created by catalog_sync (idnumber ehel-eng-gNN);
+// the dashboard links them as course=moodle_<courseid> (or the idnumber directly).
+// They are NOT in pqh_course_catalog(), so without this they would be rejected
+// below. When the course resolves to an EHEL key and the learner is enrolled, we
+// mint a progress token and redirect straight to the grade-aware Bunny app.
+// (Wires the launch flow the code previously deferred as "P1.8".)
+$pqcl_rawcourse = optional_param('course', '', PARAM_ALPHANUMEXT);
+$pqcl_ehelkey = '';
+$pqcl_ehelcourseid = 0;
+if (preg_match('/^ehel-(?:eng|math|sci)-g\d{2}$/', $pqcl_rawcourse)) {
+    $pqcl_ehelkey = $pqcl_rawcourse;
+    $pqcl_ehelcourseid = (int)$DB->get_field('course', 'id', ['idnumber' => $pqcl_ehelkey]);
+} else if (preg_match('/^moodle_(\d+)$/', $pqcl_rawcourse, $pqcl_mm)) {
+    $pqcl_cid = (int)$pqcl_mm[1];
+    $pqcl_idn = (string)$DB->get_field('course', 'idnumber', ['id' => $pqcl_cid]);
+    if (preg_match('/^ehel-(?:eng|math|sci)-g\d{2}$/', $pqcl_idn)) {
+        $pqcl_ehelkey = $pqcl_idn;
+        $pqcl_ehelcourseid = $pqcl_cid;
+    }
+}
+if ($pqcl_ehelkey !== '' && $pqcl_ehelcourseid > 0) {
+    require_once($CFG->dirroot . '/local/prequran/progress_gatewaylib.php');
+    $pqcl_target = optional_param('studentid', 0, PARAM_INT);
+    $pqcl_target = $pqcl_target > 0 ? $pqcl_target : (int)$USER->id;
+    $pqcl_ctx = context_course::instance($pqcl_ehelcourseid, IGNORE_MISSING);
+    $pqcl_callerenrolled = $pqcl_ctx && is_enrolled($pqcl_ctx, $USER, '', true);
+    $pqcl_ok = is_siteadmin()
+        || ($pqcl_target === (int)$USER->id && $pqcl_callerenrolled)
+        || ($pqcl_callerenrolled && $pqcl_ctx && is_enrolled($pqcl_ctx, $pqcl_target, '', true));
+    if (!$pqcl_ok) {
+        redirect(new moodle_url('/local/hubredirect/access_denied.php', ['course' => $pqcl_ehelkey]));
+    }
+    // Safe Exam Browser: starting an enrolled course opens it inside SEB. A
+    // normal browser gets the .seb config (which launches SEB and comes back
+    // here); a request already coming FROM SEB falls through to the app, so
+    // there is no redirect loop.
+    // The learner's own On/Off choice on the dashboard wins over the site
+    // default (Safe Exam Browser cannot run on Android at all, so this is the
+    // escape hatch). Course launches only — exams keep their own enforcement.
+    require_once($CFG->dirroot . '/local/hubredirect/seb_lib.php');
+    $pqcl_sebpref = pqh_seb_launch_pref((int)$USER->id);
+    if (pqh_seb_course_launch_enabled() && $pqcl_sebpref === 'seb' && !pqh_seb_request_is_seb()) {
+        // Hand straight to SEB via its sebs:// protocol handler so the learner
+        // never has to find and open a downloaded file. SEB fetches the config
+        // itself over HTTPS, authenticated by a short-lived signed ticket
+        // (it has no Moodle session of its own). The .seb download is kept as
+        // a visible fallback for devices where the handler is not registered.
+        $pqcl_ticket = pqh_seb_course_ticket($pqcl_target, $pqcl_ehelkey);
+        $pqcl_host = (string)($_SERVER['HTTP_HOST'] ?? '');
+        if (!preg_match('/^[A-Za-z0-9.\-]+(:\d+)?$/', $pqcl_host)) {
+            $pqcl_host = (string)parse_url((string)$CFG->wwwroot, PHP_URL_HOST);
+        }
+        $pqcl_path = '/local/hubredirect/seb_config.php?course=' . rawurlencode($pqcl_ehelkey)
+            . '&k=' . rawurlencode($pqcl_ticket);
+        $pqcl_sebs = 'sebs://' . $pqcl_host . $pqcl_path;
+        $pqcl_dl = 'https://' . $pqcl_host . $pqcl_path;
+
+        // Where this tab goes once SEB has been handed the launch: back to the
+        // dashboard, so closing SEB returns the learner somewhere useful rather
+        // than to this hand-off page. location.replace keeps it out of history,
+        // so Back does not land here either.
+        $pqcl_slug = trim((string)($pqcl_consumercontext->consumerslug ?? ''));
+        $pqcl_dash = 'https://' . $pqcl_host . '/local/hubredirect/student_dashboard.php'
+            . ($pqcl_slug !== '' ? '?consumer=' . rawurlencode($pqcl_slug) : '');
+
+        header('Content-Type: text/html; charset=utf-8');
+        header('Cache-Control: private, no-store');
+        echo '<!doctype html><html lang="en"><head><meta charset="utf-8">'
+            . '<meta name="viewport" content="width=device-width,initial-scale=1">'
+            . '<title>Opening your course</title>'
+            . '</head><body style="font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;'
+            . 'max-width:560px;margin:14vh auto;padding:0 20px;text-align:center;color:#17324a">'
+            . '<h1 style="font-size:22px;font-weight:600;margin:0 0 10px">Opening your course…</h1>'
+            . '<p style="color:#5a6b7d;margin:0 0 22px">Safe Exam Browser is starting. '
+            . 'If your browser asks for permission to open it, choose <b>Open</b>.<br>'
+            . 'This page will return to your dashboard.</p>'
+            . '<p><a href="' . s($pqcl_sebs) . '" style="display:inline-block;padding:12px 22px;'
+            . 'background:#1f5fa8;color:#fff;border-radius:8px;text-decoration:none;font-weight:600">'
+            . 'Start now</a></p>'
+            . '<p style="margin-top:26px;font-size:13px;color:#7a8794">Nothing happening? '
+            . '<a href="' . s($pqcl_dl) . '" style="color:#1f5fa8">Download the config file</a> '
+            . 'and open it, or turn Safe Exam Browser off on your dashboard.</p>'
+            . '<script>(function(){var s=' . json_encode($pqcl_sebs) . ',d=' . json_encode($pqcl_dash) . ';'
+            // Fire the protocol handler first.
+            . 'setTimeout(function(){location.href=s;},60);'
+            // Then step aside. The delay leaves room for the browser permission
+            // prompt to be answered; if the tab is backgrounded (SEB took over)
+            // we go as soon as it is looked at again.
+            . 'var gone=false,go=function(){if(gone){return;}gone=true;location.replace(d);};'
+            . 'setTimeout(go,6000);'
+            . 'document.addEventListener("visibilitychange",function(){'
+            . 'if(document.visibilityState==="visible"){setTimeout(go,400);}});'
+            . '})();</script>'
+            . '</body></html>';
+        exit;
+    }
+
+    $pqcl_env = optional_param('pq_env', '', PARAM_ALPHANUMEXT);
+    // Build against the host the learner actually reached us on, not wwwroot.
+    $pqcl_lhost = (string)($_SERVER['HTTP_HOST'] ?? '');
+    if (!preg_match('/^[A-Za-z0-9.\-]+(:\d+)?$/', $pqcl_lhost)) {
+        $pqcl_lhost = (string)parse_url((string)$CFG->wwwroot, PHP_URL_HOST);
+    }
+    $pqcl_base = 'https://' . $pqcl_lhost;
+    $pqcl_url = pqpg_ehel_launch_url($pqcl_target, $pqcl_ehelkey, $pqcl_env, $pqcl_base);
+    if ($pqcl_url !== '') {
+        // Focus mode: ordinary tab, but the app requests fullscreen and reports
+        // tab-switches / blur / fullscreen exits so a teacher sees the pattern.
+        // Deterrence and evidence — a web page cannot prevent leaving.
+        if ($pqcl_sebpref === 'focus') {
+            // Focus mode does NOT go through seb_config.php, so it must supply
+            // the same session params itself — without exitUrl the session bar
+            // never mounts and focus mode silently does nothing at all.
+            // back=1: there is no SEB to quit here, so release returns the
+            // learner to their dashboard rather than the SEB quit page.
+            $pqcl_rel = $pqcl_base . '/local/hubredirect/seb_release.php?course=' . rawurlencode($pqcl_ehelkey)
+                . '&back=1&k=' . rawurlencode(pqh_seb_course_ticket($pqcl_target, $pqcl_ehelkey, 8 * HOURSECS));
+            $pqcl_url .= '&focusMode=1'
+                . '&focusEndpoint=' . rawurlencode($pqcl_base . '/local/hubredirect/course_focus_event.php')
+                . '&exitUrl=' . rawurlencode($pqcl_rel)
+                . '&learnAfter=' . (pqh_seb_learn_minutes() * 60)
+                . '&exitAfter=' . (pqh_seb_cap_minutes() * 60)
+                . '&lockOn=0';
+        }
+        redirect(new moodle_url($pqcl_url));
+    }
+}
+
+$pqcl_rawcourseparam = optional_param('course', '', PARAM_ALPHANUMEXT);
+$coursekey = pqh_normalize_course_key($pqcl_rawcourseparam);
 $studentid = optional_param('studentid', 0, PARAM_INT);
 $catalog = pqh_course_catalog();
-if ($coursekey === '' || !isset($catalog[$coursekey])) {
+
+// Generic (non-catalog, non-Ehel) real Moodle course — reached the same way
+// the dashboard links any real enrolment: course=moodle_<courseid>. This is
+// what a course created via the workspace "Create new Moodle course"
+// self-service flow (course_offerings.php) launches as. If the course's
+// name/idnumber matches a catalog subject, fall through to the existing
+// catalog-driven launch below so e.g. Pre-Quraan keeps its bespoke app
+// experience; otherwise it is a plain Moodle course with no separate app, so
+// launch it straight into Moodle's own course page instead of rejecting it.
+$pqcl_genericcourseid = 0;
+if ($coursekey === '' && preg_match('/^moodle_(\d+)$/', $pqcl_rawcourseparam, $pqcl_genericmm)) {
+    $pqcl_genericcandidateid = (int)$pqcl_genericmm[1];
+    $pqcl_genericcourse = $DB->get_record('course', ['id' => $pqcl_genericcandidateid], 'id,fullname,shortname,idnumber', IGNORE_MISSING);
+    if ($pqcl_genericcourse) {
+        $pqcl_genericmatches = pqh_course_catalog_moodle_matches($pqcl_genericcourse);
+        if ($pqcl_genericmatches) {
+            $coursekey = $pqcl_genericmatches[0];
+        } else {
+            $pqcl_genericcourseid = $pqcl_genericcandidateid;
+        }
+    }
+}
+
+if ($pqcl_genericcourseid <= 0 && ($coursekey === '' || !isset($catalog[$coursekey]))) {
     pqh_access_denied(
         'Choose a valid course before launching the learning app.',
         new moodle_url('/local/hubredirect/dashboard.php'),
@@ -194,6 +347,15 @@ if (!$canviewtarget) {
     }
 }
 
+if ($pqcl_genericcourseid > 0) {
+    $pqcl_genericctx = context_course::instance($pqcl_genericcourseid, IGNORE_MISSING);
+    $pqcl_genericenrolled = $pqcl_genericctx && is_enrolled($pqcl_genericctx, $targetuserid, '', true);
+    if (!$canviewtarget || (!is_siteadmin((int)$USER->id) && !$pqcl_genericenrolled)) {
+        redirect(new moodle_url('/local/hubredirect/access_denied.php', ['course' => $pqcl_rawcourseparam]));
+    }
+    redirect(new moodle_url('/course/view.php', ['id' => $pqcl_genericcourseid]));
+}
+
 $haslegacycourseaccess = pqh_user_can_access_course($targetuserid, $coursekey);
 if (!$canviewtarget
     || (!is_siteadmin((int)$USER->id)
@@ -217,6 +379,8 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_title($course['title']);
 $PAGE->set_heading($course['title']);
 $PAGE->add_body_class($coursekey === 'pre_quraan' ? 'pqh-course-main-page' : 'pqh-course-placeholder-page');
+
+pqh_enforce_role_domain($pqcl_consumercontext, pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
 
 echo $OUTPUT->header();
 
@@ -381,7 +545,7 @@ body.pqh-course-placeholder-page #page,body.pqh-course-placeholder-page #page-co
     <h1 class="pqh-placeholder__title pqh-workspace-title"><?php echo s((string)$course['title']); ?></h1>
     <p class="pqh-placeholder__text"><?php echo s((string)$course['summary']); ?></p>
     <div class="pqh-placeholder__panel">
-      This course is connected to Moodle enrollment and access control. The external TypeScript app can be attached here when it is ready.
+      This course is connected to enrollment and access control. The external TypeScript app can be attached here when it is ready.
     </div>
     <div class="pqh-placeholder__actions pqh-workspace-actions">
       <a class="pqh-placeholder__btn" href="<?php echo (new moodle_url('/local/hubredirect/dashboard.php'))->out(false); ?>">Back to dashboard</a>

@@ -456,6 +456,8 @@ if ($ready && $export === 'capacity') {
     pqlcap_csv('quraan-teacher-capacity.csv', ['teacherid', 'teacher', 'available_hours', 'assigned_hours', 'capacity_rate', 'sessions', 'students', 'qa_issues', 'coaching_open', 'plans_open', 'leadership_open', 'followups_open', 'slot_available', 'slot_conflict', 'fit_score', 'fit_label', 'flags'], $rows);
 }
 
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
+
 echo $OUTPUT->header();
 ?>
 <style>

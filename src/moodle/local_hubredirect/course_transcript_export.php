@@ -108,7 +108,7 @@ function pqctx_send_pdf(array $payload, string $filename, string $title, string 
 
     $pdflib = $CFG->libdir . '/pdflib.php';
     if (!file_exists($pdflib)) {
-        throw new invalid_parameter_exception('PDF library is not available in this Moodle installation.');
+        throw new invalid_parameter_exception('PDF library is not available on this platform.');
     }
     require_once($pdflib);
     if (!class_exists('pdf')) {

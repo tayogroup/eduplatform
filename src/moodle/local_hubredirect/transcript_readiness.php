@@ -7,7 +7,17 @@ require_once(__DIR__ . '/course_transcriptlib.php');
 
 function pqctr_label(string $value): string {
     $value = trim($value);
-    return $value === '' ? 'Unknown' : ucwords(str_replace('_', ' ', $value));
+    if ($value === '') {
+        return 'Unknown';
+    }
+    $overrides = [
+        'moodle_enrolled_timestamp_missing' => 'Enrollment Timestamp Missing',
+        'approved_pending_moodle_sync' => 'Approved, Pending Sync',
+        'moodle_course_missing' => 'Course Missing',
+        'moodle_course_hidden' => 'Course Hidden',
+        'moodle_only_enrollment' => 'Enrollment Not Yet Local',
+    ];
+    return $overrides[$value] ?? ucwords(str_replace('_', ' ', $value));
 }
 
 function pqctr_warning_repair_url(array $row, array $baseparams): array {
@@ -18,7 +28,7 @@ function pqctr_warning_repair_url(array $row, array $baseparams): array {
     $moodlecourseid = (int)($row['moodlecourseid'] ?? 0);
 
     if (in_array($code, ['approved_pending_moodle_sync', 'moodle_only_enrollment'], true)) {
-        return ['Moodle sync', new moodle_url('/local/hubredirect/course_sync_report.php', $baseparams)];
+        return ['Course sync', new moodle_url('/local/hubredirect/course_sync_report.php', $baseparams)];
     }
     if (in_array($code, ['moodle_course_missing', 'moodle_course_hidden'], true)) {
         return ['Edit offering', new moodle_url('/local/hubredirect/course_offerings.php', $baseparams + ['editid' => $offeringid])];
@@ -180,6 +190,7 @@ if ($workspaceid > 0) {
 if ($workspaceid <= 0 || !pqh_user_can_manage_workspace((int)$USER->id, $workspaceid)) {
     pqh_access_denied('Only workspace admins can view transcript readiness.', new moodle_url('/local/hubredirect/workspace_dashboard.php', $baseparams), 'Transcript readiness access required');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $workspace = $DB->get_record('local_prequran_workspace', ['id' => $workspaceid], '*', MUST_EXIST);
 $students = pqct_students_for_transcript_viewer((int)$USER->id, $workspaceid);
@@ -312,7 +323,7 @@ body.pqctr-page #page,body.pqctr-page #page-content,body.pqctr-page #region-main
     </div>
     <nav class="pqctr-actions">
       <a class="pqctr-btn pqctr-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/transcript_policy.php', $baseparams))->out(false); ?>">Transcript policy</a>
-      <a class="pqctr-btn pqctr-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/course_sync_report.php', $baseparams))->out(false); ?>">Moodle sync</a>
+      <a class="pqctr-btn pqctr-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/course_sync_report.php', $baseparams))->out(false); ?>">Course sync</a>
       <a class="pqctr-btn" href="<?php echo (new moodle_url('/local/hubredirect/workspace_dashboard.php', $baseparams))->out(false); ?>">Workspace</a>
     </nav>
   </section>
@@ -348,7 +359,7 @@ body.pqctr-page #page,body.pqctr-page #page-content,body.pqctr-page #region-main
         <?php foreach ($filteredrows as $row): ?>
           <tr>
             <td><span class="pqctr-name"><?php echo s((string)$row['student']); ?></span><span class="pqctr-muted"><?php echo s((string)$row['account_no']); ?> / ID <?php echo (int)$row['studentid']; ?></span></td>
-            <td><span class="pqctr-name"><?php echo s((string)($row['course'] ?: 'Student/workspace issue')); ?></span><span class="pqctr-muted"><?php echo s((string)$row['course_key']); ?><?php if ((int)$row['moodlecourseid'] > 0): ?> / Moodle #<?php echo (int)$row['moodlecourseid']; ?><?php endif; ?></span></td>
+            <td><span class="pqctr-name"><?php echo s((string)($row['course'] ?: 'Student/workspace issue')); ?></span><span class="pqctr-muted"><?php echo s((string)$row['course_key']); ?><?php if ((int)$row['moodlecourseid'] > 0): ?> / Course #<?php echo (int)$row['moodlecourseid']; ?><?php endif; ?></span></td>
             <td><span class="pqctr-pill"><?php echo s(pqctr_label((string)$row['status'])); ?></span></td>
             <td><?php echo s((string)($row['teachers'] ?: 'Not assigned')); ?></td>
             <td><span class="pqctr-pill <?php echo (string)$row['severity'] === 'blocker' ? 'pqctr-pill--blocker' : 'pqctr-pill--warning'; ?>"><?php echo s(pqctr_label((string)$row['severity'])); ?></span><span class="pqctr-muted"><?php echo s(pqctr_label((string)$row['code'])); ?></span><span class="pqctr-muted"><?php echo s((string)$row['message']); ?></span></td>

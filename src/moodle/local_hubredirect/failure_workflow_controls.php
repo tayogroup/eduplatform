@@ -27,6 +27,7 @@ $error = '';
 if ($workspaceid <= 0) {
     pqh_access_denied('Failure workflow controls require a workspace context.', new moodle_url('/local/hubredirect/workspace_dashboard.php'), 'Workspace required');
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 function pqfwc_table_ready(string $table): bool {
     global $DB;

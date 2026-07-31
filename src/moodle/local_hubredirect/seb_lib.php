@@ -449,7 +449,7 @@ function pqh_seb_config_xml(stdClass $exam): string {
  * course_launch.php then detects the SEB request and hands them the app.
  * Reuses the same filter rules, so the CDN-hosted app loads.
  */
-function pqh_seb_course_config_xml(string $coursekey, string $starturl, string $quiturl): string {
+function pqh_seb_course_config_xml(string $coursekey, string $starturl, string $quiturl, int $userid = 0): string {
     $config = [
         'originatorVersion' => 'EduPlatform_SEB_2.0',
         'startURL' => $starturl,
@@ -457,8 +457,11 @@ function pqh_seb_course_config_xml(string $coursekey, string $starturl, string $
         'quitURL' => $quiturl,
         'quitURLConfirm' => false,
         'allowQuit' => true,
-        'hashedQuitPassword' => hash('sha256', pqh_seb_course_quit_password()),
-        'URLFilterEnable' => true,
+        // URL filtering is OFF by default for courses. SEB's kiosk mode is the
+        // real lockdown; the filter only adds a way to get a blank screen when
+        // an expression fails to match the start page. Exams keep filtering on.
+        // Set local_prequran/course_seb_url_filter = on to enable it here.
+        'URLFilterEnable' => trim((string)get_config('local_prequran', 'course_seb_url_filter')) === 'on',
         'URLFilterEnableContentFilter' => false,
         'URLFilterRules' => pqh_seb_filter_rules(pqh_seb_default_allow_expressions()),
         'browserWindowAllowReload' => true,
@@ -466,18 +469,270 @@ function pqh_seb_course_config_xml(string $coursekey, string $starturl, string $
         'showTime' => true,
     ];
 
+    // A course is NOT an exam: quitting must not demand a password. SEB only
+    // prompts when hashedQuitPassword is present, so the key is omitted unless
+    // the conditional exit LOCK is deliberately switched on (which also
+    // requires a password to be configured). Exams are unaffected —
+    // pqh_seb_config_xml keeps the per-exam quit password.
+    // Admins and flagged testers are never locked in — no quit password for them.
+    if (pqh_seb_course_lock_applies($userid)) {
+        $config['hashedQuitPassword'] = hash('sha256', pqh_seb_course_quit_password());
+    }
+
     return pqh_seb_plist_document($config);
 }
 
-/** Quit password for course (non-exam) SEB sessions. */
+// ---------------------------------------------------------------------------
+// One-click handoff tickets. A `sebs://` link makes SEB fetch the .seb config
+// itself over HTTPS — but SEB has no Moodle session cookie, so the config
+// endpoint cannot use require_login for that fetch. These short-lived signed
+// tickets authenticate it instead: they bind one user to one course for a few
+// minutes and nothing else.
+// ---------------------------------------------------------------------------
+
+function pqh_seb_ticket_secret(): string {
+    $secret = (string)get_config('local_prequran', 'seb_ticket_secret');
+    if ($secret === '') {
+        $secret = bin2hex(random_bytes(32));
+        set_config('seb_ticket_secret', $secret, 'local_prequran');
+    }
+    return $secret;
+}
+
+/** Mint a short-lived ticket binding $userid to $coursekey. */
+function pqh_seb_course_ticket(int $userid, string $coursekey, int $ttl = 300): string {
+    $payload = $userid . ':' . $coursekey . ':' . (time() + $ttl);
+    $sig = hash_hmac('sha256', $payload, pqh_seb_ticket_secret());
+    return rtrim(strtr(base64_encode($payload), '+/', '-_'), '=') . '.' . substr($sig, 0, 32);
+}
+
+/** Verify a ticket; returns ['userid'=>int,'course'=>string] or null. */
+function pqh_seb_course_ticket_verify(string $ticket): ?array {
+    $parts = explode('.', $ticket);
+    if (count($parts) !== 2) {
+        return null;
+    }
+    $payload = base64_decode(strtr($parts[0], '-_', '+/'), true);
+    if ($payload === false) {
+        return null;
+    }
+    $sig = hash_hmac('sha256', $payload, pqh_seb_ticket_secret());
+    if (!hash_equals(substr($sig, 0, 32), (string)$parts[1])) {
+        return null;
+    }
+    $bits = explode(':', $payload);
+    if (count($bits) !== 3 || (int)$bits[2] < time()) {
+        return null;
+    }
+    return ['userid' => (int)$bits[0], 'course' => (string)$bits[1]];
+}
+
+/**
+ * A `sebs://` URL that hands a course launch straight to Safe Exam Browser.
+ * Put this directly in a Continue link: clicking it starts SEB without the
+ * browser navigating anywhere, so no interstitial is shown and the page the
+ * learner came from is still there when SEB closes.
+ *
+ * TTL defaults to 2h because a dashboard can sit open for a whole lesson before
+ * the link is clicked; the ticket only authorises fetching that learner's config
+ * for that one course.
+ */
+function pqh_seb_course_handoff_url(string $coursekey, int $userid, int $ttl = 7200): string {
+    global $CFG;
+    $host = (string)($_SERVER['HTTP_HOST'] ?? '');
+    if (!preg_match('/^[A-Za-z0-9.\-]+(:\d+)?$/', $host)) {
+        $host = (string)parse_url((string)$CFG->wwwroot, PHP_URL_HOST);
+    }
+    return 'sebs://' . $host . '/local/hubredirect/seb_config.php?course=' . rawurlencode($coursekey)
+        . '&k=' . rawurlencode(pqh_seb_course_ticket($userid, $coursekey, $ttl));
+}
+
+/**
+ * How this learner wants courses to open: 'seb' (locked browser), 'focus'
+ * (install-free — ordinary tab, fullscreen + focus monitoring, breaks recorded)
+ * or 'off'. Focus mode exists because Safe Exam Browser cannot be installed on
+ * every family's device — notably it has no Android build at all — and because
+ * some parents will not install third-party software. It is deterrence and
+ * evidence, not prevention: a browser tab cannot stop anyone leaving.
+ * Legacy 'on' means 'seb'.
+ */
+function pqh_seb_launch_pref(int $userid): string {
+    $pref = trim((string)get_user_preferences('local_prequran_seb_launch', 'seb', $userid));
+    if ($pref === 'on' || $pref === '') {
+        return 'seb';
+    }
+    return in_array($pref, ['seb', 'focus', 'off'], true) ? $pref : 'seb';
+}
+
+/** Is SEB launching enabled for LIVE session joins? Separate from courses. */
+function pqh_seb_live_launch_enabled(): bool {
+    return trim((string)get_config('local_prequran', 'live_seb_launch_mode')) === 'enabled';
+}
+
+/**
+ * SEB config for joining a live class. Deliberately NEVER carries a quit
+ * password: a learner must always be able to leave a live lesson (illness,
+ * distress, a parent needing them). The conditional exit lock is a homework
+ * device and has no business holding a child in a video class.
+ */
+function pqh_seb_live_config_xml(string $starturl, string $quiturl): string {
+    return pqh_seb_plist_document([
+        'originatorVersion' => 'EduPlatform_SEB_2.0',
+        'startURL' => $starturl,
+        'sendBrowserExamKey' => true,
+        'quitURL' => $quiturl,
+        'quitURLConfirm' => false,
+        'allowQuit' => true,
+        'URLFilterEnable' => false,
+        'URLFilterEnableContentFilter' => false,
+        'URLFilterRules' => pqh_seb_filter_rules(pqh_seb_default_allow_expressions()),
+        'browserWindowAllowReload' => true,
+        'showReloadButton' => true,
+        'showTime' => true,
+        // A live class needs the microphone and camera.
+        'browserWindowAllowAudioCapture' => true,
+        'browserWindowAllowVideoCapture' => true,
+    ]);
+}
+
+/** Send a .seb config as a download and stop. */
+function pqh_seb_send_config(string $xml, string $filename): void {
+    $safe = preg_replace('/[^A-Za-z0-9_.-]/', '', $filename);
+    header('Content-Type: application/seb');
+    header('Content-Length: ' . strlen($xml));
+    header('Content-Disposition: attachment; filename="' . $safe . '"');
+    header('Cache-Control: private, no-store');
+    echo $xml;
+    exit;
+}
+
+/** Optional quit password for course (non-exam) SEB sessions; blank = none. */
 function pqh_seb_course_quit_password(): string {
-    $configured = trim((string)get_config('local_prequran', 'course_seb_quit_password'));
-    return $configured !== '' ? $configured : 'ehel-unlock';
+    return trim((string)get_config('local_prequran', 'course_seb_quit_password'));
 }
 
 /** Is SEB launching enabled for enrolled-course launches? */
 function pqh_seb_course_launch_enabled(): bool {
     return trim((string)get_config('local_prequran', 'course_seb_launch_mode')) === 'enabled';
+}
+
+/**
+ * Is the conditional exit lock on? OFF by default and deliberately so: with the
+ * lock on, a learner cannot quit SEB manually, so it must not be enabled until
+ * the lesson app can actually reach the release endpoint — otherwise a child is
+ * trapped with no exit path at all.
+ */
+function pqh_seb_course_lock_enabled(): bool {
+    return trim((string)get_config('local_prequran', 'course_seb_lock_mode')) === 'enabled'
+        && pqh_seb_course_quit_password() !== '';
+}
+
+/**
+ * Users the exit lock never applies to: site admins, academy operations staff,
+ * and any account explicitly flagged for testing via the user preference
+ * `local_prequran_seb_exit_override`. They get a config with no quit password
+ * (so they can leave SEB whenever they want) and the release gate lets them
+ * straight through. Checked by userid so it works for SEB's session-less fetch.
+ */
+function pqh_seb_exit_override(int $userid): bool {
+    if ($userid <= 0) {
+        return false;
+    }
+    if ((int)get_user_preferences('local_prequran_seb_exit_override', 0, $userid) === 1) {
+        return true;
+    }
+    try {
+        if (is_siteadmin($userid)) {
+            return true;
+        }
+        return pqh_can_manage_academy_operations($userid);
+    } catch (Throwable $e) {
+        return false;
+    }
+}
+
+/** Does the exit lock apply to THIS learner? */
+function pqh_seb_course_lock_applies(int $userid): bool {
+    return pqh_seb_course_lock_enabled() && !pqh_seb_exit_override($userid);
+}
+
+/** Minutes of learning that earn release. */
+function pqh_seb_learn_minutes(): int {
+    $v = (int)get_config('local_prequran', 'course_seb_learn_minutes');
+    return $v > 0 ? min($v, 480) : 120;
+}
+
+/** Hard cap: release ALWAYS happens by this many minutes, condition or not. */
+function pqh_seb_cap_minutes(): int {
+    $v = (int)get_config('local_prequran', 'course_seb_max_minutes');
+    $cap = $v > 0 ? min($v, 480) : 180;
+    return max($cap, pqh_seb_learn_minutes());
+}
+
+/** Stamp the start of a locked SEB session for a learner. */
+function pqh_seb_mark_session_start(int $userid): void {
+    set_user_preference('local_prequran_seb_started', (string)time(), $userid);
+}
+
+/** Seconds elapsed in the current SEB session (0 if never stamped). */
+function pqh_seb_session_elapsed(int $userid): int {
+    $start = (int)get_user_preferences('local_prequran_seb_started', 0, $userid);
+    return $start > 0 ? max(0, time() - $start) : 0;
+}
+
+/**
+ * Outstanding homework for a course: open items that are already expected
+ * (no due date, or due by the end of today). Mirrors the student dashboard's
+ * definition so the learner sees the same picture in both places.
+ */
+function pqh_seb_outstanding_homework(int $userid, int $moodlecourseid): int {
+    global $DB;
+    if (!pqh_table_exists_safe('local_prequran_homework_sub')
+            || !pqh_table_exists_safe('local_prequran_homework')) {
+        return 0;
+    }
+    try {
+        return (int)$DB->count_records_sql(
+            "SELECT COUNT(1)
+               FROM {local_prequran_homework_sub} s
+               JOIN {local_prequran_homework} h ON h.id = s.homeworkid
+              WHERE s.studentid = :sid AND h.moodlecourseid = :cid
+                AND h.status = 'published'
+                AND s.status IN ('assigned','in_progress','returned')
+                AND (h.duedate = 0 OR h.duedate <= :endoftoday)",
+            ['sid' => $userid, 'cid' => $moodlecourseid, 'endoftoday' => usergetmidnight(time()) + DAYSECS]);
+    } catch (Throwable $e) {
+        // Never hold a learner in because a query failed.
+        return 0;
+    }
+}
+
+/**
+ * Should this learner be released from the lesson? Returns
+ * [bool $release, string $reason, int $secondsleft].
+ * Releases on whichever comes first: the learning-time target, homework done,
+ * or the hard cap. The cap is the safety net — a failed condition check must
+ * never strand a child.
+ */
+function pqh_seb_release_decision(int $userid, int $moodlecourseid): array {
+    // Admins / academy staff / flagged testers leave whenever they ask.
+    if (pqh_seb_exit_override($userid)) {
+        return [true, 'override', 0];
+    }
+    $elapsed = pqh_seb_session_elapsed($userid);
+    $target = pqh_seb_learn_minutes() * 60;
+    $cap = pqh_seb_cap_minutes() * 60;
+
+    if ($elapsed >= $cap) {
+        return [true, 'cap', 0];
+    }
+    if ($elapsed >= $target) {
+        return [true, 'time', 0];
+    }
+    if (pqh_seb_outstanding_homework($userid, $moodlecourseid) === 0) {
+        return [true, 'homework', 0];
+    }
+    return [false, 'pending', max(0, $target - $elapsed)];
 }
 
 function pqh_seb_engine_ready(): bool {
@@ -487,7 +742,7 @@ function pqh_seb_engine_ready(): bool {
 function pqh_seb_config_key(stdClass $exam): string {
     if (!pqh_seb_engine_ready()) {
         throw new moodle_exception('generalexceptionmessage', 'error', '',
-            'Moodle SEB engine (quizaccess_seb) is not available on this installation.');
+            'SEB engine (quizaccess_seb) is not available on this installation.');
     }
     return \quizaccess_seb\config_key::generate(pqh_seb_config_xml($exam))->get_hash();
 }

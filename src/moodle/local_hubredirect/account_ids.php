@@ -24,7 +24,7 @@ function pqh_assign_account_id(int $userid, string $accounttype): string {
     global $DB, $CFG;
 
     if ($userid <= 0) {
-        throw new invalid_parameter_exception('A valid Moodle user ID is required.');
+        throw new invalid_parameter_exception('A valid account ID is required.');
     }
 
     $user = $DB->get_record('user', [
@@ -34,7 +34,7 @@ function pqh_assign_account_id(int $userid, string $accounttype): string {
     ], 'id,idnumber', IGNORE_MISSING);
 
     if (!$user) {
-        throw new invalid_parameter_exception('Choose a valid Moodle user before assigning an account ID.');
+        throw new invalid_parameter_exception('Choose a valid account before assigning an account ID.');
     }
 
     $existing = trim((string)($user->idnumber ?? ''));

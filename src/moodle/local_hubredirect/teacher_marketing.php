@@ -238,6 +238,7 @@ if ($workspaceid <= 0) {
 if ($workspaceid > 0) {
     $consumerparams['workspaceid'] = $workspaceid;
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 if (!pqtmkt_table_exists('local_prequran_teacher_profile')
         || !pqtmkt_column_exists('local_prequran_teacher_profile', 'application_json')) {

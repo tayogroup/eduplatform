@@ -257,7 +257,26 @@
         body: JSON.stringify(body),
       });
       const d = await r.json().catch(() => ({}));
-      if (!r.ok || !d.ok) throw new Error(d.error || ("HTTP " + r.status));
+      if (!r.ok || !d.ok) {
+        // Server-side destructive-change challenge: show the exact warning and
+        // re-submit confirmed if the admin accepts.
+        const err = String(d.error || "");
+        if (err.startsWith("CONFIRMATION REQUIRED") && !body.confirm_dangerous) {
+          if (window.confirm(err.replace("CONFIRMATION REQUIRED: ", "Confirm destructive change?\n\n").replace(" Re-submit with the confirmation box ticked to proceed.", ""))) {
+            body.confirm_dangerous = 1;
+            const r2 = await fetch(endpoint + "?" + new URLSearchParams({ report: "platform-consumers", token }), {
+              method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(body),
+            });
+            const d2 = await r2.json().catch(() => ({}));
+            if (!r2.ok || !d2.ok) throw new Error(d2.error || ("HTTP " + r2.status));
+            $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d2.message || "Saved.";
+            load(); window.scrollTo({ top: 0, behavior: "smooth" });
+            return;
+          }
+          throw new Error("Cancelled — no changes were made.");
+        }
+        throw new Error(err || ("HTTP " + r.status));
+      }
       $("#status").className = "status saved"; $("#status").hidden = false; $("#status").textContent = d.message || "Saved.";
       load();
       window.scrollTo({ top: 0, behavior: "smooth" });

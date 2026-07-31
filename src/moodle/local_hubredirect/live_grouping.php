@@ -4,6 +4,7 @@ declare(strict_types=1);
 require_once(__DIR__ . '/../../config.php');
 require_login();
 require_once(__DIR__ . '/accesslib.php');
+require_once(__DIR__ . '/availabilitylib.php');
 
 $requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
 $consumercontext = pqh_requested_consumer_context();
@@ -18,6 +19,7 @@ if ($workspaceid <= 0 || !pqh_user_can_manage_workspace((int)$USER->id, $workspa
         'Student grouping access required'
     );
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 $urlparams = ['workspaceid' => $workspaceid];
 if (!empty($consumercontext->consumerslug)) {
     $urlparams['consumer'] = (string)$consumercontext->consumerslug;
@@ -216,18 +218,39 @@ function pqlgrp_teacher_match_score($teacher, ?object $criteria, array $capacity
         $reasons[] = 'course neutral';
     }
 
+    // Hours, not zone labels. A pool has no student list yet, so the honest
+    // question is: does this teacher's recorded availability intersect
+    // plausible learner hours (07:00-21:00 local) in the pool's zone? That
+    // correctly ranks a Nairobi teacher for a Moscow pool (same UTC+3) and
+    // rules the same teacher out for a New York evening pool -- both of which
+    // the old zone-string comparison got wrong. The old label check remains
+    // as a weak proxy only when the teacher has no availability recorded
+    // (region-prefix matching is gone outright: Africa/Nairobi vs Africa/Lagos
+    // are 2h apart, sharing a prefix proves nothing).
     $timezone = (string)($criteria->timezone ?? '');
     $teachertimezone = (string)($teacher->timezone ?? '');
-    if ($timezone !== '' && pqlgrp_normal($timezone) === pqlgrp_normal($teachertimezone)) {
-        $score += 24;
-        $reasons[] = 'timezone';
-    } elseif ($timezone !== '' && $teachertimezone !== '') {
-        $groupregion = strtok($timezone, '/');
-        $teacherregion = strtok($teachertimezone, '/');
-        if ($groupregion && $teacherregion && pqlgrp_normal($groupregion) === pqlgrp_normal($teacherregion)) {
-            $score += 10;
-            $reasons[] = 'timezone region';
+    $teacherintervals = pqav_teacher_effective_intervals($teacherid);
+    if ($timezone !== '' && $teacherintervals) {
+        $poolwindow = [];
+        for ($pqavday = 0; $pqavday < 7; $pqavday++) {
+            foreach (pqav_local_to_utc_intervals($pqavday, 7 * 60, 21 * 60, $timezone) as $pqavinterval) {
+                $poolwindow[] = $pqavinterval;
+            }
         }
+        $overlap = pqav_overlap($teacherintervals, [pqav_merge_intervals($poolwindow)]);
+        if ((int)$overlap['minutes'] >= 180) {
+            $score += 24;
+            $reasons[] = 'teachable hours (' . (int)round($overlap['minutes'] / 60) . 'h/wk in pool zone)';
+        } else if ((int)$overlap['minutes'] > 0) {
+            $score += 8;
+            $reasons[] = 'limited teachable hours';
+        } else {
+            $score -= 30;
+            $reasons[] = 'no teachable hours in pool zone';
+        }
+    } else if ($timezone !== '' && pqlgrp_normal($timezone) === pqlgrp_normal($teachertimezone)) {
+        $score += 12;
+        $reasons[] = 'timezone label (no availability recorded)';
     }
 
     $language = (string)($criteria->language ?? '');
@@ -430,9 +453,38 @@ function pqlgrp_match_score($profile, $group): array {
         $score += 20;
         $details[] = 'course';
     }
-    if (pqlgrp_normal((string)$profile->timezone) !== '' && pqlgrp_normal((string)$profile->timezone) === pqlgrp_normal((string)$group->timezone)) {
-        $score += 30;
-        $details[] = 'timezone';
+    // Hours first, zone names second. Real availability overlap between the
+    // student and the group's teacher is worth more than any label: identical
+    // zone strings with disjoint hours cannot meet, and different zones with
+    // shared hours (Nairobi/Moscow, both UTC+3) work fine. The zone-equality
+    // bonus survives at reduced weight as a proxy when either side has not
+    // recorded availability yet.
+    $pqlgrpteacherid = (int)($group->teacherid ?? 0);
+    $pqlgrpstudentid = (int)($profile->userid ?? 0);
+    $pqlgrpoverlapknown = false;
+    if ($pqlgrpteacherid > 0 && $pqlgrpstudentid > 0) {
+        $teacherintervals = pqav_teacher_effective_intervals($pqlgrpteacherid);
+        $studentintervals = pqav_student_intervals($pqlgrpstudentid);
+        if ($teacherintervals && $studentintervals) {
+            $pqlgrpoverlapknown = true;
+            $overlap = pqav_overlap($teacherintervals, [$studentintervals]);
+            if ((int)$overlap['minutes'] >= 60) {
+                $score += 30;
+                $details[] = 'hours overlap (' . (int)round($overlap['minutes'] / 60) . 'h/wk)';
+            } else if ((int)$overlap['minutes'] > 0) {
+                $score += 10;
+                $details[] = 'hours overlap under 1h/wk';
+            } else {
+                $score -= 40;
+                $details[] = 'NO overlapping hours with group teacher';
+            }
+        }
+    }
+    if (!$pqlgrpoverlapknown
+            && pqlgrp_normal((string)$profile->timezone) !== ''
+            && pqlgrp_normal((string)$profile->timezone) === pqlgrp_normal((string)$group->timezone)) {
+        $score += 15;
+        $details[] = 'timezone label (no availability data)';
     }
     if (pqlgrp_normal((string)$profile->current_level) !== '' && pqlgrp_normal((string)$profile->current_level) === pqlgrp_normal((string)$group->current_level)) {
         $score += 25;
@@ -566,9 +618,24 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             ]);
             $message = 'Student intake profile saved.';
         } elseif ($action === 'create_pool') {
+            // A pool may now be demand FOR a specific offering, making it a
+            // cohort-in-waiting of a real course rather than a generic
+            // catalog-subject bucket. Optional: legacy tutoring pools keep
+            // working with course_type alone.
+            $pooloffering = null;
+            $poolofferingid = optional_param('offeringid', 0, PARAM_INT);
+            if ($poolofferingid > 0 && pqlgrp_table_exists('local_prequran_course_offering')) {
+                $pooloffering = $DB->get_record('local_prequran_course_offering',
+                    ['id' => $poolofferingid, 'workspaceid' => $workspaceid], '*', IGNORE_MISSING);
+                if (!$pooloffering) {
+                    throw new invalid_parameter_exception('Choose a course offering in this workspace.');
+                }
+            }
             $record = (object)[
                 'title' => pqlgrp_trim_param('title'),
-                'course_type' => pqlgrp_trim_param('course_type', 'pre_quraan'),
+                'course_type' => $pooloffering
+                    ? (string)$pooloffering->course_key
+                    : pqlgrp_trim_param('course_type', 'pre_quraan'),
                 'timezone' => pqlgrp_trim_param('timezone', 'UTC'),
                 'language' => pqlgrp_trim_param('language'),
                 'age_min' => max(0, min(25, optional_param('age_min', 0, PARAM_INT))),
@@ -589,6 +656,10 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             ];
             if (pqlgrp_table_has_field('local_prequran_group_pool', 'workspaceid')) {
                 $record->workspaceid = $workspaceid;
+            }
+            if ($pooloffering && pqlgrp_table_has_field('local_prequran_group_pool', 'offeringid')) {
+                $record->offeringid = (int)$pooloffering->id;
+                $record->moodlecourseid = (int)$pooloffering->moodlecourseid;
             }
             $id = (int)$DB->insert_record('local_prequran_group_pool', $record);
             pqlgrp_audit('grouping_pool_created', 'pool', $id, ['title' => $record->title]);
@@ -624,6 +695,13 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             ];
             if (pqlgrp_table_has_field('local_prequran_class_group', 'workspaceid')) {
                 $record->workspaceid = $workspaceid;
+            }
+            // A group formed from an offering-linked pool IS a cohort of that
+            // course -- carry the link so sessions, rosters and reports can
+            // resolve the real course, not just a catalog label.
+            if ($pool && pqlgrp_table_has_field('local_prequran_class_group', 'offeringid')) {
+                $record->offeringid = (int)($pool->offeringid ?? 0);
+                $record->moodlecourseid = (int)($pool->moodlecourseid ?? 0);
             }
             if ((int)$record->teacherid > 0 && !pqh_user_can_teach_in_workspace((int)$record->teacherid, $workspaceid)) {
                 throw new invalid_parameter_exception('Choose a teacher assigned to this school workspace.');
@@ -683,6 +761,217 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             pqlgrp_audit('student_assigned_group', 'group', $groupid, ['studentid' => $studentid, 'score' => $score, 'status' => $matchstatus]);
             $message = 'Student assigned to group.';
+        } elseif ($action === 'approve_cohort') {
+            // One click turns a computed proposal into a real cohort: an
+            // offering-linked class group plus its members. Everything is
+            // re-validated server-side -- the proposal in the page is only a
+            // suggestion, never trusted input.
+            $cohortofferingid = optional_param('offeringid', 0, PARAM_INT);
+            $cohortteacherid = optional_param('teacherid', 0, PARAM_INT);
+            $cohorttitle = pqlgrp_trim_param('title');
+            $cohortstudentids = array_values(array_unique(array_filter(array_map('intval',
+                explode(',', optional_param('studentids', '', PARAM_SEQUENCE))))));
+            $cohortoffering = $cohortofferingid > 0
+                ? $DB->get_record('local_prequran_course_offering', ['id' => $cohortofferingid, 'workspaceid' => $workspaceid], '*', IGNORE_MISSING)
+                : false;
+            if (!$cohortoffering) {
+                throw new invalid_parameter_exception('Choose a course offering in this workspace.');
+            }
+            if (!$cohortstudentids) {
+                throw new invalid_parameter_exception('A cohort needs at least one student.');
+            }
+            if ($cohortteacherid > 0 && !pqh_user_can_teach_in_workspace($cohortteacherid, $workspaceid)) {
+                throw new invalid_parameter_exception('Choose a teacher assigned to this school workspace.');
+            }
+            $cohortgroup = (object)[
+                'poolid' => 0,
+                'teacherid' => $cohortteacherid,
+                'title' => $cohorttitle !== '' ? $cohorttitle : ((string)$cohortoffering->title . ' cohort'),
+                'course_type' => (string)$cohortoffering->course_key,
+                'timezone' => pqlgrp_trim_param('timezone', 'UTC'),
+                'language' => '',
+                'current_level' => '',
+                'learning_base' => '',
+                'country' => '',
+                'city' => '',
+                'age_min' => 0,
+                'age_max' => 99,
+                'gender_policy' => 'flexible',
+                'schedule_summary' => pqlgrp_trim_param('schedule_summary'),
+                'max_students' => max(count($cohortstudentids), 1),
+                'status' => 'open',
+                'createdby' => (int)$USER->id,
+                'timecreated' => $now,
+                'timemodified' => $now,
+            ];
+            if (pqlgrp_table_has_field('local_prequran_class_group', 'workspaceid')) {
+                $cohortgroup->workspaceid = $workspaceid;
+            }
+            if (pqlgrp_table_has_field('local_prequran_class_group', 'offeringid')) {
+                $cohortgroup->offeringid = (int)$cohortoffering->id;
+                $cohortgroup->moodlecourseid = (int)$cohortoffering->moodlecourseid;
+            }
+            $cohortgroupid = (int)$DB->insert_record('local_prequran_class_group', $cohortgroup);
+            $cohortadded = 0;
+            foreach ($cohortstudentids as $cohortstudentid) {
+                $cohortprofile = $DB->get_record('local_prequran_student_profile', ['userid' => $cohortstudentid], '*', IGNORE_MISSING);
+                if (pqlgrp_table_has_field('local_prequran_student_profile', 'workspaceid')
+                        && $cohortprofile
+                        && (int)($cohortprofile->workspaceid ?? 0) > 0
+                        && (int)$cohortprofile->workspaceid !== $workspaceid) {
+                    continue;
+                }
+                $cohortmember = (object)[
+                    'groupid' => $cohortgroupid,
+                    'poolid' => 0,
+                    'studentid' => $cohortstudentid,
+                    'match_score' => 100,
+                    'match_status' => 'best_match',
+                    'assignment_status' => 'active',
+                    'match_details' => 'availability cohort proposal',
+                    'assignedby' => (int)$USER->id,
+                    'timecreated' => $now,
+                    'timemodified' => $now,
+                ];
+                if (pqlgrp_table_has_field('local_prequran_group_member', 'workspaceid')) {
+                    $cohortmember->workspaceid = $workspaceid;
+                }
+                $DB->insert_record('local_prequran_group_member', $cohortmember);
+                $cohortadded++;
+            }
+            pqlgrp_audit('cohort_approved', 'group', $cohortgroupid, [
+                'offeringid' => (int)$cohortoffering->id,
+                'teacherid' => $cohortteacherid,
+                'students' => $cohortadded,
+            ]);
+            $message = 'Cohort created: ' . $cohortadded . ' student(s) grouped for ' . (string)$cohortoffering->title . '.';
+
+            // ---- Phase 5: expand the approved slots into real live sessions.
+            // Anchored to the teacher's zone (recorded on every session), so
+            // the class keeps its teacher-local hour across DST instead of
+            // drifting like fixed + N*WEEKSECS stepping would.
+            $cohortslotstarts = array_values(array_filter(array_map('intval',
+                explode(',', optional_param('sessionstarts', '', PARAM_SEQUENCE))), static fn(int $v): bool => $v >= 0));
+            $cohortsessionminutes = max(0, optional_param('sessionminutes', 0, PARAM_INT));
+            if ($cohortteacherid > 0 && $cohortslotstarts && $cohortsessionminutes > 0
+                    && pqh_table_exists_safe('local_prequran_live_session')) {
+                $cohortanchorzone = 'UTC';
+                if (pqlgrp_table_exists('local_prequran_teacher_profile')) {
+                    $cohortanchorzone = trim((string)$DB->get_field('local_prequran_teacher_profile', 'timezone',
+                        ['userid' => $cohortteacherid], IGNORE_MISSING)) ?: 'UTC';
+                }
+                $cohortrangestart = max($now, (int)($cohortoffering->startdate ?? 0));
+                $cohortrangeend = (int)($cohortoffering->enddate ?? 0);
+                $cohortweeks = $cohortrangeend > $cohortrangestart
+                    ? min(26, max(1, (int)ceil(($cohortrangeend - $cohortrangestart) / WEEKSECS)))
+                    : 12;
+                $cohortsessioncolumns = $DB->get_columns('local_prequran_live_session');
+                $cohortparticipantsready = pqh_table_exists_safe('local_prequran_live_participant');
+                // Resolve names once, not once per session row.
+                $cohortnames = [];
+                $cohortteacheruser = core_user::get_user($cohortteacherid, '*', IGNORE_MISSING);
+                $cohortnames[$cohortteacherid] = $cohortteacheruser ? fullname($cohortteacheruser) : 'Teacher ' . $cohortteacherid;
+                foreach ($cohortstudentids as $cohortstudentid) {
+                    $cohortstudentuser = core_user::get_user($cohortstudentid, '*', IGNORE_MISSING);
+                    $cohortnames[$cohortstudentid] = $cohortstudentuser ? fullname($cohortstudentuser) : 'Student ' . $cohortstudentid;
+                }
+                $cohortsessionsmade = 0;
+                $cohortskipped = 0;
+                foreach ($cohortslotstarts as $cohortslotindex => $cohortslotstart) {
+                    $cohorttimes = pqav_generate_session_times(
+                        $cohortslotstart, $cohortsessionminutes, $cohortanchorzone,
+                        $cohortrangestart, $cohortrangeend, $cohortweeks);
+                    foreach ($cohorttimes as $cohortseq => $cohorttime) {
+                        // Never double-book the teacher: an occurrence that
+                        // collides with one of their existing sessions is
+                        // skipped and reported, not silently stacked.
+                        $cohortclash = $DB->record_exists_sql(
+                            "SELECT 1
+                               FROM {local_prequran_live_session}
+                              WHERE teacherid = :teacherid
+                                AND status NOT IN ('cancelled', 'failed', 'rejected')
+                                AND scheduled_start < :endtime
+                                AND scheduled_end > :starttime",
+                            [
+                                'teacherid' => $cohortteacherid,
+                                'starttime' => (int)$cohorttime['start'],
+                                'endtime' => (int)$cohorttime['end'],
+                            ]
+                        );
+                        if ($cohortclash) {
+                            $cohortskipped++;
+                            continue;
+                        }
+                        $cohortsession = (object)[
+                            'workspaceid' => $workspaceid,
+                            'seriesid' => 0,
+                            'series_sequence' => $cohortseq + 1,
+                            'cohortid' => 0,
+                            'groupid' => $cohortgroupid,
+                            'offeringid' => (int)$cohortoffering->id,
+                            'teacherid' => $cohortteacherid,
+                            'session_type' => 'teacher_led',
+                            'teacher_required' => 1,
+                            'report_to_teacherid' => $cohortteacherid,
+                            'lessonid' => '',
+                            'unitid' => '',
+                            'title' => $cohortgroup->title . ' — session ' . ($cohortslotindex + 1) . '.' . ($cohortseq + 1),
+                            'description' => 'Generated from availability cohort approval.',
+                            'scheduled_start' => (int)$cohorttime['start'],
+                            'scheduled_end' => (int)$cohorttime['end'],
+                            'timezone' => $cohortanchorzone,
+                            'status' => 'scheduled',
+                            'createdby' => (int)$USER->id,
+                            'timecreated' => $now,
+                            'timemodified' => $now,
+                        ];
+                        foreach (array_keys((array)$cohortsession) as $cohortfield) {
+                            if (!array_key_exists($cohortfield, $cohortsessioncolumns)) {
+                                unset($cohortsession->{$cohortfield});
+                            }
+                        }
+                        $cohortsessionid = (int)$DB->insert_record('local_prequran_live_session', $cohortsession);
+                        if ($cohortparticipantsready) {
+                            $DB->insert_record('local_prequran_live_participant', (object)[
+                                'sessionid' => $cohortsessionid,
+                                'userid' => $cohortteacherid,
+                                'role' => 'teacher',
+                                'studentid' => 0,
+                                'status' => 'active',
+                                'displayname' => $cohortnames[$cohortteacherid],
+                                'invitedby' => (int)$USER->id,
+                                'timecreated' => $now,
+                                'timemodified' => $now,
+                            ]);
+                            foreach ($cohortstudentids as $cohortstudentid) {
+                                $DB->insert_record('local_prequran_live_participant', (object)[
+                                    'sessionid' => $cohortsessionid,
+                                    'userid' => $cohortstudentid,
+                                    'role' => 'student',
+                                    'studentid' => $cohortstudentid,
+                                    'status' => 'active',
+                                    'displayname' => $cohortnames[$cohortstudentid],
+                                    'invitedby' => (int)$USER->id,
+                                    'timecreated' => $now,
+                                    'timemodified' => $now,
+                                ]);
+                            }
+                        }
+                        $cohortsessionsmade++;
+                    }
+                }
+                if ($cohortsessionsmade > 0 || $cohortskipped > 0) {
+                    pqlgrp_audit('cohort_sessions_generated', 'group', $cohortgroupid, [
+                        'sessions' => $cohortsessionsmade,
+                        'skipped_conflicts' => $cohortskipped,
+                        'anchor_timezone' => $cohortanchorzone,
+                    ]);
+                    $message .= ' ' . $cohortsessionsmade . ' live session(s) scheduled, anchored to ' . $cohortanchorzone . '.';
+                    if ($cohortskipped > 0) {
+                        $message .= ' ' . $cohortskipped . ' occurrence(s) skipped because the teacher already has a session at that time — review their calendar.';
+                    }
+                }
+            }
         }
     } catch (Throwable $e) {
         $error = $e->getMessage();
@@ -868,7 +1157,7 @@ body.pqh-live-grouping-page #page,body.pqh-live-grouping-page #page-content,body
     <?php if ($message !== ''): ?><div class="pqlgrp-alert pqlgrp-alert--ok"><?php echo s($message); ?></div><?php endif; ?>
     <?php if ($error !== ''): ?><div class="pqlgrp-alert pqlgrp-alert--bad"><?php echo s($error); ?></div><?php endif; ?>
     <?php if (!$ready): ?>
-      <section class="pqlgrp-panel"><div class="pqlgrp-empty">Grouping tables are not ready. Run the Moodle plugin upgrade for local_prequran, then return to this page.</div></section>
+      <section class="pqlgrp-panel"><div class="pqlgrp-empty">Grouping tables are not ready. Run the plugin upgrade for local_prequran, then return to this page.</div></section>
     <?php else: ?>
       <section class="pqlgrp-metrics">
         <div class="pqlgrp-metric"><div class="pqlgrp-num"><?php echo (int)$metrics['profiles']; ?></div><div class="pqlgrp-label">active student profiles</div></div>
@@ -932,6 +1221,29 @@ body.pqh-live-grouping-page #page,body.pqh-live-grouping-page #page-content,body
           <form method="post">
             <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
             <input type="hidden" name="action" value="create_pool">
+            <?php
+              // Offering-linked pools: demand for a real course cohort. The
+              // catalog Course select below still serves legacy tutoring pools.
+              $pqlgrpofferings = [];
+              if (pqlgrp_table_exists('local_prequran_course_offering')) {
+                  try {
+                      $pqlgrpofferings = $DB->get_records_select('local_prequran_course_offering',
+                          "workspaceid = ? AND status IN ('published', 'draft')", [$workspaceid], 'title ASC', 'id,title,status');
+                  } catch (Throwable $e) {
+                      $pqlgrpofferings = [];
+                  }
+              }
+            ?>
+            <?php if ($pqlgrpofferings && pqlgrp_table_has_field('local_prequran_group_pool', 'offeringid')): ?>
+              <div class="pqlgrp-field"><label>Course offering (recommended)</label>
+                <select class="pqlgrp-select" name="offeringid">
+                  <option value="0">None - catalog subject pool</option>
+                  <?php foreach ($pqlgrpofferings as $pqlgrpoff): ?>
+                    <option value="<?php echo (int)$pqlgrpoff->id; ?>"><?php echo s((string)$pqlgrpoff->title); ?><?php echo (string)$pqlgrpoff->status !== 'published' ? ' (' . s((string)$pqlgrpoff->status) . ')' : ''; ?></option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+            <?php endif; ?>
             <div class="pqlgrp-field"><label>Pool title</label><input class="pqlgrp-input" name="title" placeholder="Somali beginner girls 6-8" required></div>
             <div class="pqlgrp-formgrid">
               <div class="pqlgrp-field"><label>Course</label><?php echo pqlgrp_select('course_type', $pqlgrpoptions['course_types'] ?? [], 'pre_quraan', true); ?></div>
@@ -1002,6 +1314,165 @@ body.pqh-live-grouping-page #page,body.pqh-live-grouping-page #page-content,body
               </tr>
             <?php endforeach; ?>
             </tbody></table>
+          <?php endif; ?>
+        </article>
+
+        <?php
+        // ---- Cohort proposals: pick an offering, the engine clusters its
+        // pending/enrolled students by real availability overlap, ranks
+        // teachers per cluster, and each proposal approves into a group in
+        // one click. Students it cannot place are listed with the reason
+        // instead of silently scoring low.
+        $pqavofferingid = optional_param('propose_offeringid', 0, PARAM_INT);
+        $pqavofferings = [];
+        if (pqlgrp_table_exists('local_prequran_course_offering')) {
+            try {
+                $pqavofferings = $DB->get_records_select('local_prequran_course_offering',
+                    "workspaceid = ? AND status IN ('published', 'draft')", [$workspaceid], 'title ASC');
+            } catch (Throwable $e) {
+                $pqavofferings = [];
+            }
+        }
+        $pqavproposal = null;
+        $pqavoffering = null;
+        if ($pqavofferingid > 0 && isset($pqavofferings[$pqavofferingid])) {
+            $pqavoffering = $pqavofferings[$pqavofferingid];
+            $pqavsessions = (int)($pqavoffering->sessions_per_week ?? 0);
+            $pqavminutes = (int)($pqavoffering->session_minutes ?? 0);
+            $pqavstudentids = [];
+            if (pqlgrp_table_exists('local_prequran_course_enrol_req')) {
+                $pqavrows = $DB->get_records_select('local_prequran_course_enrol_req',
+                    "offeringid = ? AND status IN ('pending', 'approved', 'enrolled')",
+                    [$pqavofferingid], '', 'id,studentid');
+                foreach ($pqavrows as $pqavrow) {
+                    $pqavstudentids[(int)$pqavrow->studentid] = true;
+                }
+            }
+            // Skip students already placed in a group for this offering.
+            if ($pqavstudentids && pqlgrp_table_has_field('local_prequran_class_group', 'offeringid')) {
+                $pqavplaced = $DB->get_records_sql(
+                    "SELECT gm.studentid
+                       FROM {local_prequran_group_member} gm
+                       JOIN {local_prequran_class_group} cg ON cg.id = gm.groupid
+                      WHERE cg.offeringid = :offeringid AND gm.assignment_status = 'active'",
+                    ['offeringid' => $pqavofferingid]);
+                foreach ($pqavplaced as $pqavdone) {
+                    unset($pqavstudentids[(int)$pqavdone->studentid]);
+                }
+            }
+            $pqavintervals = [];
+            foreach (array_keys($pqavstudentids) as $pqavsid) {
+                $pqavintervals[$pqavsid] = pqav_student_intervals($pqavsid);
+            }
+            $pqavproposal = pqav_propose_cohorts($pqavintervals, $pqavsessions, $pqavminutes, 9);
+            $pqavteachermap = [];
+            foreach ($teacherprofiles as $pqavteacher) {
+                $pqavtintervals = pqav_teacher_effective_intervals((int)$pqavteacher->userid);
+                if ($pqavtintervals) {
+                    $pqavteachermap[(int)$pqavteacher->userid] = $pqavtintervals;
+                }
+            }
+            // Current weekly teaching load per teacher, in minutes: active
+            // class groups x their linked offering's sessions_per_week x
+            // session_minutes. Groups without an offering link count a
+            // nominal 60 so legacy tutoring load is not invisible. Feeds the
+            // least-loaded-first tiebreak in teacher ranking.
+            $pqavloadmap = [];
+            if (pqlgrp_table_has_field('local_prequran_class_group', 'offeringid')) {
+                try {
+                    $pqavloadrows = $DB->get_records_sql(
+                        "SELECT cg.id, cg.teacherid, o.sessions_per_week, o.session_minutes
+                           FROM {local_prequran_class_group} cg
+                      LEFT JOIN {local_prequran_course_offering} o ON o.id = cg.offeringid
+                          WHERE cg.teacherid > 0 AND cg.status <> 'archived'");
+                    foreach ($pqavloadrows as $pqavloadrow) {
+                        $pqavweekly = max(60, (int)($pqavloadrow->sessions_per_week ?? 0) * (int)($pqavloadrow->session_minutes ?? 0));
+                        $pqavloadmap[(int)$pqavloadrow->teacherid] =
+                            ($pqavloadmap[(int)$pqavloadrow->teacherid] ?? 0) + $pqavweekly;
+                    }
+                } catch (Throwable $e) {
+                    $pqavloadmap = [];
+                }
+            }
+        }
+        ?>
+        <article class="pqlgrp-panel pqlgrp-panel--wide">
+          <h2>Cohort Proposals</h2>
+          <form method="get" class="pqlgrp-formgrid" style="align-items:end">
+            <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
+            <input type="hidden" name="workspaceid" value="<?php echo (int)$workspaceid; ?>">
+            <div class="pqlgrp-field"><label>Course offering</label>
+              <select class="pqlgrp-select" name="propose_offeringid" onchange="this.form.submit()">
+                <option value="0">Choose an offering to propose cohorts for</option>
+                <?php foreach ($pqavofferings as $pqavopt): ?>
+                  <option value="<?php echo (int)$pqavopt->id; ?>"<?php echo (int)$pqavopt->id === $pqavofferingid ? ' selected' : ''; ?>><?php echo s((string)$pqavopt->title); ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+            <noscript><div class="pqlgrp-field"><button class="pqlgrp-btn" type="submit">Propose</button></div></noscript>
+          </form>
+          <?php if ($pqavproposal !== null): ?>
+            <?php $pqavreq = (int)($pqavoffering->sessions_per_week ?? 0) > 0
+                ? (int)$pqavoffering->sessions_per_week . ' x ' . max(60, (int)$pqavoffering->session_minutes) . ' min/week'
+                : 'no session requirement set (matching on any shared hour)'; ?>
+            <p class="pqlgrp-empty" style="border-style:solid"><strong><?php echo s((string)$pqavoffering->title); ?></strong> &mdash; requirement: <?php echo s($pqavreq); ?>. Students shown are requested/enrolled and not yet placed in a cohort for this offering.</p>
+            <?php if (!$pqavproposal['cohorts'] && !$pqavproposal['unplaced']): ?>
+              <div class="pqlgrp-empty">No unplaced students for this offering.</div>
+            <?php endif; ?>
+            <?php foreach ($pqavproposal['cohorts'] as $pqavindex => $pqavcohort): ?>
+              <?php
+                $pqavranked = pqav_rank_teachers_for_cohort($pqavcohort['windows'], $pqavteachermap,
+                    (int)($pqavoffering->sessions_per_week ?? 0), (int)($pqavoffering->session_minutes ?? 0), $pqavloadmap);
+                $pqavbest = $pqavranked[0] ?? null;
+                $pqavviable = $pqavbest && $pqavbest['viable'];
+              ?>
+              <h3>Proposed cohort <?php echo (int)$pqavindex + 1; ?> &mdash; <?php echo count($pqavcohort['studentids']); ?> student(s)
+                <span class="pqlgrp-pill <?php echo $pqavviable ? 'pqlgrp-pill--ok' : 'pqlgrp-pill--warn'; ?>"><?php echo $pqavviable ? 'teacher available' : 'no viable teacher'; ?></span>
+              </h3>
+              <table class="pqlgrp-table">
+                <tr><th>Students</th><td><?php
+                  $pqavnames = [];
+                  foreach ($pqavcohort['studentids'] as $pqavsid) {
+                      $pqavnames[] = pqlgrp_user_name((int)$pqavsid, 'Student #' . (int)$pqavsid);
+                  }
+                  echo s(implode(', ', $pqavnames));
+                ?></td></tr>
+                <tr><th>Common windows (UTC)</th><td><?php echo s(implode(' | ', array_slice($pqavcohort['labels'], 0, 6))); ?></td></tr>
+                <tr><th>Teacher</th><td>
+                  <?php if ($pqavviable): ?>
+                    <?php echo s(pqlgrp_user_name((int)$pqavbest['teacherid'], 'Teacher #' . (int)$pqavbest['teacherid'])); ?>
+                    <span class="pqlgrp-pill">current load <?php echo (int)round(((int)$pqavbest['load']) / 60); ?>h/wk</span>
+                    &mdash; proposed sessions: <?php echo s(implode(', ', $pqavbest['labels'])); ?>
+                  <?php else: ?>
+                    <span class="pqlgrp-pill pqlgrp-pill--warn">No teacher with recorded availability can host these windows &mdash; recruit for <?php echo s(implode(' / ', array_slice($pqavcohort['labels'], 0, 3))); ?> or adjust student hours.</span>
+                  <?php endif; ?>
+                </td></tr>
+              </table>
+              <form method="post" style="margin:8px 0 18px">
+                <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+                <input type="hidden" name="action" value="approve_cohort">
+                <input type="hidden" name="offeringid" value="<?php echo (int)$pqavoffering->id; ?>">
+                <input type="hidden" name="studentids" value="<?php echo s(implode(',', $pqavcohort['studentids'])); ?>">
+                <input type="hidden" name="teacherid" value="<?php echo $pqavviable ? (int)$pqavbest['teacherid'] : 0; ?>">
+                <input type="hidden" name="schedule_summary" value="<?php echo s(implode(' | ', $pqavviable ? $pqavbest['labels'] : array_slice($pqavcohort['labels'], 0, 3))); ?>">
+                <?php if ($pqavviable): ?>
+                  <input type="hidden" name="sessionstarts" value="<?php echo s(implode(',', array_map(static fn(array $pqavslot): int => (int)$pqavslot[0], $pqavbest['sessionslots']))); ?>">
+                  <input type="hidden" name="sessionminutes" value="<?php echo max(60, (int)($pqavoffering->session_minutes ?? 60)); ?>">
+                <?php endif; ?>
+                <div class="pqlgrp-formgrid" style="align-items:end">
+                  <div class="pqlgrp-field"><label>Cohort title</label><input class="pqlgrp-input" name="title" value="<?php echo s((string)$pqavoffering->title . ' — cohort ' . ((int)$pqavindex + 1)); ?>"></div>
+                  <div class="pqlgrp-field"><button class="pqlgrp-btn" type="submit">Approve cohort<?php echo $pqavviable ? '' : ' without teacher'; ?></button></div>
+                </div>
+              </form>
+            <?php endforeach; ?>
+            <?php if ($pqavproposal['unplaced']): ?>
+              <h3>Not placed</h3>
+              <table class="pqlgrp-table">
+                <?php foreach ($pqavproposal['unplaced'] as $pqavmiss): ?>
+                  <tr><td><?php echo s(pqlgrp_user_name((int)$pqavmiss['studentid'], 'Student #' . (int)$pqavmiss['studentid'])); ?></td><td><?php echo s((string)$pqavmiss['reason']); ?></td></tr>
+                <?php endforeach; ?>
+              </table>
+            <?php endif; ?>
           <?php endif; ?>
         </article>
 
@@ -1109,7 +1580,7 @@ body.pqh-live-grouping-page #page,body.pqh-live-grouping-page #page-content,body
             + item(links.availability, 'Availability')
             + item(links.classes, 'Current classes')
             + item(links.directory, 'Teacher directory')
-            + item(links.moodle, 'Moodle account')
+            + item(links.moodle, 'Account')
             + '</div>';
         };
         const renderMatches = (matches) => {

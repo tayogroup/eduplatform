@@ -341,8 +341,17 @@ function xmldb_local_prequran_ensure_live_schema(): void {
         [
             new xmldb_index('preqlive_att_user_ix', XMLDB_INDEX_NOTUNIQUE, ['userid']),
             new xmldb_index('preqlive_att_status_ix', XMLDB_INDEX_NOTUNIQUE, ['attendance_status']),
+            new xmldb_index('preqlive_att_student_ix', XMLDB_INDEX_NOTUNIQUE, ['studentid']),
         ]
     );
+    // studentid was only the trailing column of the (sessionid, studentid) unique
+    // key, so per-student attendance scans (report cards, at-risk) could not use
+    // an index. Add a standalone studentid index on the existing live table.
+    $liveatt = new xmldb_table('local_prequran_live_attendance');
+    if ($dbman->table_exists($liveatt)) {
+        xmldb_local_prequran_add_index_if_missing($dbman, $liveatt,
+            new xmldb_index('preqlive_att_student_ix', XMLDB_INDEX_NOTUNIQUE, ['studentid']));
+    }
 
     xmldb_local_prequran_create_table_if_missing(
         $dbman,
@@ -1303,7 +1312,7 @@ function xmldb_local_prequran_ensure_organization_group_schema(): void {
             xmldb_local_prequran_field_int('memberid'),
             xmldb_local_prequran_field_char('relationship_type', 40, 'owned_branch'),
             xmldb_local_prequran_field_char('group_role', 40, 'member'),
-            xmldb_local_prequran_field_char('access_scope', 40, 'governance'),
+            xmldb_local_prequran_field_char('access_scope', 80, 'governance'),
             xmldb_local_prequran_field_int('inherit_sensitive_access', 1, 0),
             xmldb_local_prequran_field_char('status', 40, 'active'),
             xmldb_local_prequran_field_text('notes'),
@@ -1358,7 +1367,7 @@ function xmldb_local_prequran_repair_organization_group_schema(): void {
                 memberid BIGINT(20) NOT NULL DEFAULT 0,
                 relationship_type VARCHAR(40) NOT NULL DEFAULT 'owned_branch',
                 group_role VARCHAR(40) NOT NULL DEFAULT 'member',
-                access_scope VARCHAR(40) NOT NULL DEFAULT 'governance',
+                access_scope VARCHAR(80) NOT NULL DEFAULT 'governance',
                 inherit_sensitive_access TINYINT(1) NOT NULL DEFAULT 0,
                 status VARCHAR(40) NOT NULL DEFAULT 'active',
                 notes LONGTEXT NULL,
@@ -3594,8 +3603,17 @@ function xmldb_local_prequran_ensure_finance_assistance_schema(): void {
             new xmldb_index('preqmpout_teach_ix', XMLDB_INDEX_NOTUNIQUE, ['workspaceid', 'teacherid', 'status']),
             new xmldb_index('preqmpout_req_ix', XMLDB_INDEX_NOTUNIQUE, ['requestid', 'status']),
             new xmldb_index('preqmpout_num_ix', XMLDB_INDEX_NOTUNIQUE, ['payoutnumber']),
+            new xmldb_index('preqmpout_teachonly_ix', XMLDB_INDEX_NOTUNIQUE, ['teacherid', 'timecreated']),
         ]
     );
+    // The tutor storefront lists a teacher's payouts by teacherid alone; the
+    // workspaceid-leading composite above cannot serve that, so add a teacherid
+    // index to the existing table.
+    $mpayout = new xmldb_table('local_prequran_market_payout');
+    if ($dbman->table_exists($mpayout)) {
+        xmldb_local_prequran_add_index_if_missing($dbman, $mpayout,
+            new xmldb_index('preqmpout_teachonly_ix', XMLDB_INDEX_NOTUNIQUE, ['teacherid', 'timecreated']));
+    }
 
     xmldb_local_prequran_create_table_if_missing(
         $dbman,
@@ -5546,5 +5564,1100 @@ function xmldb_local_prequran_ensure_safenet_schedule_fields(): void {
     $alertedat = new xmldb_field('alerted_at', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'sched_applied');
     if (!$dbman->field_exists($table, $alertedat)) {
         $dbman->add_field($table, $alertedat);
+    }
+}
+
+/**
+ * Parent/guardian observer role (Canvas-observer equivalent, native Moodle).
+ * Assignable ONLY in a user's context: a guardian holding ehel_parent in a
+ * student's user context may view that student's profile, activity and grade
+ * reports — nothing else. Assignments are made nightly by the
+ * enrolment_reconcile task from the consent-table guardian↔student pairs,
+ * component-tagged 'local_prequran'.
+ */
+function xmldb_local_prequran_ensure_parent_observer_role(): void {
+    global $CFG, $DB;
+
+    require_once($CFG->libdir . '/accesslib.php');
+
+    $role = $DB->get_record('role', ['shortname' => 'ehel_parent'], 'id');
+    if ($role) {
+        $roleid = (int)$role->id;
+    } else {
+        $roleid = create_role(
+            'Parent / Guardian (observer)',
+            'ehel_parent',
+            'Observer role assigned in a student\'s user context so a linked guardian can view that student\'s profile, activity and grade reports. Grants nothing outside the student contexts it is assigned in.'
+        );
+    }
+    if ($roleid <= 0) {
+        return;
+    }
+
+    set_role_contextlevels($roleid, [CONTEXT_USER]);
+
+    $systemcontext = context_system::instance();
+    $capabilities = [
+        'moodle/user:viewdetails',
+        'moodle/user:viewalldetails',
+        'moodle/user:viewuseractivitiesreport',
+        'gradereport/user:view',
+    ];
+    foreach ($capabilities as $capability) {
+        if ($DB->record_exists('capabilities', ['name' => $capability])) {
+            assign_capability($capability, CAP_ALLOW, $roleid, $systemcontext->id, true);
+        }
+    }
+    $systemcontext->mark_dirty();
+}
+
+/**
+ * Teacher certificate/compliance register (best practice: credentials carry
+ * DATES, not just status strings). One row per certificate — DBS/background
+ * check, safeguarding training, teaching qualification, first aid, other —
+ * with issue/expiry timestamps and a verification workflow
+ * (pending_review → verified/rejected; verified → expired by the nightly
+ * sweep in enrolment_reconcile once expiresat passes). Evidence is an
+ * external URL (the portal architecture has no file uploads by design).
+ */
+function xmldb_local_prequran_ensure_teacher_cert_schema(): void {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+
+    xmldb_local_prequran_create_table_if_missing(
+        $dbman,
+        new xmldb_table('local_prequran_teacher_cert'),
+        [
+            xmldb_local_prequran_field_id(),
+            xmldb_local_prequran_field_int('consumerid'),
+            xmldb_local_prequran_field_int('workspaceid'),
+            xmldb_local_prequran_field_int('teacherid'),
+            xmldb_local_prequran_field_char('cert_type', 80, 'other'),
+            xmldb_local_prequran_field_char('title', 255),
+            xmldb_local_prequran_field_char('reference', 255),
+            xmldb_local_prequran_field_char('issuer', 255),
+            xmldb_local_prequran_field_char('status', 40, 'pending_review'),
+            xmldb_local_prequran_field_int('issuedat'),
+            xmldb_local_prequran_field_int('expiresat'),
+            xmldb_local_prequran_field_char('evidence_url', 255),
+            xmldb_local_prequran_field_text('notes'),
+            xmldb_local_prequran_field_int('verifiedby'),
+            xmldb_local_prequran_field_int('verifiedat'),
+            xmldb_local_prequran_field_int('createdby'),
+            xmldb_local_prequran_field_int('timecreated'),
+            xmldb_local_prequran_field_int('timemodified'),
+        ],
+        [
+            new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id']),
+        ],
+        [
+            new xmldb_index('preqtcert_teacher_ix', XMLDB_INDEX_NOTUNIQUE, ['teacherid', 'status']),
+            new xmldb_index('preqtcert_expiry_ix', XMLDB_INDEX_NOTUNIQUE, ['status', 'expiresat']),
+            new xmldb_index('preqtcert_work_ix', XMLDB_INDEX_NOTUNIQUE, ['workspaceid', 'cert_type']),
+        ]
+    );
+}
+
+/**
+ * Learner session ratings (Canvas-style learner voice feeding teacher QA).
+ * One row per (session, rater): 1-5 stars + optional comment, written by the
+ * student-dashboard rate_session action (participants only, past sessions
+ * only). quality-analytics blends the per-teacher average into the QA rollup
+ * (qa_learner_rating_weight percent).
+ */
+function xmldb_local_prequran_ensure_session_rating_schema(): void {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+
+    xmldb_local_prequran_create_table_if_missing(
+        $dbman,
+        new xmldb_table('local_prequran_session_rating'),
+        [
+            xmldb_local_prequran_field_id(),
+            xmldb_local_prequran_field_int('consumerid'),
+            xmldb_local_prequran_field_int('workspaceid'),
+            xmldb_local_prequran_field_int('sessionid'),
+            xmldb_local_prequran_field_int('teacherid'),
+            xmldb_local_prequran_field_int('raterid'),
+            xmldb_local_prequran_field_char('rater_role', 20, 'student'),
+            xmldb_local_prequran_field_int('rating', 2, 0),
+            xmldb_local_prequran_field_text('comment'),
+            xmldb_local_prequran_field_int('timecreated'),
+            xmldb_local_prequran_field_int('timemodified'),
+        ],
+        [
+            new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id']),
+            new xmldb_key('preqsrate_uix', XMLDB_KEY_UNIQUE, ['sessionid', 'raterid']),
+        ],
+        [
+            new xmldb_index('preqsrate_teacher_ix', XMLDB_INDEX_NOTUNIQUE, ['teacherid', 'timecreated']),
+            new xmldb_index('preqsrate_work_ix', XMLDB_INDEX_NOTUNIQUE, ['workspaceid', 'timecreated']),
+        ]
+    );
+}
+
+/**
+ * LAYER-2 platform support (tenant support): the B2B channel between each
+ * consumer school's TECHNICAL TEAM and the EduPlatform platform team. Strictly
+ * tiered: end users (teachers/students/parents) use their school's internal
+ * desk (Layer 1); only workspace owners/admins can open platform tickets, and
+ * only for system problems (outage, sync, domain, platform bugs). Deliberately
+ * SEPARATE tables from the Layer-1 comm/support stores so platform tickets can
+ * never leak into school consoles and vice versa.
+ */
+function xmldb_local_prequran_ensure_platform_support_schema(): void {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+
+    xmldb_local_prequran_create_table_if_missing(
+        $dbman,
+        new xmldb_table('local_prequran_platform_ticket'),
+        [
+            xmldb_local_prequran_field_id(),
+            xmldb_local_prequran_field_char('ticketnumber', 80),
+            xmldb_local_prequran_field_int('consumerid'),
+            xmldb_local_prequran_field_int('workspaceid'),
+            xmldb_local_prequran_field_int('requesterid'),
+            xmldb_local_prequran_field_char('subject', 255),
+            xmldb_local_prequran_field_text('description'),
+            xmldb_local_prequran_field_char('category', 80, 'other'),
+            xmldb_local_prequran_field_char('priority', 40, 'normal'),
+            xmldb_local_prequran_field_char('status', 40, 'open'),
+            xmldb_local_prequran_field_int('assigneeid'),
+            xmldb_local_prequran_field_char('internal_ref', 120),
+            xmldb_local_prequran_field_text('resolution'),
+            xmldb_local_prequran_field_int('firstrespondedat'),
+            xmldb_local_prequran_field_int('resolvedat'),
+            xmldb_local_prequran_field_int('closedat'),
+            xmldb_local_prequran_field_int('sla_first_due'),
+            xmldb_local_prequran_field_int('sla_resolve_due'),
+            xmldb_local_prequran_field_int('sla_first_alerted', 1, 0),
+            xmldb_local_prequran_field_int('sla_resolve_alerted', 1, 0),
+            xmldb_local_prequran_field_int('timecreated'),
+            xmldb_local_prequran_field_int('timemodified'),
+        ],
+        [
+            new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id']),
+        ],
+        [
+            new xmldb_index('preqptick_cons_ix', XMLDB_INDEX_NOTUNIQUE, ['consumerid', 'status']),
+            new xmldb_index('preqptick_status_ix', XMLDB_INDEX_NOTUNIQUE, ['status', 'priority', 'timecreated']),
+            new xmldb_index('preqptick_sla_ix', XMLDB_INDEX_NOTUNIQUE, ['status', 'sla_first_due']),
+        ]
+    );
+
+    xmldb_local_prequran_create_table_if_missing(
+        $dbman,
+        new xmldb_table('local_prequran_platform_tmsg'),
+        [
+            xmldb_local_prequran_field_id(),
+            xmldb_local_prequran_field_int('ticketid'),
+            xmldb_local_prequran_field_int('senderid'),
+            xmldb_local_prequran_field_char('sender_side', 20, 'school'),
+            xmldb_local_prequran_field_text('body'),
+            xmldb_local_prequran_field_int('timecreated'),
+        ],
+        [
+            new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id']),
+        ],
+        [
+            new xmldb_index('preqptmsg_ticket_ix', XMLDB_INDEX_NOTUNIQUE, ['ticketid', 'timecreated']),
+        ]
+    );
+
+    xmldb_local_prequran_create_table_if_missing(
+        $dbman,
+        new xmldb_table('local_prequran_platform_notice'),
+        [
+            xmldb_local_prequran_field_id(),
+            xmldb_local_prequran_field_char('subject', 255),
+            xmldb_local_prequran_field_text('body'),
+            xmldb_local_prequran_field_char('severity', 40, 'info'),
+            xmldb_local_prequran_field_char('status', 40, 'active'),
+            xmldb_local_prequran_field_int('createdby'),
+            xmldb_local_prequran_field_int('resolvedat'),
+            xmldb_local_prequran_field_int('timecreated'),
+            xmldb_local_prequran_field_int('timemodified'),
+        ],
+        [
+            new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id']),
+        ],
+        [
+            new xmldb_index('preqpnote_status_ix', XMLDB_INDEX_NOTUNIQUE, ['status', 'timecreated']),
+        ]
+    );
+}
+
+function xmldb_local_prequran_ensure_monetization_schema(): void {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+
+    // Coupon / promo codes (staff-applied on invoices).
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_coupon'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('consumerid'),
+        xmldb_local_prequran_field_int('workspaceid'),
+        xmldb_local_prequran_field_char('code', 40),
+        xmldb_local_prequran_field_char('description', 255),
+        xmldb_local_prequran_field_char('discounttype', 20, 'fixed'),
+        xmldb_local_prequran_field_char('discountvalue', 40, '0.00'),
+        xmldb_local_prequran_field_char('currency', 10, 'USD'),
+        xmldb_local_prequran_field_int('maxredemptions'),
+        xmldb_local_prequran_field_int('perstudentlimit'),
+        xmldb_local_prequran_field_int('redemptioncount'),
+        xmldb_local_prequran_field_int('validfrom'),
+        xmldb_local_prequran_field_int('validuntil'),
+        xmldb_local_prequran_field_char('status', 20, 'active'),
+        xmldb_local_prequran_field_text('notes'),
+        xmldb_local_prequran_field_text('metadatajson'),
+        xmldb_local_prequran_field_int('createdby'),
+        xmldb_local_prequran_field_int('modifiedby'),
+        xmldb_local_prequran_field_int('timecreated'),
+        xmldb_local_prequran_field_int('timemodified'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqcoup_code_uix', XMLDB_INDEX_UNIQUE, ['workspaceid', 'code']),
+        new xmldb_index('preqcoup_status_ix', XMLDB_INDEX_NOTUNIQUE, ['workspaceid', 'status']),
+    ]);
+
+    // Discount applications (shared ledger for coupons + scholarship grants).
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_discount_apply'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_char('sourcetype', 20, 'coupon'),
+        xmldb_local_prequran_field_int('sourceid'),
+        xmldb_local_prequran_field_int('consumerid'),
+        xmldb_local_prequran_field_int('workspaceid'),
+        xmldb_local_prequran_field_int('invoiceid'),
+        xmldb_local_prequran_field_int('studentid'),
+        xmldb_local_prequran_field_char('currency', 10, 'USD'),
+        xmldb_local_prequran_field_char('amount', 40, '0.00'),
+        xmldb_local_prequran_field_char('status', 20, 'applied'),
+        xmldb_local_prequran_field_text('linejson'),
+        xmldb_local_prequran_field_int('createdby'),
+        xmldb_local_prequran_field_int('modifiedby'),
+        xmldb_local_prequran_field_int('timecreated'),
+        xmldb_local_prequran_field_int('timemodified'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqdapp_inv_ix', XMLDB_INDEX_NOTUNIQUE, ['invoiceid', 'status']),
+        new xmldb_index('preqdapp_src_ix', XMLDB_INDEX_NOTUNIQUE, ['sourcetype', 'sourceid', 'status']),
+    ]);
+
+    // Standing scholarship grants (auto-applied at invoice creation when the
+    // workspace finance policy opts in via scholarship_auto_apply=enabled).
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_scholar_grant'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('consumerid'),
+        xmldb_local_prequran_field_int('workspaceid'),
+        xmldb_local_prequran_field_int('studentid'),
+        xmldb_local_prequran_field_char('grantnumber', 80),
+        xmldb_local_prequran_field_char('name', 255),
+        xmldb_local_prequran_field_char('discounttype', 20, 'percent'),
+        xmldb_local_prequran_field_char('discountvalue', 40, '0.00'),
+        xmldb_local_prequran_field_char('source', 40, 'internal'),
+        xmldb_local_prequran_field_int('sponsoraccountid'),
+        xmldb_local_prequran_field_char('status', 20, 'active'),
+        xmldb_local_prequran_field_int('startdate'),
+        xmldb_local_prequran_field_int('enddate'),
+        xmldb_local_prequran_field_text('notes'),
+        xmldb_local_prequran_field_text('metadatajson'),
+        xmldb_local_prequran_field_int('createdby'),
+        xmldb_local_prequran_field_int('modifiedby'),
+        xmldb_local_prequran_field_int('timecreated'),
+        xmldb_local_prequran_field_int('timemodified'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqsgr_stud_ix', XMLDB_INDEX_NOTUNIQUE, ['workspaceid', 'studentid', 'status']),
+    ]);
+
+    // Marketplace payout batch runs (disbursement is recorded, never executed).
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_payout_batch'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('consumerid'),
+        xmldb_local_prequran_field_int('workspaceid'),
+        xmldb_local_prequran_field_char('batchnumber', 80),
+        xmldb_local_prequran_field_char('status', 40, 'draft'),
+        xmldb_local_prequran_field_char('currency', 10, 'USD'),
+        xmldb_local_prequran_field_char('totalgross', 40, '0.00'),
+        xmldb_local_prequran_field_char('totalfee', 40, '0.00'),
+        xmldb_local_prequran_field_char('totalnet', 40, '0.00'),
+        xmldb_local_prequran_field_int('payoutcount'),
+        xmldb_local_prequran_field_text('notes'),
+        xmldb_local_prequran_field_text('metadatajson'),
+        xmldb_local_prequran_field_int('approvedby'),
+        xmldb_local_prequran_field_int('approvedat'),
+        xmldb_local_prequran_field_int('paidby'),
+        xmldb_local_prequran_field_int('paidat'),
+        xmldb_local_prequran_field_char('paidreference', 120),
+        xmldb_local_prequran_field_int('cancelledat'),
+        xmldb_local_prequran_field_int('createdby'),
+        xmldb_local_prequran_field_int('modifiedby'),
+        xmldb_local_prequran_field_int('timecreated'),
+        xmldb_local_prequran_field_int('timemodified'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqpbt_ws_ix', XMLDB_INDEX_NOTUNIQUE, ['workspaceid', 'status']),
+    ]);
+
+    $payouttable = new xmldb_table('local_prequran_market_payout');
+    if ($dbman->table_exists($payouttable)) {
+        xmldb_local_prequran_add_field_if_missing($dbman, $payouttable,
+            xmldb_local_prequran_field_int('batchid'));
+        xmldb_local_prequran_add_index_if_missing($dbman, $payouttable,
+            new xmldb_index('preqmpout_batch_ix', XMLDB_INDEX_NOTUNIQUE, ['batchid']));
+    }
+
+    // EduPlatform <-> consumer-school settlement statements (platform fee on
+    // gross collected per period; B2B, visible only to workspace managers).
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_platform_stmt'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('consumerid'),
+        xmldb_local_prequran_field_char('statementnumber', 80),
+        xmldb_local_prequran_field_int('periodstart'),
+        xmldb_local_prequran_field_int('periodend'),
+        xmldb_local_prequran_field_char('currency', 10, 'USD'),
+        xmldb_local_prequran_field_char('grosscollected', 40, '0.00'),
+        xmldb_local_prequran_field_char('feepercent', 40, '0.00'),
+        xmldb_local_prequran_field_char('feeamount', 40, '0.00'),
+        xmldb_local_prequran_field_char('adjustment', 40, '0.00'),
+        xmldb_local_prequran_field_char('adjustmentnote', 255),
+        xmldb_local_prequran_field_char('netdue', 40, '0.00'),
+        xmldb_local_prequran_field_char('status', 40, 'draft'),
+        xmldb_local_prequran_field_int('paymentcount'),
+        xmldb_local_prequran_field_text('detailjson'),
+        xmldb_local_prequran_field_text('notes'),
+        xmldb_local_prequran_field_text('metadatajson'),
+        xmldb_local_prequran_field_int('issuedat'),
+        xmldb_local_prequran_field_int('sentat'),
+        xmldb_local_prequran_field_int('paidat'),
+        xmldb_local_prequran_field_char('paidreference', 120),
+        xmldb_local_prequran_field_int('voidedat'),
+        xmldb_local_prequran_field_int('createdby'),
+        xmldb_local_prequran_field_int('modifiedby'),
+        xmldb_local_prequran_field_int('timecreated'),
+        xmldb_local_prequran_field_int('timemodified'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqpst_cons_ix', XMLDB_INDEX_NOTUNIQUE, ['consumerid', 'periodstart']),
+        new xmldb_index('preqpst_status_ix', XMLDB_INDEX_NOTUNIQUE, ['status']),
+    ]);
+}
+
+function xmldb_local_prequran_ensure_identity_schema(): void {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+
+    // Portal/launch token registry: enables per-token and per-user revocation
+    // for the stateless HS256 tokens (legacy tokens without a jti stay valid
+    // until expiry; rows are pruned 7 days past expiry by the reconcile task).
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_token_issue'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('userid'),
+        xmldb_local_prequran_field_char('jti', 32),
+        xmldb_local_prequran_field_char('scope', 100),
+        xmldb_local_prequran_field_int('issuedat'),
+        xmldb_local_prequran_field_int('expiresat'),
+        xmldb_local_prequran_field_int('revokedat'),
+        xmldb_local_prequran_field_int('revokedby'),
+        xmldb_local_prequran_field_int('timecreated'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqtok_jti_uix', XMLDB_INDEX_UNIQUE, ['jti']),
+        new xmldb_index('preqtok_user_ix', XMLDB_INDEX_NOTUNIQUE, ['userid', 'revokedat', 'expiresat']),
+    ]);
+}
+
+function xmldb_local_prequran_ensure_lms_schema(): void {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+
+    // Curriculum map: catalog_sync previously DROPPED cambridgeCode/subject/
+    // stage/level/unit metadata (only fullname/category/summary/dates reached
+    // Moodle). This persists it per course so transcripts, reports, and
+    // standards alignment can reference the framework the course teaches.
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_curriculum_map'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('courseid'),
+        xmldb_local_prequran_field_char('idnumber', 120),
+        xmldb_local_prequran_field_char('subject', 120),
+        xmldb_local_prequran_field_char('subject_key', 40),
+        xmldb_local_prequran_field_int('stage'),
+        xmldb_local_prequran_field_char('level', 100),
+        xmldb_local_prequran_field_char('cambridge_code', 40),
+        xmldb_local_prequran_field_char('framework', 255),
+        xmldb_local_prequran_field_int('unitcount'),
+        xmldb_local_prequran_field_text('unitsjson'),
+        xmldb_local_prequran_field_int('timecreated'),
+        xmldb_local_prequran_field_int('timemodified'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqcur_course_uix', XMLDB_INDEX_UNIQUE, ['courseid']),
+        new xmldb_index('preqcur_idnum_ix', XMLDB_INDEX_NOTUNIQUE, ['idnumber']),
+    ]);
+}
+
+function xmldb_local_prequran_ensure_assessment_analytics_schema(): void {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+
+    // Assessment: formative/summative/practice classification (previously every
+    // assessment flowed through the same graded pipeline with no distinction)
+    // + attempt limit.
+    $assess = new xmldb_table('local_prequran_assessment');
+    if ($dbman->table_exists($assess)) {
+        xmldb_local_prequran_add_field_if_missing($dbman, $assess, xmldb_local_prequran_field_char('grade_impact', 20, 'summative'));
+        xmldb_local_prequran_add_field_if_missing($dbman, $assess, xmldb_local_prequran_field_int('max_attempts', 10, 0));
+    }
+
+    // Grade: real moderation / second-marker trail (the existing reviewedby is
+    // the same teacher self-attesting; this adds an INDEPENDENT moderation stage).
+    $grade = new xmldb_table('local_prequran_grade');
+    if ($dbman->table_exists($grade)) {
+        xmldb_local_prequran_add_field_if_missing($dbman, $grade, xmldb_local_prequran_field_char('moderation_status', 40, 'not_required'));
+        xmldb_local_prequran_add_field_if_missing($dbman, $grade, xmldb_local_prequran_field_int('moderatedby'));
+        xmldb_local_prequran_add_field_if_missing($dbman, $grade, xmldb_local_prequran_field_int('moderatedat'));
+        xmldb_local_prequran_add_field_if_missing($dbman, $grade, xmldb_local_prequran_field_text('moderation_note'));
+    }
+
+    // SEB attempt: a score + integrity verdict (the attempt previously carried
+    // NO mark at all — only status/focus_breaks/sebverified). Added via xmldb so
+    // the manually-created SEB tables gain the columns on upgrade.
+    $seb = new xmldb_table('local_prequran_seb_attempt');
+    if ($dbman->table_exists($seb)) {
+        xmldb_local_prequran_add_field_if_missing($dbman, $seb, xmldb_local_prequran_field_char('score_points', 40));
+        xmldb_local_prequran_add_field_if_missing($dbman, $seb, xmldb_local_prequran_field_char('max_points', 40));
+        xmldb_local_prequran_add_field_if_missing($dbman, $seb, xmldb_local_prequran_field_char('score_percent', 40));
+        xmldb_local_prequran_add_field_if_missing($dbman, $seb, xmldb_local_prequran_field_char('integrity_verdict', 20, 'unset'));
+        xmldb_local_prequran_add_field_if_missing($dbman, $seb, xmldb_local_prequran_field_text('verdict_note'));
+        xmldb_local_prequran_add_field_if_missing($dbman, $seb, xmldb_local_prequran_field_int('gradedby'));
+        xmldb_local_prequran_add_field_if_missing($dbman, $seb, xmldb_local_prequran_field_int('gradedat'));
+    }
+
+    // Analytics snapshots: the table exists but only executive-dashboard writes
+    // it (manual). Index it for the scheduled snapshot task's lookups.
+    $snap = new xmldb_table('local_prequran_analytics_snap');
+    if ($dbman->table_exists($snap)) {
+        xmldb_local_prequran_add_index_if_missing($dbman, $snap,
+            new xmldb_index('preqsnap_wt_ix', XMLDB_INDEX_NOTUNIQUE, ['workspaceid', 'snapshot_type', 'timecreated']));
+    }
+}
+
+function xmldb_local_prequran_ensure_infra_schema(): void {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+
+    // IP-keyed rate-limit hits: the public verify pages previously throttled on
+    // $_SESSION, which a cookieless client resets every request (bypass). This
+    // backs a session-independent limiter keyed on a hashed remote address.
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_rate_hit'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_char('bucket', 60),
+        xmldb_local_prequran_field_char('iphash', 64),
+        xmldb_local_prequran_field_int('timecreated'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqrate_bit_ix', XMLDB_INDEX_NOTUNIQUE, ['bucket', 'iphash', 'timecreated']),
+        new xmldb_index('preqrate_time_ix', XMLDB_INDEX_NOTUNIQUE, ['timecreated']),
+    ]);
+}
+
+function xmldb_local_prequran_ensure_institution_records_schema(): void {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+
+    // Report cards: the periodic per-term student report (grades + attendance +
+    // conduct + teacher narrative) that did not exist — distinct from the
+    // cumulative official transcript.
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_report_card'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('consumerid'),
+        xmldb_local_prequran_field_int('workspaceid'),
+        xmldb_local_prequran_field_int('studentid'),
+        xmldb_local_prequran_field_int('termid'),
+        xmldb_local_prequran_field_char('cardnumber', 80),
+        xmldb_local_prequran_field_char('status', 40, 'draft'),
+        xmldb_local_prequran_field_char('overall_grade', 40),
+        xmldb_local_prequran_field_char('attendance_rate', 40),
+        xmldb_local_prequran_field_char('conduct', 40, 'not_assessed'),
+        xmldb_local_prequran_field_char('effort', 40, 'not_assessed'),
+        xmldb_local_prequran_field_text('grades_json'),
+        xmldb_local_prequran_field_text('attendance_json'),
+        xmldb_local_prequran_field_text('teacher_narrative'),
+        xmldb_local_prequran_field_text('head_comment'),
+        xmldb_local_prequran_field_int('generateddocid'),
+        xmldb_local_prequran_field_int('issuedby'),
+        xmldb_local_prequran_field_int('issuedat'),
+        xmldb_local_prequran_field_int('createdby'),
+        xmldb_local_prequran_field_int('timecreated'),
+        xmldb_local_prequran_field_int('timemodified'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqrc_stu_uix', XMLDB_INDEX_UNIQUE, ['studentid', 'termid']),
+        new xmldb_index('preqrc_ws_ix', XMLDB_INDEX_NOTUNIQUE, ['workspaceid', 'status', 'termid']),
+    ]);
+
+    // Fee schedule / price book: reusable tuition-by-grade/level/program
+    // templates (pricing was per-offering only, with no shared catalog).
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_fee_schedule'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('consumerid'),
+        xmldb_local_prequran_field_int('workspaceid'),
+        xmldb_local_prequran_field_char('schedule_code', 80),
+        xmldb_local_prequran_field_char('title', 255),
+        xmldb_local_prequran_field_char('applies_to', 40, 'grade'),
+        xmldb_local_prequran_field_char('applies_value', 120),
+        xmldb_local_prequran_field_char('academic_year', 40),
+        xmldb_local_prequran_field_char('currency', 10, 'USD'),
+        xmldb_local_prequran_field_char('tuition_amount', 40, '0.00'),
+        xmldb_local_prequran_field_char('registration_fee', 40, '0.00'),
+        xmldb_local_prequran_field_char('materials_fee', 40, '0.00'),
+        xmldb_local_prequran_field_char('sibling_discount_percent', 40, '0.00'),
+        xmldb_local_prequran_field_char('early_payment_discount_percent', 40, '0.00'),
+        xmldb_local_prequran_field_char('status', 40, 'active'),
+        xmldb_local_prequran_field_text('notes'),
+        xmldb_local_prequran_field_int('createdby'),
+        xmldb_local_prequran_field_int('timecreated'),
+        xmldb_local_prequran_field_int('timemodified'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqfee_ws_ix', XMLDB_INDEX_NOTUNIQUE, ['workspaceid', 'status']),
+        new xmldb_index('preqfee_code_ix', XMLDB_INDEX_NOTUNIQUE, ['workspaceid', 'schedule_code']),
+    ]);
+
+    // Student enrolment-status lifecycle: the profile status was a flat
+    // 'active'. This adds a proper enrolled/withdrawn/graduated/suspended/
+    // alumni lifecycle field without disturbing the legacy 'status' column.
+    $profile = new xmldb_table('local_prequran_student_profile');
+    if ($dbman->table_exists($profile)) {
+        xmldb_local_prequran_add_field_if_missing($dbman, $profile,
+            xmldb_local_prequran_field_char('enrolment_status', 40, 'enrolled'));
+        xmldb_local_prequran_add_field_if_missing($dbman, $profile,
+            xmldb_local_prequran_field_int('enrolment_status_at'));
+        xmldb_local_prequran_add_field_if_missing($dbman, $profile,
+            xmldb_local_prequran_field_int('admission_date'));
+    }
+}
+
+function xmldb_local_prequran_ensure_records_completeness_schema(): void {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+
+    // SIS demographic completeness + a distinct admission number (the profile
+    // already carries DOB/gender/emergency/medical/country/city; these fill the
+    // remaining standard fields).
+    $profile = new xmldb_table('local_prequran_student_profile');
+    if ($dbman->table_exists($profile)) {
+        xmldb_local_prequran_add_field_if_missing($dbman, $profile, xmldb_local_prequran_field_char('nationality', 100));
+        xmldb_local_prequran_add_field_if_missing($dbman, $profile, xmldb_local_prequran_field_char('address_line', 255));
+        xmldb_local_prequran_add_field_if_missing($dbman, $profile, xmldb_local_prequran_field_char('postal_code', 40));
+        xmldb_local_prequran_add_field_if_missing($dbman, $profile, xmldb_local_prequran_field_char('admission_number', 60));
+        xmldb_local_prequran_add_index_if_missing($dbman, $profile,
+            new xmldb_index('preqstudprof_adm_ix', XMLDB_INDEX_NOTUNIQUE, ['admission_number']));
+    }
+
+    // Per-workspace admission-number sequence counter.
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_adm_seq'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('workspaceid'),
+        xmldb_local_prequran_field_char('year_code', 20),
+        xmldb_local_prequran_field_int('lastseq'),
+        xmldb_local_prequran_field_int('timemodified'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqadmseq_uix', XMLDB_INDEX_UNIQUE, ['workspaceid', 'year_code']),
+    ]);
+
+    // Behaviour / conduct records: merits and incidents with severity + action
+    // (the SIS had NO discipline/behaviour store at all).
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_behaviour'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('consumerid'),
+        xmldb_local_prequran_field_int('workspaceid'),
+        xmldb_local_prequran_field_int('studentid'),
+        xmldb_local_prequran_field_char('record_type', 40, 'incident'),
+        xmldb_local_prequran_field_char('category', 80),
+        xmldb_local_prequran_field_char('severity', 40, 'low'),
+        xmldb_local_prequran_field_char('title', 255),
+        xmldb_local_prequran_field_text('description'),
+        xmldb_local_prequran_field_text('action_taken'),
+        xmldb_local_prequran_field_int('incident_date'),
+        xmldb_local_prequran_field_int('parent_visible', 1, 0),
+        xmldb_local_prequran_field_char('status', 40, 'open'),
+        xmldb_local_prequran_field_int('recordedby'),
+        xmldb_local_prequran_field_int('resolvedby'),
+        xmldb_local_prequran_field_int('resolvedat'),
+        xmldb_local_prequran_field_int('timecreated'),
+        xmldb_local_prequran_field_int('timemodified'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqbhv_stu_ix', XMLDB_INDEX_NOTUNIQUE, ['workspaceid', 'studentid', 'incident_date']),
+    ]);
+
+    // Staff HR record for NON-teaching staff (admin/registrar/finance/support):
+    // teacher_contract is pay-only; there was no employment record for anyone.
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_staff_record'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('consumerid'),
+        xmldb_local_prequran_field_int('workspaceid'),
+        xmldb_local_prequran_field_int('userid'),
+        xmldb_local_prequran_field_char('staff_number', 60),
+        xmldb_local_prequran_field_char('role_title', 120),
+        xmldb_local_prequran_field_char('employment_type', 40, 'full_time'),
+        xmldb_local_prequran_field_char('department', 120),
+        xmldb_local_prequran_field_int('start_date'),
+        xmldb_local_prequran_field_int('end_date'),
+        xmldb_local_prequran_field_char('payroll_ref', 80),
+        xmldb_local_prequran_field_char('emergency_contact_name', 255),
+        xmldb_local_prequran_field_char('emergency_contact_phone', 100),
+        xmldb_local_prequran_field_text('qualifications'),
+        xmldb_local_prequran_field_char('status', 40, 'active'),
+        xmldb_local_prequran_field_text('notes'),
+        xmldb_local_prequran_field_int('createdby'),
+        xmldb_local_prequran_field_int('timecreated'),
+        xmldb_local_prequran_field_int('timemodified'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqstaff_uix', XMLDB_INDEX_UNIQUE, ['workspaceid', 'userid']),
+        new xmldb_index('preqstaff_status_ix', XMLDB_INDEX_NOTUNIQUE, ['workspaceid', 'status']),
+    ]);
+}
+
+function xmldb_local_prequran_ensure_marketplace_core_schema(): void {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+
+    // Reviews: the session_rating.comment was captured but NEVER surfaced (only
+    // AVG(rating) was consumed). Add moderation + tutor reply so written reviews
+    // can become a public reputation layer.
+    $rating = new xmldb_table('local_prequran_session_rating');
+    if ($dbman->table_exists($rating)) {
+        xmldb_local_prequran_add_field_if_missing($dbman, $rating, xmldb_local_prequran_field_char('moderation_status', 40, 'approved'));
+        xmldb_local_prequran_add_field_if_missing($dbman, $rating, xmldb_local_prequran_field_int('hidden'));
+        xmldb_local_prequran_add_field_if_missing($dbman, $rating, xmldb_local_prequran_field_text('tutor_reply'));
+        xmldb_local_prequran_add_field_if_missing($dbman, $rating, xmldb_local_prequran_field_int('tutor_reply_at'));
+    }
+
+    // Structured tutor pricing + trial (pricing was a free-text blob only, so it
+    // could not be filtered, sorted, or compared).
+    $profile = new xmldb_table('local_prequran_teacher_profile');
+    if ($dbman->table_exists($profile)) {
+        xmldb_local_prequran_add_field_if_missing($dbman, $profile, xmldb_local_prequran_field_char('hourly_rate', 40));
+        xmldb_local_prequran_add_field_if_missing($dbman, $profile, xmldb_local_prequran_field_char('rate_currency', 10, 'USD'));
+        xmldb_local_prequran_add_field_if_missing($dbman, $profile, xmldb_local_prequran_field_int('session_length_minutes'));
+        xmldb_local_prequran_add_field_if_missing($dbman, $profile, xmldb_local_prequran_field_int('trial_available'));
+        xmldb_local_prequran_add_field_if_missing($dbman, $profile, xmldb_local_prequran_field_char('trial_rate', 40));
+        xmldb_local_prequran_add_field_if_missing($dbman, $profile, xmldb_local_prequran_field_char('marketplace_commission_percent', 40));
+    }
+
+    // Marketplace lesson/tutor dispute flow (student/parent-vs-tutor: no-show,
+    // quality, refund request) with a resolution + optional refund outcome —
+    // there was no lesson dispute at all (only academic grade + finance-status).
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_lesson_dispute'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('consumerid'),
+        xmldb_local_prequran_field_int('workspaceid'),
+        xmldb_local_prequran_field_int('studentid'),
+        xmldb_local_prequran_field_int('teacherid'),
+        xmldb_local_prequran_field_int('sessionid'),
+        xmldb_local_prequran_field_int('raisedby'),
+        xmldb_local_prequran_field_char('disputenumber', 60),
+        xmldb_local_prequran_field_char('dispute_type', 40, 'quality'),
+        xmldb_local_prequran_field_char('desired_outcome', 40, 'review'),
+        xmldb_local_prequran_field_text('description'),
+        xmldb_local_prequran_field_char('status', 40, 'open'),
+        xmldb_local_prequran_field_char('resolution_type', 40),
+        xmldb_local_prequran_field_text('resolution'),
+        xmldb_local_prequran_field_int('refundid'),
+        xmldb_local_prequran_field_int('resolvedby'),
+        xmldb_local_prequran_field_int('resolvedat'),
+        xmldb_local_prequran_field_int('timecreated'),
+        xmldb_local_prequran_field_int('timemodified'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqldisp_ws_ix', XMLDB_INDEX_NOTUNIQUE, ['workspaceid', 'status', 'timecreated']),
+        new xmldb_index('preqldisp_stu_ix', XMLDB_INDEX_NOTUNIQUE, ['studentid', 'status']),
+    ]);
+}
+
+function xmldb_local_prequran_ensure_live_learning_schema(): void {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+
+    // Per-session AV policy: webcam policy + a waiting room / lobby. Wired into
+    // the BBB create call; the platform previously hardcoded cameras off and had
+    // no lobby.
+    $session = new xmldb_table('local_prequran_live_session');
+    if ($dbman->table_exists($session)) {
+        xmldb_local_prequran_add_field_if_missing($dbman, $session, xmldb_local_prequran_field_char('webcam_policy', 20, 'locked'));
+        xmldb_local_prequran_add_field_if_missing($dbman, $session, xmldb_local_prequran_field_int('waiting_room'));
+    }
+
+    // In-session polls / exit tickets — the platform had NO interactive
+    // primitive (no polls, raise-hand, reactions, exit tickets). A teacher posts
+    // a quick question on a session; students answer; results are tallied.
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_live_poll'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('consumerid'),
+        xmldb_local_prequran_field_int('workspaceid'),
+        xmldb_local_prequran_field_int('sessionid'),
+        xmldb_local_prequran_field_int('teacherid'),
+        xmldb_local_prequran_field_char('poll_type', 40, 'poll'),
+        xmldb_local_prequran_field_char('question', 500),
+        xmldb_local_prequran_field_text('options_json'),
+        xmldb_local_prequran_field_char('status', 40, 'open'),
+        xmldb_local_prequran_field_int('createdby'),
+        xmldb_local_prequran_field_int('timecreated'),
+        xmldb_local_prequran_field_int('timemodified'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqpoll_sess_ix', XMLDB_INDEX_NOTUNIQUE, ['sessionid', 'status']),
+        new xmldb_index('preqpoll_ws_ix', XMLDB_INDEX_NOTUNIQUE, ['workspaceid', 'timecreated']),
+    ]);
+
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_live_poll_resp'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('pollid'),
+        xmldb_local_prequran_field_int('studentid'),
+        xmldb_local_prequran_field_int('answer_index'),
+        xmldb_local_prequran_field_char('answer_text', 500),
+        xmldb_local_prequran_field_int('timecreated'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqpollr_uix', XMLDB_INDEX_UNIQUE, ['pollid', 'studentid']),
+    ]);
+}
+
+function xmldb_local_prequran_ensure_content_authoring_schema(): void {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+
+    // Learning objectives: the content JSON carries rich per-unit outcomes
+    // (learning outcome text, Bloom level, evidence, per-question outcomeId) but
+    // NONE of it reached Moodle (which knew only unit titles). This ingests /
+    // manages them so objective coverage is answerable in-platform.
+    $objective = new xmldb_table('local_prequran_objective');
+    xmldb_local_prequran_create_table_if_missing($dbman, $objective, [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('workspaceid'),
+        xmldb_local_prequran_field_int('courseid'),
+        xmldb_local_prequran_field_char('course_idnumber', 120),
+        xmldb_local_prequran_field_int('unit_number'),
+        xmldb_local_prequran_field_char('unit_title', 255),
+        xmldb_local_prequran_field_char('objective_code', 100),
+        xmldb_local_prequran_field_int('sequence'),
+        xmldb_local_prequran_field_text('learning_outcome'),
+        xmldb_local_prequran_field_char('bloom_level', 60),
+        xmldb_local_prequran_field_text('evidence'),
+        xmldb_local_prequran_field_char('framework_code', 60),
+        xmldb_local_prequran_field_char('status', 40, 'active'),
+        xmldb_local_prequran_field_int('createdby'),
+        xmldb_local_prequran_field_int('timecreated'),
+        xmldb_local_prequran_field_int('timemodified'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqobj_course_ix', XMLDB_INDEX_NOTUNIQUE, ['courseid', 'unit_number', 'sequence']),
+        new xmldb_index('preqobj_code_uix', XMLDB_INDEX_UNIQUE, ['courseid', 'objective_code']),
+        new xmldb_index('preqobj_ws_ix', XMLDB_INDEX_NOTUNIQUE, ['workspaceid', 'courseid']),
+    ]);
+    // Tenant-scoping column added after the table shipped (objectives were
+    // globally addressable by courseid). Backfilled for existing rows below.
+    if ($dbman->table_exists($objective)) {
+        xmldb_local_prequran_add_field_if_missing($dbman, $objective, xmldb_local_prequran_field_int('workspaceid'));
+        // Unit title travels with the objective so the syllabus does not have to
+        // infer unit names from gradebook items (where unit 0 is ambiguous with
+        // catalog_sync's 'final' item).
+        xmldb_local_prequran_add_field_if_missing($dbman, $objective, xmldb_local_prequran_field_char('unit_title', 255));
+        xmldb_local_prequran_add_index_if_missing($dbman, $objective,
+            new xmldb_index('preqobj_ws_ix', XMLDB_INDEX_NOTUNIQUE, ['workspaceid', 'courseid']));
+    }
+
+    // Content review register: the platform had NO approval workflow or trail
+    // for lesson content (approval was offline JSON string-flags + scripts).
+    // This tracks each content item's review state + reviewer in-platform.
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_content_review'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('consumerid'),
+        xmldb_local_prequran_field_int('workspaceid'),
+        xmldb_local_prequran_field_char('content_type', 40, 'unit'),
+        xmldb_local_prequran_field_char('content_ref', 255),
+        xmldb_local_prequran_field_char('title', 255),
+        xmldb_local_prequran_field_char('review_status', 40, 'draft'),
+        xmldb_local_prequran_field_char('content_version', 60),
+        xmldb_local_prequran_field_text('notes'),
+        xmldb_local_prequran_field_int('reviewedby'),
+        xmldb_local_prequran_field_int('reviewedat'),
+        xmldb_local_prequran_field_int('createdby'),
+        xmldb_local_prequran_field_int('timecreated'),
+        xmldb_local_prequran_field_int('timemodified'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqcrev_ws_ix', XMLDB_INDEX_NOTUNIQUE, ['workspaceid', 'review_status']),
+        new xmldb_index('preqcrev_ref_uix', XMLDB_INDEX_UNIQUE, ['workspaceid', 'content_type', 'content_ref']),
+    ]);
+
+    // Materials: tags/category for a searchable, reusable materials library
+    // (there was material_type + course_key + free-text metadata only).
+    $material = new xmldb_table('local_prequran_workspace_material');
+    if ($dbman->table_exists($material)) {
+        xmldb_local_prequran_add_field_if_missing($dbman, $material, xmldb_local_prequran_field_char('tags', 255));
+        xmldb_local_prequran_add_field_if_missing($dbman, $material, xmldb_local_prequran_field_char('category', 120));
+    }
+}
+
+/**
+ * Course syllabus (Canvas model): an AUTHORED narrative — written by the subject
+ * teacher, approved by a school administrator before it can be published — plus
+ * a GENERATED schedule assembled live at render time from objectives, homework,
+ * terms and the gradebook. Only the narrative is stored here; the half that goes
+ * stale is never typed by hand.
+ *
+ * Keyed on (workspaceid, moodlecourseid, academicyear). moodlecourseid is the
+ * ONE identifier both course systems share — catalog_sync courses have no
+ * offering row, offering courses have no catalog entry — so a single syllabus
+ * table serves every consumer on either path. academicyear (2026 = 2026-27,
+ * matching the cohorts.json convention) gives per-year versioning, so an
+ * approved syllabus stays a durable artifact for inspection and appeals.
+ */
+function xmldb_local_prequran_ensure_syllabus_schema(): void {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_syllabus'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('consumerid'),
+        xmldb_local_prequran_field_int('workspaceid'),
+        xmldb_local_prequran_field_int('moodlecourseid'),
+        xmldb_local_prequran_field_int('academicyear'),
+        xmldb_local_prequran_field_text('overview'),
+        xmldb_local_prequran_field_text('teacher_intro'),
+        xmldb_local_prequran_field_text('contact'),
+        xmldb_local_prequran_field_text('policies_json'),
+        xmldb_local_prequran_field_char('visibility', 40, 'enrolled'),
+        xmldb_local_prequran_field_char('status', 40, 'draft'),
+        xmldb_local_prequran_field_text('review_note'),
+        xmldb_local_prequran_field_int('submittedby'),
+        xmldb_local_prequran_field_int('submittedat'),
+        xmldb_local_prequran_field_int('approvedby'),
+        xmldb_local_prequran_field_int('approvedat'),
+        xmldb_local_prequran_field_int('createdby'),
+        xmldb_local_prequran_field_int('modifiedby'),
+        xmldb_local_prequran_field_int('timecreated'),
+        xmldb_local_prequran_field_int('timemodified'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqsyl_uix', XMLDB_INDEX_UNIQUE, ['workspaceid', 'moodlecourseid', 'academicyear']),
+        new xmldb_index('preqsyl_course_ix', XMLDB_INDEX_NOTUNIQUE, ['moodlecourseid', 'status']),
+        // The public route filters on exactly this pair; keep it indexed.
+        new xmldb_index('preqsyl_pub_ix', XMLDB_INDEX_NOTUNIQUE, ['visibility', 'status']),
+    ]);
+}
+
+/**
+ * DR / fresh-install completeness: the SEB exam tables (seb_exam, seb_exam_student,
+ * seb_attempt, seb_proctor) and the speaking/submission capture tables (speakrec,
+ * submitrec) shipped as manual sql/*.sql only — upgradelib merely DECORATED them
+ * (added the SEB score columns and the speakrec/submitrec 'environment' field) if
+ * they already existed. A clean xmldb install therefore lacked these tables and
+ * the exam / speaking-practice features would fatal. This ports the full CREATE
+ * TABLEs into the versioned schema. create_table_if_missing makes it inert on the
+ * live box (the tables already exist) and correct on a rebuild.
+ */
+function xmldb_local_prequran_ensure_exam_capture_schema(): void {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+
+    // Safe Exam Browser exam definitions.
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_seb_exam'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('workspaceid'),
+        xmldb_local_prequran_field_int('createdby'),
+        xmldb_local_prequran_field_char('title', 255),
+        xmldb_local_prequran_field_text('description'),
+        xmldb_local_prequran_field_text('embedurl'),
+        xmldb_local_prequran_field_char('mode', 20, 'seb'),
+        xmldb_local_prequran_field_int('proctoring', 1, 0),
+        xmldb_local_prequran_field_int('duration_minutes', 10, 30),
+        xmldb_local_prequran_field_char('quitpassword', 100),
+        xmldb_local_prequran_field_int('window_start'),
+        xmldb_local_prequran_field_int('window_end'),
+        xmldb_local_prequran_field_char('status', 20, 'active'),
+        xmldb_local_prequran_field_text('allowjson'),
+        xmldb_local_prequran_field_int('timecreated'),
+        xmldb_local_prequran_field_int('timemodified'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqsebx_ws_ix', XMLDB_INDEX_NOTUNIQUE, ['workspaceid']),
+        new xmldb_index('preqsebx_creator_ix', XMLDB_INDEX_NOTUNIQUE, ['createdby']),
+        new xmldb_index('preqsebx_status_ix', XMLDB_INDEX_NOTUNIQUE, ['status']),
+    ]);
+
+    // Per-student exam assignment.
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_seb_exam_student'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('examid'),
+        xmldb_local_prequran_field_int('studentid'),
+        xmldb_local_prequran_field_int('timecreated'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqsebxs_uix', XMLDB_INDEX_UNIQUE, ['examid', 'studentid']),
+        new xmldb_index('preqsebxs_student_ix', XMLDB_INDEX_NOTUNIQUE, ['studentid']),
+    ]);
+
+    // Exam attempt + teacher-recorded mark + integrity verdict.
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_seb_attempt'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('examid'),
+        xmldb_local_prequran_field_int('userid'),
+        xmldb_local_prequran_field_int('timestarted'),
+        xmldb_local_prequran_field_int('timefinished'),
+        xmldb_local_prequran_field_int('sebverified', 1, 0),
+        xmldb_local_prequran_field_int('focus_breaks'),
+        xmldb_local_prequran_field_char('status', 20, 'in_progress'),
+        xmldb_local_prequran_field_char('score_points', 40),
+        xmldb_local_prequran_field_char('max_points', 40),
+        xmldb_local_prequran_field_char('score_percent', 40),
+        xmldb_local_prequran_field_char('integrity_verdict', 20, 'unset'),
+        xmldb_local_prequran_field_text('verdict_note'),
+        xmldb_local_prequran_field_int('gradedby'),
+        xmldb_local_prequran_field_int('gradedat'),
+        xmldb_local_prequran_field_int('timecreated'),
+        xmldb_local_prequran_field_int('timemodified'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqseba_uix', XMLDB_INDEX_UNIQUE, ['examid', 'userid']),
+        new xmldb_index('preqseba_user_ix', XMLDB_INDEX_NOTUNIQUE, ['userid']),
+    ]);
+
+    // Proctoring evidence (webcam snapshot base64 in imagedata; voice = level only).
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_seb_proctor'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('examid'),
+        xmldb_local_prequran_field_int('userid'),
+        xmldb_local_prequran_field_int('attemptid'),
+        xmldb_local_prequran_field_char('type', 20),
+        xmldb_local_prequran_field_text('detail'),
+        xmldb_local_prequran_field_text('imagedata'),
+        xmldb_local_prequran_field_int('level'),
+        xmldb_local_prequran_field_int('timecreated'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqsebp_examuser_ix', XMLDB_INDEX_NOTUNIQUE, ['examid', 'userid']),
+        new xmldb_index('preqsebp_time_ix', XMLDB_INDEX_NOTUNIQUE, ['timecreated']),
+    ]);
+
+    // Speaking-practice recordings (audio stored on Bunny; row is metadata).
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_speakrec'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('userid'),
+        xmldb_local_prequran_field_char('lessonid', 100),
+        xmldb_local_prequran_field_char('unitid', 100),
+        xmldb_local_prequran_field_char('step_id', 100, 'speak'),
+        xmldb_local_prequran_field_char('letter_key', 100),
+        xmldb_local_prequran_field_char('letter_name', 100),
+        xmldb_local_prequran_field_char('letter_text', 100),
+        xmldb_local_prequran_field_int('attempt_no', 20, 1),
+        xmldb_local_prequran_field_int('duration_ms'),
+        xmldb_local_prequran_field_char('mime_type', 100, 'audio/webm'),
+        xmldb_local_prequran_field_int('filesize'),
+        xmldb_local_prequran_field_char('filename', 255),
+        xmldb_local_prequran_field_char('bunny_path', 500),
+        xmldb_local_prequran_field_char('status', 50, 'submitted'),
+        new xmldb_field('score', XMLDB_TYPE_NUMBER, '10, 2', null, null, null, null),
+        xmldb_local_prequran_field_text('teacher_feedback'),
+        xmldb_local_prequran_field_char('environment', 30, 'production'),
+        xmldb_local_prequran_field_int('timecreated'),
+        xmldb_local_prequran_field_int('timemodified'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqspk_user_ix', XMLDB_INDEX_NOTUNIQUE, ['userid']),
+        new xmldb_index('preqspk_unit_ix', XMLDB_INDEX_NOTUNIQUE, ['unitid']),
+        new xmldb_index('preqspk_status_ix', XMLDB_INDEX_NOTUNIQUE, ['status']),
+        new xmldb_index('preqspk_created_ix', XMLDB_INDEX_NOTUNIQUE, ['timecreated']),
+        new xmldb_index('preqspeakrec_env_ix', XMLDB_INDEX_NOTUNIQUE, ['environment', 'userid', 'lessonid', 'unitid']),
+    ]);
+
+    // Submission-practice recordings.
+    xmldb_local_prequran_create_table_if_missing($dbman, new xmldb_table('local_prequran_submitrec'), [
+        xmldb_local_prequran_field_id(),
+        xmldb_local_prequran_field_int('userid'),
+        xmldb_local_prequran_field_char('lessonid', 100),
+        xmldb_local_prequran_field_char('unitid', 100),
+        xmldb_local_prequran_field_char('step_id', 100, 'submit'),
+        xmldb_local_prequran_field_int('duration_ms'),
+        xmldb_local_prequran_field_char('mime_type', 100, 'audio/webm'),
+        xmldb_local_prequran_field_int('filesize'),
+        xmldb_local_prequran_field_char('filename', 255),
+        xmldb_local_prequran_field_char('bunny_path', 500),
+        xmldb_local_prequran_field_char('status', 50, 'submitted'),
+        new xmldb_field('score', XMLDB_TYPE_NUMBER, '10, 2', null, null, null, null),
+        xmldb_local_prequran_field_text('teacher_feedback'),
+        xmldb_local_prequran_field_char('environment', 30, 'production'),
+        xmldb_local_prequran_field_int('timecreated'),
+        xmldb_local_prequran_field_int('timemodified'),
+    ], [new xmldb_key('primary', XMLDB_KEY_PRIMARY, ['id'])], [
+        new xmldb_index('preqsub_user_lesson_unit_uix', XMLDB_INDEX_UNIQUE, ['userid', 'lessonid', 'unitid']),
+        new xmldb_index('preqsub_user_ix', XMLDB_INDEX_NOTUNIQUE, ['userid']),
+        new xmldb_index('preqsub_unit_ix', XMLDB_INDEX_NOTUNIQUE, ['unitid']),
+        new xmldb_index('preqsub_status_ix', XMLDB_INDEX_NOTUNIQUE, ['status']),
+        new xmldb_index('preqsubmitrec_env_ix', XMLDB_INDEX_NOTUNIQUE, ['environment', 'userid', 'lessonid', 'unitid']),
+    ]);
+}
+
+/**
+ * Cohort-of-a-course schema: pools and class groups gain a link to the real
+ * course they are cohorts OF (offeringid + moodlecourseid), and offerings gain
+ * the session requirement (sessions_per_week x session_minutes) that
+ * availability matching must satisfy.
+ *
+ * Before this, class_group carried only course_type -- a catalog string
+ * defaulting to 'pre_quraan' -- so "Grade 2 English, Nairobi cohort" was
+ * literally unrepresentable, and "3 x 1h live sessions per week" had nowhere
+ * to live on the offering.
+ */
+function xmldb_local_prequran_ensure_course_cohort_schema(): void {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+
+    foreach (['local_prequran_group_pool', 'local_prequran_class_group'] as $tablename) {
+        $table = new xmldb_table($tablename);
+        if (!$dbman->table_exists($table)) {
+            continue;
+        }
+        xmldb_local_prequran_add_field_if_missing($dbman, $table, xmldb_local_prequran_field_int('offeringid'));
+        xmldb_local_prequran_add_field_if_missing($dbman, $table, xmldb_local_prequran_field_int('moodlecourseid'));
+        xmldb_local_prequran_add_index_if_missing($dbman, $table, new xmldb_index(
+            substr($tablename, strlen('local_prequran_')) . '_off_ix',
+            XMLDB_INDEX_NOTUNIQUE,
+            ['offeringid']
+        ));
+    }
+
+    $offering = new xmldb_table('local_prequran_course_offering');
+    if ($dbman->table_exists($offering)) {
+        xmldb_local_prequran_add_field_if_missing($dbman, $offering, xmldb_local_prequran_field_int('sessions_per_week'));
+        xmldb_local_prequran_add_field_if_missing($dbman, $offering, xmldb_local_prequran_field_int('session_minutes'));
+    }
+}
+
+/**
+ * Teacher shift assignment (shift1 = 10:00-20:00 EAT day, shift2 = 20:00-06:00
+ * EAT night). Effective matching availability becomes the teacher's declared
+ * hours intersected with their shift window; empty = unrestricted.
+ */
+function xmldb_local_prequran_ensure_teacher_shift_schema(): void {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+    $table = new xmldb_table('local_prequran_teacher_profile');
+    if ($dbman->table_exists($table)) {
+        xmldb_local_prequran_add_field_if_missing($dbman, $table, xmldb_local_prequran_field_char('shift', 20));
+    }
+}
+
+/**
+ * Structured availability on the student profile: the canonical, editable
+ * copy that matching reads (profile first, newest intake request as the
+ * fallback for students created before this column existed). The old
+ * free-text `availability` column stays as human notes.
+ */
+function xmldb_local_prequran_ensure_student_availability_schema(): void {
+    global $DB;
+
+    $dbman = $DB->get_manager();
+    $table = new xmldb_table('local_prequran_student_profile');
+    if ($dbman->table_exists($table)) {
+        xmldb_local_prequran_add_field_if_missing($dbman, $table, xmldb_local_prequran_field_text('availability_json'));
     }
 }

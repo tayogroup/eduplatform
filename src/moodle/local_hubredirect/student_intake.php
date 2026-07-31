@@ -169,7 +169,7 @@ function pqsi_existing_user(int $userid): stdClass {
         'mnethostid' => $CFG->mnet_localhost_id,
     ], '*', IGNORE_MISSING);
     if (!$user) {
-        throw new invalid_parameter_exception('Choose a valid existing Moodle student account.');
+        throw new invalid_parameter_exception('Choose a valid existing student account.');
     }
     return $user;
 }
@@ -264,7 +264,7 @@ function pqsi_send_parent_intake_email(stdClass $parent, stdClass $student, stri
         $lines[] = '';
     }
     if ($parentcreated) {
-        $lines[] = 'A parent/guardian Moodle account has also been created for you. Please use the login details shared by the academy team.';
+        $lines[] = 'A parent/guardian account has also been created for you. Please use the login details shared by the academy team.';
         $lines[] = '';
     }
     $lines[] = 'Thank you,';
@@ -293,10 +293,12 @@ function pqsi_save_profile(int $studentid, array $data): int {
         'city' => (string)$data['city'],
         'gender' => (string)$data['gender'],
         'availability' => (string)$data['availability'],
+        // Column-safe: only written once the availability_json column exists.
         'parent_preferences' => (string)$data['parent_preferences'],
         'status' => 'active',
         'timemodified' => $now,
     ];
+    pqsi_set_profile_field($record, 'availability_json', (string)($data['availability_json'] ?? ''));
     pqsi_set_profile_field($record, 'student_display_name', (string)$data['student_display_name']);
     pqsi_set_profile_field($record, 'student_middle_name', (string)$data['student_middle_name']);
     pqsi_set_profile_field($record, 'student_access_type', (string)$data['student_access_type']);
@@ -421,6 +423,9 @@ function pqsi_save_profile(int $studentid, array $data): int {
         'adult_learning_confidence',
         'adult_support_needs',
         'adult_notes',
+        'district',
+        'division',
+        'estate',
     ] as $field) {
         pqsi_set_profile_field($record, $field, (string)($data[$field] ?? ''));
     }
@@ -760,8 +765,12 @@ function pqsi_form_value(array $form, string $name): string {
 }
 
 function pqsi_field_label(string $name): string {
+    global $pqsiisprimaryeducation;
+    if ($name === 'course_type' && !empty($pqsiisprimaryeducation)) {
+        return 'Grade level';
+    }
     $labels = [
-        'existing_studentid' => 'Existing Moodle student ID',
+        'existing_studentid' => 'Existing student ID',
         'student_firstname' => 'First name',
         'student_middle_name' => 'Middle name',
         'student_lastname' => 'Last name',
@@ -883,6 +892,9 @@ function pqsi_field_label(string $name): string {
         'country' => 'Country',
         'city' => 'City',
         'city_other' => 'City not listed',
+        'district' => 'District',
+        'division' => 'Division',
+        'estate' => 'Estate',
         'timezone' => 'Time zone',
         'primary_language' => 'Primary language',
         'preferred_teaching_language' => 'Preferred teaching language',
@@ -1171,6 +1183,9 @@ $form = [
     'country' => '',
     'city' => '',
     'city_other' => '',
+    'district' => '',
+    'division' => '',
+    'estate' => '',
     'timezone' => 'Africa/Nairobi',
     'primary_language' => '',
     'preferred_teaching_language' => '',
@@ -1234,6 +1249,7 @@ if ($getworkspaceid > 0) {
     }
     $form['workspaceid'] = (string)$getworkspaceid;
 }
+pqh_enforce_role_domain($pqsiconsumercontext, $getworkspaceid, (int)$USER->id);
 
 $prefillrequestid = 0;
 if ($ready && $_SERVER['REQUEST_METHOD'] !== 'POST' && !empty($SESSION->pqsi_prefill) && is_array($SESSION->pqsi_prefill)) {
@@ -1246,8 +1262,8 @@ if ($ready && $_SERVER['REQUEST_METHOD'] !== 'POST' && !empty($SESSION->pqsi_pre
     }
     $prefillrequestid = (int)($form['requestid'] ?? 0);
     $message = $prefillrequestid > 0
-        ? 'Public intake request #' . $prefillrequestid . ' loaded. Review the details, then create the Moodle student intake.'
-        : 'Intake details loaded. Review the details, then create the Moodle student intake.';
+        ? 'Public intake request #' . $prefillrequestid . ' loaded. Review the details, then create the student intake.'
+        : 'Intake details loaded. Review the details, then create the student intake.';
 }
 
 if (!empty($SESSION->pqsi_created)) {
@@ -1264,6 +1280,7 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!confirm_sesskey()) {
             throw new invalid_parameter_exception('This student intake form expired. Please refresh and try again.');
         }
+        $photoupload = pqh_uploaded_photo_info($_FILES['student_photo'] ?? []);
         $requestid = optional_param('requestid', 0, PARAM_INT);
         $workspaceid = optional_param('workspaceid', 0, PARAM_INT);
         if ($workspaceid <= 0 && $requestid > 0) {
@@ -1279,6 +1296,8 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($workspaceid > 0 && !$workspaceallowed) {
             throw new invalid_parameter_exception('This workspace does not belong to the active consumer.');
         }
+        $schoolcontextforusername = $workspaceid > 0 ? pqh_consumer_context_by_workspace($workspaceid) : null;
+        $schoolslugforusername = (string)($schoolcontextforusername->consumerslug ?? $pqsiconsumercontext->consumerslug ?? '');
         $existingstudentid = optional_param('existing_studentid', 0, PARAM_INT);
         if ($existingstudentid > 0 && $pqsiisindependentteacher && !$pqsiisoperationsuser) {
             throw new invalid_parameter_exception('Use Find existing student to request access to an existing learner. Existing profiles cannot be transferred through intake.');
@@ -1428,6 +1447,9 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             'country' => $country,
             'city' => $city,
             'city_other' => $cityother,
+            'district' => pqsi_trim_param('district'),
+            'division' => pqsi_trim_param('division'),
+            'estate' => pqsi_trim_param('estate'),
             'timezone' => $timezone,
             'primary_language' => pqsi_trim_param('primary_language'),
             'preferred_teaching_language' => pqsi_trim_param('preferred_teaching_language'),
@@ -1492,13 +1514,13 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($existingstudentid <= 0 && ($firstname === '' || $middlename === '' || $lastname === '')) {
             if ($firstname === '') {
-                $fielderrors['student_firstname'] = 'First name is required when creating a new Moodle student account.';
+                $fielderrors['student_firstname'] = 'First name is required when creating a new student account.';
             }
             if ($middlename === '') {
                 $fielderrors['student_middle_name'] = 'Middle name is required.';
             }
             if ($lastname === '') {
-                $fielderrors['student_lastname'] = 'Last name is required when creating a new Moodle student account.';
+                $fielderrors['student_lastname'] = 'Last name is required when creating a new student account.';
             }
         } else if ($middlename === '') {
             $fielderrors['student_middle_name'] = 'Middle name is required.';
@@ -1716,6 +1738,9 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             'course_type' => $form['course_type'],
             'country' => $country,
             'city' => $savedcity,
+            'district' => $form['district'],
+            'division' => $form['division'],
+            'estate' => $form['estate'],
             'timezone' => $timezone,
             'primary_language' => $form['primary_language'],
             'preferred_teaching_language' => $form['preferred_teaching_language'],
@@ -1724,6 +1749,16 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             'tajweed_sub_level' => $form['tajweed_sub_level'],
             'learning_base' => $form['learning_base'],
             'availability' => $availabilityforsave,
+            // Structured copy of the same slots: the free-text line above is
+            // for humans, this is what availability matching reads. Without
+            // it, admin-created students had NO machine-readable availability
+            // and every cohort proposal reported them "no availability
+            // recorded" even though the admin had just ticked their hours.
+            'availability_json' => json_encode([
+                'timezone' => $form['timezone'],
+                'session_count' => (int)$form['session_count'],
+                'slots' => array_values($form['slots']),
+            ], JSON_UNESCAPED_SLASHES),
             'parent_name' => $parentname,
             'parent_relationship' => $parentrelationship,
             'parent_relationship_other' => $parentrelationshipother,
@@ -1742,7 +1777,6 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $fielderrors['live_class_consent'] = 'Live class consent is required before creating the student intake record.';
         }
         foreach ([
-            'course_type' => 'Course is required.',
             'country' => 'Country is required.',
             'city' => 'City is required.',
             'timezone' => 'Time zone is required.',
@@ -1755,19 +1789,26 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 $fielderrors[$field] = $fieldmessage;
             }
         }
+        if (trim((string)$data['course_type']) === '') {
+            $fielderrors['course_type'] = $pqsiisprimaryeducation ? 'Grade level is required.' : 'Course is required.';
+        }
         if (($pqsiisprimaryeducation || (string)$data['special_needs'] !== '') && !in_array((string)$data['special_needs'], ['yes', 'no'], true)) {
             $fielderrors['special_needs'] = 'Special Needs must be Yes or No.';
         }
         if (!array_key_exists((string)$data['student_access_type'], $pqsioptions['student_access_types'] ?? [])) {
             $fielderrors['student_access_type'] = 'Select Managed Student or Unmanaged Student.';
         }
-        if (!array_key_exists((string)$data['course_type'], $pqsioptions['course_types'] ?? [])) {
+        if ($pqsiisprimaryeducation) {
+            if (!array_key_exists((string)$data['course_type'], $pqsioptions['primary_grade_selection_levels'] ?? [])) {
+                $fielderrors['course_type'] = 'Select a valid grade level.';
+            }
+        } else if (!array_key_exists((string)$data['course_type'], $pqsioptions['course_types'] ?? [])) {
             $fielderrors['course_type'] = 'Select a valid course.';
         }
         if (!array_key_exists((string)$data['current_level'], $pqsioptions['current_levels'] ?? [])) {
             $fielderrors['current_level'] = 'Select a valid placement level.';
         }
-        if ((string)$data['current_level'] === 'level_3' && !array_key_exists((string)$data['tajweed_sub_level'], $pqsioptions['tajweed_sub_levels'] ?? [])) {
+        if (!$pqsiisprimaryeducation && (string)$data['current_level'] === 'level_3' && !array_key_exists((string)$data['tajweed_sub_level'], $pqsioptions['tajweed_sub_levels'] ?? [])) {
             $fielderrors['tajweed_sub_level'] = 'Select Beginner, Middle, or Advanced for Level 3.';
         }
         if (!array_key_exists((string)$data['preferred_teaching_language'], $pqsioptions['primary_languages'] ?? [])) {
@@ -1947,9 +1988,9 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($duplicate) {
                 $duplicateaccount = pqh_account_no_label((int)$duplicate->userid);
                 if (($duplicate->duplicate_reason ?? '') === 'student_email') {
-                    $fielderrors['student_email'] = 'This student email or phone is already used by an existing intake profile. ' . $duplicateaccount . ', existing Moodle student ID: ' . (int)$duplicate->userid . '. Use Existing Moodle student ID to update that profile instead of creating a duplicate.';
+                    $fielderrors['student_email'] = 'This student email or phone is already used by an existing intake profile. ' . $duplicateaccount . ', existing student ID: ' . (int)$duplicate->userid . '. Use Existing student ID to update that profile instead of creating a duplicate.';
                 } else {
-                    $fielderrors['student_display_name'] = 'A student intake profile already exists with this display name and parent contact. ' . $duplicateaccount . ', existing Moodle student ID: ' . (int)$duplicate->userid . '. Use Existing Moodle student ID to update that profile instead of creating a duplicate.';
+                    $fielderrors['student_display_name'] = 'A student intake profile already exists with this display name and parent contact. ' . $duplicateaccount . ', existing student ID: ' . (int)$duplicate->userid . '. Use Existing student ID to update that profile instead of creating a duplicate.';
                     $fielderrors['parent_email'] = 'This exact student display name + parent contact already exists.';
                 }
                 throw new InvalidArgumentException('__validation__');
@@ -1970,7 +2011,7 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 $data['student_display_name'] = $displayname;
             }
         } else {
-            $studentusername = pqsi_unique_username(optional_param('student_username', '', PARAM_USERNAME) ?: 'student.' . $firstname . '.' . $lastname);
+            $studentusername = pqsi_unique_username('student.' . $firstname . '.' . $lastname);
             $studentmoodleemail = $studentemail !== '' ? pqsi_moodle_email_from_contact($studentemail, 'student') : $studentusername . '@eduplatform.local';
 
             [$studentid, $studentpassword] = pqsi_create_user($firstname, $lastname, $studentmoodleemail, $studentusername, true);
@@ -1979,6 +2020,13 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $studentuser = core_user::get_user($studentid);
         if ($studentuser) {
+            if ($existingstudentid <= 0) {
+                $standardusername = pqh_generate_standard_username($schoolslugforusername, 'student', $studentaccountid);
+                if ($standardusername !== '' && !$DB->record_exists('user', ['username' => $standardusername, 'mnethostid' => $CFG->mnet_localhost_id])) {
+                    $studentuser->username = $standardusername;
+                    $studentusername = $standardusername;
+                }
+            }
             if (core_text::strlen($country) <= 2) {
                 $studentuser->country = core_text::strtoupper($country);
             }
@@ -2003,11 +2051,22 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 $parts = preg_split('/\s+/', trim($parentname));
                 $parentfirst = $parts && isset($parts[0]) && $parts[0] !== '' ? $parts[0] : 'Parent';
                 $parentlast = $parts && count($parts) > 1 ? trim(implode(' ', array_slice($parts, 1))) : 'Guardian';
-                $parentusername = pqsi_unique_username(optional_param('parent_username', '', PARAM_USERNAME) ?: $parentcontact);
+                $parentusername = pqsi_unique_username($parentcontact);
                 [$parentid, $parentpassword] = pqsi_create_user($parentfirst, $parentlast, $parentmoodleemail, $parentusername, false);
                 $parentcreated = true;
             }
             $parentaccountid = pqh_assign_account_id($parentid, 'parent');
+            if ($parentcreated) {
+                $standardparentusername = pqh_generate_standard_username($schoolslugforusername, 'parent', $parentaccountid);
+                if ($standardparentusername !== '' && !$DB->record_exists('user', ['username' => $standardparentusername, 'mnethostid' => $CFG->mnet_localhost_id])) {
+                    $parentuserforrename = core_user::get_user($parentid);
+                    if ($parentuserforrename) {
+                        $parentuserforrename->username = $standardparentusername;
+                        user_update_user($parentuserforrename, false, false);
+                        $parentusername = $standardparentusername;
+                    }
+                }
+            }
         }
 
         $enrollmentapproved = $parentid <= 0 || pqsi_enrollment_already_approved($studentid, $parentid);
@@ -2019,6 +2078,9 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
             : 'Parent or guardian approval is required before the student can start lessons.';
 
         $profileid = pqsi_save_profile($studentid, $data);
+        if ($photoupload !== null) {
+            pqh_store_profile_photo('student_photo', $studentid, $photoupload, (int)$USER->id);
+        }
         $deferindependentmembership = $pqsiisindependentteacher && !$pqsiisoperationsuser;
         if ($workspaceid > 0 && !$deferindependentmembership) {
             pqsi_upsert_workspace_member($workspaceid, $studentid, 'student', 'Added from student intake.');
@@ -2087,7 +2149,7 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                         'Public intake request #' . $requestid . '.'
                     );
                     if ($teacherrequestid > 0) {
-                        $request->admin_notes = trim((string)($request->admin_notes ?? '')) . "\nMarketplace teacher request #" . $teacherrequestid . ' created for preferred teacher Moodle ID ' . $preferredteacherid . '.';
+                        $request->admin_notes = trim((string)($request->admin_notes ?? '')) . "\nMarketplace teacher request #" . $teacherrequestid . ' created for preferred teacher account ID ' . $preferredteacherid . '.';
                         $request->timemodified = time();
                         $DB->update_record('local_prequran_intake_request', $request);
                     }
@@ -2189,22 +2251,48 @@ echo $OUTPUT->header();
 <style>
 body.pqh-student-intake-page header,body.pqh-student-intake-page footer,body.pqh-student-intake-page nav.navbar,body.pqh-student-intake-page #page-header,body.pqh-student-intake-page #page-footer,body.pqh-student-intake-page .drawer,body.pqh-student-intake-page .drawer-toggles,body.pqh-student-intake-page .block-region,body.pqh-student-intake-page [data-region="drawer"],body.pqh-student-intake-page [data-region="right-hand-drawer"]{display:none!important}
 body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,body.pqh-student-intake-page #region-main,body.pqh-student-intake-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
-.pqsi-shell{min-height:100vh;padding:28px 18px 54px;background:#f5f8fb;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#173044}
-.pqsi-wrap{max-width:1120px;margin:0 auto}.pqsi-top,.pqsi-panel{background:#fff;border:1px solid rgba(23,48,68,.12);border-radius:10px;box-shadow:0 10px 24px rgba(23,48,68,.06)}
-.pqsi-top{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:22px;margin-bottom:16px}.pqsi-title{margin:0;font-size:30px;line-height:1.12;font-weight:950;color:#241b24}.pqsi-sub{margin:7px 0 0;color:#5e7280;font-size:14px;font-weight:800}.pqsi-muted{color:#5e7280;font-size:12px}
-.pqsi-actions{display:flex;flex-wrap:wrap;gap:9px}.pqsi-btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 14px;border:0;border-radius:8px;background:#2f6f4e;color:#fff!important;text-decoration:none;font-size:14px;font-weight:950;cursor:pointer}.pqsi-btn--light{background:#eef4f6;color:#173044!important;border:1px solid rgba(23,48,68,.12)}.pqsi-btn--brown{background:#7a5637}
-.pqsi-panel{padding:20px;margin-bottom:16px}.pqsi-panel h2{margin:0 0 12px;font-size:22px;font-weight:950}.pqsi-panel h3{margin:18px 0 10px;font-size:15px;font-weight:950;color:#7a5637}.pqsi-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.pqsi-field{display:grid;gap:6px;margin-bottom:10px;align-content:start;align-self:start}.pqsi-field label{font-size:12px;font-weight:900;color:#415665}.pqsi-city-other{display:none}.pqsi-city-other--visible{display:grid}.pqsi-input,.pqsi-select,.pqsi-textarea{width:100%;min-height:40px;border:1px solid rgba(23,48,68,.18);border-radius:8px;padding:8px 10px;font:800 14px/1.2 system-ui;background:#fff;color:#173044}.pqsi-select--multi{min-height:124px}.pqsi-field--error .pqsi-input,.pqsi-field--error .pqsi-select,.pqsi-field--error .pqsi-textarea,.pqsi-field--error .pqsi-choicegrid,.pqsi-field--error .pqsi-calendar{border-color:#a33a2c;background:#fff8f6}.pqsi-error{font-size:12px;font-weight:900;color:#a33a2c}.pqsi-textarea{min-height:86px}.pqsi-checkrow{display:flex;gap:10px;align-items:flex-start;margin:8px 0 12px;color:#173044;font-size:13px;font-weight:900}.pqsi-checkrow input{width:18px;height:18px;margin-top:1px}.pqsi-checkrow--error{color:#a33a2c}.pqsi-choicegrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:10px;border:1px solid rgba(23,48,68,.18);border-radius:8px;background:#fff}.pqsi-choice{display:flex;gap:7px;align-items:center;font-size:13px;font-weight:850;color:#173044}.pqsi-choice input{width:17px;height:17px}.pqsi-field--full{grid-column:1/-1}.pqsi-section-pill{display:inline-flex;align-items:center;padding:8px 14px;border:1px solid #f2cda8;border-radius:999px;background:#fff5ea;color:#8a4518;font-weight:950}.pqsi-calendar{overflow:auto;border:2px solid #d9e7f7;border-radius:16px;background:#fff}.pqsi-calendar table{width:100%;border-collapse:separate;border-spacing:0;min-width:980px}.pqsi-calendar th,.pqsi-calendar td{border-right:1px solid #e0ebf3;border-bottom:1px solid #e0ebf3;padding:12px;text-align:center;vertical-align:middle}.pqsi-calendar th{background:#eaf7fb;color:#213747;font-weight:950}.pqsi-calendar td:first-child{font-weight:950;text-align:left;background:#fbfaf5;color:#122638}.pqsi-slot{display:inline-flex;width:38px;height:38px;align-items:center;justify-content:center;border:1px solid #cfe1f5;border-radius:12px;background:#eef7ff}.pqsi-slot input{width:22px;height:22px}
-.pqsi-alert{padding:12px 14px;border-radius:8px;margin-bottom:12px;font-weight:850}.pqsi-alert--ok{background:#edf9ef;color:#245c35}.pqsi-alert--bad{background:#fff0ed;color:#883526}.pqsi-errorlist{margin:8px 0 0;padding-left:20px}.pqsi-errorlist a{color:#883526!important;text-decoration:underline}.pqsi-empty{padding:16px;border:1px dashed rgba(23,48,68,.22);border-radius:10px;color:#5e7280;font-weight:850;background:#fff}.pqsi-result{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.pqsi-result div{padding:12px;border-radius:8px;background:#f8fbfd;border:1px solid rgba(23,48,68,.1);font-weight:850}.pqsi-result strong{display:block;color:#7a5637;margin-bottom:4px}.pqsi-level-guide{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:2px 0 12px}.pqsi-level-card{padding:12px;border:1px solid rgba(23,48,68,.12);border-radius:8px;background:#fbfaf5}.pqsi-level-card strong{display:block;margin-bottom:6px;color:#241b24;font-size:13px}.pqsi-level-card p{margin:4px 0;color:#5e7280;font-size:12px;font-weight:750;line-height:1.35}
-@media(max-width:760px){.pqsi-top{display:block}.pqsi-actions{margin-top:12px}.pqsi-grid,.pqsi-result,.pqsi-choicegrid,.pqsi-level-guide{grid-template-columns:1fr}.pqsi-calendar table{min-width:820px}.pqsi-title{font-size:24px}}
+.pqsi-shell{--pq-blue:#2f6f4e;--pq-blue-dark:#1f5138;--pq-blue-soft:#e4efe6;--pq-ink:#1c2b22;--pq-ink-2:#33463a;--pq-muted:#5c7267;--pq-line:#e3dcc8;--pq-line-strong:#c9bd9d;--pq-paper:#f7f4ec;--pq-card:#fffdf8;--pq-green:#2f6f4e;--pq-gold:#a5741e;--pq-gold-dark:#7d5716;--pq-gold-soft:#f4e6c8;--pq-red:#9a3d2d;--pq-label:#2f5fad;--pq-serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--pq-sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;--pq-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;min-height:100vh;padding:28px 18px 54px;background:var(--pq-paper);font-family:var(--pq-sans);color:var(--pq-ink)}
+@media(prefers-color-scheme:dark){.pqsi-shell{--pq-blue:#7fc79e;--pq-blue-dark:#63a883;--pq-blue-soft:#1c3327;--pq-ink:#e8e3d3;--pq-ink-2:#cdd7c9;--pq-muted:#9fb0a4;--pq-line:#2a3a30;--pq-line-strong:#3a4c40;--pq-paper:#121d17;--pq-card:#16241c;--pq-green:#7fc79e;--pq-gold:#dcaa54;--pq-gold-dark:#f0c579;--pq-gold-soft:#3a301a;--pq-red:#e08876;--pq-label:#8ab4e8}}
+.pqsi-wrap{max-width:1120px;margin:0 auto}.pqsi-top,.pqsi-panel{background:var(--pq-card);border:1px solid var(--pq-line);border-radius:14px;box-shadow:0 2px 10px rgba(22,38,30,.06)}
+.pqsi-top{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:28px 32px;margin-bottom:16px;background:var(--pq-gold-soft)}.pqsi-title{margin:0;font-family:var(--pq-serif);font-size:clamp(26px,4vw,32px);line-height:1.14;font-weight:600;color:var(--pq-ink);letter-spacing:-.01em}.pqsi-sub{margin:8px 0 0;color:var(--pq-muted);font-size:14.5px;font-weight:400;line-height:1.6}.pqsi-muted{color:var(--pq-muted);font-size:12px}
+.pqsi-actions{display:flex;flex-wrap:wrap;gap:9px}.pqsi-btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 16px;border:0;border-radius:8px;background:var(--pq-blue);color:#fff!important;text-decoration:none;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 1px 2px rgba(47,111,78,.3)}.pqsi-btn:hover{background:var(--pq-blue-dark)}.pqsi-btn--light{background:transparent;color:var(--pq-ink)!important;border:1px solid var(--pq-line-strong);box-shadow:none}.pqsi-btn--light:hover{background:var(--pq-paper)}.pqsi-btn--brown{background:var(--pq-gold);box-shadow:0 1px 2px rgba(165,116,30,.3)}.pqsi-btn--brown:hover{background:var(--pq-gold-dark)}
+.pqsi-panel{padding:26px;margin-bottom:16px}.pqsi-panel h2{margin:0 0 18px;font-size:22px;line-height:1.2;font-weight:700;color:var(--pq-ink)}.pqsi-panel h3{display:block;margin:8px 0 24px;padding:0 0 16px;border-bottom:2px solid var(--pq-line-strong);color:var(--pq-ink);font-family:var(--pq-serif);font-size:24px;line-height:1.2;font-weight:600;letter-spacing:-.01em}.pqsi-panel h3:first-of-type{margin-top:0}.pqsi-panel h3 .pqsi-muted{display:block;margin-top:6px;font-family:var(--pq-sans);font-size:13px;font-weight:600;text-transform:none;letter-spacing:0}.pqsi-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 20px}
+.pqsi-field{display:grid;gap:6px;margin-bottom:16px;align-content:start;align-self:start}.pqsi-field label{font-size:13px;font-weight:600;color:var(--pq-label)}.pqsi-help{color:var(--pq-muted);font-size:11.5px;font-weight:500}.pqsi-city-other{display:none}.pqsi-city-other--visible{display:grid}.pqsi-input,.pqsi-select,.pqsi-textarea{width:100%;min-height:44px;border:1px solid var(--pq-line-strong);border-radius:8px;padding:10px 13px;font:400 14.5px/1.3 var(--pq-sans);background:var(--pq-card);color:var(--pq-ink);transition:border-color .15s ease,box-shadow .15s ease}.pqsi-input:focus,.pqsi-select:focus,.pqsi-textarea:focus{outline:0;border-color:var(--pq-blue);box-shadow:0 0 0 3px rgba(47,111,78,.15)}.pqsi-select--multi{min-height:124px}.pqsi-field--error .pqsi-input,.pqsi-field--error .pqsi-select,.pqsi-field--error .pqsi-textarea,.pqsi-field--error .pqsi-choicegrid,.pqsi-field--error .pqsi-calendar{border-color:var(--pq-red);background:#fef6f5}.pqsi-error{font-size:12px;font-weight:600;color:var(--pq-red)}.pqsi-textarea{min-height:90px;line-height:1.5}.pqsi-checkrow{display:flex;gap:10px;align-items:flex-start;margin:10px 0 13px;color:var(--pq-ink);font-size:13.5px;font-weight:500}.pqsi-checkrow input{width:18px;height:18px;margin-top:1px;accent-color:var(--pq-blue)}.pqsi-checkrow--error{color:var(--pq-red)}.pqsi-choicegrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:10px;border:1px solid var(--pq-line-strong);border-radius:8px;background:var(--pq-card)}.pqsi-choice{display:flex;gap:7px;align-items:center;font-size:13px;font-weight:600;color:var(--pq-ink)}.pqsi-choice input{width:17px;height:17px;accent-color:var(--pq-blue)}.pqsi-field--full{grid-column:1/-1}.pqsi-section-pill{display:inline-flex;align-items:center;padding:8px 14px;border:1px solid var(--pq-line-strong);border-radius:999px;background:var(--pq-gold-soft);color:var(--pq-gold);font-family:var(--pq-sans);font-weight:600}.pqsi-calendar{overflow:auto;border:1px solid var(--pq-line);border-radius:8px;background:var(--pq-card)}.pqsi-calendar table{width:100%;border-collapse:separate;border-spacing:0;min-width:980px}.pqsi-calendar th,.pqsi-calendar td{border-right:1px solid var(--pq-line);border-bottom:1px solid var(--pq-line);padding:12px;text-align:center;vertical-align:middle;font-weight:600}.pqsi-calendar th{background:var(--pq-blue-soft);color:var(--pq-blue-dark);font-size:12px}.pqsi-calendar td:first-child{text-align:left;background:var(--pq-paper);color:var(--pq-ink)}.pqsi-slot{display:inline-flex;width:38px;height:38px;align-items:center;justify-content:center;border:1px solid var(--pq-line-strong);border-radius:12px;background:var(--pq-blue-soft)}.pqsi-slot input{width:22px;height:22px;accent-color:var(--pq-blue)}
+.pqsi-alert{padding:13px 18px;border-radius:8px;margin-bottom:14px;font-weight:600;font-size:14px}.pqsi-alert--ok{background:#eefaf1;color:#1d6b3c}.pqsi-alert--bad{background:#fdeeec;color:#a3382a}.pqsi-errorlist{margin:8px 0 0;padding-left:20px}.pqsi-errorlist a{color:#a3382a!important;text-decoration:underline}.pqsi-empty{padding:18px;border:1px dashed var(--pq-line-strong);border-radius:8px;color:var(--pq-muted);font-weight:500;background:var(--pq-paper)}.pqsi-result{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.pqsi-result div{padding:12px;border-radius:8px;background:var(--pq-paper);border:1px solid var(--pq-line);font-weight:500}.pqsi-result strong{display:block;color:var(--pq-gold);margin-bottom:4px}.pqsi-level-guide{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:2px 0 12px}.pqsi-level-card{padding:12px;border:1px solid var(--pq-line);border-radius:8px;background:var(--pq-paper)}.pqsi-level-card strong{display:block;margin-bottom:6px;color:var(--pq-ink);font-size:13px}.pqsi-level-card p{margin:4px 0;color:var(--pq-muted);font-size:12px;font-weight:400;line-height:1.35}
+@media(max-width:760px){.pqsi-top{display:block}.pqsi-actions{margin-top:12px}.pqsi-grid,.pqsi-result,.pqsi-choicegrid,.pqsi-level-guide{grid-template-columns:1fr}.pqsi-calendar table{min-width:820px}.pqsi-title{font-size:24px}.pqsi-panel h3{font-size:19px;margin:4px 0 18px;padding:0 0 12px}}
 <?php echo pqh_dashboard_header_css(); ?>
+.pqsi-shell .pqh-workspace-top{background:var(--pq-gold-soft)!important;border:1px solid var(--pq-line)!important;box-shadow:0 2px 10px rgba(22,38,30,.06)!important;padding:28px 32px!important;border-radius:14px!important}
+.pqsi-shell .pqh-workspace-title{color:var(--pq-ink)!important;font-family:var(--pq-serif)!important;font-size:clamp(26px,4vw,32px)!important;font-weight:600!important;letter-spacing:-.01em!important;text-shadow:none!important}
+.pqsi-shell .pqh-workspace-sub{color:var(--pq-muted)!important;font-size:14.5px!important;font-weight:400!important;opacity:1!important}
+
+/* Multi-page horizontal wizard */
+.pqsi-wizard{padding:0;overflow:hidden}
+.pqsi-wizard-inner{padding:26px 30px 0}
+.pqsi-progress{margin-bottom:22px}
+.pqsi-progress-label{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px 16px;font-family:var(--pq-mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--pq-blue);margin-bottom:10px}
+.pqsi-progress-label span:last-child{color:var(--pq-muted);letter-spacing:.03em}
+.pqsi-progress-track{height:4px;border-radius:999px;background:var(--pq-line);overflow:hidden}
+.pqsi-progress-fill{height:100%;width:0;background:var(--pq-blue);border-radius:999px;transition:width .35s ease}
+.pqsi-viewport{position:relative;overflow:hidden}
+.pqsi-track{display:flex;width:100%;transition:transform .45s cubic-bezier(.16,1,.3,1);transform:translateX(calc(var(--pq-step,0) * -100%))}
+.pqsi-page{flex:0 0 100%;min-width:0;box-sizing:border-box;padding:4px 66px 6px}
+.pqsi-page[aria-hidden="true"]{visibility:hidden}
+.pqsi-nav-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border-radius:50%;border:1px solid var(--pq-line-strong);background:var(--pq-card);color:var(--pq-ink);cursor:pointer;box-shadow:0 2px 8px rgba(22,38,30,.1);transition:background .15s ease,border-color .15s ease,color .15s ease}
+.pqsi-nav-arrow:hover{background:var(--pq-blue);border-color:var(--pq-blue);color:#fff}
+.pqsi-nav-arrow svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pqsi-nav-arrow[hidden]{display:none!important}
+.pqsi-nav-back{left:10px}
+.pqsi-nav-next{right:10px}
+.pqsi-wizard-foot{display:flex;align-items:center;justify-content:flex-end;padding:22px 30px 28px;margin-top:6px;border-top:1px solid var(--pq-line)}
+.pqsi-wizard-foot .pqsi-btn{min-width:180px}
+@media(max-width:760px){.pqsi-wizard-inner{padding:18px 18px 0}.pqsi-page{padding:2px 46px 4px}.pqsi-nav-arrow{width:34px;height:34px}.pqsi-nav-arrow svg{width:16px;height:16px}.pqsi-nav-back{left:4px}.pqsi-nav-next{right:4px}.pqsi-wizard-foot{padding:18px 18px 20px}.pqsi-wizard-foot .pqsi-btn{min-width:0;flex:1}}
 </style>
 <main class="pqsi-shell">
   <div class="pqsi-wrap">
     <section class="pqsi-top pqh-workspace-top">
       <div>
         <h1 class="pqsi-title pqh-workspace-title">Student Intake</h1>
-        <p class="pqsi-sub pqh-workspace-sub">Create a Moodle student account, link a parent when needed, capture consent, and prepare the student for grouping.</p>
+        <p class="pqsi-sub pqh-workspace-sub">Create a student account, link a parent when needed, capture consent, and prepare the student for grouping.</p>
       </div>
       <div class="pqsi-actions pqh-workspace-actions">
         <a class="pqsi-btn pqsi-btn--light" href="<?php echo (new moodle_url('/local/hubredirect/intake_requests.php'))->out(false); ?>">Public requests</a>
@@ -2228,14 +2316,14 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
       </div>
     <?php endif; ?>
     <?php if (!$ready): ?>
-      <section class="pqsi-panel"><div class="pqsi-empty">Student profile table is not ready. Run the Moodle plugin upgrade for local_prequran first.</div></section>
+      <section class="pqsi-panel"><div class="pqsi-empty">Student profile table is not ready. Run the plugin upgrade for local_prequran first.</div></section>
     <?php else: ?>
       <?php if ($created): ?>
         <section class="pqsi-panel">
           <h2>Created Accounts</h2>
           <div class="pqsi-result">
-            <div><strong>Student</strong>ID <?php echo s((string)($created['studentaccountid'] ?? '')); ?><br>Moodle user ID: <?php echo (int)$created['studentid']; ?><br>Username: <?php echo s($created['studentusername']); ?><?php if (empty($created['existingstudent'])): ?><br>Temporary password: <?php echo s($created['studentpassword']); ?><?php else: ?><br>Existing Moodle account linked.<?php endif; ?></div>
-            <div><strong>Parent/guardian</strong><?php if (!empty($created['parentid'])): ?>ID <?php echo s((string)($created['parentaccountid'] ?? '')); ?><br>Moodle user ID: <?php echo (int)$created['parentid']; ?><br><?php echo !empty($created['parentcreated']) ? 'Parent/guardian account created.' : 'Existing parent/guardian account linked.'; ?><?php if (!empty($created['parentpassword'])): ?><br>Temporary password: <?php echo s($created['parentpassword']); ?><?php endif; ?><br>Email: <?php echo !empty($created['parentemailattempted']) ? (!empty($created['parentemailsent']) ? 'sent' : 'attempted but not confirmed') : 'not sent'; ?><?php else: ?><br>Not required for this adult student.<?php endif; ?></div>
+            <div><strong>Student</strong>ID <?php echo s((string)($created['studentaccountid'] ?? '')); ?><br>User ID: <?php echo (int)$created['studentid']; ?><br>Username: <?php echo s($created['studentusername']); ?><?php if (empty($created['existingstudent'])): ?><br>Temporary password: <?php echo s($created['studentpassword']); ?><?php else: ?><br>Existing account linked.<?php endif; ?></div>
+            <div><strong>Parent/guardian</strong><?php if (!empty($created['parentid'])): ?>ID <?php echo s((string)($created['parentaccountid'] ?? '')); ?><br>User ID: <?php echo (int)$created['parentid']; ?><br><?php echo !empty($created['parentcreated']) ? 'Parent/guardian account created.' : 'Existing parent/guardian account linked.'; ?><?php if (!empty($created['parentpassword'])): ?><br>Temporary password: <?php echo s($created['parentpassword']); ?><?php endif; ?><br>Email: <?php echo !empty($created['parentemailattempted']) ? (!empty($created['parentemailsent']) ? 'sent' : 'attempted but not confirmed') : 'not sent'; ?><?php else: ?><br>Not required for this adult student.<?php endif; ?></div>
             <div><strong>Referrer</strong><?php if (!empty($created['referralid'])): ?><?php echo s((string)($created['referrername'] ?? '')); ?><br>Code: <?php echo s((string)($created['referrercode'] ?? '')); ?><br>Referral ID: <?php echo (int)$created['referralid']; ?><?php else: ?>No referrer linked.<?php endif; ?></div>
             <?php if (!empty($created['workspaceid'])): ?><div><strong>Workspace</strong>Linked to workspace ID <?php echo (int)$created['workspaceid']; ?>.<br>Student and parent membership rows were created or reactivated.</div><?php endif; ?>
           </div>
@@ -2254,27 +2342,38 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
         </section>
       <?php endif; ?>
 
-      <section class="pqsi-panel">
-        <h2>Recommended Required Minimum</h2>
-        <form method="post" novalidate>
+      <section class="pqsi-panel pqsi-wizard">
+        <form method="post" novalidate enctype="multipart/form-data">
           <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
           <input type="hidden" name="requestid" value="<?php echo s(pqsi_form_value($form, 'requestid')); ?>">
           <input type="hidden" name="workspaceid" value="<?php echo s(pqsi_form_value($form, 'workspaceid')); ?>">
-
-          <h3>Core student information</h3>
+          <div class="pqsi-wizard-inner">
+            <h2>Recommended Required Minimum</h2>
+            <div class="pqsi-progress">
+              <div class="pqsi-progress-label"><span data-wizard-step-text>Step 1</span><span data-wizard-step-title></span></div>
+              <div class="pqsi-progress-track"><div class="pqsi-progress-fill" data-wizard-fill></div></div>
+            </div>
+          </div>
+          <div class="pqsi-viewport">
+          <button type="button" class="pqsi-nav-arrow pqsi-nav-back" data-wizard-back aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></button>
+          <button type="button" class="pqsi-nav-arrow pqsi-nav-next" data-wizard-next aria-label="Next"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg></button>
+          <div class="pqsi-track" data-wizard-track>
+          <div class="pqsi-page">
           <h3>Student account</h3>
-          <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'existing_studentid'); ?>" id="pqsi-existing_studentid"><label>Existing Moodle student ID</label><input class="pqsi-input" name="existing_studentid" type="number" min="0" value="<?php echo s(pqsi_form_value($form, 'existing_studentid')); ?>" placeholder="Optional: use only to add an intake profile to an already-created student"><?php echo pqsi_form_error($fielderrors, 'existing_studentid'); ?></div>
+          <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'existing_studentid'); ?>" id="pqsi-existing_studentid"><label>Existing student ID</label><input class="pqsi-input" name="existing_studentid" type="number" min="0" value="<?php echo s(pqsi_form_value($form, 'existing_studentid')); ?>" placeholder="Optional: use only to add an intake profile to an already-created student"><?php echo pqsi_form_error($fielderrors, 'existing_studentid'); ?></div>
           <div class="pqsi-grid">
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_firstname'); ?>" id="pqsi-student_firstname"><label>First name</label><input class="pqsi-input" name="student_firstname" value="<?php echo s(pqsi_form_value($form, 'student_firstname')); ?>"><?php echo pqsi_form_error($fielderrors, 'student_firstname'); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_middle_name'); ?>" id="pqsi-student_middle_name"><label>Middle name</label><input class="pqsi-input" name="student_middle_name" value="<?php echo s(pqsi_form_value($form, 'student_middle_name')); ?>" required><?php echo pqsi_form_error($fielderrors, 'student_middle_name'); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_lastname'); ?>" id="pqsi-student_lastname"><label>Last name</label><input class="pqsi-input" name="student_lastname" value="<?php echo s(pqsi_form_value($form, 'student_lastname')); ?>"><?php echo pqsi_form_error($fielderrors, 'student_lastname'); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_display_name'); ?>" id="pqsi-student_display_name"><label>Preferred name</label><input class="pqsi-input" name="student_display_name" value="<?php echo s(pqsi_form_value($form, 'student_display_name')); ?>" placeholder="Optional"><?php echo pqsi_form_error($fielderrors, 'student_display_name'); ?></div>
-            <div class="pqsi-field" id="pqsi-student_username"><label>Username</label><input class="pqsi-input" name="student_username" value="<?php echo s(pqsi_form_value($form, 'student_username')); ?>" placeholder="Auto-generated if blank"></div>
+            <div class="pqsi-field" id="pqsi-student_username"><label>Username</label><div class="pqsi-input" style="background:#f5f8fb;color:#5e7280">Auto-generated: schoolslug.s&lt;account&nbsp;no.&gt;</div></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_email'); ?>" id="pqsi-student_email"><label>Student email or phone</label><input class="pqsi-input" name="student_email" value="<?php echo s(pqsi_form_value($form, 'student_email')); ?>" placeholder="Optional for children; email or phone required for adults"><?php echo pqsi_form_error($fielderrors, 'student_email'); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'student_access_type'); ?>" id="pqsi-student_access_type"><label>Student access type</label><?php echo pqsi_select('student_access_type', $pqsioptions['student_access_types'] ?? [], $form, $fielderrors); ?></div>
+            <div class="pqsi-field" id="pqsi-student_photo"><label>Photo</label><input class="pqsi-input" name="student_photo" type="file" accept="image/jpeg,image/png,image/webp"><span class="pqsi-help">Optional. JPG, PNG, or WEBP, up to 5&nbsp;MB. Uploading a new photo replaces any existing one.</span></div>
           </div>
 
           <?php if ($pqsiisprimaryeducation): ?>
+            </div><div class="pqsi-page">
             <h3>Primary education details</h3>
             <div class="pqsi-grid">
               <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'date_of_birth'); ?>" id="pqsi-date_of_birth"><label>Date of birth</label><input class="pqsi-input" name="date_of_birth" type="date" value="<?php echo s(pqsi_form_value($form, 'date_of_birth')); ?>"><?php echo pqsi_form_error($fielderrors, 'date_of_birth'); ?></div>
@@ -2295,6 +2394,7 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
           <?php endif; ?>
 
           <?php if ($pqsiisadultlearning): ?>
+            </div><div class="pqsi-page">
             <h3>Adult learning details</h3>
             <div class="pqsi-grid">
               <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'adult_learning_area'); ?>"><label>Learning area of interest</label><?php echo pqsi_select('adult_learning_area', $pqsioptions['adult_learning_areas'] ?? [], $form, $fielderrors); ?></div>
@@ -2320,6 +2420,7 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
           <?php endif; ?>
 
           <?php if ($pqsiisprofessionaldevelopment): ?>
+            </div><div class="pqsi-page">
             <h3>Professional development details</h3>
             <div class="pqsi-grid">
               <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'professional_area'); ?>"><label>Professional development area</label><?php echo pqsi_select('professional_area', $pqsioptions['professional_development_areas'] ?? [], $form, $fielderrors); ?></div>
@@ -2347,6 +2448,7 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
           <?php endif; ?>
 
           <?php if ($pqsiistechnicaltraining): ?>
+            </div><div class="pqsi-page">
             <h3>Technical training details</h3>
             <div class="pqsi-grid">
               <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'technical_program'); ?>"><label>Training program or trade</label><?php echo pqsi_select('technical_program', $pqsioptions['technical_programs'] ?? [], $form, $fielderrors); ?></div>
@@ -2372,6 +2474,7 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
           <?php endif; ?>
 
           <?php if ($pqsiishighereducation): ?>
+            </div><div class="pqsi-page">
             <h3>Higher education details</h3>
             <div class="pqsi-grid">
               <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'higher_application_level'); ?>"><label>Application level</label><?php echo pqsi_select('higher_application_level', $pqsioptions['higher_application_levels'] ?? [], $form, $fielderrors); ?></div>
@@ -2396,6 +2499,7 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
           <?php endif; ?>
 
           <?php if ($pqsiisislamicstudies): ?>
+            </div><div class="pqsi-page">
             <h3>Islamic studies details</h3>
             <div class="pqsi-grid">
               <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'islamic_program_interest'); ?>" id="pqsi-islamic_program_interest"><label>Islamic program interest</label><?php echo pqsi_select('islamic_program_interest', $pqsioptions['islamic_program_interests'] ?? [], $form, $fielderrors); ?></div>
@@ -2413,6 +2517,7 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
           <?php endif; ?>
 
           <?php if ($pqsiischristianstudies): ?>
+            </div><div class="pqsi-page">
             <h3>Christian studies details</h3>
             <div class="pqsi-grid">
               <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'christian_program_interest'); ?>" id="pqsi-christian_program_interest"><label>Christian program interest</label><?php echo pqsi_select('christian_program_interest', $pqsioptions['christian_program_interests'] ?? [], $form, $fielderrors); ?></div>
@@ -2426,24 +2531,38 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
             <div class="pqsi-field pqsi-field--full<?php echo pqsi_field_class($fielderrors, 'christian_notes'); ?>" id="pqsi-christian_notes"><label>Additional Christian studies notes</label><textarea class="pqsi-textarea" name="christian_notes"><?php echo s(pqsi_form_value($form, 'christian_notes')); ?></textarea><?php echo pqsi_form_error($fielderrors, 'christian_notes'); ?></div>
           <?php endif; ?>
 
+          </div><div class="pqsi-page">
           <h3>Location and language</h3>
           <div class="pqsi-grid">
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'country'); ?>" id="pqsi-country"><label>Country</label><?php echo pqsi_select('country', $pqsioptions['countries'] ?? [], $form, $fielderrors); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'city'); ?>" id="pqsi-city"><label>City</label><?php echo pqsi_select('city', $pqsioptions['cities'] ?? [], $form, $fielderrors); ?></div>
             <div class="pqsi-field pqsi-city-other<?php echo pqsi_field_class($fielderrors, 'city_other'); ?>" id="pqsi-city_other"><label>City not listed</label><input class="pqsi-input" name="city_other" value="<?php echo s(pqsi_form_value($form, 'city_other')); ?>"><?php echo pqsi_form_error($fielderrors, 'city_other'); ?></div>
+            <?php if ($pqsiisprimaryeducation): ?>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'district'); ?>" id="pqsi-district"><label>District</label><input class="pqsi-input" name="district" value="<?php echo s(pqsi_form_value($form, 'district')); ?>"><?php echo pqsi_form_error($fielderrors, 'district'); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'division'); ?>" id="pqsi-division"><label>Division</label><input class="pqsi-input" name="division" value="<?php echo s(pqsi_form_value($form, 'division')); ?>"><?php echo pqsi_form_error($fielderrors, 'division'); ?></div>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'estate'); ?>" id="pqsi-estate"><label>Estate</label><input class="pqsi-input" name="estate" value="<?php echo s(pqsi_form_value($form, 'estate')); ?>"><?php echo pqsi_form_error($fielderrors, 'estate'); ?></div>
+            <?php endif; ?>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'primary_language'); ?>" id="pqsi-primary_language"><label>Primary language</label><?php echo pqsi_select('primary_language', $pqsioptions['primary_languages'] ?? [], $form, $fielderrors); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'preferred_teaching_language'); ?>" id="pqsi-preferred_teaching_language"><label>Preferred teaching language</label><?php echo pqsi_select('preferred_teaching_language', $pqsioptions['primary_languages'] ?? [], $form, $fielderrors); ?></div>
             <div class="pqsi-field" id="pqsi-other_languages"><label>Other languages</label><?php echo pqsi_multi_select('other_languages', $pqsioptions['other_languages'] ?? [], $form, $fielderrors, 5); ?></div>
           </div>
 
+          </div><div class="pqsi-page">
           <h3>Learning placement</h3>
           <div class="pqsi-grid">
-            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'course_type'); ?>" id="pqsi-course_type"><label>Course</label><?php echo pqsi_select('course_type', $pqsioptions['course_types'] ?? [], $form, $fielderrors); ?></div>
+            <?php if ($pqsiisprimaryeducation): ?>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'course_type'); ?>" id="pqsi-course_type"><label>Grade level</label><?php echo pqsi_select('course_type', $pqsioptions['primary_grade_selection_levels'] ?? [], $form, $fielderrors); ?></div>
+            <?php else: ?>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'course_type'); ?>" id="pqsi-course_type"><label>Course</label><?php echo pqsi_select('course_type', $pqsioptions['course_types'] ?? [], $form, $fielderrors); ?></div>
+            <?php endif; ?>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'current_level'); ?>" id="pqsi-current_level"><label>Placement level</label><?php echo pqsi_select('current_level', pqsi_placement_level_options($pqsioptions), $form, $fielderrors); ?></div>
-            <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'tajweed_sub_level'); ?>" id="pqsi-tajweed_sub_level"><label>Tajweed sub-level</label><?php echo pqsi_select('tajweed_sub_level', $pqsioptions['tajweed_sub_levels'] ?? [], $form, $fielderrors, 'Select when Level 3'); ?></div>
+            <?php if (!$pqsiisprimaryeducation): ?>
+              <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'tajweed_sub_level'); ?>" id="pqsi-tajweed_sub_level"><label>Tajweed sub-level</label><?php echo pqsi_select('tajweed_sub_level', $pqsioptions['tajweed_sub_levels'] ?? [], $form, $fielderrors, 'Select when Level 3'); ?></div>
+            <?php endif; ?>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'learning_base'); ?>" id="pqsi-learning_base"><label>Learning background</label><?php echo pqsi_select('learning_base', $pqsioptions['learning_bases'] ?? [], $form, $fielderrors); ?></div>
           </div>
 
+          </div><div class="pqsi-page">
           <h3><span class="pqsi-section-pill">Preferred weekly live-session number of sessions and hours</span></h3>
           <div class="pqsi-grid">
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'session_count'); ?>" id="pqsi-session_count"><label>Number of sessions</label><?php echo pqsi_select('session_count', $pqsioptions['session_counts'] ?? [], $form, $fielderrors); ?></div>
@@ -2482,6 +2601,7 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
           </div>
           <div class="pqsi-field" id="pqsi-availability"><label>Availability notes</label><textarea class="pqsi-textarea" name="availability_summary" placeholder="Exact availability, restrictions, preferred days, breaks, or admin notes"><?php echo s(pqsi_form_value($form, 'availability')); ?></textarea></div>
 
+          </div><div class="pqsi-page">
           <h3>Parent / guardian <span class="pqsi-muted"><?php echo $pqsiisprimaryeducation ? '(required for primary education)' : '(required only when the student is under 18)'; ?></span></h3>
           <div class="pqsi-grid">
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'parent_name'); ?>" id="pqsi-parent_name"><label>Parent/guardian name</label><input class="pqsi-input" name="parent_name" value="<?php echo s(pqsi_form_value($form, 'parent_name')); ?>"><?php echo pqsi_form_error($fielderrors, 'parent_name'); ?></div>
@@ -2491,11 +2611,12 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'parent_phone'); ?>" id="pqsi-parent_phone"><label>Parent/guardian phone / WhatsApp</label><input class="pqsi-input" name="parent_phone" value="<?php echo s(pqsi_form_value($form, 'parent_phone')); ?>"><?php echo pqsi_form_error($fielderrors, 'parent_phone'); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'emergency_contact_name'); ?>" id="pqsi-emergency_contact_name"><label>Emergency contact name</label><input class="pqsi-input" name="emergency_contact_name" value="<?php echo s(pqsi_form_value($form, 'emergency_contact_name')); ?>"><?php echo pqsi_form_error($fielderrors, 'emergency_contact_name'); ?></div>
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'emergency_contact_phone'); ?>" id="pqsi-emergency_contact_phone"><label>Emergency contact phone</label><input class="pqsi-input" name="emergency_contact_phone" value="<?php echo s(pqsi_form_value($form, 'emergency_contact_phone')); ?>"><?php echo pqsi_form_error($fielderrors, 'emergency_contact_phone'); ?></div>
-            <div class="pqsi-field"><label>Parent username</label><input class="pqsi-input" name="parent_username" value="<?php echo s(pqsi_form_value($form, 'parent_username')); ?>" placeholder="Auto-generated if blank"></div>
+            <div class="pqsi-field"><label>Parent username</label><div class="pqsi-input" style="background:#f5f8fb;color:#5e7280">Auto-generated: schoolslug.p&lt;account&nbsp;no.&gt;</div></div>
           </div>
           <label class="pqsi-checkrow"><input type="checkbox" name="parent_email_enabled" value="1"<?php echo pqsi_checked($form, 'parent_email_enabled'); ?>><span>Send parent email notifications when the parent contact is a valid email address.</span></label>
           <div class="pqsi-field"><label>Parent preferences</label><textarea class="pqsi-textarea" name="parent_preferences" placeholder="Teacher gender, language, schedule, sibling grouping"><?php echo s(pqsi_form_value($form, 'parent_preferences')); ?></textarea></div>
 
+          </div><div class="pqsi-page">
           <h3>Referrer <span class="pqsi-muted">(optional, separate from parent/guardian access)</span></h3>
           <div class="pqsi-grid">
             <div class="pqsi-field<?php echo pqsi_field_class($fielderrors, 'referrer_code'); ?>" id="pqsi-referrer_code"><label>Referrer Code</label><input class="pqsi-input" name="referrer_code" inputmode="numeric" maxlength="5" value="<?php echo s(pqsi_form_value($form, 'referrer_code')); ?>" placeholder="Five-digit code"><?php echo pqsi_form_error($fielderrors, 'referrer_code'); ?></div>
@@ -2515,6 +2636,7 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
           </div>
           <div class="pqsi-field"><label>Referral notes</label><textarea class="pqsi-textarea" name="referral_notes" placeholder="Campaign, agreement, source notes, or commission context"><?php echo s(pqsi_form_value($form, 'referral_notes')); ?></textarea></div>
 
+          </div><div class="pqsi-page">
           <h3>Consent</h3>
           <label class="pqsi-checkrow<?php echo isset($fielderrors['live_class_consent']) ? ' pqsi-checkrow--error' : ''; ?>"><input type="checkbox" name="live_class_consent" value="1"<?php echo pqsi_checked($form, 'live_class_consent'); ?>><span>Student or parent/guardian consents to live interactive classes.</span></label><?php echo pqsi_form_error($fielderrors, 'live_class_consent'); ?>
           <div class="pqsi-field">
@@ -2523,8 +2645,10 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
           </div>
           <label class="pqsi-checkrow"><input type="checkbox" name="recording_consent" value="1"<?php echo pqsi_checked($form, 'recording_consent'); ?>><span>Student or parent/guardian gives opt-in consent for student camera/video recording and video playback visibility when policy allows.</span></label>
           <div class="pqsi-field"><label>Consent notes/comment</label><textarea class="pqsi-textarea" name="consent_notes" placeholder="How consent was collected, who confirmed, and any limits"><?php echo s(pqsi_form_value($form, 'consent_notes')); ?></textarea></div>
-
-          <button class="pqsi-btn pqsi-btn--brown" type="submit" name="submit_intake" value="1">Create student intake</button>
+          </div></div></div>
+          <div class="pqsi-wizard-foot">
+            <button class="pqsi-btn pqsi-btn--brown" type="submit" name="submit_intake" value="1">Create student intake</button>
+          </div>
         </form>
       </section>
     <?php endif; ?>
@@ -2648,6 +2772,87 @@ body.pqh-student-intake-page #page,body.pqh-student-intake-page #page-content,bo
       subtree: true
     });
   }
+})();
+</script>
+<script>
+(function() {
+  var wizard = document.querySelector('.pqsi-wizard');
+  if (!wizard) {
+    return;
+  }
+  var form = wizard.querySelector('form') || wizard;
+  var track = wizard.querySelector('[data-wizard-track]');
+  var pages = Array.prototype.slice.call(wizard.querySelectorAll('.pqsi-page'));
+  var backBtn = wizard.querySelector('[data-wizard-back]');
+  var nextBtn = wizard.querySelector('[data-wizard-next]');
+  var fill = wizard.querySelector('[data-wizard-fill]');
+  var stepText = wizard.querySelector('[data-wizard-step-text]');
+  var stepTitle = wizard.querySelector('[data-wizard-step-title]');
+  if (!track || pages.length < 2 || !backBtn || !nextBtn) {
+    return;
+  }
+
+  var current = 0;
+  var errorField = wizard.querySelector('.pqsi-field--error, .pqsi-error, .pqsi-checkrow--error');
+  if (errorField) {
+    var errorPage = errorField.closest('.pqsi-page');
+    var errorIndex = errorPage ? pages.indexOf(errorPage) : -1;
+    if (errorIndex >= 0) {
+      current = errorIndex;
+    }
+  }
+
+  function pageTitle(page) {
+    var heading = page.querySelector('h3');
+    return heading ? heading.textContent.trim() : '';
+  }
+
+  function render() {
+    track.style.setProperty('--pq-step', current);
+    pages.forEach(function(page, index) {
+      page.setAttribute('aria-hidden', index === current ? 'false' : 'true');
+    });
+    if (fill) {
+      fill.style.width = (((current + 1) / pages.length) * 100) + '%';
+    }
+    if (stepText) {
+      stepText.textContent = 'Step ' + (current + 1) + ' of ' + pages.length;
+    }
+    if (stepTitle) {
+      stepTitle.textContent = pageTitle(pages[current]);
+    }
+    backBtn.hidden = current === 0;
+    nextBtn.hidden = current === pages.length - 1;
+  }
+
+  function go(delta) {
+    var target = current + delta;
+    if (target < 0 || target >= pages.length) {
+      return;
+    }
+    current = target;
+    render();
+    wizard.scrollIntoView({behavior: 'smooth', block: 'start'});
+  }
+
+  backBtn.addEventListener('click', function() { go(-1); });
+  nextBtn.addEventListener('click', function() { go(1); });
+
+  form.addEventListener('keydown', function(event) {
+    if (event.key !== 'Enter') {
+      return;
+    }
+    var tag = (event.target && event.target.tagName || '').toLowerCase();
+    if (tag === 'textarea') {
+      return;
+    }
+    if (current !== pages.length - 1) {
+      event.preventDefault();
+      go(1);
+    }
+  });
+
+  render();
 })();
 </script>
 <?php

@@ -23,3 +23,8 @@ Thumbs.db
 .bunny-app-manifest.json
 .bunny-content-manifest.json
 .bunny-appver-manifest.json
+
+# Deployment bundles created for uploading plugin folders to the server.
+# These are packaging artifacts, not source: the PHP under src/moodle is the
+# source of truth and the tarballs are rebuilt on demand.
+*.tar

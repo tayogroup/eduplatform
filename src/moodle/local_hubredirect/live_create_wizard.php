@@ -4,6 +4,7 @@ declare(strict_types=1);
 require_once(__DIR__ . '/../../config.php');
 require_login();
 require_once(__DIR__ . '/accesslib.php');
+require_once(__DIR__ . '/availabilitylib.php');
 
 $consumercontext = pqh_requested_consumer_context();
 $requestedworkspaceid = optional_param('workspaceid', 0, PARAM_INT);
@@ -37,6 +38,7 @@ if (!$pqlwizisadmin && !pqh_user_can_create_live_sessions((int)$USER->id, $pqlwi
         'Live session wizard access required'
     );
 }
+pqh_enforce_role_domain($consumercontext, $pqlwizworkspaceid, (int)$USER->id);
 
 function pqlwiz_table_exists(string $table): bool {
     global $DB;
@@ -608,22 +610,13 @@ function pqlwiz_conflicts(int $teacherid, array $studentids, int $start, int $du
     if ($teacherrequired && $teacherid <= 0) {
         $conflicts[] = 'Choose the teacher who will lead this session.';
     }
-    if ($teacherrequired && $teacherid > 0 && pqlwiz_table_exists('local_prequran_live_availability')) {
-        $windows = $DB->get_records('local_prequran_live_availability', ['teacherid' => $teacherid, 'status' => 'active']);
-        if ($windows) {
-            $weekday = (int)date('w', $start);
-            $startminute = ((int)date('G', $start) * 60) + (int)date('i', $start);
-            $endminute = $startminute + $duration;
-            $allowed = false;
-            foreach ($windows as $window) {
-                if ((int)$window->weekday === $weekday && (int)$window->start_minute <= $startminute && (int)$window->end_minute >= $endminute) {
-                    $allowed = true;
-                    break;
-                }
-            }
-            if (!$allowed) {
-                $conflicts[] = 'Teacher is outside active availability for this proposed time.';
-            }
+    if ($teacherrequired && $teacherid > 0) {
+        // Timezone-correct via the availability engine (the old inline check
+        // compared server-local minutes against teacher-local rows and
+        // ignored the window timezone). Shift windows are applied too.
+        $wizintervals = pqav_teacher_effective_intervals($teacherid);
+        if ($wizintervals && !pqav_covers_timestamp($start, max(15, $duration), $wizintervals)) {
+            $conflicts[] = 'Teacher is outside active availability for this proposed time.';
         }
     }
     if ($teacherrequired && $teacherid > 0) {
@@ -910,7 +903,7 @@ body.pqh-live-create-wizard-page .main-inner{margin:0!important;padding:0!import
             <section class="pqlwiz-picker" aria-label="Student picker">
               <div class="pqlwiz-card">
                 <h3><?php echo $meetingroom ? 'Optional invitees' : 'Choose students'; ?></h3>
-                <p class="pqlwiz-meta"><?php echo $meetingroom ? 'Meeting rooms are visible by role. Add invited Moodle user IDs below only when you want explicit participants recorded on the room.' : 'Filter first, then select students. The selected Moodle IDs are copied into the manual ID box below.'; ?></p>
+                <p class="pqlwiz-meta"><?php echo $meetingroom ? 'Meeting rooms are visible by role. Add invited user IDs below only when you want explicit participants recorded on the room.' : 'Filter first, then select students. The selected IDs are copied into the manual ID box below.'; ?></p>
                 <div class="pqlwiz-filter-grid">
                   <div class="pqlwiz-field">
                     <label for="student_filter_timezone">Time zone</label>
@@ -986,7 +979,7 @@ body.pqh-live-create-wizard-page .main-inner{margin:0!important;padding:0!import
                           </td>
                           <td>
                             <span class="pqlwiz-student-main"><?php echo s($studentname); ?></span>
-                            <span class="pqlwiz-student-meta"><?php echo s(pqh_account_no_label($userid)); ?> / Moodle ID <?php echo $userid; ?></span>
+                            <span class="pqlwiz-student-meta"><?php echo s(pqh_account_no_label($userid)); ?> / Account ID <?php echo $userid; ?></span>
                           </td>
                           <td><?php echo (int)$profile->age_years; ?> / <?php echo s(pqlwiz_profile_field($profile, 'gender')); ?></td>
                           <td><?php echo s(pqlwiz_profile_field($profile, 'current_level')); ?></td>
@@ -1016,7 +1009,7 @@ body.pqh-live-create-wizard-page .main-inner{margin:0!important;padding:0!import
               <div class="pqlwiz-field pqlwiz-manual">
                 <label for="studentids_raw">Student user IDs</label>
                 <textarea class="pqlwiz-textarea" id="studentids_raw" name="studentids_raw" placeholder="101, 102, 103"><?php echo s(implode(', ', $studentids)); ?></textarea>
-                <p class="pqlwiz-meta">Manual fallback. These are Moodle user IDs and will be combined with any selected class-group students.</p>
+                <p class="pqlwiz-meta">Manual fallback. These are account IDs and will be combined with any selected class-group students.</p>
               </div>
             <?php endif; ?>
             <div class="pqlwiz-actions">

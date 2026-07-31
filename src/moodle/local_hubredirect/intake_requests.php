@@ -68,6 +68,14 @@ function pqireq_slot_parts($json): array {
     $days = [];
     $times = [];
     foreach (pqireq_json_slots($json) as $slot) {
+        // Two historical shapes: ['day' => ..., 'time' => ...] arrays, and the
+        // "day|hour" strings the public intake form actually writes. The
+        // string shape was previously skipped outright, leaving these lists
+        // empty for every modern request.
+        if (is_string($slot)) {
+            [$slotday, $slottime] = array_pad(explode('|', $slot, 2), 2, '');
+            $slot = ['day' => $slotday, 'time' => $slottime];
+        }
         if (!is_array($slot)) {
             continue;
         }
@@ -221,6 +229,16 @@ function pqireq_prefill(stdClass $request): array {
         'availability_days' => $days,
         'availability_time_windows' => $times,
         'availability' => (string)$request->availability_summary,
+        // Structured slots pass straight through to the student-intake grid
+        // (same "day|hour" tokens), so the transfer save writes them onto the
+        // profile's availability_json instead of losing them to display text.
+        'slots' => array_values(array_filter(
+            array_map('strval', pqireq_json_slots((string)($request->availability_json ?? ''))),
+            static function(string $slot): bool {
+                return strpos($slot, '|') !== false;
+            }
+        )),
+        'session_count' => (string)max(1, (int)(json_decode((string)($request->availability_json ?? ''), true)['session_count'] ?? 1)),
         'parent_name' => (string)$request->parent_name,
         'parent_relationship' => (string)($request->parent_relationship ?? ''),
         'parent_relationship_other' => (string)($request->parent_relationship_other ?? ''),
@@ -522,6 +540,8 @@ if ($ready) {
         50
     );
 }
+
+pqh_enforce_role_domain($consumercontext, pqh_current_workspace_id((int)$USER->id), (int)$USER->id);
 
 echo $OUTPUT->header();
 ?>

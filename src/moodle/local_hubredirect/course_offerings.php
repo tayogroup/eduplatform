@@ -43,6 +43,7 @@ if (!$workspace || !pqcoa_user_can_manage_offerings((int)$USER->id, $workspaceid
         'Course offering access required'
     );
 }
+pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 
 $context = context_system::instance();
 $PAGE->set_context($context);
@@ -56,14 +57,141 @@ $ready = pqco_table_ready();
 $message = '';
 $error = '';
 $catalog = pqh_course_catalog();
-$moodlecourses = pqco_moodle_courses();
+// Every built-in catalog track is a Quran/Islamic-studies subject (Pre-Quraan,
+// Quran Tafsir, Tarbiyah Kids ...). Those belong in the Course track dropdown
+// for a faith-based institution, not for a K-12, languages, technical, or
+// professional school -- those should start from "Custom / other subject" and
+// name their own subjects. The full $catalog is deliberately left intact: it
+// still resolves titles for offerings that already use a catalog key, so
+// nothing that exists today loses its label.
+$pqcoinstitutiontype = trim((string)($consumercontext->institution_type ?? ''));
+$catalogoptions = ($pqcoinstitutiontype === '' || $pqcoinstitutiontype === 'faith_based_education')
+    ? $catalog
+    : [];
+$moodlecourses = pqco_moodle_courses($workspaceid);
+// Courses without an approved syllabus stay selectable -- a syllabus is
+// normally written for a course you are already offering, so hiding them would
+// deadlock offering creation. They are flagged instead: on the option itself
+// and in a note under the field.
+require_once(__DIR__ . '/syllabus_portallib.php');
+$approvedsyllabi = pqsyl_approved_course_ids($workspaceid);
 $editid = optional_param('editid', 0, PARAM_INT);
 
-function pqcoa_offering_record_for_form(stdClass $offering): array {
+/**
+ * Course inventory for the workspace: every Moodle course filed under this
+ * institution's category, plus any course an existing offering already links
+ * to, each paired with its offering when one exists. Drives the "Course
+ * Inventory" block, whose point is showing which courses are NOT yet offered.
+ *
+ * Read-only on purpose: pqh_workspace_course_category_ids() resolves the
+ * institution category by lookup, never via pqco_consumer_category_id(), which
+ * creates the category as a side effect and must not run just because someone
+ * opened the page.
+ *
+ * Offerings with no linked Moodle course are intentionally absent -- this
+ * lists courses, and those already appear in the offerings table above.
+ */
+function pqcoa_course_inventory(int $workspaceid, array $offerings, array $counts): array {
+    global $DB;
+
+    if ($workspaceid <= 0) {
+        return [];
+    }
+
+    $offeringbycourse = [];
+    foreach ($offerings as $offering) {
+        $moodlecourseid = (int)($offering->moodlecourseid ?? 0);
+        if ($moodlecourseid > 0 && !isset($offeringbycourse[$moodlecourseid])) {
+            $offeringbycourse[$moodlecourseid] = $offering;
+        }
+    }
+
+    // Institution category resolution lives in accesslib so this page and the
+    // syllabus course picker cannot drift apart.
+    $categoryids = pqh_workspace_course_category_ids($workspaceid);
+
+    $fields = 'id,fullname,shortname,idnumber,visible,category,startdate';
+    $courses = [];
+    try {
+        if ($categoryids) {
+            [$catsql, $catparams] = $DB->get_in_or_equal($categoryids, SQL_PARAMS_NAMED, 'incat');
+            foreach ($DB->get_records_select('course', "category {$catsql}", $catparams, 'fullname ASC', $fields) as $course) {
+                if ((int)$course->id !== SITEID) {
+                    $courses[(int)$course->id] = $course;
+                }
+            }
+        }
+        if ($offeringbycourse) {
+            [$insql, $params] = $DB->get_in_or_equal(array_keys($offeringbycourse), SQL_PARAMS_NAMED, 'cid');
+            foreach ($DB->get_records_select('course', "id {$insql}", $params, 'fullname ASC', $fields) as $course) {
+                if ((int)$course->id !== SITEID) {
+                    $courses[(int)$course->id] = $course;
+                }
+            }
+        }
+    } catch (Throwable $e) {
+        return [];
+    }
+    if (!$courses) {
+        return [];
+    }
+
+    $categorynames = [];
+    $categoryids = array_values(array_unique(array_filter(array_map(static function($course): int {
+        return (int)$course->category;
+    }, $courses))));
+    if ($categoryids) {
+        [$catsql, $catparams] = $DB->get_in_or_equal($categoryids, SQL_PARAMS_NAMED, 'cat');
+        foreach ($DB->get_records_select('course_categories', "id {$catsql}", $catparams, '', 'id,name') as $row) {
+            $categorynames[(int)$row->id] = (string)$row->name;
+        }
+    }
+
+    $inventory = [];
+    foreach ($courses as $courseid => $course) {
+        $offering = $offeringbycourse[$courseid] ?? null;
+        $capacity = $offering ? (int)($offering->capacity ?? 0) : 0;
+        $enrolled = $offering ? (int)($counts[(int)$offering->id] ?? 0) : 0;
+        $inventory[] = [
+            'courseid' => (int)$courseid,
+            'fullname' => trim((string)$course->fullname) !== '' ? trim((string)$course->fullname) : (string)$course->shortname,
+            'shortname' => (string)$course->shortname,
+            'idnumber' => (string)$course->idnumber,
+            'visible' => (int)$course->visible === 1,
+            'category' => $categorynames[(int)$course->category] ?? '',
+            'coursestart' => (int)($course->startdate ?? 0),
+            'isoffered' => $offering !== null,
+            'offeringid' => $offering ? (int)$offering->id : 0,
+            'offeringtitle' => $offering ? trim((string)($offering->title ?? '')) : '',
+            'coursekey' => $offering ? trim((string)($offering->course_key ?? '')) : '',
+            'status' => $offering ? (trim((string)($offering->status ?? '')) !== '' ? trim((string)$offering->status) : 'draft') : '',
+            'visibility' => $offering ? (trim((string)($offering->visibility ?? '')) !== '' ? trim((string)$offering->visibility) : 'workspace') : '',
+            'capacity' => $capacity,
+            'enrolled' => $enrolled,
+            'openseats' => $capacity > 0 ? max(0, $capacity - $enrolled) : 0,
+            'unlimited' => $offering && $capacity <= 0,
+            'startdate' => $offering ? (int)($offering->startdate ?? 0) : 0,
+            'enddate' => $offering ? (int)($offering->enddate ?? 0) : 0,
+        ];
+    }
+
+    usort($inventory, static function(array $a, array $b): int {
+        if ($a['isoffered'] !== $b['isoffered']) {
+            return $a['isoffered'] ? 1 : -1;
+        }
+        return strcasecmp($a['fullname'], $b['fullname']);
+    });
+    return $inventory;
+}
+
+function pqcoa_offering_record_for_form(stdClass $offering, array $catalog): array {
+    $coursekey = (string)($offering->course_key ?? '');
+    $iscustom = $coursekey !== '' && !isset($catalog[$coursekey]);
     return [
         'offeringid' => (string)((int)($offering->id ?? 0)),
         'course_link_mode' => 'existing',
-        'course_key' => (string)($offering->course_key ?? ''),
+        'course_key' => $iscustom ? '__custom__' : $coursekey,
+        'custom_course_title' => $iscustom ? (string)($offering->title ?? '') : '',
         'moodlecourseid' => (string)((int)($offering->moodlecourseid ?? 0)),
         'title' => (string)($offering->title ?? ''),
         'summary' => (string)($offering->summary ?? ''),
@@ -72,6 +200,8 @@ function pqcoa_offering_record_for_form(stdClass $offering): array {
         'startdate' => pqco_time_to_date((int)($offering->startdate ?? 0)),
         'enddate' => pqco_time_to_date((int)($offering->enddate ?? 0)),
         'capacity' => (string)((int)($offering->capacity ?? 0)),
+        'sessions_per_week' => (string)((int)($offering->sessions_per_week ?? 0)),
+        'session_minutes' => (string)((int)($offering->session_minutes ?? 0)),
         'tuition_amount' => (string)($offering->tuition_amount ?? ''),
         'pricing_currency' => (string)($offering->pricing_currency ?? pqfin_default_currency()),
         'registration_fee' => (string)($offering->registration_fee ?? ''),
@@ -157,7 +287,7 @@ function pqcoa_review_enrollment_request(int $requestid, string $decision, strin
             );
             $updatedrequest->status = 'enrolled';
             $updatedrequest->moodleenrolledat = time();
-            $message = 'Enrollment approved and Moodle enrollment completed.';
+            $message = 'Enrollment approved and enrollment completed.';
             pqco_course_audit('moodle_enrollment_completed', 'course_enrol_req', (int)$request->id, [
                 'consumerid' => (int)($request->consumerid ?? $consumercontext->consumerid ?? 0),
                 'workspaceid' => $workspaceid,
@@ -168,11 +298,11 @@ function pqcoa_review_enrollment_request(int $requestid, string $decision, strin
                 'teacher_enrollment_count' => $teacherenrolledcount,
             ]);
         } else {
-            $message = 'Enrollment approved. Moodle auto-enrollment was not completed; check the linked Moodle course manual enrollment setup.';
+            $message = 'Enrollment approved. Auto-enrollment was not completed; check the linked course manual enrollment setup.';
             pqco_notify_workspace_admins(
                 $workspaceid,
-                'Course Moodle sync failed',
-                'A course enrollment was approved but Moodle enrollment did not complete for ' . (string)$request->offering_title . '.',
+                'Course sync failed',
+                'A course enrollment was approved but enrollment did not complete for ' . (string)$request->offering_title . '.',
                 new moodle_url('/local/hubredirect/course_offerings.php', ['workspaceid' => $workspaceid, 'request_status' => 'approved']),
                 'Open course requests',
                 'course_moodle_sync_failed',
@@ -222,7 +352,7 @@ function pqcoa_review_enrollment_request(int $requestid, string $decision, strin
             $request,
             'course_enrollment_needs_followup',
             'Course enrollment approved - follow-up needed',
-            'Your enrollment for ' . (string)$request->offering_title . ' was approved. The academy is completing the Moodle course access setup.',
+            'Your enrollment for ' . (string)$request->offering_title . ' was approved. The academy is completing the course access setup.',
             $workspaceid
         );
     }
@@ -314,7 +444,8 @@ function pqcoa_finance_warning_labels($request, array $summary, array $pricing):
 $form = [
     'offeringid' => '0',
     'course_link_mode' => 'existing',
-    'course_key' => 'pre_quraan',
+    'course_key' => '__custom__',
+    'custom_course_title' => '',
     'moodlecourseid' => '0',
     'title' => '',
     'summary' => '',
@@ -323,6 +454,8 @@ $form = [
     'startdate' => '',
     'enddate' => '',
     'capacity' => '9',
+    'sessions_per_week' => '0',
+    'session_minutes' => '0',
     'tuition_amount' => '',
     'pricing_currency' => pqfin_default_currency(),
     'registration_fee' => '',
@@ -339,7 +472,18 @@ $form = [
 if ($ready && $editid > 0) {
     $edit = $DB->get_record('local_prequran_course_offering', ['id' => $editid, 'workspaceid' => $workspaceid], '*', IGNORE_MISSING);
     if ($edit) {
-        $form = pqcoa_offering_record_for_form($edit);
+        $form = pqcoa_offering_record_for_form($edit, $catalog);
+    }
+}
+
+// "Create offering" in the Course Inventory block links here with the course
+// already chosen, so the form opens ready to fill in rather than making the
+// admin hunt for the same course again in the Linked course dropdown.
+if ($ready && $editid <= 0 && $_SERVER['REQUEST_METHOD'] !== 'POST') {
+    $prefillcourseid = optional_param('moodlecourseid', 0, PARAM_INT);
+    if ($prefillcourseid > 0 && isset($moodlecourses[$prefillcourseid])) {
+        $form['moodlecourseid'] = (string)$prefillcourseid;
+        $form['course_link_mode'] = 'existing';
     }
 }
 
@@ -350,10 +494,16 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $action = optional_param('action', '', PARAM_ALPHANUMEXT);
         if ($action === 'save_offering') {
+            $rawcoursekey = optional_param('course_key', '', PARAM_ALPHANUMEXT);
+            $iscustomcourse = $rawcoursekey === '__custom__';
+            $customcoursetitle = pqcoa_param_text('custom_course_title');
             $form = [
                 'offeringid' => (string)optional_param('offeringid', 0, PARAM_INT),
                 'course_link_mode' => optional_param('course_link_mode', 'existing', PARAM_ALPHANUMEXT),
-                'course_key' => pqh_normalize_course_key(optional_param('course_key', '', PARAM_ALPHANUMEXT)),
+                'course_key' => $iscustomcourse
+                    ? pqco_slug_segment($customcoursetitle, 'custom_' . time())
+                    : pqh_normalize_course_key($rawcoursekey),
+                'custom_course_title' => $customcoursetitle,
                 'moodlecourseid' => (string)optional_param('moodlecourseid', 0, PARAM_INT),
                 'title' => pqcoa_param_text('title'),
                 'summary' => pqcoa_param_text('summary'),
@@ -362,6 +512,8 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 'startdate' => pqcoa_param_text('startdate'),
                 'enddate' => pqcoa_param_text('enddate'),
                 'capacity' => (string)optional_param('capacity', 0, PARAM_INT),
+                'sessions_per_week' => (string)max(0, min(7, optional_param('sessions_per_week', 0, PARAM_INT))),
+                'session_minutes' => (string)max(0, min(480, optional_param('session_minutes', 0, PARAM_INT))),
                 'tuition_amount' => pqfin_normalize_money_string(optional_param('tuition_amount', '', PARAM_RAW_TRIMMED)),
                 'pricing_currency' => pqfin_normalize_currency(optional_param('pricing_currency', pqfin_default_currency(), PARAM_ALPHANUMEXT)),
                 'registration_fee' => pqfin_normalize_money_string(optional_param('registration_fee', '', PARAM_RAW_TRIMMED)),
@@ -374,26 +526,35 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 'visibility' => optional_param('visibility', 'workspace', PARAM_ALPHANUMEXT),
                 'status' => optional_param('status', 'draft', PARAM_ALPHANUMEXT),
             ];
-            if ($form['course_key'] === '' || !isset($catalog[$form['course_key']])) {
-                pqcoa_validation_error('Choose a valid course track.');
+            if ($iscustomcourse) {
+                if ($customcoursetitle === '') {
+                    pqcoa_validation_error('Enter a title for the custom course.');
+                }
+                if ($form['title'] === '') {
+                    $form['title'] = $customcoursetitle;
+                }
+            } else {
+                if ($form['course_key'] === '' || !isset($catalog[$form['course_key']])) {
+                    pqcoa_validation_error('Choose a valid course track.');
+                }
+                if ($form['title'] === '') {
+                    $form['title'] = (string)$catalog[$form['course_key']]['title'];
+                }
             }
             if (!in_array($form['course_link_mode'], ['existing', 'create_new'], true)) {
-                pqcoa_validation_error('Choose whether to link an existing Moodle course or create a new one.');
-            }
-            if ($form['title'] === '') {
-                $form['title'] = (string)$catalog[$form['course_key']]['title'];
+                pqcoa_validation_error('Choose whether to link an existing course or create a new one.');
             }
             if ($form['course_link_mode'] === 'create_new') {
                 $createdcourseid = pqco_create_moodle_course_for_offering($consumercontext, $workspace, $form, $catalog);
                 if ($createdcourseid <= 0) {
-                    pqcoa_validation_error('The Moodle course could not be created. Check Moodle course category permissions and try again.');
+                    pqcoa_validation_error('The course could not be created. Check course category permissions and try again.');
                 }
                 $form['moodlecourseid'] = (string)$createdcourseid;
-                $moodlecourses = pqco_moodle_courses();
-                $message = 'Moodle course created and linked to this offering.';
+                $moodlecourses = pqco_moodle_courses($workspaceid);
+                $message = 'Course created and linked to this offering.';
             }
             if ((int)$form['moodlecourseid'] <= 0 || !isset($moodlecourses[(int)$form['moodlecourseid']])) {
-                pqcoa_validation_error('Choose the linked Moodle course before saving this offering, or select Create new Moodle course.');
+                pqcoa_validation_error('Choose the linked course before saving this offering, or select Create new course.');
             }
             if (!array_key_exists($form['visibility'], pqco_visibility_options())) {
                 pqcoa_validation_error('Choose a valid visibility.');
@@ -422,6 +583,9 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 'startdate' => pqco_date_to_time($form['startdate']),
                 'enddate' => pqco_date_to_time($form['enddate']),
                 'capacity' => max(0, (int)$form['capacity']),
+                // Written conditionally below: the columns arrive with upgrade
+                // 202607310028 and this page must not fatal on a DB that has
+                // not run it yet.
                 'tuition_amount' => $form['tuition_amount'],
                 'pricing_currency' => $form['pricing_currency'],
                 'registration_fee' => $form['registration_fee'],
@@ -437,6 +601,10 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 'createdby' => (int)$USER->id,
                 'timemodified' => $now,
             ];
+            if (pqh_table_has_field_safe('local_prequran_course_offering', 'sessions_per_week')) {
+                $record->sessions_per_week = max(0, (int)$form['sessions_per_week']);
+                $record->session_minutes = max(0, (int)$form['session_minutes']);
+            }
             $offeringid = (int)$form['offeringid'];
             $existing = $offeringid > 0 ? $DB->get_record('local_prequran_course_offering', ['id' => $offeringid, 'workspaceid' => $workspaceid], '*', IGNORE_MISSING) : false;
             if ($existing) {
@@ -591,7 +759,7 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                     'droppedat' => time(),
                     'timemodified' => time(),
                 ];
-                $message = 'Drop approved and Moodle unenrollment attempted.';
+                $message = 'Drop approved and unenrollment attempted.';
             } else {
                 $updatedrequest = (object)[
                     'id' => (int)$request->id,
@@ -640,7 +808,7 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 pqcoa_validation_error('Choose a valid enrollment to drop.');
             }
             if ((string)$request->status !== 'enrolled') {
-                pqcoa_validation_error('Only Moodle-enrolled requests can be dropped. Use Retry Moodle sync first for approved requests that are still pending sync.');
+                pqcoa_validation_error('Only enrolled requests can be dropped. Use Retry sync first for approved requests that are still pending sync.');
             }
             pqco_unenrol_student_from_moodle_course((int)$request->studentid, (int)$request->moodlecourseid);
             $DB->update_record('local_prequran_course_enrol_req', (object)[
@@ -671,7 +839,7 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 $workspaceid,
                 $urlparams
             );
-            $message = 'Enrollment dropped and Moodle unenrollment attempted.';
+            $message = 'Enrollment dropped and unenrollment attempted.';
         } else if ($action === 'retry_moodle_enrollment') {
             $requestid = optional_param('requestid', 0, PARAM_INT);
             $request = $DB->get_record_sql(
@@ -687,13 +855,13 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 pqcoa_validation_error('Choose a valid enrollment request.');
             }
             if ((string)$request->status !== 'approved') {
-                pqcoa_validation_error('Only approved requests pending Moodle sync can be synced to Moodle.');
+                pqcoa_validation_error('Only approved requests pending sync can be synced.');
             }
             if (!pqco_enrol_student_in_moodle_course((int)$request->studentid, (int)$request->moodlecourseid)) {
                 pqco_notify_workspace_admins(
                     $workspaceid,
-                    'Course Moodle sync failed',
-                    'Retry Moodle enrollment failed for ' . (string)$request->offering_title . '. Confirm the linked Moodle course has enabled manual enrollment.',
+                    'Course sync failed',
+                    'Retry enrollment failed for ' . (string)$request->offering_title . '. Confirm the linked course has enabled manual enrollment.',
                     new moodle_url('/local/hubredirect/course_sync_report.php', $urlparams),
                     'Open sync report',
                     'course_moodle_sync_failed',
@@ -706,7 +874,7 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                         'moodlecourseid' => (int)$request->moodlecourseid,
                     ]
                 );
-                pqcoa_validation_error('Moodle enrollment could not be completed. Confirm the linked Moodle course has an enabled manual enrollment method.');
+                pqcoa_validation_error('Enrollment could not be completed. Confirm the linked course has an enabled manual enrollment method.');
             }
             pqco_append_profile_course((int)$request->studentid, (string)$request->course_key);
             $teacherenrolledcount = pqco_enrol_assigned_teachers_in_moodle_course(
@@ -748,7 +916,7 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 $workspaceid,
                 $urlparams
             );
-            $message = 'Moodle enrollment synced for this approved request.';
+            $message = 'Enrollment synced for this approved request.';
         }
     } catch (Throwable $e) {
         $error = $e->getMessage();
@@ -757,6 +925,7 @@ if ($ready && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $offerings = [];
 $counts = [];
+$courseinventory = [];
 $requests = [];
 $requestfinancesummaries = [];
 $courseaudits = [];
@@ -767,6 +936,7 @@ $droprequestcount = 0;
 if ($ready) {
     $offerings = array_values($DB->get_records('local_prequran_course_offering', ['workspaceid' => $workspaceid], 'status ASC, startdate ASC, title ASC'));
     $counts = pqco_offering_counts(array_map(static fn($row): int => (int)$row->id, $offerings));
+    $courseinventory = pqcoa_course_inventory($workspaceid, $offerings, $counts);
     $requestwhere = ['r.workspaceid = :workspaceid'];
     $requestparams = ['workspaceid' => $workspaceid];
     if ((string)$requestfilters['request_status'] !== '') {
@@ -897,41 +1067,65 @@ body.pqco-admin-page #page,body.pqco-admin-page #page-content,body.pqco-admin-pa
     <?php if ($error !== ''): ?><div class="pqco-alert pqco-alert--bad"><?php echo s($error); ?></div><?php endif; ?>
 
     <?php if (!$ready): ?>
-      <section class="pqco-panel"><div class="pqco-empty">Course offering tables are not ready. Run the local_prequran Moodle upgrade first.</div></section>
+      <section class="pqco-panel"><div class="pqco-empty">Course offering tables are not ready. Run the local_prequran upgrade first.</div></section>
     <?php else: ?>
       <section class="pqco-grid">
-        <form class="pqco-panel" method="post">
+        <form class="pqco-panel" id="pqco-offering-form" method="post">
           <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
           <input type="hidden" name="action" value="save_offering">
           <input type="hidden" name="offeringid" value="<?php echo s($form['offeringid']); ?>">
           <h2><?php echo (int)$form['offeringid'] > 0 ? 'Edit Offering' : 'Create Offering'; ?></h2>
           <div class="pqco-row">
+            <?php
+            // Keep whatever track the offering being edited already uses, even
+            // when this institution type no longer lists the catalog -- editing
+            // an old offering must not silently switch its track.
+            $pqcotrackoptions = $catalogoptions;
+            if ($form['course_key'] !== '__custom__'
+                    && isset($catalog[$form['course_key']])
+                    && !isset($pqcotrackoptions[$form['course_key']])) {
+                $pqcotrackoptions[$form['course_key']] = $catalog[$form['course_key']];
+            }
+            ?>
             <div class="pqco-field"><label>Course track</label><select class="pqco-select" name="course_key">
-              <?php foreach ($catalog as $key => $course): ?><option value="<?php echo s($key); ?>"<?php echo $form['course_key'] === $key ? ' selected' : ''; ?>><?php echo s((string)$course['title']); ?></option><?php endforeach; ?>
+              <?php foreach ($pqcotrackoptions as $key => $course): ?><option value="<?php echo s($key); ?>"<?php echo $form['course_key'] === $key ? ' selected' : ''; ?>><?php echo s((string)$course['title']); ?></option><?php endforeach; ?>
+              <option value="__custom__"<?php echo $form['course_key'] === '__custom__' ? ' selected' : ''; ?>>Custom / other subject</option>
             </select></div>
-            <div class="pqco-field"><label>Moodle course action</label><select class="pqco-select" name="course_link_mode">
-              <option value="existing"<?php echo $form['course_link_mode'] === 'existing' ? ' selected' : ''; ?>>Use existing Moodle course</option>
-              <option value="create_new"<?php echo $form['course_link_mode'] === 'create_new' ? ' selected' : ''; ?>>Create new Moodle course</option>
+            <div class="pqco-field"><label>Course action</label><select class="pqco-select" name="course_link_mode">
+              <option value="existing"<?php echo $form['course_link_mode'] === 'existing' ? ' selected' : ''; ?>>Use existing course</option>
+              <option value="create_new"<?php echo $form['course_link_mode'] === 'create_new' ? ' selected' : ''; ?>>Create new course</option>
             </select>
-              <span class="pqco-help">Create new will place the Moodle course in this institution's Moodle category and enable manual enrollment.</span>
+              <span class="pqco-help">Create new will place the course in this institution's category and enable manual enrollment.</span>
             </div>
           </div>
           <div class="pqco-row">
-            <div class="pqco-field"><label>Linked Moodle course</label><select class="pqco-select" name="moodlecourseid">
-              <option value="0">Choose Moodle course</option>
-              <?php foreach ($moodlecourses as $courseid => $label): ?><option value="<?php echo (int)$courseid; ?>"<?php echo (int)$form['moodlecourseid'] === (int)$courseid ? ' selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?>
+            <div class="pqco-field"><label>Custom course title</label><input class="pqco-input" name="custom_course_title" value="<?php echo s($form['custom_course_title']); ?>" placeholder="e.g. Grade 3 English">
+              <span class="pqco-help">Only used when Course track is set to Custom / other subject.</span>
+            </div>
+          </div>
+          <div class="pqco-row">
+            <div class="pqco-field"><label>Linked course</label><select class="pqco-select" name="moodlecourseid">
+              <option value="0">Choose course</option>
+              <?php foreach ($moodlecourses as $courseid => $label): ?><option value="<?php echo (int)$courseid; ?>"<?php echo (int)$form['moodlecourseid'] === (int)$courseid ? ' selected' : ''; ?>><?php echo s($label); ?><?php echo isset($approvedsyllabi[(int)$courseid]) ? '' : ' -- no approved syllabus'; ?></option><?php endforeach; ?>
             </select>
+              <?php
+                $selectedcourseid = (int)$form['moodlecourseid'];
+                $selectedneedssyllabus = $selectedcourseid > 0 && !isset($approvedsyllabi[$selectedcourseid]);
+              ?>
               <?php if (!$moodlecourses): ?>
-                <span class="pqco-help pqco-help--warn">No Moodle courses are available to link. Create the Moodle course first, then return here.</span>
+                <span class="pqco-help pqco-help--warn">No courses are available to link. Create the course first, then return here.</span>
               <?php else: ?>
-                <span class="pqco-help">Required. This is the Moodle course students will be enrolled into after approval.</span>
+                <?php if ($selectedneedssyllabus): ?>
+                  <span class="pqco-help pqco-help--warn">This course has no approved syllabus yet. You can still create the offering &mdash; write and approve the syllabus before families enrol.</span>
+                <?php endif; ?>
+                <span class="pqco-help">Required. This is the course students will be enrolled into after approval.</span>
               <?php endif; ?>
             </div>
             <div class="pqco-field"><label>Auto-created category</label><input class="pqco-input" value="<?php echo s(trim((string)($consumercontext->consumername ?? '')) !== '' ? (string)$consumercontext->consumername : (string)$workspace->name); ?>" disabled>
-              <span class="pqco-help">New Moodle courses are grouped under the institution category.</span>
+              <span class="pqco-help">New courses are grouped under the institution category.</span>
             </div>
           </div>
-          <div class="pqco-field"><label>Title</label><input class="pqco-input" name="title" value="<?php echo s($form['title']); ?>" placeholder="Pre-Quraan beginner group"></div>
+          <div class="pqco-field"><label>Title</label><input class="pqco-input" name="title" value="<?php echo s($form['title']); ?>" placeholder="e.g. Grade 3 English - Term 1"></div>
           <div class="pqco-field"><label>Summary</label><textarea class="pqco-textarea" name="summary"><?php echo s($form['summary']); ?></textarea></div>
           <div class="pqco-field"><label>Syllabus</label><textarea class="pqco-textarea" name="syllabus"><?php echo s($form['syllabus']); ?></textarea></div>
           <div class="pqco-field"><label>Prerequisites</label><textarea class="pqco-textarea" name="prerequisites"><?php echo s($form['prerequisites']); ?></textarea></div>
@@ -941,6 +1135,12 @@ body.pqco-admin-page #page,body.pqco-admin-page #page-content,body.pqco-admin-pa
           </div>
           <div class="pqco-row">
             <div class="pqco-field"><label>Seats</label><input class="pqco-input" type="number" min="0" name="capacity" value="<?php echo s($form['capacity']); ?>"></div>
+            <div class="pqco-field"><label>Live sessions per week</label><input class="pqco-input" type="number" min="0" max="7" name="sessions_per_week" value="<?php echo s($form['sessions_per_week']); ?>">
+              <span class="pqco-help">How many live classes each week. Availability matching uses this to check a cohort and teacher can actually meet that often. 0 = no live-session requirement.</span>
+            </div>
+            <div class="pqco-field"><label>Session length (minutes)</label><input class="pqco-input" type="number" min="0" max="480" step="5" name="session_minutes" value="<?php echo s($form['session_minutes']); ?>">
+              <span class="pqco-help">Length of each live session, e.g. 60.</span>
+            </div>
             <div class="pqco-field"><label>Status</label><select class="pqco-select" name="status"><?php foreach (pqco_status_options() as $value => $label): ?><option value="<?php echo s($value); ?>"<?php echo $form['status'] === $value ? ' selected' : ''; ?>><?php echo s($label); ?></option><?php endforeach; ?></select></div>
           </div>
           <h2>Pricing</h2>
@@ -986,7 +1186,7 @@ body.pqco-admin-page #page,body.pqco-admin-page #page-content,body.pqco-admin-pa
                     $pricing = pqfin_offering_pricing_summary($offering);
                   ?>
                   <tr>
-                    <td data-label="Offering"><span class="pqco-name"><?php echo s($offering->title); ?></span><span class="pqco-muted"><?php echo s($catalog[(string)$offering->course_key]['title'] ?? (string)$offering->course_key); ?> / Moodle #<?php echo (int)$offering->moodlecourseid; ?></span></td>
+                    <td data-label="Offering"><span class="pqco-name"><?php echo s($offering->title); ?></span><span class="pqco-muted"><?php echo s($catalog[(string)$offering->course_key]['title'] ?? (string)$offering->course_key); ?> / Course #<?php echo (int)$offering->moodlecourseid; ?></span></td>
                     <td data-label="Dates"><?php echo (int)$offering->startdate > 0 ? s(userdate((int)$offering->startdate, get_string('strftimedate'))) : 'Not set'; ?><?php echo (int)$offering->enddate > 0 ? '<br>' . s(userdate((int)$offering->enddate, get_string('strftimedate'))) : ''; ?></td>
                     <td data-label="Seats"><span class="pqco-pill"><?php echo (int)($counts[(int)$offering->id] ?? 0); ?> approved</span><span class="pqco-pill"><?php echo (int)$offering->capacity <= 0 ? 'Unlimited' : ((int)$open . ' open'); ?></span></td>
                     <td data-label="Pricing"><span class="pqco-name"><?php echo s($pricing['currency'] . ' ' . $pricing['total']); ?></span><span class="pqco-muted">Tuition <?php echo s((string)$pricing['tuition_amount']); ?> / Fees <?php echo s(pqfin_cents_to_money(pqfin_money_to_cents((string)$pricing['registration_fee']) + pqfin_money_to_cents((string)$pricing['materials_fee']))); ?></span><?php if ($pricing['installment_eligible']): ?><span class="pqco-pill">Installments</span><?php endif; ?><?php if ($pricing['scholarship_eligible']): ?><span class="pqco-pill">Scholarship</span><?php endif; ?></td>
@@ -1054,9 +1254,9 @@ body.pqco-admin-page #page,body.pqco-admin-page #page-content,body.pqco-admin-pa
                     <td data-label="Status">
                       <span class="pqco-pill"><?php echo s(pqco_request_status_label((string)$request->status)); ?></span>
                       <?php if ((int)($request->moodleenrolledat ?? 0) > 0): ?>
-                        <span class="pqco-muted">Moodle enrolled <?php echo s(userdate((int)$request->moodleenrolledat, get_string('strftimedatetimeshort'))); ?></span>
+                        <span class="pqco-muted">Enrolled <?php echo s(userdate((int)$request->moodleenrolledat, get_string('strftimedatetimeshort'))); ?></span>
                       <?php elseif ((string)$request->status === 'approved'): ?>
-                        <span class="pqco-muted">Awaiting Moodle enrollment sync</span>
+                        <span class="pqco-muted">Awaiting enrollment sync</span>
                       <?php endif; ?>
                     </td>
                     <td data-label="Finance">
@@ -1094,7 +1294,7 @@ body.pqco-admin-page #page,body.pqco-admin-page #page-content,body.pqco-admin-pa
                           <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
                           <input type="hidden" name="action" value="retry_moodle_enrollment">
                           <input type="hidden" name="requestid" value="<?php echo (int)$request->id; ?>">
-                          <button class="pqco-btn pqco-btn--light" type="submit">Retry Moodle sync</button>
+                          <button class="pqco-btn pqco-btn--light" type="submit">Retry sync</button>
                         </form>
                         <form method="post" style="margin-top:8px">
                           <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
@@ -1105,7 +1305,7 @@ body.pqco-admin-page #page,body.pqco-admin-page #page-content,body.pqco-admin-pa
                         </form>
                       <?php elseif ((string)$request->status === 'enrolled'): ?>
                         <span class="pqco-muted"><?php echo trim((string)$request->admin_notes) !== '' ? s((string)$request->admin_notes) : 'Enrollment complete'; ?></span>
-                        <a class="pqco-btn pqco-btn--light" style="margin-top:8px" href="<?php echo (new moodle_url('/course/view.php', ['id' => (int)$request->moodlecourseid]))->out(false); ?>">Open Moodle course</a>
+                        <a class="pqco-btn pqco-btn--light" style="margin-top:8px" href="<?php echo (new moodle_url('/course/view.php', ['id' => (int)$request->moodlecourseid]))->out(false); ?>">Open course</a>
                         <form method="post" style="margin-top:8px">
                           <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
                           <input type="hidden" name="action" value="drop_enrollment">
@@ -1154,7 +1354,144 @@ body.pqco-admin-page #page,body.pqco-admin-page #page-content,body.pqco-admin-pa
         </div>
       </section>
     <?php endif; ?>
+
+    <?php if ($ready): ?>
+    <section class="pqco-panel">
+      <h2>Course Inventory</h2>
+      <p class="pqco-muted" style="margin:0 0 12px">Every course in this institution's category, and whether it already has an offering. Filter to <strong>Not offered</strong> to find courses still waiting to be published for enrollment.</p>
+      <?php if (!$courseinventory): ?>
+        <div class="pqco-empty">
+          No courses matched this institution. Courses are matched by category &mdash; the auto-created
+          <strong><?php echo s(trim((string)($consumercontext->consumername ?? '')) !== '' ? (string)$consumercontext->consumername : (string)$workspace->name); ?></strong>
+          category (and any sub-categories), plus any course an existing offering already links to.
+          If courses were loaded straight into Moodle under a differently named category, move them
+          under this institution's category and they will appear here.
+        </div>
+      <?php else: ?>
+        <?php
+          $pqcoofferedcount = count(array_filter($courseinventory, static function(array $row): bool {
+              return $row['isoffered'];
+          }));
+          $pqcostatusoptions = [];
+          foreach ($courseinventory as $inventoryopt) {
+              if ((string)$inventoryopt['status'] === '') {
+                  continue;
+              }
+              $statusopt = (string)$inventoryopt['status'];
+              $pqcostatusoptions[$statusopt] = pqco_status_options()[$statusopt] ?? ucwords(str_replace('_', ' ', $statusopt));
+          }
+          asort($pqcostatusoptions);
+        ?>
+        <div class="pqco-filter">
+          <div class="pqco-field">
+            <label for="pqco-inv-filter">Search courses</label>
+            <input class="pqco-input" id="pqco-inv-filter" type="search" placeholder="Course name, short name, ID number, or offering">
+          </div>
+          <div class="pqco-field">
+            <label for="pqco-inv-offered-filter">Offering</label>
+            <select class="pqco-select" id="pqco-inv-offered-filter">
+              <option value="">All courses</option>
+              <option value="yes">Offered</option>
+              <option value="no">Not offered</option>
+            </select>
+          </div>
+          <div class="pqco-field">
+            <label for="pqco-inv-status-filter">Offering status</label>
+            <select class="pqco-select" id="pqco-inv-status-filter">
+              <option value="">All statuses</option>
+              <?php foreach ($pqcostatusoptions as $statusvalue => $statuslabel): ?>
+                <option value="<?php echo s(strtolower((string)$statusvalue)); ?>"><?php echo s($statuslabel); ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+          <span class="pqco-muted"><?php echo (int)$pqcoofferedcount; ?> offered / <?php echo count($courseinventory); ?> course<?php echo count($courseinventory) === 1 ? '' : 's'; ?></span>
+        </div>
+        <table class="pqco-table" id="pqco-inv-table">
+          <thead><tr><th>Course</th><th>Offering</th><th>Status</th><th>Visibility</th><th>Seats</th><th>Enrolled</th><th>Actions</th></tr></thead>
+          <tbody>
+            <?php foreach ($courseinventory as $inventory): ?>
+              <?php
+                $invstatuslabel = (string)$inventory['status'] !== ''
+                    ? (pqco_status_options()[(string)$inventory['status']] ?? ucwords(str_replace('_', ' ', (string)$inventory['status'])))
+                    : '';
+                $invvisibilitylabel = (string)$inventory['visibility'] !== ''
+                    ? (pqco_visibility_options()[(string)$inventory['visibility']] ?? ucwords(str_replace('_', ' ', (string)$inventory['visibility'])))
+                    : '';
+                $invstart = (int)$inventory['startdate'] > 0 ? userdate((int)$inventory['startdate'], get_string('strftimedate')) : '';
+                $invseats = $inventory['isoffered']
+                    ? ($inventory['unlimited'] ? 'Unlimited' : ((int)$inventory['openseats'] . ' of ' . (int)$inventory['capacity'] . ' open'))
+                    : '';
+                $invsummary = $inventory['fullname']
+                    . ' / ' . ($inventory['shortname'] !== '' ? $inventory['shortname'] : '--')
+                    . ' / #' . (int)$inventory['courseid'];
+                $invhaystack = strtolower(trim(
+                    $inventory['fullname'] . ' ' . $inventory['shortname'] . ' ' . $inventory['idnumber'] . ' '
+                    . $inventory['offeringtitle'] . ' ' . $inventory['coursekey'] . ' '
+                    . $invstatuslabel . ' ' . $invvisibilitylabel . ' ' . $inventory['category'] . ' '
+                    . ($inventory['isoffered'] ? 'offered' : 'not offered') . ' #' . (int)$inventory['courseid'] . ' '
+                    . (isset($approvedsyllabi[(int)$inventory['courseid']]) ? 'syllabus approved' : 'no approved syllabus')
+                ));
+              ?>
+              <tr data-filter="<?php echo s($invhaystack); ?>" data-offered="<?php echo $inventory['isoffered'] ? 'yes' : 'no'; ?>" data-status="<?php echo s(strtolower((string)$inventory['status'])); ?>">
+                <td data-label="Course"><span class="pqco-name"><?php echo s($invsummary); ?></span><span class="pqco-muted"><?php echo s($inventory['category'] !== '' ? $inventory['category'] : 'Uncategorised'); ?><?php echo $inventory['visible'] ? '' : ' / hidden'; ?><?php echo $inventory['idnumber'] !== '' ? ' / ' . s($inventory['idnumber']) : ''; ?><?php echo isset($approvedsyllabi[(int)$inventory['courseid']]) ? ' / syllabus approved' : ' / no approved syllabus'; ?></span></td>
+                <td data-label="Offering">
+                  <?php if ($inventory['isoffered']): ?>
+                    <span class="pqco-name"><?php echo s($inventory['offeringtitle'] !== '' ? $inventory['offeringtitle'] : 'Offering #' . (int)$inventory['offeringid']); ?></span>
+                    <span class="pqco-muted"><?php echo s($inventory['coursekey'] !== '' ? $inventory['coursekey'] : '--'); ?><?php echo $invstart !== '' ? ' / starts ' . s($invstart) : ''; ?></span>
+                  <?php else: ?>
+                    <span class="pqco-pill">Not offered</span>
+                  <?php endif; ?>
+                </td>
+                <td data-label="Status"><?php echo $invstatuslabel !== '' ? '<span class="pqco-pill">' . s($invstatuslabel) . '</span>' : '<span class="pqco-muted">--</span>'; ?></td>
+                <td data-label="Visibility"><?php echo $invvisibilitylabel !== '' ? '<span class="pqco-pill">' . s($invvisibilitylabel) . '</span>' : '<span class="pqco-muted">--</span>'; ?></td>
+                <td data-label="Seats"><?php echo $invseats !== '' ? s($invseats) : '<span class="pqco-muted">--</span>'; ?></td>
+                <td data-label="Enrolled"><?php echo $inventory['isoffered'] ? (int)$inventory['enrolled'] : '<span class="pqco-muted">--</span>'; ?></td>
+                <td data-label="Actions">
+                  <div class="pqco-actions">
+                    <a class="pqco-btn pqco-btn--light" href="<?php echo (new moodle_url('/course/view.php', ['id' => (int)$inventory['courseid']]))->out(false); ?>">Open course</a>
+                    <?php if (!$inventory['isoffered']): ?>
+                      <a class="pqco-btn" href="<?php echo (new moodle_url('/local/hubredirect/course_offerings.php', $urlparams + ['moodlecourseid' => (int)$inventory['courseid']]))->out(false); ?>#pqco-offering-form">Create offering</a>
+                    <?php endif; ?>
+                  </div>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      <?php endif; ?>
+    </section>
+    <?php endif; ?>
   </div>
 </main>
+<script>
+(function() {
+  var filter = document.getElementById('pqco-inv-filter');
+  var offeredSelect = document.getElementById('pqco-inv-offered-filter');
+  var statusSelect = document.getElementById('pqco-inv-status-filter');
+  var table = document.getElementById('pqco-inv-table');
+  if (!filter || !table) {
+    return;
+  }
+  function apply() {
+    var needle = filter.value.toLowerCase().trim();
+    var offered = offeredSelect ? offeredSelect.value : '';
+    var status = statusSelect ? statusSelect.value : '';
+    table.querySelectorAll('tbody tr').forEach(function(row) {
+      var haystack = row.getAttribute('data-filter') || '';
+      var matchesText = needle === '' || haystack.indexOf(needle) !== -1;
+      var matchesOffered = offered === '' || row.getAttribute('data-offered') === offered;
+      var matchesStatus = status === '' || row.getAttribute('data-status') === status;
+      row.style.display = (matchesText && matchesOffered && matchesStatus) ? '' : 'none';
+    });
+  }
+  filter.addEventListener('input', apply);
+  if (offeredSelect) {
+    offeredSelect.addEventListener('change', apply);
+  }
+  if (statusSelect) {
+    statusSelect.addEventListener('change', apply);
+  }
+}());
+</script>
 <?php
 echo $OUTPUT->footer();

@@ -424,6 +424,7 @@ function pqti_save_profile(int $teacherid, array $data): int {
         'admin_notes' => (string)$data['admin_notes'],
         'timemodified' => $now,
     ];
+    pqti_set_profile_field($record, 'shift', in_array((string)($data['shift'] ?? ''), ['', 'shift1', 'shift2'], true) ? (string)($data['shift'] ?? '') : '');
     pqti_set_profile_field($record, 'teacher_phone', (string)$data['teacher_phone']);
     pqti_set_profile_field($record, 'preferred_contact', (string)$data['preferred_contact']);
     pqti_set_profile_field($record, 'teacher_work_models', (string)($data['teacher_work_models'] ?? ''));
@@ -602,6 +603,7 @@ function pqti_apply_teacher_profile_prefill(array &$form, int $teacherid, array 
     $form['safeguarding_trained'] = (string)(int)($profile->safeguarding_trained ?? 0);
     $form['recording_qa_ack'] = (string)(int)($profile->recording_qa_ack ?? 0);
     $form['status'] = (string)($profile->status ?? 'pending');
+    $form['shift'] = (string)($profile->shift ?? '');
     $form['marketplace_visible'] = isset($profile->marketplace_visible) ? (string)(int)$profile->marketplace_visible : '';
     $form['marketplace_status'] = (string)($profile->marketplace_status ?? 'draft');
     $form['marketplace_bio'] = (string)($profile->marketplace_bio ?? '');
@@ -1009,6 +1011,7 @@ $contextworkspaceid = (int)$consumercontext->workspaceid;
 if ($contextworkspaceid > 0) {
     $consumerparams['workspaceid'] = $contextworkspaceid;
 }
+pqh_enforce_role_domain($consumercontext, $contextworkspaceid, (int)$USER->id);
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/local/hubredirect/teacher_intake.php', $consumerparams));
 $PAGE->set_pagelayout('standard');
@@ -1150,6 +1153,7 @@ $form = [
     'safeguarding_trained' => '',
     'recording_qa_ack' => '',
     'status' => 'pending',
+    'shift' => '',
     'marketplace_visible' => '',
     'marketplace_status' => 'draft',
     'marketplace_bio' => '',
@@ -1423,6 +1427,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && optional_param('submit_intake', '',
         if (!confirm_sesskey()) {
             throw new invalid_parameter_exception('This teacher intake form expired. Please refresh and try again.');
         }
+        $photoupload = pqh_uploaded_photo_info($_FILES['teacher_photo'] ?? []);
         if (!$ready) {
             throw new invalid_parameter_exception('Teacher profile table is not ready.');
         }
@@ -1440,6 +1445,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && optional_param('submit_intake', '',
             $workspaceid = $contextworkspaceid;
         }
         $form['workspaceid'] = $workspaceid > 0 ? (string)$workspaceid : '';
+        $schoolcontextforusername = $workspaceid > 0 ? pqh_consumer_context_by_workspace($workspaceid) : null;
+        $schoolslugforusername = (string)($schoolcontextforusername->consumerslug ?? $consumercontext->consumerslug ?? '');
         $firstname = $form['teacher_firstname'];
         $lastname = $form['teacher_lastname'];
         $displayname = $form['teacher_display_name'] !== '' ? $form['teacher_display_name'] : trim($firstname . ' ' . $lastname);
@@ -1796,7 +1803,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && optional_param('submit_intake', '',
                 $teacherusername = (string)$existinguser->username;
                 $existingteacher = true;
             } else {
-                $teacherusername = pqti_unique_username(optional_param('teacher_username', '', PARAM_USERNAME) ?: 'teacher.' . $firstname . '.' . $lastname);
+                $teacherusername = pqti_unique_username('teacher.' . $firstname . '.' . $lastname);
                 [$teacherid, $teacherpassword] = pqti_create_user($firstname, $lastname, $teacheremail, $teacherusername, !pqti_contact_is_email($preferredcontact));
             }
         }
@@ -1804,6 +1811,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && optional_param('submit_intake', '',
 
         $teacheruser = core_user::get_user($teacherid);
         if ($teacheruser) {
+            if (!$existingteacher) {
+                $standardteacherusername = pqh_generate_standard_username($schoolslugforusername, 'teacher', $teacheraccountid);
+                if ($standardteacherusername !== '' && !$DB->record_exists('user', ['username' => $standardteacherusername, 'mnethostid' => $CFG->mnet_localhost_id])) {
+                    $teacheruser->username = $standardteacherusername;
+                    $teacherusername = $standardteacherusername;
+                }
+            }
             if (core_text::strlen($form['country']) <= 2) {
                 $teacheruser->country = core_text::strtoupper($form['country']);
             }
@@ -1963,6 +1977,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && optional_param('submit_intake', '',
             'safeguarding_trained' => (int)$form['safeguarding_trained'],
             'recording_qa_ack' => (int)$form['recording_qa_ack'],
             'status' => $form['status'],
+            'shift' => $form['shift'],
             'marketplace_visible' => (int)($form['marketplace_visible'] === '1'),
             'marketplace_status' => $form['marketplace_status'],
             'marketplace_bio' => $form['marketplace_bio'],
@@ -1981,6 +1996,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && optional_param('submit_intake', '',
         ];
 
         $profileid = pqti_save_profile($teacherid, $data);
+        if ($photoupload !== null) {
+            pqh_store_profile_photo('teacher_photo', $teacherid, $photoupload, (int)$USER->id);
+        }
         if ($workspaceid > 0) {
             pqti_upsert_workspace_member($workspaceid, $teacherid, 'teacher', 'Added from teacher intake.');
         }
@@ -2121,7 +2139,7 @@ body.pqh-teacher-intake-page #page,body.pqh-teacher-intake-page #page-content,bo
 .pqti-top{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:22px;margin-bottom:16px}.pqti-title{margin:0;font-size:30px;line-height:1.12;font-weight:950;color:#241b24}.pqti-sub{margin:7px 0 0;color:#5e7280;font-size:14px;font-weight:800}.pqti-muted{color:#5e7280;font-size:12px}
 .pqti-actions{display:flex;flex-wrap:wrap;gap:9px}.pqti-btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 14px;border:0;border-radius:8px;background:#2f6f4e;color:#fff!important;text-decoration:none;font-size:14px;font-weight:950;cursor:pointer}.pqti-btn--light{background:#eef4f6;color:#173044!important;border:1px solid rgba(23,48,68,.12)}.pqti-btn--brown{background:#7a5637}
 .pqti-panel{padding:20px;margin-bottom:16px}.pqti-panel h2{margin:0 0 12px;font-size:22px;font-weight:950}.pqti-panel h3{margin:18px 0 10px;font-size:15px;font-weight:950;color:#7a5637}.pqti-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}
-.pqti-field{display:grid;gap:6px;margin-bottom:10px;align-content:start}.pqti-field--tight{gap:0}.pqti-field label{margin:0;font-size:12px;font-weight:900;color:#415665}.pqti-city-other{display:none}.pqti-city-other--visible{display:grid}.pqti-input,.pqti-select,.pqti-textarea{width:100%;min-height:40px;border:1px solid rgba(23,48,68,.18);border-radius:8px;padding:8px 10px;font:800 14px/1.2 system-ui;background:#fff;color:#173044}.pqti-select--multi{min-height:124px}.pqti-field--error .pqti-input,.pqti-field--error .pqti-select,.pqti-field--error .pqti-textarea,.pqti-field--error .pqti-choicegrid,.pqti-field--error .pqti-calendar{border-color:#a33a2c;background:#fff8f6}.pqti-error{font-size:12px;font-weight:900;color:#a33a2c}.pqti-textarea{min-height:86px}.pqti-choicegrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:10px;border:1px solid rgba(23,48,68,.18);border-radius:8px;background:#fff}.pqti-choice{display:flex;gap:7px;align-items:center;font-size:13px;font-weight:850;color:#173044}.pqti-choice input{width:17px;height:17px}
+.pqti-field{display:grid;gap:6px;margin-bottom:10px;align-content:start}.pqti-field--tight{gap:0}.pqti-field label{margin:0;font-size:12px;font-weight:900;color:#415665}.pqti-help{color:#5e7280;font-size:11.5px;font-weight:700}.pqti-city-other{display:none}.pqti-city-other--visible{display:grid}.pqti-input,.pqti-select,.pqti-textarea{width:100%;min-height:40px;border:1px solid rgba(23,48,68,.18);border-radius:8px;padding:8px 10px;font:800 14px/1.2 system-ui;background:#fff;color:#173044}.pqti-select--multi{min-height:124px}.pqti-field--error .pqti-input,.pqti-field--error .pqti-select,.pqti-field--error .pqti-textarea,.pqti-field--error .pqti-choicegrid,.pqti-field--error .pqti-calendar{border-color:#a33a2c;background:#fff8f6}.pqti-error{font-size:12px;font-weight:900;color:#a33a2c}.pqti-textarea{min-height:86px}.pqti-choicegrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:10px;border:1px solid rgba(23,48,68,.18);border-radius:8px;background:#fff}.pqti-choice{display:flex;gap:7px;align-items:center;font-size:13px;font-weight:850;color:#173044}.pqti-choice input{width:17px;height:17px}
 .pqti-calendar{overflow:auto;border:2px solid #dbe8f7;border-radius:18px;background:#fff}.pqti-calendar table{width:100%;min-width:900px;border-collapse:collapse}.pqti-calendar th,.pqti-calendar td{border:1px solid #e3ebf1;text-align:center;padding:10px}.pqti-calendar th{background:#eaf7fb;color:#264055;font-size:14px;font-weight:950}.pqti-calendar td:first-child{background:#fbfaf6;text-align:left;font-size:15px;font-weight:950;color:#142233}.pqti-calendar tr:nth-child(even) td:first-child{background:#f7fcf8}.pqti-slot{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:12px;background:#eef7ff;border:1px solid #d4e8fb;cursor:pointer}.pqti-slot input{width:22px;height:22px;accent-color:#2f6f4e;cursor:pointer}
 .pqti-alert{padding:12px 14px;border-radius:8px;margin-bottom:12px;font-weight:850}.pqti-alert--ok{background:#edf9ef;color:#245c35}.pqti-alert--bad{background:#fff0ed;color:#883526}.pqti-errorlist{margin:8px 0 0;padding-left:20px}.pqti-errorlist a{color:#883526!important;text-decoration:underline}.pqti-empty{padding:16px;border:1px dashed rgba(23,48,68,.22);border-radius:10px;color:#5e7280;font-weight:850;background:#fff}.pqti-result{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.pqti-result div{padding:12px;border-radius:8px;background:#f8fbfd;border:1px solid rgba(23,48,68,.1);font-weight:850}.pqti-result strong{display:block;color:#7a5637;margin-bottom:4px}
 .pqti-checks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}.pqti-check{padding:12px;border:1px solid rgba(23,48,68,.1);border-radius:8px;background:#fbfdff;font-weight:850}.pqti-check strong{display:block;margin-bottom:4px;color:#7a5637}.pqti-pill{display:inline-flex;align-items:center;min-height:26px;padding:0 9px;border-radius:999px;font-size:12px;font-weight:950;background:#eef4f6;color:#173044}.pqti-pill--ok{background:#edf9ef;color:#245c35}.pqti-pill--warn{background:#fff4dc;color:#7a5637}.pqti-pill--bad{background:#fff0ed;color:#883526}.pqti-linkrow{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}
@@ -2246,7 +2264,7 @@ body.pqh-teacher-intake-page #page,body.pqh-teacher-intake-page #page-content,bo
 
       <section class="pqti-panel">
         <h2><?php echo s($paneltitle); ?></h2>
-        <form method="post" novalidate>
+        <form method="post" novalidate enctype="multipart/form-data">
           <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
           <input type="hidden" name="consumer" value="<?php echo s((string)$consumercontext->consumerslug); ?>">
           <input type="hidden" name="teacher_requestid" value="<?php echo s(pqti_form_value($form, 'teacher_requestid')); ?>">
@@ -2258,9 +2276,10 @@ body.pqh-teacher-intake-page #page,body.pqh-teacher-intake-page #page-content,bo
             <div class="pqti-field<?php echo pqti_field_class($fielderrors, 'teacher_firstname'); ?>" id="pqti-teacher_firstname"><label>First name</label><input class="pqti-input" name="teacher_firstname" value="<?php echo s(pqti_form_value($form, 'teacher_firstname')); ?>"><?php echo pqti_form_error($fielderrors, 'teacher_firstname'); ?></div>
             <div class="pqti-field<?php echo pqti_field_class($fielderrors, 'teacher_lastname'); ?>" id="pqti-teacher_lastname"><label>Last name</label><input class="pqti-input" name="teacher_lastname" value="<?php echo s(pqti_form_value($form, 'teacher_lastname')); ?>"><?php echo pqti_form_error($fielderrors, 'teacher_lastname'); ?></div>
             <div class="pqti-field"><label>Display name</label><input class="pqti-input" name="teacher_display_name" value="<?php echo s(pqti_form_value($form, 'teacher_display_name')); ?>" placeholder="Optional"></div>
-            <div class="pqti-field"><label>Username</label><input class="pqti-input" name="teacher_username" value="<?php echo s(pqti_form_value($form, 'teacher_username')); ?>" placeholder="Auto-generated if blank"></div>
+            <div class="pqti-field"><label>Username</label><div class="pqti-input" style="background:#f5f8fb;color:#5e7280">Auto-generated: schoolslug.t&lt;account&nbsp;no.&gt;</div></div>
             <div class="pqti-field<?php echo pqti_field_class($fielderrors, 'teacher_contact'); ?>" id="pqti-teacher_contact"><label>Teacher email or phone</label><input class="pqti-input" name="teacher_contact" value="<?php echo s(pqti_form_value($form, 'teacher_contact')); ?>" placeholder="Email preferred; phone accepted"><?php echo pqti_form_error($fielderrors, 'teacher_contact'); ?></div>
             <div class="pqti-field"><label>Phone / WhatsApp</label><input class="pqti-input" name="teacher_phone" value="<?php echo s(pqti_form_value($form, 'teacher_phone')); ?>"></div>
+            <div class="pqti-field"><label>Photo</label><input class="pqti-input" name="teacher_photo" type="file" accept="image/jpeg,image/png,image/webp"><span class="pqti-help">Optional. JPG, PNG, or WEBP, up to 5&nbsp;MB. Uploading a new photo replaces any existing one.</span></div>
             <div class="pqti-field"><label>Preferred contact</label><select class="pqti-select" name="preferred_contact"><option value="email"<?php echo pqti_selected($form, 'preferred_contact', 'email'); ?>>Email</option><option value="phone"<?php echo pqti_selected($form, 'preferred_contact', 'phone'); ?>>Phone</option><option value="whatsapp"<?php echo pqti_selected($form, 'preferred_contact', 'whatsapp'); ?>>WhatsApp</option><option value="moodle"<?php echo pqti_selected($form, 'preferred_contact', 'moodle'); ?>>Moodle message</option></select></div>
             <div class="pqti-field<?php echo pqti_field_class($fielderrors, 'gender'); ?>" id="pqti-gender"><label>Gender</label><select class="pqti-select" name="gender"><option value="">Select</option><option value="female"<?php echo pqti_selected($form, 'gender', 'female'); ?>>Female</option><option value="male"<?php echo pqti_selected($form, 'gender', 'male'); ?>>Male</option></select><?php echo pqti_form_error($fielderrors, 'gender'); ?></div>
           </div>
@@ -2478,6 +2497,7 @@ body.pqh-teacher-intake-page #page,body.pqh-teacher-intake-page #page-content,bo
             <div class="pqti-field<?php echo pqti_field_class($fielderrors, 'safeguarding_trained'); ?>" id="pqti-safeguarding_trained"><label>Child safety training</label><select class="pqti-select" name="safeguarding_trained"><option value="">Select</option><option value="1"<?php echo pqti_selected($form, 'safeguarding_trained', '1'); ?>>Completed</option><option value="0"<?php echo pqti_selected($form, 'safeguarding_trained', '0'); ?>>Not completed</option></select><?php echo pqti_form_error($fielderrors, 'safeguarding_trained'); ?></div>
             <div class="pqti-field<?php echo pqti_field_class($fielderrors, 'recording_qa_ack'); ?>" id="pqti-recording_qa_ack"><label>Recording and QA policy acknowledgement</label><select class="pqti-select" name="recording_qa_ack"><option value="">Select</option><option value="1"<?php echo pqti_selected($form, 'recording_qa_ack', '1'); ?>>Acknowledged</option><option value="0"<?php echo pqti_selected($form, 'recording_qa_ack', '0'); ?>>Not acknowledged</option></select><?php echo pqti_form_error($fielderrors, 'recording_qa_ack'); ?></div>
             <div class="pqti-field<?php echo pqti_field_class($fielderrors, 'status'); ?>" id="pqti-status"><label>Teacher status</label><select class="pqti-select" name="status"><option value="pending"<?php echo pqti_selected($form, 'status', 'pending'); ?>>Pending</option><option value="active"<?php echo pqti_selected($form, 'status', 'active'); ?>>Active</option><option value="paused"<?php echo pqti_selected($form, 'status', 'paused'); ?>>Paused</option><option value="inactive"<?php echo pqti_selected($form, 'status', 'inactive'); ?>>Inactive</option></select><?php echo pqti_form_error($fielderrors, 'status'); ?></div>
+            <div class="pqti-field" id="pqti-shift"><label>Teaching shift</label><select class="pqti-select" name="shift"><option value=""<?php echo pqti_selected($form, 'shift', ''); ?>>No shift restriction</option><option value="shift1"<?php echo pqti_selected($form, 'shift', 'shift1'); ?>>Shift 1 — 10:00-20:00 EAT (day)</option><option value="shift2"<?php echo pqti_selected($form, 'shift', 'shift2'); ?>>Shift 2 — 20:00-06:00 EAT (night)</option></select><span class="pqti-help">Matching only offers this teacher hours inside the shift window (their declared availability is intersected with it). Serves Africa/Europe/Asia daytime learners on Shift 1, Americas/Europe evening learners on Shift 2.</span></div>
           </div>
           <div class="pqti-field"><label>Admin notes</label><textarea class="pqti-textarea" name="admin_notes" placeholder="Background checks, onboarding notes, internal restrictions, teaching strengths"><?php echo s(pqti_form_value($form, 'admin_notes')); ?></textarea></div>
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 defined('MOODLE_INTERNAL') || die();
 
 function xmldb_local_prequran_upgrade($oldversion): bool {
-    global $CFG;
+    global $CFG, $DB;
 
     require_once($CFG->dirroot . '/local/prequran/db/upgradelib.php');
 
@@ -592,6 +592,234 @@ function xmldb_local_prequran_upgrade($oldversion): bool {
         require_once($CFG->dirroot . '/local/prequran/db/progresslib.php');
         xmldb_local_prequran_ensure_progress_schema();
         upgrade_plugin_savepoint(true, 202607220001, 'local', 'prequran');
+    }
+
+    if ($oldversion < 202607220003) {
+        // Enrolment lifecycle (best practice): parent/guardian observer role,
+        // assigned in student user contexts by the enrolment_reconcile task.
+        xmldb_local_prequran_ensure_parent_observer_role();
+        upgrade_plugin_savepoint(true, 202607220003, 'local', 'prequran');
+    }
+
+    if ($oldversion < 202607230003) {
+        // Teacher certificate register (expiry-dated compliance) + learner
+        // session ratings (feed the QA analytics blend).
+        xmldb_local_prequran_ensure_teacher_cert_schema();
+        xmldb_local_prequran_ensure_session_rating_schema();
+        upgrade_plugin_savepoint(true, 202607230003, 'local', 'prequran');
+    }
+
+    if ($oldversion < 202607230011) {
+        // Layer-2 platform support: consumer tech team <-> EduPlatform team
+        // (tickets, ticket messages, outage notices).
+        xmldb_local_prequran_ensure_platform_support_schema();
+        upgrade_plugin_savepoint(true, 202607230011, 'local', 'prequran');
+    }
+
+    if ($oldversion < 202607230012) {
+        // Webhook idempotency at the DB layer: a UNIQUE index on
+        // (provider, idempotencykey) closes the concurrent-duplicate race the
+        // application-level check could not. Skipped gracefully if historical
+        // duplicate rows block it (the app-level check still applies).
+        $dbman = $DB->get_manager();
+        $table = new xmldb_table('local_prequran_pay_webhook');
+        $index = new xmldb_index('preqpaywh_idem_uix', XMLDB_INDEX_UNIQUE, ['provider', 'idempotencykey']);
+        if ($dbman->table_exists($table) && !$dbman->index_exists($table, $index)) {
+            try {
+                $dbman->add_index($table, $index);
+            } catch (Throwable $e) {
+                // Existing duplicate rows — leave the non-unique behaviour.
+            }
+        }
+        upgrade_plugin_savepoint(true, 202607230012, 'local', 'prequran');
+    }
+
+    if ($oldversion < 202607230013) {
+        // Monetization layer: coupons + discount ledger, standing scholarship
+        // grants, payout batches (+ batchid on market_payout), and
+        // EduPlatform<->consumer settlement statements.
+        xmldb_local_prequran_ensure_monetization_schema();
+        upgrade_plugin_savepoint(true, 202607230013, 'local', 'prequran');
+    }
+
+    if ($oldversion < 202607230014) {
+        // Identity hardening: portal-token revocation registry.
+        xmldb_local_prequran_ensure_identity_schema();
+        upgrade_plugin_savepoint(true, 202607230014, 'local', 'prequran');
+    }
+
+    if ($oldversion < 202607230015) {
+        // LMS: curriculum map (persists catalog metadata catalog_sync dropped).
+        xmldb_local_prequran_ensure_lms_schema();
+        upgrade_plugin_savepoint(true, 202607230015, 'local', 'prequran');
+    }
+
+    if ($oldversion < 202607230016) {
+        // Assessment & analytics: grade_impact/max_attempts, grade moderation,
+        // SEB attempt score+verdict, analytics_snap index.
+        xmldb_local_prequran_ensure_assessment_analytics_schema();
+        upgrade_plugin_savepoint(true, 202607230016, 'local', 'prequran');
+    }
+
+    if ($oldversion < 202607230017) {
+        // Infra & security: IP rate-limit table for cookieless verify throttle.
+        xmldb_local_prequran_ensure_infra_schema();
+        upgrade_plugin_savepoint(true, 202607230017, 'local', 'prequran');
+    }
+
+    if ($oldversion < 202607230019) {
+        // Institution records: report cards, fee schedules, student enrolment
+        // status. (018 = parallel-session practice-cadence, no schema.)
+        xmldb_local_prequran_ensure_institution_records_schema();
+        upgrade_plugin_savepoint(true, 202607230019, 'local', 'prequran');
+    }
+
+    if ($oldversion < 202607230020) {
+        // Records completeness: behaviour records, staff HR records, admission
+        // number sequence + SIS demographic columns.
+        xmldb_local_prequran_ensure_records_completeness_schema();
+        upgrade_plugin_savepoint(true, 202607230020, 'local', 'prequran');
+    }
+
+    if ($oldversion < 202607230021) {
+        // Marketplace core: review moderation/reply fields, structured tutor
+        // pricing + trial, lesson dispute flow.
+        xmldb_local_prequran_ensure_marketplace_core_schema();
+        upgrade_plugin_savepoint(true, 202607230021, 'local', 'prequran');
+    }
+
+    if ($oldversion < 202607230023) {
+        // Live learning: per-session webcam policy + waiting room, in-session
+        // poll/exit-ticket tables. (022 = analytics reporting, no schema.)
+        xmldb_local_prequran_ensure_live_learning_schema();
+        upgrade_plugin_savepoint(true, 202607230023, 'local', 'prequran');
+    }
+
+    if ($oldversion < 202607230024) {
+        // Content authoring: learning-objective table, content review register,
+        // workspace-material tags/category.
+        xmldb_local_prequran_ensure_content_authoring_schema();
+        upgrade_plugin_savepoint(true, 202607230024, 'local', 'prequran');
+    }
+
+    if ($oldversion < 202607230025) {
+        // Implementation-audit round: tenant-scoping column on the objective
+        // table + backfill, missing hot-path indexes (live_attendance.studentid,
+        // market_payout.teacherid), and DR completeness — port the manual-SQL-only
+        // SEB / speaking-practice tables into the versioned schema.
+        xmldb_local_prequran_ensure_content_authoring_schema();
+        xmldb_local_prequran_ensure_live_schema();
+        xmldb_local_prequran_ensure_finance_assistance_schema();
+        xmldb_local_prequran_ensure_exam_capture_schema();
+
+        // Backfill objective.workspaceid from the offering that owns each course
+        // (objectives were globally addressable by courseid before this).
+        if ($DB->get_manager()->table_exists(new xmldb_table('local_prequran_objective'))
+                && $DB->get_manager()->table_exists(new xmldb_table('local_prequran_course_offering'))) {
+            try {
+                $DB->execute(
+                    "UPDATE {local_prequran_objective} o
+                        JOIN {local_prequran_course_offering} co ON co.moodlecourseid = o.courseid
+                         SET o.workspaceid = co.workspaceid
+                       WHERE o.workspaceid = 0 OR o.workspaceid IS NULL");
+            } catch (Throwable $e) {
+                // Non-fatal: the column defaults to 0 and reads still scope by
+                // course-in-workspace; the JOIN syntax is MySQL/MariaDB-specific.
+                debugging('objective workspaceid backfill skipped: ' . $e->getMessage(), DEBUG_DEVELOPER);
+            }
+        }
+        upgrade_plugin_savepoint(true, 202607230025, 'local', 'prequran');
+    }
+
+    if ($oldversion < 202607230026) {
+        // Course syllabus: authored narrative + admin approval + per-year
+        // versioning, keyed on moodlecourseid so it serves BOTH course systems.
+        xmldb_local_prequran_ensure_syllabus_schema();
+
+        // Carry the legacy free-text offering syllabus over as the first draft,
+        // so schools that already wrote one do not start from a blank page.
+        $dbman = $DB->get_manager();
+        if ($dbman->table_exists(new xmldb_table('local_prequran_syllabus'))
+                && $dbman->table_exists(new xmldb_table('local_prequran_course_offering'))) {
+            try {
+                $now = time();
+                $year = (int)date('n', $now) >= 8 ? (int)date('Y', $now) : ((int)date('Y', $now) - 1);
+                $rows = $DB->get_records_select('local_prequran_course_offering',
+                    "moodlecourseid > 0 AND workspaceid > 0 AND " . $DB->sql_isnotempty('local_prequran_course_offering', 'syllabus', true, true),
+                    [], '', 'id,consumerid,workspaceid,moodlecourseid,syllabus', 0, 1000);
+                foreach ($rows as $row) {
+                    $exists = $DB->record_exists('local_prequran_syllabus', [
+                        'workspaceid' => (int)$row->workspaceid,
+                        'moodlecourseid' => (int)$row->moodlecourseid,
+                        'academicyear' => $year,
+                    ]);
+                    if ($exists) {
+                        continue;
+                    }
+                    $DB->insert_record('local_prequran_syllabus', (object)[
+                        'consumerid' => (int)$row->consumerid,
+                        'workspaceid' => (int)$row->workspaceid,
+                        'moodlecourseid' => (int)$row->moodlecourseid,
+                        'academicyear' => $year,
+                        'overview' => (string)$row->syllabus,
+                        'teacher_intro' => '', 'contact' => '', 'policies_json' => '{}',
+                        'visibility' => 'enrolled', 'status' => 'draft', 'review_note' => '',
+                        'submittedby' => 0, 'submittedat' => 0, 'approvedby' => 0, 'approvedat' => 0,
+                        'createdby' => 0, 'modifiedby' => 0,
+                        'timecreated' => $now, 'timemodified' => $now,
+                    ]);
+                }
+            } catch (Throwable $e) {
+                debugging('syllabus migration skipped: ' . $e->getMessage(), DEBUG_DEVELOPER);
+            }
+        }
+        upgrade_plugin_savepoint(true, 202607230026, 'local', 'prequran');
+    }
+
+    if ($oldversion < 202607230027) {
+        // unit_title on objectives, so the syllabus stops inferring unit names
+        // from gradebook items (where unit 0 collides with the 'final' item).
+        xmldb_local_prequran_ensure_content_authoring_schema();
+        upgrade_plugin_savepoint(true, 202607230027, 'local', 'prequran');
+    }
+
+    if ($oldversion < 202607310028) {
+        // Cohorts of real courses: offeringid/moodlecourseid on pools and
+        // class groups, session requirement on offerings.
+        xmldb_local_prequran_ensure_course_cohort_schema();
+        upgrade_plugin_savepoint(true, 202607310028, 'local', 'prequran');
+    }
+
+    if ($oldversion < 202607310029) {
+        // Teacher shifts: day (10:00-20:00 EAT) / night (20:00-06:00 EAT)
+        // windows that cap matching availability and enable load balancing.
+        xmldb_local_prequran_ensure_teacher_shift_schema();
+        upgrade_plugin_savepoint(true, 202607310029, 'local', 'prequran');
+    }
+
+    if ($oldversion < 202607310030) {
+        // Canonical structured availability on the student profile; backfill
+        // from each student's newest transferred intake request.
+        xmldb_local_prequran_ensure_student_availability_schema();
+        try {
+            $DB->execute("
+                UPDATE {local_prequran_student_profile} sp
+                  JOIN (SELECT ir.transferred_userid, ir.availability_json
+                          FROM {local_prequran_intake_request} ir
+                          JOIN (SELECT transferred_userid, MAX(id) AS maxid
+                                  FROM {local_prequran_intake_request}
+                                 WHERE transferred_userid > 0 AND availability_json <> ''
+                              GROUP BY transferred_userid) latest
+                            ON latest.maxid = ir.id) src
+                    ON src.transferred_userid = sp.userid
+                   SET sp.availability_json = src.availability_json
+                 WHERE (sp.availability_json IS NULL OR sp.availability_json = '')");
+        } catch (Throwable $e) {
+            // Backfill is best-effort (MySQL-specific join-update); matching
+            // falls back to the intake request per student regardless.
+            debugging('Student availability backfill skipped: ' . $e->getMessage(), DEBUG_DEVELOPER);
+        }
+        upgrade_plugin_savepoint(true, 202607310030, 'local', 'prequran');
     }
 
     return true;

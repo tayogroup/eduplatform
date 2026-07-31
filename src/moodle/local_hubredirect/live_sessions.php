@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 require_once(__DIR__ . '/../../config.php');
 require_once(__DIR__ . '/accesslib.php');
+require_once(__DIR__ . '/availabilitylib.php');
 require_login();
 require_once($CFG->dirroot . '/user/profile/lib.php');
 
@@ -1105,29 +1106,22 @@ function pql_generate_recurring_starts(int $firststart, string $pattern, array $
 }
 
 function pql_teacher_availability_conflicts(int $teacherid, array $starts, int $duration): array {
-    global $DB;
-    if (!pql_table_exists('local_prequran_live_availability')) {
-        return [];
-    }
-    $windows = $DB->get_records('local_prequran_live_availability', ['teacherid' => $teacherid, 'status' => 'active']);
-    if (!$windows) {
+    // Timezone-correct check via the availability engine. The old comparison
+    // read the session start through date('w'/'G'/'i') -- the SERVER's
+    // timezone -- and compared those minutes against start_minute/end_minute
+    // stored in the TEACHER's timezone, ignoring the window's timezone column
+    // entirely; it was only right when the two zones happened to coincide.
+    // pqav_teacher_effective_intervals() also applies the teacher's shift
+    // window, so shift-2 teachers now conflict on daytime bookings too.
+    $intervals = pqav_teacher_effective_intervals($teacherid);
+    if (!$intervals) {
+        // No availability recorded: keep the historical behaviour (advisory
+        // silence) rather than flagging every time.
         return [];
     }
     $conflicts = [];
     foreach ($starts as $start) {
-        $weekday = (int)date('w', (int)$start);
-        $minute = ((int)date('G', (int)$start) * 60) + (int)date('i', (int)$start);
-        $endminute = $minute + max(15, $duration);
-        $allowed = false;
-        foreach ($windows as $window) {
-            if ((int)$window->weekday === $weekday
-                && $minute >= (int)$window->start_minute
-                && $endminute <= (int)$window->end_minute) {
-                $allowed = true;
-                break;
-            }
-        }
-        if (!$allowed) {
+        if (!pqav_covers_timestamp((int)$start, max(15, $duration), $intervals)) {
             $conflicts[] = [
                 'type' => 'availability',
                 'message' => 'Teacher is not marked available at ' . userdate((int)$start, get_string('strftimedatetimeshort')),
@@ -1419,6 +1413,7 @@ $notice = '';
 $error = '';
 $canmanage = is_siteadmin($USER) || (pql_is_teacher((int)$USER->id) && !pql_is_managed_student((int)$USER->id));
 $cancreate = pql_can_create_live_session((int)$USER->id, $pageworkspaceid);
+$pqlisparent = !is_siteadmin($USER) && $pageworkspaceid > 0 && pqh_user_workspace_role((int)$USER->id, $pageworkspaceid) === 'parent';
 $canapprove = pql_can_approve_live_session((int)$USER->id, $pageworkspaceid);
 $recordingdefault = pql_private_teacher_recording_default($consumercontext, $pageworkspaceid);
 $prefillteacherid = optional_param('teacherid', 0, PARAM_INT);
@@ -1954,51 +1949,67 @@ body.pqh-live-page #page,
 body.pqh-live-page #page-content,
 body.pqh-live-page #region-main,
 body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
-.pql-shell{min-height:100vh;padding:28px 18px 54px;background:#f5f8fb;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#173044}
+.pql-shell{min-height:100vh;padding:28px 18px 54px;background:#fff;color:#0f2237;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6}
 .pql-wrap{max-width:1120px;margin:0 auto}
-.pql-top{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:18px;padding:20px;border:1px solid rgba(23,48,68,.12);background:#fff;border-radius:10px}
-.pql-title{margin:0;font-size:28px;line-height:1.12;font-weight:950}
-.pql-sub{margin:7px 0 0;color:#5e7280;font-size:14px;font-weight:750}
+.pql-top{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:18px;padding:22px;border:1px solid #e4e9ef;background:#fff;border-radius:14px;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14)}
+.pql-title{margin:0;font-size:26px;line-height:1.1;font-weight:800;color:#0f2237;letter-spacing:-.02em}
+.pql-sub{margin:8px 0 0;color:#5b6b7c;font-size:14px;font-weight:500}
 .pql-grid{display:grid;grid-template-columns:minmax(300px,390px) 1fr;gap:16px;align-items:start}
-.pql-panel{padding:18px;background:#fff;border:1px solid rgba(23,48,68,.12);border-radius:10px;box-shadow:0 10px 24px rgba(23,48,68,.06)}
-.pql-panel h2{margin:0 0 13px;font-size:20px;font-weight:950}
+.pql-panel{padding:18px;background:#fff;border:1px solid #e4e9ef;border-radius:14px;box-shadow:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14)}
+.pql-panel h2{margin:0 0 13px;font-size:19px;font-weight:750;color:#0f2237;letter-spacing:-.01em}
 .pql-field{display:grid;gap:6px;margin-bottom:12px}
-.pql-field label{font-size:13px;font-weight:900;color:#415665}
-.pql-input,.pql-select{width:100%;min-height:40px;border:1px solid rgba(23,48,68,.18);border-radius:8px;padding:8px 10px;font:800 14px/1.2 system-ui;background:#fff;color:#173044}
-.pql-checks{display:grid;max-height:230px;overflow:auto;border:1px solid rgba(23,48,68,.14);border-radius:8px;background:#fbfdff}
-.pql-check{display:flex;gap:9px;align-items:center;padding:9px 10px;border-bottom:1px solid rgba(23,48,68,.08);font-size:13px;font-weight:850}
+.pql-field label{font-size:12px;font-weight:700;color:#5b6b7c}
+.pql-input,.pql-select{width:100%;min-height:38px;border:1px solid #e4e9ef;border-radius:9px;padding:8px 10px;font:600 14px/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;background:#fff;color:#0f2237}
+.pql-checks{display:grid;max-height:230px;overflow:auto;border:1px solid #e4e9ef;border-radius:9px;background:#f7f4ec}
+.pql-check{display:flex;gap:9px;align-items:center;padding:9px 10px;border-bottom:1px solid #e4e9ef;font-size:13px;font-weight:600}
 .pql-check:last-child{border-bottom:0}
-.pql-btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 14px;border:0;border-radius:8px;background:#2f6f4e;color:#fff!important;text-decoration:none;font-size:14px;font-weight:950;cursor:pointer}
-.pql-btn--light{background:#eef4f6;color:#173044!important;border:1px solid rgba(23,48,68,.12)}
-.pql-btn--start{background:#2166d1}
-.pql-btn--danger{background:#8a332b}
+.pql-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 14px;border:1px solid #e4e9ef;border-radius:10px;background:#fff;color:#0f2237!important;text-decoration:none;font-size:13px;font-weight:650;cursor:pointer}
+.pql-btn:hover{background:#edf3fc;border-color:#e0ebfa;text-decoration:none}
+.pql-btn--light{background:#edf3fc;color:#17498f!important;border:1px solid #e0ebfa}
+.pql-btn--start{background:#2166d1;border-color:#2166d1;color:#fff!important}
+.pql-btn--danger{background:#c0392b;border-color:#c0392b;color:#fff!important}
 .pql-inline-form{display:inline-flex;margin:0}
-.pql-alert{margin-bottom:14px;padding:12px 14px;border-radius:8px;font-size:14px;font-weight:850;white-space:pre-line}
-.pql-alert--ok{background:#edf9ef;color:#245c35;border:1px solid rgba(36,92,53,.16)}
-.pql-alert--bad{background:#fff0ed;color:#883526;border:1px solid rgba(136,53,38,.16)}
+.pql-alert{margin-bottom:14px;padding:12px 14px;border-radius:10px;font-size:14px;font-weight:650;white-space:pre-line}
+.pql-alert--ok{background:#e8f4ec;color:#2e7d4f;border:1px solid rgba(46,125,79,.16)}
+.pql-alert--bad{background:#fbe9e7;color:#c0392b;border:1px solid rgba(192,57,43,.16)}
 .pql-list{display:grid;gap:12px}
-.pql-card{padding:16px;border:1px solid rgba(23,48,68,.12);border-radius:10px;background:#fff}
+.pql-card{padding:16px;border:1px solid #e4e9ef;border-radius:12px;background:#fff}
 .pql-card__head{display:flex;justify-content:space-between;gap:12px;margin-bottom:8px}
-.pql-card h3{margin:0;font-size:18px;font-weight:950}
-.pql-meta{margin:5px 0 0;color:#5e7280;font-size:13px;font-weight:800}
-.pql-pill{display:inline-flex;align-items:center;min-height:28px;padding:0 9px;border-radius:999px;background:#eef4f6;color:#173044;font-size:12px;font-weight:950}
+.pql-card h3{margin:0;font-size:17px;font-weight:750;color:#0f2237}
+.pql-meta{margin:5px 0 0;color:#5b6b7c;font-size:13px;font-weight:600}
+.pql-pill{display:inline-flex;align-items:center;min-height:28px;padding:0 9px;border-radius:8px;background:#edf3fc;color:#17498f;font-size:12px;font-weight:650}
 .pql-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}
-.pql-empty{padding:18px;border:1px dashed rgba(23,48,68,.22);border-radius:10px;color:#5e7280;font-weight:850;background:#fff}
-.pql-help{margin:0;color:#718390;font-size:12px;font-weight:750}
+.pql-empty{padding:18px;border:1px dashed #e4e9ef;border-radius:12px;color:#5b6b7c;font-weight:550;background:#fff}
+.pql-help{margin:0;color:#8494a5;font-size:12px;font-weight:500}
 .pql-subgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.pql-recurring{margin:12px 0;padding:12px;border:1px solid rgba(23,48,68,.12);border-radius:10px;background:#fbfdff}
-.pql-recurring h3{margin:0 0 10px;font-size:16px;font-weight:950;color:#173044}
-.pql-agenda{display:flex;flex:1 0 100%;flex-wrap:wrap;align-items:center;gap:9px;margin-top:12px;padding:10px;border:1px solid rgba(23,48,68,.1);border-radius:10px;background:#fbfdff}
+.pql-recurring{margin:12px 0;padding:12px;border:1px solid #e4e9ef;border-radius:10px;background:#f7f4ec}
+.pql-recurring h3{margin:0 0 10px;font-size:15px;font-weight:750;color:#0f2237}
+.pql-agenda{display:flex;flex:1 0 100%;flex-wrap:wrap;align-items:center;gap:9px;margin-top:12px;padding:10px;border:1px solid #e4e9ef;border-radius:10px;background:#f7f4ec}
 .pql-agenda__form{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0}
-.pql-agenda__file{max-width:260px;font-size:12px;font-weight:800;color:#415665}
-.pql-agenda__status{color:#5e7280;font-size:12px;font-weight:850}
-@media(max-width:850px){.pql-grid{grid-template-columns:1fr}.pql-top{display:block}.pql-title{font-size:24px}.pql-agenda__file{max-width:100%}}
+.pql-agenda__file{max-width:260px;font-size:12px;font-weight:600;color:#5b6b7c}
+.pql-agenda__status{color:#5b6b7c;font-size:12px;font-weight:600}
+@media(max-width:850px){.pql-grid{grid-template-columns:1fr}.pql-top{display:block}.pql-title{font-size:22px}.pql-agenda__file{max-width:100%}}
 <?php echo pqh_dashboard_header_css(); ?>
-<?php echo pqh_design_system_css('.pql-shell'); ?>
+/* ---- EduPlatform design system layer: same tokens as the
+   student/teacher dashboard - light paper background, blue
+   appbar/gnav tint, quiet white surfaces, single blue accent. ---- */
+.pql-shell{
+  --pqh-ink:#0f2237;--pqh-muted:#5b6b7c;--pqh-faint:#8494a5;--pqh-line:#e4e9ef;--pqh-bg:#f7f4ec;--pqh-surface:#fff;
+  --pqh-tint:#edf3fc;--pqh-tint-2:#e0ebfa;--pqh-primary:#2166d1;--pqh-primary-ink:#17498f;
+  background:#fff!important;color:var(--pqh-ink)}
+.pql-shell .pqh-appbar{background:linear-gradient(90deg,#cfe9ff 0%,#e3f4ff 50%,#f2fbff 100%)}
+.pql-shell .pqh-workspace-top{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;box-shadow:none!important;border-radius:14px!important}
+.pql-shell .pqh-workspace-title{color:var(--pqh-ink)!important;font-size:26px!important;font-weight:800!important;letter-spacing:-.02em!important;text-shadow:none!important}
+.pql-shell .pqh-workspace-sub{color:var(--pqh-muted)!important;font-weight:500!important;opacity:1}
+.pql-shell .pqh-workspace-actions a,.pql-shell .pqh-workspace-actions button,.pql-btn{background:var(--pqh-surface)!important;border:1px solid var(--pqh-line)!important;color:var(--pqh-ink)!important;font-weight:650!important;border-radius:10px!important;box-shadow:none!important}
+.pql-shell .pqh-workspace-actions a:hover,.pql-shell .pqh-workspace-actions button:hover,.pql-btn:hover{background:var(--pqh-tint)!important;border-color:var(--pqh-tint-2)!important;text-decoration:none!important}
+.pql-shell .pqh-workspace-actions a.pqh-workspace-logout{background:var(--pqh-ink)!important;border-color:var(--pqh-ink)!important;color:#fff!important}
+.pql-shell [class*="-card"],.pql-shell [class*="-panel"]{background:var(--pqh-surface);border-color:var(--pqh-line)!important;border-radius:14px;box-shadow:0 1px 2px rgba(15,34,55,.05)}
+.pql-shell h1,.pql-shell h2,.pql-shell h3{color:var(--pqh-ink)}
 <?php echo pqh_design_shell_css('.pql-shell'); ?>
 </style>
 <main class="pql-shell">
-<?php echo pqh_design_shell_html('pql-shell'); ?>
+<?php echo pqh_design_shell_html('pql-shell', 'live', pqh_live_page_shell_opts('Live Sessions', $urlparams)); ?>
   <div class="pql-wrap">
     <section class="pql-top pqh-workspace-top">
       <div>
@@ -2006,10 +2017,10 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
         <p class="pql-sub pqh-workspace-sub">Schedule, start, and join <?php echo s($pqlbrandname); ?> review classes through BigBlueButton. <span style="opacity:.55;font-size:11px">v20260718S</span></p>
       </div>
       <div class="pql-actions pqh-workspace-actions">
-        <?php echo pqh_live_session_explainer_link(); ?>
-        <?php echo pqh_live_session_agenda_template_link(); ?>
-        <button class="pql-btn pql-btn--light" type="button" onclick="window.history.back()">Back</button>
-        <a class="pql-btn pql-btn--light" href="<?php echo $returnurl->out(false); ?>">Dashboard</a>
+        <?php if (!$pqlisparent): ?>
+          <?php echo pqh_live_session_explainer_link(); ?>
+          <?php echo pqh_live_session_agenda_template_link(); ?>
+        <?php endif; ?>
         <?php if (is_siteadmin($USER)): ?>
           <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_admin.php', $urlparams)->out(false); ?>">Admin menu</a>
           <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_ops.php', $urlparams)->out(false); ?>">Operations</a>
@@ -2030,7 +2041,6 @@ body.pqh-live-page .main-inner{margin:0!important;padding:0!important;max-width:
           <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_series.php', $urlparams)->out(false); ?>">Class series</a>
           <a class="pql-btn pql-btn--light" href="<?php echo pql_url('/local/hubredirect/live_availability.php', $urlparams)->out(false); ?>">Availability</a>
         <?php endif; ?>
-        <a class="pql-btn pqh-workspace-logout" href="<?php echo pql_url('/local/hubredirect/logout.php', $urlparams)->out(false); ?>">Logout</a>
       </div>
     </section>
 

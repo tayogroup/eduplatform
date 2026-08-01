@@ -2,12 +2,14 @@
 // Generates catalog.json — the static source of truth the Moodle catalog-sync
 // task (P1.7) reads to create categories, courses (keyed by idnumber) and grade
 // items. The course idnumber is the same key the progress web service resolves
-// against (ehel-{subj}-gNN), so once this catalog is synced, push_gradebook()
-// finds a real course and the gradebook goes live.
+// against (ehel-{subj}-gNN, or ehel-intensive-eng-lNN for the CEFR levels), so
+// once this catalog is synced, push_gradebook() finds a real course and the
+// gradebook goes live. Nothing parses these keys — they are opaque to Moodle.
 //
-// Source of truth is each prototype's grade-N/data/course-manifest.json (unit
-// list + titles). Adding/renaming a unit or grade = rerun this, redeploy
-// catalog.json, rerun the Moodle sync task.
+// Source of truth is each prototype's course-manifest.json (unit list + titles):
+// grade-N/data/ for the school subjects, level-N/data/ for Intensive English.
+// Adding/renaming a unit, grade or level = rerun this, redeploy catalog.json,
+// rerun the Moodle sync task.
 //
 // Usage: node tools/generate-ehel-catalog.js [--out <path>]
 
@@ -31,10 +33,84 @@ const levelForStage = (n) => (n <= 6 ? "primary" : "lowersec");
 const levelName = (lvl) => (lvl === "primary" ? "Primary" : "Lower Secondary");
 const pad2 = (n) => String(n).padStart(2, "0");
 
+// Intensive English is not a school course, and it breaks every assumption the
+// SUBJECTS loop makes: its stages are CEFR levels rather than Cambridge grades,
+// they live in level-N/ rather than grade-N/, and adults belong to neither the
+// Primary nor the Lower Secondary tier. So it is built as its own family.
+//
+// It reports against CEFR. Cambridge 0058/0861 only supplies the language
+// inventory the source material was written to, so cambridgeCode is left empty
+// rather than claiming a syllabus this course does not award; the real
+// alignment travels in `cefr`. catalog_sync reads named keys with `?? ''`
+// defaults, so both the blank code and the extra field are safe for it.
+const INTENSIVE = {
+  dir: "intensive-english",
+  key: "intensive-eng",
+  name: "Intensive English",
+  subject: "English",
+  // Levels 3–5 are planned but unauthored; only levels with a manifest appear.
+  maxLevel: 5,
+  categoryPath: ["Ehel Academy", "Languages", "Intensive English"],
+};
+
 function readManifest(subjectDir, grade) {
   const file = path.join(EHEL, subjectDir, `grade-${grade}`, "data", "course-manifest.json");
   if (!fs.existsSync(file)) return null;
   return JSON.parse(fs.readFileSync(file, "utf8"));
+}
+
+function readIntensiveManifest(level) {
+  const file = path.join(EHEL, INTENSIVE.dir, `level-${level}`, "data", "course-manifest.json");
+  if (!fs.existsSync(file)) return null;
+  return JSON.parse(fs.readFileSync(file, "utf8"));
+}
+
+// Pushes one course per authored level into the shared courses/category set.
+function addIntensiveCourses(courses, categorySet) {
+  for (let level = 1; level <= INTENSIVE.maxLevel; level += 1) {
+    const manifest = readIntensiveManifest(level);
+    if (!manifest) continue;
+
+    const meta = manifest.level || {};
+    const label = meta.label || `Level ${level}`;
+    const cefr = meta.cefr || [];
+    const idnumber = `ehel-${INTENSIVE.key}-l${pad2(level)}`;
+    const categoryPath = INTENSIVE.categoryPath;
+    categorySet.set(categoryPath.join(" / "), {
+      name: categoryPath[categoryPath.length - 1],
+      path: categoryPath,
+    });
+
+    // Level 1 opens at unit 0 (a pronunciation primer), so unit numbers are
+    // taken from the manifest rather than assumed to start at 1.
+    const units = (manifest.units || []).map((u) => ({
+      number: u.number,
+      idnumber: `${idnumber}-u${pad2(u.number)}`,
+      title: u.title,
+      termId: u.termId || null,
+    }));
+
+    const band = cefr.length ? ` (CEFR ${cefr.join("+")})` : "";
+    // The manifest label is "Level 1 — Foundation"; prefixing the course name
+    // with another em-dash reads as two separate dashes, so the label's own
+    // becomes a colon: "Ehel Intensive English — Level 1: Foundation".
+    const fullLabel = label.replace(/\s+—\s+/, ": ");
+    courses.push({
+      idnumber,
+      subject: INTENSIVE.subject,
+      subjectKey: INTENSIVE.key,
+      stage: level,
+      level: "Intensive English",
+      cambridgeCode: "",
+      cefr,
+      fullname: `Ehel Intensive English — ${fullLabel}`,
+      shortname: idnumber.toUpperCase(),
+      categoryPath,
+      summary: `CEFR-aligned intensive English for adults${band}. ${fullLabel}. ${units.length} units.`,
+      unitCount: units.length,
+      units,
+    });
+  }
 }
 
 function buildCatalog() {
@@ -79,6 +155,8 @@ function buildCatalog() {
     }
   }
 
+  addIntensiveCourses(courses, categorySet);
+
   courses.sort((a, b) => a.idnumber.localeCompare(b.idnumber));
   const categories = [...categorySet.values()].sort((a, b) => a.path.join("/").localeCompare(b.path.join("/")));
 
@@ -96,6 +174,10 @@ const catalog = buildCatalog();
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, JSON.stringify(catalog, null, 2) + "\n");
 console.log(`catalog: ${catalog.courses.length} courses, ${catalog.categories.length} categories → ${path.relative(ROOT, OUT)}`);
-console.log("by subject:", Object.values(SUBJECTS).map((s) => `${s.name}=${catalog.courses.filter((c) => c.subjectKey === s.key).length}`).join(" · "));
+// Counted off the built courses, not off SUBJECTS — a family that is not in
+// that map (Intensive English) would otherwise be missing from its own report.
+const bySubjectKey = new Map();
+for (const c of catalog.courses) bySubjectKey.set(c.subjectKey, (bySubjectKey.get(c.subjectKey) || 0) + 1);
+console.log("by subject:", [...bySubjectKey].map(([k, n]) => `${k}=${n}`).join(" · "));
 const totalUnits = catalog.courses.reduce((n, c) => n + c.unitCount, 0);
 console.log(`total grade-item units: ${totalUnits}`);

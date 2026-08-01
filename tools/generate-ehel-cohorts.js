@@ -41,11 +41,27 @@ const yearArg = arg("--year", "");
 const YEAR = /^\d{4}$/.test(yearArg) ? Number(yearArg)
   : (Number.isInteger(existing.academicYear) ? existing.academicYear : null);
 
+// The pilot cohorts are a school construct: one cohort per Cambridge stage,
+// named "Ehel Pilot — Stage N". Only school-tier courses belong in them.
+//
+// Tested positively, because a non-school family numbers its stages on its own
+// axis and those numbers collide: Intensive English Levels 1-2 are CEFR levels
+// for adults, but carry stage 1 and 2, so grouping on stage alone drops an
+// adult course into the Stage 1 and Stage 2 cohorts of primary schoolchildren.
+// A positive test fails safe — a future family with a new tier is excluded
+// until someone decides where it belongs, rather than silently included.
+const SCHOOL_TIERS = new Set(["Primary", "Lower Secondary"]);
+
 // Group catalog courses by grade → one cohort per grade.
 const byGrade = new Map();
+const nonSchool = [];
 for (const c of catalog.courses) {
+  if (!SCHOOL_TIERS.has(c.level)) { nonSchool.push(c.idnumber); continue; }
   if (!byGrade.has(c.stage)) byGrade.set(c.stage, { stage: c.stage, level: c.level, courses: [] });
   byGrade.get(c.stage).courses.push(c.idnumber);
+}
+if (nonSchool.length) {
+  console.log(`skipped ${nonSchool.length} non-school course(s), no pilot cohort: ${nonSchool.join(", ")}`);
 }
 
 const pad2 = (n) => String(n).padStart(2, "0");

@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "Ehel Science Course Manifest v1.0",
+  "schemaVersion": "Ehel Science Course Manifest v2.0",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -7,7 +7,8 @@
   "subject": "Science",
   "defaultUnit": 1,
   "sourcePackage": "Ehel-Academy-Science-Grade-6-Content-Package",
-  "packageReviewStatus": "Imported - curriculum review required",
+  "cambridgeFramework": "Cambridge Primary Science 0846 — Stage 6",
+  "packageReviewStatus": "Rebuilt v2.0 - self-teaching content pass complete; curriculum review pending",
   "units": [
     {
       "number": 1,
@@ -59,5 +60,14 @@
       "implementationStatus": "Complete runtime package",
       "reviewStatus": "Imported - curriculum review required"
     }
-  ]
+  ],
+  "finalAssessment": {
+    "id": "sci-s06-capstone-quiz-v2",
+    "title": "Stage 6 Science Capstone Quiz",
+    "data": "./data/grade-capstone.json",
+    "placement": "After the Stage 6 capstone project",
+    "questionCount": 15,
+    "passPercent": 80,
+    "reviewStatus": "Rebuilt v2.0 - curriculum review pending"
+  }
 }

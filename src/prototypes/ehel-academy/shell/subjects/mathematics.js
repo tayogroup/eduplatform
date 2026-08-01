@@ -5,8 +5,8 @@
 // config. Renderers use shell services through `let` bindings that bind(ctx)
 // populates, so their bodies are unchanged.
 import { initGeometryWebGL } from "../../mathematics/shared/geometry-webgl.js?v=20260715q";
-import { initMathWebGL } from "../../mathematics/shared/math-webgl.js?v=math-20260721e";
-import { unitTopic, mathDiagram } from "../../mathematics/shared/math-visuals.js?v=math-20260721e";
+import { initMathWebGL } from "../../mathematics/shared/math-webgl.js?v=math-20260801a";
+import { unitTopic, mathDiagram } from "../../mathematics/shared/math-visuals.js?v=math-20260801a";
 import { createCourseApp } from "../course-app.js?v=t2";
 
 const pad2 = (n) => String(n).padStart(2, "0");
@@ -25,6 +25,25 @@ function bind(ctx) {
 }
 
 // Subject config (were module-scope in the original).
+// Concept explanations and worked solutions carry the full source prose, with
+// paragraphs separated by a blank line. Render one <p> per paragraph so a long
+// explainer stays readable; a single escaped <p> would run it all together.
+function richText(value = "", className = "") {
+  const attr = className ? ` class="${className}"` : "";
+  return String(value)
+    .split(/\n{2,}/)
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .map((part) => `<p${attr}>${escapeHtml(part)}</p>`)
+    .join("");
+}
+
+// Narration reads the prose straight through, so collapse the paragraph breaks
+// into sentence pauses rather than feeding literal newlines to the voice engine.
+function spokenText(value = "") {
+  return String(value).split(/\n{2,}/).map((part) => part.trim()).filter(Boolean).join(" ");
+}
+
 function cambridgeFramework(stage) {
   return Number(stage) <= 6
     ? { level: "Cambridge Primary Mathematics", code: "0096" }
@@ -196,7 +215,7 @@ const courseTopic = () => unitTopic(course.unit.unitTitle, course.concepts);
 
 function renderLesson() {
   const topic = courseTopic();
-  const concepts = course.concepts.map((concept, index) => `<article class="panel concept-card"><span class="eyebrow">Concept ${index + 1}</span><h2>${escapeHtml(concept.title)}</h2>${mathDiagram(topic, index)}<p>${escapeHtml(concept.explanation)}</p><p class="example"><strong>Example:</strong> ${escapeHtml(concept.example)}</p>${voiceButton(`${concept.title}. ${concept.explanation}. Example: ${concept.example}`, "Listen to concept")}</article>`).join("");
+  const concepts = course.concepts.map((concept, index) => `<article class="panel concept-card"><span class="eyebrow">Concept ${index + 1}</span><h2>${escapeHtml(concept.title)}</h2>${mathDiagram(topic, index)}<div class="concept-body">${richText(concept.explanation)}</div><p class="example"><strong>Example:</strong> ${escapeHtml(concept.example)}</p>${voiceButton(`${concept.title}. ${spokenText(concept.explanation)}. Example: ${concept.example}`, "Listen to concept")}</article>`).join("");
   $("#app").innerHTML = `${pageHeader("Teacher lesson", course.unit.unitTitle, "Read the source-grounded concepts with a labelled diagram for each, and follow the complete ElevenLabs narration.")}
     <div class="concept-grid">${concepts}</div>
     <p><button class="button primary" id="lesson-done" type="button">I studied the concepts ✓</button></p>`;
@@ -212,7 +231,7 @@ function renderExamples() {
     const items=course.workedExamples.filter(item=>item.difficulty===level);
     $("#app").innerHTML = `${pageHeader("Twelve examples · three levels", "Worked Examples", "Study four Basic, four Intermediate and four Challenge examples. Each solution explains why the step works.")}
       <div class="subtabs">${["Basic","Intermediate","Challenge"].map(item=>`<button class="subtab ${item===level?'active':''}" data-example-level="${item}" type="button">${item} · ${course.workedExamples.filter(example=>example.difficulty===item).length}</button>`).join('')}</div>
-      <div class="task-grid">${items.map((item) => `<article class="panel"><span class="eyebrow">${escapeHtml(item.difficulty)} · ${escapeHtml(item.outcomeId)}</span><h3>${escapeHtml(item.title)}</h3><p class="rule-box">${escapeHtml(item.prompt)}</p>${voiceButton(`${item.title}. ${item.prompt}. Solution: ${item.solution}`, "Listen to example")}<details data-example="${item.id}"><summary>Show worked solution</summary><p>${escapeHtml(item.solution)}</p></details></article>`).join("")}</div>
+      <div class="task-grid">${items.map((item) => `<article class="panel"><span class="eyebrow">${escapeHtml(item.difficulty)} · ${escapeHtml(item.outcomeId)}</span><h3>${escapeHtml(item.title)}</h3><p class="rule-box">${escapeHtml(item.prompt)}</p>${voiceButton(`${item.title}. ${item.prompt}. Solution: ${spokenText(item.solution)}`, "Listen to example")}<details data-example="${item.id}"><summary>Show worked solution</summary>${richText(item.solution)}</details></article>`).join("")}</div>
       <section class="panel examples-progress"><strong>${viewed.size}/12</strong><span>solutions opened</span><div class="progress-track"><span style="width:${viewed.size/12*100}%"></span></div></section>`;
     $$('[data-example-level]').forEach(button=>button.addEventListener('click',()=>{level=button.dataset.exampleLevel;draw();}));
     $$('[data-example]').forEach(details=>details.addEventListener('toggle',()=>{if(details.open){viewed.add(details.dataset.example);progress.examplesViewed=[...viewed];saveProgress();if(viewed.size===course.workedExamples.length)complete('examples','All twelve worked examples reviewed.');}}));

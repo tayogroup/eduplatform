@@ -95,7 +95,10 @@ function rectanglePoint(p, w, h) {
   return [-w / 2, h / 2 - (d - 2 * w - h)];
 }
 
-function sceneObjects(id, time) {
+// Exported so the scene catalogue can be checked without a GL context: a scene
+// that returns nothing, or emits a NaN coordinate or an unknown mesh, renders
+// as a silently blank canvas in the browser.
+export function sceneObjects(id, time) {
   const objects = [];
   if (id === "orbit") {
     objects.push(object("sphere", [0, 0, 0], .62, COLORS.gold, [0, time * .3, 0]));
@@ -192,6 +195,184 @@ function sceneObjects(id, time) {
       objects.push(object("cylinder", [x * .5, y * .5, 0], [.08, .55, .08], COLORS.gray, [0, 0, ang]));
       objects.push(object("sphere", [x, y, 0], .32, COLORS.teal));
     }
+  } else if (id === "shadow") {
+    // Lamp, an opaque block, and the shadow it casts on a screen. The block
+    // slides towards the lamp so the shadow visibly grows — the point being
+    // that light travels in straight lines and cannot bend around the block.
+    const slide = Math.sin(time * .55) * .55;
+    objects.push(object("sphere", [-2.6, .35, 0], .34, COLORS.gold));
+    for (let i = 0; i < 10; i += 1) { const a = i / 10 * TAU; objects.push(object("sphere", [-2.6 + Math.cos(a) * .5, .35 + Math.sin(a) * .5, 0], .05, COLORS.gold)); }
+    objects.push(object("cube", [slide - .2, .1, 0], [.16, .72, .55], COLORS.navy));
+    objects.push(object("cube", [2.5, .1, 0], [.07, 1.5, 1.15], COLORS.gray));
+    // Rays that clear the block continue past it; the blocked middle does not.
+    for (const y of [1.15, -.95]) {
+      for (let i = 0; i < 12; i += 1) {
+        const p = i / 12, x = -2.2 + p * 4.5;
+        objects.push(object("sphere", [x, .35 + (y - .35) * p, 0], .05, COLORS.gold));
+      }
+    }
+    const shadowHalf = .72 * (2.5 - (-2.6)) / Math.max(.4, (slide - .2) - (-2.6));
+    objects.push(object("cube", [2.42, .1, 0], [.03, Math.min(1.45, shadowHalf), Math.min(1.1, shadowHalf * .8)], COLORS.navy));
+  } else if (id === "reflection") {
+    // Angle of incidence equals angle of reflection. The incoming ray swings,
+    // and the outgoing ray mirrors it about the normal.
+    const angle = .55 + Math.sin(time * .6) * .35;
+    objects.push(object("cube", [0, -1.1, 0], [2.6, .08, .8], COLORS.blue));
+    for (let i = 0; i < 14; i += 1) {
+      const p = (i + 1) / 14, r = p * 2.7;
+      objects.push(object("sphere", [-Math.sin(angle) * r, -1.1 + Math.cos(angle) * r, 0], .075, COLORS.gold));
+      objects.push(object("sphere", [Math.sin(angle) * r, -1.1 + Math.cos(angle) * r, 0], .075, COLORS.orange));
+    }
+    // The normal: the dashed line the two angles are measured from.
+    for (let i = 0; i < 9; i += 1) objects.push(object("sphere", [0, -1.02 + i * .27, 0], .04, COLORS.gray));
+  } else if (id === "refraction") {
+    // A ray bends as it crosses from air into a denser block, and bends back
+    // on the way out. The bend angle breathes so the effect is visible.
+    const bend = .34 + Math.sin(time * .7) * .12;
+    objects.push(object("cube", [0, -.6, 0], [1.9, .95, .8], COLORS.blue));
+    for (let i = 0; i < 12; i += 1) {
+      const p = (i + 1) / 12;
+      objects.push(object("sphere", [-2.6 + p * 1.75, 1.5 - p * 1.15, 0], .07, COLORS.gold));
+    }
+    for (let i = 0; i < 12; i += 1) {
+      const p = i / 12;
+      objects.push(object("sphere", [-.85 + p * 1.7, .35 - p * (1.9 - bend * 1.6), 0], .07, COLORS.orange));
+    }
+    for (let i = 0; i < 10; i += 1) {
+      const p = (i + 1) / 10;
+      objects.push(object("sphere", [.85 + p * 1.6, -1.55 - p * 1.05, 0], .07, COLORS.gold));
+    }
+    for (let i = 0; i < 7; i += 1) objects.push(object("sphere", [-.85, .95 - i * .3, 0], .035, COLORS.gray));
+  } else if (id === "daynight") {
+    // Earth spinning on a tilted axis beside the Sun: the lit half is day, the
+    // far half is night, and a marker rides round to show one whole day.
+    objects.push(object("sphere", [-2.75, 0, 0], .62, COLORS.gold));
+    const spin = time * .6, tilt = .41;
+    objects.push(object("sphere", [.7, 0, 0], 1.05, COLORS.blue, [tilt, spin, 0]));
+    // Daylit cap: markers on the hemisphere facing the Sun.
+    for (let i = 0; i < 22; i += 1) {
+      const a = i / 22 * TAU, r = 1.08;
+      const x = Math.cos(a) * r, z = Math.sin(a) * r;
+      const lit = x < 0;
+      objects.push(object("sphere", [.7 + x, Math.sin(a * 2) * .18, z], .07, lit ? COLORS.gold : COLORS.navy));
+    }
+    const mx = Math.cos(spin) * 1.12, mz = Math.sin(spin) * 1.12;
+    objects.push(object("sphere", [.7 + mx, .15, mz], .16, COLORS.red));
+    objects.push(object("cylinder", [.7, 0, 0], [.04, 1.5, .04], COLORS.gray, [tilt, 0, 0]));
+  } else if (id === "moonphases") {
+    // The Moon orbits Earth; its Sun-facing half is always lit, which is why we
+    // see a different fraction of it through the month.
+    objects.push(object("sphere", [-3, 0, 0], .5, COLORS.gold));
+    objects.push(object("sphere", [.4, 0, 0], .8, COLORS.blue, [0, time * .5, 0]));
+    const orbit = time * .55, ox = .4 + Math.cos(orbit) * 2.1, oz = Math.sin(orbit) * 2.1;
+    objects.push(object("sphere", [ox, 0, oz], .3, COLORS.gray));
+    // Lit face marker sits on the Sun side of the Moon at all times.
+    objects.push(object("sphere", [ox - .22, 0, oz], .16, COLORS.gold));
+    for (let i = 0; i < 30; i += 1) { const a = i / 30 * TAU; objects.push(object("sphere", [.4 + Math.cos(a) * 2.1, 0, Math.sin(a) * 2.1], .03, COLORS.gray)); }
+  } else if (id === "friction") {
+    // Same push, two surfaces. The block on the rough strip stops sooner than
+    // the block on the smooth strip.
+    const cycle = (time * .5) % 1;
+    objects.push(object("cube", [0, .55, 0], [2.9, .06, .7], COLORS.gray));
+    objects.push(object("cube", [0, -1.15, 0], [2.9, .06, .7], COLORS.navy));
+    for (let i = 0; i < 22; i += 1) objects.push(object("cone", [-2.75 + i * .26, -1.02, 0], [.09, .13, .09], COLORS.orange));
+    const smooth = -2.3 + cycle * 4.4;
+    const rough = -2.3 + (1 - Math.pow(1 - Math.min(1, cycle * 1.9), 2)) * 2.2;
+    objects.push(object("cube", [smooth, .95, 0], [.36, .32, .36], COLORS.teal));
+    objects.push(object("cube", [rough, -.75, 0], [.36, .32, .36], COLORS.pink));
+  } else if (id === "floatsink") {
+    // Upthrust: a low-density block rides the surface, a dense one sinks, and
+    // the water line stays put so the comparison is easy to read.
+    objects.push(object("cube", [0, -.55, 0], [2.6, 1.15, 1], COLORS.blue));
+    const bob = Math.sin(time * 1.3) * .07;
+    objects.push(object("cube", [-1.15, .5 + bob, 0], [.42, .34, .42], COLORS.gold));
+    arrow(objects, -1.15, -.15 + bob, 0, COLORS.green, .8);
+    const sink = Math.min(1, (time * .35) % 3);
+    objects.push(object("cube", [1.15, .55 - sink * 1.65, 0], [.36, .3, .36], COLORS.navy));
+    arrow(objects, 1.15, .55 - sink * 1.65, Math.PI, COLORS.red, .7);
+    for (let i = 0; i < 14; i += 1) objects.push(object("sphere", [-2.5 + i * .38, .58, .52], .06, COLORS.teal));
+  } else if (id === "seriescircuit") {
+    // Series on the left, parallel on the right: in series one break stops
+    // everything, in parallel each branch has its own path.
+    for (const [ox, parallel] of [[-1.7, false], [1.7, true]]) {
+      const w = 1.5, h = 1.8;
+      objects.push(object("cube", [ox, -h / 2, 0], [.42, .18, .18], COLORS.gold));
+      for (const [x, y, sx, sy] of [[ox - w / 2, 0, .05, h / 2], [ox + w / 2, 0, .05, h / 2], [ox, h / 2, w / 2, .05], [ox - w / 2 - .01, -h / 2, w / 4, .05], [ox + w / 2 + .01, -h / 2, w / 4, .05]]) {
+        objects.push(object("cube", [x, y, 0], [sx, sy, .05], COLORS.navy));
+      }
+      const glow = 1 + Math.sin(time * 4) * .14;
+      if (parallel) {
+        objects.push(object("cube", [ox, 0, 0], [.05, h / 2, .05], COLORS.navy));
+        objects.push(object("sphere", [ox - w / 2, .25, 0], .26 * glow, COLORS.orange));
+        objects.push(object("sphere", [ox + w / 2, .25, 0], .26 * glow, COLORS.orange));
+      } else {
+        objects.push(object("sphere", [ox - w / 2, .3, 0], .24 * glow, COLORS.orange));
+        objects.push(object("sphere", [ox + w / 2, .3, 0], .24 * glow, COLORS.orange));
+      }
+      for (let i = 0; i < 5; i += 1) {
+        const [px, py] = rectanglePoint(time * .14 + i / 5, w, h);
+        objects.push(object("sphere", [ox + px, py, .1], .08, COLORS.teal));
+      }
+    }
+  } else if (id === "magnetfield") {
+    // Bar magnet with field loops running north to south.
+    objects.push(object("cube", [-.55, 0, 0], [.55, .28, .28], COLORS.red));
+    objects.push(object("cube", [.55, 0, 0], [.55, .28, .28], COLORS.blue));
+    for (const scale of [1, 1.55, 2.15]) {
+      for (let i = 0; i < 26; i += 1) {
+        const a = i / 26 * TAU;
+        const x = Math.cos(a) * 1.15 * scale * .85;
+        const y = Math.sin(a) * .75 * scale;
+        objects.push(object("sphere", [x, y, 0], .05, COLORS.gray));
+      }
+    }
+    const flow = (time * .25) % 1;
+    for (const scale of [1, 1.55, 2.15]) {
+      const a = flow * TAU;
+      objects.push(object("sphere", [Math.cos(a) * 1.15 * scale * .85, Math.sin(a) * .75 * scale, 0], .1, COLORS.teal));
+    }
+  } else if (id === "soundwave") {
+    // Sound is longitudinal: particles bunch up and spread out along the line
+    // of travel rather than moving side to side like the transverse `wave`.
+    for (let i = 0; i < 30; i += 1) {
+      const base = -2.9 + i * .2;
+      const shift = Math.sin(time * 3 - i * .55) * .09;
+      const dense = Math.cos(time * 3 - i * .55) > .3;
+      objects.push(object("sphere", [base + shift, 0, 0], dense ? .13 : .1, dense ? COLORS.teal : COLORS.gray));
+    }
+    objects.push(object("cube", [-3.15, 0, 0], [.12, .5, .5], COLORS.orange));
+    objects.push(object("cube", [3.15, 0, 0], [.12, .5, .5], COLORS.navy));
+  } else if (id === "photosynthesis") {
+    // Sunlight plus water plus carbon dioxide make food, and oxygen comes out.
+    objects.push(object("sphere", [-2.6, 1.5, 0], .42, COLORS.gold));
+    for (let i = 0; i < 10; i += 1) { const a = i / 10 * TAU; objects.push(object("sphere", [-2.6 + Math.cos(a) * .62, 1.5 + Math.sin(a) * .62, 0], .06, COLORS.gold)); }
+    objects.push(object("cylinder", [0, -.35, 0], [.11, 1.05, .11], COLORS.green));
+    for (const side of [-1, 1]) {
+      objects.push(object("sphere", [side * .62, .35, 0], [.6, .16, .32], COLORS.green));
+    }
+    for (let i = 0; i < 6; i += 1) { const p = ((time * .3 + i / 6) % 1); objects.push(object("sphere", [-2.1 + p * 1.9, 1.3 - p * .8, 0], .07, COLORS.gold)); }
+    for (let i = 0; i < 5; i += 1) { const p = ((time * .25 + i / 5) % 1); objects.push(object("sphere", [2.4 - p * 1.7, .1 + p * .35, 0], .08, COLORS.gray)); }
+    for (let i = 0; i < 5; i += 1) { const p = ((time * .28 + i / 5) % 1); objects.push(object("sphere", [.35 + p * .6, .7 + p * 1.5, 0], .09, COLORS.teal)); }
+    for (let i = 0; i < 4; i += 1) objects.push(object("cylinder", [(-.5 + i * .35), -1.35, 0], [.05, .38, .05], COLORS.orange, [0, 0, (i - 1.5) * .4]));
+  } else if (id === "lifecycle") {
+    // Seed to seedling to plant to flower, carried round a ring.
+    const stages = [[.18, COLORS.gold], [.3, COLORS.green], [.46, COLORS.green], [.38, COLORS.pink]];
+    stages.forEach(([size, color], i) => {
+      const a = time * .35 + i * TAU / 4;
+      const x = Math.cos(a) * 1.95, y = Math.sin(a) * 1.25;
+      objects.push(object("sphere", [x, y, 0], size, color, [0, time * .6, 0]));
+      if (i > 0) objects.push(object("cylinder", [x, y - size - .18, 0], [.05, .2, .05], COLORS.green));
+    });
+    for (let i = 0; i < 34; i += 1) { const a = i / 34 * TAU; objects.push(object("sphere", [Math.cos(a) * 1.95, Math.sin(a) * 1.25, -.15], .035, COLORS.gray)); }
+  } else if (id === "solarsystem") {
+    // The Sun with several planets, each on its own orbit and its own speed.
+    objects.push(object("sphere", [0, 0, 0], .62, COLORS.gold, [0, time * .2, 0]));
+    const planets = [[1.15, 1.7, .13, COLORS.gray], [1.6, 1.25, .2, COLORS.orange], [2.1, 1, .21, COLORS.blue], [2.62, .78, .16, COLORS.red], [3.2, .5, .34, COLORS.teal]];
+    planets.forEach(([radius, speed, size, color], i) => {
+      for (let k = 0; k < 30; k += 1) { const a = k / 30 * TAU; objects.push(object("sphere", [Math.cos(a) * radius, 0, Math.sin(a) * radius], .022, COLORS.gray)); }
+      const a = time * speed * .45 + i;
+      objects.push(object("sphere", [Math.cos(a) * radius, 0, Math.sin(a) * radius], size, color, [0, time, 0]));
+    });
   }
   return objects;
 }

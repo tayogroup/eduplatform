@@ -23,7 +23,8 @@ const OUT = outArg >= 0 ? path.resolve(process.argv[outArg + 1]) : path.join(EHE
 const SUBJECTS = {
   english: { key: "eng", name: "English", code: { primary: "0058", lowersec: "0861" } },
   mathematics: { key: "math", name: "Mathematics", code: { primary: "0096", lowersec: "0862" } },
-  science: { key: "sci", name: "Science", code: { primary: "0097", lowersec: "0893" } },
+  science: { key: "sci", name: "Science", code: { primary: "0846", lowersec: "0893" } },
+  computing: { key: "comp", name: "Computing", code: { primary: "0672", lowersec: "0868" } },
 };
 // Cambridge level by stage: Primary = Stages 1–6, Lower Secondary = Stages 7–9.
 const levelForStage = (n) => (n <= 6 ? "primary" : "lowersec");

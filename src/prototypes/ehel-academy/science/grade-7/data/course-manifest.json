@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "Ehel Science Course Manifest v1.0",
+  "schemaVersion": "Ehel Science Course Manifest v2.0",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -7,7 +7,8 @@
   "subject": "Science",
   "defaultUnit": 1,
   "sourcePackage": "Ehel-Academy-Science-Grade-7-Content-Package",
-  "packageReviewStatus": "Imported - curriculum review required",
+  "cambridgeFramework": "Cambridge Lower Secondary Science 0893 — Stage 7",
+  "packageReviewStatus": "Rebuilt v2.0 - self-teaching content pass complete; curriculum review pending",
   "units": [
     {
       "number": 1,
@@ -99,5 +100,14 @@
       "implementationStatus": "Complete runtime package",
       "reviewStatus": "Imported - curriculum review required"
     }
-  ]
+  ],
+  "finalAssessment": {
+    "id": "sci-s07-capstone-quiz-v2",
+    "title": "Stage 7 Science Capstone Quiz",
+    "data": "./data/grade-capstone.json",
+    "placement": "After the Stage 7 capstone project",
+    "questionCount": 27,
+    "passPercent": 80,
+    "reviewStatus": "Rebuilt v2.0 - curriculum review pending"
+  }
 }

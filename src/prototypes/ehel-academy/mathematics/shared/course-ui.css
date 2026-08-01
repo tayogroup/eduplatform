@@ -8,6 +8,12 @@
 .math-symbol { width: 54px; height: 54px; display: grid; place-items: center; border-radius: 14px; background: var(--gold); color: #17324d; font: 800 27px Georgia, serif; }
 .concept-grid, .task-grid, .reference-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; }
 .concept-card { border-top: 5px solid var(--teal); }
+/* Explainers now carry the unit's full teaching prose over several paragraphs,
+   so they need paragraph spacing and a comfortable measure to stay readable. */
+.concept-body > p { margin: 0 0 12px; line-height: 1.65; }
+.concept-body > p:last-child { margin-bottom: 0; }
+.concept-card details > p { margin: 0 0 12px; line-height: 1.65; }
+.concept-card details > p:last-child { margin-bottom: 0; }
 .concept-card .example { margin-top: 14px; padding: 14px; border-radius: 7px; background: var(--teal-soft); color: var(--teal-dark); }
 .geometry-visual { margin: 14px 0 18px; overflow: hidden; border: 1px solid #d9e3ec; border-radius: 10px; background: linear-gradient(145deg,#f8fcff,#eef8f5); color: #17324d; }
 .geometry-stage { position: relative; min-height: 210px; background: radial-gradient(circle at 50% 25%,#fff 0,#edf9f5 58%,#dcebe8 100%); }

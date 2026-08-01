@@ -14,7 +14,16 @@ const model = JSON.parse(fs.readFileSync(modelPath, "utf8"));
 
 const grades = process.argv.slice(2).length ? process.argv.slice(2).map(Number) : Object.keys(model.grades).map(Number).sort((a, b) => a - b);
 
-const tidy = (value = "") => String(value).replace(/�/g, "–").replace(/\s+/g, " ").trim();
+// The source books mark callouts with a bracketed tag the typesetter turned
+// into an icon ("[Star] Big Idea…", "[!] Did You Know?"). Those tags are
+// layout instructions, not words for the learner, so strip them here rather
+// than letting 91 of them show up mid-sentence on screen.
+const SOURCE_MARKER = /\[(?:Star|Tip|Fact|Look|Safety|Note|Warning|Key|!)\]\s*/gi;
+const tidy = (value = "") => String(value)
+  .replace(/�/g, "–")
+  .replace(SOURCE_MARKER, "")
+  .replace(/\s+/g, " ")
+  .trim();
 const slug = (value = "") => tidy(value).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 const sentence = (value = "", max = 250) => {
   const text = tidy(value);
@@ -22,6 +31,15 @@ const sentence = (value = "", max = 250) => {
   const cut = text.slice(0, max).replace(/\s+\S*$/, "");
   return `${cut}…`;
 };
+
+// Join source paragraphs into one field, keeping the paragraph breaks. Teaching
+// prose is never clipped: an explainer that stops mid-sentence is worse than
+// useless to a learner working without a teacher. Consumers split on the blank
+// line to render one <p> per paragraph.
+const paragraphs = (values = []) => values
+  .map((value) => tidy(value))
+  .filter(Boolean)
+  .join("\n\n");
 
 const EMPTY_DOC = { blocks: [], source_file: "(not provided)" };
 
@@ -241,16 +259,214 @@ const GRADE1 = {
   },
 };
 
+// Child-facing Grade 1 concept text.
+//
+// Every other year ships a student lesson book, so the builder can carry the
+// source prose straight through. Grade 1 ships only a Teacher & Parent Guide:
+// its prose addresses the adult ("Goal: your child learns...", "Take your child
+// outside"), which is wrong to show a 5-year-old and, worse, teaches nothing
+// when no adult is reading. These explainers say the same science directly to
+// the child, keeping the guide's teaching order, its local examples (goats,
+// mango and banana plants, the sufuria, the Jubba) and its warmth.
+//
+// Titles follow the guide's own lesson/part order, so a unit has as many
+// concepts as the guide has lessons — never a fixed six padded with filler.
+const GRADE1_CONCEPTS = {
+  1: [
+    {
+      title: "Living or Not Living?",
+      explanation: "Look around you. Some things near you are alive. Some things are not alive. A goat is alive. A stone is not alive. A mango tree is alive. A cooking spoon is not alive.\n\nHow can you tell? Ask four questions about the thing. Does it grow bigger? Does it eat? Does it drink? Can it have babies? If the answers are mostly yes, it is a living thing. If the answers are no, it is not living.\n\nHold a stone in your hand. Does the stone eat? No. Does it drink water? No. Does it grow bigger? No. So the stone is not living.\n\nNow look at a goat. The goat eats grass. It drinks water. It grew from a small kid into a big goat. So the goat is living. It is alive!\n\nHere is a tricky one. A toy goat looks like a goat, but it is not alive. It cannot eat or grow. A toy car moves, but it still does not eat or grow or have babies. So moving is not the same as being alive.",
+      example: "Try this: find a stone, a spoon, a leaf and a cup of water. Make two piles on the floor — a Living pile and a Not Living pile. Put each thing in the right pile, and say out loud why you chose it.",
+    },
+    {
+      title: "What Living Things Need",
+      explanation: "Every living thing needs the same four things to stay alive: food, water, air and warmth. A tiny chick needs them. A big camel needs them. A tall mango tree needs them. You need them too.\n\nThink about your own body. When you feel hungry, that is your body asking for food. You are a living thing, and living things need food. When you feel thirsty, your body is asking for water.\n\nFood gives living things the energy to move and grow. A goat eats grass. A chicken pecks seeds. A cat drinks milk. A mango plant makes its own food in the sunshine.\n\nWater matters just as much. You drink from a cup. The goat drinks from the well. The banana plant drinks water from the soil through its roots. No living thing can live without water.\n\nAir is all around you, even though you cannot see it. Take a slow breath in, then out. You just used air. Every living thing needs air to breathe.\n\nWarmth is the last one. Living things need to be warm enough, not too cold. That is why a hen sits on her eggs, and why seeds wake up and grow in the warm season.",
+      example: "Put your hand on your chest and breathe in slowly. You are using air. Now say the four things every living thing needs: food, water, air, warmth.",
+    },
+    {
+      title: "Animals and Plants Are Alive",
+      explanation: "Animals are living things. Goats, camels, chickens, cats and birds all move about, eat, drink and breathe. It is easy to see that they are alive.\n\nPlants are living things too, and this surprises many people. A mango plant does not run about. It does not make a sound. So you might think it is not alive. But look closely and you will see the signs of life.\n\nA plant grows taller and taller. It drinks water from the soil through its roots. It makes its own food in the sunlight with its green leaves. Growing, drinking and feeding are all things that living things do. So a plant is alive.\n\nHere is another wonderful sign of a living thing: living things can make new living things. A grown goat can have a baby goat, and the baby is called a kid. A hen can have chicks. A tiny seed can grow into a big plant, and one day that plant makes seeds of its own.\n\nSo both animals and plants are living. They grow, they feed, they drink, and they can make new life.",
+      example: "Look at a mango or banana plant near you. Say three things that show it is alive: it grows, it drinks water, and it makes food in the sun.",
+    },
+    {
+      title: "Caring for Living Things",
+      explanation: "Now you know that living things need food, water, air and warmth. That means living things depend on kindness — often on your kindness.\n\nA goat cannot fetch its own water from the well. A plant cannot water itself when the dry season comes. A small chick cannot look after itself. They need someone to care for them, and that someone can be you.\n\nBeing kind to living things means being gentle. Give the goat water. Do not hurt the cat. Give the plant water and let it stand in the sun. Hold small chicks very gently, because they are little.\n\nWhen you care for an animal, wash your hands afterwards. That keeps you healthy too.\n\nEvery living thing around you is a gift from Allah — the chickens that give eggs, the goats that give milk, the plants that give mangoes and bananas, and your own living body. Saying Alhamdulillah is a beautiful way to thank Allah for all of them.",
+      example: "Choose one living thing today and care for it. Give a plant some water, or put out grain for the chickens. Then say what you did and why it helped.",
+    },
+  ],
+  2: [
+    {
+      title: "The Parts of a Plant",
+      explanation: "Find a real plant to look at — a mango plant, a banana plant, or even a tuft of grass. Look at it slowly. A plant has different parts, and each part has its own job, just as your body has parts with jobs: eyes to see, legs to walk.\n\nDown at the bottom are the roots. They grow down into the soil. Roots drink water for the plant, and they hold the plant steady so the wind cannot blow it over.\n\nIn the middle is the stem. It stands up tall and holds the plant up. The stem also carries water from the roots all the way up to the leaves.\n\nThe green parts are the leaves. Leaves catch the sunlight and use it to make food for the plant. That is a wonderful thing: a plant makes its own food, and it does it with light.\n\nMany plants also have a flower. The flower is the pretty part, and it is where new seeds begin.\n\nPoint to each part and say its name out loud: roots, stem, leaves, flower.",
+      example: "Point at a plant and name its parts in order from the bottom up: roots, stem, leaves, flower. Say what job each part does.",
+    },
+    {
+      title: "What Plants Need to Grow",
+      explanation: "A plant is a living thing, so it has needs — just like you. But a plant cannot walk to find food or water the way a goat or a chicken can. It must get everything it needs from the place where it grows.\n\nThere are four things every plant needs to grow strong and healthy.\n\nWater comes first. Plants drink water through their roots. In the dry season we must water them, or they wilt and droop.\n\nLight comes next. Plants use light from the bright sun to make their food in their leaves. Without light they turn pale and weak.\n\nWarmth is the third. Seeds and plants like to be warm. The warm sun helps a sleeping seed wake up and start to grow.\n\nSoil is the fourth. Good soil holds the roots firmly and gives the plant food from the ground.\n\nWater, light, warmth and soil — remember those four, and you know how to keep a plant alive.",
+      example: "Water a plant near your home. Then check that it is standing where the sun can reach it. You have just given it two of the four things it needs.",
+    },
+    {
+      title: "Planting a Seed",
+      explanation: "Every big plant, even a tall tree, started as a tiny seed. Inside each seed sleeps a baby plant, waiting for water and warmth to wake it up.\n\nHold one dry bean in your hand. It feels hard and small and still. But a whole plant — taller than a cup, maybe taller than you — is folded up asleep inside it. A seed can wait a very long time, dry and quiet, until water and warmth find it.\n\nSoak a bean in water overnight and it changes. A dry bean is hard. A soaked bean is soft and fat, because it has drunk up water and is beginning to wake.\n\nGently split a soaked bean into two halves. Inside you can see a tiny pale tip — that is the baby plant. Around it is packed food, which feeds the baby plant until it can make its own food with its leaves. A tough coat wraps around everything to keep it safe.\n\nNow plant one. Scoop soil into a cup until it is nearly full. Poke a small hole with one finger. Drop the seed in, cover it gently, and water it. Put the cup where the sun reaches it.\n\nThen watch each day. The root grows down first to find water. Then the shoot pushes up towards the light.",
+      example: "Plant a bean in a cup of soil and water it. Look at it every day and say what has changed. Which came first — the root going down, or the shoot coming up?",
+    },
+  ],
+  3: [
+    {
+      title: "The Parts of Our Body",
+      explanation: "The best place to start learning about the body is your own body. It is right here with you.\n\nStand up. Touch the top of your head and say the word: head. Now move down, one part at a time. Touch your arms. Touch your hands. Touch your legs. Touch your feet. Say each name out loud as you touch it.\n\nNow your face. Point to your eyes. Point to your ears. Point to your nose. Point to your mouth.\n\nNow count. You have two eyes. Two ears. Two hands. Ten fingers. Ten toes. Count them slowly and see if you get the same number every time.\n\nEach part of your body has a job to do. Your eyes see. Your ears hear. Your legs carry you. Your hands hold and carry things. All these parts work together, all day long, without you even asking them to.",
+      example: "Touch and name five parts of your body out loud: head, arms, hands, legs, feet. Then count your fingers and your toes.",
+    },
+    {
+      title: "Same and Different",
+      explanation: "Here is a big and kind idea: all people have the same body parts, and yet every person looks a little different. Both things are true at the same time, and both are wonderful.\n\nLook at the people in your home. What is the same? Everyone has a head. Everyone has two eyes, a nose, two hands and two feet. That is the same for every person in the whole world.\n\nNow look again. What is different? Some hair is curly and some is straight. Some eyes are dark brown and some are lighter. Some people are tall and some are small. Some hands are big and some are little.\n\nYou and a grown-up both have two hands — that is the same. But your hands are small and their hands are big — that is different.\n\nBeing different is good. Allah made every person special. Nobody in the whole world is exactly like you. What a gift that is.",
+      example: "Look at two people in your home. Say one thing that is the same about them, and one thing that is different.",
+    },
+    {
+      title: "Our Five Senses",
+      explanation: "Your body has special helpers called senses. They tell your brain about the world around you. You have five of them.\n\nSight comes from your eyes. Your eyes let you see colours, shapes, people and the bright sun. Look around and name what you can see — a cup, the door, a green plant. Now gently close your eyes and try to point at the door. It is much harder! Eyes help you a great deal.\n\nHearing comes from your ears. Tap a spoon on a cup, or clap your hands. Some sounds are happy, like a bird singing or your mother's voice. Some sounds warn us and keep us safe, like a loud beep.\n\nSmell comes from your nose. Smell a piece of mango, a date, or some bread. Smell helps you enjoy good food, and it warns you too — if food smells bad, we do not eat it.\n\nTaste comes from your tongue. A date tastes sweet. Before we eat we say Bismillah, and after we eat we say Alhamdulillah, to thank Allah for our food.\n\nTouch comes from your skin, especially your hands. Touch tells you if something is hot or cold, rough or smooth, hard or soft.\n\nSight, hearing, smell, taste and touch — five senses, working for you all day.",
+      example: "Close your eyes and ask someone to make a soft sound. Which sense did you use to find it? Now name all five senses and the body part each one uses.",
+    },
+    {
+      title: "Staying Healthy and Clean",
+      explanation: "Your body is wonderful, and it is your job to take care of it.\n\nIn Islam, being clean is loved and important. The Prophet (peace be upon him) taught that cleanliness is a beautiful part of our faith. So washing and keeping clean is healthy AND a good deed at the same time.\n\nWashing your hands is the best place to start. Wet your hands. Rub in the soap. Make bubbles between your fingers. Scrub while you count slowly, so your hands get really clean. Then rinse the soap away.\n\nWhen should you wash? Before you eat. After you use the toilet. And whenever your hands are dirty from playing.\n\nWhy does it matter? Because there are germs — tiny living things far too small for your eyes to see. If germs get onto your food and into your body, they can make you unwell. Soap and water wash them away.\n\nYour body also needs good food, clean water, plenty of sleep and lots of moving and playing to stay strong.",
+      example: "Wash your hands with soap and count slowly to twenty while you scrub. Then say two times of day when washing hands is most important.",
+    },
+  ],
+  4: [
+    {
+      title: "What Is It Made From?",
+      explanation: "Here is a new science word: material. A material is what an object is made from.\n\nLook at a wooden spoon and a metal spoon side by side. They do the same job — but they are made from different materials. One is made from wood. One is made from metal.\n\nLook around your home and you will find many materials. Wood. Plastic. Metal. Glass. Paper. Cloth. Stone. Pick up one thing at a time, feel it in your hand, and say what material it is made from.\n\nHere is something interesting: one object can be made from more than one material. Look closely at a pencil. The outside is wood. The soft grey part inside writes. At the top there is metal, and often rubber too. That is three or four materials in one small pencil.\n\nSo when you meet a new object, ask yourself: what is this made from?",
+      example: "Pick up three things near you. For each one, say what material it is made from. Then find one object that is made from more than one material.",
+    },
+    {
+      title: "How Does It Feel?",
+      explanation: "A property is a describing word for a material. It tells you how the material feels, or what it can do.\n\nThe best way to learn properties is with your fingers. Touch, press and gently bend things, and notice what you feel.\n\nHard and soft is the first pair. Press a stone — it is hard and does not squash. Press a piece of cloth — it is soft and squashes easily.\n\nRough and smooth is the next pair. Feel a coral stone or a brick — it is rough and bumpy. Feel a glass jar — it is smooth, with no bumps at all.\n\nBendy and stiff is the last pair. Bend a piece of cloth and it folds easily, so cloth is bendy. Try to bend a wooden spoon and it will not move, so wood is stiff.\n\nHard and soft. Rough and smooth. Bendy and stiff. These words help you describe any material you meet.",
+      example: "Find one hard thing and one soft thing. Then find one rough thing and one smooth thing. Say each property out loud as you touch it.",
+    },
+    {
+      title: "The Right Material for the Job",
+      explanation: "People do not choose materials by accident. We match the material to the job, because of what that material can do.\n\nThink about why. Nobody builds a window out of wood — you could not see through it. Nobody makes a cooking pot out of paper — it would burn and fall apart on the fire.\n\nA metal sufuria is used for cooking because metal is hard and strong and does not burn on the fire.\n\nA window is made of glass because glass is smooth and you can see straight through it.\n\nA dress is made of cloth because cloth is soft on your skin, keeps you warm, and bends when you move.\n\nA cup for a small child is made of plastic because plastic does not break when it is dropped.\n\nSo before you choose a material, ask: what does this thing need to do?",
+      example: "Look at a cooking pot and a window. Say what each is made from, and why that material is the right one for that job.",
+    },
+    {
+      title: "Sorting Materials",
+      explanation: "Sorting means putting things into groups that are the same in some way. Sorting is a big science skill, and you can do it with almost anything.\n\nGather a basket of objects from around your home. Now you can sort them in many different ways.\n\nYou can sort by material: all the wooden things in one group, all the metal things in another.\n\nYou can sort by how they feel: hard things in one group, soft things in another.\n\nYou can sort by what they do: things we eat with, things we wear, things we build with.\n\nWhy does sorting matter so much? Because when you put all the metal things together, you are noticing what those things share. That is the beginning of real scientific thinking — looking for what is the same and what is different. Grown-up scientists do exactly this when they study the world.",
+      example: "Collect six objects. Sort them into two groups by material. Then mix them up and sort the same six a different way — by how they feel.",
+    },
+  ],
+  5: [
+    {
+      title: "Many Ways to Move",
+      explanation: "Before we talk about pushing and pulling other things, feel how your own body moves.\n\nStand up in a clear space. How many ways can you move?\n\nWalk slowly, like a camel walking in the heat. Now walk fast. Which one was fast?\n\nJump up high. Did you notice what you did? You pushed the floor with your feet, and that push sent you up.\n\nTurn around slowly, like a spinning top. Now you are turning.\n\nSwing your arms back and forth, like a swing at the park.\n\nEvery one of those movements happened because something pushed or pulled. When you jump, your feet push the ground. When you swing your arms, your muscles pull them back and forth. Movement always starts with a push or a pull.",
+      example: "Stand up and move in four ways: walk, jump, turn and swing your arms. After each one, say whether you pushed or pulled to make it happen.",
+    },
+    {
+      title: "Push Moves Away, Pull Brings Near",
+      explanation: "Here are the two big words of this unit: push and pull.\n\nA push moves something away from you. A pull brings something closer to you. That is the whole idea, and it is easy to feel with your own hands.\n\nPut a toy car on the floor. Push it away with one finger and say the word out loud: push! It went away from you.\n\nNow tie a string to a small box and pull it towards you. Say: pull! It came to you.\n\nDoors are a good place to spot both. You push a door to shut it. You pull a door to open it.\n\nSay the word at the same time as you do the action. Push and say push. Pull and say pull. Doing it and saying it together helps you remember which is which.",
+      example: "Find a door. Push it shut and say push. Pull it open and say pull. Then find two more things at home that you push, and two that you pull.",
+    },
+    {
+      title: "Move, Stop, and Turn",
+      explanation: "A push or a pull can do three different jobs. Many people think a push only makes things go — but it can do more than that.\n\nThe first job is to start something moving. Roll a ball across the floor. Your push made it move.\n\nThe second job is to stop something. When the ball rolls back to you, put your hand out. The ball stops. Your hand pushed it to stop.\n\nThe third job is to make something turn a new way. Roll the ball again, then push it gently from the side. It does not stop — it turns and travels in a new direction.\n\nTry all three with a toy car. Push it to start. Block it to stop. Tap its side to make it turn.\n\nA push or a pull can make a thing go, make a thing stop, and make a thing turn. With your pushes and pulls, you are the boss of the ball.",
+      example: "Roll a ball three times. First make it move, then stop it with your hand, then tap it from the side to make it turn.",
+    },
+    {
+      title: "Fast and Slow, Roll and Slide",
+      explanation: "Now for two new ideas you can feel with your own hands.\n\nThe first idea is about how hard you push. A big push makes a thing go fast. A small push makes it go slow.\n\nGive a ball a soft push and watch it travel slowly. Soft push, slow ball. Now give it a big push and watch it race away. Big push, fast ball. The size of your push decides the speed.\n\nThe second idea is about shape. Round things roll, and flat things slide.\n\nRoll a ball or an orange along the floor. It rolls because it is round and has no corners to stop it.\n\nNow push a shoe or a block. It does not roll — it slides along on its flat bottom.\n\nSo the shape of a thing changes how it moves when you push it.",
+      example: "Push a ball softly, then hard, and say which push made it faster. Then find one thing that rolls and one thing that slides.",
+    },
+    {
+      title: "Pushes and Pulls Around Us",
+      explanation: "Pushes and pulls are everywhere. Once you know the two words, you start seeing them all day long.\n\nWalk around your home and yard. At each thing you meet, ask yourself one question: do we push it, or pull it?\n\nYou push a chair in under the table. You pull a drawer out. You push a door shut and pull it open. You turn a tap.\n\nOut in the yard there are more. You push a swing to send it away. You pull a toy cart behind you. You roll a ball with a push.\n\nWatch a grown-up sweeping with a broom. Look carefully — that is a push and a pull, over and over again.\n\nOut on the road, a camel or a donkey pulls a cart. The animal pulls, and the cart follows.\n\nScience is not only in books. It is in your home, your yard and your road, all day long.",
+      example: "Walk around your home and find five things you push or pull. Say push or pull for each one as you find it.",
+    },
+  ],
+  6: [
+    {
+      title: "Sounds All Around Us",
+      explanation: "There are sounds everywhere, all the time — but we are usually too busy to notice them.\n\nSit somewhere and stay very still. Close your eyes and just listen. Wait quietly and listen hard for a whole minute.\n\nNow think about what you heard. Maybe a bird calling. Maybe a goat. Maybe the wind moving, a car passing, or people talking somewhere nearby.\n\nCount the different sounds on your fingers. You probably heard more than you expected.\n\nHere is the surprising part: even when a place feels quiet, there are still little sounds to hear. Quiet does not mean there is no sound at all — it just means the sounds are small and soft.\n\nGood scientists notice things. Listening carefully is one of the best ways to notice the world.",
+      example: "Close your eyes and listen for one whole minute. Then count on your fingers how many different sounds you heard, and name each one.",
+    },
+    {
+      title: "How We Make Sounds",
+      explanation: "Here is the big science idea of this unit: sounds happen when things shake.\n\nWhen something moves back and forth very fast, it makes a sound. That fast shaking has a special name — vibrating.\n\nStretch a rubber band between your fingers and pluck it gently. Look closely. You can see it shaking, so fast that it blurs. That shaking is the vibration, and that is what makes the sound you hear.\n\nNow tap a metal pot with a spoon. You hear a sound. Rest your finger gently on the pot while it is still ringing — you can feel it buzzing. The pot is vibrating too.\n\nTry one more. Put your fingers gently on the front of your throat and hum. Can you feel the buzzing under your fingers? That is your voice vibrating inside you.\n\nEvery single sound, everywhere, comes from something shaking and moving.",
+      example: "Put your fingers on your throat and hum a long note. Say what you can feel, and use the science word for that fast shaking.",
+    },
+    {
+      title: "Loud Sounds and Quiet Sounds",
+      explanation: "Sounds come in different sizes. Some sounds are loud, and some sounds are quiet. Quiet sounds are sometimes called soft sounds.\n\nThe good news is that you can control how loud or quiet a sound is.\n\nClap your hands very softly. That is a quiet clap. Now clap firmly — but not near anyone's ears. That is a loud clap. You made both, using the same two hands.\n\nTry it with your voice. Whisper a word very quietly. Now say the same word in your normal voice. Same word, different loudness.\n\nTry it with a pot. Bang it firmly and it makes a loud sound. Tap it lightly and it makes a quiet one.\n\nWhat makes the difference? How much energy you give it. A bigger, harder movement makes a bigger vibration, and a bigger vibration makes a louder sound.",
+      example: "Clap once quietly and once loudly. Say which one needed more energy from you, and why it sounded louder.",
+    },
+    {
+      title: "How We Hear With Our Ears",
+      explanation: "You hear with your ears. You have two of them, one on each side of your head — and there is a good reason for that.\n\nTouch your ears now, one on each side.\n\nYour ears are shaped a little like small cups, and they catch sounds travelling through the air. Try cupping your hands behind your ears and listening. Sounds get a bit louder, because your hands are catching even more sound.\n\nNow here is why two ears are so useful. Close your eyes and ask someone to make a soft sound on your left side, then on your right side. Each time, point to where the sound came from.\n\nYou can do it because a sound from the left reaches your left ear a tiny bit sooner and a tiny bit louder. Your brain notices that difference and works out which direction the sound came from. Two ears help you find where a sound is.\n\nCover your ears with your hands and the sound becomes quiet and far away, because your hands are blocking it.",
+      example: "Close your eyes while someone makes a soft sound to one side of you. Point to where it came from, then say why two ears helped you.",
+    },
+    {
+      title: "Sounds Travel, and We Keep Ears Safe",
+      explanation: "Sound has to travel to reach you. It moves through the air, from the thing that is shaking all the way to your ears.\n\nHere is how you can tell. Ask someone to clap from far across the room, then clap again standing close to you. The close clap sounds louder.\n\nThat is because sound gets weaker as it travels. The further a sound has to go, the quieter it is when it arrives. A sound made far away reaches you faint and small.\n\nNow the important part: looking after your ears. Your ears are delicate, and very loud sounds can hurt them. Once hearing is damaged, it does not always come back.\n\nSo keep loud noises away from your ears. Do not shout right into someone's ear, and do not let anyone shout into yours. If a sound is so loud that it hurts, cover your ears with your hands and move away from it.\n\nYour ears let you hear a bird singing, your mother's voice, and someone reciting beautifully. They are worth protecting.",
+      example: "Ask someone to clap far away and then close to you. Say which was louder and why. Then say one way you will keep your ears safe.",
+    },
+  ],
+};
+
+// Text that briefs the adult rather than teaching the learner. The Grade 1
+// guide and the Year 1-2 activity sheets are written for whoever is sitting
+// with the child ("For the grown-up: read each instruction aloud"), and those
+// lines are meaningless — sometimes misleading — on the learner's screen.
+// Matched per sentence, so a legitimate mention ("grown-up scientists do
+// exactly this") is left alone.
+// Headings that mark the end of a unit's teaching prose. Everything from here
+// on belongs to another section of the runtime package (self-assessment, the
+// quiz, the glossary), so a concept must not absorb it.
+const LESSON_TAIL = /^(self[- ]assessment|i can\b|check what you (have )?learned|what you have learned|key ?words|key science words|key scientific terms|glossary|vocabulary\b|summary\b|unit summary|end[- ]of[- ]unit|quiz\b|answer key|answers?\b|going further|prerequisite|what.?s next|next unit|well done|wonderful work|congratulations|checklist|practice\b|section [a-e]\b|experiment \d|reference\b)/i;
+
+// Inline callouts that interrupt the prose without ending the section.
+const CALLOUT = /^(?:[\p{Emoji_Presentation}\p{Extended_Pictographic}\s]*)?(ask your ai tutor|remember|did you know|tip\b|note\b|watch out|safety)/iu;
+
+// A short, title-cased line with no sentence punctuation starts a new section.
+// Several books stop numbering partway through a unit and carry on with plain
+// headings like "Circuits: The Path Electricity Travels"; without recognising
+// those, the last numbered concept absorbs the entire rest of the book.
+function isSectionHeading(text) {
+  const value = String(text || "").trim();
+  if (value.length < 6 || value.length > 70) return false;
+  if (/[.?!,;]$/.test(value)) return false;
+  if (CALLOUT.test(value) || LESSON_TAIL.test(value)) return false;
+  if (!/^[A-Z0-9]/.test(value)) return false;
+  // Headings are short phrases; a long clause is prose that happens to wrap.
+  return value.split(/\s+/).length <= 9;
+}
+
+const ADULT_ADDRESSED = /teach in short bursts|cannot sit still for long|\byour child\b|\bthe child (draws|watches|points|is|will|looks|gets)\b|\blet (the|your) child\b|\bchildren learn\b|\bat this age\b|keep every lesson|\byou, the grown-?up\b|as the adult|as a parent|teacher or parent|in this guide you will|you will do the talking|you read the words aloud|for the grown-?up|a grown-?up reads|when the grown-?up says|if the child is tired|stop before the child/i;
+
+// Grade 1 unit overviews, written to the learner. The guide's own opening
+// paragraphs all brief the adult, so there is nothing in the source to fall
+// back to once those are filtered out.
+const GRADE1_OVERVIEWS = {
+  "1-1": "In this unit you will discover one big idea: some things around you are alive, and some things are not. A goat is alive. A stone is not. You will learn the four questions that tell you whether something is living, find out what every living thing needs to stay alive, see that plants are alive just as animals are, and learn how to care kindly for the living things around you.",
+  "1-2": "In this unit you will get to know plants. You will find the parts of a plant and learn the job each part does, discover the four things every plant needs to grow, and plant a real seed of your own. Then you will watch it every day as the root grows down and the shoot pushes up towards the light.",
+  "1-3": "In this unit you will learn about the most interesting thing you own: your own body. You will name its parts, see how all people are the same and yet each person is different, meet your five senses and try each one out, and learn how to keep your body clean, healthy and strong.",
+  "1-4": "In this unit you will become a material detective. You will learn what a material is and find the materials things are made from, describe how materials feel using words like hard, soft, rough, smooth, bendy and stiff, work out why we choose one material for a job instead of another, and sort a basket of objects in several different ways.",
+  "1-5": "In this unit you will explore pushes and pulls. You will feel the many ways your own body moves, learn that a push moves things away and a pull brings them near, discover that a push can start, stop or turn a thing, find out why a big push makes something go fast, and then hunt for pushes and pulls all around your home.",
+  "1-6": "In this unit you will explore sound. You will listen carefully to the sounds around you, discover the big idea that sounds are made when things shake, learn about loud and quiet sounds, find out how your two ears help you tell where a sound came from, and learn how to keep your ears safe from sounds that are too loud.",
+};
+
 function buildGrade(grade) {
   const source = model.grades[String(grade)];
   if (!source) throw new Error(`Grade ${grade} missing from the science content model.`);
   const stageId = `s${String(grade).padStart(2, "0")}`;
   const stageLabel = `Stage ${grade}`;
   const contentPackage = `Ehel-Academy-Science-Grade-${grade}-Content-Package`;
-  // Official Cambridge framework: Primary Science 0097 (Stages 1-6),
-  // Lower Secondary Science 0893 (Stages 7-9).
+  // Official Cambridge framework: Primary Science 0846 (Stages 1-6),
+  // Lower Secondary Science 0893 (Stages 7-9). The primary code was previously
+  // recorded as 0097; the curriculum framework Cambridge publishes for these
+  // stages is titled "Cambridge Primary Science 0846 Curriculum Framework",
+  // and it is the document these mappings validate against
+  // (src/curriculum/cambridge-science-0846.json).
   const cambridge = grade <= 6
-    ? { level: "Cambridge Primary Science", code: "0097", stage: grade }
+    ? { level: "Cambridge Primary Science", code: "0846", stage: grade }
     : { level: "Cambridge Lower Secondary Science", code: "0893", stage: grade };
   const cambridgeLabel = `${cambridge.level} ${cambridge.code} — Stage ${grade}`;
   const gradeDir = path.join(sciRoot, `grade-${grade}`);
@@ -316,23 +532,103 @@ function buildGrade(grade) {
   }
 
   function conceptList(lesson, title) {
-    // Source docs mark concepts as "Part N:", "Concept N:", "Topic N:" or
-    // "Section N:" — accept them all.
-    const CONCEPT_MARKER = /^(?:Part|Concept|Topic|Section|Idea)\s+\d+\s*[—:.\-]/i;
-    const starts = lesson.blocks
+    // Concept headings are not written the same way in every year. Three
+    // conventions appear across the source books:
+    //   "Part 2 - What Plants Need"      (word marker, Years 1-6)
+    //   "Big Idea 1: All Living Things"  (word marker, Year 2)
+    //   "3. Mass and Weight"             (bare number, Years 2/3/7/8)
+    // Only the word markers were recognised before, so units written the third
+    // way produced no concepts at all and fell through to the objective
+    // fallback, which restates the objective instead of teaching it.
+    const CONCEPT_MARKER = /^(?:Part|Concept|Topic|Section|Idea|Big Idea|Lesson)\s+\d+\s*[—:.\-]/i;
+    // A numbered heading is short, is not a sentence, and is not workbook
+    // scaffolding ("4. Complete the table", "2. Explain why...").
+    const NUMBERED = /^(\d{1,2})[.)]\s+(\S.{5,79})$/;
+    const NOT_A_HEADING = /^(answer|example|step|remember|aim|method|materials|hypothesis|conclusion|analysis|going further|safety|what you|how to|read |write |draw |name |list |explain |describe |identify |complete |circle |match |tick |fill |copy |look )/i;
+    const numberedHeading = (text) => {
+      const match = NUMBERED.exec(text);
+      if (!match) return null;
+      const body = match[2].trim();
+      if (/[.?!;,]$/.test(body) || NOT_A_HEADING.test(body)) return null;
+      return { number: Number(match[1]), body };
+    };
+
+    let starts = lesson.blocks
       .map((block, index) => ({ block, index }))
       .filter(({ block }) => CONCEPT_MARKER.test(tidy(block.text)));
-    let concepts = starts.map(({ block, index }, position) => {
+    if (starts.length < 4) {
+      // Fall back to bare-numbered headings. Numbers must ascend, but gaps are
+      // tolerated: some books leave a section unnumbered mid-run.
+      const numbered = [];
+      let highest = 0;
+      lesson.blocks.forEach((block, index) => {
+        const heading = numberedHeading(tidy(block.text));
+        if (heading && heading.number > highest) {
+          highest = heading.number;
+          numbered.push({ block, index, heading: heading.body });
+        }
+      });
+      if (numbered.length > starts.length) starts = numbered;
+    }
+    // Some books number the first few sections and then continue with plain
+    // headings ("Circuits: The Path Electricity Travels"). Those sections are
+    // ordinary teaching content, so fold them in rather than letting the last
+    // numbered concept run to the end of the book.
+    if (starts.length && starts.length < 6) {
+      const lastStart = starts[starts.length - 1].index;
+      const taken = new Set(starts.map((entry) => entry.index));
+      const extra = [];
+      for (let index = lastStart + 1; index < lesson.blocks.length; index += 1) {
+        const text = tidy(lesson.blocks[index].text);
+        if (LESSON_TAIL.test(text)) break;
+        if (!taken.has(index) && isSectionHeading(text)) extra.push({ block: lesson.blocks[index], index, heading: text });
+      }
+      starts = starts.concat(extra.slice(0, Math.max(0, 6 - starts.length)));
+    }
+    let concepts = starts.map(({ block, index, heading: numberedTitle }, position) => {
       const end = starts[position + 1]?.index ?? lesson.blocks.length;
-      const body = lesson.blocks.slice(index + 1, Math.min(end, index + 10))
-        .map((item) => tidy(item.text))
-        .filter((text) => text.length > 40 && !/Ask Your AI Tutor|^Remember\b/i.test(text));
-      const heading = tidy(block.text).replace(/^(?:Part|Concept|Topic|Section|Idea)\s+\d+\s*[—:.\-]\s*/i, "");
+      // Take the concept's whole body, not a 10-block window. These courses are
+      // self-teaching: the source prose is the only explainer a learner without
+      // a teacher ever sees, so it is carried across in full.
+      // The last concept has no following heading to stop at, so without a
+      // terminator it swallows everything to the end of the book — the
+      // self-assessment checklist, the closing note, the next unit's
+      // prerequisites. Cut at the first block that is no longer teaching prose.
+      const slice = lesson.blocks.slice(index + 1, end);
+      // Concepts with a following heading are already bounded by it. Only the
+      // final concept runs to the end of the document, so only it needs cutting
+      // at the first non-teaching heading — applying the cut everywhere would
+      // truncate bodies at their own sub-headings and drop the prose beneath.
+      const isLast = position === starts.length - 1;
+      const tailAt = isLast
+        ? slice.findIndex((item) => {
+          const text = tidy(item.text);
+          return LESSON_TAIL.test(text) || isSectionHeading(text);
+        })
+        : slice.findIndex((item) => LESSON_TAIL.test(tidy(item.text)));
+      const kept = tailAt >= 0 ? slice.slice(0, tailAt) : slice;
+      const usable = (text, minLength) => text.length > minLength && !/Ask Your AI Tutor|^Remember\b/i.test(text);
+      let body = kept.map((item) => tidy(item.text)).filter((text) => usable(text, 40));
+      // Some sections teach mostly through a table (states of matter, beak
+      // shapes, natural vs man-made). Their rows arrive as short table-cell
+      // blocks, so the 40-character prose filter empties the concept. Fall back
+      // to the shorter blocks so the table's content survives.
+      if (body.join(" ").length < 300) {
+        body = kept.map((item) => tidy(item.text)).filter((text) => usable(text, 12));
+      }
+      const heading = numberedTitle
+        || tidy(block.text).replace(/^(?:Part|Concept|Topic|Section|Idea|Big Idea|Lesson)\s+\d+\s*[—:.\-]\s*/i, "");
+      // The closing paragraph becomes the worked "Example", so hold it out of
+      // the explanation whenever there is enough prose to spare one.
+      const hasSpareParagraph = body.length > 2;
       return {
         id: `concept-${position + 1}-${slug(heading) || position + 1}`,
         title: heading,
-        explanation: sentence(body.slice(0, 2).join(" "), 520),
-        example: sentence(body[2] || body[0] || heading, 220),
+        explanation: paragraphs(hasSpareParagraph ? body.slice(0, -1) : body),
+        example: tidy(hasSpareParagraph ? body[body.length - 1] : (body[1] || body[0] || heading)),
+        // The book gave this concept its own heading, so the title is the
+        // author's, not one the builder inferred.
+        fromHeading: true,
       };
     });
     if (!concepts.length) {
@@ -367,21 +663,38 @@ function buildGrade(grade) {
         concepts = objectiveConcepts.slice(0, 6).map((o, index) => ({
           id: `concept-${index + 1}-${slug(o.title) || index + 1}`,
           title: o.title,
-          explanation: sentence(o.text, 520),
-          example: sentence(objectiveConcepts[(index + 1) % objectiveConcepts.length].text, 220),
+          explanation: tidy(o.text),
+          example: tidy(objectiveConcepts[(index + 1) % objectiveConcepts.length].text),
         }));
       } else {
-        const paragraphs = lesson.blocks.map((block) => tidy(block.text))
+        const bodyParagraphs = lesson.blocks.map((block) => tidy(block.text))
           .filter((text) => text.length > 90 && !/^(assalaam|welcome|young scientist|by the (end|time)|this is your lesson|read them (now|again)|ask your ai|in this unit you (are|will))/i.test(text))
           .slice(0, 6);
-        concepts = paragraphs.map((text, index) => ({
+        concepts = bodyParagraphs.map((text, index) => ({
           id: `concept-${index + 1}-${slug(title)}-${index + 1}`,
           title: topicHeadings[index] || `${title} — part ${index + 1}`,
-          explanation: sentence(text, 520),
-          example: sentence(paragraphs[(index + 1) % paragraphs.length] || text, 220),
+          explanation: tidy(text),
+          example: tidy(bodyParagraphs[(index + 1) % bodyParagraphs.length] || text),
         }));
       }
     }
+    // Drop concepts too thin to teach anything — a promoted heading whose
+    // section turned out to be a stub ("Reading Comprehension") is worse than
+    // no card at all. Keep them only if removing them would leave too few.
+    // Where a concept's section held only one paragraph, `example` fell back to
+    // that same paragraph — so the card printed its explanation twice, once
+    // under "Example". Give it a real prompt instead.
+    concepts = concepts.map((concept) => {
+      if (tidy(concept.example) !== tidy(concept.explanation)) return concept;
+      const opening = String(concept.explanation).split("\n\n")[0];
+      const firstSentence = (opening.match(/^.*?[.!?](?=\s|$)/) || [opening])[0];
+      return {
+        ...concept,
+        example: `Say this idea back in your own words: ${tidy(firstSentence)} Then find one example of ${concept.title.toLowerCase().replace(/[?.!]$/, "")} around your home or outside.`,
+      };
+    });
+    const substantial = concepts.filter((concept) => String(concept.explanation).length >= 300);
+    if (substantial.length >= 3) concepts = substantial;
     return concepts.slice(0, 6);
   }
 
@@ -421,11 +734,11 @@ function buildGrade(grade) {
     if (!terms.length) terms = termPairsFromTables(lesson, /./);
 
     let rules = sectionBlocks(reference, /most important rule|key rules?\b/i)
-      .map((block) => tidy(block.text)).filter((text) => text.length > 20)
+      .map((block) => tidy(block.text)).filter((text) => text.length > 20 && !ADULT_ADDRESSED.test(text))
       .map((text, index) => ({ title: `Key idea ${index + 1}`, text }));
     if (!rules.length) {
       rules = lesson.blocks.map((block) => tidy(block.text))
-        .filter((text) => /^remember\b/i.test(text) && text.length > 25).slice(0, 6)
+        .filter((text) => /^remember\b/i.test(text) && text.length > 25 && !ADULT_ADDRESSED.test(text)).slice(0, 6)
         .map((text, index) => ({ title: `Key idea ${index + 1}`, text: text.replace(/^Remember[:!]?\s*/i, "") }));
     }
 
@@ -479,7 +792,8 @@ function buildGrade(grade) {
       const key = head.split(/[\/,]/)[0].trim();
       const wordRe = new RegExp(`\\b${key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
       const example = corpus.find((s) => wordRe.test(s) && s.toLowerCase() !== tidy(meaning).toLowerCase() && !/^[a-z ]+:/i.test(s)) || "";
-      return { term: head, meaning: tidy(meaning), example: sentence(example, 220), letter: (head[0] || "?").toUpperCase() };
+      const cleanExample = ADULT_ADDRESSED.test(example) ? "" : sentence(example, 220);
+      return { term: head, meaning: tidy(meaning), example: cleanExample, letter: (head[0] || "?").toUpperCase() };
     });
     return { rules: rules.slice(0, 6), terms, vocabulary, commonMistakes: commonMistakes.slice(0, 6), connections };
   }
@@ -532,18 +846,33 @@ function buildGrade(grade) {
         }
         return out;
       };
+      // Year 1's investigations come from a parent Activity Sheet, so the aim
+      // and method can be written to the adult ("Take your child outside…").
+      // Those lines go straight onto the learner's Explore card, so drop them.
+      const learnerFacing = (values) => values.filter((text) => !ADULT_ADDRESSED.test(text));
       return {
         title: tidy(block.text).replace(/^(Experiment|Investigation)\s+\d+\s*[—:\-]\s*/i, ""),
-        aim: sentence(grab(/^Aim\b/i).join(" "), 260),
-        hypothesis: sentence(grab(/^(Make a Hypothesis|Hypothesis)\b/i).join(" "), 260),
-        materials: sentence(grab(/^Materials\b/i).join("; "), 300) || "Safe everyday materials from home",
-        steps: grab(/^Method\b/i).slice(0, 6),
-        analysis: grab(/^Analysis Questions?\b/i).slice(0, 4),
+        aim: tidy(learnerFacing(grab(/^Aim\b/i)).join(" ")),
+        hypothesis: tidy(learnerFacing(grab(/^(Make a Hypothesis|Hypothesis)\b/i)).join(" ")),
+        materials: tidy(grab(/^Materials\b/i).join("; ")) || "Safe everyday materials from home",
+        steps: learnerFacing(grab(/^Method\b/i)).slice(0, 6),
+        analysis: learnerFacing(grab(/^Analysis Questions?\b/i)).slice(0, 4),
       };
     }).filter((item) => item.title);
   }
 
-  function practiceData(practice, activitiesDoc) {
+  // `unitWords` are this unit's own glossary terms. A hint that names them is
+  // actually usable; the single sentence that used to be shared by every unit
+  // in every grade ("Use the unit's key words and explain your thinking") told
+  // the learner nothing they could act on.
+  function practiceData(practice, activitiesDoc, unitWords = []) {
+    const words = unitWords.filter(Boolean).slice(0, 3);
+    const recallHint = words.length >= 2
+      ? `Look back at what ${words.slice(0, 2).join(" and ")} mean in this unit, then answer in a full sentence.`
+      : "Find the sentence in the lesson that explains this idea, then answer in your own words.";
+    const applyHint = words.length >= 2
+      ? `Decide which idea the situation is about — ${words.join(", ")} — then explain your reasoning step by step.`
+      : "Work out which idea from this unit the situation is about, then explain your reasoning step by step.";
     // Everything before the first answer-key marker is tasks; everything
     // after is answer keys. This survives every naming variant in the packs.
     const firstKeyIndex = practice.blocks.findIndex((block) =>
@@ -595,13 +924,13 @@ function buildGrade(grade) {
       const tasks = taskBlocks
         .filter((block) => block.section === section && block.content_kind !== "Heading")
         .map((block) => tidy(block.text))
-        .filter((text) => text.length > 15 && !isInstruction(text));
+        .filter((text) => text.length > 15 && !isInstruction(text) && !ADULT_ADDRESSED.test(text));
       let keys = keysFor(letter);
       keys = letter === "A"
         ? keys.filter((key) => LETTER_RE.test(key))
         : keys.filter((key) => !/^(each answer|answers? (are|below)|explanations?$|why$|question$|q$)/i.test(key) && key.length > 8);
       tasks.forEach((prompt, index) => {
-        const answer = keys[index] ? sentence(keys[index], 300) : "Work through the task and check with your teacher or the reference card.";
+        const answer = keys[index] ? tidy(keys[index]) : "Work through the task, then check your answer against the Science Words reference card and the concept explanations for this unit.";
         const optionStart = prompt.search(/[\s:]\(?a\)\s/i);
         if (letter === "A" && optionStart > 5 && /\(?b\)\s/i.test(prompt)) {
           const stem = tidy(prompt.slice(0, optionStart + 1));
@@ -622,19 +951,22 @@ function buildGrade(grade) {
           level: levelFor[letter] || "Core",
           prompt,
           answer,
-          hint: letter === "A" || letter === "B" ? "Use the unit's key words and explain your thinking." : "Apply the science ideas to the situation before answering.",
+          hint: letter === "A" || letter === "B" ? recallHint : applyHint,
         });
       });
     }
     if (contradictions >= 3) mcqs = []; // Systematic key misalignment: fall back to safe vocabulary quizzes.
     if (!items.length && activitiesDoc.blocks.length) {
-      activitiesDoc.blocks.filter((block) => block.content_kind === "Task").slice(0, 12).forEach((block, index) => items.push({
-        id: `p${String(index + 1).padStart(2, "0")}`,
-        level: ["Warm-up", "Core", "Challenge", "Extension"][Math.floor(index / 3) % 4],
-        prompt: tidy(block.text),
-        answer: "Talk through your answer with a teacher, parent or study partner.",
-        hint: "Observe carefully and use the unit's key words.",
-      }));
+      activitiesDoc.blocks
+        .filter((block) => block.content_kind === "Task" && !ADULT_ADDRESSED.test(block.text))
+        .slice(0, 12)
+        .forEach((block, index) => items.push({
+          id: `p${String(index + 1).padStart(2, "0")}`,
+          level: ["Warm-up", "Core", "Challenge", "Extension"][Math.floor(index / 3) % 4],
+          prompt: tidy(block.text),
+          answer: "Say your answer out loud in a full sentence, then check it against the concept explanations and the Science Words reference for this unit. Talk it through with a teacher, parent or study partner if someone is nearby.",
+          hint: recallHint,
+        }));
     }
     return { items, mcqs };
   }
@@ -724,12 +1056,22 @@ function buildGrade(grade) {
       reference.terms = override.vocabulary;
     }
     const experiments = experimentsData(experimentsDoc.blocks.length ? experimentsDoc : activitiesDoc);
-    const { items: practice, mcqs: rawMcqs } = practiceData(practiceDoc, activitiesDoc);
+    const { items: practice, mcqs: rawMcqs } = practiceData(practiceDoc, activitiesDoc, (reference.terms || []).map((pair) => pair[0]));
     const mcqs = override && override.quiz ? override.quiz.map((entry) => ({ ...entry })) : rawMcqs;
     let concepts = conceptList(lesson, title);
-    if (override && override.conceptTitles) {
+    if (grade === 1 && GRADE1_CONCEPTS[unitNo]) {
+      // Grade 1's source is a Teacher & Parent Guide, so its prose speaks to the
+      // adult and cannot be shown to the child. Use the authored child-facing
+      // text instead of the extracted blocks.
+      concepts = GRADE1_CONCEPTS[unitNo].map((entry, index) => ({
+        id: `concept-${index + 1}-${slug(entry.title)}`,
+        title: entry.title,
+        explanation: entry.explanation,
+        example: entry.example,
+      }));
+    } else if (override && override.conceptTitles) {
       // Keep the source explanations but give each concept a clean, authored
-      // title (Grade 1's guide has no concept headings of its own).
+      // title (used where a guide has no concept headings of its own).
       concepts = override.conceptTitles.map((ctitle, index) => {
         const srcExpl = concepts[index]?.explanation || "";
         const explanation = srcExpl.length >= 60 ? srcExpl : `${ctitle}. ${srcExpl} Explore this idea together by looking, doing and talking about what you notice.`.replace(/\s+/g, " ").trim();
@@ -743,20 +1085,50 @@ function buildGrade(grade) {
     }
     // Reviewer-authored titles for units whose source lacks concept headings
     // (keeps the objective-derived explanations, replaces the derived title).
+    // Only for concepts the builder titled itself. Several of these units are
+    // now matched by the numbered-heading rule, so they carry the book's own
+    // headings — those beat a reviewer's guess and must not be overwritten.
     const titleOverride = CONCEPT_TITLE_OVERRIDES[`${grade}-${unitNo}`];
     if (titleOverride) {
-      concepts = concepts.map((concept, index) => (titleOverride[index] ? { ...concept, id: `concept-${index + 1}-${slug(titleOverride[index])}`, title: titleOverride[index] } : concept));
+      concepts = concepts.map((concept, index) => (titleOverride[index] && !concept.fromHeading
+        ? { ...concept, id: `concept-${index + 1}-${slug(titleOverride[index])}`, title: titleOverride[index] }
+        : concept));
+    }
+    concepts = concepts.map(({ fromHeading, ...concept }) => concept);
+    // "Key ideas" is the unit's revision card — the thing a learner re-reads
+    // before the quiz. Most reference books carry no explicit rules section, so
+    // build it from the concepts themselves: each concept's title plus the
+    // opening sentence of its explanation, which is where these books state the
+    // idea before developing it.
+    if (!reference.rules.length) {
+      reference.rules = concepts.map((concept, index) => {
+        const opening = String(concept.explanation).split("\n\n")[0];
+        const firstSentence = (opening.match(/^.*?[.!?](?=\s|$)/) || [opening])[0];
+        return { title: concept.title, text: tidy(firstSentence) };
+      }).filter((rule) => rule.text.length > 20).slice(0, 6);
     }
     let outcomes = (override && override.outcomes) ? override.outcomes.slice() : outcomeList(lesson);
     if (!outcomes.length) outcomes = concepts.map((concept) => `Explore and talk about ${concept.title.toLowerCase()}.`).slice(0, 6);
     const assessment = assessmentData(mcqs, reference, unitNo);
-    const overview = lesson.blocks.map((block) => tidy(block.text)).find((text, index) => index > 2 && text.length > 180) || `Explore ${title} through concepts, investigations, methods and real-life practice.`;
+    // The first long paragraph is the unit's own introduction — except in
+    // Grade 1, where it opens by briefing the adult ("In this unit your child
+    // learns..."). Skip anything addressed to the adult; the overview is shown
+    // to the learner and feeds the discovery screens too.
+    // Safety notices are long enough to look like introduction prose, but they
+    // are a checklist for whoever supervises, not a description of the unit.
+    const SAFETY_NOTICE = /^\[Safety\]|safety first|please read/i;
+    const overview = lesson.blocks
+      .map((block) => tidy(block.text))
+      .find((text, index) => index > 2 && text.length > 180
+        && !ADULT_ADDRESSED.test(text) && !SAFETY_NOTICE.test(text))
+      || GRADE1_OVERVIEWS[`${grade}-${unitNo}`]
+      || `Explore ${title} through concepts, investigations, methods and real-life practice.`;
 
     const workedExamples = [];
     const weHeads = lesson.blocks.map((block, index) => ({ block, index })).filter(({ block }) => /^Worked Example/i.test(tidy(block.text)));
     for (const { block, index } of weHeads.slice(0, 12)) {
       const body = lesson.blocks.slice(index + 1, index + 6).map((item) => tidy(item.text)).filter((text) => text.length > 10);
-      workedExamples.push({ id: `we${String(workedExamples.length + 1).padStart(2, "0")}`, outcomeId: `lo${String(workedExamples.length % 8 + 1).padStart(2, "0")}`, difficulty: "Intermediate", title: tidy(block.text).replace(/^Worked Examples?\s*[—:\-]?\s*/i, "") || `Worked example`, prompt: sentence(body[0] || title, 260), solution: sentence(body.slice(1).join(" ") || body[0] || title, 520) });
+      workedExamples.push({ id: `we${String(workedExamples.length + 1).padStart(2, "0")}`, outcomeId: `lo${String(workedExamples.length % 8 + 1).padStart(2, "0")}`, difficulty: "Intermediate", title: tidy(block.text).replace(/^Worked Examples?\s*[—:\-]?\s*/i, "") || `Worked example`, prompt: tidy(body[0] || title), solution: paragraphs(body.slice(1)) || tidy(body[0] || title) });
     }
     // Pad only with real practice items — skip source junk whose prompt is a
     // unit title / page marker or whose answer is the generic placeholder.
@@ -779,7 +1151,7 @@ function buildGrade(grade) {
       const n = workedExamples.length + 1;
       const cleanExpl = !PARENT_FACING.test(c.explanation) ? c.explanation : "";
       const solution = cleanExpl
-        ? sentence(`${cleanExpl} ${c.example && c.example !== c.title && !PARENT_FACING.test(c.example) ? `For example: ${c.example}` : ""}`.trim(), 480)
+        ? `${cleanExpl}${c.example && c.example !== c.title && !PARENT_FACING.test(c.example) ? `\n\nFor example: ${c.example}` : ""}`.trim()
         : `Look, point and talk about ${c.title.toLowerCase().replace(/\?$/, "")}. Say what you notice and give one example you can see around you.`;
       workedExamples.push({ id: `we${String(n).padStart(2, "0")}`, outcomeId: `lo${String(workedExamples.length % 8 + 1).padStart(2, "0")}`, difficulty: workedExamples.length < 3 ? "Basic" : "Intermediate", title: c.title, prompt: grade <= 1 ? `Look around you. Can you find an example of: ${c.title.replace(/\?$/, "")}?` : `Explain in your own words: ${c.title.replace(/\?$/, "")}.`, solution });
     }
@@ -789,7 +1161,12 @@ function buildGrade(grade) {
       outcomeId: `lo${String(index % Math.max(1, outcomes.length) + 1).padStart(2, "0")}`,
       difficulty: index < 3 ? "Core" : "Challenge",
       title: experiment.title,
-      example: experiment.aim || experiment.title,
+      // Falling back to the title made `example` a copy of `title` on 22 items,
+      // so the card showed its own heading back as the worked example. Prefer
+      // the aim, then the materials — either tells the learner something new.
+      example: tidy(experiment.aim)
+        || (experiment.materials ? `What you need: ${experiment.materials}` : "")
+        || `Follow the steps below to carry out ${experiment.title.toLowerCase()}.`,
       steps: experiment.steps.length >= 3 ? experiment.steps.slice(0, 5) : [...experiment.steps, "Observe carefully and record what you see.", "Compare your result with your hypothesis."].slice(0, 5),
     }));
     while (methods.length < 4 && concepts.length) {
@@ -816,12 +1193,18 @@ function buildGrade(grade) {
       ideaCursor += 1;
       activities.push({
         title: `${idea.verb}: ${concept.title}`,
-        materials: "Notebook, pencil and safe things you can find at home",
+        // Name the unit's own kit where the source lists one, so the card is not
+        // the same "notebook and pencil" line in all 53 units.
+        materials: experiments[activities.length % Math.max(1, experiments.length)]?.materials
+          || `Notebook and pencil, plus anything at home you can use to look closely at ${concept.title.toLowerCase()}`,
         steps: [
           `Look for an example of ${concept.title.toLowerCase()} around your home or outside.`,
           idea.tail,
-          "Write or draw what you observed, using the unit's science words.",
-          "Explain your finding to a family member or your teacher.",
+          `Write or draw what you observed, using the words ${(reference.terms || []).slice(0, 2).map((pair) => pair[0]).filter(Boolean).join(" and ") || "from this unit"}.`,
+          // Explaining aloud is the point of the step, so it must work with
+          // nobody else in the room — a learner with no teacher still has to be
+          // able to finish it.
+          "Explain your finding out loud, as if you were teaching it. Say it to a family member or your teacher if someone is nearby, or explain it to yourself and check it against the concept explanations.",
         ],
       });
     }
@@ -830,30 +1213,58 @@ function buildGrade(grade) {
       activities.forEach((activity, index) => { if (override.experimentTitles[index]) activity.title = override.experimentTitles[index]; });
     }
 
+    // The three reveal fields must each say something different, or the learner
+    // reads the same sentence three times:
+    //   context     — what this investigation is for   (the experiment's aim)
+    //   answer      — what you should have found       (its analysis answers)
+    //   explanation — the science behind it            (the matching concept)
+    // They previously all derived from `aim`, so context and explanation came
+    // out byte-identical on 194 of 227 items.
+    const conceptFor = (index) => concepts[index % Math.max(1, concepts.length)];
+    const scienceBehind = (index) => {
+      const concept = conceptFor(index);
+      const opening = String(concept?.explanation || overview).split("\n\n")[0];
+      return concept?.title ? `${concept.title}: ${sentence(opening, 300)}` : sentence(opening, 320);
+    };
+    // A hint has to point at this unit's investigation. A single sentence
+    // repeated across every grade ("Predict first, then observe, then explain")
+    // teaches nothing and tells the learner nothing they did not already know.
+    const glossaryWords = (reference.terms || []).map((pair) => pair[0]).filter(Boolean).slice(0, 3);
+    const hintFor = (experiment) => {
+      const step = (experiment.steps || []).find((text) => text.length > 30);
+      if (step) return `Work through the method one step at a time. Start here: ${sentence(step, 150)}`;
+      if (glossaryWords.length >= 2) return `Predict what will happen before you start, then observe carefully. Use these words when you explain: ${glossaryWords.join(", ")}.`;
+      return `Predict what will happen in ${experiment.title.toLowerCase()}, test it, then compare what you saw with what you expected.`;
+    };
     const explorations = experiments.slice(0, 6).map((experiment, index) => ({
       id: `explore-${index + 1}`,
       outcomeId: `lo${String(index % Math.max(1, outcomes.length) + 1).padStart(2, "0")}`,
       difficulty: index < 3 ? "Discover" : "Explore",
       title: experiment.title,
-      context: experiment.aim || sentence(overview, 260),
+      // Year 1's activity sheets carry no per-investigation aim, so falling back
+      // to the unit overview gave every card on the screen the same paragraph.
+      // Say what *this* investigation is for instead.
+      context: tidy(experiment.aim)
+        || `In this investigation you will ${experiment.title.toLowerCase().replace(/^(watch|find|sort|draw|does)\b/i, (m) => m.toLowerCase())}. Set it up, look carefully, and record what you notice.`,
       prompt: experiment.hypothesis || experiment.analysis[0] || `What do you predict will happen in ${experiment.title}?`,
-      answer: sentence(experiment.analysis.join(" ") || "Run the investigation, record your observations, and compare them with your prediction.", 300),
+      answer: tidy(experiment.analysis.join(" ")) || `Carry out ${experiment.title.toLowerCase()}, record exactly what you observe, and compare it with the prediction you wrote before you started.`,
       modelType: `model-${index + 1}`,
-      hint: "Predict first, then observe, then explain.",
-      explanation: sentence(experiment.aim || overview, 260),
+      hint: hintFor(experiment),
+      explanation: scienceBehind(index),
     }));
     while (explorations.length < 4 && practice.length) {
       const item = practice[(explorations.length * 2) % practice.length];
-      explorations.push({ id: `explore-${explorations.length + 1}`, outcomeId: "lo01", difficulty: "Explore", title: concepts[explorations.length % Math.max(1, concepts.length)]?.title || title, context: sentence(overview, 260), prompt: item.prompt, answer: item.answer, modelType: `model-${explorations.length + 1}`, hint: item.hint, explanation: item.answer });
+      const index = explorations.length;
+      explorations.push({ id: `explore-${index + 1}`, outcomeId: "lo01", difficulty: "Explore", title: conceptFor(index)?.title || title, context: sentence(overview, 260), prompt: item.prompt, answer: item.answer, modelType: `model-${index + 1}`, hint: item.hint, explanation: scienceBehind(index) });
     }
 
-    const visualModels = concepts.map((concept, index) => ({ id: `model-${index + 1}`, outcomeId: `lo${String(index % Math.max(1, outcomes.length) + 1).padStart(2, "0")}`, title: concept.title, modelType: `concept-model-${index + 1}`, purpose: sentence(concept.explanation, 220), defaultNumber: null }));
+    const visualModels = concepts.map((concept, index) => ({ id: `model-${index + 1}`, outcomeId: `lo${String(index % Math.max(1, outcomes.length) + 1).padStart(2, "0")}`, title: concept.title, modelType: `concept-model-${index + 1}`, purpose: sentence(String(concept.explanation).split("\n\n")[0], 220), defaultNumber: null }));
 
     const pool = practice.length ? practice : explorations.map((explore, index) => ({ id: `p${index}`, level: "Core", prompt: explore.prompt, answer: explore.answer, hint: explore.hint }));
-    const realProblems = pool.filter((item) => item.level === "Challenge" || item.level === "Extension").slice(0, 6).map((item, index) => ({ id: `rp${String(index + 1).padStart(2, "0")}`, outcomeId: `lo${String(index % Math.max(1, outcomes.length) + 1).padStart(2, "0")}`, difficulty: index < 3 ? "Core" : "Challenge", context: ["Home", "Market", "Travel", "School", "Community", "Nature"][index], prompt: item.prompt, answer: item.answer, hint: item.hint, errorFeedback: item.answer }));
+    const realProblems = pool.filter((item) => item.level === "Challenge" || item.level === "Extension").slice(0, 6).map((item, index) => ({ id: `rp${String(index + 1).padStart(2, "0")}`, outcomeId: `lo${String(index % Math.max(1, outcomes.length) + 1).padStart(2, "0")}`, difficulty: index < 3 ? "Core" : "Challenge", context: ["Home", "Market", "Travel", "School", "Community", "Nature"][index], prompt: item.prompt, answer: item.answer, hint: item.hint, errorFeedback: `Check your reasoning against this: ${item.answer}` }));
     while (realProblems.length < 4 && pool.length) {
       const item = pool[(realProblems.length + 3) % pool.length];
-      realProblems.push({ id: `rp${String(realProblems.length + 1).padStart(2, "0")}`, outcomeId: "lo01", difficulty: "Core", context: "Daily life", prompt: item.prompt, answer: item.answer, hint: item.hint, errorFeedback: item.answer });
+      realProblems.push({ id: `rp${String(realProblems.length + 1).padStart(2, "0")}`, outcomeId: "lo01", difficulty: "Core", context: "Daily life", prompt: item.prompt, answer: item.answer, hint: item.hint, errorFeedback: `Check your reasoning against this: ${item.answer}` });
     }
 
     const reasoningPrompts = pool.filter((item) => item.level === "Core").slice(0, 6).map((item, index) => ({ id: `reason${String(index + 1).padStart(2, "0")}`, outcomeId: `lo${String(index % Math.max(1, outcomes.length) + 1).padStart(2, "0")}`, difficulty: index < 3 ? "Core" : "Challenge", responseMode: "text", prompt: item.prompt, keyIdeas: reference.terms.slice(index, index + 3).map((termPair) => termPair[0]), modelAnswer: item.answer }));
@@ -892,13 +1303,42 @@ function buildGrade(grade) {
     fs.writeFileSync(path.join(unitDir, `unit-${unitMeta.unit}.json`), `${JSON.stringify(runtime, null, 2)}\n`, "utf8");
   });
 
+  // Sample each unit across the difficulty bands rather than taking the first
+  // two questions. Unit assessments are ordered Basic → Core → Challenge, so
+  // "first two" always produced an all-Basic capstone that never tested the
+  // reasoning the unit spent most of its pages teaching.
+  const capstoneQuestions = builtUnits.flatMap((unit) => {
+    const questions = unit.assessment.questions;
+    const picked = [];
+    for (const band of ["Basic", "Core", "Challenge"]) {
+      const next = questions.find((question) => question.difficulty === band && !picked.includes(question));
+      if (next) picked.push(next);
+    }
+    // Top up from whatever is left if a unit does not use all three bands.
+    for (const question of questions) {
+      if (picked.length >= 3) break;
+      if (!picked.includes(question)) picked.push(question);
+    }
+    return picked.map((question, index) => ({
+      ...question,
+      id: `cap-u${String(unit.unit.unitNo).padStart(2, "0")}-q${index + 1}`,
+      unitNo: unit.unit.unitNo,
+      unitTitle: unit.unit.unitTitle,
+    }));
+  });
+
   const manifest = {
-    schemaVersion: "Ehel Science Course Manifest v1.0",
+    schemaVersion: "Ehel Science Course Manifest v2.0",
     stage: { id: stageId, label: stageLabel },
     subject: "Science",
     defaultUnit: source.units[0]?.unit || 1,
     sourcePackage: contentPackage,
-    packageReviewStatus: "Imported - curriculum review required",
+    cambridgeFramework: cambridgeLabel,
+    // Deliberately not "Approved": this rebuild carried the source prose across
+    // in full and made the content self-teaching, but no curriculum reviewer has
+    // signed it off. The banner the learner sees is driven by this string, so it
+    // has to describe what actually happened.
+    packageReviewStatus: "Rebuilt v2.0 - self-teaching content pass complete; curriculum review pending",
     units: source.units.map((unit, position) => ({
       number: unit.unit,
       id: unit.unit_id,
@@ -909,15 +1349,21 @@ function buildGrade(grade) {
       implementationStatus: "Complete runtime package",
       reviewStatus: unit.review_status,
     })),
+    // Mirrors the English manifest's finalAssessment block so every subject
+    // advertises its end-of-course assessment the same way. For Science that
+    // assessment is the stage capstone quiz.
+    finalAssessment: {
+      id: `sci-${stageId}-capstone-quiz-v2`,
+      title: `${stageLabel} Science Capstone Quiz`,
+      data: "./data/grade-capstone.json",
+      placement: `After the ${stageLabel} capstone project`,
+      questionCount: capstoneQuestions.length,
+      passPercent: 80,
+      reviewStatus: "Rebuilt v2.0 - curriculum review pending",
+    },
   };
   fs.writeFileSync(path.join(gradeDir, "data", "course-manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
 
-  const capstoneQuestions = builtUnits.flatMap((unit) => unit.assessment.questions.slice(0, 2).map((question, index) => ({
-    ...question,
-    id: `cap-u${String(unit.unit.unitNo).padStart(2, "0")}-q${index + 1}`,
-    unitNo: unit.unit.unitNo,
-    unitTitle: unit.unit.unitTitle,
-  })));
   const termUnits = (term) => manifest.units.filter((unit) => unit.termId === `t0${term}`).map((unit) => unit.number);
   const allUnitNumbers = manifest.units.map((unit) => unit.number);
   const gradeCapstone = {

@@ -23,6 +23,15 @@ const sentence = (value = "", max = 250) => {
   return `${cut}…`;
 };
 
+// Join source paragraphs into one field, keeping the paragraph breaks. Teaching
+// prose is never clipped: an explainer that stops mid-sentence is worse than
+// useless to a learner working without a teacher. Consumers split on the blank
+// line to render one <p> per paragraph.
+const paragraphs = (values = []) => values
+  .map((value) => tidy(value))
+  .filter(Boolean)
+  .join("\n\n");
+
 const EMPTY_DOC = { blocks: [], source_file: "(not provided)" };
 
 function buildGrade(grade) {
@@ -62,15 +71,23 @@ function buildGrade(grade) {
       .filter(({ block }) => /^Concept\s+\d+\s*:/i.test(tidy(block.text)));
     const concepts = starts.map(({ block, index }, position) => {
       const end = starts[position + 1]?.index ?? lesson.blocks.findIndex((item, itemIndex) => itemIndex > index && /^Guided Practice/i.test(tidy(item.text)));
+      // Take the concept's whole body, not the first two paragraphs clipped at
+      // 520 characters. These courses are self-teaching: the source prose is the
+      // only explainer a learner without a teacher ever sees.
       const body = lesson.blocks.slice(index + 1, end > index ? end : index + 9)
         .map((item) => tidy(item.text))
         .filter((text) => text.length > 35 && !/Ask Your AI Tutor|Remember/i.test(text));
       const title = tidy(block.text).replace(/^Concept\s+\d+\s*:\s*/i, "");
+      // The closing paragraph becomes the worked "Example", so hold it out of
+      // the explanation whenever there is enough prose to spare one.
+      const hasSpareParagraph = body.length > 2;
       return {
         id: `concept-${position + 1}-${slug(title)}`,
         title,
-        explanation: sentence(body.slice(0, 2).join(" "), 520),
-        example: sentence(body[2] || body[0] || rules[position % Math.max(1, rules.length)]?.text || title, 220),
+        explanation: paragraphs(hasSpareParagraph ? body.slice(0, -1) : body),
+        example: tidy(hasSpareParagraph
+          ? body[body.length - 1]
+          : (body[1] || body[0] || rules[position % Math.max(1, rules.length)]?.text || title)),
       };
     });
     // Pad with reference rules, but only substantive learner-facing ones —
@@ -82,17 +99,24 @@ function buildGrade(grade) {
       && !/^Concept\s+\d+\s*:/i.test(rule.text)
       && !/^how to teach/i.test(rule.text)
       && !concepts.some((c) => norm(c.explanation).includes(norm(rule.text).slice(0, 40)) || norm(rule.text).includes(norm(c.explanation).slice(0, 40))));
+    // Padding only helps a unit that is genuinely short of concepts. Where the
+    // book already gave three or more, a one-line rule restating a concept the
+    // learner has just read ("Sequence Rule" after "Number Sequences") adds a
+    // card too thin to teach from. Rules still appear in the reference panel.
+    const substantial = concepts.filter((concept) => String(concept.explanation).length >= 300).length;
     for (const rule of padRules) {
-      if (concepts.length >= 6) break;
+      if (concepts.length >= 6 || substantial >= 3) break;
+      if ((rule.text || "").length < 300) continue;
       concepts.push({ id: `concept-rule-${concepts.length + 1}`, title: rule.title, explanation: rule.text, example: rule.text });
     }
     if (!concepts.length) {
-      const paragraphs = lesson.blocks.map((b) => tidy(b.text)).filter((text) => text.length > 80).slice(0, 6);
-      paragraphs.forEach((text, index) => concepts.push({
+      const bodyParagraphs = lesson.blocks.map((b) => tidy(b.text)).filter((text) => text.length > 80).slice(0, 6);
+      bodyParagraphs.forEach((text, index) => concepts.push({
         id: `concept-${index + 1}-${slug(unitTitle)}-${index + 1}`,
+        // The title is a label, so it stays short; the teaching text does not.
         title: sentence(text, 60),
-        explanation: sentence(text, 520),
-        example: sentence(paragraphs[(index + 1) % paragraphs.length] || text, 220),
+        explanation: tidy(text),
+        example: tidy(bodyParagraphs[(index + 1) % bodyParagraphs.length] || text),
       }));
     }
     return concepts.slice(0, 6);
@@ -175,7 +199,18 @@ function buildGrade(grade) {
     return tidy(block.text).replace(new RegExp(`^Section ${sectionNumber}:\\s*`, "i"), "").split(/\s+\d+\)\s*/).filter(Boolean);
   }
 
-  function practiceData(practice) {
+  // `unitWords` are this unit's own glossary terms. A hint that names them is
+  // actually usable; the two sentences that used to be shared by every unit in
+  // every grade ("Represent the information, name the rule…") told the learner
+  // nothing they could act on.
+  function practiceData(practice, unitWords = []) {
+    const words = unitWords.filter(Boolean).slice(0, 3);
+    const methodHint = words.length >= 2
+      ? `Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: ${words.slice(0, 2).join(" or ")}.`
+      : "Show the information first — a bar model, a number line or a jotting — then name the rule you are using before you calculate.";
+    const applyHint = words.length >= 2
+      ? `Decide which idea the question is really about (${words.join(", ")}), then work one step at a time and check the answer is sensible.`
+      : "Decide which mathematical idea the question is really about, then work one step at a time and check the answer is sensible.";
     const levels = ["Warm-up", "Core", "Challenge", "Extension"];
     const sections = [...new Set(practice.blocks.map((block) => block.section))]
       .filter((section) => /^Section\s+\d+/i.test(section));
@@ -189,8 +224,8 @@ function buildGrade(grade) {
         id: `p${String(items.length + 1).padStart(2, "0")}`,
         level: levels[sectionIndex] || "Core",
         prompt,
-        answer: sentence(answers[index] || `Use the ${section.toLowerCase()} guidance and explain each step.`, 300),
-        hint: sectionIndex < 2 ? "Represent the information, name the rule, then solve one step at a time." : "Identify the key mathematical idea before calculating or explaining.",
+        answer: tidy(answers[index] || `Use the ${section.toLowerCase()} guidance and explain each step.`),
+        hint: sectionIndex < 2 ? methodHint : applyHint,
       }));
     });
     if (!items.length) {
@@ -198,8 +233,8 @@ function buildGrade(grade) {
         id: `p${String(index + 1).padStart(2, "0")}`,
         level: levels[Math.floor(index / 3) % 4],
         prompt: tidy(block.text),
-        answer: "Work through the task and explain each step to your teacher or tutor.",
-        hint: "Represent the information, name the rule, then solve one step at a time.",
+        answer: "Work through the task one step at a time, then check each step against the worked examples and the key rules for this unit. Explain it aloud to a teacher or tutor if one is nearby.",
+        hint: methodHint,
       }));
     }
     return items;
@@ -215,8 +250,8 @@ function buildGrade(grade) {
         outcomeId: `lo${String(index % 8 + 1).padStart(2, "0")}`,
         difficulty: index < 4 ? "Basic" : index < 8 ? "Intermediate" : "Challenge",
         title,
-        prompt: sentence(body[0] || title, 260),
-        solution: sentence(body.slice(1).join(" ") || body[0] || title, 520),
+        prompt: tidy(body[0] || title),
+        solution: paragraphs(body.slice(1)) || tidy(body[0] || title),
       };
     });
     while (examples.length < 12 && practiceItems.length) {
@@ -339,7 +374,7 @@ function buildGrade(grade) {
       const options = [String(answer), ...distractors].slice(0, 4);
       const rot = stem.length % options.length;
       const rotated = options.slice(rot).concat(options.slice(0, rot));
-      items.push({ stem, answer: String(answer), options: [...new Set(rotated)], explanation: sentence(we.solution.replace(/^Solution:?\s*/i, ""), 240) });
+      items.push({ stem, answer: String(answer), options: [...new Set(rotated)], explanation: sentence(String(we.solution).split("\n\n")[0].replace(/^Solution:?\s*/i, ""), 240) });
       if (items.length >= 6) break;
     }
     return items;
@@ -348,6 +383,20 @@ function buildGrade(grade) {
   function assessmentData(reference, unitNo, workedExamples = [], topic = "number", unitTitle = "") {
     const terms = reference.terms.length >= 4 ? reference.terms : [["Mathematics", "Using numbers, shapes, measures and patterns"], ["Model", "A way to show an idea"], ["Rule", "A mathematical relationship"], ["Check", "Confirm that an answer makes sense"]];
     const questions = [];
+    // Vary the hint across the quiz and name this unit's own vocabulary. One
+    // constant hint on every item also became every game clue, so 52% of both
+    // were the same sentence in all 133 units.
+    const hintWords = terms.map((pair) => pair[0]).filter(Boolean);
+    const quizHint = (n) => {
+      const word = hintWords[n % Math.max(1, hintWords.length)];
+      const shapes = [
+        word ? `Ask yourself what "${word}" means here before you choose.` : "Name the idea being tested before you choose.",
+        "Work it out yourself first, then look for your answer among the options.",
+        "Rule out the options you know are wrong, then check the one that is left.",
+        "Estimate roughly what the answer should be, then pick the option closest to it.",
+      ];
+      return shapes[n % shapes.length];
+    };
     // 1) Source-authentic application questions from worked examples.
     for (const [i, app] of applicationQuestions(workedExamples).entries()) {
       if (app.options.length < 3) continue;
@@ -358,7 +407,7 @@ function buildGrade(grade) {
     const wanted = Math.max(0, 9 - questions.length);
     for (const g of generateQuestions(topic, grade, `g${grade}u${unitNo}-${unitTitle}`, wanted)) {
       const qn = questions.length;
-      questions.push({ id: `q${String(qn + 1).padStart(2, "0")}`, type: "Application", outcomeId: `lo${String(qn % 8 + 1).padStart(2, "0")}`, difficulty: qn < 4 ? "Basic" : qn < 7 ? "Core" : "Challenge", question: g.question, options: g.options, answer: g.answer, hint: `Work it out step by step, then check each option.`, explanation: g.explanation });
+      questions.push({ id: `q${String(qn + 1).padStart(2, "0")}`, type: "Application", outcomeId: `lo${String(qn % 8 + 1).padStart(2, "0")}`, difficulty: qn < 4 ? "Basic" : qn < 7 ? "Core" : "Challenge", question: g.question, options: g.options, answer: g.answer, hint: quizHint(qn), explanation: g.explanation });
     }
     const startVocab = questions.length;
     for (let index = 0; questions.length < 12; index += 1) {
@@ -402,15 +451,22 @@ function buildGrade(grade) {
     const activitiesDoc = docFor(unitNo, "Activities");
     const referenceDoc = docFor(unitNo, "Reference");
     const reference = referenceData(referenceDoc, lesson);
-    const practice = practiceData(practiceDoc);
+    const practice = practiceData(practiceDoc, (reference.terms || []).map((pair) => pair[0]));
     const workedExamples = workedExampleData(lesson, practice);
     const concepts = conceptList(lesson, reference.rules, unitMeta.title);
     const outcomes = objectiveList(lesson);
     const methods = methodList(referenceDoc, workedExamples);
     const assessment = assessmentData(reference, unitNo, workedExamples, unitTopic(unitMeta.title, concepts), unitMeta.title);
     const overview = lesson.blocks.map((block) => tidy(block.text)).find((text, index) => index > 2 && text.length > 180 && !/self-paced/i.test(text)) || `Explore ${unitMeta.title} through concepts, models, methods and real-life practice.`;
-    const explorations = practice.slice(0, 6).map((item, index) => ({ id: `explore-${index + 1}`, outcomeId: `lo${String(index % Math.max(1, outcomes.length) + 1).padStart(2, "0")}`, difficulty: index < 3 ? "Discover" : "Explore", title: concepts[index % Math.max(1, concepts.length)]?.title || `Unit investigation ${index + 1}`, context: sentence(concepts[index % Math.max(1, concepts.length)]?.explanation || overview, 260), prompt: item.prompt, answer: item.answer, modelType: `model-${index + 1}`, hint: item.hint, explanation: item.answer }));
-    const visualModels = concepts.map((concept, index) => ({ id: `model-${index + 1}`, outcomeId: `lo${String(index % Math.max(1, outcomes.length) + 1).padStart(2, "0")}`, title: concept.title, modelType: `concept-model-${index + 1}`, purpose: sentence(concept.explanation, 220), defaultNumber: null }));
+    // `answer` says what the result is; `explanation` has to say why. Both used
+    // to be `item.answer`, so the reveal repeated itself on 705 of 798 items.
+    const mathsBehind = (index) => {
+      const concept = concepts[index % Math.max(1, concepts.length)];
+      const opening = String(concept?.explanation || overview).split("\n\n")[0];
+      return concept?.title ? `${concept.title}: ${sentence(opening, 300)}` : sentence(opening, 320);
+    };
+    const explorations = practice.slice(0, 6).map((item, index) => ({ id: `explore-${index + 1}`, outcomeId: `lo${String(index % Math.max(1, outcomes.length) + 1).padStart(2, "0")}`, difficulty: index < 3 ? "Discover" : "Explore", title: concepts[index % Math.max(1, concepts.length)]?.title || `Unit investigation ${index + 1}`, context: sentence(String(concepts[index % Math.max(1, concepts.length)]?.explanation || overview).split("\n\n")[0], 260), prompt: item.prompt, answer: item.answer, modelType: `model-${index + 1}`, hint: item.hint, explanation: mathsBehind(index) }));
+    const visualModels = concepts.map((concept, index) => ({ id: `model-${index + 1}`, outcomeId: `lo${String(index % Math.max(1, outcomes.length) + 1).padStart(2, "0")}`, title: concept.title, modelType: `concept-model-${index + 1}`, purpose: sentence(String(concept.explanation).split("\n\n")[0], 220), defaultNumber: null }));
     const realProblems = practice.filter((item) => item.level === "Extension").slice(0, 6).map((item, index) => ({ id: `rp${String(index + 1).padStart(2, "0")}`, outcomeId: `lo${String(index % Math.max(1, outcomes.length) + 1).padStart(2, "0")}`, difficulty: index < 3 ? "Core" : "Challenge", context: ["Home", "Market", "Travel", "School", "Community", "Design"][index], prompt: item.prompt, answer: item.answer, hint: item.hint, errorFeedback: item.answer }));
     while (realProblems.length < 6 && practice.length) {
       const item = practice[(realProblems.length + 6) % practice.length];

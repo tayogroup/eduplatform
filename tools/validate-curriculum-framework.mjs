@@ -36,7 +36,7 @@ const CURRICULUM_DIR = path.join(ROOT, "src", "curriculum");
 const files = args.length
   ? args
   : (fs.existsSync(CURRICULUM_DIR)
-    ? fs.readdirSync(CURRICULUM_DIR).filter((f) => /^cambridge-english-\d+\.json$/.test(f)).sort().map((f) => path.join(CURRICULUM_DIR, f))
+    ? fs.readdirSync(CURRICULUM_DIR).filter((f) => /^cambridge-(?:english|science)-\d+\.json$/.test(f)).sort().map((f) => path.join(CURRICULUM_DIR, f))
     : []);
 if (!files.length) {
   console.error(`usage: node tools/validate-curriculum-framework.mjs [--quiet] [<framework.json> ...]\n(no framework files found in ${CURRICULUM_DIR})`);
@@ -45,7 +45,13 @@ if (!files.length) {
 
 // ── shared patterns ──────────────────────────────────────────────────────────
 // Objective code = <stage><subStrandCode>.<nn>. Both frameworks use this scheme.
-const CODE_RE = /^([1-9])((?:SL|R|W)[a-z])\.(\d{2})$/;
+// Objective code = <stage><subStrandCode><number>. The separator and the
+// sub-strand alphabet differ per framework, so match all three published
+// schemes rather than assuming the English one:
+//   English  0058/0861          7Rv.01, 8SLm.02   (dotted, 2-digit)
+//   Science  0893 lower sec.    7TWSm.01, 9ESs.03, 7SIC.01, 8Bs.02
+//   Science  0846 primary       1Ep1, 3Cc2        (no dot, 1-2 digits)
+const CODE_RE = /^([1-9])((?:SL|R|W|TWS|ES|SIC|[EBCP])[a-z]?)\.?(\d{1,2})$/;
 // Page furniture that has been observed glued onto objective text, plus the
 // headings that sit between sections in the source PDFs. Any of these inside an
 // objective means the parser ran past the end of the bullet.
@@ -85,7 +91,7 @@ function validate(file) {
   }
   // The unit validator resolves a framework by filename from the unit's declared
   // code, so a filename that disagrees with curriculumCode loads the wrong file.
-  const fileCode = /cambridge-english-(\d+)\.json$/.exec(path.basename(file))?.[1];
+  const fileCode = /cambridge-(?:english|science)-(\d+)\.json$/.exec(path.basename(file))?.[1];
   if (fileCode) F(String(fw.curriculumCode) === fileCode, "metadata: curriculumCode ≠ filename", `${fw.curriculumCode} vs ${fileCode}`);
   if (!isBlank(fw.source)) F(!PLACEHOLDER.test(fw.source), "metadata: source looks like a placeholder", fw.source);
 
@@ -99,6 +105,14 @@ function validate(file) {
   for (const [stageKey, objs] of Object.entries(byStage)) {
     F(Array.isArray(objs), "structure: stage is not an array", `stage ${stageKey}`);
   }
+  // A stage with no objectives means the extractor matched nothing — the most
+  // likely failure mode when a source PDF or a parsing rule changes. Every
+  // other check passes vacuously on an empty file, so this has to be its own
+  // failure or a silently empty framework reads as a clean pass.
+  const emptyStages = Object.entries(byStage)
+    .filter(([, objs]) => !Array.isArray(objs) || objs.length === 0)
+    .map(([stageKey]) => stageKey);
+  F(emptyStages.length === 0, "structure: stage publishes no objectives — extraction produced nothing", emptyStages.join(", "));
   const seenCodes = new Map();
   const usedSubStrands = new Set();
   const badShape = [], stageMismatch = [], subMismatch = [], labelMismatch = [], strandMismatch = [], flagIssues = [];
@@ -132,21 +146,31 @@ function validate(file) {
   // ═══ 3. TEXT BOUNDS — BOTH DIRECTIONS ═══
   // The whole point of this section. Too short means a dropped bullet; too long
   // means the parser ate the next section. Checking only one end catches neither.
+  // House style differs between the published frameworks. Cambridge Primary
+  // Science 0846 prints its objectives as unpunctuated fragments, several of
+  // them very short ("Make predictions"), where English 0058/0861 and Science
+  // 0893 print full stopped sentences. A framework declares its own style via
+  // `objectiveStyle` so the difference is recorded in the data rather than
+  // hidden in an exception list here; absent the field, the strict rules apply.
+  const style = fw.objectiveStyle || {};
+  const requireTerminalPunctuation = style.terminalPunctuation !== false;
+  const minTextChars = Number.isFinite(style.minTextChars) ? style.minTextChars : TEXT_MIN;
+
   const empty = [], tooShort = [], tooLong = [], unterminated = [], contaminated = [], mojibake = [], placeholder = [];
   for (const [, o] of all) {
     const t = String(o.text ?? "");
     if (isBlank(t)) { empty.push(o.code); continue; }
-    if (t.length < TEXT_MIN) tooShort.push(`${o.code} (${t.length} chars: "${t}")`);
+    if (t.length < minTextChars) tooShort.push(`${o.code} (${t.length} chars: "${t}")`);
     if (t.length > TEXT_MAX) tooLong.push(`${o.code} (${t.length} chars, starts "${t.slice(0, 60)}…")`);
     else if (t.length > TEXT_LONG_NOTE) N(`text note: ${o.code} is ${t.length} chars — long for an objective, worth an eye`);
-    if (!/[.?!]$/.test(t.trim())) unterminated.push(`${o.code} (ends "…${t.trim().slice(-40)}")`);
+    if (requireTerminalPunctuation && !/[.?!]$/.test(t.trim())) unterminated.push(`${o.code} (ends "…${t.trim().slice(-40)}")`);
     const hit = BOILERPLATE.find((rx) => rx.test(t));
     if (hit) contaminated.push(`${o.code} matches ${hit}`);
     if (MOJIBAKE.test(t)) mojibake.push(o.code);
     if (PLACEHOLDER.test(t)) placeholder.push(o.code);
   }
   F(empty.length === 0, "text: objective has no text", show(empty));
-  F(tooShort.length === 0, `text: shorter than ${TEXT_MIN} chars — likely a truncated bullet`, show(tooShort));
+  F(tooShort.length === 0, `text: shorter than ${minTextChars} chars — likely a truncated bullet`, show(tooShort));
   F(tooLong.length === 0, `text: longer than ${TEXT_MAX} chars — likely swallowed the following section`, show(tooLong));
   F(unterminated.length === 0, "text: no terminal punctuation", show(unterminated));
   F(contaminated.length === 0, "text: contains page furniture from the source document", show(contaminated));

@@ -17,7 +17,26 @@ from docx.oxml.table import CT_Tbl
 from docx.oxml.text.paragraph import CT_P
 
 
-ZIP_PATTERN = "Year *-20260720T*.zip"
+# Google-Drive exports are stamped "Year <n>-<UTC timestamp>-<part>.zip". A new
+# export does not replace the old one, so several stamps for the same year can
+# sit in Downloads at once. Match them all and keep only the newest per year --
+# pinning a single stamp silently rebuilds from stale source when content is
+# re-exported.
+ZIP_PATTERN = "Year *.zip"
+
+
+def newest_archive_per_year(downloads: Path, pattern: str = ZIP_PATTERN) -> list[Path]:
+    """Return one zip per year: the highest timestamp stamp available."""
+    by_year: dict[int, Path] = {}
+    for candidate in sorted(downloads.glob(pattern)):
+        match = re.search(r"Year\s+(\d+)\s*-\s*(\d{8}T\d{6}Z)", candidate.name)
+        if not match:
+            continue
+        year = int(match.group(1))
+        current = by_year.get(year)
+        if current is None or match.group(2) > re.search(r"-(\d{8}T\d{6}Z)", current.name).group(1):
+            by_year[year] = candidate
+    return [by_year[year] for year in sorted(by_year)]
 
 
 def clean(value: str) -> str:
@@ -170,7 +189,7 @@ def infer_unit_title(documents: list[dict], unit: int) -> str:
 
 def extract(downloads: Path) -> dict:
     grades: dict[int, dict] = {}
-    for zip_path in sorted(downloads.glob(ZIP_PATTERN)):
+    for zip_path in newest_archive_per_year(downloads):
         grade_match = re.search(r"Year\s+(\d+)", zip_path.name)
         if not grade_match:
             continue

@@ -33,11 +33,26 @@ const grades = process.argv.slice(2).length
 // into an icon ("[TIP] Teacher Tip", "[!] Remember", "[FREE] The software…").
 // Those tags are layout instructions, not words for the learner.
 const SOURCE_MARKER = /\[(?:TIP|FREE|AI|CT|!|\?|x|\*|>|Star|Note|Warning|Key|Safety|Fact|Look|Robot|Check|Info)\]\s*/gi;
-const tidy = (value = "") => String(value)
-  .replace(/�/g, "–")
-  .replace(SOURCE_MARKER, "")
-  .replace(/\s+/g, " ")
-  .trim();
+
+// The teacher-voice → learner-voice converter lives in tools/lib because Global
+// Perspectives Years 1-3 need exactly the same treatment as Computing Stages
+// 1-4. Only the vocabulary is subject-specific, so it is passed in here; the
+// grammar is shared. Widening these lists changes what this build produces, so
+// they are the Computing words and nothing else.
+const { createLearnerVoice } = require("./lib/ehel-learner-voice.js");
+const VOICE = createLearnerVoice({
+  sourceMarker: SOURCE_MARKER,
+  learnerVerbs: ["tap", "taps", "drag", "drags", "code", "codes", "program", "programs",
+    "debug", "debugs", "run", "runs", "click", "clicks", "press", "presses", "type", "types"],
+  learnerPossessions: ["programs?", "code", "algorithms?", "scrapbooks?", "robots?"],
+  thirdPerson: {
+    taps: "tap", drags: "drag", codes: "code", programs: "program", debugs: "debug",
+    runs: "run", clicks: "click", presses: "press", types: "type",
+  },
+});
+const { tidy, capitalise, polish, splitSentences, extractQuotes, toSecondPerson, swapLearnerPronouns, learnerVoice } = VOICE;
+const THIRD_PERSON = VOICE.thirdPerson;
+const { DIRECTIVE_START, ADULT_SUBJECT, ADULT_ADDRESSED, CLASSROOM, DIRECTIVE_RESIDUE } = VOICE.patterns;
 const slug = (value = "") => tidy(value).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 const sentence = (value = "", max = 250) => {
   const text = tidy(value);
@@ -45,7 +60,6 @@ const sentence = (value = "", max = 250) => {
   const cut = text.slice(0, max).replace(/\s+\S*$/, "");
   return `${cut}…`;
 };
-const capitalise = (value = "") => (value ? value.charAt(0).toUpperCase() + value.slice(1) : value);
 
 // Join source paragraphs into one field, keeping the paragraph breaks. Teaching
 // prose is never clipped: an explainer that stops mid-sentence is worse than
@@ -227,219 +241,9 @@ function generatedExample(title) {
 // ---------------------------------------------------------------------------
 // Teacher-voice → learner-voice
 // ---------------------------------------------------------------------------
-// The Stage 1-4 guides teach through the adult: "Hold up a phone and ask
-// brightly: 'What is this?'". Shown verbatim on a learner's screen that
-// sentence teaches nothing and, worse, waits for an adult who is not there.
-// Three things are recovered from it, in priority order:
-//   1. quoted speech — the guide's own child-facing words, which are exactly
-//      the explanation the learner needs;
-//   2. declarative prose — stories and statements that already address anyone;
-//   3. directives, rewritten to the second person, but only when steps 1 and 2
-//      leave too little to teach from.
-const DIRECTIVE_START = /^(hold|show|ask|tell|let|point|walk|say|play|read|print|give|encourage|praise|remind|model|demonstrate|repeat|finish|invite|prompt|help|sit|gather|hand|put|write|draw|use|take|bring|choose|pick|call|go around|circulate|watch|listen|make sure|allow|support|celebrate|display|collect|distribute|explain|start|begin|end|do|keep|try|set up|prepare|check|split|pair|group|count|line|stick|cut|open|close|click|press|save|stop|swap|move|place|expect|note|be ready|aim to|plan to|then ask|then tell|then let|then show|then play|then say)\b/i;
-const ADULT_SUBJECT = /\b(the child(?:ren)?|children|your child|the class|the pupils?|the learners?|the group|each child|every child|the children's)\b/i;
-// Prose that briefs whoever is sitting with the child. Some of it names an
-// adult outright; the rest gives itself away by talking *about* the learner in
-// the third person ("Children this age are experts already", "Most have tapped
-// a game on a phone") or by managing the lesson ("Keep everything short and
-// playful", "Do one task at a time"). None of it is content for the learner.
-const ADULT_ADDRESSED = /\b(teacher|parent|grown-?up|adult|classroom)\b|\byou (?:read|say|explain|model|demonstrate|ask|show|prompt|guide|scaffold)\b|\bat this age\b|\bpre-?readers?\b|\bone per child\b|\bprint one\b|\bthe answer key is for you\b|\bchildren (?:this age|are|have|will|learn|love|find|need|get|can)\b|\bthis age\b|\bsix-?year-?old|five-?year-?old|seven-?year-?old|eight-?year-?old|nine-?year-?old|ten-?year-?old\b|\bkeep (?:everything|it|the lesson|each session)\b|\bdo one task at a time\b|\bthis (?:unit|lesson) is (?:teacher|adult)-?led\b|\bwe start from what they know\b|\btheir own children'?s? names\b|\bage \d\b/i;
-
-const QUOTE_RE = /[“"']([^“”"']{15,400})[”"']/g;
-
-function splitSentences(text) {
-  return String(text || "")
-    .split(/(?<=[.!?])\s+(?=[A-Z“"'0-9])/)
-    .map(tidy)
-    .filter(Boolean);
-}
-
-// Speech in these guides regularly runs across a sentence boundary
-// ("…ask brightly: "What is this?" Let them answer, then say: "Yes! And here
-// is a secret — this is a computer.""). Splitting into sentences first tore
-// those quotes in half and left fragments like "Let them answer, then say:."
-// on the learner's screen, so quoted spans are lifted out before any splitting
-// happens and the surrounding frame is evaluated on its own.
-function extractQuotes(text) {
-  const quotes = [];
-  // Captured down to three characters: skipping short quotes left their
-  // punctuation behind and the surviving marks paired up with the wrong spans
-  // («Mina writes "HELLO "(plain text)»). Only quotes long enough to teach
-  // something are later promoted to standalone speech.
-  const frame = String(text || "").replace(/[“"]([^“”"]{3,600})[”"]/g, (whole, inner) => {
-    quotes.push(tidy(inner));
-    return " ⟪Q⟫ ";
-  });
-  return { frame, quotes };
-}
-
-// "the child" → "you", "their" → "your", and so on. Applied only to sentences
-// that survive the directive filter, so it never invents learner prose out of
-// a line that was pure classroom management.
-// Words after "you" that end in "s" but are not third-person verbs, so
-// de-inflecting them would produce "you alway" or "you focu".
-const KEEP_S = /(?:ss|us|is|as|os)$/i;
-const NOT_A_VERB = new Set(["always", "sometimes", "perhaps", "unless", "various", "yourselves", "ourselves", "themselves", "yours", "theirs", "others", "everyones", "afterwards", "towards", "upwards", "downwards", "backwards", "forwards", "sideways", "anyways"]);
-
-function toSecondPerson(value = "") {
-  return String(value)
-    // "Can they tell you which is big" — the "you" there is the adult, so the
-    // pronoun swap below would turn it into "Can you tell you which is big".
-    .replace(/\btell(?:s|ing)? you\b/gi, "say")
-    .replace(/\bshow(?:s|ing)? you\b/gi, "point it out")
-    // "Let the children draw the lines" → "You can draw the lines"
-    .replace(/\bLet\s+(?:the|your|each|every)?\s*(?:child(?:ren)?|them|class|pupils?|learners?)\s+/gi, "You can ")
-    // "Ask the child to point at…" / "asking them to try…" → "Try to point at…"
-    .replace(/\b(?:ask|encourage|invite|get|help|remind)(?:ing|s)?\s+(?:the|your|each|every)?\s*(?:child(?:ren)?|them|class|pupils?|learners?)\s+to\s+/gi, "try to ")
-    .replace(/\b(?:your|the|each|every)\s+child(?:ren)?\b/gi, "you")
-    .replace(/\bthe (?:children|class|group)\b/gi, "you")
-    .replace(/\bchildren\b/gi, "you")
-    .replace(/\bthe (?:learners?|pupils?)\b/gi, "you")
-    // The swap leaves a third-person verb behind ("you circles", "you is").
-    .replace(/\byou\s+([a-z]+)\b/gi, (whole, verb) => {
-      const irregular = { is: "are", has: "have", was: "were", does: "do", goes: "go", "isn't": "aren't", "hasn't": "haven't", "doesn't": "don't" };
-      const lower = verb.toLowerCase();
-      if (irregular[lower]) return `you ${irregular[lower]}`;
-      if (THIRD_PERSON[lower]) return `you ${THIRD_PERSON[lower]}`;
-      if (lower.length > 3 && lower.endsWith("s") && !KEEP_S.test(lower) && !NOT_A_VERB.has(lower)) {
-        if (lower.endsWith("ies")) return `you ${lower.slice(0, -3)}y`;
-        if (lower.endsWith("hes") || lower.endsWith("oes")) return `you ${lower.slice(0, -2)}`;
-        return `you ${lower.slice(0, -1)}`;
-      }
-      return whole;
-    })
-    .replace(/\byou's\b/gi, "your")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-// Classroom props and staging. A rewritten sentence that still mentions them
-// is describing a room the learner is not sitting in.
-const CLASSROOM = /\b(on the board|the big sheet|the cards|picture cards|flash ?cards|the class|classroom|whiteboard|circle time|on the carpet|photocopy|their own|one at a time to each|hand out|go round the|little hands|lots of help|together first|do it together)\b/i;
-
-// In the Stage 1-4 guides "they/them/their" usually means the child being
-// taught ("First, they learn to put steps in the right order"), and left alone
-// those pronouns produce prose that talks about the learner instead of to them.
-// But the same pronouns also refer to ordinary objects in the very same
-// paragraph ("The steps only work if they are in the right order", "join them
-// together"), where the swap produces nonsense. So the swap fires only in the
-// grammatical positions where the referent can only be the learner: as the
-// subject of a learning or doing verb, as the object of an instruction verb,
-// or as the possessor of the learner's own work.
-const LEARNER_VERB = "learn|learns|will learn|need|needs|only need|meet|meets|will meet|know|knows|already know|understand|understands|discover|discovers|practise|practises|practice|practices|write|writes|draw|draws|tap|taps|drag|drags|circle|circles|colour|colours|color|colors|match|matches|tick|ticks|cut|cuts|stick|sticks|say|says|tell|tells|explain|explains|describe|describes|sort|sorts|count|counts|build|builds|make|makes|code|codes|program|programs|debug|debugs|test|tests|run|runs|click|clicks|press|presses|type|types|choose|chooses|pick|picks|find|finds|are ready|are able|are experts|love|loves|enjoy|enjoys";
-const INSTRUCTION_VERB = "ask|asks|asking|tell|tells|telling|let|lets|letting|help|helps|helping|show|shows|showing|encourage|encourages|encouraging|remind|reminds|reminding|give|gives|giving|watch|watches|watching|support|supports|praise|praises|guide|guides|prompt|prompts|invite|invites|allow|allows";
-const LEARNER_POSSESSION = "work|answers?|names?|projects?|programs?|books?|sheets?|partners?|own words|ideas?|drawings?|pictures?|lists?|code|algorithms?|scrapbooks?|robots?|stories|story|designs?|charts?|graphs?|fingers?|hands?";
-
-function swapLearnerPronouns(value = "") {
-  return String(value)
-    .replace(/\btell(?:s|ing)? you\b/gi, "say")
-    .replace(/\bshow(?:s|ing)? you\b/gi, "point it out")
-    .replace(/\b(?:Do|Can|Will|Should|Could)\s+they\b/gi, "Can you")
-    // "let them finish" is an instruction to the adult, not an object pronoun.
-    // It has to become "you can finish"; leaving it to the instruction-verb
-    // rule below produced the literal "let you finish".
-    .replace(/\blet\s+(?:the|your|each|every)?\s*(?:child(?:ren)?|them|class|pupils?|learners?)\s+/gi, "you can ")
-    .replace(new RegExp(`\\bthey\\s+(?=(?:${LEARNER_VERB})\\b)`, "gi"), "you ")
-    .replace(new RegExp(`\\b(${INSTRUCTION_VERB})\\s+them\\b`, "gi"), "$1 you")
-    .replace(new RegExp(`\\btheir\\s+(?=(?:${LEARNER_POSSESSION})\\b)`, "gi"), "your ")
-    // Third-person singular left over once "they"/"each child" became "you".
-    .replace(/\byou\s+([a-z]+)\b/gi, (whole, verb) => {
-      const base = THIRD_PERSON[verb.toLowerCase()];
-      return base ? `you ${base}` : whole;
-    })
-    // Every swap above inserts lowercase, so a pronoun that opened a sentence
-    // leaves the sentence starting mid-word ("… boxes. you write 1, 2, 3, 4").
-    .replace(/(^|[.!?]\s+)(you|your)\b/g, (whole, lead, word) => `${lead}${word.charAt(0).toUpperCase()}${word.slice(1)}`);
-}
-
-// Explicit rather than a de-inflection rule: "presses"→"press" and
-// "practises"→"practise" need opposite treatment of the trailing "es", and a
-// generic rule turns "focuses" into "focu".
-const THIRD_PERSON = {
-  is: "are", has: "have", was: "were", does: "do", goes: "go", says: "say",
-  learns: "learn", needs: "need", meets: "meet", knows: "know", understands: "understand",
-  discovers: "discover", practises: "practise", practices: "practice", writes: "write",
-  draws: "draw", taps: "tap", drags: "drag", circles: "circle", colours: "colour",
-  colors: "color", matches: "match", ticks: "tick", cuts: "cut", sticks: "stick",
-  tells: "tell", explains: "explain", describes: "describe", sorts: "sort", counts: "count",
-  builds: "build", makes: "make", codes: "code", programs: "program", debugs: "debug",
-  tests: "test", runs: "run", clicks: "click", presses: "press", types: "type",
-  chooses: "choose", picks: "pick", finds: "find", loves: "love", enjoys: "enjoy",
-  adds: "add", sees: "see", wants: "want", gets: "get", points: "point", looks: "look",
-  uses: "use", moves: "move", plays: "play", opens: "open", starts: "start",
-  finishes: "finish", checks: "check", reads: "read", takes: "take", puts: "put",
-};
-
-function learnerVoice(text, { allowRewrite = true, guide = false } = {}) {
-  const source = guide ? swapLearnerPronouns(tidy(text)) : tidy(text);
-  if (!source) return "";
-  const { frame, quotes } = extractQuotes(source);
-  const kept = [];
-  const rewritten = [];
-  let quoteCursor = 0;
-  for (const line of splitSentences(frame)) {
-    const marks = (line.match(/⟪Q⟫/g) || []).length;
-    const spoken = quotes.slice(quoteCursor, quoteCursor + marks);
-    quoteCursor += marks;
-    // The frame with its quotes removed: what the adult was told to *do*.
-    const bare = tidy(line.replace(/⟪Q⟫/g, "").replace(/\s*[:,;]\s*$/, "").replace(/\s{2,}/g, " "));
-    const isDirective = DIRECTIVE_START.test(bare) || ADULT_SUBJECT.test(bare);
-    const isAdultOnly = ADULT_ADDRESSED.test(bare);
-    if (marks) {
-      // Speech the guide puts in the adult's mouth is written for the child, so
-      // it is the explanation. When the frame around it is itself learner-safe
-      // ("…and it is called "Computers are everywhere"") the quote is spliced
-      // back where it stood — hoisting it to the front left the frame reading
-      // "it is called It is a warm, gentle start".
-      if (!isDirective && !isAdultOnly && bare.length > 20 && !CLASSROOM.test(bare)) {
-        let index = 0;
-        const merged = tidy(line.replace(/⟪Q⟫/g, () => `“${spoken[index++] || ""}”`));
-        if (merged.length > 20) kept.push(/[.!?”]$/.test(merged) ? merged : `${merged}.`);
-        continue;
-      }
-      for (const quote of spoken) if (quote.length > 10) kept.push(/[.!?]$/.test(quote) ? quote : `${quote}.`);
-      continue;
-    }
-    if (!bare) continue;
-    // Classroom staging ("On the board, draw four dots…") reads as ordinary
-    // declarative prose, so the directive test misses it. It is still an
-    // instruction to somebody who is not in the room.
-    if (CLASSROOM.test(bare)) continue;
-    if (!isDirective && !isAdultOnly) {
-      kept.push(bare);
-      continue;
-    }
-    if (isAdultOnly) continue; // classroom management, never learner content
-    const swapped = toSecondPerson(bare);
-    if (swapped && swapped.length > 20
-      && !ADULT_SUBJECT.test(swapped) && !ADULT_ADDRESSED.test(swapped)
-      && !DIRECTIVE_RESIDUE.test(swapped) && !CLASSROOM.test(swapped)) {
-      rewritten.push(capitalise(/[.!?]$/.test(swapped) ? swapped : `${swapped}.`));
-    }
-  }
-  let out = kept.join(" ");
-  if (allowRewrite && out.length < 260 && rewritten.length) out = [out, ...rewritten].filter(Boolean).join(" ");
-  return polish(out);
-}
-
-// Cleanups that apply to anything the converter produces: punctuation left
-// behind by a removed quote, and the sentence-case artefacts of splicing a
-// rewritten clause into the middle of a sentence.
-function polish(value = "") {
-  return tidy(String(value))
-    .replace(/\s*([:;,])\s*\./g, ".")
-    .replace(/\.{2,}/g, ".")
-    .replace(/\s+([.,!?])/g, "$1")
-    .replace(/\b(and|then|or|but|so)\s+(You can|Try to)\b/g, (whole, joiner, clause) => `${joiner} ${clause.toLowerCase()}`)
-    .replace(/^\s*(and|then|or|but|so)\s+/i, "")
-    .replace(/\s{2,}/g, " ")
-    .trim();
-}
-
-// Text that came through the converter still carrying stage directions. Used
-// to reject a candidate rather than show a learner an instruction addressed to
-// someone who is not in the room.
-const DIRECTIVE_RESIDUE = /\b(aloud|read each|read both|read every|finish by|point out|show a real|hold up|one per child|go around|walk around the room|call out|during the (?:lesson|session)|before the child|to the class)\b/i;
+// Moved to tools/lib/ehel-learner-voice.js and bound to the Computing
+// vocabulary at the top of this file, so Global Perspectives Years 1-3 can
+// reuse the same conversion instead of holding a second copy that drifts.
 
 // ---------------------------------------------------------------------------
 // Code listings

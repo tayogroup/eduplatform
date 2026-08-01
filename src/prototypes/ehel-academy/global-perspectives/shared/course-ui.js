@@ -249,7 +249,11 @@ const MARKER = { tutor: "🤖", bigIdea: "💡", model: "🔍", speak: "🗣", t
 function box(item, role) {
   const marker = MARKER[role] || "•";
   const lines = item.lines?.length ? list(item.lines) : "";
-  const spoken = [item.title, ...(item.lines || [])].join(" ");
+  // The heading is on screen directly above the Listen button, so reading it
+  // aloud repeats what the learner can already see — the script review asked
+  // for it to be dropped from the narration across every callout. It is spoken
+  // only when the box has no body of its own to read instead.
+  const spoken = item.lines?.length ? item.lines.join(" ") : item.title;
   return `<div class="gp-box is-${escapeHtml(role)}">
     <h4><span aria-hidden="true">${marker}</span> ${escapeHtml(item.title)}</h4>
     ${lines}
@@ -356,7 +360,8 @@ function renderWords() {
     <article class="panel">
       <h3>${escapeHtml(word.term)}</h3>
       <p>${escapeHtml(word.meaning)}</p>
-      ${voiceButton(`${word.term}. ${word.meaning}`)}
+      ${/* The term is the card's heading, so the clip reads the meaning only. */ ""}
+      ${voiceButton(word.meaning)}
     </article>`).join("");
   const mistakes = course.reference?.mistakes || [];
   return `

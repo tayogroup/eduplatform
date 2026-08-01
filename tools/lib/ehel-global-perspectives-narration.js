@@ -41,10 +41,15 @@ function textsForUnit(unit, category) {
     case "explainers":
       return (unit.explainers || []).filter((e) => e.body).map((e) => e.body);
 
-    // box(): voiceButton([title, ...lines].join(" ")) — every callout box the
-    // page renders, across Big Ideas, Worked Examples, Ask Your AI Tutor, the
-    // teacher session and the speaking prompts, plus the boxes nested inside an
-    // activity. All six use the same helper, so all six hash the same way.
+    // box(): voiceButton(lines.join(" ")) — every callout box the page renders,
+    // across Big Ideas, Worked Examples, Ask Your AI Tutor, the teacher session
+    // and the speaking prompts, plus the boxes nested inside an activity. All
+    // six use the same helper, so all six hash the same way.
+    //
+    // The box's TITLE is not spoken: it sits on screen right above the button,
+    // and the script review asked for the repeated heading to come out of the
+    // narration. A box with no lines falls back to its title, because otherwise
+    // it would have nothing to say.
     case "boxes": {
       const boxes = [
         ...(unit.bigIdeas || []),
@@ -55,12 +60,13 @@ function textsForUnit(unit, category) {
         ...(unit.reflectionPrompts || []),
         ...(unit.activities || []).flatMap((activity) => activity.boxes || []),
       ];
-      return boxes.map((box) => [box.title, ...(box.lines || [])].join(" "));
+      return boxes.map((box) => ((box.lines || []).length ? box.lines.join(" ") : box.title));
     }
 
-    // renderWords: voiceButton(`${word.term}. ${word.meaning}`)
+    // renderWords: voiceButton(word.meaning) — the term is the card's heading,
+    // so the clip reads the meaning only.
     case "words":
-      return (((unit.reference || {}).vocabulary) || []).map((word) => `${word.term}. ${word.meaning}`);
+      return (((unit.reference || {}).vocabulary) || []).map((word) => word.meaning);
 
     default:
       return [];

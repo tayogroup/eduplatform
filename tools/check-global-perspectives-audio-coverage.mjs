@@ -95,7 +95,7 @@ const EXPECTED = new Map([
   // Worked Examples, Ask Your AI Tutor, the teacher session, the speaking
   // prompts and the boxes nested inside an activity all go through it.
   ["spoken", "boxes"],
-  ["`${word.term}. ${word.meaning}`", "words"],
+  ["word.meaning", "words"],
   // The declaration of voiceButton itself, not a call site.
   ["text", null],
 ]);

@@ -210,8 +210,14 @@ SPOKEN: dict[str, str] = {}
 
 
 def box_spoken(box: dict) -> str:
-    """box() in course-ui.js speaks the title then every line, space-joined."""
-    return " ".join([str(box.get("title") or "")] + [str(x) for x in (box.get("lines") or [])])
+    """box() in course-ui.js speaks the lines, space-joined — not the title.
+
+    The title is on screen right above the button, and the script review asked
+    for the repeated heading to come out of the narration. A box with no lines
+    falls back to its title so it still has something to say.
+    """
+    lines = [str(x) for x in (box.get("lines") or [])]
+    return " ".join(lines) if lines else str(box.get("title") or "")
 
 
 def spoken_text(row: list[str]) -> str:
@@ -324,7 +330,7 @@ def unit_rows_with_sources(unit: dict) -> list[tuple[list[str], list[tuple[str, 
         add("Glossary word (narrated)", f"{uid}-word{i + 1:02d}", word.get("term", ""),
             ("Word", f"reference.vocabulary.{i}.term", KIND_TEXT, word.get("term")),
             ("Meaning", f"reference.vocabulary.{i}.meaning", KIND_TEXT, word.get("meaning")),
-            spoken=f"{word.get('term', '')}. {word.get('meaning', '')}")
+            spoken=render(word.get("meaning"), KIND_TEXT))
     add("Common mistakes", f"{uid}-mistakes", "Common mistakes to avoid",
         ("", "reference.mistakes", KIND_LINES, reference.get("mistakes")))
 

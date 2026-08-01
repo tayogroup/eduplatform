@@ -39,6 +39,11 @@ const TREES = [
   { name: "intensive-english", src: path.join(EHEL, "intensive-english"), dest: "app/intensive-english", excludeTop: ["media"] },
   { name: "vocabulary", src: path.join(EHEL, "vocabulary"), dest: "app/vocabulary", excludeTop: [] },
   { name: "shared", src: path.join(EHEL, "shared"), dest: "app/shared", excludeTop: [] },
+  // The unified course shell. The older subjects each carry a hand-written
+  // shared/course-ui.js and never referenced this, so it was never uploaded;
+  // courses built on it (intensive-english, kiswahili) load
+  // ../shell/subjects/<subject>.js, which 404s until this ships.
+  { name: "shell", src: path.join(EHEL, "shell"), dest: "app/shell", excludeTop: [] },
 ];
 const pick = process.argv.slice(2).filter((a) => TREES.some((t) => t.name === a));
 const trees = pick.length ? TREES.filter((t) => pick.includes(t.name)) : TREES;

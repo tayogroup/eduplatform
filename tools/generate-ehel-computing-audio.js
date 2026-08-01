@@ -27,9 +27,8 @@ const API_BASE = "https://api.elevenlabs.io/v1";
 const VOICE_ID = "XfNU2rGpBa01ckF309OY";
 const MODEL_ID = "eleven_multilingual_v2";
 
-const ALL_CATS = ["concepts", "toolkit", "explorations", "explorationQuestions", "visualModels",
-  "methods", "methodSteps", "workedExamples", "practice", "debugging", "esafety", "project",
-  "realProblems", "reasoning", "assessment", "games", "words", "capstone"];
+const narration = require("./lib/ehel-computing-narration");
+const ALL_CATS = narration.CATEGORIES;
 const args = process.argv.slice(2);
 const cats = args.filter((a) => ALL_CATS.includes(a));
 const catList = cats.length ? cats : ALL_CATS;
@@ -60,72 +59,9 @@ loadDotEnv();
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // cyrb53 — identical to the copy in computing/shared/course-ui.js.
-function cyrb53(str, seed = 0) {
-  let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
-  for (let i = 0; i < str.length; i += 1) {
-    const ch = str.charCodeAt(i);
-    h1 = Math.imul(h1 ^ ch, 2654435761);
-    h2 = Math.imul(h2 ^ ch, 1597334677);
-  }
-  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-  return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(16);
-}
-const clean = (t) => String(t || "").replace(/\s+/g, " ").trim();
-// spokenText() in the UI collapses paragraph breaks before the text reaches the
-// button. Mirrored here so the two sides agree even though clean() would
-// flatten the same whitespace anyway.
-const spokenText = (value = "") => String(value).split(/\n{2,}/).map((p) => p.trim()).filter(Boolean).join(" ");
-
-// The exact strings each Listen button narrates — must match course-ui.js. A
-// difference of one character means a different cyrb53 hash. Categories with no
-// Listen button (fluency, activities, code listings, the AI tutor's typed
-// replies) are absent on purpose. Line references are into
-// computing/shared/course-ui.js.
-function textsForUnit(unit, category) {
-  switch (category) {
-    // renderLesson: `${title}. ${spokenText(explanation)}. Example: ${example}`
-    case "concepts": return (unit.concepts || []).map((c) => `${c.title}. ${spokenText(c.explanation)}. Example: ${c.example}`);
-    // renderToolkit: `${name}. ${steps.join(" ")} ${note || ""}`
-    case "toolkit": return (unit.toolkit || []).map((t) => `${t.name}. ${(t.steps || []).join(" ")} ${t.note || ""}`);
-    // renderExploreConcept: the discovery panel and its question are two buttons.
-    case "explorations": return (unit.explorations || []).map((e) => `${e.title}. ${e.context}. ${e.explanation}`);
-    case "explorationQuestions": return (unit.explorations || []).map((e) => e.prompt);
-    case "visualModels": return (unit.visualModels || []).map((m) => `${m.title}. ${m.purpose}`);
-    // renderLearnMethod: the whole method, plus one button per step.
-    case "methods": return (unit.methods || []).map((m) => `${m.title}. Example: ${m.example}. ${(m.steps || []).join(" ")}`);
-    case "methodSteps": return (unit.methods || []).flatMap((m) => (m.steps || []).map((s, i) => `Step ${i + 1}. ${s}`));
-    case "workedExamples": return (unit.workedExamples || []).map((w) => `${w.title}. ${w.prompt}. Solution: ${spokenText(w.solution)}`);
-    case "practice": return (unit.practice || []).map((p) => p.prompt);
-    // renderDebugging: `${symptom}. Cause: ${cause}. Fix: ${fix}`
-    case "debugging": return (unit.debugging || []).map((d) => `${d.symptom}. Cause: ${d.cause}. Fix: ${d.fix}`);
-    // renderSafety: `${title}. ${text}`
-    case "esafety": return (unit.esafety || []).map((s) => `${s.title}. ${s.text}`);
-    // renderProject: `${title}. ${brief} ${steps.join(" ")}`
-    // Kept to one line so check-computing-audio-coverage.mjs can read the
-    // template out of this source and compare it with the UI's.
-    case "project": return !unit.project || !unit.project.title ? [] : [`${unit.project.title}. ${unit.project.brief} ${(unit.project.steps || []).join(" ")}`];
-    // renderRealProblems speaks the prompt alone — the context is already on
-    // screen as the eyebrow above it, and is not read out.
-    case "realProblems": return (unit.realProblems || []).map((p) => p.prompt);
-    case "reasoning": return (unit.reasoningPrompts || []).flatMap((r) => [r.prompt, r.modelAnswer]);
-    // Unit assessment questions. The capstone quiz is sampled from these, so
-    // its buttons resolve to the same hashes and need no separate pass.
-    case "assessment": return ((unit.assessment || {}).questions || []).map((q) => q.question);
-    case "games": return (((unit.games || {}).games) || []).flatMap((g) => (g.rounds || []).map((r) => `${r.prompt}. ${r.clue}`));
-    // The Computing Words cards: the term with its meaning, and its example.
-    case "words": return (((unit.reference || {}).vocabulary) || []).flatMap((v) => [`${v.term}. ${v.meaning}`, v.example]);
-    default: return [];
-  }
-}
-
-// The stage capstone lives beside the units, not inside one.
-function textsForCapstone(capstone, category) {
-  if (category !== "capstone") return [];
-  const project = capstone.project || {};
-  return [`${project.drivingQuestion} ${project.finalProduct}`,
-    ...(project.stages || []).map((s) => s.prompt)];
-}
+// Hash, normalisation and the exact text of every Listen button live in
+// tools/lib/ehel-computing-narration.js so the pruner agrees with what is bought.
+const { cyrb53, clean, spokenText, textsForUnit, textsForCapstone } = narration;
 
 async function tts(text) {
   const key = process.env.ELEVENLABS_API_KEY;

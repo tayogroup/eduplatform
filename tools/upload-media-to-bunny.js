@@ -4,8 +4,8 @@
 // reaped run resumes without re-sending. Access key comes from env (BUNNY_KEY),
 // never hard-coded.
 //
-// Usage: BUNNY_KEY=… node tools/upload-media-to-bunny.js [english|mathematics|science]…
-//   (no subject args = all three)
+// Usage: BUNNY_KEY=… node tools/upload-media-to-bunny.js [english|mathematics|science|computing]…
+//   (no subject args = all four)
 
 const fs = require("fs"), path = require("path");
 const ROOT = path.resolve(__dirname, "..");
@@ -18,8 +18,8 @@ const MANIFEST = path.join(ROOT, ".bunny-upload-manifest.json");
 const CONCURRENCY = 10;
 
 if (!KEY) { console.error("BUNNY_KEY not set"); process.exit(1); }
-const subjects = process.argv.slice(2).filter((s) => ["english", "mathematics", "science"].includes(s));
-const subjectList = subjects.length ? subjects : ["english", "mathematics", "science"];
+const subjects = process.argv.slice(2).filter((s) => ["english", "mathematics", "science", "computing"].includes(s));
+const subjectList = subjects.length ? subjects : ["english", "mathematics", "science", "computing"];
 
 // Science narration text, hashes and per-grade placement come from the shared
 // module the generator and pruner use. This file used to carry its own copy,
@@ -29,6 +29,12 @@ const subjectList = subjects.length ? subjects : ["english", "mathematics", "sci
 // requested by the app.
 const scienceNarration = require("./lib/ehel-science-narration");
 const { cyrb53, clean } = scienceNarration;
+
+// Computing keeps its clips out of git entirely (see .gitignore): they are a
+// deploy artifact, generated locally and shipped straight to the CDN. That
+// makes this upload the only copy that reaches anyone, so a clip missed here
+// is a Listen button that silently falls back to the paid runtime endpoint.
+const computingNarration = require("./lib/ehel-computing-narration");
 
 // Mathematics has its own, smaller set of narrated categories. These mirror
 // tools/generate-ehel-math-audio.js exactly — including realProblems reading
@@ -79,13 +85,15 @@ function buildList() {
       }
     }
   }
-  for (const subject of ["mathematics", "science"]) {
+  for (const subject of ["mathematics", "science", "computing"]) {
     if (!subjectList.includes(subject)) continue;
     const ttsDir = path.join(EHEL, subject, "media", "audio", "tts");
     if (!fs.existsSync(ttsDir)) continue;
     const map = subject === "science"
       ? scienceNarration.hashGradeMap(path.join(EHEL, "science"))
-      : mathematicsHashGradeMap();
+      : subject === "computing"
+        ? computingNarration.hashGradeMap(path.join(EHEL, "computing"))
+        : mathematicsHashGradeMap();
     let orphans = 0;
     for (const f of fs.readdirSync(ttsDir)) {
       if (!f.endsWith(".mp3")) continue;

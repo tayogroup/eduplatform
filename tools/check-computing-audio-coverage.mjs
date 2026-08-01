@@ -1,4 +1,5 @@
-// Keep tools/generate-ehel-computing-audio.js in step with the Listen buttons in
+// Keep tools/lib/ehel-computing-narration.js — the definition the generator and
+// pruner share — in step with the Listen buttons in
 // computing/shared/course-ui.js.
 //
 // Narration is looked up by cyrb53 of the button's text, so the generator has to
@@ -21,6 +22,11 @@ import { fileURLToPath } from "node:url";
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const UI = path.join(ROOT, "src", "prototypes", "ehel-academy", "computing", "shared", "course-ui.js");
 const GEN = path.join(ROOT, "tools", "generate-ehel-computing-audio.js");
+// The button texts and the hash moved into shared narration libraries, so the
+// generator no longer holds either. Read them where they now live, or this
+// check silently stops comparing the thing it exists to compare.
+const NARRATION = path.join(ROOT, "tools", "lib", "ehel-computing-narration.js");
+const HASH_LIB = path.join(ROOT, "tools", "lib", "ehel-narration-hash.js");
 
 const failures = [];
 const fail = (message) => failures.push(message);
@@ -76,7 +82,9 @@ function callArguments(source, name) {
 }
 
 const ui = fs.readFileSync(UI, "utf8");
-const gen = fs.readFileSync(GEN, "utf8");
+const gen = fs.readFileSync(GEN, "utf8")
+  + (fs.existsSync(NARRATION) ? fs.readFileSync(NARRATION, "utf8") : "")
+  + (fs.existsSync(HASH_LIB) ? fs.readFileSync(HASH_LIB, "utf8") : "");
 
 // What the UI is expected to narrate. Each entry is a button's argument as it
 // appears in course-ui.js, mapped to the generator category that reproduces it,
@@ -113,7 +121,7 @@ const found = new Set([...callArguments(ui, "voiceButton"), ...callArguments(ui,
 for (const argument of found) {
   if (!EXPECTED.has(argument)) {
     fail(`course-ui.js narrates a text the generator does not know about: ${argument}\n`
-       + "    Add it to tools/generate-ehel-computing-audio.js and to EXPECTED here.");
+       + "    Add it to tools/lib/ehel-computing-narration.js and to EXPECTED here.");
   }
 }
 for (const argument of EXPECTED.keys()) {
@@ -159,9 +167,9 @@ const hashOf = (source, label) => {
   return body[0].replace(/\s+/g, " ");
 };
 const uiHash = hashOf(ui, "course-ui.js");
-const genHash = hashOf(gen, "generate-ehel-computing-audio.js");
+const genHash = hashOf(gen, "tools/lib/ehel-narration-hash.js");
 if (uiHash && genHash && uiHash !== genHash) {
-  fail("cyrb53 differs between course-ui.js and generate-ehel-computing-audio.js — "
+  fail("cyrb53 differs between course-ui.js and tools/lib/ehel-narration-hash.js — "
      + "every pre-generated clip would be looked up under the wrong name.");
 }
 

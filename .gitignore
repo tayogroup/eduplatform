@@ -28,3 +28,14 @@ Thumbs.db
 # These are packaging artifacts, not source: the PHP under src/moodle is the
 # source of truth and the tarballs are rebuilt on demand.
 *.tar
+
+# Pre-generated Computing narration. One clip per Listen button, named by a hash
+# of the button's text, so a rebuilt script mints a new file rather than
+# changing an existing one — committing them would grow the pack by the full
+# size of the audio on every narration pass and never shrink it again. The
+# clips are a deploy artifact: tools/generate-ehel-computing-audio.js makes them
+# and tools/upload-media-to-bunny.js computing ships them to the CDN.
+#
+# Scoped to Computing. Science and Mathematics already track theirs and that is
+# their sessions' call to change.
+src/prototypes/ehel-academy/computing/media/audio/tts/

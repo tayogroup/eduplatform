@@ -35,7 +35,7 @@ const MODEL_ID = "eleven_multilingual_v2";
 
 // --- args ---
 const args = process.argv.slice(2);
-const category = args.find((a) => /^(readings|grammar|speaking|vocabulary|dictionary|writing|activities)$/.test(a)) || "readings";
+const category = args.find((a) => /^(readings|grammar-practice|grammar|speaking|vocabulary|dictionary|writing|activities)$/.test(a)) || "readings";
 const grades = args.filter((a) => /^[1-8]$/.test(a)).map(Number);
 const gradeList = grades.length ? grades : [1, 2, 3, 4, 5, 6, 7, 8];
 const dry = args.includes("--dry");
@@ -120,7 +120,10 @@ function dictionaryItems(dictionary, grade) {
 // What to narrate for each category.
 function itemsForUnit(unit, grade) {
   const gid = String(grade).padStart(2, "0");
-  const dir = `media/audio/grade-${grade}/${category}`;
+  // grammar-practice clips sit in the existing grammar/ tree as {grammarId}-practice.mp3
+  // rather than a directory of their own, so no new media category has to be wired
+  // into upload-media-to-bunny.js or the CDN layout.
+  const dir = `media/audio/grade-${grade}/${category === "grammar-practice" ? "grammar" : category}`;
   if (category === "readings") {
     return (unit.readings || []).map((r) => ({
       id: r.readingId, ref: r, title: r.title,
@@ -189,6 +192,30 @@ function itemsForUnit(unit, grade) {
       }
     }
     return items;
+  }
+  // The practice task read aloud, from practiceAudio -- a second descriptor on the
+  // grammar entry, whose `audio` already belongs to the explanation.
+  if (category === "grammar-practice") {
+    return (unit.grammar || []).filter((g) => g.practice).map((g) => {
+      const id = `${g.grammarId}-practice`;
+      const source = `./${dir}/${id}.mp3`;
+      const prev = g.practiceAudio || {};
+      return {
+        id, ref: g, title: g.title,
+        text: narration(g.practice),
+        source,
+        output: path.join(ENGLISH, dir, `${id}.mp3`),
+        done: prev.available === true && prev.source === source,
+        apply() {
+          g.practiceAudio = {
+            ...prev, source, normal: source, slow: source,
+            provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
+            slowPlaybackRate: prev.slowPlaybackRate ?? 0.76,
+            available: true, status: "Generated",
+          };
+        },
+      };
+    });
   }
   // The writing task and the activity instructions read aloud. Both keep the full
   // descriptor shape rather than the four-field one the generic path writes, so the

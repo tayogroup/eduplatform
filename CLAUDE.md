@@ -98,6 +98,21 @@ Cambridge does not print objective codes in either Global Perspectives framework
 
 A unit's objectives are resolved from its skill, and the Year 5, 7 and 8 packs print their own `Code | What Cambridge says` table. The build **proves** the skill rule against those tables and refuses to run if they disagree — so a wrong mapping stops the build instead of shipping.
 
+#### Global Perspectives narration
+
+Same model as Science: `tools/lib/ehel-global-perspectives-narration.js` is the one definition, and `check:global-perspectives-audio` holds it to `global-perspectives/shared/course-ui.js`. Four categories carry a Listen button — `overview`, `explainers`, `boxes`, `words`. The toolkit, activities, practice, quiz and grown-up guide are read, not heard; the AI tutor's text does not exist until a learner types.
+
+```bash
+node tools/generate-ehel-global-perspectives-audio.js 1 --dry        # characters, nothing sent
+node tools/generate-ehel-global-perspectives-audio.js 1 --budget 900 # prove the pipeline first
+node tools/generate-ehel-global-perspectives-audio.js 1              # the full grade
+node tools/prune-ehel-course-audio.mjs global-perspectives           # report; --delete to remove orphans
+```
+
+The generator **rejects an unrecognised argument** rather than ignoring it: a typo silently falls back to the default set, which is every category of every grade, and that mistake is billed per character.
+
+Clips are committed (as Science's are, unlike Computing's and Mathematics'), so an orphan is free to delete while git still holds it. Grade 1 is generated: 59 clips, 11,419 characters. Guided grades produce no `words` clips — those packs carry no glossary.
+
 ### Reviewed Science scripts
 
 Narration scripts are reviewed in a workbook, not in the repo: `export-ehel-science-scripts.py` flattens every learner-facing line into one sheet per grade, and the reviewed file comes back from OneDrive. Those corrections cannot be hand-applied to `science/grade-*/data/` (generated), so they live in `science/data/script-review.json` and the builder lays them over every rebuild:

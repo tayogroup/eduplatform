@@ -149,6 +149,7 @@
     "build:global-perspectives": "node tools/build-ehel-global-perspectives-runtime.js",
     "check:global-perspectives": "node tools/check-global-perspectives-content.mjs && node tools/check-global-perspectives-audio-coverage.mjs",
     "check:global-perspectives-audio": "node tools/check-global-perspectives-audio-coverage.mjs",
+    "audio:global-perspectives": "node tools/generate-ehel-global-perspectives-audio.js",
     "build:computing": "node tools/build-ehel-computing-runtime.js",
     "check:computing-webgl": "node tools/check-computing-webgl-scenes.mjs",
     "check:computing": "node tools/check-computing-content.mjs && node tools/check-computing-webgl-scenes.mjs && node tools/check-computing-audio-coverage.mjs",

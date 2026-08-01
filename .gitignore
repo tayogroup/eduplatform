@@ -36,6 +36,17 @@ Thumbs.db
 # clips are a deploy artifact: tools/generate-ehel-computing-audio.js makes them
 # and tools/upload-media-to-bunny.js computing ships them to the CDN.
 #
-# Scoped to Computing. Science and Mathematics already track theirs and that is
-# their sessions' call to change.
+# Scoped to Computing. Science still tracks its clips and that is its session's
+# call to change.
 src/prototypes/ehel-academy/computing/media/audio/tts/
+
+# Mathematics narration, ignored for the same reason. This tree had already
+# accumulated 4,346 unreachable clips (1.73 GB) before anyone noticed: a clip is
+# named by a hash of its Listen button's text, so every wording fix silently
+# strands the previous file rather than replacing it. Committing them meant the
+# pack grew by the full size of the audio on each pass and never shrank.
+#
+# tools/generate-ehel-math-audio.js makes them and
+# tools/upload-media-to-bunny.js mathematics ships them to
+# media/mathematics/gNN/audio/tts/, the path course-ui.js builds off localhost.
+src/prototypes/ehel-academy/mathematics/media/audio/tts/

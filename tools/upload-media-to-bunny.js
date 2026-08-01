@@ -13,11 +13,24 @@ const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
 const ZONE = "ehelacademy";
 const ROOT_FOLDER = "Ehel Primary";
 const STORAGE = "https://storage.bunnycdn.com";
-const KEY = process.env.BUNNY_KEY;
 const MANIFEST = path.join(ROOT, ".bunny-upload-manifest.json");
 const CONCURRENCY = 10;
 
-if (!KEY) { console.error("BUNNY_KEY not set"); process.exit(1); }
+// Read .env the way the generators do, so the key never has to be typed onto a
+// command line (where it would sit in the process list for anyone to read).
+// Must run before KEY is read, or a key that lives only in .env looks unset.
+function loadDotEnv() {
+  const file = path.join(ROOT, ".env");
+  if (!fs.existsSync(file)) return;
+  for (const line of fs.readFileSync(file, "utf8").split(/\r?\n/)) {
+    const m = line.trim().match(/^([A-Za-z_][A-Za-z0-9_]*)=(.*)$/);
+    if (m && !process.env[m[1]]) process.env[m[1]] = m[2].replace(/^['"]|['"]$/g, "");
+  }
+}
+loadDotEnv();
+const KEY = process.env.BUNNY_KEY;
+
+if (!KEY) { console.error("BUNNY_KEY not set (checked the environment and .env)"); process.exit(1); }
 const subjects = process.argv.slice(2).filter((s) => ["english", "mathematics", "science", "computing"].includes(s));
 const subjectList = subjects.length ? subjects : ["english", "mathematics", "science", "computing"];
 
@@ -36,41 +49,12 @@ const { cyrb53, clean } = scienceNarration;
 // is a Listen button that silently falls back to the paid runtime endpoint.
 const computingNarration = require("./lib/ehel-computing-narration");
 
-// Mathematics has its own, smaller set of narrated categories. These mirror
-// tools/generate-ehel-math-audio.js exactly — including realProblems reading
-// the prompt alone, which the copy in this file used to get wrong.
-const MATH_CATS = ["concepts", "explorations", "visualModels", "methods", "workedExamples", "realProblems"];
-function mathTextsForUnit(unit, category) {
-  switch (category) {
-    case "concepts": return (unit.concepts || []).map((c) => `${c.title}. ${c.explanation}. Example: ${c.example}`);
-    case "explorations": return (unit.explorations || []).map((e) => `${e.title}. ${e.context}. ${e.explanation}`);
-    case "visualModels": return (unit.visualModels || []).map((m) => `${m.title}. ${m.purpose}`);
-    case "methods": return (unit.methods || []).map((m) => `${m.title}. Example: ${m.example}. ${(m.steps || []).join(" ")}`);
-    case "workedExamples": return (unit.workedExamples || []).map((w) => `${w.title}. ${w.prompt}. Solution: ${w.solution}`);
-    case "realProblems": return (unit.realProblems || []).map((p) => p.prompt);
-    default: return [];
-  }
-}
-
-function mathematicsHashGradeMap() {
-  const map = new Map();
-  for (let g = 1; g <= 12; g += 1) {
-    const dir = path.join(EHEL, "mathematics", `grade-${g}`, "data", "units");
-    if (!fs.existsSync(dir)) continue;
-    for (const f of fs.readdirSync(dir).filter((x) => x.endsWith(".json"))) {
-      const unit = JSON.parse(fs.readFileSync(path.join(dir, f), "utf8"));
-      for (const cat of MATH_CATS) for (const t of mathTextsForUnit(unit, cat)) {
-        const c = clean(t);
-        if (c.length < 8) continue;
-        const key = cyrb53(c);
-        if (!map.has(key)) map.set(key, new Set());
-        map.get(key).add(g);
-      }
-    }
-  }
-  return map;
-}
-
+// Mathematics now comes from the same shared definition as the generator, the
+// pruner and the coverage check. The copy that used to live here listed only
+// six categories and no capstone, so it mapped 5,626 of the 16,854 narrated
+// strings — every clip from the other seven categories would have landed in
+// _unmapped/: uploaded, paid for, and unreachable by the app.
+const mathNarration = require("./lib/ehel-math-narration");
 // Build the [{local, remote}] upload list.
 function buildList() {
   const list = [];
@@ -93,7 +77,7 @@ function buildList() {
       ? scienceNarration.hashGradeMap(path.join(EHEL, "science"))
       : subject === "computing"
         ? computingNarration.hashGradeMap(path.join(EHEL, "computing"))
-        : mathematicsHashGradeMap();
+        : mathNarration.hashGradeMap(path.join(EHEL, "mathematics"));
     let orphans = 0;
     for (const f of fs.readdirSync(ttsDir)) {
       if (!f.endsWith(".mp3")) continue;

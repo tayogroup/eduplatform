@@ -132,7 +132,21 @@ function buildUnit(authored) {
       wordIndex += 1;
       const vocabularyId = `${uid}-w${String(wordIndex).padStart(2, "0")}-${slug(word.w)}`;
       vocabularyIds.push(vocabularyId);
-      if ((word.practice || []).length !== 5) problems.push(`${where}: "${word.w}" has ${(word.practice || []).length} practice sentences; 5 required.`);
+      // Counting to 5 was the only rule here, and 1,135 words passed it while
+      // repeating the example sentence as practice 1 — the learner met four
+      // distinct sentences and a copy. The reviewer removed the copies, so the
+      // count is now a floor and the checks that would have caught the
+      // duplication in the first place do the real work.
+      const practice = (word.practice || []).map((p) => String(p).trim());
+      if (practice.length < 4) {
+        problems.push(`${where}: "${word.w}" has ${practice.length} practice sentences; at least 4 required.`);
+      }
+      if (word.example && practice.some((p) => p === String(word.example).trim())) {
+        problems.push(`${where}: "${word.w}" repeats its example sentence as a practice sentence.`);
+      }
+      if (new Set(practice).size !== practice.length) {
+        problems.push(`${where}: "${word.w}" has a repeated practice sentence.`);
+      }
       dictionaryLinks.push({
         vocabularyId,
         dictionaryEntryId: `ehel-dict-en-${slug(word.w)}-${slug(word.pos || "word")}-01`,

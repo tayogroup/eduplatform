@@ -24,7 +24,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Spoken production",
       "cefrDescriptor": "I can say what is happening now, using am, is or are with -ing.",
-      "cambridge": ["1Rw.04", "1Rg.05"]
+      "cambridge": [
+        "1Rw.04",
+        "1Rg.05"
+      ]
     },
     {
       "outcome": "Use the same present continuous form for a future arrangement, and tell the two uses apart by the time word.",
@@ -33,7 +36,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Writing",
       "cefrDescriptor": "I can say I am leaving on Tuesday to mean something I have already arranged.",
-      "cambridge": ["3Rg.05", "2Wg.04"]
+      "cambridge": [
+        "3Rg.05",
+        "2Wg.04"
+      ]
     },
     {
       "outcome": "Ask for what you want politely using would like to, and answer an offer made with would you like.",
@@ -42,7 +48,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Spoken interaction",
       "cefrDescriptor": "I can ask for a ticket politely instead of saying I want one.",
-      "cambridge": ["2SLg.04", "1SLm.02"]
+      "cambridge": [
+        "2SLg.04",
+        "1SLm.02"
+      ]
     },
     {
       "outcome": "Complete a ticket-window exchange, and read a departures board and a ticket for information that is not stated in words.",
@@ -51,62 +60,442 @@
       "cefrLevel": "A1",
       "cefrSkill": "Reading",
       "cefrDescriptor": "I can buy a ticket and read a departures board to find my platform.",
-      "cambridge": ["2Ri.09", "3Ri.14"]
+      "cambridge": [
+        "2Ri.09",
+        "3Ri.14"
+      ]
     }
   ],
   "groups": [
     {
       "title": "Ways to travel",
       "words": [
-        { "w": "train", "pos": "noun", "meaning": "A line of carriages pulled along a railway.", "example": "The train leaves at ten past six.", "practice": ["The train leaves at ten past six.", "Which train do I need?", "The train is very full today.", "I am taking the train tomorrow.", "The next train is in twenty minutes."], "starter": "The train leaves at", "tutor": "Say when a train leaves using a time from Unit 5." },
-        { "w": "coach", "pos": "noun", "meaning": "A bus for long journeys between towns.", "example": "The coach is cheaper than the train.", "practice": ["The coach is cheaper than the train.", "The coach takes four hours.", "I am going by coach on Friday.", "The coach stops twice on the way.", "There is one coach a day."], "starter": "The coach is cheaper than the", "tutor": "Compare a coach and a train using cheaper and slower, from Unit 4." },
-        { "w": "underground", "pos": "noun", "meaning": "A railway that runs below a city.", "example": "Take the underground to the centre.", "practice": ["Take the underground to the centre.", "The underground is faster at this time.", "Is there an underground station near here?", "The underground closes at midnight.", "I am taking the underground, not a taxi."], "starter": "Take the underground to the", "tutor": "Say why you would choose the underground over a taxi. Use faster or cheaper." },
-        { "w": "taxi", "pos": "noun", "meaning": "A car you pay to take you somewhere.", "example": "A taxi is quicker but it costs more.", "practice": ["A taxi is quicker but it costs more.", "I am taking a taxi to the station.", "Can you order a taxi for eight o'clock?", "The taxi is waiting outside.", "How much is a taxi to the airport?"], "starter": "A taxi is quicker but", "tutor": "Ask how much a taxi costs to somewhere. Asking the price first is normal." },
-        { "w": "route", "pos": "noun", "meaning": "The way a bus or train goes from one place to another.", "example": "This route goes through the centre.", "practice": ["This route goes through the centre.", "Which route is quicker?", "The route changes on Sundays.", "There are two routes to the station.", "The number 6 route stops outside."], "starter": "This route goes through the", "tutor": "Say which of two routes you would take and why." }
+        {
+          "w": "train",
+          "pos": "noun",
+          "meaning": "A line of carriages pulled along a railway.",
+          "example": "The train leaves at ten past six.",
+          "practice": [
+            "Which train do I need?",
+            "The train is very full today.",
+            "I am taking the train tomorrow.",
+            "The next train is in twenty minutes."
+          ],
+          "starter": "The train leaves at",
+          "tutor": "Say when a train leaves using a time from Unit 5."
+        },
+        {
+          "w": "coach",
+          "pos": "noun",
+          "meaning": "A bus for long journeys between towns.",
+          "example": "The coach is cheaper than the train.",
+          "practice": [
+            "The coach takes four hours.",
+            "I am going by coach on Friday.",
+            "The coach stops twice on the way.",
+            "There is one coach a day."
+          ],
+          "starter": "The coach is cheaper than the",
+          "tutor": "Compare a coach and a train using cheaper and slower, from Unit 4."
+        },
+        {
+          "w": "underground",
+          "pos": "noun",
+          "meaning": "A railway that runs below a city.",
+          "example": "Take the underground to the centre.",
+          "practice": [
+            "The underground is faster at this time.",
+            "Is there an underground station near here?",
+            "The underground closes at midnight.",
+            "I am taking the underground, not a taxi."
+          ],
+          "starter": "Take the underground to the",
+          "tutor": "Say why you would choose the underground over a taxi. Use faster or cheaper."
+        },
+        {
+          "w": "taxi",
+          "pos": "noun",
+          "meaning": "A car you pay to take you somewhere.",
+          "example": "A taxi is quicker but it costs more.",
+          "practice": [
+            "I am taking a taxi to the station.",
+            "Can you order a taxi for eight o'clock?",
+            "The taxi is waiting outside.",
+            "How much is a taxi to the airport?"
+          ],
+          "starter": "A taxi is quicker but",
+          "tutor": "Ask how much a taxi costs to somewhere. Asking the price first is normal."
+        },
+        {
+          "w": "route",
+          "pos": "noun",
+          "meaning": "The way a bus or train goes from one place to another.",
+          "example": "This route goes through the centre.",
+          "practice": [
+            "Which route is quicker?",
+            "The route changes on Sundays.",
+            "There are two routes to the station.",
+            "The number 6 route stops outside."
+          ],
+          "starter": "This route goes through the",
+          "tutor": "Say which of two routes you would take and why."
+        }
       ]
     },
     {
       "title": "At the station",
       "words": [
-        { "w": "platform", "pos": "noun", "meaning": "The raised place beside the track where you wait for a train.", "example": "The train leaves from platform four.", "practice": ["The train leaves from platform four.", "Which platform do I need?", "The platform has changed.", "Go to platform two — it is upstairs.", "The platform is very crowded."], "starter": "The train leaves from platform", "tutor": "Ask which platform you need. This is the most useful question in a station." },
-        { "w": "gate", "pos": "noun", "meaning": "The place where you show your ticket before boarding.", "example": "The gate closes ten minutes before.", "practice": ["The gate closes ten minutes before.", "Which gate is it?", "The gate is at the end on the left.", "Go to the gate now — they are boarding.", "The gate number is on the board."], "starter": "The gate closes ten minutes", "tutor": "Say when a gate closes and what happens if you are late." },
-        { "w": "terminal", "pos": "noun", "meaning": "The building where journeys start and end.", "example": "There are two terminals — check which one.", "practice": ["There are two terminals — check which one.", "The terminal is a ten-minute walk.", "Which terminal do I need?", "The terminal opens at five in the morning.", "Go to the other terminal — this is the wrong one."], "starter": "There are two terminals —", "tutor": "Say why checking the terminal matters. Two terminals can be far apart." },
-        { "w": "timetable", "pos": "noun", "meaning": "A list of the times when trains or buses go.", "example": "Check the timetable — it changes on Sundays.", "practice": ["Check the timetable — it changes on Sundays.", "The timetable is on the wall.", "Is there a timetable for this route?", "The new timetable starts next month.", "The timetable says twenty past, not half past."], "starter": "Check the timetable — it changes on", "tutor": "Say one thing a timetable tells you that a person at a window might not." },
-        { "w": "announcement", "pos": "noun", "meaning": "Spoken information given out loud in a station or airport.", "example": "There was an announcement about a delay.", "practice": ["There was an announcement about a delay.", "I did not hear the announcement.", "Listen for the announcement about platform changes.", "The announcement said platform six.", "There is an announcement every ten minutes."], "starter": "There was an announcement about a", "tutor": "Say what to do if you miss an announcement. Asking someone near you is normal." },
-        { "w": "departure", "pos": "noun", "meaning": "The act of leaving, or the time something leaves.", "example": "The departure is at half past nine.", "practice": ["The departure is at half past nine.", "Check the departure board.", "The departure time has changed.", "Departures are upstairs.", "The next departure is in an hour."], "starter": "The departure is at half past", "tutor": "Say the difference between a departure time and a boarding time." }
+        {
+          "w": "platform",
+          "pos": "noun",
+          "meaning": "The raised place beside the track where you wait for a train.",
+          "example": "The train leaves from platform four.",
+          "practice": [
+            "Which platform do I need?",
+            "The platform has changed.",
+            "Go to platform two — it is upstairs.",
+            "The platform is very crowded."
+          ],
+          "starter": "The train leaves from platform",
+          "tutor": "Ask which platform you need. This is the most useful question in a station."
+        },
+        {
+          "w": "gate",
+          "pos": "noun",
+          "meaning": "The place where you show your ticket before boarding.",
+          "example": "The gate closes ten minutes before.",
+          "practice": [
+            "Which gate is it?",
+            "The gate is at the end on the left.",
+            "Go to the gate now — they are boarding.",
+            "The gate number is on the board."
+          ],
+          "starter": "The gate closes ten minutes",
+          "tutor": "Say when a gate closes and what happens if you are late."
+        },
+        {
+          "w": "terminal",
+          "pos": "noun",
+          "meaning": "The building where journeys start and end.",
+          "example": "There are two terminals — check which one.",
+          "practice": [
+            "The terminal is a ten-minute walk.",
+            "Which terminal do I need?",
+            "The terminal opens at five in the morning.",
+            "Go to the other terminal — this is the wrong one."
+          ],
+          "starter": "There are two terminals —",
+          "tutor": "Say why checking the terminal matters. Two terminals can be far apart."
+        },
+        {
+          "w": "timetable",
+          "pos": "noun",
+          "meaning": "A list of the times when trains or buses go.",
+          "example": "Check the timetable — it changes on Sundays.",
+          "practice": [
+            "The timetable is on the wall.",
+            "Is there a timetable for this route?",
+            "The new timetable starts next month.",
+            "The timetable says twenty past, not half past."
+          ],
+          "starter": "Check the timetable — it changes on",
+          "tutor": "Say one thing a timetable tells you that a person at a window might not."
+        },
+        {
+          "w": "announcement",
+          "pos": "noun",
+          "meaning": "Spoken information given out loud in a station or airport.",
+          "example": "There was an announcement about a delay.",
+          "practice": [
+            "I did not hear the announcement.",
+            "Listen for the announcement about platform changes.",
+            "The announcement said platform six.",
+            "There is an announcement every ten minutes."
+          ],
+          "starter": "There was an announcement about a",
+          "tutor": "Say what to do if you miss an announcement. Asking someone near you is normal."
+        },
+        {
+          "w": "departure",
+          "pos": "noun",
+          "meaning": "The act of leaving, or the time something leaves.",
+          "example": "The departure is at half past nine.",
+          "practice": [
+            "Check the departure board.",
+            "The departure time has changed.",
+            "Departures are upstairs.",
+            "The next departure is in an hour."
+          ],
+          "starter": "The departure is at half past",
+          "tutor": "Say the difference between a departure time and a boarding time."
+        }
       ]
     },
     {
       "title": "Your ticket",
       "words": [
-        { "w": "ticket", "pos": "noun", "meaning": "The paper or card that shows you have paid to travel.", "example": "I would like a ticket to the centre, please.", "practice": ["I would like a ticket to the centre, please.", "Keep your ticket until the end.", "Where do I buy a ticket?", "The ticket is cheaper before nine.", "Show your ticket at the gate."], "starter": "I would like a ticket to the", "tutor": "Ask for a ticket politely. Use would like, not want." },
-        { "w": "single", "pos": "noun", "meaning": "A ticket for one direction only.", "example": "A single to the centre, please.", "practice": ["A single to the centre, please.", "Is a single cheaper than a return?", "I only need a single.", "Two singles, please.", "A single costs half as much."], "starter": "A single to the centre,", "tutor": "Say when you need a single and when you need a return. Getting this wrong costs money." },
-        { "w": "fare", "pos": "noun", "meaning": "The money you pay to travel.", "example": "The fare is lower after nine o'clock.", "practice": ["The fare is lower after nine o'clock.", "What is the fare to the airport?", "The fare went up last month.", "Children pay half the fare.", "The fare includes the underground."], "starter": "The fare is lower after", "tutor": "Ask what the fare is. Notice fare is used for travel and price is used for things." },
-        { "w": "reserve", "pos": "verb", "meaning": "To arrange in advance that a seat is kept for you.", "example": "You can reserve a seat for free.", "practice": ["You can reserve a seat for free.", "I would like to reserve two seats.", "Do I need to reserve?", "The seat is reserved — look at the label.", "Reserve early if you are travelling on Friday."], "starter": "You can reserve a seat for", "tutor": "Ask whether you need to reserve. On a busy route the answer changes everything." },
-        { "w": "refund", "pos": "noun", "meaning": "Money given back to you.", "example": "You can get a refund if it is cancelled.", "practice": ["You can get a refund if it is cancelled.", "I would like a refund, please.", "There is no refund on this ticket.", "Ask for a refund at the window.", "The refund takes about a week."], "starter": "You can get a refund if it is", "tutor": "Ask for a refund politely and give the reason. The reason is what decides it." },
-        { "w": "valid", "pos": "adjective", "meaning": "Able to be used; accepted.", "example": "This ticket is valid all day.", "practice": ["This ticket is valid all day.", "Is this ticket valid on the coach?", "The ticket is not valid before nine.", "It is valid for one month.", "Your ticket is valid on this route only."], "starter": "This ticket is valid all", "tutor": "Ask whether a ticket is valid on a different service. Cheap tickets usually are not." }
+        {
+          "w": "ticket",
+          "pos": "noun",
+          "meaning": "The paper or card that shows you have paid to travel.",
+          "example": "I would like a ticket to the centre, please.",
+          "practice": [
+            "Keep your ticket until the end.",
+            "Where do I buy a ticket?",
+            "The ticket is cheaper before nine.",
+            "Show your ticket at the gate."
+          ],
+          "starter": "I would like a ticket to the",
+          "tutor": "Ask for a ticket politely. Use would like, not want."
+        },
+        {
+          "w": "single",
+          "pos": "noun",
+          "meaning": "A ticket for one direction only.",
+          "example": "A single to the centre, please.",
+          "practice": [
+            "Is a single cheaper than a return?",
+            "I only need a single.",
+            "Two singles, please.",
+            "A single costs half as much."
+          ],
+          "starter": "A single to the centre,",
+          "tutor": "Say when you need a single and when you need a return. Getting this wrong costs money."
+        },
+        {
+          "w": "fare",
+          "pos": "noun",
+          "meaning": "The money you pay to travel.",
+          "example": "The fare is lower after nine o'clock.",
+          "practice": [
+            "What is the fare to the airport?",
+            "The fare went up last month.",
+            "Children pay half the fare.",
+            "The fare includes the underground."
+          ],
+          "starter": "The fare is lower after",
+          "tutor": "Ask what the fare is. Notice fare is used for travel and price is used for things."
+        },
+        {
+          "w": "reserve",
+          "pos": "verb",
+          "meaning": "To arrange in advance that a seat is kept for you.",
+          "example": "You can reserve a seat for free.",
+          "practice": [
+            "I would like to reserve two seats.",
+            "Do I need to reserve?",
+            "The seat is reserved — look at the label.",
+            "Reserve early if you are travelling on Friday."
+          ],
+          "starter": "You can reserve a seat for",
+          "tutor": "Ask whether you need to reserve. On a busy route the answer changes everything."
+        },
+        {
+          "w": "refund",
+          "pos": "noun",
+          "meaning": "Money given back to you.",
+          "example": "You can get a refund if it is cancelled.",
+          "practice": [
+            "I would like a refund, please.",
+            "There is no refund on this ticket.",
+            "Ask for a refund at the window.",
+            "The refund takes about a week."
+          ],
+          "starter": "You can get a refund if it is",
+          "tutor": "Ask for a refund politely and give the reason. The reason is what decides it."
+        },
+        {
+          "w": "valid",
+          "pos": "adjective",
+          "meaning": "Able to be used; accepted.",
+          "example": "This ticket is valid all day.",
+          "practice": [
+            "Is this ticket valid on the coach?",
+            "The ticket is not valid before nine.",
+            "It is valid for one month.",
+            "Your ticket is valid on this route only."
+          ],
+          "starter": "This ticket is valid all",
+          "tutor": "Ask whether a ticket is valid on a different service. Cheap tickets usually are not."
+        }
       ]
     },
     {
       "title": "Luggage and your seat",
       "words": [
-        { "w": "luggage", "pos": "noun", "meaning": "The bags and cases you travel with.", "example": "Put your luggage above your seat.", "practice": ["Put your luggage above your seat.", "How much luggage can I take?", "The luggage goes underneath.", "Do not leave your luggage here.", "I have one piece of luggage."], "starter": "Put your luggage above your", "tutor": "Notice luggage has no plural. You say one piece of luggage, not one luggage." },
-        { "w": "suitcase", "pos": "noun", "meaning": "A stiff case with a handle for carrying clothes.", "example": "My suitcase is too heavy.", "practice": ["My suitcase is too heavy.", "The suitcase does not fit.", "I am taking one suitcase.", "Put the suitcase on the trolley.", "The suitcase is black with a red label."], "starter": "My suitcase is too", "tutor": "Describe a suitcase so somebody could find it. Use a colour from Unit 4." },
-        { "w": "trolley", "pos": "noun", "meaning": "A small cart on wheels for carrying luggage.", "example": "Take a trolley for the suitcases.", "practice": ["Take a trolley for the suitcases.", "The trolleys are by the entrance.", "Is the trolley free?", "Put the heavy bag on the trolley.", "There are no trolleys left."], "starter": "Take a trolley for the", "tutor": "Ask whether a trolley is free. In some places you pay and get the money back." },
-        { "w": "aisle", "pos": "noun", "meaning": "The narrow walkway between rows of seats.", "example": "I would like an aisle seat.", "practice": ["I would like an aisle seat.", "The aisle is on your left.", "Do not leave bags in the aisle.", "An aisle seat is easier for getting out.", "Walk along the aisle to the back."], "starter": "I would like an aisle", "tutor": "Aisle sounds like isle — the s is silent. Say it three times, then ask for an aisle seat." },
-        { "w": "board", "pos": "verb", "meaning": "To get on a train, coach or plane.", "example": "They are boarding now.", "practice": ["They are boarding now.", "We board at gate four.", "Boarding starts twenty minutes before.", "You cannot board without a ticket.", "They are boarding the front carriages first."], "starter": "They are boarding", "tutor": "Say they are boarding now. This is the present continuous doing its happening-now job." },
-        { "w": "destination", "pos": "noun", "meaning": "The place you are travelling to.", "example": "Check the destination on the front of the bus.", "practice": ["Check the destination on the front of the bus.", "What is your final destination?", "The destination is shown on the board.", "Two buses, two different destinations.", "The destination changed halfway."], "starter": "Check the destination on the front of the", "tutor": "Say why you check the destination and not just the route number." }
+        {
+          "w": "luggage",
+          "pos": "noun",
+          "meaning": "The bags and cases you travel with.",
+          "example": "Put your luggage above your seat.",
+          "practice": [
+            "How much luggage can I take?",
+            "The luggage goes underneath.",
+            "Do not leave your luggage here.",
+            "I have one piece of luggage."
+          ],
+          "starter": "Put your luggage above your",
+          "tutor": "Notice luggage has no plural. You say one piece of luggage, not one luggage."
+        },
+        {
+          "w": "suitcase",
+          "pos": "noun",
+          "meaning": "A stiff case with a handle for carrying clothes.",
+          "example": "My suitcase is too heavy.",
+          "practice": [
+            "The suitcase does not fit.",
+            "I am taking one suitcase.",
+            "Put the suitcase on the trolley.",
+            "The suitcase is black with a red label."
+          ],
+          "starter": "My suitcase is too",
+          "tutor": "Describe a suitcase so somebody could find it. Use a colour from Unit 4."
+        },
+        {
+          "w": "trolley",
+          "pos": "noun",
+          "meaning": "A small cart on wheels for carrying luggage.",
+          "example": "Take a trolley for the suitcases.",
+          "practice": [
+            "The trolleys are by the entrance.",
+            "Is the trolley free?",
+            "Put the heavy bag on the trolley.",
+            "There are no trolleys left."
+          ],
+          "starter": "Take a trolley for the",
+          "tutor": "Ask whether a trolley is free. In some places you pay and get the money back."
+        },
+        {
+          "w": "aisle",
+          "pos": "noun",
+          "meaning": "The narrow walkway between rows of seats.",
+          "example": "I would like an aisle seat.",
+          "practice": [
+            "The aisle is on your left.",
+            "Do not leave bags in the aisle.",
+            "An aisle seat is easier for getting out.",
+            "Walk along the aisle to the back."
+          ],
+          "starter": "I would like an aisle",
+          "tutor": "Aisle sounds like isle — the s is silent. Say it three times, then ask for an aisle seat."
+        },
+        {
+          "w": "board",
+          "pos": "verb",
+          "meaning": "To get on a train, coach or plane.",
+          "example": "They are boarding now.",
+          "practice": [
+            "We board at gate four.",
+            "Boarding starts twenty minutes before.",
+            "You cannot board without a ticket.",
+            "They are boarding the front carriages first."
+          ],
+          "starter": "They are boarding",
+          "tutor": "Say they are boarding now. This is the present continuous doing its happening-now job."
+        },
+        {
+          "w": "destination",
+          "pos": "noun",
+          "meaning": "The place you are travelling to.",
+          "example": "Check the destination on the front of the bus.",
+          "practice": [
+            "What is your final destination?",
+            "The destination is shown on the board.",
+            "Two buses, two different destinations.",
+            "The destination changed halfway."
+          ],
+          "starter": "Check the destination on the front of the",
+          "tutor": "Say why you check the destination and not just the route number."
+        }
       ]
     },
     {
       "title": "When things go wrong",
       "words": [
-        { "w": "delay", "pos": "noun", "meaning": "A period of waiting longer than planned.", "example": "There is a delay of twenty minutes.", "practice": ["There is a delay of twenty minutes.", "Is there a delay on this route?", "The delay is because of the weather.", "A short delay, they said.", "The delay got longer and longer."], "starter": "There is a delay of", "tutor": "Ask how long a delay is. Then ask why — the reason tells you if it will grow." },
-        { "w": "cancel", "pos": "verb", "meaning": "To stop something that was planned from happening.", "example": "The train was cancelled.", "practice": ["The train was cancelled.", "They cancelled the last coach.", "If it is cancelled, you get a refund.", "Two trains were cancelled this morning.", "I would like to cancel my seat."], "starter": "The train was", "tutor": "Say what you do when something is cancelled. There are two things: refund and next departure." },
-        { "w": "miss", "pos": "verb", "meaning": "To fail to catch or be in time for something.", "example": "I missed the train by two minutes.", "practice": ["I missed the train by two minutes.", "Do not miss the last one.", "I missed the announcement.", "If you miss this, there is another at six.", "They missed the connection."], "starter": "I missed the train by", "tutor": "Say what happens if you miss the last one. Then ask when the last one is." },
-        { "w": "connection", "pos": "noun", "meaning": "A second train or bus you change on to.", "example": "I have twenty minutes for the connection.", "practice": ["I have twenty minutes for the connection.", "Will I make the connection?", "The connection leaves from platform six.", "A delay means I miss my connection.", "There is no connection after nine."], "starter": "I have twenty minutes for the", "tutor": "Ask whether you will make a connection. Ask before you travel, not after the delay." },
-        { "w": "passenger", "pos": "noun", "meaning": "A person travelling on a train, bus or plane.", "example": "Passengers for platform six, please.", "practice": ["Passengers for platform six, please.", "The passenger next to me was asleep.", "All passengers must show a ticket.", "There were very few passengers.", "Passengers are boarding now."], "starter": "Passengers for platform", "tutor": "Announcements say passengers, not people. Listen for the word — it means the message is for you." },
-        { "w": "driver", "pos": "noun", "meaning": "The person who drives a bus, coach or taxi.", "example": "Ask the driver whether it stops there.", "practice": ["Ask the driver whether it stops there.", "The driver said it was the wrong bus.", "Pay the driver when you get on.", "The driver is waiting.", "Tell the driver where you want to get off."], "starter": "Ask the driver whether it stops", "tutor": "Ask a driver whether a bus goes somewhere. This is faster than reading a route map." }
+        {
+          "w": "delay",
+          "pos": "noun",
+          "meaning": "A period of waiting longer than planned.",
+          "example": "There is a delay of twenty minutes.",
+          "practice": [
+            "Is there a delay on this route?",
+            "The delay is because of the weather.",
+            "A short delay, they said.",
+            "The delay got longer and longer."
+          ],
+          "starter": "There is a delay of",
+          "tutor": "Ask how long a delay is. Then ask why — the reason tells you if it will grow."
+        },
+        {
+          "w": "cancel",
+          "pos": "verb",
+          "meaning": "To stop something that was planned from happening.",
+          "example": "The train was cancelled.",
+          "practice": [
+            "They cancelled the last coach.",
+            "If it is cancelled, you get a refund.",
+            "Two trains were cancelled this morning.",
+            "I would like to cancel my seat."
+          ],
+          "starter": "The train was",
+          "tutor": "Say what you do when something is cancelled. There are two things: refund and next departure."
+        },
+        {
+          "w": "miss",
+          "pos": "verb",
+          "meaning": "To fail to catch or be in time for something.",
+          "example": "I missed the train by two minutes.",
+          "practice": [
+            "Do not miss the last one.",
+            "I missed the announcement.",
+            "If you miss this, there is another at six.",
+            "They missed the connection."
+          ],
+          "starter": "I missed the train by",
+          "tutor": "Say what happens if you miss the last one. Then ask when the last one is."
+        },
+        {
+          "w": "connection",
+          "pos": "noun",
+          "meaning": "A second train or bus you change on to.",
+          "example": "I have twenty minutes for the connection.",
+          "practice": [
+            "Will I make the connection?",
+            "The connection leaves from platform six.",
+            "A delay means I miss my connection.",
+            "There is no connection after nine."
+          ],
+          "starter": "I have twenty minutes for the",
+          "tutor": "Ask whether you will make a connection. Ask before you travel, not after the delay."
+        },
+        {
+          "w": "passenger",
+          "pos": "noun",
+          "meaning": "A person travelling on a train, bus or plane.",
+          "example": "Passengers for platform six, please.",
+          "practice": [
+            "The passenger next to me was asleep.",
+            "All passengers must show a ticket.",
+            "There were very few passengers.",
+            "Passengers are boarding now."
+          ],
+          "starter": "Passengers for platform",
+          "tutor": "Announcements say passengers, not people. Listen for the word — it means the message is for you."
+        },
+        {
+          "w": "driver",
+          "pos": "noun",
+          "meaning": "The person who drives a bus, coach or taxi.",
+          "example": "Ask the driver whether it stops there.",
+          "practice": [
+            "The driver said it was the wrong bus.",
+            "Pay the driver when you get on.",
+            "The driver is waiting.",
+            "Tell the driver where you want to get off."
+          ],
+          "starter": "Ask the driver whether it stops",
+          "tutor": "Ask a driver whether a bus goes somewhere. This is faster than reading a route map."
+        }
       ]
     }
   ],
@@ -130,16 +519,90 @@
     }
   ],
   "comprehension": [
-    { "section": "Reading", "reading": 1, "q": "Why does the text say a return is usually the right answer?", "a": "Because a return usually costs much less than two singles — sometimes only a little more than one.", "why": "The price is the whole argument. If you are coming back at all, buying two singles is nearly always the expensive way to do it.", "outcome": 4 },
-    { "section": "Reading", "reading": 1, "q": "Why does the text say people choose single by mistake?", "a": "Because they are thinking about the journey ahead, not the journey home, so single matches what is in their head.", "why": "This is an inference about attention rather than about English. Knowing why the mistake happens is what stops you making it.", "outcome": 4, "difficulty": "Stretch" },
-    { "section": "Reading", "reading": 1, "q": "What question does the text say is worth memorising, and why?", "a": "How long is the return valid? Because a day return is no use if you are coming back next week, so it decides whether the cheaper ticket is actually cheaper.", "why": "The cheap ticket is only cheap if you can use it. The question is short enough to say under pressure, which is why the text recommends it.", "outcome": 3 },
-    { "section": "Reading", "reading": 2, "q": "Why does the text say not to join the queue first?", "a": "Because everybody's first instinct is to queue, so it is now very long, and the departure board usually already shows the next service you can take.", "why": "The advice works because it goes against instinct. The information you need is on the board, and it is free and immediate.", "outcome": 4 },
-    { "section": "Reading", "reading": 2, "q": "What two different things can you do if a service is cancelled?", "a": "Travel on the next service with the ticket you already have, or decide not to travel and get a refund.", "why": "The text says to choose before speaking to anybody, because the two ask for different things and mixing them up wastes the conversation.", "outcome": 4 },
-    { "section": "Reading", "reading": 2, "q": "Why does the text say to listen for the announcement rather than read the board?", "a": "Because a cancellation is usually announced before the board changes, and the announcement often gives the reason, which the board never shows.", "why": "The reason is what tells you whether this is a five-minute problem or a two-hour one. That is a judgement you cannot make from the board.", "outcome": 4, "difficulty": "Stretch" },
-    { "section": "Document", "reading": 3, "q": "It is 14:52 and your ticket is to Northfield. Which departure should you aim for, and why not the earlier one?", "a": "The 15:40 from platform 6. The 15:12 is delayed 25 minutes, which makes it about 15:37 — but platform 6 needs 6 minutes by footbridge and the gate closes 3 minutes before, so it is very tight, and the 15:40 is on time from the same platform.", "why": "Three pieces of information combine: the delay, the footbridge time, and the gate rule. Any one alone gives the wrong answer.", "outcome": 4, "difficulty": "Stretch" },
-    { "section": "Document", "reading": 3, "q": "Your ticket is a day return. You want to come back tomorrow morning. Can you?", "a": "No. It is valid on the date of issue only, and the return journey must start before 23:30 today.", "why": "Two lines on the ticket say the same thing in different ways, and both rule out tomorrow. This is exactly the mistake Reading 1 warns about.", "outcome": 4 },
-    { "section": "Document", "reading": 3, "q": "The 15:24 to Eastbourne is cancelled. A passenger with a ticket for it asks you what to do. What does the board tell you?", "a": "There is no later Eastbourne service on the board, so the 15:05 has gone and the next one is not shown — they need to ask, or wait for a later board.", "why": "The useful answer here is what the board does not contain. Reading a document includes noticing when the information you need is absent.", "outcome": 4, "difficulty": "Stretch" },
-    { "section": "Document", "reading": 3, "q": "You have made the outward journey and then decide not to come back by train. Can you get a refund on the unused half?", "a": "No. The ticket says there is no refund after the outward journey has been made.", "why": "The condition is in the small print at the bottom and it is absolute. Half-used return tickets are worth nothing, which is another reason to check validity before buying.", "outcome": 4 }
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "Why does the text say a return is usually the right answer?",
+      "a": "Because a return usually costs much less than two singles — sometimes only a little more than one.",
+      "why": "The price is the whole argument. If you are coming back at all, buying two singles is nearly always the expensive way to do it.",
+      "outcome": 4
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "Why does the text say people choose single by mistake?",
+      "a": "Because they are thinking about the journey ahead, not the journey home, so single matches what is in their head.",
+      "why": "This is an inference about attention rather than about English. Knowing why the mistake happens is what stops you making it.",
+      "outcome": 4,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "What question does the text say is worth memorising, and why?",
+      "a": "How long is the return valid? Because a day return is no use if you are coming back next week, so it decides whether the cheaper ticket is actually cheaper.",
+      "why": "The cheap ticket is only cheap if you can use it. The question is short enough to say under pressure, which is why the text recommends it.",
+      "outcome": 3
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "Why does the text say not to join the queue first?",
+      "a": "Because everybody's first instinct is to queue, so it is now very long, and the departure board usually already shows the next service you can take.",
+      "why": "The advice works because it goes against instinct. The information you need is on the board, and it is free and immediate.",
+      "outcome": 4
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "What two different things can you do if a service is cancelled?",
+      "a": "Travel on the next service with the ticket you already have, or decide not to travel and get a refund.",
+      "why": "The text says to choose before speaking to anybody, because the two ask for different things and mixing them up wastes the conversation.",
+      "outcome": 4
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "Why does the text say to listen for the announcement rather than read the board?",
+      "a": "Because a cancellation is usually announced before the board changes, and the announcement often gives the reason, which the board never shows.",
+      "why": "The reason is what tells you whether this is a five-minute problem or a two-hour one. That is a judgement you cannot make from the board.",
+      "outcome": 4,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "It is 14:52 and your ticket is to Northfield. Which departure should you aim for, and why not the earlier one?",
+      "a": "The 15:40 from platform 6. The 15:12 is delayed 25 minutes, which makes it about 15:37 — but platform 6 needs 6 minutes by footbridge and the gate closes 3 minutes before, so it is very tight, and the 15:40 is on time from the same platform.",
+      "why": "Three pieces of information combine: the delay, the footbridge time, and the gate rule. Any one alone gives the wrong answer.",
+      "outcome": 4,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "Your ticket is a day return. You want to come back tomorrow morning. Can you?",
+      "a": "No. It is valid on the date of issue only, and the return journey must start before 23:30 today.",
+      "why": "Two lines on the ticket say the same thing in different ways, and both rule out tomorrow. This is exactly the mistake Reading 1 warns about.",
+      "outcome": 4
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "The 15:24 to Eastbourne is cancelled. A passenger with a ticket for it asks you what to do. What does the board tell you?",
+      "a": "There is no later Eastbourne service on the board, so the 15:05 has gone and the next one is not shown — they need to ask, or wait for a later board.",
+      "why": "The useful answer here is what the board does not contain. Reading a document includes noticing when the information you need is absent.",
+      "outcome": 4,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "You have made the outward journey and then decide not to come back by train. Can you get a refund on the unused half?",
+      "a": "No. The ticket says there is no refund after the outward journey has been made.",
+      "why": "The condition is in the small print at the bottom and it is absolute. Half-used return tickets are worth nothing, which is another reason to check validity before buying.",
+      "outcome": 4
+    }
   ],
   "grammar": [
     {
@@ -180,12 +643,48 @@
     }
   ],
   "speaking": [
-    { "title": "Speaking 1 — Happening now", "type": "Core pattern drill", "instructions": "Say six sentences about what is happening around you right now, using am, is or are with -ing.\nUse a different verb each time.\nRecord them. Play back and check every single one has am, is or are before the -ing word. That is the part that gets dropped.", "tutor": "Describe what is happening around you and ask the tutor to correct any missing am, is or are.", "outcome": 1 },
-    { "title": "Speaking 2 — Now or arranged", "type": "Core pattern drill", "instructions": "Say each sentence twice — once with no time word, and once with a future time word.\nI am leaving. / I am leaving on Tuesday.\nDo this with six different verbs: leave, travel, meet, take, board, come.\nRecord it. Listen back and notice that your voice is the same and only one word changed the meaning entirely.", "tutor": "Say six sentences, some now and some arranged, and ask the tutor to sort them.", "outcome": 2 },
-    { "title": "Speaking 3 — Asking politely", "type": "Fixed frame drill", "instructions": "Say each of these five times, until they arrive without assembly.\nI would like a single to the centre, please.\nI would like to reserve a seat, please.\nI would like a refund, please.\nI would like an aisle seat, please.\nYes, please. / No, thank you.\nRecord the first two and check the second one has to in it and the first one does not.", "tutor": "Ask the tutor for five different things, some nouns and some actions, and check your use of to.", "outcome": 3 },
-    { "title": "Speaking 4 — The whole window exchange", "type": "Exchange", "instructions": "Say both sides, then change the destination and the ticket type three times.\nA: A return to Northfield, please — leaving about ten, back this evening. Just one.\nB: That is a day return. Fourteen pounds fifty.\nA: Thank you. Which platform?\nB: Six. It is over the footbridge, so allow a few minutes.\nA: And how long is the return valid?\nB: Today only.\nNotice A asked two questions B never volunteered, and both mattered.\nRecord one full version.", "tutor": "Ask the tutor to be the person at the window and to answer only what you actually ask.", "outcome": 4 },
-    { "title": "Speaking 5 — Explaining a delay", "type": "Extended turn", "instructions": "Somebody is meeting you and you are going to be late.\nSay out loud, in four sentences: what has happened, how long the delay is, what you are doing now, and when you now expect to arrive.\nUse the present continuous at least twice, once for now and once for the arrangement.\nRecord it.\nThen listen back and ask whether a person hearing only this would know when to leave to meet you. If not, the time is missing or vague.", "tutor": "Tell the tutor you are delayed and ask it to repeat back when it should expect you.", "outcome": 2 },
-    { "title": "Speaking 6 — Read the board aloud and decide", "type": "Assessment rehearsal", "instructions": "Open Reading 3.\nRead the six departures aloud, including the times and the notes.\nThen say aloud, as though to somebody beside you: it is 14:52 and you are going to Northfield — which train, and why not the other one.\nThen say what your ticket does not allow you to do, and give two reasons from the ticket itself.\nRecord the last two parts and keep them.", "tutor": "Give the tutor the board information and ask it which train it would take and why.", "outcome": 4 }
+    {
+      "title": "Speaking 1 — Happening now",
+      "type": "Core pattern drill",
+      "instructions": "Say six sentences about what is happening around you right now, using am, is or are with -ing.\nUse a different verb each time.\nRecord them. Play back and check every single one has am, is or are before the -ing word. That is the part that gets dropped.",
+      "tutor": "Describe what is happening around you and ask the tutor to correct any missing am, is or are.",
+      "outcome": 1
+    },
+    {
+      "title": "Speaking 2 — Now or arranged",
+      "type": "Core pattern drill",
+      "instructions": "Say each sentence twice — once with no time word, and once with a future time word.\nI am leaving. / I am leaving on Tuesday.\nDo this with six different verbs: leave, travel, meet, take, board, come.\nRecord it. Listen back and notice that your voice is the same and only one word changed the meaning entirely.",
+      "tutor": "Say six sentences, some now and some arranged, and ask the tutor to sort them.",
+      "outcome": 2
+    },
+    {
+      "title": "Speaking 3 — Asking politely",
+      "type": "Fixed frame drill",
+      "instructions": "Say each of these five times, until they arrive without assembly.\nI would like a single to the centre, please.\nI would like to reserve a seat, please.\nI would like a refund, please.\nI would like an aisle seat, please.\nYes, please. / No, thank you.\nRecord the first two and check the second one has to in it and the first one does not.",
+      "tutor": "Ask the tutor for five different things, some nouns and some actions, and check your use of to.",
+      "outcome": 3
+    },
+    {
+      "title": "Speaking 4 — The whole window exchange",
+      "type": "Exchange",
+      "instructions": "Say both sides, then change the destination and the ticket type three times.\nA: A return to Northfield, please — leaving about ten, back this evening. Just one.\nB: That is a day return. Fourteen pounds fifty.\nA: Thank you. Which platform?\nB: Six. It is over the footbridge, so allow a few minutes.\nA: And how long is the return valid?\nB: Today only.\nNotice A asked two questions B never volunteered, and both mattered.\nRecord one full version.",
+      "tutor": "Ask the tutor to be the person at the window and to answer only what you actually ask.",
+      "outcome": 4
+    },
+    {
+      "title": "Speaking 5 — Explaining a delay",
+      "type": "Extended turn",
+      "instructions": "Somebody is meeting you and you are going to be late.\nSay out loud, in four sentences: what has happened, how long the delay is, what you are doing now, and when you now expect to arrive.\nUse the present continuous at least twice, once for now and once for the arrangement.\nRecord it.\nThen listen back and ask whether a person hearing only this would know when to leave to meet you. If not, the time is missing or vague.",
+      "tutor": "Tell the tutor you are delayed and ask it to repeat back when it should expect you.",
+      "outcome": 2
+    },
+    {
+      "title": "Speaking 6 — Read the board aloud and decide",
+      "type": "Assessment rehearsal",
+      "instructions": "Open Reading 3.\nRead the six departures aloud, including the times and the notes.\nThen say aloud, as though to somebody beside you: it is 14:52 and you are going to Northfield — which train, and why not the other one.\nThen say what your ticket does not allow you to do, and give two reasons from the ticket itself.\nRecord the last two parts and keep them.",
+      "tutor": "Give the tutor the board information and ask it which train it would take and why.",
+      "outcome": 4
+    }
   ],
   "writing": [
     {
@@ -277,32 +776,190 @@
     }
   ],
   "quizzes": [
-    { "q": "Which is correct?", "options": ["I waiting for the train.", "I waits for the train.", "I am waiting for the train.", "I am wait for the train."], "a": "I am waiting for the train.", "why": "The present continuous is am, is or are plus the verb with -ing. The -ing form cannot stand on its own, and am cannot be followed by a plain verb.", "outcome": 1 },
-    { "q": "I am leaving on Tuesday. What does this mean?", "options": ["A future arrangement", "Something happening right now", "Something I do every Tuesday", "Something I hope to do"], "a": "A future arrangement", "why": "The present continuous does two jobs, and the future time word on Tuesday shows this is the arranged-future one. Nothing is happening now.", "outcome": 2 },
-    { "q": "Which sentence means something happening at this moment?", "options": ["I am travelling on Friday.", "We are meeting tomorrow.", "She is leaving next week.", "They are boarding."], "a": "They are boarding.", "why": "It is the only one with no future time word. Without a time word the present continuous defaults to now.", "outcome": 2 },
-    { "q": "I ____ the train every day.", "options": ["am taking", "take", "taking", "am take"], "a": "take", "why": "Every day is a routine, so the present simple is right. The continuous would make it about this moment, which contradicts every day.", "outcome": 1 },
-    { "q": "Which is correct at a ticket window?", "options": ["I would like a single, please.", "I would like to a single, please.", "I would like single, please.", "I like a single, please."], "a": "I would like a single, please.", "why": "A single is a thing, so no to. And would like is the polite form — I like a single means something different entirely.", "outcome": 3 },
-    { "q": "Which is correct?", "options": ["I would like reserve a seat.", "I would like a reserve a seat.", "I would like reserving a seat.", "I would like to reserve a seat."], "a": "I would like to reserve a seat.", "why": "Reserve is an action, and an action after would like takes to. A thing takes nothing.", "outcome": 3 },
-    { "q": "Would you like a return? You are not coming back. What is the natural answer?", "options": ["No, I would not like a return.", "No, thank you — a single, please.", "No.", "I am not coming back so I do not want a return."], "a": "No, thank you — a single, please.", "why": "An offer takes a short answer plus what you do want. A full sentence repeating the offer sounds odd, and a bare no sounds abrupt.", "outcome": 3 },
-    { "q": "What is the difference between a single and a return?", "options": ["A single is cheaper for a day", "A single is for one person", "A single is one direction; a return is there and back", "A single cannot be reserved"], "a": "A single is one direction; a return is there and back", "why": "Single and return describe direction, not the number of people. A return is usually much cheaper than two singles, which is why the question is always asked.", "outcome": 4 },
-    { "q": "Reading 2 says a service is cancelled. What does it advise doing first?", "options": ["Ask for a refund", "Telephone whoever is meeting you", "Queue at the ticket window", "Look at the departure board"], "a": "Look at the departure board", "why": "The queue is now very long, and the board usually already shows the next service, which your existing ticket is normally valid on.", "outcome": 4 },
-    { "q": "The board shows the 15:12 to Northfield delayed 25 minutes, from platform 6. What else do you need to know?", "options": ["The fare to Northfield", "That platform 6 needs 6 minutes and the gate closes 3 minutes before", "Whether the train is full", "The name of the driver"], "a": "That platform 6 needs 6 minutes and the gate closes 3 minutes before", "why": "The delay alone suggests you have time. The footbridge and the gate rule together are what make it too tight to rely on.", "outcome": 4 },
-    { "q": "Your ticket says VALID: Date of issue only. You want to return tomorrow. Can you?", "options": ["No — it is valid today only", "Yes, if you pay a small charge", "Yes, day returns last 24 hours", "Only before nine in the morning"], "a": "No — it is valid today only", "why": "Date of issue only means today, and the ticket also says the return journey must start before 23:30. Two lines say the same thing.", "outcome": 4 },
-    { "q": "Which sentence is an arrangement rather than something happening now?", "options": ["The gate is closing.", "It is raining.", "I am seeing the doctor at four.", "They are queuing at the window."], "a": "I am seeing the doctor at four.", "why": "At four is a fixed time arranged in advance, which makes it the future use. The other three are all happening at this moment.", "outcome": 2 }
+    {
+      "q": "Which is correct?",
+      "options": [
+        "I waiting for the train.",
+        "I waits for the train.",
+        "I am waiting for the train.",
+        "I am wait for the train."
+      ],
+      "a": "I am waiting for the train.",
+      "why": "The present continuous is am, is or are plus the verb with -ing. The -ing form cannot stand on its own, and am cannot be followed by a plain verb.",
+      "outcome": 1
+    },
+    {
+      "q": "I am leaving on Tuesday. What does this mean?",
+      "options": [
+        "A future arrangement",
+        "Something happening right now",
+        "Something I do every Tuesday",
+        "Something I hope to do"
+      ],
+      "a": "A future arrangement",
+      "why": "The present continuous does two jobs, and the future time word on Tuesday shows this is the arranged-future one. Nothing is happening now.",
+      "outcome": 2
+    },
+    {
+      "q": "Which sentence means something happening at this moment?",
+      "options": [
+        "I am travelling on Friday.",
+        "We are meeting tomorrow.",
+        "She is leaving next week.",
+        "They are boarding."
+      ],
+      "a": "They are boarding.",
+      "why": "It is the only one with no future time word. Without a time word the present continuous defaults to now.",
+      "outcome": 2
+    },
+    {
+      "q": "I ____ the train every day.",
+      "options": [
+        "am taking",
+        "take",
+        "taking",
+        "am take"
+      ],
+      "a": "take",
+      "why": "Every day is a routine, so the present simple is right. The continuous would make it about this moment, which contradicts every day.",
+      "outcome": 1
+    },
+    {
+      "q": "Which is correct at a ticket window?",
+      "options": [
+        "I would like a single, please.",
+        "I would like to a single, please.",
+        "I would like single, please.",
+        "I like a single, please."
+      ],
+      "a": "I would like a single, please.",
+      "why": "A single is a thing, so no to. And would like is the polite form — I like a single means something different entirely.",
+      "outcome": 3
+    },
+    {
+      "q": "Which is correct?",
+      "options": [
+        "I would like reserve a seat.",
+        "I would like a reserve a seat.",
+        "I would like reserving a seat.",
+        "I would like to reserve a seat."
+      ],
+      "a": "I would like to reserve a seat.",
+      "why": "Reserve is an action, and an action after would like takes to. A thing takes nothing.",
+      "outcome": 3
+    },
+    {
+      "q": "Would you like a return? You are not coming back. What is the natural answer?",
+      "options": [
+        "No, I would not like a return.",
+        "No, thank you — a single, please.",
+        "No.",
+        "I am not coming back so I do not want a return."
+      ],
+      "a": "No, thank you — a single, please.",
+      "why": "An offer takes a short answer plus what you do want. A full sentence repeating the offer sounds odd, and a bare no sounds abrupt.",
+      "outcome": 3
+    },
+    {
+      "q": "What is the difference between a single and a return?",
+      "options": [
+        "A single is cheaper for a day",
+        "A single is for one person",
+        "A single is one direction; a return is there and back",
+        "A single cannot be reserved"
+      ],
+      "a": "A single is one direction; a return is there and back",
+      "why": "Single and return describe direction, not the number of people. A return is usually much cheaper than two singles, which is why the question is always asked.",
+      "outcome": 4
+    },
+    {
+      "q": "Reading 2 says a service is cancelled. What does it advise doing first?",
+      "options": [
+        "Ask for a refund",
+        "Telephone whoever is meeting you",
+        "Queue at the ticket window",
+        "Look at the departure board"
+      ],
+      "a": "Look at the departure board",
+      "why": "The queue is now very long, and the board usually already shows the next service, which your existing ticket is normally valid on.",
+      "outcome": 4
+    },
+    {
+      "q": "The board shows the 15:12 to Northfield delayed 25 minutes, from platform 6. What else do you need to know?",
+      "options": [
+        "The fare to Northfield",
+        "That platform 6 needs 6 minutes and the gate closes 3 minutes before",
+        "Whether the train is full",
+        "The name of the driver"
+      ],
+      "a": "That platform 6 needs 6 minutes and the gate closes 3 minutes before",
+      "why": "The delay alone suggests you have time. The footbridge and the gate rule together are what make it too tight to rely on.",
+      "outcome": 4
+    },
+    {
+      "q": "Your ticket says VALID: Date of issue only. You want to return tomorrow. Can you?",
+      "options": [
+        "No — it is valid today only",
+        "Yes, if you pay a small charge",
+        "Yes, day returns last 24 hours",
+        "Only before nine in the morning"
+      ],
+      "a": "No — it is valid today only",
+      "why": "Date of issue only means today, and the ticket also says the return journey must start before 23:30. Two lines say the same thing.",
+      "outcome": 4
+    },
+    {
+      "q": "Which sentence is an arrangement rather than something happening now?",
+      "options": [
+        "The gate is closing.",
+        "It is raining.",
+        "I am seeing the doctor at four.",
+        "They are queuing at the window."
+      ],
+      "a": "I am seeing the doctor at four.",
+      "why": "At four is a fixed time arranged in advance, which makes it the future use. The other three are all happening at this moment.",
+      "outcome": 2
+    }
   ],
   "teacherNotes": [
-    { "type": "This unit works without you", "note": "Three pattern cards, each with a worked example, and every exercise has an answer key. Practice 2 is the diagnostic: if a learner sorts NOW and ARRANGED correctly, they have understood the pattern's double job, which is the only genuinely difficult idea in the unit. Practice 5 and 6 are field tasks with no key, and both have a what-most-people-find note so a solo learner still gets feedback." },
-    { "type": "Why both uses are taught together", "note": "Most courses split the happening-now use and the arranged-future use across two units, months apart, and learners never connect them. They are the same three words. Teaching them together costs one extra practice exercise and removes the later confusion entirely. Unit 15 owns going to and will, and deliberately does not re-teach this form — it only contrasts it." },
-    { "type": "The time word does the work", "note": "The whole distinction rests on the presence or absence of a future time word, and that is a mechanical test a learner can apply alone. If a learner is struggling, do not explain the concept again — ask them to find the time word. Number 11 in Practice 2 is the designed trap, because at four looks like a clock time rather than an arrangement." },
-    { "type": "The to after would like", "note": "The noun-versus-verb split is the only error here and it goes wrong in both directions: to before a noun and no to before a verb. Writing 4 numbers 3 and 4 are that pair deliberately adjacent. The other frequent over-correction is answering an offer with a full sentence, which is why Practice 4 ends with two two-word answers." },
-    { "type": "Why the board and the ticket together", "note": "Neither document answers the important questions alone. The board gives the delay but not the footbridge time on your ticket's platform; the ticket gives the validity but not the departure. Three of the ten comprehension questions require both, and one requires noticing that the information needed is absent from the board entirely — a harder skill than lookup and worth the time." },
-    { "type": "Device and AI safety", "note": "The AI tutor is a rehearsal partner and no task here is scored by it alone. Practice 5 asks learners to plan a real journey: their actual travel plans, addresses and dates must never be collected, shared or entered into the app. The task is deliberately worded around a journey they could make rather than one they are making, and that wording should stay." }
+    {
+      "type": "This unit works without you",
+      "note": "Three pattern cards, each with a worked example, and every exercise has an answer key. Practice 2 is the diagnostic: if a learner sorts NOW and ARRANGED correctly, they have understood the pattern's double job, which is the only genuinely difficult idea in the unit. Practice 5 and 6 are field tasks with no key, and both have a what-most-people-find note so a solo learner still gets feedback."
+    },
+    {
+      "type": "Why both uses are taught together",
+      "note": "Most courses split the happening-now use and the arranged-future use across two units, months apart, and learners never connect them. They are the same three words. Teaching them together costs one extra practice exercise and removes the later confusion entirely. Unit 15 owns going to and will, and deliberately does not re-teach this form — it only contrasts it."
+    },
+    {
+      "type": "The time word does the work",
+      "note": "The whole distinction rests on the presence or absence of a future time word, and that is a mechanical test a learner can apply alone. If a learner is struggling, do not explain the concept again — ask them to find the time word. Number 11 in Practice 2 is the designed trap, because at four looks like a clock time rather than an arrangement."
+    },
+    {
+      "type": "The to after would like",
+      "note": "The noun-versus-verb split is the only error here and it goes wrong in both directions: to before a noun and no to before a verb. Writing 4 numbers 3 and 4 are that pair deliberately adjacent. The other frequent over-correction is answering an offer with a full sentence, which is why Practice 4 ends with two two-word answers."
+    },
+    {
+      "type": "Why the board and the ticket together",
+      "note": "Neither document answers the important questions alone. The board gives the delay but not the footbridge time on your ticket's platform; the ticket gives the validity but not the departure. Three of the ten comprehension questions require both, and one requires noticing that the information needed is absent from the board entirely — a harder skill than lookup and worth the time."
+    },
+    {
+      "type": "Device and AI safety",
+      "note": "The AI tutor is a rehearsal partner and no task here is scored by it alone. Practice 5 asks learners to plan a real journey: their actual travel plans, addresses and dates must never be collected, shared or entered into the app. The task is deliberately worded around a journey they could make rather than one they are making, and that wording should stay."
+    }
   ],
   "selfAssessment": [
-    { "statement": "I can say what is happening now, using am, is or are with -ing." },
-    { "statement": "I can say I am leaving on Tuesday to mean something I have already arranged." },
-    { "statement": "I can ask for a ticket politely instead of saying I want one." },
-    { "statement": "I can buy a ticket and read a departures board to find my platform." }
+    {
+      "statement": "I can say what is happening now, using am, is or are with -ing."
+    },
+    {
+      "statement": "I can say I am leaving on Tuesday to mean something I have already arranged."
+    },
+    {
+      "statement": "I can ask for a ticket politely instead of saying I want one."
+    },
+    {
+      "statement": "I can buy a ticket and read a departures board to find my platform."
+    }
   ],
   "assignment": {
     "title": "A journey arranged, and a board read",

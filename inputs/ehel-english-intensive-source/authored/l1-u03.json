@@ -24,7 +24,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Spoken production",
       "cefrDescriptor": "I can say what I am able to do in English and what I cannot do yet.",
-      "cambridge": ["1SLm.02", "3SLm.01"]
+      "cambridge": [
+        "1SLm.02",
+        "3SLm.01"
+      ]
     },
     {
       "outcome": "Add s to the present-tense verb for he, she and it, and leave it off everywhere else.",
@@ -33,7 +36,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Writing",
       "cefrDescriptor": "I can write he likes and they like without mixing them up.",
-      "cambridge": ["1Rw.04", "2Rg.06"]
+      "cambridge": [
+        "1Rw.04",
+        "2Rg.06"
+      ]
     },
     {
       "outcome": "Read the instruction at the top of an exercise and do what it asks without being told.",
@@ -42,7 +48,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Reading",
       "cefrDescriptor": "I can read the instruction on an exercise and know what to do.",
-      "cambridge": ["3Ri.09", "2Rg.04"]
+      "cambridge": [
+        "3Ri.09",
+        "2Rg.04"
+      ]
     },
     {
       "outcome": "Interrupt politely to ask for repetition, slower speech, a meaning or a spelling.",
@@ -51,7 +60,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Spoken interaction",
       "cefrDescriptor": "I can stop a conversation politely when I have not understood.",
-      "cambridge": ["2SLg.04", "1SLs.01"]
+      "cambridge": [
+        "2SLg.04",
+        "1SLs.01"
+      ]
     },
     {
       "outcome": "Say what you find easy and difficult about English, and what you like studying.",
@@ -60,62 +72,442 @@
       "cefrLevel": "A1",
       "cefrSkill": "Spoken production",
       "cefrDescriptor": "I can say what is easy and what is difficult for me in English.",
-      "cambridge": ["1SLm.03", "2SLm.02"]
+      "cambridge": [
+        "1SLm.03",
+        "2SLm.02"
+      ]
     }
   ],
   "groups": [
     {
       "title": "In the lesson",
       "words": [
-        { "w": "teacher", "pos": "noun", "meaning": "A person whose job is to help other people learn.", "example": "The teacher speaks very quickly.", "practice": ["The teacher speaks very quickly.", "She is a teacher at the centre.", "The teacher gave us an exercise.", "Ask the teacher to repeat it.", "My teacher is from another country."], "starter": "The teacher", "tutor": "Say two sentences about a teacher — one with can and one with the s on the verb." },
-        { "w": "student", "pos": "noun", "meaning": "A person who is studying something.", "example": "There are twelve students in the class.", "practice": ["There are twelve students in the class.", "I am a student here.", "The students work in pairs.", "Every student has a book.", "She is the newest student."], "starter": "There are twelve students in", "tutor": "Say how many students are somewhere, using there are." },
-        { "w": "class", "pos": "noun", "meaning": "A group of people learning together, or the time they spend learning.", "example": "The class starts at six.", "practice": ["The class starts at six.", "I have a class on Tuesday.", "The class is very big.", "She is not in my class.", "There is no class next week."], "starter": "The class starts at", "tutor": "Say when a class starts and finishes, using the times from Unit 1." },
-        { "w": "lesson", "pos": "noun", "meaning": "One period of teaching, on one subject.", "example": "The lesson is one hour long.", "practice": ["The lesson is one hour long.", "I missed the last lesson.", "This lesson is about numbers.", "The lesson finishes at eight.", "Every lesson has an exercise."], "starter": "The lesson is", "tutor": "Describe one lesson in three sentences." },
-        { "w": "homework", "pos": "noun", "meaning": "Work you do on your own, after a lesson.", "example": "I do my homework in the evening.", "practice": ["I do my homework in the evening.", "She does her homework on the bus.", "There is no homework this week.", "I have not finished my homework.", "The homework is on page ten."], "starter": "I do my homework in the", "tutor": "Say when you do homework. Then say when someone else does it, and check the verb ending." },
-        { "w": "exercise", "pos": "noun", "meaning": "A short piece of practice work.", "example": "Do the exercise on page four.", "practice": ["Do the exercise on page four.", "This exercise is difficult.", "There are ten exercises in the unit.", "I finished the exercise quickly.", "Read the exercise before you start."], "starter": "Do the exercise on", "tutor": "Read an instruction from this unit aloud and say what it is asking you to do." }
+        {
+          "w": "teacher",
+          "pos": "noun",
+          "meaning": "A person whose job is to help other people learn.",
+          "example": "The teacher speaks very quickly.",
+          "practice": [
+            "She is a teacher at the centre.",
+            "The teacher gave us an exercise.",
+            "Ask the teacher to repeat it.",
+            "My teacher is from another country."
+          ],
+          "starter": "The teacher",
+          "tutor": "Say two sentences about a teacher — one with can and one with the s on the verb."
+        },
+        {
+          "w": "student",
+          "pos": "noun",
+          "meaning": "A person who is studying something.",
+          "example": "There are twelve students in the class.",
+          "practice": [
+            "I am a student here.",
+            "The students work in pairs.",
+            "Every student has a book.",
+            "She is the newest student."
+          ],
+          "starter": "There are twelve students in",
+          "tutor": "Say how many students are somewhere, using there are."
+        },
+        {
+          "w": "class",
+          "pos": "noun",
+          "meaning": "A group of people learning together, or the time they spend learning.",
+          "example": "The class starts at six.",
+          "practice": [
+            "I have a class on Tuesday.",
+            "The class is very big.",
+            "She is not in my class.",
+            "There is no class next week."
+          ],
+          "starter": "The class starts at",
+          "tutor": "Say when a class starts and finishes, using the times from Unit 1."
+        },
+        {
+          "w": "lesson",
+          "pos": "noun",
+          "meaning": "One period of teaching, on one subject.",
+          "example": "The lesson is one hour long.",
+          "practice": [
+            "I missed the last lesson.",
+            "This lesson is about numbers.",
+            "The lesson finishes at eight.",
+            "Every lesson has an exercise."
+          ],
+          "starter": "The lesson is",
+          "tutor": "Describe one lesson in three sentences."
+        },
+        {
+          "w": "homework",
+          "pos": "noun",
+          "meaning": "Work you do on your own, after a lesson.",
+          "example": "I do my homework in the evening.",
+          "practice": [
+            "She does her homework on the bus.",
+            "There is no homework this week.",
+            "I have not finished my homework.",
+            "The homework is on page ten."
+          ],
+          "starter": "I do my homework in the",
+          "tutor": "Say when you do homework. Then say when someone else does it, and check the verb ending."
+        },
+        {
+          "w": "exercise",
+          "pos": "noun",
+          "meaning": "A short piece of practice work.",
+          "example": "Do the exercise on page four.",
+          "practice": [
+            "This exercise is difficult.",
+            "There are ten exercises in the unit.",
+            "I finished the exercise quickly.",
+            "Read the exercise before you start."
+          ],
+          "starter": "Do the exercise on",
+          "tutor": "Read an instruction from this unit aloud and say what it is asking you to do."
+        }
       ]
     },
     {
       "title": "Things you use",
       "words": [
-        { "w": "book", "pos": "noun", "meaning": "Pages joined together, with writing on them.", "example": "My book is in my bag.", "practice": ["My book is in my bag.", "Open your book at page twelve.", "This book is too difficult for me.", "She reads a book every week.", "There are no books in the room."], "starter": "My book is in", "tutor": "Say where a book is, using a position word from the last unit." },
-        { "w": "pen", "pos": "noun", "meaning": "A thing you write with, using ink.", "example": "Can I borrow a pen?", "practice": ["Can I borrow a pen?", "My pen does not work.", "Write it in pen, not pencil.", "There is a pen on the table.", "She has got a red pen."], "starter": "Can I borrow a", "tutor": "Ask to borrow three different things, each time politely." },
-        { "w": "paper", "pos": "noun", "meaning": "The thin material you write on.", "example": "I need a piece of paper.", "practice": ["I need a piece of paper.", "Write your answers on paper.", "There is no paper left.", "She gave me a piece of paper.", "Put the paper in the folder."], "starter": "I need a piece of", "tutor": "Ask for paper in two ways: one direct, one polite." },
-        { "w": "notebook", "pos": "noun", "meaning": "A book with empty pages, for writing your own notes.", "example": "I write new words in my notebook.", "practice": ["I write new words in my notebook.", "My notebook is full.", "She keeps a notebook for verbs.", "Bring your notebook to every lesson.", "There are ten pages left in my notebook."], "starter": "I write new words in my", "tutor": "Say what you write in a notebook and how often." },
-        { "w": "page", "pos": "noun", "meaning": "One side of a sheet in a book.", "example": "Turn to page twenty.", "practice": ["Turn to page twenty.", "The exercise is on page four.", "This page is difficult.", "Read the first page again.", "There are two exercises on this page."], "starter": "Turn to page", "tutor": "Say three page numbers out loud. Check the numbers from Unit 1." },
-        { "w": "dictionary", "pos": "noun", "meaning": "A book or app that tells you what words mean.", "example": "Look it up in a dictionary.", "practice": ["Look it up in a dictionary.", "I use a dictionary every day.", "She has got a dictionary on her phone.", "The dictionary does not have this word.", "A dictionary helps, but not always."], "starter": "Look it up in a", "tutor": "Say what you do when you meet a word you do not know." }
+        {
+          "w": "book",
+          "pos": "noun",
+          "meaning": "Pages joined together, with writing on them.",
+          "example": "My book is in my bag.",
+          "practice": [
+            "Open your book at page twelve.",
+            "This book is too difficult for me.",
+            "She reads a book every week.",
+            "There are no books in the room."
+          ],
+          "starter": "My book is in",
+          "tutor": "Say where a book is, using a position word from the last unit."
+        },
+        {
+          "w": "pen",
+          "pos": "noun",
+          "meaning": "A thing you write with, using ink.",
+          "example": "Can I borrow a pen?",
+          "practice": [
+            "My pen does not work.",
+            "Write it in pen, not pencil.",
+            "There is a pen on the table.",
+            "She has got a red pen."
+          ],
+          "starter": "Can I borrow a",
+          "tutor": "Ask to borrow three different things, each time politely."
+        },
+        {
+          "w": "paper",
+          "pos": "noun",
+          "meaning": "The thin material you write on.",
+          "example": "I need a piece of paper.",
+          "practice": [
+            "Write your answers on paper.",
+            "There is no paper left.",
+            "She gave me a piece of paper.",
+            "Put the paper in the folder."
+          ],
+          "starter": "I need a piece of",
+          "tutor": "Ask for paper in two ways: one direct, one polite."
+        },
+        {
+          "w": "notebook",
+          "pos": "noun",
+          "meaning": "A book with empty pages, for writing your own notes.",
+          "example": "I write new words in my notebook.",
+          "practice": [
+            "My notebook is full.",
+            "She keeps a notebook for verbs.",
+            "Bring your notebook to every lesson.",
+            "There are ten pages left in my notebook."
+          ],
+          "starter": "I write new words in my",
+          "tutor": "Say what you write in a notebook and how often."
+        },
+        {
+          "w": "page",
+          "pos": "noun",
+          "meaning": "One side of a sheet in a book.",
+          "example": "Turn to page twenty.",
+          "practice": [
+            "The exercise is on page four.",
+            "This page is difficult.",
+            "Read the first page again.",
+            "There are two exercises on this page."
+          ],
+          "starter": "Turn to page",
+          "tutor": "Say three page numbers out loud. Check the numbers from Unit 1."
+        },
+        {
+          "w": "dictionary",
+          "pos": "noun",
+          "meaning": "A book or app that tells you what words mean.",
+          "example": "Look it up in a dictionary.",
+          "practice": [
+            "I use a dictionary every day.",
+            "She has got a dictionary on her phone.",
+            "The dictionary does not have this word.",
+            "A dictionary helps, but not always."
+          ],
+          "starter": "Look it up in a",
+          "tutor": "Say what you do when you meet a word you do not know."
+        }
       ]
     },
     {
       "title": "What you can do",
       "words": [
-        { "w": "read", "pos": "verb", "meaning": "To look at written words and understand them.", "example": "I can read English better than I speak it.", "practice": ["I can read English better than I speak it.", "She reads the news every morning.", "Read the instruction first.", "I cannot read his writing.", "We read one page every day."], "starter": "I can read", "tutor": "Say what you can read and what you cannot read yet." },
-        { "w": "write", "pos": "verb", "meaning": "To put words on paper or on a screen.", "example": "Write your answer in the box.", "practice": ["Write your answer in the box.", "She writes very quickly.", "I cannot write this word.", "Write it again, please.", "He writes to his family every week."], "starter": "Write your answer in", "tutor": "Say one sentence with write and one with writes, and check which one needed the s." },
-        { "w": "speak", "pos": "verb", "meaning": "To say words to someone.", "example": "Can you speak more slowly, please?", "practice": ["Can you speak more slowly, please?", "She speaks four languages.", "I cannot speak on the telephone yet.", "He speaks too quickly for me.", "We speak English in the lesson."], "starter": "Can you speak", "tutor": "Ask the tutor to speak more slowly, then more quickly, and hear the difference." },
-        { "w": "understand", "pos": "verb", "meaning": "To know what something means.", "example": "I do not understand this word.", "practice": ["I do not understand this word.", "She understands more than she says.", "Do you understand the question?", "I understood nothing at first.", "Now I understand."], "starter": "I do not understand", "tutor": "Say I do not understand in three situations: a word, a whole sentence, and an instruction." },
-        { "w": "remember", "pos": "verb", "meaning": "To keep something in your mind and find it again later.", "example": "I cannot remember the word.", "practice": ["I cannot remember the word.", "She remembers every name.", "Remember to bring your notebook.", "I remember his face but not his name.", "Write it down so you remember."], "starter": "I cannot remember", "tutor": "Say two things you remember easily and one you cannot remember." },
-        { "w": "practise", "pos": "verb", "meaning": "To do something again and again in order to get better at it.", "example": "I practise for twenty minutes every day.", "practice": ["I practise for twenty minutes every day.", "She practises on the bus.", "You have to practise speaking, not only reading.", "I do not practise enough.", "Practise the four phrases until they are easy."], "starter": "I practise for", "tutor": "Say when and where you practise. Then say it about someone else and check the verb ending." }
+        {
+          "w": "read",
+          "pos": "verb",
+          "meaning": "To look at written words and understand them.",
+          "example": "I can read English better than I speak it.",
+          "practice": [
+            "She reads the news every morning.",
+            "Read the instruction first.",
+            "I cannot read his writing.",
+            "We read one page every day."
+          ],
+          "starter": "I can read",
+          "tutor": "Say what you can read and what you cannot read yet."
+        },
+        {
+          "w": "write",
+          "pos": "verb",
+          "meaning": "To put words on paper or on a screen.",
+          "example": "Write your answer in the box.",
+          "practice": [
+            "She writes very quickly.",
+            "I cannot write this word.",
+            "Write it again, please.",
+            "He writes to his family every week."
+          ],
+          "starter": "Write your answer in",
+          "tutor": "Say one sentence with write and one with writes, and check which one needed the s."
+        },
+        {
+          "w": "speak",
+          "pos": "verb",
+          "meaning": "To say words to someone.",
+          "example": "Can you speak more slowly, please?",
+          "practice": [
+            "She speaks four languages.",
+            "I cannot speak on the telephone yet.",
+            "He speaks too quickly for me.",
+            "We speak English in the lesson."
+          ],
+          "starter": "Can you speak",
+          "tutor": "Ask the tutor to speak more slowly, then more quickly, and hear the difference."
+        },
+        {
+          "w": "understand",
+          "pos": "verb",
+          "meaning": "To know what something means.",
+          "example": "I do not understand this word.",
+          "practice": [
+            "She understands more than she says.",
+            "Do you understand the question?",
+            "I understood nothing at first.",
+            "Now I understand."
+          ],
+          "starter": "I do not understand",
+          "tutor": "Say I do not understand in three situations: a word, a whole sentence, and an instruction."
+        },
+        {
+          "w": "remember",
+          "pos": "verb",
+          "meaning": "To keep something in your mind and find it again later.",
+          "example": "I cannot remember the word.",
+          "practice": [
+            "She remembers every name.",
+            "Remember to bring your notebook.",
+            "I remember his face but not his name.",
+            "Write it down so you remember."
+          ],
+          "starter": "I cannot remember",
+          "tutor": "Say two things you remember easily and one you cannot remember."
+        },
+        {
+          "w": "practise",
+          "pos": "verb",
+          "meaning": "To do something again and again in order to get better at it.",
+          "example": "I practise for twenty minutes every day.",
+          "practice": [
+            "She practises on the bus.",
+            "You have to practise speaking, not only reading.",
+            "I do not practise enough.",
+            "Practise the four phrases until they are easy."
+          ],
+          "starter": "I practise for",
+          "tutor": "Say when and where you practise. Then say it about someone else and check the verb ending."
+        }
       ]
     },
     {
       "title": "Asking for help",
       "words": [
-        { "w": "repeat", "pos": "verb", "meaning": "To say something again.", "example": "Can you repeat that, please?", "practice": ["Can you repeat that, please?", "Sorry — can you repeat the last word?", "She repeated it three times.", "Please repeat after me.", "I did not hear you — repeat it, please."], "starter": "Can you repeat", "tutor": "Ask the tutor to repeat something three different ways. Ask which sounds most polite." },
-        { "w": "slowly", "pos": "adverb", "meaning": "Not fast.", "example": "Can you speak more slowly, please?", "practice": ["Can you speak more slowly, please?", "She speaks very slowly and clearly.", "Read it slowly.", "More slowly, please.", "He walked slowly to the door."], "starter": "Can you speak more", "tutor": "Ask for slower speech twice: once in a full sentence and once in two words." },
-        { "w": "spell", "pos": "verb", "meaning": "To say or write the letters of a word in order.", "example": "How do you spell it?", "practice": ["How do you spell it?", "Can you spell your surname, please?", "I cannot spell this word.", "She spells it with two l's.", "Spell it slowly, please."], "starter": "How do you spell", "tutor": "Spell one long word out loud and ask the tutor to write it back." },
-        { "w": "mean", "pos": "verb", "meaning": "To have a particular meaning.", "example": "What does this word mean?", "practice": ["What does this word mean?", "I do not know what it means.", "What do you mean?", "This sign means stop.", "The word means two different things."], "starter": "What does this word", "tutor": "Ask what three words mean. Notice the question is always What does … mean, never What means …" },
-        { "w": "again", "pos": "adverb", "meaning": "One more time.", "example": "Say it again, please.", "practice": ["Say it again, please.", "Read the page again.", "I am late again.", "Try again tomorrow.", "Can you explain that again?"], "starter": "Say it again", "tutor": "Use again in a polite request and in a complaint. Notice the tone changes, not the words." },
-        { "w": "question", "pos": "noun", "meaning": "Something you ask when you want to know an answer.", "example": "I have got a question.", "practice": ["I have got a question.", "Can I ask a question?", "That is a good question.", "Answer the questions on page six.", "I did not understand the question."], "starter": "I have got a", "tutor": "Ask permission to ask a question, then ask one." }
+        {
+          "w": "repeat",
+          "pos": "verb",
+          "meaning": "To say something again.",
+          "example": "Can you repeat that, please?",
+          "practice": [
+            "Sorry — can you repeat the last word?",
+            "She repeated it three times.",
+            "Please repeat after me.",
+            "I did not hear you — repeat it, please."
+          ],
+          "starter": "Can you repeat",
+          "tutor": "Ask the tutor to repeat something three different ways. Ask which sounds most polite."
+        },
+        {
+          "w": "slowly",
+          "pos": "adverb",
+          "meaning": "Not fast.",
+          "example": "Can you speak more slowly, please?",
+          "practice": [
+            "She speaks very slowly and clearly.",
+            "Read it slowly.",
+            "More slowly, please.",
+            "He walked slowly to the door."
+          ],
+          "starter": "Can you speak more",
+          "tutor": "Ask for slower speech twice: once in a full sentence and once in two words."
+        },
+        {
+          "w": "spell",
+          "pos": "verb",
+          "meaning": "To say or write the letters of a word in order.",
+          "example": "How do you spell it?",
+          "practice": [
+            "Can you spell your surname, please?",
+            "I cannot spell this word.",
+            "She spells it with two l's.",
+            "Spell it slowly, please."
+          ],
+          "starter": "How do you spell",
+          "tutor": "Spell one long word out loud and ask the tutor to write it back."
+        },
+        {
+          "w": "mean",
+          "pos": "verb",
+          "meaning": "To have a particular meaning.",
+          "example": "What does this word mean?",
+          "practice": [
+            "I do not know what it means.",
+            "What do you mean?",
+            "This sign means stop.",
+            "The word means two different things."
+          ],
+          "starter": "What does this word",
+          "tutor": "Ask what three words mean. Notice the question is always What does … mean, never What means …"
+        },
+        {
+          "w": "again",
+          "pos": "adverb",
+          "meaning": "One more time.",
+          "example": "Say it again, please.",
+          "practice": [
+            "Read the page again.",
+            "I am late again.",
+            "Try again tomorrow.",
+            "Can you explain that again?"
+          ],
+          "starter": "Say it again",
+          "tutor": "Use again in a polite request and in a complaint. Notice the tone changes, not the words."
+        },
+        {
+          "w": "question",
+          "pos": "noun",
+          "meaning": "Something you ask when you want to know an answer.",
+          "example": "I have got a question.",
+          "practice": [
+            "Can I ask a question?",
+            "That is a good question.",
+            "Answer the questions on page six.",
+            "I did not understand the question."
+          ],
+          "starter": "I have got a",
+          "tutor": "Ask permission to ask a question, then ask one."
+        }
       ]
     },
     {
       "title": "Easy and difficult",
       "words": [
-        { "w": "like", "pos": "verb", "meaning": "To find something pleasant or enjoyable.", "example": "I like reading more than writing.", "practice": ["I like reading more than writing.", "She likes the speaking exercises.", "I do not like tests.", "Do you like this book?", "He likes studying in the morning."], "starter": "I like", "tutor": "Say what you like, then what someone else likes, and check the s." },
-        { "w": "easy", "pos": "adjective", "meaning": "Not difficult; needing little effort.", "example": "Reading is easy for me.", "practice": ["Reading is easy for me.", "This exercise is easy.", "It is easy to forget the s.", "The first page was easy.", "Nothing about this is easy."], "starter": "Reading is easy for", "tutor": "Say one thing in English that is easy for you and say why." },
-        { "w": "difficult", "pos": "adjective", "meaning": "Not easy; needing effort.", "example": "Speaking is more difficult than reading.", "practice": ["Speaking is more difficult than reading.", "This word is difficult to say.", "The exercise was too difficult.", "It is difficult for me to remember words.", "Nothing is difficult if you practise."], "starter": "Speaking is more difficult than", "tutor": "Say what is difficult for you and what you do about it." },
-        { "w": "favourite", "pos": "adjective", "meaning": "The one you like best.", "example": "My favourite exercise is the reading.", "practice": ["My favourite exercise is the reading.", "What is your favourite subject?", "This is my favourite page.", "Her favourite day is Friday.", "I have no favourite — I like them all."], "starter": "My favourite", "tutor": "Say your favourite thing about studying, and why." },
-        { "w": "boring", "pos": "adjective", "meaning": "Not interesting.", "example": "Grammar exercises are boring but useful.", "practice": ["Grammar exercises are boring but useful.", "The book is a little boring.", "I find lists boring.", "It is boring, but it works.", "Nothing here is boring."], "starter": "Grammar exercises are", "tutor": "Say something that is boring but useful, and explain why you do it anyway." }
+        {
+          "w": "like",
+          "pos": "verb",
+          "meaning": "To find something pleasant or enjoyable.",
+          "example": "I like reading more than writing.",
+          "practice": [
+            "She likes the speaking exercises.",
+            "I do not like tests.",
+            "Do you like this book?",
+            "He likes studying in the morning."
+          ],
+          "starter": "I like",
+          "tutor": "Say what you like, then what someone else likes, and check the s."
+        },
+        {
+          "w": "easy",
+          "pos": "adjective",
+          "meaning": "Not difficult; needing little effort.",
+          "example": "Reading is easy for me.",
+          "practice": [
+            "This exercise is easy.",
+            "It is easy to forget the s.",
+            "The first page was easy.",
+            "Nothing about this is easy."
+          ],
+          "starter": "Reading is easy for",
+          "tutor": "Say one thing in English that is easy for you and say why."
+        },
+        {
+          "w": "difficult",
+          "pos": "adjective",
+          "meaning": "Not easy; needing effort.",
+          "example": "Speaking is more difficult than reading.",
+          "practice": [
+            "This word is difficult to say.",
+            "The exercise was too difficult.",
+            "It is difficult for me to remember words.",
+            "Nothing is difficult if you practise."
+          ],
+          "starter": "Speaking is more difficult than",
+          "tutor": "Say what is difficult for you and what you do about it."
+        },
+        {
+          "w": "favourite",
+          "pos": "adjective",
+          "meaning": "The one you like best.",
+          "example": "My favourite exercise is the reading.",
+          "practice": [
+            "What is your favourite subject?",
+            "This is my favourite page.",
+            "Her favourite day is Friday.",
+            "I have no favourite — I like them all."
+          ],
+          "starter": "My favourite",
+          "tutor": "Say your favourite thing about studying, and why."
+        },
+        {
+          "w": "boring",
+          "pos": "adjective",
+          "meaning": "Not interesting.",
+          "example": "Grammar exercises are boring but useful.",
+          "practice": [
+            "The book is a little boring.",
+            "I find lists boring.",
+            "It is boring, but it works.",
+            "Nothing here is boring."
+          ],
+          "starter": "Grammar exercises are",
+          "tutor": "Say something that is boring but useful, and explain why you do it anyway."
+        }
       ]
     }
   ],
@@ -139,16 +531,89 @@
     }
   ],
   "comprehension": [
-    { "section": "Reading", "reading": 1, "q": "Which is better, according to the text: twenty minutes daily or three hours weekly? Why?", "a": "Twenty minutes daily, because you meet the words again while they are still in your memory.", "why": "The text gives the reason directly — after three hours you forget most of it before you return, so nothing accumulates.", "outcome": 5 },
-    { "section": "Reading", "reading": 1, "q": "The text says the question is not how many hours have I got. What is the question?", "a": "Where are my twenty minutes.", "why": "It reframes the problem from finding a lot of time to finding a small amount often — and then lists four places to find it.", "outcome": 5, "difficulty": "Stretch" },
-    { "section": "Reading", "reading": 1, "q": "Why does the text say reading silently is not enough?", "a": "Because if you never move your mouth, your mouth never learns.", "why": "It concedes that silent reading is real study — but only for reading. Speaking needs the physical practice.", "outcome": 1 },
-    { "section": "Reading", "reading": 1, "q": "Which words does the text say are worth writing down?", "a": "The words you meet and needed, not the words from a list.", "why": "The text says a word you needed today and could not find is worth ten from a list, because it is already attached to a real situation.", "outcome": 5 },
-    { "section": "Reading", "reading": 2, "q": "You heard the words but they were too fast. Which of the four phrases do you use?", "a": "Can you speak more slowly, please?", "why": "The text separates the four phrases by situation. This one is specifically for when you heard it but could not hold it.", "outcome": 4 },
-    { "section": "Reading", "reading": 2, "q": "What is the fifth phrase for, and why does the text say it saves time?", "a": "Sorry, I understood the first part but not the end. It tells the person exactly where to start again.", "why": "It is more precise than asking for the whole thing to be repeated, so the other person does not repeat what you already had.", "outcome": 4, "difficulty": "Stretch" },
-    { "section": "Reading", "reading": 2, "q": "What does the text say about people minding when you ask?", "a": "Nobody minds — people ask each other to repeat things in their own language every day.", "why": "The last paragraph exists to remove the reason learners nod instead of asking. Asking shows you are still in the conversation.", "outcome": 4 },
-    { "section": "Document", "reading": 3, "q": "Which days are the Level 1 sessions, and how long is each one?", "a": "Monday, Wednesday and Saturday. Each session is two hours.", "why": "The three lines give the days and the times; 18:00 to 20:00 and 10:00 to 12:00 are both two hours, which you work out rather than read.", "outcome": 3 },
-    { "section": "Document", "reading": 3, "q": "You can only come on Saturdays. Can you complete the level?", "a": "No. The note says Saturday alone is not enough to complete the level.", "why": "This is stated directly under the timetable, and it is the line people skip because it sits between the table and the dates.", "outcome": 3 },
-    { "section": "Document", "reading": 3, "q": "You want to sit the exit test on 28 June. What must you have done, and what could stop you?", "a": "You must attend at least one session per week. Missing more than four sessions could lose you your place.", "why": "The two conditions are in different places — the attendance rule is at the bottom under Assessment, and the four-session limit is in the paragraph above it. You need both to answer.", "outcome": 3, "difficulty": "Stretch" }
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "Which is better, according to the text: twenty minutes daily or three hours weekly? Why?",
+      "a": "Twenty minutes daily, because you meet the words again while they are still in your memory.",
+      "why": "The text gives the reason directly — after three hours you forget most of it before you return, so nothing accumulates.",
+      "outcome": 5
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "The text says the question is not how many hours have I got. What is the question?",
+      "a": "Where are my twenty minutes.",
+      "why": "It reframes the problem from finding a lot of time to finding a small amount often — and then lists four places to find it.",
+      "outcome": 5,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "Why does the text say reading silently is not enough?",
+      "a": "Because if you never move your mouth, your mouth never learns.",
+      "why": "It concedes that silent reading is real study — but only for reading. Speaking needs the physical practice.",
+      "outcome": 1
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "Which words does the text say are worth writing down?",
+      "a": "The words you meet and needed, not the words from a list.",
+      "why": "The text says a word you needed today and could not find is worth ten from a list, because it is already attached to a real situation.",
+      "outcome": 5
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "You heard the words but they were too fast. Which of the four phrases do you use?",
+      "a": "Can you speak more slowly, please?",
+      "why": "The text separates the four phrases by situation. This one is specifically for when you heard it but could not hold it.",
+      "outcome": 4
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "What is the fifth phrase for, and why does the text say it saves time?",
+      "a": "Sorry, I understood the first part but not the end. It tells the person exactly where to start again.",
+      "why": "It is more precise than asking for the whole thing to be repeated, so the other person does not repeat what you already had.",
+      "outcome": 4,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "What does the text say about people minding when you ask?",
+      "a": "Nobody minds — people ask each other to repeat things in their own language every day.",
+      "why": "The last paragraph exists to remove the reason learners nod instead of asking. Asking shows you are still in the conversation.",
+      "outcome": 4
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "Which days are the Level 1 sessions, and how long is each one?",
+      "a": "Monday, Wednesday and Saturday. Each session is two hours.",
+      "why": "The three lines give the days and the times; 18:00 to 20:00 and 10:00 to 12:00 are both two hours, which you work out rather than read.",
+      "outcome": 3
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "You can only come on Saturdays. Can you complete the level?",
+      "a": "No. The note says Saturday alone is not enough to complete the level.",
+      "why": "This is stated directly under the timetable, and it is the line people skip because it sits between the table and the dates.",
+      "outcome": 3
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "You want to sit the exit test on 28 June. What must you have done, and what could stop you?",
+      "a": "You must attend at least one session per week. Missing more than four sessions could lose you your place.",
+      "why": "The two conditions are in different places — the attendance rule is at the bottom under Assessment, and the four-session limit is in the paragraph above it. You need both to answer.",
+      "outcome": 3,
+      "difficulty": "Stretch"
+    }
   ],
   "grammar": [
     {
@@ -201,12 +666,48 @@
     }
   ],
   "speaking": [
-    { "title": "Speaking 1 — What you can and cannot do", "type": "Core pattern drill", "instructions": "Say six sentences about your own English.\nThree with can, three with cannot.\nI can read simple texts. I cannot speak on the telephone yet.\nUse the word yet in at least two of the cannot sentences — it says the situation is temporary.\nRecord all six. Play it back and check you never said cans, never said do you can, and never said can to.", "tutor": "Say your six sentences to the tutor and ask whether any of them had an extra word.", "outcome": 1 },
-    { "title": "Speaking 2 — The s you cannot hear yourself drop", "type": "Core pattern drill", "instructions": "Say each pair out loud.\nI like it. — She likes it.\nThey work here. — He works here.\nWe read every day. — She reads every day.\nI practise on the bus. — He practises on the bus.\nRecord all eight. Play it back and listen only for the s at the end of the second sentence in each pair. It is a small sound and it is the first thing to disappear when you speak quickly.", "tutor": "Say four sentences about someone else and ask the tutor whether the verb had its s." , "outcome": 2 },
-    { "title": "Speaking 3 — Read the instruction aloud", "type": "Reading for action", "instructions": "Find any three exercises in this unit.\nRead each instruction aloud, then say in your own words what it is asking you to do — before you look at the questions.\nThen do one of them and check whether you were right.\nThis sounds trivial. It is the habit that stops you doing the wrong exercise carefully.", "tutor": "Read an instruction to the tutor and ask it to say what the task is, then compare with your own answer.", "outcome": 3 },
-    { "title": "Speaking 4 — The four phrases, until they are automatic", "type": "Functional drill", "instructions": "Say each of these ten times. Not five — ten.\nSorry, can you repeat that?\nCan you speak more slowly, please?\nWhat does that word mean?\nHow do you spell it?\nThen say all four in a row, three times, without pausing to think.\nRecord the last run. You are listening for hesitation, not for accuracy. These have to arrive without being assembled, because you need them at the moment when thinking is hardest.", "tutor": "Ask the tutor to speak quickly on purpose, and use whichever phrase fits.", "outcome": 4 },
-    { "title": "Speaking 5 — Say where you stopped", "type": "Functional drill", "instructions": "This one is harder and more useful.\nRecord yourself reading a long sentence from Reading 2. Play it back at a faster speed if your player allows it.\nNow say out loud where you stopped understanding: Sorry, I understood the first part but not the end. Or: I understood everything except one word.\nDo this with four different sentences.\nNaming where you stopped is a real skill, and it is the difference between a three-second repair and a whole sentence repeated.", "tutor": "Ask the tutor for a long sentence, then tell it exactly which part you did not follow.", "outcome": 4 },
-    { "title": "Speaking 6 — Two minutes about your own English", "type": "Assessment rehearsal", "instructions": "Talk for two minutes, unprepared, on this: what is easy for me in English, what is difficult, and what I am going to do about it.\nUse can and cannot at least four times.\nUse easy, difficult and practise at least once each.\nRecord it. Listen back once and note the two places you hesitated longest.\nThen record it again and keep the second one.", "tutor": "Give your two minutes to the tutor and ask it to name one thing you could practise next.", "outcome": 5 }
+    {
+      "title": "Speaking 1 — What you can and cannot do",
+      "type": "Core pattern drill",
+      "instructions": "Say six sentences about your own English.\nThree with can, three with cannot.\nI can read simple texts. I cannot speak on the telephone yet.\nUse the word yet in at least two of the cannot sentences — it says the situation is temporary.\nRecord all six. Play it back and check you never said cans, never said do you can, and never said can to.",
+      "tutor": "Say your six sentences to the tutor and ask whether any of them had an extra word.",
+      "outcome": 1
+    },
+    {
+      "title": "Speaking 2 — The s you cannot hear yourself drop",
+      "type": "Core pattern drill",
+      "instructions": "Say each pair out loud.\nI like it. — She likes it.\nThey work here. — He works here.\nWe read every day. — She reads every day.\nI practise on the bus. — He practises on the bus.\nRecord all eight. Play it back and listen only for the s at the end of the second sentence in each pair. It is a small sound and it is the first thing to disappear when you speak quickly.",
+      "tutor": "Say four sentences about someone else and ask the tutor whether the verb had its s.",
+      "outcome": 2
+    },
+    {
+      "title": "Speaking 3 — Read the instruction aloud",
+      "type": "Reading for action",
+      "instructions": "Find any three exercises in this unit.\nRead each instruction aloud, then say in your own words what it is asking you to do — before you look at the questions.\nThen do one of them and check whether you were right.\nThis sounds trivial. It is the habit that stops you doing the wrong exercise carefully.",
+      "tutor": "Read an instruction to the tutor and ask it to say what the task is, then compare with your own answer.",
+      "outcome": 3
+    },
+    {
+      "title": "Speaking 4 — The four phrases, until they are automatic",
+      "type": "Functional drill",
+      "instructions": "Say each of these ten times. Not five — ten.\nSorry, can you repeat that?\nCan you speak more slowly, please?\nWhat does that word mean?\nHow do you spell it?\nThen say all four in a row, three times, without pausing to think.\nRecord the last run. You are listening for hesitation, not for accuracy. These have to arrive without being assembled, because you need them at the moment when thinking is hardest.",
+      "tutor": "Ask the tutor to speak quickly on purpose, and use whichever phrase fits.",
+      "outcome": 4
+    },
+    {
+      "title": "Speaking 5 — Say where you stopped",
+      "type": "Functional drill",
+      "instructions": "This one is harder and more useful.\nRecord yourself reading a long sentence from Reading 2. Play it back at a faster speed if your player allows it.\nNow say out loud where you stopped understanding: Sorry, I understood the first part but not the end. Or: I understood everything except one word.\nDo this with four different sentences.\nNaming where you stopped is a real skill, and it is the difference between a three-second repair and a whole sentence repeated.",
+      "tutor": "Ask the tutor for a long sentence, then tell it exactly which part you did not follow.",
+      "outcome": 4
+    },
+    {
+      "title": "Speaking 6 — Two minutes about your own English",
+      "type": "Assessment rehearsal",
+      "instructions": "Talk for two minutes, unprepared, on this: what is easy for me in English, what is difficult, and what I am going to do about it.\nUse can and cannot at least four times.\nUse easy, difficult and practise at least once each.\nRecord it. Listen back once and note the two places you hesitated longest.\nThen record it again and keep the second one.",
+      "tutor": "Give your two minutes to the tutor and ask it to name one thing you could practise next.",
+      "outcome": 5
+    }
   ],
   "writing": [
     {
@@ -299,32 +800,189 @@
     }
   ],
   "quizzes": [
-    { "q": "Which sentence is correct?", "options": ["She can speak four languages.", "She can to speak four languages.", "She cans speak four languages.", "She can speaks four languages."], "a": "She can speak four languages.", "why": "Can never takes to after it, never takes s itself, and the verb that follows stays plain. The other three are the three usual errors.", "outcome": 1 },
-    { "q": "Which question is correct?", "options": ["Do you can help me?", "Can you help me?", "You can help me?", "Can you to help me?"], "a": "Can you help me?", "why": "A question with can is made by moving can to the front. No do is added and no to is needed.", "outcome": 1 },
-    { "q": "Complete: My teacher ____ very quickly.", "options": ["speak", "are speaking", "speaks", "speaking"], "a": "speaks", "why": "My teacher is one person, so it behaves like he or she and takes the s. The subject being a noun rather than a pronoun changes nothing.", "outcome": 2 },
-    { "q": "Which sentence is correct?", "options": ["They likes studying.", "He like studying.", "We likes studying.", "She likes studying."], "a": "She likes studying.", "why": "Only he, she and it take the s. They, we and he-with-no-s are all wrong for the opposite reason — the s belongs to exactly three subjects.", "outcome": 2 },
-    { "q": "An exercise says: Tick the correct answer. What do you do?", "options": ["Put a ✓ next to it", "Draw a ring around it", "Draw a line under it", "Write it out again"], "a": "Put a ✓ next to it", "why": "Tick, circle and underline are three different marks, and some exercises care which you use. A ring is circle and a line is underline.", "outcome": 3 },
-    { "q": "An exercise says: Put the words in order. What do you do?", "options": ["Find them in a dictionary", "Rearrange them", "Join them to a second list", "Fill in what is missing"], "a": "Rearrange them", "why": "Put in order means the pieces are all there but in the wrong sequence. Complete would mean something is missing; match would mean joining two lists.", "outcome": 3 },
-    { "q": "You heard every word but it was too fast to follow. What do you say?", "options": ["How do you spell it?", "What does that mean?", "Can you speak more slowly, please?", "Sorry, can you repeat that?"], "a": "Can you speak more slowly, please?", "why": "You do not need it repeated — you need it slower. Asking for a repeat at the same speed usually produces the same problem again.", "outcome": 4 },
-    { "q": "Which question is correct?", "options": ["What means this word?", "What is mean this word?", "How means this word?", "What does this word mean?"], "a": "What does this word mean?", "why": "English needs does in this question, and mean stays plain at the end. What means this word is the direct translation many languages produce, and it is the one to unlearn.", "outcome": 4 },
-    { "q": "According to Reading 1, which is better?", "options": ["Twenty minutes every day", "Three hours once a week", "Two hours twice a month", "It makes no difference"], "a": "Twenty minutes every day", "why": "You meet the words again while they are still in memory, so each return costs less and holds longer. After a week's gap most of a three-hour session is gone.", "outcome": 5 },
-    { "q": "The timetable says you may miss no more than four sessions. You have missed four. What is true?", "options": ["Your place is already lost", "You are still within the limit", "You must telephone the office to explain", "You cannot sit the exit test"], "a": "You are still within the limit", "why": "The sheet says more than four, so four is still allowed. More than four and four or more mean different things, and this is exactly the kind of line worth reading twice.", "outcome": 3 },
-    { "q": "Why does Reading 2 say learners who ask improve faster?", "options": ["Because teachers prefer them", "Because it shows confidence", "Because they get the sentence again, slower and in easier words", "Because asking is polite"], "a": "Because they get the sentence again, slower and in easier words", "why": "The learning happens in the repair. A learner who nods gets nothing at all, however polite or confident they appear.", "outcome": 4 },
-    { "q": "Complete: She ____ the news every morning.", "options": ["read", "are reading", "reading", "reads"], "a": "reads", "why": "She is one of the three subjects that take the s. Read with no ending would be right for I, you, we or they.", "outcome": 2 }
+    {
+      "q": "Which sentence is correct?",
+      "options": [
+        "She can speak four languages.",
+        "She can to speak four languages.",
+        "She cans speak four languages.",
+        "She can speaks four languages."
+      ],
+      "a": "She can speak four languages.",
+      "why": "Can never takes to after it, never takes s itself, and the verb that follows stays plain. The other three are the three usual errors.",
+      "outcome": 1
+    },
+    {
+      "q": "Which question is correct?",
+      "options": [
+        "Do you can help me?",
+        "Can you help me?",
+        "You can help me?",
+        "Can you to help me?"
+      ],
+      "a": "Can you help me?",
+      "why": "A question with can is made by moving can to the front. No do is added and no to is needed.",
+      "outcome": 1
+    },
+    {
+      "q": "Complete: My teacher ____ very quickly.",
+      "options": [
+        "speak",
+        "are speaking",
+        "speaks",
+        "speaking"
+      ],
+      "a": "speaks",
+      "why": "My teacher is one person, so it behaves like he or she and takes the s. The subject being a noun rather than a pronoun changes nothing.",
+      "outcome": 2
+    },
+    {
+      "q": "Which sentence is correct?",
+      "options": [
+        "They likes studying.",
+        "He like studying.",
+        "We likes studying.",
+        "She likes studying."
+      ],
+      "a": "She likes studying.",
+      "why": "Only he, she and it take the s. They, we and he-with-no-s are all wrong for the opposite reason — the s belongs to exactly three subjects.",
+      "outcome": 2
+    },
+    {
+      "q": "An exercise says: Tick the correct answer. What do you do?",
+      "options": [
+        "Put a ✓ next to it",
+        "Draw a ring around it",
+        "Draw a line under it",
+        "Write it out again"
+      ],
+      "a": "Put a ✓ next to it",
+      "why": "Tick, circle and underline are three different marks, and some exercises care which you use. A ring is circle and a line is underline.",
+      "outcome": 3
+    },
+    {
+      "q": "An exercise says: Put the words in order. What do you do?",
+      "options": [
+        "Find them in a dictionary",
+        "Rearrange them",
+        "Join them to a second list",
+        "Fill in what is missing"
+      ],
+      "a": "Rearrange them",
+      "why": "Put in order means the pieces are all there but in the wrong sequence. Complete would mean something is missing; match would mean joining two lists.",
+      "outcome": 3
+    },
+    {
+      "q": "You heard every word but it was too fast to follow. What do you say?",
+      "options": [
+        "How do you spell it?",
+        "What does that mean?",
+        "Can you speak more slowly, please?",
+        "Sorry, can you repeat that?"
+      ],
+      "a": "Can you speak more slowly, please?",
+      "why": "You do not need it repeated — you need it slower. Asking for a repeat at the same speed usually produces the same problem again.",
+      "outcome": 4
+    },
+    {
+      "q": "Which question is correct?",
+      "options": [
+        "What means this word?",
+        "What is mean this word?",
+        "How means this word?",
+        "What does this word mean?"
+      ],
+      "a": "What does this word mean?",
+      "why": "English needs does in this question, and mean stays plain at the end. What means this word is the direct translation many languages produce, and it is the one to unlearn.",
+      "outcome": 4
+    },
+    {
+      "q": "According to Reading 1, which is better?",
+      "options": [
+        "Twenty minutes every day",
+        "Three hours once a week",
+        "Two hours twice a month",
+        "It makes no difference"
+      ],
+      "a": "Twenty minutes every day",
+      "why": "You meet the words again while they are still in memory, so each return costs less and holds longer. After a week's gap most of a three-hour session is gone.",
+      "outcome": 5
+    },
+    {
+      "q": "The timetable says you may miss no more than four sessions. You have missed four. What is true?",
+      "options": [
+        "Your place is already lost",
+        "You are still within the limit",
+        "You must telephone the office to explain",
+        "You cannot sit the exit test"
+      ],
+      "a": "You are still within the limit",
+      "why": "The sheet says more than four, so four is still allowed. More than four and four or more mean different things, and this is exactly the kind of line worth reading twice.",
+      "outcome": 3
+    },
+    {
+      "q": "Why does Reading 2 say learners who ask improve faster?",
+      "options": [
+        "Because teachers prefer them",
+        "Because it shows confidence",
+        "Because they get the sentence again, slower and in easier words",
+        "Because asking is polite"
+      ],
+      "a": "Because they get the sentence again, slower and in easier words",
+      "why": "The learning happens in the repair. A learner who nods gets nothing at all, however polite or confident they appear.",
+      "outcome": 4
+    },
+    {
+      "q": "Complete: She ____ the news every morning.",
+      "options": [
+        "read",
+        "are reading",
+        "reading",
+        "reads"
+      ],
+      "a": "reads",
+      "why": "She is one of the three subjects that take the s. Read with no ending would be right for I, you, we or they.",
+      "outcome": 2
+    }
   ],
   "teacherNotes": [
-    { "type": "This unit works without you", "note": "Every pattern card has a worked example before its practice and every exercise has its answer key. Pattern 3 and Practice 3 exist specifically so a learner working alone can read an unfamiliar instruction and act on it — the one skill a self-access course cannot do without. If you are running this with a group, the material below is an accelerator rather than a repair." },
-    { "type": "The third-person s and why it survives", "note": "This is the most common written error in beginner English and the least urgent to the learner, because dropping it costs no meaning at all. She like English is perfectly clear, so the conversation never applies pressure. Treat it as a proofreading habit rather than a comprehension problem: a learner who checks every verb after he, she or it at the end of a piece of writing will fix it faster than one who is corrected during speech." },
-    { "type": "Pattern 4 is the highest-value five minutes in the level", "note": "Learners who can interrupt politely get more practice from every conversation than learners who nod, and the gap compounds over months. Speaking 4 asks for ten repetitions of each phrase rather than five, deliberately — these have to arrive without assembly, at the moment when the learner is least able to construct anything." },
-    { "type": "Reading 1 is a study-skills text, not a filler", "note": "The twenty-minute argument is worth taking seriously with adults, who typically have very little time and blame themselves for it. Writing 3 turns it into a concrete plan attached to slots that already exist in the week, and Practice 6 tests it against a real week. Learners who fail Practice 6 have usually chosen a slot that depends on something else happening first — that is the thing to change, not their effort." },
-    { "type": "Device and AI safety", "note": "The AI tutor is a rehearsal partner, not a marking service, and no task here is scored by it alone. Learners must not be asked to give the tutor personal, immigration, medical or financial details. Writing 3 asks about daily routine and should never be collected or shared." }
+    {
+      "type": "This unit works without you",
+      "note": "Every pattern card has a worked example before its practice and every exercise has its answer key. Pattern 3 and Practice 3 exist specifically so a learner working alone can read an unfamiliar instruction and act on it — the one skill a self-access course cannot do without. If you are running this with a group, the material below is an accelerator rather than a repair."
+    },
+    {
+      "type": "The third-person s and why it survives",
+      "note": "This is the most common written error in beginner English and the least urgent to the learner, because dropping it costs no meaning at all. She like English is perfectly clear, so the conversation never applies pressure. Treat it as a proofreading habit rather than a comprehension problem: a learner who checks every verb after he, she or it at the end of a piece of writing will fix it faster than one who is corrected during speech."
+    },
+    {
+      "type": "Pattern 4 is the highest-value five minutes in the level",
+      "note": "Learners who can interrupt politely get more practice from every conversation than learners who nod, and the gap compounds over months. Speaking 4 asks for ten repetitions of each phrase rather than five, deliberately — these have to arrive without assembly, at the moment when the learner is least able to construct anything."
+    },
+    {
+      "type": "Reading 1 is a study-skills text, not a filler",
+      "note": "The twenty-minute argument is worth taking seriously with adults, who typically have very little time and blame themselves for it. Writing 3 turns it into a concrete plan attached to slots that already exist in the week, and Practice 6 tests it against a real week. Learners who fail Practice 6 have usually chosen a slot that depends on something else happening first — that is the thing to change, not their effort."
+    },
+    {
+      "type": "Device and AI safety",
+      "note": "The AI tutor is a rehearsal partner, not a marking service, and no task here is scored by it alone. Learners must not be asked to give the tutor personal, immigration, medical or financial details. Writing 3 asks about daily routine and should never be collected or shared."
+    }
   ],
   "selfAssessment": [
-    { "statement": "I can say what I am able to do in English and what I cannot do yet." },
-    { "statement": "I can write he likes and they like without mixing them up." },
-    { "statement": "I can read the instruction on an exercise and know what to do." },
-    { "statement": "I can stop a conversation politely when I have not understood." },
-    { "statement": "I can say what is easy and what is difficult for me in English." }
+    {
+      "statement": "I can say what I am able to do in English and what I cannot do yet."
+    },
+    {
+      "statement": "I can write he likes and they like without mixing them up."
+    },
+    {
+      "statement": "I can read the instruction on an exercise and know what to do."
+    },
+    {
+      "statement": "I can stop a conversation politely when I have not understood."
+    },
+    {
+      "statement": "I can say what is easy and what is difficult for me in English."
+    }
   ],
   "assignment": {
     "title": "Ask four times, and plan your week",

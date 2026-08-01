@@ -24,7 +24,10 @@
       "cefrLevel": "A2",
       "cefrSkill": "Spoken interaction",
       "cefrDescriptor": "I can build a question I have never been taught, in the right order.",
-      "cambridge": ["2Rg.04", "3Rg.05"]
+      "cambridge": [
+        "2Rg.04",
+        "3Rg.05"
+      ]
     },
     {
       "outcome": "Ask a yes/no question and give the short answer that repeats the helper.",
@@ -33,7 +36,10 @@
       "cefrLevel": "A2",
       "cefrSkill": "Spoken production",
       "cefrDescriptor": "I can answer yes, I do rather than just yes.",
-      "cambridge": ["2SLg.04", "1SLm.02"]
+      "cambridge": [
+        "2SLg.04",
+        "1SLm.02"
+      ]
     },
     {
       "outcome": "Recognise and form a question tag, matching the helper and reversing the polarity.",
@@ -42,7 +48,10 @@
       "cefrLevel": "A2",
       "cefrSkill": "Writing",
       "cefrDescriptor": "I can hear a question tag and know it is asking me to agree.",
-      "cambridge": ["3Rg.05", "2Wg.01"]
+      "cambridge": [
+        "3Rg.05",
+        "2Wg.01"
+      ]
     },
     {
       "outcome": "Choose which question to ask, and soften a question that would otherwise sound blunt.",
@@ -51,62 +60,442 @@
       "cefrLevel": "A2",
       "cefrSkill": "Reading",
       "cefrDescriptor": "I can ask a question in a way that gets an answer rather than a defence.",
-      "cambridge": ["3Ri.16", "2Ri.15"]
+      "cambridge": [
+        "3Ri.16",
+        "2Ri.15"
+      ]
     }
   ],
   "groups": [
     {
       "title": "The question words",
       "words": [
-        { "w": "who", "pos": "pronoun", "meaning": "Asks about a person.", "example": "Who told you?", "practice": ["Who told you?", "Who is coming to the meeting?", "Who did you ask?", "Who is responsible for this?", "Who else knows?"], "starter": "Who told", "tutor": "Say who told you and who did you tell. They mean opposite things." },
-        { "w": "what", "pos": "pronoun", "meaning": "Asks about a thing, with an open range of answers.", "example": "What happened?", "practice": ["What happened?", "What do you want?", "What did she say?", "What is the reason?", "What time does it start?"], "starter": "What", "tutor": "What is open. Which is a choice. Say a question with each." },
-        { "w": "where", "pos": "adverb", "meaning": "Asks about a place.", "example": "Where do you work?", "practice": ["Where do you work?", "Where did you find it?", "Where is the meeting?", "Where should I wait?", "Where are you going?"], "starter": "Where do you", "tutor": "Say where do you work, and notice the helper do sits before you." },
-        { "w": "when", "pos": "adverb", "meaning": "Asks about a time.", "example": "When did it happen?", "practice": ["When did it happen?", "When are you leaving?", "When is the meeting?", "When can you start?", "When did she tell you?"], "starter": "When did it", "tutor": "Ask when something happened, using did and a plain verb from Unit 14." },
-        { "w": "why", "pos": "adverb", "meaning": "Asks about a reason.", "example": "Why did they cancel it?", "practice": ["Why did they cancel it?", "Why is it closed?", "Why did nobody tell me?", "Why not?", "Why do you ask?"], "starter": "Why did they cancel", "tutor": "Why is the bluntest question word. Ask a why question, then soften it." },
-        { "w": "how", "pos": "adverb", "meaning": "Asks about a manner or method. It also combines with other words.", "example": "How does it work?", "practice": ["How does it work?", "How much is it?", "How long will it take?", "How often does it happen?", "How did you find out?"], "starter": "How does it", "tutor": "Say six how questions: how much, how many, how long, how far, how often, how old." }
+        {
+          "w": "who",
+          "pos": "pronoun",
+          "meaning": "Asks about a person.",
+          "example": "Who told you?",
+          "practice": [
+            "Who is coming to the meeting?",
+            "Who did you ask?",
+            "Who is responsible for this?",
+            "Who else knows?"
+          ],
+          "starter": "Who told",
+          "tutor": "Say who told you and who did you tell. They mean opposite things."
+        },
+        {
+          "w": "what",
+          "pos": "pronoun",
+          "meaning": "Asks about a thing, with an open range of answers.",
+          "example": "What happened?",
+          "practice": [
+            "What do you want?",
+            "What did she say?",
+            "What is the reason?",
+            "What time does it start?"
+          ],
+          "starter": "What",
+          "tutor": "What is open. Which is a choice. Say a question with each."
+        },
+        {
+          "w": "where",
+          "pos": "adverb",
+          "meaning": "Asks about a place.",
+          "example": "Where do you work?",
+          "practice": [
+            "Where did you find it?",
+            "Where is the meeting?",
+            "Where should I wait?",
+            "Where are you going?"
+          ],
+          "starter": "Where do you",
+          "tutor": "Say where do you work, and notice the helper do sits before you."
+        },
+        {
+          "w": "when",
+          "pos": "adverb",
+          "meaning": "Asks about a time.",
+          "example": "When did it happen?",
+          "practice": [
+            "When are you leaving?",
+            "When is the meeting?",
+            "When can you start?",
+            "When did she tell you?"
+          ],
+          "starter": "When did it",
+          "tutor": "Ask when something happened, using did and a plain verb from Unit 14."
+        },
+        {
+          "w": "why",
+          "pos": "adverb",
+          "meaning": "Asks about a reason.",
+          "example": "Why did they cancel it?",
+          "practice": [
+            "Why is it closed?",
+            "Why did nobody tell me?",
+            "Why not?",
+            "Why do you ask?"
+          ],
+          "starter": "Why did they cancel",
+          "tutor": "Why is the bluntest question word. Ask a why question, then soften it."
+        },
+        {
+          "w": "how",
+          "pos": "adverb",
+          "meaning": "Asks about a manner or method. It also combines with other words.",
+          "example": "How does it work?",
+          "practice": [
+            "How much is it?",
+            "How long will it take?",
+            "How often does it happen?",
+            "How did you find out?"
+          ],
+          "starter": "How does it",
+          "tutor": "Say six how questions: how much, how many, how long, how far, how often, how old."
+        }
       ]
     },
     {
       "title": "More asking words",
       "words": [
-        { "w": "which", "pos": "pronoun", "meaning": "Asks you to choose from a limited set.", "example": "Which one do you want?", "practice": ["Which one do you want?", "Which platform is it?", "Which of these is correct?", "Which day suits you?", "Which entrance should I use?"], "starter": "Which one do you", "tutor": "Which means choose from these. Ask a which question about two options." },
-        { "w": "whose", "pos": "pronoun", "meaning": "Asks who something belongs to.", "example": "Whose is this?", "practice": ["Whose is this?", "Whose bag is on the seat?", "Whose turn is it?", "Whose idea was it?", "I do not know whose it is."], "starter": "Whose is", "tutor": "Whose asks about an owner. Who's is who is, and they sound identical." },
-        { "w": "whether", "pos": "conjunction", "meaning": "Introduces a yes/no possibility inside a longer sentence.", "example": "I asked whether it was still open.", "practice": ["I asked whether it was still open.", "I do not know whether she is coming.", "Ask whether they deliver.", "It depends on whether it rains.", "Check whether the room is free."], "starter": "I asked whether it was still", "tutor": "Whether carries a yes/no question inside a statement. Say I asked whether." },
-        { "w": "anybody", "pos": "pronoun", "meaning": "Any person at all.", "example": "Did anybody tell you?", "practice": ["Did anybody tell you?", "Is anybody there?", "I did not see anybody.", "Anybody can apply.", "Does anybody know?"], "starter": "Did anybody tell", "tutor": "Anybody is used in questions and negatives. Somebody is used in statements." },
-        { "w": "anything", "pos": "pronoun", "meaning": "Any thing at all.", "example": "Did you find anything?", "practice": ["Did you find anything?", "I did not hear anything.", "Is there anything else?", "Anything is possible.", "Did she say anything about it?"], "starter": "Did you find", "tutor": "Say is there anything else. It is the question that ends most exchanges politely." }
+        {
+          "w": "which",
+          "pos": "pronoun",
+          "meaning": "Asks you to choose from a limited set.",
+          "example": "Which one do you want?",
+          "practice": [
+            "Which platform is it?",
+            "Which of these is correct?",
+            "Which day suits you?",
+            "Which entrance should I use?"
+          ],
+          "starter": "Which one do you",
+          "tutor": "Which means choose from these. Ask a which question about two options."
+        },
+        {
+          "w": "whose",
+          "pos": "pronoun",
+          "meaning": "Asks who something belongs to.",
+          "example": "Whose is this?",
+          "practice": [
+            "Whose bag is on the seat?",
+            "Whose turn is it?",
+            "Whose idea was it?",
+            "I do not know whose it is."
+          ],
+          "starter": "Whose is",
+          "tutor": "Whose asks about an owner. Who's is who is, and they sound identical."
+        },
+        {
+          "w": "whether",
+          "pos": "conjunction",
+          "meaning": "Introduces a yes/no possibility inside a longer sentence.",
+          "example": "I asked whether it was still open.",
+          "practice": [
+            "I do not know whether she is coming.",
+            "Ask whether they deliver.",
+            "It depends on whether it rains.",
+            "Check whether the room is free."
+          ],
+          "starter": "I asked whether it was still",
+          "tutor": "Whether carries a yes/no question inside a statement. Say I asked whether."
+        },
+        {
+          "w": "anybody",
+          "pos": "pronoun",
+          "meaning": "Any person at all.",
+          "example": "Did anybody tell you?",
+          "practice": [
+            "Is anybody there?",
+            "I did not see anybody.",
+            "Anybody can apply.",
+            "Does anybody know?"
+          ],
+          "starter": "Did anybody tell",
+          "tutor": "Anybody is used in questions and negatives. Somebody is used in statements."
+        },
+        {
+          "w": "anything",
+          "pos": "pronoun",
+          "meaning": "Any thing at all.",
+          "example": "Did you find anything?",
+          "practice": [
+            "I did not hear anything.",
+            "Is there anything else?",
+            "Anything is possible.",
+            "Did she say anything about it?"
+          ],
+          "starter": "Did you find",
+          "tutor": "Say is there anything else. It is the question that ends most exchanges politely."
+        }
       ]
     },
     {
       "title": "Getting information",
       "words": [
-        { "w": "ask", "pos": "verb", "meaning": "To put a question to somebody.", "example": "I asked twice and got no answer.", "practice": ["I asked twice and got no answer.", "Ask the driver.", "Can I ask you something?", "She asked about the delay.", "Nobody asked me."], "starter": "I asked twice and got no", "tutor": "Say ask somebody and ask about something. Both are common." },
-        { "w": "answer", "pos": "noun", "meaning": "What somebody says in reply to a question.", "example": "That is not an answer to my question.", "practice": ["That is not an answer to my question.", "I am still waiting for an answer.", "The answer was no.", "There was no answer.", "Give me a straight answer."], "starter": "That is not an answer to my", "tutor": "Answer is both a noun and a verb. Say one sentence with each." },
-        { "w": "explain", "pos": "verb", "meaning": "To make something clear by describing it.", "example": "Can you explain that again?", "practice": ["Can you explain that again?", "She explained it very clearly.", "Nobody explained why.", "Let me explain.", "It is hard to explain."], "starter": "Can you explain that", "tutor": "Say can you explain that again. It is more specific than I do not understand." },
-        { "w": "check", "pos": "verb", "meaning": "To look at something to make sure it is right.", "example": "Let me just check the time.", "practice": ["Let me just check the time.", "Check whether the room is free.", "I checked twice.", "Can you check this for me?", "Nobody checked."], "starter": "Let me just check the", "tutor": "Say let me just check. The word just makes it sound quicker and lighter." },
-        { "w": "information", "pos": "noun", "meaning": "Facts about something.", "example": "I need more information before I decide.", "practice": ["I need more information before I decide.", "There is no information on the board.", "Where can I get information about this?", "That is useful information.", "The information was wrong."], "starter": "I need more information before I", "tutor": "Information has no plural. Say a piece of information, not an information." },
-        { "w": "detail", "pos": "noun", "meaning": "A small individual fact.", "example": "One detail is missing.", "practice": ["One detail is missing.", "Can you give me more detail?", "The details are on the back.", "It is the detail that matters.", "I did not read the details."], "starter": "One detail is", "tutor": "Say the details, plural, for the small print of something." }
+        {
+          "w": "ask",
+          "pos": "verb",
+          "meaning": "To put a question to somebody.",
+          "example": "I asked twice and got no answer.",
+          "practice": [
+            "Ask the driver.",
+            "Can I ask you something?",
+            "She asked about the delay.",
+            "Nobody asked me."
+          ],
+          "starter": "I asked twice and got no",
+          "tutor": "Say ask somebody and ask about something. Both are common."
+        },
+        {
+          "w": "answer",
+          "pos": "noun",
+          "meaning": "What somebody says in reply to a question.",
+          "example": "That is not an answer to my question.",
+          "practice": [
+            "I am still waiting for an answer.",
+            "The answer was no.",
+            "There was no answer.",
+            "Give me a straight answer."
+          ],
+          "starter": "That is not an answer to my",
+          "tutor": "Answer is both a noun and a verb. Say one sentence with each."
+        },
+        {
+          "w": "explain",
+          "pos": "verb",
+          "meaning": "To make something clear by describing it.",
+          "example": "Can you explain that again?",
+          "practice": [
+            "She explained it very clearly.",
+            "Nobody explained why.",
+            "Let me explain.",
+            "It is hard to explain."
+          ],
+          "starter": "Can you explain that",
+          "tutor": "Say can you explain that again. It is more specific than I do not understand."
+        },
+        {
+          "w": "check",
+          "pos": "verb",
+          "meaning": "To look at something to make sure it is right.",
+          "example": "Let me just check the time.",
+          "practice": [
+            "Check whether the room is free.",
+            "I checked twice.",
+            "Can you check this for me?",
+            "Nobody checked."
+          ],
+          "starter": "Let me just check the",
+          "tutor": "Say let me just check. The word just makes it sound quicker and lighter."
+        },
+        {
+          "w": "information",
+          "pos": "noun",
+          "meaning": "Facts about something.",
+          "example": "I need more information before I decide.",
+          "practice": [
+            "There is no information on the board.",
+            "Where can I get information about this?",
+            "That is useful information.",
+            "The information was wrong."
+          ],
+          "starter": "I need more information before I",
+          "tutor": "Information has no plural. Say a piece of information, not an information."
+        },
+        {
+          "w": "detail",
+          "pos": "noun",
+          "meaning": "A small individual fact.",
+          "example": "One detail is missing.",
+          "practice": [
+            "Can you give me more detail?",
+            "The details are on the back.",
+            "It is the detail that matters.",
+            "I did not read the details."
+          ],
+          "starter": "One detail is",
+          "tutor": "Say the details, plural, for the small print of something."
+        }
       ]
     },
     {
       "title": "Making sure",
       "words": [
-        { "w": "sure", "pos": "adjective", "meaning": "Having no doubt.", "example": "Are you sure about that?", "practice": ["Are you sure about that?", "I am not sure.", "I am fairly sure it was Thursday.", "Make sure you confirm the place.", "She sounded sure."], "starter": "Are you sure about", "tutor": "Say make sure, meaning check that something happens. Use it once." },
-        { "w": "certain", "pos": "adjective", "meaning": "Completely sure.", "example": "I am certain I locked it.", "practice": ["I am certain I locked it.", "Nothing is certain yet.", "Are you certain?", "It is certain to be busy.", "I am not certain about the time."], "starter": "I am certain I locked", "tutor": "Certain is slightly stronger than sure. Say both in the same sentence position." },
-        { "w": "clear", "pos": "adjective", "meaning": "Easy to understand, with nothing confusing.", "example": "That is not clear to me.", "practice": ["That is not clear to me.", "She was very clear about it.", "Is that clear?", "The instructions were not clear.", "Let me be clear."], "starter": "That is not clear to", "tutor": "Say that is not clear to me. It is more useful than I do not understand." },
-        { "w": "obvious", "pos": "adjective", "meaning": "Easy to see or understand; needing no explanation.", "example": "It was obvious that something was wrong.", "practice": ["It was obvious that something was wrong.", "The answer is obvious.", "It is not obvious to me.", "For obvious reasons, we cancelled.", "That is fairly obvious."], "starter": "It was obvious that something was", "tutor": "Say it is not obvious to me. That is a polite way of asking for an explanation." },
-        { "w": "exact", "pos": "adjective", "meaning": "Precise; correct in every detail.", "example": "What is the exact time?", "practice": ["What is the exact time?", "I do not remember the exact words.", "The exact cost is on the receipt.", "Give me the exact figure.", "That is not the exact address."], "starter": "What is the exact", "tutor": "Ask for the exact something. Adding exact turns a vague answer into a usable one." },
-        { "w": "correct", "pos": "adjective", "meaning": "Right; with no mistakes.", "example": "Is this the correct platform?", "practice": ["Is this the correct platform?", "That is not correct.", "The correct answer is B.", "Please confirm the details are correct.", "It was correct the first time."], "starter": "Is this the correct", "tutor": "Say is this correct and is this right. They mean the same; correct is more formal." }
+        {
+          "w": "sure",
+          "pos": "adjective",
+          "meaning": "Having no doubt.",
+          "example": "Are you sure about that?",
+          "practice": [
+            "I am not sure.",
+            "I am fairly sure it was Thursday.",
+            "Make sure you confirm the place.",
+            "She sounded sure."
+          ],
+          "starter": "Are you sure about",
+          "tutor": "Say make sure, meaning check that something happens. Use it once."
+        },
+        {
+          "w": "certain",
+          "pos": "adjective",
+          "meaning": "Completely sure.",
+          "example": "I am certain I locked it.",
+          "practice": [
+            "Nothing is certain yet.",
+            "Are you certain?",
+            "It is certain to be busy.",
+            "I am not certain about the time."
+          ],
+          "starter": "I am certain I locked",
+          "tutor": "Certain is slightly stronger than sure. Say both in the same sentence position."
+        },
+        {
+          "w": "clear",
+          "pos": "adjective",
+          "meaning": "Easy to understand, with nothing confusing.",
+          "example": "That is not clear to me.",
+          "practice": [
+            "She was very clear about it.",
+            "Is that clear?",
+            "The instructions were not clear.",
+            "Let me be clear."
+          ],
+          "starter": "That is not clear to",
+          "tutor": "Say that is not clear to me. It is more useful than I do not understand."
+        },
+        {
+          "w": "obvious",
+          "pos": "adjective",
+          "meaning": "Easy to see or understand; needing no explanation.",
+          "example": "It was obvious that something was wrong.",
+          "practice": [
+            "The answer is obvious.",
+            "It is not obvious to me.",
+            "For obvious reasons, we cancelled.",
+            "That is fairly obvious."
+          ],
+          "starter": "It was obvious that something was",
+          "tutor": "Say it is not obvious to me. That is a polite way of asking for an explanation."
+        },
+        {
+          "w": "exact",
+          "pos": "adjective",
+          "meaning": "Precise; correct in every detail.",
+          "example": "What is the exact time?",
+          "practice": [
+            "I do not remember the exact words.",
+            "The exact cost is on the receipt.",
+            "Give me the exact figure.",
+            "That is not the exact address."
+          ],
+          "starter": "What is the exact",
+          "tutor": "Ask for the exact something. Adding exact turns a vague answer into a usable one."
+        },
+        {
+          "w": "correct",
+          "pos": "adjective",
+          "meaning": "Right; with no mistakes.",
+          "example": "Is this the correct platform?",
+          "practice": [
+            "That is not correct.",
+            "The correct answer is B.",
+            "Please confirm the details are correct.",
+            "It was correct the first time."
+          ],
+          "starter": "Is this the correct",
+          "tutor": "Say is this correct and is this right. They mean the same; correct is more formal."
+        }
       ]
     },
     {
       "title": "Softening a question",
       "words": [
-        { "w": "mind", "pos": "verb", "meaning": "To be troubled by something. Used to ask permission politely.", "example": "Do you mind if I ask something?", "practice": ["Do you mind if I ask something?", "Would you mind repeating that?", "I do not mind.", "Do you mind waiting a moment?", "She did not seem to mind."], "starter": "Do you mind if I ask", "tutor": "Careful: do you mind if I ask — yes means no. Say I do not mind to agree." },
-        { "w": "wonder", "pos": "verb", "meaning": "To want to know. Used to make a request very polite.", "example": "I was wondering whether you could help.", "practice": ["I was wondering whether you could help.", "I wonder why nobody told us.", "I was wondering about Thursday.", "I wondered whether it was still open.", "It makes you wonder."], "starter": "I was wondering whether you could", "tutor": "I was wondering whether is the most polite opening in this unit. Say it twice." },
-        { "w": "possibly", "pos": "adverb", "meaning": "Perhaps. Also used to soften a request.", "example": "Could you possibly check for me?", "practice": ["Could you possibly check for me?", "Possibly, but I am not sure.", "Could I possibly ask you something?", "It is possibly the wrong platform.", "Possibly not."], "starter": "Could you possibly check for", "tutor": "Adding possibly to could you makes a request noticeably softer. Say both versions." },
-        { "w": "actually", "pos": "adverb", "meaning": "In fact. Often used to correct or add gently.", "example": "Actually, I think it was Thursday.", "practice": ["Actually, I think it was Thursday.", "Actually, that is not quite right.", "I did not actually see it.", "Actually, could I ask something else?", "It was actually much easier."], "starter": "Actually, I think it was", "tutor": "Actually softens a disagreement. Say actually, I think, before correcting somebody." },
-        { "w": "just", "pos": "adverb", "meaning": "Only; simply. Used to make a request sound smaller.", "example": "I just wanted to check the time.", "practice": ["I just wanted to check the time.", "Just one question.", "I just need a minute.", "Could I just ask something?", "It is just a detail."], "starter": "I just wanted to check the", "tutor": "Just makes a request sound smaller. Say could I ask and could I just ask." },
-        { "w": "anyway", "pos": "adverb", "meaning": "Used to return to a subject or to close one.", "example": "Anyway, what time does it start?", "practice": ["Anyway, what time does it start?", "Anyway, thank you for checking.", "It does not matter anyway.", "Anyway, I should go.", "I was going there anyway."], "starter": "Anyway, what time does it", "tutor": "Anyway changes the subject or ends the conversation. Use it both ways." }
+        {
+          "w": "mind",
+          "pos": "verb",
+          "meaning": "To be troubled by something. Used to ask permission politely.",
+          "example": "Do you mind if I ask something?",
+          "practice": [
+            "Would you mind repeating that?",
+            "I do not mind.",
+            "Do you mind waiting a moment?",
+            "She did not seem to mind."
+          ],
+          "starter": "Do you mind if I ask",
+          "tutor": "Careful: do you mind if I ask — yes means no. Say I do not mind to agree."
+        },
+        {
+          "w": "wonder",
+          "pos": "verb",
+          "meaning": "To want to know. Used to make a request very polite.",
+          "example": "I was wondering whether you could help.",
+          "practice": [
+            "I wonder why nobody told us.",
+            "I was wondering about Thursday.",
+            "I wondered whether it was still open.",
+            "It makes you wonder."
+          ],
+          "starter": "I was wondering whether you could",
+          "tutor": "I was wondering whether is the most polite opening in this unit. Say it twice."
+        },
+        {
+          "w": "possibly",
+          "pos": "adverb",
+          "meaning": "Perhaps. Also used to soften a request.",
+          "example": "Could you possibly check for me?",
+          "practice": [
+            "Possibly, but I am not sure.",
+            "Could I possibly ask you something?",
+            "It is possibly the wrong platform.",
+            "Possibly not."
+          ],
+          "starter": "Could you possibly check for",
+          "tutor": "Adding possibly to could you makes a request noticeably softer. Say both versions."
+        },
+        {
+          "w": "actually",
+          "pos": "adverb",
+          "meaning": "In fact. Often used to correct or add gently.",
+          "example": "Actually, I think it was Thursday.",
+          "practice": [
+            "Actually, that is not quite right.",
+            "I did not actually see it.",
+            "Actually, could I ask something else?",
+            "It was actually much easier."
+          ],
+          "starter": "Actually, I think it was",
+          "tutor": "Actually softens a disagreement. Say actually, I think, before correcting somebody."
+        },
+        {
+          "w": "just",
+          "pos": "adverb",
+          "meaning": "Only; simply. Used to make a request sound smaller.",
+          "example": "I just wanted to check the time.",
+          "practice": [
+            "Just one question.",
+            "I just need a minute.",
+            "Could I just ask something?",
+            "It is just a detail."
+          ],
+          "starter": "I just wanted to check the",
+          "tutor": "Just makes a request sound smaller. Say could I ask and could I just ask."
+        },
+        {
+          "w": "anyway",
+          "pos": "adverb",
+          "meaning": "Used to return to a subject or to close one.",
+          "example": "Anyway, what time does it start?",
+          "practice": [
+            "Anyway, thank you for checking.",
+            "It does not matter anyway.",
+            "Anyway, I should go.",
+            "I was going there anyway."
+          ],
+          "starter": "Anyway, what time does it",
+          "tutor": "Anyway changes the subject or ends the conversation. Use it both ways."
+        }
       ]
     }
   ],
@@ -130,16 +519,89 @@
     }
   ],
   "comprehension": [
-    { "section": "Reading", "reading": 1, "q": "What is the one rule behind every English question?", "a": "Inversion — the subject and verb swap places, and where the verb cannot swap alone, a helper does it instead.", "why": "Seeing questions as one rule rather than a list of frames is what lets you build a question you have never been taught.", "outcome": 1 },
-    { "section": "Reading", "reading": 1, "q": "In did you go yesterday, why is the verb go and not went?", "a": "Because the helper did took the past, so the main verb goes back to its plain form.", "why": "This is the Unit 14 rule reappearing, not a new one. Recognising it as the same rule halves the work.", "outcome": 1 },
-    { "section": "Reading", "reading": 1, "q": "What is the difference between who told you and who did you tell?", "a": "In the first, the person is doing the telling and is the subject, so there is no helper. In the second, the person is being told, so the helper returns. They mean opposite things.", "why": "The exception looks like an error until you see what causes it, and the pair shows the cause clearly.", "outcome": 1, "difficulty": "Stretch" },
-    { "section": "Reading", "reading": 2, "q": "Why does the text say why is the bluntest word in English?", "a": "Because a question about a person's reasons asks them to defend themselves, so they explain instead of telling you what you wanted to know.", "why": "The grammar is perfect and the question still fails. That gap is the whole point of the reading.", "outcome": 4 },
-    { "section": "Reading", "reading": 2, "q": "What does the text suggest asking instead of why?", "a": "Ask about facts, times and sequence — when did you find out, what happened — and get to the reason afterwards.", "why": "Facts are easy to give and reasons are not. Asking in that order gets you both; asking in the other order often gets you neither.", "outcome": 4 },
-    { "section": "Reading", "reading": 2, "q": "Why does the text say I was wondering whether is polite?", "a": "Because it is longer than the request itself, and the extra length is what makes it polite.", "why": "This is counter-intuitive — efficiency is usually a virtue — and it explains why very short requests can sound abrupt even when correct.", "outcome": 4, "difficulty": "Stretch" },
-    { "section": "Document", "reading": 3, "q": "Version A ends with nothing usable. What did the questions have in common?", "a": "They were mostly why questions and yes/no questions about intentions, so every answer was a defence or a hedge rather than a fact.", "why": "Four questions, four non-answers. The failure is consistent and it is caused by the shape of the questions, not by an unhelpful person.", "outcome": 4 },
-    { "section": "Document", "reading": 3, "q": "Version B opens differently. What does the first sentence do that Version A's does not?", "a": "It makes a request rather than a demand — I was wondering whether you could check — and it gives the fact needed to act on it, that the order was due Tuesday.", "why": "The opening decides the rest. One asks somebody to explain themselves; the other asks them to look something up, which they can actually do.", "outcome": 4 },
-    { "section": "Document", "reading": 3, "q": "What three things does Version B obtain that Version A does not?", "a": "An exact date, a named contact, and a next step if the date is missed.", "why": "All three came from questions asking for facts. None of them could have come from why is my order late.", "outcome": 4 },
-    { "section": "Document", "reading": 3, "q": "Version B ends by repeating the arrangement. Why does that matter here?", "a": "Because it confirms the date and the name in one sentence and invites a correction — is that correct — while the other person is still there.", "why": "It is the same repeat-back habit used for directions and arrangements, doing the same job: catching an error while it can still be fixed.", "outcome": 4, "difficulty": "Stretch" }
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "What is the one rule behind every English question?",
+      "a": "Inversion — the subject and verb swap places, and where the verb cannot swap alone, a helper does it instead.",
+      "why": "Seeing questions as one rule rather than a list of frames is what lets you build a question you have never been taught.",
+      "outcome": 1
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "In did you go yesterday, why is the verb go and not went?",
+      "a": "Because the helper did took the past, so the main verb goes back to its plain form.",
+      "why": "This is the Unit 14 rule reappearing, not a new one. Recognising it as the same rule halves the work.",
+      "outcome": 1
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "What is the difference between who told you and who did you tell?",
+      "a": "In the first, the person is doing the telling and is the subject, so there is no helper. In the second, the person is being told, so the helper returns. They mean opposite things.",
+      "why": "The exception looks like an error until you see what causes it, and the pair shows the cause clearly.",
+      "outcome": 1,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "Why does the text say why is the bluntest word in English?",
+      "a": "Because a question about a person's reasons asks them to defend themselves, so they explain instead of telling you what you wanted to know.",
+      "why": "The grammar is perfect and the question still fails. That gap is the whole point of the reading.",
+      "outcome": 4
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "What does the text suggest asking instead of why?",
+      "a": "Ask about facts, times and sequence — when did you find out, what happened — and get to the reason afterwards.",
+      "why": "Facts are easy to give and reasons are not. Asking in that order gets you both; asking in the other order often gets you neither.",
+      "outcome": 4
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "Why does the text say I was wondering whether is polite?",
+      "a": "Because it is longer than the request itself, and the extra length is what makes it polite.",
+      "why": "This is counter-intuitive — efficiency is usually a virtue — and it explains why very short requests can sound abrupt even when correct.",
+      "outcome": 4,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "Version A ends with nothing usable. What did the questions have in common?",
+      "a": "They were mostly why questions and yes/no questions about intentions, so every answer was a defence or a hedge rather than a fact.",
+      "why": "Four questions, four non-answers. The failure is consistent and it is caused by the shape of the questions, not by an unhelpful person.",
+      "outcome": 4
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "Version B opens differently. What does the first sentence do that Version A's does not?",
+      "a": "It makes a request rather than a demand — I was wondering whether you could check — and it gives the fact needed to act on it, that the order was due Tuesday.",
+      "why": "The opening decides the rest. One asks somebody to explain themselves; the other asks them to look something up, which they can actually do.",
+      "outcome": 4
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "What three things does Version B obtain that Version A does not?",
+      "a": "An exact date, a named contact, and a next step if the date is missed.",
+      "why": "All three came from questions asking for facts. None of them could have come from why is my order late.",
+      "outcome": 4
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "Version B ends by repeating the arrangement. Why does that matter here?",
+      "a": "Because it confirms the date and the name in one sentence and invites a correction — is that correct — while the other person is still there.",
+      "why": "It is the same repeat-back habit used for directions and arrangements, doing the same job: catching an error while it can still be fixed.",
+      "outcome": 4,
+      "difficulty": "Stretch"
+    }
   ],
   "grammar": [
     {
@@ -180,12 +642,48 @@
     }
   ],
   "speaking": [
-    { "title": "Speaking 1 — Build eight questions", "type": "Core pattern drill", "instructions": "Build a question with each of the eight wh- words, about your own life.\nSay each one aloud.\nRecord all eight.\nPlay back and check the order in every one: wh- word, helper, subject, verb. If you hear where you work rather than where do you work, that is statement order and the drill needs repeating.", "tutor": "Ask the tutor eight questions, one for each wh- word, and ask it to flag any wrong word order.", "outcome": 1 },
-    { "title": "Speaking 2 — Doing or receiving", "type": "Core pattern drill", "instructions": "Say these pairs aloud, five times each.\nWho told you? / Who did you tell?\nWhat happened? / What did you do?\nWho called? / Who did you call?\nWho helped you? / Who did you help?\nRecord one full set.\nAfter each pair, say aloud which one has no helper and why. The answer is always the same: the person is doing the action rather than receiving it.", "tutor": "Say four subject questions and ask the tutor to turn each into an object question.", "outcome": 1 },
-    { "title": "Speaking 3 — Short answers", "type": "Core pattern drill", "instructions": "Ask yourself each question aloud and answer it with a short answer, not a bare yes.\nAre you ready? Do you work here? Did you go? Can you drive? Is it correct? Have you got a moment?\nDo each one twice — once positive, once negative.\nRecord all twelve answers.\nPlay back and check you never said just yes or just no. That is the habit this drill exists to build.", "tutor": "Ask the tutor to fire six yes/no questions at you and answer each with a short answer.", "outcome": 2 },
-    { "title": "Speaking 4 — Hearing tags", "type": "Core pattern drill", "instructions": "Say each statement aloud and add the tag.\nIt's cold today. You work here. She didn't come. You can drive. It isn't correct. They went yesterday.\nRecord all six.\nThen say the expected answer to each one — yes, it is; yes, I do; no, she didn't.\nThe point of this drill is recognition. You may never produce a tag by choice, but you will hear one within your first hour of any English conversation.", "tutor": "Ask the tutor to make six statements with tags and answer each one appropriately.", "outcome": 3 },
-    { "title": "Speaking 5 — The same question, two ways", "type": "Exchange", "instructions": "Take four situations where you would want to know why something went wrong.\nFor each one, say the blunt version first, then the version that asks for facts.\nWhy didn't you tell me? / When did you find out?\nWhy is it late? / Where is it now?\nWhy did nobody check? / Who was checking it?\nWhy is this wrong? / What should it say?\nRecord all eight.\nListen back to the pairs. The second of each pair is easier to answer, and that is the entire difference.", "tutor": "Ask the tutor four blunt questions, then the same four asked for facts, and compare the answers you get.", "outcome": 4 },
-    { "title": "Speaking 6 — Read both versions aloud", "type": "Assessment rehearsal", "instructions": "Open Reading 3.\nRead Version A aloud, both sides. Then Version B, both sides.\nNotice how much shorter the answers are in Version A.\nThen say aloud: what three things Version B obtained that Version A did not, and which single question produced each one.\nThen say what Version B's first sentence does that Version A's does not.\nRecord the last two parts and keep them.", "tutor": "Read the tutor Version A and ask it what it would have said if asked the Version B questions instead.", "outcome": 4 }
+    {
+      "title": "Speaking 1 — Build eight questions",
+      "type": "Core pattern drill",
+      "instructions": "Build a question with each of the eight wh- words, about your own life.\nSay each one aloud.\nRecord all eight.\nPlay back and check the order in every one: wh- word, helper, subject, verb. If you hear where you work rather than where do you work, that is statement order and the drill needs repeating.",
+      "tutor": "Ask the tutor eight questions, one for each wh- word, and ask it to flag any wrong word order.",
+      "outcome": 1
+    },
+    {
+      "title": "Speaking 2 — Doing or receiving",
+      "type": "Core pattern drill",
+      "instructions": "Say these pairs aloud, five times each.\nWho told you? / Who did you tell?\nWhat happened? / What did you do?\nWho called? / Who did you call?\nWho helped you? / Who did you help?\nRecord one full set.\nAfter each pair, say aloud which one has no helper and why. The answer is always the same: the person is doing the action rather than receiving it.",
+      "tutor": "Say four subject questions and ask the tutor to turn each into an object question.",
+      "outcome": 1
+    },
+    {
+      "title": "Speaking 3 — Short answers",
+      "type": "Core pattern drill",
+      "instructions": "Ask yourself each question aloud and answer it with a short answer, not a bare yes.\nAre you ready? Do you work here? Did you go? Can you drive? Is it correct? Have you got a moment?\nDo each one twice — once positive, once negative.\nRecord all twelve answers.\nPlay back and check you never said just yes or just no. That is the habit this drill exists to build.",
+      "tutor": "Ask the tutor to fire six yes/no questions at you and answer each with a short answer.",
+      "outcome": 2
+    },
+    {
+      "title": "Speaking 4 — Hearing tags",
+      "type": "Core pattern drill",
+      "instructions": "Say each statement aloud and add the tag.\nIt's cold today. You work here. She didn't come. You can drive. It isn't correct. They went yesterday.\nRecord all six.\nThen say the expected answer to each one — yes, it is; yes, I do; no, she didn't.\nThe point of this drill is recognition. You may never produce a tag by choice, but you will hear one within your first hour of any English conversation.",
+      "tutor": "Ask the tutor to make six statements with tags and answer each one appropriately.",
+      "outcome": 3
+    },
+    {
+      "title": "Speaking 5 — The same question, two ways",
+      "type": "Exchange",
+      "instructions": "Take four situations where you would want to know why something went wrong.\nFor each one, say the blunt version first, then the version that asks for facts.\nWhy didn't you tell me? / When did you find out?\nWhy is it late? / Where is it now?\nWhy did nobody check? / Who was checking it?\nWhy is this wrong? / What should it say?\nRecord all eight.\nListen back to the pairs. The second of each pair is easier to answer, and that is the entire difference.",
+      "tutor": "Ask the tutor four blunt questions, then the same four asked for facts, and compare the answers you get.",
+      "outcome": 4
+    },
+    {
+      "title": "Speaking 6 — Read both versions aloud",
+      "type": "Assessment rehearsal",
+      "instructions": "Open Reading 3.\nRead Version A aloud, both sides. Then Version B, both sides.\nNotice how much shorter the answers are in Version A.\nThen say aloud: what three things Version B obtained that Version A did not, and which single question produced each one.\nThen say what Version B's first sentence does that Version A's does not.\nRecord the last two parts and keep them.",
+      "tutor": "Read the tutor Version A and ask it what it would have said if asked the Version B questions instead.",
+      "outcome": 4
+    }
   ],
   "writing": [
     {
@@ -277,33 +775,194 @@
     }
   ],
   "quizzes": [
-    { "q": "Which is correct?", "options": ["Where do you work?", "Where you work?", "Where you do work?", "Where works you?"], "a": "Where do you work?", "why": "The order is wh- word, helper, subject, verb. Statement order after a wh- word is the most common error in this pattern.", "outcome": 1 },
-    { "q": "Which is correct?", "options": ["Who did tell you?", "Who did told you?", "Who told you?", "Who has told you the news yesterday?"], "a": "Who told you?", "why": "Who is the subject here — the person is doing the telling — so there is no helper. Who did you tell is different and means the opposite.", "outcome": 1 },
-    { "q": "Which is correct?", "options": ["Why did you went?", "Why did you go?", "Why you went?", "Why went you?"], "a": "Why did you go?", "why": "Did carries the past, so the main verb goes back to its plain form. This is the same rule as Unit 14, not a new one.", "outcome": 1 },
-    { "q": "Do you work here? What is the short answer?", "options": ["Yes, I am.", "Yes, I work.", "Yes.", "Yes, I do."], "a": "Yes, I do.", "why": "Whatever word the question opened with is the word you send back. The question said do, so the answer says do.", "outcome": 2 },
-    { "q": "Are you ready? Which answer keeps the conversation open?", "options": ["Yes, I am.", "Yes.", "Ready.", "Yes, ready."], "a": "Yes, I am.", "why": "A bare yes is not rude exactly, but it closes the exchange. The short answer is two extra words and changes how you sound.", "outcome": 2 },
-    { "q": "It's cold today, ____?", "options": ["is it", "isn't they", "isn't it", "does it"], "a": "isn't it", "why": "The tag matches the helper and reverses the sign. A positive sentence takes a negative tag; is it would express surprise rather than invite agreement.", "outcome": 3 },
-    { "q": "She didn't come, ____?", "options": ["didn't she", "doesn't she", "was she", "did she"], "a": "did she", "why": "A negative sentence takes a positive tag. The helper stays the same — didn't in the sentence, did in the tag.", "outcome": 3 },
-    { "q": "You work here, ____?", "options": ["aren't you", "don't you", "isn't it", "haven't you"], "a": "don't you", "why": "The sentence has no helper, so the tag supplies do. Aren't you would only be right if the sentence used be.", "outcome": 3 },
-    { "q": "What is the difference between what and which?", "options": ["What is more polite", "Which is only for people", "What is open; which asks you to choose from a set", "They are interchangeable"], "a": "What is open; which asks you to choose from a set", "why": "If somebody has just offered you three options and you ask what, it sounds as though you were not listening.", "outcome": 1 },
-    { "q": "Reading 2 says why is the bluntest word in English. What should you ask instead?", "options": ["Ask for facts, times and sequence", "Ask nothing and wait", "Ask the same question more quietly", "Ask a yes/no question"], "a": "Ask for facts, times and sequence", "why": "A question about someone's reasons asks them to defend themselves. A question about facts gets you information, and you can reach the reason afterwards.", "outcome": 4 },
-    { "q": "Which opening is the most polite?", "options": ["Check this for me.", "Can you check this?", "Check this, please.", "I was wondering whether you could check this."], "a": "I was wondering whether you could check this.", "why": "It is longer than the request itself, and that extra length is exactly what makes it polite — which is why very short requests can sound abrupt even when correct.", "outcome": 4 },
-    { "q": "Which is correct?", "options": ["Does she works here?", "Do she work here?", "Does she work here?", "She does work here?"], "a": "Does she work here?", "why": "The helper takes the third-person -s, so the main verb goes plain. Marking it twice is the same error as why did you went.", "outcome": 1 }
+    {
+      "q": "Which is correct?",
+      "options": [
+        "Where do you work?",
+        "Where you work?",
+        "Where you do work?",
+        "Where works you?"
+      ],
+      "a": "Where do you work?",
+      "why": "The order is wh- word, helper, subject, verb. Statement order after a wh- word is the most common error in this pattern.",
+      "outcome": 1
+    },
+    {
+      "q": "Which is correct?",
+      "options": [
+        "Who did tell you?",
+        "Who did told you?",
+        "Who told you?",
+        "Who has told you the news yesterday?"
+      ],
+      "a": "Who told you?",
+      "why": "Who is the subject here — the person is doing the telling — so there is no helper. Who did you tell is different and means the opposite.",
+      "outcome": 1
+    },
+    {
+      "q": "Which is correct?",
+      "options": [
+        "Why did you went?",
+        "Why did you go?",
+        "Why you went?",
+        "Why went you?"
+      ],
+      "a": "Why did you go?",
+      "why": "Did carries the past, so the main verb goes back to its plain form. This is the same rule as Unit 14, not a new one.",
+      "outcome": 1
+    },
+    {
+      "q": "Do you work here? What is the short answer?",
+      "options": [
+        "Yes, I am.",
+        "Yes, I work.",
+        "Yes.",
+        "Yes, I do."
+      ],
+      "a": "Yes, I do.",
+      "why": "Whatever word the question opened with is the word you send back. The question said do, so the answer says do.",
+      "outcome": 2
+    },
+    {
+      "q": "Are you ready? Which answer keeps the conversation open?",
+      "options": [
+        "Yes, I am.",
+        "Yes.",
+        "Ready.",
+        "Yes, ready."
+      ],
+      "a": "Yes, I am.",
+      "why": "A bare yes is not rude exactly, but it closes the exchange. The short answer is two extra words and changes how you sound.",
+      "outcome": 2
+    },
+    {
+      "q": "It's cold today, ____?",
+      "options": [
+        "is it",
+        "isn't they",
+        "isn't it",
+        "does it"
+      ],
+      "a": "isn't it",
+      "why": "The tag matches the helper and reverses the sign. A positive sentence takes a negative tag; is it would express surprise rather than invite agreement.",
+      "outcome": 3
+    },
+    {
+      "q": "She didn't come, ____?",
+      "options": [
+        "didn't she",
+        "doesn't she",
+        "was she",
+        "did she"
+      ],
+      "a": "did she",
+      "why": "A negative sentence takes a positive tag. The helper stays the same — didn't in the sentence, did in the tag.",
+      "outcome": 3
+    },
+    {
+      "q": "You work here, ____?",
+      "options": [
+        "aren't you",
+        "don't you",
+        "isn't it",
+        "haven't you"
+      ],
+      "a": "don't you",
+      "why": "The sentence has no helper, so the tag supplies do. Aren't you would only be right if the sentence used be.",
+      "outcome": 3
+    },
+    {
+      "q": "What is the difference between what and which?",
+      "options": [
+        "What is more polite",
+        "Which is only for people",
+        "What is open; which asks you to choose from a set",
+        "They are interchangeable"
+      ],
+      "a": "What is open; which asks you to choose from a set",
+      "why": "If somebody has just offered you three options and you ask what, it sounds as though you were not listening.",
+      "outcome": 1
+    },
+    {
+      "q": "Reading 2 says why is the bluntest word in English. What should you ask instead?",
+      "options": [
+        "Ask for facts, times and sequence",
+        "Ask nothing and wait",
+        "Ask the same question more quietly",
+        "Ask a yes/no question"
+      ],
+      "a": "Ask for facts, times and sequence",
+      "why": "A question about someone's reasons asks them to defend themselves. A question about facts gets you information, and you can reach the reason afterwards.",
+      "outcome": 4
+    },
+    {
+      "q": "Which opening is the most polite?",
+      "options": [
+        "Check this for me.",
+        "Can you check this?",
+        "Check this, please.",
+        "I was wondering whether you could check this."
+      ],
+      "a": "I was wondering whether you could check this.",
+      "why": "It is longer than the request itself, and that extra length is exactly what makes it polite — which is why very short requests can sound abrupt even when correct.",
+      "outcome": 4
+    },
+    {
+      "q": "Which is correct?",
+      "options": [
+        "Does she works here?",
+        "Do she work here?",
+        "Does she work here?",
+        "She does work here?"
+      ],
+      "a": "Does she work here?",
+      "why": "The helper takes the third-person -s, so the main verb goes plain. Marking it twice is the same error as why did you went.",
+      "outcome": 1
+    }
   ],
   "teacherNotes": [
-    { "type": "This unit works without you", "note": "Three pattern cards, each with a worked example, and every exercise has an answer key. Practice 1 is the drill to repeat, and its answer key explains the helper-free cases rather than just listing them. Practices 5 and 6 are field tasks with no key and both carry a what-most-people-find note so a solo learner still gets feedback." },
-    { "type": "This unit owns question form", "note": "Learners have been using question frames since Unit 1 — where is the station, how much is it, do I have to — but always as memorised wholes. This unit supplies the machinery so they can build a question nobody taught them. Asking someone to repeat is Unit 3 and polite requests are Unit 9; neither is retaught here, and the softeners in group 5 are lexical rather than a fourth pattern." },
-    { "type": "The subject-question exception", "note": "Who told you and what happened look like errors to a learner who has just internalised the helper rule, and they will over-correct to who did tell you. The fix is the doing-or-receiving test, drilled as pairs in Speaking 2. Presenting the exception in the same card as the rule, rather than later, prevents the over-correction from setting." },
-    { "type": "Short answers are a register issue, not a grammar one", "note": "A bare yes is grammatically complete and socially flat, and learners are rarely told this. The mechanism is mechanical — send back the word the question opened with — so the whole difficulty is remembering to do it at all. Speaking 3 asks for twelve recorded answers because the habit forms by repetition, not by understanding." },
-    { "type": "Tags: recognition before production", "note": "The card says plainly that producing tags is optional and understanding them is not. That is an honest statement of priority: a learner who never produces a tag is fine, and one who cannot hear that cold today, isn't it is an invitation to agree will mishandle the first conversation they have. Practice 6 asks learners to observe real tags and notice that almost none are genuine questions." },
-    { "type": "Why two versions of one conversation", "note": "Version A fails four times with perfect grammar, which is the point — the questions are the problem, not the English. Version B obtains a date, a name and a next step, and each is traceable to one specific question, so Writing 3 question 3 can be checked exactly. Practice 4 numbers 7 and 8 are deliberately the hardest, because both originals are complaints rather than questions and the rewrite requires finding the information underneath." },
-    { "type": "Device and AI safety", "note": "The AI tutor is a rehearsal partner and no task here is scored by it alone. Practice 5 asks learners to ask five real questions in real situations: the content of those exchanges, and anything about the people involved, must never be collected, shared or entered into the app. The task asks only for the question asked and whether it was answered, and that wording should stay." }
+    {
+      "type": "This unit works without you",
+      "note": "Three pattern cards, each with a worked example, and every exercise has an answer key. Practice 1 is the drill to repeat, and its answer key explains the helper-free cases rather than just listing them. Practices 5 and 6 are field tasks with no key and both carry a what-most-people-find note so a solo learner still gets feedback."
+    },
+    {
+      "type": "This unit owns question form",
+      "note": "Learners have been using question frames since Unit 1 — where is the station, how much is it, do I have to — but always as memorised wholes. This unit supplies the machinery so they can build a question nobody taught them. Asking someone to repeat is Unit 3 and polite requests are Unit 9; neither is retaught here, and the softeners in group 5 are lexical rather than a fourth pattern."
+    },
+    {
+      "type": "The subject-question exception",
+      "note": "Who told you and what happened look like errors to a learner who has just internalised the helper rule, and they will over-correct to who did tell you. The fix is the doing-or-receiving test, drilled as pairs in Speaking 2. Presenting the exception in the same card as the rule, rather than later, prevents the over-correction from setting."
+    },
+    {
+      "type": "Short answers are a register issue, not a grammar one",
+      "note": "A bare yes is grammatically complete and socially flat, and learners are rarely told this. The mechanism is mechanical — send back the word the question opened with — so the whole difficulty is remembering to do it at all. Speaking 3 asks for twelve recorded answers because the habit forms by repetition, not by understanding."
+    },
+    {
+      "type": "Tags: recognition before production",
+      "note": "The card says plainly that producing tags is optional and understanding them is not. That is an honest statement of priority: a learner who never produces a tag is fine, and one who cannot hear that cold today, isn't it is an invitation to agree will mishandle the first conversation they have. Practice 6 asks learners to observe real tags and notice that almost none are genuine questions."
+    },
+    {
+      "type": "Why two versions of one conversation",
+      "note": "Version A fails four times with perfect grammar, which is the point — the questions are the problem, not the English. Version B obtains a date, a name and a next step, and each is traceable to one specific question, so Writing 3 question 3 can be checked exactly. Practice 4 numbers 7 and 8 are deliberately the hardest, because both originals are complaints rather than questions and the rewrite requires finding the information underneath."
+    },
+    {
+      "type": "Device and AI safety",
+      "note": "The AI tutor is a rehearsal partner and no task here is scored by it alone. Practice 5 asks learners to ask five real questions in real situations: the content of those exchanges, and anything about the people involved, must never be collected, shared or entered into the app. The task asks only for the question asked and whether it was answered, and that wording should stay."
+    }
   ],
   "selfAssessment": [
-    { "statement": "I can build a question I have never been taught, in the right order." },
-    { "statement": "I can answer yes, I do rather than just yes." },
-    { "statement": "I can hear a question tag and know it is asking me to agree." },
-    { "statement": "I can ask a question in a way that gets an answer rather than a defence." }
+    {
+      "statement": "I can build a question I have never been taught, in the right order."
+    },
+    {
+      "statement": "I can answer yes, I do rather than just yes."
+    },
+    {
+      "statement": "I can hear a question tag and know it is asking me to agree."
+    },
+    {
+      "statement": "I can ask a question in a way that gets an answer rather than a defence."
+    }
   ],
   "assignment": {
     "title": "Twenty questions, and one conversation asked twice",

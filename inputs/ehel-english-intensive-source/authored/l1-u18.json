@@ -24,7 +24,10 @@
       "cefrLevel": "A2",
       "cefrSkill": "Spoken interaction",
       "cefrDescriptor": "I can say exactly what is wrong with something, so the right person comes.",
-      "cambridge": ["2SLm.02", "3SLm.03"]
+      "cambridge": [
+        "2SLm.02",
+        "3SLm.03"
+      ]
     },
     {
       "outcome": "Give the purpose of a request with so that, and distinguish purpose from the result of Unit 13.",
@@ -33,7 +36,10 @@
       "cefrLevel": "A2",
       "cefrSkill": "Writing",
       "cefrDescriptor": "I can say why I want something, not only what I want.",
-      "cambridge": ["3Rg.05", "2Wg.04"]
+      "cambridge": [
+        "3Rg.05",
+        "2Wg.04"
+      ]
     },
     {
       "outcome": "Complete a form correctly, including the four instructions that most often go wrong.",
@@ -42,7 +48,10 @@
       "cefrLevel": "A2",
       "cefrSkill": "Writing",
       "cefrDescriptor": "I can fill in a form without guessing what the boxes mean.",
-      "cambridge": ["2Ri.09", "1Ri.08"]
+      "cambridge": [
+        "2Ri.09",
+        "1Ri.08"
+      ]
     },
     {
       "outcome": "Make an appointment in the right order, and write a complaint that states a problem, a purpose and a wanted outcome.",
@@ -51,62 +60,442 @@
       "cefrLevel": "A2",
       "cefrSkill": "Reading",
       "cefrDescriptor": "I can make an appointment and write a complaint that asks for something specific.",
-      "cambridge": ["3Ri.16", "2Wc.05"]
+      "cambridge": [
+        "3Ri.16",
+        "2Wc.05"
+      ]
     }
   ],
   "groups": [
     {
       "title": "What is wrong",
       "words": [
-        { "w": "broken", "pos": "adjective", "meaning": "Physically damaged so that it does not work.", "example": "The handle is broken.", "practice": ["The handle is broken.", "It is broken, not just switched off.", "Something inside is broken.", "The window was broken last week.", "It is not broken — it is not working properly."], "starter": "The handle is", "tutor": "Say it is broken and it is not working properly. Those send different people." },
-        { "w": "fault", "pos": "noun", "meaning": "Something wrong with how a thing works.", "example": "There is a fault with the heating.", "practice": ["There is a fault with the heating.", "The fault started on Tuesday.", "They found the fault quickly.", "It is the same fault as last time.", "Report the fault today."], "starter": "There is a fault with the", "tutor": "Notice fault takes with. Say there is a fault with something." },
-        { "w": "damage", "pos": "noun", "meaning": "Harm done to something.", "example": "There is some damage to the door.", "practice": ["There is some damage to the door.", "The damage is worse than it looks.", "Report any damage immediately.", "There was no damage.", "The storm caused a lot of damage."], "starter": "There is some damage to the", "tutor": "Damage takes to. It has no plural — say a lot of damage, not damages." },
-        { "w": "leak", "pos": "noun", "meaning": "A hole or crack that lets water or gas escape.", "example": "There is a leak under the sink.", "practice": ["There is a leak under the sink.", "The leak is getting worse.", "It is a small leak but it is constant.", "The leak started after the cold weather.", "They fixed the leak the same day."], "starter": "There is a leak under the", "tutor": "Say where a leak is and whether it is getting worse. Both decide how quickly somebody comes." },
-        { "w": "blocked", "pos": "adjective", "meaning": "Stopped up so nothing can pass through.", "example": "The drain is blocked.", "practice": ["The drain is blocked.", "The road is blocked.", "It has been blocked since Monday.", "The exit must not be blocked.", "It is partly blocked, not completely."], "starter": "The drain is", "tutor": "Say partly blocked and completely blocked. The difference matters to whoever comes." },
-        { "w": "missing", "pos": "adjective", "meaning": "Not there; absent from where it should be.", "example": "One part is missing.", "practice": ["One part is missing.", "The label is missing.", "Two pages are missing from the form.", "Nothing is missing.", "Is anything missing?"], "starter": "One part is", "tutor": "Say what is missing rather than that something is wrong. It is more useful." }
+        {
+          "w": "broken",
+          "pos": "adjective",
+          "meaning": "Physically damaged so that it does not work.",
+          "example": "The handle is broken.",
+          "practice": [
+            "It is broken, not just switched off.",
+            "Something inside is broken.",
+            "The window was broken last week.",
+            "It is not broken — it is not working properly."
+          ],
+          "starter": "The handle is",
+          "tutor": "Say it is broken and it is not working properly. Those send different people."
+        },
+        {
+          "w": "fault",
+          "pos": "noun",
+          "meaning": "Something wrong with how a thing works.",
+          "example": "There is a fault with the heating.",
+          "practice": [
+            "The fault started on Tuesday.",
+            "They found the fault quickly.",
+            "It is the same fault as last time.",
+            "Report the fault today."
+          ],
+          "starter": "There is a fault with the",
+          "tutor": "Notice fault takes with. Say there is a fault with something."
+        },
+        {
+          "w": "damage",
+          "pos": "noun",
+          "meaning": "Harm done to something.",
+          "example": "There is some damage to the door.",
+          "practice": [
+            "The damage is worse than it looks.",
+            "Report any damage immediately.",
+            "There was no damage.",
+            "The storm caused a lot of damage."
+          ],
+          "starter": "There is some damage to the",
+          "tutor": "Damage takes to. It has no plural — say a lot of damage, not damages."
+        },
+        {
+          "w": "leak",
+          "pos": "noun",
+          "meaning": "A hole or crack that lets water or gas escape.",
+          "example": "There is a leak under the sink.",
+          "practice": [
+            "The leak is getting worse.",
+            "It is a small leak but it is constant.",
+            "The leak started after the cold weather.",
+            "They fixed the leak the same day."
+          ],
+          "starter": "There is a leak under the",
+          "tutor": "Say where a leak is and whether it is getting worse. Both decide how quickly somebody comes."
+        },
+        {
+          "w": "blocked",
+          "pos": "adjective",
+          "meaning": "Stopped up so nothing can pass through.",
+          "example": "The drain is blocked.",
+          "practice": [
+            "The road is blocked.",
+            "It has been blocked since Monday.",
+            "The exit must not be blocked.",
+            "It is partly blocked, not completely."
+          ],
+          "starter": "The drain is",
+          "tutor": "Say partly blocked and completely blocked. The difference matters to whoever comes."
+        },
+        {
+          "w": "missing",
+          "pos": "adjective",
+          "meaning": "Not there; absent from where it should be.",
+          "example": "One part is missing.",
+          "practice": [
+            "The label is missing.",
+            "Two pages are missing from the form.",
+            "Nothing is missing.",
+            "Is anything missing?"
+          ],
+          "starter": "One part is",
+          "tutor": "Say what is missing rather than that something is wrong. It is more useful."
+        }
       ]
     },
     {
       "title": "Getting it fixed",
       "words": [
-        { "w": "fix", "pos": "verb", "meaning": "To repair something, or to arrange something firmly.", "example": "Can you fix it today?", "practice": ["Can you fix it today?", "They fixed it in about an hour.", "It cannot be fixed.", "We have fixed a date.", "It is fixed for now but it will happen again."], "starter": "Can you fix it", "tutor": "Fix means repair and also means arrange firmly. Say one sentence with each." },
-        { "w": "replace", "pos": "verb", "meaning": "To put a new one in place of the old one.", "example": "They are going to replace the whole unit.", "practice": ["They are going to replace the whole unit.", "It is cheaper to replace than to fix.", "The part was replaced last year.", "Can you replace it or only fix it?", "They replaced it free."], "starter": "They are going to replace the whole", "tutor": "Ask whether something will be fixed or replaced. The answer changes the cost and the time." },
-        { "w": "service", "pos": "noun", "meaning": "Regular checking and maintenance; or help given to customers.", "example": "It is due for a service.", "practice": ["It is due for a service.", "The service is every twelve months.", "The service here is very good.", "It has not had a service for two years.", "Book it in for a service."], "starter": "It is due for a", "tutor": "Service means maintenance and also means how customers are treated. Say both." },
-        { "w": "engineer", "pos": "noun", "meaning": "A person trained to fix technical equipment.", "example": "An engineer is coming on Thursday.", "practice": ["An engineer is coming on Thursday.", "The engineer said it needs a new part.", "Can you send an engineer?", "The engineer could not find the fault.", "Two engineers came."], "starter": "An engineer is coming on", "tutor": "Ask them to send an engineer. Say what the fault is in the same sentence." },
-        { "w": "spare", "pos": "adjective", "meaning": "Kept in addition, ready to be used if needed.", "example": "Do you have a spare part for this?", "practice": ["Do you have a spare part for this?", "There is a spare key in the office.", "Keep a spare in the van.", "We have no spare capacity this week.", "Bring a spare, just in case."], "starter": "Do you have a spare part for", "tutor": "Say spare part and spare key. Spare goes in front of the noun." },
-        { "w": "guarantee", "pos": "noun", "meaning": "A promise to repair or replace something within a period.", "example": "It is still under guarantee.", "practice": ["It is still under guarantee.", "The guarantee is for two years.", "The guarantee ran out last month.", "Is it under guarantee?", "Keep the receipt for the guarantee."], "starter": "It is still under", "tutor": "Say it is still under guarantee. That one sentence often decides who pays." }
+        {
+          "w": "fix",
+          "pos": "verb",
+          "meaning": "To repair something, or to arrange something firmly.",
+          "example": "Can you fix it today?",
+          "practice": [
+            "They fixed it in about an hour.",
+            "It cannot be fixed.",
+            "We have fixed a date.",
+            "It is fixed for now but it will happen again."
+          ],
+          "starter": "Can you fix it",
+          "tutor": "Fix means repair and also means arrange firmly. Say one sentence with each."
+        },
+        {
+          "w": "replace",
+          "pos": "verb",
+          "meaning": "To put a new one in place of the old one.",
+          "example": "They are going to replace the whole unit.",
+          "practice": [
+            "It is cheaper to replace than to fix.",
+            "The part was replaced last year.",
+            "Can you replace it or only fix it?",
+            "They replaced it free."
+          ],
+          "starter": "They are going to replace the whole",
+          "tutor": "Ask whether something will be fixed or replaced. The answer changes the cost and the time."
+        },
+        {
+          "w": "service",
+          "pos": "noun",
+          "meaning": "Regular checking and maintenance; or help given to customers.",
+          "example": "It is due for a service.",
+          "practice": [
+            "The service is every twelve months.",
+            "The service here is very good.",
+            "It has not had a service for two years.",
+            "Book it in for a service."
+          ],
+          "starter": "It is due for a",
+          "tutor": "Service means maintenance and also means how customers are treated. Say both."
+        },
+        {
+          "w": "engineer",
+          "pos": "noun",
+          "meaning": "A person trained to fix technical equipment.",
+          "example": "An engineer is coming on Thursday.",
+          "practice": [
+            "The engineer said it needs a new part.",
+            "Can you send an engineer?",
+            "The engineer could not find the fault.",
+            "Two engineers came."
+          ],
+          "starter": "An engineer is coming on",
+          "tutor": "Ask them to send an engineer. Say what the fault is in the same sentence."
+        },
+        {
+          "w": "spare",
+          "pos": "adjective",
+          "meaning": "Kept in addition, ready to be used if needed.",
+          "example": "Do you have a spare part for this?",
+          "practice": [
+            "There is a spare key in the office.",
+            "Keep a spare in the van.",
+            "We have no spare capacity this week.",
+            "Bring a spare, just in case."
+          ],
+          "starter": "Do you have a spare part for",
+          "tutor": "Say spare part and spare key. Spare goes in front of the noun."
+        },
+        {
+          "w": "guarantee",
+          "pos": "noun",
+          "meaning": "A promise to repair or replace something within a period.",
+          "example": "It is still under guarantee.",
+          "practice": [
+            "The guarantee is for two years.",
+            "The guarantee ran out last month.",
+            "Is it under guarantee?",
+            "Keep the receipt for the guarantee."
+          ],
+          "starter": "It is still under",
+          "tutor": "Say it is still under guarantee. That one sentence often decides who pays."
+        }
       ]
     },
     {
       "title": "Complaining well",
       "words": [
-        { "w": "complain", "pos": "verb", "meaning": "To say formally that something is wrong.", "example": "I would like to complain about the delay.", "practice": ["I would like to complain about the delay.", "She complained twice and got no answer.", "I am not complaining — I am asking.", "Who do I complain to?", "They complained about the noise."], "starter": "I would like to complain about the", "tutor": "Notice complain takes about for the thing and to for the person." },
-        { "w": "complaint", "pos": "noun", "meaning": "A formal statement that something is wrong.", "example": "I would like to make a complaint.", "practice": ["I would like to make a complaint.", "My complaint is about the second delivery.", "They have not answered my complaint.", "It is a written complaint.", "The complaint was upheld."], "starter": "I would like to make a", "tutor": "English says make a complaint, not do a complaint. Say make a complaint twice." },
-        { "w": "fair", "pos": "adjective", "meaning": "Reasonable and right for everybody involved.", "example": "That does not seem fair.", "practice": ["That does not seem fair.", "It is a fair price.", "I think that is fair.", "To be fair, they did apologise.", "That is not a fair comparison."], "starter": "That does not seem", "tutor": "Say that does not seem fair. It is firmer than complaining and easier to say." },
-        { "w": "unfair", "pos": "adjective", "meaning": "Not reasonable or right.", "example": "The charge seems unfair to me.", "practice": ["The charge seems unfair to me.", "That is completely unfair.", "It would be unfair to the others.", "I am not saying it is unfair.", "The rule is unfair but it is the rule."], "starter": "The charge seems unfair to", "tutor": "Say seems unfair to me rather than is unfair. It is harder to argue with." },
-        { "w": "urgent", "pos": "adjective", "meaning": "Needing to be dealt with immediately.", "example": "It is not urgent but it is getting worse.", "practice": ["It is not urgent but it is getting worse.", "This is urgent.", "Is it urgent?", "Mark it urgent.", "It became urgent on Friday."], "starter": "It is not urgent but it is getting", "tutor": "Say it is not urgent but it is getting worse. That sentence gets things done." }
+        {
+          "w": "complain",
+          "pos": "verb",
+          "meaning": "To say formally that something is wrong.",
+          "example": "I would like to complain about the delay.",
+          "practice": [
+            "She complained twice and got no answer.",
+            "I am not complaining — I am asking.",
+            "Who do I complain to?",
+            "They complained about the noise."
+          ],
+          "starter": "I would like to complain about the",
+          "tutor": "Notice complain takes about for the thing and to for the person."
+        },
+        {
+          "w": "complaint",
+          "pos": "noun",
+          "meaning": "A formal statement that something is wrong.",
+          "example": "I would like to make a complaint.",
+          "practice": [
+            "My complaint is about the second delivery.",
+            "They have not answered my complaint.",
+            "It is a written complaint.",
+            "The complaint was upheld."
+          ],
+          "starter": "I would like to make a",
+          "tutor": "English says make a complaint, not do a complaint. Say make a complaint twice."
+        },
+        {
+          "w": "fair",
+          "pos": "adjective",
+          "meaning": "Reasonable and right for everybody involved.",
+          "example": "That does not seem fair.",
+          "practice": [
+            "It is a fair price.",
+            "I think that is fair.",
+            "To be fair, they did apologise.",
+            "That is not a fair comparison."
+          ],
+          "starter": "That does not seem",
+          "tutor": "Say that does not seem fair. It is firmer than complaining and easier to say."
+        },
+        {
+          "w": "unfair",
+          "pos": "adjective",
+          "meaning": "Not reasonable or right.",
+          "example": "The charge seems unfair to me.",
+          "practice": [
+            "That is completely unfair.",
+            "It would be unfair to the others.",
+            "I am not saying it is unfair.",
+            "The rule is unfair but it is the rule."
+          ],
+          "starter": "The charge seems unfair to",
+          "tutor": "Say seems unfair to me rather than is unfair. It is harder to argue with."
+        },
+        {
+          "w": "urgent",
+          "pos": "adjective",
+          "meaning": "Needing to be dealt with immediately.",
+          "example": "It is not urgent but it is getting worse.",
+          "practice": [
+            "This is urgent.",
+            "Is it urgent?",
+            "Mark it urgent.",
+            "It became urgent on Friday."
+          ],
+          "starter": "It is not urgent but it is getting",
+          "tutor": "Say it is not urgent but it is getting worse. That sentence gets things done."
+        }
       ]
     },
     {
       "title": "On a form",
       "words": [
-        { "w": "section", "pos": "noun", "meaning": "One part of a form or document.", "example": "Complete section 3 only if you are employed.", "practice": ["Complete section 3 only if you are employed.", "Which section do I fill in?", "Section 2 does not apply to me.", "Read the whole section first.", "The section on the back is optional."], "starter": "Complete section 3 only if you are", "tutor": "Say which section applies to you and which does not. Forms often say only if." },
-        { "w": "tick", "pos": "verb", "meaning": "To mark a box to show your answer.", "example": "Tick one box only.", "practice": ["Tick one box only.", "Tick all that apply.", "I ticked the wrong box.", "Do not tick more than one.", "Tick here if you need a reply."], "starter": "Tick one box", "tutor": "Notice tick one box only and tick all that apply mean different things. Say both." },
-        { "w": "delete", "pos": "verb", "meaning": "To cross out or remove.", "example": "Delete as applicable.", "practice": ["Delete as applicable.", "Delete the ones that do not apply.", "I deleted the wrong line.", "Do not delete anything on this page.", "Delete where it says Mr or Ms."], "starter": "Delete as", "tutor": "Delete as applicable means cross out the wrong ones. Say what it means in your own words." },
-        { "w": "signature", "pos": "noun", "meaning": "Your name written by you to show you agree.", "example": "The form needs a signature and a date.", "practice": ["The form needs a signature and a date.", "There is no signature on this one.", "Your signature goes at the bottom.", "They asked for a second signature.", "The signature must match."], "starter": "The form needs a signature and a", "tutor": "Say signature and date together. Forms almost always want both." },
-        { "w": "occupation", "pos": "noun", "meaning": "Your job. Not the name of your employer.", "example": "Under occupation, write what you do.", "practice": ["Under occupation, write what you do.", "Occupation: warehouse assistant.", "Leave occupation blank if you are not working.", "What do I put for occupation?", "Occupation is not the same as employer."], "starter": "Under occupation, write what you", "tutor": "Occupation is your job, not your company. Say your own occupation in two words." },
-        { "w": "postcode", "pos": "noun", "meaning": "The short code that identifies a small area for post.", "example": "The postcode goes in the last box.", "practice": ["The postcode goes in the last box.", "What is your postcode?", "I do not know the postcode.", "The postcode is wrong on this form.", "Write the postcode in block capitals."], "starter": "The postcode goes in the last", "tutor": "Ask what a postcode is. Every country has a version and the name is different." }
+        {
+          "w": "section",
+          "pos": "noun",
+          "meaning": "One part of a form or document.",
+          "example": "Complete section 3 only if you are employed.",
+          "practice": [
+            "Which section do I fill in?",
+            "Section 2 does not apply to me.",
+            "Read the whole section first.",
+            "The section on the back is optional."
+          ],
+          "starter": "Complete section 3 only if you are",
+          "tutor": "Say which section applies to you and which does not. Forms often say only if."
+        },
+        {
+          "w": "tick",
+          "pos": "verb",
+          "meaning": "To mark a box to show your answer.",
+          "example": "Tick one box only.",
+          "practice": [
+            "Tick all that apply.",
+            "I ticked the wrong box.",
+            "Do not tick more than one.",
+            "Tick here if you need a reply."
+          ],
+          "starter": "Tick one box",
+          "tutor": "Notice tick one box only and tick all that apply mean different things. Say both."
+        },
+        {
+          "w": "delete",
+          "pos": "verb",
+          "meaning": "To cross out or remove.",
+          "example": "Delete as applicable.",
+          "practice": [
+            "Delete the ones that do not apply.",
+            "I deleted the wrong line.",
+            "Do not delete anything on this page.",
+            "Delete where it says Mr or Ms."
+          ],
+          "starter": "Delete as",
+          "tutor": "Delete as applicable means cross out the wrong ones. Say what it means in your own words."
+        },
+        {
+          "w": "signature",
+          "pos": "noun",
+          "meaning": "Your name written by you to show you agree.",
+          "example": "The form needs a signature and a date.",
+          "practice": [
+            "There is no signature on this one.",
+            "Your signature goes at the bottom.",
+            "They asked for a second signature.",
+            "The signature must match."
+          ],
+          "starter": "The form needs a signature and a",
+          "tutor": "Say signature and date together. Forms almost always want both."
+        },
+        {
+          "w": "occupation",
+          "pos": "noun",
+          "meaning": "Your job. Not the name of your employer.",
+          "example": "Under occupation, write what you do.",
+          "practice": [
+            "Occupation: warehouse assistant.",
+            "Leave occupation blank if you are not working.",
+            "What do I put for occupation?",
+            "Occupation is not the same as employer."
+          ],
+          "starter": "Under occupation, write what you",
+          "tutor": "Occupation is your job, not your company. Say your own occupation in two words."
+        },
+        {
+          "w": "postcode",
+          "pos": "noun",
+          "meaning": "The short code that identifies a small area for post.",
+          "example": "The postcode goes in the last box.",
+          "practice": [
+            "What is your postcode?",
+            "I do not know the postcode.",
+            "The postcode is wrong on this form.",
+            "Write the postcode in block capitals."
+          ],
+          "starter": "The postcode goes in the last",
+          "tutor": "Ask what a postcode is. Every country has a version and the name is different."
+        }
       ]
     },
     {
       "title": "Getting it through",
       "words": [
-        { "w": "deadline", "pos": "noun", "meaning": "The latest time by which something must be done.", "example": "The deadline is the end of the month.", "practice": ["The deadline is the end of the month.", "I missed the deadline.", "What is the deadline?", "The deadline was extended.", "There is no deadline for this one."], "starter": "The deadline is the end of the", "tutor": "Ask what the deadline is before you start, not after. Say the question." },
-        { "w": "attach", "pos": "verb", "meaning": "To send or fasten something together with a document.", "example": "Attach a copy of the receipt.", "practice": ["Attach a copy of the receipt.", "I have attached the form.", "Nothing was attached.", "Attach it to the email.", "Do I have to attach anything?"], "starter": "Attach a copy of the", "tutor": "Ask whether you have to attach anything. It is the question that prevents a rejected form." },
-        { "w": "department", "pos": "noun", "meaning": "One part of an organisation, dealing with one kind of thing.", "example": "That is a different department.", "practice": ["That is a different department.", "Which department do I need?", "The department deals with all repairs.", "I was sent to the wrong department.", "Ask the housing department."], "starter": "That is a different", "tutor": "Ask which department you need. It saves being passed from one to another." },
-        { "w": "deposit", "pos": "noun", "meaning": "Money paid in advance and often returned later.", "example": "The deposit is returned at the end.", "practice": ["The deposit is returned at the end.", "How much is the deposit?", "I paid a deposit last month.", "The deposit was not returned.", "There is no deposit on this one."], "starter": "The deposit is returned at the", "tutor": "Ask how much the deposit is and when it comes back. Both questions matter." },
-        { "w": "submit", "pos": "verb", "meaning": "To send a form or document to be considered.", "example": "Submit the form before the deadline.", "practice": ["Submit the form before the deadline.", "I submitted it last week.", "How do I submit it?", "It was submitted twice by mistake.", "Nothing has been submitted yet."], "starter": "Submit the form before the", "tutor": "Submit is more formal than send in. Say where you would see each." },
-        { "w": "process", "pos": "verb", "meaning": "To deal with a form or request through the official steps.", "example": "It takes two weeks to process.", "practice": ["It takes two weeks to process.", "Has my form been processed?", "They are still processing it.", "It was processed the same day.", "How long does it take to process?"], "starter": "It takes two weeks to", "tutor": "Ask how long something takes to process. Then ask what happens next." }
+        {
+          "w": "deadline",
+          "pos": "noun",
+          "meaning": "The latest time by which something must be done.",
+          "example": "The deadline is the end of the month.",
+          "practice": [
+            "I missed the deadline.",
+            "What is the deadline?",
+            "The deadline was extended.",
+            "There is no deadline for this one."
+          ],
+          "starter": "The deadline is the end of the",
+          "tutor": "Ask what the deadline is before you start, not after. Say the question."
+        },
+        {
+          "w": "attach",
+          "pos": "verb",
+          "meaning": "To send or fasten something together with a document.",
+          "example": "Attach a copy of the receipt.",
+          "practice": [
+            "I have attached the form.",
+            "Nothing was attached.",
+            "Attach it to the email.",
+            "Do I have to attach anything?"
+          ],
+          "starter": "Attach a copy of the",
+          "tutor": "Ask whether you have to attach anything. It is the question that prevents a rejected form."
+        },
+        {
+          "w": "department",
+          "pos": "noun",
+          "meaning": "One part of an organisation, dealing with one kind of thing.",
+          "example": "That is a different department.",
+          "practice": [
+            "Which department do I need?",
+            "The department deals with all repairs.",
+            "I was sent to the wrong department.",
+            "Ask the housing department."
+          ],
+          "starter": "That is a different",
+          "tutor": "Ask which department you need. It saves being passed from one to another."
+        },
+        {
+          "w": "deposit",
+          "pos": "noun",
+          "meaning": "Money paid in advance and often returned later.",
+          "example": "The deposit is returned at the end.",
+          "practice": [
+            "How much is the deposit?",
+            "I paid a deposit last month.",
+            "The deposit was not returned.",
+            "There is no deposit on this one."
+          ],
+          "starter": "The deposit is returned at the",
+          "tutor": "Ask how much the deposit is and when it comes back. Both questions matter."
+        },
+        {
+          "w": "submit",
+          "pos": "verb",
+          "meaning": "To send a form or document to be considered.",
+          "example": "Submit the form before the deadline.",
+          "practice": [
+            "I submitted it last week.",
+            "How do I submit it?",
+            "It was submitted twice by mistake.",
+            "Nothing has been submitted yet."
+          ],
+          "starter": "Submit the form before the",
+          "tutor": "Submit is more formal than send in. Say where you would see each."
+        },
+        {
+          "w": "process",
+          "pos": "verb",
+          "meaning": "To deal with a form or request through the official steps.",
+          "example": "It takes two weeks to process.",
+          "practice": [
+            "Has my form been processed?",
+            "They are still processing it.",
+            "It was processed the same day.",
+            "How long does it take to process?"
+          ],
+          "starter": "It takes two weeks to",
+          "tutor": "Ask how long something takes to process. Then ask what happens next."
+        }
       ]
     }
   ],
@@ -130,16 +519,89 @@
     }
   ],
   "comprehension": [
-    { "section": "Reading", "reading": 1, "q": "What is the difference between it's broken and it's not working properly?", "a": "Broken means a part has physically failed. Not working properly means it runs but does the wrong thing.", "why": "The two send different people — one with parts, one to look at settings — so the choice decides how long you wait.", "outcome": 1 },
-    { "section": "Reading", "reading": 1, "q": "Why does the text say the choice of sentence matters so much?", "a": "Because the person you tell decides what to do next based on your sentence, and usually decides before speaking to you again.", "why": "The decision happens out of sight and cannot be corrected later, which is why the first sentence carries so much weight.", "outcome": 1, "difficulty": "Stretch" },
-    { "section": "Reading", "reading": 1, "q": "Why does the text call I've switched it off and on again the most underrated sentence in the unit?", "a": "Because without it, the first thing you will be asked to do is the thing you have already done, and the conversation restarts.", "why": "It is a small piece of information that removes a whole round of exchange, and almost nobody volunteers it.", "outcome": 1 },
-    { "section": "Reading", "reading": 2, "q": "What happens when you give the purpose as well as the request?", "a": "If what you asked for is not available, the other person can often solve the problem a different way — because you told them what the problem was.", "why": "The example is precise: no early appointment, but a late one at six would also stop you missing work. That answer is unreachable without the purpose.", "outcome": 2 },
-    { "section": "Reading", "reading": 2, "q": "Why does the text say a request is a guess?", "a": "Because the request is your guess at a solution, while the purpose is the actual need — and people can help with a need but can only say yes or no to a guess.", "why": "This is the general principle underneath the grammar, and it applies far beyond appointments.", "outcome": 2, "difficulty": "Stretch" },
-    { "section": "Reading", "reading": 2, "q": "What caution does the text give about explaining?", "a": "A purpose is one clause and it helps. A long account of your week is an explanation, and it makes the request harder to say yes to rather than easier.", "why": "The useful version is short. Learners often assume more explanation means more sympathy, and it works the other way.", "outcome": 2 },
-    { "section": "Document", "reading": 3, "q": "The form says tick ONE box only for the problem, and tick all that apply for urgency. Why the difference?", "a": "The problem goes to one department, so only one category can be chosen. Urgency is a list of separate conditions and several can be true at once.", "why": "Two similar-looking instructions with opposite meanings, sitting four lines apart. Reading them as the same is the commonest form error.", "outcome": 3 },
-    { "section": "Document", "reading": 3, "q": "Delete as applicable appears next to Mr / Ms / Mx. What are you being asked to do?", "a": "Cross out the two that do not apply to you and leave the one that does.", "why": "The instruction looks like it is asking you to remove your answer, and it is the opposite — you remove the wrong answers.", "outcome": 3 },
-    { "section": "Document", "reading": 3, "q": "The complaint uses so that twice. What are the two purposes?", "a": "So that there is a record of the delay, and so that the damage is on file before it gets worse.", "why": "Neither is a request. Both explain why the letter exists, which makes the two requests that follow harder to ignore.", "outcome": 4 },
-    { "section": "Document", "reading": 3, "q": "The complaint asks for two specific things and gives a date. Why is that better than asking them to sort it out?", "a": "Because a specific request can be answered and tracked, and a date makes it clear when the absence of a reply becomes a new fact.", "why": "The letter is built so that doing nothing is visible. Sort it out gives no way to tell whether anything has happened.", "outcome": 4, "difficulty": "Stretch" }
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "What is the difference between it's broken and it's not working properly?",
+      "a": "Broken means a part has physically failed. Not working properly means it runs but does the wrong thing.",
+      "why": "The two send different people — one with parts, one to look at settings — so the choice decides how long you wait.",
+      "outcome": 1
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "Why does the text say the choice of sentence matters so much?",
+      "a": "Because the person you tell decides what to do next based on your sentence, and usually decides before speaking to you again.",
+      "why": "The decision happens out of sight and cannot be corrected later, which is why the first sentence carries so much weight.",
+      "outcome": 1,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "Why does the text call I've switched it off and on again the most underrated sentence in the unit?",
+      "a": "Because without it, the first thing you will be asked to do is the thing you have already done, and the conversation restarts.",
+      "why": "It is a small piece of information that removes a whole round of exchange, and almost nobody volunteers it.",
+      "outcome": 1
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "What happens when you give the purpose as well as the request?",
+      "a": "If what you asked for is not available, the other person can often solve the problem a different way — because you told them what the problem was.",
+      "why": "The example is precise: no early appointment, but a late one at six would also stop you missing work. That answer is unreachable without the purpose.",
+      "outcome": 2
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "Why does the text say a request is a guess?",
+      "a": "Because the request is your guess at a solution, while the purpose is the actual need — and people can help with a need but can only say yes or no to a guess.",
+      "why": "This is the general principle underneath the grammar, and it applies far beyond appointments.",
+      "outcome": 2,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "What caution does the text give about explaining?",
+      "a": "A purpose is one clause and it helps. A long account of your week is an explanation, and it makes the request harder to say yes to rather than easier.",
+      "why": "The useful version is short. Learners often assume more explanation means more sympathy, and it works the other way.",
+      "outcome": 2
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "The form says tick ONE box only for the problem, and tick all that apply for urgency. Why the difference?",
+      "a": "The problem goes to one department, so only one category can be chosen. Urgency is a list of separate conditions and several can be true at once.",
+      "why": "Two similar-looking instructions with opposite meanings, sitting four lines apart. Reading them as the same is the commonest form error.",
+      "outcome": 3
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "Delete as applicable appears next to Mr / Ms / Mx. What are you being asked to do?",
+      "a": "Cross out the two that do not apply to you and leave the one that does.",
+      "why": "The instruction looks like it is asking you to remove your answer, and it is the opposite — you remove the wrong answers.",
+      "outcome": 3
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "The complaint uses so that twice. What are the two purposes?",
+      "a": "So that there is a record of the delay, and so that the damage is on file before it gets worse.",
+      "why": "Neither is a request. Both explain why the letter exists, which makes the two requests that follow harder to ignore.",
+      "outcome": 4
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "The complaint asks for two specific things and gives a date. Why is that better than asking them to sort it out?",
+      "a": "Because a specific request can be answered and tracked, and a date makes it clear when the absence of a reply becomes a new fact.",
+      "why": "The letter is built so that doing nothing is visible. Sort it out gives no way to tell whether anything has happened.",
+      "outcome": 4,
+      "difficulty": "Stretch"
+    }
   ],
   "grammar": [
     {
@@ -180,12 +642,48 @@
     }
   ],
   "speaking": [
-    { "title": "Speaking 1 — Five ways", "type": "Core pattern drill", "instructions": "Say the five sentences aloud, five times each.\nIt doesn't work. / It isn't working. / It's broken. / There's something wrong with it. / It's not working properly.\nThen take six things around you and say which sentence you would use if each one failed, and why.\nRecord the six.\nPlay back and count how many times you said broken. If it is more than one or two, you are using it as a general word, which is the error this card exists to prevent.", "tutor": "Describe six faults and ask the tutor what kind of help it would send for each.", "outcome": 1 },
-    { "title": "Speaking 2 — The full fault report", "type": "Extended turn", "instructions": "Choose a real fault — something at home, at work, or something that failed recently.\nReport it in four sentences: which of the five it is, what exactly happens, when it started, and what you have already tried.\nRecord it.\nThen listen back and ask: could somebody decide what to bring from this alone? If not, the missing piece is almost always the second sentence — what exactly happens.", "tutor": "Report a fault to the tutor and ask what it would still need to know before sending somebody.", "outcome": 1 },
-    { "title": "Speaking 3 — Say why", "type": "Core pattern drill", "instructions": "Take six things you might ask for.\nSay each one twice: once as a bare request, once with so that.\nCould I have an early appointment? / Could I have an early appointment so that I don't miss work?\nRecord all twelve.\nListen back to each pair and ask which one you would find easier to answer if somebody asked you. That is the whole argument for this pattern.", "tutor": "Make six requests with a purpose and ask the tutor to offer an alternative solution to each purpose.", "outcome": 2 },
-    { "title": "Speaking 4 — Making an appointment", "type": "Exchange", "instructions": "Say both sides, then change the problem three times.\nA: I'd like to make an appointment about a leak under the kitchen sink.\nB: When are you available?\nA: Any morning this week. It's not urgent, but it is getting worse.\nB: I can do Thursday morning, between nine and one.\nA: Thursday morning is fine. Do I need to be there the whole time?\nB: Someone needs to be there, yes.\nA: So, Thursday, nine to one, and someone has to be in. Is that right?\nNotice A gave the urgency without being asked, and confirmed at the end.\nRecord one full version.", "tutor": "Make an appointment with the tutor and give the urgency before it asks.", "outcome": 4 },
-    { "title": "Speaking 5 — Reading the form aloud", "type": "Core pattern drill", "instructions": "Open Reading 3.\nRead every instruction on the form aloud — the labels, the bracketed notes, and the two lines at the bottom.\nThen say aloud what each of these means: block capitals, delete as applicable, tick one box only, tick all that apply, Section B is for office use only.\nRecord the five explanations.\nThe two tick instructions are four lines apart and mean opposite things. Say both aloud one after the other.", "tutor": "Ask the tutor to explain four form instructions and check its answers against the card.", "outcome": 3 },
-    { "title": "Speaking 6 — Read the complaint aloud", "type": "Assessment rehearsal", "instructions": "Open Reading 3.\nRead the complaint aloud, all the way through.\nThen say aloud: what the two so that clauses are for, and why neither of them is a request.\nThen say what two specific things the letter asks for, and why asking for those is better than asking them to sort it out.\nThen say what the date at the end does.\nRecord the last three parts and keep them.", "tutor": "Read the tutor the complaint and ask what it would have to do to answer it properly.", "outcome": 4 }
+    {
+      "title": "Speaking 1 — Five ways",
+      "type": "Core pattern drill",
+      "instructions": "Say the five sentences aloud, five times each.\nIt doesn't work. / It isn't working. / It's broken. / There's something wrong with it. / It's not working properly.\nThen take six things around you and say which sentence you would use if each one failed, and why.\nRecord the six.\nPlay back and count how many times you said broken. If it is more than one or two, you are using it as a general word, which is the error this card exists to prevent.",
+      "tutor": "Describe six faults and ask the tutor what kind of help it would send for each.",
+      "outcome": 1
+    },
+    {
+      "title": "Speaking 2 — The full fault report",
+      "type": "Extended turn",
+      "instructions": "Choose a real fault — something at home, at work, or something that failed recently.\nReport it in four sentences: which of the five it is, what exactly happens, when it started, and what you have already tried.\nRecord it.\nThen listen back and ask: could somebody decide what to bring from this alone? If not, the missing piece is almost always the second sentence — what exactly happens.",
+      "tutor": "Report a fault to the tutor and ask what it would still need to know before sending somebody.",
+      "outcome": 1
+    },
+    {
+      "title": "Speaking 3 — Say why",
+      "type": "Core pattern drill",
+      "instructions": "Take six things you might ask for.\nSay each one twice: once as a bare request, once with so that.\nCould I have an early appointment? / Could I have an early appointment so that I don't miss work?\nRecord all twelve.\nListen back to each pair and ask which one you would find easier to answer if somebody asked you. That is the whole argument for this pattern.",
+      "tutor": "Make six requests with a purpose and ask the tutor to offer an alternative solution to each purpose.",
+      "outcome": 2
+    },
+    {
+      "title": "Speaking 4 — Making an appointment",
+      "type": "Exchange",
+      "instructions": "Say both sides, then change the problem three times.\nA: I'd like to make an appointment about a leak under the kitchen sink.\nB: When are you available?\nA: Any morning this week. It's not urgent, but it is getting worse.\nB: I can do Thursday morning, between nine and one.\nA: Thursday morning is fine. Do I need to be there the whole time?\nB: Someone needs to be there, yes.\nA: So, Thursday, nine to one, and someone has to be in. Is that right?\nNotice A gave the urgency without being asked, and confirmed at the end.\nRecord one full version.",
+      "tutor": "Make an appointment with the tutor and give the urgency before it asks.",
+      "outcome": 4
+    },
+    {
+      "title": "Speaking 5 — Reading the form aloud",
+      "type": "Core pattern drill",
+      "instructions": "Open Reading 3.\nRead every instruction on the form aloud — the labels, the bracketed notes, and the two lines at the bottom.\nThen say aloud what each of these means: block capitals, delete as applicable, tick one box only, tick all that apply, Section B is for office use only.\nRecord the five explanations.\nThe two tick instructions are four lines apart and mean opposite things. Say both aloud one after the other.",
+      "tutor": "Ask the tutor to explain four form instructions and check its answers against the card.",
+      "outcome": 3
+    },
+    {
+      "title": "Speaking 6 — Read the complaint aloud",
+      "type": "Assessment rehearsal",
+      "instructions": "Open Reading 3.\nRead the complaint aloud, all the way through.\nThen say aloud: what the two so that clauses are for, and why neither of them is a request.\nThen say what two specific things the letter asks for, and why asking for those is better than asking them to sort it out.\nThen say what the date at the end does.\nRecord the last three parts and keep them.",
+      "tutor": "Read the tutor the complaint and ask what it would have to do to answer it properly.",
+      "outcome": 4
+    }
   ],
   "writing": [
     {
@@ -277,33 +775,194 @@
     }
   ],
   "quizzes": [
-    { "q": "The heating comes on but only warms one room. What do you say?", "options": ["It's broken.", "It doesn't work.", "It's not working properly.", "There's something wrong with it."], "a": "It's not working properly.", "why": "It runs and does the wrong thing. Broken means a part has physically failed, and saying it sends somebody with parts for a system that is working.", "outcome": 1 },
-    { "q": "Why does the choice between the five descriptions matter?", "options": ["Some are more polite", "Whoever helps decides what to do based on your sentence", "Only one of them is correct English", "It affects the price"], "a": "Whoever helps decides what to do based on your sentence", "why": "They usually decide before speaking to you again, so the wrong description sends the wrong person and you go back on the list.", "outcome": 1 },
-    { "q": "Which detail stops somebody suggesting what you have already done?", "options": ["What you have already tried", "When it started", "Your address", "How urgent it is"], "a": "What you have already tried", "why": "Without it, the first suggestion is nearly always the thing you did before calling, and the conversation restarts.", "outcome": 1 },
-    { "q": "Which is correct?", "options": ["It was raining so that we stayed at home.", "It was raining, so we stayed at home.", "It was raining in order to we stayed at home.", "It was raining, so that we stayed at home."], "a": "It was raining, so we stayed at home.", "why": "That is a result, which takes so from Unit 13. So that gives a purpose — something you want to happen and which has not yet.", "outcome": 2 },
-    { "q": "Which is correct?", "options": ["I'm leaving early so I catch the train.", "I'm leaving early, so I catch the train.", "I'm leaving early so that I catch the train.", "I'm leaving early because I catch the train."], "a": "I'm leaving early so that I catch the train.", "why": "Catching the train is the purpose, not a result. The test works: in order to catch the train fits, so it takes so that.", "outcome": 2 },
-    { "q": "Why does adding so that I don't miss work help your request?", "options": ["It is more polite", "It makes the request longer", "It shows you have a job", "It lets them solve the problem a different way if what you asked for is unavailable"], "a": "It lets them solve the problem a different way if what you asked for is unavailable", "why": "The request is your guess at a solution; the purpose is the actual need. People can help with a need but can only say yes or no to a guess.", "outcome": 2 },
-    { "q": "What goes under occupation on a form?", "options": ["Your job", "The name of your employer", "Where you live", "How long you have worked there"], "a": "Your job", "why": "Occupation means what you do, such as warehouse assistant. The employer's name belongs somewhere else, if the form asks for it at all.", "outcome": 3 },
-    { "q": "Delete as applicable appears next to Mr / Ms / Mx. What do you do?", "options": ["Cross out the ones that do not apply to you", "Cross out the one that applies to you", "Leave all three", "Write your name over all three"], "a": "Cross out the ones that do not apply to you", "why": "You are removing the wrong answers, not your answer. The instruction reads as though it means the opposite, which is why it catches people.", "outcome": 3 },
-    { "q": "What is the difference between tick one box only and tick all that apply?", "options": ["They mean the same thing", "The first allows exactly one; the second allows any number", "The first is for names, the second for dates", "The second means tick nothing if unsure"], "a": "The first allows exactly one; the second allows any number", "why": "They look alike and are opposite, and on most forms they sit only a few lines apart.", "outcome": 3 },
-    { "q": "A box on the form does not apply to you. What should you write?", "options": ["Nothing — leave it blank", "A dash", "Your name again", "N/A"], "a": "N/A", "why": "A blank is indistinguishable from an oversight, and forms with unexplained blanks come back. N/A says you read the box and it does not apply.", "outcome": 3 },
-    { "q": "Which part of an appointment request do people most often leave out?", "options": ["What they need", "Whether it is urgent", "When they are available", "Their name"], "a": "Whether it is urgent", "why": "It is the part that decides when you are seen. Not urgent but getting worse is a specific position, treated differently from both an emergency and no preference.", "outcome": 4 },
-    { "q": "Why does the complaint in Reading 3 ask for two specific things and give a date?", "options": ["To make the letter longer", "Because the rules require it", "So the request can be answered and tracked, and inaction becomes visible", "To show it was written carefully"], "a": "So the request can be answered and tracked, and inaction becomes visible", "why": "Sort it out gives no way to tell whether anything has happened. A specific request with a date makes the absence of a reply into a new fact.", "outcome": 4 }
+    {
+      "q": "The heating comes on but only warms one room. What do you say?",
+      "options": [
+        "It's broken.",
+        "It doesn't work.",
+        "It's not working properly.",
+        "There's something wrong with it."
+      ],
+      "a": "It's not working properly.",
+      "why": "It runs and does the wrong thing. Broken means a part has physically failed, and saying it sends somebody with parts for a system that is working.",
+      "outcome": 1
+    },
+    {
+      "q": "Why does the choice between the five descriptions matter?",
+      "options": [
+        "Some are more polite",
+        "Whoever helps decides what to do based on your sentence",
+        "Only one of them is correct English",
+        "It affects the price"
+      ],
+      "a": "Whoever helps decides what to do based on your sentence",
+      "why": "They usually decide before speaking to you again, so the wrong description sends the wrong person and you go back on the list.",
+      "outcome": 1
+    },
+    {
+      "q": "Which detail stops somebody suggesting what you have already done?",
+      "options": [
+        "What you have already tried",
+        "When it started",
+        "Your address",
+        "How urgent it is"
+      ],
+      "a": "What you have already tried",
+      "why": "Without it, the first suggestion is nearly always the thing you did before calling, and the conversation restarts.",
+      "outcome": 1
+    },
+    {
+      "q": "Which is correct?",
+      "options": [
+        "It was raining so that we stayed at home.",
+        "It was raining, so we stayed at home.",
+        "It was raining in order to we stayed at home.",
+        "It was raining, so that we stayed at home."
+      ],
+      "a": "It was raining, so we stayed at home.",
+      "why": "That is a result, which takes so from Unit 13. So that gives a purpose — something you want to happen and which has not yet.",
+      "outcome": 2
+    },
+    {
+      "q": "Which is correct?",
+      "options": [
+        "I'm leaving early so I catch the train.",
+        "I'm leaving early, so I catch the train.",
+        "I'm leaving early so that I catch the train.",
+        "I'm leaving early because I catch the train."
+      ],
+      "a": "I'm leaving early so that I catch the train.",
+      "why": "Catching the train is the purpose, not a result. The test works: in order to catch the train fits, so it takes so that.",
+      "outcome": 2
+    },
+    {
+      "q": "Why does adding so that I don't miss work help your request?",
+      "options": [
+        "It is more polite",
+        "It makes the request longer",
+        "It shows you have a job",
+        "It lets them solve the problem a different way if what you asked for is unavailable"
+      ],
+      "a": "It lets them solve the problem a different way if what you asked for is unavailable",
+      "why": "The request is your guess at a solution; the purpose is the actual need. People can help with a need but can only say yes or no to a guess.",
+      "outcome": 2
+    },
+    {
+      "q": "What goes under occupation on a form?",
+      "options": [
+        "Your job",
+        "The name of your employer",
+        "Where you live",
+        "How long you have worked there"
+      ],
+      "a": "Your job",
+      "why": "Occupation means what you do, such as warehouse assistant. The employer's name belongs somewhere else, if the form asks for it at all.",
+      "outcome": 3
+    },
+    {
+      "q": "Delete as applicable appears next to Mr / Ms / Mx. What do you do?",
+      "options": [
+        "Cross out the ones that do not apply to you",
+        "Cross out the one that applies to you",
+        "Leave all three",
+        "Write your name over all three"
+      ],
+      "a": "Cross out the ones that do not apply to you",
+      "why": "You are removing the wrong answers, not your answer. The instruction reads as though it means the opposite, which is why it catches people.",
+      "outcome": 3
+    },
+    {
+      "q": "What is the difference between tick one box only and tick all that apply?",
+      "options": [
+        "They mean the same thing",
+        "The first allows exactly one; the second allows any number",
+        "The first is for names, the second for dates",
+        "The second means tick nothing if unsure"
+      ],
+      "a": "The first allows exactly one; the second allows any number",
+      "why": "They look alike and are opposite, and on most forms they sit only a few lines apart.",
+      "outcome": 3
+    },
+    {
+      "q": "A box on the form does not apply to you. What should you write?",
+      "options": [
+        "Nothing — leave it blank",
+        "A dash",
+        "Your name again",
+        "N/A"
+      ],
+      "a": "N/A",
+      "why": "A blank is indistinguishable from an oversight, and forms with unexplained blanks come back. N/A says you read the box and it does not apply.",
+      "outcome": 3
+    },
+    {
+      "q": "Which part of an appointment request do people most often leave out?",
+      "options": [
+        "What they need",
+        "Whether it is urgent",
+        "When they are available",
+        "Their name"
+      ],
+      "a": "Whether it is urgent",
+      "why": "It is the part that decides when you are seen. Not urgent but getting worse is a specific position, treated differently from both an emergency and no preference.",
+      "outcome": 4
+    },
+    {
+      "q": "Why does the complaint in Reading 3 ask for two specific things and give a date?",
+      "options": [
+        "To make the letter longer",
+        "Because the rules require it",
+        "So the request can be answered and tracked, and inaction becomes visible",
+        "To show it was written carefully"
+      ],
+      "a": "So the request can be answered and tracked, and inaction becomes visible",
+      "why": "Sort it out gives no way to tell whether anything has happened. A specific request with a date makes the absence of a reply into a new fact.",
+      "outcome": 4
+    }
   ],
   "teacherNotes": [
-    { "type": "This unit works without you", "note": "Three pattern cards, each with a worked example, and every exercise has an answer key. Practice 1 is the diagnostic and its key groups the answers by category so the learner can see that four of the twelve are the one people get wrong. Practices 5 and 6 are field tasks with no key and both carry a what-most-people-find note." },
-    { "type": "Vocabulary that behaves like grammar", "note": "The five fault descriptions are a lexical set with functional consequences: the sentence chosen determines what help is dispatched, usually before anybody speaks to the learner again. Broken is massively over-used as a general word for anything wrong, and Speaking 1 asks learners to count their own uses of it. If a learner cannot name the part that failed, it is almost certainly not broken." },
-    { "type": "So that is a Unit 13 extension with a practical payoff", "note": "Because and so were taught in Unit 13; this unit adds purpose only. The grammatical distinction is small and the practical one is large — Reading 2 makes the argument that a request is a guess at a solution while the purpose is the actual need. The one-clause limit is stated explicitly because learners often assume more explanation produces more sympathy, and it works the other way." },
-    { "type": "Four form instructions, not forty", "note": "Forms are mostly vocabulary and the unit deliberately teaches only the four that catch almost everybody: the name boxes, occupation, delete as applicable, and the two tick instructions. Tick one box only and tick all that apply are printed four lines apart in Reading 3 so the contrast is on one page. The N/A habit is worth as much as the four, because an unexplained blank is the commonest reason a form is returned." },
-    { "type": "Why a form and a complaint together", "note": "They are the two documents where imprecise English costs most, and the complaint is written three weeks after the form to show what happens when the first document does not work. The complaint is built backwards from two specific requests and a date, which is why Writing 3's support note tells learners to write the requests first — letters written forwards tend to arrive at no request at all." },
-    { "type": "This is the last teaching unit of Level 1", "note": "Unit 19 is the capstone and introduces no new patterns. Everything in this unit is deliberately practical, and the two field tasks are the most directly useful in the level: reporting a real fault and reading a real form. A learner who completes Practice 6 usually discovers the fourth sentence effect for themselves, which is more convincing than the card." },
-    { "type": "Device and AI safety", "note": "The AI tutor is a rehearsal partner and no task here is scored by it alone. Writing 2 asks learners to complete a form and Practice 5 sends them to a real one: no personal details — address, postcode, signature, occupation, or anything identifying — should be collected, shared or entered into the app, and Practice 5 says explicitly not to copy personal details into the notes. Writing 2 tells learners they may invent the address, and that wording should stay. Practice 6 involves a real exchange with a landlord or service, and nothing about that other party should be recorded either." }
+    {
+      "type": "This unit works without you",
+      "note": "Three pattern cards, each with a worked example, and every exercise has an answer key. Practice 1 is the diagnostic and its key groups the answers by category so the learner can see that four of the twelve are the one people get wrong. Practices 5 and 6 are field tasks with no key and both carry a what-most-people-find note."
+    },
+    {
+      "type": "Vocabulary that behaves like grammar",
+      "note": "The five fault descriptions are a lexical set with functional consequences: the sentence chosen determines what help is dispatched, usually before anybody speaks to the learner again. Broken is massively over-used as a general word for anything wrong, and Speaking 1 asks learners to count their own uses of it. If a learner cannot name the part that failed, it is almost certainly not broken."
+    },
+    {
+      "type": "So that is a Unit 13 extension with a practical payoff",
+      "note": "Because and so were taught in Unit 13; this unit adds purpose only. The grammatical distinction is small and the practical one is large — Reading 2 makes the argument that a request is a guess at a solution while the purpose is the actual need. The one-clause limit is stated explicitly because learners often assume more explanation produces more sympathy, and it works the other way."
+    },
+    {
+      "type": "Four form instructions, not forty",
+      "note": "Forms are mostly vocabulary and the unit deliberately teaches only the four that catch almost everybody: the name boxes, occupation, delete as applicable, and the two tick instructions. Tick one box only and tick all that apply are printed four lines apart in Reading 3 so the contrast is on one page. The N/A habit is worth as much as the four, because an unexplained blank is the commonest reason a form is returned."
+    },
+    {
+      "type": "Why a form and a complaint together",
+      "note": "They are the two documents where imprecise English costs most, and the complaint is written three weeks after the form to show what happens when the first document does not work. The complaint is built backwards from two specific requests and a date, which is why Writing 3's support note tells learners to write the requests first — letters written forwards tend to arrive at no request at all."
+    },
+    {
+      "type": "This is the last teaching unit of Level 1",
+      "note": "Unit 19 is the capstone and introduces no new patterns. Everything in this unit is deliberately practical, and the two field tasks are the most directly useful in the level: reporting a real fault and reading a real form. A learner who completes Practice 6 usually discovers the fourth sentence effect for themselves, which is more convincing than the card."
+    },
+    {
+      "type": "Device and AI safety",
+      "note": "The AI tutor is a rehearsal partner and no task here is scored by it alone. Writing 2 asks learners to complete a form and Practice 5 sends them to a real one: no personal details — address, postcode, signature, occupation, or anything identifying — should be collected, shared or entered into the app, and Practice 5 says explicitly not to copy personal details into the notes. Writing 2 tells learners they may invent the address, and that wording should stay. Practice 6 involves a real exchange with a landlord or service, and nothing about that other party should be recorded either."
+    }
   ],
   "selfAssessment": [
-    { "statement": "I can say exactly what is wrong with something, so the right person comes." },
-    { "statement": "I can say why I want something, not only what I want." },
-    { "statement": "I can fill in a form without guessing what the boxes mean." },
-    { "statement": "I can make an appointment and write a complaint that asks for something specific." }
+    {
+      "statement": "I can say exactly what is wrong with something, so the right person comes."
+    },
+    {
+      "statement": "I can say why I want something, not only what I want."
+    },
+    {
+      "statement": "I can fill in a form without guessing what the boxes mean."
+    },
+    {
+      "statement": "I can make an appointment and write a complaint that asks for something specific."
+    }
   ],
   "assignment": {
     "title": "A fault reported, a form completed, a complaint written",

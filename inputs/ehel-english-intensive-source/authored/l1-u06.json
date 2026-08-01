@@ -24,7 +24,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Spoken interaction",
       "cefrDescriptor": "I can ask for a packet, a bottle or a kilo of something in a shop.",
-      "cambridge": ["2SLm.02", "1SLm.02"]
+      "cambridge": [
+        "2SLm.02",
+        "1SLm.02"
+      ]
     },
     {
       "outcome": "Choose some or any correctly in statements, negatives, questions, offers and requests.",
@@ -33,7 +36,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Writing",
       "cefrDescriptor": "I can say I have some rice and I do not have any rice without mixing them up.",
-      "cambridge": ["2Rg.05", "2Rg.02"]
+      "cambridge": [
+        "2Rg.05",
+        "2Rg.02"
+      ]
     },
     {
       "outcome": "Read a set of written instructions and carry them out in the right order.",
@@ -42,7 +48,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Reading",
       "cefrDescriptor": "I can read instructions on a packet and do what they say.",
-      "cambridge": ["2Rg.04", "3Ri.09"]
+      "cambridge": [
+        "2Rg.04",
+        "3Ri.09"
+      ]
     },
     {
       "outcome": "Give a set of steps in order, using first, then, after that and finally with the comma.",
@@ -51,7 +60,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Spoken production",
       "cefrDescriptor": "I can explain how to do something in steps that somebody else could follow.",
-      "cambridge": ["3Rs.04", "2Rv.05"]
+      "cambridge": [
+        "3Rs.04",
+        "2Rv.05"
+      ]
     },
     {
       "outcome": "Read a food label and find the dates, the ingredients and the amount a figure refers to.",
@@ -60,62 +72,442 @@
       "cefrLevel": "A1",
       "cefrSkill": "Reading",
       "cefrDescriptor": "I can read a food label and tell a use by date from a best before date.",
-      "cambridge": ["1Ri.08", "2Ri.09"]
+      "cambridge": [
+        "1Ri.08",
+        "2Ri.09"
+      ]
     }
   ],
   "groups": [
     {
       "title": "Food",
       "words": [
-        { "w": "rice", "pos": "noun", "meaning": "Small white or brown grains that are boiled and eaten.", "example": "I need a packet of rice.", "practice": ["I need a packet of rice.", "There is some rice in the cupboard.", "We do not have any rice.", "Boil the rice for ten minutes.", "Rice is cheaper at the market."], "starter": "I need a packet of", "tutor": "Ask for rice in two ways: with a container and without one. Notice which sounds more natural in a shop." },
-        { "w": "bread", "pos": "noun", "meaning": "A food made from flour and baked, usually in a loaf.", "example": "Can I have some bread, please?", "practice": ["Can I have some bread, please?", "There is no bread left.", "I buy bread every morning.", "Cut two slices of bread.", "The bread is fresher at the market."], "starter": "Can I have some", "tutor": "Ask for bread as a request, then ask whether there is any. Notice which takes some and which takes any." },
-        { "w": "milk", "pos": "noun", "meaning": "The white liquid from cows and other animals, drunk and used in cooking.", "example": "We need a bottle of milk.", "practice": ["We need a bottle of milk.", "Is there any milk?", "I do not take milk in my tea.", "Add a little milk.", "The milk is past its use by date."], "starter": "We need a bottle of", "tutor": "Ask whether there is milk, and answer both yes and no. Check which word each answer needs." },
-        { "w": "meat", "pos": "noun", "meaning": "The flesh of an animal, eaten as food.", "example": "How much is the meat per kilo?", "practice": ["How much is the meat per kilo?", "I do not eat much meat.", "Cook the meat for an hour.", "The meat is fresh today.", "There is some meat in the fridge."], "starter": "How much is the meat", "tutor": "Ask the price of meat per kilo. Use the price question from Unit 4." },
-        { "w": "fish", "pos": "noun", "meaning": "An animal that lives in water, eaten as food.", "example": "A tin of fish is cheap and quick.", "practice": ["A tin of fish is cheap and quick.", "Is there any fish left?", "The fish is very fresh.", "I cook fish twice a week.", "Do not cook the fish for too long."], "starter": "A tin of fish is", "tutor": "Say how often you eat fish. Use a frequency word from Unit 5." },
-        { "w": "vegetables", "pos": "noun", "meaning": "Plants or parts of plants eaten as food, such as onions and carrots.", "example": "I buy vegetables at the market.", "practice": ["I buy vegetables at the market.", "Cut the vegetables into small pieces.", "There are no vegetables in the fridge.", "Vegetables are cheaper here.", "Add the vegetables after the meat."], "starter": "I buy vegetables at the", "tutor": "Say where you buy vegetables and why there. Use because." }
+        {
+          "w": "rice",
+          "pos": "noun",
+          "meaning": "Small white or brown grains that are boiled and eaten.",
+          "example": "I need a packet of rice.",
+          "practice": [
+            "There is some rice in the cupboard.",
+            "We do not have any rice.",
+            "Boil the rice for ten minutes.",
+            "Rice is cheaper at the market."
+          ],
+          "starter": "I need a packet of",
+          "tutor": "Ask for rice in two ways: with a container and without one. Notice which sounds more natural in a shop."
+        },
+        {
+          "w": "bread",
+          "pos": "noun",
+          "meaning": "A food made from flour and baked, usually in a loaf.",
+          "example": "Can I have some bread, please?",
+          "practice": [
+            "There is no bread left.",
+            "I buy bread every morning.",
+            "Cut two slices of bread.",
+            "The bread is fresher at the market."
+          ],
+          "starter": "Can I have some",
+          "tutor": "Ask for bread as a request, then ask whether there is any. Notice which takes some and which takes any."
+        },
+        {
+          "w": "milk",
+          "pos": "noun",
+          "meaning": "The white liquid from cows and other animals, drunk and used in cooking.",
+          "example": "We need a bottle of milk.",
+          "practice": [
+            "Is there any milk?",
+            "I do not take milk in my tea.",
+            "Add a little milk.",
+            "The milk is past its use by date."
+          ],
+          "starter": "We need a bottle of",
+          "tutor": "Ask whether there is milk, and answer both yes and no. Check which word each answer needs."
+        },
+        {
+          "w": "meat",
+          "pos": "noun",
+          "meaning": "The flesh of an animal, eaten as food.",
+          "example": "How much is the meat per kilo?",
+          "practice": [
+            "I do not eat much meat.",
+            "Cook the meat for an hour.",
+            "The meat is fresh today.",
+            "There is some meat in the fridge."
+          ],
+          "starter": "How much is the meat",
+          "tutor": "Ask the price of meat per kilo. Use the price question from Unit 4."
+        },
+        {
+          "w": "fish",
+          "pos": "noun",
+          "meaning": "An animal that lives in water, eaten as food.",
+          "example": "A tin of fish is cheap and quick.",
+          "practice": [
+            "Is there any fish left?",
+            "The fish is very fresh.",
+            "I cook fish twice a week.",
+            "Do not cook the fish for too long."
+          ],
+          "starter": "A tin of fish is",
+          "tutor": "Say how often you eat fish. Use a frequency word from Unit 5."
+        },
+        {
+          "w": "vegetables",
+          "pos": "noun",
+          "meaning": "Plants or parts of plants eaten as food, such as onions and carrots.",
+          "example": "I buy vegetables at the market.",
+          "practice": [
+            "Cut the vegetables into small pieces.",
+            "There are no vegetables in the fridge.",
+            "Vegetables are cheaper here.",
+            "Add the vegetables after the meat."
+          ],
+          "starter": "I buy vegetables at the",
+          "tutor": "Say where you buy vegetables and why there. Use because."
+        }
       ]
     },
     {
       "title": "At the market",
       "words": [
-        { "w": "market", "pos": "noun", "meaning": "A place, often outdoors, where many people sell food and other goods.", "example": "The market is open on Saturdays.", "practice": ["The market is open on Saturdays.", "I go to the market every week.", "The market is cheaper than the shop.", "There is a market in the next street.", "The market closes at two."], "starter": "The market is open on", "tutor": "Say when the market is open near you, and how often you go." },
-        { "w": "stall", "pos": "noun", "meaning": "A small open shop at a market, usually a table with goods on it.", "example": "The fish stall is at the end.", "practice": ["The fish stall is at the end.", "That stall is always busy.", "She has a stall at the market.", "Which stall sells vegetables?", "The stall opens at six in the morning."], "starter": "The fish stall is at the", "tutor": "Ask which stall sells something. Use the question form from Unit 3." },
-        { "w": "label", "pos": "noun", "meaning": "The paper or printing on a product that says what it is and what is in it.", "example": "Read the label before you buy it.", "practice": ["Read the label before you buy it.", "The label says use by Friday.", "There is no label on this one.", "The price is on the label.", "Check the label for the weight."], "starter": "Read the label before", "tutor": "Say two things you would check on a label before buying something." },
-        { "w": "fresh", "pos": "adjective", "meaning": "Recently made, picked or caught; not old and not frozen.", "example": "The bread is fresh today.", "practice": ["The bread is fresh today.", "Is the fish fresh?", "Fresh vegetables are better.", "It is not fresh — look at the date.", "The market has the freshest fruit."], "starter": "The bread is fresh", "tutor": "Ask whether something is fresh, and say how you would know." },
-        { "w": "order", "pos": "verb", "meaning": "To ask for something you want to buy.", "example": "I would like to order two kilos.", "practice": ["I would like to order two kilos.", "She ordered the same as me.", "Can I order it for Friday?", "I ordered too much.", "Order it before Thursday."], "starter": "I would like to order", "tutor": "Order three things with amounts. Use a container for at least one." },
-        { "w": "queue", "pos": "noun", "meaning": "A line of people waiting their turn.", "example": "There is a long queue at that stall.", "practice": ["There is a long queue at that stall.", "I waited in the queue for ten minutes.", "The queue is shorter now.", "Join the queue at the back.", "There is never a queue on Tuesdays."], "starter": "There is a long queue at", "tutor": "Ask whether you are in the right queue. Note the spelling — five letters after the q are silent." }
+        {
+          "w": "market",
+          "pos": "noun",
+          "meaning": "A place, often outdoors, where many people sell food and other goods.",
+          "example": "The market is open on Saturdays.",
+          "practice": [
+            "I go to the market every week.",
+            "The market is cheaper than the shop.",
+            "There is a market in the next street.",
+            "The market closes at two."
+          ],
+          "starter": "The market is open on",
+          "tutor": "Say when the market is open near you, and how often you go."
+        },
+        {
+          "w": "stall",
+          "pos": "noun",
+          "meaning": "A small open shop at a market, usually a table with goods on it.",
+          "example": "The fish stall is at the end.",
+          "practice": [
+            "That stall is always busy.",
+            "She has a stall at the market.",
+            "Which stall sells vegetables?",
+            "The stall opens at six in the morning."
+          ],
+          "starter": "The fish stall is at the",
+          "tutor": "Ask which stall sells something. Use the question form from Unit 3."
+        },
+        {
+          "w": "label",
+          "pos": "noun",
+          "meaning": "The paper or printing on a product that says what it is and what is in it.",
+          "example": "Read the label before you buy it.",
+          "practice": [
+            "The label says use by Friday.",
+            "There is no label on this one.",
+            "The price is on the label.",
+            "Check the label for the weight."
+          ],
+          "starter": "Read the label before",
+          "tutor": "Say two things you would check on a label before buying something."
+        },
+        {
+          "w": "fresh",
+          "pos": "adjective",
+          "meaning": "Recently made, picked or caught; not old and not frozen.",
+          "example": "The bread is fresh today.",
+          "practice": [
+            "Is the fish fresh?",
+            "Fresh vegetables are better.",
+            "It is not fresh — look at the date.",
+            "The market has the freshest fruit."
+          ],
+          "starter": "The bread is fresh",
+          "tutor": "Ask whether something is fresh, and say how you would know."
+        },
+        {
+          "w": "order",
+          "pos": "verb",
+          "meaning": "To ask for something you want to buy.",
+          "example": "I would like to order two kilos.",
+          "practice": [
+            "She ordered the same as me.",
+            "Can I order it for Friday?",
+            "I ordered too much.",
+            "Order it before Thursday."
+          ],
+          "starter": "I would like to order",
+          "tutor": "Order three things with amounts. Use a container for at least one."
+        },
+        {
+          "w": "queue",
+          "pos": "noun",
+          "meaning": "A line of people waiting their turn.",
+          "example": "There is a long queue at that stall.",
+          "practice": [
+            "I waited in the queue for ten minutes.",
+            "The queue is shorter now.",
+            "Join the queue at the back.",
+            "There is never a queue on Tuesdays."
+          ],
+          "starter": "There is a long queue at",
+          "tutor": "Ask whether you are in the right queue. Note the spelling — five letters after the q are silent."
+        }
       ]
     },
     {
       "title": "Containers and amounts",
       "words": [
-        { "w": "packet", "pos": "noun", "meaning": "A small paper or plastic container with something inside.", "example": "A packet of rice, please.", "practice": ["A packet of rice, please.", "There are two packets in the cupboard.", "The packet says boil for ten minutes.", "This packet is nearly empty.", "How much is a packet of tea?"], "starter": "A packet of", "tutor": "Ask for three different things by the packet. Check you said of every time." },
-        { "w": "bottle", "pos": "noun", "meaning": "A tall container for liquid, usually glass or plastic.", "example": "Two bottles of milk, please.", "practice": ["Two bottles of milk, please.", "The bottle is empty.", "A bottle of water costs very little.", "Put the bottles in the bag.", "There is one bottle left."], "starter": "Two bottles of", "tutor": "Say a bottle of and two bottles of. Notice the container takes the plural, not the liquid." },
-        { "w": "tin", "pos": "noun", "meaning": "A sealed metal container for food that keeps for a long time.", "example": "A tin of fish is useful to have.", "practice": ["A tin of fish is useful to have.", "There are three tins in the cupboard.", "Open the tin carefully.", "A tin lasts for years.", "How much is a tin of tomatoes?"], "starter": "A tin of", "tutor": "Say what you keep in tins and why. Use because." },
-        { "w": "slice", "pos": "noun", "meaning": "A thin flat piece cut from something larger.", "example": "Two slices of bread, please.", "practice": ["Two slices of bread, please.", "Cut a slice for me.", "One slice is enough.", "The slices are too thick.", "A slice of bread and some tea."], "starter": "Two slices of", "tutor": "Ask for a number of slices of something. Notice it is slices OF, not slices bread." },
-        { "w": "piece", "pos": "noun", "meaning": "A part of something, cut or broken off.", "example": "A piece of fish, please.", "practice": ["A piece of fish, please.", "Cut it into six pieces.", "This piece is too big.", "There is one piece left.", "A piece of paper and a pen."], "starter": "A piece of", "tutor": "Piece works with almost anything. Say four things you could ask for by the piece." },
-        { "w": "bunch", "pos": "noun", "meaning": "A number of things growing or fastened together, such as bananas or keys.", "example": "A bunch of bananas, please.", "practice": ["A bunch of bananas, please.", "That bunch is too small.", "I bought two bunches.", "A bunch of keys was on the table.", "How much is a bunch?"], "starter": "A bunch of", "tutor": "Say two things that come in bunches. Ask the price of one." }
+        {
+          "w": "packet",
+          "pos": "noun",
+          "meaning": "A small paper or plastic container with something inside.",
+          "example": "A packet of rice, please.",
+          "practice": [
+            "There are two packets in the cupboard.",
+            "The packet says boil for ten minutes.",
+            "This packet is nearly empty.",
+            "How much is a packet of tea?"
+          ],
+          "starter": "A packet of",
+          "tutor": "Ask for three different things by the packet. Check you said of every time."
+        },
+        {
+          "w": "bottle",
+          "pos": "noun",
+          "meaning": "A tall container for liquid, usually glass or plastic.",
+          "example": "Two bottles of milk, please.",
+          "practice": [
+            "The bottle is empty.",
+            "A bottle of water costs very little.",
+            "Put the bottles in the bag.",
+            "There is one bottle left."
+          ],
+          "starter": "Two bottles of",
+          "tutor": "Say a bottle of and two bottles of. Notice the container takes the plural, not the liquid."
+        },
+        {
+          "w": "tin",
+          "pos": "noun",
+          "meaning": "A sealed metal container for food that keeps for a long time.",
+          "example": "A tin of fish is useful to have.",
+          "practice": [
+            "There are three tins in the cupboard.",
+            "Open the tin carefully.",
+            "A tin lasts for years.",
+            "How much is a tin of tomatoes?"
+          ],
+          "starter": "A tin of",
+          "tutor": "Say what you keep in tins and why. Use because."
+        },
+        {
+          "w": "slice",
+          "pos": "noun",
+          "meaning": "A thin flat piece cut from something larger.",
+          "example": "Two slices of bread, please.",
+          "practice": [
+            "Cut a slice for me.",
+            "One slice is enough.",
+            "The slices are too thick.",
+            "A slice of bread and some tea."
+          ],
+          "starter": "Two slices of",
+          "tutor": "Ask for a number of slices of something. Notice it is slices OF, not slices bread."
+        },
+        {
+          "w": "piece",
+          "pos": "noun",
+          "meaning": "A part of something, cut or broken off.",
+          "example": "A piece of fish, please.",
+          "practice": [
+            "Cut it into six pieces.",
+            "This piece is too big.",
+            "There is one piece left.",
+            "A piece of paper and a pen."
+          ],
+          "starter": "A piece of",
+          "tutor": "Piece works with almost anything. Say four things you could ask for by the piece."
+        },
+        {
+          "w": "bunch",
+          "pos": "noun",
+          "meaning": "A number of things growing or fastened together, such as bananas or keys.",
+          "example": "A bunch of bananas, please.",
+          "practice": [
+            "That bunch is too small.",
+            "I bought two bunches.",
+            "A bunch of keys was on the table.",
+            "How much is a bunch?"
+          ],
+          "starter": "A bunch of",
+          "tutor": "Say two things that come in bunches. Ask the price of one."
+        }
       ]
     },
     {
       "title": "Cooking",
       "words": [
-        { "w": "cook", "pos": "verb", "meaning": "To prepare food using heat.", "example": "Cook it for twenty minutes.", "practice": ["Cook it for twenty minutes.", "I cook every evening.", "She cooks better than I do.", "Do not cook the fish too long.", "Who cooks in your house?"], "starter": "Cook it for", "tutor": "Say how long to cook something. Then say who cooks in your home." },
-        { "w": "boil", "pos": "verb", "meaning": "To heat a liquid until it bubbles, or to cook food in bubbling water.", "example": "First, boil the water.", "practice": ["First, boil the water.", "Boil the rice for ten minutes.", "The water is boiling.", "Do not let it boil over.", "Boil it, then add the vegetables."], "starter": "First, boil the", "tutor": "Give two boiling instructions, using first and then." },
-        { "w": "cut", "pos": "verb", "meaning": "To divide something with a knife.", "example": "Cut the vegetables into small pieces.", "practice": ["Cut the vegetables into small pieces.", "Cut it in half.", "Be careful when you cut it.", "I cut my finger.", "Cut two slices of bread."], "starter": "Cut the vegetables into", "tutor": "Give three cutting instructions with different amounts." },
-        { "w": "add", "pos": "verb", "meaning": "To put something in with something else.", "example": "Then add the rice.", "practice": ["Then add the rice.", "Add a little salt.", "Do not add too much water.", "After that, add the vegetables.", "Add the meat last."], "starter": "Then add the", "tutor": "Give four add instructions in order, using first, then, after that and finally." },
-        { "w": "mix", "pos": "verb", "meaning": "To put things together so they combine.", "example": "Mix it well.", "practice": ["Mix it well.", "Mix the vegetables and the rice.", "Do not mix them yet.", "Mix everything in a large pan.", "Mix it and leave it for five minutes."], "starter": "Mix it", "tutor": "Say two mixing instructions, one positive and one negative." },
-        { "w": "heat", "pos": "verb", "meaning": "To make something hot.", "example": "Heat the oil first.", "practice": ["Heat the oil first.", "Heat it for two minutes.", "Do not heat it again.", "Heat the pan before you add anything.", "Take it off the heat."], "starter": "Heat the", "tutor": "Notice heat is both a verb and a noun here. Use it both ways." }
+        {
+          "w": "cook",
+          "pos": "verb",
+          "meaning": "To prepare food using heat.",
+          "example": "Cook it for twenty minutes.",
+          "practice": [
+            "I cook every evening.",
+            "She cooks better than I do.",
+            "Do not cook the fish too long.",
+            "Who cooks in your house?"
+          ],
+          "starter": "Cook it for",
+          "tutor": "Say how long to cook something. Then say who cooks in your home."
+        },
+        {
+          "w": "boil",
+          "pos": "verb",
+          "meaning": "To heat a liquid until it bubbles, or to cook food in bubbling water.",
+          "example": "First, boil the water.",
+          "practice": [
+            "Boil the rice for ten minutes.",
+            "The water is boiling.",
+            "Do not let it boil over.",
+            "Boil it, then add the vegetables."
+          ],
+          "starter": "First, boil the",
+          "tutor": "Give two boiling instructions, using first and then."
+        },
+        {
+          "w": "cut",
+          "pos": "verb",
+          "meaning": "To divide something with a knife.",
+          "example": "Cut the vegetables into small pieces.",
+          "practice": [
+            "Cut it in half.",
+            "Be careful when you cut it.",
+            "I cut my finger.",
+            "Cut two slices of bread."
+          ],
+          "starter": "Cut the vegetables into",
+          "tutor": "Give three cutting instructions with different amounts."
+        },
+        {
+          "w": "add",
+          "pos": "verb",
+          "meaning": "To put something in with something else.",
+          "example": "Then add the rice.",
+          "practice": [
+            "Add a little salt.",
+            "Do not add too much water.",
+            "After that, add the vegetables.",
+            "Add the meat last."
+          ],
+          "starter": "Then add the",
+          "tutor": "Give four add instructions in order, using first, then, after that and finally."
+        },
+        {
+          "w": "mix",
+          "pos": "verb",
+          "meaning": "To put things together so they combine.",
+          "example": "Mix it well.",
+          "practice": [
+            "Mix the vegetables and the rice.",
+            "Do not mix them yet.",
+            "Mix everything in a large pan.",
+            "Mix it and leave it for five minutes."
+          ],
+          "starter": "Mix it",
+          "tutor": "Say two mixing instructions, one positive and one negative."
+        },
+        {
+          "w": "heat",
+          "pos": "verb",
+          "meaning": "To make something hot.",
+          "example": "Heat the oil first.",
+          "practice": [
+            "Heat it for two minutes.",
+            "Do not heat it again.",
+            "Heat the pan before you add anything.",
+            "Take it off the heat."
+          ],
+          "starter": "Heat the",
+          "tutor": "Notice heat is both a verb and a noun here. Use it both ways."
+        }
       ]
     },
     {
       "title": "In the kitchen",
       "words": [
-        { "w": "pan", "pos": "noun", "meaning": "A round metal container used for cooking on a stove.", "example": "Put it in a large pan.", "practice": ["Put it in a large pan.", "The pan is too small.", "Heat the pan first.", "Wash the pan afterwards.", "There is one pan in the kitchen."], "starter": "Put it in a large", "tutor": "Say what size pan you need and why." },
-        { "w": "knife", "pos": "noun", "meaning": "A tool with a blade, used for cutting. More than one: knives.", "example": "Use a sharp knife.", "practice": ["Use a sharp knife.", "The knife is not sharp enough.", "Put the knives in the drawer.", "Be careful with the knife.", "I need a bigger knife."], "starter": "Use a sharp", "tutor": "Knife becomes knives in the plural, and the k is silent. Say both forms." },
-        { "w": "plate", "pos": "noun", "meaning": "A flat dish that food is served on.", "example": "There are four plates in the cupboard.", "practice": ["There are four plates in the cupboard.", "Put it on a plate.", "The plate is hot.", "Wash the plates after dinner.", "One plate is broken."], "starter": "There are four plates in the", "tutor": "Say how many plates there are somewhere, using there are." },
-        { "w": "spoon", "pos": "noun", "meaning": "A tool with a small bowl on a handle, used for eating and stirring.", "example": "Mix it with a spoon.", "practice": ["Mix it with a spoon.", "Add two spoons of sugar.", "The spoon is in the drawer.", "Use a large spoon.", "There are no clean spoons."], "starter": "Mix it with a", "tutor": "Notice a spoon of something is also an amount. Use it both ways." },
-        { "w": "oven", "pos": "noun", "meaning": "The closed box in a cooker where food is baked.", "example": "Put it in the oven for an hour.", "practice": ["Put it in the oven for an hour.", "The oven is not working.", "Heat the oven first.", "Take it out of the oven.", "There is no oven in this kitchen."], "starter": "Put it in the oven for", "tutor": "Give an oven instruction with a time. Use for." }
+        {
+          "w": "pan",
+          "pos": "noun",
+          "meaning": "A round metal container used for cooking on a stove.",
+          "example": "Put it in a large pan.",
+          "practice": [
+            "The pan is too small.",
+            "Heat the pan first.",
+            "Wash the pan afterwards.",
+            "There is one pan in the kitchen."
+          ],
+          "starter": "Put it in a large",
+          "tutor": "Say what size pan you need and why."
+        },
+        {
+          "w": "knife",
+          "pos": "noun",
+          "meaning": "A tool with a blade, used for cutting. More than one: knives.",
+          "example": "Use a sharp knife.",
+          "practice": [
+            "The knife is not sharp enough.",
+            "Put the knives in the drawer.",
+            "Be careful with the knife.",
+            "I need a bigger knife."
+          ],
+          "starter": "Use a sharp",
+          "tutor": "Knife becomes knives in the plural, and the k is silent. Say both forms."
+        },
+        {
+          "w": "plate",
+          "pos": "noun",
+          "meaning": "A flat dish that food is served on.",
+          "example": "There are four plates in the cupboard.",
+          "practice": [
+            "Put it on a plate.",
+            "The plate is hot.",
+            "Wash the plates after dinner.",
+            "One plate is broken."
+          ],
+          "starter": "There are four plates in the",
+          "tutor": "Say how many plates there are somewhere, using there are."
+        },
+        {
+          "w": "spoon",
+          "pos": "noun",
+          "meaning": "A tool with a small bowl on a handle, used for eating and stirring.",
+          "example": "Mix it with a spoon.",
+          "practice": [
+            "Add two spoons of sugar.",
+            "The spoon is in the drawer.",
+            "Use a large spoon.",
+            "There are no clean spoons."
+          ],
+          "starter": "Mix it with a",
+          "tutor": "Notice a spoon of something is also an amount. Use it both ways."
+        },
+        {
+          "w": "oven",
+          "pos": "noun",
+          "meaning": "The closed box in a cooker where food is baked.",
+          "example": "Put it in the oven for an hour.",
+          "practice": [
+            "The oven is not working.",
+            "Heat the oven first.",
+            "Take it out of the oven.",
+            "There is no oven in this kitchen."
+          ],
+          "starter": "Put it in the oven for",
+          "tutor": "Give an oven instruction with a time. Use for."
+        }
       ]
     }
   ],
@@ -139,16 +531,90 @@
     }
   ],
   "comprehension": [
-    { "section": "Reading", "reading": 1, "q": "Why does the text say you can buy food for years without learning anything?", "a": "Because you can point, hold up fingers and hand over money without saying anything.", "why": "The text calls this out precisely because it works — the transaction succeeds and no language is used, so nothing is learned.", "outcome": 1 },
-    { "section": "Reading", "reading": 1, "q": "What three things does the text tell you to do to make it harder on purpose?", "a": "Say the amount out loud, ask one question you did not need to ask, and repeat the price back.", "why": "All three are listed in order. The third one the text says you should be doing anyway, from Unit 4.", "outcome": 1 },
-    { "section": "Reading", "reading": 1, "q": "The text gives three reasons a market is good for practising. What is the third?", "a": "The person wants the exchange to work, because they want to sell you something.", "why": "This is the least obvious of the three, and it is the reason a market is easier than a classroom conversation — the other person is motivated to understand you.", "outcome": 1, "difficulty": "Stretch" },
-    { "section": "Reading", "reading": 2, "q": "How is an instruction different from a statement?", "a": "The verb comes first and nobody is named — it says boil the water, not you boil the water.", "why": "The text states the difference directly, and this shape appears on packets, machines and official notices, not only in recipes.", "outcome": 3 },
-    { "section": "Reading", "reading": 2, "q": "Which part of a recipe does the text say to read before you start, and why?", "a": "The list of what you need, so you do not get halfway through and find something missing.", "why": "The text says almost nobody does this. It is the difference between a recipe working and stopping in the middle.", "outcome": 3 },
-    { "section": "Reading", "reading": 2, "q": "The text says times on a packet are minimums, not promises. What should you do?", "a": "Check it yourself before you trust it — boil for ten minutes usually means at least ten.", "why": "This is an inference about how instructions are written rather than about language, and it is the kind of thing nobody says out loud.", "outcome": 3, "difficulty": "Stretch" },
-    { "section": "Document", "reading": 3, "q": "How much does the whole packet weigh, and how many portions is that?", "a": "400 grams, which is two portions of 200 grams.", "why": "Both are on the second line. The portion size matters for the nutrition table further down.", "outcome": 5 },
-    { "section": "Document", "reading": 3, "q": "The label gives a use by date but no best before date. What does that tell you?", "a": "That this is about safety, not quality — it should not be eaten after 14 May.", "why": "Use by is a safety date and best before is a quality one. A product carrying only a use by date is one where the date matters for more than taste.", "outcome": 5, "difficulty": "Stretch" },
-    { "section": "Document", "reading": 3, "q": "The salt figure says 0.9 g per 100 g. How much salt is in one portion?", "a": "1.8 grams, because a portion is 200 grams — twice 100.", "why": "The table gives both columns, but the per portion figure only makes sense once you know a portion is 200 g from the line at the top. Reading the per 100 g column alone halves the real amount.", "outcome": 5, "difficulty": "Stretch" },
-    { "section": "Document", "reading": 3, "q": "You open the packet on 10 May and use half. When must you eat the rest?", "a": "By 12 May — within two days of opening, which comes before the use by date of 14 May.", "why": "Two rules apply at once and the tighter one wins. The use by date is not the answer here, and that is exactly the trap.", "outcome": 5 }
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "Why does the text say you can buy food for years without learning anything?",
+      "a": "Because you can point, hold up fingers and hand over money without saying anything.",
+      "why": "The text calls this out precisely because it works — the transaction succeeds and no language is used, so nothing is learned.",
+      "outcome": 1
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "What three things does the text tell you to do to make it harder on purpose?",
+      "a": "Say the amount out loud, ask one question you did not need to ask, and repeat the price back.",
+      "why": "All three are listed in order. The third one the text says you should be doing anyway, from Unit 4.",
+      "outcome": 1
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "The text gives three reasons a market is good for practising. What is the third?",
+      "a": "The person wants the exchange to work, because they want to sell you something.",
+      "why": "This is the least obvious of the three, and it is the reason a market is easier than a classroom conversation — the other person is motivated to understand you.",
+      "outcome": 1,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "How is an instruction different from a statement?",
+      "a": "The verb comes first and nobody is named — it says boil the water, not you boil the water.",
+      "why": "The text states the difference directly, and this shape appears on packets, machines and official notices, not only in recipes.",
+      "outcome": 3
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "Which part of a recipe does the text say to read before you start, and why?",
+      "a": "The list of what you need, so you do not get halfway through and find something missing.",
+      "why": "The text says almost nobody does this. It is the difference between a recipe working and stopping in the middle.",
+      "outcome": 3
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "The text says times on a packet are minimums, not promises. What should you do?",
+      "a": "Check it yourself before you trust it — boil for ten minutes usually means at least ten.",
+      "why": "This is an inference about how instructions are written rather than about language, and it is the kind of thing nobody says out loud.",
+      "outcome": 3,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "How much does the whole packet weigh, and how many portions is that?",
+      "a": "400 grams, which is two portions of 200 grams.",
+      "why": "Both are on the second line. The portion size matters for the nutrition table further down.",
+      "outcome": 5
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "The label gives a use by date but no best before date. What does that tell you?",
+      "a": "That this is about safety, not quality — it should not be eaten after 14 May.",
+      "why": "Use by is a safety date and best before is a quality one. A product carrying only a use by date is one where the date matters for more than taste.",
+      "outcome": 5,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "The salt figure says 0.9 g per 100 g. How much salt is in one portion?",
+      "a": "1.8 grams, because a portion is 200 grams — twice 100.",
+      "why": "The table gives both columns, but the per portion figure only makes sense once you know a portion is 200 g from the line at the top. Reading the per 100 g column alone halves the real amount.",
+      "outcome": 5,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "You open the packet on 10 May and use half. When must you eat the rest?",
+      "a": "By 12 May — within two days of opening, which comes before the use by date of 14 May.",
+      "why": "Two rules apply at once and the tighter one wins. The use by date is not the answer here, and that is exactly the trap.",
+      "outcome": 5
+    }
   ],
   "grammar": [
     {
@@ -201,12 +667,48 @@
     }
   ],
   "speaking": [
-    { "title": "Speaking 1 — Ask for ten amounts", "type": "Core pattern drill", "instructions": "Ask for each of these out loud, as you would in a shop.\n1 packet of rice · 2 bottles of milk · 3 slices of bread · 1 tin of fish · half a kilo of meat · a bunch of bananas · 2 packets of tea · a piece of cheese · 4 bottles of water · a spoon of sugar\nRecord all ten. Play it back and check one thing only: did you say of every single time?", "tutor": "Order six things from the tutor with amounts, and ask it whether any of the of words were missing.", "outcome": 1 },
-    { "title": "Speaking 2 — At the stall", "type": "Exchange", "instructions": "Say both sides, then change it four times with different items and amounts.\nA: Two kilos of rice, please.\nB: Anything else?\nA: Have you got any fresh fish?\nB: Not today.\nA: All right. How much is that?\nB: Six twenty.\nA: Sorry — six twenty?\nB: Yes.\nRecord one full version. Check two things: did you use any in the question, and did you repeat the price back?", "tutor": "Buy five things from the tutor, asking the price of each and repeating it back.", "outcome": 1 },
-    { "title": "Speaking 3 — Some or any", "type": "Core pattern drill", "instructions": "Say twelve sentences about what is in your kitchen right now.\nFour positive, with some. Four negative, with any. Two questions with any. Two requests or offers, with some.\nRecord all twelve. Play it back and check each one against the type of sentence it was — that is the only thing being tested.", "tutor": "Ask the tutor whether it has any of six things, then offer it some of two things.", "outcome": 2 },
-    { "title": "Speaking 4 — Explain how to make something", "type": "Extended turn", "instructions": "Choose something simple you can actually cook.\nExplain how to make it out loud, in six steps.\nEvery step must be one instruction, and every step must start with an ordering word.\nRecord it.\nNow the test: play it back and try to follow your own instructions exactly as spoken, doing nothing that was not said. Where would you get stuck? That gap is a missing step.", "tutor": "Give the tutor your six steps and ask it to repeat them back in order.", "outcome": 4 },
-    { "title": "Speaking 5 — Read the preparation instructions", "type": "Reading aloud", "instructions": "Open Reading 3 and read the PREPARATION section out loud.\nThen say in your own words what the four instructions are, without looking.\nNotice that two of the four are negative — do not boil, do not reheat. Negative instructions are easy to skip when reading quickly and they are usually the important ones.\nRecord the second part.", "tutor": "Read the preparation instructions to the tutor and ask it which ones were negative.", "outcome": 3 },
-    { "title": "Speaking 6 — Order a week of food", "type": "Assessment rehearsal", "instructions": "Without notes, order everything you would need for a week, out loud, in one continuous turn.\nAt least ten items, each with an amount.\nUse at least five different containers or measures.\nAsk at least two questions while you do it — about freshness, about price, or about whether they have something.\nRecord it, listen once, record it again and keep the second.", "tutor": "Ask the tutor to be a stallholder and order a week of food from it.", "outcome": 1 }
+    {
+      "title": "Speaking 1 — Ask for ten amounts",
+      "type": "Core pattern drill",
+      "instructions": "Ask for each of these out loud, as you would in a shop.\n1 packet of rice · 2 bottles of milk · 3 slices of bread · 1 tin of fish · half a kilo of meat · a bunch of bananas · 2 packets of tea · a piece of cheese · 4 bottles of water · a spoon of sugar\nRecord all ten. Play it back and check one thing only: did you say of every single time?",
+      "tutor": "Order six things from the tutor with amounts, and ask it whether any of the of words were missing.",
+      "outcome": 1
+    },
+    {
+      "title": "Speaking 2 — At the stall",
+      "type": "Exchange",
+      "instructions": "Say both sides, then change it four times with different items and amounts.\nA: Two kilos of rice, please.\nB: Anything else?\nA: Have you got any fresh fish?\nB: Not today.\nA: All right. How much is that?\nB: Six twenty.\nA: Sorry — six twenty?\nB: Yes.\nRecord one full version. Check two things: did you use any in the question, and did you repeat the price back?",
+      "tutor": "Buy five things from the tutor, asking the price of each and repeating it back.",
+      "outcome": 1
+    },
+    {
+      "title": "Speaking 3 — Some or any",
+      "type": "Core pattern drill",
+      "instructions": "Say twelve sentences about what is in your kitchen right now.\nFour positive, with some. Four negative, with any. Two questions with any. Two requests or offers, with some.\nRecord all twelve. Play it back and check each one against the type of sentence it was — that is the only thing being tested.",
+      "tutor": "Ask the tutor whether it has any of six things, then offer it some of two things.",
+      "outcome": 2
+    },
+    {
+      "title": "Speaking 4 — Explain how to make something",
+      "type": "Extended turn",
+      "instructions": "Choose something simple you can actually cook.\nExplain how to make it out loud, in six steps.\nEvery step must be one instruction, and every step must start with an ordering word.\nRecord it.\nNow the test: play it back and try to follow your own instructions exactly as spoken, doing nothing that was not said. Where would you get stuck? That gap is a missing step.",
+      "tutor": "Give the tutor your six steps and ask it to repeat them back in order.",
+      "outcome": 4
+    },
+    {
+      "title": "Speaking 5 — Read the preparation instructions",
+      "type": "Reading aloud",
+      "instructions": "Open Reading 3 and read the PREPARATION section out loud.\nThen say in your own words what the four instructions are, without looking.\nNotice that two of the four are negative — do not boil, do not reheat. Negative instructions are easy to skip when reading quickly and they are usually the important ones.\nRecord the second part.",
+      "tutor": "Read the preparation instructions to the tutor and ask it which ones were negative.",
+      "outcome": 3
+    },
+    {
+      "title": "Speaking 6 — Order a week of food",
+      "type": "Assessment rehearsal",
+      "instructions": "Without notes, order everything you would need for a week, out loud, in one continuous turn.\nAt least ten items, each with an amount.\nUse at least five different containers or measures.\nAsk at least two questions while you do it — about freshness, about price, or about whether they have something.\nRecord it, listen once, record it again and keep the second.",
+      "tutor": "Ask the tutor to be a stallholder and order a week of food from it.",
+      "outcome": 1
+    }
   ],
   "writing": [
     {
@@ -299,33 +801,193 @@
     }
   ],
   "quizzes": [
-    { "q": "Which is correct?", "options": ["two packets of rice", "two packet of rice", "two packets rice", "two packets of rices"], "a": "two packets of rice", "why": "The s goes on the container and of joins it to the thing. Rice itself never takes a plural.", "outcome": 1 },
-    { "q": "Complete: a ____ of milk.", "options": ["packet", "bottle", "slice", "bunch"], "a": "bottle", "why": "Milk is a liquid, so it comes in a bottle. A packet holds dry things, a slice is cut from something solid, and a bunch is things fastened together.", "outcome": 1 },
-    { "q": "Complete: I do not have ____ bread.", "options": ["some", "a", "any", "much of"], "a": "any", "why": "A negative sentence takes any. Some would be right in the positive: I have some bread.", "outcome": 2 },
-    { "q": "Complete: Can I have ____ water, please?", "options": ["a", "the", "any", "some"], "a": "some", "why": "This is a request, not a real question about whether water exists, so it takes some. Can I have any water sounds as though you doubt there is any.", "outcome": 2 },
-    { "q": "Complete: Is there ____ milk left?", "options": ["any", "some", "a", "much of"], "a": "any", "why": "This is a genuine question about whether milk exists, so it takes any. Compare Would you like some milk, which is an offer.", "outcome": 2 },
-    { "q": "Which is written as an instruction?", "options": ["You boil the water.", "Boil the water.", "The water is boiled.", "You should boil the water."], "a": "Boil the water.", "why": "An instruction starts with the verb and names nobody. The others are a description, a passive statement and advice.", "outcome": 3 },
-    { "q": "How do you make an instruction negative?", "options": ["Put do not in front", "Add not after the verb", "Add no at the end", "Change the verb"], "a": "Put do not in front", "why": "Do not add salt. Do not reheat. The rest of the instruction stays exactly as it was.", "outcome": 3 },
-    { "q": "Which step must come last?", "options": ["Cut the vegetables", "Heat the oil", "Add the water", "Take it off the heat"], "a": "Take it off the heat", "why": "The other three can be reordered in several workable ways, but nothing can happen after the pan comes off the heat.", "outcome": 4 },
-    { "q": "Which is correctly punctuated?", "options": ["First heat the oil.", "First; heat the oil.", "First, heat the oil.", "First: heat the oil."], "a": "First, heat the oil.", "why": "An ordering word at the start of a step takes a comma after it. It is a small mark and it makes an instruction much easier to read.", "outcome": 4 },
-    { "q": "A label says USE BY 14 May. What kind of date is that?", "options": ["A quality date", "A safety date", "The date it was made", "The date it was packed"], "a": "A safety date", "why": "Use by is about safety and best before is about quality. Food after its best before date is usually fine; after its use by date it may not be.", "outcome": 5 },
-    { "q": "A packet is 400 g and holds 2 portions. Salt is 0.9 g per 100 g. How much salt is in one portion?", "options": ["0.9 g", "0.45 g", "3.6 g", "1.8 g"], "a": "1.8 g", "why": "A portion is 200 g, which is twice 100 g, so the salt doubles. Reading only the per 100 g column halves the real amount.", "outcome": 5 },
-    { "q": "A label says use by 14 May and eat within 2 days of opening. You open it on 10 May. When must you finish it?", "options": ["14 May", "16 May", "12 May", "10 May"], "a": "12 May", "why": "Two rules apply and the tighter one wins. Two days from opening is 12 May, which comes before the printed use by date.", "outcome": 5 }
+    {
+      "q": "Which is correct?",
+      "options": [
+        "two packets of rice",
+        "two packet of rice",
+        "two packets rice",
+        "two packets of rices"
+      ],
+      "a": "two packets of rice",
+      "why": "The s goes on the container and of joins it to the thing. Rice itself never takes a plural.",
+      "outcome": 1
+    },
+    {
+      "q": "Complete: a ____ of milk.",
+      "options": [
+        "packet",
+        "bottle",
+        "slice",
+        "bunch"
+      ],
+      "a": "bottle",
+      "why": "Milk is a liquid, so it comes in a bottle. A packet holds dry things, a slice is cut from something solid, and a bunch is things fastened together.",
+      "outcome": 1
+    },
+    {
+      "q": "Complete: I do not have ____ bread.",
+      "options": [
+        "some",
+        "a",
+        "any",
+        "much of"
+      ],
+      "a": "any",
+      "why": "A negative sentence takes any. Some would be right in the positive: I have some bread.",
+      "outcome": 2
+    },
+    {
+      "q": "Complete: Can I have ____ water, please?",
+      "options": [
+        "a",
+        "the",
+        "any",
+        "some"
+      ],
+      "a": "some",
+      "why": "This is a request, not a real question about whether water exists, so it takes some. Can I have any water sounds as though you doubt there is any.",
+      "outcome": 2
+    },
+    {
+      "q": "Complete: Is there ____ milk left?",
+      "options": [
+        "any",
+        "some",
+        "a",
+        "much of"
+      ],
+      "a": "any",
+      "why": "This is a genuine question about whether milk exists, so it takes any. Compare Would you like some milk, which is an offer.",
+      "outcome": 2
+    },
+    {
+      "q": "Which is written as an instruction?",
+      "options": [
+        "You boil the water.",
+        "Boil the water.",
+        "The water is boiled.",
+        "You should boil the water."
+      ],
+      "a": "Boil the water.",
+      "why": "An instruction starts with the verb and names nobody. The others are a description, a passive statement and advice.",
+      "outcome": 3
+    },
+    {
+      "q": "How do you make an instruction negative?",
+      "options": [
+        "Put do not in front",
+        "Add not after the verb",
+        "Add no at the end",
+        "Change the verb"
+      ],
+      "a": "Put do not in front",
+      "why": "Do not add salt. Do not reheat. The rest of the instruction stays exactly as it was.",
+      "outcome": 3
+    },
+    {
+      "q": "Which step must come last?",
+      "options": [
+        "Cut the vegetables",
+        "Heat the oil",
+        "Add the water",
+        "Take it off the heat"
+      ],
+      "a": "Take it off the heat",
+      "why": "The other three can be reordered in several workable ways, but nothing can happen after the pan comes off the heat.",
+      "outcome": 4
+    },
+    {
+      "q": "Which is correctly punctuated?",
+      "options": [
+        "First heat the oil.",
+        "First; heat the oil.",
+        "First, heat the oil.",
+        "First: heat the oil."
+      ],
+      "a": "First, heat the oil.",
+      "why": "An ordering word at the start of a step takes a comma after it. It is a small mark and it makes an instruction much easier to read.",
+      "outcome": 4
+    },
+    {
+      "q": "A label says USE BY 14 May. What kind of date is that?",
+      "options": [
+        "A quality date",
+        "A safety date",
+        "The date it was made",
+        "The date it was packed"
+      ],
+      "a": "A safety date",
+      "why": "Use by is about safety and best before is about quality. Food after its best before date is usually fine; after its use by date it may not be.",
+      "outcome": 5
+    },
+    {
+      "q": "A packet is 400 g and holds 2 portions. Salt is 0.9 g per 100 g. How much salt is in one portion?",
+      "options": [
+        "0.9 g",
+        "0.45 g",
+        "3.6 g",
+        "1.8 g"
+      ],
+      "a": "1.8 g",
+      "why": "A portion is 200 g, which is twice 100 g, so the salt doubles. Reading only the per 100 g column halves the real amount.",
+      "outcome": 5
+    },
+    {
+      "q": "A label says use by 14 May and eat within 2 days of opening. You open it on 10 May. When must you finish it?",
+      "options": [
+        "14 May",
+        "16 May",
+        "12 May",
+        "10 May"
+      ],
+      "a": "12 May",
+      "why": "Two rules apply and the tighter one wins. Two days from opening is 12 May, which comes before the printed use by date.",
+      "outcome": 5
+    }
   ],
   "teacherNotes": [
-    { "type": "This unit works without you", "note": "Every pattern card has a worked example and every exercise an answer key. Practice 5 and Practice 6 send the learner to a real packet and a real market, and both have answer notes that explain what they will probably find rather than giving a correct response — which is the only honest way to key a field task." },
-    { "type": "Countability is applied here, not taught", "note": "Unit 4 taught countable and uncountable twice over, through how much/how many and a little/a few. This unit uses that knowledge to build container phrases and does not explain the distinction again. If a learner struggles with Pattern 1, the problem is almost always Unit 4 rather than this card — send them back rather than reteaching here." },
-    { "type": "The word that disappears", "note": "Of is the only real error in Pattern 1, and it is inaudible in fast speech, which is why it survives. A packet rice and a packet of rice sound nearly identical when said quickly. Correct it in writing rather than in speech; that is where it is visible and where it matters." },
-    { "type": "Negative instructions get skipped", "note": "Practice 4 is deliberately half negative, and the food label carries do not boil, do not freeze and do not reheat. Learners reading quickly skip the do not and read the instruction as positive, which on a real packet can matter. Speaking 5 asks them to identify which instructions were negative for this reason." },
-    { "type": "Why the label", "note": "The use by against best before distinction is the single most useful thing on a food label and is genuinely not obvious. Three comprehension questions turn on it or on the per 100 g against per portion trap, and one requires noticing that two rules apply at once and the tighter one wins. All three are real and all three cost people money or safety." },
-    { "type": "Device and AI safety", "note": "The AI tutor is a rehearsal partner, not a marking service, and no task here is scored by it alone. Learners must not be asked to give the tutor personal details. Note also that this unit touches allergens: the label carries a wheat warning and a traces-of-milk note, and no learner should be encouraged to rely on the course or the tutor for allergen information about real food." }
+    {
+      "type": "This unit works without you",
+      "note": "Every pattern card has a worked example and every exercise an answer key. Practice 5 and Practice 6 send the learner to a real packet and a real market, and both have answer notes that explain what they will probably find rather than giving a correct response — which is the only honest way to key a field task."
+    },
+    {
+      "type": "Countability is applied here, not taught",
+      "note": "Unit 4 taught countable and uncountable twice over, through how much/how many and a little/a few. This unit uses that knowledge to build container phrases and does not explain the distinction again. If a learner struggles with Pattern 1, the problem is almost always Unit 4 rather than this card — send them back rather than reteaching here."
+    },
+    {
+      "type": "The word that disappears",
+      "note": "Of is the only real error in Pattern 1, and it is inaudible in fast speech, which is why it survives. A packet rice and a packet of rice sound nearly identical when said quickly. Correct it in writing rather than in speech; that is where it is visible and where it matters."
+    },
+    {
+      "type": "Negative instructions get skipped",
+      "note": "Practice 4 is deliberately half negative, and the food label carries do not boil, do not freeze and do not reheat. Learners reading quickly skip the do not and read the instruction as positive, which on a real packet can matter. Speaking 5 asks them to identify which instructions were negative for this reason."
+    },
+    {
+      "type": "Why the label",
+      "note": "The use by against best before distinction is the single most useful thing on a food label and is genuinely not obvious. Three comprehension questions turn on it or on the per 100 g against per portion trap, and one requires noticing that two rules apply at once and the tighter one wins. All three are real and all three cost people money or safety."
+    },
+    {
+      "type": "Device and AI safety",
+      "note": "The AI tutor is a rehearsal partner, not a marking service, and no task here is scored by it alone. Learners must not be asked to give the tutor personal details. Note also that this unit touches allergens: the label carries a wheat warning and a traces-of-milk note, and no learner should be encouraged to rely on the course or the tutor for allergen information about real food."
+    }
   ],
   "selfAssessment": [
-    { "statement": "I can ask for a packet, a bottle or a kilo of something in a shop." },
-    { "statement": "I can say I have some rice and I do not have any rice without mixing them up." },
-    { "statement": "I can read instructions on a packet and do what they say." },
-    { "statement": "I can explain how to do something in steps somebody else could follow." },
-    { "statement": "I can read a food label and tell a use by date from a best before date." }
+    {
+      "statement": "I can ask for a packet, a bottle or a kilo of something in a shop."
+    },
+    {
+      "statement": "I can say I have some rice and I do not have any rice without mixing them up."
+    },
+    {
+      "statement": "I can read instructions on a packet and do what they say."
+    },
+    {
+      "statement": "I can explain how to do something in steps somebody else could follow."
+    },
+    {
+      "statement": "I can read a food label and tell a use by date from a best before date."
+    }
   ],
   "assignment": {
     "title": "A recipe written, and a label read",

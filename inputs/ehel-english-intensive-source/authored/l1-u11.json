@@ -24,7 +24,10 @@
       "cefrLevel": "A2",
       "cefrSkill": "Spoken interaction",
       "cefrDescriptor": "I can say what I have to do at work, and ask whether something is required.",
-      "cambridge": ["3Rg.05", "2Wg.04"]
+      "cambridge": [
+        "3Rg.05",
+        "2Wg.04"
+      ]
     },
     {
       "outcome": "Distinguish do not have to, meaning it is not necessary, from a prohibition.",
@@ -33,7 +36,10 @@
       "cefrLevel": "A2",
       "cefrSkill": "Writing",
       "cefrDescriptor": "I can tell the difference between something that is not required and something that is not allowed.",
-      "cambridge": ["3Ri.16", "2Ri.15"]
+      "cambridge": [
+        "3Ri.16",
+        "2Ri.15"
+      ]
     },
     {
       "outcome": "Describe what a job involves in three parts: what you do, what it requires, and what it is like.",
@@ -42,7 +48,10 @@
       "cefrLevel": "A2",
       "cefrSkill": "Spoken production",
       "cefrDescriptor": "I can describe a job, including what it requires and what it is like to do.",
-      "cambridge": ["2SLm.02", "3Ra.03"]
+      "cambridge": [
+        "2SLm.02",
+        "3Ra.03"
+      ]
     },
     {
       "outcome": "Grade an adjective with quite, very and really, and read a contract for the conditions that are not stated prominently.",
@@ -51,62 +60,442 @@
       "cefrLevel": "A2",
       "cefrSkill": "Reading",
       "cefrDescriptor": "I can say quite hard, very hard and really hard and mean three different amounts.",
-      "cambridge": ["3Ri.14", "2Ri.09"]
+      "cambridge": [
+        "3Ri.14",
+        "2Ri.09"
+      ]
     }
   ],
   "groups": [
     {
       "title": "Kinds of work",
       "words": [
-        { "w": "job", "pos": "noun", "meaning": "The particular work a person is paid to do.", "example": "I am looking for a job in a shop.", "practice": ["I am looking for a job in a shop.", "It is a good job but the hours are long.", "She has two jobs.", "The job involves a lot of walking.", "I started this job in March."], "starter": "I am looking for a job in a", "tutor": "Say what job you would like and one thing it involves." },
-        { "w": "career", "pos": "noun", "meaning": "The work a person does over many years, and how it develops.", "example": "She has had a long career in teaching.", "practice": ["She has had a long career in teaching.", "I want a career, not just a job.", "It is a good career for someone who likes people.", "He changed career at forty.", "There is no career here — it is only a job."], "starter": "She has had a long career in", "tutor": "Say the difference between a job and a career in your own words." },
-        { "w": "employer", "pos": "noun", "meaning": "The person or company that pays you to work.", "example": "My employer pays for the training.", "practice": ["My employer pays for the training.", "Ask your employer for it in writing.", "The employer must give you a contract.", "My last employer was much better.", "The employer decides the shifts."], "starter": "My employer pays for the", "tutor": "Say one thing an employer has to do. Use have to." },
-        { "w": "employee", "pos": "noun", "meaning": "A person who is paid to work for someone.", "example": "Every employee gets a contract.", "practice": ["Every employee gets a contract.", "There are forty employees.", "As an employee you have certain rights.", "New employees start on a lower wage.", "The employees are all part-time."], "starter": "Every employee gets a", "tutor": "Notice employer and employee differ by two letters and mean opposite people. Say both aloud." },
-        { "w": "staff", "pos": "noun", "meaning": "All the people who work somewhere, taken together.", "example": "The staff are very friendly.", "practice": ["The staff are very friendly.", "We are short of staff today.", "Staff must use the side entrance.", "There are twelve staff on this shift.", "The staff room is upstairs."], "starter": "The staff are very", "tutor": "Staff is a group word and takes are, not is. Say the staff are three times." },
-        { "w": "team", "pos": "noun", "meaning": "A small group who work together on the same thing.", "example": "She manages a team of six.", "practice": ["She manages a team of six.", "I work in a small team.", "The team meets every Monday.", "It is a good team to be in.", "The team is short of one person."], "starter": "She manages a team of", "tutor": "Say how big a team you would prefer to work in, and why." }
+        {
+          "w": "job",
+          "pos": "noun",
+          "meaning": "The particular work a person is paid to do.",
+          "example": "I am looking for a job in a shop.",
+          "practice": [
+            "It is a good job but the hours are long.",
+            "She has two jobs.",
+            "The job involves a lot of walking.",
+            "I started this job in March."
+          ],
+          "starter": "I am looking for a job in a",
+          "tutor": "Say what job you would like and one thing it involves."
+        },
+        {
+          "w": "career",
+          "pos": "noun",
+          "meaning": "The work a person does over many years, and how it develops.",
+          "example": "She has had a long career in teaching.",
+          "practice": [
+            "I want a career, not just a job.",
+            "It is a good career for someone who likes people.",
+            "He changed career at forty.",
+            "There is no career here — it is only a job."
+          ],
+          "starter": "She has had a long career in",
+          "tutor": "Say the difference between a job and a career in your own words."
+        },
+        {
+          "w": "employer",
+          "pos": "noun",
+          "meaning": "The person or company that pays you to work.",
+          "example": "My employer pays for the training.",
+          "practice": [
+            "Ask your employer for it in writing.",
+            "The employer must give you a contract.",
+            "My last employer was much better.",
+            "The employer decides the shifts."
+          ],
+          "starter": "My employer pays for the",
+          "tutor": "Say one thing an employer has to do. Use have to."
+        },
+        {
+          "w": "employee",
+          "pos": "noun",
+          "meaning": "A person who is paid to work for someone.",
+          "example": "Every employee gets a contract.",
+          "practice": [
+            "There are forty employees.",
+            "As an employee you have certain rights.",
+            "New employees start on a lower wage.",
+            "The employees are all part-time."
+          ],
+          "starter": "Every employee gets a",
+          "tutor": "Notice employer and employee differ by two letters and mean opposite people. Say both aloud."
+        },
+        {
+          "w": "staff",
+          "pos": "noun",
+          "meaning": "All the people who work somewhere, taken together.",
+          "example": "The staff are very friendly.",
+          "practice": [
+            "We are short of staff today.",
+            "Staff must use the side entrance.",
+            "There are twelve staff on this shift.",
+            "The staff room is upstairs."
+          ],
+          "starter": "The staff are very",
+          "tutor": "Staff is a group word and takes are, not is. Say the staff are three times."
+        },
+        {
+          "w": "team",
+          "pos": "noun",
+          "meaning": "A small group who work together on the same thing.",
+          "example": "She manages a team of six.",
+          "practice": [
+            "I work in a small team.",
+            "The team meets every Monday.",
+            "It is a good team to be in.",
+            "The team is short of one person."
+          ],
+          "starter": "She manages a team of",
+          "tutor": "Say how big a team you would prefer to work in, and why."
+        }
       ]
     },
     {
       "title": "What you do",
       "words": [
-        { "w": "manage", "pos": "verb", "meaning": "To be responsible for people or work.", "example": "She manages a team of six.", "practice": ["She manages a team of six.", "I manage the shop on Saturdays.", "Who manages this department?", "He has managed the team for three years.", "You have to manage your own time."], "starter": "She manages a team of", "tutor": "Say what you would have to do if you managed a small team." },
-        { "w": "organise", "pos": "verb", "meaning": "To arrange things so they happen properly.", "example": "I organise the shifts every week.", "practice": ["I organise the shifts every week.", "She organises the training.", "You have to organise your own work.", "Who organises the deliveries?", "The job involves organising a lot of paperwork."], "starter": "I organise the shifts every", "tutor": "Say one thing you organise, at work or at home." },
-        { "w": "repair", "pos": "verb", "meaning": "To mend something that is broken.", "example": "He repairs machines.", "practice": ["He repairs machines.", "The job involves repairing equipment.", "Can you repair it, or is it finished?", "They repair it free in the first year.", "I repaired it myself."], "starter": "He repairs", "tutor": "Say what you can repair and what you would pay someone else to repair." },
-        { "w": "deliver", "pos": "verb", "meaning": "To take something to a place or person.", "example": "I deliver to twenty shops a day.", "practice": ["I deliver to twenty shops a day.", "They deliver on Tuesdays only.", "The job involves delivering to homes.", "She delivers the post.", "Do you deliver to this address?"], "starter": "I deliver to twenty shops a", "tutor": "Ask whether somewhere delivers to your area. That is a useful everyday question." },
-        { "w": "serve", "pos": "verb", "meaning": "To help customers and give them what they have asked for.", "example": "I serve customers all day.", "practice": ["I serve customers all day.", "She serves in the shop on Saturdays.", "You have to serve quickly at lunchtime.", "Who is serving?", "He served me very politely."], "starter": "I serve customers all", "tutor": "Say what you have to be good at if you serve customers. Use have to." },
-        { "w": "supervise", "pos": "verb", "meaning": "To watch over work and make sure it is done properly.", "example": "I supervise two new employees.", "practice": ["I supervise two new employees.", "Someone has to supervise the evening shift.", "She supervises the whole floor.", "New staff are supervised for a month.", "The job involves supervising a small team."], "starter": "I supervise two new", "tutor": "Say the difference between supervising and managing. They overlap but are not the same." }
+        {
+          "w": "manage",
+          "pos": "verb",
+          "meaning": "To be responsible for people or work.",
+          "example": "She manages a team of six.",
+          "practice": [
+            "I manage the shop on Saturdays.",
+            "Who manages this department?",
+            "He has managed the team for three years.",
+            "You have to manage your own time."
+          ],
+          "starter": "She manages a team of",
+          "tutor": "Say what you would have to do if you managed a small team."
+        },
+        {
+          "w": "organise",
+          "pos": "verb",
+          "meaning": "To arrange things so they happen properly.",
+          "example": "I organise the shifts every week.",
+          "practice": [
+            "She organises the training.",
+            "You have to organise your own work.",
+            "Who organises the deliveries?",
+            "The job involves organising a lot of paperwork."
+          ],
+          "starter": "I organise the shifts every",
+          "tutor": "Say one thing you organise, at work or at home."
+        },
+        {
+          "w": "repair",
+          "pos": "verb",
+          "meaning": "To mend something that is broken.",
+          "example": "He repairs machines.",
+          "practice": [
+            "The job involves repairing equipment.",
+            "Can you repair it, or is it finished?",
+            "They repair it free in the first year.",
+            "I repaired it myself."
+          ],
+          "starter": "He repairs",
+          "tutor": "Say what you can repair and what you would pay someone else to repair."
+        },
+        {
+          "w": "deliver",
+          "pos": "verb",
+          "meaning": "To take something to a place or person.",
+          "example": "I deliver to twenty shops a day.",
+          "practice": [
+            "They deliver on Tuesdays only.",
+            "The job involves delivering to homes.",
+            "She delivers the post.",
+            "Do you deliver to this address?"
+          ],
+          "starter": "I deliver to twenty shops a",
+          "tutor": "Ask whether somewhere delivers to your area. That is a useful everyday question."
+        },
+        {
+          "w": "serve",
+          "pos": "verb",
+          "meaning": "To help customers and give them what they have asked for.",
+          "example": "I serve customers all day.",
+          "practice": [
+            "She serves in the shop on Saturdays.",
+            "You have to serve quickly at lunchtime.",
+            "Who is serving?",
+            "He served me very politely."
+          ],
+          "starter": "I serve customers all",
+          "tutor": "Say what you have to be good at if you serve customers. Use have to."
+        },
+        {
+          "w": "supervise",
+          "pos": "verb",
+          "meaning": "To watch over work and make sure it is done properly.",
+          "example": "I supervise two new employees.",
+          "practice": [
+            "Someone has to supervise the evening shift.",
+            "She supervises the whole floor.",
+            "New staff are supervised for a month.",
+            "The job involves supervising a small team."
+          ],
+          "starter": "I supervise two new",
+          "tutor": "Say the difference between supervising and managing. They overlap but are not the same."
+        }
       ]
     },
     {
       "title": "Terms and conditions",
       "words": [
-        { "w": "contract", "pos": "noun", "meaning": "A written agreement about the work and the pay.", "example": "Read the contract before you sign it.", "practice": ["Read the contract before you sign it.", "My contract is for six months.", "The contract says thirty hours a week.", "Ask for a contract in writing.", "It is not in my contract."], "starter": "Read the contract before you", "tutor": "Say one thing you would check in a contract before signing." },
-        { "w": "salary", "pos": "noun", "meaning": "A fixed amount paid for a year's work, usually monthly.", "example": "The salary is paid on the last Friday.", "practice": ["The salary is paid on the last Friday.", "What is the salary for this job?", "The salary goes up after a year.", "It is a good salary for the hours.", "The salary is not in the advertisement."], "starter": "The salary is paid on the last", "tutor": "Ask what the salary is. It is a normal question and not a rude one." },
-        { "w": "wage", "pos": "noun", "meaning": "Money paid for work, usually by the hour or the week.", "example": "The wage is higher at weekends.", "practice": ["The wage is higher at weekends.", "New staff start on a lower wage.", "The wage is paid every Friday.", "What is the hourly wage?", "The wage went up in April."], "starter": "The wage is higher at", "tutor": "Say the difference between a salary and a wage in your own words." },
-        { "w": "overtime", "pos": "noun", "meaning": "Extra hours worked beyond the normal ones, often paid more.", "example": "Overtime is paid at a higher rate.", "practice": ["Overtime is paid at a higher rate.", "Do I have to do overtime?", "There is a lot of overtime in December.", "The overtime is not compulsory.", "I do six hours of overtime a week."], "starter": "Overtime is paid at a higher", "tutor": "Ask whether overtime is required or optional. Use do I have to." },
-        { "w": "holiday", "pos": "noun", "meaning": "Days you do not work but are still paid for.", "example": "You get twenty-eight days of holiday.", "practice": ["You get twenty-eight days of holiday.", "I would like to take a holiday in July.", "How much holiday do I get?", "Holiday must be agreed in advance.", "The holiday year starts in April."], "starter": "You get twenty-eight days of", "tutor": "Ask how much holiday a job gives. Ask before you accept, not after." },
-        { "w": "notice", "pos": "noun", "meaning": "The warning you must give before leaving a job.", "example": "You have to give one month's notice.", "practice": ["You have to give one month's notice.", "How much notice do I have to give?", "She gave notice last week.", "The notice period is four weeks.", "I have to work my notice."], "starter": "You have to give one month's", "tutor": "Ask how much notice you have to give. This is in the contract and people never read it." }
+        {
+          "w": "contract",
+          "pos": "noun",
+          "meaning": "A written agreement about the work and the pay.",
+          "example": "Read the contract before you sign it.",
+          "practice": [
+            "My contract is for six months.",
+            "The contract says thirty hours a week.",
+            "Ask for a contract in writing.",
+            "It is not in my contract."
+          ],
+          "starter": "Read the contract before you",
+          "tutor": "Say one thing you would check in a contract before signing."
+        },
+        {
+          "w": "salary",
+          "pos": "noun",
+          "meaning": "A fixed amount paid for a year's work, usually monthly.",
+          "example": "The salary is paid on the last Friday.",
+          "practice": [
+            "What is the salary for this job?",
+            "The salary goes up after a year.",
+            "It is a good salary for the hours.",
+            "The salary is not in the advertisement."
+          ],
+          "starter": "The salary is paid on the last",
+          "tutor": "Ask what the salary is. It is a normal question and not a rude one."
+        },
+        {
+          "w": "wage",
+          "pos": "noun",
+          "meaning": "Money paid for work, usually by the hour or the week.",
+          "example": "The wage is higher at weekends.",
+          "practice": [
+            "New staff start on a lower wage.",
+            "The wage is paid every Friday.",
+            "What is the hourly wage?",
+            "The wage went up in April."
+          ],
+          "starter": "The wage is higher at",
+          "tutor": "Say the difference between a salary and a wage in your own words."
+        },
+        {
+          "w": "overtime",
+          "pos": "noun",
+          "meaning": "Extra hours worked beyond the normal ones, often paid more.",
+          "example": "Overtime is paid at a higher rate.",
+          "practice": [
+            "Do I have to do overtime?",
+            "There is a lot of overtime in December.",
+            "The overtime is not compulsory.",
+            "I do six hours of overtime a week."
+          ],
+          "starter": "Overtime is paid at a higher",
+          "tutor": "Ask whether overtime is required or optional. Use do I have to."
+        },
+        {
+          "w": "holiday",
+          "pos": "noun",
+          "meaning": "Days you do not work but are still paid for.",
+          "example": "You get twenty-eight days of holiday.",
+          "practice": [
+            "I would like to take a holiday in July.",
+            "How much holiday do I get?",
+            "Holiday must be agreed in advance.",
+            "The holiday year starts in April."
+          ],
+          "starter": "You get twenty-eight days of",
+          "tutor": "Ask how much holiday a job gives. Ask before you accept, not after."
+        },
+        {
+          "w": "notice",
+          "pos": "noun",
+          "meaning": "The warning you must give before leaving a job.",
+          "example": "You have to give one month's notice.",
+          "practice": [
+            "How much notice do I have to give?",
+            "She gave notice last week.",
+            "The notice period is four weeks.",
+            "I have to work my notice."
+          ],
+          "starter": "You have to give one month's",
+          "tutor": "Ask how much notice you have to give. This is in the contract and people never read it."
+        }
       ]
     },
     {
       "title": "Applying for work",
       "words": [
-        { "w": "apply", "pos": "verb", "meaning": "To formally ask for a job.", "example": "I am applying for three jobs this week.", "practice": ["I am applying for three jobs this week.", "You have to apply online.", "She applied and got an interview.", "Apply before the end of the month.", "How do I apply?"], "starter": "I am applying for three jobs this", "tutor": "Notice apply takes for: apply for a job. Say it three times with different jobs." },
-        { "w": "experience", "pos": "noun", "meaning": "The work you have done before, and what you learned from it.", "example": "You do not have to have experience.", "practice": ["You do not have to have experience.", "I have two years of experience.", "Experience is more useful than qualifications here.", "What experience do you have?", "No experience is necessary."], "starter": "You do not have to have", "tutor": "Say what experience you have, in one sentence. Any work counts." },
-        { "w": "qualification", "pos": "noun", "meaning": "A certificate showing you have completed training or study.", "example": "The job needs one qualification.", "practice": ["The job needs one qualification.", "Do I have to have a qualification?", "My qualifications are from another country.", "She has a qualification in accounting.", "No qualifications are required."], "starter": "The job needs one", "tutor": "Ask whether a qualification is required. Use do I have to have." },
-        { "w": "reference", "pos": "noun", "meaning": "A statement from a former employer about your work.", "example": "They asked for two references.", "practice": ["They asked for two references.", "Can you give me a reference?", "The references are taken up afterwards.", "I need a reference from my last employer.", "You have to give two references."], "starter": "They asked for two", "tutor": "Ask someone politely for a reference. Use would like from Unit 10." },
-        { "w": "interview", "pos": "noun", "meaning": "A meeting where an employer asks you questions about a job.", "example": "The interview is on Thursday at ten.", "practice": ["The interview is on Thursday at ten.", "I have an interview next week.", "The interview lasted twenty minutes.", "What do I have to bring to the interview?", "She got the job after one interview."], "starter": "The interview is on Thursday at", "tutor": "Ask what you have to bring to an interview. It is a good question to ask in advance." }
+        {
+          "w": "apply",
+          "pos": "verb",
+          "meaning": "To formally ask for a job.",
+          "example": "I am applying for three jobs this week.",
+          "practice": [
+            "You have to apply online.",
+            "She applied and got an interview.",
+            "Apply before the end of the month.",
+            "How do I apply?"
+          ],
+          "starter": "I am applying for three jobs this",
+          "tutor": "Notice apply takes for: apply for a job. Say it three times with different jobs."
+        },
+        {
+          "w": "experience",
+          "pos": "noun",
+          "meaning": "The work you have done before, and what you learned from it.",
+          "example": "You do not have to have experience.",
+          "practice": [
+            "I have two years of experience.",
+            "Experience is more useful than qualifications here.",
+            "What experience do you have?",
+            "No experience is necessary."
+          ],
+          "starter": "You do not have to have",
+          "tutor": "Say what experience you have, in one sentence. Any work counts."
+        },
+        {
+          "w": "qualification",
+          "pos": "noun",
+          "meaning": "A certificate showing you have completed training or study.",
+          "example": "The job needs one qualification.",
+          "practice": [
+            "Do I have to have a qualification?",
+            "My qualifications are from another country.",
+            "She has a qualification in accounting.",
+            "No qualifications are required."
+          ],
+          "starter": "The job needs one",
+          "tutor": "Ask whether a qualification is required. Use do I have to have."
+        },
+        {
+          "w": "reference",
+          "pos": "noun",
+          "meaning": "A statement from a former employer about your work.",
+          "example": "They asked for two references.",
+          "practice": [
+            "Can you give me a reference?",
+            "The references are taken up afterwards.",
+            "I need a reference from my last employer.",
+            "You have to give two references."
+          ],
+          "starter": "They asked for two",
+          "tutor": "Ask someone politely for a reference. Use would like from Unit 10."
+        },
+        {
+          "w": "interview",
+          "pos": "noun",
+          "meaning": "A meeting where an employer asks you questions about a job.",
+          "example": "The interview is on Thursday at ten.",
+          "practice": [
+            "I have an interview next week.",
+            "The interview lasted twenty minutes.",
+            "What do I have to bring to the interview?",
+            "She got the job after one interview."
+          ],
+          "starter": "The interview is on Thursday at",
+          "tutor": "Ask what you have to bring to an interview. It is a good question to ask in advance."
+        }
       ]
     },
     {
       "title": "How much, and how well",
       "words": [
-        { "w": "quite", "pos": "adverb", "meaning": "To a moderate amount; fairly. Less than very.", "example": "It is quite hard work.", "practice": ["It is quite hard work.", "The job is quite interesting.", "It is quite far from where I live.", "She is quite good at it.", "It is quite busy in the mornings."], "starter": "It is quite hard", "tutor": "Say quite good and very good. Ask the tutor which is the bigger claim." },
-        { "w": "really", "pos": "adverb", "meaning": "To a large amount; more than very.", "example": "It is really interesting work.", "practice": ["It is really interesting work.", "The team is really good.", "It was really difficult at first.", "I am really tired after a long shift.", "The pay is really low."], "starter": "It is really interesting", "tutor": "Say the same sentence with quite, very and really. Notice the scale." },
-        { "w": "hard", "pos": "adjective", "meaning": "Needing a lot of effort.", "example": "It is hard work but the team is good.", "practice": ["It is hard work but the team is good.", "The first week was really hard.", "It is quite hard at the beginning.", "Nothing about this job is hard.", "It is hard but it is interesting."], "starter": "It is hard work but the team is", "tutor": "Say one thing about a job that is hard and one that is easy." },
-        { "w": "careful", "pos": "adjective", "meaning": "Paying close attention so that nothing goes wrong.", "example": "You have to be very careful with the machines.", "practice": ["You have to be very careful with the machines.", "She is really careful with money.", "Be careful — the floor is wet.", "You have to be careful but not slow.", "He is quite careful, most of the time."], "starter": "You have to be very careful with the", "tutor": "Say one job where you have to be careful, and say why." },
-        { "w": "reliable", "pos": "adjective", "meaning": "Able to be trusted to do what you said you would.", "example": "You have to be reliable — that matters more than being fast.", "practice": ["You have to be reliable — that matters more than being fast.", "She is really reliable.", "The staff are quite reliable.", "Reliable people get the extra shifts.", "It is not a difficult job but you have to be reliable."], "starter": "You have to be reliable — that matters more than", "tutor": "Say what being reliable means in a job, in your own words." },
-        { "w": "responsible", "pos": "adjective", "meaning": "Having a duty to deal with something.", "example": "I am responsible for the evening shift.", "practice": ["I am responsible for the evening shift.", "Who is responsible for the keys?", "She is responsible for four people.", "You are responsible for your own equipment.", "It is a responsible job."], "starter": "I am responsible for the evening", "tutor": "Notice responsible takes for. Say what you are responsible for, at work or at home." }
+        {
+          "w": "quite",
+          "pos": "adverb",
+          "meaning": "To a moderate amount; fairly. Less than very.",
+          "example": "It is quite hard work.",
+          "practice": [
+            "The job is quite interesting.",
+            "It is quite far from where I live.",
+            "She is quite good at it.",
+            "It is quite busy in the mornings."
+          ],
+          "starter": "It is quite hard",
+          "tutor": "Say quite good and very good. Ask the tutor which is the bigger claim."
+        },
+        {
+          "w": "really",
+          "pos": "adverb",
+          "meaning": "To a large amount; more than very.",
+          "example": "It is really interesting work.",
+          "practice": [
+            "The team is really good.",
+            "It was really difficult at first.",
+            "I am really tired after a long shift.",
+            "The pay is really low."
+          ],
+          "starter": "It is really interesting",
+          "tutor": "Say the same sentence with quite, very and really. Notice the scale."
+        },
+        {
+          "w": "hard",
+          "pos": "adjective",
+          "meaning": "Needing a lot of effort.",
+          "example": "It is hard work but the team is good.",
+          "practice": [
+            "The first week was really hard.",
+            "It is quite hard at the beginning.",
+            "Nothing about this job is hard.",
+            "It is hard but it is interesting."
+          ],
+          "starter": "It is hard work but the team is",
+          "tutor": "Say one thing about a job that is hard and one that is easy."
+        },
+        {
+          "w": "careful",
+          "pos": "adjective",
+          "meaning": "Paying close attention so that nothing goes wrong.",
+          "example": "You have to be very careful with the machines.",
+          "practice": [
+            "She is really careful with money.",
+            "Be careful — the floor is wet.",
+            "You have to be careful but not slow.",
+            "He is quite careful, most of the time."
+          ],
+          "starter": "You have to be very careful with the",
+          "tutor": "Say one job where you have to be careful, and say why."
+        },
+        {
+          "w": "reliable",
+          "pos": "adjective",
+          "meaning": "Able to be trusted to do what you said you would.",
+          "example": "You have to be reliable — that matters more than being fast.",
+          "practice": [
+            "She is really reliable.",
+            "The staff are quite reliable.",
+            "Reliable people get the extra shifts.",
+            "It is not a difficult job but you have to be reliable."
+          ],
+          "starter": "You have to be reliable — that matters more than",
+          "tutor": "Say what being reliable means in a job, in your own words."
+        },
+        {
+          "w": "responsible",
+          "pos": "adjective",
+          "meaning": "Having a duty to deal with something.",
+          "example": "I am responsible for the evening shift.",
+          "practice": [
+            "Who is responsible for the keys?",
+            "She is responsible for four people.",
+            "You are responsible for your own equipment.",
+            "It is a responsible job."
+          ],
+          "starter": "I am responsible for the evening",
+          "tutor": "Notice responsible takes for. Say what you are responsible for, at work or at home."
+        }
       ]
     }
   ],
@@ -130,16 +519,90 @@
     }
   ],
   "comprehension": [
-    { "section": "Reading", "reading": 1, "q": "What does you do not have to have experience mean?", "a": "Experience is not required — you are welcome to apply without it.", "why": "It opens a door. This is the single most important sentence in the unit and the one most often read backwards.", "outcome": 2 },
-    { "section": "Reading", "reading": 1, "q": "Why does the text say this confusion costs people opportunities?", "a": "Because they read the negative as discouraging, decide the job is not for them, and do not apply — when the sentence was telling them a worry did not matter.", "why": "The cost is not a mark on an exercise. It is a job not applied for, and the person never finds out.", "outcome": 2, "difficulty": "Stretch" },
-    { "section": "Reading", "reading": 1, "q": "The text says every negative in this unit is an open door. What is it preparing you for?", "a": "Unit 17, where the construction that does close a door uses different words entirely.", "why": "The two are kept in separate units on purpose. Knowing that a closing form exists, but is not here, stops you from reading one into these sentences.", "outcome": 2 },
-    { "section": "Reading", "reading": 2, "q": "What are the three parts of a job description?", "a": "What you actually do, what the job requires, and what it is like.", "why": "Each answers a different question, and most people give only the first — which is a title with extra words.", "outcome": 3 },
-    { "section": "Reading", "reading": 2, "q": "What happens if you leave out the third part?", "a": "It sounds like a contract rather than a life — the listener cannot tell whether they would want the job.", "why": "The text gives a specific consequence for each missing part, and this is the one people leave out most, because opinions feel less safe than facts.", "outcome": 3, "difficulty": "Stretch" },
-    { "section": "Reading", "reading": 2, "q": "Why does the text recommend the verb involves?", "a": "Because it lets you name something that is neither a duty nor an opinion — just a fact about what the work is actually like.", "why": "It fills a gap the other two parts leave. A lot of walking is not a requirement and not a judgement, but it is the thing a listener most wants to know.", "outcome": 3 },
-    { "section": "Document", "reading": 3, "q": "The advertisement says you do not have to have your own transport. What does that tell you, and what does it not tell you?", "a": "It tells you transport is not required and there is a free staff bus from the station. It does not tell you what times the bus runs, which matters if your shift starts early.", "why": "The open door is real, but it has a condition attached that the advertisement does not state. Noticing what is absent is the harder half of reading a document.", "outcome": 4, "difficulty": "Stretch" },
-    { "section": "Document", "reading": 3, "q": "Do you have to do overtime in this job?", "a": "You may be required to — clause 3.2 says employees may be required to work up to 8 hours a week. So it is not optional, and it is paid at the normal rate rather than a higher one.", "why": "Two facts sit in one short clause, and the second is the one that costs money. Overtime is often paid at a higher rate; here it is not, and only the contract says so.", "outcome": 4 },
-    { "section": "Document", "reading": 3, "q": "You want to take a week's holiday in December. Can you?", "a": "No. Clause 4.2 says holiday may not be taken during November or December.", "why": "This is the one restriction in the whole document, and it is in the contract rather than the advertisement — which is normal, and the reason for reading one before signing.", "outcome": 4 },
-    { "section": "Document", "reading": 3, "q": "You start the job and leave after two months. How much notice do you have to give, and why is that different from later?", "a": "One week, because the first three months are a trial period. After three months it becomes four weeks.", "why": "Clauses 6.1 and 6.2 say the same thing from two directions. The short notice cuts both ways — it is easier for you to leave and easier for them to end it.", "outcome": 4, "difficulty": "Stretch" }
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "What does you do not have to have experience mean?",
+      "a": "Experience is not required — you are welcome to apply without it.",
+      "why": "It opens a door. This is the single most important sentence in the unit and the one most often read backwards.",
+      "outcome": 2
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "Why does the text say this confusion costs people opportunities?",
+      "a": "Because they read the negative as discouraging, decide the job is not for them, and do not apply — when the sentence was telling them a worry did not matter.",
+      "why": "The cost is not a mark on an exercise. It is a job not applied for, and the person never finds out.",
+      "outcome": 2,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "The text says every negative in this unit is an open door. What is it preparing you for?",
+      "a": "Unit 17, where the construction that does close a door uses different words entirely.",
+      "why": "The two are kept in separate units on purpose. Knowing that a closing form exists, but is not here, stops you from reading one into these sentences.",
+      "outcome": 2
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "What are the three parts of a job description?",
+      "a": "What you actually do, what the job requires, and what it is like.",
+      "why": "Each answers a different question, and most people give only the first — which is a title with extra words.",
+      "outcome": 3
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "What happens if you leave out the third part?",
+      "a": "It sounds like a contract rather than a life — the listener cannot tell whether they would want the job.",
+      "why": "The text gives a specific consequence for each missing part, and this is the one people leave out most, because opinions feel less safe than facts.",
+      "outcome": 3,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "Why does the text recommend the verb involves?",
+      "a": "Because it lets you name something that is neither a duty nor an opinion — just a fact about what the work is actually like.",
+      "why": "It fills a gap the other two parts leave. A lot of walking is not a requirement and not a judgement, but it is the thing a listener most wants to know.",
+      "outcome": 3
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "The advertisement says you do not have to have your own transport. What does that tell you, and what does it not tell you?",
+      "a": "It tells you transport is not required and there is a free staff bus from the station. It does not tell you what times the bus runs, which matters if your shift starts early.",
+      "why": "The open door is real, but it has a condition attached that the advertisement does not state. Noticing what is absent is the harder half of reading a document.",
+      "outcome": 4,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "Do you have to do overtime in this job?",
+      "a": "You may be required to — clause 3.2 says employees may be required to work up to 8 hours a week. So it is not optional, and it is paid at the normal rate rather than a higher one.",
+      "why": "Two facts sit in one short clause, and the second is the one that costs money. Overtime is often paid at a higher rate; here it is not, and only the contract says so.",
+      "outcome": 4
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "You want to take a week's holiday in December. Can you?",
+      "a": "No. Clause 4.2 says holiday may not be taken during November or December.",
+      "why": "This is the one restriction in the whole document, and it is in the contract rather than the advertisement — which is normal, and the reason for reading one before signing.",
+      "outcome": 4
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "You start the job and leave after two months. How much notice do you have to give, and why is that different from later?",
+      "a": "One week, because the first three months are a trial period. After three months it becomes four weeks.",
+      "why": "Clauses 6.1 and 6.2 say the same thing from two directions. The short notice cuts both ways — it is easier for you to leave and easier for them to end it.",
+      "outcome": 4,
+      "difficulty": "Stretch"
+    }
   ],
   "grammar": [
     {
@@ -180,12 +643,48 @@
     }
   ],
   "speaking": [
-    { "title": "Speaking 1 — What you have to do", "type": "Core pattern drill", "instructions": "Say six sentences about things you have to do — at work, at home, or in your week.\nUse have to four times and has to twice, by talking about somebody else for two of them.\nRecord them. Play back and check every one has both words: have and to.", "tutor": "Say six things you have to do and ask the tutor to correct any missing to.", "outcome": 1 },
-    { "title": "Speaking 2 — Not necessary", "type": "Core pattern drill", "instructions": "Say six sentences using do not have to or does not have to.\nAfter each one, say out loud what it means: that is not necessary.\nFor example: You do not have to have experience. That is not necessary.\nRecord it. The second half of each pair is there to build the habit of reading these as open doors, and it is worth saying aloud even though it feels repetitive.", "tutor": "Say six do-not-have-to sentences and ask the tutor whether each one forbids anything. The answer should be no every time.", "outcome": 2 },
-    { "title": "Speaking 3 — Asking what is required", "type": "Fixed frame drill", "instructions": "Say each of these five times, until they arrive without assembly.\nDo I have to work at weekends?\nDo I have to have a qualification?\nHow much notice do I have to give?\nWhat do I have to bring to the interview?\nDoes everyone have to do overtime?\nRecord the last two. Both are questions people wish they had asked earlier.", "tutor": "Ask the tutor five questions about what a job requires, and ask it to answer only what you asked.", "outcome": 1 },
-    { "title": "Speaking 4 — A job in three parts", "type": "Extended turn", "instructions": "Choose a job — yours, one you have done, or one you would like.\nDescribe it in three parts: what you do, what it requires, what it is like.\nUse have to at least twice and a degree word at least twice.\nInclude one sentence with involves.\nRecord it.\nThen listen back and ask: could somebody hearing only this tell whether they could do the job, and whether they would want to? If not, one of the three parts is missing or too short.", "tutor": "Describe a job to the tutor and ask it which of the three parts was weakest.", "outcome": 3 },
-    { "title": "Speaking 5 — The scale", "type": "Core pattern drill", "instructions": "Take one adjective — hard.\nSay: It is quite hard. It is very hard. It is really hard.\nSay them in order, then out of order, then ask yourself which was which.\nDo the same with: interesting, difficult, busy, tired, good.\nRecord one full set. Listening back to your own voice on a scale is the fastest way to fix the order of the three.", "tutor": "Say sentences at different points on the scale and ask the tutor to rank them.", "outcome": 4 },
-    { "title": "Speaking 6 — Read the contract aloud and decide", "type": "Assessment rehearsal", "instructions": "Open Reading 3.\nRead the advertisement aloud, then clauses 3.2, 4.2 and 6.1 of the contract.\nThen say aloud, as though explaining to a friend: whether overtime is required, whether it is paid extra, and whether you could take a holiday in December.\nThen say what the advertisement promised that the contract does not explain.\nRecord the last two parts and keep them.", "tutor": "Give the tutor the contract clauses and ask which one it would want changed before signing.", "outcome": 4 }
+    {
+      "title": "Speaking 1 — What you have to do",
+      "type": "Core pattern drill",
+      "instructions": "Say six sentences about things you have to do — at work, at home, or in your week.\nUse have to four times and has to twice, by talking about somebody else for two of them.\nRecord them. Play back and check every one has both words: have and to.",
+      "tutor": "Say six things you have to do and ask the tutor to correct any missing to.",
+      "outcome": 1
+    },
+    {
+      "title": "Speaking 2 — Not necessary",
+      "type": "Core pattern drill",
+      "instructions": "Say six sentences using do not have to or does not have to.\nAfter each one, say out loud what it means: that is not necessary.\nFor example: You do not have to have experience. That is not necessary.\nRecord it. The second half of each pair is there to build the habit of reading these as open doors, and it is worth saying aloud even though it feels repetitive.",
+      "tutor": "Say six do-not-have-to sentences and ask the tutor whether each one forbids anything. The answer should be no every time.",
+      "outcome": 2
+    },
+    {
+      "title": "Speaking 3 — Asking what is required",
+      "type": "Fixed frame drill",
+      "instructions": "Say each of these five times, until they arrive without assembly.\nDo I have to work at weekends?\nDo I have to have a qualification?\nHow much notice do I have to give?\nWhat do I have to bring to the interview?\nDoes everyone have to do overtime?\nRecord the last two. Both are questions people wish they had asked earlier.",
+      "tutor": "Ask the tutor five questions about what a job requires, and ask it to answer only what you asked.",
+      "outcome": 1
+    },
+    {
+      "title": "Speaking 4 — A job in three parts",
+      "type": "Extended turn",
+      "instructions": "Choose a job — yours, one you have done, or one you would like.\nDescribe it in three parts: what you do, what it requires, what it is like.\nUse have to at least twice and a degree word at least twice.\nInclude one sentence with involves.\nRecord it.\nThen listen back and ask: could somebody hearing only this tell whether they could do the job, and whether they would want to? If not, one of the three parts is missing or too short.",
+      "tutor": "Describe a job to the tutor and ask it which of the three parts was weakest.",
+      "outcome": 3
+    },
+    {
+      "title": "Speaking 5 — The scale",
+      "type": "Core pattern drill",
+      "instructions": "Take one adjective — hard.\nSay: It is quite hard. It is very hard. It is really hard.\nSay them in order, then out of order, then ask yourself which was which.\nDo the same with: interesting, difficult, busy, tired, good.\nRecord one full set. Listening back to your own voice on a scale is the fastest way to fix the order of the three.",
+      "tutor": "Say sentences at different points on the scale and ask the tutor to rank them.",
+      "outcome": 4
+    },
+    {
+      "title": "Speaking 6 — Read the contract aloud and decide",
+      "type": "Assessment rehearsal",
+      "instructions": "Open Reading 3.\nRead the advertisement aloud, then clauses 3.2, 4.2 and 6.1 of the contract.\nThen say aloud, as though explaining to a friend: whether overtime is required, whether it is paid extra, and whether you could take a holiday in December.\nThen say what the advertisement promised that the contract does not explain.\nRecord the last two parts and keep them.",
+      "tutor": "Give the tutor the contract clauses and ask which one it would want changed before signing.",
+      "outcome": 4
+    }
   ],
   "writing": [
     {
@@ -277,32 +776,190 @@
     }
   ],
   "quizzes": [
-    { "q": "You do not have to have experience. What does this mean?", "options": ["Experience is forbidden", "Experience is not required", "You should not mention experience", "Experience is essential"], "a": "Experience is not required", "why": "Do not have to means it is not necessary. It never means something is forbidden — it is an open door, and in a job advertisement it is an invitation to apply.", "outcome": 2 },
-    { "q": "Which is correct?", "options": ["She have to wear a uniform.", "She has to wear a uniform.", "She has wear a uniform.", "She have wear a uniform."], "a": "She has to wear a uniform.", "why": "Third person takes has, and have to is two words — both parts are needed.", "outcome": 1 },
-    { "q": "Which question is correct?", "options": ["Do you have to work weekends?", "Do you has to work weekends?", "Have you to work weekends?", "You have to work weekends?"], "a": "Do you have to work weekends?", "why": "Have is an ordinary verb here, so the question uses do, and the verb after do stays plain — have, not has.", "outcome": 1 },
-    { "q": "Which sentence means the smallest amount?", "options": ["It is really hard.", "It is very hard.", "It is quite hard.", "They are all the same."], "a": "It is quite hard.", "why": "The scale runs quite, very, really. Quite means fairly, which is a smaller claim than very — so quite good is faint praise, not high praise.", "outcome": 4 },
-    { "q": "Which is correct?", "options": ["It is really interesting.", "It is interesting really.", "Really it is interesting job.", "It is interesting very."], "a": "It is really interesting.", "why": "The degree word goes immediately before the adjective, with nothing between them. The order is fixed even though the meaning would be guessable either way.", "outcome": 4 },
-    { "q": "What are the three parts of a job description?", "options": ["The title, the pay and the hours", "What you do, what it requires, what it is like", "The employer, the contract and the notice", "Your experience, your qualifications and your references"], "a": "What you do, what it requires, what it is like", "why": "Each answers a different question. Without the second, nobody can judge whether they could do it; without the third, it sounds like a contract rather than a life.", "outcome": 3 },
-    { "q": "Which sentence uses have to correctly?", "options": ["I have start at six.", "I having to start at six.", "I has to start at six.", "I have to start at six."], "a": "I have to start at six.", "why": "First person takes have, and to is required. The most common error at this level is dropping the to entirely.", "outcome": 1 },
-    { "q": "What does the verb involves mean?", "options": ["Includes as a necessary part", "Is forbidden by", "Is paid extra for", "Happens occasionally"], "a": "Includes as a necessary part", "why": "It lets you state a fact about the work that is neither a duty nor an opinion — the job involves a lot of walking is exactly the thing a listener most wants to know.", "outcome": 3 },
-    { "q": "The contract says overtime may be required and is paid at the normal hourly rate. What does this tell you?", "options": ["Overtime is optional and paid extra", "You must do overtime and it is paid extra", "You may have to do overtime and it is not paid extra", "There is no overtime in this job"], "a": "You may have to do overtime and it is not paid extra", "why": "Two facts sit in one clause, and the second is the one that costs money. Overtime is often paid at a higher rate; this contract says it is not.", "outcome": 4 },
-    { "q": "Which of these is NOT a prohibition?", "options": ["Staff must not enter this area.", "Holiday may not be taken in December.", "No smoking beyond this point.", "You do not have to work weekends."], "a": "You do not have to work weekends.", "why": "It is the only open door in the list. The other three close something; this one says weekends are optional, so the person may work them if they want the hours.", "outcome": 2 },
-    { "q": "Which is correct?", "options": ["He does not have to give notice.", "He do not have to give notice.", "He does not have give notice.", "He not have to give notice."], "a": "He does not have to give notice.", "why": "Third person takes does in the negative, and the to stays. Both parts go wrong independently, which is why this form is worth drilling.", "outcome": 1 },
-    { "q": "The contract says the first 3 months are a trial period with 1 week's notice. What does that mean for you?", "options": ["You cannot leave for three months", "You are paid less for three months", "You have no contract for three months", "Either side can end it with one week's notice"], "a": "Either side can end it with one week's notice", "why": "The short notice cuts both ways — it is easier for you to leave and easier for the employer to end it. Clause 6.2 says so explicitly.", "outcome": 4 }
+    {
+      "q": "You do not have to have experience. What does this mean?",
+      "options": [
+        "Experience is forbidden",
+        "Experience is not required",
+        "You should not mention experience",
+        "Experience is essential"
+      ],
+      "a": "Experience is not required",
+      "why": "Do not have to means it is not necessary. It never means something is forbidden — it is an open door, and in a job advertisement it is an invitation to apply.",
+      "outcome": 2
+    },
+    {
+      "q": "Which is correct?",
+      "options": [
+        "She have to wear a uniform.",
+        "She has to wear a uniform.",
+        "She has wear a uniform.",
+        "She have wear a uniform."
+      ],
+      "a": "She has to wear a uniform.",
+      "why": "Third person takes has, and have to is two words — both parts are needed.",
+      "outcome": 1
+    },
+    {
+      "q": "Which question is correct?",
+      "options": [
+        "Do you have to work weekends?",
+        "Do you has to work weekends?",
+        "Have you to work weekends?",
+        "You have to work weekends?"
+      ],
+      "a": "Do you have to work weekends?",
+      "why": "Have is an ordinary verb here, so the question uses do, and the verb after do stays plain — have, not has.",
+      "outcome": 1
+    },
+    {
+      "q": "Which sentence means the smallest amount?",
+      "options": [
+        "It is really hard.",
+        "It is very hard.",
+        "It is quite hard.",
+        "They are all the same."
+      ],
+      "a": "It is quite hard.",
+      "why": "The scale runs quite, very, really. Quite means fairly, which is a smaller claim than very — so quite good is faint praise, not high praise.",
+      "outcome": 4
+    },
+    {
+      "q": "Which is correct?",
+      "options": [
+        "It is really interesting.",
+        "It is interesting really.",
+        "Really it is interesting job.",
+        "It is interesting very."
+      ],
+      "a": "It is really interesting.",
+      "why": "The degree word goes immediately before the adjective, with nothing between them. The order is fixed even though the meaning would be guessable either way.",
+      "outcome": 4
+    },
+    {
+      "q": "What are the three parts of a job description?",
+      "options": [
+        "The title, the pay and the hours",
+        "What you do, what it requires, what it is like",
+        "The employer, the contract and the notice",
+        "Your experience, your qualifications and your references"
+      ],
+      "a": "What you do, what it requires, what it is like",
+      "why": "Each answers a different question. Without the second, nobody can judge whether they could do it; without the third, it sounds like a contract rather than a life.",
+      "outcome": 3
+    },
+    {
+      "q": "Which sentence uses have to correctly?",
+      "options": [
+        "I have start at six.",
+        "I having to start at six.",
+        "I has to start at six.",
+        "I have to start at six."
+      ],
+      "a": "I have to start at six.",
+      "why": "First person takes have, and to is required. The most common error at this level is dropping the to entirely.",
+      "outcome": 1
+    },
+    {
+      "q": "What does the verb involves mean?",
+      "options": [
+        "Includes as a necessary part",
+        "Is forbidden by",
+        "Is paid extra for",
+        "Happens occasionally"
+      ],
+      "a": "Includes as a necessary part",
+      "why": "It lets you state a fact about the work that is neither a duty nor an opinion — the job involves a lot of walking is exactly the thing a listener most wants to know.",
+      "outcome": 3
+    },
+    {
+      "q": "The contract says overtime may be required and is paid at the normal hourly rate. What does this tell you?",
+      "options": [
+        "Overtime is optional and paid extra",
+        "You must do overtime and it is paid extra",
+        "You may have to do overtime and it is not paid extra",
+        "There is no overtime in this job"
+      ],
+      "a": "You may have to do overtime and it is not paid extra",
+      "why": "Two facts sit in one clause, and the second is the one that costs money. Overtime is often paid at a higher rate; this contract says it is not.",
+      "outcome": 4
+    },
+    {
+      "q": "Which of these is NOT a prohibition?",
+      "options": [
+        "Staff must not enter this area.",
+        "Holiday may not be taken in December.",
+        "No smoking beyond this point.",
+        "You do not have to work weekends."
+      ],
+      "a": "You do not have to work weekends.",
+      "why": "It is the only open door in the list. The other three close something; this one says weekends are optional, so the person may work them if they want the hours.",
+      "outcome": 2
+    },
+    {
+      "q": "Which is correct?",
+      "options": [
+        "He does not have to give notice.",
+        "He do not have to give notice.",
+        "He does not have give notice.",
+        "He not have to give notice."
+      ],
+      "a": "He does not have to give notice.",
+      "why": "Third person takes does in the negative, and the to stays. Both parts go wrong independently, which is why this form is worth drilling.",
+      "outcome": 1
+    },
+    {
+      "q": "The contract says the first 3 months are a trial period with 1 week's notice. What does that mean for you?",
+      "options": [
+        "You cannot leave for three months",
+        "You are paid less for three months",
+        "You have no contract for three months",
+        "Either side can end it with one week's notice"
+      ],
+      "a": "Either side can end it with one week's notice",
+      "why": "The short notice cuts both ways — it is easier for you to leave and easier for the employer to end it. Clause 6.2 says so explicitly.",
+      "outcome": 4
+    }
   ],
   "teacherNotes": [
-    { "type": "This unit works without you", "note": "Three pattern cards, each with a worked example, and every exercise has an answer key. Practice 2 is the diagnostic and it is built in two columns on purpose: sorting REQUIRED from NOT REQUIRED is the easy half, and writing what the person can now actually do is the half that reveals whether the meaning has landed. A learner who writes cannot in that column has not understood, and the answer key says so directly." },
-    { "type": "The one thing that must not be got wrong", "note": "Do not have to reads as a prohibition to a large proportion of learners, and the cost is not an exercise mark — it is a job advertisement misread and not applied to. Reading 1 exists solely for this. The unit deliberately contains no prohibition form at all, so that every negative a learner meets here is an open door; must and mustn't are held back to Unit 17." },
-    { "type": "Almost nothing here is new grammar", "note": "Third-person -s is Unit 3, the present simple is Unit 5, and do and does in questions and negatives is Unit 5. What is new is one verb pattern and the meaning of its negative. If a learner struggles with does not have to, check whether the problem is the modal meaning or just the third-person does — they are different problems and the second is a Unit 5 review." },
-    { "type": "Quite is genuinely ambiguous and we teach only one use", "note": "Quite means fairly in this course, and the card says plainly that some speakers use it to mean completely with words like right and finished. Learners will meet that use and should recognise it without being asked to produce it. Teaching both productively at A2 causes more errors than it prevents." },
-    { "type": "Why the advertisement and the contract together", "note": "Neither document is dishonest and they say different things. The advertisement offers a free staff bus; the contract never mentions it, and no document states the times — which is the gap question in Reading 3 and Writing 3. Four of the ten comprehension questions need the contract rather than the advertisement, which is the practical lesson: the conditions that affect you are in the document you sign, not the one that attracted you." },
-    { "type": "Device and AI safety", "note": "The AI tutor is a rehearsal partner and no task here is scored by it alone. Practice 5 asks learners to work from a real job advertisement and Practice 6 to ask a real person about their job: neither the advertisement, the employer's name, nor anything the other person said should be collected, shared or entered into the app. Practice 6 asks only for the shape of what was said, not the content, and that wording should stay." }
+    {
+      "type": "This unit works without you",
+      "note": "Three pattern cards, each with a worked example, and every exercise has an answer key. Practice 2 is the diagnostic and it is built in two columns on purpose: sorting REQUIRED from NOT REQUIRED is the easy half, and writing what the person can now actually do is the half that reveals whether the meaning has landed. A learner who writes cannot in that column has not understood, and the answer key says so directly."
+    },
+    {
+      "type": "The one thing that must not be got wrong",
+      "note": "Do not have to reads as a prohibition to a large proportion of learners, and the cost is not an exercise mark — it is a job advertisement misread and not applied to. Reading 1 exists solely for this. The unit deliberately contains no prohibition form at all, so that every negative a learner meets here is an open door; must and mustn't are held back to Unit 17."
+    },
+    {
+      "type": "Almost nothing here is new grammar",
+      "note": "Third-person -s is Unit 3, the present simple is Unit 5, and do and does in questions and negatives is Unit 5. What is new is one verb pattern and the meaning of its negative. If a learner struggles with does not have to, check whether the problem is the modal meaning or just the third-person does — they are different problems and the second is a Unit 5 review."
+    },
+    {
+      "type": "Quite is genuinely ambiguous and we teach only one use",
+      "note": "Quite means fairly in this course, and the card says plainly that some speakers use it to mean completely with words like right and finished. Learners will meet that use and should recognise it without being asked to produce it. Teaching both productively at A2 causes more errors than it prevents."
+    },
+    {
+      "type": "Why the advertisement and the contract together",
+      "note": "Neither document is dishonest and they say different things. The advertisement offers a free staff bus; the contract never mentions it, and no document states the times — which is the gap question in Reading 3 and Writing 3. Four of the ten comprehension questions need the contract rather than the advertisement, which is the practical lesson: the conditions that affect you are in the document you sign, not the one that attracted you."
+    },
+    {
+      "type": "Device and AI safety",
+      "note": "The AI tutor is a rehearsal partner and no task here is scored by it alone. Practice 5 asks learners to work from a real job advertisement and Practice 6 to ask a real person about their job: neither the advertisement, the employer's name, nor anything the other person said should be collected, shared or entered into the app. Practice 6 asks only for the shape of what was said, not the content, and that wording should stay."
+    }
   ],
   "selfAssessment": [
-    { "statement": "I can say what I have to do at work, and ask whether something is required." },
-    { "statement": "I can tell the difference between something that is not required and something that is not allowed." },
-    { "statement": "I can describe a job, including what it requires and what it is like to do." },
-    { "statement": "I can say quite hard, very hard and really hard and mean three different amounts." }
+    {
+      "statement": "I can say what I have to do at work, and ask whether something is required."
+    },
+    {
+      "statement": "I can tell the difference between something that is not required and something that is not allowed."
+    },
+    {
+      "statement": "I can describe a job, including what it requires and what it is like to do."
+    },
+    {
+      "statement": "I can say quite hard, very hard and really hard and mean three different amounts."
+    }
   ],
   "assignment": {
     "title": "A job described, and a contract read",

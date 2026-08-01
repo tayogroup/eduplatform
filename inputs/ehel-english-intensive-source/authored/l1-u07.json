@@ -24,7 +24,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Spoken production",
       "cefrDescriptor": "I can tell someone what is wrong with me without stopping to think.",
-      "cambridge": ["1SLm.03", "2SLm.02"]
+      "cambridge": [
+        "1SLm.03",
+        "2SLm.02"
+      ]
     },
     {
       "outcome": "Give and understand advice using should and shouldn't.",
@@ -33,7 +36,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Spoken interaction",
       "cefrDescriptor": "I can give someone simple advice and understand advice given to me.",
-      "cambridge": ["3SLm.03", "2SLs.01"]
+      "cambridge": [
+        "3SLm.03",
+        "2SLs.01"
+      ]
     },
     {
       "outcome": "Read a medicine label and find the dose, the frequency, the limit and the warnings.",
@@ -42,7 +48,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Reading",
       "cefrDescriptor": "I can read a medicine label and work out how much to take and how often.",
-      "cambridge": ["1Ri.08", "3Ri.09"]
+      "cambridge": [
+        "1Ri.08",
+        "3Ri.09"
+      ]
     },
     {
       "outcome": "Prepare for an appointment by writing down what is wrong, when it started and what you need to ask.",
@@ -51,62 +60,442 @@
       "cefrLevel": "A1",
       "cefrSkill": "Writing",
       "cefrDescriptor": "I can write down what is wrong with me before I go to an appointment.",
-      "cambridge": ["1Wc.05", "2Rg.04"]
+      "cambridge": [
+        "1Wc.05",
+        "2Rg.04"
+      ]
     }
   ],
   "groups": [
     {
       "title": "The body",
       "words": [
-        { "w": "head", "pos": "noun", "meaning": "The part of your body above your neck.", "example": "I have got a pain in my head.", "practice": ["I have got a pain in my head.", "My head hurts.", "She hit her head.", "The pain is in the back of my head.", "My head has hurt since yesterday."], "starter": "My head", "tutor": "Say the same problem two ways: with I have got and with my head hurts." },
-        { "w": "back", "pos": "noun", "meaning": "The rear part of your body, from your neck to your legs.", "example": "My back hurts when I lift things.", "practice": ["My back hurts when I lift things.", "I have got a bad back.", "She hurt her back at work.", "My back is worse in the morning.", "The pain is in my lower back."], "starter": "My back hurts when", "tutor": "Say when your back hurts, using when. Invent it if you prefer." },
-        { "w": "stomach", "pos": "noun", "meaning": "The part of your body where food goes.", "example": "My stomach hurts.", "practice": ["My stomach hurts.", "I have got stomach pain.", "The pain is in my stomach.", "Take it with food to protect your stomach.", "My stomach has hurt for two days."], "starter": "My stomach", "tutor": "Note the ch sounds like k. Say stomach three times and check." },
-        { "w": "throat", "pos": "noun", "meaning": "The passage at the back of your mouth, going down your neck.", "example": "I have got a sore throat.", "practice": ["I have got a sore throat.", "My throat hurts when I swallow.", "A sore throat is not serious.", "The doctor looked at my throat.", "My throat has been sore since Monday."], "starter": "I have got a sore", "tutor": "Sore throat is a fixed pair — say it, then try painful throat and hear why nobody says that." },
-        { "w": "tooth", "pos": "noun", "meaning": "One of the hard white things in your mouth. More than one: teeth.", "example": "My tooth hurts.", "practice": ["My tooth hurts.", "I have got toothache.", "My teeth hurt when I drink something cold.", "She lost a tooth.", "I need to see a dentist about this tooth."], "starter": "My tooth", "tutor": "Say my tooth hurts and my teeth hurt. Notice the verb changed as well as the noun." },
-        { "w": "chest", "pos": "noun", "meaning": "The front of your body between your neck and your stomach.", "example": "I have got a pain in my chest.", "practice": ["I have got a pain in my chest.", "My chest hurts when I cough.", "Chest pain is always serious — see a doctor.", "The doctor listened to my chest.", "The pain is on the left side of my chest."], "starter": "I have got a pain in my", "tutor": "Say where a pain is using in my. Practise being precise about the place." }
+        {
+          "w": "head",
+          "pos": "noun",
+          "meaning": "The part of your body above your neck.",
+          "example": "I have got a pain in my head.",
+          "practice": [
+            "My head hurts.",
+            "She hit her head.",
+            "The pain is in the back of my head.",
+            "My head has hurt since yesterday."
+          ],
+          "starter": "My head",
+          "tutor": "Say the same problem two ways: with I have got and with my head hurts."
+        },
+        {
+          "w": "back",
+          "pos": "noun",
+          "meaning": "The rear part of your body, from your neck to your legs.",
+          "example": "My back hurts when I lift things.",
+          "practice": [
+            "I have got a bad back.",
+            "She hurt her back at work.",
+            "My back is worse in the morning.",
+            "The pain is in my lower back."
+          ],
+          "starter": "My back hurts when",
+          "tutor": "Say when your back hurts, using when. Invent it if you prefer."
+        },
+        {
+          "w": "stomach",
+          "pos": "noun",
+          "meaning": "The part of your body where food goes.",
+          "example": "My stomach hurts.",
+          "practice": [
+            "I have got stomach pain.",
+            "The pain is in my stomach.",
+            "Take it with food to protect your stomach.",
+            "My stomach has hurt for two days."
+          ],
+          "starter": "My stomach",
+          "tutor": "Note the ch sounds like k. Say stomach three times and check."
+        },
+        {
+          "w": "throat",
+          "pos": "noun",
+          "meaning": "The passage at the back of your mouth, going down your neck.",
+          "example": "I have got a sore throat.",
+          "practice": [
+            "My throat hurts when I swallow.",
+            "A sore throat is not serious.",
+            "The doctor looked at my throat.",
+            "My throat has been sore since Monday."
+          ],
+          "starter": "I have got a sore",
+          "tutor": "Sore throat is a fixed pair — say it, then try painful throat and hear why nobody says that."
+        },
+        {
+          "w": "tooth",
+          "pos": "noun",
+          "meaning": "One of the hard white things in your mouth. More than one: teeth.",
+          "example": "My tooth hurts.",
+          "practice": [
+            "I have got toothache.",
+            "My teeth hurt when I drink something cold.",
+            "She lost a tooth.",
+            "I need to see a dentist about this tooth."
+          ],
+          "starter": "My tooth",
+          "tutor": "Say my tooth hurts and my teeth hurt. Notice the verb changed as well as the noun."
+        },
+        {
+          "w": "chest",
+          "pos": "noun",
+          "meaning": "The front of your body between your neck and your stomach.",
+          "example": "I have got a pain in my chest.",
+          "practice": [
+            "My chest hurts when I cough.",
+            "Chest pain is always serious — see a doctor.",
+            "The doctor listened to my chest.",
+            "The pain is on the left side of my chest."
+          ],
+          "starter": "I have got a pain in my",
+          "tutor": "Say where a pain is using in my. Practise being precise about the place."
+        }
       ]
     },
     {
       "title": "Feeling ill",
       "words": [
-        { "w": "ill", "pos": "adjective", "meaning": "Not well; suffering from an illness.", "example": "I feel ill.", "practice": ["I feel ill.", "She has been ill for a week.", "I was ill on Monday.", "He looks ill.", "I am not ill, only tired."], "starter": "I feel", "tutor": "Say I feel ill and I am ill. Ask the tutor whether they mean the same." },
-        { "w": "pain", "pos": "noun", "meaning": "The feeling you have when part of your body hurts.", "example": "I have got a pain in my back.", "practice": ["I have got a pain in my back.", "The pain is worse at night.", "The pain started on Tuesday.", "It is a sharp pain.", "The medicine helps with the pain."], "starter": "I have got a pain in my", "tutor": "Describe a pain three ways: where it is, when it is worse, and what kind it is." },
-        { "w": "hurt", "pos": "verb", "meaning": "To feel pain, or to cause pain.", "example": "My back hurts.", "practice": ["My back hurts.", "My legs hurt after work.", "Does it hurt here?", "It hurts when I move.", "She hurt her hand."], "starter": "My back", "tutor": "Say one thing that hurts and one thing that hurt in the plural. Check the s." },
-        { "w": "cough", "pos": "noun", "meaning": "A sudden loud push of air from your throat, often when you are ill.", "example": "I have got a cough.", "practice": ["I have got a cough.", "The cough keeps me awake.", "It is a dry cough.", "The cough has lasted three weeks.", "The medicine is for a cough."], "starter": "I have got a", "tutor": "Cough is spelled with gh but sounds like f at the end. Say it and check." },
-        { "w": "temperature", "pos": "noun", "meaning": "How hot your body is; a high one means you are ill.", "example": "I have got a temperature.", "practice": ["I have got a temperature.", "The nurse took my temperature.", "His temperature is very high.", "The temperature came down overnight.", "Do you have a temperature?"], "starter": "I have got a", "tutor": "Note that having a temperature means a HIGH one. Everybody has a temperature all the time." },
-        { "w": "sick", "pos": "adjective", "meaning": "About to vomit; in some places it also means ill generally.", "example": "I feel sick.", "practice": ["I feel sick.", "I was sick this morning.", "The medicine makes me feel sick.", "She felt sick on the bus.", "I am not sick, I am just tired."], "starter": "I feel", "tutor": "Ask the tutor what I feel sick means where it is from. This word does not mean the same everywhere." }
+        {
+          "w": "ill",
+          "pos": "adjective",
+          "meaning": "Not well; suffering from an illness.",
+          "example": "I feel ill.",
+          "practice": [
+            "She has been ill for a week.",
+            "I was ill on Monday.",
+            "He looks ill.",
+            "I am not ill, only tired."
+          ],
+          "starter": "I feel",
+          "tutor": "Say I feel ill and I am ill. Ask the tutor whether they mean the same."
+        },
+        {
+          "w": "pain",
+          "pos": "noun",
+          "meaning": "The feeling you have when part of your body hurts.",
+          "example": "I have got a pain in my back.",
+          "practice": [
+            "The pain is worse at night.",
+            "The pain started on Tuesday.",
+            "It is a sharp pain.",
+            "The medicine helps with the pain."
+          ],
+          "starter": "I have got a pain in my",
+          "tutor": "Describe a pain three ways: where it is, when it is worse, and what kind it is."
+        },
+        {
+          "w": "hurt",
+          "pos": "verb",
+          "meaning": "To feel pain, or to cause pain.",
+          "example": "My back hurts.",
+          "practice": [
+            "My legs hurt after work.",
+            "Does it hurt here?",
+            "It hurts when I move.",
+            "She hurt her hand."
+          ],
+          "starter": "My back",
+          "tutor": "Say one thing that hurts and one thing that hurt in the plural. Check the s."
+        },
+        {
+          "w": "cough",
+          "pos": "noun",
+          "meaning": "A sudden loud push of air from your throat, often when you are ill.",
+          "example": "I have got a cough.",
+          "practice": [
+            "The cough keeps me awake.",
+            "It is a dry cough.",
+            "The cough has lasted three weeks.",
+            "The medicine is for a cough."
+          ],
+          "starter": "I have got a",
+          "tutor": "Cough is spelled with gh but sounds like f at the end. Say it and check."
+        },
+        {
+          "w": "temperature",
+          "pos": "noun",
+          "meaning": "How hot your body is; a high one means you are ill.",
+          "example": "I have got a temperature.",
+          "practice": [
+            "The nurse took my temperature.",
+            "His temperature is very high.",
+            "The temperature came down overnight.",
+            "Do you have a temperature?"
+          ],
+          "starter": "I have got a",
+          "tutor": "Note that having a temperature means a HIGH one. Everybody has a temperature all the time."
+        },
+        {
+          "w": "sick",
+          "pos": "adjective",
+          "meaning": "About to vomit; in some places it also means ill generally.",
+          "example": "I feel sick.",
+          "practice": [
+            "I was sick this morning.",
+            "The medicine makes me feel sick.",
+            "She felt sick on the bus.",
+            "I am not sick, I am just tired."
+          ],
+          "starter": "I feel",
+          "tutor": "Ask the tutor what I feel sick means where it is from. This word does not mean the same everywhere."
+        }
       ]
     },
     {
       "title": "At the clinic",
       "words": [
-        { "w": "doctor", "pos": "noun", "meaning": "A person trained to treat people who are ill.", "example": "You should see a doctor.", "practice": ["You should see a doctor.", "The doctor is running late.", "I have got an appointment with the doctor.", "The doctor gave me a prescription.", "Which doctor did you see?"], "starter": "You should see a", "tutor": "Give advice to see a doctor. Use should." },
-        { "w": "nurse", "pos": "noun", "meaning": "A person trained to care for people who are ill.", "example": "The nurse will take your temperature.", "practice": ["The nurse will take your temperature.", "Ask the nurse at the desk.", "The nurse was very kind.", "A nurse can do this, not only a doctor.", "The nurse called my name."], "starter": "The nurse will", "tutor": "Say two things a nurse does and two things a doctor does." },
-        { "w": "appointment", "pos": "noun", "meaning": "An arranged time to see somebody.", "example": "I have got an appointment at ten.", "practice": ["I have got an appointment at ten.", "Can I make an appointment?", "I missed my appointment.", "The appointment is on Thursday.", "You need an appointment — you cannot just come."], "starter": "I have got an appointment at", "tutor": "Say when your appointment is, using at and on from Unit 5." },
-        { "w": "patient", "pos": "noun", "meaning": "A person who is being treated by a doctor.", "example": "The doctor has many patients today.", "practice": ["The doctor has many patients today.", "I am a patient at this surgery.", "The patient before me was a long time.", "New patients must register first.", "There are twelve patients waiting."], "starter": "I am a patient at", "tutor": "Notice patient is also an adjective meaning calm. Use it both ways." },
-        { "w": "surgery", "pos": "noun", "meaning": "The building where a doctor sees patients; also an operation.", "example": "The surgery opens at eight.", "practice": ["The surgery opens at eight.", "The surgery is closed at the weekend.", "I registered at the surgery near my flat.", "Telephone the surgery in the morning.", "The surgery is on the second floor."], "starter": "The surgery opens at", "tutor": "This word has two very different meanings. Ask the tutor to use it both ways." },
-        { "w": "prescription", "pos": "noun", "meaning": "A paper from a doctor that lets you get a particular medicine.", "example": "The doctor gave me a prescription.", "practice": ["The doctor gave me a prescription.", "Take this prescription to the chemist.", "You need a prescription for this one.", "I lost my prescription.", "The prescription is for two weeks."], "starter": "The doctor gave me a", "tutor": "Say what you do with a prescription after you get it." }
+        {
+          "w": "doctor",
+          "pos": "noun",
+          "meaning": "A person trained to treat people who are ill.",
+          "example": "You should see a doctor.",
+          "practice": [
+            "The doctor is running late.",
+            "I have got an appointment with the doctor.",
+            "The doctor gave me a prescription.",
+            "Which doctor did you see?"
+          ],
+          "starter": "You should see a",
+          "tutor": "Give advice to see a doctor. Use should."
+        },
+        {
+          "w": "nurse",
+          "pos": "noun",
+          "meaning": "A person trained to care for people who are ill.",
+          "example": "The nurse will take your temperature.",
+          "practice": [
+            "Ask the nurse at the desk.",
+            "The nurse was very kind.",
+            "A nurse can do this, not only a doctor.",
+            "The nurse called my name."
+          ],
+          "starter": "The nurse will",
+          "tutor": "Say two things a nurse does and two things a doctor does."
+        },
+        {
+          "w": "appointment",
+          "pos": "noun",
+          "meaning": "An arranged time to see somebody.",
+          "example": "I have got an appointment at ten.",
+          "practice": [
+            "Can I make an appointment?",
+            "I missed my appointment.",
+            "The appointment is on Thursday.",
+            "You need an appointment — you cannot just come."
+          ],
+          "starter": "I have got an appointment at",
+          "tutor": "Say when your appointment is, using at and on from Unit 5."
+        },
+        {
+          "w": "patient",
+          "pos": "noun",
+          "meaning": "A person who is being treated by a doctor.",
+          "example": "The doctor has many patients today.",
+          "practice": [
+            "I am a patient at this surgery.",
+            "The patient before me was a long time.",
+            "New patients must register first.",
+            "There are twelve patients waiting."
+          ],
+          "starter": "I am a patient at",
+          "tutor": "Notice patient is also an adjective meaning calm. Use it both ways."
+        },
+        {
+          "w": "surgery",
+          "pos": "noun",
+          "meaning": "The building where a doctor sees patients; also an operation.",
+          "example": "The surgery opens at eight.",
+          "practice": [
+            "The surgery is closed at the weekend.",
+            "I registered at the surgery near my flat.",
+            "Telephone the surgery in the morning.",
+            "The surgery is on the second floor."
+          ],
+          "starter": "The surgery opens at",
+          "tutor": "This word has two very different meanings. Ask the tutor to use it both ways."
+        },
+        {
+          "w": "prescription",
+          "pos": "noun",
+          "meaning": "A paper from a doctor that lets you get a particular medicine.",
+          "example": "The doctor gave me a prescription.",
+          "practice": [
+            "Take this prescription to the chemist.",
+            "You need a prescription for this one.",
+            "I lost my prescription.",
+            "The prescription is for two weeks."
+          ],
+          "starter": "The doctor gave me a",
+          "tutor": "Say what you do with a prescription after you get it."
+        }
       ]
     },
     {
       "title": "Medicine",
       "words": [
-        { "w": "medicine", "pos": "noun", "meaning": "Something you take to treat an illness.", "example": "Take the medicine after food.", "practice": ["Take the medicine after food.", "The medicine is not working.", "Keep the medicine away from children.", "This medicine makes me tired.", "Have you taken your medicine?"], "starter": "Take the medicine", "tutor": "Give two instructions about taking medicine. Use the imperative from Unit 6." },
-        { "w": "tablet", "pos": "noun", "meaning": "A small hard piece of medicine that you swallow.", "example": "Take one tablet twice a day.", "practice": ["Take one tablet twice a day.", "The tablets are too big to swallow.", "Take the tablet with water.", "There are twenty tablets in the packet.", "Do not take more than six tablets in a day."], "starter": "Take one tablet", "tutor": "Say a dose out loud: how many, how often. Use twice from Unit 5." },
-        { "w": "dose", "pos": "noun", "meaning": "The amount of a medicine you take at one time.", "example": "The dose is one tablet.", "practice": ["The dose is one tablet.", "Do not take a double dose.", "The dose for children is smaller.", "What is the correct dose?", "Never take more than the stated dose."], "starter": "The dose is", "tutor": "Ask what the correct dose is. Practise the question form." },
-        { "w": "chemist", "pos": "noun", "meaning": "A shop that sells medicine, and the person trained to advise you there.", "example": "Ask the chemist.", "practice": ["Ask the chemist.", "The chemist is next to the surgery.", "The chemist can advise you without an appointment.", "Take the prescription to the chemist.", "The chemist closes at six."], "starter": "Ask the", "tutor": "The chemist can give advice without an appointment. Say why that is useful." },
-        { "w": "allergy", "pos": "noun", "meaning": "A bad reaction your body has to a particular thing.", "example": "I have got an allergy to this.", "practice": ["I have got an allergy to this.", "Tell the doctor about any allergy.", "She has an allergy to milk.", "Does anyone have an allergy?", "The label warns about a milk allergy."], "starter": "I have got an allergy to", "tutor": "Say you have an allergy to something. This is a sentence worth being able to say fast." },
-        { "w": "treatment", "pos": "noun", "meaning": "What is done to make somebody better.", "example": "The treatment takes two weeks.", "practice": ["The treatment takes two weeks.", "The treatment is working.", "There is no treatment for a cold.", "Finish the whole treatment.", "The treatment is free here."], "starter": "The treatment takes", "tutor": "Say how long a treatment takes. Use the time words from Unit 5." }
+        {
+          "w": "medicine",
+          "pos": "noun",
+          "meaning": "Something you take to treat an illness.",
+          "example": "Take the medicine after food.",
+          "practice": [
+            "The medicine is not working.",
+            "Keep the medicine away from children.",
+            "This medicine makes me tired.",
+            "Have you taken your medicine?"
+          ],
+          "starter": "Take the medicine",
+          "tutor": "Give two instructions about taking medicine. Use the imperative from Unit 6."
+        },
+        {
+          "w": "tablet",
+          "pos": "noun",
+          "meaning": "A small hard piece of medicine that you swallow.",
+          "example": "Take one tablet twice a day.",
+          "practice": [
+            "The tablets are too big to swallow.",
+            "Take the tablet with water.",
+            "There are twenty tablets in the packet.",
+            "Do not take more than six tablets in a day."
+          ],
+          "starter": "Take one tablet",
+          "tutor": "Say a dose out loud: how many, how often. Use twice from Unit 5."
+        },
+        {
+          "w": "dose",
+          "pos": "noun",
+          "meaning": "The amount of a medicine you take at one time.",
+          "example": "The dose is one tablet.",
+          "practice": [
+            "Do not take a double dose.",
+            "The dose for children is smaller.",
+            "What is the correct dose?",
+            "Never take more than the stated dose."
+          ],
+          "starter": "The dose is",
+          "tutor": "Ask what the correct dose is. Practise the question form."
+        },
+        {
+          "w": "chemist",
+          "pos": "noun",
+          "meaning": "A shop that sells medicine, and the person trained to advise you there.",
+          "example": "Ask the chemist.",
+          "practice": [
+            "The chemist is next to the surgery.",
+            "The chemist can advise you without an appointment.",
+            "Take the prescription to the chemist.",
+            "The chemist closes at six."
+          ],
+          "starter": "Ask the",
+          "tutor": "The chemist can give advice without an appointment. Say why that is useful."
+        },
+        {
+          "w": "allergy",
+          "pos": "noun",
+          "meaning": "A bad reaction your body has to a particular thing.",
+          "example": "I have got an allergy to this.",
+          "practice": [
+            "Tell the doctor about any allergy.",
+            "She has an allergy to milk.",
+            "Does anyone have an allergy?",
+            "The label warns about a milk allergy."
+          ],
+          "starter": "I have got an allergy to",
+          "tutor": "Say you have an allergy to something. This is a sentence worth being able to say fast."
+        },
+        {
+          "w": "treatment",
+          "pos": "noun",
+          "meaning": "What is done to make somebody better.",
+          "example": "The treatment takes two weeks.",
+          "practice": [
+            "The treatment is working.",
+            "There is no treatment for a cold.",
+            "Finish the whole treatment.",
+            "The treatment is free here."
+          ],
+          "starter": "The treatment takes",
+          "tutor": "Say how long a treatment takes. Use the time words from Unit 5."
+        }
       ]
     },
     {
       "title": "Getting better",
       "words": [
-        { "w": "rest", "pos": "verb", "meaning": "To stop working or moving in order to get your strength back.", "example": "You should rest for a few days.", "practice": ["You should rest for a few days.", "I need to rest.", "Rest is the best treatment.", "She rested all weekend.", "You should rest, not work."], "starter": "You should rest for", "tutor": "Give advice to rest, using should. Add how long." },
-        { "w": "recover", "pos": "verb", "meaning": "To get well again after being ill.", "example": "It takes a week to recover.", "practice": ["It takes a week to recover.", "She has recovered completely.", "You will recover faster if you rest.", "He is recovering slowly.", "Most people recover without treatment."], "starter": "It takes a week to", "tutor": "Say how long it takes to recover from something, and what helps." },
-        { "w": "symptom", "pos": "noun", "meaning": "A sign that you are ill, such as a cough or a pain.", "example": "The symptoms started on Monday.", "practice": ["The symptoms started on Monday.", "Tell the doctor all your symptoms.", "The symptoms are getting worse.", "Write your symptoms down before you go.", "The main symptom is a headache."], "starter": "The symptoms started on", "tutor": "List three symptoms. This is what you will be asked for at an appointment." },
-        { "w": "serious", "pos": "adjective", "meaning": "Bad enough to be worried about.", "example": "It is not serious.", "practice": ["It is not serious.", "Is it serious, doctor?", "Chest pain is always serious.", "It is nothing serious.", "This is more serious than I thought."], "starter": "It is not", "tutor": "Ask whether something is serious. This is the question most people actually want answered." },
-        { "w": "emergency", "pos": "noun", "meaning": "A sudden dangerous situation that needs help immediately.", "example": "In an emergency, telephone for an ambulance.", "practice": ["In an emergency, telephone for an ambulance.", "This is not an emergency.", "The emergency number is on the door.", "Go to the emergency department.", "In an emergency, do not wait for an appointment."], "starter": "In an emergency,", "tutor": "Say what you would do in an emergency. Find out the real emergency number where you live." }
+        {
+          "w": "rest",
+          "pos": "verb",
+          "meaning": "To stop working or moving in order to get your strength back.",
+          "example": "You should rest for a few days.",
+          "practice": [
+            "I need to rest.",
+            "Rest is the best treatment.",
+            "She rested all weekend.",
+            "You should rest, not work."
+          ],
+          "starter": "You should rest for",
+          "tutor": "Give advice to rest, using should. Add how long."
+        },
+        {
+          "w": "recover",
+          "pos": "verb",
+          "meaning": "To get well again after being ill.",
+          "example": "It takes a week to recover.",
+          "practice": [
+            "She has recovered completely.",
+            "You will recover faster if you rest.",
+            "He is recovering slowly.",
+            "Most people recover without treatment."
+          ],
+          "starter": "It takes a week to",
+          "tutor": "Say how long it takes to recover from something, and what helps."
+        },
+        {
+          "w": "symptom",
+          "pos": "noun",
+          "meaning": "A sign that you are ill, such as a cough or a pain.",
+          "example": "The symptoms started on Monday.",
+          "practice": [
+            "Tell the doctor all your symptoms.",
+            "The symptoms are getting worse.",
+            "Write your symptoms down before you go.",
+            "The main symptom is a headache."
+          ],
+          "starter": "The symptoms started on",
+          "tutor": "List three symptoms. This is what you will be asked for at an appointment."
+        },
+        {
+          "w": "serious",
+          "pos": "adjective",
+          "meaning": "Bad enough to be worried about.",
+          "example": "It is not serious.",
+          "practice": [
+            "Is it serious, doctor?",
+            "Chest pain is always serious.",
+            "It is nothing serious.",
+            "This is more serious than I thought."
+          ],
+          "starter": "It is not",
+          "tutor": "Ask whether something is serious. This is the question most people actually want answered."
+        },
+        {
+          "w": "emergency",
+          "pos": "noun",
+          "meaning": "A sudden dangerous situation that needs help immediately.",
+          "example": "In an emergency, telephone for an ambulance.",
+          "practice": [
+            "This is not an emergency.",
+            "The emergency number is on the door.",
+            "Go to the emergency department.",
+            "In an emergency, do not wait for an appointment."
+          ],
+          "starter": "In an emergency,",
+          "tutor": "Say what you would do in an emergency. Find out the real emergency number where you live."
+        }
       ]
     }
   ],
@@ -130,16 +519,90 @@
     }
   ],
   "comprehension": [
-    { "section": "Reading", "reading": 1, "q": "Why does the text say to do the language part before you go?", "a": "Because an appointment is short and happens when your English is at its worst — you are ill, worried, and the room is unfamiliar.", "why": "The text names all three reasons in its opening lines. Preparation moves the language work to a calmer moment.", "outcome": 4 },
-    { "section": "Reading", "reading": 1, "q": "What are the four things to write down?", "a": "What is wrong, when it started, what makes it better or worse, and what you want to ask.", "why": "All four are listed with an example each. The third is the one the text says nobody prepares for.", "outcome": 4 },
-    { "section": "Reading", "reading": 1, "q": "Why does the text say to take a photograph of your medicine boxes?", "a": "Because you will be asked what you are taking, and the names are hard to say and easy to get wrong.", "why": "This is a practical inference — a photograph removes a pronunciation problem entirely rather than solving it.", "outcome": 4, "difficulty": "Stretch" },
-    { "section": "Reading", "reading": 2, "q": "Name three things a chemist can advise you about.", "a": "Coughs and colds, small pains, skin problems, and whether two medicines can be taken together.", "why": "The text lists them and adds that this is not a lesser service — for many problems the chemist is the fastest correct answer.", "outcome": 3 },
-    { "section": "Reading", "reading": 2, "q": "When you telephone for an appointment, why should you not answer vaguely?", "a": "Because the person asking is deciding how soon you are seen, and a vague answer gets a later appointment.", "why": "The text names the real reason for a question that many people find uncomfortable, which is what makes it answerable.", "outcome": 2, "difficulty": "Stretch" },
-    { "section": "Reading", "reading": 2, "q": "You were told to wait, and you have become worse. What does the text say to do?", "a": "Telephone again and say what has changed, because it is a new situation.", "why": "The text ends on this deliberately. Getting worse while waiting is not the same problem you first described.", "outcome": 2 },
-    { "section": "Document", "reading": 3, "q": "You are an adult with a headache. How many tablets may you take at once, and how often?", "a": "One or two tablets, every four to six hours.", "why": "The adult dose is the first block. Both the amount and the interval are ranges, not fixed numbers.", "outcome": 3 },
-    { "section": "Document", "reading": 3, "q": "An adult takes two tablets at a time. What is the most they may take in a day, and how many doses is that?", "a": "Eight tablets, which is four doses of two.", "why": "The label gives the daily limit but not the number of doses. Combining the dose with the limit is the calculation that stops an accidental overdose.", "outcome": 3, "difficulty": "Stretch" },
-    { "section": "Document", "reading": 3, "q": "A 14-year-old has toothache. What does the label allow?", "a": "One tablet every six hours, and no more than four in twenty-four hours.", "why": "The 12 to 16 block is different from the adult one in both the dose and the limit. Reading the first block only would give twice the permitted amount.", "outcome": 3, "difficulty": "Stretch" },
-    { "section": "Document", "reading": 3, "q": "You have had a headache for four days and the tablets are helping. What does the label say to do?", "a": "Speak to a doctor — it says not to take it for more than three days without doing so.", "why": "The warning is about time, not about whether it is working, and the fact that it is helping does not change it. This is the warning people most often ignore.", "outcome": 3 }
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "Why does the text say to do the language part before you go?",
+      "a": "Because an appointment is short and happens when your English is at its worst — you are ill, worried, and the room is unfamiliar.",
+      "why": "The text names all three reasons in its opening lines. Preparation moves the language work to a calmer moment.",
+      "outcome": 4
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "What are the four things to write down?",
+      "a": "What is wrong, when it started, what makes it better or worse, and what you want to ask.",
+      "why": "All four are listed with an example each. The third is the one the text says nobody prepares for.",
+      "outcome": 4
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "Why does the text say to take a photograph of your medicine boxes?",
+      "a": "Because you will be asked what you are taking, and the names are hard to say and easy to get wrong.",
+      "why": "This is a practical inference — a photograph removes a pronunciation problem entirely rather than solving it.",
+      "outcome": 4,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "Name three things a chemist can advise you about.",
+      "a": "Coughs and colds, small pains, skin problems, and whether two medicines can be taken together.",
+      "why": "The text lists them and adds that this is not a lesser service — for many problems the chemist is the fastest correct answer.",
+      "outcome": 3
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "When you telephone for an appointment, why should you not answer vaguely?",
+      "a": "Because the person asking is deciding how soon you are seen, and a vague answer gets a later appointment.",
+      "why": "The text names the real reason for a question that many people find uncomfortable, which is what makes it answerable.",
+      "outcome": 2,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "You were told to wait, and you have become worse. What does the text say to do?",
+      "a": "Telephone again and say what has changed, because it is a new situation.",
+      "why": "The text ends on this deliberately. Getting worse while waiting is not the same problem you first described.",
+      "outcome": 2
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "You are an adult with a headache. How many tablets may you take at once, and how often?",
+      "a": "One or two tablets, every four to six hours.",
+      "why": "The adult dose is the first block. Both the amount and the interval are ranges, not fixed numbers.",
+      "outcome": 3
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "An adult takes two tablets at a time. What is the most they may take in a day, and how many doses is that?",
+      "a": "Eight tablets, which is four doses of two.",
+      "why": "The label gives the daily limit but not the number of doses. Combining the dose with the limit is the calculation that stops an accidental overdose.",
+      "outcome": 3,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "A 14-year-old has toothache. What does the label allow?",
+      "a": "One tablet every six hours, and no more than four in twenty-four hours.",
+      "why": "The 12 to 16 block is different from the adult one in both the dose and the limit. Reading the first block only would give twice the permitted amount.",
+      "outcome": 3,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "You have had a headache for four days and the tablets are helping. What does the label say to do?",
+      "a": "Speak to a doctor — it says not to take it for more than three days without doing so.",
+      "why": "The warning is about time, not about whether it is working, and the fact that it is helping does not change it. This is the warning people most often ignore.",
+      "outcome": 3
+    }
   ],
   "grammar": [
     {
@@ -180,12 +643,48 @@
     }
   ],
   "speaking": [
-    { "title": "Speaking 1 — Nine problems, three frames", "type": "Fixed frame drill", "instructions": "Say each of these out loud, choosing the right frame.\nheadache · sore throat · painful back · cough · temperature · tired · painful tooth · generally unwell · both legs painful\nRecord all nine. Play it back and check two things: did you use all three frames, and did the plural one lose its s on the verb?", "tutor": "Say six problems to the tutor and ask which frame each one used.", "outcome": 1 },
-    { "title": "Speaking 2 — Where and when", "type": "Extended turn", "instructions": "Choose one problem, real or invented.\nDescribe it in four sentences: what is wrong, where exactly, when it started, and what makes it better or worse.\nRecord it.\nNow do it again for a different problem, and again for a third. Three problems, four sentences each.\nThe third one is the one to keep — by then you are not building the sentences any more.", "tutor": "Describe a problem to the tutor in four sentences and ask what it would want to know next.", "outcome": 1 },
-    { "title": "Speaking 3 — Give advice", "type": "Core pattern drill", "instructions": "Give advice out loud for each situation, using should or shouldn't.\nSomeone has a cough that will not go away. · Someone's back hurts when they lift things. · Someone has had a headache for four days. · Someone feels tired all the time. · Someone has chest pain. · Someone has a temperature and a cough.\nGive two pieces of advice for each — one thing they should do and one they should not.\nRecord all twelve.", "tutor": "Describe three problems to the tutor and ask it for advice, then give advice back for three more.", "outcome": 2 },
-    { "title": "Speaking 4 — Telephone for an appointment", "type": "Exchange", "instructions": "Say both sides, then change the problem three times.\nA: Good morning, surgery.\nB: Hello. I would like to make an appointment, please.\nA: What is it about?\nB: I have had a cough for three weeks.\nA: Can you come on Thursday at ten past four?\nB: Sorry — ten past four?\nA: Yes, Thursday.\nB: Thank you.\nThe fourth line is the one that matters. Reading 2 explains why a vague answer there gets you a later appointment.\nRecord one full version.", "tutor": "Ask the tutor to be the receptionist and make three appointments for three different problems.", "outcome": 2 },
-    { "title": "Speaking 5 — Read the label aloud", "type": "Reading aloud", "instructions": "Open Reading 3.\nRead the DOSE section aloud, all three blocks.\nThen close it and say from memory: the adult dose, the adult daily limit, the child dose, and the age it must not be given under.\nThen read the WARNINGS aloud and say how many of the four are negative instructions.\nRecord the memory part.", "tutor": "Ask the tutor to read you a dose instruction and repeat it back to check you heard the numbers.", "outcome": 3 },
-    { "title": "Speaking 6 — The whole appointment", "type": "Assessment rehearsal", "instructions": "Without notes, play both sides of a whole appointment, at least ten turns.\nYou describe what is wrong, where, when it started and what makes it worse. The doctor asks two questions. You ask whether it is serious and how long it will take. The doctor gives advice with should. You say thank you and ask where the chemist is.\nRecord it. Listen once. Record it again and keep the second.", "tutor": "Ask the tutor to be the doctor and hold the whole appointment.", "outcome": 1 }
+    {
+      "title": "Speaking 1 — Nine problems, three frames",
+      "type": "Fixed frame drill",
+      "instructions": "Say each of these out loud, choosing the right frame.\nheadache · sore throat · painful back · cough · temperature · tired · painful tooth · generally unwell · both legs painful\nRecord all nine. Play it back and check two things: did you use all three frames, and did the plural one lose its s on the verb?",
+      "tutor": "Say six problems to the tutor and ask which frame each one used.",
+      "outcome": 1
+    },
+    {
+      "title": "Speaking 2 — Where and when",
+      "type": "Extended turn",
+      "instructions": "Choose one problem, real or invented.\nDescribe it in four sentences: what is wrong, where exactly, when it started, and what makes it better or worse.\nRecord it.\nNow do it again for a different problem, and again for a third. Three problems, four sentences each.\nThe third one is the one to keep — by then you are not building the sentences any more.",
+      "tutor": "Describe a problem to the tutor in four sentences and ask what it would want to know next.",
+      "outcome": 1
+    },
+    {
+      "title": "Speaking 3 — Give advice",
+      "type": "Core pattern drill",
+      "instructions": "Give advice out loud for each situation, using should or shouldn't.\nSomeone has a cough that will not go away. · Someone's back hurts when they lift things. · Someone has had a headache for four days. · Someone feels tired all the time. · Someone has chest pain. · Someone has a temperature and a cough.\nGive two pieces of advice for each — one thing they should do and one they should not.\nRecord all twelve.",
+      "tutor": "Describe three problems to the tutor and ask it for advice, then give advice back for three more.",
+      "outcome": 2
+    },
+    {
+      "title": "Speaking 4 — Telephone for an appointment",
+      "type": "Exchange",
+      "instructions": "Say both sides, then change the problem three times.\nA: Good morning, surgery.\nB: Hello. I would like to make an appointment, please.\nA: What is it about?\nB: I have had a cough for three weeks.\nA: Can you come on Thursday at ten past four?\nB: Sorry — ten past four?\nA: Yes, Thursday.\nB: Thank you.\nThe fourth line is the one that matters. Reading 2 explains why a vague answer there gets you a later appointment.\nRecord one full version.",
+      "tutor": "Ask the tutor to be the receptionist and make three appointments for three different problems.",
+      "outcome": 2
+    },
+    {
+      "title": "Speaking 5 — Read the label aloud",
+      "type": "Reading aloud",
+      "instructions": "Open Reading 3.\nRead the DOSE section aloud, all three blocks.\nThen close it and say from memory: the adult dose, the adult daily limit, the child dose, and the age it must not be given under.\nThen read the WARNINGS aloud and say how many of the four are negative instructions.\nRecord the memory part.",
+      "tutor": "Ask the tutor to read you a dose instruction and repeat it back to check you heard the numbers.",
+      "outcome": 3
+    },
+    {
+      "title": "Speaking 6 — The whole appointment",
+      "type": "Assessment rehearsal",
+      "instructions": "Without notes, play both sides of a whole appointment, at least ten turns.\nYou describe what is wrong, where, when it started and what makes it worse. The doctor asks two questions. You ask whether it is serious and how long it will take. The doctor gives advice with should. You say thank you and ask where the chemist is.\nRecord it. Listen once. Record it again and keep the second.",
+      "tutor": "Ask the tutor to be the doctor and hold the whole appointment.",
+      "outcome": 1
+    }
   ],
   "writing": [
     {
@@ -278,32 +777,190 @@
     }
   ],
   "quizzes": [
-    { "q": "Which is correct for a problem with a name?", "options": ["I have got a headache.", "I feel a headache.", "My headache hurts.", "I have headache."], "a": "I have got a headache.", "why": "A named problem takes I have got a, and the a is needed. My headache hurts and I feel a headache both use the wrong frame.", "outcome": 1 },
-    { "q": "Both your legs are painful. What do you say?", "options": ["My legs hurts.", "My legs hurt.", "I feel my legs.", "I have got a legs."], "a": "My legs hurt.", "why": "Legs is plural, so the verb loses its s — the same rule as everywhere else. My leg hurts would be right for one.", "outcome": 1 },
-    { "q": "You are generally unwell, with no particular place. What do you say?", "options": ["I have got an ill.", "My body hurts.", "I feel ill.", "I feel sick."], "a": "I feel ill.", "why": "A general feeling takes I feel. I feel sick is the trap — in many kinds of English it means about to vomit, not unwell in general.", "outcome": 1 },
-    { "q": "Which is correct?", "options": ["You should to rest.", "You shoulds rest.", "Do you should rest?", "You should rest."], "a": "You should rest.", "why": "Should takes no to, never adds s, and needs no do. Exactly the same three rules as can.", "outcome": 2 },
-    { "q": "How do you make should into a question?", "options": ["Add do at the front", "Move should to the front", "Add to after should", "Change should to shall"], "a": "Move should to the front", "why": "Should I come back? Nothing else in the sentence changes — the same operation as with can.", "outcome": 2 },
-    { "q": "The label says 1 or 2 tablets every 4 to 6 hours, maximum 8 in 24 hours. You take 2 at a time. How many doses may you have?", "options": ["Eight", "Two", "Six", "Four"], "a": "Four", "why": "Eight tablets divided by two per dose is four doses. The label gives the limit in tablets, so you have to convert it yourself.", "outcome": 3 },
-    { "q": "A 14-year-old needs a tablet. What does the label allow?", "options": ["The adult dose", "One tablet every six hours", "Nothing — it is not for under 16s", "Two tablets every four hours"], "a": "One tablet every six hours", "why": "A 14-year-old falls in the 12-to-16 block, which has both a smaller dose and a lower limit. Reading the adult block would give twice the permitted amount.", "outcome": 3 },
-    { "q": "You have taken the tablets for four days and they are helping. What does the label say?", "options": ["Continue while it helps", "Speak to a doctor", "Double the dose", "Stop immediately"], "a": "Speak to a doctor", "why": "The warning is about time, not about whether it works. Three days is the limit without medical advice, and the fact that it is helping does not change it.", "outcome": 3 },
-    { "q": "You have had a cough for three weeks. Who should you go to?", "options": ["The chemist", "Nobody — wait", "An emergency service", "A doctor"], "a": "A doctor", "why": "A doctor is for things that do not get better. A chemist would be right for a cough of two days, and three weeks is what changes the answer.", "outcome": 2 },
-    { "q": "You telephone for an appointment and are asked what it is about. What should you do?", "options": ["Say it plainly", "Say it is personal", "Say you would rather tell the doctor", "Give as little detail as possible"], "a": "Say it plainly", "why": "The person asking is deciding how soon you are seen. A vague answer gets a later appointment, which is the opposite of what you want.", "outcome": 2 },
-    { "q": "What can a chemist do without an appointment?", "options": ["Perform an examination", "Give you any medicine you ask for", "Advise on small problems and on medicines", "Write a prescription"], "a": "Advise on small problems and on medicines", "why": "This is what a chemist is trained for, and for many problems it is the fastest correct answer. A prescription needs a doctor.", "outcome": 2 },
-    { "q": "Reading 1 says to write four things before an appointment. Which is the one people forget?", "options": ["What is wrong", "When it started", "What you want to ask", "What makes it better or worse"], "a": "What makes it better or worse", "why": "The text says directly that this is the question you will be asked and the one nobody prepares for. Practice 6 confirms it is one of the two most common surprises.", "outcome": 4 }
+    {
+      "q": "Which is correct for a problem with a name?",
+      "options": [
+        "I have got a headache.",
+        "I feel a headache.",
+        "My headache hurts.",
+        "I have headache."
+      ],
+      "a": "I have got a headache.",
+      "why": "A named problem takes I have got a, and the a is needed. My headache hurts and I feel a headache both use the wrong frame.",
+      "outcome": 1
+    },
+    {
+      "q": "Both your legs are painful. What do you say?",
+      "options": [
+        "My legs hurts.",
+        "My legs hurt.",
+        "I feel my legs.",
+        "I have got a legs."
+      ],
+      "a": "My legs hurt.",
+      "why": "Legs is plural, so the verb loses its s — the same rule as everywhere else. My leg hurts would be right for one.",
+      "outcome": 1
+    },
+    {
+      "q": "You are generally unwell, with no particular place. What do you say?",
+      "options": [
+        "I have got an ill.",
+        "My body hurts.",
+        "I feel ill.",
+        "I feel sick."
+      ],
+      "a": "I feel ill.",
+      "why": "A general feeling takes I feel. I feel sick is the trap — in many kinds of English it means about to vomit, not unwell in general.",
+      "outcome": 1
+    },
+    {
+      "q": "Which is correct?",
+      "options": [
+        "You should to rest.",
+        "You shoulds rest.",
+        "Do you should rest?",
+        "You should rest."
+      ],
+      "a": "You should rest.",
+      "why": "Should takes no to, never adds s, and needs no do. Exactly the same three rules as can.",
+      "outcome": 2
+    },
+    {
+      "q": "How do you make should into a question?",
+      "options": [
+        "Add do at the front",
+        "Move should to the front",
+        "Add to after should",
+        "Change should to shall"
+      ],
+      "a": "Move should to the front",
+      "why": "Should I come back? Nothing else in the sentence changes — the same operation as with can.",
+      "outcome": 2
+    },
+    {
+      "q": "The label says 1 or 2 tablets every 4 to 6 hours, maximum 8 in 24 hours. You take 2 at a time. How many doses may you have?",
+      "options": [
+        "Eight",
+        "Two",
+        "Six",
+        "Four"
+      ],
+      "a": "Four",
+      "why": "Eight tablets divided by two per dose is four doses. The label gives the limit in tablets, so you have to convert it yourself.",
+      "outcome": 3
+    },
+    {
+      "q": "A 14-year-old needs a tablet. What does the label allow?",
+      "options": [
+        "The adult dose",
+        "One tablet every six hours",
+        "Nothing — it is not for under 16s",
+        "Two tablets every four hours"
+      ],
+      "a": "One tablet every six hours",
+      "why": "A 14-year-old falls in the 12-to-16 block, which has both a smaller dose and a lower limit. Reading the adult block would give twice the permitted amount.",
+      "outcome": 3
+    },
+    {
+      "q": "You have taken the tablets for four days and they are helping. What does the label say?",
+      "options": [
+        "Continue while it helps",
+        "Speak to a doctor",
+        "Double the dose",
+        "Stop immediately"
+      ],
+      "a": "Speak to a doctor",
+      "why": "The warning is about time, not about whether it works. Three days is the limit without medical advice, and the fact that it is helping does not change it.",
+      "outcome": 3
+    },
+    {
+      "q": "You have had a cough for three weeks. Who should you go to?",
+      "options": [
+        "The chemist",
+        "Nobody — wait",
+        "An emergency service",
+        "A doctor"
+      ],
+      "a": "A doctor",
+      "why": "A doctor is for things that do not get better. A chemist would be right for a cough of two days, and three weeks is what changes the answer.",
+      "outcome": 2
+    },
+    {
+      "q": "You telephone for an appointment and are asked what it is about. What should you do?",
+      "options": [
+        "Say it plainly",
+        "Say it is personal",
+        "Say you would rather tell the doctor",
+        "Give as little detail as possible"
+      ],
+      "a": "Say it plainly",
+      "why": "The person asking is deciding how soon you are seen. A vague answer gets a later appointment, which is the opposite of what you want.",
+      "outcome": 2
+    },
+    {
+      "q": "What can a chemist do without an appointment?",
+      "options": [
+        "Perform an examination",
+        "Give you any medicine you ask for",
+        "Advise on small problems and on medicines",
+        "Write a prescription"
+      ],
+      "a": "Advise on small problems and on medicines",
+      "why": "This is what a chemist is trained for, and for many problems it is the fastest correct answer. A prescription needs a doctor.",
+      "outcome": 2
+    },
+    {
+      "q": "Reading 1 says to write four things before an appointment. Which is the one people forget?",
+      "options": [
+        "What is wrong",
+        "When it started",
+        "What you want to ask",
+        "What makes it better or worse"
+      ],
+      "a": "What makes it better or worse",
+      "why": "The text says directly that this is the question you will be asked and the one nobody prepares for. Practice 6 confirms it is one of the two most common surprises.",
+      "outcome": 4
+    }
   ],
   "teacherNotes": [
-    { "type": "This unit works without you", "note": "Three pattern cards, each with a worked example, and every exercise has its answer key. Practice 4 shows full arithmetic working rather than answers alone, because the calculation is the skill and a bare number teaches nothing." },
-    { "type": "Not medical advice — say so", "note": "The label in Reading 3 is a practice document for an invented medicine and is marked as such at the top. The lecture says explicitly that nothing here should be acted on and that a pharmacist or doctor is the right source. That framing is deliberate and should not be removed or softened. If you localise the unit, keep the medicine fictional — a real drug name invites a learner to act on an exercise." },
-    { "type": "Fixed frames, not a rule", "note": "Pattern 1 is deliberately taught as three memorised frames rather than as grammar to work out, because the situation in which it is needed is the worst possible one for constructing sentences. Treat it like the four help phrases in Unit 3: drill to automaticity rather than explaining." },
-    { "type": "I feel sick", "note": "Worth flagging explicitly in any group. In many kinds of English this means about to vomit, not generally unwell, and the misunderstanding occasionally has consequences at a clinic. Learners transferring from a first language where the equivalent means unwell generally will produce it constantly." },
-    { "type": "Obligation is not here", "note": "Should is taught in this unit as advice only. Must, mustn't and have to belong to Unit 17. If a learner asks about the difference, the short answer is that should is a good idea and must is no choice — but the full treatment is later and this unit should not pre-empt it." },
-    { "type": "Device and AI safety", "note": "The AI tutor is a rehearsal partner and no task here is scored by it alone. Learners must never be asked to give the tutor real health information, real medicine names or real doses, and Writing 3 explicitly says the problem may be invented. If a learner shares a genuine medical concern during this unit, direct them to a pharmacist or doctor and do not attempt to answer it." }
+    {
+      "type": "This unit works without you",
+      "note": "Three pattern cards, each with a worked example, and every exercise has its answer key. Practice 4 shows full arithmetic working rather than answers alone, because the calculation is the skill and a bare number teaches nothing."
+    },
+    {
+      "type": "Not medical advice — say so",
+      "note": "The label in Reading 3 is a practice document for an invented medicine and is marked as such at the top. The lecture says explicitly that nothing here should be acted on and that a pharmacist or doctor is the right source. That framing is deliberate and should not be removed or softened. If you localise the unit, keep the medicine fictional — a real drug name invites a learner to act on an exercise."
+    },
+    {
+      "type": "Fixed frames, not a rule",
+      "note": "Pattern 1 is deliberately taught as three memorised frames rather than as grammar to work out, because the situation in which it is needed is the worst possible one for constructing sentences. Treat it like the four help phrases in Unit 3: drill to automaticity rather than explaining."
+    },
+    {
+      "type": "I feel sick",
+      "note": "Worth flagging explicitly in any group. In many kinds of English this means about to vomit, not generally unwell, and the misunderstanding occasionally has consequences at a clinic. Learners transferring from a first language where the equivalent means unwell generally will produce it constantly."
+    },
+    {
+      "type": "Obligation is not here",
+      "note": "Should is taught in this unit as advice only. Must, mustn't and have to belong to Unit 17. If a learner asks about the difference, the short answer is that should is a good idea and must is no choice — but the full treatment is later and this unit should not pre-empt it."
+    },
+    {
+      "type": "Device and AI safety",
+      "note": "The AI tutor is a rehearsal partner and no task here is scored by it alone. Learners must never be asked to give the tutor real health information, real medicine names or real doses, and Writing 3 explicitly says the problem may be invented. If a learner shares a genuine medical concern during this unit, direct them to a pharmacist or doctor and do not attempt to answer it."
+    }
   ],
   "selfAssessment": [
-    { "statement": "I can tell someone what is wrong with me without stopping to think." },
-    { "statement": "I can give someone simple advice and understand advice given to me." },
-    { "statement": "I can read a medicine label and work out how much to take and how often." },
-    { "statement": "I can write down what is wrong with me before I go to an appointment." }
+    {
+      "statement": "I can tell someone what is wrong with me without stopping to think."
+    },
+    {
+      "statement": "I can give someone simple advice and understand advice given to me."
+    },
+    {
+      "statement": "I can read a medicine label and work out how much to take and how often."
+    },
+    {
+      "statement": "I can write down what is wrong with me before I go to an appointment."
+    }
   ],
   "assignment": {
     "title": "A note prepared, and a label read",

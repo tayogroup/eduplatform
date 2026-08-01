@@ -24,7 +24,10 @@
       "cefrLevel": "A2",
       "cefrSkill": "Reading",
       "cefrDescriptor": "I can tell the difference between something that is not required and something that is forbidden.",
-      "cambridge": ["3Ri.16", "2Ri.15"]
+      "cambridge": [
+        "3Ri.16",
+        "2Ri.15"
+      ]
     },
     {
       "outcome": "Express permission and prohibition three ways: can and cannot, no plus -ing, and allowed and not allowed.",
@@ -33,7 +36,10 @@
       "cefrLevel": "A2",
       "cefrSkill": "Spoken production",
       "cefrDescriptor": "I can say a rule three ways and choose the one that fits the situation.",
-      "cambridge": ["2Wg.04", "3Rg.05"]
+      "cambridge": [
+        "2Wg.04",
+        "3Rg.05"
+      ]
     },
     {
       "outcome": "Reconstruct the missing words in a compressed public sign, and identify who it addresses.",
@@ -42,7 +48,10 @@
       "cefrLevel": "A2",
       "cefrSkill": "Writing",
       "cefrDescriptor": "I can read a short sign and say the full sentence it is standing in for.",
-      "cambridge": ["2Ri.09", "1Ri.08"]
+      "cambridge": [
+        "2Ri.09",
+        "1Ri.08"
+      ]
     },
     {
       "outcome": "Read a safety notice for what it requires, what it forbids, and what it leaves unstated.",
@@ -51,62 +60,442 @@
       "cefrLevel": "A2",
       "cefrSkill": "Reading",
       "cefrDescriptor": "I can read a safety notice and know exactly what I must and must not do.",
-      "cambridge": ["3Ri.14", "3Rs.03"]
+      "cambridge": [
+        "3Ri.14",
+        "3Rs.03"
+      ]
     }
   ],
   "groups": [
     {
       "title": "Rules and signs",
       "words": [
-        { "w": "rule", "pos": "noun", "meaning": "Something you must or must not do in a particular place.", "example": "It is a rule, not a suggestion.", "practice": ["It is a rule, not a suggestion.", "What are the rules here?", "That is against the rules.", "The rules changed last month.", "There is one rule everybody forgets."], "starter": "It is a rule, not a", "tutor": "Say one rule where you work or live. Use must." },
-        { "w": "sign", "pos": "noun", "meaning": "A board with words or a picture giving information or an instruction.", "example": "There is a sign on the door.", "practice": ["There is a sign on the door.", "Did you read the sign?", "The sign says no entry.", "Follow the green signs.", "There was no sign anywhere."], "starter": "There is a sign on the", "tutor": "Say what a sign near you says, in full sentences rather than sign English." },
-        { "w": "warning", "pos": "noun", "meaning": "Something that tells you about a possible danger.", "example": "That is a warning, not a rule.", "practice": ["That is a warning, not a rule.", "There was no warning.", "The warning is on the label.", "Read the warning first.", "It is a warning about deep water."], "starter": "That is a warning, not a", "tutor": "Say the difference between a warning and a rule in your own words." },
-        { "w": "danger", "pos": "noun", "meaning": "The possibility of harm.", "example": "Danger: deep water.", "practice": ["Danger: deep water.", "There is no danger now.", "The sign says danger.", "It is a danger to everybody.", "Danger — do not enter."], "starter": "Danger: deep", "tutor": "Danger on a sign means stay away. Say the full sentence it stands for." },
-        { "w": "safety", "pos": "noun", "meaning": "The state of being protected from harm.", "example": "You must wear safety shoes.", "practice": ["You must wear safety shoes.", "It is a safety rule.", "Read the safety notice.", "Safety comes first here.", "The safety equipment is by the door."], "starter": "You must wear safety", "tutor": "Say safety shoes, safety notice, safety rule. It goes in front of a noun." },
-        { "w": "safe", "pos": "adjective", "meaning": "Not in danger; not causing harm.", "example": "It is safe now.", "practice": ["It is safe now.", "Is it safe to go in?", "This is the safe route.", "It is not safe to lift that alone.", "Keep it in a safe place."], "starter": "It is safe", "tutor": "Say safe and safety in two sentences. One is an adjective, one is a noun." }
+        {
+          "w": "rule",
+          "pos": "noun",
+          "meaning": "Something you must or must not do in a particular place.",
+          "example": "It is a rule, not a suggestion.",
+          "practice": [
+            "What are the rules here?",
+            "That is against the rules.",
+            "The rules changed last month.",
+            "There is one rule everybody forgets."
+          ],
+          "starter": "It is a rule, not a",
+          "tutor": "Say one rule where you work or live. Use must."
+        },
+        {
+          "w": "sign",
+          "pos": "noun",
+          "meaning": "A board with words or a picture giving information or an instruction.",
+          "example": "There is a sign on the door.",
+          "practice": [
+            "Did you read the sign?",
+            "The sign says no entry.",
+            "Follow the green signs.",
+            "There was no sign anywhere."
+          ],
+          "starter": "There is a sign on the",
+          "tutor": "Say what a sign near you says, in full sentences rather than sign English."
+        },
+        {
+          "w": "warning",
+          "pos": "noun",
+          "meaning": "Something that tells you about a possible danger.",
+          "example": "That is a warning, not a rule.",
+          "practice": [
+            "There was no warning.",
+            "The warning is on the label.",
+            "Read the warning first.",
+            "It is a warning about deep water."
+          ],
+          "starter": "That is a warning, not a",
+          "tutor": "Say the difference between a warning and a rule in your own words."
+        },
+        {
+          "w": "danger",
+          "pos": "noun",
+          "meaning": "The possibility of harm.",
+          "example": "Danger: deep water.",
+          "practice": [
+            "There is no danger now.",
+            "The sign says danger.",
+            "It is a danger to everybody.",
+            "Danger — do not enter."
+          ],
+          "starter": "Danger: deep",
+          "tutor": "Danger on a sign means stay away. Say the full sentence it stands for."
+        },
+        {
+          "w": "safety",
+          "pos": "noun",
+          "meaning": "The state of being protected from harm.",
+          "example": "You must wear safety shoes.",
+          "practice": [
+            "It is a safety rule.",
+            "Read the safety notice.",
+            "Safety comes first here.",
+            "The safety equipment is by the door."
+          ],
+          "starter": "You must wear safety",
+          "tutor": "Say safety shoes, safety notice, safety rule. It goes in front of a noun."
+        },
+        {
+          "w": "safe",
+          "pos": "adjective",
+          "meaning": "Not in danger; not causing harm.",
+          "example": "It is safe now.",
+          "practice": [
+            "Is it safe to go in?",
+            "This is the safe route.",
+            "It is not safe to lift that alone.",
+            "Keep it in a safe place."
+          ],
+          "starter": "It is safe",
+          "tutor": "Say safe and safety in two sentences. One is an adjective, one is a noun."
+        }
       ]
     },
     {
       "title": "Allowed, or not allowed",
       "words": [
-        { "w": "allow", "pos": "verb", "meaning": "To let somebody do something.", "example": "Smoking is not allowed in here.", "practice": ["Smoking is not allowed in here.", "You are not allowed to park there.", "They do not allow bags in the room.", "Are we allowed to use this?", "It is allowed after six."], "starter": "Smoking is not allowed in", "tutor": "Not allowed is softer than must not. Say the same rule both ways." },
-        { "w": "permission", "pos": "noun", "meaning": "Being told you may do something.", "example": "You need permission to enter.", "practice": ["You need permission to enter.", "I did not have permission.", "Ask permission first.", "Permission was refused.", "You have my permission."], "starter": "You need permission to", "tutor": "Say ask permission and have permission. Both are common." },
-        { "w": "forbidden", "pos": "adjective", "meaning": "Not allowed at all.", "example": "It is forbidden to smoke here.", "practice": ["It is forbidden to smoke here.", "Entry is forbidden.", "That is completely forbidden.", "It is not forbidden — it is just not usual.", "Forbidden means must not."], "starter": "It is forbidden to smoke", "tutor": "Forbidden is very strong and quite formal. Say where you would actually see it." },
-        { "w": "entry", "pos": "noun", "meaning": "The act of going in, or the way in.", "example": "The sign says no entry.", "practice": ["The sign says no entry.", "Entry is by the side door.", "No entry between 6pm and 8am.", "Entry is free.", "This is the staff entry."], "starter": "The sign says no", "tutor": "No entry is two words standing for a whole sentence. Say the full sentence." },
-        { "w": "exit", "pos": "noun", "meaning": "The way out.", "example": "Keep the exit clear at all times.", "practice": ["Keep the exit clear at all times.", "Where is the nearest exit?", "The exit is at the back.", "Do not block the exit.", "Use the fire exit only in an emergency."], "starter": "Keep the exit clear at all", "tutor": "Ask where the nearest exit is. It is worth knowing before you need it." },
-        { "w": "restricted", "pos": "adjective", "meaning": "Limited to certain people or certain times.", "example": "This is a restricted area.", "practice": ["This is a restricted area.", "Access is restricted after six.", "It is a restricted route for vehicles.", "Restricted does not mean forbidden.", "The area is restricted to staff."], "starter": "This is a restricted", "tutor": "Restricted means limited, not banned. Say the difference from forbidden." }
+        {
+          "w": "allow",
+          "pos": "verb",
+          "meaning": "To let somebody do something.",
+          "example": "Smoking is not allowed in here.",
+          "practice": [
+            "You are not allowed to park there.",
+            "They do not allow bags in the room.",
+            "Are we allowed to use this?",
+            "It is allowed after six."
+          ],
+          "starter": "Smoking is not allowed in",
+          "tutor": "Not allowed is softer than must not. Say the same rule both ways."
+        },
+        {
+          "w": "permission",
+          "pos": "noun",
+          "meaning": "Being told you may do something.",
+          "example": "You need permission to enter.",
+          "practice": [
+            "I did not have permission.",
+            "Ask permission first.",
+            "Permission was refused.",
+            "You have my permission."
+          ],
+          "starter": "You need permission to",
+          "tutor": "Say ask permission and have permission. Both are common."
+        },
+        {
+          "w": "forbidden",
+          "pos": "adjective",
+          "meaning": "Not allowed at all.",
+          "example": "It is forbidden to smoke here.",
+          "practice": [
+            "Entry is forbidden.",
+            "That is completely forbidden.",
+            "It is not forbidden — it is just not usual.",
+            "Forbidden means must not."
+          ],
+          "starter": "It is forbidden to smoke",
+          "tutor": "Forbidden is very strong and quite formal. Say where you would actually see it."
+        },
+        {
+          "w": "entry",
+          "pos": "noun",
+          "meaning": "The act of going in, or the way in.",
+          "example": "The sign says no entry.",
+          "practice": [
+            "Entry is by the side door.",
+            "No entry between 6pm and 8am.",
+            "Entry is free.",
+            "This is the staff entry."
+          ],
+          "starter": "The sign says no",
+          "tutor": "No entry is two words standing for a whole sentence. Say the full sentence."
+        },
+        {
+          "w": "exit",
+          "pos": "noun",
+          "meaning": "The way out.",
+          "example": "Keep the exit clear at all times.",
+          "practice": [
+            "Where is the nearest exit?",
+            "The exit is at the back.",
+            "Do not block the exit.",
+            "Use the fire exit only in an emergency."
+          ],
+          "starter": "Keep the exit clear at all",
+          "tutor": "Ask where the nearest exit is. It is worth knowing before you need it."
+        },
+        {
+          "w": "restricted",
+          "pos": "adjective",
+          "meaning": "Limited to certain people or certain times.",
+          "example": "This is a restricted area.",
+          "practice": [
+            "Access is restricted after six.",
+            "It is a restricted route for vehicles.",
+            "Restricted does not mean forbidden.",
+            "The area is restricted to staff."
+          ],
+          "starter": "This is a restricted",
+          "tutor": "Restricted means limited, not banned. Say the difference from forbidden."
+        }
       ]
     },
     {
       "title": "On a safety notice",
       "words": [
-        { "w": "equipment", "pos": "noun", "meaning": "The tools and machines used for a job.", "example": "Check the equipment before you start.", "practice": ["Check the equipment before you start.", "You must not use the equipment without training.", "The safety equipment is by the door.", "The equipment is quite old.", "Report any damaged equipment."], "starter": "Check the equipment before you", "tutor": "Equipment has no plural. Say a piece of equipment, not an equipment." },
-        { "w": "protect", "pos": "verb", "meaning": "To keep something or somebody safe from harm.", "example": "Safety shoes protect your feet.", "practice": ["Safety shoes protect your feet.", "You must protect your eyes.", "It protects against the heat.", "Nothing protected the equipment.", "This is to protect everybody, not just you."], "starter": "Safety shoes protect your", "tutor": "Say protect against something. That is the usual pattern." },
-        { "w": "risk", "pos": "noun", "meaning": "The chance that something bad will happen.", "example": "There is a risk of falling.", "practice": ["There is a risk of falling.", "It is not worth the risk.", "The risk is small but it is real.", "You must report any risk.", "At your own risk."], "starter": "There is a risk of", "tutor": "Say at your own risk. It means nobody else is responsible if it goes wrong." },
-        { "w": "avoid", "pos": "verb", "meaning": "To keep away from, or to stop something happening.", "example": "Avoid parking under trees.", "practice": ["Avoid parking under trees.", "Avoid the coast road tonight.", "This is to avoid accidents.", "You cannot avoid it completely.", "Avoid lifting alone."], "starter": "Avoid parking under", "tutor": "Notice avoid takes -ing: avoid parking, avoid lifting. Say both." },
-        { "w": "hazard", "pos": "noun", "meaning": "Something that could cause harm.", "example": "A wet floor is a hazard.", "practice": ["A wet floor is a hazard.", "Report any hazard immediately.", "The main hazard here is the traffic.", "It is a fire hazard.", "There are two hazards on this list."], "starter": "A wet floor is a", "tutor": "Hazard is the thing; risk is the chance. Say one sentence with each." },
-        { "w": "alarm", "pos": "noun", "meaning": "A loud sound warning of danger.", "example": "If the alarm sounds, leave immediately.", "practice": ["If the alarm sounds, leave immediately.", "The alarm is tested every Monday.", "Nobody heard the alarm.", "Do not touch the alarm.", "The fire alarm went off at two."], "starter": "If the alarm sounds, leave", "tutor": "Say what you do if the alarm sounds. Use the imperative from Unit 6." }
+        {
+          "w": "equipment",
+          "pos": "noun",
+          "meaning": "The tools and machines used for a job.",
+          "example": "Check the equipment before you start.",
+          "practice": [
+            "You must not use the equipment without training.",
+            "The safety equipment is by the door.",
+            "The equipment is quite old.",
+            "Report any damaged equipment."
+          ],
+          "starter": "Check the equipment before you",
+          "tutor": "Equipment has no plural. Say a piece of equipment, not an equipment."
+        },
+        {
+          "w": "protect",
+          "pos": "verb",
+          "meaning": "To keep something or somebody safe from harm.",
+          "example": "Safety shoes protect your feet.",
+          "practice": [
+            "You must protect your eyes.",
+            "It protects against the heat.",
+            "Nothing protected the equipment.",
+            "This is to protect everybody, not just you."
+          ],
+          "starter": "Safety shoes protect your",
+          "tutor": "Say protect against something. That is the usual pattern."
+        },
+        {
+          "w": "risk",
+          "pos": "noun",
+          "meaning": "The chance that something bad will happen.",
+          "example": "There is a risk of falling.",
+          "practice": [
+            "It is not worth the risk.",
+            "The risk is small but it is real.",
+            "You must report any risk.",
+            "At your own risk."
+          ],
+          "starter": "There is a risk of",
+          "tutor": "Say at your own risk. It means nobody else is responsible if it goes wrong."
+        },
+        {
+          "w": "avoid",
+          "pos": "verb",
+          "meaning": "To keep away from, or to stop something happening.",
+          "example": "Avoid parking under trees.",
+          "practice": [
+            "Avoid the coast road tonight.",
+            "This is to avoid accidents.",
+            "You cannot avoid it completely.",
+            "Avoid lifting alone."
+          ],
+          "starter": "Avoid parking under",
+          "tutor": "Notice avoid takes -ing: avoid parking, avoid lifting. Say both."
+        },
+        {
+          "w": "hazard",
+          "pos": "noun",
+          "meaning": "Something that could cause harm.",
+          "example": "A wet floor is a hazard.",
+          "practice": [
+            "Report any hazard immediately.",
+            "The main hazard here is the traffic.",
+            "It is a fire hazard.",
+            "There are two hazards on this list."
+          ],
+          "starter": "A wet floor is a",
+          "tutor": "Hazard is the thing; risk is the chance. Say one sentence with each."
+        },
+        {
+          "w": "alarm",
+          "pos": "noun",
+          "meaning": "A loud sound warning of danger.",
+          "example": "If the alarm sounds, leave immediately.",
+          "practice": [
+            "The alarm is tested every Monday.",
+            "Nobody heard the alarm.",
+            "Do not touch the alarm.",
+            "The fire alarm went off at two."
+          ],
+          "starter": "If the alarm sounds, leave",
+          "tutor": "Say what you do if the alarm sounds. Use the imperative from Unit 6."
+        }
       ]
     },
     {
       "title": "What the notice tells you to do",
       "words": [
-        { "w": "wear", "pos": "verb", "meaning": "To have clothing or equipment on your body.", "example": "You must wear safety shoes in this area.", "practice": ["You must wear safety shoes in this area.", "You do not have to wear a uniform.", "She was wearing a blue jacket.", "Wear something warm.", "You must not wear loose clothing near the machines."], "starter": "You must wear safety shoes in this", "tutor": "Say you must wear and you do not have to wear. Notice how different they are." },
-        { "w": "remove", "pos": "verb", "meaning": "To take something away or take it off.", "example": "Remove the label before use.", "practice": ["Remove the label before use.", "Do not remove this notice.", "Remove your equipment at the end of the shift.", "The sign was removed last week.", "You must remove all bags from the aisle."], "starter": "Remove the label before", "tutor": "Remove is more formal than take off. Say where you would see each." },
-        { "w": "press", "pos": "verb", "meaning": "To push something down, usually a button.", "example": "Press the green button to start.", "practice": ["Press the green button to start.", "Press here in an emergency.", "Do not press this.", "Press and hold for three seconds.", "She pressed the wrong one."], "starter": "Press the green button to", "tutor": "Say press, push and pull in three instructions. They are not the same." },
-        { "w": "push", "pos": "verb", "meaning": "To move something away from you.", "example": "Push the door — do not pull it.", "practice": ["Push the door — do not pull it.", "The sign says push.", "Push the trolley, do not carry it.", "Do not push.", "Push firmly."], "starter": "Push the door — do not", "tutor": "Push and pull are opposites and both appear on doors. Say both." },
-        { "w": "pull", "pos": "verb", "meaning": "To move something towards you.", "example": "Pull the handle down.", "practice": ["Pull the handle down.", "The sign says pull.", "Pull in an emergency.", "Do not pull the cable.", "Pull, then turn."], "starter": "Pull the handle", "tutor": "Say pull the handle. Then say the opposite instruction." },
-        { "w": "switch", "pos": "verb", "meaning": "To turn something on or off.", "example": "Switch off the machine before cleaning it.", "practice": ["Switch off the machine before cleaning it.", "Switch it on at the wall.", "Do not switch this off.", "The switch is on the left.", "Switch off at the end of the shift."], "starter": "Switch off the machine before cleaning", "tutor": "Say switch on and switch off. Both take a small word after switch." }
+        {
+          "w": "wear",
+          "pos": "verb",
+          "meaning": "To have clothing or equipment on your body.",
+          "example": "You must wear safety shoes in this area.",
+          "practice": [
+            "You do not have to wear a uniform.",
+            "She was wearing a blue jacket.",
+            "Wear something warm.",
+            "You must not wear loose clothing near the machines."
+          ],
+          "starter": "You must wear safety shoes in this",
+          "tutor": "Say you must wear and you do not have to wear. Notice how different they are."
+        },
+        {
+          "w": "remove",
+          "pos": "verb",
+          "meaning": "To take something away or take it off.",
+          "example": "Remove the label before use.",
+          "practice": [
+            "Do not remove this notice.",
+            "Remove your equipment at the end of the shift.",
+            "The sign was removed last week.",
+            "You must remove all bags from the aisle."
+          ],
+          "starter": "Remove the label before",
+          "tutor": "Remove is more formal than take off. Say where you would see each."
+        },
+        {
+          "w": "press",
+          "pos": "verb",
+          "meaning": "To push something down, usually a button.",
+          "example": "Press the green button to start.",
+          "practice": [
+            "Press here in an emergency.",
+            "Do not press this.",
+            "Press and hold for three seconds.",
+            "She pressed the wrong one."
+          ],
+          "starter": "Press the green button to",
+          "tutor": "Say press, push and pull in three instructions. They are not the same."
+        },
+        {
+          "w": "push",
+          "pos": "verb",
+          "meaning": "To move something away from you.",
+          "example": "Push the door — do not pull it.",
+          "practice": [
+            "The sign says push.",
+            "Push the trolley, do not carry it.",
+            "Do not push.",
+            "Push firmly."
+          ],
+          "starter": "Push the door — do not",
+          "tutor": "Push and pull are opposites and both appear on doors. Say both."
+        },
+        {
+          "w": "pull",
+          "pos": "verb",
+          "meaning": "To move something towards you.",
+          "example": "Pull the handle down.",
+          "practice": [
+            "The sign says pull.",
+            "Pull in an emergency.",
+            "Do not pull the cable.",
+            "Pull, then turn."
+          ],
+          "starter": "Pull the handle",
+          "tutor": "Say pull the handle. Then say the opposite instruction."
+        },
+        {
+          "w": "switch",
+          "pos": "verb",
+          "meaning": "To turn something on or off.",
+          "example": "Switch off the machine before cleaning it.",
+          "practice": [
+            "Switch it on at the wall.",
+            "Do not switch this off.",
+            "The switch is on the left.",
+            "Switch off at the end of the shift."
+          ],
+          "starter": "Switch off the machine before cleaning",
+          "tutor": "Say switch on and switch off. Both take a small word after switch."
+        }
       ]
     },
     {
       "title": "In an emergency",
       "words": [
-        { "w": "fire", "pos": "noun", "meaning": "Burning that causes damage and danger.", "example": "In case of fire, use the stairs.", "practice": ["In case of fire, use the stairs.", "The fire alarm is tested on Mondays.", "There was a small fire last year.", "Do not use the lift in a fire.", "The fire exit is at the back."], "starter": "In case of fire, use the", "tutor": "Say in case of fire. It is the standard opening on this kind of notice." },
-        { "w": "escape", "pos": "noun", "meaning": "The act or route of getting away from danger.", "example": "Keep the escape route clear.", "practice": ["Keep the escape route clear.", "The fire escape is outside.", "There is no other escape route.", "Do not block the escape route.", "The escape route is marked in green."], "starter": "Keep the escape route", "tutor": "Say escape route. Then say where the nearest one is from where you are." },
-        { "w": "evacuate", "pos": "verb", "meaning": "To leave a building because of danger.", "example": "Evacuate the building immediately.", "practice": ["Evacuate the building immediately.", "We had to evacuate twice last year.", "Evacuate by the nearest exit.", "The building was evacuated at ten.", "Do not return until told."], "starter": "Evacuate the building", "tutor": "Evacuate is formal and appears almost only on notices. Say the everyday version too." },
-        { "w": "assemble", "pos": "verb", "meaning": "To gather together in one place.", "example": "Assemble in the car park.", "practice": ["Assemble in the car park.", "The assembly point is by the gate.", "Assemble and wait to be counted.", "Everybody must assemble outside.", "Do not assemble near the building."], "starter": "Assemble in the car", "tutor": "Say where the assembly point is where you work or study. If you do not know, that is worth finding out." },
-        { "w": "extinguisher", "pos": "noun", "meaning": "A container of material for putting out a fire.", "example": "The extinguisher is beside the door.", "practice": ["The extinguisher is beside the door.", "Do not move the extinguisher.", "You must not use an extinguisher without training.", "There are two extinguishers on this floor.", "The extinguisher was checked in March."], "starter": "The extinguisher is beside the", "tutor": "Say the word slowly: ex-tin-guish-er. Four syllables." }
+        {
+          "w": "fire",
+          "pos": "noun",
+          "meaning": "Burning that causes damage and danger.",
+          "example": "In case of fire, use the stairs.",
+          "practice": [
+            "The fire alarm is tested on Mondays.",
+            "There was a small fire last year.",
+            "Do not use the lift in a fire.",
+            "The fire exit is at the back."
+          ],
+          "starter": "In case of fire, use the",
+          "tutor": "Say in case of fire. It is the standard opening on this kind of notice."
+        },
+        {
+          "w": "escape",
+          "pos": "noun",
+          "meaning": "The act or route of getting away from danger.",
+          "example": "Keep the escape route clear.",
+          "practice": [
+            "The fire escape is outside.",
+            "There is no other escape route.",
+            "Do not block the escape route.",
+            "The escape route is marked in green."
+          ],
+          "starter": "Keep the escape route",
+          "tutor": "Say escape route. Then say where the nearest one is from where you are."
+        },
+        {
+          "w": "evacuate",
+          "pos": "verb",
+          "meaning": "To leave a building because of danger.",
+          "example": "Evacuate the building immediately.",
+          "practice": [
+            "We had to evacuate twice last year.",
+            "Evacuate by the nearest exit.",
+            "The building was evacuated at ten.",
+            "Do not return until told."
+          ],
+          "starter": "Evacuate the building",
+          "tutor": "Evacuate is formal and appears almost only on notices. Say the everyday version too."
+        },
+        {
+          "w": "assemble",
+          "pos": "verb",
+          "meaning": "To gather together in one place.",
+          "example": "Assemble in the car park.",
+          "practice": [
+            "The assembly point is by the gate.",
+            "Assemble and wait to be counted.",
+            "Everybody must assemble outside.",
+            "Do not assemble near the building."
+          ],
+          "starter": "Assemble in the car",
+          "tutor": "Say where the assembly point is where you work or study. If you do not know, that is worth finding out."
+        },
+        {
+          "w": "extinguisher",
+          "pos": "noun",
+          "meaning": "A container of material for putting out a fire.",
+          "example": "The extinguisher is beside the door.",
+          "practice": [
+            "Do not move the extinguisher.",
+            "You must not use an extinguisher without training.",
+            "There are two extinguishers on this floor.",
+            "The extinguisher was checked in March."
+          ],
+          "starter": "The extinguisher is beside the",
+          "tutor": "Say the word slowly: ex-tin-guish-er. Four syllables."
+        }
       ]
     }
   ],
@@ -130,16 +519,90 @@
     }
   ],
   "comprehension": [
-    { "section": "Reading", "reading": 1, "q": "What is the difference between you do not have to wear a uniform and you must not wear a uniform?", "a": "The first means no uniform is required — wear one if you like. The second means uniforms are forbidden.", "why": "Opposite meanings, one small word apart. This is the pair the whole unit is built around.", "outcome": 1 },
-    { "section": "Reading", "reading": 1, "q": "Why does the text say the two forms are taught six units apart?", "a": "Because learners who meet both in the same lesson tend to blur them permanently — they look similar, sound similar and sit in the same grammatical slot.", "why": "The separation is a teaching decision with a reason, and knowing the reason helps a learner keep them apart deliberately.", "outcome": 1, "difficulty": "Stretch" },
-    { "section": "Reading", "reading": 1, "q": "What asymmetry does the text describe between the two errors?", "a": "Misreading do not have to as a prohibition costs you an opportunity you never knew you had. Misreading must not as optional costs you something more immediate.", "why": "The two failures are not the same size or the same kind, and naming that makes both worth avoiding for different reasons.", "outcome": 1 },
-    { "section": "Reading", "reading": 2, "q": "What does authorised personnel only stand for in full?", "a": "Only authorised personnel may enter this area.", "why": "Reconstruction is the whole skill. The sign has deleted a verb, a modal and an object, and all three have to be put back.", "outcome": 3 },
-    { "section": "Reading", "reading": 2, "q": "What is the difference between staff only and authorised personnel only?", "a": "Staff only names a group you might belong to. Authorised personnel only names a permission you have to have been given.", "why": "They look almost identical and one is much narrower. Being staff does not make you authorised.", "outcome": 3, "difficulty": "Stretch" },
-    { "section": "Reading", "reading": 2, "q": "Why does the text say the last word on a sign is often the most important?", "a": "Because the qualifying phrase comes at the end — no parking is absolute, but no parking except for loading is not.", "why": "Stopping early produces a confident misreading, which is worse than not reading at all. The short signs are the riskiest for exactly this reason.", "outcome": 3 },
-    { "section": "Document", "reading": 3, "q": "The notice says you do not have to wear a helmet in this bay. What does that mean, and what does the bracket add?", "a": "It means a helmet is not required in this bay — you may wear one if you want. The bracket adds that helmets are required in Bay 3, so the rule changes by location.", "why": "This is the one open door on the notice, and it sits directly under six closed ones, which is exactly where the confusion would occur if the two forms had not been separated.", "outcome": 1 },
-    { "section": "Document", "reading": 3, "q": "You have been trained on lifting equipment but not on extinguishers. What may you do and not do?", "a": "You may operate the lifting equipment, because the prohibition applies only without training. You must not use an extinguisher, because you have not been trained on one.", "why": "Both prohibitions are conditional on training and the conditions are separate. Reading either one as absolute gets the answer wrong in a different direction.", "outcome": 4, "difficulty": "Stretch" },
-    { "section": "Document", "reading": 3, "q": "Sign 2 says NO PARKING except for loading. What would you have misread if you stopped at the second word?", "a": "You would have read an absolute prohibition, when in fact parking for loading is permitted.", "why": "This is the mistake Reading 2 predicts, printed on a sign so it can be caught. The qualifier is on the second line and easy to skip.", "outcome": 3 },
-    { "section": "Document", "reading": 3, "q": "The fire instructions tell you to assemble in the staff car park. What do they not tell you?", "a": "They do not say what to do if the staff car park cannot be reached, or who checks that everybody is out.", "why": "The instructions are complete for the ordinary case and silent on the case where the ordinary route is blocked, which is the situation they exist for.", "outcome": 4, "difficulty": "Stretch" }
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "What is the difference between you do not have to wear a uniform and you must not wear a uniform?",
+      "a": "The first means no uniform is required — wear one if you like. The second means uniforms are forbidden.",
+      "why": "Opposite meanings, one small word apart. This is the pair the whole unit is built around.",
+      "outcome": 1
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "Why does the text say the two forms are taught six units apart?",
+      "a": "Because learners who meet both in the same lesson tend to blur them permanently — they look similar, sound similar and sit in the same grammatical slot.",
+      "why": "The separation is a teaching decision with a reason, and knowing the reason helps a learner keep them apart deliberately.",
+      "outcome": 1,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "What asymmetry does the text describe between the two errors?",
+      "a": "Misreading do not have to as a prohibition costs you an opportunity you never knew you had. Misreading must not as optional costs you something more immediate.",
+      "why": "The two failures are not the same size or the same kind, and naming that makes both worth avoiding for different reasons.",
+      "outcome": 1
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "What does authorised personnel only stand for in full?",
+      "a": "Only authorised personnel may enter this area.",
+      "why": "Reconstruction is the whole skill. The sign has deleted a verb, a modal and an object, and all three have to be put back.",
+      "outcome": 3
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "What is the difference between staff only and authorised personnel only?",
+      "a": "Staff only names a group you might belong to. Authorised personnel only names a permission you have to have been given.",
+      "why": "They look almost identical and one is much narrower. Being staff does not make you authorised.",
+      "outcome": 3,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "Why does the text say the last word on a sign is often the most important?",
+      "a": "Because the qualifying phrase comes at the end — no parking is absolute, but no parking except for loading is not.",
+      "why": "Stopping early produces a confident misreading, which is worse than not reading at all. The short signs are the riskiest for exactly this reason.",
+      "outcome": 3
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "The notice says you do not have to wear a helmet in this bay. What does that mean, and what does the bracket add?",
+      "a": "It means a helmet is not required in this bay — you may wear one if you want. The bracket adds that helmets are required in Bay 3, so the rule changes by location.",
+      "why": "This is the one open door on the notice, and it sits directly under six closed ones, which is exactly where the confusion would occur if the two forms had not been separated.",
+      "outcome": 1
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "You have been trained on lifting equipment but not on extinguishers. What may you do and not do?",
+      "a": "You may operate the lifting equipment, because the prohibition applies only without training. You must not use an extinguisher, because you have not been trained on one.",
+      "why": "Both prohibitions are conditional on training and the conditions are separate. Reading either one as absolute gets the answer wrong in a different direction.",
+      "outcome": 4,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "Sign 2 says NO PARKING except for loading. What would you have misread if you stopped at the second word?",
+      "a": "You would have read an absolute prohibition, when in fact parking for loading is permitted.",
+      "why": "This is the mistake Reading 2 predicts, printed on a sign so it can be caught. The qualifier is on the second line and easy to skip.",
+      "outcome": 3
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "The fire instructions tell you to assemble in the staff car park. What do they not tell you?",
+      "a": "They do not say what to do if the staff car park cannot be reached, or who checks that everybody is out.",
+      "why": "The instructions are complete for the ordinary case and silent on the case where the ordinary route is blocked, which is the situation they exist for.",
+      "outcome": 4,
+      "difficulty": "Stretch"
+    }
   ],
   "grammar": [
     {
@@ -180,12 +643,48 @@
     }
   ],
   "speaking": [
-    { "title": "Speaking 1 — Six rules", "type": "Core pattern drill", "instructions": "Say six real rules from somewhere you know — work, a building, a form of transport.\nThree with must and three with mustn't.\nRecord them.\nPlay back and check the verb after must is plain and never has -s. She must sign in, not she musts sign in.", "tutor": "Say six rules and ask the tutor which ones forbid something and which require it.", "outcome": 1 },
-    { "title": "Speaking 2 — Opens or closes", "type": "Core pattern drill", "instructions": "Say each pair aloud, five times.\nYou don't have to wear a uniform. / You mustn't wear a uniform.\nYou don't have to have experience. / You mustn't have experience.\nYou don't have to sign in. / You mustn't sign in.\nAfter each pair, say aloud which one opens and which closes.\nRecord one full set.\nThe second sentence of each pair sounds strange, and it should — it is a real prohibition and most workplaces do not have one. That strangeness is what makes the difference memorable.", "tutor": "Say six sentences, some with don't have to and some with mustn't, and ask the tutor which ones forbid anything.", "outcome": 1 },
-    { "title": "Speaking 3 — Three registers", "type": "Core pattern drill", "instructions": "Take four rules. Say each one three ways.\nNo smoking. / Smoking isn't allowed in here. / You mustn't smoke here.\nDo the same with parking, eating, and going into a restricted area.\nRecord all twelve.\nPlay back and check the verb shape in each: -ing after no, to after allowed, plain after mustn't. Getting the shape right is the whole grammar of this card.", "tutor": "Say a rule three ways and ask the tutor which version it would expect on a wall, from a colleague, and from a supervisor.", "outcome": 2 },
-    { "title": "Speaking 4 — Explaining a rule to somebody", "type": "Exchange", "instructions": "Say both sides, then change the rule three times.\nA: Can I park here?\nB: I'm afraid not — you're not allowed to park there between eight and six.\nA: Oh. Where can I park?\nB: The car park at the back is fine. There's a sign but it's easy to miss.\nA: So the back car park, any time?\nB: Any time, yes.\nNotice B explained rather than forbade, and gave the alternative without being asked.\nRecord one full version.", "tutor": "Ask the tutor whether you can do four different things and ask it to explain each rule and give an alternative.", "outcome": 2 },
-    { "title": "Speaking 5 — Say what the sign means", "type": "Core pattern drill", "instructions": "Say the full sentence each of these signs stands for, then say who it addresses.\nMind the step. / No entry. / Authorised personnel only. / Danger: deep excavation. / No parking except for loading. / Keep the escape route clear at all times.\nRecord all six, with the who for each.\nThe last three words of the fifth one change it completely. If your full sentence did not include the loading exception, read it again.", "tutor": "Give the tutor six short signs and ask it to say the full sentence each one stands for.", "outcome": 3 },
-    { "title": "Speaking 6 — Read the notice aloud and act on it", "type": "Assessment rehearsal", "instructions": "Open Reading 3.\nRead the whole safety notice aloud, including the headings.\nThen say aloud: you have been trained on lifting equipment but not on extinguishers — what may you do and what may you not do, and why.\nThen say what the fire instructions do not tell you.\nThen read the four signs aloud and say which one you would misread if you stopped at the second word.\nRecord the last three parts and keep them.", "tutor": "Give the tutor the notice and ask what it would want added before it worked there.", "outcome": 4 }
+    {
+      "title": "Speaking 1 — Six rules",
+      "type": "Core pattern drill",
+      "instructions": "Say six real rules from somewhere you know — work, a building, a form of transport.\nThree with must and three with mustn't.\nRecord them.\nPlay back and check the verb after must is plain and never has -s. She must sign in, not she musts sign in.",
+      "tutor": "Say six rules and ask the tutor which ones forbid something and which require it.",
+      "outcome": 1
+    },
+    {
+      "title": "Speaking 2 — Opens or closes",
+      "type": "Core pattern drill",
+      "instructions": "Say each pair aloud, five times.\nYou don't have to wear a uniform. / You mustn't wear a uniform.\nYou don't have to have experience. / You mustn't have experience.\nYou don't have to sign in. / You mustn't sign in.\nAfter each pair, say aloud which one opens and which closes.\nRecord one full set.\nThe second sentence of each pair sounds strange, and it should — it is a real prohibition and most workplaces do not have one. That strangeness is what makes the difference memorable.",
+      "tutor": "Say six sentences, some with don't have to and some with mustn't, and ask the tutor which ones forbid anything.",
+      "outcome": 1
+    },
+    {
+      "title": "Speaking 3 — Three registers",
+      "type": "Core pattern drill",
+      "instructions": "Take four rules. Say each one three ways.\nNo smoking. / Smoking isn't allowed in here. / You mustn't smoke here.\nDo the same with parking, eating, and going into a restricted area.\nRecord all twelve.\nPlay back and check the verb shape in each: -ing after no, to after allowed, plain after mustn't. Getting the shape right is the whole grammar of this card.",
+      "tutor": "Say a rule three ways and ask the tutor which version it would expect on a wall, from a colleague, and from a supervisor.",
+      "outcome": 2
+    },
+    {
+      "title": "Speaking 4 — Explaining a rule to somebody",
+      "type": "Exchange",
+      "instructions": "Say both sides, then change the rule three times.\nA: Can I park here?\nB: I'm afraid not — you're not allowed to park there between eight and six.\nA: Oh. Where can I park?\nB: The car park at the back is fine. There's a sign but it's easy to miss.\nA: So the back car park, any time?\nB: Any time, yes.\nNotice B explained rather than forbade, and gave the alternative without being asked.\nRecord one full version.",
+      "tutor": "Ask the tutor whether you can do four different things and ask it to explain each rule and give an alternative.",
+      "outcome": 2
+    },
+    {
+      "title": "Speaking 5 — Say what the sign means",
+      "type": "Core pattern drill",
+      "instructions": "Say the full sentence each of these signs stands for, then say who it addresses.\nMind the step. / No entry. / Authorised personnel only. / Danger: deep excavation. / No parking except for loading. / Keep the escape route clear at all times.\nRecord all six, with the who for each.\nThe last three words of the fifth one change it completely. If your full sentence did not include the loading exception, read it again.",
+      "tutor": "Give the tutor six short signs and ask it to say the full sentence each one stands for.",
+      "outcome": 3
+    },
+    {
+      "title": "Speaking 6 — Read the notice aloud and act on it",
+      "type": "Assessment rehearsal",
+      "instructions": "Open Reading 3.\nRead the whole safety notice aloud, including the headings.\nThen say aloud: you have been trained on lifting equipment but not on extinguishers — what may you do and what may you not do, and why.\nThen say what the fire instructions do not tell you.\nThen read the four signs aloud and say which one you would misread if you stopped at the second word.\nRecord the last three parts and keep them.",
+      "tutor": "Give the tutor the notice and ask what it would want added before it worked there.",
+      "outcome": 4
+    }
   ],
   "writing": [
     {
@@ -277,33 +776,194 @@
     }
   ],
   "quizzes": [
-    { "q": "You do not have to wear a uniform. What does this mean?", "options": ["Uniforms are forbidden", "You should not wear one", "A uniform is not required", "You must wear one"], "a": "A uniform is not required", "why": "Don't have to opens a door — wear one if you like. Mustn't is the form that closes one, and the two are opposite meanings.", "outcome": 1 },
-    { "q": "You must not wear a uniform. What does this mean?", "options": ["Uniforms are forbidden", "A uniform is optional", "A uniform is not required", "You should wear one"], "a": "Uniforms are forbidden", "why": "Mustn't forbids. This and the previous question are the pair the whole unit is built around, and they are one small word apart.", "outcome": 1 },
-    { "q": "Which is correct?", "options": ["She musts wear safety shoes.", "She must to wear safety shoes.", "She must wearing safety shoes.", "She must wear safety shoes."], "a": "She must wear safety shoes.", "why": "Must takes the plain verb and never changes for person — no -s, no to. It behaves like can from Unit 3, not like have to from Unit 11.", "outcome": 1 },
-    { "q": "Which is the correct sign form?", "options": ["No smoke.", "No to smoke.", "Not smoking.", "No smoking."], "a": "No smoking.", "why": "No takes the -ing form. It is two words standing for a whole prohibition, with no verb, subject or modal.", "outcome": 2 },
-    { "q": "Which is correct?", "options": ["You are not allowed to smoke in here.", "You are not allowed smoking in here.", "You are not allowed smoke in here.", "You are not allow to smoke in here."], "a": "You are not allowed to smoke in here.", "why": "Allowed takes to plus a plain verb. Each of the three structures takes a different shape and they do not swap.", "outcome": 2 },
-    { "q": "A sign says NO PARKING except for loading. What does it mean?", "options": ["You may never park here", "You may park here at any time", "Only staff may park here", "You may stop to load, but not park"], "a": "You may stop to load, but not park", "why": "The qualifier is at the end and it changes the sign completely. Stopping at the second word produces a confident misreading.", "outcome": 3 },
-    { "q": "What does authorised personnel only stand for in full?", "options": ["Staff may enter", "Only authorised personnel may enter this area", "Personnel are authorised here", "Everybody may enter with permission"], "a": "Only authorised personnel may enter this area", "why": "The sign has deleted a verb, a modal and an object. Reconstructing all three is the skill, and the reconstruction shows how narrow it is.", "outcome": 3 },
-    { "q": "You work in the warehouse. A door says AUTHORISED PERSONNEL ONLY. May you go in?", "options": ["Yes, warehouse staff are always authorised", "Not necessarily — being staff is not the same as being authorised", "Yes, if you are wearing safety shoes", "Only during working hours"], "a": "Not necessarily — being staff is not the same as being authorised", "why": "Staff only names a group you might belong to; authorised personnel only names a permission you have to have been given. The two signs look alike and one is much narrower.", "outcome": 3 },
-    { "q": "Which is correct?", "options": ["Do you must sign in?", "You must to sign in?", "Must you sign in?", "Does you must sign in?"], "a": "Must you sign in?", "why": "Must makes its own questions and negatives with no do at all, exactly like can. Have to is the one that needs do.", "outcome": 1 },
-    { "q": "Reading 2 says the most important word on a sign is often the last. Why?", "options": ["Signs are read from the bottom", "The qualifying phrase comes at the end", "The last word is always larger", "It names who wrote the sign"], "a": "The qualifying phrase comes at the end", "why": "No parking is absolute; no parking between 8am and 6pm is not. Short signs are the riskiest because you believe you have already understood them.", "outcome": 3 },
-    { "q": "The notice forbids operating lifting equipment without training. You have been trained. What follows?", "options": ["You may operate it — the prohibition is conditional", "You still may not operate it", "You may operate it only with a supervisor", "The notice does not apply to you at all"], "a": "You may operate it — the prohibition is conditional", "why": "The prohibition attaches to operating it without training, not to operating it at all. Reading it as absolute gets the answer wrong.", "outcome": 4 },
-    { "q": "Which sign is information rather than an instruction?", "options": ["Mind the step.", "Keep the escape route clear.", "No entry.", "Danger: deep water."], "a": "Danger: deep water.", "why": "It states a fact and leaves the conclusion to you. The other three tell you what to do. Both kinds change your behaviour; only one tells you how.", "outcome": 3 }
+    {
+      "q": "You do not have to wear a uniform. What does this mean?",
+      "options": [
+        "Uniforms are forbidden",
+        "You should not wear one",
+        "A uniform is not required",
+        "You must wear one"
+      ],
+      "a": "A uniform is not required",
+      "why": "Don't have to opens a door — wear one if you like. Mustn't is the form that closes one, and the two are opposite meanings.",
+      "outcome": 1
+    },
+    {
+      "q": "You must not wear a uniform. What does this mean?",
+      "options": [
+        "Uniforms are forbidden",
+        "A uniform is optional",
+        "A uniform is not required",
+        "You should wear one"
+      ],
+      "a": "Uniforms are forbidden",
+      "why": "Mustn't forbids. This and the previous question are the pair the whole unit is built around, and they are one small word apart.",
+      "outcome": 1
+    },
+    {
+      "q": "Which is correct?",
+      "options": [
+        "She musts wear safety shoes.",
+        "She must to wear safety shoes.",
+        "She must wearing safety shoes.",
+        "She must wear safety shoes."
+      ],
+      "a": "She must wear safety shoes.",
+      "why": "Must takes the plain verb and never changes for person — no -s, no to. It behaves like can from Unit 3, not like have to from Unit 11.",
+      "outcome": 1
+    },
+    {
+      "q": "Which is the correct sign form?",
+      "options": [
+        "No smoke.",
+        "No to smoke.",
+        "Not smoking.",
+        "No smoking."
+      ],
+      "a": "No smoking.",
+      "why": "No takes the -ing form. It is two words standing for a whole prohibition, with no verb, subject or modal.",
+      "outcome": 2
+    },
+    {
+      "q": "Which is correct?",
+      "options": [
+        "You are not allowed to smoke in here.",
+        "You are not allowed smoking in here.",
+        "You are not allowed smoke in here.",
+        "You are not allow to smoke in here."
+      ],
+      "a": "You are not allowed to smoke in here.",
+      "why": "Allowed takes to plus a plain verb. Each of the three structures takes a different shape and they do not swap.",
+      "outcome": 2
+    },
+    {
+      "q": "A sign says NO PARKING except for loading. What does it mean?",
+      "options": [
+        "You may never park here",
+        "You may park here at any time",
+        "Only staff may park here",
+        "You may stop to load, but not park"
+      ],
+      "a": "You may stop to load, but not park",
+      "why": "The qualifier is at the end and it changes the sign completely. Stopping at the second word produces a confident misreading.",
+      "outcome": 3
+    },
+    {
+      "q": "What does authorised personnel only stand for in full?",
+      "options": [
+        "Staff may enter",
+        "Only authorised personnel may enter this area",
+        "Personnel are authorised here",
+        "Everybody may enter with permission"
+      ],
+      "a": "Only authorised personnel may enter this area",
+      "why": "The sign has deleted a verb, a modal and an object. Reconstructing all three is the skill, and the reconstruction shows how narrow it is.",
+      "outcome": 3
+    },
+    {
+      "q": "You work in the warehouse. A door says AUTHORISED PERSONNEL ONLY. May you go in?",
+      "options": [
+        "Yes, warehouse staff are always authorised",
+        "Not necessarily — being staff is not the same as being authorised",
+        "Yes, if you are wearing safety shoes",
+        "Only during working hours"
+      ],
+      "a": "Not necessarily — being staff is not the same as being authorised",
+      "why": "Staff only names a group you might belong to; authorised personnel only names a permission you have to have been given. The two signs look alike and one is much narrower.",
+      "outcome": 3
+    },
+    {
+      "q": "Which is correct?",
+      "options": [
+        "Do you must sign in?",
+        "You must to sign in?",
+        "Must you sign in?",
+        "Does you must sign in?"
+      ],
+      "a": "Must you sign in?",
+      "why": "Must makes its own questions and negatives with no do at all, exactly like can. Have to is the one that needs do.",
+      "outcome": 1
+    },
+    {
+      "q": "Reading 2 says the most important word on a sign is often the last. Why?",
+      "options": [
+        "Signs are read from the bottom",
+        "The qualifying phrase comes at the end",
+        "The last word is always larger",
+        "It names who wrote the sign"
+      ],
+      "a": "The qualifying phrase comes at the end",
+      "why": "No parking is absolute; no parking between 8am and 6pm is not. Short signs are the riskiest because you believe you have already understood them.",
+      "outcome": 3
+    },
+    {
+      "q": "The notice forbids operating lifting equipment without training. You have been trained. What follows?",
+      "options": [
+        "You may operate it — the prohibition is conditional",
+        "You still may not operate it",
+        "You may operate it only with a supervisor",
+        "The notice does not apply to you at all"
+      ],
+      "a": "You may operate it — the prohibition is conditional",
+      "why": "The prohibition attaches to operating it without training, not to operating it at all. Reading it as absolute gets the answer wrong.",
+      "outcome": 4
+    },
+    {
+      "q": "Which sign is information rather than an instruction?",
+      "options": [
+        "Mind the step.",
+        "Keep the escape route clear.",
+        "No entry.",
+        "Danger: deep water."
+      ],
+      "a": "Danger: deep water.",
+      "why": "It states a fact and leaves the conclusion to you. The other three tell you what to do. Both kinds change your behaviour; only one tells you how.",
+      "outcome": 3
+    }
   ],
   "teacherNotes": [
-    { "type": "This unit works without you", "note": "Three pattern cards, each with a worked example, and every exercise has an answer key. Practice 2 is the diagnostic and it is built in two columns on purpose — sorting OPEN from CLOSED is the easy half, and writing what the person may actually do is the half that shows whether the meaning has landed. Practices 5 and 6 are field tasks with no key and both carry a what-most-people-find note." },
-    { "type": "The six-unit gap is the design", "note": "Unit 11 owns have to and don't have to; this unit owns must and mustn't. They are the two halves of one confusion and they are deliberately far apart, because learners who meet both in one lesson blur them permanently. Every negative in Unit 11 opened a door; this unit is the first place a prohibition form appears at all. Reading 1 states the separation and its reason explicitly rather than leaving it implicit." },
-    { "type": "Must is read more than it is said", "note": "In speech, have to is far more common for obligation. Must dominates written rules — signs, contracts, safety notices, official instructions. The practical consequence is that mustn't needs to be recognised instantly and produced only occasionally, which is why the unit's reading load is heavier than its speaking load and why Speaking 2 drills the contrast rather than the production." },
-    { "type": "Three registers, three verb shapes", "note": "No plus -ing, allowed plus to, mustn't plus the plain verb. The errors are almost entirely shape-swapping, and Writing 4 numbers 5, 6 and 7 are that trio deliberately adjacent. The register point matters as much as the grammar: no smoking on a wall, it isn't allowed from a colleague, you mustn't from a supervisor. A learner who says no smoking to a colleague is grammatically correct and socially odd." },
-    { "type": "Reading to the end is the highest-value habit", "note": "The qualifier-at-the-end error produces a confident misreading rather than an uncertain one, which is what makes it dangerous, and it happens to first-language readers too. Sign 2 in Reading 3 is that error made available to catch. Practice 5 asks learners to find a real example, and most will find one on a sign they pass daily — familiar signs are the least carefully read." },
-    { "type": "Why the notice has an open door on it", "note": "The YOU DO NOT HAVE TO heading sits directly beneath six prohibitions, which is exactly where the Unit 11 confusion would surface if the separation had not worked. It also carries a bracket showing the rule changes by location, so the learner cannot generalise it across the building. Writing 1 asks learners to build the same three-heading structure and then audit their own second and third lists for miscategorisation." },
-    { "type": "Device and AI safety", "note": "The AI tutor is a rehearsal partner and no task here is scored by it alone. Practice 5 and Practice 6 send learners to look at real signs and real fire notices in buildings they use: the name and location of those buildings must never be collected, shared or entered into the app. Practice 6 asks for the exit, the assembly point and one gap — not for where the learner works or lives — and that wording should stay. Practice 6 also has a genuine safety value beyond the language: a learner who finishes it knows their assembly point, and most did not before." }
+    {
+      "type": "This unit works without you",
+      "note": "Three pattern cards, each with a worked example, and every exercise has an answer key. Practice 2 is the diagnostic and it is built in two columns on purpose — sorting OPEN from CLOSED is the easy half, and writing what the person may actually do is the half that shows whether the meaning has landed. Practices 5 and 6 are field tasks with no key and both carry a what-most-people-find note."
+    },
+    {
+      "type": "The six-unit gap is the design",
+      "note": "Unit 11 owns have to and don't have to; this unit owns must and mustn't. They are the two halves of one confusion and they are deliberately far apart, because learners who meet both in one lesson blur them permanently. Every negative in Unit 11 opened a door; this unit is the first place a prohibition form appears at all. Reading 1 states the separation and its reason explicitly rather than leaving it implicit."
+    },
+    {
+      "type": "Must is read more than it is said",
+      "note": "In speech, have to is far more common for obligation. Must dominates written rules — signs, contracts, safety notices, official instructions. The practical consequence is that mustn't needs to be recognised instantly and produced only occasionally, which is why the unit's reading load is heavier than its speaking load and why Speaking 2 drills the contrast rather than the production."
+    },
+    {
+      "type": "Three registers, three verb shapes",
+      "note": "No plus -ing, allowed plus to, mustn't plus the plain verb. The errors are almost entirely shape-swapping, and Writing 4 numbers 5, 6 and 7 are that trio deliberately adjacent. The register point matters as much as the grammar: no smoking on a wall, it isn't allowed from a colleague, you mustn't from a supervisor. A learner who says no smoking to a colleague is grammatically correct and socially odd."
+    },
+    {
+      "type": "Reading to the end is the highest-value habit",
+      "note": "The qualifier-at-the-end error produces a confident misreading rather than an uncertain one, which is what makes it dangerous, and it happens to first-language readers too. Sign 2 in Reading 3 is that error made available to catch. Practice 5 asks learners to find a real example, and most will find one on a sign they pass daily — familiar signs are the least carefully read."
+    },
+    {
+      "type": "Why the notice has an open door on it",
+      "note": "The YOU DO NOT HAVE TO heading sits directly beneath six prohibitions, which is exactly where the Unit 11 confusion would surface if the separation had not worked. It also carries a bracket showing the rule changes by location, so the learner cannot generalise it across the building. Writing 1 asks learners to build the same three-heading structure and then audit their own second and third lists for miscategorisation."
+    },
+    {
+      "type": "Device and AI safety",
+      "note": "The AI tutor is a rehearsal partner and no task here is scored by it alone. Practice 5 and Practice 6 send learners to look at real signs and real fire notices in buildings they use: the name and location of those buildings must never be collected, shared or entered into the app. Practice 6 asks for the exit, the assembly point and one gap — not for where the learner works or lives — and that wording should stay. Practice 6 also has a genuine safety value beyond the language: a learner who finishes it knows their assembly point, and most did not before."
+    }
   ],
   "selfAssessment": [
-    { "statement": "I can tell the difference between something that is not required and something that is forbidden." },
-    { "statement": "I can say a rule three ways and choose the one that fits the situation." },
-    { "statement": "I can read a short sign and say the full sentence it is standing in for." },
-    { "statement": "I can read a safety notice and know exactly what I must and must not do." }
+    {
+      "statement": "I can tell the difference between something that is not required and something that is forbidden."
+    },
+    {
+      "statement": "I can say a rule three ways and choose the one that fits the situation."
+    },
+    {
+      "statement": "I can read a short sign and say the full sentence it is standing in for."
+    },
+    {
+      "statement": "I can read a safety notice and know exactly what I must and must not do."
+    }
   ],
   "assignment": {
     "title": "A notice written, and a notice read",

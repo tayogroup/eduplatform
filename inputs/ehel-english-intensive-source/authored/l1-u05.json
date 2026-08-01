@@ -24,7 +24,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Spoken production",
       "cefrDescriptor": "I can describe what I do on an ordinary day.",
-      "cambridge": ["1Rw.04", "2SLm.02"]
+      "cambridge": [
+        "1Rw.04",
+        "2SLm.02"
+      ]
     },
     {
       "outcome": "Place always, usually, often, sometimes and never in the right position in a sentence.",
@@ -33,7 +36,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Writing",
       "cefrDescriptor": "I can say how often I do something, and put the word in the right place.",
-      "cambridge": ["2Rv.05", "3Rs.04"]
+      "cambridge": [
+        "2Rv.05",
+        "3Rs.04"
+      ]
     },
     {
       "outcome": "Say a clock time in the spoken system, and read one in the written twenty-four hour system.",
@@ -42,7 +48,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Spoken interaction",
       "cefrDescriptor": "I can ask the time and say it, and understand a time somebody tells me.",
-      "cambridge": ["1SLm.02", "2SLs.01"]
+      "cambridge": [
+        "1SLm.02",
+        "2SLs.01"
+      ]
     },
     {
       "outcome": "Choose at, on or in before a time expression, and leave it out where English takes none.",
@@ -51,7 +60,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Writing",
       "cefrDescriptor": "I can write at seven, on Monday and in March without mixing them up.",
-      "cambridge": ["3Rg.09", "2Rg.05"]
+      "cambridge": [
+        "3Rg.09",
+        "2Rg.05"
+      ]
     },
     {
       "outcome": "Read a shift rota, find your own hours, and spot a change or an exception in it.",
@@ -60,62 +72,442 @@
       "cefrLevel": "A1",
       "cefrSkill": "Reading",
       "cefrDescriptor": "I can read a work rota and find when I am working.",
-      "cambridge": ["2Ri.09", "1Ri.08"]
+      "cambridge": [
+        "2Ri.09",
+        "1Ri.08"
+      ]
     }
   ],
   "groups": [
     {
       "title": "Your day",
       "words": [
-        { "w": "wake", "pos": "verb", "meaning": "To stop sleeping.", "example": "I wake at six every day.", "practice": ["I wake at six every day.", "She wakes before the others.", "I woke early this morning.", "What time do you wake?", "The noise wakes the whole building."], "starter": "I wake at", "tutor": "Say what time you wake, then what time somebody else wakes. Check the s." },
-        { "w": "get up", "pos": "verb", "meaning": "To leave your bed after waking.", "example": "I get up at half past six.", "practice": ["I get up at half past six.", "She gets up before me.", "I do not get up early at the weekend.", "What time do you get up?", "He gets up when the alarm goes."], "starter": "I get up at", "tutor": "Say the difference between when you wake and when you get up." },
-        { "w": "breakfast", "pos": "noun", "meaning": "The first meal of the day.", "example": "I have breakfast at seven.", "practice": ["I have breakfast at seven.", "She never has breakfast.", "Breakfast is the quickest meal.", "We have breakfast together on Sundays.", "I do not eat breakfast before work."], "starter": "I have breakfast at", "tutor": "Say when you have breakfast, using at. Then say how often, using a frequency word." },
-        { "w": "lunch", "pos": "noun", "meaning": "The meal in the middle of the day.", "example": "Lunch is at midday.", "practice": ["Lunch is at midday.", "I usually have lunch at work.", "We have half an hour for lunch.", "She never stops for lunch.", "Lunch is the busiest time here."], "starter": "Lunch is at", "tutor": "Say when lunch is and how long you have. Use at and for." },
-        { "w": "dinner", "pos": "noun", "meaning": "The main meal in the evening.", "example": "We have dinner at eight.", "practice": ["We have dinner at eight.", "Dinner is late on Fridays.", "I cook dinner three times a week.", "She has dinner after the children.", "Dinner is the only meal we eat together."], "starter": "We have dinner at", "tutor": "Say when you have dinner and who with." },
-        { "w": "sleep", "pos": "verb", "meaning": "To rest with your eyes closed and your mind not working.", "example": "I sleep for six hours.", "practice": ["I sleep for six hours.", "She sleeps in the afternoon.", "I do not sleep well.", "How many hours do you sleep?", "He sleeps until midday at the weekend."], "starter": "I sleep for", "tutor": "Say how many hours you sleep and whether that is enough." }
+        {
+          "w": "wake",
+          "pos": "verb",
+          "meaning": "To stop sleeping.",
+          "example": "I wake at six every day.",
+          "practice": [
+            "She wakes before the others.",
+            "I woke early this morning.",
+            "What time do you wake?",
+            "The noise wakes the whole building."
+          ],
+          "starter": "I wake at",
+          "tutor": "Say what time you wake, then what time somebody else wakes. Check the s."
+        },
+        {
+          "w": "get up",
+          "pos": "verb",
+          "meaning": "To leave your bed after waking.",
+          "example": "I get up at half past six.",
+          "practice": [
+            "She gets up before me.",
+            "I do not get up early at the weekend.",
+            "What time do you get up?",
+            "He gets up when the alarm goes."
+          ],
+          "starter": "I get up at",
+          "tutor": "Say the difference between when you wake and when you get up."
+        },
+        {
+          "w": "breakfast",
+          "pos": "noun",
+          "meaning": "The first meal of the day.",
+          "example": "I have breakfast at seven.",
+          "practice": [
+            "She never has breakfast.",
+            "Breakfast is the quickest meal.",
+            "We have breakfast together on Sundays.",
+            "I do not eat breakfast before work."
+          ],
+          "starter": "I have breakfast at",
+          "tutor": "Say when you have breakfast, using at. Then say how often, using a frequency word."
+        },
+        {
+          "w": "lunch",
+          "pos": "noun",
+          "meaning": "The meal in the middle of the day.",
+          "example": "Lunch is at midday.",
+          "practice": [
+            "I usually have lunch at work.",
+            "We have half an hour for lunch.",
+            "She never stops for lunch.",
+            "Lunch is the busiest time here."
+          ],
+          "starter": "Lunch is at",
+          "tutor": "Say when lunch is and how long you have. Use at and for."
+        },
+        {
+          "w": "dinner",
+          "pos": "noun",
+          "meaning": "The main meal in the evening.",
+          "example": "We have dinner at eight.",
+          "practice": [
+            "Dinner is late on Fridays.",
+            "I cook dinner three times a week.",
+            "She has dinner after the children.",
+            "Dinner is the only meal we eat together."
+          ],
+          "starter": "We have dinner at",
+          "tutor": "Say when you have dinner and who with."
+        },
+        {
+          "w": "sleep",
+          "pos": "verb",
+          "meaning": "To rest with your eyes closed and your mind not working.",
+          "example": "I sleep for six hours.",
+          "practice": [
+            "She sleeps in the afternoon.",
+            "I do not sleep well.",
+            "How many hours do you sleep?",
+            "He sleeps until midday at the weekend."
+          ],
+          "starter": "I sleep for",
+          "tutor": "Say how many hours you sleep and whether that is enough."
+        }
       ]
     },
     {
       "title": "Getting there",
       "words": [
-        { "w": "journey", "pos": "noun", "meaning": "The travelling from one place to another.", "example": "The journey takes forty minutes.", "practice": ["The journey takes forty minutes.", "It is a long journey.", "The journey is worse in the morning.", "How long is your journey?", "The journey home is quicker."], "starter": "The journey takes", "tutor": "Say how long your journey is and how you make it." },
-        { "w": "walk", "pos": "verb", "meaning": "To move on your feet.", "example": "I walk to work every day.", "practice": ["I walk to work every day.", "She walks the children to school.", "I do not walk when it rains.", "How far do you walk?", "He walks faster than me."], "starter": "I walk to", "tutor": "Say where you walk and how often. Use a frequency word." },
-        { "w": "catch", "pos": "verb", "meaning": "To get on a bus or train before it leaves.", "example": "I catch the seven o'clock bus.", "practice": ["I catch the seven o'clock bus.", "She catches the same train every day.", "I missed it — I did not catch it.", "What time do you catch the bus?", "If I am late I catch the next one."], "starter": "I catch the", "tutor": "Say which bus or train you catch and at what time." },
-        { "w": "arrive", "pos": "verb", "meaning": "To get to a place.", "example": "I arrive at ten to eight.", "practice": ["I arrive at ten to eight.", "She always arrives first.", "The bus arrives late on Mondays.", "What time do you arrive?", "We arrive before the shop opens."], "starter": "I arrive at", "tutor": "Say when you arrive somewhere, using a time from Pattern 3." },
-        { "w": "early", "pos": "adverb", "meaning": "Before the usual or expected time.", "example": "I always arrive early.", "practice": ["I always arrive early.", "She gets up very early.", "The bus was early for once.", "I finish early on Fridays.", "It is too early to telephone."], "starter": "I always arrive", "tutor": "Say one thing you do early and one thing you never do early." }
+        {
+          "w": "journey",
+          "pos": "noun",
+          "meaning": "The travelling from one place to another.",
+          "example": "The journey takes forty minutes.",
+          "practice": [
+            "It is a long journey.",
+            "The journey is worse in the morning.",
+            "How long is your journey?",
+            "The journey home is quicker."
+          ],
+          "starter": "The journey takes",
+          "tutor": "Say how long your journey is and how you make it."
+        },
+        {
+          "w": "walk",
+          "pos": "verb",
+          "meaning": "To move on your feet.",
+          "example": "I walk to work every day.",
+          "practice": [
+            "She walks the children to school.",
+            "I do not walk when it rains.",
+            "How far do you walk?",
+            "He walks faster than me."
+          ],
+          "starter": "I walk to",
+          "tutor": "Say where you walk and how often. Use a frequency word."
+        },
+        {
+          "w": "catch",
+          "pos": "verb",
+          "meaning": "To get on a bus or train before it leaves.",
+          "example": "I catch the seven o'clock bus.",
+          "practice": [
+            "She catches the same train every day.",
+            "I missed it — I did not catch it.",
+            "What time do you catch the bus?",
+            "If I am late I catch the next one."
+          ],
+          "starter": "I catch the",
+          "tutor": "Say which bus or train you catch and at what time."
+        },
+        {
+          "w": "arrive",
+          "pos": "verb",
+          "meaning": "To get to a place.",
+          "example": "I arrive at ten to eight.",
+          "practice": [
+            "She always arrives first.",
+            "The bus arrives late on Mondays.",
+            "What time do you arrive?",
+            "We arrive before the shop opens."
+          ],
+          "starter": "I arrive at",
+          "tutor": "Say when you arrive somewhere, using a time from Pattern 3."
+        },
+        {
+          "w": "early",
+          "pos": "adverb",
+          "meaning": "Before the usual or expected time.",
+          "example": "I always arrive early.",
+          "practice": [
+            "She gets up very early.",
+            "The bus was early for once.",
+            "I finish early on Fridays.",
+            "It is too early to telephone."
+          ],
+          "starter": "I always arrive",
+          "tutor": "Say one thing you do early and one thing you never do early."
+        }
       ]
     },
     {
       "title": "Times of day",
       "words": [
-        { "w": "morning", "pos": "noun", "meaning": "The part of the day from waking until midday.", "example": "I work in the morning.", "practice": ["I work in the morning.", "The morning is always busy.", "I study on Saturday mornings.", "She is better in the morning.", "The appointment is on Tuesday morning."], "starter": "I work in the", "tutor": "Say what you do in the morning. Notice it is in the morning, not at." },
-        { "w": "afternoon", "pos": "noun", "meaning": "The part of the day from midday until about six.", "example": "The class is in the afternoon.", "practice": ["The class is in the afternoon.", "I am free on Wednesday afternoon.", "The afternoon goes slowly.", "She sleeps in the afternoon.", "The office closes early in the afternoon."], "starter": "The class is in the", "tutor": "Say what you usually do in the afternoon." },
-        { "w": "evening", "pos": "noun", "meaning": "The part of the day from about six until you sleep.", "example": "I study in the evening.", "practice": ["I study in the evening.", "The evening is the only free time I have.", "We eat late in the evening.", "I am tired by the evening.", "The class is on Monday evening."], "starter": "I study in the", "tutor": "Say what you do in the evening and how often." },
-        { "w": "night", "pos": "noun", "meaning": "The dark part of the day, when most people sleep.", "example": "He works at night.", "practice": ["He works at night.", "I do not sleep well at night.", "The shop is closed at night.", "She works three nights a week.", "It is very quiet at night."], "starter": "He works at", "tutor": "Notice it is at night, not in the night. Say two sentences with at night." },
-        { "w": "midday", "pos": "noun", "meaning": "Twelve o'clock in the middle of the day.", "example": "Lunch is at midday.", "practice": ["Lunch is at midday.", "The bell goes at midday.", "It is hottest at midday.", "I finish at midday on Fridays.", "The shop closes for an hour at midday."], "starter": "Lunch is at", "tutor": "Say two things that happen at midday where you are." },
-        { "w": "midnight", "pos": "noun", "meaning": "Twelve o'clock in the middle of the night.", "example": "The shift ends at midnight.", "practice": ["The shift ends at midnight.", "I never go to bed before midnight.", "The last bus is at midnight.", "It is nearly midnight.", "The shop is open until midnight."], "starter": "The shift ends at", "tutor": "Say what time the last bus or train is where you live." }
+        {
+          "w": "morning",
+          "pos": "noun",
+          "meaning": "The part of the day from waking until midday.",
+          "example": "I work in the morning.",
+          "practice": [
+            "The morning is always busy.",
+            "I study on Saturday mornings.",
+            "She is better in the morning.",
+            "The appointment is on Tuesday morning."
+          ],
+          "starter": "I work in the",
+          "tutor": "Say what you do in the morning. Notice it is in the morning, not at."
+        },
+        {
+          "w": "afternoon",
+          "pos": "noun",
+          "meaning": "The part of the day from midday until about six.",
+          "example": "The class is in the afternoon.",
+          "practice": [
+            "I am free on Wednesday afternoon.",
+            "The afternoon goes slowly.",
+            "She sleeps in the afternoon.",
+            "The office closes early in the afternoon."
+          ],
+          "starter": "The class is in the",
+          "tutor": "Say what you usually do in the afternoon."
+        },
+        {
+          "w": "evening",
+          "pos": "noun",
+          "meaning": "The part of the day from about six until you sleep.",
+          "example": "I study in the evening.",
+          "practice": [
+            "The evening is the only free time I have.",
+            "We eat late in the evening.",
+            "I am tired by the evening.",
+            "The class is on Monday evening."
+          ],
+          "starter": "I study in the",
+          "tutor": "Say what you do in the evening and how often."
+        },
+        {
+          "w": "night",
+          "pos": "noun",
+          "meaning": "The dark part of the day, when most people sleep.",
+          "example": "He works at night.",
+          "practice": [
+            "I do not sleep well at night.",
+            "The shop is closed at night.",
+            "She works three nights a week.",
+            "It is very quiet at night."
+          ],
+          "starter": "He works at",
+          "tutor": "Notice it is at night, not in the night. Say two sentences with at night."
+        },
+        {
+          "w": "midday",
+          "pos": "noun",
+          "meaning": "Twelve o'clock in the middle of the day.",
+          "example": "Lunch is at midday.",
+          "practice": [
+            "The bell goes at midday.",
+            "It is hottest at midday.",
+            "I finish at midday on Fridays.",
+            "The shop closes for an hour at midday."
+          ],
+          "starter": "Lunch is at",
+          "tutor": "Say two things that happen at midday where you are."
+        },
+        {
+          "w": "midnight",
+          "pos": "noun",
+          "meaning": "Twelve o'clock in the middle of the night.",
+          "example": "The shift ends at midnight.",
+          "practice": [
+            "I never go to bed before midnight.",
+            "The last bus is at midnight.",
+            "It is nearly midnight.",
+            "The shop is open until midnight."
+          ],
+          "starter": "The shift ends at",
+          "tutor": "Say what time the last bus or train is where you live."
+        }
       ]
     },
     {
       "title": "How often",
       "words": [
-        { "w": "always", "pos": "adverb", "meaning": "Every time, without exception.", "example": "I always start at seven.", "practice": ["I always start at seven.", "She is always late.", "The bus is always full.", "I always walk when it is dry.", "He always forgets his card."], "starter": "I always", "tutor": "Say one sentence with always before a verb and one with always after is." },
-        { "w": "usually", "pos": "adverb", "meaning": "Most of the time, but not every time.", "example": "I usually have lunch at work.", "practice": ["I usually have lunch at work.", "She is usually here by eight.", "I usually catch the early bus.", "We usually eat together on Sundays.", "The journey usually takes an hour."], "starter": "I usually", "tutor": "Say what you usually do on a Monday." },
-        { "w": "often", "pos": "adverb", "meaning": "Many times, but not most.", "example": "I often work late.", "practice": ["I often work late.", "She often walks home.", "It often rains in the morning.", "How often do you study?", "I do not often get up early."], "starter": "I often", "tutor": "Ask the tutor how often it does something, then answer the same question." },
-        { "w": "sometimes", "pos": "adverb", "meaning": "On some occasions, not many.", "example": "I sometimes finish early.", "practice": ["I sometimes finish early.", "She sometimes works at night.", "Sometimes the bus does not come.", "I sometimes forget my key.", "We sometimes eat out on Fridays."], "starter": "I sometimes", "tutor": "Say three things you sometimes do. Notice this word can also start a sentence." },
-        { "w": "never", "pos": "adverb", "meaning": "At no time; not ever.", "example": "I never work on Sundays.", "practice": ["I never work on Sundays.", "She is never late.", "I never have breakfast.", "He never answers his phone.", "The shop is never closed."], "starter": "I never", "tutor": "Say two never sentences and check you did not also use not. English uses one negative." },
-        { "w": "twice", "pos": "adverb", "meaning": "Two times.", "example": "I study twice a week.", "practice": ["I study twice a week.", "The bus comes twice an hour.", "I have been there twice.", "She calls twice a day.", "Twice a month is enough."], "starter": "I study twice a", "tutor": "Say how many times a week you do three different things. Use once, twice and three times." }
+        {
+          "w": "always",
+          "pos": "adverb",
+          "meaning": "Every time, without exception.",
+          "example": "I always start at seven.",
+          "practice": [
+            "She is always late.",
+            "The bus is always full.",
+            "I always walk when it is dry.",
+            "He always forgets his card."
+          ],
+          "starter": "I always",
+          "tutor": "Say one sentence with always before a verb and one with always after is."
+        },
+        {
+          "w": "usually",
+          "pos": "adverb",
+          "meaning": "Most of the time, but not every time.",
+          "example": "I usually have lunch at work.",
+          "practice": [
+            "She is usually here by eight.",
+            "I usually catch the early bus.",
+            "We usually eat together on Sundays.",
+            "The journey usually takes an hour."
+          ],
+          "starter": "I usually",
+          "tutor": "Say what you usually do on a Monday."
+        },
+        {
+          "w": "often",
+          "pos": "adverb",
+          "meaning": "Many times, but not most.",
+          "example": "I often work late.",
+          "practice": [
+            "She often walks home.",
+            "It often rains in the morning.",
+            "How often do you study?",
+            "I do not often get up early."
+          ],
+          "starter": "I often",
+          "tutor": "Ask the tutor how often it does something, then answer the same question."
+        },
+        {
+          "w": "sometimes",
+          "pos": "adverb",
+          "meaning": "On some occasions, not many.",
+          "example": "I sometimes finish early.",
+          "practice": [
+            "She sometimes works at night.",
+            "Sometimes the bus does not come.",
+            "I sometimes forget my key.",
+            "We sometimes eat out on Fridays."
+          ],
+          "starter": "I sometimes",
+          "tutor": "Say three things you sometimes do. Notice this word can also start a sentence."
+        },
+        {
+          "w": "never",
+          "pos": "adverb",
+          "meaning": "At no time; not ever.",
+          "example": "I never work on Sundays.",
+          "practice": [
+            "She is never late.",
+            "I never have breakfast.",
+            "He never answers his phone.",
+            "The shop is never closed."
+          ],
+          "starter": "I never",
+          "tutor": "Say two never sentences and check you did not also use not. English uses one negative."
+        },
+        {
+          "w": "twice",
+          "pos": "adverb",
+          "meaning": "Two times.",
+          "example": "I study twice a week.",
+          "practice": [
+            "The bus comes twice an hour.",
+            "I have been there twice.",
+            "She calls twice a day.",
+            "Twice a month is enough."
+          ],
+          "starter": "I study twice a",
+          "tutor": "Say how many times a week you do three different things. Use once, twice and three times."
+        }
       ]
     },
     {
       "title": "Work and time",
       "words": [
-        { "w": "start", "pos": "verb", "meaning": "To begin.", "example": "I start at seven.", "practice": ["I start at seven.", "The class starts on Monday.", "What time do you start?", "She starts an hour before me.", "The shift starts at midnight."], "starter": "I start at", "tutor": "Say when you start and finish. Use at both times." },
-        { "w": "finish", "pos": "verb", "meaning": "To end, or to complete something.", "example": "I finish at three.", "practice": ["I finish at three.", "She finishes early on Fridays.", "What time do you finish?", "I never finish on time.", "The course finishes in July."], "starter": "I finish at", "tutor": "Say when you finish. Then say it about somebody else and check the s." },
-        { "w": "break", "pos": "noun", "meaning": "A short rest in the middle of work or study.", "example": "We have a break at eleven.", "practice": ["We have a break at eleven.", "The break is twenty minutes.", "I study on my break.", "There is no break on a short shift.", "She takes her break at midday."], "starter": "We have a break at", "tutor": "Say when your break is and what you do in it." },
-        { "w": "shift", "pos": "noun", "meaning": "A fixed period of work, especially when a job runs day and night.", "example": "I work the early shift.", "practice": ["I work the early shift.", "The night shift starts at ten.", "She swapped her shift with me.", "My shift finishes at three.", "There are three shifts in a day."], "starter": "I work the", "tutor": "Describe one shift: when it starts, when it finishes, and how long it is." },
-        { "w": "busy", "pos": "adjective", "meaning": "Having a lot to do; or a place with many people.", "example": "Mondays are always busy.", "practice": ["Mondays are always busy.", "I am busy in the morning.", "The shop is busiest at midday.", "She is too busy to talk now.", "It is never busy at night."], "starter": "Mondays are always", "tutor": "Say when you are busiest and when you are free." },
-        { "w": "free", "pos": "adjective", "meaning": "Not working and not busy; also costing nothing.", "example": "I am free on Thursday.", "practice": ["I am free on Thursday.", "Are you free this afternoon?", "I have two free hours.", "The class is free.", "She is never free before eight."], "starter": "I am free on", "tutor": "Say when you are free this week. Notice free has two meanings — use both." }
+        {
+          "w": "start",
+          "pos": "verb",
+          "meaning": "To begin.",
+          "example": "I start at seven.",
+          "practice": [
+            "The class starts on Monday.",
+            "What time do you start?",
+            "She starts an hour before me.",
+            "The shift starts at midnight."
+          ],
+          "starter": "I start at",
+          "tutor": "Say when you start and finish. Use at both times."
+        },
+        {
+          "w": "finish",
+          "pos": "verb",
+          "meaning": "To end, or to complete something.",
+          "example": "I finish at three.",
+          "practice": [
+            "She finishes early on Fridays.",
+            "What time do you finish?",
+            "I never finish on time.",
+            "The course finishes in July."
+          ],
+          "starter": "I finish at",
+          "tutor": "Say when you finish. Then say it about somebody else and check the s."
+        },
+        {
+          "w": "break",
+          "pos": "noun",
+          "meaning": "A short rest in the middle of work or study.",
+          "example": "We have a break at eleven.",
+          "practice": [
+            "The break is twenty minutes.",
+            "I study on my break.",
+            "There is no break on a short shift.",
+            "She takes her break at midday."
+          ],
+          "starter": "We have a break at",
+          "tutor": "Say when your break is and what you do in it."
+        },
+        {
+          "w": "shift",
+          "pos": "noun",
+          "meaning": "A fixed period of work, especially when a job runs day and night.",
+          "example": "I work the early shift.",
+          "practice": [
+            "The night shift starts at ten.",
+            "She swapped her shift with me.",
+            "My shift finishes at three.",
+            "There are three shifts in a day."
+          ],
+          "starter": "I work the",
+          "tutor": "Describe one shift: when it starts, when it finishes, and how long it is."
+        },
+        {
+          "w": "busy",
+          "pos": "adjective",
+          "meaning": "Having a lot to do; or a place with many people.",
+          "example": "Mondays are always busy.",
+          "practice": [
+            "I am busy in the morning.",
+            "The shop is busiest at midday.",
+            "She is too busy to talk now.",
+            "It is never busy at night."
+          ],
+          "starter": "Mondays are always",
+          "tutor": "Say when you are busiest and when you are free."
+        },
+        {
+          "w": "free",
+          "pos": "adjective",
+          "meaning": "Not working and not busy; also costing nothing.",
+          "example": "I am free on Thursday.",
+          "practice": [
+            "Are you free this afternoon?",
+            "I have two free hours.",
+            "The class is free.",
+            "She is never free before eight."
+          ],
+          "starter": "I am free on",
+          "tutor": "Say when you are free this week. Notice free has two meanings — use both."
+        }
       ]
     }
   ],
@@ -139,16 +531,89 @@
     }
   ],
   "comprehension": [
-    { "section": "Reading", "reading": 1, "q": "What time does the writer wake, and what time do they get up?", "a": "They wake at half past five and get up at twenty to six.", "why": "The text separates the two deliberately — ten minutes lying there in between. Waking and getting up are different actions.", "outcome": 1 },
-    { "section": "Reading", "reading": 1, "q": "When does the writer have breakfast, and why not earlier?", "a": "At the eleven o'clock break, because there is no time at home and they are not hungry that early.", "why": "Two reasons are given in one sentence. The breakfast is four hours later than the meal usually is.", "outcome": 1 },
-    { "section": "Reading", "reading": 1, "q": "The writer says I study in the evening. Not always. Usually. Why add those two words?", "a": "Because it is honest — it happens most evenings but not every evening.", "why": "This is an inference. The correction shows the difference between always and usually being used precisely rather than loosely.", "outcome": 2, "difficulty": "Stretch" },
-    { "section": "Reading", "reading": 1, "q": "How long is the journey, and why does the writer say it is always the same?", "a": "Forty minutes, because the traffic is the same every morning.", "why": "The reason is joined with because. It is also a good example of the present simple used for something regular rather than something happening now.", "outcome": 1 },
-    { "section": "Reading", "reading": 2, "q": "What is 06:45 in the spoken system?", "a": "Quarter to seven.", "why": "After thirty minutes English counts backwards to the next hour, so the word seven appears even though it is still six o'clock.", "outcome": 3 },
-    { "section": "Reading", "reading": 2, "q": "When is the word o'clock used?", "a": "Only on the exact hour.", "why": "Six o'clock is correct; half past six o'clock is not. The text states this as a rule with no exceptions.", "outcome": 3 },
-    { "section": "Reading", "reading": 2, "q": "What does the text say you can always do if the words are difficult?", "a": "Read the numbers — six forty-five, fourteen twenty. Everybody understands it.", "why": "The text gives permission deliberately, and says this is what most people say anyway when giving a time quickly.", "outcome": 3 },
-    { "section": "Document", "reading": 3, "q": "Which shifts does A. Costa work on Thursday and Friday?", "a": "The night shift on both days, 22:00 to 06:00.", "why": "Reading across the row is the wrong move here — you have to read down the NIGHT column and find the name.", "outcome": 5 },
-    { "section": "Document", "reading": 3, "q": "T. Novak is on the late shift on Friday. What time does the shift finish?", "a": "20:00, not 22:00, because of the early close note for that week only.", "why": "The column heading says 14:00 to 22:00 and the note underneath overrides it for one day. Reading only the heading gives the wrong answer by two hours.", "outcome": 5, "difficulty": "Stretch" },
-    { "section": "Document", "reading": 3, "q": "R. Iqbal is on nights for the Monday rota. Which day does that shift actually begin?", "a": "Sunday, at 22:00, because the night shift starts the evening before.", "why": "The second note says so, and it is the kind of line people skip. A night shift labelled Monday begins on Sunday evening, which is the single most misread thing on any rota.", "outcome": 5, "difficulty": "Stretch" }
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "What time does the writer wake, and what time do they get up?",
+      "a": "They wake at half past five and get up at twenty to six.",
+      "why": "The text separates the two deliberately — ten minutes lying there in between. Waking and getting up are different actions.",
+      "outcome": 1
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "When does the writer have breakfast, and why not earlier?",
+      "a": "At the eleven o'clock break, because there is no time at home and they are not hungry that early.",
+      "why": "Two reasons are given in one sentence. The breakfast is four hours later than the meal usually is.",
+      "outcome": 1
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "The writer says I study in the evening. Not always. Usually. Why add those two words?",
+      "a": "Because it is honest — it happens most evenings but not every evening.",
+      "why": "This is an inference. The correction shows the difference between always and usually being used precisely rather than loosely.",
+      "outcome": 2,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "How long is the journey, and why does the writer say it is always the same?",
+      "a": "Forty minutes, because the traffic is the same every morning.",
+      "why": "The reason is joined with because. It is also a good example of the present simple used for something regular rather than something happening now.",
+      "outcome": 1
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "What is 06:45 in the spoken system?",
+      "a": "Quarter to seven.",
+      "why": "After thirty minutes English counts backwards to the next hour, so the word seven appears even though it is still six o'clock.",
+      "outcome": 3
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "When is the word o'clock used?",
+      "a": "Only on the exact hour.",
+      "why": "Six o'clock is correct; half past six o'clock is not. The text states this as a rule with no exceptions.",
+      "outcome": 3
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "What does the text say you can always do if the words are difficult?",
+      "a": "Read the numbers — six forty-five, fourteen twenty. Everybody understands it.",
+      "why": "The text gives permission deliberately, and says this is what most people say anyway when giving a time quickly.",
+      "outcome": 3
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "Which shifts does A. Costa work on Thursday and Friday?",
+      "a": "The night shift on both days, 22:00 to 06:00.",
+      "why": "Reading across the row is the wrong move here — you have to read down the NIGHT column and find the name.",
+      "outcome": 5
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "T. Novak is on the late shift on Friday. What time does the shift finish?",
+      "a": "20:00, not 22:00, because of the early close note for that week only.",
+      "why": "The column heading says 14:00 to 22:00 and the note underneath overrides it for one day. Reading only the heading gives the wrong answer by two hours.",
+      "outcome": 5,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "R. Iqbal is on nights for the Monday rota. Which day does that shift actually begin?",
+      "a": "Sunday, at 22:00, because the night shift starts the evening before.",
+      "why": "The second note says so, and it is the kind of line people skip. A night shift labelled Monday begins on Sunday evening, which is the single most misread thing on any rota.",
+      "outcome": 5,
+      "difficulty": "Stretch"
+    }
   ],
   "grammar": [
     {
@@ -201,12 +666,48 @@
     }
   ],
   "speaking": [
-    { "title": "Speaking 1 — Your ordinary day", "type": "Extended turn", "instructions": "Describe your ordinary day out loud, in ten sentences, from waking to sleeping.\nEvery sentence must use the present simple, and at least six must contain a time.\nRecord it. Play it back and check two things: did any verb after he, she or it lose its s, and did you use at before every clock time?", "tutor": "Describe your day to the tutor and ask it to tell your day back to you in the third person — that is where the missing s becomes obvious.", "outcome": 1 },
-    { "title": "Speaking 2 — How often", "type": "Core pattern drill", "instructions": "Say twelve sentences about yourself, using each frequency word twice: always, usually, often, sometimes, never, twice.\nSix must use an ordinary verb, so the word goes before it.\nSix must use am, is or are, so the word goes after.\nRecord all twelve. Play it back and check the position each time — that is the only thing being tested.", "tutor": "Say six frequency sentences to the tutor and ask whether any word was in the wrong place.", "outcome": 2 },
-    { "title": "Speaking 3 — Say the time", "type": "Core pattern drill", "instructions": "Say each of these out loud in the spoken system, then again as numbers.\n06:00 · 07:15 · 09:30 · 11:45 · 13:20 · 14:40 · 17:55 · 22:10\nRecord all eight, both ways.\nPlay it back. The four that cross thirty minutes are the ones to check — did you count backwards, and did you name the next hour?", "tutor": "Ask the tutor for four times and write them down as numbers, then check.", "outcome": 3 },
-    { "title": "Speaking 4 — At, on, in", "type": "Core pattern drill", "instructions": "Say twelve sentences about your week. Four with at, four with on, four with in.\nThen say three more using today, tomorrow and this evening — with no preposition at all.\nRecord all fifteen. Play it back and listen for the three at the end: if you said on tomorrow, that is the error this drill exists for.", "tutor": "Say five time sentences to the tutor and ask whether any preposition was wrong or missing.", "outcome": 4 },
-    { "title": "Speaking 5 — Ask about somebody's day", "type": "Exchange", "instructions": "Say both sides of this, then change it four times.\nA: What time do you start?\nB: I start at seven.\nA: And what time do you finish?\nB: Half past three, usually.\nA: Do you work at the weekend?\nB: Sometimes. Never on Sundays.\nNotice B answers in short forms — half past three, sometimes — which is what people actually do.\nRecord one full version.", "tutor": "Ask the tutor six questions about its routine, then answer the same six about yours.", "outcome": 1 },
-    { "title": "Speaking 6 — Read the rota aloud", "type": "Assessment rehearsal", "instructions": "Open Reading 3.\nRead out A. Costa's whole week: which shift on each day, and what times.\nSay the times in the spoken system, not as numbers — that is the harder version.\nThen say the two notes at the bottom in your own words.\nRecord it, listen once, record it again and keep the second.", "tutor": "Ask the tutor to be a colleague asking when you are working this week, and answer from the rota.", "outcome": 5 }
+    {
+      "title": "Speaking 1 — Your ordinary day",
+      "type": "Extended turn",
+      "instructions": "Describe your ordinary day out loud, in ten sentences, from waking to sleeping.\nEvery sentence must use the present simple, and at least six must contain a time.\nRecord it. Play it back and check two things: did any verb after he, she or it lose its s, and did you use at before every clock time?",
+      "tutor": "Describe your day to the tutor and ask it to tell your day back to you in the third person — that is where the missing s becomes obvious.",
+      "outcome": 1
+    },
+    {
+      "title": "Speaking 2 — How often",
+      "type": "Core pattern drill",
+      "instructions": "Say twelve sentences about yourself, using each frequency word twice: always, usually, often, sometimes, never, twice.\nSix must use an ordinary verb, so the word goes before it.\nSix must use am, is or are, so the word goes after.\nRecord all twelve. Play it back and check the position each time — that is the only thing being tested.",
+      "tutor": "Say six frequency sentences to the tutor and ask whether any word was in the wrong place.",
+      "outcome": 2
+    },
+    {
+      "title": "Speaking 3 — Say the time",
+      "type": "Core pattern drill",
+      "instructions": "Say each of these out loud in the spoken system, then again as numbers.\n06:00 · 07:15 · 09:30 · 11:45 · 13:20 · 14:40 · 17:55 · 22:10\nRecord all eight, both ways.\nPlay it back. The four that cross thirty minutes are the ones to check — did you count backwards, and did you name the next hour?",
+      "tutor": "Ask the tutor for four times and write them down as numbers, then check.",
+      "outcome": 3
+    },
+    {
+      "title": "Speaking 4 — At, on, in",
+      "type": "Core pattern drill",
+      "instructions": "Say twelve sentences about your week. Four with at, four with on, four with in.\nThen say three more using today, tomorrow and this evening — with no preposition at all.\nRecord all fifteen. Play it back and listen for the three at the end: if you said on tomorrow, that is the error this drill exists for.",
+      "tutor": "Say five time sentences to the tutor and ask whether any preposition was wrong or missing.",
+      "outcome": 4
+    },
+    {
+      "title": "Speaking 5 — Ask about somebody's day",
+      "type": "Exchange",
+      "instructions": "Say both sides of this, then change it four times.\nA: What time do you start?\nB: I start at seven.\nA: And what time do you finish?\nB: Half past three, usually.\nA: Do you work at the weekend?\nB: Sometimes. Never on Sundays.\nNotice B answers in short forms — half past three, sometimes — which is what people actually do.\nRecord one full version.",
+      "tutor": "Ask the tutor six questions about its routine, then answer the same six about yours.",
+      "outcome": 1
+    },
+    {
+      "title": "Speaking 6 — Read the rota aloud",
+      "type": "Assessment rehearsal",
+      "instructions": "Open Reading 3.\nRead out A. Costa's whole week: which shift on each day, and what times.\nSay the times in the spoken system, not as numbers — that is the harder version.\nThen say the two notes at the bottom in your own words.\nRecord it, listen once, record it again and keep the second.",
+      "tutor": "Ask the tutor to be a colleague asking when you are working this week, and answer from the rota.",
+      "outcome": 5
+    }
   ],
   "writing": [
     {
@@ -299,33 +800,193 @@
     }
   ],
   "quizzes": [
-    { "q": "Complete: She ____ at three every day.", "options": ["finishes", "finish", "is finishing", "finishing"], "a": "finishes", "why": "She takes the s, and finish adds es because it ends in sh. Is finishing would mean right now, not every day.", "outcome": 1 },
-    { "q": "Which sentence is correct?", "options": ["I start always at seven.", "I always start at seven.", "Always I start at seven.", "I start at seven always."], "a": "I always start at seven.", "why": "The frequency word goes before an ordinary verb. Start is an ordinary verb, so the word comes in front of it.", "outcome": 2 },
-    { "q": "Which sentence is correct?", "options": ["She never is late.", "Never she is late.", "She is never late.", "She is late never."], "a": "She is never late.", "why": "With am, is or are the word goes after the verb. This is the one exception to the rule in the previous question.", "outcome": 2 },
-    { "q": "How do you say 06:45?", "options": ["six forty-five o'clock", "quarter past six", "forty-five past six", "quarter to seven"], "a": "quarter to seven", "why": "Past thirty minutes English counts backwards to the next hour, so the hour named is seven even though it is still six o'clock.", "outcome": 3 },
-    { "q": "Which is correct?", "options": ["It is half past six.", "It is half past six o'clock.", "It is half to six.", "It is thirty past six o'clock."], "a": "It is half past six.", "why": "O'clock is used only on the exact hour, so half past six o'clock is wrong. Half past, not half to.", "outcome": 3 },
-    { "q": "Complete: The class is ____ Monday.", "options": ["at", "in", "on", "no word needed"], "a": "on", "why": "A day takes on. At is for clock times and in is for longer periods like months and seasons.", "outcome": 4 },
-    { "q": "Complete: See you ____ tomorrow.", "options": ["on", "at", "in", "no word needed"], "a": "no word needed", "why": "Today, tomorrow and yesterday take no preposition at all. Adding on is the commonest error on this pattern.", "outcome": 4 },
-    { "q": "Complete: He works ____ night.", "options": ["in", "on", "at", "by"], "a": "at", "why": "At night is an exception — you would expect in the night from the rule, but English uses at. It simply has to be remembered.", "outcome": 4 },
-    { "q": "Which sentence is correct?", "options": ["I do not never work on Sundays.", "I never work on Sundays.", "I never do not work on Sundays.", "I not never work on Sundays."], "a": "I never work on Sundays.", "why": "Never is already negative. English uses one negative in a sentence, so adding do not makes two.", "outcome": 2 },
-    { "q": "On the rota, T. Novak is on the late shift on Friday. What time does it finish?", "options": ["22:00", "20:00", "14:00", "06:00"], "a": "20:00", "why": "The column heading says 22:00, but the note underneath overrides it for that week only. Reading the heading alone gives the wrong answer by two hours.", "outcome": 5 },
-    { "q": "A night shift is listed under Monday. When does it start?", "options": ["Monday 06:00", "Monday 22:00", "Sunday 22:00", "Tuesday 22:00"], "a": "Sunday 22:00", "why": "The second note says the night shift starts the evening before the day it is listed under. This is the single most misread line on any rota.", "outcome": 5 },
-    { "q": "Which day has nobody working at all?", "options": ["Saturday", "Friday", "Wednesday", "Sunday"], "a": "Sunday", "why": "Sunday shows dashes in all three columns. Saturday has an early and a late shift but no night, which is a different thing.", "outcome": 5 }
+    {
+      "q": "Complete: She ____ at three every day.",
+      "options": [
+        "finishes",
+        "finish",
+        "is finishing",
+        "finishing"
+      ],
+      "a": "finishes",
+      "why": "She takes the s, and finish adds es because it ends in sh. Is finishing would mean right now, not every day.",
+      "outcome": 1
+    },
+    {
+      "q": "Which sentence is correct?",
+      "options": [
+        "I start always at seven.",
+        "I always start at seven.",
+        "Always I start at seven.",
+        "I start at seven always."
+      ],
+      "a": "I always start at seven.",
+      "why": "The frequency word goes before an ordinary verb. Start is an ordinary verb, so the word comes in front of it.",
+      "outcome": 2
+    },
+    {
+      "q": "Which sentence is correct?",
+      "options": [
+        "She never is late.",
+        "Never she is late.",
+        "She is never late.",
+        "She is late never."
+      ],
+      "a": "She is never late.",
+      "why": "With am, is or are the word goes after the verb. This is the one exception to the rule in the previous question.",
+      "outcome": 2
+    },
+    {
+      "q": "How do you say 06:45?",
+      "options": [
+        "six forty-five o'clock",
+        "quarter past six",
+        "forty-five past six",
+        "quarter to seven"
+      ],
+      "a": "quarter to seven",
+      "why": "Past thirty minutes English counts backwards to the next hour, so the hour named is seven even though it is still six o'clock.",
+      "outcome": 3
+    },
+    {
+      "q": "Which is correct?",
+      "options": [
+        "It is half past six.",
+        "It is half past six o'clock.",
+        "It is half to six.",
+        "It is thirty past six o'clock."
+      ],
+      "a": "It is half past six.",
+      "why": "O'clock is used only on the exact hour, so half past six o'clock is wrong. Half past, not half to.",
+      "outcome": 3
+    },
+    {
+      "q": "Complete: The class is ____ Monday.",
+      "options": [
+        "at",
+        "in",
+        "on",
+        "no word needed"
+      ],
+      "a": "on",
+      "why": "A day takes on. At is for clock times and in is for longer periods like months and seasons.",
+      "outcome": 4
+    },
+    {
+      "q": "Complete: See you ____ tomorrow.",
+      "options": [
+        "on",
+        "at",
+        "in",
+        "no word needed"
+      ],
+      "a": "no word needed",
+      "why": "Today, tomorrow and yesterday take no preposition at all. Adding on is the commonest error on this pattern.",
+      "outcome": 4
+    },
+    {
+      "q": "Complete: He works ____ night.",
+      "options": [
+        "in",
+        "on",
+        "at",
+        "by"
+      ],
+      "a": "at",
+      "why": "At night is an exception — you would expect in the night from the rule, but English uses at. It simply has to be remembered.",
+      "outcome": 4
+    },
+    {
+      "q": "Which sentence is correct?",
+      "options": [
+        "I do not never work on Sundays.",
+        "I never work on Sundays.",
+        "I never do not work on Sundays.",
+        "I not never work on Sundays."
+      ],
+      "a": "I never work on Sundays.",
+      "why": "Never is already negative. English uses one negative in a sentence, so adding do not makes two.",
+      "outcome": 2
+    },
+    {
+      "q": "On the rota, T. Novak is on the late shift on Friday. What time does it finish?",
+      "options": [
+        "22:00",
+        "20:00",
+        "14:00",
+        "06:00"
+      ],
+      "a": "20:00",
+      "why": "The column heading says 22:00, but the note underneath overrides it for that week only. Reading the heading alone gives the wrong answer by two hours.",
+      "outcome": 5
+    },
+    {
+      "q": "A night shift is listed under Monday. When does it start?",
+      "options": [
+        "Monday 06:00",
+        "Monday 22:00",
+        "Sunday 22:00",
+        "Tuesday 22:00"
+      ],
+      "a": "Sunday 22:00",
+      "why": "The second note says the night shift starts the evening before the day it is listed under. This is the single most misread line on any rota.",
+      "outcome": 5
+    },
+    {
+      "q": "Which day has nobody working at all?",
+      "options": [
+        "Saturday",
+        "Friday",
+        "Wednesday",
+        "Sunday"
+      ],
+      "a": "Sunday",
+      "why": "Sunday shows dashes in all three columns. Saturday has an early and a late shift but no night, which is a different thing.",
+      "outcome": 5
+    }
   ],
   "teacherNotes": [
-    { "type": "This unit works without you", "note": "Every pattern card has a worked example and every exercise an answer key. Practice 3 Part C and Practice 6 both send the learner to check against reality — a clock and their own week — so accuracy can be confirmed without anyone else present." },
-    { "type": "The backwards half of the clock", "note": "Counting down to an hour that has not arrived is the genuinely hard part, and it is conceptual rather than lexical — learners who can say quarter past fluently often stall completely at quarter to. Reading 2 gives explicit permission to read the numbers instead while the system is being built, and that permission matters: learners who feel they must use the words often avoid saying times at all." },
-    { "type": "Frequency words drift to the end", "note": "The commonest error is position, not choice, and it is mechanical to fix: find the verb, put the word in front, unless the verb is be. Practice 2 has five of its twelve items using be specifically so the exception gets as much practice as the rule." },
-    { "type": "Precision about frequency is a real skill", "note": "Practice 6 exists because learners reach for always and never — the easiest words — and end up describing a life they do not lead. Pushing them towards usually, often and sometimes is worth the time; it is the beginning of saying what is actually the case rather than what is easiest to say." },
-    { "type": "Why the rota", "note": "Three of the ten comprehension questions require reading a note that overrides the table, and one requires understanding that a night shift labelled Monday begins on Sunday. Both are real, both cost people money or attendance, and neither is answerable by reading a cell. Do not let the rota be skimmed." },
-    { "type": "Device and AI safety", "note": "The AI tutor is a rehearsal partner, not a marking service, and no task here is scored by it alone. Learners must not be asked to give the tutor personal details. Practice 6 and Writing 2 both record a real daily routine, including when someone is away from home; that information should stay on the learner's own device and should never be collected." }
+    {
+      "type": "This unit works without you",
+      "note": "Every pattern card has a worked example and every exercise an answer key. Practice 3 Part C and Practice 6 both send the learner to check against reality — a clock and their own week — so accuracy can be confirmed without anyone else present."
+    },
+    {
+      "type": "The backwards half of the clock",
+      "note": "Counting down to an hour that has not arrived is the genuinely hard part, and it is conceptual rather than lexical — learners who can say quarter past fluently often stall completely at quarter to. Reading 2 gives explicit permission to read the numbers instead while the system is being built, and that permission matters: learners who feel they must use the words often avoid saying times at all."
+    },
+    {
+      "type": "Frequency words drift to the end",
+      "note": "The commonest error is position, not choice, and it is mechanical to fix: find the verb, put the word in front, unless the verb is be. Practice 2 has five of its twelve items using be specifically so the exception gets as much practice as the rule."
+    },
+    {
+      "type": "Precision about frequency is a real skill",
+      "note": "Practice 6 exists because learners reach for always and never — the easiest words — and end up describing a life they do not lead. Pushing them towards usually, often and sometimes is worth the time; it is the beginning of saying what is actually the case rather than what is easiest to say."
+    },
+    {
+      "type": "Why the rota",
+      "note": "Three of the ten comprehension questions require reading a note that overrides the table, and one requires understanding that a night shift labelled Monday begins on Sunday. Both are real, both cost people money or attendance, and neither is answerable by reading a cell. Do not let the rota be skimmed."
+    },
+    {
+      "type": "Device and AI safety",
+      "note": "The AI tutor is a rehearsal partner, not a marking service, and no task here is scored by it alone. Learners must not be asked to give the tutor personal details. Practice 6 and Writing 2 both record a real daily routine, including when someone is away from home; that information should stay on the learner's own device and should never be collected."
+    }
   ],
   "selfAssessment": [
-    { "statement": "I can describe what I do on an ordinary day." },
-    { "statement": "I can say how often I do something, and put the word in the right place." },
-    { "statement": "I can say the time and understand a time somebody tells me." },
-    { "statement": "I can write at seven, on Monday and in March without mixing them up." },
-    { "statement": "I can read a work rota and find when I am working." }
+    {
+      "statement": "I can describe what I do on an ordinary day."
+    },
+    {
+      "statement": "I can say how often I do something, and put the word in the right place."
+    },
+    {
+      "statement": "I can say the time and understand a time somebody tells me."
+    },
+    {
+      "statement": "I can write at seven, on Monday and in March without mixing them up."
+    },
+    {
+      "statement": "I can read a work rota and find when I am working."
+    }
   ],
   "assignment": {
     "title": "A week described, and a rota read",

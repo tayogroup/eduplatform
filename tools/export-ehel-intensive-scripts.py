@@ -105,8 +105,10 @@ def unit_rows(u: dict) -> list[list[str]]:
                   ("Why", c.get("explanation"))))
 
     for g in u.get("grammar", []):
+        # No title prefix on the script: the title is already its own column,
+        # and read aloud it just repeats the card's name back at the learner.
         add("Grammar (narrated)", g.get("grammarId"), g.get("title"),
-            block(("", f"{clean(g.get('title'))}. {clean(g.get('explanation'))}".strip(". ")),
+            block(("", g.get("explanation")),
                   ("Rule and examples", g.get("ruleAndExamples")),
                   ("Worked example", g.get("workedExample")),
                   ("Common mistake", g.get("commonMistake")),

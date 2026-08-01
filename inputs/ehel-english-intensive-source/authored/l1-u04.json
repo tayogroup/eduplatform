@@ -24,7 +24,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Spoken production",
       "cefrDescriptor": "I can say first, second and third, and put things in order out loud.",
-      "cambridge": ["1SLm.02", "2SLm.02"]
+      "cambridge": [
+        "1SLm.02",
+        "2SLm.02"
+      ]
     },
     {
       "outcome": "Choose how much or how many correctly, and ask a price.",
@@ -33,7 +36,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Spoken interaction",
       "cefrDescriptor": "I can ask how much something costs and understand the answer.",
-      "cambridge": ["2Rg.05", "2SLs.01"]
+      "cambridge": [
+        "2Rg.05",
+        "2SLs.01"
+      ]
     },
     {
       "outcome": "Compare two things using the -er than form, including the spelling changes and the two irregulars.",
@@ -42,7 +48,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Writing",
       "cefrDescriptor": "I can write that one thing is cheaper or bigger than another.",
-      "cambridge": ["3Rg.07", "2Rv.04"]
+      "cambridge": [
+        "3Rg.07",
+        "2Rv.04"
+      ]
     },
     {
       "outcome": "Say roughly how much of something there is, choosing a few or a little correctly.",
@@ -51,7 +60,10 @@
       "cefrLevel": "A1",
       "cefrSkill": "Writing",
       "cefrDescriptor": "I can say a few days and a little time without mixing them up.",
-      "cambridge": ["2Wg.02", "3Rg.08"]
+      "cambridge": [
+        "2Wg.02",
+        "3Rg.08"
+      ]
     },
     {
       "outcome": "Read a receipt and check whether what was charged matches what was expected.",
@@ -60,62 +72,442 @@
       "cefrLevel": "A1",
       "cefrSkill": "Reading",
       "cefrDescriptor": "I can read a receipt and find what I paid and what it was for.",
-      "cambridge": ["2Ri.09", "1Ri.08"]
+      "cambridge": [
+        "2Ri.09",
+        "1Ri.08"
+      ]
     }
   ],
   "groups": [
     {
       "title": "Money",
       "words": [
-        { "w": "price", "pos": "noun", "meaning": "The amount of money you must pay for something.", "example": "The price is on the label.", "practice": ["The price is on the label.", "What is the price of this one?", "The price has gone up.", "That is a good price.", "The price includes delivery."], "starter": "The price is on the", "tutor": "Ask the price of three things, each in a different way." },
-        { "w": "cost", "pos": "verb", "meaning": "To have a particular price.", "example": "How much does it cost?", "practice": ["How much does it cost?", "It costs more than I thought.", "The bus costs less than the train.", "It cost nothing.", "The repair will cost too much."], "starter": "How much does it", "tutor": "Ask what something costs, then say what it costs. Check the s on costs." },
-        { "w": "cheap", "pos": "adjective", "meaning": "Not costing much money.", "example": "This one is cheaper.", "practice": ["This one is cheaper.", "The market is cheap.", "It is cheap because it is old.", "Cheap is not always better.", "The cheaper one is good enough."], "starter": "This one is", "tutor": "Compare two things using cheaper than. Check you said than and not that." },
-        { "w": "expensive", "pos": "adjective", "meaning": "Costing a lot of money.", "example": "That is more expensive than this.", "practice": ["That is more expensive than this.", "The flat is too expensive.", "It is expensive but it lasts.", "Why is it so expensive?", "The most expensive one is not the best."], "starter": "That is more expensive than", "tutor": "Expensive is a long word, so it takes more instead of er. Say it and hear why cheaper works but expensiver does not." },
-        { "w": "change", "pos": "noun", "meaning": "The money you get back when you pay more than the price.", "example": "You gave me the wrong change.", "practice": ["You gave me the wrong change.", "Keep the change.", "I have no change.", "Here is your change.", "Do you have change for this?"], "starter": "You gave me the wrong", "tutor": "Say the sentence you would use if the change was wrong. Practise saying it politely." },
-        { "w": "pay", "pos": "verb", "meaning": "To give money for something.", "example": "Can I pay by card?", "practice": ["Can I pay by card?", "I pay the rent on the first.", "She pays every month.", "How would you like to pay?", "I paid too much."], "starter": "Can I pay by", "tutor": "Ask to pay two different ways. Then answer the question how would you like to pay." }
+        {
+          "w": "price",
+          "pos": "noun",
+          "meaning": "The amount of money you must pay for something.",
+          "example": "The price is on the label.",
+          "practice": [
+            "What is the price of this one?",
+            "The price has gone up.",
+            "That is a good price.",
+            "The price includes delivery."
+          ],
+          "starter": "The price is on the",
+          "tutor": "Ask the price of three things, each in a different way."
+        },
+        {
+          "w": "cost",
+          "pos": "verb",
+          "meaning": "To have a particular price.",
+          "example": "How much does it cost?",
+          "practice": [
+            "It costs more than I thought.",
+            "The bus costs less than the train.",
+            "It cost nothing.",
+            "The repair will cost too much."
+          ],
+          "starter": "How much does it",
+          "tutor": "Ask what something costs, then say what it costs. Check the s on costs."
+        },
+        {
+          "w": "cheap",
+          "pos": "adjective",
+          "meaning": "Not costing much money.",
+          "example": "This one is cheaper.",
+          "practice": [
+            "The market is cheap.",
+            "It is cheap because it is old.",
+            "Cheap is not always better.",
+            "The cheaper one is good enough."
+          ],
+          "starter": "This one is",
+          "tutor": "Compare two things using cheaper than. Check you said than and not that."
+        },
+        {
+          "w": "expensive",
+          "pos": "adjective",
+          "meaning": "Costing a lot of money.",
+          "example": "That is more expensive than this.",
+          "practice": [
+            "The flat is too expensive.",
+            "It is expensive but it lasts.",
+            "Why is it so expensive?",
+            "The most expensive one is not the best."
+          ],
+          "starter": "That is more expensive than",
+          "tutor": "Expensive is a long word, so it takes more instead of er. Say it and hear why cheaper works but expensiver does not."
+        },
+        {
+          "w": "change",
+          "pos": "noun",
+          "meaning": "The money you get back when you pay more than the price.",
+          "example": "You gave me the wrong change.",
+          "practice": [
+            "Keep the change.",
+            "I have no change.",
+            "Here is your change.",
+            "Do you have change for this?"
+          ],
+          "starter": "You gave me the wrong",
+          "tutor": "Say the sentence you would use if the change was wrong. Practise saying it politely."
+        },
+        {
+          "w": "pay",
+          "pos": "verb",
+          "meaning": "To give money for something.",
+          "example": "Can I pay by card?",
+          "practice": [
+            "I pay the rent on the first.",
+            "She pays every month.",
+            "How would you like to pay?",
+            "I paid too much."
+          ],
+          "starter": "Can I pay by",
+          "tutor": "Ask to pay two different ways. Then answer the question how would you like to pay."
+        }
       ]
     },
     {
       "title": "Buying",
       "words": [
-        { "w": "buy", "pos": "verb", "meaning": "To get something by paying for it.", "example": "I buy fruit at the market.", "practice": ["I buy fruit at the market.", "She buys the same thing every week.", "Where did you buy that?", "I want to buy a ticket.", "Do not buy the first one you see."], "starter": "I buy", "tutor": "Say what you buy and where. Then say it about someone else and check the verb ending." },
-        { "w": "sell", "pos": "verb", "meaning": "To give something to someone for money.", "example": "They sell it cheaper online.", "practice": ["They sell it cheaper online.", "The shop sells everything.", "Do you sell batteries?", "She sells bread at the market.", "They do not sell it here."], "starter": "They sell it", "tutor": "Ask whether a shop sells something. Use the do you form." },
-        { "w": "receipt", "pos": "noun", "meaning": "The paper that shows what you bought and what you paid.", "example": "Keep the receipt.", "practice": ["Keep the receipt.", "Can I have a receipt, please?", "The receipt is in the bag.", "I lost the receipt.", "You need the receipt to return it."], "starter": "Can I have a", "tutor": "Ask for a receipt politely. Note the p is silent — say it and check." },
-        { "w": "cash", "pos": "noun", "meaning": "Money as notes and coins, not a card.", "example": "I only have cash.", "practice": ["I only have cash.", "Do you take cash?", "It is cheaper if you pay cash.", "I have no cash on me.", "The machine takes cash only."], "starter": "I only have", "tutor": "Say you want to pay in cash, and ask if that is possible." },
-        { "w": "card", "pos": "noun", "meaning": "The plastic card you use to pay from your bank.", "example": "Can I pay by card?", "practice": ["Can I pay by card?", "My card does not work.", "The card machine is broken.", "She paid by card.", "Do you take this card?"], "starter": "Can I pay by", "tutor": "Say what you would do if your card did not work." },
-        { "w": "total", "pos": "noun", "meaning": "The whole amount, when everything is added together.", "example": "The total is at the bottom.", "practice": ["The total is at the bottom.", "What is the total?", "The total is more than I expected.", "Check the total before you pay.", "That is the total including delivery."], "starter": "The total is", "tutor": "Ask what the total is, then say a total out loud." }
+        {
+          "w": "buy",
+          "pos": "verb",
+          "meaning": "To get something by paying for it.",
+          "example": "I buy fruit at the market.",
+          "practice": [
+            "She buys the same thing every week.",
+            "Where did you buy that?",
+            "I want to buy a ticket.",
+            "Do not buy the first one you see."
+          ],
+          "starter": "I buy",
+          "tutor": "Say what you buy and where. Then say it about someone else and check the verb ending."
+        },
+        {
+          "w": "sell",
+          "pos": "verb",
+          "meaning": "To give something to someone for money.",
+          "example": "They sell it cheaper online.",
+          "practice": [
+            "The shop sells everything.",
+            "Do you sell batteries?",
+            "She sells bread at the market.",
+            "They do not sell it here."
+          ],
+          "starter": "They sell it",
+          "tutor": "Ask whether a shop sells something. Use the do you form."
+        },
+        {
+          "w": "receipt",
+          "pos": "noun",
+          "meaning": "The paper that shows what you bought and what you paid.",
+          "example": "Keep the receipt.",
+          "practice": [
+            "Can I have a receipt, please?",
+            "The receipt is in the bag.",
+            "I lost the receipt.",
+            "You need the receipt to return it."
+          ],
+          "starter": "Can I have a",
+          "tutor": "Ask for a receipt politely. Note the p is silent — say it and check."
+        },
+        {
+          "w": "cash",
+          "pos": "noun",
+          "meaning": "Money as notes and coins, not a card.",
+          "example": "I only have cash.",
+          "practice": [
+            "Do you take cash?",
+            "It is cheaper if you pay cash.",
+            "I have no cash on me.",
+            "The machine takes cash only."
+          ],
+          "starter": "I only have",
+          "tutor": "Say you want to pay in cash, and ask if that is possible."
+        },
+        {
+          "w": "card",
+          "pos": "noun",
+          "meaning": "The plastic card you use to pay from your bank.",
+          "example": "Can I pay by card?",
+          "practice": [
+            "My card does not work.",
+            "The card machine is broken.",
+            "She paid by card.",
+            "Do you take this card?"
+          ],
+          "starter": "Can I pay by",
+          "tutor": "Say what you would do if your card did not work."
+        },
+        {
+          "w": "total",
+          "pos": "noun",
+          "meaning": "The whole amount, when everything is added together.",
+          "example": "The total is at the bottom.",
+          "practice": [
+            "What is the total?",
+            "The total is more than I expected.",
+            "Check the total before you pay.",
+            "That is the total including delivery."
+          ],
+          "starter": "The total is",
+          "tutor": "Ask what the total is, then say a total out loud."
+        }
       ]
     },
     {
       "title": "Measuring",
       "words": [
-        { "w": "weight", "pos": "noun", "meaning": "How heavy something is.", "example": "What is the weight of the bag?", "practice": ["What is the weight of the bag?", "The weight is on the label.", "There is a weight limit.", "The weight is in kilos.", "Check the weight before you post it."], "starter": "What is the weight of", "tutor": "Ask about the weight of something. Note the silent gh." },
-        { "w": "height", "pos": "noun", "meaning": "How tall something or someone is.", "example": "The form asks for your height.", "practice": ["The form asks for your height.", "What is the height of the door?", "The height is in metres.", "There is a height limit here.", "The two are the same height."], "starter": "The form asks for your", "tutor": "Say your height, or invent one. Notice height and weight rhyme but are spelled differently." },
-        { "w": "length", "pos": "noun", "meaning": "How long something is from end to end.", "example": "Measure the length first.", "practice": ["Measure the length first.", "What is the length of the room?", "The length is four metres.", "The length and the width are the same.", "Check the length before you cut it."], "starter": "Measure the length", "tutor": "Say the length of something in the room you are in." },
-        { "w": "size", "pos": "noun", "meaning": "How big or small something is; also the number on clothes and shoes.", "example": "What size do you need?", "practice": ["What size do you need?", "This size is too small.", "Have you got it in a bigger size?", "The size is on the label.", "They are all the same size."], "starter": "What size do you", "tutor": "Ask for a different size in a shop. Ask for bigger and then for smaller." },
-        { "w": "metre", "pos": "noun", "meaning": "A unit for measuring length, about the height of a door handle from the floor.", "example": "The room is four metres long.", "practice": ["The room is four metres long.", "It is about two metres wide.", "I need three metres of it.", "The ceiling is two and a half metres high.", "How many metres do you need?"], "starter": "The room is four metres", "tutor": "Estimate the length of the room in metres and say it out loud." },
-        { "w": "kilo", "pos": "noun", "meaning": "A unit for measuring weight, about the weight of a large bag of sugar.", "example": "Two kilos of rice, please.", "practice": ["Two kilos of rice, please.", "How much is it per kilo?", "It weighs half a kilo.", "I bought three kilos.", "The price is per kilo, not per bag."], "starter": "Two kilos of", "tutor": "Ask for a weight of something at a market. Then ask the price per kilo." }
+        {
+          "w": "weight",
+          "pos": "noun",
+          "meaning": "How heavy something is.",
+          "example": "What is the weight of the bag?",
+          "practice": [
+            "The weight is on the label.",
+            "There is a weight limit.",
+            "The weight is in kilos.",
+            "Check the weight before you post it."
+          ],
+          "starter": "What is the weight of",
+          "tutor": "Ask about the weight of something. Note the silent gh."
+        },
+        {
+          "w": "height",
+          "pos": "noun",
+          "meaning": "How tall something or someone is.",
+          "example": "The form asks for your height.",
+          "practice": [
+            "What is the height of the door?",
+            "The height is in metres.",
+            "There is a height limit here.",
+            "The two are the same height."
+          ],
+          "starter": "The form asks for your",
+          "tutor": "Say your height, or invent one. Notice height and weight rhyme but are spelled differently."
+        },
+        {
+          "w": "length",
+          "pos": "noun",
+          "meaning": "How long something is from end to end.",
+          "example": "Measure the length first.",
+          "practice": [
+            "What is the length of the room?",
+            "The length is four metres.",
+            "The length and the width are the same.",
+            "Check the length before you cut it."
+          ],
+          "starter": "Measure the length",
+          "tutor": "Say the length of something in the room you are in."
+        },
+        {
+          "w": "size",
+          "pos": "noun",
+          "meaning": "How big or small something is; also the number on clothes and shoes.",
+          "example": "What size do you need?",
+          "practice": [
+            "This size is too small.",
+            "Have you got it in a bigger size?",
+            "The size is on the label.",
+            "They are all the same size."
+          ],
+          "starter": "What size do you",
+          "tutor": "Ask for a different size in a shop. Ask for bigger and then for smaller."
+        },
+        {
+          "w": "metre",
+          "pos": "noun",
+          "meaning": "A unit for measuring length, about the height of a door handle from the floor.",
+          "example": "The room is four metres long.",
+          "practice": [
+            "It is about two metres wide.",
+            "I need three metres of it.",
+            "The ceiling is two and a half metres high.",
+            "How many metres do you need?"
+          ],
+          "starter": "The room is four metres",
+          "tutor": "Estimate the length of the room in metres and say it out loud."
+        },
+        {
+          "w": "kilo",
+          "pos": "noun",
+          "meaning": "A unit for measuring weight, about the weight of a large bag of sugar.",
+          "example": "Two kilos of rice, please.",
+          "practice": [
+            "How much is it per kilo?",
+            "It weighs half a kilo.",
+            "I bought three kilos.",
+            "The price is per kilo, not per bag."
+          ],
+          "starter": "Two kilos of",
+          "tutor": "Ask for a weight of something at a market. Then ask the price per kilo."
+        }
       ]
     },
     {
       "title": "How much of it",
       "words": [
-        { "w": "much", "pos": "determiner", "meaning": "A large amount of something you cannot count.", "example": "How much time have we got?", "practice": ["How much time have we got?", "There is not much water left.", "How much does it cost?", "I do not have much money.", "Too much salt."], "starter": "How much", "tutor": "Ask three how much questions about things you cannot count." },
-        { "w": "many", "pos": "determiner", "meaning": "A large number of things you can count.", "example": "How many people are waiting?", "practice": ["How many people are waiting?", "There are not many left.", "How many rooms has it got?", "Too many questions.", "How many do you want?"], "starter": "How many", "tutor": "Ask three how many questions about things you can count. Notice the difference from much." },
-        { "w": "enough", "pos": "determiner", "meaning": "As much or as many as you need — not more, not less.", "example": "There is not enough time.", "practice": ["There is not enough time.", "Have we got enough chairs?", "That is enough, thank you.", "I do not have enough money for both.", "One is enough."], "starter": "There is not enough", "tutor": "Say one thing you have enough of and one thing you do not." },
-        { "w": "more", "pos": "determiner", "meaning": "A larger amount or number.", "example": "I need more time.", "practice": ["I need more time.", "There are more people today.", "Can I have a little more, please?", "This one costs more.", "No more, thank you."], "starter": "I need more", "tutor": "Ask for more of something politely, then refuse more of something politely." },
-        { "w": "less", "pos": "determiner", "meaning": "A smaller amount of something you cannot count.", "example": "It costs less than the other one.", "practice": ["It costs less than the other one.", "I have less time this week.", "Use less water.", "Less sugar, please.", "The journey takes less than an hour."], "starter": "It costs less than", "tutor": "Say two things you want less of. Check they are things you cannot count." },
-        { "w": "half", "pos": "noun", "meaning": "One of two equal parts of something.", "example": "Half a kilo, please.", "practice": ["Half a kilo, please.", "It costs half as much.", "Half the people did not come.", "I only need half of it.", "Half an hour is enough."], "starter": "Half a kilo,", "tutor": "Order half of something at a market. Note the l is silent." }
+        {
+          "w": "much",
+          "pos": "determiner",
+          "meaning": "A large amount of something you cannot count.",
+          "example": "How much time have we got?",
+          "practice": [
+            "There is not much water left.",
+            "How much does it cost?",
+            "I do not have much money.",
+            "Too much salt."
+          ],
+          "starter": "How much",
+          "tutor": "Ask three how much questions about things you cannot count."
+        },
+        {
+          "w": "many",
+          "pos": "determiner",
+          "meaning": "A large number of things you can count.",
+          "example": "How many people are waiting?",
+          "practice": [
+            "There are not many left.",
+            "How many rooms has it got?",
+            "Too many questions.",
+            "How many do you want?"
+          ],
+          "starter": "How many",
+          "tutor": "Ask three how many questions about things you can count. Notice the difference from much."
+        },
+        {
+          "w": "enough",
+          "pos": "determiner",
+          "meaning": "As much or as many as you need — not more, not less.",
+          "example": "There is not enough time.",
+          "practice": [
+            "Have we got enough chairs?",
+            "That is enough, thank you.",
+            "I do not have enough money for both.",
+            "One is enough."
+          ],
+          "starter": "There is not enough",
+          "tutor": "Say one thing you have enough of and one thing you do not."
+        },
+        {
+          "w": "more",
+          "pos": "determiner",
+          "meaning": "A larger amount or number.",
+          "example": "I need more time.",
+          "practice": [
+            "There are more people today.",
+            "Can I have a little more, please?",
+            "This one costs more.",
+            "No more, thank you."
+          ],
+          "starter": "I need more",
+          "tutor": "Ask for more of something politely, then refuse more of something politely."
+        },
+        {
+          "w": "less",
+          "pos": "determiner",
+          "meaning": "A smaller amount of something you cannot count.",
+          "example": "It costs less than the other one.",
+          "practice": [
+            "I have less time this week.",
+            "Use less water.",
+            "Less sugar, please.",
+            "The journey takes less than an hour."
+          ],
+          "starter": "It costs less than",
+          "tutor": "Say two things you want less of. Check they are things you cannot count."
+        },
+        {
+          "w": "half",
+          "pos": "noun",
+          "meaning": "One of two equal parts of something.",
+          "example": "Half a kilo, please.",
+          "practice": [
+            "It costs half as much.",
+            "Half the people did not come.",
+            "I only need half of it.",
+            "Half an hour is enough."
+          ],
+          "starter": "Half a kilo,",
+          "tutor": "Order half of something at a market. Note the l is silent."
+        }
       ]
     },
     {
       "title": "Comparing",
       "words": [
-        { "w": "big", "pos": "adjective", "meaning": "Large in size.", "example": "This bag is bigger than that one.", "practice": ["This bag is bigger than that one.", "The room is not very big.", "I need a bigger size.", "It is too big for me.", "The bigger one costs more."], "starter": "This bag is bigger than", "tutor": "Say bigger out loud and check you doubled the g when you wrote it." },
-        { "w": "heavy", "pos": "adjective", "meaning": "Weighing a lot.", "example": "This box is heavier than it looks.", "practice": ["This box is heavier than it looks.", "The bag is too heavy.", "It is heavier than a kilo.", "Which one is heavier?", "A heavy bag is hard to carry upstairs."], "starter": "This box is heavier than", "tutor": "Compare two things by weight. Check the y became i when you wrote heavier." },
-        { "w": "light", "pos": "adjective", "meaning": "Not weighing much; the opposite of heavy.", "example": "The smaller one is lighter.", "practice": ["The smaller one is lighter.", "It is light enough to carry.", "This is lighter than I expected.", "A light bag is better for the bus.", "The box is light but big."], "starter": "The smaller one is", "tutor": "Compare two things using lighter than. Then say the same idea using less heavy." },
-        { "w": "wide", "pos": "adjective", "meaning": "Measuring a lot from one side to the other.", "example": "The door is not wide enough.", "practice": ["The door is not wide enough.", "The room is four metres wide.", "This one is wider than that one.", "How wide is it?", "A wider table would be better."], "starter": "The door is not wide", "tutor": "Say how wide something is, then compare it with something else." },
-        { "w": "tall", "pos": "adjective", "meaning": "Measuring a lot from bottom to top; used of people and buildings.", "example": "He is taller than his brother.", "practice": ["He is taller than his brother.", "How tall are you?", "The building is very tall.", "She is the tallest in the family.", "A taller cupboard would not fit."], "starter": "He is taller than", "tutor": "Ask how tall someone is and answer. Note that things use high but people use tall." }
+        {
+          "w": "big",
+          "pos": "adjective",
+          "meaning": "Large in size.",
+          "example": "This bag is bigger than that one.",
+          "practice": [
+            "The room is not very big.",
+            "I need a bigger size.",
+            "It is too big for me.",
+            "The bigger one costs more."
+          ],
+          "starter": "This bag is bigger than",
+          "tutor": "Say bigger out loud and check you doubled the g when you wrote it."
+        },
+        {
+          "w": "heavy",
+          "pos": "adjective",
+          "meaning": "Weighing a lot.",
+          "example": "This box is heavier than it looks.",
+          "practice": [
+            "The bag is too heavy.",
+            "It is heavier than a kilo.",
+            "Which one is heavier?",
+            "A heavy bag is hard to carry upstairs."
+          ],
+          "starter": "This box is heavier than",
+          "tutor": "Compare two things by weight. Check the y became i when you wrote heavier."
+        },
+        {
+          "w": "light",
+          "pos": "adjective",
+          "meaning": "Not weighing much; the opposite of heavy.",
+          "example": "The smaller one is lighter.",
+          "practice": [
+            "It is light enough to carry.",
+            "This is lighter than I expected.",
+            "A light bag is better for the bus.",
+            "The box is light but big."
+          ],
+          "starter": "The smaller one is",
+          "tutor": "Compare two things using lighter than. Then say the same idea using less heavy."
+        },
+        {
+          "w": "wide",
+          "pos": "adjective",
+          "meaning": "Measuring a lot from one side to the other.",
+          "example": "The door is not wide enough.",
+          "practice": [
+            "The room is four metres wide.",
+            "This one is wider than that one.",
+            "How wide is it?",
+            "A wider table would be better."
+          ],
+          "starter": "The door is not wide",
+          "tutor": "Say how wide something is, then compare it with something else."
+        },
+        {
+          "w": "tall",
+          "pos": "adjective",
+          "meaning": "Measuring a lot from bottom to top; used of people and buildings.",
+          "example": "He is taller than his brother.",
+          "practice": [
+            "How tall are you?",
+            "The building is very tall.",
+            "She is the tallest in the family.",
+            "A taller cupboard would not fit."
+          ],
+          "starter": "He is taller than",
+          "tutor": "Ask how tall someone is and answer. Note that things use high but people use tall."
+        }
       ]
     }
   ],
@@ -139,16 +531,90 @@
     }
   ],
   "comprehension": [
-    { "section": "Reading", "reading": 1, "q": "Why does the text say numbers are different from the rest of a conversation?", "a": "Because a wrong number is not repaired by the listener — you hand over the wrong money or arrive on the wrong day.", "why": "The text contrasts a grammar slip, which the listener fixes without noticing, with a number, which nobody fixes.", "outcome": 1 },
-    { "section": "Reading", "reading": 1, "q": "What are the three habits the text recommends?", "a": "Repeat the number back, ask for it written down when it matters, and check the pairs that sound alike.", "why": "All three are listed in order. The first is the quickest and the text says to use it as a check rather than a challenge.", "outcome": 1 },
-    { "section": "Reading", "reading": 1, "q": "The text says native speakers mishear these numbers too. Why does it say that?", "a": "To show that asking is normal, not a sign of weak English — they ask as well.", "why": "This is an inference. The sentence exists to remove the embarrassment that stops learners from checking.", "outcome": 1, "difficulty": "Stretch" },
-    { "section": "Reading", "reading": 2, "q": "A label says 1.85 per kilo and your bag weighs two kilos. What do you pay?", "a": "3.70 — double the price on the label.", "why": "Per kilo means the price is for one kilo, so the number on the shelf is not the number at the till unless the bag weighs exactly one kilo.", "outcome": 5 },
-    { "section": "Reading", "reading": 2, "q": "What is the difference between including and excluding?", "a": "Including means it is already in the price. Excluding means it will be added.", "why": "They are opposite statements, and the text warns that they are often printed in the same small type.", "outcome": 5 },
-    { "section": "Reading", "reading": 2, "q": "A sign says Rooms from 40. Does that mean every room costs 40?", "a": "No. It means the cheapest room costs 40 and the rest cost more.", "why": "From gives the minimum, not the usual price. Up to means the opposite, and the text pairs them deliberately.", "outcome": 5, "difficulty": "Stretch" },
-    { "section": "Document", "reading": 3, "q": "How many items of soap were bought, and at what price each?", "a": "Three, at 0.95 each.", "why": "The quantity is in the first column and the each price in the middle. The line total of 2.85 is 3 x 0.95.", "outcome": 5 },
-    { "section": "Document", "reading": 3, "q": "The rice line says 2 kg at 1.85 per kilo. Check the total for that line.", "a": "3.70, which is correct — two kilos at 1.85 each.", "why": "This is the per-kilo idea from Reading 2 appearing on a real receipt. The shelf price was 1.85, but the line came to more than that because the bag weighed two kilos.", "outcome": 5, "difficulty": "Stretch" },
-    { "section": "Document", "reading": 3, "q": "Why is the total less than the subtotal?", "a": "Because of the soap offer, three for two, which took 0.95 off.", "why": "The offer line sits between them and is negative. The subtotal is what the items came to before the offer was applied.", "outcome": 5 },
-    { "section": "Document", "reading": 3, "q": "You want to return the bread and the tea. Can you?", "a": "The tea yes, within fourteen days with the receipt. The bread no, because it is fresh and fresh items cannot be returned.", "why": "Both conditions are in the last three lines, and they apply differently to the two items. Answering needs you to decide which item is fresh.", "outcome": 5, "difficulty": "Stretch" }
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "Why does the text say numbers are different from the rest of a conversation?",
+      "a": "Because a wrong number is not repaired by the listener — you hand over the wrong money or arrive on the wrong day.",
+      "why": "The text contrasts a grammar slip, which the listener fixes without noticing, with a number, which nobody fixes.",
+      "outcome": 1
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "What are the three habits the text recommends?",
+      "a": "Repeat the number back, ask for it written down when it matters, and check the pairs that sound alike.",
+      "why": "All three are listed in order. The first is the quickest and the text says to use it as a check rather than a challenge.",
+      "outcome": 1
+    },
+    {
+      "section": "Reading",
+      "reading": 1,
+      "q": "The text says native speakers mishear these numbers too. Why does it say that?",
+      "a": "To show that asking is normal, not a sign of weak English — they ask as well.",
+      "why": "This is an inference. The sentence exists to remove the embarrassment that stops learners from checking.",
+      "outcome": 1,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "A label says 1.85 per kilo and your bag weighs two kilos. What do you pay?",
+      "a": "3.70 — double the price on the label.",
+      "why": "Per kilo means the price is for one kilo, so the number on the shelf is not the number at the till unless the bag weighs exactly one kilo.",
+      "outcome": 5
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "What is the difference between including and excluding?",
+      "a": "Including means it is already in the price. Excluding means it will be added.",
+      "why": "They are opposite statements, and the text warns that they are often printed in the same small type.",
+      "outcome": 5
+    },
+    {
+      "section": "Reading",
+      "reading": 2,
+      "q": "A sign says Rooms from 40. Does that mean every room costs 40?",
+      "a": "No. It means the cheapest room costs 40 and the rest cost more.",
+      "why": "From gives the minimum, not the usual price. Up to means the opposite, and the text pairs them deliberately.",
+      "outcome": 5,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "How many items of soap were bought, and at what price each?",
+      "a": "Three, at 0.95 each.",
+      "why": "The quantity is in the first column and the each price in the middle. The line total of 2.85 is 3 x 0.95.",
+      "outcome": 5
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "The rice line says 2 kg at 1.85 per kilo. Check the total for that line.",
+      "a": "3.70, which is correct — two kilos at 1.85 each.",
+      "why": "This is the per-kilo idea from Reading 2 appearing on a real receipt. The shelf price was 1.85, but the line came to more than that because the bag weighed two kilos.",
+      "outcome": 5,
+      "difficulty": "Stretch"
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "Why is the total less than the subtotal?",
+      "a": "Because of the soap offer, three for two, which took 0.95 off.",
+      "why": "The offer line sits between them and is negative. The subtotal is what the items came to before the offer was applied.",
+      "outcome": 5
+    },
+    {
+      "section": "Document",
+      "reading": 3,
+      "q": "You want to return the bread and the tea. Can you?",
+      "a": "The tea yes, within fourteen days with the receipt. The bread no, because it is fresh and fresh items cannot be returned.",
+      "why": "Both conditions are in the last three lines, and they apply differently to the two items. Answering needs you to decide which item is fresh.",
+      "outcome": 5,
+      "difficulty": "Stretch"
+    }
   ],
   "grammar": [
     {
@@ -201,12 +667,48 @@
     }
   ],
   "speaking": [
-    { "title": "Speaking 1 — Ordinals out loud", "type": "Core pattern drill", "instructions": "Say these in order, twice: first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh, twelfth.\nThen say only the four with spelling changes: fifth, ninth, twelfth, twentieth.\nThen use three of them in real sentences: a floor, a position in a queue, and a step in an instruction.\nRecord the last three and play them back.", "tutor": "Say six ordinals to the tutor in a mixed order and ask it to put them in sequence.", "outcome": 1 },
-    { "title": "Speaking 2 — Much or many", "type": "Core pattern drill", "instructions": "Ask twelve questions out loud, alternating.\nHow much time…? How many days…? How much water…? How many bottles…? How much money…? How many coins…?\nKeep going until you have twelve.\nRecord them. Play it back and check every one: could you have put a number in front of that noun? If yes it should have been many.", "tutor": "Ask the tutor six quantity questions and ask whether you chose the right word each time.", "outcome": 2 },
-    { "title": "Speaking 3 — Asking a price", "type": "Exchange", "instructions": "Practise both sides four times, changing the item and the number.\nA: How much is this?\nB: 4.50.\nA: Sorry — four fifty or four fifteen?\nB: Four fifty.\nA: Thank you.\nThat third line is the important one. Use the check every single time, until it is automatic.\nRecord the last exchange.", "tutor": "Ask the tutor for four prices and repeat each number back to check it.", "outcome": 2 },
-    { "title": "Speaking 4 — Compare two things", "type": "Core pattern drill", "instructions": "Look around the room and find eight pairs of things.\nCompare each pair out loud, using than every time.\nUse at least one word that doubles its last letter, one that changes y to i, one long word with more, and one irregular.\nRecord all eight. Play it back and check that you said than in every single one — that is the word that disappears first.", "tutor": "Compare four pairs to the tutor and ask whether any comparison was left unfinished.", "outcome": 3 },
-    { "title": "Speaking 5 — At the market", "type": "Exchange", "instructions": "Say both sides of this, then change it four times with different items and amounts.\nA: Two kilos of rice, please.\nB: That is 3.70.\nA: Sorry, how much?\nB: Three seventy.\nA: Can I pay by card?\nB: Cash only.\nA: All right. Here you are.\nRecord one full version. You are checking two things: did you say the amount clearly, and did you use the repeat-back check?", "tutor": "Order three things from the tutor with amounts, and ask the price of each.", "outcome": 2 },
-    { "title": "Speaking 6 — Read the receipt aloud", "type": "Assessment rehearsal", "instructions": "Open Reading 3 and read the whole receipt out loud, including every number.\nSay the prices as people say them — 1.20 is one twenty, 12.20 is twelve twenty.\nThen, without looking, say four things about it from memory: the total, what the offer was, how much change was given, and one thing that cannot be returned.\nRecord the second part and keep it.", "tutor": "Read four lines of the receipt to the tutor and ask it to say the total back.", "outcome": 5 }
+    {
+      "title": "Speaking 1 — Ordinals out loud",
+      "type": "Core pattern drill",
+      "instructions": "Say these in order, twice: first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleventh, twelfth.\nThen say only the four with spelling changes: fifth, ninth, twelfth, twentieth.\nThen use three of them in real sentences: a floor, a position in a queue, and a step in an instruction.\nRecord the last three and play them back.",
+      "tutor": "Say six ordinals to the tutor in a mixed order and ask it to put them in sequence.",
+      "outcome": 1
+    },
+    {
+      "title": "Speaking 2 — Much or many",
+      "type": "Core pattern drill",
+      "instructions": "Ask twelve questions out loud, alternating.\nHow much time…? How many days…? How much water…? How many bottles…? How much money…? How many coins…?\nKeep going until you have twelve.\nRecord them. Play it back and check every one: could you have put a number in front of that noun? If yes it should have been many.",
+      "tutor": "Ask the tutor six quantity questions and ask whether you chose the right word each time.",
+      "outcome": 2
+    },
+    {
+      "title": "Speaking 3 — Asking a price",
+      "type": "Exchange",
+      "instructions": "Practise both sides four times, changing the item and the number.\nA: How much is this?\nB: 4.50.\nA: Sorry — four fifty or four fifteen?\nB: Four fifty.\nA: Thank you.\nThat third line is the important one. Use the check every single time, until it is automatic.\nRecord the last exchange.",
+      "tutor": "Ask the tutor for four prices and repeat each number back to check it.",
+      "outcome": 2
+    },
+    {
+      "title": "Speaking 4 — Compare two things",
+      "type": "Core pattern drill",
+      "instructions": "Look around the room and find eight pairs of things.\nCompare each pair out loud, using than every time.\nUse at least one word that doubles its last letter, one that changes y to i, one long word with more, and one irregular.\nRecord all eight. Play it back and check that you said than in every single one — that is the word that disappears first.",
+      "tutor": "Compare four pairs to the tutor and ask whether any comparison was left unfinished.",
+      "outcome": 3
+    },
+    {
+      "title": "Speaking 5 — At the market",
+      "type": "Exchange",
+      "instructions": "Say both sides of this, then change it four times with different items and amounts.\nA: Two kilos of rice, please.\nB: That is 3.70.\nA: Sorry, how much?\nB: Three seventy.\nA: Can I pay by card?\nB: Cash only.\nA: All right. Here you are.\nRecord one full version. You are checking two things: did you say the amount clearly, and did you use the repeat-back check?",
+      "tutor": "Order three things from the tutor with amounts, and ask the price of each.",
+      "outcome": 2
+    },
+    {
+      "title": "Speaking 6 — Read the receipt aloud",
+      "type": "Assessment rehearsal",
+      "instructions": "Open Reading 3 and read the whole receipt out loud, including every number.\nSay the prices as people say them — 1.20 is one twenty, 12.20 is twelve twenty.\nThen, without looking, say four things about it from memory: the total, what the offer was, how much change was given, and one thing that cannot be returned.\nRecord the second part and keep it.",
+      "tutor": "Read four lines of the receipt to the tutor and ask it to say the total back.",
+      "outcome": 5
+    }
   ],
   "writing": [
     {
@@ -299,33 +801,193 @@
     }
   ],
   "quizzes": [
-    { "q": "What is the ordinal for 5?", "options": ["fifth", "fiveth", "fivth", "fifeth"], "a": "fifth", "why": "Five loses its e and takes th. Nine does the same — ninth — and twelve becomes twelfth. Those three are the spelling changes to learn.", "outcome": 1 },
-    { "q": "What is the ordinal for 21?", "options": ["twentieth-one", "twenty-first", "twenty-oneth", "first-twenty"], "a": "twenty-first", "why": "Only the last part of a compound number becomes an ordinal. Twenty stays as it is and one becomes first.", "outcome": 1 },
-    { "q": "Which question asks a price?", "options": ["How many is it?", "How many does it cost?", "How much is it?", "How much are it?"], "a": "How much is it?", "why": "Money is uncountable in English, so a price is always how much. This one is worth fixing because you will ask it several times a day.", "outcome": 2 },
-    { "q": "Complete: ____ people are waiting?", "options": ["How much", "How many of", "How much of", "How many"], "a": "How many", "why": "People can be counted separately, so it takes many. You could say two people, four people — that test decides it every time.", "outcome": 2 },
-    { "q": "Which is correct?", "options": ["This bag is heavier than that one.", "This bag is more heavy than that one.", "This bag is more heavier than that one.", "This bag is heavyer than that one."], "a": "This bag is heavier than that one.", "why": "Heavy is short enough to take -er, the y becomes i, and you never use more and -er together.", "outcome": 3 },
-    { "q": "What is the comparing form of good?", "options": ["gooder", "more good", "goodest", "better"], "a": "better", "why": "Good is irregular. It never takes -er and it never takes more. Bad is the other one: worse.", "outcome": 3 },
-    { "q": "Complete: I have ____ time before the bus.", "options": ["a few", "a lot", "a little", "many"], "a": "a little", "why": "Time as an amount cannot be counted, so it takes a little. A few minutes would be correct, because minutes can be counted.", "outcome": 4 },
-    { "q": "Complete: There are ____ people outside.", "options": ["a little", "much", "a little of", "a few"], "a": "a few", "why": "People can be counted, so it takes a few. This is the same division as how much and how many — learn it once and it covers both.", "outcome": 4 },
-    { "q": "A label says 1.85 per kilo. Your bag weighs 2 kilos. What do you pay?", "options": ["3.70", "1.85", "0.93", "2.00"], "a": "3.70", "why": "Per kilo means the price is for one kilo, so two kilos cost double. The number on the shelf is not the number at the till unless the weight is exactly one kilo.", "outcome": 5 },
-    { "q": "On the receipt, why is the total lower than the subtotal?", "options": ["The cashier made an error", "An offer took 0.95 off", "The change was subtracted", "Fresh items were removed"], "a": "An offer took 0.95 off", "why": "The offer line sits between the subtotal and the total and is negative. The subtotal is what the items came to before it was applied.", "outcome": 5 },
-    { "q": "A sign says Rooms from 40. What does it mean?", "options": ["Every room costs 40", "No room costs more than 40", "The cheapest room costs 40", "Rooms cost 40 including breakfast"], "a": "The cheapest room costs 40", "why": "From gives the minimum and most will cost more. Up to means the opposite — that would be the maximum.", "outcome": 5 },
-    { "q": "The receipt says returns within 14 days with receipt only, and fresh items cannot be returned. You want to return bread. Can you?", "options": ["Yes, within 14 days", "Yes, with the receipt", "Yes, if it is unopened", "No, bread is fresh"], "a": "No, bread is fresh", "why": "The fresh-items rule overrides the fourteen-day rule. Answering needs you to decide which items count as fresh — the receipt does not list them.", "outcome": 5 }
+    {
+      "q": "What is the ordinal for 5?",
+      "options": [
+        "fifth",
+        "fiveth",
+        "fivth",
+        "fifeth"
+      ],
+      "a": "fifth",
+      "why": "Five loses its e and takes th. Nine does the same — ninth — and twelve becomes twelfth. Those three are the spelling changes to learn.",
+      "outcome": 1
+    },
+    {
+      "q": "What is the ordinal for 21?",
+      "options": [
+        "twentieth-one",
+        "twenty-first",
+        "twenty-oneth",
+        "first-twenty"
+      ],
+      "a": "twenty-first",
+      "why": "Only the last part of a compound number becomes an ordinal. Twenty stays as it is and one becomes first.",
+      "outcome": 1
+    },
+    {
+      "q": "Which question asks a price?",
+      "options": [
+        "How many is it?",
+        "How many does it cost?",
+        "How much is it?",
+        "How much are it?"
+      ],
+      "a": "How much is it?",
+      "why": "Money is uncountable in English, so a price is always how much. This one is worth fixing because you will ask it several times a day.",
+      "outcome": 2
+    },
+    {
+      "q": "Complete: ____ people are waiting?",
+      "options": [
+        "How much",
+        "How many of",
+        "How much of",
+        "How many"
+      ],
+      "a": "How many",
+      "why": "People can be counted separately, so it takes many. You could say two people, four people — that test decides it every time.",
+      "outcome": 2
+    },
+    {
+      "q": "Which is correct?",
+      "options": [
+        "This bag is heavier than that one.",
+        "This bag is more heavy than that one.",
+        "This bag is more heavier than that one.",
+        "This bag is heavyer than that one."
+      ],
+      "a": "This bag is heavier than that one.",
+      "why": "Heavy is short enough to take -er, the y becomes i, and you never use more and -er together.",
+      "outcome": 3
+    },
+    {
+      "q": "What is the comparing form of good?",
+      "options": [
+        "gooder",
+        "more good",
+        "goodest",
+        "better"
+      ],
+      "a": "better",
+      "why": "Good is irregular. It never takes -er and it never takes more. Bad is the other one: worse.",
+      "outcome": 3
+    },
+    {
+      "q": "Complete: I have ____ time before the bus.",
+      "options": [
+        "a few",
+        "a lot",
+        "a little",
+        "many"
+      ],
+      "a": "a little",
+      "why": "Time as an amount cannot be counted, so it takes a little. A few minutes would be correct, because minutes can be counted.",
+      "outcome": 4
+    },
+    {
+      "q": "Complete: There are ____ people outside.",
+      "options": [
+        "a little",
+        "much",
+        "a little of",
+        "a few"
+      ],
+      "a": "a few",
+      "why": "People can be counted, so it takes a few. This is the same division as how much and how many — learn it once and it covers both.",
+      "outcome": 4
+    },
+    {
+      "q": "A label says 1.85 per kilo. Your bag weighs 2 kilos. What do you pay?",
+      "options": [
+        "3.70",
+        "1.85",
+        "0.93",
+        "2.00"
+      ],
+      "a": "3.70",
+      "why": "Per kilo means the price is for one kilo, so two kilos cost double. The number on the shelf is not the number at the till unless the weight is exactly one kilo.",
+      "outcome": 5
+    },
+    {
+      "q": "On the receipt, why is the total lower than the subtotal?",
+      "options": [
+        "The cashier made an error",
+        "An offer took 0.95 off",
+        "The change was subtracted",
+        "Fresh items were removed"
+      ],
+      "a": "An offer took 0.95 off",
+      "why": "The offer line sits between the subtotal and the total and is negative. The subtotal is what the items came to before it was applied.",
+      "outcome": 5
+    },
+    {
+      "q": "A sign says Rooms from 40. What does it mean?",
+      "options": [
+        "Every room costs 40",
+        "No room costs more than 40",
+        "The cheapest room costs 40",
+        "Rooms cost 40 including breakfast"
+      ],
+      "a": "The cheapest room costs 40",
+      "why": "From gives the minimum and most will cost more. Up to means the opposite — that would be the maximum.",
+      "outcome": 5
+    },
+    {
+      "q": "The receipt says returns within 14 days with receipt only, and fresh items cannot be returned. You want to return bread. Can you?",
+      "options": [
+        "Yes, within 14 days",
+        "Yes, with the receipt",
+        "Yes, if it is unopened",
+        "No, bread is fresh"
+      ],
+      "a": "No, bread is fresh",
+      "why": "The fresh-items rule overrides the fourteen-day rule. Answering needs you to decide which items count as fresh — the receipt does not list them.",
+      "outcome": 5
+    }
   ],
   "teacherNotes": [
-    { "type": "This unit works without you", "note": "Every pattern card has a worked example before its practice and every exercise has an answer key. Writing 3 and Practice 5 both check a real document with visible arithmetic, so a learner alone can confirm their own accuracy rather than needing it confirmed." },
-    { "type": "Numbers are a separate skill", "note": "Treat mishearing numbers as a listening problem, not a knowledge problem. Learners who can write thirteen and thirty perfectly still confuse them at speed, because the difference is mainly stress placement. Reading 1 and Practice 6 build the repeat-back habit deliberately, and that habit is worth more than any amount of number drilling." },
-    { "type": "Countability is taught once and used twice", "note": "Patterns 2 and 4 rest on the same countable/uncountable division. Teach it once, at Pattern 2, and then let Pattern 4 be a second application rather than a new rule. Learners who see the two as separate spend twice as long on them. The pairs in Practice 2 — rice and kilos, water and bottles, change and coins — are built to make the point that the noun on the page decides, not the substance in the world." },
-    { "type": "Why the receipt", "note": "Reading 3 and Writing 3 are the most practical part of the unit. Two comprehension questions require arithmetic rather than location, and one requires deciding which items count as fresh when the receipt does not say. That last one is deliberately underdetermined, because real documents are." },
-    { "type": "Currency and neutrality", "note": "All amounts in this unit are written as bare numbers with no currency symbol, so the material carries no nationality and can be used anywhere. If you localise it, change the symbols consistently across the readings, the receipt and the quiz — the receipt arithmetic is checked in Writing 3 and will not survive a partial edit." },
-    { "type": "Device and AI safety", "note": "The AI tutor is a rehearsal partner, not a marking service, and no task here is scored by it alone. Learners must not be asked to give the tutor personal or financial details, and should never enter a real card number, bank detail or account figure anywhere in the app. Practice 6 asks about real prices heard in public and should not be collected." }
+    {
+      "type": "This unit works without you",
+      "note": "Every pattern card has a worked example before its practice and every exercise has an answer key. Writing 3 and Practice 5 both check a real document with visible arithmetic, so a learner alone can confirm their own accuracy rather than needing it confirmed."
+    },
+    {
+      "type": "Numbers are a separate skill",
+      "note": "Treat mishearing numbers as a listening problem, not a knowledge problem. Learners who can write thirteen and thirty perfectly still confuse them at speed, because the difference is mainly stress placement. Reading 1 and Practice 6 build the repeat-back habit deliberately, and that habit is worth more than any amount of number drilling."
+    },
+    {
+      "type": "Countability is taught once and used twice",
+      "note": "Patterns 2 and 4 rest on the same countable/uncountable division. Teach it once, at Pattern 2, and then let Pattern 4 be a second application rather than a new rule. Learners who see the two as separate spend twice as long on them. The pairs in Practice 2 — rice and kilos, water and bottles, change and coins — are built to make the point that the noun on the page decides, not the substance in the world."
+    },
+    {
+      "type": "Why the receipt",
+      "note": "Reading 3 and Writing 3 are the most practical part of the unit. Two comprehension questions require arithmetic rather than location, and one requires deciding which items count as fresh when the receipt does not say. That last one is deliberately underdetermined, because real documents are."
+    },
+    {
+      "type": "Currency and neutrality",
+      "note": "All amounts in this unit are written as bare numbers with no currency symbol, so the material carries no nationality and can be used anywhere. If you localise it, change the symbols consistently across the readings, the receipt and the quiz — the receipt arithmetic is checked in Writing 3 and will not survive a partial edit."
+    },
+    {
+      "type": "Device and AI safety",
+      "note": "The AI tutor is a rehearsal partner, not a marking service, and no task here is scored by it alone. Learners must not be asked to give the tutor personal or financial details, and should never enter a real card number, bank detail or account figure anywhere in the app. Practice 6 asks about real prices heard in public and should not be collected."
+    }
   ],
   "selfAssessment": [
-    { "statement": "I can say first, second and third, and put things in order." },
-    { "statement": "I can ask how much something costs and understand the answer." },
-    { "statement": "I can say that one thing is cheaper or bigger than another." },
-    { "statement": "I can say a few days and a little time without mixing them up." },
-    { "statement": "I can read a receipt and check what I paid." }
+    {
+      "statement": "I can say first, second and third, and put things in order."
+    },
+    {
+      "statement": "I can ask how much something costs and understand the answer."
+    },
+    {
+      "statement": "I can say that one thing is cheaper or bigger than another."
+    },
+    {
+      "statement": "I can say a few days and a little time without mixing them up."
+    },
+    {
+      "statement": "I can read a receipt and check what I paid."
+    }
   ],
   "assignment": {
     "title": "Check a real receipt",

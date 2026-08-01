@@ -154,10 +154,10 @@
       "difficulty": "Explore",
       "title": "Tests of Divisibility",
       "context": "A number is divisible by another number if it can be divided by it with no remainder. For example, 15 is divisible by 3 because 15 ÷ 3 = 5 exactly, but 17 is not divisible by 4 because 17 ÷ 4 = 4 remainder 1.",
-      "prompt": "Compare with < or >: a) −4 __ −7 b) 3 __ −2 c) −6 __ 2.",
-      "answer": "a) −4 > −7, b) 3 > −2, c) −6 < 2.",
+      "prompt": "Use the divisibility tests: a) Is 246 divisible by 3? b) Is 1,530 divisible by both 5 and 10? c) Is 784 divisible by both 2 and 4?",
+      "answer": "a) Yes — the digits add to 2 + 4 + 6 = 12, and 12 divides by 3. b) Yes to both — it ends in 0. c) Yes to both — it is even, and its last two digits, 84, divide by 4.",
       "modelType": "model-5",
-      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Negative number or Odd / Even.",
+      "hint": "Test for 3 with the digit sum, for 5 and 10 with the last digit, for 2 with whether the number is even, and for 4 with the last two digits.",
       "explanation": "Tests of Divisibility: A number is divisible by another number if it can be divided by it with no remainder. For example, 15 is divisible by 3 because 15 ÷ 3 = 5 exactly, but 17 is not divisible by 4 because 17 ÷ 4 = 4 remainder 1. Rather than doing long division every time, you can use quick divisibility tests that look only at the last one or two digits."
     },
     {
@@ -166,10 +166,10 @@
       "difficulty": "Explore",
       "title": "Sorting Numbers with Venn Diagrams",
       "context": "A Venn diagram uses overlapping rings to sort things by their properties. Each ring stands for one property. A number goes inside a ring if it has that property, in the overlap if it has both properties, and outside both rings if it has neither.",
-      "prompt": "List the first eight multiples of 3.",
-      "answer": "3, 6, 9, 12, 15, 18, 21, 24.",
+      "prompt": "A Venn diagram has one ring for 'multiples of 3' and another for 'even numbers'. Where does each of these go: 9, 12, 14, 25?",
+      "answer": "9 goes in the multiples of 3 ring only. 12 goes in the overlap, being both a multiple of 3 and even. 14 goes in the even ring only. 25 goes outside both rings.",
       "modelType": "model-6",
-      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Negative number or Odd / Even.",
+      "hint": "Test each number against both properties in turn. One that passes both belongs in the overlap; one that passes neither sits outside the rings altogether.",
       "explanation": "Sorting Numbers with Venn Diagrams: A Venn diagram uses overlapping rings to sort things by their properties. Each ring stands for one property. A number goes inside a ring if it has that property, in the overlap if it has both properties, and outside both rings if it has neither."
     }
   ],

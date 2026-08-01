@@ -96,6 +96,48 @@ const QUESTIONS = [
     answer: "a) 15, 18 — the rule is add 3 each time. b) 32, 64 — the rule is double each time.",
     hint: "Look at the jump from each term to the next. If the jump is always the same size you are adding; if each term is a multiple of the one before, you are multiplying.",
   },
+  {
+    grade: 4, unit: "unit-3", id: "explore-2", teaches: "Inverse Operations – the Key to Missing Numbers",
+    replaces: "Round each number to the nearest 100: a) 438 b) 762 c) 1256.",
+    prompt: "Use the inverse to find each missing number: a) 37 + ___ = 82 b) ___ − 46 = 125 c) 8 × ___ = 96.",
+    answer: "a) 45, because 82 − 37 = 45. b) 171, because 125 + 46 = 171. c) 12, because 96 ÷ 8 = 12.",
+    hint: "Undo the operation you can see. A missing part of an addition is found by subtracting, a missing start of a subtraction by adding, and a missing factor by dividing.",
+  },
+  {
+    grade: 4, unit: "unit-15", id: "explore-5", teaches: "Tests of Divisibility",
+    replaces: "Compare with < or >: a) −4 __ −7 b) 3 __ −2 c) −6 __ 2.",
+    prompt: "Use the divisibility tests: a) Is 246 divisible by 3? b) Is 1,530 divisible by both 5 and 10? c) Is 784 divisible by both 2 and 4?",
+    answer: "a) Yes — the digits add to 2 + 4 + 6 = 12, and 12 divides by 3. b) Yes to both — it ends in 0. c) Yes to both — it is even, and its last two digits, 84, divide by 4.",
+    hint: "Test for 3 with the digit sum, for 5 and 10 with the last digit, for 2 with whether the number is even, and for 4 with the last two digits.",
+  },
+  {
+    grade: 4, unit: "unit-15", id: "explore-6", teaches: "Sorting Numbers with Venn Diagrams",
+    replaces: "List the first eight multiples of 3.",
+    prompt: "A Venn diagram has one ring for 'multiples of 3' and another for 'even numbers'. Where does each of these go: 9, 12, 14, 25?",
+    answer: "9 goes in the multiples of 3 ring only. 12 goes in the overlap, being both a multiple of 3 and even. 14 goes in the even ring only. 25 goes outside both rings.",
+    hint: "Test each number against both properties in turn. One that passes both belongs in the overlap; one that passes neither sits outside the rings altogether.",
+  },
+  {
+    grade: 4, unit: "unit-17", id: "explore-3", teaches: "An Efficient Method for Division",
+    replaces: "Multiply using the column method: a) 34 × 7 b) 63 × 5 c) 28 × 4.",
+    prompt: "Divide using an efficient written method: a) 96 ÷ 4 b) 175 ÷ 5 c) 138 ÷ 6.",
+    answer: "a) 24, b) 35, c) 23.",
+    hint: "Split the number into parts that divide easily. For 96 ÷ 4, take 80 ÷ 4 = 20 and 16 ÷ 4 = 4, then add them to get 24.",
+  },
+  {
+    grade: 4, unit: "unit-18", id: "explore-1", teaches: "The Eight Compass Directions",
+    replaces: "Write the four main compass directions in clockwise order, starting from North.",
+    prompt: "Write all eight compass directions in clockwise order, starting from North.",
+    answer: "North, North-East, East, South-East, South, South-West, West, North-West.",
+    hint: "Write the four main directions first, then name the one that sits between each pair. An in-between direction takes both names, such as North-East between North and East.",
+  },
+  {
+    grade: 4, unit: "unit-18", id: "explore-5", teaches: "Understanding Reflections",
+    replaces: "True or false: moving East increases the x-coordinate.",
+    prompt: "A triangle sits to the left of a vertical mirror line. After it is reflected: a) which way does it face? b) does its size change? c) a corner was 3 squares from the line — how far is it now?",
+    answer: "a) It faces the opposite way, as though flipped over. b) No — a reflection never changes size or shape. c) Still 3 squares, but on the other side of the line.",
+    hint: "Fold the paper along the mirror line. The reflected shape lands exactly on top of the original, which is why every distance from the line stays the same.",
+  },
 ];
 
 const norm = (s) => String(s || "").replace(/\s+/g, " ").trim();

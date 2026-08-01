@@ -64,38 +64,38 @@
     {
       "id": "concept-1-what-is-a-sequence",
       "title": "What Is a Sequence?",
-      "explanation": "A sequence is an ordered list of numbers that follows a specific rule. Each number in the sequence is called a term, and the position of each term matters. In the sequence 2, 4, 6, 8, 10, the first term is 2, the second term is 4, the third term is 6, and so on. The order is part of what makes it a sequence – 2, 4, 6 is not the same sequence as 6, 4, 2. Sequences appear everywhere. The pages of a book, the floors of a building, the days counted down to Eid, and the rows of seats in a hall all form sequences.…",
-      "example": "There are two kinds of sequences you should know by name. A finite sequence has a set number of terms and then stops, such as 1, 3, 5, 7, 9 – exactly five terms ending at 9. An infinite sequence carries on forever, and…"
+      "explanation": "A sequence is an ordered list of numbers that follows a specific rule. Each number in the sequence is called a term, and the position of each term matters. In the sequence 2, 4, 6, 8, 10, the first term is 2, the second term is 4, the third term is 6, and so on. The order is part of what makes it a sequence – 2, 4, 6 is not the same sequence as 6, 4, 2.\n\nSequences appear everywhere. The pages of a book, the floors of a building, the days counted down to Eid, and the rows of seats in a hall all form sequences. Whenever a set of numbers marches along in a fixed order following a pattern, you are looking at a sequence. Being able to spot the pattern lets you say what comes next – and often lets you jump far ahead without listing every step.",
+      "example": "There are two kinds of sequences you should know by name. A finite sequence has a set number of terms and then stops, such as 1, 3, 5, 7, 9 – exactly five terms ending at 9. An infinite sequence carries on forever, and we show this by writing three dots (an ellipsis) at the end, such as 2, 4, 6, 8, 10, … The three dots are a promise that the pattern keeps going in the same way without ever ending."
     },
     {
       "id": "concept-2-term-to-term-rules",
       "title": "Term-to-Term Rules",
-      "explanation": "The first way to describe a sequence is with a term-to-term rule. This rule tells you how to get from one term to the next term. To find it, look at what happens between neighbouring terms. Take the sequence 5, 8, 11, 14, 17, … Work out the differences between each pair of neighbours: 8 − 5 = 3, then 11 − 8 = 3, then 14 − 11 = 3, then 17 − 14 = 3. Every step adds 3, so the term-to-term rule is “add 3”. Once you know this, continuing the sequence is easy: the next term is 17 + 3 = 20, then 23, then 26.",
-      "example": "Term-to-term rules do not have to be “add” rules. A rule can subtract, as in 20, 17, 14, 11, 8, … where the rule is “subtract 3”. A rule can multiply, as in 4, 8, 16, 32, 64, … where the rule is “multiply by 2”. Some…"
+      "explanation": "The first way to describe a sequence is with a term-to-term rule. This rule tells you how to get from one term to the next term. To find it, look at what happens between neighbouring terms.\n\nTake the sequence 5, 8, 11, 14, 17, … Work out the differences between each pair of neighbours: 8 − 5 = 3, then 11 − 8 = 3, then 14 − 11 = 3, then 17 − 14 = 3. Every step adds 3, so the term-to-term rule is “add 3”. Once you know this, continuing the sequence is easy: the next term is 17 + 3 = 20, then 23, then 26.\n\nTerm-to-term rules do not have to be “add” rules. A rule can subtract, as in 20, 17, 14, 11, 8, … where the rule is “subtract 3”. A rule can multiply, as in 4, 8, 16, 32, 64, … where the rule is “multiply by 2”. Some famous sequences use two previous terms: in the Fibonacci sequence 1, 1, 2, 3, 5, 8, 13, 21, … the rule is “add the previous two terms” (1 + 1 = 2, then 1 + 2 = 3, then 2 + 3 = 5, and so on). Fibonacci numbers show up in nature all the time – in the petals of flowers and the spirals of a pinecone.",
+      "example": "The weakness of a term-to-term rule is that it only tells you the next term. If Khadija wants the 50th term of 5, 8, 11, 14, … the term-to-term rule forces her to work out all 49 terms before it. That is slow and it is easy to make a slip. For jumping far ahead, we need a better tool – the position-to-term rule, which is coming next."
     },
     {
       "id": "concept-3-arithmetic-sequences-and-the-common-difference",
       "title": "Arithmetic Sequences and the Common Difference",
-      "explanation": "An arithmetic sequence is a special sequence where the difference between one term and the next is always the same. That fixed step is called the common difference, and we often write it as the letter d. Arithmetic sequences are the most important type you will meet this year, so learn them well. Look at these examples and find the common difference each time:",
-      "example": "3, 7, 11, 15, 19, … has common difference d = 4 (add 4 each time)."
+      "explanation": "An arithmetic sequence is a special sequence where the difference between one term and the next is always the same. That fixed step is called the common difference, and we often write it as the letter d. Arithmetic sequences are the most important type you will meet this year, so learn them well.\n\nLook at these examples and find the common difference each time:\n\n3, 7, 11, 15, 19, … has common difference d = 4 (add 4 each time).\n\n20, 17, 14, 11, 8, … has common difference d = −3 (the sequence goes down).\n\n1.5, 2.0, 2.5, 3.0, … has common difference d = 0.5 (a decimal step is fine).",
+      "example": "Notice that the common difference can be positive (the sequence increases), negative (the sequence decreases), or even a decimal or fraction. To check whether a sequence is arithmetic, find the difference between at least three pairs of neighbours. If every difference is the same, it is arithmetic. If the differences change, it is not. For example, 2, 6, 18, 54, … is not arithmetic, because the differences are 4, 12, 36 – they are not constant. (That one is actually geometric, multiplying by 3 each time.)"
     },
     {
       "id": "concept-4-position-to-term-rules",
       "title": "Position-to-Term Rules",
-      "explanation": "A position-to-term rule is a rule that gives you the value of a term directly from its position number. We use the letter n for the position: n = 1 for the first term, n = 2 for the second term, n = 3 for the third, and so on. The rule is written as an expression in n, such as 3n + 1. Let us test the rule term = 3n + 1 by substituting each position:",
-      "example": "So the rule 3n + 1 generates the sequence 4, 7, 10, 13, … The huge advantage of a position-to-term rule is that you can find any term without working out the ones before it. If Farah wants the 100th term, she simply…"
+      "explanation": "A position-to-term rule is a rule that gives you the value of a term directly from its position number. We use the letter n for the position: n = 1 for the first term, n = 2 for the second term, n = 3 for the third, and so on. The rule is written as an expression in n, such as 3n + 1.\n\nLet us test the rule term = 3n + 1 by substituting each position:\n\nSo the rule 3n + 1 generates the sequence 4, 7, 10, 13, … The huge advantage of a position-to-term rule is that you can find any term without working out the ones before it. If Farah wants the 100th term, she simply substitutes n = 100: 3 × 100 + 1 = 301. No need to list ninety-nine other terms first. This is exactly the power that a term-to-term rule lacks.",
+      "example": "It helps to lay the sequence out in a small table so you can see the position sitting above its term. Reading down each column pairs a position with its value, and it makes the pattern easy to check. Whenever you find a rule, always test it on two or three positions to make sure it really produces the right terms."
     },
     {
       "id": "concept-5-finding-the-nth-term-of-an-arithmetic-sequence",
       "title": "Finding the nth Term of an Arithmetic Sequence",
-      "explanation": "The nth term formula is the most useful position-to-term rule of all, because there is a reliable method to find it for any arithmetic sequence. The formula is: nth term = first term + (n − 1) × common difference",
-      "example": "Let us find the nth term of the sequence 5, 9, 13, 17, … First, the first term is 5. Second, the common difference is d = 4 (each step adds 4). Now substitute into the formula and simplify:"
+      "explanation": "The nth term formula is the most useful position-to-term rule of all, because there is a reliable method to find it for any arithmetic sequence. The formula is:\n\nnth term = first term + (n − 1) × common difference\n\nLet us find the nth term of the sequence 5, 9, 13, 17, … First, the first term is 5. Second, the common difference is d = 4 (each step adds 4). Now substitute into the formula and simplify:\n\nSo the nth term is 4n + 1. Let us check it works: for n = 1 we get 4 + 1 = 5 (correct), for n = 2 we get 8 + 1 = 9 (correct), for n = 3 we get 12 + 1 = 13 (correct). It works, so we can trust it. Now the 10th term is easy: 4 × 10 + 1 = 41, and the 100th term is 4 × 100 + 1 = 401 – found instantly.",
+      "example": "Here is a quick shortcut worth knowing. In the nth term of an arithmetic sequence, the number in front of n is always the common difference. So for a sequence that goes up in 4s, the nth term will start with 4n; for a sequence that goes up in 7s, it will start with 7n. You then adjust with a constant number to make the first term come out right. For 6, 13, 20, 27, … the common difference is 7, so the nth term begins 7n; since 7 × 1 = 7 but the first term is 6, we subtract 1, giving nth term = 7n − 1."
     },
     {
       "id": "concept-6-what-is-a-function",
       "title": "What Is a Function?",
-      "explanation": "A function is a rule that connects two quantities. It takes an input, does something to it, and produces exactly one output. The key idea is that word exactly one – for every input you put in, a function always gives back a single, definite output. Put the same input in twice and you always get the same output, because the rule never changes. The easiest way to picture a function is as a function machine. You feed a number in one end, the machine works on it according to its rule, and the answer drops out the…",
-      "example": "Function machines can also be run in the right order carefully. A machine that says “multiply by 2, then add 3” is not the same as one that says “add 3, then multiply by 2”. Feed 5 into the second machine: 5 + 3 = 8,…"
+      "explanation": "A function is a rule that connects two quantities. It takes an input, does something to it, and produces exactly one output. The key idea is that word exactly one – for every input you put in, a function always gives back a single, definite output. Put the same input in twice and you always get the same output, because the rule never changes.\n\nThe easiest way to picture a function is as a function machine. You feed a number in one end, the machine works on it according to its rule, and the answer drops out the other end. Imagine a machine whose rule is “multiply by 2, then add 3”. If you feed in 5, the machine doubles it to 10, then adds 3, and out comes 13. If you feed in 0, you get 3. If you feed in 10, you get 23. The machine treats every number the same way.",
+      "example": "Function machines can also be run in the right order carefully. A machine that says “multiply by 2, then add 3” is not the same as one that says “add 3, then multiply by 2”. Feed 5 into the second machine: 5 + 3 = 8, then 8 × 2 = 16 – a different answer. The order of the steps matters, just like the order of terms matters in a sequence. Always follow the machine’s steps from left to right."
     }
   ],
   "explorations": [
@@ -104,48 +104,48 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "What Is a Sequence?",
-      "context": "A sequence is an ordered list of numbers that follows a specific rule. Each number in the sequence is called a term, and the position of each term matters. In the sequence 2, 4, 6, 8, 10, the first term is 2, the second term is 4, the third term is 6, and so…",
+      "context": "A sequence is an ordered list of numbers that follows a specific rule. Each number in the sequence is called a term, and the position of each term matters.",
       "prompt": "Write the next two terms and the term-to-term rule: a) 3, 7, 11, 15, … b) 40, 34, 28, 22, …",
       "answer": "1) a) 19, 23, rule “add 4”; b) 16, 10, rule “subtract 6”.",
       "modelType": "model-1",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) a) 19, 23, rule “add 4”; b) 16, 10, rule “subtract 6”."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position.",
+      "explanation": "What Is a Sequence?: A sequence is an ordered list of numbers that follows a specific rule. Each number in the sequence is called a term, and the position of each term matters. In the sequence 2, 4, 6, 8, 10, the first term is 2, the second term is 4, the third term is 6, and so on. The order is part of what makes it a sequence – 2, 4, 6 is not the same sequence as 6, 4, 2."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Term-to-Term Rules",
-      "context": "The first way to describe a sequence is with a term-to-term rule. This rule tells you how to get from one term to the next term. To find it, look at what happens between neighbouring terms. Take the sequence 5, 8, 11, 14, 17, … Work out the differences…",
+      "context": "The first way to describe a sequence is with a term-to-term rule. This rule tells you how to get from one term to the next term. To find it, look at what happens between neighbouring terms.",
       "prompt": "Find the common difference: a) 2, 9, 16, 23, … b) 100, 88, 76, 64, …",
       "answer": "a) 7; b) −12.",
       "modelType": "model-2",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "a) 7; b) −12."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position.",
+      "explanation": "Term-to-Term Rules: The first way to describe a sequence is with a term-to-term rule. This rule tells you how to get from one term to the next term. To find it, look at what happens between neighbouring terms."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Arithmetic Sequences and the Common Difference",
-      "context": "An arithmetic sequence is a special sequence where the difference between one term and the next is always the same. That fixed step is called the common difference, and we often write it as the letter d. Arithmetic sequences are the most important type you…",
+      "context": "An arithmetic sequence is a special sequence where the difference between one term and the next is always the same. That fixed step is called the common difference, and we often write it as the letter d.",
       "prompt": "Use the rule term = 2n + 1 to write the first five terms.",
       "answer": "3, 5, 7, 9, 11.",
       "modelType": "model-3",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "3, 5, 7, 9, 11."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position.",
+      "explanation": "Arithmetic Sequences and the Common Difference: An arithmetic sequence is a special sequence where the difference between one term and the next is always the same. That fixed step is called the common difference, and we often write it as the letter d. Arithmetic sequences are the most important type you will meet this year, so learn them well."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Position-to-Term Rules",
-      "context": "A position-to-term rule is a rule that gives you the value of a term directly from its position number. We use the letter n for the position: n = 1 for the first term, n = 2 for the second term, n = 3 for the third, and so on. The rule is written as an…",
+      "context": "A position-to-term rule is a rule that gives you the value of a term directly from its position number. We use the letter n for the position: n = 1 for the first term, n = 2 for the second term, n = 3 for the third, and so on.",
       "prompt": "For f(x) = x + 8, find f(2), f(0) and f(9).",
       "answer": "f(2) = 10, f(0) = 8, f(9) = 17.",
       "modelType": "model-4",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "f(2) = 10, f(0) = 8, f(9) = 17."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position.",
+      "explanation": "Position-to-Term Rules: A position-to-term rule is a rule that gives you the value of a term directly from its position number. We use the letter n for the position: n = 1 for the first term, n = 2 for the second term, n = 3 for the third, and so on. The rule is written as an expression in n, such as 3n + 1."
     },
     {
       "id": "explore-5",
@@ -154,22 +154,22 @@
       "title": "Finding the nth Term of an Arithmetic Sequence",
       "context": "The nth term formula is the most useful position-to-term rule of all, because there is a reliable method to find it for any arithmetic sequence. The formula is: nth term = first term + (n − 1) × common difference",
       "prompt": "Is 5, 10, 20, 40, … arithmetic? Explain in one sentence.",
-      "answer": "No – it doubles each time (multiplies by",
+      "answer": "No – it doubles each time (multiplies by 2).",
       "modelType": "model-5",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "No – it doubles each time (multiplies by"
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position.",
+      "explanation": "Finding the nth Term of an Arithmetic Sequence: The nth term formula is the most useful position-to-term rule of all, because there is a reliable method to find it for any arithmetic sequence. The formula is:"
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "What Is a Function?",
-      "context": "A function is a rule that connects two quantities. It takes an input, does something to it, and produces exactly one output. The key idea is that word exactly one – for every input you put in, a function always gives back a single, definite output. Put the…",
+      "context": "A function is a rule that connects two quantities. It takes an input, does something to it, and produces exactly one output. The key idea is that word exactly one – for every input you put in, a function always gives back a single, definite output.",
       "prompt": "Find the nth term of each sequence: a) 4, 7, 10, 13, … b) 9, 14, 19, 24, …",
       "answer": "1) a) 3n + 1; b) 5n + 4.",
       "modelType": "model-6",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) a) 3n + 1; b) 5n + 4."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position.",
+      "explanation": "What Is a Function?: A function is a rule that connects two quantities. It takes an input, does something to it, and produces exactly one output. The key idea is that word exactly one – for every input you put in, a function always gives back a single, definite output. Put the same input in twice and you always get the same output, because the rule never changes."
     }
   ],
   "visualModels": [
@@ -178,7 +178,7 @@
       "outcomeId": "lo01",
       "title": "What Is a Sequence?",
       "modelType": "concept-model-1",
-      "purpose": "A sequence is an ordered list of numbers that follows a specific rule. Each number in the sequence is called a term, and the position of each term matters. In the sequence 2, 4, 6, 8, 10, the first term is 2, the second…",
+      "purpose": "A sequence is an ordered list of numbers that follows a specific rule. Each number in the sequence is called a term, and the position of each term matters.",
       "defaultNumber": null
     },
     {
@@ -186,7 +186,7 @@
       "outcomeId": "lo02",
       "title": "Term-to-Term Rules",
       "modelType": "concept-model-2",
-      "purpose": "The first way to describe a sequence is with a term-to-term rule. This rule tells you how to get from one term to the next term. To find it, look at what happens between neighbouring terms. Take the sequence 5, 8, 11,…",
+      "purpose": "The first way to describe a sequence is with a term-to-term rule. This rule tells you how to get from one term to the next term. To find it, look at what happens between neighbouring terms.",
       "defaultNumber": null
     },
     {
@@ -194,7 +194,7 @@
       "outcomeId": "lo03",
       "title": "Arithmetic Sequences and the Common Difference",
       "modelType": "concept-model-3",
-      "purpose": "An arithmetic sequence is a special sequence where the difference between one term and the next is always the same. That fixed step is called the common difference, and we often write it as the letter d. Arithmetic…",
+      "purpose": "An arithmetic sequence is a special sequence where the difference between one term and the next is always the same. That fixed step is called the common difference, and we often write it as the letter d.",
       "defaultNumber": null
     },
     {
@@ -202,7 +202,7 @@
       "outcomeId": "lo04",
       "title": "Position-to-Term Rules",
       "modelType": "concept-model-4",
-      "purpose": "A position-to-term rule is a rule that gives you the value of a term directly from its position number. We use the letter n for the position: n = 1 for the first term, n = 2 for the second term, n = 3 for the third, and…",
+      "purpose": "A position-to-term rule is a rule that gives you the value of a term directly from its position number.",
       "defaultNumber": null
     },
     {
@@ -218,7 +218,7 @@
       "outcomeId": "lo06",
       "title": "What Is a Function?",
       "modelType": "concept-model-6",
-      "purpose": "A function is a rule that connects two quantities. It takes an input, does something to it, and produces exactly one output. The key idea is that word exactly one – for every input you put in, a function always gives…",
+      "purpose": "A function is a rule that connects two quantities. It takes an input, does something to it, and produces exactly one output.",
       "defaultNumber": null
     }
   ],
@@ -405,84 +405,84 @@
       "level": "Warm-up",
       "prompt": "Write the next two terms and the term-to-term rule: a) 3, 7, 11, 15, … b) 40, 34, 28, 22, …",
       "answer": "1) a) 19, 23, rule “add 4”; b) 16, 10, rule “subtract 6”.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position."
     },
     {
       "id": "p02",
       "level": "Warm-up",
       "prompt": "Find the common difference: a) 2, 9, 16, 23, … b) 100, 88, 76, 64, …",
       "answer": "a) 7; b) −12.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position."
     },
     {
       "id": "p03",
       "level": "Warm-up",
       "prompt": "Use the rule term = 2n + 1 to write the first five terms.",
       "answer": "3, 5, 7, 9, 11.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position."
     },
     {
       "id": "p04",
       "level": "Warm-up",
       "prompt": "For f(x) = x + 8, find f(2), f(0) and f(9).",
       "answer": "f(2) = 10, f(0) = 8, f(9) = 17.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position."
     },
     {
       "id": "p05",
       "level": "Warm-up",
       "prompt": "Is 5, 10, 20, 40, … arithmetic? Explain in one sentence.",
-      "answer": "No – it doubles each time (multiplies by",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "No – it doubles each time (multiplies by 2).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position."
     },
     {
       "id": "p06",
       "level": "Core",
       "prompt": "Find the nth term of each sequence: a) 4, 7, 10, 13, … b) 9, 14, 19, 24, …",
       "answer": "1) a) 3n + 1; b) 5n + 4.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position."
     },
     {
       "id": "p07",
       "level": "Core",
       "prompt": "For g(x) = 3x − 4, find g(5), g(0) and g(−2).",
       "answer": "g(5) = 11, g(0) = −4, g(−2) = −10.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position."
     },
     {
       "id": "p08",
       "level": "Core",
       "prompt": "Complete the input-output table for y = 5x − 2 with inputs 1, 2, 3, 4, 5.",
       "answer": "Outputs: 3, 8, 13, 18, 23.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position."
     },
     {
       "id": "p09",
       "level": "Core",
       "prompt": "For h(x) = 2x + 1, find the value of x for which h(x) = 15.",
       "answer": "x = 7.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position."
     },
     {
       "id": "p10",
       "level": "Core",
       "prompt": "A sequence has nth term 6n − 1. Find the 1st, 5th and 10th terms.",
       "answer": "5, 29, 59.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position."
     },
     {
       "id": "p11",
       "level": "Core",
       "prompt": "Write a term-to-term rule and a position-to-term rule for 5, 10, 15, 20, …",
       "answer": "Term-to-term: “add 5”; position-to-term: 5n.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position."
     },
     {
       "id": "p12",
       "level": "Challenge",
       "prompt": "In an arithmetic sequence, the 5th term is 23 and the 12th term is 58. Find the first term and the common difference.",
       "answer": "1) From term 5 to term 12 the value rises 58 − 23 = 35 over 7 steps, so d = 5; first term = 23 − 4×5 = 3.",
-      "hint": "Identify the key mathematical idea before calculating or explaining."
+      "hint": "Decide which idea the question is really about (Sequence, Term / Position, Term-to-term rule), then work one step at a time and check the answer is sensible."
     }
   ],
   "activities": [
@@ -529,9 +529,9 @@
     },
     {
       "title": "Guess My Rule (Family Game)",
-      "materials": "paper and pencil for two or more players.",
+      "materials": "paper and pencil for two or more players (or play solo, or with your AI tutor, if no one is available).",
       "steps": [
-        "One player secretly picks a linear rule, such as “double and add 1”.",
+        "One player secretly picks a linear rule, such as “double and add 1” (playing alone or with your AI tutor, you pick the rule and write down the outputs before checking your own guesses).",
         "The others call out input numbers; the rule-keeper gives the outputs only.",
         "Players write the input-output pairs in a table and try to spot the rule.",
         "The first to say the rule correctly (as words or as f(x)) wins and picks the next rule."
@@ -543,8 +543,8 @@
       "steps": [
         "Draw a long snake and divide its body into boxes.",
         "Choose a starting term and a common difference, then fill the snake with the sequence.",
-        "Rub out some terms to leave gaps, and swap snakes with a friend.",
-        "Fill the gaps in your friend’s snake by working out the common difference first.",
+        "Rub out some terms to leave gaps, and swap snakes with a friend or your AI tutor (or, working alone, cover the gaps and test yourself later without looking).",
+        "Fill the gaps in your friend's or AI tutor's snake by working out the common difference first (or check your own gaps against your original sequence).",
         "After your activities, talk or write about: Which activity made the nth term feel clearest to you? Where did you spot a real pattern outside of maths class? What would you like more practice with? Share your answers with your teacher at your next session."
       ]
     }
@@ -552,28 +552,24 @@
   "reference": {
     "rules": [
       {
-        "title": "A sequence is an ordered list of",
-        "text": "A sequence is an ordered list of numbers that follows a rule, such as 5, 8, 11, 14, 17, … A function is a rule that takes an input, does something to it, and produces exactly one output, like a little machine. These two ideas are closely related, and by the end of the unit you will see that every sequence is really a special kind of function. This is your first serious step into algebra – the branch of mathematics where letters stand for numbers and where we describe patterns with formulas rather than long lists."
+        "title": "Sequences and functions",
+        "text": "A sequence is an ordered list of numbers that follows a rule, such as 5, 8, 11, 14, 17, … A function is a rule that takes an input, does something to it, and produces exactly one output, like a little machine. These two ideas are closely related, and by the end of the unit you will see that every sequence is really a special kind of function."
       },
       {
-        "title": "Why do sequences and functions matter so",
-        "text": "Why do sequences and functions matter so much? Because they let you predict. Once you know the rule behind a pattern, you no longer have to work out every single step – you can jump straight to the answer. A shopkeeper in Hargeisa who knows the rule for his weekly savings can say exactly how much he will have in a year without adding it up week by week. A scientist who knows the function linking time and temperature can predict tomorrow. Learning to find and use rules is one of the most powerful skills in all of mathematics, and it opens the door to everything that follows."
+        "title": "Why sequences and functions matter",
+        "text": "Once you know the rule behind a pattern, you no longer have to work out every single step – you can jump straight to the answer. A shopkeeper in Hargeisa who knows the rule for his weekly savings can say exactly how much he will have in a year without adding it up week by week. Learning to find and use rules is one of the most powerful skills in mathematics."
       },
       {
-        "title": "Recognise a sequence and describe it using",
-        "text": "Recognise a sequence and describe it using a term-to-term rule."
+        "title": "Term-to-term rule",
+        "text": "A term-to-term rule tells you how to get from one term to the next. Find it by working out the difference between consecutive terms, e.g. in 5, 8, 11, 14, … each step adds 3, so the rule is “add 3”."
       },
       {
-        "title": "Use a position-to-term rule to generate a",
-        "text": "Use a position-to-term rule to generate a sequence from its position numbers."
+        "title": "The nth term formula",
+        "text": "For an arithmetic sequence, nth term = first term + (n − 1) × common difference. This position-to-term rule lets you find any term directly, without listing every term before it."
       },
       {
-        "title": "A sequence is an ordered list of",
-        "text": "A sequence is an ordered list of numbers that follows a specific rule. Each number in the sequence is called a term, and the position of each term matters. In the sequence 2, 4, 6, 8, 10, the first term is 2, the second term is 4, the third term is 6, and so on. The order is part of what makes it a sequence – 2, 4, 6 is not the same sequence as 6, 4, 2."
-      },
-      {
-        "title": "The first way to describe a sequence",
-        "text": "The first way to describe a sequence is with a term-to-term rule. This rule tells you how to get from one term to the next term. To find it, look at what happens between neighbouring terms."
+        "title": "Function notation",
+        "text": "f(x) means the output of the function f when the input is x. To evaluate f(3), replace every x in the rule with 3 and work out the result."
       }
     ],
     "terms": [
@@ -636,7 +632,7 @@
       "difficulty": "Round 1",
       "prompt": "Write the next two terms and the term-to-term rule: a) 3, 7, 11, 15, … b) 40, 34, 28, 22, …",
       "answer": "1) a) 19, 23, rule “add 4”; b) 16, 10, rule “subtract 6”.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position.",
       "errorFeedback": "1) a) 19, 23, rule “add 4”; b) 16, 10, rule “subtract 6”."
     },
     {
@@ -645,7 +641,7 @@
       "difficulty": "Round 1",
       "prompt": "Find the common difference: a) 2, 9, 16, 23, … b) 100, 88, 76, 64, …",
       "answer": "a) 7; b) −12.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position.",
       "errorFeedback": "a) 7; b) −12."
     },
     {
@@ -654,7 +650,7 @@
       "difficulty": "Round 1",
       "prompt": "Use the rule term = 2n + 1 to write the first five terms.",
       "answer": "3, 5, 7, 9, 11.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position.",
       "errorFeedback": "3, 5, 7, 9, 11."
     },
     {
@@ -663,7 +659,7 @@
       "difficulty": "Round 1",
       "prompt": "For f(x) = x + 8, find f(2), f(0) and f(9).",
       "answer": "f(2) = 10, f(0) = 8, f(9) = 17.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position.",
       "errorFeedback": "f(2) = 10, f(0) = 8, f(9) = 17."
     },
     {
@@ -671,9 +667,9 @@
       "outcomeId": "lo05",
       "difficulty": "Round 2",
       "prompt": "Is 5, 10, 20, 40, … arithmetic? Explain in one sentence.",
-      "answer": "No – it doubles each time (multiplies by",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "No – it doubles each time (multiplies by"
+      "answer": "No – it doubles each time (multiplies by 2).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position.",
+      "errorFeedback": "No – it doubles each time (multiplies by 2)."
     },
     {
       "id": "fl06",
@@ -681,7 +677,7 @@
       "difficulty": "Round 2",
       "prompt": "Find the nth term of each sequence: a) 4, 7, 10, 13, … b) 9, 14, 19, 24, …",
       "answer": "1) a) 3n + 1; b) 5n + 4.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position.",
       "errorFeedback": "1) a) 3n + 1; b) 5n + 4."
     },
     {
@@ -690,7 +686,7 @@
       "difficulty": "Round 2",
       "prompt": "For g(x) = 3x − 4, find g(5), g(0) and g(−2).",
       "answer": "g(5) = 11, g(0) = −4, g(−2) = −10.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position.",
       "errorFeedback": "g(5) = 11, g(0) = −4, g(−2) = −10."
     },
     {
@@ -699,7 +695,7 @@
       "difficulty": "Round 2",
       "prompt": "Complete the input-output table for y = 5x − 2 with inputs 1, 2, 3, 4, 5.",
       "answer": "Outputs: 3, 8, 13, 18, 23.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position.",
       "errorFeedback": "Outputs: 3, 8, 13, 18, 23."
     },
     {
@@ -708,7 +704,7 @@
       "difficulty": "Round 3",
       "prompt": "For h(x) = 2x + 1, find the value of x for which h(x) = 15.",
       "answer": "x = 7.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position.",
       "errorFeedback": "x = 7."
     },
     {
@@ -717,7 +713,7 @@
       "difficulty": "Round 3",
       "prompt": "A sequence has nth term 6n − 1. Find the 1st, 5th and 10th terms.",
       "answer": "5, 29, 59.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position.",
       "errorFeedback": "5, 29, 59."
     },
     {
@@ -726,7 +722,7 @@
       "difficulty": "Round 3",
       "prompt": "Write a term-to-term rule and a position-to-term rule for 5, 10, 15, 20, …",
       "answer": "Term-to-term: “add 5”; position-to-term: 5n.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term / Position.",
       "errorFeedback": "Term-to-term: “add 5”; position-to-term: 5n."
     },
     {
@@ -735,7 +731,7 @@
       "difficulty": "Round 3",
       "prompt": "In an arithmetic sequence, the 5th term is 23 and the 12th term is 58. Find the first term and the common difference.",
       "answer": "1) From term 5 to term 12 the value rises 58 − 23 = 35 over 7 steps, so d = 5; first term = 23 − 4×5 = 3.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Sequence, Term / Position, Term-to-term rule), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) From term 5 to term 12 the value rises 58 − 23 = 35 over 7 steps, so d = 5; first term = 23 − 4×5 = 3."
     }
   ],
@@ -747,7 +743,7 @@
       "context": "Home",
       "prompt": "A construction crew in Kismaayo builds 12 metres of road on day 1 and 3 more metres each day than the day before. How many metres do they build on day 10?",
       "answer": "1) nth term = 3n + 9, day 10 = 39 metres.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Sequence, Term / Position, Term-to-term rule), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) nth term = 3n + 9, day 10 = 39 metres."
     },
     {
@@ -757,7 +753,7 @@
       "context": "Market",
       "prompt": "The temperature at noon in Nairobi is 18°C and drops 2.5°C each hour. What is the temperature at 8:00 pm?",
       "answer": "Noon to 8 pm is 8 hours; 18 − 2.5×8 = 18 − 20 = −2°C.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Sequence, Term / Position, Term-to-term rule), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "Noon to 8 pm is 8 hours; 18 − 2.5×8 = 18 − 20 = −2°C."
     },
     {
@@ -766,9 +762,9 @@
       "difficulty": "Core",
       "context": "Travel",
       "prompt": "Maryam does 15 press-ups on day 1 and adds 3 each day. On which day does she first do more than 50 press-ups?",
-      "answer": "nth term = 3n + 12; first over 50 is day 13 (3×13 + 12 =",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "nth term = 3n + 12; first over 50 is day 13 (3×13 + 12 ="
+      "answer": "nth term = 3n + 12; first over 50 is day 13 (3×13 + 12 = 51). Day 12 gives only 48, still under 50.",
+      "hint": "Decide which idea the question is really about (Sequence, Term / Position, Term-to-term rule), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "nth term = 3n + 12; first over 50 is day 13 (3×13 + 12 = 51). Day 12 gives only 48, still under 50."
     },
     {
       "id": "rp04",
@@ -776,9 +772,9 @@
       "difficulty": "Challenge",
       "context": "School",
       "prompt": "A car rental charges 40 shillings per day plus 0.30 per kilometre. Write the cost function C(k) and find the cost of driving 120 km in one day.",
-      "answer": ". Note: on day 12 she does 48, still under 50.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": ". Note: on day 12 she does 48, still under 50."
+      "answer": "C(k) = 40 + 0.30k; 40 + 0.30×120 = 40 + 36 = 76 shillings.",
+      "hint": "Decide which idea the question is really about (Sequence, Term / Position, Term-to-term rule), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "C(k) = 40 + 0.30k; 40 + 0.30×120 = 40 + 36 = 76 shillings."
     },
     {
       "id": "rp05",
@@ -786,9 +782,9 @@
       "difficulty": "Challenge",
       "context": "Community",
       "prompt": "A population of goats grows by the function P = 5000 + 200t, where t is years. After how many years does the herd reach 6000?",
-      "answer": "C(k) = 40 + 0.30k; 40 + 0.30×120 = 40 + 36 = 76 shillings.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "C(k) = 40 + 0.30k; 40 + 0.30×120 = 40 + 36 = 76 shillings."
+      "answer": "5000 + 200t = 6000, so 200t = 1000, giving t = 5 years.",
+      "hint": "Decide which idea the question is really about (Sequence, Term / Position, Term-to-term rule), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "5000 + 200t = 6000, so 200t = 1000, giving t = 5 years."
     },
     {
       "id": "rp06",
@@ -797,7 +793,7 @@
       "context": "Daily life",
       "prompt": "In an arithmetic sequence, the 5th term is 23 and the 12th term is 58. Find the first term and the common difference.",
       "answer": "1) From term 5 to term 12 the value rises 58 − 23 = 35 over 7 steps, so d = 5; first term = 23 − 4×5 = 3.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Sequence, Term / Position, Term-to-term rule), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) From term 5 to term 12 the value rises 58 − 23 = 35 over 7 steps, so d = 5; first term = 23 − 4×5 = 3."
     }
   ],
@@ -826,7 +822,7 @@
         "Term-to-term rule",
         "Position-to-term rule"
       ],
-      "modelAnswer": "97 = 2 + (n −"
+      "modelAnswer": "97 = 2 + (n − 1) × 5, so 95 = 5(n − 1), n − 1 = 19, n = 20. There are 20 terms."
     },
     {
       "id": "reason03",
@@ -839,7 +835,7 @@
         "Position-to-term rule",
         "Common difference"
       ],
-      "modelAnswer": "×5 gives n = 20 terms."
+      "modelAnswer": "f(x) = 3x − 1; output 26 means 3x − 1 = 26, so 3x = 27, x = 9."
     },
     {
       "id": "reason04",
@@ -852,7 +848,7 @@
         "Common difference",
         "nth term"
       ],
-      "modelAnswer": "f(x) = 3x − 1; output 26 means 3x − 1 = 26, so 3x = 27, x = 9."
+      "modelAnswer": "Plan A: A(n) = 1000 + 100(n − 1) = 100n + 900. Plan B: B(n) = 500 + 150(n − 1) = 150n + 350. Setting B(n) > A(n): 150n + 350 > 100n + 900, so 50n > 550, n > 11. Plan B first exceeds Plan A in month 12 (A = 2100, B = 2150)."
     },
     {
       "id": "reason05",
@@ -878,7 +874,7 @@
         "Term / Position",
         "Term-to-term rule"
       ],
-      "modelAnswer": "A function is a rule that connects two quantities. It takes an input, does something to it, and produces exactly one output. The key idea is that word exactly one – for every input you put in, a function always gives back a single, definite output. Put the same input in twice and you always get the same output, because the rule never changes. The easiest way to picture a function is as a function machine. You feed a number in one end, the machine works on it according to its rule, and the answer drops out the…"
+      "modelAnswer": "A function is a rule that connects two quantities. It takes an input, does something to it, and produces exactly one output. The key idea is that word exactly one – for every input you put in, a function always gives back a single, definite output. Put the same input in twice and you always get the same output, because the rule never changes.\n\nThe easiest way to picture a function is as a function machine. You feed a number in one end, the machine works on it according to its rule, and the answer drops out the other end. Imagine a machine whose rule is “multiply by 2, then add 3”. If you feed in 5, the machine doubles it to 10, then adds 3, and out comes 13. If you feed in 0, you get 3. If you feed in 10, you get 23. The machine treats every number the same way."
     }
   ],
   "assessment": {
@@ -897,7 +893,7 @@
           "28"
         ],
         "answer": "36",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Ask yourself what \"Sequence\" means here before you choose.",
         "explanation": "The rule is add 8 each time, so the next term is 28 + 8 = 36."
       },
       {
@@ -905,48 +901,48 @@
         "type": "Application",
         "outcomeId": "lo02",
         "difficulty": "Basic",
-        "question": "Solve for x: x + 11 = 21.",
+        "question": "Which sequence is infinite?",
         "options": [
-          "10",
-          "21",
-          "32",
-          "11"
+          "3, 6, 9, 12 (4 terms)",
+          "10, 20, 30, 40, …",
+          "1, 2, 3, 4, 5 (5 terms)",
+          "7, 14, 21 (3 terms)"
         ],
-        "answer": "10",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Subtract 11 from both sides: x = 21 − 11 = 10."
+        "answer": "10, 20, 30, 40, …",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
+        "explanation": "The dots (…) show the sequence carries on forever, so it is infinite; the others state a fixed number of terms and stop, so they are finite."
       },
       {
         "id": "q03",
         "type": "Application",
         "outcomeId": "lo03",
         "difficulty": "Basic",
-        "question": "If x = 7, what is the value of 2x + 7?",
+        "question": "What is the common difference of the arithmetic sequence 5, 9, 13, 17, …?",
         "options": [
-          "23",
-          "21",
-          "16",
-          "14"
+          "4",
+          "5",
+          "9",
+          "13"
         ],
-        "answer": "21",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "2 × 7 + 7 = 14 + 7 = 21."
+        "answer": "4",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
+        "explanation": "9 − 5 = 4, 13 − 9 = 4, 17 − 13 = 4, so the common difference is 4."
       },
       {
         "id": "q04",
         "type": "Application",
         "outcomeId": "lo04",
         "difficulty": "Basic",
-        "question": "If x = 6, what is the value of 9x + 5?",
+        "question": "Using the position-to-term rule term = 4n − 1, what is the 5th term?",
         "options": [
+          "15",
+          "19",
           "20",
-          "54",
-          "68",
-          "59"
+          "21"
         ],
-        "answer": "59",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "9 × 6 + 5 = 54 + 5 = 59."
+        "answer": "19",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
+        "explanation": "Substitute n = 5: 4(5) − 1 = 20 − 1 = 19."
       },
       {
         "id": "q05",
@@ -961,7 +957,7 @@
           "41"
         ],
         "answer": "41",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Ask yourself what \"Common difference\" means here before you choose.",
         "explanation": "The rule is add 8 each time, so the next term is 33 + 8 = 41."
       },
       {
@@ -969,32 +965,32 @@
         "type": "Application",
         "outcomeId": "lo06",
         "difficulty": "Core",
-        "question": "Solve for x: x + 3 = 8.",
+        "question": "A function machine doubles the input, then adds 3. What is the output when the input is 5?",
         "options": [
-          "3",
-          "5",
           "8",
-          "11"
+          "10",
+          "13",
+          "16"
         ],
-        "answer": "5",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Subtract 3 from both sides: x = 8 − 3 = 5."
+        "answer": "13",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
+        "explanation": "Double 5 to get 10, then add 3: 10 + 3 = 13."
       },
       {
         "id": "q07",
         "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
-        "question": "Solve for x: x + 6 = 11.",
+        "question": "If f(x) = 2x + 3, what is f(4)?",
         "options": [
-          "6",
-          "5",
+          "7",
+          "9",
           "11",
-          "17"
+          "14"
         ],
-        "answer": "5",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Subtract 6 from both sides: x = 11 − 6 = 5."
+        "answer": "11",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
+        "explanation": "f(4) = 2(4) + 3 = 8 + 3 = 11."
       },
       {
         "id": "q08",
@@ -1009,7 +1005,7 @@
           "7"
         ],
         "answer": "9",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
         "explanation": "The rule is add 2 each time, so the next term is 7 + 2 = 9."
       },
       {
@@ -1017,16 +1013,16 @@
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Challenge",
-        "question": "If x = 8, what is the value of 3x + 9?",
+        "question": "What is the term-to-term rule for the sequence 6, 10, 14, 18, …?",
         "options": [
-          "33",
-          "20",
-          "24",
-          "36"
+          "Add 4",
+          "Add 6",
+          "Multiply by 2",
+          "Subtract 4"
         ],
-        "answer": "33",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "3 × 8 + 9 = 24 + 9 = 33."
+        "answer": "Add 4",
+        "hint": "Ask yourself what \"Sequence\" means here before you choose.",
+        "explanation": "Each term increases by 4: 10 − 6 = 4, 14 − 10 = 4, 18 − 14 = 4."
       },
       {
         "id": "q10",
@@ -1098,32 +1094,32 @@
               "28"
             ],
             "answer": "36",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Sequence\" means here before you choose.",
             "explanation": "The rule is add 8 each time, so the next term is 28 + 8 = 36."
           },
           {
-            "prompt": "If x = 6, what is the value of 9x + 5?",
+            "prompt": "Using the position-to-term rule term = 4n − 1, what is the 5th term?",
             "choices": [
+              "15",
+              "19",
               "20",
-              "54",
-              "68",
-              "59"
+              "21"
             ],
-            "answer": "59",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "9 × 6 + 5 = 54 + 5 = 59."
+            "answer": "19",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Substitute n = 5: 4(5) − 1 = 20 − 1 = 19."
           },
           {
-            "prompt": "Solve for x: x + 6 = 11.",
+            "prompt": "If f(x) = 2x + 3, what is f(4)?",
             "choices": [
-              "6",
-              "5",
+              "7",
+              "9",
               "11",
-              "17"
+              "14"
             ],
-            "answer": "5",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Subtract 6 from both sides: x = 11 − 6 = 5."
+            "answer": "11",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "f(4) = 2(4) + 3 = 8 + 3 = 11."
           },
           {
             "prompt": "What does “Sequence” mean?",
@@ -1148,16 +1144,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Solve for x: x + 11 = 21.",
+            "prompt": "Which sequence is infinite?",
             "choices": [
-              "10",
-              "21",
-              "32",
-              "11"
+              "3, 6, 9, 12 (4 terms)",
+              "10, 20, 30, 40, …",
+              "1, 2, 3, 4, 5 (5 terms)",
+              "7, 14, 21 (3 terms)"
             ],
-            "answer": "10",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Subtract 11 from both sides: x = 21 − 11 = 10."
+            "answer": "10, 20, 30, 40, …",
+            "clue": "Ask yourself what \"Sequence\" means here before you choose.",
+            "explanation": "The dots (…) show the sequence carries on forever, so it is infinite; the others state a fixed number of terms and stop, so they are finite."
           },
           {
             "prompt": "Find the next term: 9, 17, 25, 33, ___",
@@ -1168,7 +1164,7 @@
               "41"
             ],
             "answer": "41",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "The rule is add 8 each time, so the next term is 33 + 8 = 41."
           },
           {
@@ -1180,7 +1176,7 @@
               "7"
             ],
             "answer": "9",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "The rule is add 2 each time, so the next term is 7 + 2 = 9."
           },
           {
@@ -1206,40 +1202,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "If x = 7, what is the value of 2x + 7?",
+            "prompt": "What is the common difference of the arithmetic sequence 5, 9, 13, 17, …?",
             "choices": [
-              "23",
-              "21",
-              "16",
-              "14"
-            ],
-            "answer": "21",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "2 × 7 + 7 = 14 + 7 = 21."
-          },
-          {
-            "prompt": "Solve for x: x + 3 = 8.",
-            "choices": [
-              "3",
+              "4",
               "5",
-              "8",
-              "11"
+              "9",
+              "13"
             ],
-            "answer": "5",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Subtract 3 from both sides: x = 8 − 3 = 5."
+            "answer": "4",
+            "clue": "Ask yourself what \"Sequence\" means here before you choose.",
+            "explanation": "9 − 5 = 4, 13 − 9 = 4, 17 − 13 = 4, so the common difference is 4."
           },
           {
-            "prompt": "If x = 8, what is the value of 3x + 9?",
+            "prompt": "A function machine doubles the input, then adds 3. What is the output when the input is 5?",
             "choices": [
-              "33",
-              "20",
-              "24",
-              "36"
+              "8",
+              "10",
+              "13",
+              "16"
             ],
-            "answer": "33",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "3 × 8 + 9 = 24 + 9 = 33."
+            "answer": "13",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Double 5 to get 10, then add 3: 10 + 3 = 13."
+          },
+          {
+            "prompt": "What is the term-to-term rule for the sequence 6, 10, 14, 18, …?",
+            "choices": [
+              "Add 4",
+              "Add 6",
+              "Multiply by 2",
+              "Subtract 4"
+            ],
+            "answer": "Add 4",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Each term increases by 4: 10 − 6 = 4, 14 − 10 = 4, 18 − 14 = 4."
           },
           {
             "prompt": "What does “Term-to-term rule” mean?",
@@ -1264,28 +1260,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "If x = 6, what is the value of 9x + 5?",
+            "prompt": "Using the position-to-term rule term = 4n − 1, what is the 5th term?",
             "choices": [
+              "15",
+              "19",
               "20",
-              "54",
-              "68",
-              "59"
+              "21"
             ],
-            "answer": "59",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "9 × 6 + 5 = 54 + 5 = 59."
+            "answer": "19",
+            "clue": "Ask yourself what \"Sequence\" means here before you choose.",
+            "explanation": "Substitute n = 5: 4(5) − 1 = 20 − 1 = 19."
           },
           {
-            "prompt": "Solve for x: x + 6 = 11.",
+            "prompt": "If f(x) = 2x + 3, what is f(4)?",
             "choices": [
-              "6",
-              "5",
+              "7",
+              "9",
               "11",
-              "17"
+              "14"
             ],
-            "answer": "5",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Subtract 6 from both sides: x = 11 − 6 = 5."
+            "answer": "11",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "f(4) = 2(4) + 3 = 8 + 3 = 11."
           },
           {
             "prompt": "What does “Sequence” mean?",
@@ -1308,7 +1304,7 @@
               "28"
             ],
             "answer": "36",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "The rule is add 8 each time, so the next term is 28 + 8 = 36."
           }
         ]
@@ -1330,7 +1326,7 @@
               "41"
             ],
             "answer": "41",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Sequence\" means here before you choose.",
             "explanation": "The rule is add 8 each time, so the next term is 33 + 8 = 41."
           },
           {
@@ -1342,7 +1338,7 @@
               "7"
             ],
             "answer": "9",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "The rule is add 2 each time, so the next term is 7 + 2 = 9."
           },
           {
@@ -1358,16 +1354,16 @@
             "explanation": "Term / Position means A number in the sequence / where it sits (n)."
           },
           {
-            "prompt": "Solve for x: x + 11 = 21.",
+            "prompt": "Which sequence is infinite?",
             "choices": [
-              "10",
-              "21",
-              "32",
-              "11"
+              "3, 6, 9, 12 (4 terms)",
+              "10, 20, 30, 40, …",
+              "1, 2, 3, 4, 5 (5 terms)",
+              "7, 14, 21 (3 terms)"
             ],
-            "answer": "10",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Subtract 11 from both sides: x = 21 − 11 = 10."
+            "answer": "10, 20, 30, 40, …",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "The dots (…) show the sequence carries on forever, so it is infinite; the others state a fixed number of terms and stop, so they are finite."
           }
         ]
       },
@@ -1380,28 +1376,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Solve for x: x + 3 = 8.",
+            "prompt": "A function machine doubles the input, then adds 3. What is the output when the input is 5?",
             "choices": [
-              "3",
-              "5",
               "8",
-              "11"
+              "10",
+              "13",
+              "16"
             ],
-            "answer": "5",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Subtract 3 from both sides: x = 8 − 3 = 5."
+            "answer": "13",
+            "clue": "Ask yourself what \"Sequence\" means here before you choose.",
+            "explanation": "Double 5 to get 10, then add 3: 10 + 3 = 13."
           },
           {
-            "prompt": "If x = 8, what is the value of 3x + 9?",
+            "prompt": "What is the term-to-term rule for the sequence 6, 10, 14, 18, …?",
             "choices": [
-              "33",
-              "20",
-              "24",
-              "36"
+              "Add 4",
+              "Add 6",
+              "Multiply by 2",
+              "Subtract 4"
             ],
-            "answer": "33",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "3 × 8 + 9 = 24 + 9 = 33."
+            "answer": "Add 4",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Each term increases by 4: 10 − 6 = 4, 14 − 10 = 4, 18 − 14 = 4."
           },
           {
             "prompt": "What does “Term-to-term rule” mean?",
@@ -1416,16 +1412,16 @@
             "explanation": "Term-to-term rule means How to get from one term to the next."
           },
           {
-            "prompt": "If x = 7, what is the value of 2x + 7?",
+            "prompt": "What is the common difference of the arithmetic sequence 5, 9, 13, 17, …?",
             "choices": [
-              "23",
-              "21",
-              "16",
-              "14"
+              "4",
+              "5",
+              "9",
+              "13"
             ],
-            "answer": "21",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "2 × 7 + 7 = 14 + 7 = 21."
+            "answer": "4",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "9 − 5 = 4, 13 − 9 = 4, 17 − 13 = 4, so the common difference is 4."
           }
         ]
       },
@@ -1438,16 +1434,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Solve for x: x + 6 = 11.",
+            "prompt": "If f(x) = 2x + 3, what is f(4)?",
             "choices": [
-              "6",
-              "5",
+              "7",
+              "9",
               "11",
-              "17"
+              "14"
             ],
-            "answer": "5",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Subtract 6 from both sides: x = 11 − 6 = 5."
+            "answer": "11",
+            "clue": "Ask yourself what \"Sequence\" means here before you choose.",
+            "explanation": "f(4) = 2(4) + 3 = 8 + 3 = 11."
           },
           {
             "prompt": "What does “Sequence” mean?",
@@ -1470,20 +1466,20 @@
               "28"
             ],
             "answer": "36",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "The rule is add 8 each time, so the next term is 28 + 8 = 36."
           },
           {
-            "prompt": "If x = 6, what is the value of 9x + 5?",
+            "prompt": "Using the position-to-term rule term = 4n − 1, what is the 5th term?",
             "choices": [
+              "15",
+              "19",
               "20",
-              "54",
-              "68",
-              "59"
+              "21"
             ],
-            "answer": "59",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "9 × 6 + 5 = 54 + 5 = 59."
+            "answer": "19",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Substitute n = 5: 4(5) − 1 = 20 − 1 = 19."
           }
         ]
       },
@@ -1504,7 +1500,7 @@
               "7"
             ],
             "answer": "9",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Sequence\" means here before you choose.",
             "explanation": "The rule is add 2 each time, so the next term is 7 + 2 = 9."
           },
           {
@@ -1520,16 +1516,16 @@
             "explanation": "Term / Position means A number in the sequence / where it sits (n)."
           },
           {
-            "prompt": "Solve for x: x + 11 = 21.",
+            "prompt": "Which sequence is infinite?",
             "choices": [
-              "10",
-              "21",
-              "32",
-              "11"
+              "3, 6, 9, 12 (4 terms)",
+              "10, 20, 30, 40, …",
+              "1, 2, 3, 4, 5 (5 terms)",
+              "7, 14, 21 (3 terms)"
             ],
-            "answer": "10",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Subtract 11 from both sides: x = 21 − 11 = 10."
+            "answer": "10, 20, 30, 40, …",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "The dots (…) show the sequence carries on forever, so it is infinite; the others state a fixed number of terms and stop, so they are finite."
           },
           {
             "prompt": "Find the next term: 9, 17, 25, 33, ___",
@@ -1540,7 +1536,7 @@
               "41"
             ],
             "answer": "41",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "The rule is add 8 each time, so the next term is 33 + 8 = 41."
           }
         ]
@@ -1554,16 +1550,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "If x = 8, what is the value of 3x + 9?",
+            "prompt": "What is the term-to-term rule for the sequence 6, 10, 14, 18, …?",
             "choices": [
-              "33",
-              "20",
-              "24",
-              "36"
+              "Add 4",
+              "Add 6",
+              "Multiply by 2",
+              "Subtract 4"
             ],
-            "answer": "33",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "3 × 8 + 9 = 24 + 9 = 33."
+            "answer": "Add 4",
+            "clue": "Ask yourself what \"Sequence\" means here before you choose.",
+            "explanation": "Each term increases by 4: 10 − 6 = 4, 14 − 10 = 4, 18 − 14 = 4."
           },
           {
             "prompt": "What does “Term-to-term rule” mean?",
@@ -1578,28 +1574,28 @@
             "explanation": "Term-to-term rule means How to get from one term to the next."
           },
           {
-            "prompt": "If x = 7, what is the value of 2x + 7?",
+            "prompt": "What is the common difference of the arithmetic sequence 5, 9, 13, 17, …?",
             "choices": [
-              "23",
-              "21",
-              "16",
-              "14"
+              "4",
+              "5",
+              "9",
+              "13"
             ],
-            "answer": "21",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "2 × 7 + 7 = 14 + 7 = 21."
+            "answer": "4",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "9 − 5 = 4, 13 − 9 = 4, 17 − 13 = 4, so the common difference is 4."
           },
           {
-            "prompt": "Solve for x: x + 3 = 8.",
+            "prompt": "A function machine doubles the input, then adds 3. What is the output when the input is 5?",
             "choices": [
-              "3",
-              "5",
               "8",
-              "11"
+              "10",
+              "13",
+              "16"
             ],
-            "answer": "5",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Subtract 3 from both sides: x = 8 − 3 = 5."
+            "answer": "13",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Double 5 to get 10, then add 3: 10 + 3 = 13."
           }
         ]
       },
@@ -1632,32 +1628,32 @@
               "28"
             ],
             "answer": "36",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "The rule is add 8 each time, so the next term is 28 + 8 = 36."
           },
           {
-            "prompt": "If x = 6, what is the value of 9x + 5?",
+            "prompt": "Using the position-to-term rule term = 4n − 1, what is the 5th term?",
             "choices": [
+              "15",
+              "19",
               "20",
-              "54",
-              "68",
-              "59"
+              "21"
             ],
-            "answer": "59",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "9 × 6 + 5 = 54 + 5 = 59."
+            "answer": "19",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Substitute n = 5: 4(5) − 1 = 20 − 1 = 19."
           },
           {
-            "prompt": "Solve for x: x + 6 = 11.",
+            "prompt": "If f(x) = 2x + 3, what is f(4)?",
             "choices": [
-              "6",
-              "5",
+              "7",
+              "9",
               "11",
-              "17"
+              "14"
             ],
-            "answer": "5",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Subtract 6 from both sides: x = 11 − 6 = 5."
+            "answer": "11",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "f(4) = 2(4) + 3 = 8 + 3 = 11."
           }
         ]
       },
@@ -1682,16 +1678,16 @@
             "explanation": "Term / Position means A number in the sequence / where it sits (n)."
           },
           {
-            "prompt": "Solve for x: x + 11 = 21.",
+            "prompt": "Which sequence is infinite?",
             "choices": [
-              "10",
-              "21",
-              "32",
-              "11"
+              "3, 6, 9, 12 (4 terms)",
+              "10, 20, 30, 40, …",
+              "1, 2, 3, 4, 5 (5 terms)",
+              "7, 14, 21 (3 terms)"
             ],
-            "answer": "10",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Subtract 11 from both sides: x = 21 − 11 = 10."
+            "answer": "10, 20, 30, 40, …",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "The dots (…) show the sequence carries on forever, so it is infinite; the others state a fixed number of terms and stop, so they are finite."
           },
           {
             "prompt": "Find the next term: 9, 17, 25, 33, ___",
@@ -1702,7 +1698,7 @@
               "41"
             ],
             "answer": "41",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "The rule is add 8 each time, so the next term is 33 + 8 = 41."
           },
           {
@@ -1714,7 +1710,7 @@
               "7"
             ],
             "answer": "9",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "The rule is add 2 each time, so the next term is 7 + 2 = 9."
           }
         ]
@@ -1740,40 +1736,40 @@
             "explanation": "Term-to-term rule means How to get from one term to the next."
           },
           {
-            "prompt": "If x = 7, what is the value of 2x + 7?",
+            "prompt": "What is the common difference of the arithmetic sequence 5, 9, 13, 17, …?",
             "choices": [
-              "23",
-              "21",
-              "16",
-              "14"
-            ],
-            "answer": "21",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "2 × 7 + 7 = 14 + 7 = 21."
-          },
-          {
-            "prompt": "Solve for x: x + 3 = 8.",
-            "choices": [
-              "3",
+              "4",
               "5",
-              "8",
-              "11"
+              "9",
+              "13"
             ],
-            "answer": "5",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Subtract 3 from both sides: x = 8 − 3 = 5."
+            "answer": "4",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "9 − 5 = 4, 13 − 9 = 4, 17 − 13 = 4, so the common difference is 4."
           },
           {
-            "prompt": "If x = 8, what is the value of 3x + 9?",
+            "prompt": "A function machine doubles the input, then adds 3. What is the output when the input is 5?",
             "choices": [
-              "33",
-              "20",
-              "24",
-              "36"
+              "8",
+              "10",
+              "13",
+              "16"
             ],
-            "answer": "33",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "3 × 8 + 9 = 24 + 9 = 33."
+            "answer": "13",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Double 5 to get 10, then add 3: 10 + 3 = 13."
+          },
+          {
+            "prompt": "What is the term-to-term rule for the sequence 6, 10, 14, 18, …?",
+            "choices": [
+              "Add 4",
+              "Add 6",
+              "Multiply by 2",
+              "Subtract 4"
+            ],
+            "answer": "Add 4",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Each term increases by 4: 10 − 6 = 4, 14 − 10 = 4, 18 − 14 = 4."
           }
         ]
       }
@@ -1787,6 +1783,8 @@
     "I can find and use the nth term formula of an arithmetic sequence.",
     "I can understand a function as an input-output machine with one output for each input.",
     "I can use function notation such as f(x) = 2x + 3 and evaluate it for given inputs.",
-    "I can complete input-output tables and recognise linear functions of the form y = mx + c."
+    "I can complete input-output tables and recognise linear functions of the form y = mx + c.",
+    "I can see how a sequence is a function of its position, and connect the two ideas.",
+    "I can model and solve real-world problems using sequences and functions."
   ]
 }

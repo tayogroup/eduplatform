@@ -49,9 +49,6 @@
     "poster": null
   },
   "outcomes": [
-    "This unit is designed for self-paced learning. That means you move at your own speed. Read each explanation slowly, work through every example yourself on paper, and only move on when you feel ready. Your AI tutor is available day and night to give you extra practice, explain a step in a fresh way, or check your answers whenever you get stuck. Your teacher will also meet with you about twice a week to help with anything that feels tricky and to look over your written work.",
-    "Why does probability matter so much? Because we live in a world full of uncertainty, and good decisions depend on understanding chance. A farmer near Hargeisa studies the probability of rain before deciding when to plant. A shopkeeper in Eastleigh works out how many crates of mango are likely to sell so none are wasted. Doctors weigh the probability that a treatment will help a patient. Even games are built on probability – a game is only fair if every player has an equal chance of winning. Learning to reason about chance will help you make wiser choices for the rest of your life, and it lays the foundation for the statistics you will meet in secondary school.",
-    "As you work, keep a pencil, some paper and a few everyday objects beside you – a coin, a dice if you have one, or some coloured beans in a cup will do. Probability is a subject you must do, not only read. Flip the coin, tally the results, and see the mathematics come alive in your own hands. If an experiment does not match your prediction exactly, that is not a mistake – it is one of the most important lessons in the whole unit, and we will explain exactly why it happens.",
     "Describe the likelihood of events using words such as impossible, unlikely, even chance, likely and certain.",
     "Place events on a probability scale from 0 (impossible) to 1 (certain).",
     "Calculate the probability of an event using the formula favourable outcomes ÷ total outcomes.",
@@ -64,38 +61,38 @@
     {
       "id": "concept-1-the-language-of-likelihood",
       "title": "The Language of Likelihood",
-      "explanation": "Before we reach numbers, we describe chance with words. Every event in the world sits somewhere between two extremes. Some things are impossible – they simply cannot happen. Some are certain – they are sure to happen. Most events fall somewhere in between, and we describe them with words such as unlikely, even chance and likely. Think about these everyday situations. It is certain that the sun will set this evening and certain that you will breathe in the next minute. It is impossible to roll an 8 on an ordinary…",
-      "example": "We can arrange these words on a likelihood scale that runs from left to right, from impossible to certain:"
+      "explanation": "Before we reach numbers, we describe chance with words. Every event in the world sits somewhere between two extremes. Some things are impossible – they simply cannot happen. Some are certain – they are sure to happen. Most events fall somewhere in between, and we describe them with words such as unlikely, even chance and likely.\n\nThink about these everyday situations. It is certain that the sun will set this evening and certain that you will breathe in the next minute. It is impossible to roll an 8 on an ordinary dice numbered 1 to 6, and impossible to travel back to yesterday. It is very likely that a classmate at Nuur Academy is wearing shoes today. It is unlikely, but not impossible, that it snows in the desert. And when Yusuf tosses a fair coin, there is an even chance it lands heads.\n\nWe can arrange these words on a likelihood scale that runs from left to right, from impossible to certain:\n\nImpossible → Unlikely → Even chance → Likely → Certain\n\nUnderneath the words we can imagine a number line: impossible is at one end, certain is at the far end, and even chance sits exactly in the middle. This picture is one of the most useful ideas in the whole unit, because it lets us line up events and compare their chances at a glance. An event that is 'likely' sits further along the scale than one that is only 'unlikely', so it has a greater chance of happening.",
+      "example": "A word of caution that catches many learners: likely does not mean certain. If an event is likely, it will *probably* happen – but it might not. Rain is likely on a heavy, grey morning, yet the day can still stay dry. In the same way, unlikely does not mean impossible. An unlikely event has a small chance, but a small chance is still a chance. Keeping these differences straight is the first step to thinking clearly about probability."
     },
     {
       "id": "concept-2-the-probability-scale-from-0-to-1",
       "title": "The Probability Scale from 0 to 1",
-      "explanation": "Words are useful, but they are not precise. Two people might disagree about whether an event is 'likely' or only 'quite likely'. To be exact, mathematicians turn likelihood into a number. Every probability is a number between 0 and 1: A probability of 0 means the event is impossible – it never happens.",
-      "example": "A probability of 1 means the event is certain – it always happens."
+      "explanation": "Words are useful, but they are not precise. Two people might disagree about whether an event is 'likely' or only 'quite likely'. To be exact, mathematicians turn likelihood into a number. Every probability is a number between 0 and 1:\n\nA probability of 0 means the event is impossible – it never happens.\n\nA probability of 1 means the event is certain – it always happens.\n\nA probability of 1/2 (that is 0.5, or 50%) means an even chance.\n\nThe closer a probability is to 1, the more likely the event.\n\nThe closer a probability is to 0, the less likely the event.\n\nNo probability can ever be less than 0 or greater than 1. If you ever calculate a probability of 2, or of −0.3, you know at once that a mistake has crept in. This is a wonderful checking tool: a sensible answer always sits between 0 and 1. We can match the number scale to the word scale like this: 0 is impossible, about 0.25 is unlikely, 0.5 is an even chance, about 0.75 is likely, and 1 is certain.\n\nThe same probability can be written in three different forms, and all three mean exactly the same thing. An even chance is 1/2 as a fraction, 0.5 as a decimal, and 50% as a percentage. Being able to switch between these forms is one of the key skills of this unit. To turn a fraction into a decimal, divide the top by the bottom. To turn a decimal into a percentage, multiply by 100. So 1/4 = 0.25 = 25%, and 3/4 = 0.75 = 75%.",
+      "example": "Consider the weather forecast, which you have surely heard on the radio. When the forecaster says there is a 30% chance of rain, they are giving a probability in percentage form. It means that out of 100 days with these same conditions, rain would fall on about 30 of them. It also tells us the chance of no rain is 70%, because the two must add up to 100%. Notice how the number 30% is far more useful than simply saying 'it might rain' – it tells you *how much* it might rain, so you can decide whether to carry a covering for the walk to Dhuhr prayer."
     },
     {
       "id": "concept-3-calculating-probability",
       "title": "Calculating Probability",
-      "explanation": "Now we come to the heart of the unit: how to *work out* a probability. When every outcome is equally likely, we use one simple formula: Probability = number of favourable outcomes ÷ total number of possible outcomes",
-      "example": "A favourable outcome is simply an outcome that counts as the event we want – the word does not mean 'good', it just means 'the ones we are counting'. Let us see the formula in action with a fair coin. A coin has 2…"
+      "explanation": "Now we come to the heart of the unit: how to *work out* a probability. When every outcome is equally likely, we use one simple formula:\n\nProbability = number of favourable outcomes ÷ total number of possible outcomes\n\nA favourable outcome is simply an outcome that counts as the event we want – the word does not mean 'good', it just means 'the ones we are counting'. Let us see the formula in action with a fair coin. A coin has 2 equally likely outcomes: heads or tails. Only 1 of them is heads. So the probability of heads is 1 out of 2 = 1/2 = 0.5 = 50%. In the same way, the probability of tails is also 1/2.\n\nNow take an ordinary dice numbered 1 to 6. There are 6 equally likely outcomes. The probability of rolling a 3 is 1 out of 6 = 1/6, which is about 0.167 or 16.7%. What about rolling an even number? The even numbers are 2, 4 and 6 – that is 3 favourable outcomes out of 6 – so the probability is 3/6 = 1/2 = 50%. Rolling a number less than 4 means getting 1, 2 or 3, again 3 outcomes out of 6, so once more the probability is 1/2. Always ask two questions: how many outcomes count as my event, and how many outcomes are there altogether?\n\nHere is an example with objects. Imagine a bag holding coloured beads, the kind Khadija sews onto cloth: 8 red beads and 4 blue beads, so 12 beads in total. If she draws one without looking, the probability of red is 8/12, which simplifies to 2/3. The probability of blue is 4/12 = 1/3. Notice that these two fractions add up to 2/3 + 1/3 = 1, because the bead must be either red or blue – there is no other possibility. Always simplify your probability fractions to their lowest terms, just as you learned in the fractions unit, because 2/3 is much clearer than 8/12.",
+      "example": "Let us try one more, with cards numbered like a market game. Suppose you have five cards showing 1, 1, 2, 3, 4. There are 5 cards in total. Because there are two cards showing '1', the probability of drawing a 1 is 2/5 = 0.4 = 40%. The probability of drawing a 2 is 1/5 = 20%, since only one card shows a 2. The probability of drawing a number greater than 2 means drawing the 3 or the 4, which is 2/5 = 40%. Working carefully through each event like this is exactly how a mathematician thinks."
     },
     {
       "id": "concept-4-listing-outcomes-and-complementary-events",
       "title": "Listing Outcomes and Complementary Events",
-      "explanation": "To calculate a probability correctly, you must be sure you have counted all the possible outcomes – missing even one will spoil your answer. For simple situations we list the outcomes in an organised way. The outcomes of tossing a coin are just {heads, tails}. The outcomes of rolling a dice are {1, 2, 3, 4, 5, 6}. Writing them out, especially in order, makes sure none are forgotten and none are counted twice. When two things happen together, we list every combination. Suppose Omar tosses a coin and rolls a dice at…",
-      "example": "A second powerful idea is the complement. The complement of an event is the event not happening. Because something either happens or it does not, these two probabilities must always add up to 1:"
+      "explanation": "To calculate a probability correctly, you must be sure you have counted all the possible outcomes – missing even one will spoil your answer. For simple situations we list the outcomes in an organised way. The outcomes of tossing a coin are just {heads, tails}. The outcomes of rolling a dice are {1, 2, 3, 4, 5, 6}. Writing them out, especially in order, makes sure none are forgotten and none are counted twice.\n\nWhen two things happen together, we list every combination. Suppose Omar tosses a coin and rolls a dice at the same time. We can pair each coin result with each dice result. With heads there are six pairs: (H,1), (H,2), (H,3), (H,4), (H,5), (H,6). With tails there are six more: (T,1), (T,2), (T,3), (T,4), (T,5), (T,6). That gives 12 outcomes in total. Now probabilities are easy: the probability of 'heads and a 6' is just 1/12, because only one of the twelve pairs matches. The probability of 'tails and an even number' is 3/12 = 1/4, since (T,2), (T,4) and (T,6) all match. Organised listing turns a tricky question into simple counting.\n\nA second powerful idea is the complement. The complement of an event is the event not happening. Because something either happens or it does not, these two probabilities must always add up to 1:\n\nP(event) + P(not event) = 1, which rearranges to P(not event) = 1 − P(event).",
+      "example": "This is a great shortcut. On a dice, the probability of rolling a 6 is 1/6, so the probability of not rolling a 6 is 1 − 1/6 = 5/6. You did not have to count all five other faces; you simply subtracted from 1. If the probability that Hassan's bus arrives on time is 0.85, then the probability it does not arrive on time is 1 − 0.85 = 0.15. Whenever a question asks for the chance that something does *not* happen, think of the complement first – it is often the quickest path to the answer."
     },
     {
       "id": "concept-5-theoretical-and-experimental-probability",
       "title": "Theoretical and Experimental Probability",
-      "explanation": "There are two ways to find a probability, and it is vital to tell them apart. Theoretical probability is what the mathematics *predicts* should happen, worked out with the formula. Experimental probability is what *actually* happens when you carry out a real experiment and count the results. For a fair coin the theoretical probability of heads is 1/2, so we expect heads about half the time. But suppose Amina actually flips a coin 20 times and records the outcomes. She counts 12 heads and 8 tails. Her experimental…",
-      "example": "Why do the two differ? Because of random variation. In a small number of trials, chance naturally causes the results to wobble above and below the predicted value. If you flip a coin only ten times you might easily get…"
+      "explanation": "There are two ways to find a probability, and it is vital to tell them apart. Theoretical probability is what the mathematics *predicts* should happen, worked out with the formula. Experimental probability is what *actually* happens when you carry out a real experiment and count the results.\n\nFor a fair coin the theoretical probability of heads is 1/2, so we expect heads about half the time. But suppose Amina actually flips a coin 20 times and records the outcomes. She counts 12 heads and 8 tails. Her experimental probability of heads is 12/20 = 3/5 = 0.6 = 60%, and of tails 8/20 = 40%. The experimental result (60%) is not the same as the theoretical prediction (50%) – there is a gap of 10%. This does not mean the coin is faulty or the maths is wrong. It is completely normal.\n\nWhy do the two differ? Because of random variation. In a small number of trials, chance naturally causes the results to wobble above and below the predicted value. If you flip a coin only ten times you might easily get 7 heads, which is 70%, far from 50%. This wobble is the nature of chance itself.\n\nBut something remarkable happens as you do more trials. The experimental probability creeps closer and closer to the theoretical value. This is called the Law of Large Numbers. Look at how the results settle down for a fair coin:\n\n10 flips: you might get 7 heads → 70%, quite far from 50%.\n\n100 flips: you might get 53 heads → 53%, closer.\n\n1000 flips: you might get 501 heads → 50.1%, closer still.\n\n10 000 flips: you might get 5003 heads → 50.03%, very close indeed.",
+      "example": "This is why more trials give more reliable results, and it is the reason insurance companies and scientists trust probability: over very many events, the wobble shrinks and the outcome becomes predictable. When you run your own experiments in this unit, do as many trials as you can, and record them in a tally chart so you never lose count. A running table – trial number, outcome, running totals – lets you watch the experimental probability settle towards the theoretical one before your eyes."
     },
     {
       "id": "concept-6-fairness-games-and-real-world-probability",
       "title": "Fairness, Games and Real-World Probability",
-      "explanation": "A game is fair when every player has an equal chance of winning. Probability lets us test fairness with mathematics instead of arguing about it. If Farah and Idris play a game where Farah wins by rolling an even number and Idris wins by rolling an odd number, the game is fair, because P(even) = 3/6 = 1/2 and P(odd) = 3/6 = 1/2 – both have an equal chance. But if Farah won on 'a number greater than 2' (that is 3, 4, 5 or 6, a probability of 4/6) while Idris won on '1 or 2' (a probability of only 2/6), the game…",
-      "example": "Probability also shapes sport. If a footballer scores from 7 of her last 10 penalty kicks, her experimental probability of scoring is 7/10 = 70%, and we might predict she will score about 70% of her future penalties. It…"
+      "explanation": "A game is fair when every player has an equal chance of winning. Probability lets us test fairness with mathematics instead of arguing about it. If Farah and Idris play a game where Farah wins by rolling an even number and Idris wins by rolling an odd number, the game is fair, because P(even) = 3/6 = 1/2 and P(odd) = 3/6 = 1/2 – both have an equal chance. But if Farah won on 'a number greater than 2' (that is 3, 4, 5 or 6, a probability of 4/6) while Idris won on '1 or 2' (a probability of only 2/6), the game would be unfair in Farah's favour. To make it fair again, we would change the rules until each player's probability is equal.\n\nProbability guides important decisions far beyond games. Consider quality control in a factory. Suppose a workshop tests 100 water pumps and finds that 3 are faulty. The probability that a pump is faulty is 3/100 = 3%, and the probability it works is 97/100 = 97%. If that faulty rate climbs above an agreed limit, the manager knows to stop and investigate. In the same way, a shop that receives 500 solar lamps, knowing 3 in every 100 are usually faulty, can expect about 500 × 3/100 = 15 faulty lamps, and can plan for that.\n\nProbability also shapes sport. If a footballer scores from 7 of her last 10 penalty kicks, her experimental probability of scoring is 7/10 = 70%, and we might predict she will score about 70% of her future penalties. It shapes weather planning, where a 20% chance of rain over the next few days helps a farmer near Kismaayo decide when to harvest. And it lies behind insurance and medicine, where experts weigh the probability of events to keep people safe. In every case, the same simple idea is at work: count the favourable outcomes, divide by the total, and reason carefully about what the number means.\n\nYou have now met six big ideas: the language of likelihood, the probability scale from 0 to 1, calculating probability with the formula, listing outcomes and using complements, the difference between theoretical and experimental probability, and applying all of this to fairness and the real world. These ideas are not separate – they weave together. When you judge whether a game is fair, you list the outcomes, calculate each player's probability as a fraction, perhaps convert it to a percentage to compare, and reason about the complement to check your total comes to 1.",
+      "example": "The best way to lock these ideas into memory is to use them with real objects around your home. Flip a bottle cap fifty times and tally the results. Draw beans of two colours from a cup and predict, then test, the probability of each. Estimate the chance of rain before you set out, then see what actually happens. Every time you reason about chance, your understanding grows stronger, and the statistics you will meet in later years will feel familiar and friendly. Now let us practise together with some fully worked examples."
     }
   ],
   "explorations": [
@@ -104,24 +101,24 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "The Language of Likelihood",
-      "context": "Before we reach numbers, we describe chance with words. Every event in the world sits somewhere between two extremes. Some things are impossible – they simply cannot happen. Some are certain – they are sure to happen. Most events fall somewhere in between,…",
+      "context": "Before we reach numbers, we describe chance with words. Every event in the world sits somewhere between two extremes. Some things are impossible – they simply cannot happen. Some are certain – they are sure to happen.",
       "prompt": "Which word best fits a probability of 0: likely, unlikely, impossible or certain?",
       "answer": "1) Impossible.",
       "modelType": "model-1",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) Impossible."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome.",
+      "explanation": "The Language of Likelihood: Before we reach numbers, we describe chance with words. Every event in the world sits somewhere between two extremes. Some things are impossible – they simply cannot happen. Some are certain – they are sure to happen. Most events fall somewhere in between, and we describe them with words such as unlikely, even chance and likely."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "The Probability Scale from 0 to 1",
-      "context": "Words are useful, but they are not precise. Two people might disagree about whether an event is 'likely' or only 'quite likely'. To be exact, mathematicians turn likelihood into a number. Every probability is a number between 0 and 1: A probability of 0 means…",
+      "context": "Words are useful, but they are not precise. Two people might disagree about whether an event is 'likely' or only 'quite likely'. To be exact, mathematicians turn likelihood into a number.",
       "prompt": "Write the probability of rolling a 3 on an ordinary dice as a fraction.",
       "answer": "1/6.",
       "modelType": "model-2",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1/6."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome.",
+      "explanation": "The Probability Scale from 0 to 1: Words are useful, but they are not precise. Two people might disagree about whether an event is 'likely' or only 'quite likely'. To be exact, mathematicians turn likelihood into a number. Every probability is a number between 0 and 1:"
     },
     {
       "id": "explore-3",
@@ -132,44 +129,44 @@
       "prompt": "Convert to a percentage: a) 1/4 b) 3/5 c) 0.35",
       "answer": "a) 25%, b) 60%, c) 35%.",
       "modelType": "model-3",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "a) 25%, b) 60%, c) 35%."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome.",
+      "explanation": "Calculating Probability: Now we come to the heart of the unit: how to *work out* a probability. When every outcome is equally likely, we use one simple formula:"
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Listing Outcomes and Complementary Events",
-      "context": "To calculate a probability correctly, you must be sure you have counted all the possible outcomes – missing even one will spoil your answer. For simple situations we list the outcomes in an organised way. The outcomes of tossing a coin are just {heads,…",
+      "context": "To calculate a probability correctly, you must be sure you have counted all the possible outcomes – missing even one will spoil your answer. For simple situations we list the outcomes in an organised way.",
       "prompt": "A bag has 5 red balls and 3 blue balls. Write P(red) as a fraction.",
       "answer": "5/8.",
       "modelType": "model-4",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "5/8."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome.",
+      "explanation": "Listing Outcomes and Complementary Events: To calculate a probability correctly, you must be sure you have counted all the possible outcomes – missing even one will spoil your answer. For simple situations we list the outcomes in an organised way. The outcomes of tossing a coin are just {heads, tails}. The outcomes of rolling a dice are {1, 2, 3, 4, 5, 6}."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Theoretical and Experimental Probability",
-      "context": "There are two ways to find a probability, and it is vital to tell them apart. Theoretical probability is what the mathematics *predicts* should happen, worked out with the formula. Experimental probability is what *actually* happens when you carry out a real…",
+      "context": "There are two ways to find a probability, and it is vital to tell them apart. Theoretical probability is what the mathematics *predicts* should happen, worked out with the formula.",
       "prompt": "True or false: every probability is between 0 and 1.",
       "answer": "True.",
       "modelType": "model-5",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "True."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome.",
+      "explanation": "Theoretical and Experimental Probability: There are two ways to find a probability, and it is vital to tell them apart. Theoretical probability is what the mathematics *predicts* should happen, worked out with the formula. Experimental probability is what *actually* happens when you carry out a real experiment and count the results."
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Fairness, Games and Real-World Probability",
-      "context": "A game is fair when every player has an equal chance of winning. Probability lets us test fairness with mathematics instead of arguing about it. If Farah and Idris play a game where Farah wins by rolling an even number and Idris wins by rolling an odd number,…",
+      "context": "A game is fair when every player has an equal chance of winning. Probability lets us test fairness with mathematics instead of arguing about it.",
       "prompt": "If P(winning) = 0.7, what is P(losing)?",
       "answer": "1 − 0.7 = 0.3.",
       "modelType": "model-6",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1 − 0.7 = 0.3."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome.",
+      "explanation": "Fairness, Games and Real-World Probability: A game is fair when every player has an equal chance of winning. Probability lets us test fairness with mathematics instead of arguing about it. If Farah and Idris play a game where Farah wins by rolling an even number and Idris wins by rolling an odd number, the game is fair, because P(even) = 3/6 = 1/2 and P(odd) = 3/6 = 1/2 – both have an equal chance."
     }
   ],
   "visualModels": [
@@ -178,7 +175,7 @@
       "outcomeId": "lo01",
       "title": "The Language of Likelihood",
       "modelType": "concept-model-1",
-      "purpose": "Before we reach numbers, we describe chance with words. Every event in the world sits somewhere between two extremes. Some things are impossible – they simply cannot happen. Some are certain – they are sure to happen.…",
+      "purpose": "Before we reach numbers, we describe chance with words. Every event in the world sits somewhere between two extremes. Some things are impossible – they simply cannot happen.",
       "defaultNumber": null
     },
     {
@@ -186,7 +183,7 @@
       "outcomeId": "lo02",
       "title": "The Probability Scale from 0 to 1",
       "modelType": "concept-model-2",
-      "purpose": "Words are useful, but they are not precise. Two people might disagree about whether an event is 'likely' or only 'quite likely'. To be exact, mathematicians turn likelihood into a number. Every probability is a number…",
+      "purpose": "Words are useful, but they are not precise. Two people might disagree about whether an event is 'likely' or only 'quite likely'. To be exact, mathematicians turn likelihood into a number.",
       "defaultNumber": null
     },
     {
@@ -202,7 +199,7 @@
       "outcomeId": "lo04",
       "title": "Listing Outcomes and Complementary Events",
       "modelType": "concept-model-4",
-      "purpose": "To calculate a probability correctly, you must be sure you have counted all the possible outcomes – missing even one will spoil your answer. For simple situations we list the outcomes in an organised way. The outcomes…",
+      "purpose": "To calculate a probability correctly, you must be sure you have counted all the possible outcomes – missing even one will spoil your answer. For simple situations we list the outcomes in an organised way.",
       "defaultNumber": null
     },
     {
@@ -210,7 +207,7 @@
       "outcomeId": "lo05",
       "title": "Theoretical and Experimental Probability",
       "modelType": "concept-model-5",
-      "purpose": "There are two ways to find a probability, and it is vital to tell them apart. Theoretical probability is what the mathematics *predicts* should happen, worked out with the formula. Experimental probability is what…",
+      "purpose": "There are two ways to find a probability, and it is vital to tell them apart. Theoretical probability is what the mathematics *predicts* should happen, worked out with the formula.",
       "defaultNumber": null
     },
     {
@@ -218,7 +215,7 @@
       "outcomeId": "lo06",
       "title": "Fairness, Games and Real-World Probability",
       "modelType": "concept-model-6",
-      "purpose": "A game is fair when every player has an equal chance of winning. Probability lets us test fairness with mathematics instead of arguing about it. If Farah and Idris play a game where Farah wins by rolling an even number…",
+      "purpose": "A game is fair when every player has an equal chance of winning. Probability lets us test fairness with mathematics instead of arguing about it.",
       "defaultNumber": null
     }
   ],
@@ -297,7 +294,7 @@
         "Solution: Expected faulty = 500 × 3/100 = 15 lamps.",
         "The probability a lamp works is the complement: 1 − 3/100 = 97/100 = 97%.",
         "So about 485 lamps should work properly.",
-        "Worked Example 7: Is the game fair?"
+        "State your final answer clearly, including the expected count and the probability."
       ]
     }
   ],
@@ -348,19 +345,19 @@
       "difficulty": "Intermediate",
       "title": "Expected number from a percentage",
       "prompt": "A quality check shows 3 out of every 100 lamps are faulty. A shop in Mombasa receives 500 lamps. How many would you expect to be faulty, and what is the probability a lamp works?",
-      "solution": "Solution: Expected faulty = 500 × 3/100 = 15 lamps. The probability a lamp works is the complement: 1 − 3/100 = 97/100 = 97%. So about 485 lamps should work properly. Worked Example 7: Is the game fair? In a spinner game, Aisha wins on red and Ibrahim wins on blue. The spinner has 8 equal sections: 3 red, 3 blue and 2 yellow (yellow means no one wins). Is the game fair? Solution: P(red) = 3/8 and P(blue) = 3/8. Because both players have the same probability of 3/8, the game is fair, even though yellow sometimes…"
+      "solution": "Solution: Expected faulty = 500 × 3/100 = 15 lamps. The probability a lamp works is the complement: 1 − 3/100 = 97/100 = 97%. So about 485 lamps should work properly."
     },
     {
       "id": "we07",
       "outcomeId": "lo07",
       "difficulty": "Intermediate",
       "title": "Is the game fair?",
-      "prompt": "A quality check shows 3 out of every 100 lamps are faulty. A shop in Mombasa receives 500 lamps. How many would you expect to be faulty, and what is the probability a lamp works?",
-      "solution": "Solution: Expected faulty = 500 × 3/100 = 15 lamps. The probability a lamp works is the complement: 1 − 3/100 = 97/100 = 97%. So about 485 lamps should work properly. Worked Example 7: Is the game fair? In a spinner game, Aisha wins on red and Ibrahim wins on blue. The spinner has 8 equal sections: 3 red, 3 blue and 2 yellow (yellow means no one wins). Is the game fair? Solution: P(red) = 3/8 and P(blue) = 3/8. Because both players have the same probability of 3/8, the game is fair, even though yellow sometimes…"
+      "prompt": "In a spinner game, Aisha wins on red and Ibrahim wins on blue. The spinner has 8 equal sections: 3 red, 3 blue and 2 yellow (yellow means no one wins). Is the game fair?",
+      "solution": "Solution: P(red) = 3/8 and P(blue) = 3/8. Because both players have the same probability of 3/8, the game is fair, even though the 2 yellow sections mean neither player wins on a quarter of the spins."
     },
     {
       "id": "we08",
-      "outcomeId": "lo08",
+      "outcomeId": "lo03",
       "difficulty": "Intermediate",
       "title": "Choosing from survey data",
       "prompt": "In a survey of 200 students, 60 chose science and 40 chose English as their favourite subject. What is the probability a randomly chosen student prefers science or English?",
@@ -405,84 +402,84 @@
       "level": "Warm-up",
       "prompt": "Which word best fits a probability of 0: likely, unlikely, impossible or certain?",
       "answer": "1) Impossible.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome."
     },
     {
       "id": "p02",
       "level": "Warm-up",
       "prompt": "Write the probability of rolling a 3 on an ordinary dice as a fraction.",
       "answer": "1/6.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome."
     },
     {
       "id": "p03",
       "level": "Warm-up",
       "prompt": "Convert to a percentage: a) 1/4 b) 3/5 c) 0.35",
       "answer": "a) 25%, b) 60%, c) 35%.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome."
     },
     {
       "id": "p04",
       "level": "Warm-up",
       "prompt": "A bag has 5 red balls and 3 blue balls. Write P(red) as a fraction.",
       "answer": "5/8.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome."
     },
     {
       "id": "p05",
       "level": "Warm-up",
       "prompt": "True or false: every probability is between 0 and 1.",
       "answer": "True.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome."
     },
     {
       "id": "p06",
       "level": "Warm-up",
       "prompt": "If P(winning) = 0.7, what is P(losing)?",
       "answer": "1 − 0.7 = 0.3.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome."
     },
     {
       "id": "p07",
       "level": "Core",
       "prompt": "A jar holds 20 jellybeans: 8 red, 5 green, 4 yellow and 3 purple. Find a) P(red) b) P(green or yellow) c) P(not purple).",
       "answer": "1) a) 8/20 = 2/5, b) 9/20, c) 17/20.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome."
     },
     {
       "id": "p08",
       "level": "Core",
       "prompt": "A spinner has 6 equal sections numbered 1 to 6. Find a) P(even) b) P(a number greater than 4) c) P(the number 3).",
       "answer": "a) 3/6 = 1/2, b) 2/6 = 1/3, c) 1/6.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome."
     },
     {
       "id": "p09",
       "level": "Core",
       "prompt": "Convert these percentages to fractions in simplest form: a) 25% b) 60% c) 80%.",
       "answer": "a) 1/4, b) 3/5, c) 4/5.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome."
     },
     {
       "id": "p10",
       "level": "Core",
       "prompt": "A standard deck has 52 cards with 13 hearts. Find P(drawing a heart) as a fraction and a percentage.",
       "answer": "13/52 = 1/4 = 25%.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome."
     },
     {
       "id": "p11",
       "level": "Core",
       "prompt": "A box contains 12 chocolates: 5 dark, 4 milk, 3 white. Find a) P(dark) b) P(milk) c) P(not white).",
       "answer": "a) 5/12, b) 4/12 = 1/3, c) 9/12 = 3/4.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome."
     },
     {
       "id": "p12",
       "level": "Core",
       "prompt": "A coin is tossed and a dice rolled. List all 12 outcomes, then find P(heads and a 6).",
       "answer": "Outcomes (H,1)…(H,6),(T,1)…(T,6); P(H,6) = 1/12.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome."
     }
   ],
   "activities": [
@@ -532,7 +529,7 @@
       "title": "Family Weather Forecast Tracker",
       "materials": "paper, a pencil, and one week of patience.",
       "steps": [
-        "Each morning, ask your family to predict the chance of rain as a percentage.",
+        "Each morning, ask your family to predict the chance of rain as a percentage (or make your own prediction, or ask your AI tutor, if no one else is available).",
         "Write down everyone's prediction and note whether it actually rains.",
         "After a week, work out how often the family predictions matched reality.",
         "Discuss: does a 30% chance of rain mean it will not rain? Talk about what the percentage really means."
@@ -540,7 +537,7 @@
     },
     {
       "title": "Probability Word Wall (Group Task)",
-      "materials": "paper cards, a pencil, and one or more friends or family members.",
+      "materials": "paper cards, a pencil, and one or more friends or family members (or your AI tutor if no one else is available).",
       "steps": [
         "On each card write one probability word: impossible, unlikely, even chance, likely, certain.",
         "Take turns calling out an everyday event (for example, 'the sun rises tomorrow').",
@@ -633,7 +630,7 @@
       "difficulty": "Round 1",
       "prompt": "Which word best fits a probability of 0: likely, unlikely, impossible or certain?",
       "answer": "1) Impossible.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome.",
       "errorFeedback": "1) Impossible."
     },
     {
@@ -642,7 +639,7 @@
       "difficulty": "Round 1",
       "prompt": "Write the probability of rolling a 3 on an ordinary dice as a fraction.",
       "answer": "1/6.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome.",
       "errorFeedback": "1/6."
     },
     {
@@ -651,7 +648,7 @@
       "difficulty": "Round 1",
       "prompt": "Convert to a percentage: a) 1/4 b) 3/5 c) 0.35",
       "answer": "a) 25%, b) 60%, c) 35%.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome.",
       "errorFeedback": "a) 25%, b) 60%, c) 35%."
     },
     {
@@ -660,7 +657,7 @@
       "difficulty": "Round 1",
       "prompt": "A bag has 5 red balls and 3 blue balls. Write P(red) as a fraction.",
       "answer": "5/8.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome.",
       "errorFeedback": "5/8."
     },
     {
@@ -669,7 +666,7 @@
       "difficulty": "Round 2",
       "prompt": "True or false: every probability is between 0 and 1.",
       "answer": "True.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome.",
       "errorFeedback": "True."
     },
     {
@@ -678,7 +675,7 @@
       "difficulty": "Round 2",
       "prompt": "If P(winning) = 0.7, what is P(losing)?",
       "answer": "1 − 0.7 = 0.3.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome.",
       "errorFeedback": "1 − 0.7 = 0.3."
     },
     {
@@ -687,34 +684,34 @@
       "difficulty": "Round 2",
       "prompt": "A jar holds 20 jellybeans: 8 red, 5 green, 4 yellow and 3 purple. Find a) P(red) b) P(green or yellow) c) P(not purple).",
       "answer": "1) a) 8/20 = 2/5, b) 9/20, c) 17/20.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome.",
       "errorFeedback": "1) a) 8/20 = 2/5, b) 9/20, c) 17/20."
     },
     {
       "id": "fl08",
-      "outcomeId": "lo08",
+      "outcomeId": "lo03",
       "difficulty": "Round 2",
       "prompt": "A spinner has 6 equal sections numbered 1 to 6. Find a) P(even) b) P(a number greater than 4) c) P(the number 3).",
       "answer": "a) 3/6 = 1/2, b) 2/6 = 1/3, c) 1/6.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome.",
       "errorFeedback": "a) 3/6 = 1/2, b) 2/6 = 1/3, c) 1/6."
     },
     {
       "id": "fl09",
-      "outcomeId": "lo09",
+      "outcomeId": "lo04",
       "difficulty": "Round 3",
       "prompt": "Convert these percentages to fractions in simplest form: a) 25% b) 60% c) 80%.",
       "answer": "a) 1/4, b) 3/5, c) 4/5.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome.",
       "errorFeedback": "a) 1/4, b) 3/5, c) 4/5."
     },
     {
       "id": "fl10",
-      "outcomeId": "lo10",
+      "outcomeId": "lo04",
       "difficulty": "Round 3",
       "prompt": "A standard deck has 52 cards with 13 hearts. Find P(drawing a heart) as a fraction and a percentage.",
       "answer": "13/52 = 1/4 = 25%.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome.",
       "errorFeedback": "13/52 = 1/4 = 25%."
     },
     {
@@ -723,7 +720,7 @@
       "difficulty": "Round 3",
       "prompt": "A box contains 12 chocolates: 5 dark, 4 milk, 3 white. Find a) P(dark) b) P(milk) c) P(not white).",
       "answer": "a) 5/12, b) 4/12 = 1/3, c) 9/12 = 3/4.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome.",
       "errorFeedback": "a) 5/12, b) 4/12 = 1/3, c) 9/12 = 3/4."
     },
     {
@@ -732,7 +729,7 @@
       "difficulty": "Round 3",
       "prompt": "A coin is tossed and a dice rolled. List all 12 outcomes, then find P(heads and a 6).",
       "answer": "Outcomes (H,1)…(H,6),(T,1)…(T,6); P(H,6) = 1/12.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome.",
       "errorFeedback": "Outcomes (H,1)…(H,6),(T,1)…(T,6); P(H,6) = 1/12."
     }
   ],
@@ -744,7 +741,7 @@
       "context": "Home",
       "prompt": "Restaurant orders: A cafe in Nairobi tracks a week of orders: pizza 120, pasta 80, salad 60, soup 40. For the next customer, find a) P(pizza) b) P(pasta or salad) c) P(not soup).",
       "answer": "1) Total = 300. a) 120/300 = 2/5 = 40%, b) 140/300 = 7/15, c) 260/300 = 13/15.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Probability, Outcome, Favourable outcome), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) Total = 300. a) 120/300 = 2/5 = 40%, b) 140/300 = 7/15, c) 260/300 = 13/15."
     },
     {
@@ -754,7 +751,7 @@
       "context": "Market",
       "prompt": "Library: A children's section has 1000 books: 400 fiction, 250 science, 200 history, 150 art. For a random book, find a) P(fiction) b) P(science or history) c) P(not art).",
       "answer": "a) 400/1000 = 2/5, b) 450/1000 = 9/20, c) 850/1000 = 17/20.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Probability, Outcome, Favourable outcome), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "a) 400/1000 = 2/5, b) 450/1000 = 9/20, c) 850/1000 = 17/20."
     },
     {
@@ -764,7 +761,7 @@
       "context": "Travel",
       "prompt": "Weather run: It rains on 2 days in every 10 on average. a) Find P(rain tomorrow). b) Find P(no rain for the next 3 days in a row). (Hint: multiply the daily 'no rain' probabilities.)",
       "answer": "a) 2/10 = 1/5 = 20%, b) (8/10)³ = 512/1000 = 0.512 = 51.2%.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Probability, Outcome, Favourable outcome), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "a) 2/10 = 1/5 = 20%, b) (8/10)³ = 512/1000 = 0.512 = 51.2%."
     },
     {
@@ -774,7 +771,7 @@
       "context": "School",
       "prompt": "Pet clinic: A vet's records show dogs 45%, cats 30%, birds 15%, other 10%. For the next pet, find a) P(dog or cat) b) P(not a bird) c) P(other).",
       "answer": "a) 45% + 30% = 75%, b) 100% − 15% = 85%, c) 10%.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Probability, Outcome, Favourable outcome), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "a) 45% + 30% = 75%, b) 100% − 15% = 85%, c) 10%."
     },
     {
@@ -784,7 +781,7 @@
       "context": "Community",
       "prompt": "Fair game design: Design a spinner game for two players that is fair. Describe the sections and give each player's probability of winning to prove it is fair.",
       "answer": "Sample answer: a spinner with 4 equal sections, 2 marked 'Player A' and 2 marked 'Player B'. Each player has P = 2/4 = 1/2, so the game is fair.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Probability, Outcome, Favourable outcome), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "Sample answer: a spinner with 4 equal sections, 2 marked 'Player A' and 2 marked 'Player B'. Each player has P = 2/4 = 1/2, so the game is fair."
     },
     {
@@ -794,7 +791,7 @@
       "context": "Daily life",
       "prompt": "A coin is tossed and a dice rolled. List all 12 outcomes, then find P(heads and a 6).",
       "answer": "Outcomes (H,1)…(H,6),(T,1)…(T,6); P(H,6) = 1/12.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Probability or Outcome.",
       "errorFeedback": "Outcomes (H,1)…(H,6),(T,1)…(T,6); P(H,6) = 1/12."
     }
   ],
@@ -862,7 +859,7 @@
         "Outcome",
         "Favourable outcome"
       ],
-      "modelAnswer": "There are two ways to find a probability, and it is vital to tell them apart. Theoretical probability is what the mathematics *predicts* should happen, worked out with the formula. Experimental probability is what *actually* happens when you carry out a real experiment and count the results. For a fair coin the theoretical probability of heads is 1/2, so we expect heads about half the time. But suppose Amina actually flips a coin 20 times and records the outcomes. She counts 12 heads and 8 tails. Her experimental…"
+      "modelAnswer": "There are two ways to find a probability, and it is vital to tell them apart. Theoretical probability is what the mathematics *predicts* should happen, worked out with the formula. Experimental probability is what *actually* happens when you carry out a real experiment and count the results.\n\nFor a fair coin the theoretical probability of heads is 1/2, so we expect heads about half the time. But suppose Amina actually flips a coin 20 times and records the outcomes. She counts 12 heads and 8 tails. Her experimental probability of heads is 12/20 = 3/5 = 0.6 = 60%, and of tails 8/20 = 40%. The experimental result (60%) is not the same as the theoretical prediction (50%) – there is a gap of 10%. This does not mean the coin is faulty or the maths is wrong. It is completely normal."
     },
     {
       "id": "reason06",
@@ -875,7 +872,7 @@
         "Outcome",
         "Favourable outcome"
       ],
-      "modelAnswer": "A game is fair when every player has an equal chance of winning. Probability lets us test fairness with mathematics instead of arguing about it. If Farah and Idris play a game where Farah wins by rolling an even number and Idris wins by rolling an odd number, the game is fair, because P(even) = 3/6 = 1/2 and P(odd) = 3/6 = 1/2 – both have an equal chance. But if Farah won on 'a number greater than 2' (that is 3, 4, 5 or 6, a probability of 4/6) while Idris won on '1 or 2' (a probability of only 2/6), the game…"
+      "modelAnswer": "A game is fair when every player has an equal chance of winning. Probability lets us test fairness with mathematics instead of arguing about it. If Farah and Idris play a game where Farah wins by rolling an even number and Idris wins by rolling an odd number, the game is fair, because P(even) = 3/6 = 1/2 and P(odd) = 3/6 = 1/2 – both have an equal chance. But if Farah won on 'a number greater than 2' (that is 3, 4, 5 or 6, a probability of 4/6) while Idris won on '1 or 2' (a probability of only 2/6), the game would be unfair in Farah's favour. To make it fair again, we would change the rules until each player's probability is equal."
     }
   ],
   "assessment": {
@@ -886,144 +883,144 @@
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Basic",
-        "question": "Here is some data: 1, 19, 4, 14, 8. What is the range?",
+        "question": "Which word best describes an event that is sure to happen: impossible, unlikely, even chance or certain?",
         "options": [
-          "1",
-          "17",
-          "18",
-          "19"
+          "impossible",
+          "unlikely",
+          "even chance",
+          "certain"
         ],
-        "answer": "18",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Range = largest − smallest = 19 − 1 = 18."
+        "answer": "certain",
+        "hint": "Ask yourself what \"Probability\" means here before you choose.",
+        "explanation": "An event that will definitely happen is certain – it has a probability of 1."
       },
       {
         "id": "q02",
         "type": "Application",
         "outcomeId": "lo02",
         "difficulty": "Basic",
-        "question": "Here is some data: 20, 15, 13, 4, 11. What is the range?",
+        "question": "A probability is marked exactly halfway between impossible and certain on the probability scale. What is this probability as a decimal?",
         "options": [
-          "16",
-          "20",
-          "4",
-          "17"
+          "0",
+          "0.5",
+          "1",
+          "1.5"
         ],
-        "answer": "16",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Range = largest − smallest = 20 − 4 = 16."
+        "answer": "0.5",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
+        "explanation": "Halfway between 0 and 1 is 0.5 – an even chance."
       },
       {
         "id": "q03",
         "type": "Application",
         "outcomeId": "lo03",
         "difficulty": "Basic",
-        "question": "Here is some data: 15, 3, 16, 10, 14. What is the largest value?",
+        "question": "A bag has 3 red counters and 9 blue counters. What is P(red) as a fraction in simplest form?",
         "options": [
-          "15",
-          "17",
-          "16",
-          "3"
+          "1/4",
+          "1/3",
+          "3/9",
+          "9/12"
         ],
-        "answer": "16",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Look for the biggest number: 16."
+        "answer": "1/4",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
+        "explanation": "There are 12 counters in total, so P(red) = 3/12 = 1/4."
       },
       {
         "id": "q04",
         "type": "Application",
         "outcomeId": "lo04",
         "difficulty": "Basic",
-        "question": "Here is some data: 2, 8, 6, 4, 10, 2. Which value appears most often (the mode)?",
+        "question": "Write the probability 3/4 as a percentage.",
         "options": [
-          "2",
-          "10",
-          "8",
-          "3"
+          "34%",
+          "43%",
+          "57%",
+          "75%"
         ],
-        "answer": "2",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "2 appears more than any other value, so it is the mode."
+        "answer": "75%",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
+        "explanation": "3 ÷ 4 = 0.75, and 0.75 × 100 = 75%."
       },
       {
         "id": "q05",
         "type": "Application",
         "outcomeId": "lo05",
         "difficulty": "Core",
-        "question": "A tally shows these counts: 5, 19, 9, 12, 17. What is the total?",
+        "question": "A coin is tossed and a spinner with 3 equal sections (A, B, C) is spun. How many outcomes are there in total when listed together?",
         "options": [
-          "19",
-          "62",
-          "63",
-          "61"
+          "5",
+          "6",
+          "8",
+          "9"
         ],
-        "answer": "62",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Add them all: 5 + 19 + 9 + 12 + 17 = 62."
+        "answer": "6",
+        "hint": "Ask yourself what \"Even chance\" means here before you choose.",
+        "explanation": "Pair each of the 2 coin outcomes with each of the 3 spinner outcomes: 2 × 3 = 6."
       },
       {
         "id": "q06",
         "type": "Application",
         "outcomeId": "lo06",
         "difficulty": "Core",
-        "question": "Here is some data: 20, 12, 18, 7, 14, 20. Which value appears most often (the mode)?",
+        "question": "P(rain tomorrow) = 0.35. What is P(no rain tomorrow)?",
         "options": [
-          "7",
-          "12",
-          "21",
-          "20"
+          "0.35",
+          "0.5",
+          "0.65",
+          "1.35"
         ],
-        "answer": "20",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "20 appears more than any other value, so it is the mode."
+        "answer": "0.65",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
+        "explanation": "P(not event) = 1 − P(event) = 1 − 0.35 = 0.65."
       },
       {
         "id": "q07",
         "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
-        "question": "A tally shows these counts: 11, 6, 3, 5, 16. What is the total?",
+        "question": "Yusuf rolls a dice 40 times and records an even number 24 times. What is the experimental probability of rolling an even number, as a fraction in simplest form?",
         "options": [
-          "16",
-          "41",
-          "42",
-          "40"
+          "1/2",
+          "3/5",
+          "2/3",
+          "4/5"
         ],
-        "answer": "41",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Add them all: 11 + 6 + 3 + 5 + 16 = 41."
+        "answer": "3/5",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
+        "explanation": "Experimental probability = 24/40 = 3/5."
       },
       {
         "id": "q08",
         "type": "Application",
-        "outcomeId": "lo08",
+        "outcomeId": "lo06",
         "difficulty": "Challenge",
-        "question": "A tally shows these counts: 6, 18, 14, 2, 15. What is the total?",
+        "question": "In a bag of counters, P(green) = 3/8. What is P(not green)?",
         "options": [
-          "55",
-          "56",
-          "54",
-          "18"
+          "1/8",
+          "3/8",
+          "5/8",
+          "8/3"
         ],
-        "answer": "55",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Add them all: 6 + 18 + 14 + 2 + 15 = 55."
+        "answer": "5/8",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
+        "explanation": "P(not green) = 1 − 3/8 = 5/8."
       },
       {
         "id": "q09",
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Challenge",
-        "question": "A tally shows these counts: 6, 16, 4, 11, 12. What is the total?",
+        "question": "A spinner has 8 equal sections: 1 marked 'win' and 7 marked 'lose'. Which word best describes the chance of landing on 'win': impossible, unlikely, even chance or certain?",
         "options": [
-          "16",
-          "49",
-          "50",
-          "48"
+          "impossible",
+          "unlikely",
+          "even chance",
+          "certain"
         ],
-        "answer": "49",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Add them all: 6 + 16 + 4 + 11 + 12 = 49."
+        "answer": "unlikely",
+        "hint": "Ask yourself what \"Fair\" means here before you choose.",
+        "explanation": "A probability of 1/8 is small but not zero, so landing on 'win' is unlikely."
       },
       {
         "id": "q10",
@@ -1087,40 +1084,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 1, 19, 4, 14, 8. What is the range?",
+            "prompt": "Which word best describes an event that is sure to happen: impossible, unlikely, even chance or certain?",
             "choices": [
-              "1",
-              "17",
-              "18",
-              "19"
+              "impossible",
+              "unlikely",
+              "even chance",
+              "certain"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 19 − 1 = 18."
+            "answer": "certain",
+            "clue": "Ask yourself what \"Probability\" means here before you choose.",
+            "explanation": "An event that will definitely happen is certain – it has a probability of 1."
           },
           {
-            "prompt": "Here is some data: 2, 8, 6, 4, 10, 2. Which value appears most often (the mode)?",
+            "prompt": "Write the probability 3/4 as a percentage.",
             "choices": [
-              "2",
-              "10",
-              "8",
-              "3"
+              "34%",
+              "43%",
+              "57%",
+              "75%"
             ],
-            "answer": "2",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "2 appears more than any other value, so it is the mode."
+            "answer": "75%",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "3 ÷ 4 = 0.75, and 0.75 × 100 = 75%."
           },
           {
-            "prompt": "A tally shows these counts: 11, 6, 3, 5, 16. What is the total?",
+            "prompt": "Yusuf rolls a dice 40 times and records an even number 24 times. What is the experimental probability of rolling an even number, as a fraction in simplest form?",
             "choices": [
-              "16",
-              "41",
-              "42",
-              "40"
+              "1/2",
+              "3/5",
+              "2/3",
+              "4/5"
             ],
-            "answer": "41",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 11 + 6 + 3 + 5 + 16 = 41."
+            "answer": "3/5",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Experimental probability = 24/40 = 3/5."
           },
           {
             "prompt": "What does “Probability” mean?",
@@ -1145,40 +1142,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 20, 15, 13, 4, 11. What is the range?",
+            "prompt": "A probability is marked exactly halfway between impossible and certain on the probability scale. What is this probability as a decimal?",
             "choices": [
-              "16",
-              "20",
-              "4",
-              "17"
+              "0",
+              "0.5",
+              "1",
+              "1.5"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 20 − 4 = 16."
+            "answer": "0.5",
+            "clue": "Ask yourself what \"Probability\" means here before you choose.",
+            "explanation": "Halfway between 0 and 1 is 0.5 – an even chance."
           },
           {
-            "prompt": "A tally shows these counts: 5, 19, 9, 12, 17. What is the total?",
+            "prompt": "A coin is tossed and a spinner with 3 equal sections (A, B, C) is spun. How many outcomes are there in total when listed together?",
             "choices": [
-              "19",
-              "62",
-              "63",
-              "61"
+              "5",
+              "6",
+              "8",
+              "9"
             ],
-            "answer": "62",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 5 + 19 + 9 + 12 + 17 = 62."
+            "answer": "6",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Pair each of the 2 coin outcomes with each of the 3 spinner outcomes: 2 × 3 = 6."
           },
           {
-            "prompt": "A tally shows these counts: 6, 18, 14, 2, 15. What is the total?",
+            "prompt": "In a bag of counters, P(green) = 3/8. What is P(not green)?",
             "choices": [
-              "55",
-              "56",
-              "54",
-              "18"
+              "1/8",
+              "3/8",
+              "5/8",
+              "8/3"
             ],
-            "answer": "55",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 6 + 18 + 14 + 2 + 15 = 55."
+            "answer": "5/8",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "P(not green) = 1 − 3/8 = 5/8."
           },
           {
             "prompt": "What does “Outcome” mean?",
@@ -1203,40 +1200,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 15, 3, 16, 10, 14. What is the largest value?",
+            "prompt": "A bag has 3 red counters and 9 blue counters. What is P(red) as a fraction in simplest form?",
             "choices": [
-              "15",
-              "17",
-              "16",
-              "3"
+              "1/4",
+              "1/3",
+              "3/9",
+              "9/12"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 16."
+            "answer": "1/4",
+            "clue": "Ask yourself what \"Probability\" means here before you choose.",
+            "explanation": "There are 12 counters in total, so P(red) = 3/12 = 1/4."
           },
           {
-            "prompt": "Here is some data: 20, 12, 18, 7, 14, 20. Which value appears most often (the mode)?",
+            "prompt": "P(rain tomorrow) = 0.35. What is P(no rain tomorrow)?",
             "choices": [
-              "7",
-              "12",
-              "21",
-              "20"
+              "0.35",
+              "0.5",
+              "0.65",
+              "1.35"
             ],
-            "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "20 appears more than any other value, so it is the mode."
+            "answer": "0.65",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "P(not event) = 1 − P(event) = 1 − 0.35 = 0.65."
           },
           {
-            "prompt": "A tally shows these counts: 6, 16, 4, 11, 12. What is the total?",
+            "prompt": "A spinner has 8 equal sections: 1 marked 'win' and 7 marked 'lose'. Which word best describes the chance of landing on 'win': impossible, unlikely, even chance or certain?",
             "choices": [
-              "16",
-              "49",
-              "50",
-              "48"
+              "impossible",
+              "unlikely",
+              "even chance",
+              "certain"
             ],
-            "answer": "49",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 6 + 16 + 4 + 11 + 12 = 49."
+            "answer": "unlikely",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "A probability of 1/8 is small but not zero, so landing on 'win' is unlikely."
           },
           {
             "prompt": "What does “Favourable outcome” mean?",
@@ -1261,28 +1258,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 2, 8, 6, 4, 10, 2. Which value appears most often (the mode)?",
+            "prompt": "Write the probability 3/4 as a percentage.",
             "choices": [
-              "2",
-              "10",
-              "8",
-              "3"
+              "34%",
+              "43%",
+              "57%",
+              "75%"
             ],
-            "answer": "2",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "2 appears more than any other value, so it is the mode."
+            "answer": "75%",
+            "clue": "Ask yourself what \"Probability\" means here before you choose.",
+            "explanation": "3 ÷ 4 = 0.75, and 0.75 × 100 = 75%."
           },
           {
-            "prompt": "A tally shows these counts: 11, 6, 3, 5, 16. What is the total?",
+            "prompt": "Yusuf rolls a dice 40 times and records an even number 24 times. What is the experimental probability of rolling an even number, as a fraction in simplest form?",
             "choices": [
-              "16",
-              "41",
-              "42",
-              "40"
+              "1/2",
+              "3/5",
+              "2/3",
+              "4/5"
             ],
-            "answer": "41",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 11 + 6 + 3 + 5 + 16 = 41."
+            "answer": "3/5",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Experimental probability = 24/40 = 3/5."
           },
           {
             "prompt": "What does “Probability” mean?",
@@ -1297,16 +1294,16 @@
             "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
           },
           {
-            "prompt": "Here is some data: 1, 19, 4, 14, 8. What is the range?",
+            "prompt": "Which word best describes an event that is sure to happen: impossible, unlikely, even chance or certain?",
             "choices": [
-              "1",
-              "17",
-              "18",
-              "19"
+              "impossible",
+              "unlikely",
+              "even chance",
+              "certain"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 19 − 1 = 18."
+            "answer": "certain",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "An event that will definitely happen is certain – it has a probability of 1."
           }
         ]
       },
@@ -1319,28 +1316,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "A tally shows these counts: 5, 19, 9, 12, 17. What is the total?",
+            "prompt": "A coin is tossed and a spinner with 3 equal sections (A, B, C) is spun. How many outcomes are there in total when listed together?",
             "choices": [
-              "19",
-              "62",
-              "63",
-              "61"
+              "5",
+              "6",
+              "8",
+              "9"
             ],
-            "answer": "62",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 5 + 19 + 9 + 12 + 17 = 62."
+            "answer": "6",
+            "clue": "Ask yourself what \"Probability\" means here before you choose.",
+            "explanation": "Pair each of the 2 coin outcomes with each of the 3 spinner outcomes: 2 × 3 = 6."
           },
           {
-            "prompt": "A tally shows these counts: 6, 18, 14, 2, 15. What is the total?",
+            "prompt": "In a bag of counters, P(green) = 3/8. What is P(not green)?",
             "choices": [
-              "55",
-              "56",
-              "54",
-              "18"
+              "1/8",
+              "3/8",
+              "5/8",
+              "8/3"
             ],
-            "answer": "55",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 6 + 18 + 14 + 2 + 15 = 55."
+            "answer": "5/8",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "P(not green) = 1 − 3/8 = 5/8."
           },
           {
             "prompt": "What does “Outcome” mean?",
@@ -1355,16 +1352,16 @@
             "explanation": "Outcome means One possible single result of a trial."
           },
           {
-            "prompt": "Here is some data: 20, 15, 13, 4, 11. What is the range?",
+            "prompt": "A probability is marked exactly halfway between impossible and certain on the probability scale. What is this probability as a decimal?",
             "choices": [
-              "16",
-              "20",
-              "4",
-              "17"
+              "0",
+              "0.5",
+              "1",
+              "1.5"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 20 − 4 = 16."
+            "answer": "0.5",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Halfway between 0 and 1 is 0.5 – an even chance."
           }
         ]
       },
@@ -1377,28 +1374,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 20, 12, 18, 7, 14, 20. Which value appears most often (the mode)?",
+            "prompt": "P(rain tomorrow) = 0.35. What is P(no rain tomorrow)?",
             "choices": [
-              "7",
-              "12",
-              "21",
-              "20"
+              "0.35",
+              "0.5",
+              "0.65",
+              "1.35"
             ],
-            "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "20 appears more than any other value, so it is the mode."
+            "answer": "0.65",
+            "clue": "Ask yourself what \"Probability\" means here before you choose.",
+            "explanation": "P(not event) = 1 − P(event) = 1 − 0.35 = 0.65."
           },
           {
-            "prompt": "A tally shows these counts: 6, 16, 4, 11, 12. What is the total?",
+            "prompt": "A spinner has 8 equal sections: 1 marked 'win' and 7 marked 'lose'. Which word best describes the chance of landing on 'win': impossible, unlikely, even chance or certain?",
             "choices": [
-              "16",
-              "49",
-              "50",
-              "48"
+              "impossible",
+              "unlikely",
+              "even chance",
+              "certain"
             ],
-            "answer": "49",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 6 + 16 + 4 + 11 + 12 = 49."
+            "answer": "unlikely",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "A probability of 1/8 is small but not zero, so landing on 'win' is unlikely."
           },
           {
             "prompt": "What does “Favourable outcome” mean?",
@@ -1413,16 +1410,16 @@
             "explanation": "Favourable outcome means An outcome that counts as your event."
           },
           {
-            "prompt": "Here is some data: 15, 3, 16, 10, 14. What is the largest value?",
+            "prompt": "A bag has 3 red counters and 9 blue counters. What is P(red) as a fraction in simplest form?",
             "choices": [
-              "15",
-              "17",
-              "16",
-              "3"
+              "1/4",
+              "1/3",
+              "3/9",
+              "9/12"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 16."
+            "answer": "1/4",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "There are 12 counters in total, so P(red) = 3/12 = 1/4."
           }
         ]
       },
@@ -1435,16 +1432,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "A tally shows these counts: 11, 6, 3, 5, 16. What is the total?",
+            "prompt": "Yusuf rolls a dice 40 times and records an even number 24 times. What is the experimental probability of rolling an even number, as a fraction in simplest form?",
             "choices": [
-              "16",
-              "41",
-              "42",
-              "40"
+              "1/2",
+              "3/5",
+              "2/3",
+              "4/5"
             ],
-            "answer": "41",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 11 + 6 + 3 + 5 + 16 = 41."
+            "answer": "3/5",
+            "clue": "Ask yourself what \"Probability\" means here before you choose.",
+            "explanation": "Experimental probability = 24/40 = 3/5."
           },
           {
             "prompt": "What does “Probability” mean?",
@@ -1459,28 +1456,28 @@
             "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
           },
           {
-            "prompt": "Here is some data: 1, 19, 4, 14, 8. What is the range?",
+            "prompt": "Which word best describes an event that is sure to happen: impossible, unlikely, even chance or certain?",
             "choices": [
-              "1",
-              "17",
-              "18",
-              "19"
+              "impossible",
+              "unlikely",
+              "even chance",
+              "certain"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 19 − 1 = 18."
+            "answer": "certain",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "An event that will definitely happen is certain – it has a probability of 1."
           },
           {
-            "prompt": "Here is some data: 2, 8, 6, 4, 10, 2. Which value appears most often (the mode)?",
+            "prompt": "Write the probability 3/4 as a percentage.",
             "choices": [
-              "2",
-              "10",
-              "8",
-              "3"
+              "34%",
+              "43%",
+              "57%",
+              "75%"
             ],
-            "answer": "2",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "2 appears more than any other value, so it is the mode."
+            "answer": "75%",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "3 ÷ 4 = 0.75, and 0.75 × 100 = 75%."
           }
         ]
       },
@@ -1493,16 +1490,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "A tally shows these counts: 6, 18, 14, 2, 15. What is the total?",
+            "prompt": "In a bag of counters, P(green) = 3/8. What is P(not green)?",
             "choices": [
-              "55",
-              "56",
-              "54",
-              "18"
+              "1/8",
+              "3/8",
+              "5/8",
+              "8/3"
             ],
-            "answer": "55",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 6 + 18 + 14 + 2 + 15 = 55."
+            "answer": "5/8",
+            "clue": "Ask yourself what \"Probability\" means here before you choose.",
+            "explanation": "P(not green) = 1 − 3/8 = 5/8."
           },
           {
             "prompt": "What does “Outcome” mean?",
@@ -1517,28 +1514,28 @@
             "explanation": "Outcome means One possible single result of a trial."
           },
           {
-            "prompt": "Here is some data: 20, 15, 13, 4, 11. What is the range?",
+            "prompt": "A probability is marked exactly halfway between impossible and certain on the probability scale. What is this probability as a decimal?",
             "choices": [
-              "16",
-              "20",
-              "4",
-              "17"
+              "0",
+              "0.5",
+              "1",
+              "1.5"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 20 − 4 = 16."
+            "answer": "0.5",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Halfway between 0 and 1 is 0.5 – an even chance."
           },
           {
-            "prompt": "A tally shows these counts: 5, 19, 9, 12, 17. What is the total?",
+            "prompt": "A coin is tossed and a spinner with 3 equal sections (A, B, C) is spun. How many outcomes are there in total when listed together?",
             "choices": [
-              "19",
-              "62",
-              "63",
-              "61"
+              "5",
+              "6",
+              "8",
+              "9"
             ],
-            "answer": "62",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 5 + 19 + 9 + 12 + 17 = 62."
+            "answer": "6",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Pair each of the 2 coin outcomes with each of the 3 spinner outcomes: 2 × 3 = 6."
           }
         ]
       },
@@ -1551,16 +1548,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "A tally shows these counts: 6, 16, 4, 11, 12. What is the total?",
+            "prompt": "A spinner has 8 equal sections: 1 marked 'win' and 7 marked 'lose'. Which word best describes the chance of landing on 'win': impossible, unlikely, even chance or certain?",
             "choices": [
-              "16",
-              "49",
-              "50",
-              "48"
+              "impossible",
+              "unlikely",
+              "even chance",
+              "certain"
             ],
-            "answer": "49",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 6 + 16 + 4 + 11 + 12 = 49."
+            "answer": "unlikely",
+            "clue": "Ask yourself what \"Probability\" means here before you choose.",
+            "explanation": "A probability of 1/8 is small but not zero, so landing on 'win' is unlikely."
           },
           {
             "prompt": "What does “Favourable outcome” mean?",
@@ -1575,28 +1572,28 @@
             "explanation": "Favourable outcome means An outcome that counts as your event."
           },
           {
-            "prompt": "Here is some data: 15, 3, 16, 10, 14. What is the largest value?",
+            "prompt": "A bag has 3 red counters and 9 blue counters. What is P(red) as a fraction in simplest form?",
             "choices": [
-              "15",
-              "17",
-              "16",
-              "3"
+              "1/4",
+              "1/3",
+              "3/9",
+              "9/12"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 16."
+            "answer": "1/4",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "There are 12 counters in total, so P(red) = 3/12 = 1/4."
           },
           {
-            "prompt": "Here is some data: 20, 12, 18, 7, 14, 20. Which value appears most often (the mode)?",
+            "prompt": "P(rain tomorrow) = 0.35. What is P(no rain tomorrow)?",
             "choices": [
-              "7",
-              "12",
-              "21",
-              "20"
+              "0.35",
+              "0.5",
+              "0.65",
+              "1.35"
             ],
-            "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "20 appears more than any other value, so it is the mode."
+            "answer": "0.65",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "P(not event) = 1 − P(event) = 1 − 0.35 = 0.65."
           }
         ]
       },
@@ -1621,40 +1618,40 @@
             "explanation": "Probability means A number from 0 to 1 showing how likely an event is."
           },
           {
-            "prompt": "Here is some data: 1, 19, 4, 14, 8. What is the range?",
+            "prompt": "Which word best describes an event that is sure to happen: impossible, unlikely, even chance or certain?",
             "choices": [
-              "1",
-              "17",
-              "18",
-              "19"
+              "impossible",
+              "unlikely",
+              "even chance",
+              "certain"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 19 − 1 = 18."
+            "answer": "certain",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "An event that will definitely happen is certain – it has a probability of 1."
           },
           {
-            "prompt": "Here is some data: 2, 8, 6, 4, 10, 2. Which value appears most often (the mode)?",
+            "prompt": "Write the probability 3/4 as a percentage.",
             "choices": [
-              "2",
-              "10",
-              "8",
-              "3"
+              "34%",
+              "43%",
+              "57%",
+              "75%"
             ],
-            "answer": "2",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "2 appears more than any other value, so it is the mode."
+            "answer": "75%",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "3 ÷ 4 = 0.75, and 0.75 × 100 = 75%."
           },
           {
-            "prompt": "A tally shows these counts: 11, 6, 3, 5, 16. What is the total?",
+            "prompt": "Yusuf rolls a dice 40 times and records an even number 24 times. What is the experimental probability of rolling an even number, as a fraction in simplest form?",
             "choices": [
-              "16",
-              "41",
-              "42",
-              "40"
+              "1/2",
+              "3/5",
+              "2/3",
+              "4/5"
             ],
-            "answer": "41",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 11 + 6 + 3 + 5 + 16 = 41."
+            "answer": "3/5",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Experimental probability = 24/40 = 3/5."
           }
         ]
       },
@@ -1679,40 +1676,40 @@
             "explanation": "Outcome means One possible single result of a trial."
           },
           {
-            "prompt": "Here is some data: 20, 15, 13, 4, 11. What is the range?",
+            "prompt": "A probability is marked exactly halfway between impossible and certain on the probability scale. What is this probability as a decimal?",
             "choices": [
-              "16",
-              "20",
-              "4",
-              "17"
+              "0",
+              "0.5",
+              "1",
+              "1.5"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 20 − 4 = 16."
+            "answer": "0.5",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Halfway between 0 and 1 is 0.5 – an even chance."
           },
           {
-            "prompt": "A tally shows these counts: 5, 19, 9, 12, 17. What is the total?",
+            "prompt": "A coin is tossed and a spinner with 3 equal sections (A, B, C) is spun. How many outcomes are there in total when listed together?",
             "choices": [
-              "19",
-              "62",
-              "63",
-              "61"
+              "5",
+              "6",
+              "8",
+              "9"
             ],
-            "answer": "62",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 5 + 19 + 9 + 12 + 17 = 62."
+            "answer": "6",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Pair each of the 2 coin outcomes with each of the 3 spinner outcomes: 2 × 3 = 6."
           },
           {
-            "prompt": "A tally shows these counts: 6, 18, 14, 2, 15. What is the total?",
+            "prompt": "In a bag of counters, P(green) = 3/8. What is P(not green)?",
             "choices": [
-              "55",
-              "56",
-              "54",
-              "18"
+              "1/8",
+              "3/8",
+              "5/8",
+              "8/3"
             ],
-            "answer": "55",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 6 + 18 + 14 + 2 + 15 = 55."
+            "answer": "5/8",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "P(not green) = 1 − 3/8 = 5/8."
           }
         ]
       },
@@ -1737,53 +1734,52 @@
             "explanation": "Favourable outcome means An outcome that counts as your event."
           },
           {
-            "prompt": "Here is some data: 15, 3, 16, 10, 14. What is the largest value?",
+            "prompt": "A bag has 3 red counters and 9 blue counters. What is P(red) as a fraction in simplest form?",
             "choices": [
-              "15",
-              "17",
-              "16",
-              "3"
+              "1/4",
+              "1/3",
+              "3/9",
+              "9/12"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 16."
+            "answer": "1/4",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "There are 12 counters in total, so P(red) = 3/12 = 1/4."
           },
           {
-            "prompt": "Here is some data: 20, 12, 18, 7, 14, 20. Which value appears most often (the mode)?",
+            "prompt": "P(rain tomorrow) = 0.35. What is P(no rain tomorrow)?",
             "choices": [
-              "7",
-              "12",
-              "21",
-              "20"
+              "0.35",
+              "0.5",
+              "0.65",
+              "1.35"
             ],
-            "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "20 appears more than any other value, so it is the mode."
+            "answer": "0.65",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "P(not event) = 1 − P(event) = 1 − 0.35 = 0.65."
           },
           {
-            "prompt": "A tally shows these counts: 6, 16, 4, 11, 12. What is the total?",
+            "prompt": "A spinner has 8 equal sections: 1 marked 'win' and 7 marked 'lose'. Which word best describes the chance of landing on 'win': impossible, unlikely, even chance or certain?",
             "choices": [
-              "16",
-              "49",
-              "50",
-              "48"
+              "impossible",
+              "unlikely",
+              "even chance",
+              "certain"
             ],
-            "answer": "49",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 6 + 16 + 4 + 11 + 12 = 49."
+            "answer": "unlikely",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "A probability of 1/8 is small but not zero, so landing on 'win' is unlikely."
           }
         ]
       }
     ]
   },
   "selfAssessment": [
-    "I can this unit is designed for self-paced learning. That means you move at your own speed. Read each explanation slowly, work through every example yourself on paper, and only move on when you feel ready. Your AI tutor is available day and night to give you extra practice, explain a step in a fresh way, or check your answers whenever you get stuck. Your teacher will also meet with you about twice a week to help with anything that feels tricky and to look over your written work.",
-    "I can why does probability matter so much? Because we live in a world full of uncertainty, and good decisions depend on understanding chance. A farmer near Hargeisa studies the probability of rain before deciding when to plant. A shopkeeper in Eastleigh works out how many crates of mango are likely to sell so none are wasted. Doctors weigh the probability that a treatment will help a patient. Even games are built on probability – a game is only fair if every player has an equal chance of winning. Learning to reason about chance will help you make wiser choices for the rest of your life, and it lays the foundation for the statistics you will meet in secondary school.",
-    "I can as you work, keep a pencil, some paper and a few everyday objects beside you – a coin, a dice if you have one, or some coloured beans in a cup will do. Probability is a subject you must do, not only read. Flip the coin, tally the results, and see the mathematics come alive in your own hands. If an experiment does not match your prediction exactly, that is not a mistake – it is one of the most important lessons in the whole unit, and we will explain exactly why it happens.",
     "I can describe the likelihood of events using words such as impossible, unlikely, even chance, likely and certain.",
     "I can place events on a probability scale from 0 (impossible) to 1 (certain).",
     "I can calculate the probability of an event using the formula favourable outcomes ÷ total outcomes.",
     "I can express any probability as a fraction, a decimal and a percentage, and convert between them.",
-    "I can list all the possible outcomes of a situation in an organised way."
+    "I can list all the possible outcomes of a situation in an organised way.",
+    "I can use the idea of complementary events – that P(event) + P(not event) = 1.",
+    "I can run probability experiments, record results in tally and frequency tables, and find experimental probability."
   ]
 }

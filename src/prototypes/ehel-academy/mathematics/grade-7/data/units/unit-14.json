@@ -55,44 +55,58 @@
     "Describe and perform a reflection in a mirror line, including the x-axis, the y-axis and lines such as x = 2.",
     "Describe and perform a rotation about a point, giving the centre, angle and direction.",
     "Use coordinate rules to transform points quickly with algebra.",
-    "Explain why translations, reflections and rotations produce a congruent image, and combine two transformations in sequence."
+    "Explain why translations, reflections and rotations produce a congruent image, and combine two transformations in sequence.",
+    "Find the distance between two coordinate points that share the same x-coordinate or the same y-coordinate, without needing to draw a grid.",
+    "Enlarge a shape by a positive integer scale factor from a centre of enlargement, and explain why the image is similar (but not congruent) to the object."
   ],
   "concepts": [
     {
       "id": "concept-1-the-coordinate-grid-and-four-quadrants",
       "title": "The Coordinate Grid and Four Quadrants",
-      "explanation": "A coordinate grid (also called the coordinate plane) is built from two number lines that cross at right angles. The horizontal line is the x-axis and the vertical line is the y-axis. They meet at a single point called the origin, whose coordinates are (0, 0). Every other point on the grid has its own unique pair of numbers, just as every house on a well-planned street has its own address. Positive and negative signs tell you the direction. A positive x means move right; a negative x means move left. A positive y…",
+      "explanation": "A coordinate grid (also called the coordinate plane) is built from two number lines that cross at right angles. The horizontal line is the x-axis and the vertical line is the y-axis. They meet at a single point called the origin, whose coordinates are (0, 0). Every other point on the grid has its own unique pair of numbers, just as every house on a well-planned street has its own address. Positive and negative signs tell you the direction. A positive x means move right; a negative x means move left. A positive y means move up; a negative y means move down.",
       "example": "The two axes cut the grid into four regions called quadrants, numbered with Roman numerals and running anticlockwise from the top-right:"
     },
     {
       "id": "concept-2-plotting-and-reading-points-accurately",
       "title": "Plotting and Reading Points Accurately",
-      "explanation": "Plotting means marking a point when you are given its coordinates. Reading means writing the coordinates of a point you can already see. These are opposite skills, and you need both. To plot a point, start at the origin every single time. Move along the x-axis by the first number, then move parallel to the y-axis by the second number, and make a small neat cross where you land. To read a point, do the reverse. Look at the point and ask two questions. First, how far left or right of the y-axis is it? That distance,…",
-      "example": "Here is a common trap to avoid. Many learners rush and swap the two numbers, plotting (2, 5) where (5, 2) belongs. Slow down and whisper the rule – x first, then y; along, then up. Another trap is to lose track of the…"
+      "explanation": "Plotting means marking a point when you are given its coordinates. Reading means writing the coordinates of a point you can already see. These are opposite skills, and you need both. To plot a point, start at the origin every single time. Move along the x-axis by the first number, then move parallel to the y-axis by the second number, and make a small neat cross where you land.\n\nTo read a point, do the reverse. Look at the point and ask two questions. First, how far left or right of the y-axis is it? That distance, with the correct sign, is the x-coordinate. Second, how far above or below the x-axis is it? That distance, with the correct sign, is the y-coordinate. Always check the signs carefully: a point to the left of the y-axis has a negative x, and a point below the x-axis has a negative y.\n\nHere is a common trap to avoid. Many learners rush and swap the two numbers, plotting (2, 5) where (5, 2) belongs. Slow down and whisper the rule – x first, then y; along, then up. Another trap is to lose track of the sign when working in the lower or left quadrants. If Khadija plots the vertices of a triangle and one corner drifts into the wrong quadrant, the whole triangle will look wrong. Careful, unhurried plotting is the foundation of every transformation that follows in this unit.",
+      "example": "Coordinates also let us describe whole shapes. A rectangle might have corners, called vertices, at (1, 1), (5, 1), (5, 3) and (1, 3). If you plot those four points and join them in order with a ruler, a rectangle appears. Because we can describe a shape entirely by its vertices, we can move the whole shape simply by moving each vertex – and that is exactly how the transformations in this unit work. Master plotting now, and every later idea becomes much easier."
     },
     {
       "id": "concept-3-translation-sliding-a-shape",
       "title": "Translation – Sliding a Shape",
-      "explanation": "A translation slides every point of a shape the same distance in the same direction. Nothing turns and nothing flips – the shape just moves to a new position, keeping exactly the same size, shape and orientation. Sliding a book across a table, moving a game piece across a board, or shifting a chair straight across a room are all everyday translations. We describe a translation with a column vector, two numbers written one above the other. The top number tells you the horizontal move (right is positive, left is…",
-      "example": "To translate a shape, apply the same slide to every vertex. Suppose a triangle has vertices at A(1, 1), B(4, 1) and C(1, 3), and we translate it by (3, -2). We add 3 to each x-coordinate and subtract 2 from each…"
+      "explanation": "A translation slides every point of a shape the same distance in the same direction. Nothing turns and nothing flips – the shape just moves to a new position, keeping exactly the same size, shape and orientation. Sliding a book across a table, moving a game piece across a board, or shifting a chair straight across a room are all everyday translations.\n\nWe describe a translation with a column vector, two numbers written one above the other. The top number tells you the horizontal move (right is positive, left is negative). The bottom number tells you the vertical move (up is positive, down is negative). For example, the vector (3 over -2) means ‘move 3 units right and 2 units down’. Because writing a column in a line of text is awkward, we will write it here as (3, -2) with the understanding that the first number is horizontal and the second is vertical.\n\nTo translate a shape, apply the same slide to every vertex. Suppose a triangle has vertices at A(1, 1), B(4, 1) and C(1, 3), and we translate it by (3, -2). We add 3 to each x-coordinate and subtract 2 from each y-coordinate. So A(1, 1) moves to A′(4, -1), B(4, 1) moves to B′(7, -1), and C(1, 3) moves to C′(4, 1). Plot the new points, join them, and you have an identical triangle that has simply slid across the grid. We call the original the object and the new one the image, and we mark image points with a small dash, like A′, read aloud as ‘A dash’ or ‘A prime’.",
+      "example": "Two useful facts make translations powerful. First, the image is always congruent to the object – same size, same shape, same way up. Second, if you do one translation and then another, the results add together. Sliding by (3, -2) and then by (1, 4) gives the same finish as a single slide of (4, 2), because 3 + 1 = 4 and -2 + 4 = 2. This is why complex movements in animation and robotics can be built from simple slides added together. To undo a translation, reverse both numbers: the inverse of (3, -2) is (-3, 2)."
     },
     {
       "id": "concept-4-reflection-flipping-in-a-mirror-line",
       "title": "Reflection – Flipping in a Mirror Line",
-      "explanation": "A reflection produces a mirror image of a shape across a straight line called the mirror line or line of reflection. When you look in a mirror you see yourself the same size and shape but reversed left to right; mathematical reflection works in exactly the same way. The reflected image is congruent to the object, but its orientation is flipped. The mirror line follows one golden rule: every point of the image is the same distance from the mirror line as the matching point of the object, but on the opposite side.…",
-      "example": "To reflect a shape neatly, reflect each vertex and then join the images. Measure the perpendicular distance from each vertex to the mirror line, then count the same distance across to the other side and mark the image…"
+      "explanation": "A reflection produces a mirror image of a shape across a straight line called the mirror line or line of reflection. When you look in a mirror you see yourself the same size and shape but reversed left to right; mathematical reflection works in exactly the same way. The reflected image is congruent to the object, but its orientation is flipped.\n\nThe mirror line follows one golden rule: every point of the image is the same distance from the mirror line as the matching point of the object, but on the opposite side. The line joining a point to its image crosses the mirror line at a right angle. So if a corner sits 3 units to the left of the mirror line, its image sits 3 units to the right of that same line, directly across from it.\n\nTo reflect a shape neatly, reflect each vertex and then join the images. Measure the perpendicular distance from each vertex to the mirror line, then count the same distance across to the other side and mark the image point. A piece of tracing paper is a wonderful check: trace the shape and the mirror line, flip the paper over along the line, and the tracing should land exactly on the image you drew.\n\nReflections in the axes have especially tidy coordinate rules, which you will use again and again:\n\nReflection in the x-axis: the rule is (x, y) → (x, -y). The x stays the same; the y changes sign. So (3, 2) becomes (3, -2).\n\nReflection in the y-axis: the rule is (x, y) → (-x, y). The y stays the same; the x changes sign. So (3, 2) becomes (-3, 2).\n\nReflection in a vertical line like x = 2: measure how far the point is from the line and count the same distance across. (5, 1) is 3 right of x = 2, so its image is 3 left, at (-1, 1).",
+      "example": "Reflection is closely tied to symmetry. A shape has a line of symmetry when reflecting it in that line leaves it looking exactly the same – you could fold the shape along the line and the two halves would match perfectly. A square has four lines of symmetry, an equilateral triangle has three, and a circle has infinitely many, since any line through its centre is a line of symmetry. You can see this beautiful balance in the geometric patterns of tilework and woven mats, and in the wings of a butterfly."
     },
     {
       "id": "concept-5-rotation-turning-about-a-point",
       "title": "Rotation – Turning About a Point",
-      "explanation": "A rotation turns a shape about a fixed point called the centre of rotation. Every point of the shape travels along a circular path around this centre, and every point turns through the same angle. A wheel spinning on its axle, a door swinging on its hinge, and the hands sweeping around a clock are all rotations. Like the other transformations, rotation keeps the shape congruent – the size and shape never change, only the orientation. To describe a rotation fully you must give three pieces of information: the…",
-      "example": "The distance from any point to the centre stays exactly the same through the whole turn. If a corner starts 5 units from the centre, it finishes 5 units from the centre, just pointing in a new direction. This is why…"
+      "explanation": "A rotation turns a shape about a fixed point called the centre of rotation. Every point of the shape travels along a circular path around this centre, and every point turns through the same angle. A wheel spinning on its axle, a door swinging on its hinge, and the hands sweeping around a clock are all rotations. Like the other transformations, rotation keeps the shape congruent – the size and shape never change, only the orientation.\n\nTo describe a rotation fully you must give three pieces of information: the centre of rotation (the fixed point), the angle of rotation (how far to turn), and the direction (clockwise or anticlockwise). Miss any one of these and the description is incomplete. The most common angles are the quarter turn of 90°, the half turn of 180°, and the three-quarter turn of 270°. A half turn of 180° lands in the same place whether you go clockwise or anticlockwise, so for 180° the direction does not matter.\n\nThe distance from any point to the centre stays exactly the same through the whole turn. If a corner starts 5 units from the centre, it finishes 5 units from the centre, just pointing in a new direction. This is why tracing paper is the perfect tool for rotations: trace the shape, press your pencil tip firmly on the centre to hold it still, and turn the paper through the required angle. Where the tracing lands is the image.\n\nFor rotations about the origin, there are clean coordinate rules worth memorising. Here ‘anticlockwise’ is the positive direction, as usual in mathematics:\n\n90° anticlockwise about the origin: (x, y) → (-y, x). So (3, 1) becomes (-1, 3).\n\n180° about the origin (either direction): (x, y) → (-x, -y). So (3, 1) becomes (-3, -1).\n\n90° clockwise about the origin, the same as 270° anticlockwise: (x, y) → (y, -x). So (3, 1) becomes (1, -3).",
+      "example": "A shape has rotational symmetry when it looks identical after a turn of less than a full 360°. The order of rotational symmetry counts how many times it looks the same during one complete turn. A square has rotational symmetry of order 4, because it matches itself after 90°, 180°, 270° and 360°. A regular pentagon has order 5, and an equilateral triangle has order 3. Look for this repeating balance in wheel hubs, flower petals, and the spokes of a fan."
     },
     {
       "id": "concept-6-congruence-and-combining-transformations",
       "title": "Congruence and Combining Transformations",
-      "explanation": "The three transformations you have met – translation, reflection and rotation – are called rigid transformations because they never change a shape's size or its lengths and angles. The image is always congruent to the object. Two shapes are congruent when one can be placed exactly on top of the other after some combination of slides, flips and turns; every side matches a side, and every angle matches an angle. Congruence is one of the most important ideas in geometry, and transformations are the natural way to…",
-      "example": "The order usually matters. Reflecting a shape and then translating it can land in a different place from translating first and then reflecting. Always read the instructions carefully to see which move comes first. There…"
+      "explanation": "The three transformations you have met – translation, reflection and rotation – are called rigid transformations because they never change a shape's size or its lengths and angles. The image is always congruent to the object. Two shapes are congruent when one can be placed exactly on top of the other after some combination of slides, flips and turns; every side matches a side, and every angle matches an angle. Congruence is one of the most important ideas in geometry, and transformations are the natural way to test for it.\n\nReal problems often use more than one transformation in a row. When we do one transformation and then another, we call it a combination or composition of transformations. To carry one out, apply the first transformation to get an image, then apply the second transformation to that image. Work carefully and label each stage, for example A → A′ after the first move and A′ → A′′ after the second.\n\nThe order usually matters. Reflecting a shape and then translating it can land in a different place from translating first and then reflecting. Always read the instructions carefully to see which move comes first. There are, however, some neat results worth knowing. Two reflections in parallel mirror lines combine to give a single translation. Two reflections in mirror lines that cross combine to give a single rotation about the point where they meet. Mathematicians love these facts because they show how the transformations are secretly connected.\n\nEvery transformation also has an inverse – a move that undoes it and returns the shape home. The inverse of a translation is the same slide reversed. The inverse of a rotation is the same turn in the opposite direction about the same centre. The inverse of a reflection is simply the same reflection again, because flipping twice in the same mirror brings you back to the start. Understanding inverses helps you check your work: if you can undo a transformation and land exactly on the original, you did it correctly.\n\nYou have now met the whole toolkit of this unit: the coordinate grid with its four quadrants, accurate plotting and reading of points, and the three rigid transformations of translation, reflection and rotation, all held together by the idea of congruence. These ideas are not separate islands – they work as one system. A translation, a reflection and a rotation can all be written as a rule that acts on the coordinates (x, y), which is why a computer can perform millions of them every second when it draws a moving image on screen.\n\nThink of how these pieces fit together in a single scene. A game designer places a spaceship using coordinates, slides it across the screen with a translation, flips it with a reflection when it turns to face the other way, and spins it with a rotation when it is hit. Every frame of the animation is just the same shape transformed by a new rule. When Maryam designs a repeating border pattern for a length of cloth, she reflects and translates one motif over and over, and the mathematics guarantees that every copy is perfectly congruent to the first.",
+      "example": "The best way to lock these ideas into memory is to use them with real squared paper and real shapes. Plot a small triangle, then translate it, reflect it, and rotate it, checking each image with tracing paper. Say each move out loud with its full description – the vector for a slide, the mirror line for a flip, the centre, angle and direction for a turn. Every time you do this, your spatial reasoning grows stronger, and the geometry of later years will feel far more natural. Now let us practise together with some fully worked examples."
+    },
+    {
+      "id": "concept-7-finding-the-distance-between-two-points",
+      "title": "Finding the Distance Between Two Points",
+      "explanation": "When two points share the same x-coordinate, they lie directly above or below each other on a vertical line, so the distance between them is just the difference between their y-coordinates. When two points share the same y-coordinate, they lie directly left or right of each other on a horizontal line, so the distance between them is the difference between their x-coordinates. Because distance is always positive, subtract the smaller value from the larger one (or take the absolute value of the difference) – you do not need to draw a grid to work this out.",
+      "example": "Points A(3, 2) and B(3, 9) share the same x-coordinate, 3, so they lie on a vertical line. The distance between them is 9 − 2 = 7 units. Points C(−2, 5) and D(6, 5) share the same y-coordinate, 5, so they lie on a horizontal line. The distance between them is 6 − (−2) = 8 units."
+    },
+    {
+      "id": "concept-8-enlargement-scaling-a-shape-up",
+      "title": "Enlargement – Scaling a Shape Up",
+      "explanation": "Enlargement is a transformation that changes the size of a shape without changing its angles or its overall proportions. Every length in the original shape (the object) is multiplied by the same number, called the scale factor, to give the matching length in the new shape (the image). This unit only uses positive whole-number scale factors, such as 2 or 3, which make the image bigger than the object. To enlarge a shape from a centre of enlargement, draw a line from the centre through each vertex of the object, and mark the image vertex at a distance from the centre that is the scale factor times as far as the object vertex was. Because every length is scaled by the same factor and every angle stays exactly the same, the image is similar to the object – same shape, same angles, but a different size. This is different from a translation, reflection or rotation, which all produce a congruent image (identical size).",
+      "example": "Triangle ABC has vertices A(1, 1), B(2, 1) and C(1, 3). Enlarge it by scale factor 2 from the origin (0, 0). Multiply every coordinate by 2: A′(2, 2), B′(4, 2), C′(2, 6). Check the side lengths: AB was 1 unit long (from x = 1 to x = 2), and A′B′ is 2 units long (from x = 2 to x = 4) – exactly double, matching the scale factor. The image triangle A′B′C′ is similar to the original: it has the same angles, but every side is twice as long."
     }
   ],
   "explorations": [
@@ -101,72 +115,72 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "The Coordinate Grid and Four Quadrants",
-      "context": "A coordinate grid (also called the coordinate plane) is built from two number lines that cross at right angles. The horizontal line is the x-axis and the vertical line is the y-axis. They meet at a single point called the origin, whose coordinates are (0, 0).…",
+      "context": "A coordinate grid (also called the coordinate plane) is built from two number lines that cross at right angles. The horizontal line is the x-axis and the vertical line is the y-axis.",
       "prompt": "Name the quadrant of each point: a) (2, 7) b) (-5, 1) c) (-3, -8) d) (6, -2).",
       "answer": "1) a) Quadrant I, b) Quadrant II, c) Quadrant III, d) Quadrant IV.",
       "modelType": "model-1",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) a) Quadrant I, b) Quadrant II, c) Quadrant III, d) Quadrant IV."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "explanation": "The Coordinate Grid and Four Quadrants: A coordinate grid (also called the coordinate plane) is built from two number lines that cross at right angles. The horizontal line is the x-axis and the vertical line is the y-axis. They meet at a single point called the origin, whose coordinates are (0, 0). Every other point on the grid has its own unique pair of numbers, just as every house on a well-planned street has its own address."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Plotting and Reading Points Accurately",
-      "context": "Plotting means marking a point when you are given its coordinates. Reading means writing the coordinates of a point you can already see. These are opposite skills, and you need both. To plot a point, start at the origin every single time. Move along the…",
+      "context": "Plotting means marking a point when you are given its coordinates. Reading means writing the coordinates of a point you can already see. These are opposite skills, and you need both. To plot a point, start at the origin every single time.",
       "prompt": "Write the coordinates of the origin.",
-      "answer": "(0,",
+      "answer": "(0, 0)",
       "modelType": "model-2",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "(0,"
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "explanation": "Plotting and Reading Points Accurately: Plotting means marking a point when you are given its coordinates. Reading means writing the coordinates of a point you can already see. These are opposite skills, and you need both. To plot a point, start at the origin every single time. Move along the x-axis by the first number, then move parallel to the y-axis by the second number, and make a small neat cross where you land."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Translation – Sliding a Shape",
-      "context": "A translation slides every point of a shape the same distance in the same direction. Nothing turns and nothing flips – the shape just moves to a new position, keeping exactly the same size, shape and orientation. Sliding a book across a table, moving a game…",
+      "context": "A translation slides every point of a shape the same distance in the same direction. Nothing turns and nothing flips – the shape just moves to a new position, keeping exactly the same size, shape and orientation.",
       "prompt": "A point is 3 units left and 4 units up from the origin. Write its coordinates.",
-      "answer": ".",
+      "answer": "(-3, 4)",
       "modelType": "model-3",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "explanation": "Translation – Sliding a Shape: A translation slides every point of a shape the same distance in the same direction. Nothing turns and nothing flips – the shape just moves to a new position, keeping exactly the same size, shape and orientation. Sliding a book across a table, moving a game piece across a board, or shifting a chair straight across a room are all everyday translations."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Reflection – Flipping in a Mirror Line",
-      "context": "A reflection produces a mirror image of a shape across a straight line called the mirror line or line of reflection. When you look in a mirror you see yourself the same size and shape but reversed left to right; mathematical reflection works in exactly the…",
+      "context": "A reflection produces a mirror image of a shape across a straight line called the mirror line or line of reflection.",
       "prompt": "Translate the point (1, 1) by the vector (5, 2).",
-      "answer": "(-3,",
+      "answer": "(6, 3)",
       "modelType": "model-4",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "(-3,"
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "explanation": "Reflection – Flipping in a Mirror Line: A reflection produces a mirror image of a shape across a straight line called the mirror line or line of reflection. When you look in a mirror you see yourself the same size and shape but reversed left to right; mathematical reflection works in exactly the same way. The reflected image is congruent to the object, but its orientation is flipped."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Rotation – Turning About a Point",
-      "context": "A rotation turns a shape about a fixed point called the centre of rotation. Every point of the shape travels along a circular path around this centre, and every point turns through the same angle. A wheel spinning on its axle, a door swinging on its hinge,…",
+      "context": "A rotation turns a shape about a fixed point called the centre of rotation. Every point of the shape travels along a circular path around this centre, and every point turns through the same angle.",
       "prompt": "Reflect the point (4, 5) in the x-axis.",
-      "answer": ".",
+      "answer": "(4, -5)",
       "modelType": "model-5",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "explanation": "Rotation – Turning About a Point: A rotation turns a shape about a fixed point called the centre of rotation. Every point of the shape travels along a circular path around this centre, and every point turns through the same angle. A wheel spinning on its axle, a door swinging on its hinge, and the hands sweeping around a clock are all rotations."
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Congruence and Combining Transformations",
-      "context": "The three transformations you have met – translation, reflection and rotation – are called rigid transformations because they never change a shape's size or its lengths and angles. The image is always congruent to the object. Two shapes are congruent when one…",
+      "context": "The three transformations you have met – translation, reflection and rotation – are called rigid transformations because they never change a shape's size or its lengths and angles. The image is always congruent to the object.",
       "prompt": "Reflect each point in the y-axis: a) (3, 2) b) (-1, 5) c) (4, -6).",
-      "answer": "1) a) (-3,",
+      "answer": "1) a) (-3, 2), b) (1, 5), c) (-4, -6).",
       "modelType": "model-6",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) a) (-3,"
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "explanation": "Congruence and Combining Transformations: The three transformations you have met – translation, reflection and rotation – are called rigid transformations because they never change a shape's size or its lengths and angles. The image is always congruent to the object. Two shapes are congruent when one can be placed exactly on top of the other after some combination of slides, flips and turns; every side matches a side, and every angle matches an angle."
     }
   ],
   "visualModels": [
@@ -175,7 +189,7 @@
       "outcomeId": "lo01",
       "title": "The Coordinate Grid and Four Quadrants",
       "modelType": "concept-model-1",
-      "purpose": "A coordinate grid (also called the coordinate plane) is built from two number lines that cross at right angles. The horizontal line is the x-axis and the vertical line is the y-axis. They meet at a single point called…",
+      "purpose": "A coordinate grid (also called the coordinate plane) is built from two number lines that cross at right angles. The horizontal line is the x-axis and the vertical line is the y-axis.",
       "defaultNumber": null
     },
     {
@@ -183,7 +197,7 @@
       "outcomeId": "lo02",
       "title": "Plotting and Reading Points Accurately",
       "modelType": "concept-model-2",
-      "purpose": "Plotting means marking a point when you are given its coordinates. Reading means writing the coordinates of a point you can already see. These are opposite skills, and you need both. To plot a point, start at the origin…",
+      "purpose": "Plotting means marking a point when you are given its coordinates. Reading means writing the coordinates of a point you can already see. These are opposite skills, and you need both.",
       "defaultNumber": null
     },
     {
@@ -191,7 +205,7 @@
       "outcomeId": "lo03",
       "title": "Translation – Sliding a Shape",
       "modelType": "concept-model-3",
-      "purpose": "A translation slides every point of a shape the same distance in the same direction. Nothing turns and nothing flips – the shape just moves to a new position, keeping exactly the same size, shape and orientation.…",
+      "purpose": "A translation slides every point of a shape the same distance in the same direction.",
       "defaultNumber": null
     },
     {
@@ -199,7 +213,7 @@
       "outcomeId": "lo04",
       "title": "Reflection – Flipping in a Mirror Line",
       "modelType": "concept-model-4",
-      "purpose": "A reflection produces a mirror image of a shape across a straight line called the mirror line or line of reflection. When you look in a mirror you see yourself the same size and shape but reversed left to right;…",
+      "purpose": "A reflection produces a mirror image of a shape across a straight line called the mirror line or line of reflection.",
       "defaultNumber": null
     },
     {
@@ -207,7 +221,7 @@
       "outcomeId": "lo05",
       "title": "Rotation – Turning About a Point",
       "modelType": "concept-model-5",
-      "purpose": "A rotation turns a shape about a fixed point called the centre of rotation. Every point of the shape travels along a circular path around this centre, and every point turns through the same angle. A wheel spinning on…",
+      "purpose": "A rotation turns a shape about a fixed point called the centre of rotation. Every point of the shape travels along a circular path around this centre, and every point turns through the same angle.",
       "defaultNumber": null
     },
     {
@@ -215,7 +229,7 @@
       "outcomeId": "lo06",
       "title": "Congruence and Combining Transformations",
       "modelType": "concept-model-6",
-      "purpose": "The three transformations you have met – translation, reflection and rotation – are called rigid transformations because they never change a shape's size or its lengths and angles. The image is always congruent to the…",
+      "purpose": "The three transformations you have met – translation, reflection and rotation – are called rigid transformations because they never change a shape's size or its lengths and angles.",
       "defaultNumber": null
     }
   ],
@@ -357,7 +371,7 @@
     },
     {
       "id": "we08",
-      "outcomeId": "lo08",
+      "outcomeId": "lo07",
       "difficulty": "Intermediate",
       "title": "Combine two transformations",
       "prompt": "Point U(1, 2) is first reflected in the x-axis, then translated by (4, 1). Find the final image.",
@@ -369,7 +383,7 @@
       "difficulty": "Challenge",
       "title": "Practice 9",
       "prompt": "Rotate the point (1, 0) by 90° anticlockwise about the origin.",
-      "solution": "A′(1,"
+      "solution": "Solution: The rule for 90° anticlockwise about the origin is (x, y) → (-y, x). So take (1, 0): the new x is -y = 0, and the new y is x = 1. Therefore the image is A′(0, 1)."
     },
     {
       "id": "we10",
@@ -377,7 +391,7 @@
       "difficulty": "Challenge",
       "title": "Reflect the point (6, 2) in the line x = 3",
       "prompt": "Reflect the point (6, 2) in the line x = 3.",
-      "solution": ", B′(4,"
+      "solution": "Solution: Find how far (6, 2) is from the mirror line x = 3. The point has x = 6, so it is 6 - 3 = 3 units to the right of the line. The image must be 3 units to the left of the line: 3 - 3 = 0. The y-coordinate is unchanged. So the image is B′(0, 2)."
     },
     {
       "id": "we11",
@@ -385,7 +399,7 @@
       "difficulty": "Challenge",
       "title": "Practice 11",
       "prompt": "Describe fully the single transformation that maps (2, 3) onto (2, -3).",
-      "solution": ", C′(1,"
+      "solution": "Solution: The x-coordinate stays the same (2) and the y-coordinate changes sign (3 becomes -3). The rule (x, y) → (x, -y) is reflection in the x-axis. So the single transformation is: reflection in the x-axis."
     },
     {
       "id": "we12",
@@ -393,7 +407,7 @@
       "difficulty": "Challenge",
       "title": "Practice 12",
       "prompt": "Point P(4, -2) is rotated 90° clockwise about the origin, then translated by (1, 5). Find the final coordinates.",
-      "solution": "1) 90° clockwise uses (x, y) → (y, -x), so (4, -2) → (-2, -4). Then translate by (1,"
+      "solution": "1) 90° clockwise uses (x, y) → (y, -x), so (4, -2) → (-2, -4). Then translate by (1, 5): add 1 to the x-coordinate and 5 to the y-coordinate: (-2 + 1, -4 + 5) = (-1, 1). The final coordinates are (-1, 1)."
     }
   ],
   "practice": [
@@ -402,84 +416,84 @@
       "level": "Warm-up",
       "prompt": "Name the quadrant of each point: a) (2, 7) b) (-5, 1) c) (-3, -8) d) (6, -2).",
       "answer": "1) a) Quadrant I, b) Quadrant II, c) Quadrant III, d) Quadrant IV.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p02",
       "level": "Warm-up",
       "prompt": "Write the coordinates of the origin.",
-      "answer": "(0,",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "(0, 0)",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p03",
       "level": "Warm-up",
       "prompt": "A point is 3 units left and 4 units up from the origin. Write its coordinates.",
-      "answer": ".",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "(-3, 4)",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p04",
       "level": "Warm-up",
       "prompt": "Translate the point (1, 1) by the vector (5, 2).",
-      "answer": "(-3,",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "(6, 3)",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p05",
       "level": "Warm-up",
       "prompt": "Reflect the point (4, 5) in the x-axis.",
-      "answer": ".",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "(4, -5)",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p06",
       "level": "Core",
       "prompt": "Reflect each point in the y-axis: a) (3, 2) b) (-1, 5) c) (4, -6).",
-      "answer": "1) a) (-3,",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "1) a) (-3, 2), b) (1, 5), c) (-4, -6).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p07",
       "level": "Core",
       "prompt": "Triangle ABC has vertices A(2, 1), B(5, 1), C(2, 3). Translate it by (-1, 3) and list the image vertices.",
-      "answer": ", b) (1,",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "A′(1, 4), B′(4, 4), C′(1, 6).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p08",
       "level": "Core",
       "prompt": "Rotate each point 180° about the origin: a) (2, 5) b) (-3, 4).",
-      "answer": ", c) (-4, -6).",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "a) (-2, -5), b) (3, -4).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p09",
       "level": "Core",
       "prompt": "Rotate the point (1, 0) by 90° anticlockwise about the origin.",
-      "answer": "A′(1,",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "A′(0, 1).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p10",
       "level": "Core",
       "prompt": "Reflect the point (6, 2) in the line x = 3.",
-      "answer": ", B′(4,",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "B′(0, 2).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p11",
       "level": "Core",
       "prompt": "Describe fully the single transformation that maps (2, 3) onto (2, -3).",
-      "answer": ", C′(1,",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "Reflection in the x-axis.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p12",
       "level": "Challenge",
       "prompt": "Point P(4, -2) is rotated 90° clockwise about the origin, then translated by (1, 5). Find the final coordinates.",
-      "answer": "1) 90° clockwise uses (x, y) → (y, -x), so (4, -2) → (-2, -4). Then translate by (1,",
-      "hint": "Identify the key mathematical idea before calculating or explaining."
+      "answer": "1) 90° clockwise uses (x, y) → (y, -x), so (4, -2) → (-2, -4). Then translate by (1, 5): (-2 + 1, -4 + 5) = (-1, 1). The final coordinates are (-1, 1).",
+      "hint": "Decide which idea the question is really about (Coordinates, Origin, Quadrant), then work one step at a time and check the answer is sensible."
     }
   ],
   "activities": [
@@ -490,7 +504,7 @@
         "Draw an x-axis and a y-axis crossing at the centre of the page. Label the origin (0, 0).",
         "Number both axes from -6 to 6, marking each unit carefully.",
         "Plot one point in each quadrant and label its coordinates.",
-        "Challenge a family member to name the quadrant of each point you plotted.",
+        "Challenge a family member (or your AI tutor) to name the quadrant of each point you plotted.",
         "Keep your grid – you can reuse it for the transformation activities below."
       ]
     },
@@ -500,7 +514,7 @@
       "steps": [
         "Secretly choose a simple picture, such as a house or a boat, made from straight lines.",
         "Write down the list of coordinates for each corner, in order.",
-        "Give only the list of coordinates to a friend and ask them to plot and join the points.",
+        "Give only the list of coordinates to a friend or your AI tutor and ask them to plot and join the points.",
         "Check whether the picture they reveal matches your secret drawing.",
         "This game trains fast, accurate plotting and reading of points in all four quadrants."
       ]
@@ -521,7 +535,7 @@
       "steps": [
         "Mark a starting spot as the origin and agree which way is positive x and positive y.",
         "Write instructions as vectors, such as ‘translate by (3, -2) steps’, leading to a hidden treasure.",
-        "Let a family member follow the clues to find the treasure, then swap roles."
+        "Let a family member (or, if nobody is free, your AI tutor) follow the clues to find the treasure, then swap roles."
       ]
     },
     {
@@ -549,27 +563,27 @@
   "reference": {
     "rules": [
       {
-        "title": "Here is a common trap to avoid",
+        "title": "Avoiding Coordinate Mix-Ups",
         "text": "Here is a common trap to avoid. Many learners rush and swap the two numbers, plotting (2, 5) where (5, 2) belongs. Slow down and whisper the rule – x first, then y; along, then up. Another trap is to lose track of the sign when working in the lower or left quadrants. If Khadija plots the vertices of a triangle and one corner drifts into the wrong quadrant, the whole triangle will look wrong. Careful, unhurried plotting is the foundation of every transformation that follows in this unit."
       },
       {
-        "title": "The mirror line follows one golden rule",
+        "title": "The Mirror Line Rule",
         "text": "The mirror line follows one golden rule: every point of the image is the same distance from the mirror line as the matching point of the object, but on the opposite side. The line joining a point to its image crosses the mirror line at a right angle. So if a corner sits 3 units to the left of the mirror line, its image sits 3 units to the right of that same line, directly across from it."
       },
       {
-        "title": "Reflection in the x-axis: the rule is",
+        "title": "Reflecting in the x-axis",
         "text": "Reflection in the x-axis: the rule is (x, y) → (x, -y). The x stays the same; the y changes sign. So (3, 2) becomes (3, -2)."
       },
       {
-        "title": "Reflection in the y-axis: the rule is",
+        "title": "Reflecting in the y-axis",
         "text": "Reflection in the y-axis: the rule is (x, y) → (-x, y). The y stays the same; the x changes sign. So (3, 2) becomes (-3, 2)."
       },
       {
-        "title": "You have now met the whole toolkit",
+        "title": "Summary of the Unit Toolkit",
         "text": "You have now met the whole toolkit of this unit: the coordinate grid with its four quadrants, accurate plotting and reading of points, and the three rigid transformations of translation, reflection and rotation, all held together by the idea of congruence. These ideas are not separate islands – they work as one system. A translation, a reflection and a rotation can all be written as a rule that acts on the coordinates (x, y), which is why a computer can perform millions of them every second when it draws a moving image on screen."
       },
       {
-        "title": "Think of how these pieces fit together",
+        "title": "Transformations in Action",
         "text": "Think of how these pieces fit together in a single scene. A game designer places a spaceship using coordinates, slides it across the screen with a translation, flips it with a reflection when it turns to face the other way, and spins it with a rotation when it is hit. Every frame of the animation is just the same shape transformed by a new rule. When Maryam designs a repeating border pattern for a length of cloth, she reflects and translates one motif over and over, and the mathematics guarantees that every copy is perfectly congruent to the first."
       }
     ],
@@ -633,7 +647,7 @@
       "difficulty": "Round 1",
       "prompt": "Name the quadrant of each point: a) (2, 7) b) (-5, 1) c) (-3, -8) d) (6, -2).",
       "answer": "1) a) Quadrant I, b) Quadrant II, c) Quadrant III, d) Quadrant IV.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
       "errorFeedback": "1) a) Quadrant I, b) Quadrant II, c) Quadrant III, d) Quadrant IV."
     },
     {
@@ -641,99 +655,99 @@
       "outcomeId": "lo02",
       "difficulty": "Round 1",
       "prompt": "Write the coordinates of the origin.",
-      "answer": "(0,",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "(0,"
+      "answer": "(0, 0)",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "errorFeedback": "(0, 0)"
     },
     {
       "id": "fl03",
       "outcomeId": "lo03",
       "difficulty": "Round 1",
       "prompt": "A point is 3 units left and 4 units up from the origin. Write its coordinates.",
-      "answer": ".",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "."
+      "answer": "(-3, 4)",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "errorFeedback": "(-3, 4)"
     },
     {
       "id": "fl04",
       "outcomeId": "lo04",
       "difficulty": "Round 1",
       "prompt": "Translate the point (1, 1) by the vector (5, 2).",
-      "answer": "(-3,",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "(-3,"
+      "answer": "(6, 3)",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "errorFeedback": "(6, 3)"
     },
     {
       "id": "fl05",
       "outcomeId": "lo05",
       "difficulty": "Round 2",
       "prompt": "Reflect the point (4, 5) in the x-axis.",
-      "answer": ".",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "."
+      "answer": "(4, -5)",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "errorFeedback": "(4, -5)"
     },
     {
       "id": "fl06",
       "outcomeId": "lo06",
       "difficulty": "Round 2",
       "prompt": "Reflect each point in the y-axis: a) (3, 2) b) (-1, 5) c) (4, -6).",
-      "answer": "1) a) (-3,",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "1) a) (-3,"
+      "answer": "1) a) (-3, 2), b) (1, 5), c) (-4, -6).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "errorFeedback": "1) a) (-3, 2), b) (1, 5), c) (-4, -6)."
     },
     {
       "id": "fl07",
       "outcomeId": "lo07",
       "difficulty": "Round 2",
       "prompt": "Triangle ABC has vertices A(2, 1), B(5, 1), C(2, 3). Translate it by (-1, 3) and list the image vertices.",
-      "answer": ", b) (1,",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": ", b) (1,"
+      "answer": "A′(1, 4), B′(4, 4), C′(1, 6).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "errorFeedback": "A′(1, 4), B′(4, 4), C′(1, 6)."
     },
     {
       "id": "fl08",
       "outcomeId": "lo01",
       "difficulty": "Round 2",
       "prompt": "Rotate each point 180° about the origin: a) (2, 5) b) (-3, 4).",
-      "answer": ", c) (-4, -6).",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": ", c) (-4, -6)."
+      "answer": "a) (-2, -5), b) (3, -4).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "errorFeedback": "a) (-2, -5), b) (3, -4)."
     },
     {
       "id": "fl09",
       "outcomeId": "lo02",
       "difficulty": "Round 3",
       "prompt": "Rotate the point (1, 0) by 90° anticlockwise about the origin.",
-      "answer": "A′(1,",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "A′(1,"
+      "answer": "A′(0, 1).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "errorFeedback": "A′(0, 1)."
     },
     {
       "id": "fl10",
       "outcomeId": "lo03",
       "difficulty": "Round 3",
       "prompt": "Reflect the point (6, 2) in the line x = 3.",
-      "answer": ", B′(4,",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": ", B′(4,"
+      "answer": "B′(0, 2).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "errorFeedback": "B′(0, 2)."
     },
     {
       "id": "fl11",
       "outcomeId": "lo04",
       "difficulty": "Round 3",
       "prompt": "Describe fully the single transformation that maps (2, 3) onto (2, -3).",
-      "answer": ", C′(1,",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": ", C′(1,"
+      "answer": "Reflection in the x-axis.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "errorFeedback": "Reflection in the x-axis."
     },
     {
       "id": "fl12",
       "outcomeId": "lo05",
       "difficulty": "Round 3",
       "prompt": "Point P(4, -2) is rotated 90° clockwise about the origin, then translated by (1, 5). Find the final coordinates.",
-      "answer": "1) 90° clockwise uses (x, y) → (y, -x), so (4, -2) → (-2, -4). Then translate by (1,",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "1) 90° clockwise uses (x, y) → (y, -x), so (4, -2) → (-2, -4). Then translate by (1,"
+      "answer": "1) 90° clockwise uses (x, y) → (y, -x), so (4, -2) → (-2, -4). Then translate by (1, 5): (-2 + 1, -4 + 5) = (-1, 1). The final coordinates are (-1, 1).",
+      "hint": "Decide which idea the question is really about (Coordinates, Origin, Quadrant), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "1) 90° clockwise uses (x, y) → (y, -x), so (4, -2) → (-2, -4). Then translate by (1, 5): (-2 + 1, -4 + 5) = (-1, 1). The final coordinates are (-1, 1)."
     }
   ],
   "realProblems": [
@@ -743,9 +757,9 @@
       "difficulty": "Core",
       "context": "Home",
       "prompt": "On a map of Kismaayo, the school is at (-2, 3) and the well is at (5, 3). Each unit is 100 metres. What translation vector takes you from the school to the well, and how far apart are they?",
-      "answer": "1) Vector (7,",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "1) Vector (7,"
+      "answer": "1) Vector (7, 0); they are 7 units = 700 metres apart.",
+      "hint": "Decide which idea the question is really about (Coordinates, Origin, Quadrant), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "1) Vector (7, 0); they are 7 units = 700 metres apart."
     },
     {
       "id": "rp02",
@@ -753,9 +767,9 @@
       "difficulty": "Core",
       "context": "Market",
       "prompt": "Farah makes a border pattern by reflecting a triangle in a vertical mirror line and then repeating it. The triangle has a corner at (2, 1) and the mirror line is x = 4. Where is the corner of the reflected triangle?",
-      "answer": "; they are 7 units = 700 metres apart.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "; they are 7 units = 700 metres apart."
+      "answer": "The corner (2, 1) is 2 units left of x = 4, so its image is 2 units right of the line, at (6, 1).",
+      "hint": "Decide which idea the question is really about (Coordinates, Origin, Quadrant), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "The corner (2, 1) is 2 units left of x = 4, so its image is 2 units right of the line, at (6, 1)."
     },
     {
       "id": "rp03",
@@ -763,9 +777,9 @@
       "difficulty": "Core",
       "context": "Travel",
       "prompt": "A ceiling fan has 5 identical blades spaced evenly. What is its order of rotational symmetry, and through what angle must one blade turn to sit where the next blade was?",
-      "answer": "The corner (2,",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "The corner (2,"
+      "answer": "Order of rotational symmetry = 5; each blade must turn 360° ÷ 5 = 72° to reach the next blade's position.",
+      "hint": "Decide which idea the question is really about (Coordinates, Origin, Quadrant), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "Order of rotational symmetry = 5; each blade must turn 360° ÷ 5 = 72° to reach the next blade's position."
     },
     {
       "id": "rp04",
@@ -773,9 +787,9 @@
       "difficulty": "Challenge",
       "context": "School",
       "prompt": "Ibrahim rotates a game piece at (3, 1) by 90° anticlockwise about the origin, and Zahra rotates an identical piece by 90° clockwise. Give both image coordinates and explain why both pieces are still congruent to the original.",
-      "answer": "is 2 left of x = 4, so its image is 2 right of the line, at (6,",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "is 2 left of x = 4, so its image is 2 right of the line, at (6,"
+      "answer": "Ibrahim's image: 90° anticlockwise uses (x, y) → (-y, x), so (3, 1) → (-1, 3). Zahra's image: 90° clockwise uses (x, y) → (y, -x), so (3, 1) → (1, -3). Both pieces are still congruent to the original because rotation is a rigid transformation – it changes only the position and orientation, never the size or shape.",
+      "hint": "Decide which idea the question is really about (Coordinates, Origin, Quadrant), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "Ibrahim's image: 90° anticlockwise uses (x, y) → (-y, x), so (3, 1) → (-1, 3). Zahra's image: 90° clockwise uses (x, y) → (y, -x), so (3, 1) → (1, -3). Both pieces are still congruent to the original because rotation is a rigid transformation – it changes only the position and orientation, never the size or shape."
     },
     {
       "id": "rp05",
@@ -783,9 +797,9 @@
       "difficulty": "Challenge",
       "context": "Community",
       "prompt": "A shape is reflected in the x-axis and its image is then reflected in the x-axis again. Explain, using the idea of inverse transformations, why the shape returns exactly to its starting position.",
-      "answer": ".",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "."
+      "answer": "Reflecting a point (x, y) in the x-axis gives (x, -y). Reflecting that image in the x-axis again gives (x, -(-y)) = (x, y), the original point. Reflection is a self-inverse transformation, so two reflections in the same mirror line cancel out and the shape returns exactly to its starting position.",
+      "hint": "Decide which idea the question is really about (Coordinates, Origin, Quadrant), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "Reflecting a point (x, y) in the x-axis gives (x, -y). Reflecting that image in the x-axis again gives (x, -(-y)) = (x, y), the original point. Reflection is a self-inverse transformation, so two reflections in the same mirror line cancel out and the shape returns exactly to its starting position."
     },
     {
       "id": "rp06",
@@ -793,9 +807,9 @@
       "difficulty": "Core",
       "context": "Daily life",
       "prompt": "Point P(4, -2) is rotated 90° clockwise about the origin, then translated by (1, 5). Find the final coordinates.",
-      "answer": "1) 90° clockwise uses (x, y) → (y, -x), so (4, -2) → (-2, -4). Then translate by (1,",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "1) 90° clockwise uses (x, y) → (y, -x), so (4, -2) → (-2, -4). Then translate by (1,"
+      "answer": "90° clockwise uses (x, y) → (y, -x), so (4, -2) → (-2, -4). Then translate by (1, 5): (-2 + 1, -4 + 5) = (-1, 1). The final coordinates are (-1, 1).",
+      "hint": "Decide which idea the question is really about (Coordinates, Origin, Quadrant), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "90° clockwise uses (x, y) → (y, -x), so (4, -2) → (-2, -4). Then translate by (1, 5): (-2 + 1, -4 + 5) = (-1, 1). The final coordinates are (-1, 1)."
     }
   ],
   "reasoningPrompts": [
@@ -810,7 +824,7 @@
         "Origin",
         "Quadrant"
       ],
-      "modelAnswer": "1) 90° clockwise uses (x, y) → (y, -x), so (4, -2) → (-2, -4). Then translate by (1,"
+      "modelAnswer": "1) 90° clockwise uses (x, y) → (y, -x), so (4, -2) → (-2, -4). Then translate by (1, 5): (-2 + 1, -4 + 5) = (-1, 1). The final coordinates are (-1, 1)."
     },
     {
       "id": "reason02",
@@ -823,7 +837,7 @@
         "Quadrant",
         "Translation"
       ],
-      "modelAnswer": ": (-2 + 1, -4 +"
+      "modelAnswer": "The single equivalent vector is (-3 + 7, 4 + (-1)) = (4, 3). The vector that returns the shape to the start is the inverse of this, (-4, -3)."
     },
     {
       "id": "reason03",
@@ -836,7 +850,7 @@
         "Translation",
         "Reflection"
       ],
-      "modelAnswer": "= (-1,"
+      "modelAnswer": "180° rotation maps (a, b) to (-a, -b). Since (-a, -b) = (-6, 9), we get a = 6 and b = -9. So the original point is (6, -9)."
     },
     {
       "id": "reason04",
@@ -849,7 +863,7 @@
         "Reflection",
         "Rotation"
       ],
-      "modelAnswer": ". Final answer (-1,"
+      "modelAnswer": "Two reflections in parallel vertical mirror lines are equivalent to a single translation. The translation is horizontal (perpendicular to the mirror lines), and its distance is twice the distance between the two mirror lines."
     },
     {
       "id": "reason05",
@@ -862,7 +876,7 @@
         "Origin",
         "Quadrant"
       ],
-      "modelAnswer": "A rotation turns a shape about a fixed point called the centre of rotation. Every point of the shape travels along a circular path around this centre, and every point turns through the same angle. A wheel spinning on its axle, a door swinging on its hinge, and the hands sweeping around a clock are all rotations. Like the other transformations, rotation keeps the shape congruent – the size and shape never change, only the orientation. To describe a rotation fully you must give three pieces of information: the…"
+      "modelAnswer": "A rotation turns a shape about a fixed point called the centre of rotation. Every point of the shape travels along a circular path around this centre, and every point turns through the same angle. A wheel spinning on its axle, a door swinging on its hinge, and the hands sweeping around a clock are all rotations. Like the other transformations, rotation keeps the shape congruent – the size and shape never change, only the orientation. To describe a rotation fully you must give three pieces of information: the centre of rotation, the angle turned through, and the direction of the turn (clockwise or anticlockwise)."
     },
     {
       "id": "reason06",
@@ -875,7 +889,7 @@
         "Origin",
         "Quadrant"
       ],
-      "modelAnswer": "The three transformations you have met – translation, reflection and rotation – are called rigid transformations because they never change a shape's size or its lengths and angles. The image is always congruent to the object. Two shapes are congruent when one can be placed exactly on top of the other after some combination of slides, flips and turns; every side matches a side, and every angle matches an angle. Congruence is one of the most important ideas in geometry, and transformations are the natural way to…"
+      "modelAnswer": "The three transformations you have met – translation, reflection and rotation – are called rigid transformations because they never change a shape's size or its lengths and angles. The image is always congruent to the object. Two shapes are congruent when one can be placed exactly on top of the other after some combination of slides, flips and turns; every side matches a side, and every angle matches an angle. Congruence is one of the most important ideas in geometry, and transformations are the natural way to show that two shapes are congruent, since a rigid transformation is exactly the sequence of moves that carries one shape exactly onto the other."
     }
   ],
   "assessment": {
@@ -886,144 +900,144 @@
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Basic",
-        "question": "How many degrees are there in a right angle?",
+        "question": "In which quadrant does the point (-4, 6) lie?",
         "options": [
-          "45",
-          "91",
-          "90",
-          "180"
+          "Quadrant I",
+          "Quadrant II",
+          "Quadrant III",
+          "Quadrant IV"
         ],
-        "answer": "90",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "A right angle measures 90°."
+        "answer": "Quadrant II",
+        "hint": "Ask yourself what \"Coordinates\" means here before you choose.",
+        "explanation": "The x-coordinate is negative and the y-coordinate is positive, which is Quadrant II."
       },
       {
         "id": "q02",
         "type": "Application",
         "outcomeId": "lo02",
         "difficulty": "Basic",
-        "question": "How many degrees are there in a straight line?",
+        "question": "What are the coordinates of the origin?",
         "options": [
-          "181",
-          "180",
-          "270",
-          "90"
+          "(0, 0)",
+          "(1, 0)",
+          "(0, 1)",
+          "(1, 1)"
         ],
-        "answer": "180",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "A straight line measures 180°."
+        "answer": "(0, 0)",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
+        "explanation": "The origin is where the x-axis and y-axis cross, at (0, 0)."
       },
       {
         "id": "q03",
         "type": "Application",
         "outcomeId": "lo03",
         "difficulty": "Basic",
-        "question": "How many degrees are there in a full turn?",
+        "question": "A point at (2, 3) is translated by the vector (4, -1). What are the new coordinates?",
         "options": [
-          "450",
-          "270",
-          "180",
-          "360"
+          "(6, 2)",
+          "(6, 4)",
+          "(-2, 2)",
+          "(2, 6)"
         ],
-        "answer": "360",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "A full turn measures 360°."
+        "answer": "(6, 2)",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
+        "explanation": "Add 4 to the x-coordinate and subtract 1 from the y-coordinate: (2 + 4, 3 - 1) = (6, 2)."
       },
       {
         "id": "q04",
         "type": "Application",
         "outcomeId": "lo04",
         "difficulty": "Basic",
-        "question": "How many sides does a square have?",
+        "question": "Point A(3, 5) is reflected in the y-axis. What are the coordinates of the image?",
         "options": [
-          "6",
-          "4",
-          "5",
-          "3"
+          "(-3, 5)",
+          "(3, -5)",
+          "(-3, -5)",
+          "(5, 3)"
         ],
-        "answer": "4",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "A square has 4 straight sides."
+        "answer": "(-3, 5)",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
+        "explanation": "Reflecting in the y-axis keeps y the same and changes the sign of x: (3, 5) → (-3, 5)."
       },
       {
         "id": "q05",
         "type": "Application",
         "outcomeId": "lo05",
         "difficulty": "Core",
-        "question": "How many sides does a hexagon have?",
+        "question": "A point is rotated 90° anticlockwise about the origin. Which rule describes this rotation?",
         "options": [
-          "7",
-          "5",
-          "8",
-          "6"
+          "(x, y) → (-y, x)",
+          "(x, y) → (y, -x)",
+          "(x, y) → (-x, -y)",
+          "(x, y) → (x, -y)"
         ],
-        "answer": "6",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "A hexagon has 6 straight sides."
+        "answer": "(x, y) → (-y, x)",
+        "hint": "Ask yourself what \"Reflection\" means here before you choose.",
+        "explanation": "A 90° anticlockwise rotation about the origin maps (x, y) to (-y, x)."
       },
       {
         "id": "q06",
         "type": "Application",
         "outcomeId": "lo06",
         "difficulty": "Core",
-        "question": "How many faces does a cube have?",
+        "question": "Which single rule maps (x, y) to (x, -y)?",
         "options": [
-          "7",
-          "5",
-          "8",
-          "6"
+          "Reflection in the x-axis",
+          "Reflection in the y-axis",
+          "Rotation 180° about the origin",
+          "Translation by (0, -1)"
         ],
-        "answer": "6",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "A cube has 6 faces."
+        "answer": "Reflection in the x-axis",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
+        "explanation": "(x, y) → (x, -y) keeps x the same and changes the sign of y, which is reflection in the x-axis."
       },
       {
         "id": "q07",
         "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
-        "question": "How many vertices does a cube have?",
+        "question": "A shape is translated and then rotated. What can you say about the image compared with the original shape?",
         "options": [
-          "9",
-          "7",
-          "10",
-          "8"
+          "It is congruent to the original",
+          "It is larger than the original",
+          "It is smaller than the original",
+          "Its side lengths change but its angles stay the same"
         ],
-        "answer": "8",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "A cube has 8 vertices."
+        "answer": "It is congruent to the original",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
+        "explanation": "Translations and rotations are rigid transformations, so the image is always congruent to the object – the same size and shape."
       },
       {
         "id": "q08",
         "type": "Application",
-        "outcomeId": "lo08",
+        "outcomeId": "lo01",
         "difficulty": "Challenge",
-        "question": "How many sides does a octagon have?",
+        "question": "A point lies in Quadrant III. Which of these could be its coordinates?",
         "options": [
-          "10",
-          "8",
-          "9",
-          "7"
+          "(-3, -5)",
+          "(3, 5)",
+          "(-3, 5)",
+          "(3, -5)"
         ],
-        "answer": "8",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "A octagon has 8 straight sides."
+        "answer": "(-3, -5)",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
+        "explanation": "Quadrant III has both coordinates negative, so (-3, -5) is correct."
       },
       {
         "id": "q09",
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Challenge",
-        "question": "How many edges does a cube have?",
+        "question": "Point B lies in Quadrant IV. What must be true about its x- and y-coordinates?",
         "options": [
-          "12",
-          "13",
-          "11",
-          "14"
+          "x is positive and y is negative",
+          "x is negative and y is positive",
+          "Both x and y are positive",
+          "Both x and y are negative"
         ],
-        "answer": "12",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "A cube has 12 edges."
+        "answer": "x is positive and y is negative",
+        "hint": "Ask yourself what \"Coordinates\" means here before you choose.",
+        "explanation": "Quadrant IV is to the right of the y-axis (positive x) and below the x-axis (negative y)."
       },
       {
         "id": "q10",
@@ -1087,40 +1101,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many degrees are there in a right angle?",
+            "prompt": "In which quadrant does the point (-4, 6) lie?",
             "choices": [
-              "45",
-              "91",
-              "90",
-              "180"
+              "Quadrant I",
+              "Quadrant II",
+              "Quadrant III",
+              "Quadrant IV"
             ],
-            "answer": "90",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A right angle measures 90°."
+            "answer": "Quadrant II",
+            "clue": "Ask yourself what \"Coordinates\" means here before you choose.",
+            "explanation": "The x-coordinate is negative and the y-coordinate is positive, which is Quadrant II."
           },
           {
-            "prompt": "How many sides does a square have?",
+            "prompt": "Point A(3, 5) is reflected in the y-axis. What are the coordinates of the image?",
             "choices": [
-              "6",
-              "4",
-              "5",
-              "3"
+              "(-3, 5)",
+              "(3, -5)",
+              "(-3, -5)",
+              "(5, 3)"
             ],
-            "answer": "4",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A square has 4 straight sides."
+            "answer": "(-3, 5)",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Reflecting in the y-axis keeps y the same and changes the sign of x: (3, 5) → (-3, 5)."
           },
           {
-            "prompt": "How many vertices does a cube have?",
+            "prompt": "A shape is translated and then rotated. What can you say about the image compared with the original shape?",
             "choices": [
-              "9",
-              "7",
-              "10",
-              "8"
+              "It is congruent to the original",
+              "It is larger than the original",
+              "It is smaller than the original",
+              "Its side lengths change but its angles stay the same"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 8 vertices."
+            "answer": "It is congruent to the original",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Translations and rotations are rigid transformations, so the image is always congruent to the object – the same size and shape."
           },
           {
             "prompt": "What does “Coordinates” mean?",
@@ -1145,40 +1159,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many degrees are there in a straight line?",
+            "prompt": "What are the coordinates of the origin?",
             "choices": [
-              "181",
-              "180",
-              "270",
-              "90"
+              "(0, 0)",
+              "(1, 0)",
+              "(0, 1)",
+              "(1, 1)"
             ],
-            "answer": "180",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A straight line measures 180°."
+            "answer": "(0, 0)",
+            "clue": "Ask yourself what \"Coordinates\" means here before you choose.",
+            "explanation": "The origin is where the x-axis and y-axis cross, at (0, 0)."
           },
           {
-            "prompt": "How many sides does a hexagon have?",
+            "prompt": "A point is rotated 90° anticlockwise about the origin. Which rule describes this rotation?",
             "choices": [
-              "7",
-              "5",
-              "8",
-              "6"
+              "(x, y) → (-y, x)",
+              "(x, y) → (y, -x)",
+              "(x, y) → (-x, -y)",
+              "(x, y) → (x, -y)"
             ],
-            "answer": "6",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A hexagon has 6 straight sides."
+            "answer": "(x, y) → (-y, x)",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "A 90° anticlockwise rotation about the origin maps (x, y) to (-y, x)."
           },
           {
-            "prompt": "How many sides does a octagon have?",
+            "prompt": "A point lies in Quadrant III. Which of these could be its coordinates?",
             "choices": [
-              "10",
-              "8",
-              "9",
-              "7"
+              "(-3, -5)",
+              "(3, 5)",
+              "(-3, 5)",
+              "(3, -5)"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A octagon has 8 straight sides."
+            "answer": "(-3, -5)",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Quadrant III has both coordinates negative, so (-3, -5) is correct."
           },
           {
             "prompt": "What does “Origin” mean?",
@@ -1203,40 +1217,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many degrees are there in a full turn?",
+            "prompt": "A point at (2, 3) is translated by the vector (4, -1). What are the new coordinates?",
             "choices": [
-              "450",
-              "270",
-              "180",
-              "360"
+              "(6, 2)",
+              "(6, 4)",
+              "(-2, 2)",
+              "(2, 6)"
             ],
-            "answer": "360",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A full turn measures 360°."
+            "answer": "(6, 2)",
+            "clue": "Ask yourself what \"Coordinates\" means here before you choose.",
+            "explanation": "Add 4 to the x-coordinate and subtract 1 from the y-coordinate: (2 + 4, 3 - 1) = (6, 2)."
           },
           {
-            "prompt": "How many faces does a cube have?",
+            "prompt": "Which single rule maps (x, y) to (x, -y)?",
             "choices": [
-              "7",
-              "5",
-              "8",
-              "6"
+              "Reflection in the x-axis",
+              "Reflection in the y-axis",
+              "Rotation 180° about the origin",
+              "Translation by (0, -1)"
             ],
-            "answer": "6",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 6 faces."
+            "answer": "Reflection in the x-axis",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "(x, y) → (x, -y) keeps x the same and changes the sign of y, which is reflection in the x-axis."
           },
           {
-            "prompt": "How many edges does a cube have?",
+            "prompt": "Point B lies in Quadrant IV. What must be true about its x- and y-coordinates?",
             "choices": [
-              "12",
-              "13",
-              "11",
-              "14"
+              "x is positive and y is negative",
+              "x is negative and y is positive",
+              "Both x and y are positive",
+              "Both x and y are negative"
             ],
-            "answer": "12",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 12 edges."
+            "answer": "x is positive and y is negative",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Quadrant IV is to the right of the y-axis (positive x) and below the x-axis (negative y)."
           },
           {
             "prompt": "What does “Quadrant” mean?",
@@ -1261,28 +1275,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many sides does a square have?",
+            "prompt": "Point A(3, 5) is reflected in the y-axis. What are the coordinates of the image?",
             "choices": [
-              "6",
-              "4",
-              "5",
-              "3"
+              "(-3, 5)",
+              "(3, -5)",
+              "(-3, -5)",
+              "(5, 3)"
             ],
-            "answer": "4",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A square has 4 straight sides."
+            "answer": "(-3, 5)",
+            "clue": "Ask yourself what \"Coordinates\" means here before you choose.",
+            "explanation": "Reflecting in the y-axis keeps y the same and changes the sign of x: (3, 5) → (-3, 5)."
           },
           {
-            "prompt": "How many vertices does a cube have?",
+            "prompt": "A shape is translated and then rotated. What can you say about the image compared with the original shape?",
             "choices": [
-              "9",
-              "7",
-              "10",
-              "8"
+              "It is congruent to the original",
+              "It is larger than the original",
+              "It is smaller than the original",
+              "Its side lengths change but its angles stay the same"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 8 vertices."
+            "answer": "It is congruent to the original",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Translations and rotations are rigid transformations, so the image is always congruent to the object – the same size and shape."
           },
           {
             "prompt": "What does “Coordinates” mean?",
@@ -1297,16 +1311,16 @@
             "explanation": "Coordinates means An ordered pair (x, y) giving position."
           },
           {
-            "prompt": "How many degrees are there in a right angle?",
+            "prompt": "In which quadrant does the point (-4, 6) lie?",
             "choices": [
-              "45",
-              "91",
-              "90",
-              "180"
+              "Quadrant I",
+              "Quadrant II",
+              "Quadrant III",
+              "Quadrant IV"
             ],
-            "answer": "90",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A right angle measures 90°."
+            "answer": "Quadrant II",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "The x-coordinate is negative and the y-coordinate is positive, which is Quadrant II."
           }
         ]
       },
@@ -1319,28 +1333,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many sides does a hexagon have?",
+            "prompt": "A point is rotated 90° anticlockwise about the origin. Which rule describes this rotation?",
             "choices": [
-              "7",
-              "5",
-              "8",
-              "6"
+              "(x, y) → (-y, x)",
+              "(x, y) → (y, -x)",
+              "(x, y) → (-x, -y)",
+              "(x, y) → (x, -y)"
             ],
-            "answer": "6",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A hexagon has 6 straight sides."
+            "answer": "(x, y) → (-y, x)",
+            "clue": "Ask yourself what \"Coordinates\" means here before you choose.",
+            "explanation": "A 90° anticlockwise rotation about the origin maps (x, y) to (-y, x)."
           },
           {
-            "prompt": "How many sides does a octagon have?",
+            "prompt": "A point lies in Quadrant III. Which of these could be its coordinates?",
             "choices": [
-              "10",
-              "8",
-              "9",
-              "7"
+              "(-3, -5)",
+              "(3, 5)",
+              "(-3, 5)",
+              "(3, -5)"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A octagon has 8 straight sides."
+            "answer": "(-3, -5)",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Quadrant III has both coordinates negative, so (-3, -5) is correct."
           },
           {
             "prompt": "What does “Origin” mean?",
@@ -1355,16 +1369,16 @@
             "explanation": "Origin means The centre point (0, 0) where the axes cross."
           },
           {
-            "prompt": "How many degrees are there in a straight line?",
+            "prompt": "What are the coordinates of the origin?",
             "choices": [
-              "181",
-              "180",
-              "270",
-              "90"
+              "(0, 0)",
+              "(1, 0)",
+              "(0, 1)",
+              "(1, 1)"
             ],
-            "answer": "180",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A straight line measures 180°."
+            "answer": "(0, 0)",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "The origin is where the x-axis and y-axis cross, at (0, 0)."
           }
         ]
       },
@@ -1377,28 +1391,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many faces does a cube have?",
+            "prompt": "Which single rule maps (x, y) to (x, -y)?",
             "choices": [
-              "7",
-              "5",
-              "8",
-              "6"
+              "Reflection in the x-axis",
+              "Reflection in the y-axis",
+              "Rotation 180° about the origin",
+              "Translation by (0, -1)"
             ],
-            "answer": "6",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 6 faces."
+            "answer": "Reflection in the x-axis",
+            "clue": "Ask yourself what \"Coordinates\" means here before you choose.",
+            "explanation": "(x, y) → (x, -y) keeps x the same and changes the sign of y, which is reflection in the x-axis."
           },
           {
-            "prompt": "How many edges does a cube have?",
+            "prompt": "Point B lies in Quadrant IV. What must be true about its x- and y-coordinates?",
             "choices": [
-              "12",
-              "13",
-              "11",
-              "14"
+              "x is positive and y is negative",
+              "x is negative and y is positive",
+              "Both x and y are positive",
+              "Both x and y are negative"
             ],
-            "answer": "12",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 12 edges."
+            "answer": "x is positive and y is negative",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Quadrant IV is to the right of the y-axis (positive x) and below the x-axis (negative y)."
           },
           {
             "prompt": "What does “Quadrant” mean?",
@@ -1413,16 +1427,16 @@
             "explanation": "Quadrant means One of the four regions of the grid."
           },
           {
-            "prompt": "How many degrees are there in a full turn?",
+            "prompt": "A point at (2, 3) is translated by the vector (4, -1). What are the new coordinates?",
             "choices": [
-              "450",
-              "270",
-              "180",
-              "360"
+              "(6, 2)",
+              "(6, 4)",
+              "(-2, 2)",
+              "(2, 6)"
             ],
-            "answer": "360",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A full turn measures 360°."
+            "answer": "(6, 2)",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Add 4 to the x-coordinate and subtract 1 from the y-coordinate: (2 + 4, 3 - 1) = (6, 2)."
           }
         ]
       },
@@ -1435,16 +1449,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many vertices does a cube have?",
+            "prompt": "A shape is translated and then rotated. What can you say about the image compared with the original shape?",
             "choices": [
-              "9",
-              "7",
-              "10",
-              "8"
+              "It is congruent to the original",
+              "It is larger than the original",
+              "It is smaller than the original",
+              "Its side lengths change but its angles stay the same"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 8 vertices."
+            "answer": "It is congruent to the original",
+            "clue": "Ask yourself what \"Coordinates\" means here before you choose.",
+            "explanation": "Translations and rotations are rigid transformations, so the image is always congruent to the object – the same size and shape."
           },
           {
             "prompt": "What does “Coordinates” mean?",
@@ -1459,28 +1473,28 @@
             "explanation": "Coordinates means An ordered pair (x, y) giving position."
           },
           {
-            "prompt": "How many degrees are there in a right angle?",
+            "prompt": "In which quadrant does the point (-4, 6) lie?",
             "choices": [
-              "45",
-              "91",
-              "90",
-              "180"
+              "Quadrant I",
+              "Quadrant II",
+              "Quadrant III",
+              "Quadrant IV"
             ],
-            "answer": "90",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A right angle measures 90°."
+            "answer": "Quadrant II",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "The x-coordinate is negative and the y-coordinate is positive, which is Quadrant II."
           },
           {
-            "prompt": "How many sides does a square have?",
+            "prompt": "Point A(3, 5) is reflected in the y-axis. What are the coordinates of the image?",
             "choices": [
-              "6",
-              "4",
-              "5",
-              "3"
+              "(-3, 5)",
+              "(3, -5)",
+              "(-3, -5)",
+              "(5, 3)"
             ],
-            "answer": "4",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A square has 4 straight sides."
+            "answer": "(-3, 5)",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Reflecting in the y-axis keeps y the same and changes the sign of x: (3, 5) → (-3, 5)."
           }
         ]
       },
@@ -1493,16 +1507,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many sides does a octagon have?",
+            "prompt": "A point lies in Quadrant III. Which of these could be its coordinates?",
             "choices": [
-              "10",
-              "8",
-              "9",
-              "7"
+              "(-3, -5)",
+              "(3, 5)",
+              "(-3, 5)",
+              "(3, -5)"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A octagon has 8 straight sides."
+            "answer": "(-3, -5)",
+            "clue": "Ask yourself what \"Coordinates\" means here before you choose.",
+            "explanation": "Quadrant III has both coordinates negative, so (-3, -5) is correct."
           },
           {
             "prompt": "What does “Origin” mean?",
@@ -1517,28 +1531,28 @@
             "explanation": "Origin means The centre point (0, 0) where the axes cross."
           },
           {
-            "prompt": "How many degrees are there in a straight line?",
+            "prompt": "What are the coordinates of the origin?",
             "choices": [
-              "181",
-              "180",
-              "270",
-              "90"
+              "(0, 0)",
+              "(1, 0)",
+              "(0, 1)",
+              "(1, 1)"
             ],
-            "answer": "180",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A straight line measures 180°."
+            "answer": "(0, 0)",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "The origin is where the x-axis and y-axis cross, at (0, 0)."
           },
           {
-            "prompt": "How many sides does a hexagon have?",
+            "prompt": "A point is rotated 90° anticlockwise about the origin. Which rule describes this rotation?",
             "choices": [
-              "7",
-              "5",
-              "8",
-              "6"
+              "(x, y) → (-y, x)",
+              "(x, y) → (y, -x)",
+              "(x, y) → (-x, -y)",
+              "(x, y) → (x, -y)"
             ],
-            "answer": "6",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A hexagon has 6 straight sides."
+            "answer": "(x, y) → (-y, x)",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "A 90° anticlockwise rotation about the origin maps (x, y) to (-y, x)."
           }
         ]
       },
@@ -1551,16 +1565,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many edges does a cube have?",
+            "prompt": "Point B lies in Quadrant IV. What must be true about its x- and y-coordinates?",
             "choices": [
-              "12",
-              "13",
-              "11",
-              "14"
+              "x is positive and y is negative",
+              "x is negative and y is positive",
+              "Both x and y are positive",
+              "Both x and y are negative"
             ],
-            "answer": "12",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 12 edges."
+            "answer": "x is positive and y is negative",
+            "clue": "Ask yourself what \"Coordinates\" means here before you choose.",
+            "explanation": "Quadrant IV is to the right of the y-axis (positive x) and below the x-axis (negative y)."
           },
           {
             "prompt": "What does “Quadrant” mean?",
@@ -1575,28 +1589,28 @@
             "explanation": "Quadrant means One of the four regions of the grid."
           },
           {
-            "prompt": "How many degrees are there in a full turn?",
+            "prompt": "A point at (2, 3) is translated by the vector (4, -1). What are the new coordinates?",
             "choices": [
-              "450",
-              "270",
-              "180",
-              "360"
+              "(6, 2)",
+              "(6, 4)",
+              "(-2, 2)",
+              "(2, 6)"
             ],
-            "answer": "360",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A full turn measures 360°."
+            "answer": "(6, 2)",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Add 4 to the x-coordinate and subtract 1 from the y-coordinate: (2 + 4, 3 - 1) = (6, 2)."
           },
           {
-            "prompt": "How many faces does a cube have?",
+            "prompt": "Which single rule maps (x, y) to (x, -y)?",
             "choices": [
-              "7",
-              "5",
-              "8",
-              "6"
+              "Reflection in the x-axis",
+              "Reflection in the y-axis",
+              "Rotation 180° about the origin",
+              "Translation by (0, -1)"
             ],
-            "answer": "6",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 6 faces."
+            "answer": "Reflection in the x-axis",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "(x, y) → (x, -y) keeps x the same and changes the sign of y, which is reflection in the x-axis."
           }
         ]
       },
@@ -1621,40 +1635,40 @@
             "explanation": "Coordinates means An ordered pair (x, y) giving position."
           },
           {
-            "prompt": "How many degrees are there in a right angle?",
+            "prompt": "In which quadrant does the point (-4, 6) lie?",
             "choices": [
-              "45",
-              "91",
-              "90",
-              "180"
+              "Quadrant I",
+              "Quadrant II",
+              "Quadrant III",
+              "Quadrant IV"
             ],
-            "answer": "90",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A right angle measures 90°."
+            "answer": "Quadrant II",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "The x-coordinate is negative and the y-coordinate is positive, which is Quadrant II."
           },
           {
-            "prompt": "How many sides does a square have?",
+            "prompt": "Point A(3, 5) is reflected in the y-axis. What are the coordinates of the image?",
             "choices": [
-              "6",
-              "4",
-              "5",
-              "3"
+              "(-3, 5)",
+              "(3, -5)",
+              "(-3, -5)",
+              "(5, 3)"
             ],
-            "answer": "4",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A square has 4 straight sides."
+            "answer": "(-3, 5)",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Reflecting in the y-axis keeps y the same and changes the sign of x: (3, 5) → (-3, 5)."
           },
           {
-            "prompt": "How many vertices does a cube have?",
+            "prompt": "A shape is translated and then rotated. What can you say about the image compared with the original shape?",
             "choices": [
-              "9",
-              "7",
-              "10",
-              "8"
+              "It is congruent to the original",
+              "It is larger than the original",
+              "It is smaller than the original",
+              "Its side lengths change but its angles stay the same"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 8 vertices."
+            "answer": "It is congruent to the original",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Translations and rotations are rigid transformations, so the image is always congruent to the object – the same size and shape."
           }
         ]
       },
@@ -1679,40 +1693,40 @@
             "explanation": "Origin means The centre point (0, 0) where the axes cross."
           },
           {
-            "prompt": "How many degrees are there in a straight line?",
+            "prompt": "What are the coordinates of the origin?",
             "choices": [
-              "181",
-              "180",
-              "270",
-              "90"
+              "(0, 0)",
+              "(1, 0)",
+              "(0, 1)",
+              "(1, 1)"
             ],
-            "answer": "180",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A straight line measures 180°."
+            "answer": "(0, 0)",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "The origin is where the x-axis and y-axis cross, at (0, 0)."
           },
           {
-            "prompt": "How many sides does a hexagon have?",
+            "prompt": "A point is rotated 90° anticlockwise about the origin. Which rule describes this rotation?",
             "choices": [
-              "7",
-              "5",
-              "8",
-              "6"
+              "(x, y) → (-y, x)",
+              "(x, y) → (y, -x)",
+              "(x, y) → (-x, -y)",
+              "(x, y) → (x, -y)"
             ],
-            "answer": "6",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A hexagon has 6 straight sides."
+            "answer": "(x, y) → (-y, x)",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "A 90° anticlockwise rotation about the origin maps (x, y) to (-y, x)."
           },
           {
-            "prompt": "How many sides does a octagon have?",
+            "prompt": "A point lies in Quadrant III. Which of these could be its coordinates?",
             "choices": [
-              "10",
-              "8",
-              "9",
-              "7"
+              "(-3, -5)",
+              "(3, 5)",
+              "(-3, 5)",
+              "(3, -5)"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A octagon has 8 straight sides."
+            "answer": "(-3, -5)",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Quadrant III has both coordinates negative, so (-3, -5) is correct."
           }
         ]
       },
@@ -1737,40 +1751,40 @@
             "explanation": "Quadrant means One of the four regions of the grid."
           },
           {
-            "prompt": "How many degrees are there in a full turn?",
+            "prompt": "A point at (2, 3) is translated by the vector (4, -1). What are the new coordinates?",
             "choices": [
-              "450",
-              "270",
-              "180",
-              "360"
+              "(6, 2)",
+              "(6, 4)",
+              "(-2, 2)",
+              "(2, 6)"
             ],
-            "answer": "360",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A full turn measures 360°."
+            "answer": "(6, 2)",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Add 4 to the x-coordinate and subtract 1 from the y-coordinate: (2 + 4, 3 - 1) = (6, 2)."
           },
           {
-            "prompt": "How many faces does a cube have?",
+            "prompt": "Which single rule maps (x, y) to (x, -y)?",
             "choices": [
-              "7",
-              "5",
-              "8",
-              "6"
+              "Reflection in the x-axis",
+              "Reflection in the y-axis",
+              "Rotation 180° about the origin",
+              "Translation by (0, -1)"
             ],
-            "answer": "6",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 6 faces."
+            "answer": "Reflection in the x-axis",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "(x, y) → (x, -y) keeps x the same and changes the sign of y, which is reflection in the x-axis."
           },
           {
-            "prompt": "How many edges does a cube have?",
+            "prompt": "Point B lies in Quadrant IV. What must be true about its x- and y-coordinates?",
             "choices": [
-              "12",
-              "13",
-              "11",
-              "14"
+              "x is positive and y is negative",
+              "x is negative and y is positive",
+              "Both x and y are positive",
+              "Both x and y are negative"
             ],
-            "answer": "12",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 12 edges."
+            "answer": "x is positive and y is negative",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Quadrant IV is to the right of the y-axis (positive x) and below the x-axis (negative y)."
           }
         ]
       }

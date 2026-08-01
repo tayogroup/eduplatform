@@ -49,8 +49,6 @@
     "poster": null
   },
   "outcomes": [
-    "This unit is designed for self-paced learning. That means you move at your own speed. Read each explanation slowly, work through every example on paper, and only move on when the idea feels solid. Your AI tutor is available day and night to explain a point in a new way, invent extra practice, or check your reasoning. Your teacher will also meet with you about twice a week to help with anything that feels tricky. Keep a pencil and notebook beside you – statistics is something you learn by doing, not just by reading.",
-    "Why does this matter so much? We live in a world flooded with numbers. Advertisements claim that \"four out of five people prefer\" a product. News reports announce that a poll predicts an election result. Health campaigns tell us how many people a disease affects. Some of these claims are trustworthy and some are dangerously misleading, and the difference almost always lies in how the data was collected. Once you understand data collection, you will never again read a statistic in quite the same innocent way. You will ask: who was asked, how were they chosen, and was the question fair? That habit of careful questioning is one of the most valuable thinking skills you can own.",
     "Classify data as quantitative or qualitative, and as discrete, continuous, nominal or ordinal.",
     "Explain the difference between primary and secondary data and choose the right one for a question.",
     "Describe and apply random, systematic, stratified and convenience sampling.",
@@ -58,44 +56,72 @@
     "Design clear, unbiased questionnaire questions and choose suitable question types.",
     "Record and read data in tally charts, frequency tables and two-way tables.",
     "Identify common types of bias and explain how to reduce them.",
-    "Plan a simple statistical investigation from question to conclusion."
+    "Plan a simple statistical investigation from question to conclusion.",
+    "Construct and interpret bar charts, pie charts and line (time-series) graphs to display data.",
+    "Sort and interpret data using Venn diagrams and Carroll diagrams.",
+    "Construct and interpret a stem-and-leaf diagram, including finding an average from it.",
+    "Explain the advantages and disadvantages of random, systematic, stratified and convenience sampling for a given situation."
   ],
   "concepts": [
     {
       "id": "concept-1-types-of-data",
       "title": "Types of Data",
-      "explanation": "Data is simply information collected to answer a question or solve a problem. Before you collect anything, it helps enormously to know what type of data you are dealing with, because the type decides how you gather it, how you record it, and which graphs and calculations make sense later. All data splits first into two big families: quantitative and qualitative. Quantitative data is information that is measured or counted as numbers. Height, mass, age, temperature, test scores and the number of camels a family…",
-      "example": "Quantitative data divides again into discrete and continuous. Discrete data can only take separate, usually whole-number, values – you count it. The number of students in Zahra’s class, the number of goals in a football…"
+      "explanation": "Data is simply information collected to answer a question or solve a problem. Before you collect anything, it helps enormously to know what type of data you are dealing with, because the type decides how you gather it, how you record it, and which graphs and calculations make sense later. All data splits first into two big families: quantitative and qualitative.\n\nQuantitative data is information that is measured or counted as numbers. Height, mass, age, temperature, test scores and the number of camels a family owns are all quantitative. Qualitative data (sometimes called categorical data) describes a quality or category that is not a number – favourite colour, type of pet, brand of phone, or an opinion about a film. A quick test: if it makes sense to find an average of it, it is almost certainly quantitative. You can average heights; you cannot average favourite colours.\n\nQuantitative data divides again into discrete and continuous. Discrete data can only take separate, usually whole-number, values – you count it. The number of students in Zahra’s class, the number of goals in a football match, or the number of goats in a herd are discrete, because you cannot sensibly have 25.5 students or 3.7 goats. Continuous data can take any value within a range – you measure it, and the answer depends only on how precise your instrument is. Height (165.7 cm), mass (52.3 kg), time (a race of 12.47 seconds) and temperature (23.6 °C) are all continuous, because between any two values there is always another possible value.\n\nQualitative data also divides into two kinds: nominal and ordinal. Nominal data falls into categories with no natural order – eye colour (brown, black, hazel), type of transport (walk, bus, bicycle, car), or blood group (A, B, AB, O). You cannot say one category is \"higher\" than another. Ordinal data falls into categories that do have a natural order or ranking, even though they are not numbers – a rating of poor, fair, good, excellent, or an agreement scale of strongly disagree up to strongly agree, or race positions of 1st, 2nd, 3rd. The order matters, but the gaps between categories are not equal or measurable, which is what keeps it qualitative rather than quantitative.\n\nHere is a warning that catches many students: not every number is quantitative. A phone number, a house number, or the number on a footballer’s shirt is really a label, not a measurement. You would never find the average shirt number and expect it to mean anything, so those numbers are actually nominal qualitative data in disguise. Always ask what the number *represents*, not just whether it looks like a number.",
+      "example": "Choosing the right data type flows straight from your question. \"How many?\" points to discrete data; \"how much?\" or \"how long?\" points to continuous data; \"what type?\" points to nominal data; and \"what rank?\" points to ordinal data. If Hassan asks \"What is the average height of Year 8 students?\" he needs continuous data. If he asks \"Which subject is most popular?\" he needs nominal data. If he asks \"How do students rate the school lunch?\" he needs ordinal data. Getting this clear at the start saves a great deal of trouble later."
     },
     {
       "id": "concept-2-primary-and-secondary-data",
       "title": "Primary and Secondary Data",
-      "explanation": "Once you know what type of data you need, you must decide where to get it. There are two sources. Primary data is information you collect yourself, first-hand, for your own specific purpose – you are the first person ever to gather it. Surveying your own classmates about their favourite sport, measuring the growth of bean plants in a science experiment, or timing how long cars wait at a junction near Nuur Academy all produce primary data. Secondary data is information that someone else already collected, usually…",
-      "example": "Each source has real strengths. Primary data is exactly what you need: it answers your precise question, it is current, and you control how it was collected, so you can trust its quality. Its weaknesses are that it is…"
+      "explanation": "Once you know what type of data you need, you must decide where to get it. There are two sources. Primary data is information you collect yourself, first-hand, for your own specific purpose – you are the first person ever to gather it. Surveying your own classmates about their favourite sport, measuring the growth of bean plants in a science experiment, or timing how long cars wait at a junction near Nuur Academy all produce primary data.\n\nSecondary data is information that someone else already collected, usually for a different purpose, which you then reuse. Government census tables, weather records from the meteorological service, sports statistics from an official website, or figures published in a newspaper are all secondary data for you, because you did not gather them yourself.\n\nEach source has real strengths. Primary data is exactly what you need: it answers your precise question, it is current, and you control how it was collected, so you can trust its quality. Its weaknesses are that it is slow and expensive to gather, it needs planning and effort, and your sample may end up small. Secondary data is the opposite: it is quick, cheap and often huge, gathered by professionals with resources you could never match, and it may stretch back many years to reveal long-term trends. But it may not fit your question exactly, it could be out of date, and you often cannot check how carefully it was collected.\n\nThis leads to a golden rule for using secondary data: always question the source. Before you trust a figure someone else collected, ask five things. Who collected it – are they credible and unbiased? When was it collected – is it still current? How was it collected – were proper methods used? Why was it collected – does the original purpose match yours? And what was the sample – does it represent the group you care about? A figure from a national statistics agency or a peer-reviewed study deserves far more trust than a number on an anonymous website with no explanation of where it came from.",
+      "example": "The best investigations often combine both. Suppose Maryam wants to know how students’ use of mobile phones has changed over time. She cannot survey students from ten years ago, so she uses secondary data – older published reports – for the past, and collects primary data – her own survey – for the present, then compares the two. Knowing when to collect fresh data and when to reuse existing data is a mark of a thoughtful researcher."
     },
     {
       "id": "concept-3-populations-samples-and-sampling-methods",
       "title": "Populations, Samples and Sampling Methods",
-      "explanation": "A population is the entire group you want to learn about – for example, *all* Year 8 students in your country. A sample is a smaller group, chosen from that population, that you actually study. We use samples because reaching everyone is usually impossible, too slow, or too expensive. To learn what teenagers think about social media, nobody could question every teenager on Earth, but a carefully chosen sample of a thousand can give a reliable answer. A sample is only useful if it is representative – it should…",
-      "example": "Simple random sampling gives every member of the population an equal chance of being chosen. You list everyone, number them, and use a random number generator (or names drawn from a hat) to pick the sample. Its great…"
+      "explanation": "A population is the entire group you want to learn about – for example, *all* Year 8 students in your country. A sample is a smaller group, chosen from that population, that you actually study. We use samples because reaching everyone is usually impossible, too slow, or too expensive. To learn what teenagers think about social media, nobody could question every teenager on Earth, but a carefully chosen sample of a thousand can give a reliable answer.\n\nA sample is only useful if it is representative – it should mirror the population, so that every important group has a fair chance of being included. A sample that leaves people out in a systematic way is biased, and a biased sample can be more misleading than no data at all. There are four sampling methods you must know.\n\nSimple random sampling gives every member of the population an equal chance of being chosen. You list everyone, number them, and use a random number generator (or names drawn from a hat) to pick the sample. Its great strength is that it removes selection bias, so results can be trusted and generalised. Its weakness is that you need a complete list of the whole population, and some chosen people may refuse to take part.\n\nSystematic sampling selects every nth member from an ordered list. You work out the interval by dividing the population size by the sample size, pick a random starting point, then step through the list. To choose 100 students from a school of 1000, the interval is 1000 ÷ 100 = 10, so you take every 10th student. It is quicker than random sampling and spreads the sample evenly, but if the list has a hidden repeating pattern that matches your interval, it can introduce bias.\n\nStratified sampling divides the population into important subgroups, called strata, and then samples randomly from each one, usually in proportion to its size. To survey opinions about school policy, Yusuf might split students by year group and sample from each year. Its strength is that it guarantees every subgroup is represented, and it lets you compare groups fairly. Its weakness is that it is more complex to organise and you must already know the make-up of the population.\n\nConvenience sampling simply uses whoever is easy to reach – friends, family, or people passing a market stall. It is fast, cheap and fine for a quick pilot, but it is highly biased and its results cannot be generalised, because the easy-to-reach people are rarely typical of everyone. Convenience sampling is acceptable for rough, early feedback but never for a serious study whose conclusions matter.",
+      "example": "How big should a sample be? Larger samples are generally more accurate, but there are diminishing returns – the jump from 1000 to 1001 people changes almost nothing. More important than raw size is the quality of the method: a well-chosen sample of 1000 can represent millions accurately, while a badly chosen sample of 10,000 can be hopelessly misleading. As a rough guide, a small school project might use 30–100 people, a local study 100–500, and a national study a few thousand. The famous lesson here is that a good method beats a big number every time."
     },
     {
       "id": "concept-4-census-versus-sample-survey",
       "title": "Census versus Sample Survey",
-      "explanation": "A census collects data from every single member of a population – it aims for complete, 100% coverage. A national population count, where a government tries to record every person living in the country, is the classic example. A sample survey collects data from only a part of the population, chosen to represent the whole. Deciding between them is a genuine trade-off. A census has powerful advantages: it gives complete information, it has no sampling error (because nobody is left out), and it lets you study even…",
-      "example": "A sample survey is cheaper, faster and less intrusive, and because you spend your resources on fewer people you can often collect higher-quality answers. Its drawback is sampling error: because you did not ask everyone,…"
+      "explanation": "A census collects data from every single member of a population – it aims for complete, 100% coverage. A national population count, where a government tries to record every person living in the country, is the classic example. A sample survey collects data from only a part of the population, chosen to represent the whole. Deciding between them is a genuine trade-off.\n\nA census has powerful advantages: it gives complete information, it has no sampling error (because nobody is left out), and it lets you study even very small subgroups in detail. But it is extremely expensive, very slow to plan and process, and hard to organise, needing thousands of trained workers. Worse, it is nearly impossible to reach *absolutely* everyone – some people move, refuse, or are simply missed – so even a census can suffer from non-response.",
+      "example": "A sample survey is cheaper, faster and less intrusive, and because you spend your resources on fewer people you can often collect higher-quality answers. Its drawback is sampling error: because you did not ask everyone, your results are estimates carrying some uncertainty. There is also a special situation where a census is simply impossible: destructive testing. To test whether every match in a box lights, you would have to strike them all and destroy the product. Here a sample is the *only* sensible option."
     },
     {
       "id": "concept-5-designing-a-questionnaire",
       "title": "Designing a Questionnaire",
-      "explanation": "A questionnaire is a set of questions written to collect specific information from people, called respondents. Good questionnaire design is a real skill, because a badly worded question quietly produces useless or misleading answers. Good questions are clear, unambiguous, unbiased, and each ask only one thing, arranged in a sensible order. Questions come in two broad types. Closed questions give a fixed set of answers to choose from – multiple choice, yes/no, rating scales (excellent / good / fair / poor), or…",
-      "example": "The wording of a question can wreck it in several classic ways, and you must learn to avoid every one:"
+      "explanation": "A questionnaire is a set of questions written to collect specific information from people, called respondents. Good questionnaire design is a real skill, because a badly worded question quietly produces useless or misleading answers. Good questions are clear, unambiguous, unbiased, and each ask only one thing, arranged in a sensible order.\n\nQuestions come in two broad types. Closed questions give a fixed set of answers to choose from – multiple choice, yes/no, rating scales (excellent / good / fair / poor), or ranking. They are quick to answer and easy to analyse and put into tables, which is ideal for statistics, but they can force people into boxes that do not quite fit. Open questions let people answer in their own words – \"How could the school library be improved?\" They capture rich, unexpected detail, but they are slow and hard to analyse and difficult to compare. A good questionnaire usually leans on closed questions and uses a few open ones sparingly.\n\nThe wording of a question can wreck it in several classic ways, and you must learn to avoid every one:\n\nLeading questions push the respondent toward an answer. Poor: \"Don’t you agree that lunch breaks are too short?\" Better: \"What do you think about the length of lunch breaks?\"\n\nLoaded questions hide an assumption or emotional word. Poor: \"How do you feel about the wasteful spending on sports?\" Better: \"What is your opinion of spending on sports?\"\n\nDouble-barrelled questions ask two things at once. Poor: \"Do you like maths and science?\" Better: split into two separate questions.\n\nVague or complicated language. Poor: \"How often do you engage in physical fitness activity?\" Better: \"How many days a week do you exercise?\"\n\nOverlapping or unbalanced response options. Age boxes must not overlap (0–9, 10–19, not 0–10, 10–20), and rating scales should be balanced with as many positive as negative choices.",
+      "example": "A good questionnaire also has a sensible structure: an opening that explains the purpose, gives instructions, promises confidentiality and estimates the time; a middle that groups related questions and puts sensitive ones near the end; and a close that thanks the respondent. Finally, before using it for real, you should pilot test it – try it on a small group of 5 to 10 people similar to your target respondents. Piloting reveals confusing questions, options that do not fit, and questions that are too long or too personal, so you can fix them before it matters."
     },
     {
       "id": "concept-6-frequency-tables-and-two-way-tables",
       "title": "Frequency Tables and Two-Way Tables",
-      "explanation": "Once you have collected raw answers, you must organise them before they mean anything. The simplest tool is a tally chart, which becomes a frequency table. As each answer comes in you draw a tally mark, grouping in fives (four upright strokes with the fifth crossing them) so they are easy to count. The frequency is simply how many times each value or category occurred. Suppose Amina asks 30 classmates how they travel to school and records the tallies, giving these frequencies: The frequencies should always add up…",
-      "example": "A two-way table records two categories at the same time, with one across the top and the other down the side, so you can study how they relate. Suppose Hassan surveys 60 students, recording both their year group and…"
+      "explanation": "Once you have collected raw answers, you must organise them before they mean anything. The simplest tool is a tally chart, which becomes a frequency table. As each answer comes in you draw a tally mark, grouping in fives (four upright strokes with the fifth crossing them) so they are easy to count. The frequency is simply how many times each value or category occurred. Suppose Amina asks 30 classmates how they travel to school and records the tallies, giving these frequencies:\n\nThe frequencies should always add up to the total number of people asked – here 12 + 7 + 6 + 5 = 30, which confirms nobody was missed or double-counted. A quick total check like this catches many recording errors. For numerical data with many different values, we often use a grouped frequency table, collecting values into equal, non-overlapping class intervals such as 0–9, 10–19, 20–29, so the table stays short and readable.\n\nA two-way table records two categories at the same time, with one across the top and the other down the side, so you can study how they relate. Suppose Hassan surveys 60 students, recording both their year group and whether they walk or ride to school. A two-way table might look like this:",
+      "example": "Read a two-way table carefully. Each inner number is a count meeting both conditions – for example, 20 students are in Year 8 and walk. The final row and column are totals: 34 students walk in all, 36 students are in Year 8, and the grand total of 60 sits in the bottom-right corner. A vital check is that the row totals and the column totals must both add up to that same grand total (14 + 10 = 24, and 24 + 36 = 60). If a single cell is missing, you can often find it by subtraction, which makes two-way tables a favourite in examinations."
+    },
+    {
+      "id": "concept-7-bar-pie-and-line-graphs",
+      "title": "Bar Charts, Pie Charts and Line Graphs",
+      "explanation": "Once data has been collected and organised into a frequency table, it can be displayed visually so that patterns are easy to see at a glance. A bar chart uses separate bars of equal width, with height (or length) showing frequency, to compare categories — a dual or compound bar chart places two or more bars side by side for each category so that two data sets can be compared directly, for example rainfall in two different years. A pie chart shows how a total is split into parts, using a full circle (360°) to represent the whole: each category gets a sector whose angle is found by (category frequency ÷ total frequency) × 360°, so that the sector's size shows its share of the whole. A line graph plots points in order (often over time) and joins them with straight lines; when the horizontal axis represents time, it is called a time-series graph, and it is especially good at showing a trend — whether a quantity is rising, falling, or staying roughly the same over time. Choosing between them depends on your data: use a bar chart to compare separate categories, a pie chart to show proportions of a whole, and a line or time-series graph to show change over time. An infographic combines several of these tools — charts, icons, short text and colour — on one page to tell a data story clearly to a general audience.",
+      "example": "A survey of 40 students asks their favourite sport: Football 16, Basketball 10, Athletics 8, Swimming 6. Find the pie-chart angle for Football, and say which chart type — bar, pie or line — would best show how the school's total enrolment changed over the last 5 years. Solution: Football's angle = (16 ÷ 40) × 360° = 0.4 × 360° = 144°. For enrolment over 5 years, a line graph (time-series graph) is best, because the data changes over time and a line graph makes the trend (rising, falling or steady) easy to see."
+    },
+    {
+      "id": "concept-8-venn-and-carroll-diagrams",
+      "title": "Venn Diagrams and Carroll Diagrams",
+      "explanation": "When data needs to be sorted by more than one property at once, a picture can make the overlaps clear. A Venn diagram uses overlapping circles inside a rectangle (the rectangle represents everything being studied) — each circle represents one property, and anything in the overlap between two circles has both properties, while anything outside all the circles has neither. For example, one circle could be \"plays football\" and another \"plays basketball\"; a student who does both sits in the overlap. A Carroll diagram sorts the same kind of data into a grid instead of circles: each row and column represents a property and its opposite (for example \"plays football\" / \"does not play football\" across the top, \"plays basketball\" / \"does not play basketball\" down the side), and each item goes in exactly one of the four boxes. Both diagrams organise the same information — a Venn diagram makes overlaps visually obvious, while a Carroll diagram is often easier to read numbers from directly, especially with more than two properties.",
+      "example": "In a class of 30 students, 18 play football, 12 play basketball, and 6 play both. Draw a Carroll diagram to show this, and state how many students play neither sport. Solution: Students who play only football = 18 − 6 = 12. Students who play only basketball = 12 − 6 = 6. Students who play both = 6. So far that accounts for 12 + 6 + 6 = 24 students; the remaining 30 − 24 = 6 students play neither sport. A Carroll diagram would show: Football & Basketball = 6, Football only = 12, Basketball only = 6, Neither = 6, with row and column totals of 18 (football) and 12 (basketball)."
+    },
+    {
+      "id": "concept-9-stem-and-leaf-diagrams",
+      "title": "Stem-and-Leaf Diagrams",
+      "explanation": "A stem-and-leaf diagram displays a list of numbers so that you can see both the individual values and the overall shape of the data at the same time — something a simple frequency table cannot do as clearly. Each number is split into a \"stem\" (all the digits except the last one) and a \"leaf\" (the last digit). The stems are listed once, in order, down the left-hand side, and every matching leaf is written next to its stem, in increasing order, separated by spaces. For example, the number 47 has stem 4 and leaf 7. A key must always be included, such as \"4 | 7 means 47,\" so that anyone reading the diagram knows how to reconstruct the original numbers. Reading down a stem-and-leaf diagram is a little like reading a sideways bar chart — the row lengths show frequency — but unlike a bar chart, no original data value is lost, because every single number can be read straight back off the diagram.",
+      "example": "These are the ages of 12 people at a family gathering: 34, 41, 29, 52, 38, 45, 27, 41, 33, 58, 26, 47. Draw a stem-and-leaf diagram, and use it to find the median age. Solution: Stems are the tens digit (2, 3, 4, 5); leaves are the units digit, written in order: 2 | 6 7 9; 3 | 3 4 8; 4 | 1 1 5 7; 5 | 2 8. Key: 2 | 6 means 26. Reading all 12 leaves in order gives: 26, 27, 29, 33, 34, 38, 41, 41, 45, 47, 52, 58. With 12 values, the median is the average of the 6th and 7th values: (38 + 41) ÷ 2 = 39.5 years."
+    },
+    {
+      "id": "concept-10-comparing-sampling-methods",
+      "title": "Comparing Sampling Methods: Strengths and Weaknesses",
+      "explanation": "Random, systematic, stratified and convenience sampling each have real advantages and disadvantages, and choosing well means weighing them up for the situation at hand. Random sampling (every member has an equal chance of being chosen) is fair and avoids bias, but can be slow to carry out and, by bad luck, might still miss an important group entirely. Systematic sampling (picking every nth member from a list) is quick and easy to carry out, but can introduce bias if the list has a hidden pattern that lines up with the interval — for example, sampling every 7th day of the week always lands on the same weekday. Stratified sampling (splitting the population into groups, then sampling proportionally from each) guarantees that every important subgroup is represented fairly, but takes more planning and needs good group data in advance. Convenience sampling (choosing whoever is easiest to reach) is the fastest and cheapest method, but is the most biased, since it only reflects the people who happened to be available, not the whole population.",
+      "example": "A school wants to find out how students travel to school. For each method, give one advantage and one disadvantage of using it for this survey: a) convenience sampling (asking students in the canteen at lunchtime) b) stratified sampling (sampling proportionally from each year group). Solution: a) Convenience sampling is quick and cheap, needing no list or planning; but it is biased, because it only reaches students who eat in the canteen at that time, missing students who travel differently or are not present. b) Stratified sampling fairly represents every year group in proportion to its size, giving a more accurate overall picture; but it takes more time to organise, since you need a list of students by year group before sampling."
     }
   ],
   "explorations": [
@@ -104,72 +130,72 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "Types of Data",
-      "context": "Data is simply information collected to answer a question or solve a problem. Before you collect anything, it helps enormously to know what type of data you are dealing with, because the type decides how you gather it, how you record it, and which graphs and…",
+      "context": "Data is simply information collected to answer a question or solve a problem.",
       "prompt": "Classify each as discrete or continuous: (a) number of students, (b) length of a pencil, (c) number of text messages, (d) mass of a mango.",
       "answer": "1) (a) discrete, (b) continuous, (c) discrete, (d) continuous.",
       "modelType": "model-1",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) (a) discrete, (b) continuous, (c) discrete, (d) continuous."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous.",
+      "explanation": "Types of Data: Data is simply information collected to answer a question or solve a problem. Before you collect anything, it helps enormously to know what type of data you are dealing with, because the type decides how you gather it, how you record it, and which graphs and calculations make sense later. All data splits first into two big families: quantitative and qualitative."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Primary and Secondary Data",
-      "context": "Once you know what type of data you need, you must decide where to get it. There are two sources. Primary data is information you collect yourself, first-hand, for your own specific purpose – you are the first person ever to gather it. Surveying your own…",
-      "prompt": "Classify each as nominal or ordinal: (a) favourite colour, (b) exam grades A to E, (c) type of transport, (d) satisfaction rating.",
-      "answer": "(a) nominal, (b) ordinal, (c) nominal, (d) ordinal.",
+      "context": "Once you know what type of data you need, you must decide where to get it. There are two sources. Primary data is information you collect yourself, first-hand, for your own specific purpose – you are the first person ever to gather it.",
+      "prompt": "State whether each is primary or secondary data: (a) measuring your classmates’ heights yourself, (b) using rainfall records from a website.",
+      "answer": "(a) primary, (b) secondary.",
       "modelType": "model-2",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "(a) nominal, (b) ordinal, (c) nominal, (d) ordinal."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous.",
+      "explanation": "Primary and Secondary Data: Once you know what type of data you need, you must decide where to get it. There are two sources. Primary data is information you collect yourself, first-hand, for your own specific purpose – you are the first person ever to gather it. Surveying your own classmates about their favourite sport, measuring the growth of bean plants in an experiment, or timing how long cars wait at a junction all produce primary data."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Populations, Samples and Sampling Methods",
-      "context": "A population is the entire group you want to learn about – for example, *all* Year 8 students in your country. A sample is a smaller group, chosen from that population, that you actually study. We use samples because reaching everyone is usually impossible,…",
-      "prompt": "State whether each is primary or secondary data: (a) measuring your classmates’ heights yourself, (b) using rainfall records from a website.",
-      "answer": "(a) primary, (b) secondary.",
+      "context": "A population is the entire group you want to learn about – for example, *all* Year 8 students in your country. A sample is a smaller group, chosen from that population, that you actually study.",
+      "prompt": "Name the four sampling methods you have learned.",
+      "answer": "Random, systematic, stratified, convenience.",
       "modelType": "model-3",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "(a) primary, (b) secondary."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous.",
+      "explanation": "Populations, Samples and Sampling Methods: A population is the entire group you want to learn about – for example, *all* Year 8 students in your country. A sample is a smaller group, chosen from that population, that you actually study. We use samples because reaching everyone is usually impossible, too slow, or too expensive. To learn what teenagers think about social media, nobody could question every teenager on Earth, but a carefully chosen sample of a thousand can give a reliable answer."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Census versus Sample Survey",
-      "context": "A census collects data from every single member of a population – it aims for complete, 100% coverage. A national population count, where a government tries to record every person living in the country, is the classic example. A sample survey collects data…",
-      "prompt": "Name the four sampling methods you have learned.",
-      "answer": "Random, systematic, stratified, convenience.",
+      "context": "A census collects data from every single member of a population – it aims for complete, 100% coverage. A national population count, where a government tries to record every person living in the country, is the classic example.",
+      "prompt": "True or false: a census collects data from every member of a population.",
+      "answer": "True.",
       "modelType": "model-4",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "Random, systematic, stratified, convenience."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous.",
+      "explanation": "Census versus Sample Survey: A census collects data from every single member of a population – it aims for complete, 100% coverage. A national population count, where a government tries to record every person living in the country, is the classic example. A sample survey collects data from only a part of the population, chosen to represent the whole."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Designing a Questionnaire",
-      "context": "A questionnaire is a set of questions written to collect specific information from people, called respondents. Good questionnaire design is a real skill, because a badly worded question quietly produces useless or misleading answers. Good questions are clear,…",
-      "prompt": "True or false: a census collects data from every member of a population.",
-      "answer": "True.",
+      "context": "A questionnaire is a set of questions written to collect specific information from people, called respondents. Good questionnaire design is a real skill, because a badly worded question quietly produces useless or misleading answers.",
+      "prompt": "What is wrong with this survey question: \"Don’t you agree that our wonderful new library is a huge improvement?\"",
+      "answer": "It is both a leading question (\"Don’t you agree\") and a loaded question (\"wonderful\", \"huge improvement\") — a neutral version is \"What is your opinion of the new library?\"",
       "modelType": "model-5",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "True."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous.",
+      "explanation": "Designing a Questionnaire: A questionnaire is a set of questions written to collect specific information from people, called respondents. Good questionnaire design is a real skill, because a badly worded question quietly produces useless or misleading answers. Good questions are clear, unambiguous, unbiased, and each ask only one thing, arranged in a sensible order."
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Frequency Tables and Two-Way Tables",
-      "context": "Once you have collected raw answers, you must organise them before they mean anything. The simplest tool is a tally chart, which becomes a frequency table. As each answer comes in you draw a tally mark, grouping in fives (four upright strokes with the fifth…",
-      "prompt": "A school of 900 students wants a systematic sample of 45. Find the sampling interval.",
-      "answer": "1) 900 ÷ 45 = 20.",
+      "context": "Once you have collected raw answers, you must organise them before they mean anything. The simplest tool is a tally chart, which becomes a frequency table.",
+      "prompt": "Amina tallies how 30 classmates travel to school: Walk 12, Bus 9, Cycle ?, Car 4. If the frequencies must total 30, how many classmates cycle?",
+      "answer": "30 − (12 + 9 + 4) = 5, so 5 classmates cycle.",
       "modelType": "model-6",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) 900 ÷ 45 = 20."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous.",
+      "explanation": "Frequency Tables and Two-Way Tables: Once you have collected raw answers, you must organise them before they mean anything. The simplest tool is a tally chart, which becomes a frequency table. As each answer comes in you draw a tally mark, grouping in fives (four upright strokes with the fifth crossing them) so they are easy to count."
     }
   ],
   "visualModels": [
@@ -178,7 +204,7 @@
       "outcomeId": "lo01",
       "title": "Types of Data",
       "modelType": "concept-model-1",
-      "purpose": "Data is simply information collected to answer a question or solve a problem. Before you collect anything, it helps enormously to know what type of data you are dealing with, because the type decides how you gather it,…",
+      "purpose": "Data is simply information collected to answer a question or solve a problem.",
       "defaultNumber": null
     },
     {
@@ -186,7 +212,7 @@
       "outcomeId": "lo02",
       "title": "Primary and Secondary Data",
       "modelType": "concept-model-2",
-      "purpose": "Once you know what type of data you need, you must decide where to get it. There are two sources. Primary data is information you collect yourself, first-hand, for your own specific purpose – you are the first person…",
+      "purpose": "Once you know what type of data you need, you must decide where to get it. There are two sources.",
       "defaultNumber": null
     },
     {
@@ -194,7 +220,7 @@
       "outcomeId": "lo03",
       "title": "Populations, Samples and Sampling Methods",
       "modelType": "concept-model-3",
-      "purpose": "A population is the entire group you want to learn about – for example, *all* Year 8 students in your country. A sample is a smaller group, chosen from that population, that you actually study. We use samples because…",
+      "purpose": "A population is the entire group you want to learn about – for example, *all* Year 8 students in your country. A sample is a smaller group, chosen from that population, that you actually study.",
       "defaultNumber": null
     },
     {
@@ -202,7 +228,7 @@
       "outcomeId": "lo04",
       "title": "Census versus Sample Survey",
       "modelType": "concept-model-4",
-      "purpose": "A census collects data from every single member of a population – it aims for complete, 100% coverage. A national population count, where a government tries to record every person living in the country, is the classic…",
+      "purpose": "A census collects data from every single member of a population – it aims for complete, 100% coverage.",
       "defaultNumber": null
     },
     {
@@ -210,7 +236,7 @@
       "outcomeId": "lo05",
       "title": "Designing a Questionnaire",
       "modelType": "concept-model-5",
-      "purpose": "A questionnaire is a set of questions written to collect specific information from people, called respondents. Good questionnaire design is a real skill, because a badly worded question quietly produces useless or…",
+      "purpose": "A questionnaire is a set of questions written to collect specific information from people, called respondents.",
       "defaultNumber": null
     },
     {
@@ -218,7 +244,7 @@
       "outcomeId": "lo06",
       "title": "Frequency Tables and Two-Way Tables",
       "modelType": "concept-model-6",
-      "purpose": "Once you have collected raw answers, you must organise them before they mean anything. The simplest tool is a tally chart, which becomes a frequency table. As each answer comes in you draw a tally mark, grouping in…",
+      "purpose": "Once you have collected raw answers, you must organise them before they mean anything. The simplest tool is a tally chart, which becomes a frequency table.",
       "defaultNumber": null
     }
   ],
@@ -228,7 +254,7 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "title": "How to take a systematic sample",
-      "example": "Classify each of these fully: (a) the number of goats a family owns, (b) the time runners take in a race, (c) students’ favourite subjects, (d) medal positions in a competition.",
+      "example": "A school has 800 students. Farah wants a systematic sample of 40. What is the sampling interval, and how does she choose the sample?",
       "steps": [
         "Divide the population size by the sample size to get the interval n.",
         "Choose a random starting point between 1 and n.",
@@ -241,7 +267,7 @@
       "outcomeId": "lo02",
       "difficulty": "Core",
       "title": "How to take a stratified sample",
-      "example": "Classify each of these fully: (a) the number of goats a family owns, (b) the time runners take in a race, (c) students’ favourite subjects, (d) medal positions in a competition.",
+      "example": "A youth club has 90 boys and 60 girls (150 members). Layla wants a stratified sample of 30. How many boys and how many girls should she include?",
       "steps": [
         "Work out the overall sampling fraction (sample size ÷ population size).",
         "Multiply each subgroup’s size by that fraction.",
@@ -254,7 +280,7 @@
       "outcomeId": "lo03",
       "difficulty": "Core",
       "title": "How to complete a two-way table",
-      "example": "A school has 800 students. Farah wants a systematic sample of 40. What is the sampling interval, and how does she choose the sample?",
+      "example": "In a two-way table, 50 students were asked if they play a musical instrument. 28 are girls, of whom 16 play an instrument; 10 boys play an instrument. Complete the table and find how many boys do not play an instrument.",
       "steps": [
         "Fill in every value you are given.",
         "Use subtraction: any missing cell = its row or column total minus the known cells.",
@@ -284,7 +310,7 @@
       "steps": [
         "Solution: The question is both leading (\"Don’t you agree\") and loaded (\"wonderful\", \"huge improvement\").",
         "A neutral version is: \"What is your opinion of the new library?\" with balanced options such as poor / fair / good / excellent.",
-        "Check the fix a biased question result carefully."
+        "Check your rewritten question by reading it aloud — it should not hint at any expected answer."
       ]
     },
     {
@@ -308,15 +334,15 @@
       "difficulty": "Basic",
       "title": "Classify the data type",
       "prompt": "Classify each of these fully: (a) the number of goats a family owns, (b) the time runners take in a race, (c) students’ favourite subjects, (d) medal positions in a competition.",
-      "solution": "Solution: (a) You count goats in whole numbers, so it is discrete quantitative. (b) Time can take any value and is measured, so it is continuous quantitative. (c) Subjects are categories with no order, so they are nominal qualitative. (d) 1st, 2nd, 3rd are categories with a natural order, so they are ordinal qualitative. Worked Example 2: Primary or secondary? Omar wants to know the average rainfall in Mogadishu over the last 50 years. Should he use primary or secondary data, and why? Solution: He cannot travel…"
+      "solution": "Solution: (a) You count goats in whole numbers, so it is discrete quantitative. (b) Time can take any value and is measured, so it is continuous quantitative. (c) Subjects are categories with no order, so they are nominal qualitative. (d) 1st, 2nd, 3rd are categories with a natural order, so they are ordinal qualitative."
     },
     {
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Basic",
       "title": "Primary or secondary?",
-      "prompt": "Classify each of these fully: (a) the number of goats a family owns, (b) the time runners take in a race, (c) students’ favourite subjects, (d) medal positions in a competition.",
-      "solution": "Solution: (a) You count goats in whole numbers, so it is discrete quantitative. (b) Time can take any value and is measured, so it is continuous quantitative. (c) Subjects are categories with no order, so they are nominal qualitative. (d) 1st, 2nd, 3rd are categories with a natural order, so they are ordinal qualitative. Worked Example 2: Primary or secondary? Omar wants to know the average rainfall in Mogadishu over the last 50 years. Should he use primary or secondary data, and why? Solution: He cannot travel…"
+      "prompt": "Omar wants to know the average rainfall in Mogadishu over the last 50 years. Should he use primary or secondary data, and why?",
+      "solution": "Solution: He cannot travel back in time to measure 50 years of historical rainfall himself, so he should use secondary data — existing rainfall records from a meteorological service or government archive, which have already been collected for that period."
     },
     {
       "id": "we03",
@@ -348,15 +374,15 @@
       "difficulty": "Intermediate",
       "title": "Complete a two-way table",
       "prompt": "In a two-way table, 24 students study French and 36 study Spanish, giving 60 in total. Of the French students, 15 are girls; of the Spanish students, 20 are girls. How many boys study each language?",
-      "solution": "Solution: French boys = 24 − 15 = 9. Spanish boys = 36 − 20 = 16. Check the totals: girls = 15 + 20 = 35, boys = 9 + 16 = 25, and 35 + 25 = 60. ✓ The totals confirm the answer. Worked Example 7: Census or sample? A factory makes 10,000 light bulbs a day and must check how long they last before failing. Should it test every bulb or a sample? Explain. Solution: Testing how long a bulb lasts destroys it, so a census would leave nothing to sell. The factory must use a sample survey, testing a random selection and…"
+      "solution": "Solution: French boys = 24 − 15 = 9. Spanish boys = 36 − 20 = 16. Check the totals: girls = 15 + 20 = 35, boys = 9 + 16 = 25, and 35 + 25 = 60. ✓ The totals confirm the answer."
     },
     {
       "id": "we07",
       "outcomeId": "lo07",
       "difficulty": "Intermediate",
       "title": "Census or sample?",
-      "prompt": "In a two-way table, 24 students study French and 36 study Spanish, giving 60 in total. Of the French students, 15 are girls; of the Spanish students, 20 are girls. How many boys study each language?",
-      "solution": "Solution: French boys = 24 − 15 = 9. Spanish boys = 36 − 20 = 16. Check the totals: girls = 15 + 20 = 35, boys = 9 + 16 = 25, and 35 + 25 = 60. ✓ The totals confirm the answer. Worked Example 7: Census or sample? A factory makes 10,000 light bulbs a day and must check how long they last before failing. Should it test every bulb or a sample? Explain. Solution: Testing how long a bulb lasts destroys it, so a census would leave nothing to sell. The factory must use a sample survey, testing a random selection and…"
+      "prompt": "A factory makes 10,000 light bulbs a day and must check how long they last before failing. Should it test every bulb or a sample? Explain.",
+      "solution": "Solution: Testing how long a bulb lasts destroys it, so a census would leave nothing to sell. The factory must use a sample survey, testing a random selection of bulbs and using the results to estimate the typical lifetime of all the bulbs it makes."
     },
     {
       "id": "we08",
@@ -372,7 +398,7 @@
       "difficulty": "Challenge",
       "title": "Practice 9",
       "prompt": "For each research question, name the best sampling method: (a) comparing opinions fairly across three year groups, (b) a quick pilot before a big study, (c) picking names so everyone has an equal chance.",
-      "solution": "One sixth of each: adults 180 ÷ 6 = 30, children 60 ÷ 6 = 10 (check 30 + 10 ="
+      "solution": "Solution: (a) Comparing three year groups fairly needs each group properly represented, so use stratified sampling. (b) A quick pilot just needs whoever is easy to reach, so use convenience sampling. (c) Giving everyone an equal chance means simple random sampling. Answer: (a) stratified, (b) convenience, (c) random."
     },
     {
       "id": "we10",
@@ -380,7 +406,7 @@
       "difficulty": "Challenge",
       "title": "Practice 10",
       "prompt": "Copy and complete this two-way table (find the missing values and all totals): Year 7 walk 12, Year 7 ride ?, Year 7 total 20; Year 8 walk ?, Year 8 ride 18, Year 8 total 30.",
-      "solution": "."
+      "solution": "Solution: Year 7 ride = 20 − 12 = 8. Year 8 walk = 30 − 18 = 12. Walk total = 12 + 12 = 24, Ride total = 8 + 18 = 26, Grand total = 20 + 30 = 50 (check 24 + 26 = 50 ✓)."
     },
     {
       "id": "we11",
@@ -388,7 +414,7 @@
       "difficulty": "Challenge",
       "title": "Practice 11",
       "prompt": "Explain in one sentence why testing the lifetime of every battery a factory makes is impossible.",
-      "solution": "(a) stratified, (b) convenience, (c) random."
+      "solution": "Solution: Testing a battery's lifetime uses it up completely (it is destructive testing), so testing every single battery would leave none left to sell — the factory must test a sample instead of taking a census."
     },
     {
       "id": "we12",
@@ -405,84 +431,84 @@
       "level": "Warm-up",
       "prompt": "Classify each as discrete or continuous: (a) number of students, (b) length of a pencil, (c) number of text messages, (d) mass of a mango.",
       "answer": "1) (a) discrete, (b) continuous, (c) discrete, (d) continuous.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous."
     },
     {
       "id": "p02",
       "level": "Warm-up",
       "prompt": "Classify each as nominal or ordinal: (a) favourite colour, (b) exam grades A to E, (c) type of transport, (d) satisfaction rating.",
       "answer": "(a) nominal, (b) ordinal, (c) nominal, (d) ordinal.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous."
     },
     {
       "id": "p03",
       "level": "Warm-up",
       "prompt": "State whether each is primary or secondary data: (a) measuring your classmates’ heights yourself, (b) using rainfall records from a website.",
       "answer": "(a) primary, (b) secondary.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous."
     },
     {
       "id": "p04",
       "level": "Warm-up",
       "prompt": "Name the four sampling methods you have learned.",
       "answer": "Random, systematic, stratified, convenience.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous."
     },
     {
       "id": "p05",
       "level": "Warm-up",
       "prompt": "True or false: a census collects data from every member of a population.",
       "answer": "True.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous."
     },
     {
       "id": "p06",
       "level": "Core",
       "prompt": "A school of 900 students wants a systematic sample of 45. Find the sampling interval.",
       "answer": "1) 900 ÷ 45 = 20.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous."
     },
     {
       "id": "p07",
       "level": "Core",
       "prompt": "A survey records: Walk 14, Bus 11, Cycle 7, Car x, total asked 40. Find x, then check your answer.",
-      "answer": "x = 40 − (14 + 11 +",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "x = 40 − (14 + 11 + 7) = 8.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous."
     },
     {
       "id": "p08",
       "level": "Core",
       "prompt": "A club has 240 members: 180 adults and 60 children. Find a stratified sample of 40 split correctly between the two groups.",
-      "answer": "= 40 − 32 = 8.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "Sampling fraction = 40 ÷ 240 = 1/6. Adults: 180 × 1/6 = 30. Children: 60 × 1/6 = 10. Check: 30 + 10 = 40 ✓.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous."
     },
     {
       "id": "p09",
       "level": "Core",
       "prompt": "For each research question, name the best sampling method: (a) comparing opinions fairly across three year groups, (b) a quick pilot before a big study, (c) picking names so everyone has an equal chance.",
-      "answer": "One sixth of each: adults 180 ÷ 6 = 30, children 60 ÷ 6 = 10 (check 30 + 10 =",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "(a) stratified, (b) convenience, (c) random.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous."
     },
     {
       "id": "p10",
       "level": "Core",
       "prompt": "Copy and complete this two-way table (find the missing values and all totals): Year 7 walk 12, Year 7 ride ?, Year 7 total 20; Year 8 walk ?, Year 8 ride 18, Year 8 total 30.",
-      "answer": ".",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "Year 7 ride = 20 − 12 = 8. Year 8 walk = 30 − 18 = 12. Walk total = 12 + 12 = 24, Ride total = 8 + 18 = 26, Grand total = 20 + 30 = 50 (check 24 + 26 = 50 ✓).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous."
     },
     {
       "id": "p11",
       "level": "Core",
       "prompt": "Explain in one sentence why testing the lifetime of every battery a factory makes is impossible.",
-      "answer": "(a) stratified, (b) convenience, (c) random.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "Testing a battery's lifetime uses it up completely, so testing every single battery would leave none left to sell — the factory must test a sample instead of taking a census.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous."
     },
     {
       "id": "p12",
       "level": "Challenge",
       "prompt": "A magazine surveys its readers by post and gets 2 million replies, yet its prediction is completely wrong. Explain how such a large sample can still be biased.",
       "answer": "1) The replies came only from readers wealthy enough to subscribe and willing to post back, so the sample was systematically unrepresentative (selection and non-response bias); size does not remove bias.",
-      "hint": "Identify the key mathematical idea before calculating or explaining."
+      "hint": "Decide which idea the question is really about (Quantitative / Qualitative, Discrete / Continuous, Nominal / Ordinal), then work one step at a time and check the answer is sensible."
     }
   ],
   "activities": [
@@ -553,7 +579,7 @@
   "reference": {
     "rules": [
       {
-        "title": "Key rule 1",
+        "title": "Types of Data Rule",
         "text": "Types of Data Quantitative = numbers. Qualitative = categories. Discrete = counted (whole values). Continuous = measured (any value). Nominal = no order. Ordinal = natural order or rank."
       },
       {
@@ -561,7 +587,7 @@
         "text": "A good method matters more than a big sample. A sample must be representative, or the results are biased. Random gives everyone an equal chance; stratified guarantees every subgroup appears."
       },
       {
-        "title": "Key rule 3",
+        "title": "Census vs Sample Rule",
         "text": "Census vs Sample Census = ask everyone: complete but slow and costly. Sample = ask a representative part: fast and cheap, with some uncertainty. Use a sample when testing is destructive or the population is large."
       }
     ],
@@ -625,7 +651,7 @@
       "difficulty": "Round 1",
       "prompt": "Classify each as discrete or continuous: (a) number of students, (b) length of a pencil, (c) number of text messages, (d) mass of a mango.",
       "answer": "1) (a) discrete, (b) continuous, (c) discrete, (d) continuous.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous.",
       "errorFeedback": "1) (a) discrete, (b) continuous, (c) discrete, (d) continuous."
     },
     {
@@ -634,7 +660,7 @@
       "difficulty": "Round 1",
       "prompt": "Classify each as nominal or ordinal: (a) favourite colour, (b) exam grades A to E, (c) type of transport, (d) satisfaction rating.",
       "answer": "(a) nominal, (b) ordinal, (c) nominal, (d) ordinal.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous.",
       "errorFeedback": "(a) nominal, (b) ordinal, (c) nominal, (d) ordinal."
     },
     {
@@ -643,7 +669,7 @@
       "difficulty": "Round 1",
       "prompt": "State whether each is primary or secondary data: (a) measuring your classmates’ heights yourself, (b) using rainfall records from a website.",
       "answer": "(a) primary, (b) secondary.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous.",
       "errorFeedback": "(a) primary, (b) secondary."
     },
     {
@@ -652,7 +678,7 @@
       "difficulty": "Round 1",
       "prompt": "Name the four sampling methods you have learned.",
       "answer": "Random, systematic, stratified, convenience.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous.",
       "errorFeedback": "Random, systematic, stratified, convenience."
     },
     {
@@ -661,7 +687,7 @@
       "difficulty": "Round 2",
       "prompt": "True or false: a census collects data from every member of a population.",
       "answer": "True.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous.",
       "errorFeedback": "True."
     },
     {
@@ -670,7 +696,7 @@
       "difficulty": "Round 2",
       "prompt": "A school of 900 students wants a systematic sample of 45. Find the sampling interval.",
       "answer": "1) 900 ÷ 45 = 20.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous.",
       "errorFeedback": "1) 900 ÷ 45 = 20."
     },
     {
@@ -678,53 +704,53 @@
       "outcomeId": "lo07",
       "difficulty": "Round 2",
       "prompt": "A survey records: Walk 14, Bus 11, Cycle 7, Car x, total asked 40. Find x, then check your answer.",
-      "answer": "x = 40 − (14 + 11 +",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "x = 40 − (14 + 11 +"
+      "answer": "x = 40 − (14 + 11 + 7) = 8.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous.",
+      "errorFeedback": "x = 40 − (14 + 11 + 7) = 8."
     },
     {
       "id": "fl08",
       "outcomeId": "lo08",
       "difficulty": "Round 2",
       "prompt": "A club has 240 members: 180 adults and 60 children. Find a stratified sample of 40 split correctly between the two groups.",
-      "answer": "= 40 − 32 = 8.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "= 40 − 32 = 8."
+      "answer": "Sampling fraction = 40 ÷ 240 = 1/6. Adults: 180 × 1/6 = 30. Children: 60 × 1/6 = 10. Check: 30 + 10 = 40 ✓.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous.",
+      "errorFeedback": "Sampling fraction = 40 ÷ 240 = 1/6. Adults: 180 × 1/6 = 30. Children: 60 × 1/6 = 10. Check: 30 + 10 = 40 ✓."
     },
     {
       "id": "fl09",
-      "outcomeId": "lo09",
-      "difficulty": "Round 3",
-      "prompt": "For each research question, name the best sampling method: (a) comparing opinions fairly across three year groups, (b) a quick pilot before a big study, (c) picking names so everyone has an equal chance.",
-      "answer": "One sixth of each: adults 180 ÷ 6 = 30, children 60 ÷ 6 = 10 (check 30 + 10 =",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "One sixth of each: adults 180 ÷ 6 = 30, children 60 ÷ 6 = 10 (check 30 + 10 ="
-    },
-    {
-      "id": "fl10",
-      "outcomeId": "lo10",
-      "difficulty": "Round 3",
-      "prompt": "Copy and complete this two-way table (find the missing values and all totals): Year 7 walk 12, Year 7 ride ?, Year 7 total 20; Year 8 walk ?, Year 8 ride 18, Year 8 total 30.",
-      "answer": ".",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "."
-    },
-    {
-      "id": "fl11",
       "outcomeId": "lo01",
       "difficulty": "Round 3",
-      "prompt": "Explain in one sentence why testing the lifetime of every battery a factory makes is impossible.",
+      "prompt": "For each research question, name the best sampling method: (a) comparing opinions fairly across three year groups, (b) a quick pilot before a big study, (c) picking names so everyone has an equal chance.",
       "answer": "(a) stratified, (b) convenience, (c) random.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous.",
       "errorFeedback": "(a) stratified, (b) convenience, (c) random."
     },
     {
-      "id": "fl12",
+      "id": "fl10",
       "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "Copy and complete this two-way table (find the missing values and all totals): Year 7 walk 12, Year 7 ride ?, Year 7 total 20; Year 8 walk ?, Year 8 ride 18, Year 8 total 30.",
+      "answer": "Year 7 ride = 20 − 12 = 8. Year 8 walk = 30 − 18 = 12. Walk total = 12 + 12 = 24, Ride total = 8 + 18 = 26, Grand total = 20 + 30 = 50 (check 24 + 26 = 50 ✓).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous.",
+      "errorFeedback": "Year 7 ride = 20 − 12 = 8. Year 8 walk = 30 − 18 = 12. Walk total = 12 + 12 = 24, Ride total = 8 + 18 = 26, Grand total = 20 + 30 = 50 (check 24 + 26 = 50 ✓)."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo03",
+      "difficulty": "Round 3",
+      "prompt": "Explain in one sentence why testing the lifetime of every battery a factory makes is impossible.",
+      "answer": "Testing a battery's lifetime uses it up completely, so testing every single battery would leave none left to sell — the factory must test a sample instead of taking a census.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Quantitative / Qualitative or Discrete / Continuous.",
+      "errorFeedback": "Testing a battery's lifetime uses it up completely, so testing every single battery would leave none left to sell — the factory must test a sample instead of taking a census."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo04",
       "difficulty": "Round 3",
       "prompt": "A magazine surveys its readers by post and gets 2 million replies, yet its prediction is completely wrong. Explain how such a large sample can still be biased.",
       "answer": "1) The replies came only from readers wealthy enough to subscribe and willing to post back, so the sample was systematically unrepresentative (selection and non-response bias); size does not remove bias.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Quantitative / Qualitative, Discrete / Continuous, Nominal / Ordinal), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) The replies came only from readers wealthy enough to subscribe and willing to post back, so the sample was systematically unrepresentative (selection and non-response bias); size does not remove bias."
     }
   ],
@@ -736,7 +762,7 @@
       "context": "Home",
       "prompt": "Hassan wants to know the favourite football team of students at Nuur Academy. Describe, step by step, how he could collect fair, unbiased data – including his sampling method and one sample question.",
       "answer": "1) e.g. list all students, use stratified sampling by year group so each year is fairly represented, ask a neutral closed question such as \"Which of these teams do you support?\" with a balanced list plus \"other\"; keep answers anonymous.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Quantitative / Qualitative, Discrete / Continuous, Nominal / Ordinal), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) e.g. list all students, use stratified sampling by year group so each year is fairly represented, ask a neutral closed question such as \"Which of these teams do you support?\" with a balanced list plus \"other\"; keep answers anonymous."
     },
     {
@@ -746,7 +772,7 @@
       "context": "Market",
       "prompt": "A health worker in Kismaayo must estimate the average height of 5-year-olds in the town. Explain whether primary or secondary data is better and why, and suggest a suitable sampling method.",
       "answer": "Primary data – he needs current local measurements that do not already exist; a random or stratified sample of the town’s 5-year-olds.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Quantitative / Qualitative, Discrete / Continuous, Nominal / Ordinal), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "Primary data – he needs current local measurements that do not already exist; a random or stratified sample of the town’s 5-year-olds."
     },
     {
@@ -756,7 +782,7 @@
       "context": "Travel",
       "prompt": "A shop asks only customers who join its loyalty club to rate its service, then advertises the high score as proof that everyone is happy. Explain the bias and why the advertisement is misleading.",
       "answer": "Only loyalty-club members (already the happiest, most regular customers) were asked – selection/volunteer bias – so the score does not represent all customers.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Quantitative / Qualitative, Discrete / Continuous, Nominal / Ordinal), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "Only loyalty-club members (already the happiest, most regular customers) were asked – selection/volunteer bias – so the score does not represent all customers."
     },
     {
@@ -766,7 +792,7 @@
       "context": "School",
       "prompt": "Amina records the number of siblings of 30 classmates: 0 appears 4 times, 1 appears 11 times, 2 appears 8 times, 3 appears 5 times, 4 appears 2 times. Draw a frequency table and confirm the total is 30.",
       "answer": "0→4, 1→11, 2→8, 3→5, 4→2; total 4 + 11 + 8 + 5 + 2 = 30 ✓.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Quantitative / Qualitative, Discrete / Continuous, Nominal / Ordinal), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "0→4, 1→11, 2→8, 3→5, 4→2; total 4 + 11 + 8 + 5 + 2 = 30 ✓."
     },
     {
@@ -776,7 +802,7 @@
       "context": "Community",
       "prompt": "A council wants residents’ views on a new park in Eastleigh. Explain why standing outside the existing park to ask people would give biased results, and suggest a fairer approach.",
       "answer": "People at the existing park already like parks, so their views are not typical (location/selection bias); instead sample residents across the whole area, for example by random household selection.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Quantitative / Qualitative, Discrete / Continuous, Nominal / Ordinal), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "People at the existing park already like parks, so their views are not typical (location/selection bias); instead sample residents across the whole area, for example by random household selection."
     },
     {
@@ -786,7 +812,7 @@
       "context": "Daily life",
       "prompt": "A magazine surveys its readers by post and gets 2 million replies, yet its prediction is completely wrong. Explain how such a large sample can still be biased.",
       "answer": "1) The replies came only from readers wealthy enough to subscribe and willing to post back, so the sample was systematically unrepresentative (selection and non-response bias); size does not remove bias.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Quantitative / Qualitative, Discrete / Continuous, Nominal / Ordinal), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) The replies came only from readers wealthy enough to subscribe and willing to post back, so the sample was systematically unrepresentative (selection and non-response bias); size does not remove bias."
     }
   ],
@@ -828,7 +854,7 @@
         "Population / Sample",
         "Census"
       ],
-      "modelAnswer": "Sample is 50 out of 1000 = one twentieth: Year 7 400 ÷ 20 = 20, Year 8 300 ÷ 20 = 15, Year 9 300 ÷ 20 = 15 (check 20 + 15 + 15 ="
+      "modelAnswer": "Sample is 50 out of 1000 = one twentieth: Year 7 400 ÷ 20 = 20, Year 8 300 ÷ 20 = 15, Year 9 300 ÷ 20 = 15 (check 20 + 15 + 15 = 50 ✓)."
     },
     {
       "id": "reason04",
@@ -841,7 +867,7 @@
         "Census",
         "Primary / Secondary"
       ],
-      "modelAnswer": "."
+      "modelAnswer": "People who work weekday mornings, and people who shop at other supermarkets or online, are under-represented, because they would not be in that supermarket at that time — this is selection (location/time) bias."
     },
     {
       "id": "reason05",
@@ -854,7 +880,7 @@
         "Discrete / Continuous",
         "Nominal / Ordinal"
       ],
-      "modelAnswer": "A questionnaire is a set of questions written to collect specific information from people, called respondents. Good questionnaire design is a real skill, because a badly worded question quietly produces useless or misleading answers. Good questions are clear, unambiguous, unbiased, and each ask only one thing, arranged in a sensible order. Questions come in two broad types. Closed questions give a fixed set of answers to choose from – multiple choice, yes/no, rating scales (excellent / good / fair / poor), or…"
+      "modelAnswer": "A questionnaire is a set of questions written to collect specific information from people, called respondents. Good questionnaire design is a real skill, because a badly worded question quietly produces useless or misleading answers. Good questions are clear, unambiguous, unbiased, and each ask only one thing, arranged in a sensible order.\n\nQuestions come in two broad types. Closed questions give a fixed set of answers to choose from – multiple choice, yes/no, rating scales (excellent / good / fair / poor), or ranking. They are quick to answer and easy to analyse and put into tables, which is ideal for statistics, but they can force people into boxes that do not quite fit. Open questions let people answer in their own words – \"How could the school library be improved?\" They capture rich, unexpected detail, but they are slow and hard to analyse and difficult to compare. A good questionnaire usually leans on closed questions and uses a few open ones sparingly."
     },
     {
       "id": "reason06",
@@ -867,7 +893,7 @@
         "Discrete / Continuous",
         "Nominal / Ordinal"
       ],
-      "modelAnswer": "Once you have collected raw answers, you must organise them before they mean anything. The simplest tool is a tally chart, which becomes a frequency table. As each answer comes in you draw a tally mark, grouping in fives (four upright strokes with the fifth crossing them) so they are easy to count. The frequency is simply how many times each value or category occurred. Suppose Amina asks 30 classmates how they travel to school and records the tallies, giving these frequencies: The frequencies should always add up…"
+      "modelAnswer": "Once you have collected raw answers, you must organise them before they mean anything. The simplest tool is a tally chart, which becomes a frequency table. As each answer comes in you draw a tally mark, grouping in fives (four upright strokes with the fifth crossing them) so they are easy to count. The frequency is simply how many times each value or category occurred. Suppose Amina asks 30 classmates how they travel to school and records the tallies, giving these frequencies:\n\nThe frequencies should always add up to the total number of people asked – here 12 + 7 + 6 + 5 = 30, which confirms nobody was missed or double-counted. A quick total check like this catches many recording errors. For numerical data with many different values, we often use a grouped frequency table, collecting values into equal, non-overlapping class intervals such as 0–9, 10–19, 20–29, so the table stays short and readable."
     }
   ],
   "assessment": {
@@ -878,144 +904,144 @@
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Basic",
-        "question": "Here is some data: 12, 5, 3, 4, 9. What is the largest value?",
+        "question": "Is 'the number of pets a family owns' discrete or continuous data?",
         "options": [
-          "13",
-          "12",
-          "3",
-          "11"
+          "Continuous",
+          "Discrete",
+          "Nominal",
+          "Ordinal"
         ],
-        "answer": "12",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Look for the biggest number: 12."
+        "answer": "Discrete",
+        "hint": "Ask yourself what \"Quantitative / Qualitative\" means here before you choose.",
+        "explanation": "You count pets in whole numbers, so it is discrete data."
       },
       {
         "id": "q02",
         "type": "Application",
         "outcomeId": "lo02",
         "difficulty": "Basic",
-        "question": "Here is some data: 15, 16, 10, 3, 8, 15. Which value appears most often (the mode)?",
+        "question": "A student finds last year's rainfall totals for her town on a government weather website instead of measuring rainfall herself. What type of data is this?",
         "options": [
-          "3",
-          "14",
-          "15",
-          "16"
+          "Primary data",
+          "Secondary data",
+          "Qualitative data",
+          "Ordinal data"
         ],
-        "answer": "15",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "15 appears more than any other value, so it is the mode."
+        "answer": "Secondary data",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
+        "explanation": "The data was already collected by someone else (the weather service), so it is secondary data."
       },
       {
         "id": "q03",
         "type": "Application",
         "outcomeId": "lo03",
         "difficulty": "Basic",
-        "question": "Here is some data: 10, 12, 6, 5, 8. What is the largest value?",
+        "question": "A researcher numbers every member of a population and uses a random number generator to choose who to survey, giving everyone an equal chance of being picked. Which sampling method is this?",
         "options": [
-          "10",
-          "12",
-          "5",
-          "11"
+          "Convenience sampling",
+          "Stratified sampling",
+          "Simple random sampling",
+          "Systematic sampling"
         ],
-        "answer": "12",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Look for the biggest number: 12."
+        "answer": "Simple random sampling",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
+        "explanation": "Giving every member of the population an equal chance of being chosen is the definition of simple random sampling."
       },
       {
         "id": "q04",
         "type": "Application",
         "outcomeId": "lo04",
         "difficulty": "Basic",
-        "question": "Here is some data: 11, 17, 16, 10, 3, 11. Which value appears most often (the mode)?",
+        "question": "A government tries to count every single person living in the country. What is this called?",
         "options": [
-          "17",
-          "3",
-          "12",
-          "11"
+          "A sample survey",
+          "A census",
+          "A pilot study",
+          "A convenience sample"
         ],
-        "answer": "11",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "11 appears more than any other value, so it is the mode."
+        "answer": "A census",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
+        "explanation": "Collecting data from every member of a population is a census."
       },
       {
         "id": "q05",
         "type": "Application",
         "outcomeId": "lo05",
         "difficulty": "Core",
-        "question": "Here is some data: 13, 6, 12, 14, 11. What is the range?",
+        "question": "Which of these questionnaire questions is written fairly, without bias?",
         "options": [
-          "14",
-          "6",
-          "9",
-          "8"
+          "\"Don’t you agree our new library is wonderful?\"",
+          "\"What is your opinion of the new library?\"",
+          "\"How amazing is our new library?\"",
+          "\"Everyone loves the new library, don’t they?\""
         ],
-        "answer": "8",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Range = largest − smallest = 14 − 6 = 8."
+        "answer": "\"What is your opinion of the new library?\"",
+        "hint": "Ask yourself what \"Census\" means here before you choose.",
+        "explanation": "This question is neutral and does not hint at an expected answer, unlike the others which are leading or loaded."
       },
       {
         "id": "q06",
         "type": "Application",
         "outcomeId": "lo06",
         "difficulty": "Core",
-        "question": "Here is some data: 9, 5, 18, 7, 12, 9. Which value appears most often (the mode)?",
+        "question": "Amina tallies how 24 classmates travel to school: Walk 10, Bus 8, Cycle 6. A 25th classmate is added who cycles. What is the new frequency for Cycle?",
         "options": [
-          "18",
-          "5",
-          "10",
-          "9"
+          "6",
+          "7",
+          "8",
+          "24"
         ],
-        "answer": "9",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "9 appears more than any other value, so it is the mode."
+        "answer": "7",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
+        "explanation": "The frequency for Cycle increases by 1, from 6 to 7."
       },
       {
         "id": "q07",
         "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
-        "question": "A tally shows these counts: 2, 16, 17, 13, 10. What is the total?",
+        "question": "A radio station asks listeners to phone in and say whether they liked a new song. Only enthusiastic fans bother to call, and most say yes. What type of bias is this?",
         "options": [
-          "57",
-          "17",
-          "58",
-          "59"
+          "Sampling error",
+          "Volunteer bias",
+          "Systematic bias in measurement",
+          "Rounding error"
         ],
-        "answer": "58",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Add them all: 2 + 16 + 17 + 13 + 10 = 58."
+        "answer": "Volunteer bias",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
+        "explanation": "Only people with strong feelings choose to respond, so the result over-represents fans — this is volunteer bias."
       },
       {
         "id": "q08",
         "type": "Application",
         "outcomeId": "lo08",
         "difficulty": "Challenge",
-        "question": "Here is some data: 6, 1, 8, 18, 14. What is the range?",
+        "question": "Which is the correct order of steps for planning a statistical investigation?",
         "options": [
-          "1",
-          "16",
-          "17",
-          "18"
+          "Collect data, ask a question, analyse, conclude",
+          "Ask a question, plan data collection, collect data, analyse and conclude",
+          "Analyse data, ask a question, collect data, conclude",
+          "Conclude, ask a question, collect data, analyse"
         ],
-        "answer": "17",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Range = largest − smallest = 18 − 1 = 17."
+        "answer": "Ask a question, plan data collection, collect data, analyse and conclude",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
+        "explanation": "A statistical investigation starts with a clear question, then you plan and collect data, and finally analyse it to reach a conclusion."
       },
       {
         "id": "q09",
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Challenge",
-        "question": "Here is some data: 13, 4, 10, 15, 1. What is the largest value?",
+        "question": "Is 'the time it takes a runner to finish a race' discrete or continuous data?",
         "options": [
-          "14",
-          "13",
-          "15",
-          "1"
+          "Discrete",
+          "Continuous",
+          "Nominal",
+          "Ordinal"
         ],
-        "answer": "15",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Look for the biggest number: 15."
+        "answer": "Continuous",
+        "hint": "Ask yourself what \"Quantitative / Qualitative\" means here before you choose.",
+        "explanation": "Time can take any value (it is measured, not counted), so it is continuous data."
       },
       {
         "id": "q10",
@@ -1079,40 +1105,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 12, 5, 3, 4, 9. What is the largest value?",
+            "prompt": "Is 'the number of pets a family owns' discrete or continuous data?",
             "choices": [
-              "13",
-              "12",
-              "3",
-              "11"
+              "Continuous",
+              "Discrete",
+              "Nominal",
+              "Ordinal"
             ],
-            "answer": "12",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 12."
+            "answer": "Discrete",
+            "clue": "Ask yourself what \"Quantitative / Qualitative\" means here before you choose.",
+            "explanation": "You count pets in whole numbers, so it is discrete data."
           },
           {
-            "prompt": "Here is some data: 11, 17, 16, 10, 3, 11. Which value appears most often (the mode)?",
+            "prompt": "A government tries to count every single person living in the country. What is this called?",
             "choices": [
-              "17",
-              "3",
-              "12",
-              "11"
+              "A sample survey",
+              "A census",
+              "A pilot study",
+              "A convenience sample"
             ],
-            "answer": "11",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "11 appears more than any other value, so it is the mode."
+            "answer": "A census",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Collecting data from every member of a population is a census."
           },
           {
-            "prompt": "A tally shows these counts: 2, 16, 17, 13, 10. What is the total?",
+            "prompt": "A radio station asks listeners to phone in and say whether they liked a new song. Only enthusiastic fans bother to call, and most say yes. What type of bias is this?",
             "choices": [
-              "57",
-              "17",
-              "58",
-              "59"
+              "Sampling error",
+              "Volunteer bias",
+              "Systematic bias in measurement",
+              "Rounding error"
             ],
-            "answer": "58",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 2 + 16 + 17 + 13 + 10 = 58."
+            "answer": "Volunteer bias",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Only people with strong feelings choose to respond, so the result over-represents fans — this is volunteer bias."
           },
           {
             "prompt": "What does “Quantitative / Qualitative” mean?",
@@ -1137,40 +1163,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 15, 16, 10, 3, 8, 15. Which value appears most often (the mode)?",
+            "prompt": "A student finds last year's rainfall totals for her town on a government weather website instead of measuring rainfall herself. What type of data is this?",
             "choices": [
-              "3",
-              "14",
-              "15",
-              "16"
+              "Primary data",
+              "Secondary data",
+              "Qualitative data",
+              "Ordinal data"
             ],
-            "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "15 appears more than any other value, so it is the mode."
+            "answer": "Secondary data",
+            "clue": "Ask yourself what \"Quantitative / Qualitative\" means here before you choose.",
+            "explanation": "The data was already collected by someone else (the weather service), so it is secondary data."
           },
           {
-            "prompt": "Here is some data: 13, 6, 12, 14, 11. What is the range?",
+            "prompt": "Which of these questionnaire questions is written fairly, without bias?",
             "choices": [
-              "14",
-              "6",
-              "9",
-              "8"
+              "\"Don’t you agree our new library is wonderful?\"",
+              "\"What is your opinion of the new library?\"",
+              "\"How amazing is our new library?\"",
+              "\"Everyone loves the new library, don’t they?\""
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 14 − 6 = 8."
+            "answer": "\"What is your opinion of the new library?\"",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "This question is neutral and does not hint at an expected answer, unlike the others which are leading or loaded."
           },
           {
-            "prompt": "Here is some data: 6, 1, 8, 18, 14. What is the range?",
+            "prompt": "Which is the correct order of steps for planning a statistical investigation?",
             "choices": [
-              "1",
-              "16",
-              "17",
-              "18"
+              "Collect data, ask a question, analyse, conclude",
+              "Ask a question, plan data collection, collect data, analyse and conclude",
+              "Analyse data, ask a question, collect data, conclude",
+              "Conclude, ask a question, collect data, analyse"
             ],
-            "answer": "17",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 18 − 1 = 17."
+            "answer": "Ask a question, plan data collection, collect data, analyse and conclude",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "A statistical investigation starts with a clear question, then you plan and collect data, and finally analyse it to reach a conclusion."
           },
           {
             "prompt": "What does “Discrete / Continuous” mean?",
@@ -1195,40 +1221,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 10, 12, 6, 5, 8. What is the largest value?",
+            "prompt": "A researcher numbers every member of a population and uses a random number generator to choose who to survey, giving everyone an equal chance of being picked. Which sampling method is this?",
             "choices": [
-              "10",
-              "12",
-              "5",
-              "11"
+              "Convenience sampling",
+              "Stratified sampling",
+              "Simple random sampling",
+              "Systematic sampling"
             ],
-            "answer": "12",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 12."
+            "answer": "Simple random sampling",
+            "clue": "Ask yourself what \"Quantitative / Qualitative\" means here before you choose.",
+            "explanation": "Giving every member of the population an equal chance of being chosen is the definition of simple random sampling."
           },
           {
-            "prompt": "Here is some data: 9, 5, 18, 7, 12, 9. Which value appears most often (the mode)?",
+            "prompt": "Amina tallies how 24 classmates travel to school: Walk 10, Bus 8, Cycle 6. A 25th classmate is added who cycles. What is the new frequency for Cycle?",
             "choices": [
-              "18",
-              "5",
-              "10",
-              "9"
+              "6",
+              "7",
+              "8",
+              "24"
             ],
-            "answer": "9",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "9 appears more than any other value, so it is the mode."
+            "answer": "7",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "The frequency for Cycle increases by 1, from 6 to 7."
           },
           {
-            "prompt": "Here is some data: 13, 4, 10, 15, 1. What is the largest value?",
+            "prompt": "Is 'the time it takes a runner to finish a race' discrete or continuous data?",
             "choices": [
-              "14",
-              "13",
-              "15",
-              "1"
+              "Discrete",
+              "Continuous",
+              "Nominal",
+              "Ordinal"
             ],
-            "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 15."
+            "answer": "Continuous",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Time can take any value (it is measured, not counted), so it is continuous data."
           },
           {
             "prompt": "What does “Nominal / Ordinal” mean?",
@@ -1253,28 +1279,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 11, 17, 16, 10, 3, 11. Which value appears most often (the mode)?",
+            "prompt": "A government tries to count every single person living in the country. What is this called?",
             "choices": [
-              "17",
-              "3",
-              "12",
-              "11"
+              "A sample survey",
+              "A census",
+              "A pilot study",
+              "A convenience sample"
             ],
-            "answer": "11",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "11 appears more than any other value, so it is the mode."
+            "answer": "A census",
+            "clue": "Ask yourself what \"Quantitative / Qualitative\" means here before you choose.",
+            "explanation": "Collecting data from every member of a population is a census."
           },
           {
-            "prompt": "A tally shows these counts: 2, 16, 17, 13, 10. What is the total?",
+            "prompt": "A radio station asks listeners to phone in and say whether they liked a new song. Only enthusiastic fans bother to call, and most say yes. What type of bias is this?",
             "choices": [
-              "57",
-              "17",
-              "58",
-              "59"
+              "Sampling error",
+              "Volunteer bias",
+              "Systematic bias in measurement",
+              "Rounding error"
             ],
-            "answer": "58",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 2 + 16 + 17 + 13 + 10 = 58."
+            "answer": "Volunteer bias",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Only people with strong feelings choose to respond, so the result over-represents fans — this is volunteer bias."
           },
           {
             "prompt": "What does “Quantitative / Qualitative” mean?",
@@ -1289,16 +1315,16 @@
             "explanation": "Quantitative / Qualitative means Number data / category data."
           },
           {
-            "prompt": "Here is some data: 12, 5, 3, 4, 9. What is the largest value?",
+            "prompt": "Is 'the number of pets a family owns' discrete or continuous data?",
             "choices": [
-              "13",
-              "12",
-              "3",
-              "11"
+              "Continuous",
+              "Discrete",
+              "Nominal",
+              "Ordinal"
             ],
-            "answer": "12",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 12."
+            "answer": "Discrete",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "You count pets in whole numbers, so it is discrete data."
           }
         ]
       },
@@ -1311,28 +1337,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 13, 6, 12, 14, 11. What is the range?",
+            "prompt": "Which of these questionnaire questions is written fairly, without bias?",
             "choices": [
-              "14",
-              "6",
-              "9",
-              "8"
+              "\"Don’t you agree our new library is wonderful?\"",
+              "\"What is your opinion of the new library?\"",
+              "\"How amazing is our new library?\"",
+              "\"Everyone loves the new library, don’t they?\""
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 14 − 6 = 8."
+            "answer": "\"What is your opinion of the new library?\"",
+            "clue": "Ask yourself what \"Quantitative / Qualitative\" means here before you choose.",
+            "explanation": "This question is neutral and does not hint at an expected answer, unlike the others which are leading or loaded."
           },
           {
-            "prompt": "Here is some data: 6, 1, 8, 18, 14. What is the range?",
+            "prompt": "Which is the correct order of steps for planning a statistical investigation?",
             "choices": [
-              "1",
-              "16",
-              "17",
-              "18"
+              "Collect data, ask a question, analyse, conclude",
+              "Ask a question, plan data collection, collect data, analyse and conclude",
+              "Analyse data, ask a question, collect data, conclude",
+              "Conclude, ask a question, collect data, analyse"
             ],
-            "answer": "17",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 18 − 1 = 17."
+            "answer": "Ask a question, plan data collection, collect data, analyse and conclude",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "A statistical investigation starts with a clear question, then you plan and collect data, and finally analyse it to reach a conclusion."
           },
           {
             "prompt": "What does “Discrete / Continuous” mean?",
@@ -1347,16 +1373,16 @@
             "explanation": "Discrete / Continuous means Counted whole values / measured any value."
           },
           {
-            "prompt": "Here is some data: 15, 16, 10, 3, 8, 15. Which value appears most often (the mode)?",
+            "prompt": "A student finds last year's rainfall totals for her town on a government weather website instead of measuring rainfall herself. What type of data is this?",
             "choices": [
-              "3",
-              "14",
-              "15",
-              "16"
+              "Primary data",
+              "Secondary data",
+              "Qualitative data",
+              "Ordinal data"
             ],
-            "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "15 appears more than any other value, so it is the mode."
+            "answer": "Secondary data",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "The data was already collected by someone else (the weather service), so it is secondary data."
           }
         ]
       },
@@ -1369,28 +1395,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 9, 5, 18, 7, 12, 9. Which value appears most often (the mode)?",
+            "prompt": "Amina tallies how 24 classmates travel to school: Walk 10, Bus 8, Cycle 6. A 25th classmate is added who cycles. What is the new frequency for Cycle?",
             "choices": [
-              "18",
-              "5",
-              "10",
-              "9"
+              "6",
+              "7",
+              "8",
+              "24"
             ],
-            "answer": "9",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "9 appears more than any other value, so it is the mode."
+            "answer": "7",
+            "clue": "Ask yourself what \"Quantitative / Qualitative\" means here before you choose.",
+            "explanation": "The frequency for Cycle increases by 1, from 6 to 7."
           },
           {
-            "prompt": "Here is some data: 13, 4, 10, 15, 1. What is the largest value?",
+            "prompt": "Is 'the time it takes a runner to finish a race' discrete or continuous data?",
             "choices": [
-              "14",
-              "13",
-              "15",
-              "1"
+              "Discrete",
+              "Continuous",
+              "Nominal",
+              "Ordinal"
             ],
-            "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 15."
+            "answer": "Continuous",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Time can take any value (it is measured, not counted), so it is continuous data."
           },
           {
             "prompt": "What does “Nominal / Ordinal” mean?",
@@ -1405,16 +1431,16 @@
             "explanation": "Nominal / Ordinal means No order / natural order."
           },
           {
-            "prompt": "Here is some data: 10, 12, 6, 5, 8. What is the largest value?",
+            "prompt": "A researcher numbers every member of a population and uses a random number generator to choose who to survey, giving everyone an equal chance of being picked. Which sampling method is this?",
             "choices": [
-              "10",
-              "12",
-              "5",
-              "11"
+              "Convenience sampling",
+              "Stratified sampling",
+              "Simple random sampling",
+              "Systematic sampling"
             ],
-            "answer": "12",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 12."
+            "answer": "Simple random sampling",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Giving every member of the population an equal chance of being chosen is the definition of simple random sampling."
           }
         ]
       },
@@ -1427,16 +1453,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "A tally shows these counts: 2, 16, 17, 13, 10. What is the total?",
+            "prompt": "A radio station asks listeners to phone in and say whether they liked a new song. Only enthusiastic fans bother to call, and most say yes. What type of bias is this?",
             "choices": [
-              "57",
-              "17",
-              "58",
-              "59"
+              "Sampling error",
+              "Volunteer bias",
+              "Systematic bias in measurement",
+              "Rounding error"
             ],
-            "answer": "58",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 2 + 16 + 17 + 13 + 10 = 58."
+            "answer": "Volunteer bias",
+            "clue": "Ask yourself what \"Quantitative / Qualitative\" means here before you choose.",
+            "explanation": "Only people with strong feelings choose to respond, so the result over-represents fans — this is volunteer bias."
           },
           {
             "prompt": "What does “Quantitative / Qualitative” mean?",
@@ -1451,28 +1477,28 @@
             "explanation": "Quantitative / Qualitative means Number data / category data."
           },
           {
-            "prompt": "Here is some data: 12, 5, 3, 4, 9. What is the largest value?",
+            "prompt": "Is 'the number of pets a family owns' discrete or continuous data?",
             "choices": [
-              "13",
-              "12",
-              "3",
-              "11"
+              "Continuous",
+              "Discrete",
+              "Nominal",
+              "Ordinal"
             ],
-            "answer": "12",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 12."
+            "answer": "Discrete",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "You count pets in whole numbers, so it is discrete data."
           },
           {
-            "prompt": "Here is some data: 11, 17, 16, 10, 3, 11. Which value appears most often (the mode)?",
+            "prompt": "A government tries to count every single person living in the country. What is this called?",
             "choices": [
-              "17",
-              "3",
-              "12",
-              "11"
+              "A sample survey",
+              "A census",
+              "A pilot study",
+              "A convenience sample"
             ],
-            "answer": "11",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "11 appears more than any other value, so it is the mode."
+            "answer": "A census",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Collecting data from every member of a population is a census."
           }
         ]
       },
@@ -1485,16 +1511,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 6, 1, 8, 18, 14. What is the range?",
+            "prompt": "Which is the correct order of steps for planning a statistical investigation?",
             "choices": [
-              "1",
-              "16",
-              "17",
-              "18"
+              "Collect data, ask a question, analyse, conclude",
+              "Ask a question, plan data collection, collect data, analyse and conclude",
+              "Analyse data, ask a question, collect data, conclude",
+              "Conclude, ask a question, collect data, analyse"
             ],
-            "answer": "17",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 18 − 1 = 17."
+            "answer": "Ask a question, plan data collection, collect data, analyse and conclude",
+            "clue": "Ask yourself what \"Quantitative / Qualitative\" means here before you choose.",
+            "explanation": "A statistical investigation starts with a clear question, then you plan and collect data, and finally analyse it to reach a conclusion."
           },
           {
             "prompt": "What does “Discrete / Continuous” mean?",
@@ -1509,28 +1535,28 @@
             "explanation": "Discrete / Continuous means Counted whole values / measured any value."
           },
           {
-            "prompt": "Here is some data: 15, 16, 10, 3, 8, 15. Which value appears most often (the mode)?",
+            "prompt": "A student finds last year's rainfall totals for her town on a government weather website instead of measuring rainfall herself. What type of data is this?",
             "choices": [
-              "3",
-              "14",
-              "15",
-              "16"
+              "Primary data",
+              "Secondary data",
+              "Qualitative data",
+              "Ordinal data"
             ],
-            "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "15 appears more than any other value, so it is the mode."
+            "answer": "Secondary data",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "The data was already collected by someone else (the weather service), so it is secondary data."
           },
           {
-            "prompt": "Here is some data: 13, 6, 12, 14, 11. What is the range?",
+            "prompt": "Which of these questionnaire questions is written fairly, without bias?",
             "choices": [
-              "14",
-              "6",
-              "9",
-              "8"
+              "\"Don’t you agree our new library is wonderful?\"",
+              "\"What is your opinion of the new library?\"",
+              "\"How amazing is our new library?\"",
+              "\"Everyone loves the new library, don’t they?\""
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 14 − 6 = 8."
+            "answer": "\"What is your opinion of the new library?\"",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "This question is neutral and does not hint at an expected answer, unlike the others which are leading or loaded."
           }
         ]
       },
@@ -1543,16 +1569,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 13, 4, 10, 15, 1. What is the largest value?",
+            "prompt": "Is 'the time it takes a runner to finish a race' discrete or continuous data?",
             "choices": [
-              "14",
-              "13",
-              "15",
-              "1"
+              "Discrete",
+              "Continuous",
+              "Nominal",
+              "Ordinal"
             ],
-            "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 15."
+            "answer": "Continuous",
+            "clue": "Ask yourself what \"Quantitative / Qualitative\" means here before you choose.",
+            "explanation": "Time can take any value (it is measured, not counted), so it is continuous data."
           },
           {
             "prompt": "What does “Nominal / Ordinal” mean?",
@@ -1567,28 +1593,28 @@
             "explanation": "Nominal / Ordinal means No order / natural order."
           },
           {
-            "prompt": "Here is some data: 10, 12, 6, 5, 8. What is the largest value?",
+            "prompt": "A researcher numbers every member of a population and uses a random number generator to choose who to survey, giving everyone an equal chance of being picked. Which sampling method is this?",
             "choices": [
-              "10",
-              "12",
-              "5",
-              "11"
+              "Convenience sampling",
+              "Stratified sampling",
+              "Simple random sampling",
+              "Systematic sampling"
             ],
-            "answer": "12",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 12."
+            "answer": "Simple random sampling",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Giving every member of the population an equal chance of being chosen is the definition of simple random sampling."
           },
           {
-            "prompt": "Here is some data: 9, 5, 18, 7, 12, 9. Which value appears most often (the mode)?",
+            "prompt": "Amina tallies how 24 classmates travel to school: Walk 10, Bus 8, Cycle 6. A 25th classmate is added who cycles. What is the new frequency for Cycle?",
             "choices": [
-              "18",
-              "5",
-              "10",
-              "9"
+              "6",
+              "7",
+              "8",
+              "24"
             ],
-            "answer": "9",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "9 appears more than any other value, so it is the mode."
+            "answer": "7",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "The frequency for Cycle increases by 1, from 6 to 7."
           }
         ]
       },
@@ -1613,40 +1639,40 @@
             "explanation": "Quantitative / Qualitative means Number data / category data."
           },
           {
-            "prompt": "Here is some data: 12, 5, 3, 4, 9. What is the largest value?",
+            "prompt": "Is 'the number of pets a family owns' discrete or continuous data?",
             "choices": [
-              "13",
-              "12",
-              "3",
-              "11"
+              "Continuous",
+              "Discrete",
+              "Nominal",
+              "Ordinal"
             ],
-            "answer": "12",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 12."
+            "answer": "Discrete",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "You count pets in whole numbers, so it is discrete data."
           },
           {
-            "prompt": "Here is some data: 11, 17, 16, 10, 3, 11. Which value appears most often (the mode)?",
+            "prompt": "A government tries to count every single person living in the country. What is this called?",
             "choices": [
-              "17",
-              "3",
-              "12",
-              "11"
+              "A sample survey",
+              "A census",
+              "A pilot study",
+              "A convenience sample"
             ],
-            "answer": "11",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "11 appears more than any other value, so it is the mode."
+            "answer": "A census",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Collecting data from every member of a population is a census."
           },
           {
-            "prompt": "A tally shows these counts: 2, 16, 17, 13, 10. What is the total?",
+            "prompt": "A radio station asks listeners to phone in and say whether they liked a new song. Only enthusiastic fans bother to call, and most say yes. What type of bias is this?",
             "choices": [
-              "57",
-              "17",
-              "58",
-              "59"
+              "Sampling error",
+              "Volunteer bias",
+              "Systematic bias in measurement",
+              "Rounding error"
             ],
-            "answer": "58",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 2 + 16 + 17 + 13 + 10 = 58."
+            "answer": "Volunteer bias",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Only people with strong feelings choose to respond, so the result over-represents fans — this is volunteer bias."
           }
         ]
       },
@@ -1671,40 +1697,40 @@
             "explanation": "Discrete / Continuous means Counted whole values / measured any value."
           },
           {
-            "prompt": "Here is some data: 15, 16, 10, 3, 8, 15. Which value appears most often (the mode)?",
+            "prompt": "A student finds last year's rainfall totals for her town on a government weather website instead of measuring rainfall herself. What type of data is this?",
             "choices": [
-              "3",
-              "14",
-              "15",
-              "16"
+              "Primary data",
+              "Secondary data",
+              "Qualitative data",
+              "Ordinal data"
             ],
-            "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "15 appears more than any other value, so it is the mode."
+            "answer": "Secondary data",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "The data was already collected by someone else (the weather service), so it is secondary data."
           },
           {
-            "prompt": "Here is some data: 13, 6, 12, 14, 11. What is the range?",
+            "prompt": "Which of these questionnaire questions is written fairly, without bias?",
             "choices": [
-              "14",
-              "6",
-              "9",
-              "8"
+              "\"Don’t you agree our new library is wonderful?\"",
+              "\"What is your opinion of the new library?\"",
+              "\"How amazing is our new library?\"",
+              "\"Everyone loves the new library, don’t they?\""
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 14 − 6 = 8."
+            "answer": "\"What is your opinion of the new library?\"",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "This question is neutral and does not hint at an expected answer, unlike the others which are leading or loaded."
           },
           {
-            "prompt": "Here is some data: 6, 1, 8, 18, 14. What is the range?",
+            "prompt": "Which is the correct order of steps for planning a statistical investigation?",
             "choices": [
-              "1",
-              "16",
-              "17",
-              "18"
+              "Collect data, ask a question, analyse, conclude",
+              "Ask a question, plan data collection, collect data, analyse and conclude",
+              "Analyse data, ask a question, collect data, conclude",
+              "Conclude, ask a question, collect data, analyse"
             ],
-            "answer": "17",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 18 − 1 = 17."
+            "answer": "Ask a question, plan data collection, collect data, analyse and conclude",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "A statistical investigation starts with a clear question, then you plan and collect data, and finally analyse it to reach a conclusion."
           }
         ]
       },
@@ -1729,53 +1755,53 @@
             "explanation": "Nominal / Ordinal means No order / natural order."
           },
           {
-            "prompt": "Here is some data: 10, 12, 6, 5, 8. What is the largest value?",
+            "prompt": "A researcher numbers every member of a population and uses a random number generator to choose who to survey, giving everyone an equal chance of being picked. Which sampling method is this?",
             "choices": [
-              "10",
-              "12",
-              "5",
-              "11"
+              "Convenience sampling",
+              "Stratified sampling",
+              "Simple random sampling",
+              "Systematic sampling"
             ],
-            "answer": "12",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 12."
+            "answer": "Simple random sampling",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Giving every member of the population an equal chance of being chosen is the definition of simple random sampling."
           },
           {
-            "prompt": "Here is some data: 9, 5, 18, 7, 12, 9. Which value appears most often (the mode)?",
+            "prompt": "Amina tallies how 24 classmates travel to school: Walk 10, Bus 8, Cycle 6. A 25th classmate is added who cycles. What is the new frequency for Cycle?",
             "choices": [
-              "18",
-              "5",
-              "10",
-              "9"
+              "6",
+              "7",
+              "8",
+              "24"
             ],
-            "answer": "9",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "9 appears more than any other value, so it is the mode."
+            "answer": "7",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "The frequency for Cycle increases by 1, from 6 to 7."
           },
           {
-            "prompt": "Here is some data: 13, 4, 10, 15, 1. What is the largest value?",
+            "prompt": "Is 'the time it takes a runner to finish a race' discrete or continuous data?",
             "choices": [
-              "14",
-              "13",
-              "15",
-              "1"
+              "Discrete",
+              "Continuous",
+              "Nominal",
+              "Ordinal"
             ],
-            "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 15."
+            "answer": "Continuous",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Time can take any value (it is measured, not counted), so it is continuous data."
           }
         ]
       }
     ]
   },
   "selfAssessment": [
-    "I can this unit is designed for self-paced learning. That means you move at your own speed. Read each explanation slowly, work through every example on paper, and only move on when the idea feels solid. Your AI tutor is available day and night to explain a point in a new way, invent extra practice, or check your reasoning. Your teacher will also meet with you about twice a week to help with anything that feels tricky. Keep a pencil and notebook beside you – statistics is something you learn by doing, not just by reading.",
-    "I can why does this matter so much? We live in a world flooded with numbers. Advertisements claim that \"four out of five people prefer\" a product. News reports announce that a poll predicts an election result. Health campaigns tell us how many people a disease affects. Some of these claims are trustworthy and some are dangerously misleading, and the difference almost always lies in how the data was collected. Once you understand data collection, you will never again read a statistic in quite the same innocent way. You will ask: who was asked, how were they chosen, and was the question fair? That habit of careful questioning is one of the most valuable thinking skills you can own.",
     "I can classify data as quantitative or qualitative, and as discrete, continuous, nominal or ordinal.",
     "I can explain the difference between primary and secondary data and choose the right one for a question.",
     "I can describe and apply random, systematic, stratified and convenience sampling.",
     "I can explain the difference between a population, a sample and a census, and decide which to use.",
     "I can design clear, unbiased questionnaire questions and choose suitable question types.",
-    "I can record and read data in tally charts, frequency tables and two-way tables."
+    "I can record and read data in tally charts, frequency tables and two-way tables.",
+    "I can identify common types of bias and explain how to reduce them.",
+    "I can plan a simple statistical investigation from question to conclusion."
   ]
 }

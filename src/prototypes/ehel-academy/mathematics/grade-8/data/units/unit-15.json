@@ -56,44 +56,71 @@
     "Calculate the volume of cuboids, prisms and cylinders.",
     "Calculate the surface area of cuboids, cylinders and triangular prisms.",
     "Convert between metric units of length, area and volume correctly.",
-    "Use estimation to check that a measurement answer is reasonable."
+    "Use estimation to check that a measurement answer is reasonable.",
+    "Draw and interpret the front, side and top views (elevations) of a 3D shape, drawn to scale.",
+    "Calculate the surface area of a pyramid by adding the base area to the area of its triangular faces.",
+    "Convert between miles and kilometres using the approximation 5 miles ≈ 8 km."
   ],
   "concepts": [
     {
       "id": "concept-1-area-of-2d-shapes",
       "title": "Area of 2D Shapes",
-      "explanation": "Area is the amount of flat surface a shape covers, and it is always measured in square units. Before we can tackle circles and compound shapes, you must be fluent with the four basic area formulas. Learn them until they are automatic. Rectangle: Area = length × width, written A = lw.",
-      "example": "Square: Area = side × side, written A = s²."
+      "explanation": "Area is the amount of flat surface a shape covers, and it is always measured in square units. Before we can tackle circles and compound shapes, you must be fluent with the four basic area formulas. Learn them until they are automatic.\n\nRectangle: Area = length × width, written A = lw.\n\nSquare: Area = side × side, written A = s².\n\nTriangle: Area = ½ × base × height, written A = ½bh. The height must be measured at a right angle to the base.\n\nParallelogram: Area = base × height, written A = bh. Again, the height is the perpendicular distance, not the slanted side.\n\nTrapezium: Area = ½ × (sum of the two parallel sides) × height, written A = ½(a + b)h.\n\nLet us see each formula in action. A rectangular vegetable plot measures 8 m by 5 m, so its area is 8 × 5 = 40 m². A triangular sail has base 12 cm and perpendicular height 7 cm, so its area is ½ × 12 × 7 = 42 cm². A parallelogram-shaped tile has base 10 cm and height 6 cm, giving 10 × 6 = 60 cm².",
+      "example": "A very common error is to use a slanted side as the height. The height in every one of these formulas is the perpendicular distance – the straight-up distance measured at a right angle. If a problem gives you a slanted length as well as a perpendicular height, use only the perpendicular one for area. Keep this warning in your mind; it catches many students."
     },
     {
       "id": "concept-2-circles-circumference-and-area",
       "title": "Circles – Circumference and Area",
-      "explanation": "A circle is different from the straight-sided shapes, so it needs its own special number: π (pi). Pi is the ratio you get when you divide the distance around any circle (the circumference) by the distance straight across it (the diameter). Amazingly, this ratio is the same for every circle in the world, large or small. Its value is 3.14159…, a number whose digits never end and never repeat. For calculations we usually use 3.14, or the π button on a calculator, or sometimes the fraction 22/7. First learn the parts…",
-      "example": "Circumference can be found two ways, and they are really the same formula: C = πd (pi times the diameter) or C = 2πr (pi times twice the radius). Take a circular water tank with radius 4 cm. Its circumference is 2 × π ×…"
+      "explanation": "A circle is different from the straight-sided shapes, so it needs its own special number: π (pi). Pi is the ratio you get when you divide the distance around any circle (the circumference) by the distance straight across it (the diameter). Amazingly, this ratio is the same for every circle in the world, large or small. Its value is 3.14159…, a number whose digits never end and never repeat. For calculations we usually use 3.14, or the π button on a calculator, or sometimes the fraction 22/7. First learn the parts: the diameter runs straight across the circle through the centre, and the radius runs from the centre to the edge, so d = 2r.",
+      "example": "Circumference can be found two ways, and they are really the same formula: C = πd (pi times the diameter) or C = 2πr (pi times twice the radius). Take a circular water tank with radius 4 cm. Its circumference is 2 × π × 4 = 8π ≈ 25.13 cm."
     },
     {
       "id": "concept-3-compound-shapes",
       "title": "Compound Shapes",
-      "explanation": "A compound shape (also called a composite shape) is made by joining simple shapes together. Almost any real object – the floor plan of a house, a running track, a garden with a pond – is a compound shape. There are two strategies for finding the area, and choosing the right one makes the work easy. Strategy 1 – Addition. Split the shape into simple pieces that do not overlap, find the area of each piece, then add them together. Consider an L-shaped room. You can cut it into two rectangles. If the first rectangle…",
-      "example": "Strategy 2 – Subtraction. Start with a large simple shape and cut a hole out of it. Find the area of the big shape, find the area of the hole, then subtract. Imagine a rectangular metal plate 10 cm by 8 cm with a…"
+      "explanation": "A compound shape (also called a composite shape) is made by joining simple shapes together. Almost any real object – the floor plan of a house, a running track, a garden with a pond – is a compound shape. There are two strategies for finding the area, and choosing the right one makes the work easy. Strategy 1 – Addition. Split the shape into simple pieces that do not overlap, find the area of each piece, then add them together. Consider an L-shaped room. You can cut it into two rectangles. If the first rectangle is 6 m by 4 m and the second is 3 m by 2 m, find each area separately and add them together for the total.",
+      "example": "Strategy 2 – Subtraction. Start with a large simple shape and cut a hole out of it. Find the area of the big shape, find the area of the hole, then subtract. Imagine a rectangular metal plate 10 cm by 8 cm with a circular hole of radius 2 cm cut from the middle. The plate is 10 × 8 = 80 cm², the hole is π × 2² ≈ 12.57 cm², so the remaining area is about 80 − 12.57 = 67.43 cm²."
     },
     {
       "id": "concept-4-3d-shapes-and-their-properties",
       "title": "3D Shapes and Their Properties",
-      "explanation": "Now we step from flat shapes into three dimensions. A 3D shape (a solid) has length, width and height. Three words describe its structure. A face is a flat surface of the solid. An edge is the line where two faces meet. A vertex is a corner point where edges meet (the plural is vertices). A net is a flat pattern that folds up to make the solid – a very useful idea when we come to surface area. Here are the solids you must know for this unit, with their properties:",
-      "example": "A prism is a special and very important kind of solid: it has the same cross-section all the way along its length. If you sliced a triangular prism anywhere along its length, every slice would be the identical triangle.…"
+      "explanation": "Now we step from flat shapes into three dimensions. A 3D shape (a solid) has length, width and height. Three words describe its structure. A face is a flat surface of the solid. An edge is the line where two faces meet. A vertex is a corner point where edges meet (the plural is vertices). A net is a flat pattern that folds up to make the solid – a very useful idea when we come to surface area.\n\nHere are the solids you must know for this unit, with their properties:\n\nA prism is a special and very important kind of solid: it has the same cross-section all the way along its length. If you sliced a triangular prism anywhere along its length, every slice would be the identical triangle. A cuboid is a prism whose cross-section is a rectangle; a cube is a prism whose cross-section is a square; and a cylinder is really a prism whose cross-section is a circle. Recognising a solid as a prism is the key that unlocks its volume, as you will see next.",
+      "example": "A cylinder is worth a special note. It has two flat circular faces (top and bottom) and one curved surface wrapped around the side. It has no vertices at all, because there are no sharp corners. If you unroll the curved surface, it opens out into a rectangle whose width is the height of the cylinder and whose length is the circumference of the circle. That single idea explains the surface-area formula you will meet later, so keep it in mind."
     },
     {
       "id": "concept-5-volume-of-prisms-and-cylinders",
       "title": "Volume of Prisms and Cylinders",
-      "explanation": "Volume is the amount of space a solid fills, measured in cubic units such as cm³ and m³. Picture stacking unit cubes to fill the solid; the number of cubes is the volume. For a cuboid, volume is length × width × height: V = lwh. A cuboid box 8 cm by 5 cm by 3 cm holds 8 × 5 × 3 = 120 cm³. For a cube, all three edges are equal, so V = s³. A cube of side 4 cm has volume 4³ = 4 × 4 × 4 = 64 cm³.",
-      "example": "The truly powerful idea is the general prism formula. Because a prism has the same cross-section all the way along, its volume is simply the area of the cross-section multiplied by the length (or height): V = area of…"
+      "explanation": "Volume is the amount of space a solid fills, measured in cubic units such as cm³ and m³. Picture stacking unit cubes to fill the solid; the number of cubes is the volume.\n\nFor a cuboid, volume is length × width × height: V = lwh. A cuboid box 8 cm by 5 cm by 3 cm holds 8 × 5 × 3 = 120 cm³. For a cube, all three edges are equal, so V = s³. A cube of side 4 cm has volume 4³ = 4 × 4 × 4 = 64 cm³.\n\nThe truly powerful idea is the general prism formula. Because a prism has the same cross-section all the way along, its volume is simply the area of the cross-section multiplied by the length (or height): V = area of cross-section × length. This one rule covers every prism. For a triangular prism whose triangular cross-section has area ½ × 6 × 4 = 12 cm² and whose length is 10 cm, the volume is 12 × 10 = 120 cm³. First find the area of the end face, then multiply by how long the prism is – that is all there is to it.\n\nA cylinder follows exactly the same idea. Its cross-section is a circle of area πr², and its length is the height h, so its volume is V = πr²h. Take a cylindrical can with radius 3 cm and height 8 cm. Its volume is π × 3² × 8 = π × 9 × 8 = 72π ≈ 226.19 cm³. Notice the pattern: find the area of the circular end (πr²), then multiply by the height. It is the prism rule again, wearing circular clothes.",
+      "example": "The truly powerful idea is the general prism formula. Because a prism has the same cross-section all the way along, its volume is simply the area of the cross-section multiplied by the length (or height): V = area of cross-section × length. A triangular prism with cross-sectional area 12 cm² and length 10 cm has volume 12 × 10 = 120 cm³."
     },
     {
       "id": "concept-6-surface-area-of-prisms-and-cylinders",
       "title": "Surface Area of Prisms and Cylinders",
-      "explanation": "The surface area of a solid is the total area of all its faces added together. Because it is an area, it is always measured in square units (cm², m²) – never cubic units. A useful way to think about surface area is to imagine unfolding the solid into its flat net; the surface area is the area of that whole net. This is the amount of card you would need to build the box, or the amount of paint to cover the outside. For a cuboid with length l, width w and height h, there are three pairs of matching rectangular…",
+      "explanation": "The surface area of a solid is the total area of all its faces added together. Because it is an area, it is always measured in square units (cm², m²) – never cubic units. A useful way to think about surface area is to imagine unfolding the solid into its flat net; the surface area is the area of that whole net. This is the amount of card you would need to build the box, or the amount of paint to cover the outside. For a cuboid with length l, width w and height h, there are three pairs of matching rectangular faces, so the surface area is SA = 2(lw + lh + wh).",
       "example": "For a cube, all six faces are identical squares, so SA = 6s². A cube of side 5 cm has surface area 6 × 5² = 6 × 25 = 150 cm²."
+    },
+    {
+      "id": "concept-7-area-of-a-parallelogram",
+      "title": "Area of a Parallelogram",
+      "explanation": "A parallelogram is a four-sided shape with two pairs of parallel sides, like a rectangle that has been pushed over sideways. If you cut a right-angled triangle off one end of a parallelogram and slide it round to the other end, the shape rearranges exactly into a rectangle with the same base and the same height — which is why the area formula is so similar to a rectangle's. The area of a parallelogram is Area = base × height, written A = b × h, where the height is the perpendicular (straight up-and-down) distance between the base and the opposite side, not the length of the slanted side. Using the slanted side by mistake is the single most common error with this formula.",
+      "example": "A parallelogram has a base of 12 cm and a perpendicular height of 7 cm (its slanted side is 8.5 cm, but that is not needed). Find its area. Solution: A = b × h = 12 × 7 = 84 cm². The 8.5 cm slanted side is extra information and is not used in the calculation, because it is not the perpendicular height."
+    },
+    {
+      "id": "concept-8-front-side-and-top-views",
+      "title": "Front, Side and Top Views (Elevations)",
+      "explanation": "A 3D solid can be drawn from three standard directions to show its shape without needing a full 3D sketch: the front view (also called the front elevation) is what you see looking straight at the front of the object; the side view (side elevation) is what you see looking from the side, usually the left or right; and the top view (plan view) is what you see looking straight down from above. Each view is drawn to scale, as a flat 2D shape, using the same units and the same scale as the real object, so that measurements can be read directly off the drawing. Architects, engineers and furniture-makers use these three views together, because no single view fully describes a 3D shape — a cylinder lying on its side looks like a rectangle from the front, a rectangle from the side, and a circle from the top, and you need all three to know it is a cylinder and not a cuboid with rounded ends.",
+      "example": "A triangular prism lies on a table with its triangular faces at the two ends (left and right) and its length running left-right. Describe its front, side and top views. Solution: The front view (looking at one triangular end) is a triangle. The side view (looking along the length, from the left or right) is also a triangle — the same triangular cross-section. The top view (looking straight down) is a rectangle, because from above you see the flat length and width of the prism, with the triangular ends hidden."
+    },
+    {
+      "id": "concept-9-surface-area-of-a-pyramid",
+      "title": "Surface Area of a Pyramid",
+      "explanation": "A pyramid has one base (often a square or a rectangle) and a set of triangular faces that meet at a single point called the apex. To find its total surface area, find the area of the base, then find the area of each triangular face and add them all together. For a right pyramid with a square base, all four triangular faces are identical, so you can find the area of one triangle and multiply by four. Each triangular face has a base equal to one side of the pyramid's base, and a height called the slant height — the distance from the apex straight down the middle of the triangular face to the midpoint of its base edge — which is different from the pyramid's vertical height (the straight up-down height from the apex to the centre of the base).",
+      "example": "A square-based pyramid has a base of side 6 cm and a slant height of 5 cm on each triangular face. Find its total surface area. Solution: Base area = 6 × 6 = 36 cm². Area of one triangular face = ½ × base × slant height = ½ × 6 × 5 = 15 cm². There are 4 identical triangular faces, so their total area = 4 × 15 = 60 cm². Total surface area = base + triangles = 36 + 60 = 96 cm²."
+    },
+    {
+      "id": "concept-10-converting-between-miles-and-kilometres",
+      "title": "Converting Between Miles and Kilometres",
+      "explanation": "Most of the world measures distance in kilometres, but some countries — including the United Kingdom and the United States — still use miles on road signs and in everyday speech. A simple, memorable conversion is that 5 miles is approximately equal to 8 kilometres, which gives the conversion factor 1 mile ≈ 1.6 km (since 8 ÷ 5 = 1.6), and 1 km ≈ 0.625 miles (since 5 ÷ 8 = 0.625). To convert miles to kilometres, multiply by 8/5 (or 1.6); to convert kilometres to miles, multiply by 5/8 (or 0.625). This conversion is an approximation, not an exact equality (the precise value is 1 mile = 1.60934 km), but 5 miles ≈ 8 km is accurate enough for road signs, running races and everyday estimates.",
+      "example": "a) A road sign shows the next town is 40 miles away. About how many kilometres is that? b) A race is 42 km long. About how many miles is that? Solution: a) Using 5 miles ≈ 8 km, the scale factor from miles to km is 8/5. 40 × 8/5 = 40 ÷ 5 × 8 = 8 × 8 = 64 km. b) Using the reverse scale factor 5/8, 42 × 5/8 = 42 ÷ 8 × 5 = 5.25 × 5 = 26.25 miles."
     }
   ],
   "explorations": [
@@ -102,72 +129,72 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "Area of 2D Shapes",
-      "context": "Area is the amount of flat surface a shape covers, and it is always measured in square units. Before we can tackle circles and compound shapes, you must be fluent with the four basic area formulas. Learn them until they are automatic. Rectangle: Area = length…",
+      "context": "Area is the amount of flat surface a shape covers, and it is always measured in square units. Before we can tackle circles and compound shapes, you must be fluent with the four basic area formulas. Learn them until they are automatic.",
       "prompt": "Find the area of a rectangle 12 cm by 7 cm.",
       "answer": "1) 12 × 7 = 84 cm².",
       "modelType": "model-1",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) 12 × 7 = 84 cm²."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "explanation": "Area of 2D Shapes: Area is the amount of flat surface a shape covers, and it is always measured in square units. Before we can tackle circles and compound shapes, you must be fluent with the four basic area formulas. Learn them until they are automatic."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Circles – Circumference and Area",
-      "context": "A circle is different from the straight-sided shapes, so it needs its own special number: π (pi). Pi is the ratio you get when you divide the distance around any circle (the circumference) by the distance straight across it (the diameter). Amazingly, this…",
-      "prompt": "Find the area of a triangle with base 8 cm and height 5 cm.",
-      "answer": "½ × 8 × 5 = 20 cm².",
+      "context": "A circle is different from the straight-sided shapes, so it needs its own special number: π (pi). Pi is the ratio you get when you divide the distance around any circle (the circumference) by the distance straight across it (the diameter).",
+      "prompt": "Find the circumference of a circle with diameter 10 cm.",
+      "answer": "C = π × 10 = 10π ≈ 31.42 cm.",
       "modelType": "model-2",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "½ × 8 × 5 = 20 cm²."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "explanation": "Circles – Circumference and Area: A circle is different from the straight-sided shapes, so it needs its own special number: π (pi). Pi is the ratio you get when you divide the distance around any circle (the circumference) by the distance straight across it (the diameter). Amazingly, this ratio is the same for every circle in the world, large or small."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Compound Shapes",
-      "context": "A compound shape (also called a composite shape) is made by joining simple shapes together. Almost any real object – the floor plan of a house, a running track, a garden with a pond – is a compound shape. There are two strategies for finding the area, and…",
-      "prompt": "Find the area of a trapezium with parallel sides 5 cm and 9 cm and height 6 cm.",
-      "answer": "½ × (5 +",
+      "context": "A compound shape (also called a composite shape) is made by joining simple shapes together. Almost any real object – the floor plan of a house, a running track, a garden with a pond – is a compound shape.",
+      "prompt": "An L-shape is made of a 10 cm by 6 cm rectangle with a 4 cm by 3 cm rectangle removed from one corner. Find its area.",
+      "answer": "10 × 6 − 4 × 3 = 60 − 12 = 48 cm².",
       "modelType": "model-3",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "½ × (5 +"
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "explanation": "Compound Shapes: A compound shape (also called a composite shape) is made by joining simple shapes together. Almost any real object – the floor plan of a house, a running track, a garden with a pond – is a compound shape. There are two strategies for finding the area, and choosing the right one makes the work easy."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "3D Shapes and Their Properties",
-      "context": "Now we step from flat shapes into three dimensions. A 3D shape (a solid) has length, width and height. Three words describe its structure. A face is a flat surface of the solid. An edge is the line where two faces meet. A vertex is a corner point where edges…",
-      "prompt": "Find the circumference of a circle with diameter 10 cm.",
-      "answer": "× 6 = ½ × 14 × 6 = 42 cm².",
+      "context": "Now we step from flat shapes into three dimensions. A 3D shape (a solid) has length, width and height. Three words describe its structure. A face is a flat surface of the solid. An edge is the line where two faces meet.",
+      "prompt": "How many faces, edges and vertices does a triangular prism have?",
+      "answer": "A triangular prism has 5 faces (2 triangular + 3 rectangular), 9 edges and 6 vertices.",
       "modelType": "model-4",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "× 6 = ½ × 14 × 6 = 42 cm²."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "explanation": "3D Shapes and Their Properties: Now we step from flat shapes into three dimensions. A 3D shape (a solid) has length, width and height. Three words describe its structure. A face is a flat surface of the solid. An edge is the line where two faces meet. A vertex is a corner point where edges meet (the plural is vertices). A net is a flat pattern that folds up to make the solid."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Volume of Prisms and Cylinders",
-      "context": "Volume is the amount of space a solid fills, measured in cubic units such as cm³ and m³. Picture stacking unit cubes to fill the solid; the number of cubes is the volume. For a cuboid, volume is length × width × height: V = lwh. A cuboid box 8 cm by 5 cm by 3…",
+      "context": "Volume is the amount of space a solid fills, measured in cubic units such as cm³ and m³. Picture stacking unit cubes to fill the solid; the number of cubes is the volume. For a cuboid, volume is length × width × height: V = lwh.",
       "prompt": "Find the volume of a cube with edge 5 cm.",
-      "answer": "π × 10 = 10π ≈ 31.42 cm.",
+      "answer": "5³ = 5 × 5 × 5 = 125 cm³.",
       "modelType": "model-5",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "π × 10 = 10π ≈ 31.42 cm."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "explanation": "Volume of Prisms and Cylinders: Volume is the amount of space a solid fills, measured in cubic units such as cm³ and m³. Picture stacking unit cubes to fill the solid; the number of cubes is the volume."
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Surface Area of Prisms and Cylinders",
-      "context": "The surface area of a solid is the total area of all its faces added together. Because it is an area, it is always measured in square units (cm², m²) – never cubic units. A useful way to think about surface area is to imagine unfolding the solid into its flat…",
-      "prompt": "Find the area of a circle with radius 6 cm.",
-      "answer": "1) π × 6² = 36π ≈ 113.10 cm².",
+      "context": "The surface area of a solid is the total area of all its faces added together. Because it is an area, it is always measured in square units (cm², m²) – never cubic units.",
+      "prompt": "Find the surface area of a cuboid measuring 10 cm by 6 cm by 4 cm.",
+      "answer": "SA = 2(lw + lh + wh) = 2(10×6 + 10×4 + 6×4) = 2(60 + 40 + 24) = 2 × 124 = 248 cm².",
       "modelType": "model-6",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) π × 6² = 36π ≈ 113.10 cm²."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "explanation": "Surface Area of Prisms and Cylinders: The surface area of a solid is the total area of all its faces added together. Because it is an area, it is always measured in square units (cm², m²) – never cubic units. A useful way to think about surface area is to imagine unfolding the solid into its flat net; the surface area is the area of that whole net."
     }
   ],
   "visualModels": [
@@ -176,7 +203,7 @@
       "outcomeId": "lo01",
       "title": "Area of 2D Shapes",
       "modelType": "concept-model-1",
-      "purpose": "Area is the amount of flat surface a shape covers, and it is always measured in square units. Before we can tackle circles and compound shapes, you must be fluent with the four basic area formulas. Learn them until they…",
+      "purpose": "Area is the amount of flat surface a shape covers, and it is always measured in square units. Before we can tackle circles and compound shapes, you must be fluent with the four basic area formulas.",
       "defaultNumber": null
     },
     {
@@ -184,7 +211,7 @@
       "outcomeId": "lo02",
       "title": "Circles – Circumference and Area",
       "modelType": "concept-model-2",
-      "purpose": "A circle is different from the straight-sided shapes, so it needs its own special number: π (pi). Pi is the ratio you get when you divide the distance around any circle (the circumference) by the distance straight…",
+      "purpose": "A circle is different from the straight-sided shapes, so it needs its own special number: π (pi).",
       "defaultNumber": null
     },
     {
@@ -192,7 +219,7 @@
       "outcomeId": "lo03",
       "title": "Compound Shapes",
       "modelType": "concept-model-3",
-      "purpose": "A compound shape (also called a composite shape) is made by joining simple shapes together. Almost any real object – the floor plan of a house, a running track, a garden with a pond – is a compound shape. There are two…",
+      "purpose": "A compound shape (also called a composite shape) is made by joining simple shapes together. Almost any real object – the floor plan of a house, a running track, a garden with a pond – is a compound shape.",
       "defaultNumber": null
     },
     {
@@ -200,7 +227,7 @@
       "outcomeId": "lo04",
       "title": "3D Shapes and Their Properties",
       "modelType": "concept-model-4",
-      "purpose": "Now we step from flat shapes into three dimensions. A 3D shape (a solid) has length, width and height. Three words describe its structure. A face is a flat surface of the solid. An edge is the line where two faces meet.…",
+      "purpose": "Now we step from flat shapes into three dimensions. A 3D shape (a solid) has length, width and height. Three words describe its structure. A face is a flat surface of the solid.",
       "defaultNumber": null
     },
     {
@@ -208,7 +235,7 @@
       "outcomeId": "lo05",
       "title": "Volume of Prisms and Cylinders",
       "modelType": "concept-model-5",
-      "purpose": "Volume is the amount of space a solid fills, measured in cubic units such as cm³ and m³. Picture stacking unit cubes to fill the solid; the number of cubes is the volume. For a cuboid, volume is length × width × height:…",
+      "purpose": "Volume is the amount of space a solid fills, measured in cubic units such as cm³ and m³. Picture stacking unit cubes to fill the solid; the number of cubes is the volume.",
       "defaultNumber": null
     },
     {
@@ -216,17 +243,17 @@
       "outcomeId": "lo06",
       "title": "Surface Area of Prisms and Cylinders",
       "modelType": "concept-model-6",
-      "purpose": "The surface area of a solid is the total area of all its faces added together. Because it is an area, it is always measured in square units (cm², m²) – never cubic units. A useful way to think about surface area is to…",
+      "purpose": "The surface area of a solid is the total area of all its faces added together. Because it is an area, it is always measured in square units (cm², m²) – never cubic units.",
       "defaultNumber": null
     }
   ],
   "methods": [
     {
       "id": "method-1",
-      "outcomeId": "lo01",
+      "outcomeId": "lo03",
       "difficulty": "Core",
       "title": "How to find the area of a compound shape",
-      "example": "A trapezium has parallel sides of 9 cm and 15 cm, with a perpendicular height of 6 cm. Find its area.",
+      "example": "An L-shape is made of a 10 cm by 6 cm rectangle with a 4 cm by 3 cm rectangle removed from one corner. Find its area.",
       "steps": [
         "Sketch the shape and mark on every length you know.",
         "Decide whether to add pieces together or subtract a hole.",
@@ -237,10 +264,10 @@
     },
     {
       "id": "method-2",
-      "outcomeId": "lo02",
+      "outcomeId": "lo05",
       "difficulty": "Core",
       "title": "How to find the volume of a prism or cylinder",
-      "example": "A circular pond has a diameter of 14 m. Find its circumference and its area.",
+      "example": "Zahra designs a cylindrical water tank with radius 0.5 m and height 2 m. How many litres does it hold?",
       "steps": [
         "Identify the cross-section (the shape of the end face).",
         "Find the area of that cross-section.",
@@ -250,10 +277,10 @@
     },
     {
       "id": "method-3",
-      "outcomeId": "lo03",
+      "outcomeId": "lo07",
       "difficulty": "Core",
       "title": "How to convert units safely",
-      "example": "A rectangular garden is 12 m by 8 m. A circular pond of radius 2 m sits inside it. Find the area left for planting.",
+      "example": "Convert 3 m² into cm², and convert 7500 cm² into m².",
       "steps": [
         "For length, multiply going to smaller units, divide going to larger.",
         "For area, square the factor (1 m² = 10 000 cm²).",
@@ -263,7 +290,7 @@
     },
     {
       "id": "method-4",
-      "outcomeId": "lo04",
+      "outcomeId": "lo05",
       "difficulty": "Challenge",
       "title": "Volume of a cylinder",
       "example": "A cylindrical tin of tomatoes has radius 4 cm and height 10 cm. Find its volume and its capacity in millilitres.",
@@ -275,19 +302,19 @@
     },
     {
       "id": "method-5",
-      "outcomeId": "lo05",
+      "outcomeId": "lo06",
       "difficulty": "Challenge",
       "title": "Surface area of a cuboid",
       "example": "Find the surface area of a cuboid measuring 10 cm by 6 cm by 4 cm.",
       "steps": [
         "Solution: SA = 2(lw + lh + wh) = 2(10×6 + 10×4 + 6×4) = 2(60 + 40 + 24) = 2 × 124 = 248 cm².",
         "Find the three different face areas, add them, then double for the matching pairs.",
-        "Check the surface area of a cuboid result carefully."
+        "Check by re-adding the three face areas in a different order before doubling: 40 + 60 + 24 should still give 124."
       ]
     },
     {
       "id": "method-6",
-      "outcomeId": "lo06",
+      "outcomeId": "lo05",
       "difficulty": "Challenge",
       "title": "Volume of a triangular prism",
       "example": "A triangular prism has a triangular cross-section with base 6 cm and height 5 cm. The prism is 12 cm long. Find its volume.",
@@ -365,33 +392,33 @@
     },
     {
       "id": "we09",
-      "outcomeId": "lo01",
+      "outcomeId": "lo06",
       "difficulty": "Challenge",
-      "title": "Practice 9",
+      "title": "Surface area practice: a cuboid",
       "prompt": "Find the surface area of a cuboid 8 cm by 5 cm by 3 cm.",
-      "solution": "2(8×5 + 8×3 + 5×3) = 2(40 + 24 +"
+      "solution": "SA = 2(lw + lh + wh) = 2(8×5 + 8×3 + 5×3) = 2(40 + 24 + 15) = 2 × 79 = 158 cm²."
     },
     {
       "id": "we10",
-      "outcomeId": "lo02",
+      "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Practice 10",
+      "title": "Compound shape by subtraction (L-shape)",
       "prompt": "An L-shape is made of a 10 cm by 6 cm rectangle with a 4 cm by 3 cm rectangle removed from one corner. Find its area.",
-      "solution": "= 2 × 79 = 158 cm²."
+      "solution": "Full rectangle minus the missing corner: 10 × 6 − 4 × 3 = 60 − 12 = 48 cm²."
     },
     {
       "id": "we11",
-      "outcomeId": "lo03",
+      "outcomeId": "lo07",
       "difficulty": "Challenge",
-      "title": "Practice 11",
+      "title": "Converting metric units",
       "prompt": "Convert: a) 3.5 m to cm b) 4 m² to cm² c) 2000 cm³ to litres.",
-      "solution": "10 × 6 − 4 × 3 = 60 − 12 = 48 cm²."
+      "solution": "a) 3.5 m = 3.5 × 100 = 350 cm. b) 4 m² = 4 × 10 000 = 40 000 cm² (square the factor 100). c) 2000 cm³ = 2000 ÷ 1000 = 2 litres."
     },
     {
       "id": "we12",
-      "outcomeId": "lo04",
+      "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Practice 12",
+      "title": "Compound shape: rectangle minus circle",
       "prompt": "A rectangle 14 cm by 9 cm has a circular hole of radius 3 cm cut out. Find the remaining area.",
       "solution": "1) 14 × 9 − π × 3² = 126 − 9π ≈ 126 − 28.27 = 97.73 cm²."
     }
@@ -402,84 +429,84 @@
       "level": "Warm-up",
       "prompt": "Find the area of a rectangle 12 cm by 7 cm.",
       "answer": "1) 12 × 7 = 84 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p02",
       "level": "Warm-up",
       "prompt": "Find the area of a triangle with base 8 cm and height 5 cm.",
       "answer": "½ × 8 × 5 = 20 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p03",
       "level": "Warm-up",
       "prompt": "Find the area of a trapezium with parallel sides 5 cm and 9 cm and height 6 cm.",
-      "answer": "½ × (5 +",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "½ × (5 + 9) × 6 = ½ × 14 × 6 = 42 cm².",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p04",
       "level": "Warm-up",
       "prompt": "Find the circumference of a circle with diameter 10 cm.",
-      "answer": "× 6 = ½ × 14 × 6 = 42 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "C = π × 10 = 10π ≈ 31.42 cm.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p05",
       "level": "Warm-up",
       "prompt": "Find the volume of a cube with edge 5 cm.",
-      "answer": "π × 10 = 10π ≈ 31.42 cm.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "5³ = 5 × 5 × 5 = 125 cm³.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p06",
       "level": "Core",
       "prompt": "Find the area of a circle with radius 6 cm.",
       "answer": "1) π × 6² = 36π ≈ 113.10 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p07",
       "level": "Core",
       "prompt": "Find the area of a semicircle with radius 4 cm.",
       "answer": "½ × π × 4² = 8π ≈ 25.13 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p08",
       "level": "Core",
       "prompt": "Find the volume of a cylinder with radius 3 cm and height 10 cm.",
       "answer": "π × 3² × 10 = 90π ≈ 282.74 cm³.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p09",
       "level": "Core",
       "prompt": "Find the surface area of a cuboid 8 cm by 5 cm by 3 cm.",
-      "answer": "2(8×5 + 8×3 + 5×3) = 2(40 + 24 +",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "2(8×5 + 8×3 + 5×3) = 2(40 + 24 + 15) = 2 × 79 = 158 cm².",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p10",
       "level": "Core",
       "prompt": "An L-shape is made of a 10 cm by 6 cm rectangle with a 4 cm by 3 cm rectangle removed from one corner. Find its area.",
-      "answer": "= 2 × 79 = 158 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "10 × 6 − 4 × 3 = 60 − 12 = 48 cm².",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p11",
       "level": "Core",
       "prompt": "Convert: a) 3.5 m to cm b) 4 m² to cm² c) 2000 cm³ to litres.",
-      "answer": "10 × 6 − 4 × 3 = 60 − 12 = 48 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "a) 3.5 × 100 = 350 cm. b) 4 × 10 000 = 40 000 cm². c) 2000 ÷ 1000 = 2 litres.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p12",
       "level": "Challenge",
       "prompt": "A rectangle 14 cm by 9 cm has a circular hole of radius 3 cm cut out. Find the remaining area.",
       "answer": "1) 14 × 9 − π × 3² = 126 − 9π ≈ 126 − 28.27 = 97.73 cm².",
-      "hint": "Identify the key mathematical idea before calculating or explaining."
+      "hint": "Decide which idea the question is really about (Area, Perimeter, Circumference), then work one step at a time and check the answer is sensible."
     }
   ],
   "activities": [
@@ -533,7 +560,7 @@
       "steps": [
         "On graph paper, draw an interesting compound shape (an L-shape, a house shape, or a shape with a semicircle).",
         "Label all the lengths you would need to find the area.",
-        "Challenge a family member to calculate the area by splitting it into simple pieces.",
+        "Challenge a family member (or your AI tutor, if no one is free) to calculate the area by splitting it into simple pieces.",
         "Swap shapes and check each other's working. Did you both split it the same way?",
         "Discuss: is it easier to add pieces or subtract a hole for your shape?"
       ]
@@ -553,23 +580,23 @@
   "reference": {
     "rules": [
       {
-        "title": "The truly powerful idea is the general",
+        "title": "The General Prism Formula",
         "text": "The truly powerful idea is the general prism formula. Because a prism has the same cross-section all the way along, its volume is simply the area of the cross-section multiplied by the length (or height): V = area of cross-section × length. This one rule covers every prism. For a triangular prism whose triangular cross-section has area ½ × 6 × 4 = 12 cm² and whose length is 10 cm, the volume is 12 × 10 = 120 cm³. First find the area of the end face, then multiply by how long the prism is – that is all there is to it."
       },
       {
-        "title": "A cylinder follows exactly the same idea",
+        "title": "Volume of a Cylinder",
         "text": "A cylinder follows exactly the same idea. Its cross-section is a circle of area πr², and its length is the height h, so its volume is V = πr²h. Take a cylindrical can with radius 3 cm and height 8 cm. Its volume is π × 3² × 8 = π × 9 × 8 = 72π ≈ 226.19 cm³. Notice the pattern: find the area of the circular end (πr²), then multiply by the height. It is the prism rule again, wearing circular clothes."
       },
       {
-        "title": "You have now met seven big ideas",
+        "title": "Unit Summary: Bringing the Ideas Together",
         "text": "You have now met seven big ideas: the areas of straight-sided shapes, circles with π, compound shapes, the properties of solids, the volume of prisms and cylinders, the surface area of solids, and unit conversions. These ideas are not separate – real problems often use several at once. When Ibrahim designs a cylindrical water tank for the masjid courtyard, he uses circle area to find the cross-section, the prism rule to find the volume, capacity units to turn cm³ into litres, and surface area to work out how much metal sheet to buy. One object, four ideas from this unit, all working together."
       },
       {
-        "title": "Solution: First the cross-section area: A =",
+        "title": "Worked Example: Volume of a Triangular Prism",
         "text": "Solution: First the cross-section area: A = ½ × 6 × 5 = 15 cm². Then multiply by the length: V = 15 × 12 = 180 cm³. This is the prism rule: area of cross-section times length."
       },
       {
-        "title": "In the next unit you will build",
+        "title": "Before You Move On: Prerequisite Check",
         "text": "In the next unit you will build on these measurement skills, often combining them with algebra and ratio. Before you move on, make sure the foundations here are firm. Prerequisite check: Can you find the area of a circle from its radius? Can you use the prism rule V = cross-section × length? Can you convert m² to cm² by squaring the factor? Can you tell surface area from volume by their units? If yes, you are ready. If any feel shaky, spend a little longer here and ask your AI tutor to review that skill with you."
       }
     ],
@@ -645,7 +672,7 @@
       "difficulty": "Round 1",
       "prompt": "Find the area of a rectangle 12 cm by 7 cm.",
       "answer": "1) 12 × 7 = 84 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
       "errorFeedback": "1) 12 × 7 = 84 cm²."
     },
     {
@@ -654,7 +681,7 @@
       "difficulty": "Round 1",
       "prompt": "Find the area of a triangle with base 8 cm and height 5 cm.",
       "answer": "½ × 8 × 5 = 20 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
       "errorFeedback": "½ × 8 × 5 = 20 cm²."
     },
     {
@@ -662,27 +689,27 @@
       "outcomeId": "lo03",
       "difficulty": "Round 1",
       "prompt": "Find the area of a trapezium with parallel sides 5 cm and 9 cm and height 6 cm.",
-      "answer": "½ × (5 +",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "½ × (5 +"
+      "answer": "½ × (5 + 9) × 6 = ½ × 14 × 6 = 42 cm².",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "errorFeedback": "½ × (5 + 9) × 6 = ½ × 14 × 6 = 42 cm²."
     },
     {
       "id": "fl04",
       "outcomeId": "lo04",
       "difficulty": "Round 1",
       "prompt": "Find the circumference of a circle with diameter 10 cm.",
-      "answer": "× 6 = ½ × 14 × 6 = 42 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "× 6 = ½ × 14 × 6 = 42 cm²."
+      "answer": "C = π × 10 = 10π ≈ 31.42 cm.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "errorFeedback": "C = π × 10 = 10π ≈ 31.42 cm."
     },
     {
       "id": "fl05",
       "outcomeId": "lo05",
       "difficulty": "Round 2",
       "prompt": "Find the volume of a cube with edge 5 cm.",
-      "answer": "π × 10 = 10π ≈ 31.42 cm.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "π × 10 = 10π ≈ 31.42 cm."
+      "answer": "5³ = 5 × 5 × 5 = 125 cm³.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "errorFeedback": "5³ = 5 × 5 × 5 = 125 cm³."
     },
     {
       "id": "fl06",
@@ -690,7 +717,7 @@
       "difficulty": "Round 2",
       "prompt": "Find the area of a circle with radius 6 cm.",
       "answer": "1) π × 6² = 36π ≈ 113.10 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
       "errorFeedback": "1) π × 6² = 36π ≈ 113.10 cm²."
     },
     {
@@ -699,7 +726,7 @@
       "difficulty": "Round 2",
       "prompt": "Find the area of a semicircle with radius 4 cm.",
       "answer": "½ × π × 4² = 8π ≈ 25.13 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
       "errorFeedback": "½ × π × 4² = 8π ≈ 25.13 cm²."
     },
     {
@@ -708,7 +735,7 @@
       "difficulty": "Round 2",
       "prompt": "Find the volume of a cylinder with radius 3 cm and height 10 cm.",
       "answer": "π × 3² × 10 = 90π ≈ 282.74 cm³.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
       "errorFeedback": "π × 3² × 10 = 90π ≈ 282.74 cm³."
     },
     {
@@ -716,27 +743,27 @@
       "outcomeId": "lo01",
       "difficulty": "Round 3",
       "prompt": "Find the surface area of a cuboid 8 cm by 5 cm by 3 cm.",
-      "answer": "2(8×5 + 8×3 + 5×3) = 2(40 + 24 +",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "2(8×5 + 8×3 + 5×3) = 2(40 + 24 +"
+      "answer": "2(8×5 + 8×3 + 5×3) = 2(40 + 24 + 15) = 2 × 79 = 158 cm².",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "errorFeedback": "2(8×5 + 8×3 + 5×3) = 2(40 + 24 + 15) = 2 × 79 = 158 cm²."
     },
     {
       "id": "fl10",
       "outcomeId": "lo02",
       "difficulty": "Round 3",
       "prompt": "An L-shape is made of a 10 cm by 6 cm rectangle with a 4 cm by 3 cm rectangle removed from one corner. Find its area.",
-      "answer": "= 2 × 79 = 158 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "= 2 × 79 = 158 cm²."
+      "answer": "10 × 6 − 4 × 3 = 60 − 12 = 48 cm².",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "errorFeedback": "10 × 6 − 4 × 3 = 60 − 12 = 48 cm²."
     },
     {
       "id": "fl11",
       "outcomeId": "lo03",
       "difficulty": "Round 3",
       "prompt": "Convert: a) 3.5 m to cm b) 4 m² to cm² c) 2000 cm³ to litres.",
-      "answer": "10 × 6 − 4 × 3 = 60 − 12 = 48 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "10 × 6 − 4 × 3 = 60 − 12 = 48 cm²."
+      "answer": "a) 3.5 × 100 = 350 cm. b) 4 × 10 000 = 40 000 cm². c) 2000 ÷ 1000 = 2 litres.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "errorFeedback": "a) 3.5 × 100 = 350 cm. b) 4 × 10 000 = 40 000 cm². c) 2000 ÷ 1000 = 2 litres."
     },
     {
       "id": "fl12",
@@ -744,7 +771,7 @@
       "difficulty": "Round 3",
       "prompt": "A rectangle 14 cm by 9 cm has a circular hole of radius 3 cm cut out. Find the remaining area.",
       "answer": "1) 14 × 9 − π × 3² = 126 − 9π ≈ 126 − 28.27 = 97.73 cm².",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Area, Perimeter, Circumference), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) 14 × 9 − π × 3² = 126 − 9π ≈ 126 − 28.27 = 97.73 cm²."
     }
   ],
@@ -755,9 +782,9 @@
       "difficulty": "Core",
       "context": "Home",
       "prompt": "A rectangular field in Garissa is 40 m by 25 m. Fencing costs 8 shillings per metre and turf costs 5 shillings per square metre. Find the total cost of fencing the perimeter and turfing the whole field.",
-      "answer": "1) Perimeter = 2(40 +",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "1) Perimeter = 2(40 +"
+      "answer": "Perimeter = 2 × (40 + 25) = 130 m, fencing = 130 × 8 = 1040 sh; area = 40 × 25 = 1000 m², turf = 1000 × 5 = 5000 sh; total = 1040 + 5000 = 6040 shillings.",
+      "hint": "Decide which idea the question is really about (Area, Perimeter, Circumference), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "Perimeter = 2 × (40 + 25) = 130 m, fencing = 130 × 8 = 1040 sh; area = 40 × 25 = 1000 m², turf = 1000 × 5 = 5000 sh; total = 1040 + 5000 = 6040 shillings."
     },
     {
       "id": "rp02",
@@ -765,9 +792,9 @@
       "difficulty": "Core",
       "context": "Market",
       "prompt": "Omar stores camel milk in a cylindrical churn of radius 20 cm and height 60 cm. How many litres does it hold? (Give your answer to the nearest litre.)",
-      "answer": "= 130 m, fencing = 130 × 8 = 1040 sh; area = 40 × 25 = 1000 m², turf = 1000 × 5 = 5000 sh; total = 6040 shillings.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "= 130 m, fencing = 130 × 8 = 1040 sh; area = 40 × 25 = 1000 m², turf = 1000 × 5 = 5000 sh; total = 6040 shillings."
+      "answer": "V = π × 20² × 60 = 24 000π ≈ 75 398 cm³ ≈ 75 litres.",
+      "hint": "Decide which idea the question is really about (Area, Perimeter, Circumference), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "V = π × 20² × 60 = 24 000π ≈ 75 398 cm³ ≈ 75 litres."
     },
     {
       "id": "rp03",
@@ -775,9 +802,9 @@
       "difficulty": "Core",
       "context": "Travel",
       "prompt": "A concrete foundation is a cuboid 6 m long, 4 m wide and 0.5 m deep. Find its volume in cubic metres. If concrete costs 90 shillings per cubic metre, find the cost.",
-      "answer": "V = π × 20² × 60 = 24 000π ≈ 75 398 cm³ ≈ 75 litres.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "V = π × 20² × 60 = 24 000π ≈ 75 398 cm³ ≈ 75 litres."
+      "answer": "V = 6 × 4 × 0.5 = 12 m³; cost = 12 × 90 = 1080 shillings.",
+      "hint": "Decide which idea the question is really about (Area, Perimeter, Circumference), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "V = 6 × 4 × 0.5 = 12 m³; cost = 12 × 90 = 1080 shillings."
     },
     {
       "id": "rp04",
@@ -785,9 +812,9 @@
       "difficulty": "Challenge",
       "context": "School",
       "prompt": "A rectangular roof in Mombasa measures 12 m by 8 m. In a storm, 30 mm of rain falls on it. Given 1 m² of roof collecting 1 mm of rain gives 1 litre, how many litres could be collected?",
-      "answer": "V = 6 × 4 × 0.5 = 12 m³; cost = 12 × 90 = 1080 shillings.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "V = 6 × 4 × 0.5 = 12 m³; cost = 12 × 90 = 1080 shillings."
+      "answer": "Area = 12 × 8 = 96 m²; 96 × 30 = 2880 litres.",
+      "hint": "Decide which idea the question is really about (Area, Perimeter, Circumference), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "Area = 12 × 8 = 96 m²; 96 × 30 = 2880 litres."
     },
     {
       "id": "rp05",
@@ -795,9 +822,9 @@
       "difficulty": "Challenge",
       "context": "Community",
       "prompt": "Maryam packs sambusas in cuboid boxes 24 cm by 18 cm by 10 cm. Find the volume of one box. If each sambusa needs about 90 cm³, roughly how many fit in one box?",
-      "answer": "Area = 12 × 8 = 96 m²; 96 × 30 = 2880 litres.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "Area = 12 × 8 = 96 m²; 96 × 30 = 2880 litres."
+      "answer": "Volume = 24 × 18 × 10 = 4320 cm³; 4320 ÷ 90 ≈ 48 sambusas.",
+      "hint": "Decide which idea the question is really about (Area, Perimeter, Circumference), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "Volume = 24 × 18 × 10 = 4320 cm³; 4320 ÷ 90 ≈ 48 sambusas."
     },
     {
       "id": "rp06",
@@ -806,7 +833,7 @@
       "context": "Daily life",
       "prompt": "A rectangle 14 cm by 9 cm has a circular hole of radius 3 cm cut out. Find the remaining area.",
       "answer": "1) 14 × 9 − π × 3² = 126 − 9π ≈ 126 − 28.27 = 97.73 cm².",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Area, Perimeter, Circumference), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) 14 × 9 − π × 3² = 126 − 9π ≈ 126 − 28.27 = 97.73 cm²."
     }
   ],
@@ -844,9 +871,9 @@
       "responseMode": "text",
       "prompt": "A triangular prism has a triangular cross-section of area 15 cm² and length 12 cm. Find its volume.",
       "keyIdeas": [
-        "Circumference",
-        "Radius / Diameter",
-        "π (pi)"
+        "Volume",
+        "Prism",
+        "Area"
       ],
       "modelAnswer": "15 × 12 = 180 cm³."
     },
@@ -870,9 +897,9 @@
       "responseMode": "text",
       "prompt": "Explain the key idea in Volume of Prisms and Cylinders.",
       "keyIdeas": [
-        "Area",
-        "Perimeter",
-        "Circumference"
+        "Volume",
+        "Prism",
+        "Capacity"
       ],
       "modelAnswer": "Volume is the amount of space a solid fills, measured in cubic units such as cm³ and m³. Picture stacking unit cubes to fill the solid; the number of cubes is the volume. For a cuboid, volume is length × width × height: V = lwh. A cuboid box 8 cm by 5 cm by 3 cm holds 8 × 5 × 3 = 120 cm³. For a cube, all three edges are equal, so V = s³. A cube of side 4 cm has volume 4³ = 4 × 4 × 4 = 64 cm³."
     },
@@ -883,11 +910,11 @@
       "responseMode": "text",
       "prompt": "Explain the key idea in Surface Area of Prisms and Cylinders.",
       "keyIdeas": [
-        "Area",
-        "Perimeter",
-        "Circumference"
+        "Surface area",
+        "Prism",
+        "Area"
       ],
-      "modelAnswer": "The surface area of a solid is the total area of all its faces added together. Because it is an area, it is always measured in square units (cm², m²) – never cubic units. A useful way to think about surface area is to imagine unfolding the solid into its flat net; the surface area is the area of that whole net. This is the amount of card you would need to build the box, or the amount of paint to cover the outside. For a cuboid with length l, width w and height h, there are three pairs of matching rectangular…"
+      "modelAnswer": "The surface area of a solid is the total area of all its faces added together. Because it is an area, it is always measured in square units (cm², m²) – never cubic units. A useful way to think about surface area is to imagine unfolding the solid into its flat net; the surface area is the area of that whole net. This is the amount of card you would need to build the box, or the amount of paint to cover the outside. For a cuboid with length l, width w and height h, there are three pairs of matching rectangular faces, so SA = 2(lw + lh + wh). For a cube, all six faces are identical squares, so SA = 6s²; a cube of side 5 cm has surface area 6 × 5² = 150 cm²."
     }
   ],
   "assessment": {
@@ -906,7 +933,7 @@
           "31"
         ],
         "answer": "240",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Ask yourself what \"Area\" means here before you choose.",
         "explanation": "Area = width × height = 16 × 15 = 240."
       },
       {
@@ -922,7 +949,7 @@
           "176"
         ],
         "answer": "165",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
         "explanation": "Area = width × height = 11 × 15 = 165."
       },
       {
@@ -938,7 +965,7 @@
           "3000"
         ],
         "answer": "3000",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
         "explanation": "1 litre = 1000 millilitres, so 3 litres = 3000 millilitres."
       },
       {
@@ -954,7 +981,7 @@
           "23"
         ],
         "answer": "90",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
         "explanation": "Area = width × height = 18 × 5 = 90."
       },
       {
@@ -970,7 +997,7 @@
           "40"
         ],
         "answer": "64",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Ask yourself what \"π (pi)\" means here before you choose.",
         "explanation": "Area = width × height = 4 × 16 = 64."
       },
       {
@@ -986,7 +1013,7 @@
           "70000"
         ],
         "answer": "7000",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
         "explanation": "1 litre = 1000 millilitres, so 7 litres = 7000 millilitres."
       },
       {
@@ -1002,7 +1029,7 @@
           "72"
         ],
         "answer": "70",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
         "explanation": "Perimeter = 2 × (width + height) = 2 × (16 + 19) = 70."
       },
       {
@@ -1018,7 +1045,7 @@
           "4000"
         ],
         "answer": "4000",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
         "explanation": "1 litre = 1000 millilitres, so 4 litres = 4000 millilitres."
       },
       {
@@ -1034,7 +1061,7 @@
           "46"
         ],
         "answer": "46",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Ask yourself what \"Prism\" means here before you choose.",
         "explanation": "Perimeter = 2 × (width + height) = 2 × (15 + 8) = 46."
       },
       {
@@ -1107,7 +1134,7 @@
               "31"
             ],
             "answer": "240",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
             "explanation": "Area = width × height = 16 × 15 = 240."
           },
           {
@@ -1119,7 +1146,7 @@
               "23"
             ],
             "answer": "90",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "Area = width × height = 18 × 5 = 90."
           },
           {
@@ -1131,7 +1158,7 @@
               "72"
             ],
             "answer": "70",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "Perimeter = 2 × (width + height) = 2 × (16 + 19) = 70."
           },
           {
@@ -1165,7 +1192,7 @@
               "176"
             ],
             "answer": "165",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
             "explanation": "Area = width × height = 11 × 15 = 165."
           },
           {
@@ -1177,7 +1204,7 @@
               "40"
             ],
             "answer": "64",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "Area = width × height = 4 × 16 = 64."
           },
           {
@@ -1189,7 +1216,7 @@
               "4000"
             ],
             "answer": "4000",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "1 litre = 1000 millilitres, so 4 litres = 4000 millilitres."
           },
           {
@@ -1223,7 +1250,7 @@
               "3000"
             ],
             "answer": "3000",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
             "explanation": "1 litre = 1000 millilitres, so 3 litres = 3000 millilitres."
           },
           {
@@ -1235,7 +1262,7 @@
               "70000"
             ],
             "answer": "7000",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "1 litre = 1000 millilitres, so 7 litres = 7000 millilitres."
           },
           {
@@ -1247,7 +1274,7 @@
               "46"
             ],
             "answer": "46",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "Perimeter = 2 × (width + height) = 2 × (15 + 8) = 46."
           },
           {
@@ -1281,7 +1308,7 @@
               "23"
             ],
             "answer": "90",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
             "explanation": "Area = width × height = 18 × 5 = 90."
           },
           {
@@ -1293,7 +1320,7 @@
               "72"
             ],
             "answer": "70",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "Perimeter = 2 × (width + height) = 2 × (16 + 19) = 70."
           },
           {
@@ -1317,7 +1344,7 @@
               "31"
             ],
             "answer": "240",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "Area = width × height = 16 × 15 = 240."
           }
         ]
@@ -1339,7 +1366,7 @@
               "40"
             ],
             "answer": "64",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
             "explanation": "Area = width × height = 4 × 16 = 64."
           },
           {
@@ -1351,7 +1378,7 @@
               "4000"
             ],
             "answer": "4000",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "1 litre = 1000 millilitres, so 4 litres = 4000 millilitres."
           },
           {
@@ -1375,7 +1402,7 @@
               "176"
             ],
             "answer": "165",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "Area = width × height = 11 × 15 = 165."
           }
         ]
@@ -1397,7 +1424,7 @@
               "70000"
             ],
             "answer": "7000",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
             "explanation": "1 litre = 1000 millilitres, so 7 litres = 7000 millilitres."
           },
           {
@@ -1409,7 +1436,7 @@
               "46"
             ],
             "answer": "46",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "Perimeter = 2 × (width + height) = 2 × (15 + 8) = 46."
           },
           {
@@ -1433,7 +1460,7 @@
               "3000"
             ],
             "answer": "3000",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "1 litre = 1000 millilitres, so 3 litres = 3000 millilitres."
           }
         ]
@@ -1455,7 +1482,7 @@
               "72"
             ],
             "answer": "70",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
             "explanation": "Perimeter = 2 × (width + height) = 2 × (16 + 19) = 70."
           },
           {
@@ -1479,7 +1506,7 @@
               "31"
             ],
             "answer": "240",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "Area = width × height = 16 × 15 = 240."
           },
           {
@@ -1491,7 +1518,7 @@
               "23"
             ],
             "answer": "90",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "Area = width × height = 18 × 5 = 90."
           }
         ]
@@ -1513,7 +1540,7 @@
               "4000"
             ],
             "answer": "4000",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
             "explanation": "1 litre = 1000 millilitres, so 4 litres = 4000 millilitres."
           },
           {
@@ -1537,7 +1564,7 @@
               "176"
             ],
             "answer": "165",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "Area = width × height = 11 × 15 = 165."
           },
           {
@@ -1549,7 +1576,7 @@
               "40"
             ],
             "answer": "64",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "Area = width × height = 4 × 16 = 64."
           }
         ]
@@ -1571,7 +1598,7 @@
               "46"
             ],
             "answer": "46",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
             "explanation": "Perimeter = 2 × (width + height) = 2 × (15 + 8) = 46."
           },
           {
@@ -1595,7 +1622,7 @@
               "3000"
             ],
             "answer": "3000",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "1 litre = 1000 millilitres, so 3 litres = 3000 millilitres."
           },
           {
@@ -1607,7 +1634,7 @@
               "70000"
             ],
             "answer": "7000",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "1 litre = 1000 millilitres, so 7 litres = 7000 millilitres."
           }
         ]
@@ -1641,7 +1668,7 @@
               "31"
             ],
             "answer": "240",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "Area = width × height = 16 × 15 = 240."
           },
           {
@@ -1653,7 +1680,7 @@
               "23"
             ],
             "answer": "90",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "Area = width × height = 18 × 5 = 90."
           },
           {
@@ -1665,7 +1692,7 @@
               "72"
             ],
             "answer": "70",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "Perimeter = 2 × (width + height) = 2 × (16 + 19) = 70."
           }
         ]
@@ -1699,7 +1726,7 @@
               "176"
             ],
             "answer": "165",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "Area = width × height = 11 × 15 = 165."
           },
           {
@@ -1711,7 +1738,7 @@
               "40"
             ],
             "answer": "64",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "Area = width × height = 4 × 16 = 64."
           },
           {
@@ -1723,7 +1750,7 @@
               "4000"
             ],
             "answer": "4000",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "1 litre = 1000 millilitres, so 4 litres = 4000 millilitres."
           }
         ]
@@ -1757,7 +1784,7 @@
               "3000"
             ],
             "answer": "3000",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "1 litre = 1000 millilitres, so 3 litres = 3000 millilitres."
           },
           {
@@ -1769,7 +1796,7 @@
               "70000"
             ],
             "answer": "7000",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "1 litre = 1000 millilitres, so 7 litres = 7000 millilitres."
           },
           {
@@ -1781,7 +1808,7 @@
               "46"
             ],
             "answer": "46",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "Perimeter = 2 × (width + height) = 2 × (15 + 8) = 46."
           }
         ]

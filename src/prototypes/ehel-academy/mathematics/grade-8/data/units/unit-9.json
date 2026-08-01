@@ -62,38 +62,38 @@
     {
       "id": "concept-1-sequences-and-term-to-term-rules",
       "title": "Sequences and Term-to-Term Rules",
-      "explanation": "A sequence is an ordered list of numbers that follows a rule. Each number is called a term, and its place in the line is its position: the first term, the second term, and so on. Look at the sequence 2, 5, 8, 11, 14, … The first term is 2, the second term is 5, the third term is 8. The three dots at the end mean the sequence carries on forever, following the same rule. The term-to-term rule tells you how to move from one term to the next. For 2, 5, 8, 11, 14 the rule is “add 3”, because 2 + 3 = 5, then 5 + 3 = 8,…",
-      "example": "Sequences can also go down. Take 20, 17, 14, 11, 8, … Here the rule is “subtract 3”, so the common difference is −3. To find any common difference, subtract a term from the one after it: 17 − 20 = −3. If you always…"
+      "explanation": "A sequence is an ordered list of numbers that follows a rule. Each number is called a term, and its place in the line is its position: the first term, the second term, and so on. Look at the sequence 2, 5, 8, 11, 14, … The first term is 2, the second term is 5, the third term is 8. The three dots at the end mean the sequence carries on forever, following the same rule.\n\nThe term-to-term rule tells you how to move from one term to the next. For 2, 5, 8, 11, 14 the rule is “add 3”, because 2 + 3 = 5, then 5 + 3 = 8, then 8 + 3 = 11, and so on. A sequence that goes up or down by the same fixed amount every step is called a linear sequence (or arithmetic sequence), and that fixed amount is the common difference.\n\nSequences can also go down. Take 20, 17, 14, 11, 8, … Here the rule is “subtract 3”, so the common difference is −3. To find any common difference, subtract a term from the one after it: 17 − 20 = −3. If you always subtract the earlier term from the later term, a rising sequence gives a positive difference and a falling sequence gives a negative one.",
+      "example": "When a sequence has gaps, use the rule to fill them. Consider 4, 9, __, 19, __, 29. First find the rule: 9 − 4 = 5, so it is “add 5”. The missing third term is 9 + 5 = 14, and the missing fifth term is 19 + 5 = 24. The complete sequence is 4, 9, 14, 19, 24, 29. Notice how one careful step at a time keeps you safe: find the rule, then apply it patiently to each gap."
     },
     {
       "id": "concept-2-the-nth-term-formula",
       "title": "The nth Term Formula",
-      "explanation": "The term-to-term rule is handy, but slow for large positions. To find the 100th term of 3, 7, 11, 15 you would have to add 4 ninety-nine times. The nth term formula fixes this. It is a rule that connects the position of a term (called n) directly to its value, so you can leap to any term at once. This is sometimes called the position-to-term rule. For any linear sequence the nth term has the form an + b, where a is the common difference and b is a constant. The letter n stands for the position number: put n = 1…",
-      "example": "Step 1 — Find the common difference. 7 − 3 = 4, 11 − 7 = 4, so a = 4. The formula begins 4n."
+      "explanation": "The term-to-term rule is handy, but slow for large positions. To find the 100th term of 3, 7, 11, 15 you would have to add 4 ninety-nine times. The nth term formula fixes this. It is a rule that connects the position of a term (called n) directly to its value, so you can leap to any term at once. This is sometimes called the position-to-term rule.\n\nFor any linear sequence the nth term has the form an + b, where a is the common difference and b is a constant. The letter n stands for the position number: put n = 1 for the first term, n = 2 for the second, and so on. Let us find the formula for 3, 7, 11, 15, 19, … step by step.\n\nStep 1 — Find the common difference. 7 − 3 = 4, 11 − 7 = 4, so a = 4. The formula begins 4n.\n\nStep 2 — Find b. When n = 1 the value must be 3. So 4(1) + b = 3, which gives 4 + b = 3, so b = −1.\n\nStep 3 — Write the formula. nth term = 4n − 1.\n\nStep 4 — Check. n = 2 gives 4(2) − 1 = 7 ✓; n = 3 gives 4(3) − 1 = 11 ✓.\n\nA quick shortcut for b: once you know a, work out b = first term − a. For our sequence, b = 3 − 4 = −1, exactly as before. Always test your formula on two or three known terms before you trust it, because a small slip in b throws every term off by the same amount.",
+      "example": "Now the power of the formula shows. To find the 50th term of 3, 7, 11, 15, you no longer add 4 fifty times. You simply substitute n = 50: nth term = 4(50) − 1 = 200 − 1 = 199. In one line you have reached a term that would take ages by hand. This is why the nth term is such a prized tool."
     },
     {
       "id": "concept-3-generating-sequences-and-multi-step-rules",
       "title": "Generating Sequences and Multi-Step Rules",
-      "explanation": "You can also build a sequence forwards from a starting term and a rule. If you are told “first term = 5, rule = add 4”, you generate 5, 9, 13, 17, 21, … Generating a sequence from its nth term formula is just as easy: for nth term = 3n − 1, substitute n = 1, 2, 3, 4, 5 to get 2, 5, 8, 11, 14. Some rules use more than one operation, and the order matters. Take “first term = 3, rule = multiply by 2, then subtract 1.” Starting at 3: the 2nd term is 3 × 2 − 1 = 5; the 3rd term is 5 × 2 − 1 = 9; the 4th term is 9 × 2 −…",
-      "example": "Another example: “first term = 20, rule = divide by 2, then add 3.” We get 20, then 20 ÷ 2 + 3 = 13, then 13 ÷ 2 + 3 = 9.5, then 9.5 ÷ 2 + 3 = 7.75. The sequence is 20, 13, 9.5, 7.75, … Do not be alarmed by decimals;…"
+      "explanation": "You can also build a sequence forwards from a starting term and a rule. If you are told “first term = 5, rule = add 4”, you generate 5, 9, 13, 17, 21, … Generating a sequence from its nth term formula is just as easy: for nth term = 3n − 1, substitute n = 1, 2, 3, 4, 5 to get 2, 5, 8, 11, 14.\n\nSome rules use more than one operation, and the order matters. Take “first term = 3, rule = multiply by 2, then subtract 1.” Starting at 3: the 2nd term is 3 × 2 − 1 = 5; the 3rd term is 5 × 2 − 1 = 9; the 4th term is 9 × 2 − 1 = 17. The sequence is 3, 5, 9, 17, … This is not linear, because the differences (2, 4, 8) are not constant. Multi-step rules can grow very fast.\n\nAnother example: “first term = 20, rule = divide by 2, then add 3.” We get 20, then 20 ÷ 2 + 3 = 13, then 13 ÷ 2 + 3 = 9.5, then 9.5 ÷ 2 + 3 = 7.75. The sequence is 20, 13, 9.5, 7.75, … Do not be alarmed by decimals; the rule is simply applied faithfully each step.",
+      "example": "Sometimes you must work backwards to discover the rule from the sequence. Look at 8, 10, 14, 22, 38, … The differences are 2, 4, 8, 16 — they are doubling, which hints at a “multiply then add” rule. Testing “multiply by 2, then subtract 6”: 8 × 2 − 6 = 10 ✓, 10 × 2 − 6 = 14 ✓, 14 × 2 − 6 = 22 ✓. The rule works for every given term, so we can trust it. Always verify a proposed rule against all the terms you are given before using it."
     },
     {
       "id": "concept-4-visual-patterns-and-sequences",
       "title": "Visual Patterns and Sequences",
-      "explanation": "Many sequences are born from pictures. Learning to count the pieces of a growing pattern in a systematic way lets you find the numerical sequence and then its formula. Imagine tiles laid out at Nuur Academy for a classroom display. Consider an L-shaped tile pattern that grows: Pattern 1 uses 1 tile, Pattern 2 uses 3 tiles, Pattern 3 uses 5 tiles, Pattern 4 uses 7 tiles. The sequence is 1, 3, 5, 7, … — the odd numbers. The common difference is 2, so the formula begins 2n, and b = 1 − 2 = −1, giving nth term = 2n −…",
-      "example": "Square dot patterns give a different sequence. Pattern 1 is a single dot (1 = 1²), Pattern 2 is a 2-by-2 square (4 = 2²), Pattern 3 is a 3-by-3 square (9 = 3²). The nth pattern holds n² dots, so this is a square-number…"
+      "explanation": "Many sequences are born from pictures. Learning to count the pieces of a growing pattern in a systematic way lets you find the numerical sequence and then its formula. Imagine tiles laid out at Nuur Academy for a classroom display.\n\nConsider an L-shaped tile pattern that grows: Pattern 1 uses 1 tile, Pattern 2 uses 3 tiles, Pattern 3 uses 5 tiles, Pattern 4 uses 7 tiles. The sequence is 1, 3, 5, 7, … — the odd numbers. The common difference is 2, so the formula begins 2n, and b = 1 − 2 = −1, giving nth term = 2n − 1. Check: n = 4 gives 2(4) − 1 = 7 ✓, matching the fourth pattern.\n\nSquare dot patterns give a different sequence. Pattern 1 is a single dot (1 = 1²), Pattern 2 is a 2-by-2 square (4 = 2²), Pattern 3 is a 3-by-3 square (9 = 3²). The nth pattern holds n² dots, so this is a square-number sequence: 1, 4, 9, 16, 25. Its differences are 3, 5, 7, 9 — not constant, so this sequence is not linear.",
+      "example": "Triangle patterns build up like a stack: 1 dot, then 3 (1 + 2), then 6 (1 + 2 + 3), then 10 (1 + 2 + 3 + 4). These are the triangular numbers, and their formula is nth term = n(n + 1)/2. Check: for n = 4, 4 × 5 ÷ 2 = 10 ✓. The key skill in every visual pattern is to count the same way each time and record the totals as a sequence before you hunt for the rule."
     },
     {
       "id": "concept-5-function-machines-and-function-notation",
       "title": "Function Machines and Function Notation",
-      "explanation": "A function is a rule that takes an input, does something fixed to it, and produces exactly one output. A helpful picture is a function machine: a number goes in one end, the machine follows its rule, and a new number comes out the other end. If the machine’s rule is “× 2 then + 3”, then an input of 5 becomes 5 × 2 = 10, then 10 + 3 = 13, so the output is 13. Mathematicians write functions with function notation. We might name the machine f and write f(x) = 2x + 3. Here x is the input variable, the expression 2x +…",
-      "example": "Let us evaluate f(x) = 2x + 3 for more inputs so the idea is firm. f(1) = 2(1) + 3 = 5; f(4) = 2(4) + 3 = 11; and for a negative input, f(−2) = 2(−2) + 3 = −4 + 3 = −1. Take great care with the signs when the input is…"
+      "explanation": "A function is a rule that takes an input, does something fixed to it, and produces exactly one output. A helpful picture is a function machine: a number goes in one end, the machine follows its rule, and a new number comes out the other end. If the machine’s rule is “× 2 then + 3”, then an input of 5 becomes 5 × 2 = 10, then 10 + 3 = 13, so the output is 13.\n\nMathematicians write functions with function notation. We might name the machine f and write f(x) = 2x + 3. Here x is the input variable, the expression 2x + 3 is the rule, and f(x) is the output. The notation f(5) means “the output of f when the input is 5”. To evaluate it we substitute x = 5: f(5) = 2(5) + 3 = 10 + 3 = 13, exactly what the machine gave us.\n\nLet us evaluate f(x) = 2x + 3 for more inputs so the idea is firm. f(1) = 2(1) + 3 = 5; f(4) = 2(4) + 3 = 11; and for a negative input, f(−2) = 2(−2) + 3 = −4 + 3 = −1. Take great care with the signs when the input is negative. A very common slip is to read f(3) as “f times 3”; it does not mean multiply. It means “the value of the function f at input 3”.",
+      "example": "Functions describe the real world. The cost of a taxi in Kismaayo might be a base fare plus a charge for each kilometre: C(k) = 3 + 2k, where k is the number of kilometres and C is the cost in dollars. Converting a temperature from Celsius to Fahrenheit uses the function F(C) = 9C/5 + 32. In each case, one input gives exactly one output, which is the heart of what makes something a function."
     },
     {
       "id": "concept-6-tables-of-values-and-linear-graphs",
       "title": "Tables of Values and Linear Graphs",
-      "explanation": "A table of values lays out the inputs and outputs of a function side by side, which makes the relationship easy to see and to plot. For f(x) = 3x − 1 we choose some inputs and work out each output: when x = 0, f(x) = −1; when x = 1, f(x) = 2; when x = 2, f(x) = 5; when x = 3, f(x) = 8; when x = 4, f(x) = 11. Notice that each time x rises by 1, the output rises by 3 — the same as the coefficient of x. That steady step is the signature of a linear function. Because the output climbs by the same amount for each equal…",
-      "example": "Two features of the line are worth naming. The point where the line crosses the vertical axis is the output when x = 0; for y = 3x − 1 that is (0, −1), and the number −1 is the constant in the rule. The steepness of the…"
+      "explanation": "A table of values lays out the inputs and outputs of a function side by side, which makes the relationship easy to see and to plot. For f(x) = 3x − 1 we choose some inputs and work out each output: when x = 0, f(x) = −1; when x = 1, f(x) = 2; when x = 2, f(x) = 5; when x = 3, f(x) = 8; when x = 4, f(x) = 11. Notice that each time x rises by 1, the output rises by 3 — the same as the coefficient of x. That steady step is the signature of a linear function.\n\nBecause the output climbs by the same amount for each equal step in the input, a linear function draws a perfectly straight line when you plot it. To draw the graph of y = 3x − 1, treat each pair from the table as a coordinate: (0, −1), (1, 2), (2, 5), (3, 8), (4, 11). Plot the points on a grid with x across and y up, then join them with a ruler. If the points do not lie in a straight line, check your arithmetic, because a linear function can never bend.\n\nTwo features of the line are worth naming. The point where the line crosses the vertical axis is the output when x = 0; for y = 3x − 1 that is (0, −1), and the number −1 is the constant in the rule. The steepness of the line, called its gradient, is the coefficient of x; for y = 3x − 1 the line climbs 3 for every 1 it moves to the right. So in a rule of the form y = mx + c, the m controls the slope and the c controls where the line crosses the vertical axis. This connects directly to the nth term form an + b you met earlier — the same linear idea in a new dress.",
+      "example": "Graphs let you read off answers without algebra. If Halima plots the cost of internet data as y = 2x + 5 (a $5 fixed charge plus $2 per gigabyte), she can find the cost of any number of gigabytes by going up from that value on the x-axis to the line and across to the y-axis. Reading a graph both ways — input to output, and output back to input — is a skill you will use throughout mathematics and science."
     }
   ],
   "explorations": [
@@ -102,72 +102,72 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "Sequences and Term-to-Term Rules",
-      "context": "A sequence is an ordered list of numbers that follows a rule. Each number is called a term, and its place in the line is its position: the first term, the second term, and so on. Look at the sequence 2, 5, 8, 11, 14, … The first term is 2, the second term is…",
+      "context": "A sequence is an ordered list of numbers that follows a rule. Each number is called a term, and its place in the line is its position: the first term, the second term, and so on.",
       "prompt": "Find the next two terms: a) 5, 8, 11, 14, __, __ b) 20, 17, 14, 11, __, __.",
       "answer": "1) a) 17, 20 b) 8, 5.",
       "modelType": "model-1",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) a) 17, 20 b) 8, 5."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term.",
+      "explanation": "Sequences and Term-to-Term Rules: A sequence is an ordered list of numbers that follows a rule. Each number is called a term, and its place in the line is its position: the first term, the second term, and so on. Look at the sequence 2, 5, 8, 11, 14, … The first term is 2, the second term is 5, the third term is 8. The three dots at the end mean the sequence carries on forever, following the same rule."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "The nth Term Formula",
-      "context": "The term-to-term rule is handy, but slow for large positions. To find the 100th term of 3, 7, 11, 15 you would have to add 4 ninety-nine times. The nth term formula fixes this. It is a rule that connects the position of a term (called n) directly to its…",
+      "context": "The term-to-term rule is handy, but slow for large positions. To find the 100th term of 3, 7, 11, 15 you would have to add 4 ninety-nine times. The nth term formula fixes this.",
       "prompt": "Write the term-to-term rule: a) 3, 7, 11, 15, … b) 50, 45, 40, 35, …",
       "answer": "a) Add 4 b) Subtract 5.",
       "modelType": "model-2",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "a) Add 4 b) Subtract 5."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term.",
+      "explanation": "The nth Term Formula: The term-to-term rule is handy, but slow for large positions. To find the 100th term of 3, 7, 11, 15 you would have to add 4 ninety-nine times. The nth term formula fixes this. It is a rule that connects the position of a term (called n) directly to its value, so you can leap to any term at once."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Generating Sequences and Multi-Step Rules",
-      "context": "You can also build a sequence forwards from a starting term and a rule. If you are told “first term = 5, rule = add 4”, you generate 5, 9, 13, 17, 21, … Generating a sequence from its nth term formula is just as easy: for nth term = 3n − 1, substitute n = 1,…",
+      "context": "You can also build a sequence forwards from a starting term and a rule.",
       "prompt": "Find the common difference of 7, 10, 13, 16, 19, …",
       "answer": "Common difference 3.",
       "modelType": "model-3",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "Common difference 3."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term.",
+      "explanation": "Generating Sequences and Multi-Step Rules: You can also build a sequence forwards from a starting term and a rule. If you are told “first term = 5, rule = add 4”, you generate 5, 9, 13, 17, 21, … Generating a sequence from its nth term formula is just as easy: for nth term = 3n − 1, substitute n = 1, 2, 3, 4, 5 to get 2, 5, 8, 11, 14."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Visual Patterns and Sequences",
-      "context": "Many sequences are born from pictures. Learning to count the pieces of a growing pattern in a systematic way lets you find the numerical sequence and then its formula. Imagine tiles laid out at Nuur Academy for a classroom display. Consider an L-shaped tile…",
+      "context": "Many sequences are born from pictures. Learning to count the pieces of a growing pattern in a systematic way lets you find the numerical sequence and then its formula. Imagine tiles laid out at Nuur Academy for a classroom display.",
       "prompt": "Generate the first five terms from nth term = 4n + 1.",
       "answer": "5, 9, 13, 17, 21.",
       "modelType": "model-4",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "5, 9, 13, 17, 21."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term.",
+      "explanation": "Visual Patterns and Sequences: Many sequences are born from pictures. Learning to count the pieces of a growing pattern in a systematic way lets you find the numerical sequence and then its formula. Imagine tiles laid out at Nuur Academy for a classroom display."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Function Machines and Function Notation",
-      "context": "A function is a rule that takes an input, does something fixed to it, and produces exactly one output. A helpful picture is a function machine: a number goes in one end, the machine follows its rule, and a new number comes out the other end. If the machine’s…",
+      "context": "A function is a rule that takes an input, does something fixed to it, and produces exactly one output. A helpful picture is a function machine: a number goes in one end, the machine follows its rule, and a new number comes out the other end.",
       "prompt": "For f(x) = 3x + 5, find a) f(2) b) f(0) c) f(−1).",
       "answer": "a) 11 b) 5 c) 2.",
       "modelType": "model-5",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "a) 11 b) 5 c) 2."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term.",
+      "explanation": "Function Machines and Function Notation: A function is a rule that takes an input, does something fixed to it, and produces exactly one output. A helpful picture is a function machine: a number goes in one end, the machine follows its rule, and a new number comes out the other end. If the machine’s rule is “× 2 then + 3”, then an input of 5 becomes 5 × 2 = 10, then 10 + 3 = 13, so the output is 13."
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Tables of Values and Linear Graphs",
-      "context": "A table of values lays out the inputs and outputs of a function side by side, which makes the relationship easy to see and to plot. For f(x) = 3x − 1 we choose some inputs and work out each output: when x = 0, f(x) = −1; when x = 1, f(x) = 2; when x = 2, f(x)…",
+      "context": "A table of values lays out the inputs and outputs of a function side by side, which makes the relationship easy to see and to plot.",
       "prompt": "Find the nth term formula for each: a) 7, 10, 13, 16, … b) 25, 22, 19, 16, … c) 3, 8, 13, 18, …",
-      "answer": "1) a) 3n + 4 (a = 3, b = 7 − 3 =",
+      "answer": "a) 3n + 4 (a = 3, b = 7 − 3 = 4) b) 28 − 3n (a = −3, b = 25 − (−3) = 28) c) 5n − 2 (a = 5, b = 3 − 5 = −2).",
       "modelType": "model-6",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) a) 3n + 4 (a = 3, b = 7 − 3 ="
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term.",
+      "explanation": "Tables of Values and Linear Graphs: A table of values lays out the inputs and outputs of a function side by side, which makes the relationship easy to see and to plot. For f(x) = 3x − 1 we choose some inputs and work out each output: when x = 0, f(x) = −1; when x = 1, f(x) = 2; when x = 2, f(x) = 5; when x = 3, f(x) = 8; when x = 4, f(x) = 11."
     }
   ],
   "visualModels": [
@@ -176,7 +176,7 @@
       "outcomeId": "lo01",
       "title": "Sequences and Term-to-Term Rules",
       "modelType": "concept-model-1",
-      "purpose": "A sequence is an ordered list of numbers that follows a rule. Each number is called a term, and its place in the line is its position: the first term, the second term, and so on. Look at the sequence 2, 5, 8, 11, 14, ……",
+      "purpose": "A sequence is an ordered list of numbers that follows a rule. Each number is called a term, and its place in the line is its position: the first term, the second term, and so on.",
       "defaultNumber": null
     },
     {
@@ -184,7 +184,7 @@
       "outcomeId": "lo02",
       "title": "The nth Term Formula",
       "modelType": "concept-model-2",
-      "purpose": "The term-to-term rule is handy, but slow for large positions. To find the 100th term of 3, 7, 11, 15 you would have to add 4 ninety-nine times. The nth term formula fixes this. It is a rule that connects the position of…",
+      "purpose": "The term-to-term rule is handy, but slow for large positions. To find the 100th term of 3, 7, 11, 15 you would have to add 4 ninety-nine times. The nth term formula fixes this.",
       "defaultNumber": null
     },
     {
@@ -192,7 +192,7 @@
       "outcomeId": "lo03",
       "title": "Generating Sequences and Multi-Step Rules",
       "modelType": "concept-model-3",
-      "purpose": "You can also build a sequence forwards from a starting term and a rule. If you are told “first term = 5, rule = add 4”, you generate 5, 9, 13, 17, 21, … Generating a sequence from its nth term formula is just as easy:…",
+      "purpose": "You can also build a sequence forwards from a starting term and a rule.",
       "defaultNumber": null
     },
     {
@@ -200,7 +200,7 @@
       "outcomeId": "lo04",
       "title": "Visual Patterns and Sequences",
       "modelType": "concept-model-4",
-      "purpose": "Many sequences are born from pictures. Learning to count the pieces of a growing pattern in a systematic way lets you find the numerical sequence and then its formula. Imagine tiles laid out at Nuur Academy for a…",
+      "purpose": "Many sequences are born from pictures. Learning to count the pieces of a growing pattern in a systematic way lets you find the numerical sequence and then its formula.",
       "defaultNumber": null
     },
     {
@@ -208,7 +208,7 @@
       "outcomeId": "lo05",
       "title": "Function Machines and Function Notation",
       "modelType": "concept-model-5",
-      "purpose": "A function is a rule that takes an input, does something fixed to it, and produces exactly one output. A helpful picture is a function machine: a number goes in one end, the machine follows its rule, and a new number…",
+      "purpose": "A function is a rule that takes an input, does something fixed to it, and produces exactly one output.",
       "defaultNumber": null
     },
     {
@@ -216,7 +216,7 @@
       "outcomeId": "lo06",
       "title": "Tables of Values and Linear Graphs",
       "modelType": "concept-model-6",
-      "purpose": "A table of values lays out the inputs and outputs of a function side by side, which makes the relationship easy to see and to plot. For f(x) = 3x − 1 we choose some inputs and work out each output: when x = 0, f(x) =…",
+      "purpose": "A table of values lays out the inputs and outputs of a function side by side, which makes the relationship easy to see and to plot.",
       "defaultNumber": null
     }
   ],
@@ -226,7 +226,7 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "title": "How to find an nth term formula",
-      "example": "Find the term-to-term rule and the next two terms of 6, 10, 14, 18, __, __.",
+      "example": "Find the nth term of 5, 9, 13, 17, 21, …",
       "steps": [
         "Find the common difference a by subtracting one term from the next.",
         "Write the formula as an, then work out b = first term − a.",
@@ -239,7 +239,7 @@
       "outcomeId": "lo02",
       "difficulty": "Core",
       "title": "How to evaluate a function",
-      "example": "Find the nth term of 5, 9, 13, 17, 21, …",
+      "example": "For f(x) = 2x + 3, find f(4).",
       "steps": [
         "Write the rule with brackets where x appears.",
         "Substitute the input in place of x.",
@@ -252,7 +252,7 @@
       "outcomeId": "lo03",
       "difficulty": "Core",
       "title": "How to draw a linear graph",
-      "example": "Using nth term = 4n + 1, find the 20th term.",
+      "example": "Draw the graph of y = 2x + 1 using a table of values for x = 0 to 4.",
       "steps": [
         "Make a table of values for a few inputs.",
         "Write each pair as a coordinate (x, y).",
@@ -294,7 +294,7 @@
       "steps": [
         "Solution: g(−2) = −9, g(−1) = −7, g(0) = −5, g(1) = −3, g(2) = −1, g(3) = 1.",
         "The outputs are −9, −7, −5, −3, −1, 1 — rising by 2 each step, so the graph would be a straight line.",
-        "Check the complete a table of values result carefully."
+        "Check by substituting one x-value back into the rule to confirm the output matches your table."
       ]
     }
   ],
@@ -369,7 +369,7 @@
       "difficulty": "Challenge",
       "title": "Practice 9",
       "prompt": "Complete the table of values for f(x) = 4x − 3 using x = −2, −1, 0, 1, 2, 3.",
-      "solution": "a) 4(1) + 3 = 7 b) 4(25) + 3 = 103 c) 4n + 3 = 47 gives n = 11, the 11th term."
+      "solution": "Solution: f(−2) = −11, f(−1) = −7, f(0) = −3, f(1) = 1, f(2) = 5, f(3) = 9. The outputs rise by 4 each time, matching the coefficient of x."
     },
     {
       "id": "we10",
@@ -377,15 +377,15 @@
       "difficulty": "Challenge",
       "title": "Practice 10",
       "prompt": "A student claims 6, 11, 16, 21, 26 has nth term 5n + 1. Check by substituting n = 1, 2, 3, and say whether the formula is correct.",
-      "solution": "100, 60, 40, 30 (100÷2+10=60, 60÷2+10=40, 40÷2+10=30)."
+      "solution": "Solution: n = 1: 5(1) + 1 = 6 ✓. n = 2: 5(2) + 1 = 11 ✓. n = 3: 5(3) + 1 = 16 ✓. The formula 5n + 1 is correct — it matches every term."
     },
     {
       "id": "we11",
       "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "For g(x) = 2x − 7, find",
+      "title": "Evaluate a linear function",
       "prompt": "For g(x) = 2x − 7, find a) g(5) b) g(−3) c) the value of x for which g(x) = 3.",
-      "solution": "f(−2) = −11, f(−1) = −7, f(0) = −3, f(1) = 1, f(2) = 5, f(3) = 9."
+      "solution": "Solution: a) g(5) = 2(5) − 7 = 3 b) g(−3) = 2(−3) − 7 = −13 c) 2x − 7 = 3, so 2x = 10, so x = 5."
     },
     {
       "id": "we12",
@@ -402,84 +402,84 @@
       "level": "Warm-up",
       "prompt": "Find the next two terms: a) 5, 8, 11, 14, __, __ b) 20, 17, 14, 11, __, __.",
       "answer": "1) a) 17, 20 b) 8, 5.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term."
     },
     {
       "id": "p02",
       "level": "Warm-up",
       "prompt": "Write the term-to-term rule: a) 3, 7, 11, 15, … b) 50, 45, 40, 35, …",
       "answer": "a) Add 4 b) Subtract 5.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term."
     },
     {
       "id": "p03",
       "level": "Warm-up",
       "prompt": "Find the common difference of 7, 10, 13, 16, 19, …",
       "answer": "Common difference 3.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term."
     },
     {
       "id": "p04",
       "level": "Warm-up",
       "prompt": "Generate the first five terms from nth term = 4n + 1.",
       "answer": "5, 9, 13, 17, 21.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term."
     },
     {
       "id": "p05",
       "level": "Warm-up",
       "prompt": "For f(x) = 3x + 5, find a) f(2) b) f(0) c) f(−1).",
       "answer": "a) 11 b) 5 c) 2.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term."
     },
     {
       "id": "p06",
       "level": "Core",
       "prompt": "Find the nth term formula for each: a) 7, 10, 13, 16, … b) 25, 22, 19, 16, … c) 3, 8, 13, 18, …",
-      "answer": "1) a) 3n + 4 (a = 3, b = 7 − 3 =",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "a) 3n + 4 (a = 3, b = 7 − 3 = 4) b) 28 − 3n (a = −3, b = 25 − (−3) = 28) c) 5n − 2 (a = 5, b = 3 − 5 = −2).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term."
     },
     {
       "id": "p07",
       "level": "Core",
       "prompt": "Using nth term = 4n + 3: a) find the 1st term b) find the 25th term c) which term has value 47?",
-      "answer": "b) 28 − 3n (a = −3, b = 25 − (−3) =",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "a) 4(1) + 3 = 7 b) 4(25) + 3 = 103 c) 4n + 3 = 47 gives 4n = 44, n = 11, the 11th term.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term."
     },
     {
       "id": "p08",
       "level": "Core",
       "prompt": "Generate four terms from “first term = 100, rule = divide by 2, then add 10”.",
-      "answer": "c) 5n − 2.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "100, 60, 40, 30 (100 ÷ 2 + 10 = 60, 60 ÷ 2 + 10 = 40, 40 ÷ 2 + 10 = 30).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term."
     },
     {
       "id": "p09",
       "level": "Core",
       "prompt": "Complete the table of values for f(x) = 4x − 3 using x = −2, −1, 0, 1, 2, 3.",
-      "answer": "a) 4(1) + 3 = 7 b) 4(25) + 3 = 103 c) 4n + 3 = 47 gives n = 11, the 11th term.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "f(−2) = −11, f(−1) = −7, f(0) = −3, f(1) = 1, f(2) = 5, f(3) = 9. The outputs rise by 4 each time, matching the coefficient of x.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term."
     },
     {
       "id": "p10",
       "level": "Core",
       "prompt": "A student claims 6, 11, 16, 21, 26 has nth term 5n + 1. Check by substituting n = 1, 2, 3, and say whether the formula is correct.",
-      "answer": "100, 60, 40, 30 (100÷2+10=60, 60÷2+10=40, 40÷2+10=30).",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "n = 1: 5(1) + 1 = 6 ✓. n = 2: 5(2) + 1 = 11 ✓. n = 3: 5(3) + 1 = 16 ✓. The formula 5n + 1 is correct — it matches every term.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term."
     },
     {
       "id": "p11",
       "level": "Core",
       "prompt": "For g(x) = 2x − 7, find a) g(5) b) g(−3) c) the value of x for which g(x) = 3.",
-      "answer": "f(−2) = −11, f(−1) = −7, f(0) = −3, f(1) = 1, f(2) = 5, f(3) = 9.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "a) g(5) = 2(5) − 7 = 3 b) g(−3) = 2(−3) − 7 = −13 c) 2x − 7 = 3, so 2x = 10, so x = 5.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term."
     },
     {
       "id": "p12",
       "level": "Challenge",
       "prompt": "Find the nth term of 12, 17, 22, 27, 32, … and use it to find the 100th term.",
       "answer": "1) a = 5, b = 12 − 5 = 7, so nth term = 5n + 7; 100th term = 5(100) + 7 = 507.",
-      "hint": "Identify the key mathematical idea before calculating or explaining."
+      "hint": "Decide which idea the question is really about (Sequence, Term, Common difference), then work one step at a time and check the answer is sensible."
     }
   ],
   "activities": [
@@ -496,11 +496,11 @@
     },
     {
       "title": "The Function Machine Game",
-      "materials": "paper and a partner.",
+      "materials": "paper and a partner, or your AI tutor if no partner is available.",
       "steps": [
         "Secretly choose a rule, for example “multiply by 2, then add 1”.",
-        "Ask your partner for inputs and give back only the outputs.",
-        "Your partner keeps a table of inputs and outputs and tries to guess your rule.",
+        "Ask your partner (or your AI tutor) for inputs and give back only the outputs.",
+        "Your partner or AI tutor keeps a table of inputs and outputs and tries to guess your rule.",
         "Swap roles. Then write each rule using proper notation, such as f(x) = 2x + 1."
       ]
     },
@@ -527,11 +527,11 @@
     },
     {
       "title": "Real-World Rule Hunt (Family Task)",
-      "materials": "your family and everyday prices.",
+      "materials": "your family, or your AI tutor if family isn't available, and everyday prices.",
       "steps": [
         "Find a real cost with a fixed part and a per-item part, like a taxi fare or a market stall rent.",
         "Write it as a function, for example C(k) = 3 + 2k for a taxi in Mogadishu.",
-        "Ask a family member to name a number of kilometres and work out the cost together.",
+        "Ask a family member, or your AI tutor, to name a number of kilometres and work out the cost together.",
         "Then reverse it: given a total cost, work backwards to find the number of items."
       ]
     },
@@ -540,37 +540,37 @@
       "materials": "paper and pencil.",
       "steps": [
         "Write a sequence using a two-step rule, like “multiply by 2, then subtract 6”.",
-        "Show only the first four terms to a friend.",
+        "Show only the first four terms to a friend, or to your AI tutor if no one else is available.",
         "Challenge them to find your rule and the next term.",
         "Reveal your rule and check whether it works for every term you wrote.",
-        "After your activities, talk or write about: Which activity made the nth term formula clearest? What was the trickiest part of drawing a graph or guessing a rule? What would you like more practice with? Share your answers with your teacher at your next session."
+        "After your activities, talk or write about: Which activity made the nth term formula clearest? What was the trickiest part of drawing a graph or guessing a rule? What would you like more practice with? Share your answers with your teacher, parent, or AI tutor at your next session."
       ]
     }
   ],
   "reference": {
     "rules": [
       {
-        "title": "You will also meet functions. A function",
+        "title": "What a Function Machine Does",
         "text": "You will also meet functions. A function is a machine that takes an input, follows a fixed rule, and gives back exactly one output. When Amina works out the cost of a taxi ride across Mogadishu, or when Yusuf predicts how much water is left in the family tank after a number of days, they are using functions, whether they call them that or not. By the end of the unit you will write functions using proper notation such as f(x) = 2x + 3, build tables of values, and draw the straight-line graphs that linear functions produce."
       },
       {
-        "title": "Why does this matter? Sequences and functions",
+        "title": "Why Sequences and Functions Matter",
         "text": "Why does this matter? Sequences and functions are the bridge between the arithmetic you already know and the algebra that unlocks higher mathematics, science, and computing. Traders use sequences to plan savings that grow month by month. Farmers near Hargeisa use functions to estimate how a herd of goats grows over the years. Engineers use them to design staircases, and scientists use them to model how a population of bacteria multiplies. When you can spot a pattern, describe it with a rule, and use that rule to predict, you are thinking like a mathematician about the real world."
       },
       {
-        "title": "Generate sequences from a first term and",
+        "title": "Generating Sequences from a Rule",
         "text": "Generate sequences from a first term and a rule, including multi-step rules."
       },
       {
-        "title": "A sequence is an ordered list of",
+        "title": "What Is a Sequence?",
         "text": "A sequence is an ordered list of numbers that follows a rule. Each number is called a term, and its place in the line is its position: the first term, the second term, and so on. Look at the sequence 2, 5, 8, 11, 14, … The first term is 2, the second term is 5, the third term is 8. The three dots at the end mean the sequence carries on forever, following the same rule."
       },
       {
-        "title": "The term-to-term rule tells you how to",
+        "title": "The Term-to-Term Rule",
         "text": "The term-to-term rule tells you how to move from one term to the next. For 2, 5, 8, 11, 14 the rule is “add 3”, because 2 + 3 = 5, then 5 + 3 = 8, then 8 + 3 = 11, and so on. A sequence that goes up or down by the same fixed amount every step is called a linear sequence (or arithmetic sequence), and that fixed amount is the common difference."
       },
       {
-        "title": "Sequences can also go down. Take 20",
+        "title": "Descending Sequences and Negative Differences",
         "text": "Sequences can also go down. Take 20, 17, 14, 11, 8, … Here the rule is “subtract 3”, so the common difference is −3. To find any common difference, subtract a term from the one after it: 17 − 20 = −3. If you always subtract the earlier term from the later term, a rising sequence gives a positive difference and a falling sequence gives a negative one."
       }
     ],
@@ -634,7 +634,7 @@
       "difficulty": "Round 1",
       "prompt": "Find the next two terms: a) 5, 8, 11, 14, __, __ b) 20, 17, 14, 11, __, __.",
       "answer": "1) a) 17, 20 b) 8, 5.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term.",
       "errorFeedback": "1) a) 17, 20 b) 8, 5."
     },
     {
@@ -643,7 +643,7 @@
       "difficulty": "Round 1",
       "prompt": "Write the term-to-term rule: a) 3, 7, 11, 15, … b) 50, 45, 40, 35, …",
       "answer": "a) Add 4 b) Subtract 5.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term.",
       "errorFeedback": "a) Add 4 b) Subtract 5."
     },
     {
@@ -652,7 +652,7 @@
       "difficulty": "Round 1",
       "prompt": "Find the common difference of 7, 10, 13, 16, 19, …",
       "answer": "Common difference 3.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term.",
       "errorFeedback": "Common difference 3."
     },
     {
@@ -661,7 +661,7 @@
       "difficulty": "Round 1",
       "prompt": "Generate the first five terms from nth term = 4n + 1.",
       "answer": "5, 9, 13, 17, 21.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term.",
       "errorFeedback": "5, 9, 13, 17, 21."
     },
     {
@@ -670,7 +670,7 @@
       "difficulty": "Round 2",
       "prompt": "For f(x) = 3x + 5, find a) f(2) b) f(0) c) f(−1).",
       "answer": "a) 11 b) 5 c) 2.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term.",
       "errorFeedback": "a) 11 b) 5 c) 2."
     },
     {
@@ -678,18 +678,18 @@
       "outcomeId": "lo06",
       "difficulty": "Round 2",
       "prompt": "Find the nth term formula for each: a) 7, 10, 13, 16, … b) 25, 22, 19, 16, … c) 3, 8, 13, 18, …",
-      "answer": "1) a) 3n + 4 (a = 3, b = 7 − 3 =",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "1) a) 3n + 4 (a = 3, b = 7 − 3 ="
+      "answer": "a) 3n + 4 (a = 3, b = 7 − 3 = 4) b) 28 − 3n (a = −3, b = 25 − (−3) = 28) c) 5n − 2 (a = 5, b = 3 − 5 = −2).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term.",
+      "errorFeedback": "a) 3n + 4 (a = 3, b = 7 − 3 = 4) b) 28 − 3n (a = −3, b = 25 − (−3) = 28) c) 5n − 2 (a = 5, b = 3 − 5 = −2)."
     },
     {
       "id": "fl07",
       "outcomeId": "lo07",
       "difficulty": "Round 2",
       "prompt": "Using nth term = 4n + 3: a) find the 1st term b) find the 25th term c) which term has value 47?",
-      "answer": "b) 28 − 3n (a = −3, b = 25 − (−3) =",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "b) 28 − 3n (a = −3, b = 25 − (−3) ="
+      "answer": "a) 1st term = 4(1) + 3 = 7 b) 25th term = 4(25) + 3 = 103 c) 4n + 3 = 47, so 4n = 44, so n = 11.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term.",
+      "errorFeedback": "a) 1st term = 4(1) + 3 = 7 b) 25th term = 4(25) + 3 = 103 c) 4n + 3 = 47, so 4n = 44, so n = 11."
     },
     {
       "id": "fl08",
@@ -697,7 +697,7 @@
       "difficulty": "Round 2",
       "prompt": "Generate four terms from “first term = 100, rule = divide by 2, then add 10”.",
       "answer": "c) 5n − 2.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term.",
       "errorFeedback": "c) 5n − 2."
     },
     {
@@ -705,27 +705,27 @@
       "outcomeId": "lo01",
       "difficulty": "Round 3",
       "prompt": "Complete the table of values for f(x) = 4x − 3 using x = −2, −1, 0, 1, 2, 3.",
-      "answer": "a) 4(1) + 3 = 7 b) 4(25) + 3 = 103 c) 4n + 3 = 47 gives n = 11, the 11th term.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "a) 4(1) + 3 = 7 b) 4(25) + 3 = 103 c) 4n + 3 = 47 gives n = 11, the 11th term."
+      "answer": "f(−2) = −11, f(−1) = −7, f(0) = −3, f(1) = 1, f(2) = 5, f(3) = 9. The outputs rise by 4 each time, matching the coefficient of x.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term.",
+      "errorFeedback": "f(−2) = −11, f(−1) = −7, f(0) = −3, f(1) = 1, f(2) = 5, f(3) = 9. The outputs rise by 4 each time, matching the coefficient of x."
     },
     {
       "id": "fl10",
       "outcomeId": "lo02",
       "difficulty": "Round 3",
       "prompt": "A student claims 6, 11, 16, 21, 26 has nth term 5n + 1. Check by substituting n = 1, 2, 3, and say whether the formula is correct.",
-      "answer": "100, 60, 40, 30 (100÷2+10=60, 60÷2+10=40, 40÷2+10=30).",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "100, 60, 40, 30 (100÷2+10=60, 60÷2+10=40, 40÷2+10=30)."
+      "answer": "n = 1: 5(1) + 1 = 6 ✓. n = 2: 5(2) + 1 = 11 ✓. n = 3: 5(3) + 1 = 16 ✓. The formula 5n + 1 is correct — it matches every term.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term.",
+      "errorFeedback": "n = 1: 5(1) + 1 = 6 ✓. n = 2: 5(2) + 1 = 11 ✓. n = 3: 5(3) + 1 = 16 ✓. The formula 5n + 1 is correct — it matches every term."
     },
     {
       "id": "fl11",
       "outcomeId": "lo03",
       "difficulty": "Round 3",
       "prompt": "For g(x) = 2x − 7, find a) g(5) b) g(−3) c) the value of x for which g(x) = 3.",
-      "answer": "f(−2) = −11, f(−1) = −7, f(0) = −3, f(1) = 1, f(2) = 5, f(3) = 9.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "f(−2) = −11, f(−1) = −7, f(0) = −3, f(1) = 1, f(2) = 5, f(3) = 9."
+      "answer": "a) g(5) = 2(5) − 7 = 3 b) g(−3) = 2(−3) − 7 = −13 c) 2x − 7 = 3, so 2x = 10, so x = 5.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Sequence or Term.",
+      "errorFeedback": "a) g(5) = 2(5) − 7 = 3 b) g(−3) = 2(−3) − 7 = −13 c) 2x − 7 = 3, so 2x = 10, so x = 5."
     },
     {
       "id": "fl12",
@@ -733,7 +733,7 @@
       "difficulty": "Round 3",
       "prompt": "Find the nth term of 12, 17, 22, 27, 32, … and use it to find the 100th term.",
       "answer": "1) a = 5, b = 12 − 5 = 7, so nth term = 5n + 7; 100th term = 5(100) + 7 = 507.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Sequence, Term, Common difference), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) a = 5, b = 12 − 5 = 7, so nth term = 5n + 7; 100th term = 5(100) + 7 = 507."
     }
   ],
@@ -745,7 +745,7 @@
       "context": "Home",
       "prompt": "A car rental in Nairobi costs $40 per day plus $0.30 per kilometre. a) Write C(k) for one day. b) Find the cost of driving 200 km. c) How far can you drive for $100?",
       "answer": "1) a) C(k) = 40 + 0.30k b) C(200) = 40 + 60 = $100 c) 40 + 0.30k = 100 gives 0.30k = 60, k = 200 km.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Sequence, Term, Common difference), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) a) C(k) = 40 + 0.30k b) C(200) = 40 + 60 = $100 c) 40 + 0.30k = 100 gives 0.30k = 60, k = 200 km."
     },
     {
@@ -755,7 +755,7 @@
       "context": "Market",
       "prompt": "A savings account starts at $500 and grows by $25 each month. a) Write A(n) for the amount after n months. b) Find the amount after 12 months. c) When does it first reach $1000?",
       "answer": "a) A(n) = 500 + 25n b) A(12) = 500 + 300 = $800 c) 500 + 25n = 1000 gives 25n = 500, n = 20 months.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Sequence, Term, Common difference), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "a) A(n) = 500 + 25n b) A(12) = 500 + 300 = $800 c) 500 + 25n = 1000 gives 25n = 500, n = 20 months."
     },
     {
@@ -765,7 +765,7 @@
       "context": "Travel",
       "prompt": "A phone plan costs $30 per month plus $0.20 per text. a) Write C(t). b) Find the cost of 150 texts. c) How many texts give a bill of $50?",
       "answer": "a) C(t) = 30 + 0.20t b) C(150) = 30 + 30 = $60 c) 30 + 0.20t = 50 gives 0.20t = 20, t = 100 texts.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Sequence, Term, Common difference), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "a) C(t) = 30 + 0.20t b) C(150) = 30 + 30 = $60 c) 30 + 0.20t = 50 gives 0.20t = 20, t = 100 texts."
     },
     {
@@ -775,7 +775,7 @@
       "context": "School",
       "prompt": "A staircase has steps each 20 cm high, so height after n steps is H(n) = 20n. How many steps are needed to reach a 3-metre (300 cm) ceiling?",
       "answer": "20n = 300 gives n = 15 steps.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Sequence, Term, Common difference), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "20n = 300 gives n = 15 steps."
     },
     {
@@ -785,7 +785,7 @@
       "context": "Community",
       "prompt": "A town’s population is modelled by P(t) = 50000 + 2000t, where t is years since 2020. a) Find the population in 2020. b) Find it in 2030. c) When will it reach 80,000?",
       "answer": "a) P(0) = 50,000 b) P(10) = 50000 + 20000 = 70,000 c) 50000 + 2000t = 80000 gives 2000t = 30000, t = 15, so the year 2035.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Sequence, Term, Common difference), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "a) P(0) = 50,000 b) P(10) = 50000 + 20000 = 70,000 c) 50000 + 2000t = 80000 gives 2000t = 30000, t = 15, so the year 2035."
     },
     {
@@ -795,7 +795,7 @@
       "context": "Daily life",
       "prompt": "Find the nth term of 12, 17, 22, 27, 32, … and use it to find the 100th term.",
       "answer": "1) a = 5, b = 12 − 5 = 7, so nth term = 5n + 7; 100th term = 5(100) + 7 = 507.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Sequence, Term, Common difference), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) a = 5, b = 12 − 5 = 7, so nth term = 5n + 7; 100th term = 5(100) + 7 = 507."
     }
   ],
@@ -867,16 +867,16 @@
     },
     {
       "id": "reason06",
-      "outcomeId": "lo01",
+      "outcomeId": "lo06",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Explain the key idea in Tables of Values and Linear Graphs.",
+      "prompt": "For the function h(x) = 2x + 4, explain why the points in its table of values always lie on a straight line, and find h(3).",
       "keyIdeas": [
-        "Sequence",
-        "Term",
-        "Common difference"
+        "Function",
+        "Table of values",
+        "Gradient"
       ],
-      "modelAnswer": "A table of values lays out the inputs and outputs of a function side by side, which makes the relationship easy to see and to plot. For f(x) = 3x − 1 we choose some inputs and work out each output: when x = 0, f(x) = −1; when x = 1, f(x) = 2; when x = 2, f(x) = 5; when x = 3, f(x) = 8; when x = 4, f(x) = 11. Notice that each time x rises by 1, the output rises by 3 — the same as the coefficient of x. That steady step is the signature of a linear function. Because the output climbs by the same amount for each equal…"
+      "modelAnswer": "Each time x increases by 1, h(x) increases by 2 (the coefficient of x), so the output changes by the same fixed amount for every equal step in the input — this constant rate of change is what makes the graph a straight line. h(3) = 2(3) + 4 = 10."
     }
   ],
   "assessment": {
@@ -887,128 +887,128 @@
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Basic",
-        "question": "Solve for x: x + 5 = 18.",
+        "question": "Find the next term: 6, 11, 16, 21, ___",
         "options": [
-          "23",
-          "5",
-          "13",
-          "18"
+          "25",
+          "26",
+          "27",
+          "31"
         ],
-        "answer": "13",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Subtract 5 from both sides: x = 18 − 5 = 13."
+        "answer": "26",
+        "hint": "Work out the common difference first, then apply it to the last term.",
+        "explanation": "The rule is add 5 each time, so the next term is 21 + 5 = 26."
       },
       {
         "id": "q02",
         "type": "Application",
         "outcomeId": "lo02",
         "difficulty": "Basic",
-        "question": "If x = 5, what is the value of 7x + 5?",
+        "question": "The nth term of a sequence is 4n + 3. What is the 10th term?",
         "options": [
-          "35",
-          "47",
           "40",
-          "17"
+          "43",
+          "47",
+          "34"
         ],
-        "answer": "40",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "7 × 5 + 5 = 35 + 5 = 40."
+        "answer": "43",
+        "hint": "Substitute the position number for n, then work out the arithmetic.",
+        "explanation": "Substitute n = 10 into 4n + 3: 4(10) + 3 = 40 + 3 = 43."
       },
       {
         "id": "q03",
         "type": "Application",
         "outcomeId": "lo03",
         "difficulty": "Basic",
-        "question": "Solve for x: x + 11 = 14.",
+        "question": "A sequence starts at 4. The rule is “multiply by 2, then add 1”. What is the 3rd term?",
         "options": [
-          "3",
-          "14",
-          "25",
-          "11"
+          "17",
+          "18",
+          "19",
+          "21"
         ],
-        "answer": "3",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Subtract 11 from both sides: x = 14 − 11 = 3."
+        "answer": "19",
+        "hint": "Apply the rule one step at a time, starting from the first term.",
+        "explanation": "Term 2 = 4 × 2 + 1 = 9. Term 3 = 9 × 2 + 1 = 19."
       },
       {
         "id": "q04",
         "type": "Application",
         "outcomeId": "lo04",
         "difficulty": "Basic",
-        "question": "Find the next term: 4, 9, 14, 19, ___",
+        "question": "A tile pattern grows like this: Pattern 1 has 4 tiles, Pattern 2 has 7 tiles, Pattern 3 has 10 tiles. How many tiles will Pattern 5 have?",
         "options": [
-          "24",
-          "29",
-          "19",
-          "20"
+          "13",
+          "15",
+          "16",
+          "19"
         ],
-        "answer": "24",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "The rule is add 5 each time, so the next term is 19 + 5 = 24."
+        "answer": "16",
+        "hint": "Find the common difference between patterns, then use it to build the nth term formula.",
+        "explanation": "The pattern grows by 3 tiles each time, so the nth term is 3n + 1. Pattern 5 = 3(5) + 1 = 16."
       },
       {
         "id": "q05",
         "type": "Application",
         "outcomeId": "lo05",
         "difficulty": "Core",
-        "question": "If x = 7, what is the value of 6x + 2?",
+        "question": "If f(x) = 5x − 2, what is f(4)?",
         "options": [
-          "44",
-          "15",
-          "42",
-          "50"
+          "17",
+          "18",
+          "20",
+          "22"
         ],
-        "answer": "44",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "6 × 7 + 2 = 42 + 2 = 44."
+        "answer": "18",
+        "hint": "Substitute the input in place of x, then work out the arithmetic.",
+        "explanation": "f(4) = 5(4) − 2 = 20 − 2 = 18."
       },
       {
         "id": "q06",
         "type": "Application",
         "outcomeId": "lo06",
         "difficulty": "Core",
-        "question": "If x = 4, what is the value of 9x + 7?",
+        "question": "For the function g(x) = 2x + 3, what is g(5)?",
         "options": [
-          "52",
-          "43",
-          "20",
-          "36"
+          "10",
+          "11",
+          "13",
+          "15"
         ],
-        "answer": "43",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "9 × 4 + 7 = 36 + 7 = 43."
+        "answer": "13",
+        "hint": "Substitute x = 5 into the rule and work out the output.",
+        "explanation": "g(5) = 2(5) + 3 = 10 + 3 = 13."
       },
       {
         "id": "q07",
         "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
-        "question": "If x = 5, what is the value of 8x + 8?",
+        "question": "The graph of y = 2x + 1 passes through which of these points?",
         "options": [
-          "21",
-          "40",
-          "56",
-          "48"
+          "(2, 5)",
+          "(2, 3)",
+          "(3, 6)",
+          "(1, 1)"
         ],
-        "answer": "48",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "8 × 5 + 8 = 40 + 8 = 48."
+        "answer": "(2, 5)",
+        "hint": "Substitute the x-value from each point into the equation and check the y-value.",
+        "explanation": "Substitute x = 2 into y = 2x + 1: y = 2(2) + 1 = 5, so the point (2, 5) lies on the line."
       },
       {
         "id": "q08",
         "type": "Application",
         "outcomeId": "lo08",
         "difficulty": "Challenge",
-        "question": "Find the next term: 9, 12, 15, 18, ___",
+        "question": "A sequence has nth term 3n + 4. Which of these numbers is a term in the sequence?",
         "options": [
-          "19",
-          "21",
-          "24",
-          "18"
+          "20",
+          "22",
+          "23",
+          "24"
         ],
-        "answer": "21",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "The rule is add 3 each time, so the next term is 18 + 3 = 21."
+        "answer": "22",
+        "hint": "Set 3n + 4 equal to each option and check whether n is a whole number.",
+        "explanation": "3n + 4 = 22 gives 3n = 18, so n = 6, a whole number — 22 is the 6th term. The other options do not give a whole number for n."
       },
       {
         "id": "q09",
@@ -1023,7 +1023,7 @@
           "13"
         ],
         "answer": "13",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Ask yourself what \"Sequence\" means here before you choose.",
         "explanation": "The rule is add 2 each time, so the next term is 11 + 2 = 13."
       },
       {
@@ -1031,48 +1031,48 @@
         "type": "Reasoning",
         "outcomeId": "lo02",
         "difficulty": "Challenge",
-        "question": "What does “Sequence” mean?",
+        "question": "Which nth term formula matches the sequence 2, 6, 10, 14, …?",
         "options": [
-          "An ordered list of numbers following a rule",
-          "A single number in a sequence",
-          "The fixed step in a linear sequence",
-          "A formula giving any term from its position n"
+          "4n − 2",
+          "4n + 2",
+          "2n + 4",
+          "4n − 4"
         ],
-        "answer": "An ordered list of numbers following a rule",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Sequence means An ordered list of numbers following a rule."
+        "answer": "4n − 2",
+        "hint": "Find the common difference first, then work out b = first term − common difference.",
+        "explanation": "Common difference = 4, so a = 4. b = first term − a = 2 − 4 = −2. nth term = 4n − 2. Check: n = 1 gives 4(1) − 2 = 2 ✓."
       },
       {
         "id": "q11",
         "type": "Reasoning",
         "outcomeId": "lo03",
         "difficulty": "Challenge",
-        "question": "What does “Term” mean?",
+        "question": "A sequence starts at 10. The rule is “subtract 3, then multiply by 2”. What is the 3rd term?",
         "options": [
-          "A single number in a sequence",
-          "The fixed step in a linear sequence",
-          "A formula giving any term from its position n",
-          "A rule giving one output for each input"
+          "18",
+          "20",
+          "22",
+          "24"
         ],
-        "answer": "A single number in a sequence",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Term means A single number in a sequence."
+        "answer": "22",
+        "hint": "Apply the rule step by step, following the order given.",
+        "explanation": "Term 2 = (10 − 3) × 2 = 14. Term 3 = (14 − 3) × 2 = 22."
       },
       {
         "id": "q12",
         "type": "Reasoning",
         "outcomeId": "lo04",
         "difficulty": "Challenge",
-        "question": "What does “Common difference” mean?",
+        "question": "A dot pattern grows like this: Pattern 1 = 2 dots, Pattern 2 = 5 dots, Pattern 3 = 8 dots. What is the nth term formula for the number of dots?",
         "options": [
-          "The fixed step in a linear sequence",
-          "A formula giving any term from its position n",
-          "A rule giving one output for each input",
-          "Writing a function as f(x) = …"
+          "3n − 1",
+          "3n + 1",
+          "2n + 3",
+          "3n − 2"
         ],
-        "answer": "The fixed step in a linear sequence",
-        "hint": "Use the Unit 9 Math Words & Symbols reference.",
-        "explanation": "Common difference means The fixed step in a linear sequence."
+        "answer": "3n − 1",
+        "hint": "Find the common difference between patterns, then use it to build the nth term formula.",
+        "explanation": "Common difference = 3, so a = 3. b = first term − a = 2 − 3 = −1. nth term = 3n − 1. Check: n = 1 gives 3(1) − 1 = 2 ✓."
       }
     ]
   },
@@ -1088,52 +1088,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Solve for x: x + 5 = 18.",
+            "prompt": "Find the next term: 6, 11, 16, 21, ___",
             "choices": [
-              "23",
-              "5",
+              "25",
+              "26",
+              "27",
+              "31"
+            ],
+            "answer": "26",
+            "clue": "Work out the common difference first, then apply it to the last term.",
+            "explanation": "The rule is add 5 each time, so the next term is 21 + 5 = 26."
+          },
+          {
+            "prompt": "A tile pattern grows like this: Pattern 1 has 4 tiles, Pattern 2 has 7 tiles, Pattern 3 has 10 tiles. How many tiles will Pattern 5 have?",
+            "choices": [
               "13",
-              "18"
+              "15",
+              "16",
+              "19"
             ],
-            "answer": "13",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Subtract 5 from both sides: x = 18 − 5 = 13."
+            "answer": "16",
+            "clue": "Find the common difference between patterns, then use it to build the nth term formula.",
+            "explanation": "The pattern grows by 3 tiles each time, so the nth term is 3n + 1. Pattern 5 = 3(5) + 1 = 16."
           },
           {
-            "prompt": "Find the next term: 4, 9, 14, 19, ___",
+            "prompt": "The graph of y = 2x + 1 passes through which of these points?",
             "choices": [
-              "24",
-              "29",
-              "19",
-              "20"
+              "(2, 5)",
+              "(2, 3)",
+              "(3, 6)",
+              "(1, 1)"
             ],
-            "answer": "24",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 5 each time, so the next term is 19 + 5 = 24."
+            "answer": "(2, 5)",
+            "clue": "Substitute the x-value from each point into the equation and check the y-value.",
+            "explanation": "Substitute x = 2 into y = 2x + 1: y = 2(2) + 1 = 5, so the point (2, 5) lies on the line."
           },
           {
-            "prompt": "If x = 5, what is the value of 8x + 8?",
+            "prompt": "Which nth term formula matches the sequence 2, 6, 10, 14, …?",
             "choices": [
-              "21",
-              "40",
-              "56",
-              "48"
+              "4n − 2",
+              "4n + 2",
+              "2n + 4",
+              "4n − 4"
             ],
-            "answer": "48",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "8 × 5 + 8 = 40 + 8 = 48."
-          },
-          {
-            "prompt": "What does “Sequence” mean?",
-            "choices": [
-              "An ordered list of numbers following a rule",
-              "A single number in a sequence",
-              "The fixed step in a linear sequence",
-              "A formula giving any term from its position n"
-            ],
-            "answer": "An ordered list of numbers following a rule",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Sequence means An ordered list of numbers following a rule."
+            "answer": "4n − 2",
+            "clue": "Find the common difference first, then work out b = first term − common difference.",
+            "explanation": "Common difference = 4, so a = 4. b = first term − a = 2 − 4 = −2. nth term = 4n − 2. Check: n = 1 gives 4(1) − 2 = 2 ✓."
           }
         ]
       },
@@ -1146,52 +1146,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "If x = 5, what is the value of 7x + 5?",
+            "prompt": "The nth term of a sequence is 4n + 3. What is the 10th term?",
             "choices": [
-              "35",
-              "47",
               "40",
-              "17"
+              "43",
+              "47",
+              "34"
             ],
-            "answer": "40",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "7 × 5 + 5 = 35 + 5 = 40."
+            "answer": "43",
+            "clue": "Substitute the position number for n, then work out the arithmetic.",
+            "explanation": "Substitute n = 10 into 4n + 3: 4(10) + 3 = 40 + 3 = 43."
           },
           {
-            "prompt": "If x = 7, what is the value of 6x + 2?",
+            "prompt": "If f(x) = 5x − 2, what is f(4)?",
             "choices": [
-              "44",
-              "15",
-              "42",
-              "50"
+              "17",
+              "18",
+              "20",
+              "22"
             ],
-            "answer": "44",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "6 × 7 + 2 = 42 + 2 = 44."
+            "answer": "18",
+            "clue": "Substitute the input in place of x, then work out the arithmetic.",
+            "explanation": "f(4) = 5(4) − 2 = 20 − 2 = 18."
           },
           {
-            "prompt": "Find the next term: 9, 12, 15, 18, ___",
+            "prompt": "A sequence has nth term 3n + 4. Which of these numbers is a term in the sequence?",
             "choices": [
-              "19",
-              "21",
-              "24",
-              "18"
+              "20",
+              "22",
+              "23",
+              "24"
             ],
-            "answer": "21",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 3 each time, so the next term is 18 + 3 = 21."
+            "answer": "22",
+            "clue": "Set 3n + 4 equal to each option and check whether n is a whole number.",
+            "explanation": "3n + 4 = 22 gives 3n = 18, so n = 6, a whole number — 22 is the 6th term. The other options do not give a whole number for n."
           },
           {
-            "prompt": "What does “Term” mean?",
+            "prompt": "A sequence starts at 10. The rule is “subtract 3, then multiply by 2”. What is the 3rd term?",
             "choices": [
-              "A single number in a sequence",
-              "The fixed step in a linear sequence",
-              "A formula giving any term from its position n",
-              "A rule giving one output for each input"
+              "18",
+              "20",
+              "22",
+              "24"
             ],
-            "answer": "A single number in a sequence",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Term means A single number in a sequence."
+            "answer": "22",
+            "clue": "Apply the rule step by step, following the order given.",
+            "explanation": "Term 2 = (10 − 3) × 2 = 14. Term 3 = (14 − 3) × 2 = 22."
           }
         ]
       },
@@ -1204,28 +1204,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Solve for x: x + 11 = 14.",
+            "prompt": "A sequence starts at 4. The rule is “multiply by 2, then add 1”. What is the 3rd term?",
             "choices": [
-              "3",
-              "14",
-              "25",
-              "11"
+              "17",
+              "18",
+              "19",
+              "21"
             ],
-            "answer": "3",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Subtract 11 from both sides: x = 14 − 11 = 3."
+            "answer": "19",
+            "clue": "Apply the rule one step at a time, starting from the first term.",
+            "explanation": "Term 2 = 4 × 2 + 1 = 9. Term 3 = 9 × 2 + 1 = 19."
           },
           {
-            "prompt": "If x = 4, what is the value of 9x + 7?",
+            "prompt": "For the function g(x) = 2x + 3, what is g(5)?",
             "choices": [
-              "52",
-              "43",
-              "20",
-              "36"
+              "10",
+              "11",
+              "13",
+              "15"
             ],
-            "answer": "43",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "9 × 4 + 7 = 36 + 7 = 43."
+            "answer": "13",
+            "clue": "Substitute x = 5 into the rule and work out the output.",
+            "explanation": "g(5) = 2(5) + 3 = 10 + 3 = 13."
           },
           {
             "prompt": "Find the next term: 5, 7, 9, 11, ___",
@@ -1236,20 +1236,20 @@
               "13"
             ],
             "answer": "13",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "The rule is add 2 each time, so the next term is 11 + 2 = 13."
           },
           {
-            "prompt": "What does “Common difference” mean?",
+            "prompt": "A dot pattern grows like this: Pattern 1 = 2 dots, Pattern 2 = 5 dots, Pattern 3 = 8 dots. What is the nth term formula for the number of dots?",
             "choices": [
-              "The fixed step in a linear sequence",
-              "A formula giving any term from its position n",
-              "A rule giving one output for each input",
-              "Writing a function as f(x) = …"
+              "3n − 1",
+              "3n + 1",
+              "2n + 3",
+              "3n − 2"
             ],
-            "answer": "The fixed step in a linear sequence",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Common difference means The fixed step in a linear sequence."
+            "answer": "3n − 1",
+            "clue": "Find the common difference between patterns, then use it to build the nth term formula.",
+            "explanation": "Common difference = 3, so a = 3. b = first term − a = 2 − 3 = −1. nth term = 3n − 1. Check: n = 1 gives 3(1) − 1 = 2 ✓."
           }
         ]
       },
@@ -1262,52 +1262,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Find the next term: 4, 9, 14, 19, ___",
+            "prompt": "A tile pattern grows like this: Pattern 1 has 4 tiles, Pattern 2 has 7 tiles, Pattern 3 has 10 tiles. How many tiles will Pattern 5 have?",
             "choices": [
-              "24",
-              "29",
-              "19",
-              "20"
-            ],
-            "answer": "24",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 5 each time, so the next term is 19 + 5 = 24."
-          },
-          {
-            "prompt": "If x = 5, what is the value of 8x + 8?",
-            "choices": [
-              "21",
-              "40",
-              "56",
-              "48"
-            ],
-            "answer": "48",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "8 × 5 + 8 = 40 + 8 = 48."
-          },
-          {
-            "prompt": "What does “Sequence” mean?",
-            "choices": [
-              "An ordered list of numbers following a rule",
-              "A single number in a sequence",
-              "The fixed step in a linear sequence",
-              "A formula giving any term from its position n"
-            ],
-            "answer": "An ordered list of numbers following a rule",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Sequence means An ordered list of numbers following a rule."
-          },
-          {
-            "prompt": "Solve for x: x + 5 = 18.",
-            "choices": [
-              "23",
-              "5",
               "13",
-              "18"
+              "15",
+              "16",
+              "19"
             ],
-            "answer": "13",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Subtract 5 from both sides: x = 18 − 5 = 13."
+            "answer": "16",
+            "clue": "Find the common difference between patterns, then use it to build the nth term formula.",
+            "explanation": "The pattern grows by 3 tiles each time, so the nth term is 3n + 1. Pattern 5 = 3(5) + 1 = 16."
+          },
+          {
+            "prompt": "The graph of y = 2x + 1 passes through which of these points?",
+            "choices": [
+              "(2, 5)",
+              "(2, 3)",
+              "(3, 6)",
+              "(1, 1)"
+            ],
+            "answer": "(2, 5)",
+            "clue": "Substitute the x-value from each point into the equation and check the y-value.",
+            "explanation": "Substitute x = 2 into y = 2x + 1: y = 2(2) + 1 = 5, so the point (2, 5) lies on the line."
+          },
+          {
+            "prompt": "Which nth term formula matches the sequence 2, 6, 10, 14, …?",
+            "choices": [
+              "4n − 2",
+              "4n + 2",
+              "2n + 4",
+              "4n − 4"
+            ],
+            "answer": "4n − 2",
+            "clue": "Find the common difference first, then work out b = first term − common difference.",
+            "explanation": "Common difference = 4, so a = 4. b = first term − a = 2 − 4 = −2. nth term = 4n − 2. Check: n = 1 gives 4(1) − 2 = 2 ✓."
+          },
+          {
+            "prompt": "Find the next term: 6, 11, 16, 21, ___",
+            "choices": [
+              "25",
+              "26",
+              "27",
+              "31"
+            ],
+            "answer": "26",
+            "clue": "Work out the common difference first, then apply it to the last term.",
+            "explanation": "The rule is add 5 each time, so the next term is 21 + 5 = 26."
           }
         ]
       },
@@ -1320,52 +1320,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "If x = 7, what is the value of 6x + 2?",
+            "prompt": "If f(x) = 5x − 2, what is f(4)?",
             "choices": [
-              "44",
-              "15",
-              "42",
-              "50"
+              "17",
+              "18",
+              "20",
+              "22"
             ],
-            "answer": "44",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "6 × 7 + 2 = 42 + 2 = 44."
+            "answer": "18",
+            "clue": "Substitute the input in place of x, then work out the arithmetic.",
+            "explanation": "f(4) = 5(4) − 2 = 20 − 2 = 18."
           },
           {
-            "prompt": "Find the next term: 9, 12, 15, 18, ___",
+            "prompt": "A sequence has nth term 3n + 4. Which of these numbers is a term in the sequence?",
             "choices": [
-              "19",
-              "21",
-              "24",
-              "18"
+              "20",
+              "22",
+              "23",
+              "24"
             ],
-            "answer": "21",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 3 each time, so the next term is 18 + 3 = 21."
+            "answer": "22",
+            "clue": "Set 3n + 4 equal to each option and check whether n is a whole number.",
+            "explanation": "3n + 4 = 22 gives 3n = 18, so n = 6, a whole number — 22 is the 6th term. The other options do not give a whole number for n."
           },
           {
-            "prompt": "What does “Term” mean?",
+            "prompt": "A sequence starts at 10. The rule is “subtract 3, then multiply by 2”. What is the 3rd term?",
             "choices": [
-              "A single number in a sequence",
-              "The fixed step in a linear sequence",
-              "A formula giving any term from its position n",
-              "A rule giving one output for each input"
+              "18",
+              "20",
+              "22",
+              "24"
             ],
-            "answer": "A single number in a sequence",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Term means A single number in a sequence."
+            "answer": "22",
+            "clue": "Apply the rule step by step, following the order given.",
+            "explanation": "Term 2 = (10 − 3) × 2 = 14. Term 3 = (14 − 3) × 2 = 22."
           },
           {
-            "prompt": "If x = 5, what is the value of 7x + 5?",
+            "prompt": "The nth term of a sequence is 4n + 3. What is the 10th term?",
             "choices": [
-              "35",
-              "47",
               "40",
-              "17"
+              "43",
+              "47",
+              "34"
             ],
-            "answer": "40",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "7 × 5 + 5 = 35 + 5 = 40."
+            "answer": "43",
+            "clue": "Substitute the position number for n, then work out the arithmetic.",
+            "explanation": "Substitute n = 10 into 4n + 3: 4(10) + 3 = 40 + 3 = 43."
           }
         ]
       },
@@ -1378,16 +1378,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "If x = 4, what is the value of 9x + 7?",
+            "prompt": "For the function g(x) = 2x + 3, what is g(5)?",
             "choices": [
-              "52",
-              "43",
-              "20",
-              "36"
+              "10",
+              "11",
+              "13",
+              "15"
             ],
-            "answer": "43",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "9 × 4 + 7 = 36 + 7 = 43."
+            "answer": "13",
+            "clue": "Substitute x = 5 into the rule and work out the output.",
+            "explanation": "g(5) = 2(5) + 3 = 10 + 3 = 13."
           },
           {
             "prompt": "Find the next term: 5, 7, 9, 11, ___",
@@ -1398,32 +1398,32 @@
               "13"
             ],
             "answer": "13",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "The rule is add 2 each time, so the next term is 11 + 2 = 13."
           },
           {
-            "prompt": "What does “Common difference” mean?",
+            "prompt": "A dot pattern grows like this: Pattern 1 = 2 dots, Pattern 2 = 5 dots, Pattern 3 = 8 dots. What is the nth term formula for the number of dots?",
             "choices": [
-              "The fixed step in a linear sequence",
-              "A formula giving any term from its position n",
-              "A rule giving one output for each input",
-              "Writing a function as f(x) = …"
+              "3n − 1",
+              "3n + 1",
+              "2n + 3",
+              "3n − 2"
             ],
-            "answer": "The fixed step in a linear sequence",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Common difference means The fixed step in a linear sequence."
+            "answer": "3n − 1",
+            "clue": "Find the common difference between patterns, then use it to build the nth term formula.",
+            "explanation": "Common difference = 3, so a = 3. b = first term − a = 2 − 3 = −1. nth term = 3n − 1. Check: n = 1 gives 3(1) − 1 = 2 ✓."
           },
           {
-            "prompt": "Solve for x: x + 11 = 14.",
+            "prompt": "A sequence starts at 4. The rule is “multiply by 2, then add 1”. What is the 3rd term?",
             "choices": [
-              "3",
-              "14",
-              "25",
-              "11"
+              "17",
+              "18",
+              "19",
+              "21"
             ],
-            "answer": "3",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Subtract 11 from both sides: x = 14 − 11 = 3."
+            "answer": "19",
+            "clue": "Apply the rule one step at a time, starting from the first term.",
+            "explanation": "Term 2 = 4 × 2 + 1 = 9. Term 3 = 9 × 2 + 1 = 19."
           }
         ]
       },
@@ -1436,52 +1436,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "If x = 5, what is the value of 8x + 8?",
+            "prompt": "The graph of y = 2x + 1 passes through which of these points?",
             "choices": [
-              "21",
-              "40",
-              "56",
-              "48"
+              "(2, 5)",
+              "(2, 3)",
+              "(3, 6)",
+              "(1, 1)"
             ],
-            "answer": "48",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "8 × 5 + 8 = 40 + 8 = 48."
+            "answer": "(2, 5)",
+            "clue": "Substitute the x-value from each point into the equation and check the y-value.",
+            "explanation": "Substitute x = 2 into y = 2x + 1: y = 2(2) + 1 = 5, so the point (2, 5) lies on the line."
           },
           {
-            "prompt": "What does “Sequence” mean?",
+            "prompt": "Which nth term formula matches the sequence 2, 6, 10, 14, …?",
             "choices": [
-              "An ordered list of numbers following a rule",
-              "A single number in a sequence",
-              "The fixed step in a linear sequence",
-              "A formula giving any term from its position n"
+              "4n − 2",
+              "4n + 2",
+              "2n + 4",
+              "4n − 4"
             ],
-            "answer": "An ordered list of numbers following a rule",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Sequence means An ordered list of numbers following a rule."
+            "answer": "4n − 2",
+            "clue": "Find the common difference first, then work out b = first term − common difference.",
+            "explanation": "Common difference = 4, so a = 4. b = first term − a = 2 − 4 = −2. nth term = 4n − 2. Check: n = 1 gives 4(1) − 2 = 2 ✓."
           },
           {
-            "prompt": "Solve for x: x + 5 = 18.",
+            "prompt": "Find the next term: 6, 11, 16, 21, ___",
             "choices": [
-              "23",
-              "5",
+              "25",
+              "26",
+              "27",
+              "31"
+            ],
+            "answer": "26",
+            "clue": "Work out the common difference first, then apply it to the last term.",
+            "explanation": "The rule is add 5 each time, so the next term is 21 + 5 = 26."
+          },
+          {
+            "prompt": "A tile pattern grows like this: Pattern 1 has 4 tiles, Pattern 2 has 7 tiles, Pattern 3 has 10 tiles. How many tiles will Pattern 5 have?",
+            "choices": [
               "13",
-              "18"
+              "15",
+              "16",
+              "19"
             ],
-            "answer": "13",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Subtract 5 from both sides: x = 18 − 5 = 13."
-          },
-          {
-            "prompt": "Find the next term: 4, 9, 14, 19, ___",
-            "choices": [
-              "24",
-              "29",
-              "19",
-              "20"
-            ],
-            "answer": "24",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 5 each time, so the next term is 19 + 5 = 24."
+            "answer": "16",
+            "clue": "Find the common difference between patterns, then use it to build the nth term formula.",
+            "explanation": "The pattern grows by 3 tiles each time, so the nth term is 3n + 1. Pattern 5 = 3(5) + 1 = 16."
           }
         ]
       },
@@ -1494,52 +1494,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Find the next term: 9, 12, 15, 18, ___",
+            "prompt": "A sequence has nth term 3n + 4. Which of these numbers is a term in the sequence?",
             "choices": [
-              "19",
-              "21",
-              "24",
-              "18"
+              "20",
+              "22",
+              "23",
+              "24"
             ],
-            "answer": "21",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 3 each time, so the next term is 18 + 3 = 21."
+            "answer": "22",
+            "clue": "Set 3n + 4 equal to each option and check whether n is a whole number.",
+            "explanation": "3n + 4 = 22 gives 3n = 18, so n = 6, a whole number — 22 is the 6th term. The other options do not give a whole number for n."
           },
           {
-            "prompt": "What does “Term” mean?",
+            "prompt": "A sequence starts at 10. The rule is “subtract 3, then multiply by 2”. What is the 3rd term?",
             "choices": [
-              "A single number in a sequence",
-              "The fixed step in a linear sequence",
-              "A formula giving any term from its position n",
-              "A rule giving one output for each input"
+              "18",
+              "20",
+              "22",
+              "24"
             ],
-            "answer": "A single number in a sequence",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Term means A single number in a sequence."
+            "answer": "22",
+            "clue": "Apply the rule step by step, following the order given.",
+            "explanation": "Term 2 = (10 − 3) × 2 = 14. Term 3 = (14 − 3) × 2 = 22."
           },
           {
-            "prompt": "If x = 5, what is the value of 7x + 5?",
+            "prompt": "The nth term of a sequence is 4n + 3. What is the 10th term?",
             "choices": [
-              "35",
-              "47",
               "40",
-              "17"
+              "43",
+              "47",
+              "34"
             ],
-            "answer": "40",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "7 × 5 + 5 = 35 + 5 = 40."
+            "answer": "43",
+            "clue": "Substitute the position number for n, then work out the arithmetic.",
+            "explanation": "Substitute n = 10 into 4n + 3: 4(10) + 3 = 40 + 3 = 43."
           },
           {
-            "prompt": "If x = 7, what is the value of 6x + 2?",
+            "prompt": "If f(x) = 5x − 2, what is f(4)?",
             "choices": [
-              "44",
-              "15",
-              "42",
-              "50"
+              "17",
+              "18",
+              "20",
+              "22"
             ],
-            "answer": "44",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "6 × 7 + 2 = 42 + 2 = 44."
+            "answer": "18",
+            "clue": "Substitute the input in place of x, then work out the arithmetic.",
+            "explanation": "f(4) = 5(4) − 2 = 20 − 2 = 18."
           }
         ]
       },
@@ -1560,44 +1560,44 @@
               "13"
             ],
             "answer": "13",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Sequence\" means here before you choose.",
             "explanation": "The rule is add 2 each time, so the next term is 11 + 2 = 13."
           },
           {
-            "prompt": "What does “Common difference” mean?",
+            "prompt": "A dot pattern grows like this: Pattern 1 = 2 dots, Pattern 2 = 5 dots, Pattern 3 = 8 dots. What is the nth term formula for the number of dots?",
             "choices": [
-              "The fixed step in a linear sequence",
-              "A formula giving any term from its position n",
-              "A rule giving one output for each input",
-              "Writing a function as f(x) = …"
+              "3n − 1",
+              "3n + 1",
+              "2n + 3",
+              "3n − 2"
             ],
-            "answer": "The fixed step in a linear sequence",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Common difference means The fixed step in a linear sequence."
+            "answer": "3n − 1",
+            "clue": "Find the common difference between patterns, then use it to build the nth term formula.",
+            "explanation": "Common difference = 3, so a = 3. b = first term − a = 2 − 3 = −1. nth term = 3n − 1. Check: n = 1 gives 3(1) − 1 = 2 ✓."
           },
           {
-            "prompt": "Solve for x: x + 11 = 14.",
+            "prompt": "A sequence starts at 4. The rule is “multiply by 2, then add 1”. What is the 3rd term?",
             "choices": [
-              "3",
-              "14",
-              "25",
-              "11"
+              "17",
+              "18",
+              "19",
+              "21"
             ],
-            "answer": "3",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Subtract 11 from both sides: x = 14 − 11 = 3."
+            "answer": "19",
+            "clue": "Apply the rule one step at a time, starting from the first term.",
+            "explanation": "Term 2 = 4 × 2 + 1 = 9. Term 3 = 9 × 2 + 1 = 19."
           },
           {
-            "prompt": "If x = 4, what is the value of 9x + 7?",
+            "prompt": "For the function g(x) = 2x + 3, what is g(5)?",
             "choices": [
-              "52",
-              "43",
-              "20",
-              "36"
+              "10",
+              "11",
+              "13",
+              "15"
             ],
-            "answer": "43",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "9 × 4 + 7 = 36 + 7 = 43."
+            "answer": "13",
+            "clue": "Substitute x = 5 into the rule and work out the output.",
+            "explanation": "g(5) = 2(5) + 3 = 10 + 3 = 13."
           }
         ]
       },
@@ -1610,52 +1610,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Sequence” mean?",
+            "prompt": "Which nth term formula matches the sequence 2, 6, 10, 14, …?",
             "choices": [
-              "An ordered list of numbers following a rule",
-              "A single number in a sequence",
-              "The fixed step in a linear sequence",
-              "A formula giving any term from its position n"
+              "4n − 2",
+              "4n + 2",
+              "2n + 4",
+              "4n − 4"
             ],
-            "answer": "An ordered list of numbers following a rule",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Sequence means An ordered list of numbers following a rule."
+            "answer": "4n − 2",
+            "clue": "Find the common difference first, then work out b = first term − common difference.",
+            "explanation": "Common difference = 4, so a = 4. b = first term − a = 2 − 4 = −2. nth term = 4n − 2. Check: n = 1 gives 4(1) − 2 = 2 ✓."
           },
           {
-            "prompt": "Solve for x: x + 5 = 18.",
+            "prompt": "Find the next term: 6, 11, 16, 21, ___",
             "choices": [
-              "23",
-              "5",
+              "25",
+              "26",
+              "27",
+              "31"
+            ],
+            "answer": "26",
+            "clue": "Work out the common difference first, then apply it to the last term.",
+            "explanation": "The rule is add 5 each time, so the next term is 21 + 5 = 26."
+          },
+          {
+            "prompt": "A tile pattern grows like this: Pattern 1 has 4 tiles, Pattern 2 has 7 tiles, Pattern 3 has 10 tiles. How many tiles will Pattern 5 have?",
+            "choices": [
               "13",
-              "18"
+              "15",
+              "16",
+              "19"
             ],
-            "answer": "13",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Subtract 5 from both sides: x = 18 − 5 = 13."
+            "answer": "16",
+            "clue": "Find the common difference between patterns, then use it to build the nth term formula.",
+            "explanation": "The pattern grows by 3 tiles each time, so the nth term is 3n + 1. Pattern 5 = 3(5) + 1 = 16."
           },
           {
-            "prompt": "Find the next term: 4, 9, 14, 19, ___",
+            "prompt": "The graph of y = 2x + 1 passes through which of these points?",
             "choices": [
-              "24",
-              "29",
-              "19",
-              "20"
+              "(2, 5)",
+              "(2, 3)",
+              "(3, 6)",
+              "(1, 1)"
             ],
-            "answer": "24",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 5 each time, so the next term is 19 + 5 = 24."
-          },
-          {
-            "prompt": "If x = 5, what is the value of 8x + 8?",
-            "choices": [
-              "21",
-              "40",
-              "56",
-              "48"
-            ],
-            "answer": "48",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "8 × 5 + 8 = 40 + 8 = 48."
+            "answer": "(2, 5)",
+            "clue": "Substitute the x-value from each point into the equation and check the y-value.",
+            "explanation": "Substitute x = 2 into y = 2x + 1: y = 2(2) + 1 = 5, so the point (2, 5) lies on the line."
           }
         ]
       },
@@ -1668,52 +1668,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Term” mean?",
+            "prompt": "A sequence starts at 10. The rule is “subtract 3, then multiply by 2”. What is the 3rd term?",
             "choices": [
-              "A single number in a sequence",
-              "The fixed step in a linear sequence",
-              "A formula giving any term from its position n",
-              "A rule giving one output for each input"
+              "18",
+              "20",
+              "22",
+              "24"
             ],
-            "answer": "A single number in a sequence",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Term means A single number in a sequence."
+            "answer": "22",
+            "clue": "Apply the rule step by step, following the order given.",
+            "explanation": "Term 2 = (10 − 3) × 2 = 14. Term 3 = (14 − 3) × 2 = 22."
           },
           {
-            "prompt": "If x = 5, what is the value of 7x + 5?",
+            "prompt": "The nth term of a sequence is 4n + 3. What is the 10th term?",
             "choices": [
-              "35",
-              "47",
               "40",
-              "17"
+              "43",
+              "47",
+              "34"
             ],
-            "answer": "40",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "7 × 5 + 5 = 35 + 5 = 40."
+            "answer": "43",
+            "clue": "Substitute the position number for n, then work out the arithmetic.",
+            "explanation": "Substitute n = 10 into 4n + 3: 4(10) + 3 = 40 + 3 = 43."
           },
           {
-            "prompt": "If x = 7, what is the value of 6x + 2?",
+            "prompt": "If f(x) = 5x − 2, what is f(4)?",
             "choices": [
-              "44",
-              "15",
-              "42",
-              "50"
+              "17",
+              "18",
+              "20",
+              "22"
             ],
-            "answer": "44",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "6 × 7 + 2 = 42 + 2 = 44."
+            "answer": "18",
+            "clue": "Substitute the input in place of x, then work out the arithmetic.",
+            "explanation": "f(4) = 5(4) − 2 = 20 − 2 = 18."
           },
           {
-            "prompt": "Find the next term: 9, 12, 15, 18, ___",
+            "prompt": "A sequence has nth term 3n + 4. Which of these numbers is a term in the sequence?",
             "choices": [
-              "19",
-              "21",
-              "24",
-              "18"
+              "20",
+              "22",
+              "23",
+              "24"
             ],
-            "answer": "21",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 3 each time, so the next term is 18 + 3 = 21."
+            "answer": "22",
+            "clue": "Set 3n + 4 equal to each option and check whether n is a whole number.",
+            "explanation": "3n + 4 = 22 gives 3n = 18, so n = 6, a whole number — 22 is the 6th term. The other options do not give a whole number for n."
           }
         ]
       },
@@ -1726,40 +1726,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Common difference” mean?",
+            "prompt": "A dot pattern grows like this: Pattern 1 = 2 dots, Pattern 2 = 5 dots, Pattern 3 = 8 dots. What is the nth term formula for the number of dots?",
             "choices": [
-              "The fixed step in a linear sequence",
-              "A formula giving any term from its position n",
-              "A rule giving one output for each input",
-              "Writing a function as f(x) = …"
+              "3n − 1",
+              "3n + 1",
+              "2n + 3",
+              "3n − 2"
             ],
-            "answer": "The fixed step in a linear sequence",
-            "clue": "Use the Unit 9 Math Words & Symbols reference.",
-            "explanation": "Common difference means The fixed step in a linear sequence."
+            "answer": "3n − 1",
+            "clue": "Find the common difference between patterns, then use it to build the nth term formula.",
+            "explanation": "Common difference = 3, so a = 3. b = first term − a = 2 − 3 = −1. nth term = 3n − 1. Check: n = 1 gives 3(1) − 1 = 2 ✓."
           },
           {
-            "prompt": "Solve for x: x + 11 = 14.",
+            "prompt": "A sequence starts at 4. The rule is “multiply by 2, then add 1”. What is the 3rd term?",
             "choices": [
-              "3",
-              "14",
-              "25",
-              "11"
+              "17",
+              "18",
+              "19",
+              "21"
             ],
-            "answer": "3",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Subtract 11 from both sides: x = 14 − 11 = 3."
+            "answer": "19",
+            "clue": "Apply the rule one step at a time, starting from the first term.",
+            "explanation": "Term 2 = 4 × 2 + 1 = 9. Term 3 = 9 × 2 + 1 = 19."
           },
           {
-            "prompt": "If x = 4, what is the value of 9x + 7?",
+            "prompt": "For the function g(x) = 2x + 3, what is g(5)?",
             "choices": [
-              "52",
-              "43",
-              "20",
-              "36"
+              "10",
+              "11",
+              "13",
+              "15"
             ],
-            "answer": "43",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "9 × 4 + 7 = 36 + 7 = 43."
+            "answer": "13",
+            "clue": "Substitute x = 5 into the rule and work out the output.",
+            "explanation": "g(5) = 2(5) + 3 = 10 + 3 = 13."
           },
           {
             "prompt": "Find the next term: 5, 7, 9, 11, ___",
@@ -1770,7 +1770,7 @@
               "13"
             ],
             "answer": "13",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "The rule is add 2 each time, so the next term is 11 + 2 = 13."
           }
         ]

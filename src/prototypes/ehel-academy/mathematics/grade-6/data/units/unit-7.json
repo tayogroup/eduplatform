@@ -58,44 +58,80 @@
     "Choose sensible units of area (mm², cm², m², km²) and convert between them.",
     "Convert between decimal hours (like 2.5 hours) and hours and minutes (like 2 hours 30 minutes).",
     "Add and subtract time intervals and find how long an activity lasts.",
-    "Solve real-world problems involving area and time, showing your working clearly."
+    "Solve real-world problems involving area and time, showing your working clearly.",
+    "Use units of time including decades and centuries, and compare times shown on digital and analogue clocks.",
+    "Use standard units of length, mass and capacity written to 2 or 3 decimal places, and convert between units, including writing a decimal measurement in mixed form such as 1.245 m = 1 m 24.5 cm.",
+    "Interpret scales on measuring instruments and diagrams, measure and draw lengths to the nearest millimetre, and use the imperial unit of the mile alongside its approximate metric equivalent (1 mile ≈ 1.6 km).",
+    "Calculate the perimeter of rectilinear shapes, including compound shapes made from joined rectangles, by adding the lengths of the outer sides.",
+    "Estimate the area of an irregular shape by counting whole squares and part-squares on a grid.",
+    "Read and use timetables written in the 24-hour clock to find journey durations, and calculate the time in a different time zone given each zone's offset from GMT."
   ],
   "concepts": [
     {
       "id": "concept-1-what-area-really-means",
       "title": "What Area Really Means",
-      "explanation": "Area is the amount of flat space inside a two-dimensional shape. Think of area as the amount of material you would need to cover a surface completely. When Halima spreads butter across a piece of anjero, the area tells her how much butter is needed. When a painter coats a wall in Nairobi, the area tells him how much paint to buy. Area is about *covering*, and covering is something you can picture. Because a flat shape has two dimensions, length and width, area is always measured in square units. Imagine a pile of…",
-      "example": "The small raised '2' in a unit like cm² or m² is called a superscript, and it reminds us that area involves two dimensions multiplied together. It is a signal, not a decoration. Whenever you write an area, you must…"
+      "explanation": "Area is the amount of flat space inside a two-dimensional shape. Think of area as the amount of material you would need to cover a surface completely. When Halima spreads butter across a piece of anjero, the area tells her how much butter is needed. When a painter coats a wall in Nairobi, the area tells him how much paint to buy. Area is about *covering*, and covering is something you can picture.\n\nBecause a flat shape has two dimensions, length and width, area is always measured in square units. Imagine a pile of identical square tiles, each one measuring 1 cm along every side. Each tile has an area of exactly 1 square centimetre (1 cm²). If you arrange these tiles to cover a surface completely, with no gaps and no overlaps, then the number of tiles you use is the area in square centimetres. This is why we can find area by counting squares on grid paper: each little square is one square unit.\n\nThe small raised '2' in a unit like cm² or m² is called a superscript, and it reminds us that area involves two dimensions multiplied together. It is a signal, not a decoration. Whenever you write an area, you must include the square unit, because a bare number like '40' does not tell anyone whether you mean 40 cm² or 40 m², and those are wildly different sizes.",
+      "example": "It is easy to confuse area with perimeter, so let us be clear from the start. Perimeter is the distance all the way around the *edge* of a shape, measured in ordinary length units like centimetres or metres. Area is the space *inside* the shape, measured in square units. If you walked around the boundary of a football pitch, you would measure its perimeter. If you wanted to lay turf across the whole pitch, you would need its area. Keep the two ideas separate, and you will avoid one of the most common mistakes in this whole unit."
     },
     {
       "id": "concept-2-area-of-rectangles-and-squares",
       "title": "Area of Rectangles and Squares",
-      "explanation": "A rectangle is one of the most common shapes we ever need to measure. Rooms, fields, books, screens, doors, prayer mats and market stalls are all rectangles. The rule for the area of a rectangle is short and powerful: ⭐ Rectangle Area Formula Area = Length × Width Multiply the two side lengths together, then write the square unit.",
-      "example": "Why does multiplying work? Imagine filling the rectangle with 1 cm² tiles. Each row contains as many tiles as the width, and there are as many rows as the length. So the total number of tiles is length rows of width…"
+      "explanation": "A rectangle is one of the most common shapes we ever need to measure. Rooms, fields, books, screens, doors, prayer mats and market stalls are all rectangles. The rule for the area of a rectangle is short and powerful:\n\n⭐ Rectangle Area Formula Area = Length × Width Multiply the two side lengths together, then write the square unit.\n\nWhy does multiplying work? Imagine filling the rectangle with 1 cm² tiles. Each row contains as many tiles as the width, and there are as many rows as the length. So the total number of tiles is length rows of width tiles, which is exactly length × width. For a rectangle that is 4 cm long and 3 cm wide, each row holds 4 tiles and there are 3 rows, giving 3 × 4 = 12 tiles, so the area is 12 cm². Multiplying is just a fast way of counting all those squares at once.\n\nHere is a careful, step-by-step method you can use every time. First, identify the length and the width, and check that both are in the same unit (never multiply centimetres by metres). Second, multiply the two measurements. Third, write the answer with the correct square unit. Fourth, check that the answer looks sensible for the size of the shape.\n\nLet us work through three examples. Example A: A rectangular garden is 8 m long and 5 m wide, so its area is 8 m × 5 m = 40 m². Example B: A book cover is 25 cm by 18 cm, so its area is 25 × 18 = 450 cm². Example C: A field near Garissa is 120 m by 80 m, so its area is 120 × 80 = 9,600 m². Notice that it does not matter which side you call the length and which you call the width; because multiplication can be done in any order, 8 × 5 and 5 × 8 both give 40.\n\nA square is a special rectangle in which all four sides are equal. That makes its area formula even simpler: Area = Side × Side, sometimes written as Side². A square tile with sides of 10 cm has an area of 10 × 10 = 100 cm². A square playground with sides of 25 m has an area of 25 × 25 = 625 m². This is exactly why we call our units 'square' units in the first place: they are based on a square whose sides are one unit long.",
+      "example": "Sometimes a problem gives you the area and one side, and asks for the missing side. Because area = length × width, you can find a missing side by dividing: length = area ÷ width. For example, if a rectangle has an area of 48 cm² and a length of 12 cm, then its width is 48 ÷ 12 = 4 cm. Division 'undoes' the multiplication that made the area. For a square, finding the side from the area means asking, 'What number multiplied by itself gives this area?' Since 9 × 9 = 81, a square of area 81 cm² has sides of 9 cm."
     },
     {
       "id": "concept-3-area-of-triangles",
       "title": "Area of Triangles",
-      "explanation": "Triangles are everywhere: in roof shapes, road signs, sails, flags and bracing struts. To find their area, you need one beautiful idea that connects triangles back to rectangles you already understand. The key relationship: any triangle has exactly half the area of a rectangle with the same base and height. Picture a rectangle, then draw one diagonal line from a corner to the opposite corner. That diagonal splits the rectangle into two identical triangles. Since the two triangles together make the whole rectangle,…",
-      "example": "⭐ Triangle Area Formula Area = (Base × Height) ÷ 2 This is the same as one half of Base × Height."
+      "explanation": "Triangles are everywhere: in roof shapes, road signs, sails, flags and bracing struts. To find their area, you need one beautiful idea that connects triangles back to rectangles you already understand.\n\nThe key relationship: any triangle has exactly half the area of a rectangle with the same base and height. Picture a rectangle, then draw one diagonal line from a corner to the opposite corner. That diagonal splits the rectangle into two identical triangles. Since the two triangles together make the whole rectangle, each one must be exactly half of it. This is why the triangle formula has a 'divide by 2' in it.\n\n⭐ Triangle Area Formula Area = (Base × Height) ÷ 2 This is the same as one half of Base × Height.\n\nTwo words need care here. The base can be any side of the triangle you choose. The height is the perpendicular distance from that base straight up to the opposite corner, always measured at a right angle to the base. The height is not the slanted side; it is the straight-up distance. Depending on the triangle, the height might fall inside the triangle, along one side, or even outside it, but the rule never changes: height is measured perpendicular to the base.\n\nHere is the step-by-step method. First, choose a base and identify its length. Second, find the height that is perpendicular to that base. Third, multiply base by height. Fourth, divide the result by 2. Fifth, write the square unit. Sixth, check your answer is less than the area of the matching rectangle, because a triangle is only half of it.\n\nLet us practise. Example A: A triangle has base 6 cm and height 4 cm, so its area is (6 × 4) ÷ 2 = 24 ÷ 2 = 12 cm². Example B: A triangular garden plot near Berbera has base 10 m and height 8 m, so its area is (10 × 8) ÷ 2 = 80 ÷ 2 = 40 m². Example C: A triangular sail has base 3 m and height 5 m, so its area is (3 × 5) ÷ 2 = 15 ÷ 2 = 7.5 m². Do not be surprised by the decimal; halving an odd product often gives a decimal answer, and that is perfectly correct.",
+      "example": "You can also work backwards. If a triangle has area 30 cm² and base 10 cm, what is its height? Undo the formula: multiply the area by 2 to get 60, then divide by the base to get height = (2 × 30) ÷ 10 = 6 cm. A right-angled triangle is especially friendly, because its two shorter sides (the legs) are already perpendicular to each other, so one leg is the base and the other is the height. A right triangle with legs 6 cm and 8 cm has area (6 × 8) ÷ 2 = 24 cm²."
     },
     {
       "id": "concept-4-composite-shapes",
       "title": "Composite Shapes",
-      "explanation": "Many real shapes are not simple rectangles or triangles. A house outline might be a rectangle with a triangular roof on top. A garden might be a large rectangle with a triangular flower bed cut from one corner. We call these composite shapes, because they are composed of simpler pieces joined together. The trick is always the same: break the shape into rectangles and triangles, find each area separately, then add the parts (if pieces are joined) or subtract (if a piece is removed). Example (adding): A shape is…",
-      "example": "Example (subtracting): A rectangular garden is 12 m long and 8 m wide, and a triangular flower bed with base 4 m and height 3 m sits in one corner. What is the area of the garden that is left over? First find the whole…"
+      "explanation": "Many real shapes are not simple rectangles or triangles. A house outline might be a rectangle with a triangular roof on top. A garden might be a large rectangle with a triangular flower bed cut from one corner. We call these composite shapes, because they are composed of simpler pieces joined together. The trick is always the same: break the shape into rectangles and triangles, find each area separately, then add the parts (if pieces are joined) or subtract (if a piece is removed).\n\nExample (adding): A shape is made of a rectangle 8 cm by 5 cm with a triangle of base 8 cm and height 4 cm sitting on top, like a simple house. The rectangle has area 8 × 5 = 40 cm². The triangle has area (8 × 4) ÷ 2 = 16 cm². The total area is 40 + 16 = 56 cm². Because the roof is added to the walls, we add the two areas together.\n\nExample (subtracting): A rectangular garden is 12 m long and 8 m wide, and a triangular flower bed with base 4 m and height 3 m sits in one corner. What is the area of the garden that is left over? First find the whole garden: 12 × 8 = 96 m². Then find the flower bed: (4 × 3) ÷ 2 = 6 m². Because the flower bed is taken out of the garden, we subtract: 96 − 6 = 90 m² of remaining garden space.",
+      "example": "When you meet a composite shape, take your time. Sketch it, then draw lines that cut it into pieces you recognise. Label every length you know. Work out one piece at a time, writing each area down before you combine them. Decide carefully whether each piece should be added or subtracted. This calm, one-piece-at-a-time approach turns a frightening-looking shape into a set of easy little problems."
     },
     {
       "id": "concept-5-units-of-area-and-converting-between-them",
       "title": "Units of Area and Converting Between Them",
-      "explanation": "Different sizes of space call for different units of area. Very small areas, like the cross-section of a wire, are measured in square millimetres (mm²). Everyday objects like phone screens and book covers use square centimetres (cm²). Rooms, gardens and stalls use square metres (m²). Whole cities and regions use square kilometres (km²). Choosing a sensible unit keeps the numbers from becoming awkwardly huge or tiny. Converting area units needs one important warning. Because area has two dimensions, the conversion…",
-      "example": "Here are the conversions you will use most. 1 cm² = 100 mm² (because 10 × 10). 1 m² = 10,000 cm² (because 100 × 100). 1 km² = 1,000,000 m² (because 1,000 × 1,000). To change a larger unit into a smaller one you…"
+      "explanation": "Different sizes of space call for different units of area. Very small areas, like the cross-section of a wire, are measured in square millimetres (mm²). Everyday objects like phone screens and book covers use square centimetres (cm²). Rooms, gardens and stalls use square metres (m²). Whole cities and regions use square kilometres (km²). Choosing a sensible unit keeps the numbers from becoming awkwardly huge or tiny.\n\nConverting area units needs one important warning. Because area has two dimensions, the conversion factor must be applied twice, once for each dimension. Since 1 m = 100 cm, a square metre is 100 cm by 100 cm, which is 100 × 100 = 10,000 cm². It is a very common mistake to think 1 m² is only 100 cm², but that would be a line, not a square. Always square the length conversion factor.",
+      "example": "Here are the conversions you will use most. 1 cm² = 100 mm² (because 10 × 10). 1 m² = 10,000 cm² (because 100 × 100). 1 km² = 1,000,000 m² (because 1,000 × 1,000). To change a larger unit into a smaller one you multiply; to change a smaller unit into a larger one you divide. For example, 3 m² = 3 × 10,000 = 30,000 cm², while 5,000 cm² = 5,000 ÷ 10,000 = 0.5 m². And 2.5 km² = 2.5 × 1,000,000 = 2,500,000 m²."
     },
     {
       "id": "concept-6-understanding-time-and-its-units",
       "title": "Understanding Time and Its Units",
-      "explanation": "Now we turn to time. Time is one of the most useful measurements in daily life, yet it behaves differently from most other measurements. Length, mass and money all follow the neat base-ten pattern, where ten of one unit makes the next. Time does not. There are 60 seconds in a minute, 60 minutes in an hour, and 24 hours in a day. These unusual bases come from ancient astronomy and Babylonian mathematics, and they are why time calculations need extra care. It helps to know the basic relationships by heart. 1 minute…",
-      "example": "Time can be written in two different ways that mean the same thing. Mixed units look like '2 hours and 30 minutes' or '1 hour and 45 minutes'. Decimal hours look like '2.5 hours' or '1.75 hours'. Both describe the same…"
+      "explanation": "Now we turn to time. Time is one of the most useful measurements in daily life, yet it behaves differently from most other measurements. Length, mass and money all follow the neat base-ten pattern, where ten of one unit makes the next. Time does not. There are 60 seconds in a minute, 60 minutes in an hour, and 24 hours in a day. These unusual bases come from ancient astronomy and Babylonian mathematics, and they are why time calculations need extra care. It helps to know the basic relationships by heart. 1 minute… Time is also measured in much longer units for describing history and dates: a decade is a period of 10 years, and a century is a period of 100 years, so the 1990s (1990-1999) is one decade, and the years 1901 to 2000 make up one century. When comparing clock readings, remember that a digital clock displays the time directly as numbers, such as 14:35, while an analogue clock shows the time using a face with moving hour and minute hands; to read an analogue clock, the short hour hand shows roughly which hour it is, and the long minute hand shows how many minutes past that hour, counting each numbered mark as 5 minutes. Both clocks can show exactly the same moment in time — an analogue clock reading 'twenty minutes past two' shows the same time as a digital clock reading 14:20, once you have decided whether it is morning (before midday) or afternoon (after midday).",
+      "example": "Time can be written in two different ways that mean the same thing. Mixed units look like '2 hours and 30 minutes' or '1 hour and 45 minutes'. Decimal hours look like '2.5 hours' or '1.75 hours'. Both describe the same length of time, but they suit different jobs. Mixed units are natural for reading a clock or planning your day, while decimal hours are convenient for multiplying, dividing and adding on a calculator. The skill you need is to move confidently between the two forms."
+    },
+    {
+      "id": "concept-7-length-mass-and-capacity-units-conversions-and-scales",
+      "title": "Length, Mass and Capacity: Units, Conversions and Scales",
+      "explanation": "Alongside area and time, everyday life constantly uses three more kinds of measurement: length (how long or how far), mass (how heavy something is) and capacity (how much liquid a container holds). Like area, these use a base-ten system of units, so converting between them uses multiplying or dividing by powers of ten. For length: 10 millimetres (mm) = 1 centimetre (cm), 100 centimetres = 1 metre (m), and 1000 metres = 1 kilometre (km). For mass: 1000 grams (g) = 1 kilogram (kg), and 1000 kilograms = 1 tonne. For capacity: 1000 millilitres (ml) = 1 litre (l). To convert from a larger unit to a smaller one, multiply by the conversion number (for example, metres to centimetres, multiply by 100); to convert from a smaller unit to a larger one, divide (for example, centimetres to metres, divide by 100). Measurements are often written with up to 2 or 3 decimal places for extra precision, such as 2.345 kg or 1.5 litres, and you may need to rewrite a decimal measurement as mixed units. For example, 1.245 m means 1 whole metre plus 0.245 of a metre; since 0.245 m × 100 = 24.5 cm, we can write 1.245 m as 1 m 24.5 cm. The same idea works for any unit: split the measurement into its whole-unit part and its decimal part, then convert only the decimal part into the smaller unit.",
+      "example": "Convert 1.245 m into metres and centimetres. The whole-number part, 1, stays as 1 m. The decimal part, 0.245 m, is converted to centimetres by multiplying by 100: 0.245 × 100 = 24.5 cm. So 1.245 m = 1 m 24.5 cm. Now convert 2.6 kg into kilograms and grams: the whole part is 2 kg, and the decimal part 0.6 kg × 1000 = 600 g, so 2.6 kg = 2 kg 600 g."
+    },
+    {
+      "id": "concept-8-reading-scales-measuring-precisely-and-imperial-units",
+      "title": "Reading Scales, Measuring Precisely, and Imperial Units",
+      "explanation": "Many real measuring tools — rulers, kitchen scales, measuring jugs, thermometers and road signs — show a scale with marks at regular intervals, and not every value is individually labelled. To read a scale accurately, work out what each small gap between marked lines is worth: count how many small divisions lie between two labelled numbers, then divide the difference between those numbers by the number of divisions. For example, if a scale is labelled every 100 g but has 5 small divisions between each label, each small division is worth 100 ÷ 5 = 20 g. When measuring a length with a ruler, always line up one end of the object exactly with the 0 mark, then read off the value at the other end to the nearest millimetre — the smallest marks on most rulers. Alongside metric units, a small number of imperial units are still used in everyday life in some countries, especially for road distances and some sports. The most common is the mile, a unit of length. One mile is approximately equal to 1.6 kilometres (or, going the other way, 1 kilometre is approximately 0.62 miles). Because this conversion is only approximate, imperial-to-metric conversions in this course use the 'approximately equal to' sign, ≈, rather than an exact equals sign.",
+      "example": "A road sign says the next town is 5 miles away. Approximately how far is that in kilometres? Multiply by 1.6: 5 × 1.6 = 8 km, so the town is approximately 8 km away. Now read a ruler: an object's edge lines up with the 0 mm mark, and its other end falls exactly on the mark for 73 mm. Written to the nearest millimetre, the object is 73 mm (or 7.3 cm) long."
+    },
+    {
+      "id": "concept-9-perimeter-of-simple-and-compound-shapes",
+      "title": "Perimeter of Simple and Compound Shapes",
+      "explanation": "Perimeter is the total distance all the way around the outside edge of a shape — different from area, which measures the space inside. To find the perimeter of any polygon, simply add together the lengths of all of its sides. For a rectangle, this can be written as a shortcut formula: Perimeter = 2 × (Length + Width), because a rectangle has two pairs of equal sides. For a square, Perimeter = 4 × Side, since all four sides are equal. For any other shape, including irregular polygons, add every side length in turn; if a side length is missing, it can sometimes be worked out using opposite or parallel sides, since in a rectilinear shape (a shape made only of straight lines that meet at right angles), the total length of all the sides going one way must equal the total length of all the sides going the other way. Compound shapes, made by joining rectangles together, need extra care: the perimeter is only the distance around the outside — any edges where two rectangles are joined together on the inside are not part of the perimeter, since a robot walking around the outside boundary would never travel along an internal joining edge.",
+      "example": "Find the perimeter of a rectangle 9 m long and 4 m wide: Perimeter = 2 × (9 + 4) = 2 × 13 = 26 m. Now find the perimeter of an L-shaped compound shape made from a 10 m by 6 m rectangle with a 4 m by 3 m rectangle removed from one corner. Even though a piece is removed, every outer edge is still walked around, so add all seven outer side lengths of the L-shape directly, rather than simply adding the perimeters of the two rectangles, since the cut edges where the shapes met are not part of the outer boundary."
+    },
+    {
+      "id": "concept-10-estimating-area-of-irregular-shapes-by-counting-squares",
+      "title": "Estimating the Area of Irregular Shapes by Counting Squares",
+      "explanation": "Not every shape is a neat rectangle or triangle with a formula. Irregular shapes — like the outline of a leaf, a lake, or a country on a map — have curved or uneven edges, so there is no exact formula for their area. Instead, we estimate the area by placing the shape on a grid of equal squares (such as a centimetre-squared grid) and counting. The method is: count every square that is fully inside the shape and add 1 for each. Then look at the squares the outline passes through (part-squares): a common and simple rule is to count any square that is at least half covered as a whole square, and ignore any square that is less than half covered. Add the full squares and the counted part-squares together for your estimate. Because this method involves judgement about 'at least half', it always gives an estimate rather than an exact answer, and different people might get slightly different (but close) answers for the same shape — this is expected, which is why we call it an estimate, not a calculation.",
+      "example": "A shape drawn on a 1 cm² grid fully covers 14 squares, and its edge passes through 10 more squares, of which 6 are estimated to be at least half covered and 4 are estimated to be less than half covered. The area estimate is: 14 (full squares) + 6 (part-squares counted as whole) = 20 cm². The 4 mostly-empty part-squares are not counted."
+    },
+    {
+      "id": "concept-11-timetables-and-time-zones",
+      "title": "Timetables and Time Zones",
+      "explanation": "A timetable is a table that lists times when events happen, most commonly departure and arrival times for buses, trains, flights or lessons. Timetables are usually written using the 24-hour clock to avoid any confusion between morning and afternoon: instead of writing '3:45 pm', a 24-hour timetable writes '15:45', found by adding 12 hours to any afternoon or evening time from 1 pm onwards (3 pm + 12 hours = 15:00, so 3:45 pm = 15:45). Midnight is written as 00:00 and midday as 12:00. To read a timetable, find your starting point (the row or column for your departure station or event) and your destination, then read across or down to find the matching time. To find the length of a journey from a timetable, subtract the departure time from the arrival time, taking care when the subtraction crosses an hour boundary — for example, from 09:50 to 11:15, work out the time from 09:50 to 10:00 first (10 minutes), then add the time from 10:00 to 11:15 (1 hour 15 minutes), for a total of 1 hour 25 minutes. Time zones exist because the Earth is a rotating sphere, so different parts of the world experience daytime and night-time at different moments: it might be midday in one country while it is still the middle of the night on the opposite side of the world. To manage this, the world is divided into time zones, and each zone's clock time is set a fixed number of hours ahead of or behind a reference time called Greenwich Mean Time (GMT), also called Coordinated Universal Time (UTC). A time zone written as 'GMT+3' is 3 hours ahead of GMT, and 'GMT−5' is 5 hours behind GMT. To work out the time in another zone, add or subtract the difference between the two zones' offsets.",
+      "example": "A flight leaves Hargeisa (time zone GMT+3) at 14:00 local time and takes 4 hours to reach Cairo (time zone GMT+2). First find the arrival time in Hargeisa's own time zone: 14:00 + 4 hours = 18:00. Now convert to Cairo time: Cairo is 1 hour behind Hargeisa (GMT+2 is 1 hour less than GMT+3), so subtract 1 hour: 18:00 − 1 hour = 17:00. The flight lands at 17:00 Cairo time. Now read a bus timetable: a bus departs at 07:35 and arrives at 09:10. The journey time is found by counting from 07:35 to 08:00 (25 minutes) and then from 08:00 to 09:10 (1 hour 10 minutes), giving a total journey time of 1 hour 35 minutes."
     }
   ],
   "explorations": [
@@ -104,72 +140,72 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "What Area Really Means",
-      "context": "Area is the amount of flat space inside a two-dimensional shape. Think of area as the amount of material you would need to cover a surface completely. When Halima spreads butter across a piece of anjero, the area tells her how much butter is needed. When a…",
+      "context": "Area is the amount of flat space inside a two-dimensional shape. Think of area as the amount of material you would need to cover a surface completely. When Halima spreads butter across a piece of anjero, the area tells her how much butter is needed.",
       "prompt": "Find the area of a rectangle 8 cm long and 5 cm wide.",
       "answer": "1) 8 × 5 = 40 cm².",
       "modelType": "model-1",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) 8 × 5 = 40 cm²."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "explanation": "What Area Really Means: Area is the amount of flat space inside a two-dimensional shape. Think of area as the amount of material you would need to cover a surface completely. When Halima spreads butter across a piece of anjero, the area tells her how much butter is needed. When a painter coats a wall in Nairobi, the area tells him how much paint to buy."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Area of Rectangles and Squares",
-      "context": "A rectangle is one of the most common shapes we ever need to measure. Rooms, fields, books, screens, doors, prayer mats and market stalls are all rectangles. The rule for the area of a rectangle is short and powerful: ⭐ Rectangle Area Formula Area = Length ×…",
+      "context": "A rectangle is one of the most common shapes we ever need to measure. Rooms, fields, books, screens, doors, prayer mats and market stalls are all rectangles.",
       "prompt": "Find the area of a square with sides of 7 cm.",
       "answer": "7 × 7 = 49 cm².",
       "modelType": "model-2",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "7 × 7 = 49 cm²."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "explanation": "Area of Rectangles and Squares: A rectangle is one of the most common shapes we ever need to measure. Rooms, fields, books, screens, doors, prayer mats and market stalls are all rectangles. The rule for the area of a rectangle is short and powerful:"
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Area of Triangles",
-      "context": "Triangles are everywhere: in roof shapes, road signs, sails, flags and bracing struts. To find their area, you need one beautiful idea that connects triangles back to rectangles you already understand. The key relationship: any triangle has exactly half the…",
+      "context": "Triangles are everywhere: in roof shapes, road signs, sails, flags and bracing struts. To find their area, you need one beautiful idea that connects triangles back to rectangles you already understand.",
       "prompt": "Find the area of a triangle with base 10 cm and height 6 cm.",
-      "answer": "(10 ×",
+      "answer": "(10 × 6) ÷ 2 = 30 cm².",
       "modelType": "model-3",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "(10 ×"
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "explanation": "Area of Triangles: Triangles are everywhere: in roof shapes, road signs, sails, flags and bracing struts. To find their area, you need one beautiful idea that connects triangles back to rectangles you already understand."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Composite Shapes",
-      "context": "Many real shapes are not simple rectangles or triangles. A house outline might be a rectangle with a triangular roof on top. A garden might be a large rectangle with a triangular flower bed cut from one corner. We call these composite shapes, because they are…",
+      "context": "Many real shapes are not simple rectangles or triangles. A house outline might be a rectangle with a triangular roof on top. A garden might be a large rectangle with a triangular flower bed cut from one corner.",
       "prompt": "How many minutes are in 2.5 hours?",
-      "answer": "÷ 2 = 30 cm².",
+      "answer": "2.5 × 60 = 150 minutes.",
       "modelType": "model-4",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "÷ 2 = 30 cm²."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "explanation": "Composite Shapes: Many real shapes are not simple rectangles or triangles. A house outline might be a rectangle with a triangular roof on top. A garden might be a large rectangle with a triangular flower bed cut from one corner. We call these composite shapes, because they are composed of simpler pieces joined together."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Units of Area and Converting Between Them",
-      "context": "Different sizes of space call for different units of area. Very small areas, like the cross-section of a wire, are measured in square millimetres (mm²). Everyday objects like phone screens and book covers use square centimetres (cm²). Rooms, gardens and…",
+      "context": "Different sizes of space call for different units of area. Very small areas, like the cross-section of a wire, are measured in square millimetres (mm²). Everyday objects like phone screens and book covers use square centimetres (cm²).",
       "prompt": "Convert 3 hours 45 minutes into decimal hours.",
-      "answer": "2.5 × 60 = 150 minutes.",
+      "answer": "45 ÷ 60 = 0.75, so 3 hours 45 minutes = 3.75 hours.",
       "modelType": "model-5",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "2.5 × 60 = 150 minutes."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "explanation": "Units of Area and Converting Between Them: Different sizes of space call for different units of area. Very small areas, like the cross-section of a wire, are measured in square millimetres (mm²). Everyday objects like phone screens and book covers use square centimetres (cm²). Rooms, gardens and stalls use square metres (m²). Whole cities and regions use square kilometres (km²)."
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Understanding Time and Its Units",
-      "context": "Now we turn to time. Time is one of the most useful measurements in daily life, yet it behaves differently from most other measurements. Length, mass and money all follow the neat base-ten pattern, where ten of one unit makes the next. Time does not. There…",
+      "context": "Now we turn to time. Time is one of the most useful measurements in daily life, yet it behaves differently from most other measurements. Length, mass and money all follow the neat base-ten pattern, where ten of one unit makes the next. Time does not.",
       "prompt": "A rectangular playground is 25 m long and 18 m wide. Find its area.",
       "answer": "1) 25 × 18 = 450 m².",
       "modelType": "model-6",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) 25 × 18 = 450 m²."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "explanation": "Understanding Time and Its Units: Now we turn to time. Time is one of the most useful measurements in daily life, yet it behaves differently from most other measurements. Length, mass and money all follow the neat base-ten pattern, where ten of one unit makes the next. Time does not. There are 60 seconds in a minute, 60 minutes in an hour, and 24 hours in a day."
     }
   ],
   "visualModels": [
@@ -178,7 +214,7 @@
       "outcomeId": "lo01",
       "title": "What Area Really Means",
       "modelType": "concept-model-1",
-      "purpose": "Area is the amount of flat space inside a two-dimensional shape. Think of area as the amount of material you would need to cover a surface completely. When Halima spreads butter across a piece of anjero, the area tells…",
+      "purpose": "Area is the amount of flat space inside a two-dimensional shape. Think of area as the amount of material you would need to cover a surface completely.",
       "defaultNumber": null
     },
     {
@@ -186,7 +222,7 @@
       "outcomeId": "lo02",
       "title": "Area of Rectangles and Squares",
       "modelType": "concept-model-2",
-      "purpose": "A rectangle is one of the most common shapes we ever need to measure. Rooms, fields, books, screens, doors, prayer mats and market stalls are all rectangles. The rule for the area of a rectangle is short and powerful: ⭐…",
+      "purpose": "A rectangle is one of the most common shapes we ever need to measure. Rooms, fields, books, screens, doors, prayer mats and market stalls are all rectangles.",
       "defaultNumber": null
     },
     {
@@ -194,7 +230,7 @@
       "outcomeId": "lo03",
       "title": "Area of Triangles",
       "modelType": "concept-model-3",
-      "purpose": "Triangles are everywhere: in roof shapes, road signs, sails, flags and bracing struts. To find their area, you need one beautiful idea that connects triangles back to rectangles you already understand. The key…",
+      "purpose": "Triangles are everywhere: in roof shapes, road signs, sails, flags and bracing struts. To find their area, you need one beautiful idea that connects triangles back to rectangles you already understand.",
       "defaultNumber": null
     },
     {
@@ -202,7 +238,7 @@
       "outcomeId": "lo04",
       "title": "Composite Shapes",
       "modelType": "concept-model-4",
-      "purpose": "Many real shapes are not simple rectangles or triangles. A house outline might be a rectangle with a triangular roof on top. A garden might be a large rectangle with a triangular flower bed cut from one corner. We call…",
+      "purpose": "Many real shapes are not simple rectangles or triangles. A house outline might be a rectangle with a triangular roof on top. A garden might be a large rectangle with a triangular flower bed cut from one corner.",
       "defaultNumber": null
     },
     {
@@ -210,7 +246,7 @@
       "outcomeId": "lo05",
       "title": "Units of Area and Converting Between Them",
       "modelType": "concept-model-5",
-      "purpose": "Different sizes of space call for different units of area. Very small areas, like the cross-section of a wire, are measured in square millimetres (mm²). Everyday objects like phone screens and book covers use square…",
+      "purpose": "Different sizes of space call for different units of area. Very small areas, like the cross-section of a wire, are measured in square millimetres (mm²).",
       "defaultNumber": null
     },
     {
@@ -218,7 +254,7 @@
       "outcomeId": "lo06",
       "title": "Understanding Time and Its Units",
       "modelType": "concept-model-6",
-      "purpose": "Now we turn to time. Time is one of the most useful measurements in daily life, yet it behaves differently from most other measurements. Length, mass and money all follow the neat base-ten pattern, where ten of one unit…",
+      "purpose": "Now we turn to time. Time is one of the most useful measurements in daily life, yet it behaves differently from most other measurements.",
       "defaultNumber": null
     }
   ],
@@ -228,7 +264,7 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "title": "How to find the area of a triangle",
-      "example": "A prayer mat is 120 cm long and 60 cm wide. What is its area?",
+      "example": "A triangular flag has base 16 cm and height 9 cm. Find its area.",
       "steps": [
         "Choose a base and note its length.",
         "Find the height that is perpendicular (at a right angle) to that base.",
@@ -253,7 +289,7 @@
       "outcomeId": "lo03",
       "difficulty": "Core",
       "title": "How to solve a composite shape",
-      "example": "A triangular flag has base 16 cm and height 9 cm. Find its area.",
+      "example": "A rectangular garden is 12 m long and 8 m wide, with a triangular flower bed of base 4 m and height 3 m cut from one corner. What is the area of the garden that is left over?",
       "steps": [
         "Split the shape into rectangles and triangles.",
         "Find the area of each simple piece separately.",
@@ -266,7 +302,7 @@
       "outcomeId": "lo04",
       "difficulty": "Core",
       "title": "How to convert time",
-      "example": "A triangle has area 42 cm² and height 12 cm. What is its base?",
+      "example": "Convert 4.25 hours into hours and minutes.",
       "steps": [
         "Decimal to mixed: keep whole hours, multiply the decimal by 60 for minutes.",
         "Mixed to decimal: keep whole hours, divide the minutes by 60, then add.",
@@ -294,7 +330,7 @@
       "steps": [
         "Solution: Since 1 m² = 10,000 cm², we multiply: 3 × 10,000 = 30,000 cm².",
         "We multiplied because we are moving from a larger unit to a smaller one.",
-        "Check the area unit conversion result carefully."
+        "Check by dividing your answer by 10,000 — it should return the original 3 m²."
       ]
     }
   ],
@@ -385,15 +421,15 @@
       "difficulty": "Challenge",
       "title": "Convert 5 hours 12 minutes into decimal hours",
       "prompt": "Convert 5 hours 12 minutes into decimal hours.",
-      "solution": "÷ 9 = 8 cm."
+      "solution": "Solution: Keep the 5 hours. Divide the minutes by 60: 12 ÷ 60 = 0.2. Add: 5 + 0.2 = 5.2 hours."
     },
     {
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "title": "Practice 12",
+      "title": "Converting between square metres and square centimetres",
       "prompt": "Convert 3 m² into square centimetres, and 5,000 cm² into square metres.",
-      "solution": "0.25 × 60 = 15 min, so 4 hours 15 minutes."
+      "solution": "Solution: 1 m² = 10,000 cm², so 3 m² = 3 × 10,000 = 30,000 cm². Going the other way, 5,000 cm² = 5,000 ÷ 10,000 = 0.5 m²."
     }
   ],
   "practice": [
@@ -402,84 +438,84 @@
       "level": "Warm-up",
       "prompt": "Find the area of a rectangle 8 cm long and 5 cm wide.",
       "answer": "1) 8 × 5 = 40 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p02",
       "level": "Warm-up",
       "prompt": "Find the area of a square with sides of 7 cm.",
       "answer": "7 × 7 = 49 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p03",
       "level": "Warm-up",
       "prompt": "Find the area of a triangle with base 10 cm and height 6 cm.",
-      "answer": "(10 ×",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "(10 × 6) ÷ 2 = 30 cm².",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p04",
       "level": "Warm-up",
       "prompt": "How many minutes are in 2.5 hours?",
-      "answer": "÷ 2 = 30 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "2.5 × 60 = 150 minutes.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p05",
       "level": "Warm-up",
       "prompt": "Convert 3 hours 45 minutes into decimal hours.",
-      "answer": "2.5 × 60 = 150 minutes.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "45 ÷ 60 = 0.75, so 3 hours 45 minutes = 3.75 hours.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p06",
       "level": "Core",
       "prompt": "A rectangular playground is 25 m long and 18 m wide. Find its area.",
       "answer": "1) 25 × 18 = 450 m².",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p07",
       "level": "Core",
       "prompt": "A rectangle has area 72 cm² and length 8 cm. Find its width.",
       "answer": "72 ÷ 8 = 9 cm.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p08",
       "level": "Core",
       "prompt": "A triangle has base 14 cm and height 8 cm. Find its area.",
-      "answer": "(14 ×",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "(14 × 8) ÷ 2 = 56 cm².",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p09",
       "level": "Core",
       "prompt": "A triangle has area 36 cm² and base 9 cm. Find its height.",
-      "answer": "÷ 2 = 56 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "(2 × 36) ÷ 9 = 8 cm.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p10",
       "level": "Core",
       "prompt": "Convert 4.25 hours into hours and minutes.",
-      "answer": "(2 ×",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "Keep 4 hours. 0.25 × 60 = 15 minutes, so 4.25 hours = 4 hours 15 minutes.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p11",
       "level": "Core",
       "prompt": "Convert 5 hours 12 minutes into decimal hours.",
-      "answer": "÷ 9 = 8 cm.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "12 ÷ 60 = 0.2, so 5 hours 12 minutes = 5.2 hours.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p12",
       "level": "Core",
       "prompt": "Convert 3 m² into square centimetres, and 5,000 cm² into square metres.",
-      "answer": "0.25 × 60 = 15 min, so 4 hours 15 minutes.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "3 × 10,000 = 30,000 cm²; 5,000 ÷ 10,000 = 0.5 m².",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     }
   ],
   "activities": [
@@ -520,19 +556,19 @@
       "steps": [
         "On some cards write decimal hours (like 2.5, 1.75, 3.25). On others write the matching mixed times (2 h 30 min, 1 h 45 min, 3 h 15 min).",
         "Shuffle all the cards and lay them face down.",
-        "Take turns flipping two cards, trying to find a decimal and its matching mixed time.",
+        "Take turns flipping two cards with a partner, sibling, or your AI tutor, trying to find a decimal and its matching mixed time. If no one else is available, play solo: time yourself and try to beat your best time on a second round.",
         "If they match, keep the pair. The player with the most pairs wins.",
         "This trains you to convert time both ways, quickly and confidently."
       ]
     },
     {
       "title": "Design a Garden (Family Task)",
-      "materials": "grid paper, a ruler, coloured pencils, and a helper.",
+      "materials": "grid paper, a ruler, coloured pencils, and a helper (or your AI tutor, if no one else is available).",
       "steps": [
         "Design a rectangular garden with an area of exactly 48 square metres. Find at least three length-and-width pairs that work.",
         "Inside your chosen garden, draw a triangular flower bed and calculate its area.",
         "Subtract the flower bed from the whole garden to find the space left for vegetables.",
-        "Explain your plan to a family member and tell them each area you calculated."
+        "Explain your plan to a family member or your AI tutor, and tell them each area you calculated."
       ]
     },
     {
@@ -543,26 +579,26 @@
         "Write how long each one lasts in hours and minutes.",
         "Convert each time into decimal hours by dividing the minutes by 60.",
         "Add all your decimal hours together. Do they come close to 24? If not, find what you missed.",
-        "After your activities, talk or write about these questions: Which activity helped you understand area best? What was the trickiest part of converting time? What would you like more practice with? Share your answers with your teacher at your next session."
+        "After your activities, talk or write about these questions: Which activity helped you understand area best? What was the trickiest part of converting time? What would you like more practice with? Share your answers with your teacher or your AI tutor at your next session."
       ]
     }
   ],
   "reference": {
     "rules": [
       {
-        "title": "A rectangle is one of the most",
+        "title": "Rectangle Area Formula",
         "text": "A rectangle is one of the most common shapes we ever need to measure. Rooms, fields, books, screens, doors, prayer mats and market stalls are all rectangles. The rule for the area of a rectangle is short and powerful:"
       },
       {
-        "title": "Two words need care here. The base",
+        "title": "Base and Height in a Triangle",
         "text": "Two words need care here. The base can be any side of the triangle you choose. The height is the perpendicular distance from that base straight up to the opposite corner, always measured at a right angle to the base. The height is not the slanted side; it is the straight-up distance. Depending on the triangle, the height might fall inside the triangle, along one side, or even outside it, but the rule never changes: height is measured perpendicular to the base."
       },
       {
-        "title": "The rule behind every one of these",
+        "title": "Converting Decimal Hours and Minutes",
         "text": "The rule behind every one of these is the same: minutes = decimal part × 60, and going the other way, decimal = minutes ÷ 60. If you ever forget a value, you can rebuild it in seconds. Try covering the table and rebuilding each row yourself; after a few tries the common ones will simply stick in your memory."
       },
       {
-        "title": "Keep a small formula card nearby: rectangle",
+        "title": "Quick Reference: Area and Time Formulas",
         "text": "Keep a small formula card nearby: rectangle area, triangle area, and the 60-minute time rule."
       }
     ],
@@ -626,7 +662,7 @@
       "difficulty": "Round 1",
       "prompt": "Find the area of a rectangle 8 cm long and 5 cm wide.",
       "answer": "1) 8 × 5 = 40 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
       "errorFeedback": "1) 8 × 5 = 40 cm²."
     },
     {
@@ -635,7 +671,7 @@
       "difficulty": "Round 1",
       "prompt": "Find the area of a square with sides of 7 cm.",
       "answer": "7 × 7 = 49 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
       "errorFeedback": "7 × 7 = 49 cm²."
     },
     {
@@ -643,27 +679,27 @@
       "outcomeId": "lo03",
       "difficulty": "Round 1",
       "prompt": "Find the area of a triangle with base 10 cm and height 6 cm.",
-      "answer": "(10 ×",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "(10 ×"
+      "answer": "(10 × 6) ÷ 2 = 30 cm².",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "errorFeedback": "(10 × 6) ÷ 2 = 30 cm²."
     },
     {
       "id": "fl04",
       "outcomeId": "lo04",
       "difficulty": "Round 1",
       "prompt": "How many minutes are in 2.5 hours?",
-      "answer": "÷ 2 = 30 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "÷ 2 = 30 cm²."
+      "answer": "2.5 × 60 = 150 minutes.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "errorFeedback": "2.5 × 60 = 150 minutes."
     },
     {
       "id": "fl05",
       "outcomeId": "lo05",
       "difficulty": "Round 2",
       "prompt": "Convert 3 hours 45 minutes into decimal hours.",
-      "answer": "2.5 × 60 = 150 minutes.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "2.5 × 60 = 150 minutes."
+      "answer": "45 ÷ 60 = 0.75, so 3 hours 45 minutes = 3.75 hours.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "errorFeedback": "45 ÷ 60 = 0.75, so 3 hours 45 minutes = 3.75 hours."
     },
     {
       "id": "fl06",
@@ -671,7 +707,7 @@
       "difficulty": "Round 2",
       "prompt": "A rectangular playground is 25 m long and 18 m wide. Find its area.",
       "answer": "1) 25 × 18 = 450 m².",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
       "errorFeedback": "1) 25 × 18 = 450 m²."
     },
     {
@@ -680,7 +716,7 @@
       "difficulty": "Round 2",
       "prompt": "A rectangle has area 72 cm² and length 8 cm. Find its width.",
       "answer": "72 ÷ 8 = 9 cm.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
       "errorFeedback": "72 ÷ 8 = 9 cm."
     },
     {
@@ -688,45 +724,45 @@
       "outcomeId": "lo08",
       "difficulty": "Round 2",
       "prompt": "A triangle has base 14 cm and height 8 cm. Find its area.",
-      "answer": "(14 ×",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "(14 ×"
+      "answer": "(14 × 8) ÷ 2 = 56 cm².",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "errorFeedback": "(14 × 8) ÷ 2 = 56 cm²."
     },
     {
       "id": "fl09",
       "outcomeId": "lo09",
       "difficulty": "Round 3",
       "prompt": "A triangle has area 36 cm² and base 9 cm. Find its height.",
-      "answer": "÷ 2 = 56 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "÷ 2 = 56 cm²."
+      "answer": "(2 × 36) ÷ 9 = 8 cm.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "errorFeedback": "(2 × 36) ÷ 9 = 8 cm."
     },
     {
       "id": "fl10",
       "outcomeId": "lo10",
       "difficulty": "Round 3",
       "prompt": "Convert 4.25 hours into hours and minutes.",
-      "answer": "(2 ×",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "(2 ×"
+      "answer": "Keep 4 hours. 0.25 × 60 = 15 minutes, so 4.25 hours = 4 hours 15 minutes.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "errorFeedback": "Keep 4 hours. 0.25 × 60 = 15 minutes, so 4.25 hours = 4 hours 15 minutes."
     },
     {
       "id": "fl11",
       "outcomeId": "lo01",
       "difficulty": "Round 3",
       "prompt": "Convert 5 hours 12 minutes into decimal hours.",
-      "answer": "÷ 9 = 8 cm.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "÷ 9 = 8 cm."
+      "answer": "12 ÷ 60 = 0.2, so 5 hours 12 minutes = 5.2 hours.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "errorFeedback": "12 ÷ 60 = 0.2, so 5 hours 12 minutes = 5.2 hours."
     },
     {
       "id": "fl12",
       "outcomeId": "lo02",
       "difficulty": "Round 3",
       "prompt": "Convert 3 m² into square centimetres, and 5,000 cm² into square metres.",
-      "answer": "0.25 × 60 = 15 min, so 4 hours 15 minutes.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "0.25 × 60 = 15 min, so 4 hours 15 minutes."
+      "answer": "3 × 10,000 = 30,000 cm²; 5,000 ÷ 10,000 = 0.5 m².",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "errorFeedback": "3 × 10,000 = 30,000 cm²; 5,000 ÷ 10,000 = 0.5 m²."
     }
   ],
   "realProblems": [
@@ -737,7 +773,7 @@
       "context": "Home",
       "prompt": "At the Hargeisa market, Farah covers a rectangular stall top 200 cm by 120 cm with cloth. What area of cloth does she need?",
       "answer": "1) 200 × 120 = 24,000 cm².",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Area, Perimeter, Base / Height), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) 200 × 120 = 24,000 cm²."
     },
     {
@@ -746,9 +782,9 @@
       "difficulty": "Core",
       "context": "Market",
       "prompt": "A triangular section of a roof near Mombasa has base 8 m and height 5 m. What is its area?",
-      "answer": "(8 ×",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "(8 ×"
+      "answer": "(8 × 5) ÷ 2 = 20 m².",
+      "hint": "Decide which idea the question is really about (Area, Perimeter, Base / Height), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "(8 × 5) ÷ 2 = 20 m²."
     },
     {
       "id": "rp03",
@@ -756,9 +792,9 @@
       "difficulty": "Core",
       "context": "Travel",
       "prompt": "A trip has three parts: 2 hours 45 minutes driving, 1.5 hours resting, and 45 minutes walking. Find the total time in decimal hours.",
-      "answer": "÷ 2 = 20 m².",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "÷ 2 = 20 m²."
+      "answer": "2.75 + 1.5 + 0.75 = 5.0 hours.",
+      "hint": "Decide which idea the question is really about (Area, Perimeter, Base / Height), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "2.75 + 1.5 + 0.75 = 5.0 hours."
     },
     {
       "id": "rp04",
@@ -766,9 +802,9 @@
       "difficulty": "Challenge",
       "context": "School",
       "prompt": "A rectangular room is 4.5 m by 3.8 m. If flooring costs 22 shillings per square metre, what is the total cost?",
-      "answer": "2.75 + 1.5 + 0.75 = 5.0 hours.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "2.75 + 1.5 + 0.75 = 5.0 hours."
+      "answer": "4.5 × 3.8 = 17.1 m²; 17.1 × 22 = 376.20 shillings.",
+      "hint": "Decide which idea the question is really about (Area, Perimeter, Base / Height), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "4.5 × 3.8 = 17.1 m²; 17.1 × 22 = 376.20 shillings."
     },
     {
       "id": "rp05",
@@ -776,9 +812,9 @@
       "difficulty": "Challenge",
       "context": "Community",
       "prompt": "A student sleeps 8.25 hours, is at school 6.5 hours, does homework 1.75 hours, and eats for 1.5 hours. How much of the 24-hour day remains?",
-      "answer": "4.5 × 3.8 = 17.1 m²; 17.1 × 22 = 376.20 shillings.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "4.5 × 3.8 = 17.1 m²; 17.1 × 22 = 376.20 shillings."
+      "answer": "8.25 + 6.5 + 1.75 + 1.5 = 18 hours; 24 − 18 = 6 hours remaining.",
+      "hint": "Decide which idea the question is really about (Area, Perimeter, Base / Height), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "8.25 + 6.5 + 1.75 + 1.5 = 18 hours; 24 − 18 = 6 hours remaining."
     },
     {
       "id": "rp06",
@@ -786,9 +822,9 @@
       "difficulty": "Core",
       "context": "Daily life",
       "prompt": "Convert 3 m² into square centimetres, and 5,000 cm² into square metres.",
-      "answer": "0.25 × 60 = 15 min, so 4 hours 15 minutes.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "0.25 × 60 = 15 min, so 4 hours 15 minutes."
+      "answer": "3 × 10,000 = 30,000 cm²; 5,000 ÷ 10,000 = 0.5 m².",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "errorFeedback": "3 × 10,000 = 30,000 cm²; 5,000 ÷ 10,000 = 0.5 m²."
     }
   ],
   "reasoningPrompts": [
@@ -827,9 +863,9 @@
       "keyIdeas": [
         "Base / Height",
         "Composite shape",
-        "Decimal hours"
+        "Area"
       ],
-      "modelAnswer": "(2 ×"
+      "modelAnswer": "(2 × 150) ÷ 20 = 300 ÷ 20 = 15 m."
     },
     {
       "id": "reason04",
@@ -838,11 +874,11 @@
       "responseMode": "text",
       "prompt": "You have 24 m of fencing for a rectangular garden. What dimensions give the largest area, and what is that area?",
       "keyIdeas": [
-        "Composite shape",
-        "Decimal hours",
-        "Mixed time"
+        "Area",
+        "Perimeter",
+        "Composite shape"
       ],
-      "modelAnswer": "÷ 20 = 15 m."
+      "modelAnswer": "A square 6 m by 6 m gives the maximum area of 36 m² (for a fixed perimeter, a square encloses the most area)."
     },
     {
       "id": "reason05",
@@ -855,7 +891,7 @@
         "Mixed time",
         "Convert"
       ],
-      "modelAnswer": "A square 6 m by 6 m gives the maximum area of 36 m² (for a fixed perimeter, the square is largest)."
+      "modelAnswer": "12.5 ÷ 2.25 ≈ 5.6 days, so it would take 6 full days to complete the 12.5 hours of work."
     },
     {
       "id": "reason06",
@@ -864,11 +900,11 @@
       "responseMode": "text",
       "prompt": "Explain the key idea in Understanding Time and Its Units.",
       "keyIdeas": [
-        "Area",
-        "Perimeter",
-        "Base / Height"
+        "Decimal hours",
+        "Mixed time",
+        "Convert"
       ],
-      "modelAnswer": "Now we turn to time. Time is one of the most useful measurements in daily life, yet it behaves differently from most other measurements. Length, mass and money all follow the neat base-ten pattern, where ten of one unit makes the next. Time does not. There are 60 seconds in a minute, 60 minutes in an hour, and 24 hours in a day. These unusual bases come from ancient astronomy and Babylonian mathematics, and they are why time calculations need extra care. It helps to know the basic relationships by heart. 1 minute…"
+      "modelAnswer": "Time does not follow the base-ten pattern that length, mass and money use. Instead there are 60 seconds in a minute, 60 minutes in an hour, and 24 hours in a day, so converting between decimal hours and mixed hours-and-minutes always uses the number 60, not 100."
     }
   ],
   "assessment": {
@@ -879,192 +915,192 @@
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Basic",
-        "question": "A lesson starts at 4 o'clock and lasts 3 hours. At what hour does it end?",
+        "question": "Why is the area of a shape measured in square units such as cm² or m²?",
         "options": [
-          "8",
-          "3",
-          "7",
-          "4"
+          "Because area covers two dimensions, length and width, multiplied together",
+          "Because area is always a whole number",
+          "Because squares are the only shapes that have area",
+          "Because area measures distance, not space"
         ],
-        "answer": "7",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "4 + 3 = 7 o'clock."
+        "answer": "Because area covers two dimensions, length and width, multiplied together",
+        "hint": "Think about what area actually measures, then check each option.",
+        "explanation": "Area comes from multiplying two dimensions (length × width), so the unit must show two dimensions too — that's what the small 2 in cm² means."
       },
       {
         "id": "q02",
         "type": "Application",
         "outcomeId": "lo02",
         "difficulty": "Basic",
-        "question": "How many minutes are there in 5 hours?",
+        "question": "What is the area of a rectangle that is 9 cm long and 4 cm wide?",
         "options": [
-          "65",
-          "300",
-          "150",
-          "500"
+          "36 cm²",
+          "13 cm²",
+          "26 cm²",
+          "18 cm²"
         ],
-        "answer": "300",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "1 hour = 60 minutes, so 5 hours = 300 minutes."
+        "answer": "36 cm²",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
+        "explanation": "Area = length × width = 9 × 4 = 36 cm²."
       },
       {
         "id": "q03",
         "type": "Application",
         "outcomeId": "lo03",
         "difficulty": "Basic",
-        "question": "A lesson starts at 5 o'clock and lasts 3 hours. At what hour does it end?",
+        "question": "What is the area of a square with sides of 6 cm?",
         "options": [
-          "3",
-          "8",
-          "5",
-          "9"
+          "36 cm²",
+          "24 cm²",
+          "12 cm²",
+          "30 cm²"
         ],
-        "answer": "8",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "5 + 3 = 8 o'clock."
+        "answer": "36 cm²",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
+        "explanation": "Area = side × side = 6 × 6 = 36 cm²."
       },
       {
         "id": "q04",
         "type": "Application",
         "outcomeId": "lo04",
         "difficulty": "Basic",
-        "question": "A lesson starts at 9 o'clock and lasts 3 hours. At what hour does it end?",
+        "question": "A triangle has a base of 10 cm and a height of 8 cm. What is its area?",
         "options": [
-          "12",
-          "9",
-          "13",
-          "3"
+          "40 cm²",
+          "80 cm²",
+          "18 cm²",
+          "36 cm²"
         ],
-        "answer": "12",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "9 + 3 = 12 o'clock."
+        "answer": "40 cm²",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
+        "explanation": "Area = (base × height) ÷ 2 = (10 × 8) ÷ 2 = 80 ÷ 2 = 40 cm²."
       },
       {
         "id": "q05",
         "type": "Application",
         "outcomeId": "lo05",
         "difficulty": "Core",
-        "question": "A lesson starts at 7 o'clock and lasts 1 hour. At what hour does it end?",
+        "question": "A rectangle has an area of 45 cm² and a length of 9 cm. What is its width?",
         "options": [
-          "8",
-          "7",
-          "9",
-          "1"
+          "5 cm",
+          "36 cm",
+          "9 cm",
+          "4 cm"
         ],
-        "answer": "8",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "7 + 1 = 8 o'clock."
+        "answer": "5 cm",
+        "hint": "Ask yourself what \"Decimal hours\" means here before you choose.",
+        "explanation": "Width = area ÷ length = 45 ÷ 9 = 5 cm."
       },
       {
         "id": "q06",
         "type": "Application",
         "outcomeId": "lo06",
         "difficulty": "Core",
-        "question": "How many minutes are there in 2 hours?",
+        "question": "A shape is a rectangle 5 cm by 4 cm with a triangle of base 5 cm and height 2 cm on top. What is the total area?",
         "options": [
-          "62",
-          "120",
-          "60",
-          "200"
+          "25 cm²",
+          "20 cm²",
+          "45 cm²",
+          "15 cm²"
         ],
-        "answer": "120",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "1 hour = 60 minutes, so 2 hours = 120 minutes."
+        "answer": "25 cm²",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
+        "explanation": "Rectangle = 5 × 4 = 20 cm². Triangle = (5 × 2) ÷ 2 = 5 cm². Total = 20 + 5 = 25 cm²."
       },
       {
         "id": "q07",
         "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
-        "question": "A lesson starts at 2 o'clock and lasts 3 hours. At what hour does it end?",
+        "question": "How many square centimetres (cm²) are there in 1 square metre (m²)?",
         "options": [
-          "6",
-          "3",
-          "5",
-          "2"
+          "10,000",
+          "100",
+          "1,000",
+          "1,000,000"
         ],
-        "answer": "5",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "2 + 3 = 5 o'clock."
+        "answer": "10,000",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
+        "explanation": "1 m² = 100 cm × 100 cm = 10,000 cm²."
       },
       {
         "id": "q08",
         "type": "Application",
         "outcomeId": "lo08",
         "difficulty": "Challenge",
-        "question": "How many minutes are there in 3 hours?",
+        "question": "Convert 3.5 hours into hours and minutes.",
         "options": [
-          "180",
-          "90",
-          "300",
-          "63"
+          "3 hours 30 minutes",
+          "3 hours 50 minutes",
+          "3 hours 5 minutes",
+          "3 hours 15 minutes"
         ],
-        "answer": "180",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "1 hour = 60 minutes, so 3 hours = 180 minutes."
+        "answer": "3 hours 30 minutes",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
+        "explanation": "Keep the 3 hours. 0.5 × 60 = 30 minutes, so 3.5 hours = 3 hours 30 minutes."
       },
       {
         "id": "q09",
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Challenge",
-        "question": "How many minutes are there in 1 hour?",
+        "question": "What does the small '2' mean in a unit like cm²?",
         "options": [
-          "30",
-          "100",
-          "61",
-          "60"
+          "That the measurement covers two dimensions multiplied together",
+          "That the value should be doubled",
+          "That there are two shapes",
+          "That the unit is squared in shape"
         ],
-        "answer": "60",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "1 hour = 60 minutes, so 1 hours = 60 minutes."
+        "answer": "That the measurement covers two dimensions multiplied together",
+        "hint": "Think about what area actually measures, then check each option.",
+        "explanation": "The superscript 2 in cm² shows that area comes from multiplying two dimensions (length × width) together."
       },
       {
         "id": "q10",
         "type": "Reasoning",
         "outcomeId": "lo02",
         "difficulty": "Challenge",
-        "question": "What does “Area” mean?",
+        "question": "A rectangular field is 15 m long and 6 m wide. What is its area?",
         "options": [
-          "The flat space inside a shape, in square units",
-          "The distance all the way around a shape",
-          "A chosen side of a triangle and the perpendicular distance to the far corner",
-          "A shape built from simpler shapes"
+          "90 m²",
+          "42 m²",
+          "21 m²",
+          "84 m²"
         ],
-        "answer": "The flat space inside a shape, in square units",
-        "hint": "Use the Unit 7 Math Words & Symbols reference.",
-        "explanation": "Area means The flat space inside a shape, in square units."
+        "answer": "90 m²",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
+        "explanation": "Area = length × width = 15 × 6 = 90 m²."
       },
       {
         "id": "q11",
         "type": "Reasoning",
         "outcomeId": "lo03",
         "difficulty": "Challenge",
-        "question": "What does “Perimeter” mean?",
+        "question": "What is the area of a square with sides of 11 cm?",
         "options": [
-          "The distance all the way around a shape",
-          "A chosen side of a triangle and the perpendicular distance to the far corner",
-          "A shape built from simpler shapes",
-          "Time as a decimal, like 2.5 hours"
+          "121 cm²",
+          "44 cm²",
+          "22 cm²",
+          "111 cm²"
         ],
-        "answer": "The distance all the way around a shape",
-        "hint": "Use the Unit 7 Math Words & Symbols reference.",
-        "explanation": "Perimeter means The distance all the way around a shape."
+        "answer": "121 cm²",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
+        "explanation": "Area = side × side = 11 × 11 = 121 cm²."
       },
       {
         "id": "q12",
         "type": "Reasoning",
         "outcomeId": "lo04",
         "difficulty": "Challenge",
-        "question": "What does “Base / Height” mean?",
+        "question": "A triangle has a base of 14 cm and a height of 5 cm. What is its area?",
         "options": [
-          "A chosen side of a triangle and the perpendicular distance to the far corner",
-          "A shape built from simpler shapes",
-          "Time as a decimal, like 2.5 hours",
-          "Time as hours and minutes, like 2 h 30 min"
+          "35 cm²",
+          "70 cm²",
+          "19 cm²",
+          "45 cm²"
         ],
-        "answer": "A chosen side of a triangle and the perpendicular distance to the far corner",
-        "hint": "Use the Unit 7 Math Words & Symbols reference.",
-        "explanation": "Base / Height means A chosen side of a triangle and the perpendicular distance to the far corner."
+        "answer": "35 cm²",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
+        "explanation": "Area = (base × height) ÷ 2 = (14 × 5) ÷ 2 = 70 ÷ 2 = 35 cm²."
       }
     ]
   },
@@ -1080,52 +1116,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "A lesson starts at 4 o'clock and lasts 3 hours. At what hour does it end?",
+            "prompt": "Why is the area of a shape measured in square units such as cm² or m²?",
             "choices": [
-              "8",
-              "3",
-              "7",
-              "4"
+              "Because area covers two dimensions, length and width, multiplied together",
+              "Because area is always a whole number",
+              "Because squares are the only shapes that have area",
+              "Because area measures distance, not space"
             ],
-            "answer": "7",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "4 + 3 = 7 o'clock."
+            "answer": "Because area covers two dimensions, length and width, multiplied together",
+            "clue": "Think about what area actually measures, then check each option.",
+            "explanation": "Area comes from multiplying two dimensions (length × width), so the unit must show two dimensions too — that's what the small 2 in cm² means."
           },
           {
-            "prompt": "A lesson starts at 9 o'clock and lasts 3 hours. At what hour does it end?",
+            "prompt": "A triangle has a base of 10 cm and a height of 8 cm. What is its area?",
             "choices": [
-              "12",
-              "9",
-              "13",
-              "3"
+              "40 cm²",
+              "80 cm²",
+              "18 cm²",
+              "36 cm²"
             ],
-            "answer": "12",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "9 + 3 = 12 o'clock."
+            "answer": "40 cm²",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Area = (base × height) ÷ 2 = (10 × 8) ÷ 2 = 80 ÷ 2 = 40 cm²."
           },
           {
-            "prompt": "A lesson starts at 2 o'clock and lasts 3 hours. At what hour does it end?",
+            "prompt": "How many square centimetres (cm²) are there in 1 square metre (m²)?",
             "choices": [
-              "6",
-              "3",
-              "5",
-              "2"
+              "10,000",
+              "100",
+              "1,000",
+              "1,000,000"
             ],
-            "answer": "5",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "2 + 3 = 5 o'clock."
+            "answer": "10,000",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "1 m² = 100 cm × 100 cm = 10,000 cm²."
           },
           {
-            "prompt": "What does “Area” mean?",
+            "prompt": "A rectangular field is 15 m long and 6 m wide. What is its area?",
             "choices": [
-              "The flat space inside a shape, in square units",
-              "The distance all the way around a shape",
-              "A chosen side of a triangle and the perpendicular distance to the far corner",
-              "A shape built from simpler shapes"
+              "90 m²",
+              "42 m²",
+              "21 m²",
+              "84 m²"
             ],
-            "answer": "The flat space inside a shape, in square units",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Area means The flat space inside a shape, in square units."
+            "answer": "90 m²",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Area = length × width = 15 × 6 = 90 m²."
           }
         ]
       },
@@ -1138,52 +1174,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many minutes are there in 5 hours?",
+            "prompt": "What is the area of a rectangle that is 9 cm long and 4 cm wide?",
             "choices": [
-              "65",
-              "300",
-              "150",
-              "500"
+              "36 cm²",
+              "13 cm²",
+              "26 cm²",
+              "18 cm²"
             ],
-            "answer": "300",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "1 hour = 60 minutes, so 5 hours = 300 minutes."
+            "answer": "36 cm²",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "Area = length × width = 9 × 4 = 36 cm²."
           },
           {
-            "prompt": "A lesson starts at 7 o'clock and lasts 1 hour. At what hour does it end?",
+            "prompt": "A rectangle has an area of 45 cm² and a length of 9 cm. What is its width?",
             "choices": [
-              "8",
-              "7",
-              "9",
-              "1"
+              "5 cm",
+              "36 cm",
+              "9 cm",
+              "4 cm"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "7 + 1 = 8 o'clock."
+            "answer": "5 cm",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Width = area ÷ length = 45 ÷ 9 = 5 cm."
           },
           {
-            "prompt": "How many minutes are there in 3 hours?",
+            "prompt": "Convert 3.5 hours into hours and minutes.",
             "choices": [
-              "180",
-              "90",
-              "300",
-              "63"
+              "3 hours 30 minutes",
+              "3 hours 50 minutes",
+              "3 hours 5 minutes",
+              "3 hours 15 minutes"
             ],
-            "answer": "180",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "1 hour = 60 minutes, so 3 hours = 180 minutes."
+            "answer": "3 hours 30 minutes",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Keep the 3 hours. 0.5 × 60 = 30 minutes, so 3.5 hours = 3 hours 30 minutes."
           },
           {
-            "prompt": "What does “Perimeter” mean?",
+            "prompt": "What is the area of a square with sides of 11 cm?",
             "choices": [
-              "The distance all the way around a shape",
-              "A chosen side of a triangle and the perpendicular distance to the far corner",
-              "A shape built from simpler shapes",
-              "Time as a decimal, like 2.5 hours"
+              "121 cm²",
+              "44 cm²",
+              "22 cm²",
+              "111 cm²"
             ],
-            "answer": "The distance all the way around a shape",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Perimeter means The distance all the way around a shape."
+            "answer": "121 cm²",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Area = side × side = 11 × 11 = 121 cm²."
           }
         ]
       },
@@ -1196,52 +1232,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "A lesson starts at 5 o'clock and lasts 3 hours. At what hour does it end?",
+            "prompt": "What is the area of a square with sides of 6 cm?",
             "choices": [
-              "3",
-              "8",
-              "5",
-              "9"
+              "36 cm²",
+              "24 cm²",
+              "12 cm²",
+              "30 cm²"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "5 + 3 = 8 o'clock."
+            "answer": "36 cm²",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "Area = side × side = 6 × 6 = 36 cm²."
           },
           {
-            "prompt": "How many minutes are there in 2 hours?",
+            "prompt": "A shape is a rectangle 5 cm by 4 cm with a triangle of base 5 cm and height 2 cm on top. What is the total area?",
             "choices": [
-              "62",
-              "120",
-              "60",
-              "200"
+              "25 cm²",
+              "20 cm²",
+              "45 cm²",
+              "15 cm²"
             ],
-            "answer": "120",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "1 hour = 60 minutes, so 2 hours = 120 minutes."
+            "answer": "25 cm²",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Rectangle = 5 × 4 = 20 cm². Triangle = (5 × 2) ÷ 2 = 5 cm². Total = 20 + 5 = 25 cm²."
           },
           {
-            "prompt": "How many minutes are there in 1 hour?",
+            "prompt": "What does the small '2' mean in a unit like cm²?",
             "choices": [
-              "30",
-              "100",
-              "61",
-              "60"
+              "That the measurement covers two dimensions multiplied together",
+              "That the value should be doubled",
+              "That there are two shapes",
+              "That the unit is squared in shape"
             ],
-            "answer": "60",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "1 hour = 60 minutes, so 1 hours = 60 minutes."
+            "answer": "That the measurement covers two dimensions multiplied together",
+            "clue": "Think about what area actually measures, then check each option.",
+            "explanation": "The superscript 2 in cm² shows that area comes from multiplying two dimensions (length × width) together."
           },
           {
-            "prompt": "What does “Base / Height” mean?",
+            "prompt": "A triangle has a base of 14 cm and a height of 5 cm. What is its area?",
             "choices": [
-              "A chosen side of a triangle and the perpendicular distance to the far corner",
-              "A shape built from simpler shapes",
-              "Time as a decimal, like 2.5 hours",
-              "Time as hours and minutes, like 2 h 30 min"
+              "35 cm²",
+              "70 cm²",
+              "19 cm²",
+              "45 cm²"
             ],
-            "answer": "A chosen side of a triangle and the perpendicular distance to the far corner",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Base / Height means A chosen side of a triangle and the perpendicular distance to the far corner."
+            "answer": "35 cm²",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Area = (base × height) ÷ 2 = (14 × 5) ÷ 2 = 70 ÷ 2 = 35 cm²."
           }
         ]
       },
@@ -1254,52 +1290,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "A lesson starts at 9 o'clock and lasts 3 hours. At what hour does it end?",
+            "prompt": "A triangle has a base of 10 cm and a height of 8 cm. What is its area?",
             "choices": [
-              "12",
-              "9",
-              "13",
-              "3"
+              "40 cm²",
+              "80 cm²",
+              "18 cm²",
+              "36 cm²"
             ],
-            "answer": "12",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "9 + 3 = 12 o'clock."
+            "answer": "40 cm²",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "Area = (base × height) ÷ 2 = (10 × 8) ÷ 2 = 80 ÷ 2 = 40 cm²."
           },
           {
-            "prompt": "A lesson starts at 2 o'clock and lasts 3 hours. At what hour does it end?",
+            "prompt": "How many square centimetres (cm²) are there in 1 square metre (m²)?",
             "choices": [
-              "6",
-              "3",
-              "5",
-              "2"
+              "10,000",
+              "100",
+              "1,000",
+              "1,000,000"
             ],
-            "answer": "5",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "2 + 3 = 5 o'clock."
+            "answer": "10,000",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "1 m² = 100 cm × 100 cm = 10,000 cm²."
           },
           {
-            "prompt": "What does “Area” mean?",
+            "prompt": "A rectangular field is 15 m long and 6 m wide. What is its area?",
             "choices": [
-              "The flat space inside a shape, in square units",
-              "The distance all the way around a shape",
-              "A chosen side of a triangle and the perpendicular distance to the far corner",
-              "A shape built from simpler shapes"
+              "90 m²",
+              "42 m²",
+              "21 m²",
+              "84 m²"
             ],
-            "answer": "The flat space inside a shape, in square units",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Area means The flat space inside a shape, in square units."
+            "answer": "90 m²",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Area = length × width = 15 × 6 = 90 m²."
           },
           {
-            "prompt": "A lesson starts at 4 o'clock and lasts 3 hours. At what hour does it end?",
+            "prompt": "Why is the area of a shape measured in square units such as cm² or m²?",
             "choices": [
-              "8",
-              "3",
-              "7",
-              "4"
+              "Because area covers two dimensions, length and width, multiplied together",
+              "Because area is always a whole number",
+              "Because squares are the only shapes that have area",
+              "Because area measures distance, not space"
             ],
-            "answer": "7",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "4 + 3 = 7 o'clock."
+            "answer": "Because area covers two dimensions, length and width, multiplied together",
+            "clue": "Think about what area actually measures, then check each option.",
+            "explanation": "Area comes from multiplying two dimensions (length × width), so the unit must show two dimensions too — that's what the small 2 in cm² means."
           }
         ]
       },
@@ -1312,52 +1348,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "A lesson starts at 7 o'clock and lasts 1 hour. At what hour does it end?",
+            "prompt": "A rectangle has an area of 45 cm² and a length of 9 cm. What is its width?",
             "choices": [
-              "8",
-              "7",
-              "9",
-              "1"
+              "5 cm",
+              "36 cm",
+              "9 cm",
+              "4 cm"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "7 + 1 = 8 o'clock."
+            "answer": "5 cm",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "Width = area ÷ length = 45 ÷ 9 = 5 cm."
           },
           {
-            "prompt": "How many minutes are there in 3 hours?",
+            "prompt": "Convert 3.5 hours into hours and minutes.",
             "choices": [
-              "180",
-              "90",
-              "300",
-              "63"
+              "3 hours 30 minutes",
+              "3 hours 50 minutes",
+              "3 hours 5 minutes",
+              "3 hours 15 minutes"
             ],
-            "answer": "180",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "1 hour = 60 minutes, so 3 hours = 180 minutes."
+            "answer": "3 hours 30 minutes",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Keep the 3 hours. 0.5 × 60 = 30 minutes, so 3.5 hours = 3 hours 30 minutes."
           },
           {
-            "prompt": "What does “Perimeter” mean?",
+            "prompt": "What is the area of a square with sides of 11 cm?",
             "choices": [
-              "The distance all the way around a shape",
-              "A chosen side of a triangle and the perpendicular distance to the far corner",
-              "A shape built from simpler shapes",
-              "Time as a decimal, like 2.5 hours"
+              "121 cm²",
+              "44 cm²",
+              "22 cm²",
+              "111 cm²"
             ],
-            "answer": "The distance all the way around a shape",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Perimeter means The distance all the way around a shape."
+            "answer": "121 cm²",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Area = side × side = 11 × 11 = 121 cm²."
           },
           {
-            "prompt": "How many minutes are there in 5 hours?",
+            "prompt": "What is the area of a rectangle that is 9 cm long and 4 cm wide?",
             "choices": [
-              "65",
-              "300",
-              "150",
-              "500"
+              "36 cm²",
+              "13 cm²",
+              "26 cm²",
+              "18 cm²"
             ],
-            "answer": "300",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "1 hour = 60 minutes, so 5 hours = 300 minutes."
+            "answer": "36 cm²",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Area = length × width = 9 × 4 = 36 cm²."
           }
         ]
       },
@@ -1370,52 +1406,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many minutes are there in 2 hours?",
+            "prompt": "A shape is a rectangle 5 cm by 4 cm with a triangle of base 5 cm and height 2 cm on top. What is the total area?",
             "choices": [
-              "62",
-              "120",
-              "60",
-              "200"
+              "25 cm²",
+              "20 cm²",
+              "45 cm²",
+              "15 cm²"
             ],
-            "answer": "120",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "1 hour = 60 minutes, so 2 hours = 120 minutes."
+            "answer": "25 cm²",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "Rectangle = 5 × 4 = 20 cm². Triangle = (5 × 2) ÷ 2 = 5 cm². Total = 20 + 5 = 25 cm²."
           },
           {
-            "prompt": "How many minutes are there in 1 hour?",
+            "prompt": "What does the small '2' mean in a unit like cm²?",
             "choices": [
-              "30",
-              "100",
-              "61",
-              "60"
+              "That the measurement covers two dimensions multiplied together",
+              "That the value should be doubled",
+              "That there are two shapes",
+              "That the unit is squared in shape"
             ],
-            "answer": "60",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "1 hour = 60 minutes, so 1 hours = 60 minutes."
+            "answer": "That the measurement covers two dimensions multiplied together",
+            "clue": "Think about what area actually measures, then check each option.",
+            "explanation": "The superscript 2 in cm² shows that area comes from multiplying two dimensions (length × width) together."
           },
           {
-            "prompt": "What does “Base / Height” mean?",
+            "prompt": "A triangle has a base of 14 cm and a height of 5 cm. What is its area?",
             "choices": [
-              "A chosen side of a triangle and the perpendicular distance to the far corner",
-              "A shape built from simpler shapes",
-              "Time as a decimal, like 2.5 hours",
-              "Time as hours and minutes, like 2 h 30 min"
+              "35 cm²",
+              "70 cm²",
+              "19 cm²",
+              "45 cm²"
             ],
-            "answer": "A chosen side of a triangle and the perpendicular distance to the far corner",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Base / Height means A chosen side of a triangle and the perpendicular distance to the far corner."
+            "answer": "35 cm²",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Area = (base × height) ÷ 2 = (14 × 5) ÷ 2 = 70 ÷ 2 = 35 cm²."
           },
           {
-            "prompt": "A lesson starts at 5 o'clock and lasts 3 hours. At what hour does it end?",
+            "prompt": "What is the area of a square with sides of 6 cm?",
             "choices": [
-              "3",
-              "8",
-              "5",
-              "9"
+              "36 cm²",
+              "24 cm²",
+              "12 cm²",
+              "30 cm²"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "5 + 3 = 8 o'clock."
+            "answer": "36 cm²",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Area = side × side = 6 × 6 = 36 cm²."
           }
         ]
       },
@@ -1428,52 +1464,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "A lesson starts at 2 o'clock and lasts 3 hours. At what hour does it end?",
+            "prompt": "How many square centimetres (cm²) are there in 1 square metre (m²)?",
             "choices": [
-              "6",
-              "3",
-              "5",
-              "2"
+              "10,000",
+              "100",
+              "1,000",
+              "1,000,000"
             ],
-            "answer": "5",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "2 + 3 = 5 o'clock."
+            "answer": "10,000",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "1 m² = 100 cm × 100 cm = 10,000 cm²."
           },
           {
-            "prompt": "What does “Area” mean?",
+            "prompt": "A rectangular field is 15 m long and 6 m wide. What is its area?",
             "choices": [
-              "The flat space inside a shape, in square units",
-              "The distance all the way around a shape",
-              "A chosen side of a triangle and the perpendicular distance to the far corner",
-              "A shape built from simpler shapes"
+              "90 m²",
+              "42 m²",
+              "21 m²",
+              "84 m²"
             ],
-            "answer": "The flat space inside a shape, in square units",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Area means The flat space inside a shape, in square units."
+            "answer": "90 m²",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Area = length × width = 15 × 6 = 90 m²."
           },
           {
-            "prompt": "A lesson starts at 4 o'clock and lasts 3 hours. At what hour does it end?",
+            "prompt": "Why is the area of a shape measured in square units such as cm² or m²?",
             "choices": [
-              "8",
-              "3",
-              "7",
-              "4"
+              "Because area covers two dimensions, length and width, multiplied together",
+              "Because area is always a whole number",
+              "Because squares are the only shapes that have area",
+              "Because area measures distance, not space"
             ],
-            "answer": "7",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "4 + 3 = 7 o'clock."
+            "answer": "Because area covers two dimensions, length and width, multiplied together",
+            "clue": "Think about what area actually measures, then check each option.",
+            "explanation": "Area comes from multiplying two dimensions (length × width), so the unit must show two dimensions too — that's what the small 2 in cm² means."
           },
           {
-            "prompt": "A lesson starts at 9 o'clock and lasts 3 hours. At what hour does it end?",
+            "prompt": "A triangle has a base of 10 cm and a height of 8 cm. What is its area?",
             "choices": [
-              "12",
-              "9",
-              "13",
-              "3"
+              "40 cm²",
+              "80 cm²",
+              "18 cm²",
+              "36 cm²"
             ],
-            "answer": "12",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "9 + 3 = 12 o'clock."
+            "answer": "40 cm²",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Area = (base × height) ÷ 2 = (10 × 8) ÷ 2 = 80 ÷ 2 = 40 cm²."
           }
         ]
       },
@@ -1486,52 +1522,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many minutes are there in 3 hours?",
+            "prompt": "Convert 3.5 hours into hours and minutes.",
             "choices": [
-              "180",
-              "90",
-              "300",
-              "63"
+              "3 hours 30 minutes",
+              "3 hours 50 minutes",
+              "3 hours 5 minutes",
+              "3 hours 15 minutes"
             ],
-            "answer": "180",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "1 hour = 60 minutes, so 3 hours = 180 minutes."
+            "answer": "3 hours 30 minutes",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "Keep the 3 hours. 0.5 × 60 = 30 minutes, so 3.5 hours = 3 hours 30 minutes."
           },
           {
-            "prompt": "What does “Perimeter” mean?",
+            "prompt": "What is the area of a square with sides of 11 cm?",
             "choices": [
-              "The distance all the way around a shape",
-              "A chosen side of a triangle and the perpendicular distance to the far corner",
-              "A shape built from simpler shapes",
-              "Time as a decimal, like 2.5 hours"
+              "121 cm²",
+              "44 cm²",
+              "22 cm²",
+              "111 cm²"
             ],
-            "answer": "The distance all the way around a shape",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Perimeter means The distance all the way around a shape."
+            "answer": "121 cm²",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Area = side × side = 11 × 11 = 121 cm²."
           },
           {
-            "prompt": "How many minutes are there in 5 hours?",
+            "prompt": "What is the area of a rectangle that is 9 cm long and 4 cm wide?",
             "choices": [
-              "65",
-              "300",
-              "150",
-              "500"
+              "36 cm²",
+              "13 cm²",
+              "26 cm²",
+              "18 cm²"
             ],
-            "answer": "300",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "1 hour = 60 minutes, so 5 hours = 300 minutes."
+            "answer": "36 cm²",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Area = length × width = 9 × 4 = 36 cm²."
           },
           {
-            "prompt": "A lesson starts at 7 o'clock and lasts 1 hour. At what hour does it end?",
+            "prompt": "A rectangle has an area of 45 cm² and a length of 9 cm. What is its width?",
             "choices": [
-              "8",
-              "7",
-              "9",
-              "1"
+              "5 cm",
+              "36 cm",
+              "9 cm",
+              "4 cm"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "7 + 1 = 8 o'clock."
+            "answer": "5 cm",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Width = area ÷ length = 45 ÷ 9 = 5 cm."
           }
         ]
       },
@@ -1544,52 +1580,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many minutes are there in 1 hour?",
+            "prompt": "What does the small '2' mean in a unit like cm²?",
             "choices": [
-              "30",
-              "100",
-              "61",
-              "60"
+              "That the measurement covers two dimensions multiplied together",
+              "That the value should be doubled",
+              "That there are two shapes",
+              "That the unit is squared in shape"
             ],
-            "answer": "60",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "1 hour = 60 minutes, so 1 hours = 60 minutes."
+            "answer": "That the measurement covers two dimensions multiplied together",
+            "clue": "Think about what area actually measures, then check each option.",
+            "explanation": "The superscript 2 in cm² shows that area comes from multiplying two dimensions (length × width) together."
           },
           {
-            "prompt": "What does “Base / Height” mean?",
+            "prompt": "A triangle has a base of 14 cm and a height of 5 cm. What is its area?",
             "choices": [
-              "A chosen side of a triangle and the perpendicular distance to the far corner",
-              "A shape built from simpler shapes",
-              "Time as a decimal, like 2.5 hours",
-              "Time as hours and minutes, like 2 h 30 min"
+              "35 cm²",
+              "70 cm²",
+              "19 cm²",
+              "45 cm²"
             ],
-            "answer": "A chosen side of a triangle and the perpendicular distance to the far corner",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Base / Height means A chosen side of a triangle and the perpendicular distance to the far corner."
+            "answer": "35 cm²",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Area = (base × height) ÷ 2 = (14 × 5) ÷ 2 = 70 ÷ 2 = 35 cm²."
           },
           {
-            "prompt": "A lesson starts at 5 o'clock and lasts 3 hours. At what hour does it end?",
+            "prompt": "What is the area of a square with sides of 6 cm?",
             "choices": [
-              "3",
-              "8",
-              "5",
-              "9"
+              "36 cm²",
+              "24 cm²",
+              "12 cm²",
+              "30 cm²"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "5 + 3 = 8 o'clock."
+            "answer": "36 cm²",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Area = side × side = 6 × 6 = 36 cm²."
           },
           {
-            "prompt": "How many minutes are there in 2 hours?",
+            "prompt": "A shape is a rectangle 5 cm by 4 cm with a triangle of base 5 cm and height 2 cm on top. What is the total area?",
             "choices": [
-              "62",
-              "120",
-              "60",
-              "200"
+              "25 cm²",
+              "20 cm²",
+              "45 cm²",
+              "15 cm²"
             ],
-            "answer": "120",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "1 hour = 60 minutes, so 2 hours = 120 minutes."
+            "answer": "25 cm²",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Rectangle = 5 × 4 = 20 cm². Triangle = (5 × 2) ÷ 2 = 5 cm². Total = 20 + 5 = 25 cm²."
           }
         ]
       },
@@ -1602,52 +1638,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Area” mean?",
+            "prompt": "A rectangular field is 15 m long and 6 m wide. What is its area?",
             "choices": [
-              "The flat space inside a shape, in square units",
-              "The distance all the way around a shape",
-              "A chosen side of a triangle and the perpendicular distance to the far corner",
-              "A shape built from simpler shapes"
+              "90 m²",
+              "42 m²",
+              "21 m²",
+              "84 m²"
             ],
-            "answer": "The flat space inside a shape, in square units",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Area means The flat space inside a shape, in square units."
+            "answer": "90 m²",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "Area = length × width = 15 × 6 = 90 m²."
           },
           {
-            "prompt": "A lesson starts at 4 o'clock and lasts 3 hours. At what hour does it end?",
+            "prompt": "Why is the area of a shape measured in square units such as cm² or m²?",
             "choices": [
-              "8",
-              "3",
-              "7",
-              "4"
+              "Because area covers two dimensions, length and width, multiplied together",
+              "Because area is always a whole number",
+              "Because squares are the only shapes that have area",
+              "Because area measures distance, not space"
             ],
-            "answer": "7",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "4 + 3 = 7 o'clock."
+            "answer": "Because area covers two dimensions, length and width, multiplied together",
+            "clue": "Think about what area actually measures, then check each option.",
+            "explanation": "Area comes from multiplying two dimensions (length × width), so the unit must show two dimensions too — that's what the small 2 in cm² means."
           },
           {
-            "prompt": "A lesson starts at 9 o'clock and lasts 3 hours. At what hour does it end?",
+            "prompt": "A triangle has a base of 10 cm and a height of 8 cm. What is its area?",
             "choices": [
-              "12",
-              "9",
-              "13",
-              "3"
+              "40 cm²",
+              "80 cm²",
+              "18 cm²",
+              "36 cm²"
             ],
-            "answer": "12",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "9 + 3 = 12 o'clock."
+            "answer": "40 cm²",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Area = (base × height) ÷ 2 = (10 × 8) ÷ 2 = 80 ÷ 2 = 40 cm²."
           },
           {
-            "prompt": "A lesson starts at 2 o'clock and lasts 3 hours. At what hour does it end?",
+            "prompt": "How many square centimetres (cm²) are there in 1 square metre (m²)?",
             "choices": [
-              "6",
-              "3",
-              "5",
-              "2"
+              "10,000",
+              "100",
+              "1,000",
+              "1,000,000"
             ],
-            "answer": "5",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "2 + 3 = 5 o'clock."
+            "answer": "10,000",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "1 m² = 100 cm × 100 cm = 10,000 cm²."
           }
         ]
       },
@@ -1660,52 +1696,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Perimeter” mean?",
+            "prompt": "What is the area of a square with sides of 11 cm?",
             "choices": [
-              "The distance all the way around a shape",
-              "A chosen side of a triangle and the perpendicular distance to the far corner",
-              "A shape built from simpler shapes",
-              "Time as a decimal, like 2.5 hours"
+              "121 cm²",
+              "44 cm²",
+              "22 cm²",
+              "111 cm²"
             ],
-            "answer": "The distance all the way around a shape",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Perimeter means The distance all the way around a shape."
+            "answer": "121 cm²",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "Area = side × side = 11 × 11 = 121 cm²."
           },
           {
-            "prompt": "How many minutes are there in 5 hours?",
+            "prompt": "What is the area of a rectangle that is 9 cm long and 4 cm wide?",
             "choices": [
-              "65",
-              "300",
-              "150",
-              "500"
+              "36 cm²",
+              "13 cm²",
+              "26 cm²",
+              "18 cm²"
             ],
-            "answer": "300",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "1 hour = 60 minutes, so 5 hours = 300 minutes."
+            "answer": "36 cm²",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Area = length × width = 9 × 4 = 36 cm²."
           },
           {
-            "prompt": "A lesson starts at 7 o'clock and lasts 1 hour. At what hour does it end?",
+            "prompt": "A rectangle has an area of 45 cm² and a length of 9 cm. What is its width?",
             "choices": [
-              "8",
-              "7",
-              "9",
-              "1"
+              "5 cm",
+              "36 cm",
+              "9 cm",
+              "4 cm"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "7 + 1 = 8 o'clock."
+            "answer": "5 cm",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Width = area ÷ length = 45 ÷ 9 = 5 cm."
           },
           {
-            "prompt": "How many minutes are there in 3 hours?",
+            "prompt": "Convert 3.5 hours into hours and minutes.",
             "choices": [
-              "180",
-              "90",
-              "300",
-              "63"
+              "3 hours 30 minutes",
+              "3 hours 50 minutes",
+              "3 hours 5 minutes",
+              "3 hours 15 minutes"
             ],
-            "answer": "180",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "1 hour = 60 minutes, so 3 hours = 180 minutes."
+            "answer": "3 hours 30 minutes",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Keep the 3 hours. 0.5 × 60 = 30 minutes, so 3.5 hours = 3 hours 30 minutes."
           }
         ]
       },
@@ -1718,52 +1754,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Base / Height” mean?",
+            "prompt": "A triangle has a base of 14 cm and a height of 5 cm. What is its area?",
             "choices": [
-              "A chosen side of a triangle and the perpendicular distance to the far corner",
-              "A shape built from simpler shapes",
-              "Time as a decimal, like 2.5 hours",
-              "Time as hours and minutes, like 2 h 30 min"
+              "35 cm²",
+              "70 cm²",
+              "19 cm²",
+              "45 cm²"
             ],
-            "answer": "A chosen side of a triangle and the perpendicular distance to the far corner",
-            "clue": "Use the Unit 7 Math Words & Symbols reference.",
-            "explanation": "Base / Height means A chosen side of a triangle and the perpendicular distance to the far corner."
+            "answer": "35 cm²",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "Area = (base × height) ÷ 2 = (14 × 5) ÷ 2 = 70 ÷ 2 = 35 cm²."
           },
           {
-            "prompt": "A lesson starts at 5 o'clock and lasts 3 hours. At what hour does it end?",
+            "prompt": "What is the area of a square with sides of 6 cm?",
             "choices": [
-              "3",
-              "8",
-              "5",
-              "9"
+              "36 cm²",
+              "24 cm²",
+              "12 cm²",
+              "30 cm²"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "5 + 3 = 8 o'clock."
+            "answer": "36 cm²",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Area = side × side = 6 × 6 = 36 cm²."
           },
           {
-            "prompt": "How many minutes are there in 2 hours?",
+            "prompt": "A shape is a rectangle 5 cm by 4 cm with a triangle of base 5 cm and height 2 cm on top. What is the total area?",
             "choices": [
-              "62",
-              "120",
-              "60",
-              "200"
+              "25 cm²",
+              "20 cm²",
+              "45 cm²",
+              "15 cm²"
             ],
-            "answer": "120",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "1 hour = 60 minutes, so 2 hours = 120 minutes."
+            "answer": "25 cm²",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Rectangle = 5 × 4 = 20 cm². Triangle = (5 × 2) ÷ 2 = 5 cm². Total = 20 + 5 = 25 cm²."
           },
           {
-            "prompt": "How many minutes are there in 1 hour?",
+            "prompt": "What does the small '2' mean in a unit like cm²?",
             "choices": [
-              "30",
-              "100",
-              "61",
-              "60"
+              "That the measurement covers two dimensions multiplied together",
+              "That the value should be doubled",
+              "That there are two shapes",
+              "That the unit is squared in shape"
             ],
-            "answer": "60",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "1 hour = 60 minutes, so 1 hours = 60 minutes."
+            "answer": "That the measurement covers two dimensions multiplied together",
+            "clue": "Think about what area actually measures, then check each option.",
+            "explanation": "The superscript 2 in cm² shows that area comes from multiplying two dimensions (length × width) together."
           }
         ]
       }
@@ -1777,6 +1813,8 @@
     "I can find a missing length when you already know the area of a rectangle or triangle.",
     "I can break a composite shape into rectangles and triangles to find its total area.",
     "I can choose sensible units of area (mm², cm², m², km²) and convert between them.",
-    "I can convert between decimal hours (like 2.5 hours) and hours and minutes (like 2 hours 30 minutes)."
+    "I can convert between decimal hours (like 2.5 hours) and hours and minutes (like 2 hours 30 minutes).",
+    "I can add and subtract time intervals and find how long an activity lasts.",
+    "I can solve real-world problems involving area and time, showing my working clearly."
   ]
 }

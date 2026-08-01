@@ -56,44 +56,51 @@
     "Substitute numbers into expressions and formulae, following the correct order of operations.",
     "Construct an equation from a word problem and solve it step by step.",
     "Check a solution by substituting it back into the original equation.",
-    "Understand inequality symbols and solve simple linear inequalities."
+    "Understand inequality symbols and solve simple linear inequalities.",
+    "Turn a short word description into a formula using a single operation, and explain in words what a simple existing formula means."
   ],
   "concepts": [
     {
       "id": "concept-1-understanding-algebraic-expressions",
       "title": "Understanding Algebraic Expressions",
-      "explanation": "An algebraic expression is a mathematical phrase built from numbers, letters and operation signs. Unlike an equation, an expression has no equals sign – it represents a value or a calculation rather than a statement that two things are equal. For example, 3x + 5 is an expression; it tells you to multiply some number x by 3 and then add 5. The letters in an expression are called variables because their value can vary – it can change from one situation to the next. We usually use letters such as x, y, a, b or n.…",
-      "example": "When a number sits directly in front of a letter, it means multiply. So 3x means 3 × x, and 5y means 5 × y. The number in front is called the coefficient. In the term 7a, the coefficient is 7. If no number is written,…"
+      "explanation": "An algebraic expression is a mathematical phrase built from numbers, letters and operation signs. Unlike an equation, an expression has no equals sign – it represents a value or a calculation rather than a statement that two things are equal. For example, 3x + 5 is an expression; it tells you to multiply some number x by 3 and then add 5.\n\nThe letters in an expression are called variables because their value can vary – it can change from one situation to the next. We usually use letters such as x, y, a, b or n. Sometimes we choose a letter that reminds us of its meaning, such as t for time, d for distance or A for area, but the choice is really up to you.\n\nWhen a number sits directly in front of a letter, it means multiply. So 3x means 3 × x, and 5y means 5 × y. The number in front is called the coefficient. In the term 7a, the coefficient is 7. If no number is written, the coefficient is understood to be 1, so x really means 1x. This is a small point that trips up many learners, so keep it in mind.\n\nThe building blocks of an expression are its terms. A term can be a single number, a single letter, or a product of numbers and letters. The plus and minus signs separate the terms and tell you whether each term is positive or negative. In the expression 3x + 2y − 5, there are three terms: 3x, 2y and −5. A term that is just a number, like the −5 here, is called a constant.",
+      "example": "Expressions are wonderful for describing real situations. If a sambusa costs 4 shillings, then the cost of n sambusas is 4n shillings. If Farah starts with 50 shillings and spends d shillings at the Eastleigh market, she has 50 − d shillings left. If a rectangular garden has length l and width w, its perimeter is 2l + 2w. Each of these expressions captures a general rule that works for any value of the letters – that is exactly why algebra is so useful."
     },
     {
       "id": "concept-2-collecting-like-terms",
       "title": "Collecting Like Terms",
-      "explanation": "Like terms are terms that have exactly the same letters raised to exactly the same powers. The coefficients can be different, but the letter part must be identical. For example, 3x and 7x are like terms, and so are 2y and −5y. However, 3x and 3y are not like terms because they use different letters, and 2x and 2x² are not like terms because the power of x is different. To simplify an expression means to rewrite it in its shortest correct form. The main way to do this is to collect like terms: you combine like…",
-      "example": "Be careful with the signs. In the expression 4a − 7a + 2a, you work out the coefficients as 4 − 7 + 2 = −1, so the answer is −a (which means −1a). It helps to imagine subtraction as adding a negative: 6b − 3b is the…"
+      "explanation": "Like terms are terms that have exactly the same letters raised to exactly the same powers. The coefficients can be different, but the letter part must be identical. For example, 3x and 7x are like terms, and so are 2y and −5y. However, 3x and 3y are not like terms because they use different letters, and 2x and 2x² are not like terms because the power of x is different.\n\nTo simplify an expression means to rewrite it in its shortest correct form. The main way to do this is to collect like terms: you combine like terms by adding or subtracting their coefficients, keeping the letter part unchanged. Think of it as counting groups of the same object. If you have 5 groups of x and add 3 more groups of x, you now have 8 groups of x, so 5x + 3x = 8x. In the same way, 7y − 2y = 5y.\n\nBe careful with the signs. In the expression 4a − 7a + 2a, you work out the coefficients as 4 − 7 + 2 = −1, so the answer is −a (which means −1a). It helps to imagine subtraction as adding a negative: 6b − 3b is the same as 6b + (−3b) = 3b.\n\nLonger expressions often mix several kinds of term. Consider 3x + 5y − 2x + 4 − y + 7. Group the like terms together: the x terms give 3x − 2x = x; the y terms give 5y − y = 4y; the constants give 4 + 7 = 11. So the simplified expression is x + 4y + 11. Notice that plain numbers (constants) are like terms with one another, so they combine too.\n\nWhen powers appear, only terms with the same letter to the same power combine. So 2x² + 5x² = 7x², but 2x² + 5x cannot be simplified any further, because x² and x are different kinds of term. Learning to spot when an expression is already as simple as possible is just as important as knowing how to simplify – the expression 3x + 2y − 5 cannot be shortened at all, because none of its terms are alike.",
+      "example": "⚠ Common Trap You cannot add unlike terms. 3x + 2y does NOT equal 5xy. The x groups and the y groups stay separate. When the coefficient works out to 1 or −1, write x or −x, not 1x or −1x."
     },
     {
       "id": "concept-3-expanding-brackets",
       "title": "Expanding Brackets",
-      "explanation": "Expanding brackets, also called distributing, means removing the brackets by multiplying the term outside by every term inside. It rests on the distributive law, which says a(b + c) = ab + ac. For example, 3(x + 4) means 3 × x + 3 × 4 = 3x + 12. The word ‘every’ is the key: a common mistake is to multiply the first term inside and forget the second. Negative signs need extra care, because a negative outside the brackets changes the sign of every term inside. Expanding −2(x + 5) gives −2 × x + (−2) × 5 = −2x − 10.…",
-      "example": "Often you must expand and then collect like terms. Take 3(x + 2) + 2(x − 1). First expand each bracket: 3x + 6 + 2x − 2. Then collect like terms: (3x + 2x) + (6 − 2) = 5x + 4. Working in this order – expand first, then…"
+      "explanation": "Expanding brackets, also called distributing, means removing the brackets by multiplying the term outside by every term inside. It rests on the distributive law, which says a(b + c) = ab + ac. For example, 3(x + 4) means 3 × x + 3 × 4 = 3x + 12. The word ‘every’ is the key: a common mistake is to multiply the first term inside and forget the second. Negative signs need extra care, because a negative outside the brackets changes the sign of every term inside. Expanding −2(x + 5) gives −2 × x + (−2) × 5 = −2x − 10.",
+      "example": "Often you must expand and then collect like terms. Take 3(x + 2) + 2(x − 1). First expand each bracket: 3x + 6 + 2x − 2. Then collect like terms: (3x + 2x) + (6 − 2) = 5x + 4. Working in this order – expand first, then tidy up – keeps you from making mistakes."
     },
     {
       "id": "concept-4-substituting-into-formulae",
       "title": "Substituting into Formulae",
-      "explanation": "A formula is a rule that connects quantities, written using letters. Substituting means replacing each letter with a given number and then working out the answer. Many formulae come from geometry. The area of a rectangle is A = lw, and its perimeter is P = 2l + 2w. If a rectangle has length 8 cm and width 5 cm, then A = lw = 8 × 5 = 40 cm², and P = 2l + 2w = 2(8) + 2(5) = 16 + 10 = 26 cm. When substituting, always follow the order of operations (brackets, then powers, then multiply and divide, then add and…",
-      "example": "Some formulae mix several operations. The rule for changing degrees Celsius to Fahrenheit is F = 9C/5 + 32. To convert 25°C: F = 9(25)/5 + 32 = 225/5 + 32 = 45 + 32 = 77°F. Notice how the order of operations makes you…"
+      "explanation": "A formula is a rule that connects quantities, written using letters. Substituting means replacing each letter with a given number and then working out the answer. Many formulae come from geometry. The area of a rectangle is A = lw, and its perimeter is P = 2l + 2w. If a rectangle has length 8 cm and width 5 cm, then A = lw = 8 × 5 = 40 cm², and P = 2l + 2w = 2(8) + 2(5) = 16 + 10 = 26 cm.\n\nWhen substituting, always follow the order of operations (brackets, then powers, then multiply and divide, then add and subtract). For the area of a triangle, A = ½bh, if b = 6 and h = 4 then A = ½ × 6 × 4 = ½ × 24 = 12. The multiplication happens before the halving.",
+      "example": "Some formulae mix several operations. The rule for changing degrees Celsius to Fahrenheit is F = 9C/5 + 32. To convert 25°C: F = 9(25)/5 + 32 = 225/5 + 32 = 45 + 32 = 77°F. Notice how the order of operations makes you multiply by 9, then divide by 5, then add 32 – doing these in a different order would give the wrong answer."
     },
     {
       "id": "concept-5-constructing-and-solving-equations",
       "title": "Constructing and Solving Equations",
-      "explanation": "An equation is a statement that two expressions are equal, joined by an equals sign. Solving an equation means finding the value of the variable that makes the statement true. The golden rule is the balance principle: you may do the same thing to both sides of an equation without changing whether it is true. Picture an old-fashioned balance scale; if you add or take away the same weight from both pans, it stays balanced. Start with a one-step example. To solve x + 7 = 15, you want x by itself, so subtract 7 from…",
-      "example": "Most equations take more than one step. To solve 2x + 5 = 13, first undo the addition by subtracting 5 from both sides: 2x = 8. Then undo the multiplication by dividing both sides by 2: x = 4. The general plan is to…"
+      "explanation": "An equation is a statement that two expressions are equal, joined by an equals sign. Solving an equation means finding the value of the variable that makes the statement true. The golden rule is the balance principle: you may do the same thing to both sides of an equation without changing whether it is true. Picture an old-fashioned balance scale; if you add or take away the same weight from both pans, it stays balanced.\n\nStart with a one-step example. To solve x + 7 = 15, you want x by itself, so subtract 7 from both sides: x + 7 − 7 = 15 − 7, which gives x = 8. You can check by substituting back: 8 + 7 = 15. ✔ When the variable has a coefficient, you divide. To solve 3x = 12, divide both sides by 3: x = 12 ÷ 3 = 4.\n\nMost equations take more than one step. To solve 2x + 5 = 13, first undo the addition by subtracting 5 from both sides: 2x = 8. Then undo the multiplication by dividing both sides by 2: x = 4. The general plan is to undo the operations in reverse order, peeling them away one at a time until the variable stands alone.\n\nWhen the variable appears on both sides, gather the variable terms on one side and the numbers on the other. To solve 3x − 4 = 2x + 6, subtract 2x from both sides to get x − 4 = 6, then add 4 to both sides to get x = 10. If an equation contains brackets, expand them first: 2(x + 3) = 14 becomes 2x + 6 = 14, then 2x = 8, so x = 4.",
+      "example": "Constructing an equation from a word problem is a skill worth practising. Start by choosing a letter for the unknown, then translate the words into algebra one phrase at a time. ‘A number increased by 7 equals 15’ becomes x + 7 = 15. ‘Three times a number minus 4 equals twice the number plus 6’ becomes 3x − 4 = 2x + 6. Once the equation is built, solve it with the steps above, and always check your answer by putting it back into the original problem to make sure it makes sense."
     },
     {
       "id": "concept-6-working-with-inequalities",
       "title": "Working with Inequalities",
-      "explanation": "An inequality compares two expressions using the symbols < (less than), > (greater than), ≤ (less than or equal to) and ≥ (greater than or equal to). Unlike an equation, which usually has one exact answer, an inequality has a range of answers. The inequality x > 3 means x can be any number bigger than 3 – such as 3.1, 4, 10 or 100 – but not 3 itself. The inequality y ≤ −2 means y can be −2 or anything less. You solve most inequalities exactly like equations. For x + 4 > 7, subtract 4 from both sides to get x > 3.…",
-      "example": "Why does the sign flip? Consider the true statement 2 < 5. If you multiply both sides by −1, you get −2 and −5. On the number line −2 sits to the right of −5, so −2 is actually the larger number; the inequality must…"
+      "explanation": "An inequality compares two expressions using the symbols < (less than), > (greater than), ≤ (less than or equal to) and ≥ (greater than or equal to). Unlike an equation, which usually has one exact answer, an inequality has a range of answers. The inequality x > 3 means x can be any number bigger than 3 – such as 3.1, 4, 10 or 100 – but not 3 itself. The inequality y ≤ −2 means y can be −2 or anything less.\n\nYou solve most inequalities exactly like equations. For x + 4 > 7, subtract 4 from both sides to get x > 3. For 3y ≤ 15, divide both sides by 3 to get y ≤ 5. There is one crucial extra rule: when you multiply or divide both sides by a negative number, you must reverse the inequality symbol. So for −2x < 6, dividing both sides by −2 flips the sign to give x > −3.\n\nWhy does the sign flip? Consider the true statement 2 < 5. If you multiply both sides by −1, you get −2 and −5. On the number line −2 sits to the right of −5, so −2 is actually the larger number; the inequality must reverse to −2 > −5 to stay true. Keeping this picture in mind will save you from a very common error.\n\nInequalities describe the limits and constraints of real life. If Yusuf needs at least 40 correct answers to pass a test, we write x ≥ 40. If Halima has 100 shillings to spend on books costing 15 shillings each, then 15b ≤ 100, so b ≤ 6.67, meaning she can afford at most 6 books. Age limits, speed limits, budgets and capacity rules are all inequalities in disguise.\n\nYou have now met six big ideas: reading expressions, collecting like terms, expanding brackets, substituting into formulae, constructing and solving equations, and working with inequalities. These are not separate skills that live in separate boxes – they work together as one connected toolkit. When Ibrahim wants to find the width of a rectangular plot whose perimeter and length he already knows, he substitutes into a formula, forms an equation and then solves it. Each idea supports the next.",
+      "example": "The best way to make these ideas your own is to use them out loud with real situations around you. Write an expression for the cost of several loaves of anjero. Substitute numbers into the area formula for your prayer mat. Turn a shopping question into an equation and solve it. Every time you do this, your algebraic thinking grows a little stronger, and the harder mathematics in later units – graphs, sequences, and beyond – will feel far more natural. Now let us work through some examples together, step by step."
+    },
+    {
+      "id": "concept-7-writing-a-formula-from-words",
+      "title": "Writing a Formula from Words",
+      "explanation": "A formula connects two or more quantities with a rule, and sometimes you must build that formula yourself from a sentence rather than being given it. Read the sentence carefully, decide which quantity is being worked out (this becomes the letter on its own on the left), and decide which single operation the words describe – add, subtract, multiply or divide. For example: 'The total cost, C, is the number of tickets, n, multiplied by the price of one ticket, p.' The quantity being found is C, and the words 'multiplied by' tell you the operation is ×. So the formula is C = np. You can also go the other way, turning a formula back into words: P = 4s means 'the perimeter is four times the side length'.",
+      "example": "Try another: 'The total weight, W, is the number of sacks, n, multiplied by the weight of one sack, k.' Being found: W. Operation: multiply. Formula: W = nk. Or: 'The remaining money, R, is the starting amount, A, minus the amount spent, S.' Being found: R. Operation: subtract. Formula: R = A − S. Always check your formula by substituting a sensible number, the same way you would check any expression."
     }
   ],
   "explorations": [
@@ -102,72 +109,72 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "Understanding Algebraic Expressions",
-      "context": "An algebraic expression is a mathematical phrase built from numbers, letters and operation signs. Unlike an equation, an expression has no equals sign – it represents a value or a calculation rather than a statement that two things are equal. For example, 3x…",
+      "context": "An algebraic expression is a mathematical phrase built from numbers, letters and operation signs. Unlike an equation, an expression has no equals sign – it represents a value or a calculation rather than a statement that two things are equal.",
       "prompt": "Simplify: a) 3x + 4x b) 9y − 2y c) 6a + a.",
       "answer": "1) a) 7x, b) 7y, c) 7a.",
       "modelType": "model-1",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) a) 7x, b) 7y, c) 7a."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient.",
+      "explanation": "Understanding Algebraic Expressions: An algebraic expression is a mathematical phrase built from numbers, letters and operation signs. Unlike an equation, an expression has no equals sign – it represents a value or a calculation rather than a statement that two things are equal. For example, 3x + 5 is an expression; it tells you to multiply some number x by 3 and then add 5."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Collecting Like Terms",
-      "context": "Like terms are terms that have exactly the same letters raised to exactly the same powers. The coefficients can be different, but the letter part must be identical. For example, 3x and 7x are like terms, and so are 2y and −5y. However, 3x and 3y are not like…",
+      "context": "Like terms are terms that have exactly the same letters raised to exactly the same powers. The coefficients can be different, but the letter part must be identical. For example, 3x and 7x are like terms, and so are 2y and −5y.",
       "prompt": "Name the coefficient of x in: 5x + 3y − 7.",
       "answer": "coefficient of x is 5.",
       "modelType": "model-2",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "coefficient of x is 5."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient.",
+      "explanation": "Collecting Like Terms: Like terms are terms that have exactly the same letters raised to exactly the same powers. The coefficients can be different, but the letter part must be identical. For example, 3x and 7x are like terms, and so are 2y and −5y. However, 3x and 3y are not like terms because they use different letters, and 2x and 2x² are not like terms because the power of x is different."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Expanding Brackets",
-      "context": "Expanding brackets, also called distributing, means removing the brackets by multiplying the term outside by every term inside. It rests on the distributive law, which says a(b + c) = ab + ac. For example, 3(x + 4) means 3 × x + 3 × 4 = 3x + 12. The word…",
+      "context": "Expanding brackets, also called distributing, means removing the brackets by multiplying the term outside by every term inside. It rests on the distributive law, which says a(b + c) = ab + ac. For example, 3(x + 4) means 3 × x + 3 × 4 = 3x + 12.",
       "prompt": "Expand: a) 2(x + 3) b) 5(a + 4) c) 3(2y + 1).",
       "answer": "a) 2x + 6, b) 5a + 20, c) 6y + 3.",
       "modelType": "model-3",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "a) 2x + 6, b) 5a + 20, c) 6y + 3."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient.",
+      "explanation": "Expanding Brackets: Expanding brackets, also called distributing, means removing the brackets by multiplying the term outside by every term inside. It rests on the distributive law, which says a(b + c) = ab + ac. For example, 3(x + 4) means 3 × x + 3 × 4 = 3x + 12. The word ‘every’ is the key: a common mistake is to multiply the first term inside and forget the second."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Substituting into Formulae",
-      "context": "A formula is a rule that connects quantities, written using letters. Substituting means replacing each letter with a given number and then working out the answer. Many formulae come from geometry. The area of a rectangle is A = lw, and its perimeter is P = 2l…",
+      "context": "A formula is a rule that connects quantities, written using letters. Substituting means replacing each letter with a given number and then working out the answer. Many formulae come from geometry.",
       "prompt": "If y = 5, find the value of: a) 2y b) y + 8 c) 3y − 1.",
       "answer": "a) 10, b) 13, c) 14.",
       "modelType": "model-4",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "a) 10, b) 13, c) 14."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient.",
+      "explanation": "Substituting into Formulae: A formula is a rule that connects quantities, written using letters. Substituting means replacing each letter with a given number and then working out the answer. Many formulae come from geometry. The area of a rectangle is A = lw, and its perimeter is P = 2l + 2w. If a rectangle has length 8 cm and width 5 cm, then A = lw = 8 × 5 = 40 cm², and P = 2l + 2w = 2(8) + 2(5) = 16 + 10 = 26 cm."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Constructing and Solving Equations",
-      "context": "An equation is a statement that two expressions are equal, joined by an equals sign. Solving an equation means finding the value of the variable that makes the statement true. The golden rule is the balance principle: you may do the same thing to both sides…",
+      "context": "An equation is a statement that two expressions are equal, joined by an equals sign. Solving an equation means finding the value of the variable that makes the statement true.",
       "prompt": "Solve: a) x + 6 = 14 b) x − 3 = 10 c) 4x = 20.",
       "answer": "a) x = 8, b) x = 13, c) x = 5.",
       "modelType": "model-5",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "a) x = 8, b) x = 13, c) x = 5."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient.",
+      "explanation": "Constructing and Solving Equations: An equation is a statement that two expressions are equal, joined by an equals sign. Solving an equation means finding the value of the variable that makes the statement true. The golden rule is the balance principle: you may do the same thing to both sides of an equation without changing whether it is true."
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Working with Inequalities",
-      "context": "An inequality compares two expressions using the symbols < (less than), > (greater than), ≤ (less than or equal to) and ≥ (greater than or equal to). Unlike an equation, which usually has one exact answer, an inequality has a range of answers. The inequality…",
+      "context": "An inequality compares two expressions using the symbols < (less than), > (greater than), ≤ (less than or equal to) and ≥ (greater than or equal to). Unlike an equation, which usually has one exact answer, an inequality has a range of answers.",
       "prompt": "Collect like terms: 6x + 2y − 3x + 5y − x.",
       "answer": "1) (6x − 3x − x) + (2y + 5y) = 2x + 7y.",
       "modelType": "model-6",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) (6x − 3x − x) + (2y + 5y) = 2x + 7y."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient.",
+      "explanation": "Working with Inequalities: An inequality compares two expressions using the symbols < (less than), > (greater than), ≤ (less than or equal to) and ≥ (greater than or equal to). Unlike an equation, which usually has one exact answer, an inequality has a range of answers. The inequality x > 3 means x can be any number bigger than 3 – such as 3.1, 4, 10 or 100 – but not 3 itself."
     }
   ],
   "visualModels": [
@@ -176,7 +183,7 @@
       "outcomeId": "lo01",
       "title": "Understanding Algebraic Expressions",
       "modelType": "concept-model-1",
-      "purpose": "An algebraic expression is a mathematical phrase built from numbers, letters and operation signs. Unlike an equation, an expression has no equals sign – it represents a value or a calculation rather than a statement…",
+      "purpose": "An algebraic expression is a mathematical phrase built from numbers, letters and operation signs.",
       "defaultNumber": null
     },
     {
@@ -184,7 +191,7 @@
       "outcomeId": "lo02",
       "title": "Collecting Like Terms",
       "modelType": "concept-model-2",
-      "purpose": "Like terms are terms that have exactly the same letters raised to exactly the same powers. The coefficients can be different, but the letter part must be identical. For example, 3x and 7x are like terms, and so are 2y…",
+      "purpose": "Like terms are terms that have exactly the same letters raised to exactly the same powers. The coefficients can be different, but the letter part must be identical.",
       "defaultNumber": null
     },
     {
@@ -192,7 +199,7 @@
       "outcomeId": "lo03",
       "title": "Expanding Brackets",
       "modelType": "concept-model-3",
-      "purpose": "Expanding brackets, also called distributing, means removing the brackets by multiplying the term outside by every term inside. It rests on the distributive law, which says a(b + c) = ab + ac. For example, 3(x + 4)…",
+      "purpose": "Expanding brackets, also called distributing, means removing the brackets by multiplying the term outside by every term inside. It rests on the distributive law, which says a(b + c) = ab + ac.",
       "defaultNumber": null
     },
     {
@@ -200,7 +207,7 @@
       "outcomeId": "lo04",
       "title": "Substituting into Formulae",
       "modelType": "concept-model-4",
-      "purpose": "A formula is a rule that connects quantities, written using letters. Substituting means replacing each letter with a given number and then working out the answer. Many formulae come from geometry. The area of a…",
+      "purpose": "A formula is a rule that connects quantities, written using letters. Substituting means replacing each letter with a given number and then working out the answer. Many formulae come from geometry.",
       "defaultNumber": null
     },
     {
@@ -208,7 +215,7 @@
       "outcomeId": "lo05",
       "title": "Constructing and Solving Equations",
       "modelType": "concept-model-5",
-      "purpose": "An equation is a statement that two expressions are equal, joined by an equals sign. Solving an equation means finding the value of the variable that makes the statement true. The golden rule is the balance principle:…",
+      "purpose": "An equation is a statement that two expressions are equal, joined by an equals sign. Solving an equation means finding the value of the variable that makes the statement true.",
       "defaultNumber": null
     },
     {
@@ -216,7 +223,7 @@
       "outcomeId": "lo06",
       "title": "Working with Inequalities",
       "modelType": "concept-model-6",
-      "purpose": "An inequality compares two expressions using the symbols < (less than), > (greater than), ≤ (less than or equal to) and ≥ (greater than or equal to). Unlike an equation, which usually has one exact answer, an inequality…",
+      "purpose": "An inequality compares two expressions using the symbols < (less than), > (greater than), ≤ (less than or equal to) and ≥ (greater than or equal to).",
       "defaultNumber": null
     }
   ],
@@ -269,7 +276,7 @@
       "steps": [
         "Solution: Replace l with 12 and w with 8: P = 2(12) + 2(8) = 24 + 16 = 40.",
         "Because this is a perimeter, the answer would carry a length unit such as 40 cm.",
-        "Check the substitute into a formula result carefully."
+        "Check by substituting your values back into the formula to confirm both sides give 40."
       ]
     },
     {
@@ -402,84 +409,84 @@
       "level": "Warm-up",
       "prompt": "Simplify: a) 3x + 4x b) 9y − 2y c) 6a + a.",
       "answer": "1) a) 7x, b) 7y, c) 7a.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient."
     },
     {
       "id": "p02",
       "level": "Warm-up",
       "prompt": "Name the coefficient of x in: 5x + 3y − 7.",
       "answer": "coefficient of x is 5.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient."
     },
     {
       "id": "p03",
       "level": "Warm-up",
       "prompt": "Expand: a) 2(x + 3) b) 5(a + 4) c) 3(2y + 1).",
       "answer": "a) 2x + 6, b) 5a + 20, c) 6y + 3.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient."
     },
     {
       "id": "p04",
       "level": "Warm-up",
       "prompt": "If y = 5, find the value of: a) 2y b) y + 8 c) 3y − 1.",
       "answer": "a) 10, b) 13, c) 14.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient."
     },
     {
       "id": "p05",
       "level": "Warm-up",
       "prompt": "Solve: a) x + 6 = 14 b) x − 3 = 10 c) 4x = 20.",
       "answer": "a) x = 8, b) x = 13, c) x = 5.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient."
     },
     {
       "id": "p06",
       "level": "Core",
       "prompt": "Collect like terms: 6x + 2y − 3x + 5y − x.",
       "answer": "1) (6x − 3x − x) + (2y + 5y) = 2x + 7y.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient."
     },
     {
       "id": "p07",
       "level": "Core",
       "prompt": "Simplify: 5m² + 3m − 2m² + m.",
       "answer": "(5m² − 2m²) + (3m + m) = 3m² + 4m.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient."
     },
     {
       "id": "p08",
       "level": "Core",
       "prompt": "Expand and simplify: 4(x + 2) + 3(x − 1).",
       "answer": "4x + 8 + 3x − 3 = 7x + 5.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient."
     },
     {
       "id": "p09",
       "level": "Core",
       "prompt": "Using P = 2l + 2w, find P when l = 9 and w = 6.",
       "answer": "P = 2(9) + 2(6) = 18 + 12 = 30.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient."
     },
     {
       "id": "p10",
       "level": "Core",
       "prompt": "Using A = ½bh, find A when b = 10 and h = 7.",
       "answer": "A = ½ × 10 × 7 = 35.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient."
     },
     {
       "id": "p11",
       "level": "Core",
       "prompt": "Solve: a) 2x + 3 = 11 b) 3x − 5 = 16 c) 5x + 2 = 22.",
       "answer": "a) 2x = 8, x = 4; b) 3x = 21, x = 7; c) 5x = 20, x = 4.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient."
     },
     {
       "id": "p12",
       "level": "Challenge",
       "prompt": "Expand and simplify: 5(2a + 3) − 2(3a − 4).",
       "answer": "1) 10a + 15 − 6a + 8 = 4a + 23.",
-      "hint": "Identify the key mathematical idea before calculating or explaining."
+      "hint": "Decide which idea the question is really about (Variable, Coefficient, Term), then work one step at a time and check the answer is sensible."
     }
   ],
   "activities": [
@@ -498,7 +505,7 @@
       "title": "The Cover-Up Equation Game",
       "materials": "small stones or beans, and a cup or bowl to hide some under.",
       "steps": [
-        "Ask a family member to hide some stones under the cup and place a few visible stones beside it, telling you only the total.",
+        "Ask a family member or your AI tutor to hide some stones under the cup and place a few visible stones beside it, telling you only the total. If no one is available, hide the stones yourself without counting, mix them up, then work out how many are hidden.",
         "For example: ‘Under the cup plus 3 on the table makes 8 in all.’ The hidden amount is your unknown x.",
         "Write the equation x + 3 = 8 and solve it, then lift the cup to check.",
         "Swap roles and make harder ones, such as ‘two cups with the same amount, plus 1, makes 9’ (2x + 1 = 9).",
@@ -507,9 +514,9 @@
     },
     {
       "title": "Think-of-a-Number Trick",
-      "materials": "just a pencil, paper, and a friend or family member.",
+      "materials": "just a pencil, paper, and a friend, family member, or your AI tutor.",
       "steps": [
-        "Tell someone: ‘Think of a number, double it, add 10, then tell me your answer.’",
+        "Tell someone (a friend, family member, or your AI tutor): ‘Think of a number, double it, add 10, then tell me your answer.’",
         "To find their secret number, subtract 10 and halve the result – you are solving 2n + 10 = answer.",
         "Write the algebra down so they can see how you ‘read their mind’.",
         "Invent your own trick with three steps and work out the equation that undoes it."
@@ -551,27 +558,27 @@
   "reference": {
     "rules": [
       {
-        "title": "Think about it this way. When Amina",
+        "title": "Why Algebra Is Powerful",
         "text": "Think about it this way. When Amina writes 2 + 3 = 5, she has described one single fact. But when she writes a + b = c, she has described a whole family of facts that works for endless combinations of numbers. That is the power of algebra: instead of solving one problem at a time, you learn to solve entire classes of problems together. A market trader in Hargeisa who wants a rule for the cost of any number of mangoes, an engineer who needs a formula for the strength of a bridge, and a scientist measuring the speed of light – all of them reach for the same tool you are about to learn."
       },
       {
-        "title": "Expressions are wonderful for describing real situations",
+        "title": "Expressions Describe Real Situations",
         "text": "Expressions are wonderful for describing real situations. If a sambusa costs 4 shillings, then the cost of n sambusas is 4n shillings. If Farah starts with 50 shillings and spends d shillings at the Eastleigh market, she has 50 − d shillings left. If a rectangular garden has length l and width w, its perimeter is 2l + 2w. Each of these expressions captures a general rule that works for any value of the letters – that is exactly why algebra is so useful."
       },
       {
-        "title": "When the term outside is positive, expanding",
+        "title": "Expanding Positive Brackets",
         "text": "When the term outside is positive, expanding is straightforward. Look at 5(2y + 3): multiply 5 by each inside term to get 5 × 2y + 5 × 3 = 10y + 15. When a letter is outside, the same rule holds: x(x + 7) = x × x + x × 7 = x² + 7x, remembering that x × x = x²."
       },
       {
-        "title": "A formula is a rule that connects",
+        "title": "Using Formulae",
         "text": "A formula is a rule that connects quantities, written using letters. Substituting means replacing each letter with a given number and then working out the answer. Many formulae come from geometry. The area of a rectangle is A = lw, and its perimeter is P = 2l + 2w. If a rectangle has length 8 cm and width 5 cm, then A = lw = 8 × 5 = 40 cm², and P = 2l + 2w = 2(8) + 2(5) = 16 + 10 = 26 cm."
       },
       {
-        "title": "Some formulae mix several operations. The rule",
+        "title": "Order of Operations in Formulae",
         "text": "Some formulae mix several operations. The rule for changing degrees Celsius to Fahrenheit is F = 9C/5 + 32. To convert 25°C: F = 9(25)/5 + 32 = 225/5 + 32 = 45 + 32 = 77°F. Notice how the order of operations makes you multiply by 9, then divide by 5, then add 32 – doing these in a different order would give the wrong answer."
       },
       {
-        "title": "An equation is a statement that two",
+        "title": "The Balance Principle",
         "text": "An equation is a statement that two expressions are equal, joined by an equals sign. Solving an equation means finding the value of the variable that makes the statement true. The golden rule is the balance principle: you may do the same thing to both sides of an equation without changing whether it is true. Picture an old-fashioned balance scale; if you add or take away the same weight from both pans, it stays balanced."
       }
     ],
@@ -635,7 +642,7 @@
       "difficulty": "Round 1",
       "prompt": "Simplify: a) 3x + 4x b) 9y − 2y c) 6a + a.",
       "answer": "1) a) 7x, b) 7y, c) 7a.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient.",
       "errorFeedback": "1) a) 7x, b) 7y, c) 7a."
     },
     {
@@ -644,7 +651,7 @@
       "difficulty": "Round 1",
       "prompt": "Name the coefficient of x in: 5x + 3y − 7.",
       "answer": "coefficient of x is 5.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient.",
       "errorFeedback": "coefficient of x is 5."
     },
     {
@@ -653,7 +660,7 @@
       "difficulty": "Round 1",
       "prompt": "Expand: a) 2(x + 3) b) 5(a + 4) c) 3(2y + 1).",
       "answer": "a) 2x + 6, b) 5a + 20, c) 6y + 3.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient.",
       "errorFeedback": "a) 2x + 6, b) 5a + 20, c) 6y + 3."
     },
     {
@@ -662,7 +669,7 @@
       "difficulty": "Round 1",
       "prompt": "If y = 5, find the value of: a) 2y b) y + 8 c) 3y − 1.",
       "answer": "a) 10, b) 13, c) 14.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient.",
       "errorFeedback": "a) 10, b) 13, c) 14."
     },
     {
@@ -671,7 +678,7 @@
       "difficulty": "Round 2",
       "prompt": "Solve: a) x + 6 = 14 b) x − 3 = 10 c) 4x = 20.",
       "answer": "a) x = 8, b) x = 13, c) x = 5.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient.",
       "errorFeedback": "a) x = 8, b) x = 13, c) x = 5."
     },
     {
@@ -680,7 +687,7 @@
       "difficulty": "Round 2",
       "prompt": "Collect like terms: 6x + 2y − 3x + 5y − x.",
       "answer": "1) (6x − 3x − x) + (2y + 5y) = 2x + 7y.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient.",
       "errorFeedback": "1) (6x − 3x − x) + (2y + 5y) = 2x + 7y."
     },
     {
@@ -689,7 +696,7 @@
       "difficulty": "Round 2",
       "prompt": "Simplify: 5m² + 3m − 2m² + m.",
       "answer": "(5m² − 2m²) + (3m + m) = 3m² + 4m.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient.",
       "errorFeedback": "(5m² − 2m²) + (3m + m) = 3m² + 4m."
     },
     {
@@ -698,7 +705,7 @@
       "difficulty": "Round 2",
       "prompt": "Expand and simplify: 4(x + 2) + 3(x − 1).",
       "answer": "4x + 8 + 3x − 3 = 7x + 5.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient.",
       "errorFeedback": "4x + 8 + 3x − 3 = 7x + 5."
     },
     {
@@ -707,7 +714,7 @@
       "difficulty": "Round 3",
       "prompt": "Using P = 2l + 2w, find P when l = 9 and w = 6.",
       "answer": "P = 2(9) + 2(6) = 18 + 12 = 30.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient.",
       "errorFeedback": "P = 2(9) + 2(6) = 18 + 12 = 30."
     },
     {
@@ -716,7 +723,7 @@
       "difficulty": "Round 3",
       "prompt": "Using A = ½bh, find A when b = 10 and h = 7.",
       "answer": "A = ½ × 10 × 7 = 35.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient.",
       "errorFeedback": "A = ½ × 10 × 7 = 35."
     },
     {
@@ -725,7 +732,7 @@
       "difficulty": "Round 3",
       "prompt": "Solve: a) 2x + 3 = 11 b) 3x − 5 = 16 c) 5x + 2 = 22.",
       "answer": "a) 2x = 8, x = 4; b) 3x = 21, x = 7; c) 5x = 20, x = 4.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Coefficient.",
       "errorFeedback": "a) 2x = 8, x = 4; b) 3x = 21, x = 7; c) 5x = 20, x = 4."
     },
     {
@@ -734,7 +741,7 @@
       "difficulty": "Round 3",
       "prompt": "Expand and simplify: 5(2a + 3) − 2(3a − 4).",
       "answer": "1) 10a + 15 − 6a + 8 = 4a + 23.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Variable, Coefficient, Term), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) 10a + 15 − 6a + 8 = 4a + 23."
     }
   ],
@@ -746,7 +753,7 @@
       "context": "Home",
       "prompt": "A sambusa costs 5 shillings. Write an expression for the cost of n sambusas, then find the cost of 8 sambusas for an iftar gathering.",
       "answer": "1) Cost = 5n; for n = 8 that is 40 shillings.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Variable, Coefficient, Term), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) Cost = 5n; for n = 8 that is 40 shillings."
     },
     {
@@ -756,7 +763,7 @@
       "context": "Market",
       "prompt": "Ibrahim thinks of a number, multiplies it by 5 and adds 3 to get 38. Form an equation and find his number.",
       "answer": "5n + 3 = 38 → 5n = 35 → n = 7.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Variable, Coefficient, Term), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "5n + 3 = 38 → 5n = 35 → n = 7."
     },
     {
@@ -766,7 +773,7 @@
       "context": "Travel",
       "prompt": "A minibus from Eastleigh charges 30 shillings plus 15 shillings per stop. Write a formula for the fare F after s stops, then find the fare after 6 stops.",
       "answer": "F = 30 + 15s; for s = 6, F = 30 + 90 = 120 shillings.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Variable, Coefficient, Term), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "F = 30 + 15s; for s = 6, F = 30 + 90 = 120 shillings."
     },
     {
@@ -776,7 +783,7 @@
       "context": "School",
       "prompt": "The perimeter of a rectangular field is 40 m and its length is 12 m. Form an equation using P = 2l + 2w and find the width.",
       "answer": "40 = 2(12) + 2w → 40 = 24 + 2w → 2w = 16 → w = 8 m.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Variable, Coefficient, Term), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "40 = 2(12) + 2w → 40 = 24 + 2w → 2w = 16 → w = 8 m."
     },
     {
@@ -786,7 +793,7 @@
       "context": "Community",
       "prompt": "Farah has 80 shillings and buys books at 12 shillings each. Write an inequality for the number of books b she can buy, then find the greatest number she can afford.",
       "answer": "12b ≤ 80 → b ≤ 6.67, so the greatest whole number of books is 6.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Variable, Coefficient, Term), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "12b ≤ 80 → b ≤ 6.67, so the greatest whole number of books is 6."
     },
     {
@@ -796,7 +803,7 @@
       "context": "Daily life",
       "prompt": "Expand and simplify: 5(2a + 3) − 2(3a − 4).",
       "answer": "1) 10a + 15 − 6a + 8 = 4a + 23.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Variable, Coefficient, Term), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) 10a + 15 − 6a + 8 = 4a + 23."
     }
   ],
@@ -825,7 +832,7 @@
         "Term",
         "Constant"
       ],
-      "modelAnswer": "Perimeter = 2[(2x+5)+(x+3)] = 2(3x +"
+      "modelAnswer": "Perimeter = 2[(2x + 5) + (x + 3)] = 2(3x + 8) = 6x + 16."
     },
     {
       "id": "reason03",
@@ -838,7 +845,7 @@
         "Constant",
         "Expression"
       ],
-      "modelAnswer": "= 6x + 16."
+      "modelAnswer": "4x − 3 = 2x + 9 → 2x = 12 → x = 6."
     },
     {
       "id": "reason04",
@@ -851,7 +858,7 @@
         "Expression",
         "Equation"
       ],
-      "modelAnswer": "4x − 3 = 2x + 9 → 2x = 12 → x = 6."
+      "modelAnswer": "Divide by −2 and flip the sign: x ≤ −4, meaning any number that is −4 or smaller."
     },
     {
       "id": "reason05",
@@ -864,7 +871,7 @@
         "Equation",
         "Formula"
       ],
-      "modelAnswer": "Divide by −2 and flip the sign: x ≤ −4, meaning any number that is −4 or smaller."
+      "modelAnswer": "F = 9(20)/5 + 32 = 180/5 + 32 = 36 + 32 = 68°F."
     },
     {
       "id": "reason06",
@@ -877,7 +884,7 @@
         "Coefficient",
         "Term"
       ],
-      "modelAnswer": "An inequality compares two expressions using the symbols < (less than), > (greater than), ≤ (less than or equal to) and ≥ (greater than or equal to). Unlike an equation, which usually has one exact answer, an inequality has a range of answers. The inequality x > 3 means x can be any number bigger than 3 – such as 3.1, 4, 10 or 100 – but not 3 itself. The inequality y ≤ −2 means y can be −2 or anything less. You solve most inequalities exactly like equations. For x + 4 > 7, subtract 4 from both sides to get x > 3.…"
+      "modelAnswer": "An inequality compares two expressions using the symbols < (less than), > (greater than), ≤ (less than or equal to) and ≥ (greater than or equal to). Unlike an equation, which usually has one exact answer, an inequality has a range of answers. The inequality x > 3 means x can be any number bigger than 3 – such as 3.1, 4, 10 or 100 – but not 3 itself. The inequality y ≤ −2 means y can be −2 or anything less.\n\nYou solve most inequalities exactly like equations. For x + 4 > 7, subtract 4 from both sides to get x > 3. For 3y ≤ 15, divide both sides by 3 to get y ≤ 5. There is one crucial extra rule: when you multiply or divide both sides by a negative number, you must reverse the inequality symbol. So for −2x < 6, dividing both sides by −2 flips the sign to give x > −3."
     }
   ],
   "assessment": {
@@ -888,16 +895,16 @@
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Basic",
-        "question": "Find the next term: 1, 6, 11, 16, ___",
+        "question": "In the expression 4x + 7, what is the constant term?",
         "options": [
-          "16",
-          "17",
-          "21",
-          "26"
+          "4",
+          "x",
+          "7",
+          "4x"
         ],
-        "answer": "21",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "The rule is add 5 each time, so the next term is 16 + 5 = 21."
+        "answer": "7",
+        "hint": "Ask yourself what \"Variable\" means here before you choose.",
+        "explanation": "The constant is the term with no letter attached; here it is 7."
       },
       {
         "id": "q02",
@@ -912,7 +919,7 @@
           "15"
         ],
         "answer": "15",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
         "explanation": "Subtract 2 from both sides: x = 17 − 2 = 15."
       },
       {
@@ -928,7 +935,7 @@
           "15"
         ],
         "answer": "5",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
         "explanation": "Subtract 15 from both sides: x = 20 − 15 = 5."
       },
       {
@@ -936,16 +943,16 @@
         "type": "Application",
         "outcomeId": "lo04",
         "difficulty": "Basic",
-        "question": "Find the next term: 7, 14, 21, 28, ___",
+        "question": "Expand: −3(x + 5)",
         "options": [
-          "35",
-          "42",
-          "28",
-          "29"
+          "−3x + 5",
+          "−3x − 15",
+          "3x − 15",
+          "−3x + 15"
         ],
-        "answer": "35",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "The rule is add 7 each time, so the next term is 28 + 7 = 35."
+        "answer": "−3x − 15",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
+        "explanation": "Multiply −3 by each term inside the bracket: −3 × x = −3x and −3 × 5 = −15, giving −3x − 15."
       },
       {
         "id": "q05",
@@ -960,7 +967,7 @@
           "9"
         ],
         "answer": "9",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Ask yourself what \"Expression\" means here before you choose.",
         "explanation": "Subtract 6 from both sides: x = 15 − 6 = 9."
       },
       {
@@ -976,7 +983,7 @@
           "14"
         ],
         "answer": "14",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
         "explanation": "6 × 2 + 2 = 12 + 2 = 14."
       },
       {
@@ -992,7 +999,7 @@
           "33"
         ],
         "answer": "20",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
         "explanation": "Subtract 13 from both sides: x = 33 − 13 = 20."
       },
       {
@@ -1000,32 +1007,32 @@
         "type": "Application",
         "outcomeId": "lo08",
         "difficulty": "Challenge",
-        "question": "Find the next term: 4, 7, 10, 13, ___",
+        "question": "Solve the inequality: x − 4 > 6",
         "options": [
-          "14",
-          "16",
-          "19",
-          "13"
+          "x > 2",
+          "x > 10",
+          "x < 10",
+          "x > −2"
         ],
-        "answer": "16",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "The rule is add 3 each time, so the next term is 13 + 3 = 16."
+        "answer": "x > 10",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
+        "explanation": "Add 4 to both sides of the inequality: x > 6 + 4, so x > 10."
       },
       {
         "id": "q09",
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Challenge",
-        "question": "Find the next term: 6, 9, 12, 15, ___",
+        "question": "In the expression 5a − 2b + 9, how many terms are there?",
         "options": [
-          "18",
-          "21",
-          "15",
-          "16"
+          "2",
+          "3",
+          "4",
+          "9"
         ],
-        "answer": "18",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "The rule is add 3 each time, so the next term is 15 + 3 = 18."
+        "answer": "3",
+        "hint": "Ask yourself what \"Variable\" means here before you choose.",
+        "explanation": "The three terms are 5a, −2b and 9 — each part separated by a + or − sign."
       },
       {
         "id": "q10",
@@ -1089,28 +1096,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Find the next term: 1, 6, 11, 16, ___",
+            "prompt": "In the expression 4x + 7, what is the constant term?",
             "choices": [
-              "16",
-              "17",
-              "21",
-              "26"
+              "4",
+              "x",
+              "7",
+              "4x"
             ],
-            "answer": "21",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 5 each time, so the next term is 16 + 5 = 21."
+            "answer": "7",
+            "clue": "Ask yourself what \"Variable\" means here before you choose.",
+            "explanation": "The constant is the term with no letter attached; here it is 7."
           },
           {
-            "prompt": "Find the next term: 7, 14, 21, 28, ___",
+            "prompt": "Expand: −3(x + 5)",
             "choices": [
-              "35",
-              "42",
-              "28",
-              "29"
+              "−3x + 5",
+              "−3x − 15",
+              "3x − 15",
+              "−3x + 15"
             ],
-            "answer": "35",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 7 each time, so the next term is 28 + 7 = 35."
+            "answer": "−3x − 15",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Multiply −3 by each term inside the bracket: −3 × x = −3x and −3 × 5 = −15, giving −3x − 15."
           },
           {
             "prompt": "Solve for x: x + 13 = 33.",
@@ -1121,7 +1128,7 @@
               "33"
             ],
             "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "Subtract 13 from both sides: x = 33 − 13 = 20."
           },
           {
@@ -1155,7 +1162,7 @@
               "15"
             ],
             "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Variable\" means here before you choose.",
             "explanation": "Subtract 2 from both sides: x = 17 − 2 = 15."
           },
           {
@@ -1167,20 +1174,20 @@
               "9"
             ],
             "answer": "9",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "Subtract 6 from both sides: x = 15 − 6 = 9."
           },
           {
-            "prompt": "Find the next term: 4, 7, 10, 13, ___",
+            "prompt": "Solve the inequality: x − 4 > 6",
             "choices": [
-              "14",
-              "16",
-              "19",
-              "13"
+              "x > 2",
+              "x > 10",
+              "x < 10",
+              "x > −2"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 3 each time, so the next term is 13 + 3 = 16."
+            "answer": "x > 10",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Add 4 to both sides of the inequality: x > 6 + 4, so x > 10."
           },
           {
             "prompt": "What does “Coefficient” mean?",
@@ -1213,7 +1220,7 @@
               "15"
             ],
             "answer": "5",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Variable\" means here before you choose.",
             "explanation": "Subtract 15 from both sides: x = 20 − 15 = 5."
           },
           {
@@ -1225,20 +1232,20 @@
               "14"
             ],
             "answer": "14",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "6 × 2 + 2 = 12 + 2 = 14."
           },
           {
-            "prompt": "Find the next term: 6, 9, 12, 15, ___",
+            "prompt": "In the expression 5a − 2b + 9, how many terms are there?",
             "choices": [
-              "18",
-              "21",
-              "15",
-              "16"
+              "2",
+              "3",
+              "4",
+              "9"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 3 each time, so the next term is 15 + 3 = 18."
+            "answer": "3",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "The three terms are 5a, −2b and 9 — each part separated by a + or − sign."
           },
           {
             "prompt": "What does “Term” mean?",
@@ -1263,16 +1270,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Find the next term: 7, 14, 21, 28, ___",
+            "prompt": "Expand: −3(x + 5)",
             "choices": [
-              "35",
-              "42",
-              "28",
-              "29"
+              "−3x + 5",
+              "−3x − 15",
+              "3x − 15",
+              "−3x + 15"
             ],
-            "answer": "35",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 7 each time, so the next term is 28 + 7 = 35."
+            "answer": "−3x − 15",
+            "clue": "Ask yourself what \"Variable\" means here before you choose.",
+            "explanation": "Multiply −3 by each term inside the bracket: −3 × x = −3x and −3 × 5 = −15, giving −3x − 15."
           },
           {
             "prompt": "Solve for x: x + 13 = 33.",
@@ -1283,7 +1290,7 @@
               "33"
             ],
             "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "Subtract 13 from both sides: x = 33 − 13 = 20."
           },
           {
@@ -1299,16 +1306,16 @@
             "explanation": "Variable means A letter standing for an unknown number."
           },
           {
-            "prompt": "Find the next term: 1, 6, 11, 16, ___",
+            "prompt": "In the expression 4x + 7, what is the constant term?",
             "choices": [
-              "16",
-              "17",
-              "21",
-              "26"
+              "4",
+              "x",
+              "7",
+              "4x"
             ],
-            "answer": "21",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 5 each time, so the next term is 16 + 5 = 21."
+            "answer": "7",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "The constant is the term with no letter attached; here it is 7."
           }
         ]
       },
@@ -1329,20 +1336,20 @@
               "9"
             ],
             "answer": "9",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Variable\" means here before you choose.",
             "explanation": "Subtract 6 from both sides: x = 15 − 6 = 9."
           },
           {
-            "prompt": "Find the next term: 4, 7, 10, 13, ___",
+            "prompt": "Solve the inequality: x − 4 > 6",
             "choices": [
-              "14",
-              "16",
-              "19",
-              "13"
+              "x > 2",
+              "x > 10",
+              "x < 10",
+              "x > −2"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 3 each time, so the next term is 13 + 3 = 16."
+            "answer": "x > 10",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Add 4 to both sides of the inequality: x > 6 + 4, so x > 10."
           },
           {
             "prompt": "What does “Coefficient” mean?",
@@ -1365,7 +1372,7 @@
               "15"
             ],
             "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "Subtract 2 from both sides: x = 17 − 2 = 15."
           }
         ]
@@ -1387,20 +1394,20 @@
               "14"
             ],
             "answer": "14",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Variable\" means here before you choose.",
             "explanation": "6 × 2 + 2 = 12 + 2 = 14."
           },
           {
-            "prompt": "Find the next term: 6, 9, 12, 15, ___",
+            "prompt": "In the expression 5a − 2b + 9, how many terms are there?",
             "choices": [
-              "18",
-              "21",
-              "15",
-              "16"
+              "2",
+              "3",
+              "4",
+              "9"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 3 each time, so the next term is 15 + 3 = 18."
+            "answer": "3",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "The three terms are 5a, −2b and 9 — each part separated by a + or − sign."
           },
           {
             "prompt": "What does “Term” mean?",
@@ -1423,7 +1430,7 @@
               "15"
             ],
             "answer": "5",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "Subtract 15 from both sides: x = 20 − 15 = 5."
           }
         ]
@@ -1445,7 +1452,7 @@
               "33"
             ],
             "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Variable\" means here before you choose.",
             "explanation": "Subtract 13 from both sides: x = 33 − 13 = 20."
           },
           {
@@ -1461,28 +1468,28 @@
             "explanation": "Variable means A letter standing for an unknown number."
           },
           {
-            "prompt": "Find the next term: 1, 6, 11, 16, ___",
+            "prompt": "In the expression 4x + 7, what is the constant term?",
             "choices": [
-              "16",
-              "17",
-              "21",
-              "26"
+              "4",
+              "x",
+              "7",
+              "4x"
             ],
-            "answer": "21",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 5 each time, so the next term is 16 + 5 = 21."
+            "answer": "7",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "The constant is the term with no letter attached; here it is 7."
           },
           {
-            "prompt": "Find the next term: 7, 14, 21, 28, ___",
+            "prompt": "Expand: −3(x + 5)",
             "choices": [
-              "35",
-              "42",
-              "28",
-              "29"
+              "−3x + 5",
+              "−3x − 15",
+              "3x − 15",
+              "−3x + 15"
             ],
-            "answer": "35",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 7 each time, so the next term is 28 + 7 = 35."
+            "answer": "−3x − 15",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Multiply −3 by each term inside the bracket: −3 × x = −3x and −3 × 5 = −15, giving −3x − 15."
           }
         ]
       },
@@ -1495,16 +1502,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Find the next term: 4, 7, 10, 13, ___",
+            "prompt": "Solve the inequality: x − 4 > 6",
             "choices": [
-              "14",
-              "16",
-              "19",
-              "13"
+              "x > 2",
+              "x > 10",
+              "x < 10",
+              "x > −2"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 3 each time, so the next term is 13 + 3 = 16."
+            "answer": "x > 10",
+            "clue": "Ask yourself what \"Variable\" means here before you choose.",
+            "explanation": "Add 4 to both sides of the inequality: x > 6 + 4, so x > 10."
           },
           {
             "prompt": "What does “Coefficient” mean?",
@@ -1527,7 +1534,7 @@
               "15"
             ],
             "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "Subtract 2 from both sides: x = 17 − 2 = 15."
           },
           {
@@ -1539,7 +1546,7 @@
               "9"
             ],
             "answer": "9",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "Subtract 6 from both sides: x = 15 − 6 = 9."
           }
         ]
@@ -1553,16 +1560,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Find the next term: 6, 9, 12, 15, ___",
+            "prompt": "In the expression 5a − 2b + 9, how many terms are there?",
             "choices": [
-              "18",
-              "21",
-              "15",
-              "16"
+              "2",
+              "3",
+              "4",
+              "9"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 3 each time, so the next term is 15 + 3 = 18."
+            "answer": "3",
+            "clue": "Ask yourself what \"Variable\" means here before you choose.",
+            "explanation": "The three terms are 5a, −2b and 9 — each part separated by a + or − sign."
           },
           {
             "prompt": "What does “Term” mean?",
@@ -1585,7 +1592,7 @@
               "15"
             ],
             "answer": "5",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "Subtract 15 from both sides: x = 20 − 15 = 5."
           },
           {
@@ -1597,7 +1604,7 @@
               "14"
             ],
             "answer": "14",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "6 × 2 + 2 = 12 + 2 = 14."
           }
         ]
@@ -1623,28 +1630,28 @@
             "explanation": "Variable means A letter standing for an unknown number."
           },
           {
-            "prompt": "Find the next term: 1, 6, 11, 16, ___",
+            "prompt": "In the expression 4x + 7, what is the constant term?",
             "choices": [
-              "16",
-              "17",
-              "21",
-              "26"
+              "4",
+              "x",
+              "7",
+              "4x"
             ],
-            "answer": "21",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 5 each time, so the next term is 16 + 5 = 21."
+            "answer": "7",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "The constant is the term with no letter attached; here it is 7."
           },
           {
-            "prompt": "Find the next term: 7, 14, 21, 28, ___",
+            "prompt": "Expand: −3(x + 5)",
             "choices": [
-              "35",
-              "42",
-              "28",
-              "29"
+              "−3x + 5",
+              "−3x − 15",
+              "3x − 15",
+              "−3x + 15"
             ],
-            "answer": "35",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 7 each time, so the next term is 28 + 7 = 35."
+            "answer": "−3x − 15",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Multiply −3 by each term inside the bracket: −3 × x = −3x and −3 × 5 = −15, giving −3x − 15."
           },
           {
             "prompt": "Solve for x: x + 13 = 33.",
@@ -1655,7 +1662,7 @@
               "33"
             ],
             "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "Subtract 13 from both sides: x = 33 − 13 = 20."
           }
         ]
@@ -1689,7 +1696,7 @@
               "15"
             ],
             "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "Subtract 2 from both sides: x = 17 − 2 = 15."
           },
           {
@@ -1701,20 +1708,20 @@
               "9"
             ],
             "answer": "9",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "Subtract 6 from both sides: x = 15 − 6 = 9."
           },
           {
-            "prompt": "Find the next term: 4, 7, 10, 13, ___",
+            "prompt": "Solve the inequality: x − 4 > 6",
             "choices": [
-              "14",
-              "16",
-              "19",
-              "13"
+              "x > 2",
+              "x > 10",
+              "x < 10",
+              "x > −2"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 3 each time, so the next term is 13 + 3 = 16."
+            "answer": "x > 10",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Add 4 to both sides of the inequality: x > 6 + 4, so x > 10."
           }
         ]
       },
@@ -1747,7 +1754,7 @@
               "15"
             ],
             "answer": "5",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "Subtract 15 from both sides: x = 20 − 15 = 5."
           },
           {
@@ -1759,20 +1766,20 @@
               "14"
             ],
             "answer": "14",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "6 × 2 + 2 = 12 + 2 = 14."
           },
           {
-            "prompt": "Find the next term: 6, 9, 12, 15, ___",
+            "prompt": "In the expression 5a − 2b + 9, how many terms are there?",
             "choices": [
-              "18",
-              "21",
-              "15",
-              "16"
+              "2",
+              "3",
+              "4",
+              "9"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "The rule is add 3 each time, so the next term is 15 + 3 = 18."
+            "answer": "3",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "The three terms are 5a, −2b and 9 — each part separated by a + or − sign."
           }
         ]
       }

@@ -56,44 +56,65 @@
     "Recognise square and cube numbers and their roots, and evaluate expressions with powers.",
     "Identify prime numbers and write any integer as a product of prime factors.",
     "Find the HCF and LCM of two or more numbers using prime factorisation and other methods.",
-    "Use divisibility rules to test numbers quickly and solve real-world problems with integers."
+    "Use divisibility rules to test numbers quickly and solve real-world problems with integers.",
+    "Understand the hierarchy of natural numbers, integers and rational numbers, and classify numbers correctly.",
+    "Find square roots and cube roots, including cube roots of negative numbers, and know why negative numbers have no real square root.",
+    "Understand and evaluate negative indices as reciprocals of positive powers."
   ],
   "concepts": [
     {
       "id": "concept-1-integers-and-the-number-line",
       "title": "Integers and the Number Line",
-      "explanation": "An integer is a whole number that may be positive, negative or zero: … −3, −2, −1, 0, 1, 2, 3 … There are no fractions or decimals among the integers. Negative integers let us describe quantities that point the *opposite* way to positive ones – a debt instead of savings, a depth instead of a height, a temperature below freezing instead of above it. The number line is the picture that makes integers make sense. Draw a straight line with zero in the middle. Positive numbers run to the right, growing larger. Negative…",
-      "example": "The absolute value of a number is its distance from zero on the line, and distance is never negative. We write it with two straight bars: |−6| = 6 and |6| = 6. Both −6 and 6 sit six steps from zero, just in opposite…"
+      "explanation": "An integer is a whole number that may be positive, negative or zero: … −3, −2, −1, 0, 1, 2, 3 … There are no fractions or decimals among the integers. Negative integers let us describe quantities that point the *opposite* way to positive ones – a debt instead of savings, a depth instead of a height, a temperature below freezing instead of above it.\n\nThe number line is the picture that makes integers make sense. Draw a straight line with zero in the middle. Positive numbers run to the right, growing larger. Negative numbers run to the left, growing smaller. So −8 is further left than −3, which means −8 is less than −3, even though 8 is bigger than 3. This is one of the first ideas that trips learners up: with negatives, the number with the larger digit can be the *smaller* number.\n\nThe absolute value of a number is its distance from zero on the line, and distance is never negative. We write it with two straight bars: |−6| = 6 and |6| = 6. Both −6 and 6 sit six steps from zero, just in opposite directions. Absolute value answers the question *how far?* while the sign answers the question *which way?* When Amina records that the well water is 6 metres below the ground, the depth (the absolute value) is 6, and the minus sign simply tells us it is below.",
+      "example": "Every integer has an opposite, also called its additive inverse, that sits the same distance from zero on the other side. The opposite of 5 is −5; the opposite of −9 is 9. When you add any number to its opposite you always get zero: 5 + (−5) = 0. This simple fact is the engine behind subtraction, as you will see next."
     },
     {
       "id": "concept-2-adding-and-subtracting-integers",
       "title": "Adding and Subtracting Integers",
-      "explanation": "Addition of integers obeys two clear rules. Same signs: add the absolute values and keep the common sign. So (−4) + (−7): add 4 and 7 to get 11, keep the minus, giving −11. Different signs: subtract the smaller absolute value from the larger, and take the sign of the number with the larger absolute value. So (−8) + (+5): 8 − 5 = 3, and since 8 (from −8) is larger, the answer is −3. On the number line, adding a positive number means moving to the right, and adding a negative number means moving to the left. To work…",
-      "example": "Subtraction has one golden idea: subtracting is the same as adding the opposite. In symbols, a − b = a + (−b). This turns every subtraction into an addition, so you only ever need the addition rules. For example, (−6) −…"
+      "explanation": "Addition of integers obeys two clear rules. Same signs: add the absolute values and keep the common sign. So (−4) + (−7): add 4 and 7 to get 11, keep the minus, giving −11. Different signs: subtract the smaller absolute value from the larger, and take the sign of the number with the larger absolute value. So (−8) + (+5): 8 − 5 = 3, and since 8 (from −8) is larger, the answer is −3.\n\nOn the number line, adding a positive number means moving to the right, and adding a negative number means moving to the left. To work out (−8) + 5, start at −8 and step 5 places right: −7, −6, −5, −4, −3. You land on −3, matching the rule above. Picturing the movement is a reliable way to check a sign.\n\nSubtraction has one golden idea: subtracting is the same as adding the opposite. In symbols, a − b = a + (−b). This turns every subtraction into an addition, so you only ever need the addition rules. For example, (−6) − (−4) = (−6) + (+4) = −2. The double negative becomes a plus: taking away a debt of 4 is the same as gaining 4. Likewise 3 − 8 = 3 + (−8) = −5, and 7 − (−2) = 7 + 2 = 9.",
+      "example": "A real story helps this stick. A submarine off the coast of Kismaayo sits at 120 metres below sea level, which we write as −120. It rises 45 metres (add 45), then descends 30 metres (add −30). Its final depth is −120 + 45 + (−30) = −105, that is 105 metres below sea level. Notice how rising is positive and descending is negative, and how the arithmetic simply follows the story."
     },
     {
       "id": "concept-3-multiplying-and-dividing-integers",
       "title": "Multiplying and Dividing Integers",
-      "explanation": "Multiplication and division of integers share one neat set of sign rules. When the two numbers have the same sign, the result is positive. When they have different signs, the result is negative. So (+6) × (+3) = 18, (−6) × (−3) = 18, but (−6) × (+3) = −18 and (+6) × (−3) = −18. Division follows exactly the same pattern, because division is just multiplication in reverse: (+15) ÷ (−3) = −5, while (−15) ÷ (−3) = +5. Why does a negative times a negative give a positive? Think of it as reversing a reversal.…",
-      "example": "When several numbers are multiplied together, count the negative factors. An even number of negatives gives a positive product; an odd number of negatives gives a negative product. For example, (−2) × (−3) × (−1) has…"
+      "explanation": "Multiplication and division of integers share one neat set of sign rules. When the two numbers have the same sign, the result is positive. When they have different signs, the result is negative. So (+6) × (+3) = 18, (−6) × (−3) = 18, but (−6) × (+3) = −18 and (+6) × (−3) = −18. Division follows exactly the same pattern, because division is just multiplication in reverse: (+15) ÷ (−3) = −5, while (−15) ÷ (−3) = +5.\n\nWhy does a negative times a negative give a positive? Think of it as reversing a reversal. Multiplying by −1 flips a number to the other side of zero: −1 × 4 = −4. Flip it again by multiplying by −1 once more, and you are back where you started: −1 × (−4) = 4. Two flips return you to the positive side. This is not a trick to memorise blindly – it is the only rule that keeps arithmetic consistent.\n\nWhen several numbers are multiplied together, count the negative factors. An even number of negatives gives a positive product; an odd number of negatives gives a negative product. For example, (−2) × (−3) × (−1) has three negative factors, an odd count, so the answer is negative: the sizes multiply to 6, giving −6. But (−2) × (−3) × (−1) × (−1) has four negatives, an even count, so it is +6.",
+      "example": "Integer division does not always land on a whole number. 20 ÷ 4 = 5 exactly, but 20 ÷ 6 leaves a remainder. In this unit we mostly divide where the result is a whole number, but keep in mind that quotient and remainder are important ideas you will use in the HCF work later. The distributive property, a(b + c) = ab + ac, also works with integers: −3 × (10 + 2) = (−3 × 10) + (−3 × 2) = −30 + (−6) = −36. Recognising this property helps you multiply cleverly and lays the groundwork for algebra."
     },
     {
       "id": "concept-4-order-of-operations-bidmas",
       "title": "Order of Operations (BIDMAS)",
-      "explanation": "The most important thing to understand is that Division and Multiplication share one rank, worked left to right, and Addition and Subtraction share the next rank, also left to right. They are not four separate steps but two shared steps. Consider 20 − 4 × 3. Multiplication comes before subtraction, so 4 × 3 = 12 first, then 20 − 12 = 8. If you wrongly went left to right doing subtraction first you would get 48, which is incorrect. Brackets always come first, and they can change the whole answer. Compare (20 − 4) ×…",
-      "example": "Indices come straight after brackets, and this is where a famous trap lives. The expressions −3² and (−3)² are different. In −3², only the 3 is squared, because the power binds tighter than the minus sign: −3² = −(3 ×…"
+      "explanation": "The most important thing to understand is that Division and Multiplication share one rank, worked left to right, and Addition and Subtraction share the next rank, also left to right. They are not four separate steps but two shared steps. Consider 20 − 4 × 3. Multiplication comes before subtraction, so 4 × 3 = 12 first, then 20 − 12 = 8. If you wrongly went left to right doing subtraction first you would get 48, which is incorrect.\n\nBrackets always come first, and they can change the whole answer. Compare (20 − 4) × 3 with 20 − 4 × 3. In the first, the brackets force 20 − 4 = 16, then 16 × 3 = 48. In the second, with no brackets, we get 8. The two expressions use the same numbers and symbols yet mean completely different things – the brackets are doing real work.\n\nIndices come straight after brackets, and this is where a famous trap lives. The expressions −3² and (−3)² are different. In −3², only the 3 is squared, because the power binds tighter than the minus sign: −3² = −(3 × 3) = −9. In (−3)², the brackets mean the whole of −3 is squared: (−3) × (−3) = +9. Whenever you want to square a negative number, you must wrap it in brackets.",
+      "example": "Let us evaluate a full example carefully: (−4)² + (−2) × (+6). First indices: (−4)² = 16. Then multiplication: (−2) × (+6) = −12. Finally addition: 16 + (−12) = 4. Working strictly in BIDMAS order keeps you safe even when negatives are scattered through the expression."
     },
     {
       "id": "concept-5-powers-and-indices",
       "title": "Powers and Indices",
-      "explanation": "An index (plural indices), also called a power or exponent, is a short way of writing repeated multiplication. The notation aⁿ means the base a multiplied by itself n times, where n is the index. So 2⁵ means 2 × 2 × 2 × 2 × 2 = 32, and 10³ means 10 × 10 × 10 = 1000. Powers let us write huge numbers compactly, which is why they matter so much in science and computing. Three laws of indices do most of the work, and each one comes straight from the meaning of a power. Multiplying powers with the same base: add the…",
-      "example": "Two special indices are worth memorising. Any non-zero number to the power 0 equals 1: 3⁰ = 1, 100⁰ = 1. You can see why from the division law: 3² ÷ 3² = 3⁰, but any number divided by itself is 1, so 3⁰ must be 1. And…"
+      "explanation": "An index (plural indices), also called a power or exponent, is a short way of writing repeated multiplication. The notation aⁿ means the base a multiplied by itself n times, where n is the index. So 2⁵ means 2 × 2 × 2 × 2 × 2 = 32, and 10³ means 10 × 10 × 10 = 1000. Powers let us write huge numbers compactly, which is why they matter so much in science and computing.\n\nThree laws of indices do most of the work, and each one comes straight from the meaning of a power. Multiplying powers with the same base: add the indices, aᵐ × aⁿ = aᵐ⁺ⁿ. So 5² × 5³ = 5⁵, because you are multiplying by five two times and then three more times, five times in all. Dividing powers with the same base: subtract the indices, aᵐ ÷ aⁿ = aᵐ⁻ⁿ. So 10⁶ ÷ 10² = 10⁴. Raising a power to a power: multiply the indices, (aᵐ)ⁿ = aᵐⁿ. So (3²)³ = 3⁶.\n\nTwo special indices are worth memorising. Any non-zero number to the power 0 equals 1: 3⁰ = 1, 100⁰ = 1. You can see why from the division law: 3² ÷ 3² = 3⁰, but any number divided by itself is 1, so 3⁰ must be 1. And any number to the power 1 is itself: 4¹ = 4. These small facts appear again and again inside longer calculations.\n\nSquare numbers come from raising to the power 2, and you can picture n² as the area of a square with side n: 1, 4, 9, 16, 25, 36, 49, 64, 81, 100 are the first ten square numbers. Cube numbers come from the power 3, and n³ is the volume of a cube with side n: 1, 8, 27, 64, 125. The opposite of squaring is taking a square root: since 8² = 64, we say √64 = 8. The opposite of cubing is the cube root: since 4³ = 64, the cube root of 64 is 4. Roots undo powers, just as subtraction undoes addition.",
+      "example": "Be careful with a negative base. (−2)³ means (−2) × (−2) × (−2). The first two negatives give +4, and the last negative makes it −8. In general, an odd power of a negative number stays negative, while an even power of a negative number becomes positive, because the negatives pair up. This links neatly back to the sign-counting idea from Concept 3."
     },
     {
       "id": "concept-6-prime-numbers-and-prime-factorisation",
       "title": "Prime Numbers and Prime Factorisation",
-      "explanation": "A prime number is a whole number greater than 1 that has exactly two factors: 1 and itself. The primes begin 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 and continue forever. A composite number has more than two factors, such as 12 (1, 2, 3, 4, 6, 12). The number 1 is neither prime nor composite, because it has only one factor; and 2 is the only even prime, because every other even number has 2 as an extra factor. Two common misunderstandings are worth clearing up now. First, not all odd numbers are prime: 9, 15 and 21 are…",
-      "example": "The Fundamental Theorem of Arithmetic says that every integer greater than 1 is either prime or can be written as a product of primes in exactly one way (apart from the order). This makes primes the building blocks of…"
+      "explanation": "A prime number is a whole number greater than 1 that has exactly two factors: 1 and itself. The primes begin 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 and continue forever. A composite number has more than two factors, such as 12 (1, 2, 3, 4, 6, 12). The number 1 is neither prime nor composite, because it has only one factor; and 2 is the only even prime, because every other even number has 2 as an extra factor.\n\nTwo common misunderstandings are worth clearing up now. First, not all odd numbers are prime: 9, 15 and 21 are all odd yet composite. Second, 1 is not prime, even though people sometimes assume it is – a prime must have *two distinct* factors, and 1 only has itself. To test whether a number is prime, you check for a factor by dividing by the primes 2, 3, 5, 7 … up to its square root; if none divides it exactly, it is prime.\n\nThe Fundamental Theorem of Arithmetic says that every integer greater than 1 is either prime or can be written as a product of primes in exactly one way (apart from the order). This makes primes the building blocks of all numbers, rather like bricks from which every larger number is built. Writing a number as such a product is called prime factorisation, and the most reliable tool for it is the factor tree.\n\nTo build a factor tree for 60, split it into any two factors, say 60 = 6 × 10. Neither is prime, so split again: 6 = 2 × 3 and 10 = 2 × 5. Now every branch ends in a prime. Collecting them gives 60 = 2 × 2 × 3 × 5, which we write with indices as 60 = 2² × 3 × 5. A key insight: even if you had started 60 = 4 × 15 instead, you would reach the very same primes. The starting split does not matter; the prime factorisation is unique.",
+      "example": "Larger numbers work the same way. For 360 you might go 360 = 36 × 10 = (4 × 9) × (2 × 5) = 2² × 3² × 2 × 5, which tidies to 360 = 2³ × 3² × 5. Written this way, a number reveals all its secrets at a glance: which primes divide it and how many times each one appears. This compact form is exactly what you need to find HCF and LCM quickly, which is where we go next."
+    },
+    {
+      "id": "concept-7-the-number-system-natural-integers-rational",
+      "title": "The Number System: Natural Numbers, Integers and Rational Numbers",
+      "explanation": "Numbers can be organised into nested families, each one containing the family before it. Natural numbers are the counting numbers 1, 2, 3, 4, … (some definitions include 0) — they have no negative numbers, fractions or decimals. Integers extend the natural numbers by adding zero and the negative whole numbers: … −3, −2, −1, 0, 1, 2, 3 … Every natural number is an integer, but not every integer is a natural number (−5 is an integer but not natural). Rational numbers extend the integers further by adding every number that can be written as a fraction a/b, where a and b are integers and b is not zero. This includes all integers (5 = 5/1), all terminating decimals (0.75 = 3/4), and all recurring decimals (0.333… = 1/3). So the hierarchy nests like Russian dolls: natural numbers sit inside integers, which sit inside rational numbers — every natural number is an integer, and every integer is rational, but the reverse is not true.",
+      "example": "Sort these numbers into the smallest family that fits each one: 7, −4, 0, 2/5, −1.5, 9/3. Solution: 7 is a natural number (and also an integer and rational). −4 is an integer (negative, so not natural) and rational. 0 is an integer (by most definitions not natural) and rational. 2/5 and −1.5 are rational but not integers, because they are not whole numbers. 9/3 = 3 exactly, so despite looking like a fraction it simplifies to a natural number."
+    },
+    {
+      "id": "concept-8-square-roots-and-cube-roots",
+      "title": "Square Roots and Cube Roots",
+      "explanation": "A square root of a number is a value that, when multiplied by itself, gives that number. We write the square root of 36 as √36. Since 6 × 6 = 36, √36 = 6. Every positive number has two square roots, a positive one and a negative one, because (−6) × (−6) = 36 too; but the symbol √ always means the positive (principal) root, so √36 = 6, not −6. Negative numbers have no real square root, because a negative number times itself is always positive — there is no real number whose square is −36. A cube root of a number is a value that, when multiplied by itself three times, gives that number, written ³√. Since 5³ = 125, ³√125 = 5. Unlike square roots, cube roots exist for negative numbers too, because a negative number cubed stays negative: (−4)³ = −4 × −4 × −4 = −64, so ³√(−64) = −4.",
+      "example": "Evaluate: a) √81  b) √(−9)  c) ³√(−27)  d) ³√1000. Solution: a) √81 = 9, because 9 × 9 = 81. b) √(−9) has no real answer, because no real number squared gives a negative result. c) ³√(−27) = −3, because (−3)³ = −3 × −3 × −3 = −27. d) ³√1000 = 10, because 10³ = 1000."
+    },
+    {
+      "id": "concept-9-negative-indices",
+      "title": "Negative Indices",
+      "explanation": "A negative index tells you to divide instead of multiply. For any non-zero base a, a⁻ⁿ means 1 ÷ aⁿ, written 1/aⁿ. So 2⁻³ = 1/2³ = 1/8, and 10⁻² = 1/10² = 1/100 = 0.01. This rule follows naturally from the division law of indices: 3² ÷ 3⁵ = 3^(2−5) = 3⁻³, and working it out directly gives 3² ÷ 3⁵ = 9/243 = 1/27 = 1/3³, confirming that 3⁻³ = 1/3³. A negative index never makes a number negative — it only means \"the reciprocal of the positive power.\" So 2⁻³ = 1/8 (a small positive fraction), not −8. This connects to the laws you already know: whether the index is positive, zero or negative, multiplying powers with the same base still means adding indices, and dividing still means subtracting them.",
+      "example": "Simplify, giving your answer as a fraction: a) 5⁻² b) 4³ × 4⁻⁵ c) 2⁵ ÷ 2⁸. Solution: a) 5⁻² = 1/5² = 1/25. b) Add the indices: 4³ × 4⁻⁵ = 4^(3+(−5)) = 4⁻² = 1/4² = 1/16. c) Subtract the indices: 2⁵ ÷ 2⁸ = 2^(5−8) = 2⁻³ = 1/2³ = 1/8."
     }
   ],
   "explorations": [
@@ -102,72 +123,72 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "Integers and the Number Line",
-      "context": "An integer is a whole number that may be positive, negative or zero: … −3, −2, −1, 0, 1, 2, 3 … There are no fractions or decimals among the integers. Negative integers let us describe quantities that point the *opposite* way to positive ones – a debt instead…",
+      "context": "An integer is a whole number that may be positive, negative or zero: … −3, −2, −1, 0, 1, 2, 3 … There are no fractions or decimals among the integers.",
       "prompt": "Calculate: a) (−8) + (+5) b) (−6) − (−4) c) (−3) × (−7) d) (+15) ÷ (−3).",
       "answer": "1) a) −3, b) −2, c) +21, d) −5.",
       "modelType": "model-1",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) a) −3, b) −2, c) +21, d) −5."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value.",
+      "explanation": "Integers and the Number Line: An integer is a whole number that may be positive, negative or zero: … −3, −2, −1, 0, 1, 2, 3 … There are no fractions or decimals among the integers. Negative integers let us describe quantities that point the *opposite* way to positive ones – a debt instead of savings, a depth instead of a height, a temperature below freezing instead of above it."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Adding and Subtracting Integers",
-      "context": "Addition of integers obeys two clear rules. Same signs: add the absolute values and keep the common sign. So (−4) + (−7): add 4 and 7 to get 11, keep the minus, giving −11. Different signs: subtract the smaller absolute value from the larger, and take the…",
+      "context": "Addition of integers obeys two clear rules. Same signs: add the absolute values and keep the common sign. So (−4) + (−7): add 4 and 7 to get 11, keep the minus, giving −11.",
       "prompt": "Evaluate: a) 2⁵ b) 3⁰ c) (−2)³ d) 4¹.",
       "answer": "a) 32, b) 1, c) −8, d) 4.",
       "modelType": "model-2",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "a) 32, b) 1, c) −8, d) 4."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value.",
+      "explanation": "Adding and Subtracting Integers: Addition of integers obeys two clear rules. Same signs: add the absolute values and keep the common sign. So (−4) + (−7): add 4 and 7 to get 11, keep the minus, giving −11. Different signs: subtract the smaller absolute value from the larger, and take the sign of the number with the larger absolute value."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Multiplying and Dividing Integers",
-      "context": "Multiplication and division of integers share one neat set of sign rules. When the two numbers have the same sign, the result is positive. When they have different signs, the result is negative. So (+6) × (+3) = 18, (−6) × (−3) = 18, but (−6) × (+3) = −18 and…",
+      "context": "Multiplication and division of integers share one neat set of sign rules. When the two numbers have the same sign, the result is positive. When they have different signs, the result is negative.",
       "prompt": "List all the factors of: a) 28 b) 36.",
       "answer": "a) 1,2,4,7,14,28; b) 1,2,3,4,6,9,12,18,36.",
       "modelType": "model-3",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "a) 1,2,4,7,14,28; b) 1,2,3,4,6,9,12,18,36."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value.",
+      "explanation": "Multiplying and Dividing Integers: Multiplication and division of integers share one neat set of sign rules. When the two numbers have the same sign, the result is positive. When they have different signs, the result is negative. So (+6) × (+3) = 18, (−6) × (−3) = 18, but (−6) × (+3) = −18 and (+6) × (−3) = −18. Division follows exactly the same pattern, because division is just multiplication in reverse."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Order of Operations (BIDMAS)",
-      "context": "The most important thing to understand is that Division and Multiplication share one rank, worked left to right, and Addition and Subtraction share the next rank, also left to right. They are not four separate steps but two shared steps. Consider 20 − 4 × 3.…",
+      "context": "The most important thing to understand is that Division and Multiplication share one rank, worked left to right, and Addition and Subtraction share the next rank, also left to right. They are not four separate steps but two shared steps.",
       "prompt": "Arrange in ascending order: −5, +2, −8, 0, +3.",
       "answer": "−8, −5, 0, +2, +3.",
       "modelType": "model-4",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "−8, −5, 0, +2, +3."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value.",
+      "explanation": "Order of Operations (BIDMAS): The most important thing to understand is that Division and Multiplication share one rank, worked left to right, and Addition and Subtraction share the next rank, also left to right. They are not four separate steps but two shared steps. Consider 20 − 4 × 3. Multiplication comes before subtraction, so 4 × 3 = 12 first, then 20 − 12 = 8."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Powers and Indices",
-      "context": "An index (plural indices), also called a power or exponent, is a short way of writing repeated multiplication. The notation aⁿ means the base a multiplied by itself n times, where n is the index. So 2⁵ means 2 × 2 × 2 × 2 × 2 = 32, and 10³ means 10 × 10 × 10…",
+      "context": "An index (plural indices), also called a power or exponent, is a short way of writing repeated multiplication. The notation aⁿ means the base a multiplied by itself n times, where n is the index.",
       "prompt": "Which of these are prime? 15, 21, 23, 25, 29.",
       "answer": "Prime: 23 and 29.",
       "modelType": "model-5",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "Prime: 23 and 29."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value.",
+      "explanation": "Powers and Indices: An index (plural indices), also called a power or exponent, is a short way of writing repeated multiplication. The notation aⁿ means the base a multiplied by itself n times, where n is the index. So 2⁵ means 2 × 2 × 2 × 2 × 2 = 32, and 10³ means 10 × 10 × 10 = 1000. Powers let us write huge numbers compactly, which is why they matter so much in science and computing."
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Prime Numbers and Prime Factorisation",
-      "context": "A prime number is a whole number greater than 1 that has exactly two factors: 1 and itself. The primes begin 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 and continue forever. A composite number has more than two factors, such as 12 (1, 2, 3, 4, 6, 12). The number 1 is…",
+      "context": "A prime number is a whole number greater than 1 that has exactly two factors: 1 and itself. The primes begin 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 and continue forever. A composite number has more than two factors, such as 12 (1, 2, 3, 4, 6, 12).",
       "prompt": "Evaluate using BIDMAS: a) 2³ + 3² − 4¹ b) (−4)² + (−2) × (+6) c) 20 − 4 × 3.",
       "answer": "1) a) 8+9−4 = 13, b) 16 + (−12) = 4, c) 20 − 12 = 8.",
       "modelType": "model-6",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) a) 8+9−4 = 13, b) 16 + (−12) = 4, c) 20 − 12 = 8."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value.",
+      "explanation": "Prime Numbers and Prime Factorisation: A prime number is a whole number greater than 1 that has exactly two factors: 1 and itself. The primes begin 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 and continue forever. A composite number has more than two factors, such as 12 (1, 2, 3, 4, 6, 12). The number 1 is neither prime nor composite, because it has only one factor."
     }
   ],
   "visualModels": [
@@ -176,7 +197,7 @@
       "outcomeId": "lo01",
       "title": "Integers and the Number Line",
       "modelType": "concept-model-1",
-      "purpose": "An integer is a whole number that may be positive, negative or zero: … −3, −2, −1, 0, 1, 2, 3 … There are no fractions or decimals among the integers. Negative integers let us describe quantities that point the…",
+      "purpose": "An integer is a whole number that may be positive, negative or zero: … −3, −2, −1, 0, 1, 2, 3 … There are no fractions or decimals among the integers.",
       "defaultNumber": null
     },
     {
@@ -184,7 +205,7 @@
       "outcomeId": "lo02",
       "title": "Adding and Subtracting Integers",
       "modelType": "concept-model-2",
-      "purpose": "Addition of integers obeys two clear rules. Same signs: add the absolute values and keep the common sign. So (−4) + (−7): add 4 and 7 to get 11, keep the minus, giving −11. Different signs: subtract the smaller absolute…",
+      "purpose": "Addition of integers obeys two clear rules. Same signs: add the absolute values and keep the common sign. So (−4) + (−7): add 4 and 7 to get 11, keep the minus, giving −11.",
       "defaultNumber": null
     },
     {
@@ -192,7 +213,7 @@
       "outcomeId": "lo03",
       "title": "Multiplying and Dividing Integers",
       "modelType": "concept-model-3",
-      "purpose": "Multiplication and division of integers share one neat set of sign rules. When the two numbers have the same sign, the result is positive. When they have different signs, the result is negative. So (+6) × (+3) = 18,…",
+      "purpose": "Multiplication and division of integers share one neat set of sign rules. When the two numbers have the same sign, the result is positive. When they have different signs, the result is negative.",
       "defaultNumber": null
     },
     {
@@ -200,7 +221,7 @@
       "outcomeId": "lo04",
       "title": "Order of Operations (BIDMAS)",
       "modelType": "concept-model-4",
-      "purpose": "The most important thing to understand is that Division and Multiplication share one rank, worked left to right, and Addition and Subtraction share the next rank, also left to right. They are not four separate steps but…",
+      "purpose": "The most important thing to understand is that Division and Multiplication share one rank, worked left to right, and Addition and Subtraction share the next rank, also left to right.",
       "defaultNumber": null
     },
     {
@@ -208,7 +229,7 @@
       "outcomeId": "lo05",
       "title": "Powers and Indices",
       "modelType": "concept-model-5",
-      "purpose": "An index (plural indices), also called a power or exponent, is a short way of writing repeated multiplication. The notation aⁿ means the base a multiplied by itself n times, where n is the index. So 2⁵ means 2 × 2 × 2 ×…",
+      "purpose": "An index (plural indices), also called a power or exponent, is a short way of writing repeated multiplication. The notation aⁿ means the base a multiplied by itself n times, where n is the index.",
       "defaultNumber": null
     },
     {
@@ -216,7 +237,7 @@
       "outcomeId": "lo06",
       "title": "Prime Numbers and Prime Factorisation",
       "modelType": "concept-model-6",
-      "purpose": "A prime number is a whole number greater than 1 that has exactly two factors: 1 and itself. The primes begin 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 and continue forever. A composite number has more than two factors, such as…",
+      "purpose": "A prime number is a whole number greater than 1 that has exactly two factors: 1 and itself. The primes begin 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 and continue forever.",
       "defaultNumber": null
     }
   ],
@@ -226,7 +247,7 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "title": "How to write a number as a product of primes",
-      "example": "Calculate (−8) + (+5).",
+      "example": "Write 60 as a product of prime factors.",
       "steps": [
         "Split the number into any two factors.",
         "Keep splitting any factor that is not prime.",
@@ -239,7 +260,7 @@
       "outcomeId": "lo02",
       "difficulty": "Core",
       "title": "How to find the HCF and LCM from primes",
-      "example": "Calculate (−6) − (−4).",
+      "example": "Find the HCF and LCM of 12 and 18 using prime factorisation.",
       "steps": [
         "Write each number as a product of primes.",
         "For the HCF, take only the shared primes at their lowest powers and multiply.",
@@ -252,7 +273,7 @@
       "outcomeId": "lo03",
       "difficulty": "Core",
       "title": "How to use the Euclidean algorithm",
-      "example": "Evaluate (−4)² + (−2) × (+6).",
+      "example": "Use the Euclidean algorithm to find HCF(48, 18).",
       "steps": [
         "Divide the larger number by the smaller and note the remainder.",
         "Replace the larger with the smaller, and the smaller with the remainder.",
@@ -375,25 +396,25 @@
       "id": "we10",
       "outcomeId": "lo02",
       "difficulty": "Challenge",
-      "title": "Practice 10",
-      "prompt": "Use the Euclidean algorithm to find HCF(48, 18), showing each step.",
-      "solution": "48 = 18×2+12; 18 = 12×1+6; 12 = 6×2+0, so HCF = 6."
+      "title": "Comparing integers with the number line and absolute value",
+      "prompt": "Use the number line to work out (−7) + 4. Then use absolute value to compare |−7| and |4|.",
+      "solution": "Solution: On the number line, start at −7 and move 4 places right: −7 → −6 → −5 → −4 → −3. So (−7) + 4 = −3. For the comparison, |−7| = 7 and |4| = 4. Since 7 > 4, |−7| is the larger absolute value, even though −7 is the smaller (more negative) number."
     },
     {
       "id": "we11",
       "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Practice 11",
-      "prompt": "Test whether 2346 is divisible by 2, 3, 4, 5, 6, 9 and 10.",
-      "solution": "Divisible by 2, 3 and 6; not by 4, 5, 9 or 10."
+      "title": "Order of operations with a bracket and a square",
+      "prompt": "Evaluate 5² − (8 − 3) × 2.",
+      "solution": "Solution: Brackets first: 8 − 3 = 5. Then the index: 5² = 25. Then multiplication: 5 × 2 = 10. Finally subtraction: 25 − 10 = 15."
     },
     {
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "title": "If HCF(a,",
-      "prompt": "If HCF(a, b) = 6 and LCM(a, b) = 72 and a = 18, find b, and check your answer.",
-      "solution": "1) HCF × LCM = a × b, so 6 × 72 = 18 × b, giving b = 24; check HCF(18,24)=6 and LCM(18,24)=72."
+      "title": "Dividing powers with the same base",
+      "prompt": "Simplify (2⁴ × 2³) ÷ 2⁵.",
+      "solution": "Solution: Multiply same bases by adding indices first: 2⁴ × 2³ = 2⁷. Then divide same bases by subtracting indices: 2⁷ ÷ 2⁵ = 2². As a number, 2² = 4."
     }
   ],
   "practice": [
@@ -402,84 +423,84 @@
       "level": "Warm-up",
       "prompt": "Calculate: a) (−8) + (+5) b) (−6) − (−4) c) (−3) × (−7) d) (+15) ÷ (−3).",
       "answer": "1) a) −3, b) −2, c) +21, d) −5.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value."
     },
     {
       "id": "p02",
       "level": "Warm-up",
       "prompt": "Evaluate: a) 2⁵ b) 3⁰ c) (−2)³ d) 4¹.",
       "answer": "a) 32, b) 1, c) −8, d) 4.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value."
     },
     {
       "id": "p03",
       "level": "Warm-up",
       "prompt": "List all the factors of: a) 28 b) 36.",
       "answer": "a) 1,2,4,7,14,28; b) 1,2,3,4,6,9,12,18,36.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value."
     },
     {
       "id": "p04",
       "level": "Warm-up",
       "prompt": "Arrange in ascending order: −5, +2, −8, 0, +3.",
       "answer": "−8, −5, 0, +2, +3.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value."
     },
     {
       "id": "p05",
       "level": "Warm-up",
       "prompt": "Which of these are prime? 15, 21, 23, 25, 29.",
       "answer": "Prime: 23 and 29.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value."
     },
     {
       "id": "p06",
       "level": "Core",
       "prompt": "Evaluate using BIDMAS: a) 2³ + 3² − 4¹ b) (−4)² + (−2) × (+6) c) 20 − 4 × 3.",
       "answer": "1) a) 8+9−4 = 13, b) 16 + (−12) = 4, c) 20 − 12 = 8.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value."
     },
     {
       "id": "p07",
       "level": "Core",
       "prompt": "Simplify using the laws of indices: a) 5² × 5³ b) 10⁶ ÷ 10² c) (3²)³ × 3¹.",
       "answer": "a) 5⁵, b) 10⁴, c) 3⁶ × 3¹ = 3⁷.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value."
     },
     {
       "id": "p08",
       "level": "Core",
       "prompt": "Write as a product of prime factors: a) 60 b) 72 c) 360.",
       "answer": "a) 60 = 2² × 3 × 5, b) 72 = 2³ × 3², c) 360 = 2³ × 3² × 5.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value."
     },
     {
       "id": "p09",
       "level": "Core",
       "prompt": "Find the HCF and LCM of: a) 12 and 18 b) 20 and 30.",
       "answer": "a) HCF 6, LCM 36; b) HCF 10, LCM 60.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value."
     },
     {
       "id": "p10",
       "level": "Core",
       "prompt": "Use the Euclidean algorithm to find HCF(48, 18), showing each step.",
       "answer": "48 = 18×2+12; 18 = 12×1+6; 12 = 6×2+0, so HCF = 6.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value."
     },
     {
       "id": "p11",
       "level": "Core",
       "prompt": "Test whether 2346 is divisible by 2, 3, 4, 5, 6, 9 and 10.",
       "answer": "Divisible by 2, 3 and 6; not by 4, 5, 9 or 10.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value."
     },
     {
       "id": "p12",
       "level": "Challenge",
       "prompt": "If HCF(a, b) = 6 and LCM(a, b) = 72 and a = 18, find b, and check your answer.",
       "answer": "1) HCF × LCM = a × b, so 6 × 72 = 18 × b, giving b = 24; check HCF(18,24)=6 and LCM(18,24)=72.",
-      "hint": "Identify the key mathematical idea before calculating or explaining."
+      "hint": "Decide which idea the question is really about (Integer, Absolute value, Base / Index), then work one step at a time and check the answer is sensible."
     }
   ],
   "activities": [
@@ -548,28 +569,28 @@
   "reference": {
     "rules": [
       {
-        "title": "On the number line, adding a positive",
+        "title": "Adding Integers on the Number Line",
         "text": "On the number line, adding a positive number means moving to the right, and adding a negative number means moving to the left. To work out (−8) + 5, start at −8 and step 5 places right: −7, −6, −5, −4, −3. You land on −3, matching the rule above. Picturing the movement is a reliable way to check a sign."
       },
       {
-        "title": "Why does a negative times a negative",
+        "title": "Why Negative Times Negative Is Positive",
         "text": "Why does a negative times a negative give a positive? Think of it as reversing a reversal. Multiplying by −1 flips a number to the other side of zero: −1 × 4 = −4. Flip it again by multiplying by −1 once more, and you are back where you started: −1 × (−4) = 4. Two flips return you to the positive side. This is not a trick to memorise blindly – it is the only rule that keeps arithmetic consistent."
       },
       {
-        "title": "The lowest common multiple of two or",
+        "title": "Finding the LCM by Prime Factorisation",
         "text": "The lowest common multiple of two or more numbers is the smallest positive integer that every one of them divides into. Using prime factorisation, you take every prime that appears in any number, each raised to its highest power, and multiply them together. This is the mirror image of the HCF rule, which used lowest powers of shared primes only."
       },
       {
-        "title": "🤖 Ask Your AI Tutor Ask your",
+        "title": "🤖 Ask Your AI Tutor",
         "text": "🤖 Ask Your AI Tutor Ask your AI tutor for a pair of numbers and race to find both their HCF and LCM, then check with the product rule. Say: Give me a real-life bells or traffic-light problem that needs the LCM to solve."
       },
       {
-        "title": "You have now met nine connected ideas",
+        "title": "How the Nine Unit Ideas Connect",
         "text": "You have now met nine connected ideas: integers on the number line, adding and subtracting them, multiplying and dividing with sign rules, the order of operations, powers and indices, prime factorisation, HCF, LCM and divisibility. These are not separate islands – they lean on one another constantly. Prime factorisation feeds directly into both HCF and LCM. The sign-counting rule for products reappears when you raise negatives to powers. Divisibility rules speed up your factor trees. The order of operations governs every calculation that mixes these tools."
       },
       {
-        "title": "If HCF(a, b) = 6 and LCM(a",
-        "text": "If HCF(a, b) = 6 and LCM(a, b) = 72 and a = 18, find b using the product rule."
+        "title": "The product rule connects HCF and LCM",
+        "text": "For any two positive integers a and b, HCF(a, b) × LCM(a, b) = a × b. This is a quick way to check an HCF or LCM answer, or to find one number when you already know the other one together with its HCF and LCM."
       }
     ],
     "terms": [
@@ -636,7 +657,7 @@
       "difficulty": "Round 1",
       "prompt": "Calculate: a) (−8) + (+5) b) (−6) − (−4) c) (−3) × (−7) d) (+15) ÷ (−3).",
       "answer": "1) a) −3, b) −2, c) +21, d) −5.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value.",
       "errorFeedback": "1) a) −3, b) −2, c) +21, d) −5."
     },
     {
@@ -645,7 +666,7 @@
       "difficulty": "Round 1",
       "prompt": "Evaluate: a) 2⁵ b) 3⁰ c) (−2)³ d) 4¹.",
       "answer": "a) 32, b) 1, c) −8, d) 4.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value.",
       "errorFeedback": "a) 32, b) 1, c) −8, d) 4."
     },
     {
@@ -654,7 +675,7 @@
       "difficulty": "Round 1",
       "prompt": "List all the factors of: a) 28 b) 36.",
       "answer": "a) 1,2,4,7,14,28; b) 1,2,3,4,6,9,12,18,36.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value.",
       "errorFeedback": "a) 1,2,4,7,14,28; b) 1,2,3,4,6,9,12,18,36."
     },
     {
@@ -663,7 +684,7 @@
       "difficulty": "Round 1",
       "prompt": "Arrange in ascending order: −5, +2, −8, 0, +3.",
       "answer": "−8, −5, 0, +2, +3.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value.",
       "errorFeedback": "−8, −5, 0, +2, +3."
     },
     {
@@ -672,7 +693,7 @@
       "difficulty": "Round 2",
       "prompt": "Which of these are prime? 15, 21, 23, 25, 29.",
       "answer": "Prime: 23 and 29.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value.",
       "errorFeedback": "Prime: 23 and 29."
     },
     {
@@ -681,7 +702,7 @@
       "difficulty": "Round 2",
       "prompt": "Evaluate using BIDMAS: a) 2³ + 3² − 4¹ b) (−4)² + (−2) × (+6) c) 20 − 4 × 3.",
       "answer": "1) a) 8+9−4 = 13, b) 16 + (−12) = 4, c) 20 − 12 = 8.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value.",
       "errorFeedback": "1) a) 8+9−4 = 13, b) 16 + (−12) = 4, c) 20 − 12 = 8."
     },
     {
@@ -690,7 +711,7 @@
       "difficulty": "Round 2",
       "prompt": "Simplify using the laws of indices: a) 5² × 5³ b) 10⁶ ÷ 10² c) (3²)³ × 3¹.",
       "answer": "a) 5⁵, b) 10⁴, c) 3⁶ × 3¹ = 3⁷.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value.",
       "errorFeedback": "a) 5⁵, b) 10⁴, c) 3⁶ × 3¹ = 3⁷."
     },
     {
@@ -699,7 +720,7 @@
       "difficulty": "Round 2",
       "prompt": "Write as a product of prime factors: a) 60 b) 72 c) 360.",
       "answer": "a) 60 = 2² × 3 × 5, b) 72 = 2³ × 3², c) 360 = 2³ × 3² × 5.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value.",
       "errorFeedback": "a) 60 = 2² × 3 × 5, b) 72 = 2³ × 3², c) 360 = 2³ × 3² × 5."
     },
     {
@@ -708,7 +729,7 @@
       "difficulty": "Round 3",
       "prompt": "Find the HCF and LCM of: a) 12 and 18 b) 20 and 30.",
       "answer": "a) HCF 6, LCM 36; b) HCF 10, LCM 60.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value.",
       "errorFeedback": "a) HCF 6, LCM 36; b) HCF 10, LCM 60."
     },
     {
@@ -717,7 +738,7 @@
       "difficulty": "Round 3",
       "prompt": "Use the Euclidean algorithm to find HCF(48, 18), showing each step.",
       "answer": "48 = 18×2+12; 18 = 12×1+6; 12 = 6×2+0, so HCF = 6.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value.",
       "errorFeedback": "48 = 18×2+12; 18 = 12×1+6; 12 = 6×2+0, so HCF = 6."
     },
     {
@@ -726,7 +747,7 @@
       "difficulty": "Round 3",
       "prompt": "Test whether 2346 is divisible by 2, 3, 4, 5, 6, 9 and 10.",
       "answer": "Divisible by 2, 3 and 6; not by 4, 5, 9 or 10.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Integer or Absolute value.",
       "errorFeedback": "Divisible by 2, 3 and 6; not by 4, 5, 9 or 10."
     },
     {
@@ -735,7 +756,7 @@
       "difficulty": "Round 3",
       "prompt": "If HCF(a, b) = 6 and LCM(a, b) = 72 and a = 18, find b, and check your answer.",
       "answer": "1) HCF × LCM = a × b, so 6 × 72 = 18 × b, giving b = 24; check HCF(18,24)=6 and LCM(18,24)=72.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Integer, Absolute value, Base / Index), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) HCF × LCM = a × b, so 6 × 72 = 18 × b, giving b = 24; check HCF(18,24)=6 and LCM(18,24)=72."
     }
   ],
@@ -747,7 +768,7 @@
       "context": "Home",
       "prompt": "A submarine near Berbera is 75 m below sea level. It rises 40 m, then descends 25 m. What is its final position?",
       "answer": "1) −75 + 40 − 25 = −60, i.e. 60 m below sea level.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Integer, Absolute value, Base / Index), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) −75 + 40 − 25 = −60, i.e. 60 m below sea level."
     },
     {
@@ -756,9 +777,9 @@
       "difficulty": "Core",
       "context": "Market",
       "prompt": "Three lights flash every 6, 8 and 12 seconds and flash together at 12:00:00. When do they next flash together?",
-      "answer": "LCM(6, 8,",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "LCM(6, 8,"
+      "answer": "LCM(6, 8, 12) = 24, so the lights next flash together after 24 seconds, at 12:00:24.",
+      "hint": "Decide which idea the question is really about (Integer, Absolute value, Base / Index), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "LCM(6, 8, 12) = 24, so the lights next flash together after 24 seconds, at 12:00:24."
     },
     {
       "id": "rp03",
@@ -766,9 +787,9 @@
       "difficulty": "Core",
       "context": "Travel",
       "prompt": "A rectangular garden is 24 m by 18 m. What is the largest square tile that covers it exactly?",
-      "answer": "= 24, so 12:00:24.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "= 24, so 12:00:24."
+      "answer": "HCF(24, 18) = 6, so the largest square tile that covers the garden exactly is 6 m by 6 m.",
+      "hint": "Decide which idea the question is really about (Integer, Absolute value, Base / Index), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "HCF(24, 18) = 6, so the largest square tile that covers the garden exactly is 6 m by 6 m."
     },
     {
       "id": "rp04",
@@ -776,9 +797,9 @@
       "difficulty": "Challenge",
       "context": "School",
       "prompt": "Yusuf has 48 mangoes and 60 bananas to pack into identical crates with none left over. What is the greatest number of crates, and what goes in each?",
-      "answer": "HCF(24,",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "HCF(24,"
+      "answer": "HCF(48, 60) = 12, so the greatest number of crates is 12, each holding 4 mangoes and 5 bananas.",
+      "hint": "Decide which idea the question is really about (Integer, Absolute value, Base / Index), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "HCF(48, 60) = 12, so the greatest number of crates is 12, each holding 4 mangoes and 5 bananas."
     },
     {
       "id": "rp05",
@@ -786,9 +807,9 @@
       "difficulty": "Challenge",
       "context": "Community",
       "prompt": "The temperature at dawn in Hargeisa was −2 °C. It rose 9 °C by noon, then fell 4 °C by evening. What was the evening temperature?",
-      "answer": "= 6, so a 6 m by 6 m tile.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "= 6, so a 6 m by 6 m tile."
+      "answer": "−2 + 9 − 4 = 3, so the evening temperature was 3 °C.",
+      "hint": "Decide which idea the question is really about (Integer, Absolute value, Base / Index), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "−2 + 9 − 4 = 3, so the evening temperature was 3 °C."
     },
     {
       "id": "rp06",
@@ -797,7 +818,7 @@
       "context": "Daily life",
       "prompt": "If HCF(a, b) = 6 and LCM(a, b) = 72 and a = 18, find b, and check your answer.",
       "answer": "1) HCF × LCM = a × b, so 6 × 72 = 18 × b, giving b = 24; check HCF(18,24)=6 and LCM(18,24)=72.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Integer, Absolute value, Base / Index), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) HCF × LCM = a × b, so 6 × 72 = 18 × b, giving b = 24; check HCF(18,24)=6 and LCM(18,24)=72."
     }
   ],
@@ -839,7 +860,7 @@
         "Prime",
         "Prime factorisation"
       ],
-      "modelAnswer": "LCM(6, 8,"
+      "modelAnswer": "The smallest number divisible by all three is their LCM. 6 = 2×3, 8 = 2³, 12 = 2²×3; taking the highest power of each prime gives LCM = 2³ × 3 = 24, so 24 is the smallest such number."
     },
     {
       "id": "reason04",
@@ -852,33 +873,33 @@
         "Prime factorisation",
         "HCF"
       ],
-      "modelAnswer": ": 6 = 2×3, 8 = 2³, 12 = 2²×3, take highest powers 2³ × 3 = 24."
+      "modelAnswer": "256 = 2⁸ (2×2×2×2×2×2×2×2 = 256) and 2187 = 3⁷ (3×3×3×3×3×3×3 = 2187)."
     },
     {
       "id": "reason05",
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "A number leaves the digit sum 15. Which of 3, 5 and 9 must divide it, which cannot, and why?",
+      "prompt": "A number has a digit sum of 15. Which of 3, 5 and 9 must divide it, which cannot, and why?",
       "keyIdeas": [
         "Prime factorisation",
         "HCF",
         "LCM"
       ],
-      "modelAnswer": "256 = 2⁸, 2187 = 3⁷."
+      "modelAnswer": "3 must divide it, because 15 is divisible by 3 (the digit-sum test for 3). 9 cannot divide it, because 15 is not divisible by 9 (15 ÷ 9 is not exact). Whether 5 divides it cannot be decided from the digit sum alone — divisibility by 5 depends only on the last digit."
     },
     {
       "id": "reason06",
       "outcomeId": "lo01",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Explain the key idea in Prime Numbers and Prime Factorisation.",
+      "prompt": "Explain why (−6) − (−4) gives the same result as (−6) + (+4). Use the idea to work out (−9) − (−3).",
       "keyIdeas": [
         "Integer",
         "Absolute value",
         "Base / Index"
       ],
-      "modelAnswer": "A prime number is a whole number greater than 1 that has exactly two factors: 1 and itself. The primes begin 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 and continue forever. A composite number has more than two factors, such as 12 (1, 2, 3, 4, 6, 12). The number 1 is neither prime nor composite, because it has only one factor; and 2 is the only even prime, because every other even number has 2 as an extra factor. Two common misunderstandings are worth clearing up now. First, not all odd numbers are prime: 9, 15 and 21 are…"
+      "modelAnswer": "Subtracting a number is the same as adding its opposite: a − b = a + (−b). So (−6) − (−4) = (−6) + (+4) = −2. Using the same idea, (−9) − (−3) = (−9) + (+3) = −6."
     }
   ],
   "assessment": {
@@ -889,144 +910,144 @@
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Basic",
-        "question": "Round 147,204 to the nearest 10.",
+        "question": "Calculate (−8) + (+5).",
         "options": [
-          "147201",
-          "147200",
-          "147210",
-          "147190"
+          "−3",
+          "3",
+          "−13",
+          "13"
         ],
-        "answer": "147200",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "147204 rounds to 147,200 — look at the ones digit."
+        "answer": "−3",
+        "hint": "Ask yourself what \"Integer\" means here before you choose.",
+        "explanation": "Different signs: subtract the smaller size from the larger, 8 − 5 = 3. The larger size (8) came from the negative, so the answer keeps the minus sign: −3."
       },
       {
         "id": "q02",
         "type": "Application",
         "outcomeId": "lo02",
         "difficulty": "Basic",
-        "question": "In the number 56,011, what is the value of the digit 5?",
+        "question": "What is |−12| − |4|?",
         "options": [
-          "500000",
-          "5000",
-          "50000",
-          "5"
+          "8",
+          "−8",
+          "16",
+          "−16"
         ],
-        "answer": "50000",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "5 is in the ten thousands place, so it is worth 50,000."
+        "answer": "8",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
+        "explanation": "Absolute value is distance from zero, so |−12| = 12 and |4| = 4. Then 12 − 4 = 8."
       },
       {
         "id": "q03",
         "type": "Application",
         "outcomeId": "lo03",
         "difficulty": "Basic",
-        "question": "Which number is greater: 698,714 or 531,497?",
+        "question": "Evaluate (5 − 8) × 2² using the correct order of operations.",
         "options": [
-          "698,714",
-          "531,497",
-          "They are equal",
-          "698,715"
+          "−12",
+          "12",
+          "−6",
+          "36"
         ],
-        "answer": "698,714",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "698,714 is greater than 531,497."
+        "answer": "−12",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
+        "explanation": "Brackets first: 5 − 8 = −3. Then the index: 2² = 4. Finally multiply: −3 × 4 = −12."
       },
       {
         "id": "q04",
         "type": "Application",
         "outcomeId": "lo04",
         "difficulty": "Basic",
-        "question": "In the number 42,737, what is the value of the digit 2?",
+        "question": "Simplify 2³ × 2⁴ using the laws of indices.",
         "options": [
-          "20000",
-          "200",
-          "2000",
-          "2"
+          "2⁷ = 128",
+          "2¹² = 4096",
+          "4⁷",
+          "2¹ = 2"
         ],
-        "answer": "2000",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "2 is in the thousands place, so it is worth 2,000."
+        "answer": "2⁷ = 128",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
+        "explanation": "When multiplying powers with the same base, add the indices: 2³ × 2⁴ = 2⁷ = 128."
       },
       {
         "id": "q05",
         "type": "Application",
         "outcomeId": "lo05",
         "difficulty": "Core",
-        "question": "Which number is greater: 18,105 or 987,334?",
+        "question": "What is the cube root of 125, written ³√125?",
         "options": [
-          "987,334",
-          "18,105",
-          "They are equal",
-          "987,335"
+          "5",
+          "15",
+          "25",
+          "625"
         ],
-        "answer": "987,334",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "987,334 is greater than 18,105."
+        "answer": "5",
+        "hint": "Ask yourself what \"Prime factorisation\" means here before you choose.",
+        "explanation": "Since 5³ = 5 × 5 × 5 = 125, the cube root of 125 is 5."
       },
       {
         "id": "q06",
         "type": "Application",
         "outcomeId": "lo06",
         "difficulty": "Core",
-        "question": "Round 592,108 to the nearest 10.",
+        "question": "Write 84 as a product of prime factors.",
         "options": [
-          "592100",
-          "592111",
-          "592110",
-          "592120"
+          "2² × 3 × 7",
+          "2 × 3 × 7²",
+          "2³ × 3 × 7",
+          "2² × 3² × 7"
         ],
-        "answer": "592110",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "592108 rounds to 592,110 — look at the ones digit."
+        "answer": "2² × 3 × 7",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
+        "explanation": "84 = 4 × 21 = (2 × 2) × (3 × 7) = 2² × 3 × 7."
       },
       {
         "id": "q07",
         "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
-        "question": "In the number 85,213, what is the value of the digit 8?",
+        "question": "Find the LCM of 8 and 12.",
         "options": [
-          "80000",
-          "8",
-          "800000",
-          "8000"
+          "24",
+          "4",
+          "96",
+          "48"
         ],
-        "answer": "80000",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "8 is in the ten thousands place, so it is worth 80,000."
+        "answer": "24",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
+        "explanation": "8 = 2³ and 12 = 2² × 3. Taking the highest power of each prime gives LCM = 2³ × 3 = 24."
       },
       {
         "id": "q08",
         "type": "Application",
         "outcomeId": "lo08",
         "difficulty": "Challenge",
-        "question": "In the number 18,779, what is the value of the digit 1?",
+        "question": "Which of these numbers is divisible by both 3 and 4?",
         "options": [
-          "10000",
-          "1",
-          "100000",
-          "1000"
+          "36",
+          "34",
+          "27",
+          "44"
         ],
-        "answer": "10000",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "1 is in the ten thousands place, so it is worth 10,000."
+        "answer": "36",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
+        "explanation": "36 is divisible by 3 because its digit sum (3 + 6 = 9) is a multiple of 3, and divisible by 4 because 36 ÷ 4 = 9 exactly."
       },
       {
         "id": "q09",
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Challenge",
-        "question": "Round 620,569 to the nearest 100.",
+        "question": "Calculate (−6) × (−4) ÷ (+3).",
         "options": [
-          "620700",
-          "620500",
-          "620601",
-          "620600"
+          "8",
+          "−8",
+          "24",
+          "−24"
         ],
-        "answer": "620600",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "620569 rounds to 620,600 — look at the tens digit."
+        "answer": "8",
+        "hint": "Ask yourself what \"Integer\" means here before you choose.",
+        "explanation": "Same-sign multiplication gives a positive: (−6) × (−4) = 24. Then 24 ÷ (+3) = 8, since dividing two numbers with the same sign gives a positive result."
       },
       {
         "id": "q10",
@@ -1090,40 +1111,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Round 147,204 to the nearest 10.",
+            "prompt": "Calculate (−8) + (+5).",
             "choices": [
-              "147201",
-              "147200",
-              "147210",
-              "147190"
+              "−3",
+              "3",
+              "−13",
+              "13"
             ],
-            "answer": "147200",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "147204 rounds to 147,200 — look at the ones digit."
+            "answer": "−3",
+            "clue": "Ask yourself what \"Integer\" means here before you choose.",
+            "explanation": "Different signs: subtract the smaller size from the larger, 8 − 5 = 3. The larger size (8) came from the negative, so the answer keeps the minus sign: −3."
           },
           {
-            "prompt": "In the number 42,737, what is the value of the digit 2?",
+            "prompt": "Simplify 2³ × 2⁴ using the laws of indices.",
             "choices": [
-              "20000",
-              "200",
-              "2000",
-              "2"
+              "2⁷ = 128",
+              "2¹² = 4096",
+              "4⁷",
+              "2¹ = 2"
             ],
-            "answer": "2000",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "2 is in the thousands place, so it is worth 2,000."
+            "answer": "2⁷ = 128",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "When multiplying powers with the same base, add the indices: 2³ × 2⁴ = 2⁷ = 128."
           },
           {
-            "prompt": "In the number 85,213, what is the value of the digit 8?",
+            "prompt": "Find the LCM of 8 and 12.",
             "choices": [
-              "80000",
-              "8",
-              "800000",
-              "8000"
+              "24",
+              "4",
+              "96",
+              "48"
             ],
-            "answer": "80000",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "8 is in the ten thousands place, so it is worth 80,000."
+            "answer": "24",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "8 = 2³ and 12 = 2² × 3. Taking the highest power of each prime gives LCM = 2³ × 3 = 24."
           },
           {
             "prompt": "What does “Integer” mean?",
@@ -1148,40 +1169,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "In the number 56,011, what is the value of the digit 5?",
+            "prompt": "What is |−12| − |4|?",
             "choices": [
-              "500000",
-              "5000",
-              "50000",
-              "5"
+              "8",
+              "−8",
+              "16",
+              "−16"
             ],
-            "answer": "50000",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "5 is in the ten thousands place, so it is worth 50,000."
+            "answer": "8",
+            "clue": "Ask yourself what \"Integer\" means here before you choose.",
+            "explanation": "Absolute value is distance from zero, so |−12| = 12 and |4| = 4. Then 12 − 4 = 8."
           },
           {
-            "prompt": "Which number is greater: 18,105 or 987,334?",
+            "prompt": "What is the cube root of 125, written ³√125?",
             "choices": [
-              "987,334",
-              "18,105",
-              "They are equal",
-              "987,335"
+              "5",
+              "15",
+              "25",
+              "625"
             ],
-            "answer": "987,334",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "987,334 is greater than 18,105."
+            "answer": "5",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Since 5³ = 5 × 5 × 5 = 125, the cube root of 125 is 5."
           },
           {
-            "prompt": "In the number 18,779, what is the value of the digit 1?",
+            "prompt": "Which of these numbers is divisible by both 3 and 4?",
             "choices": [
-              "10000",
-              "1",
-              "100000",
-              "1000"
+              "36",
+              "34",
+              "27",
+              "44"
             ],
-            "answer": "10000",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "1 is in the ten thousands place, so it is worth 10,000."
+            "answer": "36",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "36 is divisible by 3 because its digit sum (3 + 6 = 9) is a multiple of 3, and divisible by 4 because 36 ÷ 4 = 9 exactly."
           },
           {
             "prompt": "What does “Absolute value” mean?",
@@ -1206,40 +1227,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which number is greater: 698,714 or 531,497?",
+            "prompt": "Evaluate (5 − 8) × 2² using the correct order of operations.",
             "choices": [
-              "698,714",
-              "531,497",
-              "They are equal",
-              "698,715"
+              "−12",
+              "12",
+              "−6",
+              "36"
             ],
-            "answer": "698,714",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "698,714 is greater than 531,497."
+            "answer": "−12",
+            "clue": "Ask yourself what \"Integer\" means here before you choose.",
+            "explanation": "Brackets first: 5 − 8 = −3. Then the index: 2² = 4. Finally multiply: −3 × 4 = −12."
           },
           {
-            "prompt": "Round 592,108 to the nearest 10.",
+            "prompt": "Write 84 as a product of prime factors.",
             "choices": [
-              "592100",
-              "592111",
-              "592110",
-              "592120"
+              "2² × 3 × 7",
+              "2 × 3 × 7²",
+              "2³ × 3 × 7",
+              "2² × 3² × 7"
             ],
-            "answer": "592110",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "592108 rounds to 592,110 — look at the ones digit."
+            "answer": "2² × 3 × 7",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "84 = 4 × 21 = (2 × 2) × (3 × 7) = 2² × 3 × 7."
           },
           {
-            "prompt": "Round 620,569 to the nearest 100.",
+            "prompt": "Calculate (−6) × (−4) ÷ (+3).",
             "choices": [
-              "620700",
-              "620500",
-              "620601",
-              "620600"
+              "8",
+              "−8",
+              "24",
+              "−24"
             ],
-            "answer": "620600",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "620569 rounds to 620,600 — look at the tens digit."
+            "answer": "8",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Same-sign multiplication gives a positive: (−6) × (−4) = 24. Then 24 ÷ (+3) = 8, since dividing two numbers with the same sign gives a positive result."
           },
           {
             "prompt": "What does “Base / Index” mean?",
@@ -1264,28 +1285,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "In the number 42,737, what is the value of the digit 2?",
+            "prompt": "Simplify 2³ × 2⁴ using the laws of indices.",
             "choices": [
-              "20000",
-              "200",
-              "2000",
-              "2"
+              "2⁷ = 128",
+              "2¹² = 4096",
+              "4⁷",
+              "2¹ = 2"
             ],
-            "answer": "2000",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "2 is in the thousands place, so it is worth 2,000."
+            "answer": "2⁷ = 128",
+            "clue": "Ask yourself what \"Integer\" means here before you choose.",
+            "explanation": "When multiplying powers with the same base, add the indices: 2³ × 2⁴ = 2⁷ = 128."
           },
           {
-            "prompt": "In the number 85,213, what is the value of the digit 8?",
+            "prompt": "Find the LCM of 8 and 12.",
             "choices": [
-              "80000",
-              "8",
-              "800000",
-              "8000"
+              "24",
+              "4",
+              "96",
+              "48"
             ],
-            "answer": "80000",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "8 is in the ten thousands place, so it is worth 80,000."
+            "answer": "24",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "8 = 2³ and 12 = 2² × 3. Taking the highest power of each prime gives LCM = 2³ × 3 = 24."
           },
           {
             "prompt": "What does “Integer” mean?",
@@ -1300,16 +1321,16 @@
             "explanation": "Integer means A whole number: positive, negative or zero."
           },
           {
-            "prompt": "Round 147,204 to the nearest 10.",
+            "prompt": "Calculate (−8) + (+5).",
             "choices": [
-              "147201",
-              "147200",
-              "147210",
-              "147190"
+              "−3",
+              "3",
+              "−13",
+              "13"
             ],
-            "answer": "147200",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "147204 rounds to 147,200 — look at the ones digit."
+            "answer": "−3",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Different signs: subtract the smaller size from the larger, 8 − 5 = 3. The larger size (8) came from the negative, so the answer keeps the minus sign: −3."
           }
         ]
       },
@@ -1322,28 +1343,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which number is greater: 18,105 or 987,334?",
+            "prompt": "What is the cube root of 125, written ³√125?",
             "choices": [
-              "987,334",
-              "18,105",
-              "They are equal",
-              "987,335"
+              "5",
+              "15",
+              "25",
+              "625"
             ],
-            "answer": "987,334",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "987,334 is greater than 18,105."
+            "answer": "5",
+            "clue": "Ask yourself what \"Integer\" means here before you choose.",
+            "explanation": "Since 5³ = 5 × 5 × 5 = 125, the cube root of 125 is 5."
           },
           {
-            "prompt": "In the number 18,779, what is the value of the digit 1?",
+            "prompt": "Which of these numbers is divisible by both 3 and 4?",
             "choices": [
-              "10000",
-              "1",
-              "100000",
-              "1000"
+              "36",
+              "34",
+              "27",
+              "44"
             ],
-            "answer": "10000",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "1 is in the ten thousands place, so it is worth 10,000."
+            "answer": "36",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "36 is divisible by 3 because its digit sum (3 + 6 = 9) is a multiple of 3, and divisible by 4 because 36 ÷ 4 = 9 exactly."
           },
           {
             "prompt": "What does “Absolute value” mean?",
@@ -1358,16 +1379,16 @@
             "explanation": "Absolute value means Distance from zero; never negative."
           },
           {
-            "prompt": "In the number 56,011, what is the value of the digit 5?",
+            "prompt": "What is |−12| − |4|?",
             "choices": [
-              "500000",
-              "5000",
-              "50000",
-              "5"
+              "8",
+              "−8",
+              "16",
+              "−16"
             ],
-            "answer": "50000",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "5 is in the ten thousands place, so it is worth 50,000."
+            "answer": "8",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Absolute value is distance from zero, so |−12| = 12 and |4| = 4. Then 12 − 4 = 8."
           }
         ]
       },
@@ -1380,28 +1401,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Round 592,108 to the nearest 10.",
+            "prompt": "Write 84 as a product of prime factors.",
             "choices": [
-              "592100",
-              "592111",
-              "592110",
-              "592120"
+              "2² × 3 × 7",
+              "2 × 3 × 7²",
+              "2³ × 3 × 7",
+              "2² × 3² × 7"
             ],
-            "answer": "592110",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "592108 rounds to 592,110 — look at the ones digit."
+            "answer": "2² × 3 × 7",
+            "clue": "Ask yourself what \"Integer\" means here before you choose.",
+            "explanation": "84 = 4 × 21 = (2 × 2) × (3 × 7) = 2² × 3 × 7."
           },
           {
-            "prompt": "Round 620,569 to the nearest 100.",
+            "prompt": "Calculate (−6) × (−4) ÷ (+3).",
             "choices": [
-              "620700",
-              "620500",
-              "620601",
-              "620600"
+              "8",
+              "−8",
+              "24",
+              "−24"
             ],
-            "answer": "620600",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "620569 rounds to 620,600 — look at the tens digit."
+            "answer": "8",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Same-sign multiplication gives a positive: (−6) × (−4) = 24. Then 24 ÷ (+3) = 8, since dividing two numbers with the same sign gives a positive result."
           },
           {
             "prompt": "What does “Base / Index” mean?",
@@ -1416,16 +1437,16 @@
             "explanation": "Base / Index means The number multiplied / how many times."
           },
           {
-            "prompt": "Which number is greater: 698,714 or 531,497?",
+            "prompt": "Evaluate (5 − 8) × 2² using the correct order of operations.",
             "choices": [
-              "698,714",
-              "531,497",
-              "They are equal",
-              "698,715"
+              "−12",
+              "12",
+              "−6",
+              "36"
             ],
-            "answer": "698,714",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "698,714 is greater than 531,497."
+            "answer": "−12",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Brackets first: 5 − 8 = −3. Then the index: 2² = 4. Finally multiply: −3 × 4 = −12."
           }
         ]
       },
@@ -1438,16 +1459,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "In the number 85,213, what is the value of the digit 8?",
+            "prompt": "Find the LCM of 8 and 12.",
             "choices": [
-              "80000",
-              "8",
-              "800000",
-              "8000"
+              "24",
+              "4",
+              "96",
+              "48"
             ],
-            "answer": "80000",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "8 is in the ten thousands place, so it is worth 80,000."
+            "answer": "24",
+            "clue": "Ask yourself what \"Integer\" means here before you choose.",
+            "explanation": "8 = 2³ and 12 = 2² × 3. Taking the highest power of each prime gives LCM = 2³ × 3 = 24."
           },
           {
             "prompt": "What does “Integer” mean?",
@@ -1462,28 +1483,28 @@
             "explanation": "Integer means A whole number: positive, negative or zero."
           },
           {
-            "prompt": "Round 147,204 to the nearest 10.",
+            "prompt": "Calculate (−8) + (+5).",
             "choices": [
-              "147201",
-              "147200",
-              "147210",
-              "147190"
+              "−3",
+              "3",
+              "−13",
+              "13"
             ],
-            "answer": "147200",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "147204 rounds to 147,200 — look at the ones digit."
+            "answer": "−3",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Different signs: subtract the smaller size from the larger, 8 − 5 = 3. The larger size (8) came from the negative, so the answer keeps the minus sign: −3."
           },
           {
-            "prompt": "In the number 42,737, what is the value of the digit 2?",
+            "prompt": "Simplify 2³ × 2⁴ using the laws of indices.",
             "choices": [
-              "20000",
-              "200",
-              "2000",
-              "2"
+              "2⁷ = 128",
+              "2¹² = 4096",
+              "4⁷",
+              "2¹ = 2"
             ],
-            "answer": "2000",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "2 is in the thousands place, so it is worth 2,000."
+            "answer": "2⁷ = 128",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "When multiplying powers with the same base, add the indices: 2³ × 2⁴ = 2⁷ = 128."
           }
         ]
       },
@@ -1496,16 +1517,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "In the number 18,779, what is the value of the digit 1?",
+            "prompt": "Which of these numbers is divisible by both 3 and 4?",
             "choices": [
-              "10000",
-              "1",
-              "100000",
-              "1000"
+              "36",
+              "34",
+              "27",
+              "44"
             ],
-            "answer": "10000",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "1 is in the ten thousands place, so it is worth 10,000."
+            "answer": "36",
+            "clue": "Ask yourself what \"Integer\" means here before you choose.",
+            "explanation": "36 is divisible by 3 because its digit sum (3 + 6 = 9) is a multiple of 3, and divisible by 4 because 36 ÷ 4 = 9 exactly."
           },
           {
             "prompt": "What does “Absolute value” mean?",
@@ -1520,28 +1541,28 @@
             "explanation": "Absolute value means Distance from zero; never negative."
           },
           {
-            "prompt": "In the number 56,011, what is the value of the digit 5?",
+            "prompt": "What is |−12| − |4|?",
             "choices": [
-              "500000",
-              "5000",
-              "50000",
-              "5"
+              "8",
+              "−8",
+              "16",
+              "−16"
             ],
-            "answer": "50000",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "5 is in the ten thousands place, so it is worth 50,000."
+            "answer": "8",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Absolute value is distance from zero, so |−12| = 12 and |4| = 4. Then 12 − 4 = 8."
           },
           {
-            "prompt": "Which number is greater: 18,105 or 987,334?",
+            "prompt": "What is the cube root of 125, written ³√125?",
             "choices": [
-              "987,334",
-              "18,105",
-              "They are equal",
-              "987,335"
+              "5",
+              "15",
+              "25",
+              "625"
             ],
-            "answer": "987,334",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "987,334 is greater than 18,105."
+            "answer": "5",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Since 5³ = 5 × 5 × 5 = 125, the cube root of 125 is 5."
           }
         ]
       },
@@ -1554,16 +1575,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Round 620,569 to the nearest 100.",
+            "prompt": "Calculate (−6) × (−4) ÷ (+3).",
             "choices": [
-              "620700",
-              "620500",
-              "620601",
-              "620600"
+              "8",
+              "−8",
+              "24",
+              "−24"
             ],
-            "answer": "620600",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "620569 rounds to 620,600 — look at the tens digit."
+            "answer": "8",
+            "clue": "Ask yourself what \"Integer\" means here before you choose.",
+            "explanation": "Same-sign multiplication gives a positive: (−6) × (−4) = 24. Then 24 ÷ (+3) = 8, since dividing two numbers with the same sign gives a positive result."
           },
           {
             "prompt": "What does “Base / Index” mean?",
@@ -1578,28 +1599,28 @@
             "explanation": "Base / Index means The number multiplied / how many times."
           },
           {
-            "prompt": "Which number is greater: 698,714 or 531,497?",
+            "prompt": "Evaluate (5 − 8) × 2² using the correct order of operations.",
             "choices": [
-              "698,714",
-              "531,497",
-              "They are equal",
-              "698,715"
+              "−12",
+              "12",
+              "−6",
+              "36"
             ],
-            "answer": "698,714",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "698,714 is greater than 531,497."
+            "answer": "−12",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Brackets first: 5 − 8 = −3. Then the index: 2² = 4. Finally multiply: −3 × 4 = −12."
           },
           {
-            "prompt": "Round 592,108 to the nearest 10.",
+            "prompt": "Write 84 as a product of prime factors.",
             "choices": [
-              "592100",
-              "592111",
-              "592110",
-              "592120"
+              "2² × 3 × 7",
+              "2 × 3 × 7²",
+              "2³ × 3 × 7",
+              "2² × 3² × 7"
             ],
-            "answer": "592110",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "592108 rounds to 592,110 — look at the ones digit."
+            "answer": "2² × 3 × 7",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "84 = 4 × 21 = (2 × 2) × (3 × 7) = 2² × 3 × 7."
           }
         ]
       },
@@ -1624,40 +1645,40 @@
             "explanation": "Integer means A whole number: positive, negative or zero."
           },
           {
-            "prompt": "Round 147,204 to the nearest 10.",
+            "prompt": "Calculate (−8) + (+5).",
             "choices": [
-              "147201",
-              "147200",
-              "147210",
-              "147190"
+              "−3",
+              "3",
+              "−13",
+              "13"
             ],
-            "answer": "147200",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "147204 rounds to 147,200 — look at the ones digit."
+            "answer": "−3",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Different signs: subtract the smaller size from the larger, 8 − 5 = 3. The larger size (8) came from the negative, so the answer keeps the minus sign: −3."
           },
           {
-            "prompt": "In the number 42,737, what is the value of the digit 2?",
+            "prompt": "Simplify 2³ × 2⁴ using the laws of indices.",
             "choices": [
-              "20000",
-              "200",
-              "2000",
-              "2"
+              "2⁷ = 128",
+              "2¹² = 4096",
+              "4⁷",
+              "2¹ = 2"
             ],
-            "answer": "2000",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "2 is in the thousands place, so it is worth 2,000."
+            "answer": "2⁷ = 128",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "When multiplying powers with the same base, add the indices: 2³ × 2⁴ = 2⁷ = 128."
           },
           {
-            "prompt": "In the number 85,213, what is the value of the digit 8?",
+            "prompt": "Find the LCM of 8 and 12.",
             "choices": [
-              "80000",
-              "8",
-              "800000",
-              "8000"
+              "24",
+              "4",
+              "96",
+              "48"
             ],
-            "answer": "80000",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "8 is in the ten thousands place, so it is worth 80,000."
+            "answer": "24",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "8 = 2³ and 12 = 2² × 3. Taking the highest power of each prime gives LCM = 2³ × 3 = 24."
           }
         ]
       },
@@ -1682,40 +1703,40 @@
             "explanation": "Absolute value means Distance from zero; never negative."
           },
           {
-            "prompt": "In the number 56,011, what is the value of the digit 5?",
+            "prompt": "What is |−12| − |4|?",
             "choices": [
-              "500000",
-              "5000",
-              "50000",
-              "5"
+              "8",
+              "−8",
+              "16",
+              "−16"
             ],
-            "answer": "50000",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "5 is in the ten thousands place, so it is worth 50,000."
+            "answer": "8",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Absolute value is distance from zero, so |−12| = 12 and |4| = 4. Then 12 − 4 = 8."
           },
           {
-            "prompt": "Which number is greater: 18,105 or 987,334?",
+            "prompt": "What is the cube root of 125, written ³√125?",
             "choices": [
-              "987,334",
-              "18,105",
-              "They are equal",
-              "987,335"
+              "5",
+              "15",
+              "25",
+              "625"
             ],
-            "answer": "987,334",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "987,334 is greater than 18,105."
+            "answer": "5",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Since 5³ = 5 × 5 × 5 = 125, the cube root of 125 is 5."
           },
           {
-            "prompt": "In the number 18,779, what is the value of the digit 1?",
+            "prompt": "Which of these numbers is divisible by both 3 and 4?",
             "choices": [
-              "10000",
-              "1",
-              "100000",
-              "1000"
+              "36",
+              "34",
+              "27",
+              "44"
             ],
-            "answer": "10000",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "1 is in the ten thousands place, so it is worth 10,000."
+            "answer": "36",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "36 is divisible by 3 because its digit sum (3 + 6 = 9) is a multiple of 3, and divisible by 4 because 36 ÷ 4 = 9 exactly."
           }
         ]
       },
@@ -1740,40 +1761,40 @@
             "explanation": "Base / Index means The number multiplied / how many times."
           },
           {
-            "prompt": "Which number is greater: 698,714 or 531,497?",
+            "prompt": "Evaluate (5 − 8) × 2² using the correct order of operations.",
             "choices": [
-              "698,714",
-              "531,497",
-              "They are equal",
-              "698,715"
+              "−12",
+              "12",
+              "−6",
+              "36"
             ],
-            "answer": "698,714",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "698,714 is greater than 531,497."
+            "answer": "−12",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Brackets first: 5 − 8 = −3. Then the index: 2² = 4. Finally multiply: −3 × 4 = −12."
           },
           {
-            "prompt": "Round 592,108 to the nearest 10.",
+            "prompt": "Write 84 as a product of prime factors.",
             "choices": [
-              "592100",
-              "592111",
-              "592110",
-              "592120"
+              "2² × 3 × 7",
+              "2 × 3 × 7²",
+              "2³ × 3 × 7",
+              "2² × 3² × 7"
             ],
-            "answer": "592110",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "592108 rounds to 592,110 — look at the ones digit."
+            "answer": "2² × 3 × 7",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "84 = 4 × 21 = (2 × 2) × (3 × 7) = 2² × 3 × 7."
           },
           {
-            "prompt": "Round 620,569 to the nearest 100.",
+            "prompt": "Calculate (−6) × (−4) ÷ (+3).",
             "choices": [
-              "620700",
-              "620500",
-              "620601",
-              "620600"
+              "8",
+              "−8",
+              "24",
+              "−24"
             ],
-            "answer": "620600",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "620569 rounds to 620,600 — look at the tens digit."
+            "answer": "8",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Same-sign multiplication gives a positive: (−6) × (−4) = 24. Then 24 ÷ (+3) = 8, since dividing two numbers with the same sign gives a positive result."
           }
         ]
       }

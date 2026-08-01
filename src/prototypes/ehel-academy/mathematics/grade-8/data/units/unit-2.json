@@ -49,8 +49,6 @@
     "poster": null
   },
   "outcomes": [
-    "This unit is designed for self-paced learning, so you move at your own speed. Read each explanation slowly, and copy every worked example onto paper, doing the steps yourself rather than only reading them. Algebra is a subject you learn through your pencil, not just your eyes. Your AI tutor is available day and night to give you extra questions, explain a tricky step in a new way, or check your working line by line. Your teacher will also meet with you about twice a week to help with anything that still feels difficult.",
-    "One warning before we begin: algebra rewards care and neatness. A single lost minus sign or a term combined wrongly can change the whole answer. Do not rush. Write each step underneath the last, keep your equals signs lined up, and check your work by substituting a number back in. If you make a mistake, that is not failure – it is exactly the information you need to know what to practise next. Every mathematician, engineer and scientist you admire once sat where you sit now, learning these very same rules.",
     "Understand a variable as a letter that stands for an unknown or changing number.",
     "Identify the terms, coefficients and constants in an algebraic expression.",
     "Write algebraic expressions from words, pictures and real-life situations.",
@@ -58,44 +56,58 @@
     "Expand brackets using the distributive law, including negative multipliers.",
     "Factorise expressions by taking out the highest common factor.",
     "Substitute numbers, including negatives, into expressions and formulae.",
-    "Solve linear equations, including those with brackets and variables on both sides."
+    "Solve linear equations, including those with brackets and variables on both sides.",
+    "Apply the distributive law and factorise expressions when the terms involve squares, cubes or an algebraic highest common factor.",
+    "Write and interpret compound inequalities describing an open or closed interval, such as 2 ≤ x < 5."
   ],
   "concepts": [
     {
       "id": "concept-1-variables-terms-and-expressions",
       "title": "Variables, Terms and Expressions",
-      "explanation": "A variable is a letter used to stand for a number. It might be a number you do not know yet, or a number that is allowed to change. When Amina writes n for the number of goats her family owns, that letter can be 12 one year and 15 the next – the letter stays the same, but the value it holds can change. This is the shift from arithmetic to algebra: instead of thinking about one fixed number, you think about a whole family of numbers at once. An algebraic expression is a group of numbers and variables joined by…",
-      "example": "Every expression is built from terms. A term is a single piece of the expression, and terms are separated by + or − signs. In the expression 3x² + 2x − 7, there are three terms: 3x², 2x and −7. Notice that the minus…"
+      "explanation": "A variable is a letter used to stand for a number. It might be a number you do not know yet, or a number that is allowed to change. When Amina writes n for the number of goats her family owns, that letter can be 12 one year and 15 the next – the letter stays the same, but the value it holds can change. This is the shift from arithmetic to algebra: instead of thinking about one fixed number, you think about a whole family of numbers at once.\n\nAn algebraic expression is a group of numbers and variables joined by operations, with no equals sign. Because it has no equals sign, you cannot *solve* an expression – there is nothing to make equal. Instead you can evaluate it (work out its value for given numbers) or simplify it (write it more neatly). Examples of expressions are 2x + 5, 3a − 7b, and x² + 4x − 9.\n\nEvery expression is built from terms. A term is a single piece of the expression, and terms are separated by + or − signs. In the expression 3x² + 2x − 7, there are three terms: 3x², 2x and −7. Notice that the minus sign belongs to the term after it, so the third term is negative seven, not seven. Keeping the sign attached to its term is one of the most important habits in all of algebra.\n\nInside a term that has a variable, the number in front is called the coefficient. In the term 3x², the coefficient is 3. A term with no variable at all, such as the −7 above, is called a constant. When a variable appears with no visible number, its coefficient is 1: the term x really means 1x, and −x means −1x. Learning to *see* that invisible 1 will save you from many mistakes later.",
+      "example": "The power of one short expression is remarkable. Take 2x + 5. If x = 3, then 2x + 5 = 2(3) + 5 = 11. If x = 10, then 2x + 5 = 2(10) + 5 = 25. A single expression stands for infinitely many separate calculations – one for every possible value of x. This is exactly why algebra can describe phone bills, market prices, camel counts, prayer-time gaps and journeys between Mogadishu and Hargeisa, all with the same compact rules."
     },
     {
       "id": "concept-2-building-expressions-from-words",
       "title": "Building Expressions from Words",
-      "explanation": "A key algebra skill is turning ordinary language into an algebraic expression. Word problems are written in sentences, but to work with them you must translate them into symbols. The trick is to know which words point to which operations, and to choose a letter for the unknown quantity before you start. Here are the most common translations. More than and increased by mean add. Less than and decreased by mean subtract – but watch the order carefully. Times, product of and multiplied by mean multiply. Divided by…",
-      "example": "5 less than a number n → n − 5 (not 5 − n – order matters!)"
+      "explanation": "A key algebra skill is turning ordinary language into an algebraic expression. Word problems are written in sentences, but to work with them you must translate them into symbols. The trick is to know which words point to which operations, and to choose a letter for the unknown quantity before you start.\n\nHere are the most common translations. More than and increased by mean add. Less than and decreased by mean subtract – but watch the order carefully. Times, product of and multiplied by mean multiply. Divided by and quotient mean divide. Twice means multiply by 2, and the square of means raise to the power 2.\n\n5 less than a number n → n − 5 (not 5 − n – order matters!)\n\nthree times a number, then add 7 → 3n + 7\n\nthe square of a number, decreased by twice the number → n² − 2n\n\na number divided by 4 → n ÷ 4, usually written n/4\n\nLet us build one carefully. Consider the phrase *three times a number, increased by seven*. First choose a letter for the unknown number: call it n. *Three times a number* is 3n. *Increased by seven* means add 7. So the full expression is 3n + 7. Notice how we translated one small piece at a time and then joined them together. This piece-by-piece method keeps long descriptions from becoming confusing.",
+      "example": "Real situations often lead naturally to expressions. Suppose a taxi in Nairobi charges 5 shillings to start the journey plus 2 shillings for every kilometre. If you travel k kilometres, the fixed 5 stays the same while the 2 shillings is charged k times, so the total cost is 5 + 2k. Or think of a rectangle whose length is l and width is w: its perimeter is 2l + 2w, which we can also write as 2(l + w), and its area is simply lw. Being able to move from a story to an expression is one of the most useful skills you will ever build."
     },
     {
       "id": "concept-3-simplifying-by-collecting-like-terms",
       "title": "Simplifying by Collecting Like Terms",
-      "explanation": "Expressions are often longer than they need to be. Simplifying means writing an expression in its shortest, tidiest form without changing its value. The main tool is collecting like terms. Like terms are terms that have exactly the same variable part – the same letters raised to the same powers. Only like terms can be added or subtracted together. For example, 3x and 7x are like terms because both are just x to the first power, so 3x + 7x = 10x. Likewise 2x²y and −5x²y are like terms because both have x² and y.…",
-      "example": "Why does collecting like terms work? It is really the distributive law used in reverse: 3x + 7x = (3 + 7)x = 10x. You are simply counting how many x's you have, just as 3 camels plus 7 camels makes 10 camels. You cannot…"
+      "explanation": "Expressions are often longer than they need to be. Simplifying means writing an expression in its shortest, tidiest form without changing its value. The main tool is collecting like terms. Like terms are terms that have exactly the same variable part – the same letters raised to the same powers. Only like terms can be added or subtracted together.\n\nFor example, 3x and 7x are like terms because both are just x to the first power, so 3x + 7x = 10x. Likewise 2x²y and −5x²y are like terms because both have x² and y. But 3x and 3x² are not like terms, because one has x and the other has x² – the powers are different. And 2x and 3y are not like terms, because they use different letters. A common early mistake is to write 2x + 3y = 5xy; this is wrong, because x and y are different and cannot be combined.\n\nWhy does collecting like terms work? It is really the distributive law used in reverse: 3x + 7x = (3 + 7)x = 10x. You are simply counting how many x's you have, just as 3 camels plus 7 camels makes 10 camels. You cannot add camels to goats, and in the same way you cannot add x-terms to y-terms.\n\nTo simplify a longer expression, group the like terms and combine each group, being very careful with signs. Take 5x + 3y − 2x + 7y. The x-terms are 5x and −2x, which give 5x − 2x = 3x. The y-terms are 3y and 7y, which give 10y. So the simplified expression is 3x + 10y. Notice the −2x: the minus sign belongs to that term, so we subtract. Always drag each sign along with its term as you gather it into a group.",
+      "example": "A slightly harder example: 4x² + 3xy − 2x² + 5xy − 7. The x² terms are 4x² and −2x², giving 2x². The xy terms are 3xy and 5xy, giving 8xy. The −7 is a constant that stands alone. So the answer is 2x² + 8xy − 7. Work through it slowly, ticking off each term as you use it, so that nothing is counted twice and nothing is left behind."
     },
     {
       "id": "concept-4-expanding-brackets",
       "title": "Expanding Brackets",
-      "explanation": "The distributive law is one of the most used rules in algebra. It says that for any numbers a, b and c: a(b + c) = ab + ac, and a(b − c) = ab − ac. In words, you multiply the term outside the bracket by every term inside the bracket. Removing brackets this way is called expanding. Start simple. To expand 3(x + 4), multiply the 3 by each term inside: 3 × x = 3x, and 3 × 4 = 12. So 3(x + 4) = 3x + 12. A very common mistake is to write 3(x + 4) = 3x + 4, forgetting to multiply the 4. The bracket means the 3 belongs…",
-      "example": "Signs need extra care. To expand 5(2x − 3), we get 5 × 2x = 10x and 5 × (−3) = −15, so the answer is 10x − 15. When the multiplier is negative, every sign inside flips. To expand −2(3x − 4), we do −2 × 3x = −6x and −2 ×…"
+      "explanation": "The distributive law is one of the most used rules in algebra. It says that for any numbers a, b and c: a(b + c) = ab + ac, and a(b − c) = ab − ac. In words, you multiply the term outside the bracket by every term inside the bracket. Removing brackets this way is called expanding.\n\nStart simple. To expand 3(x + 4), multiply the 3 by each term inside: 3 × x = 3x, and 3 × 4 = 12. So 3(x + 4) = 3x + 12. A very common mistake is to write 3(x + 4) = 3x + 4, forgetting to multiply the 4. The bracket means the 3 belongs to *both* terms inside, so make sure the outside term reaches every term in the bracket.\n\nSigns need extra care. To expand 5(2x − 3), we get 5 × 2x = 10x and 5 × (−3) = −15, so the answer is 10x − 15. When the multiplier is negative, every sign inside flips. To expand −2(3x − 4), we do −2 × 3x = −6x and −2 × (−4) = +8, giving −6x + 8. Notice how the minus in front changed the −4 into a +8; multiplying two negatives makes a positive.",
+      "example": "Often you expand and then simplify. Consider 3(x + 4) + 2(x − 1). First expand each bracket: 3(x + 4) = 3x + 12 and 2(x − 1) = 2x − 2. Now collect like terms: 3x + 2x = 5x, and 12 − 2 = 10. The final answer is 5x + 10. Always finish the job by collecting like terms after expanding."
     },
     {
       "id": "concept-5-factorising-expressions",
       "title": "Factorising Expressions",
-      "explanation": "Factorising is the reverse of expanding. Instead of removing brackets, you put them back. To factorise an expression, you find the highest common factor (HCF) of all the terms and take it outside a bracket. This is a powerful skill because a factorised expression often reveals structure that the expanded form hides. Look at 12x + 18. Both terms share a factor: the HCF of 12 and 18 is 6. Take out the 6, and ask what is left inside: 12x ÷ 6 = 2x, and 18 ÷ 6 = 3. So 12x + 18 = 6(2x + 3). You can always check a…",
-      "example": "Try 15y − 10. The HCF of 15 and 10 is 5. Dividing gives 15y ÷ 5 = 3y and −10 ÷ 5 = −2, so 15y − 10 = 5(3y − 2). To *factorise completely* means to take out the largest possible common factor. Writing 15y − 10 = 5(3y −…"
+      "explanation": "Factorising is the reverse of expanding. Instead of removing brackets, you put them back. To factorise an expression, you find the highest common factor (HCF) of all the terms and take it outside a bracket. This is a powerful skill because a factorised expression often reveals structure that the expanded form hides.\n\nLook at 12x + 18. Both terms share a factor: the HCF of 12 and 18 is 6. Take out the 6, and ask what is left inside: 12x ÷ 6 = 2x, and 18 ÷ 6 = 3. So 12x + 18 = 6(2x + 3). You can always check a factorisation by expanding it again: 6(2x + 3) = 12x + 18. If you get back what you started with, your factorising is correct.\n\nTry 15y − 10. The HCF of 15 and 10 is 5. Dividing gives 15y ÷ 5 = 3y and −10 ÷ 5 = −2, so 15y − 10 = 5(3y − 2). To *factorise completely* means to take out the largest possible common factor. Writing 15y − 10 = 5(3y − 2) is fully factorised, but writing it as 5(3y − 2) rather than, say, taking out only a factor of 1, is the goal. Always check whether the numbers inside the bracket still share a common factor; if they do, you have not finished.",
+      "example": "Factorising can involve three or more terms and can include letters in the common factor. For 21m − 14n + 7, the HCF of 21, 14 and 7 is 7, giving 7(3m − 2n + 1). Do not forget the +1: since 7 ÷ 7 = 1, the last term inside must be 1, not nothing. For 6x² + 9x, both terms share 3 and both share an x, so the HCF is 3x, giving 3x(2x + 3). Expanding checks it: 3x(2x + 3) = 6x² + 9x."
     },
     {
       "id": "concept-6-formulae-and-substitution",
       "title": "Formulae and Substitution",
-      "explanation": "A formula is a rule, written with letters, that connects quantities. The formula for the area of a rectangle is A = lw, where A is the area, l the length and w the width. The letter that stands alone on one side is called the subject of the formula – here A is the subject. Formulae appear everywhere: in geometry, science, trade and daily life, because they capture a relationship once and let you use it again and again. Substitution means replacing each letter with a given number and then working out the value.…",
-      "example": "Substituting negative numbers needs special care, and brackets are your best friend. To evaluate x² − 2x when x = −3, write (−3)² − 2(−3). Now (−3)² = 9 and −2(−3) = +6, so the value is 9 + 6 = 15. Without the brackets…"
+      "explanation": "A formula is a rule, written with letters, that connects quantities. The formula for the area of a rectangle is A = lw, where A is the area, l the length and w the width. The letter that stands alone on one side is called the subject of the formula – here A is the subject. Formulae appear everywhere: in geometry, science, trade and daily life, because they capture a relationship once and let you use it again and again.\n\nSubstitution means replacing each letter with a given number and then working out the value. Every time the letter appears, you swap in the number – and it is wise to write the number in brackets to avoid slips. If a rectangle has length 8 and width 5, then A = lw = 8 × 5 = 40 square units. If the triangle formula is A = ½bh with b = 6 and h = 4, then A = ½ × 6 × 4 = ½ × 24 = 12 square units.\n\nSubstituting negative numbers needs special care, and brackets are your best friend. To evaluate x² − 2x when x = −3, write (−3)² − 2(−3). Now (−3)² = 9 and −2(−3) = +6, so the value is 9 + 6 = 15. Without the brackets it is easy to write −3² and get the wrong sign. The rule is simple: whenever you substitute a negative number, wrap it in brackets first, then simplify.\n\nThe order of operations matters just as much in algebra as in arithmetic. To evaluate 2x + 3y² when x = 4 and y = 2, do the power first: y² = 2² = 4. Then 2(4) + 3(4) = 8 + 12 = 20. A careless student might do (3 × 2) first and square it, getting 6² = 36 and a final answer of 44 – which is wrong. Powers come before multiplication, and multiplication before addition, exactly as with numbers.",
+      "example": "Formulae can also be rearranged to make a different letter the subject. If P = 2l + 2w and you want w, undo the operations step by step: subtract 2l from both sides to get P − 2l = 2w, then divide by 2 to get w = (P − 2l)/2. Rearranging uses the very same balance rule you will meet next when solving equations – whatever you do to one side, you must do to the other."
+    },
+    {
+      "id": "concept-7-squares-cubes-and-algebraic-factors",
+      "title": "Squares, Cubes and Algebraic Factors",
+      "explanation": "The distributive law works the same way whether the term outside the bracket is a plain number or contains a letter, a square or a cube. To expand a(b + c) you multiply the outside term by every term inside the bracket, keeping track of powers with the index laws: x × x = x², so x(x + 2) = x² + 2x. When the outside term already has a power, multiply the powers by adding indices: 2x²(3x − 1) = 2x² × 3x − 2x² × 1 = 6x³ − 2x². Factorising reverses this. So far you have taken out a purely numeric highest common factor; an algebraic HCF works the same way but can include a letter, and even a power of a letter, if every term shares it. To factorise 6x² + 9x, first find the HCF of the numbers (HCF of 6 and 9 is 3) and the HCF of the letter parts (x² and x share x), giving an overall HCF of 3x; dividing each term by 3x leaves 2x + 3, so 6x² + 9x = 3x(2x + 3).",
+      "example": "a) Expand x(x + 5). b) Expand 3x²(2x − 4). c) Factorise 8x² + 12x fully. Solution: a) x(x + 5) = x² + 5x. b) 3x²(2x − 4) = 6x³ − 12x². c) HCF of 8 and 12 is 4; the letter parts x² and x share x; so the overall HCF is 4x. Dividing each term by 4x gives 2x + 3, so 8x² + 12x = 4x(2x + 3)."
+    },
+    {
+      "id": "concept-8-open-and-closed-intervals",
+      "title": "Open and Closed Intervals",
+      "explanation": "An inequality like x > 3 describes every number bigger than 3, stretching out forever — an open, one-sided interval. Sometimes a quantity is trapped between two boundaries at once, and you need a compound (two-sided) interval to describe it, such as \"x is at least 2 but less than 5.\" This is written as a single chained inequality, 2 ≤ x < 5, read from left to right: x is greater than or equal to 2, and x is less than 5. On a number line, a closed (filled) dot marks a boundary that is included (≤ or ≥), and an open dot marks a boundary that is excluded (< or >), so 2 ≤ x < 5 is drawn with a filled dot at 2 and an open dot at 5, with the line shaded between them. A closed interval like 2 ≤ x ≤ 5 includes both endpoints; an open interval like 2 < x < 5 includes neither.",
+      "example": "Write an inequality for \"x is more than −1 but no more than 6,\" then list three whole numbers that satisfy it. Solution: \"More than −1\" means x > −1 (open at −1); \"no more than 6\" means x ≤ 6 (closed at 6). Combined: −1 < x ≤ 6. Three whole numbers satisfying this are 0, 3 and 6 (note 6 is allowed, but −1 is not)."
     }
   ],
   "explorations": [
@@ -104,72 +116,72 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "Variables, Terms and Expressions",
-      "context": "A variable is a letter used to stand for a number. It might be a number you do not know yet, or a number that is allowed to change. When Amina writes n for the number of goats her family owns, that letter can be 12 one year and 15 the next – the letter stays…",
+      "context": "A variable is a letter used to stand for a number. It might be a number you do not know yet, or a number that is allowed to change.",
       "prompt": "Simplify: a) 5x + 3x b) 7a − 4a + 2a c) 9m + m − 3m.",
       "answer": "1) a) 8x, b) 5a, c) 7m.",
       "modelType": "model-1",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) a) 8x, b) 5a, c) 7m."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term.",
+      "explanation": "Variables, Terms and Expressions: A variable is a letter used to stand for a number. It might be a number you do not know yet, or a number that is allowed to change. When Amina writes n for the number of goats her family owns, that letter can be 12 one year and 15 the next – the letter stays the same, but the value it holds can change."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Building Expressions from Words",
-      "context": "A key algebra skill is turning ordinary language into an algebraic expression. Word problems are written in sentences, but to work with them you must translate them into symbols. The trick is to know which words point to which operations, and to choose a…",
+      "context": "A key algebra skill is turning ordinary language into an algebraic expression. Word problems are written in sentences, but to work with them you must translate them into symbols.",
       "prompt": "Write an expression: a) 7 more than twice a number n b) a number decreased by 8.",
       "answer": "a) 2n + 7, b) x − 8.",
       "modelType": "model-2",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "a) 2n + 7, b) x − 8."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term.",
+      "explanation": "Building Expressions from Words: A key algebra skill is turning ordinary language into an algebraic expression. Word problems are written in sentences, but to work with them you must translate them into symbols. The trick is to know which words point to which operations, and to choose a letter for the unknown quantity before you start."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Simplifying by Collecting Like Terms",
-      "context": "Expressions are often longer than they need to be. Simplifying means writing an expression in its shortest, tidiest form without changing its value. The main tool is collecting like terms. Like terms are terms that have exactly the same variable part – the…",
+      "context": "Expressions are often longer than they need to be. Simplifying means writing an expression in its shortest, tidiest form without changing its value. The main tool is collecting like terms.",
       "prompt": "Expand: a) 4(x + 5) b) 3(2y − 1).",
       "answer": "a) 4x + 20, b) 6y − 3.",
       "modelType": "model-3",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "a) 4x + 20, b) 6y − 3."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term.",
+      "explanation": "Simplifying by Collecting Like Terms: Expressions are often longer than they need to be. Simplifying means writing an expression in its shortest, tidiest form without changing its value. The main tool is collecting like terms. Like terms are terms that have exactly the same variable part – the same letters raised to the same powers."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Expanding Brackets",
-      "context": "The distributive law is one of the most used rules in algebra. It says that for any numbers a, b and c: a(b + c) = ab + ac, and a(b − c) = ab − ac. In words, you multiply the term outside the bracket by every term inside the bracket. Removing brackets this…",
+      "context": "The distributive law is one of the most used rules in algebra. It says that for any numbers a, b and c: a(b + c) = ab + ac, and a(b − c) = ab − ac. In words, you multiply the term outside the bracket by every term inside the bracket.",
       "prompt": "Evaluate 3x + 4 when a) x = 5 b) x = 0 c) x = −2.",
       "answer": "a) 19, b) 4, c) −2.",
       "modelType": "model-4",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "a) 19, b) 4, c) −2."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term.",
+      "explanation": "Expanding Brackets: The distributive law is one of the most used rules in algebra. It says that for any numbers a, b and c: a(b + c) = ab + ac, and a(b − c) = ab − ac. In words, you multiply the term outside the bracket by every term inside the bracket. Removing brackets this way is called expanding."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Factorising Expressions",
-      "context": "Factorising is the reverse of expanding. Instead of removing brackets, you put them back. To factorise an expression, you find the highest common factor (HCF) of all the terms and take it outside a bracket. This is a powerful skill because a factorised…",
+      "context": "Factorising is the reverse of expanding. Instead of removing brackets, you put them back. To factorise an expression, you find the highest common factor (HCF) of all the terms and take it outside a bracket.",
       "prompt": "State the coefficient and constant in 6x − 9.",
       "answer": "coefficient 6, constant −9.",
       "modelType": "model-5",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "coefficient 6, constant −9."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term.",
+      "explanation": "Factorising Expressions: Factorising is the reverse of expanding. Instead of removing brackets, you put them back. To factorise an expression, you find the highest common factor (HCF) of all the terms and take it outside a bracket. This is a powerful skill because a factorised expression often reveals structure that the expanded form hides."
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Formulae and Substitution",
-      "context": "A formula is a rule, written with letters, that connects quantities. The formula for the area of a rectangle is A = lw, where A is the area, l the length and w the width. The letter that stands alone on one side is called the subject of the formula – here A…",
+      "context": "A formula is a rule, written with letters, that connects quantities. The formula for the area of a rectangle is A = lw, where A is the area, l the length and w the width.",
       "prompt": "Simplify: a) 6x + 4y − 2x + 3y b) 3a² + 5a − 2a² + 4a − 1.",
       "answer": "1) a) 4x + 7y, b) a² + 9a − 1.",
       "modelType": "model-6",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) a) 4x + 7y, b) a² + 9a − 1."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term.",
+      "explanation": "Formulae and Substitution: A formula is a rule, written with letters, that connects quantities. The formula for the area of a rectangle is A = lw, where A is the area, l the length and w the width. The letter that stands alone on one side is called the subject of the formula – here A is the subject. Formulae appear everywhere – in geometry, science, trade and daily life."
     }
   ],
   "visualModels": [
@@ -178,7 +190,7 @@
       "outcomeId": "lo01",
       "title": "Variables, Terms and Expressions",
       "modelType": "concept-model-1",
-      "purpose": "A variable is a letter used to stand for a number. It might be a number you do not know yet, or a number that is allowed to change. When Amina writes n for the number of goats her family owns, that letter can be 12 one…",
+      "purpose": "A variable is a letter used to stand for a number. It might be a number you do not know yet, or a number that is allowed to change.",
       "defaultNumber": null
     },
     {
@@ -186,7 +198,7 @@
       "outcomeId": "lo02",
       "title": "Building Expressions from Words",
       "modelType": "concept-model-2",
-      "purpose": "A key algebra skill is turning ordinary language into an algebraic expression. Word problems are written in sentences, but to work with them you must translate them into symbols. The trick is to know which words point…",
+      "purpose": "A key algebra skill is turning ordinary language into an algebraic expression. Word problems are written in sentences, but to work with them you must translate them into symbols.",
       "defaultNumber": null
     },
     {
@@ -194,7 +206,7 @@
       "outcomeId": "lo03",
       "title": "Simplifying by Collecting Like Terms",
       "modelType": "concept-model-3",
-      "purpose": "Expressions are often longer than they need to be. Simplifying means writing an expression in its shortest, tidiest form without changing its value. The main tool is collecting like terms. Like terms are terms that have…",
+      "purpose": "Expressions are often longer than they need to be. Simplifying means writing an expression in its shortest, tidiest form without changing its value. The main tool is collecting like terms.",
       "defaultNumber": null
     },
     {
@@ -202,7 +214,7 @@
       "outcomeId": "lo04",
       "title": "Expanding Brackets",
       "modelType": "concept-model-4",
-      "purpose": "The distributive law is one of the most used rules in algebra. It says that for any numbers a, b and c: a(b + c) = ab + ac, and a(b − c) = ab − ac. In words, you multiply the term outside the bracket by every term…",
+      "purpose": "The distributive law is one of the most used rules in algebra. It says that for any numbers a, b and c: a(b + c) = ab + ac, and a(b − c) = ab − ac.",
       "defaultNumber": null
     },
     {
@@ -210,7 +222,7 @@
       "outcomeId": "lo05",
       "title": "Factorising Expressions",
       "modelType": "concept-model-5",
-      "purpose": "Factorising is the reverse of expanding. Instead of removing brackets, you put them back. To factorise an expression, you find the highest common factor (HCF) of all the terms and take it outside a bracket. This is a…",
+      "purpose": "Factorising is the reverse of expanding. Instead of removing brackets, you put them back. To factorise an expression, you find the highest common factor (HCF) of all the terms and take it outside a bracket.",
       "defaultNumber": null
     },
     {
@@ -218,7 +230,7 @@
       "outcomeId": "lo06",
       "title": "Formulae and Substitution",
       "modelType": "concept-model-6",
-      "purpose": "A formula is a rule, written with letters, that connects quantities. The formula for the area of a rectangle is A = lw, where A is the area, l the length and w the width. The letter that stands alone on one side is…",
+      "purpose": "A formula is a rule, written with letters, that connects quantities. The formula for the area of a rectangle is A = lw, where A is the area, l the length and w the width.",
       "defaultNumber": null
     }
   ],
@@ -228,7 +240,7 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "title": "How to solve a linear equation",
-      "example": "In the expression 6a²b + 2ab − 5, name the variables, the coefficients, and the constant.",
+      "example": "Solve 4(x − 2) = 20.",
       "steps": [
         "If there are brackets, expand them first.",
         "Collect the variable terms on one side and the constants on the other.",
@@ -241,7 +253,7 @@
       "outcomeId": "lo02",
       "difficulty": "Core",
       "title": "How to substitute into a formula",
-      "example": "A taxi in Mombasa charges 5 shillings plus 2 shillings per kilometre. Write an expression for the cost of travelling k kilometres.",
+      "example": "Evaluate x² − 2x when x = −3.",
       "steps": [
         "Write each number in place of its letter, using brackets for negatives.",
         "Work out powers first, then multiplication and division, then addition and subtraction.",
@@ -253,7 +265,7 @@
       "outcomeId": "lo03",
       "difficulty": "Core",
       "title": "How to factorise",
-      "example": "Simplify 6x + 4y − 2x + 3y.",
+      "example": "Factorise 12x + 18.",
       "steps": [
         "Find the HCF of the numbers, and any letter common to every term.",
         "Divide each term by the HCF to find what goes inside the bracket.",
@@ -386,7 +398,7 @@
       "difficulty": "Challenge",
       "title": "Rearrange P = 2l + 2w to make w the subject",
       "prompt": "Rearrange P = 2l + 2w to make w the subject.",
-      "solution": "."
+      "solution": "Solution: Subtract 2l from both sides: P − 2l = 2w. Divide both sides by 2: w = (P − 2l) / 2."
     },
     {
       "id": "we12",
@@ -394,7 +406,7 @@
       "difficulty": "Challenge",
       "title": "Solve with variables on both sides",
       "prompt": "Solve with variables on both sides: a) 2x + 5 = x + 12 b) 5x − 3 = 3x + 9.",
-      "solution": "Use the section 3: challenge guidance and explain each step."
+      "solution": "Solution: a) Subtract x from both sides: x + 5 = 12, so x = 7. b) Subtract 3x from both sides: 2x − 3 = 9, add 3 to both sides: 2x = 12, so x = 6."
     }
   ],
   "practice": [
@@ -403,84 +415,84 @@
       "level": "Warm-up",
       "prompt": "Simplify: a) 5x + 3x b) 7a − 4a + 2a c) 9m + m − 3m.",
       "answer": "1) a) 8x, b) 5a, c) 7m.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term."
     },
     {
       "id": "p02",
       "level": "Warm-up",
       "prompt": "Write an expression: a) 7 more than twice a number n b) a number decreased by 8.",
       "answer": "a) 2n + 7, b) x − 8.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term."
     },
     {
       "id": "p03",
       "level": "Warm-up",
       "prompt": "Expand: a) 4(x + 5) b) 3(2y − 1).",
       "answer": "a) 4x + 20, b) 6y − 3.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term."
     },
     {
       "id": "p04",
       "level": "Warm-up",
       "prompt": "Evaluate 3x + 4 when a) x = 5 b) x = 0 c) x = −2.",
       "answer": "a) 19, b) 4, c) −2.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term."
     },
     {
       "id": "p05",
       "level": "Warm-up",
       "prompt": "State the coefficient and constant in 6x − 9.",
       "answer": "coefficient 6, constant −9.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term."
     },
     {
       "id": "p06",
       "level": "Core",
       "prompt": "Simplify: a) 6x + 4y − 2x + 3y b) 3a² + 5a − 2a² + 4a − 1.",
       "answer": "1) a) 4x + 7y, b) a² + 9a − 1.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term."
     },
     {
       "id": "p07",
       "level": "Core",
       "prompt": "Expand and simplify: a) 3(x + 4) + 2(x − 1) b) 4(2x − 1) − 3(x + 2).",
       "answer": "a) 5x + 10, b) 5x − 10.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term."
     },
     {
       "id": "p08",
       "level": "Core",
       "prompt": "Factorise completely: a) 12x + 18 b) 15y − 10 c) 21m − 14n + 7.",
-      "answer": "a) 6(2x +",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "a) 6(2x + 3), b) 5(3y − 2), c) 7(3m − 2n + 1).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term."
     },
     {
       "id": "p09",
       "level": "Core",
       "prompt": "Solve: a) x + 9 = 15 b) 4x = 28 c) 3x − 7 = 14.",
-      "answer": ", b) 5(3y −",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "a) x = 6, b) x = 7, c) x = 7.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term."
     },
     {
       "id": "p10",
       "level": "Core",
       "prompt": "Substitute: If v = u + at, find v when u = 10, a = 3, t = 4.",
-      "answer": ", c) 7(3m − 2n +",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "v = 10 + (3)(4) = 22.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term."
     },
     {
       "id": "p11",
       "level": "Core",
       "prompt": "Rearrange P = 2l + 2w to make w the subject.",
-      "answer": ".",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "w = (P − 2l) / 2.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term."
     },
     {
       "id": "p12",
       "level": "Challenge",
       "prompt": "Solve with variables on both sides: a) 2x + 5 = x + 12 b) 5x − 3 = 3x + 9.",
-      "answer": "Use the section 3: challenge guidance and explain each step.",
-      "hint": "Identify the key mathematical idea before calculating or explaining."
+      "answer": "a) x = 7 (subtract x from both sides: x + 5 = 12), b) x = 6 (subtract 3x: 2x − 3 = 9, so 2x = 12).",
+      "hint": "Decide which idea the question is really about (Variable, Term, Coefficient), then work one step at a time and check the answer is sensible."
     }
   ],
   "activities": [
@@ -507,10 +519,10 @@
     },
     {
       "title": "Algebra Bingo (Substitution Race)",
-      "materials": "paper, pencil, and a partner.",
+      "materials": "paper, pencil, and a partner (or your AI tutor / a family member if no partner is available).",
       "steps": [
         "Each player draws a 3×3 grid and writes nine different numbers from −5 to 20 in the boxes.",
-        "One player calls an expression and a value, such as 2x + 1 with x = 4.",
+        "One player (or your AI tutor) calls an expression and a value, such as 2x + 1 with x = 4.",
         "Both players work out the answer (here, 9) and cross it off if it is on their grid.",
         "The first to cross off a full line wins. This trains fast, accurate substitution."
       ]
@@ -527,7 +539,7 @@
     },
     {
       "title": "Expand-and-Factorise Card Match (Group Game)",
-      "materials": "paper cards, and two or more players.",
+      "materials": "paper cards, and two or more players (or play solo against a timer if no partner is available).",
       "steps": [
         "On some cards write expanded expressions (for example 12x + 18); on matching cards write the factorised form (6(2x + 3)).",
         "Shuffle all cards and lay them face down in a grid.",
@@ -539,7 +551,7 @@
       "title": "Inequality Number-Line Walk",
       "materials": "chalk or a long strip of paper marked with a number line from −10 to 10.",
       "steps": [
-        "A caller shouts an inequality, such as x > 3, x ≤ −2, or −2x > 6 (solve to x < −3).",
+        "A caller (a partner, family member, or your AI tutor reading them aloud) shouts an inequality, such as x > 3, x ≤ −2, or −2x > 6 (solve to x < −3).",
         "Walk to and stand on numbers that satisfy the inequality; a partner checks each one.",
         "Use an open hand for a strict inequality (< or >) and a closed fist for ≤ or ≥ to show whether the end value is included.",
         "Discuss why −2x > 6 requires flipping the sign when you divide by −2.",
@@ -550,16 +562,16 @@
   "reference": {
     "rules": [
       {
-        "title": "Key rule 1",
-        "text": "Collecting Like Terms Only combine terms with exactly the same variable part. 3x + 7x = 10x, but 2x + 3y cannot be combined. Keep each sign attached to its own term."
+        "title": "Collecting Like Terms",
+        "text": "Only combine terms with exactly the same variable part. 3x + 7x = 10x, but 2x + 3y cannot be combined. Keep each sign attached to its own term."
       },
       {
-        "title": "Key rule 2",
-        "text": "Distributive Law (Expanding) a(b + c) = ab + ac. Multiply the outside term by EVERY term inside. 3(x + 4) = 3x + 12. −2(3x − 4) = −6x + 8."
+        "title": "Distributive Law (Expanding)",
+        "text": "a(b + c) = ab + ac. Multiply the outside term by EVERY term inside. 3(x + 4) = 3x + 12. −2(3x − 4) = −6x + 8."
       },
       {
-        "title": "Key rule 3",
-        "text": "Factorising Take out the highest common factor (HCF) into a bracket. 12x + 18 = 6(2x + 3). Check by expanding."
+        "title": "Factorising",
+        "text": "Take out the highest common factor (HCF) into a bracket. 12x + 18 = 6(2x + 3). Check by expanding."
       },
       {
         "title": "Balance Rule",
@@ -638,7 +650,7 @@
       "difficulty": "Round 1",
       "prompt": "Simplify: a) 5x + 3x b) 7a − 4a + 2a c) 9m + m − 3m.",
       "answer": "1) a) 8x, b) 5a, c) 7m.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term.",
       "errorFeedback": "1) a) 8x, b) 5a, c) 7m."
     },
     {
@@ -647,7 +659,7 @@
       "difficulty": "Round 1",
       "prompt": "Write an expression: a) 7 more than twice a number n b) a number decreased by 8.",
       "answer": "a) 2n + 7, b) x − 8.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term.",
       "errorFeedback": "a) 2n + 7, b) x − 8."
     },
     {
@@ -656,7 +668,7 @@
       "difficulty": "Round 1",
       "prompt": "Expand: a) 4(x + 5) b) 3(2y − 1).",
       "answer": "a) 4x + 20, b) 6y − 3.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term.",
       "errorFeedback": "a) 4x + 20, b) 6y − 3."
     },
     {
@@ -665,7 +677,7 @@
       "difficulty": "Round 1",
       "prompt": "Evaluate 3x + 4 when a) x = 5 b) x = 0 c) x = −2.",
       "answer": "a) 19, b) 4, c) −2.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term.",
       "errorFeedback": "a) 19, b) 4, c) −2."
     },
     {
@@ -674,7 +686,7 @@
       "difficulty": "Round 2",
       "prompt": "State the coefficient and constant in 6x − 9.",
       "answer": "coefficient 6, constant −9.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term.",
       "errorFeedback": "coefficient 6, constant −9."
     },
     {
@@ -683,7 +695,7 @@
       "difficulty": "Round 2",
       "prompt": "Simplify: a) 6x + 4y − 2x + 3y b) 3a² + 5a − 2a² + 4a − 1.",
       "answer": "1) a) 4x + 7y, b) a² + 9a − 1.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term.",
       "errorFeedback": "1) a) 4x + 7y, b) a² + 9a − 1."
     },
     {
@@ -692,7 +704,7 @@
       "difficulty": "Round 2",
       "prompt": "Expand and simplify: a) 3(x + 4) + 2(x − 1) b) 4(2x − 1) − 3(x + 2).",
       "answer": "a) 5x + 10, b) 5x − 10.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term.",
       "errorFeedback": "a) 5x + 10, b) 5x − 10."
     },
     {
@@ -700,45 +712,45 @@
       "outcomeId": "lo08",
       "difficulty": "Round 2",
       "prompt": "Factorise completely: a) 12x + 18 b) 15y − 10 c) 21m − 14n + 7.",
-      "answer": "a) 6(2x +",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "a) 6(2x +"
+      "answer": "a) 6(2x + 3), b) 5(3y − 2), c) 7(3m − 2n + 1).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term.",
+      "errorFeedback": "a) 6(2x + 3), b) 5(3y − 2), c) 7(3m − 2n + 1)."
     },
     {
       "id": "fl09",
-      "outcomeId": "lo09",
+      "outcomeId": "lo01",
       "difficulty": "Round 3",
       "prompt": "Solve: a) x + 9 = 15 b) 4x = 28 c) 3x − 7 = 14.",
-      "answer": ", b) 5(3y −",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": ", b) 5(3y −"
+      "answer": "a) x = 6, b) x = 7, c) x = 7.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term.",
+      "errorFeedback": "a) x = 6, b) x = 7, c) x = 7."
     },
     {
       "id": "fl10",
-      "outcomeId": "lo10",
+      "outcomeId": "lo02",
       "difficulty": "Round 3",
       "prompt": "Substitute: If v = u + at, find v when u = 10, a = 3, t = 4.",
-      "answer": ", c) 7(3m − 2n +",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": ", c) 7(3m − 2n +"
+      "answer": "v = 10 + (3)(4) = 22.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term.",
+      "errorFeedback": "v = 10 + (3)(4) = 22."
     },
     {
       "id": "fl11",
       "outcomeId": "lo01",
       "difficulty": "Round 3",
       "prompt": "Rearrange P = 2l + 2w to make w the subject.",
-      "answer": ".",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "."
+      "answer": "w = (P − 2l) / 2.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Variable or Term.",
+      "errorFeedback": "w = (P − 2l) / 2."
     },
     {
       "id": "fl12",
       "outcomeId": "lo02",
       "difficulty": "Round 3",
       "prompt": "Solve with variables on both sides: a) 2x + 5 = x + 12 b) 5x − 3 = 3x + 9.",
-      "answer": "Use the section 3: challenge guidance and explain each step.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "Use the section 3: challenge guidance and explain each step."
+      "answer": "a) x = 7 (subtract x from both sides: x + 5 = 12), b) x = 6 (subtract 3x: 2x − 3 = 9, so 2x = 12).",
+      "hint": "Decide which idea the question is really about (Variable, Term, Coefficient), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "a) x = 7 (subtract x from both sides: x + 5 = 12), b) x = 6 (subtract 3x: 2x − 3 = 9, so 2x = 12)."
     }
   ],
   "realProblems": [
@@ -748,9 +760,9 @@
       "difficulty": "Core",
       "context": "Home",
       "prompt": "A concert charges 25 shillings per ticket plus a 5-shilling booking fee per order. Write an expression for the cost of n tickets, find the cost of 8 tickets, and work out how many tickets were bought if someone paid 155 shillings.",
-      "answer": "Use the section 4: extension – word problems guidance and explain each step.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "Use the section 4: extension – word problems guidance and explain each step."
+      "answer": "C = 25n + 5. Cost of 8 tickets: 25(8) + 5 = 205 shillings. If someone paid 155 shillings: 25n + 5 = 155, so 25n = 150, n = 6 tickets.",
+      "hint": "Decide which idea the question is really about (Variable, Term, Coefficient), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "C = 25n + 5. Cost of 8 tickets: 25(8) + 5 = 205 shillings. If someone paid 155 shillings: 25n + 5 = 155, so 25n = 150, n = 6 tickets."
     },
     {
       "id": "rp02",
@@ -758,9 +770,9 @@
       "difficulty": "Core",
       "context": "Market",
       "prompt": "Company A charges 30 shillings per month plus 0.10 per text; Company B charges 25 plus 0.15 per text. For how many texts do the two plans cost the same?",
-      "answer": "Use the section 4: extension – word problems guidance and explain each step.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "Use the section 4: extension – word problems guidance and explain each step."
+      "answer": "30 + 0.10x = 25 + 0.15x. Subtract 25 and 0.10x from both sides: 5 = 0.05x. Divide by 0.05: x = 100 texts. At 100 texts both plans cost 30 + 0.10(100) = 40 shillings.",
+      "hint": "Decide which idea the question is really about (Variable, Term, Coefficient), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "30 + 0.10x = 25 + 0.15x. Subtract 25 and 0.10x from both sides: 5 = 0.05x. Divide by 0.05: x = 100 texts. At 100 texts both plans cost 30 + 0.10(100) = 40 shillings."
     },
     {
       "id": "rp03",
@@ -768,9 +780,9 @@
       "difficulty": "Core",
       "context": "Travel",
       "prompt": "Three times a number minus 5 equals 22. Find the number.",
-      "answer": "Use the section 4: extension – word problems guidance and explain each step.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "Use the section 4: extension – word problems guidance and explain each step."
+      "answer": "3x − 5 = 22. Add 5 to both sides: 3x = 27. Divide by 3: x = 9.",
+      "hint": "Decide which idea the question is really about (Variable, Term, Coefficient), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "3x − 5 = 22. Add 5 to both sides: 3x = 27. Divide by 3: x = 9."
     },
     {
       "id": "rp04",
@@ -778,9 +790,9 @@
       "difficulty": "Challenge",
       "context": "School",
       "prompt": "A rectangle has length (2x + 3) and width (x − 1). Write expressions for the perimeter and the area, then find both when x = 5.",
-      "answer": "Use the section 4: extension – word problems guidance and explain each step.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "Use the section 4: extension – word problems guidance and explain each step."
+      "answer": "Perimeter = 2[(2x + 3) + (x − 1)] = 6x + 4; at x = 5, perimeter = 34. Area = (2x + 3)(x − 1) = 2x² + x − 3; at x = 5, area = 52.",
+      "hint": "Decide which idea the question is really about (Variable, Term, Coefficient), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "Perimeter = 2[(2x + 3) + (x − 1)] = 6x + 4; at x = 5, perimeter = 34. Area = (2x + 3)(x − 1) = 2x² + x − 3; at x = 5, area = 52."
     },
     {
       "id": "rp05",
@@ -788,9 +800,9 @@
       "difficulty": "Challenge",
       "context": "Community",
       "prompt": "Amina is x years old. Her brother Hassan is 3 years older. The sum of their ages is 27. Write an equation and find Amina's age.",
-      "answer": "Use the section 4: extension – word problems guidance and explain each step.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "Use the section 4: extension – word problems guidance and explain each step."
+      "answer": "x + (x + 3) = 27. Simplify: 2x + 3 = 27. Subtract 3: 2x = 24. Divide by 2: x = 12. Amina is 12 years old.",
+      "hint": "Decide which idea the question is really about (Variable, Term, Coefficient), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "x + (x + 3) = 27. Simplify: 2x + 3 = 27. Subtract 3: 2x = 24. Divide by 2: x = 12. Amina is 12 years old."
     },
     {
       "id": "rp06",
@@ -798,9 +810,9 @@
       "difficulty": "Core",
       "context": "Daily life",
       "prompt": "Solve with variables on both sides: a) 2x + 5 = x + 12 b) 5x − 3 = 3x + 9.",
-      "answer": "Use the section 3: challenge guidance and explain each step.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "Use the section 3: challenge guidance and explain each step."
+      "answer": "a) Subtract x from both sides: x + 5 = 12, so x = 7. b) Subtract 3x from both sides: 2x − 3 = 9, add 3: 2x = 12, so x = 6.",
+      "hint": "Decide which idea the question is really about (Variable, Term, Coefficient), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "a) Subtract x from both sides: x + 5 = 12, so x = 7. b) Subtract 3x from both sides: 2x − 3 = 9, add 3: 2x = 12, so x = 6."
     }
   ],
   "reasoningPrompts": [
@@ -815,7 +827,7 @@
         "Term",
         "Coefficient"
       ],
-      "modelAnswer": "Use the section 3: challenge guidance and explain each step."
+      "modelAnswer": "a) Subtract x (the variable term) from both sides: x + 5 = 12, so x = 7. b) Subtract 3x from both sides: 2x − 3 = 9, add 3: 2x = 12, so x = 6. Collecting the variable terms on one side keeps the coefficient of x clear before you undo the remaining operations."
     },
     {
       "id": "reason02",
@@ -828,7 +840,7 @@
         "Coefficient",
         "Constant"
       ],
-      "modelAnswer": "Use the section 3: challenge guidance and explain each step."
+      "modelAnswer": "a) Expand the bracket: 4x − 8 = 20. Add 8 to both sides: 4x = 28. Divide by the coefficient 4: x = 7. b) Multiply both sides by 3 to clear the constant divisor: x + 4 = 15. Subtract 4: x = 11."
     },
     {
       "id": "reason03",
@@ -841,7 +853,7 @@
         "Constant",
         "Like terms"
       ],
-      "modelAnswer": "Use the section 3: challenge guidance and explain each step."
+      "modelAnswer": "Substitute a = 2, b = −1: 2(2)²(−1) − 3(2)(−1) + (−1)² = 2(4)(−1) − (−6) + 1 = −8 + 6 + 1 = −1. Keep track of each coefficient and constant separately, and use brackets around the negative substitution to avoid a sign error."
     },
     {
       "id": "reason04",
@@ -854,7 +866,7 @@
         "Like terms",
         "Expression"
       ],
-      "modelAnswer": "Use the section 3: challenge guidance and explain each step."
+      "modelAnswer": "a) Subtract the constant 3: x > 4. b) Divide by 2: x ≤ 5. c) Divide by −2 and reverse the inequality because you divided by a negative: x < −3."
     },
     {
       "id": "reason05",
@@ -867,7 +879,7 @@
         "Expression",
         "Equation"
       ],
-      "modelAnswer": "Use the section 3: challenge guidance and explain each step."
+      "modelAnswer": "Perimeter = 2[(4x + 1) + (2x − 3)]. Collect like terms inside the bracket: 2(6x − 2). Expand: 12x − 4."
     },
     {
       "id": "reason06",
@@ -880,7 +892,7 @@
         "Term",
         "Coefficient"
       ],
-      "modelAnswer": "A formula is a rule, written with letters, that connects quantities. The formula for the area of a rectangle is A = lw, where A is the area, l the length and w the width. The letter that stands alone on one side is called the subject of the formula – here A is the subject. Formulae appear everywhere: in geometry, science, trade and daily life, because they capture a relationship once and let you use it again and again. Substitution means replacing each letter with a given number and then working out the value.…"
+      "modelAnswer": "A formula is a rule, written with letters, that connects quantities. The formula for the area of a rectangle is A = lw, where A is the area, l the length and w the width. The letter that stands alone on one side is called the subject of the formula – here A is the subject. Formulae appear everywhere: in geometry, science, trade and daily life, because they capture a relationship once and let you use it again and again.\n\nSubstitution means replacing each letter with a given number and then working out the value. Every time the letter appears, you swap in the number – and it is wise to write the number in brackets to avoid slips. If a rectangle has length 8 and width 5, then A = lw = 8 × 5 = 40 square units. If the triangle formula is A = ½bh with b = 6 and h = 4, then A = ½ × 6 × 4 = ½ × 24 = 12 square units."
     }
   ],
   "assessment": {
@@ -899,7 +911,7 @@
           "15"
         ],
         "answer": "15",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Ask yourself what \"Variable\" means here before you choose.",
         "explanation": "Subtract 4 from both sides: x = 19 − 4 = 15."
       },
       {
@@ -915,7 +927,7 @@
           "20"
         ],
         "answer": "20",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
         "explanation": "3 × 6 + 2 = 18 + 2 = 20."
       },
       {
@@ -931,7 +943,7 @@
           "60"
         ],
         "answer": "60",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
         "explanation": "9 × 6 + 6 = 54 + 6 = 60."
       },
       {
@@ -947,7 +959,7 @@
           "15"
         ],
         "answer": "15",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
         "explanation": "4 × 2 + 7 = 8 + 7 = 15."
       },
       {
@@ -963,7 +975,7 @@
           "20"
         ],
         "answer": "18",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Ask yourself what \"Like terms\" means here before you choose.",
         "explanation": "2 × 8 + 2 = 16 + 2 = 18."
       },
       {
@@ -979,7 +991,7 @@
           "34"
         ],
         "answer": "34",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
         "explanation": "The rule is add 8 each time, so the next term is 26 + 8 = 34."
       },
       {
@@ -995,7 +1007,7 @@
           "5"
         ],
         "answer": "4",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
         "explanation": "Subtract 1 from both sides: x = 5 − 1 = 4."
       },
       {
@@ -1011,7 +1023,7 @@
           "21"
         ],
         "answer": "14",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
         "explanation": "Subtract 7 from both sides: x = 21 − 7 = 14."
       },
       {
@@ -1027,7 +1039,7 @@
           "20"
         ],
         "answer": "10",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Ask yourself what \"Inequality\" means here before you choose.",
         "explanation": "Subtract 10 from both sides: x = 20 − 10 = 10."
       },
       {
@@ -1100,7 +1112,7 @@
               "15"
             ],
             "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Variable\" means here before you choose.",
             "explanation": "Subtract 4 from both sides: x = 19 − 4 = 15."
           },
           {
@@ -1112,7 +1124,7 @@
               "15"
             ],
             "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "4 × 2 + 7 = 8 + 7 = 15."
           },
           {
@@ -1124,7 +1136,7 @@
               "5"
             ],
             "answer": "4",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "Subtract 1 from both sides: x = 5 − 1 = 4."
           },
           {
@@ -1158,7 +1170,7 @@
               "20"
             ],
             "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Variable\" means here before you choose.",
             "explanation": "3 × 6 + 2 = 18 + 2 = 20."
           },
           {
@@ -1170,7 +1182,7 @@
               "20"
             ],
             "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "2 × 8 + 2 = 16 + 2 = 18."
           },
           {
@@ -1182,7 +1194,7 @@
               "21"
             ],
             "answer": "14",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "Subtract 7 from both sides: x = 21 − 7 = 14."
           },
           {
@@ -1216,7 +1228,7 @@
               "60"
             ],
             "answer": "60",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Variable\" means here before you choose.",
             "explanation": "9 × 6 + 6 = 54 + 6 = 60."
           },
           {
@@ -1228,7 +1240,7 @@
               "34"
             ],
             "answer": "34",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "The rule is add 8 each time, so the next term is 26 + 8 = 34."
           },
           {
@@ -1240,7 +1252,7 @@
               "20"
             ],
             "answer": "10",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "Subtract 10 from both sides: x = 20 − 10 = 10."
           },
           {
@@ -1274,7 +1286,7 @@
               "15"
             ],
             "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Variable\" means here before you choose.",
             "explanation": "4 × 2 + 7 = 8 + 7 = 15."
           },
           {
@@ -1286,7 +1298,7 @@
               "5"
             ],
             "answer": "4",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "Subtract 1 from both sides: x = 5 − 1 = 4."
           },
           {
@@ -1310,7 +1322,7 @@
               "15"
             ],
             "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "Subtract 4 from both sides: x = 19 − 4 = 15."
           }
         ]
@@ -1332,7 +1344,7 @@
               "20"
             ],
             "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Variable\" means here before you choose.",
             "explanation": "2 × 8 + 2 = 16 + 2 = 18."
           },
           {
@@ -1344,7 +1356,7 @@
               "21"
             ],
             "answer": "14",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "Subtract 7 from both sides: x = 21 − 7 = 14."
           },
           {
@@ -1368,7 +1380,7 @@
               "20"
             ],
             "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "3 × 6 + 2 = 18 + 2 = 20."
           }
         ]
@@ -1390,7 +1402,7 @@
               "34"
             ],
             "answer": "34",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Variable\" means here before you choose.",
             "explanation": "The rule is add 8 each time, so the next term is 26 + 8 = 34."
           },
           {
@@ -1402,7 +1414,7 @@
               "20"
             ],
             "answer": "10",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "Subtract 10 from both sides: x = 20 − 10 = 10."
           },
           {
@@ -1426,7 +1438,7 @@
               "60"
             ],
             "answer": "60",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "9 × 6 + 6 = 54 + 6 = 60."
           }
         ]
@@ -1448,7 +1460,7 @@
               "5"
             ],
             "answer": "4",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Variable\" means here before you choose.",
             "explanation": "Subtract 1 from both sides: x = 5 − 1 = 4."
           },
           {
@@ -1472,7 +1484,7 @@
               "15"
             ],
             "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "Subtract 4 from both sides: x = 19 − 4 = 15."
           },
           {
@@ -1484,7 +1496,7 @@
               "15"
             ],
             "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "4 × 2 + 7 = 8 + 7 = 15."
           }
         ]
@@ -1506,7 +1518,7 @@
               "21"
             ],
             "answer": "14",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Variable\" means here before you choose.",
             "explanation": "Subtract 7 from both sides: x = 21 − 7 = 14."
           },
           {
@@ -1530,7 +1542,7 @@
               "20"
             ],
             "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "3 × 6 + 2 = 18 + 2 = 20."
           },
           {
@@ -1542,7 +1554,7 @@
               "20"
             ],
             "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "2 × 8 + 2 = 16 + 2 = 18."
           }
         ]
@@ -1564,7 +1576,7 @@
               "20"
             ],
             "answer": "10",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Variable\" means here before you choose.",
             "explanation": "Subtract 10 from both sides: x = 20 − 10 = 10."
           },
           {
@@ -1588,7 +1600,7 @@
               "60"
             ],
             "answer": "60",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "9 × 6 + 6 = 54 + 6 = 60."
           },
           {
@@ -1600,7 +1612,7 @@
               "34"
             ],
             "answer": "34",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "The rule is add 8 each time, so the next term is 26 + 8 = 34."
           }
         ]
@@ -1634,7 +1646,7 @@
               "15"
             ],
             "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "Subtract 4 from both sides: x = 19 − 4 = 15."
           },
           {
@@ -1646,7 +1658,7 @@
               "15"
             ],
             "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "4 × 2 + 7 = 8 + 7 = 15."
           },
           {
@@ -1658,7 +1670,7 @@
               "5"
             ],
             "answer": "4",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "Subtract 1 from both sides: x = 5 − 1 = 4."
           }
         ]
@@ -1692,7 +1704,7 @@
               "20"
             ],
             "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "3 × 6 + 2 = 18 + 2 = 20."
           },
           {
@@ -1704,7 +1716,7 @@
               "20"
             ],
             "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "2 × 8 + 2 = 16 + 2 = 18."
           },
           {
@@ -1716,7 +1728,7 @@
               "21"
             ],
             "answer": "14",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "Subtract 7 from both sides: x = 21 − 7 = 14."
           }
         ]
@@ -1750,7 +1762,7 @@
               "60"
             ],
             "answer": "60",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "9 × 6 + 6 = 54 + 6 = 60."
           },
           {
@@ -1762,7 +1774,7 @@
               "34"
             ],
             "answer": "34",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "The rule is add 8 each time, so the next term is 26 + 8 = 34."
           },
           {
@@ -1774,7 +1786,7 @@
               "20"
             ],
             "answer": "10",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "Subtract 10 from both sides: x = 20 − 10 = 10."
           }
         ]
@@ -1782,13 +1794,13 @@
     ]
   },
   "selfAssessment": [
-    "I can this unit is designed for self-paced learning, so you move at your own speed. Read each explanation slowly, and copy every worked example onto paper, doing the steps yourself rather than only reading them. Algebra is a subject you learn through your pencil, not just your eyes. Your AI tutor is available day and night to give you extra questions, explain a tricky step in a new way, or check your working line by line. Your teacher will also meet with you about twice a week to help with anything that still feels difficult.",
-    "I can one warning before we begin: algebra rewards care and neatness. A single lost minus sign or a term combined wrongly can change the whole answer. Do not rush. Write each step underneath the last, keep your equals signs lined up, and check your work by substituting a number back in. If you make a mistake, that is not failure – it is exactly the information you need to know what to practise next. Every mathematician, engineer and scientist you admire once sat where you sit now, learning these very same rules.",
     "I can understand a variable as a letter that stands for an unknown or changing number.",
     "I can identify the terms, coefficients and constants in an algebraic expression.",
     "I can write algebraic expressions from words, pictures and real-life situations.",
     "I can simplify expressions by collecting like terms, keeping signs correct.",
     "I can expand brackets using the distributive law, including negative multipliers.",
-    "I can factorise expressions by taking out the highest common factor."
+    "I can factorise expressions by taking out the highest common factor.",
+    "I can substitute numbers, including negatives, into expressions and formulae.",
+    "I can solve linear equations, including those with brackets and variables on both sides."
   ]
 }

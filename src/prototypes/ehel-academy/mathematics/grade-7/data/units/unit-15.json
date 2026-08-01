@@ -55,45 +55,45 @@
     "Break a compound (composite) shape into rectangles and triangles, then add or subtract areas.",
     "Find the volume of a prism using V = area of cross-section × length, including cubes, cuboids and triangular prisms.",
     "Find the surface area of a cuboid by adding the areas of all six faces.",
-    "Convert between units of length, area and volume, and choose sensible units for a task.",
+    "Convert between units of length, area and volume, including the hectare (ha) for measuring land, and choose sensible units for a task.",
     "Solve real-world problems and check whether an answer is reasonable."
   ],
   "concepts": [
     {
       "id": "concept-1-area-volume-and-their-units",
       "title": "Area, Volume and Their Units",
-      "explanation": "Area measures flat, two-dimensional space. Imagine covering a shape completely with unit squares that do not overlap – the area is simply how many of those squares fit inside. This is why area is always measured in square units: square centimetres (cm²), square metres (m²) or square kilometres (km²). When we say a room has an area of 12 m², we mean that 12 squares, each 1 metre by 1 metre, would exactly cover the floor. Volume measures solid, three-dimensional space. Now imagine filling a box with unit cubes that…",
-      "example": "Do not confuse area with perimeter. Perimeter is the distance all the way around the edge of a shape, measured in ordinary length units like centimetres or metres. If Amina builds a fence around a goat pen, the length…"
+      "explanation": "Area measures flat, two-dimensional space. Imagine covering a shape completely with unit squares that do not overlap – the area is simply how many of those squares fit inside. This is why area is always measured in square units: square centimetres (cm²), square metres (m²) or square kilometres (km²). When we say a room has an area of 12 m², we mean that 12 squares, each 1 metre by 1 metre, would exactly cover the floor. Volume measures solid, three-dimensional space. Now imagine filling a box with unit cubes that… Very large areas of land, such as farms, forests or plots for building, are usually measured in hectares (ha) instead of square metres, because the numbers in square metres would be inconveniently large. One hectare is defined as the area of a square 100 m by 100 m, so 1 hectare = 100 × 100 = 10,000 m². To convert from square metres to hectares, divide by 10,000; to convert from hectares to square metres, multiply by 10,000.",
+      "example": "Do not confuse area with perimeter. Perimeter is the distance all the way around the edge of a shape, measured in ordinary length units like centimetres or metres. If Amina builds a fence around a goat pen, the length… A rectangular farm measures 500 m by 400 m. Its area is 500 × 400 = 200,000 m². In hectares this is 200,000 ÷ 10,000 = 20 hectares – a much more sensible number for describing farmland."
     },
     {
       "id": "concept-2-area-of-rectangles-squares-and-triangles",
       "title": "Area of Rectangles, Squares and Triangles",
-      "explanation": "The rectangle is the foundation of every area formula, so start here. The area of a rectangle is length × width, written A = l × w. This works because a rectangle is really rows of unit squares: a rectangle 5 cm long and 3 cm wide holds 3 rows of 5 squares, which is 15 squares, so its area is 15 cm². A square is just a special rectangle with all sides equal, so its area is A = s × s = s². This is exactly why multiplying a number by itself is called *squaring* it – it gives the area of a square. Now the triangle.…",
-      "example": "The single most common mistake with triangles is using the wrong height. The height must be measured at a right angle (perpendicular) to the base – it is the straight-up distance from the base to the opposite corner,…"
+      "explanation": "The rectangle is the foundation of every area formula, so start here. The area of a rectangle is length × width, written A = l × w. This works because a rectangle is really rows of unit squares: a rectangle 5 cm long and 3 cm wide holds 3 rows of 5 squares, which is 15 squares, so its area is 15 cm². A square is just a special rectangle with all sides equal, so its area is A = s × s = s². This is exactly why multiplying a number by itself is called *squaring* it – it gives the area of a square.\n\nNow the triangle. Here is the key idea: any triangle is exactly half of a rectangle (or parallelogram) with the same base and the same height. If you draw a rectangle and then draw one diagonal, you split it into two identical triangles. So the area of a triangle is half the area of that rectangle, which gives us A = ½ × base × height.\n\nThe single most common mistake with triangles is using the wrong height. The height must be measured at a right angle (perpendicular) to the base – it is the straight-up distance from the base to the opposite corner, not the length of a slanted side. Any of the three sides can be chosen as the base, but whichever base you pick, the height must be the perpendicular distance to the corner opposite it. In a right-angled triangle this is easy, because the two sides that meet at the right angle are already perpendicular, so you can use them directly as base and height.\n\nLet us work an example. A triangular scarf has a base of 12 cm and a perpendicular height of 8 cm. Its area is A = ½ × 12 × 8 = ½ × 96 = 48 cm². A neat way to keep the arithmetic simple is to halve the even number first: half of 12 is 6, and 6 × 8 = 48. Same answer, easier steps. Notice the unit is cm², because area is always in square units.",
+      "example": "You can also run the formula backwards to find a missing length. Suppose a triangular field near Garissa has an area of 45 m² and a base of 10 m, and you want the height. Start from A = ½ × base × height, so 45 = ½ × 10 × height = 5 × height. Dividing both sides by 5 gives height = 9 m. Being able to rearrange a formula like this is a skill you will use again and again."
     },
     {
       "id": "concept-3-area-of-parallelograms-and-trapeziums",
       "title": "Area of Parallelograms and Trapeziums",
-      "explanation": "A parallelogram looks like a rectangle that has been pushed over to one side, so its opposite sides stay parallel and equal but its corners are no longer right angles. Its area formula is beautifully simple: A = base × height, exactly the same as a rectangle. Why? Imagine cutting a right-angled triangle off one end of the parallelogram and sliding it round to the other end – the shape becomes a perfect rectangle with the same base and the same height. Nothing was added or thrown away, so the area is unchanged. As…",
-      "example": "A trapezium (called a trapezoid in some books) is a quadrilateral with just one pair of parallel sides. These two parallel sides are the two bases; call them a and b. The distance between them, measured at a right…"
+      "explanation": "A parallelogram looks like a rectangle that has been pushed over to one side, so its opposite sides stay parallel and equal but its corners are no longer right angles. Its area formula is beautifully simple: A = base × height, exactly the same as a rectangle. Why? Imagine cutting a right-angled triangle off one end of the parallelogram and sliding it round to the other end – the shape becomes a perfect rectangle with the same base and the same height. Nothing was added or thrown away, so the area is unchanged.\n\nAs with the triangle, the height of a parallelogram is the perpendicular distance between the two parallel sides, not the length of the slanted side. This trips up many students: they see a slanted side labelled 7 cm and use it as the height, but the true height is the shorter, straight-up distance. Always look for the height that meets the base at a right angle. For example, a parallelogram with base 6 m and perpendicular height 4 m has area A = 6 × 4 = 24 m², even if its slanted side is longer than 4 m.\n\nA trapezium (called a trapezoid in some books) is a quadrilateral with just one pair of parallel sides. These two parallel sides are the two bases; call them a and b. The distance between them, measured at a right angle, is the height h. The area is A = ½ × (a + b) × h. A good way to understand this is that ½(a + b) is simply the average of the two parallel sides, so a trapezium has the same area as a rectangle whose width is that average length and whose height is h.",
+      "example": "Here is a worked trapezium. A concrete step near a doorway has a cross-section that is a trapezium with parallel sides of 8 cm and 12 cm and a height of 5 cm. Add the parallel sides first: 8 + 12 = 20. Halve that: ½ × 20 = 10. Multiply by the height: 10 × 5 = 50 cm². Trapeziums appear all over real life – in the cross-section of a drainage channel, the side of a hill terrace, or the shape of a plot of land – so this formula is genuinely useful."
     },
     {
       "id": "concept-4-compound-composite-shapes",
       "title": "Compound (Composite) Shapes",
-      "explanation": "Many real shapes are not a single rectangle or triangle but a compound shape built from several simple shapes joined together. The strategy is always the same: split the shape into simple pieces you know how to measure, find each area separately, then add the areas together. Sometimes, when a piece has been cut out, you subtract instead. Drawing the split lines clearly on your diagram is half the work. Take an L-shaped room, common in older houses. Suppose the floor can be divided into two rectangles: one 12 m by…",
-      "example": "A house shape – a rectangle with a triangular roof on top – shows the *adding* method with two different shapes. If the rectangular wall is 8 m wide and 6 m tall, its area is 8 × 6 = 48 m². If the triangular roof has a…"
+      "explanation": "Many real shapes are not a single rectangle or triangle but a compound shape built from several simple shapes joined together. The strategy is always the same: split the shape into simple pieces you know how to measure, find each area separately, then add the areas together. Sometimes, when a piece has been cut out, you subtract instead. Drawing the split lines clearly on your diagram is half the work.\n\nTake an L-shaped room, common in older houses. Suppose the floor can be divided into two rectangles: one 12 m by 8 m and another 6 m by 4 m. The first rectangle has area 12 × 8 = 96 m² and the second has area 6 × 4 = 24 m². Add them: 96 + 24 = 120 m² of flooring. There is often more than one correct way to cut a compound shape into pieces, and every correct cut gives the same total – a good way to check your work is to split it a second way and confirm you get the same answer.\n\nA house shape – a rectangle with a triangular roof on top – shows the *adding* method with two different shapes. If the rectangular wall is 8 m wide and 6 m tall, its area is 8 × 6 = 48 m². If the triangular roof has a base of 8 m and a perpendicular height of 3 m, its area is ½ × 8 × 3 = 12 m². The whole house shape is 48 + 12 = 60 m².",
+      "example": "Now the *subtracting* method. Imagine a rectangular metal sheet 15 cm by 10 cm with a smaller rectangle 4 cm by 3 cm cut out of it. The large rectangle is 15 × 10 = 150 cm² and the hole is 4 × 3 = 12 cm². The metal that remains is 150 − 12 = 138 cm². The same idea handles a garden with a pond removed, or a wall with a window not to be painted: find the whole, find the part taken away, and subtract. Deciding whether to add or subtract is the real skill, so always ask: is this piece being joined on, or taken out?"
     },
     {
       "id": "concept-5-volume-of-prisms",
       "title": "Volume of Prisms",
-      "explanation": "A prism is a solid that has the same cross-section all along its length – if you sliced it straight across at any point you would get an identical flat shape. A tin of tomatoes, a shoebox, a wooden beam and a Toblerone bar are all prisms. The volume of any prism is found with one powerful formula: V = area of cross-section × length. Learn this one idea and you can find the volume of a huge family of solids. The simplest prism is a cuboid (a rectangular box). Its cross-section is a rectangle of area length × width,…",
-      "example": "The formula truly shines with a triangular prism, such as a bar of chocolate or the ridge of a tent. First find the area of the triangular cross-section, then multiply by the length of the prism. Suppose the triangular…"
+      "explanation": "A prism is a solid that has the same cross-section all along its length – if you sliced it straight across at any point you would get an identical flat shape. A tin of tomatoes, a shoebox, a wooden beam and a Toblerone bar are all prisms. The volume of any prism is found with one powerful formula: V = area of cross-section × length. Learn this one idea and you can find the volume of a huge family of solids.\n\nThe simplest prism is a cuboid (a rectangular box). Its cross-section is a rectangle of area length × width, and stretching that rectangle along the height gives V = length × width × height. For example, a storage box 6 cm by 4 cm by 3 cm has volume 6 × 4 × 3 = 72 cm³. A cube is a cuboid with all edges equal, so its volume is V = s³; a cube of edge 5 cm holds 5 × 5 × 5 = 125 cm³. This is why multiplying a number by itself three times is called *cubing* it.\n\nThe formula truly shines with a triangular prism, such as a bar of chocolate or the ridge of a tent. First find the area of the triangular cross-section, then multiply by the length of the prism. Suppose the triangular end has a base of 6 cm and a height of 4 cm, and the prism is 10 cm long. The cross-section area is ½ × 6 × 4 = 12 cm². The volume is 12 × 10 = 120 cm³. Notice how the triangle work from Concept 2 slots straight into this – the topics build on one another.",
+      "example": "You can also work backwards. A water tank shaped like a cuboid holds a volume of 240 cm³, with a length of 8 cm and a width of 5 cm; what is its height? Since V = l × w × h, we have 240 = 8 × 5 × h = 40 × h, so h = 240 ÷ 40 = 6 cm. A real-world version: a swimming pool 25 m long, 10 m wide and 2 m deep holds 25 × 10 × 2 = 500 m³ of water, which is 500 000 litres. Always keep the units consistent – do not mix metres and centimetres in the same calculation."
     },
     {
       "id": "concept-6-surface-area-of-solids",
       "title": "Surface Area of Solids",
-      "explanation": "Surface area is different from volume. Volume tells you how much space is *inside* a solid; surface area tells you how much material would *cover the outside*. Because it is made of flat faces, surface area is measured in square units, just like ordinary area. Think of wrapping a gift, painting a box, or cutting the cardboard to make a carton – all of these need surface area, not volume. A cuboid has six rectangular faces, and they come in three matching pairs: top and bottom, front and back, left and right. To…",
-      "example": "Here is a worked example with a box measuring 6 cm by 4 cm by 3 cm. The three different faces are 6 × 4 = 24 cm², 6 × 3 = 18 cm², and 4 × 3 = 12 cm². Add them: 24 + 18 + 12 = 54 cm². Double for the matching pairs: 2 ×…"
+      "explanation": "Surface area is different from volume. Volume tells you how much space is *inside* a solid; surface area tells you how much material would *cover the outside*. Because it is made of flat faces, surface area is measured in square units, just like ordinary area. Think of wrapping a gift, painting a box, or cutting the cardboard to make a carton – all of these need surface area, not volume.\n\nA cuboid has six rectangular faces, and they come in three matching pairs: top and bottom, front and back, left and right. To find the surface area, work out the area of each different face, add the three, then double the total. With length l, width w and height h the rule is SA = 2(lw + lh + wh). A tidy method is to find the three different face areas, add them, and double.\n\nHere is a worked example with a box measuring 6 cm by 4 cm by 3 cm. The three different faces are 6 × 4 = 24 cm², 6 × 3 = 18 cm², and 4 × 3 = 12 cm². Add them: 24 + 18 + 12 = 54 cm². Double for the matching pairs: 2 × 54 = 108 cm². So a manufacturer would need 108 cm² of cardboard (before any flaps) to make this box.",
+      "example": "A cube is easier still. All six faces are identical squares of area s², so its surface area is SA = 6s². A cube with edge 4 cm has surface area 6 × 4² = 6 × 16 = 96 cm². A helpful check for any surface-area answer: it must come out in square units, and it should feel reasonable next to the size of the solid. If you accidentally wrote 96 cm³ you would know at once that something is wrong, because covering an outside is an *area*, never a volume."
     }
   ],
   "explorations": [
@@ -102,72 +102,72 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "Area, Volume and Their Units",
-      "context": "Area measures flat, two-dimensional space. Imagine covering a shape completely with unit squares that do not overlap – the area is simply how many of those squares fit inside. This is why area is always measured in square units: square centimetres (cm²),…",
+      "context": "Area measures flat, two-dimensional space. Imagine covering a shape completely with unit squares that do not overlap – the area is simply how many of those squares fit inside.",
       "prompt": "Find the area of a rectangle 8 cm by 5 cm.",
       "answer": "1) 8 × 5 = 40 cm².",
       "modelType": "model-1",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) 8 × 5 = 40 cm²."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "explanation": "Area, Volume and Their Units: Area measures flat, two-dimensional space. Imagine covering a shape completely with unit squares that do not overlap – the area is simply how many of those squares fit inside. This is why area is always measured in square units: square centimetres (cm²), square metres (m²) or square kilometres (km²)."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Area of Rectangles, Squares and Triangles",
-      "context": "The rectangle is the foundation of every area formula, so start here. The area of a rectangle is length × width, written A = l × w. This works because a rectangle is really rows of unit squares: a rectangle 5 cm long and 3 cm wide holds 3 rows of 5 squares,…",
+      "context": "The rectangle is the foundation of every area formula, so start here. The area of a rectangle is length × width, written A = l × w.",
       "prompt": "Find the area of a triangle with base 6 cm and perpendicular height 4 cm.",
       "answer": "½ × 6 × 4 = 12 cm².",
       "modelType": "model-2",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "½ × 6 × 4 = 12 cm²."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "explanation": "Area of Rectangles, Squares and Triangles: The rectangle is the foundation of every area formula, so start here. The area of a rectangle is length × width, written A = l × w. This works because a rectangle is really rows of unit squares: a rectangle 5 cm long and 3 cm wide holds 3 rows of 5 squares, which is 15 squares, so its area is 15 cm²."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Area of Parallelograms and Trapeziums",
-      "context": "A parallelogram looks like a rectangle that has been pushed over to one side, so its opposite sides stay parallel and equal but its corners are no longer right angles. Its area formula is beautifully simple: A = base × height, exactly the same as a rectangle.…",
+      "context": "A parallelogram looks like a rectangle that has been pushed over to one side, so its opposite sides stay parallel and equal but its corners are no longer right angles.",
       "prompt": "Find the area of a parallelogram with base 10 m and height 3 m.",
       "answer": "10 × 3 = 30 m².",
       "modelType": "model-3",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "10 × 3 = 30 m²."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "explanation": "Area of Parallelograms and Trapeziums: A parallelogram looks like a rectangle that has been pushed over to one side, so its opposite sides stay parallel and equal but its corners are no longer right angles. Its area formula is beautifully simple: A = base × height, exactly the same as a rectangle. Why? Imagine cutting a right-angled triangle off one end of the parallelogram and sliding it round to the other end – the shape becomes a perfect rectangle with the same base and the same height."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Compound (Composite) Shapes",
-      "context": "Many real shapes are not a single rectangle or triangle but a compound shape built from several simple shapes joined together. The strategy is always the same: split the shape into simple pieces you know how to measure, find each area separately, then add the…",
+      "context": "Many real shapes are not a single rectangle or triangle but a compound shape built from several simple shapes joined together.",
       "prompt": "Find the volume of a cube with edge 4 cm.",
       "answer": "4³ = 64 cm³.",
       "modelType": "model-4",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "4³ = 64 cm³."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "explanation": "Compound (Composite) Shapes: Many real shapes are not a single rectangle or triangle but a compound shape built from several simple shapes joined together. The strategy is always the same: split the shape into simple pieces you know how to measure, find each area separately, then add the areas together. Sometimes, when a piece has been cut out, you subtract instead."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Volume of Prisms",
-      "context": "A prism is a solid that has the same cross-section all along its length – if you sliced it straight across at any point you would get an identical flat shape. A tin of tomatoes, a shoebox, a wooden beam and a Toblerone bar are all prisms. The volume of any…",
+      "context": "A prism is a solid that has the same cross-section all along its length – if you sliced it straight across at any point you would get an identical flat shape. A tin of tomatoes, a shoebox, a wooden beam and a Toblerone bar are all prisms.",
       "prompt": "State the correct unit (cm², cm³, or cm): a) the area of a card, b) the water in a bottle, c) the length of a pencil.",
       "answer": "a) cm², b) cm³, c) cm.",
       "modelType": "model-5",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "a) cm², b) cm³, c) cm."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "explanation": "Volume of Prisms: A prism is a solid that has the same cross-section all along its length – if you sliced it straight across at any point you would get an identical flat shape. A tin of tomatoes, a shoebox, a wooden beam and a Toblerone bar are all prisms. The volume of any prism is found with one powerful formula: V = area of cross-section × length."
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Surface Area of Solids",
-      "context": "Surface area is different from volume. Volume tells you how much space is *inside* a solid; surface area tells you how much material would *cover the outside*. Because it is made of flat faces, surface area is measured in square units, just like ordinary…",
+      "context": "Surface area is different from volume. Volume tells you how much space is *inside* a solid; surface area tells you how much material would *cover the outside*.",
       "prompt": "Find the area of a triangle with base 16 cm and height 9 cm.",
       "answer": "1) ½ × 16 × 9 = 72 cm².",
       "modelType": "model-6",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) ½ × 16 × 9 = 72 cm²."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "explanation": "Surface Area of Solids: Surface area is different from volume. Volume tells you how much space is *inside* a solid; surface area tells you how much material would *cover the outside*. Because it is made of flat faces, surface area is measured in square units, just like ordinary area. Think of wrapping a gift, painting a box, or cutting the cardboard to make a carton – all of these need surface area, not volume."
     }
   ],
   "visualModels": [
@@ -176,7 +176,7 @@
       "outcomeId": "lo01",
       "title": "Area, Volume and Their Units",
       "modelType": "concept-model-1",
-      "purpose": "Area measures flat, two-dimensional space. Imagine covering a shape completely with unit squares that do not overlap – the area is simply how many of those squares fit inside. This is why area is always measured in…",
+      "purpose": "Area measures flat, two-dimensional space. Imagine covering a shape completely with unit squares that do not overlap – the area is simply how many of those squares fit inside.",
       "defaultNumber": null
     },
     {
@@ -184,7 +184,7 @@
       "outcomeId": "lo02",
       "title": "Area of Rectangles, Squares and Triangles",
       "modelType": "concept-model-2",
-      "purpose": "The rectangle is the foundation of every area formula, so start here. The area of a rectangle is length × width, written A = l × w. This works because a rectangle is really rows of unit squares: a rectangle 5 cm long…",
+      "purpose": "The rectangle is the foundation of every area formula, so start here. The area of a rectangle is length × width, written A = l × w.",
       "defaultNumber": null
     },
     {
@@ -192,7 +192,7 @@
       "outcomeId": "lo03",
       "title": "Area of Parallelograms and Trapeziums",
       "modelType": "concept-model-3",
-      "purpose": "A parallelogram looks like a rectangle that has been pushed over to one side, so its opposite sides stay parallel and equal but its corners are no longer right angles. Its area formula is beautifully simple: A = base ×…",
+      "purpose": "A parallelogram looks like a rectangle that has been pushed over to one side, so its opposite sides stay parallel and equal but its corners are no longer right angles.",
       "defaultNumber": null
     },
     {
@@ -200,7 +200,7 @@
       "outcomeId": "lo04",
       "title": "Compound (Composite) Shapes",
       "modelType": "concept-model-4",
-      "purpose": "Many real shapes are not a single rectangle or triangle but a compound shape built from several simple shapes joined together. The strategy is always the same: split the shape into simple pieces you know how to measure,…",
+      "purpose": "Many real shapes are not a single rectangle or triangle but a compound shape built from several simple shapes joined together.",
       "defaultNumber": null
     },
     {
@@ -208,7 +208,7 @@
       "outcomeId": "lo05",
       "title": "Volume of Prisms",
       "modelType": "concept-model-5",
-      "purpose": "A prism is a solid that has the same cross-section all along its length – if you sliced it straight across at any point you would get an identical flat shape. A tin of tomatoes, a shoebox, a wooden beam and a Toblerone…",
+      "purpose": "A prism is a solid that has the same cross-section all along its length – if you sliced it straight across at any point you would get an identical flat shape.",
       "defaultNumber": null
     },
     {
@@ -216,7 +216,7 @@
       "outcomeId": "lo06",
       "title": "Surface Area of Solids",
       "modelType": "concept-model-6",
-      "purpose": "Surface area is different from volume. Volume tells you how much space is *inside* a solid; surface area tells you how much material would *cover the outside*. Because it is made of flat faces, surface area is measured…",
+      "purpose": "Surface area is different from volume. Volume tells you how much space is *inside* a solid; surface area tells you how much material would *cover the outside*.",
       "defaultNumber": null
     }
   ],
@@ -385,7 +385,7 @@
       "difficulty": "Challenge",
       "title": "Find the area of a circle with radius 6 cm",
       "prompt": "Find the area of a circle with radius 6 cm.",
-      "solution": "54 = ½ × 12 × h = 6h, so h = 9 cm."
+      "solution": "Solution: Use A = πr². Square the radius: 6² = 36. Multiply by pi: 3.14 × 36 = 113.04 cm². Remember to square the radius before multiplying by pi."
     },
     {
       "id": "we12",
@@ -393,7 +393,7 @@
       "difficulty": "Challenge",
       "title": "Practice 12",
       "prompt": "Convert: a) 2 m² to cm², b) 5000 cm³ to litres.",
-      "solution": "3.14 × 6² = 3.14 × 36 = 113.04 cm²."
+      "solution": "Solution: a) 1 m² = 100 × 100 = 10 000 cm², so 2 m² = 2 × 10 000 = 20 000 cm². b) 1000 cm³ = 1 litre, so 5000 cm³ = 5000 ÷ 1000 = 5 litres."
     }
   ],
   "practice": [
@@ -402,84 +402,84 @@
       "level": "Warm-up",
       "prompt": "Find the area of a rectangle 8 cm by 5 cm.",
       "answer": "1) 8 × 5 = 40 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p02",
       "level": "Warm-up",
       "prompt": "Find the area of a triangle with base 6 cm and perpendicular height 4 cm.",
       "answer": "½ × 6 × 4 = 12 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p03",
       "level": "Warm-up",
       "prompt": "Find the area of a parallelogram with base 10 m and height 3 m.",
       "answer": "10 × 3 = 30 m².",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p04",
       "level": "Warm-up",
       "prompt": "Find the volume of a cube with edge 4 cm.",
       "answer": "4³ = 64 cm³.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p05",
       "level": "Warm-up",
       "prompt": "State the correct unit (cm², cm³, or cm): a) the area of a card, b) the water in a bottle, c) the length of a pencil.",
       "answer": "a) cm², b) cm³, c) cm.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p06",
       "level": "Core",
       "prompt": "Find the area of a triangle with base 16 cm and height 9 cm.",
       "answer": "1) ½ × 16 × 9 = 72 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p07",
       "level": "Core",
       "prompt": "Find the area of a trapezium with parallel sides 7 cm and 13 cm and height 8 cm.",
-      "answer": "½ × (7 +",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "½ × (7 + 13) × 8 = ½ × 20 × 8 = 80 cm².",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p08",
       "level": "Core",
       "prompt": "Find the volume of a cuboid 9 cm by 5 cm by 4 cm.",
-      "answer": "× 8 = ½ × 20 × 8 = 80 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "9 × 5 × 4 = 180 cm³.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p09",
       "level": "Core",
       "prompt": "Find the surface area of a cuboid 6 cm by 4 cm by 5 cm.",
-      "answer": "9 × 5 × 4 = 180 cm³.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "Faces: 6 × 4 = 24, 6 × 5 = 30, 4 × 5 = 20; sum = 74; × 2 = 148 cm².",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p10",
       "level": "Core",
       "prompt": "A triangle has area 54 cm² and base 12 cm. Find its perpendicular height.",
-      "answer": "faces 6×4=24, 6×5=30, 4×5=20; sum 74; ×2 = 148 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "54 = ½ × 12 × h = 6h, so h = 9 cm.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p11",
       "level": "Core",
       "prompt": "Find the area of a circle with radius 6 cm.",
-      "answer": "54 = ½ × 12 × h = 6h, so h = 9 cm.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "3.14 × 6² = 3.14 × 36 = 113.04 cm².",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     },
     {
       "id": "p12",
       "level": "Core",
       "prompt": "Convert: a) 2 m² to cm², b) 5000 cm³ to litres.",
-      "answer": "3.14 × 6² = 3.14 × 36 = 113.04 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "a) 2 m² = 2 × 10 000 = 20 000 cm². b) 5000 cm³ = 5000 ÷ 1000 = 5 litres.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter."
     }
   ],
   "activities": [
@@ -522,7 +522,7 @@
         "Walk around your home and find three compound shapes – an L-shaped room, a stepped wall, a window with a curved top.",
         "Sketch each one and mark the split lines that break it into rectangles and triangles.",
         "Measure or estimate the lengths and work out each area, then add or subtract.",
-        "Challenge a family member to split the same shape a different way and check you both get the same total."
+        "Challenge a family member (or your AI tutor, or check it yourself a second way) to split the same shape a different way and see if you get the same total."
       ]
     },
     {
@@ -543,18 +543,18 @@
         "Work out the volume the box needs, then choose sensible length, width and height.",
         "Work out the surface area – how much card you need to cut, including the six faces.",
         "Build your box, put the object inside, and check your calculations against the real box.",
-        "After your activities, talk or write about these questions: Which activity made area or volume clearest to you? What surprised you when you compared a prediction with a real measurement? Which formula do you now trust the most, and which do you want more practice with? Share your answers with your teacher at your next session, and set yourself one goal for the coming week."
+        "After your activities, talk or write about these questions: Which activity made area or volume clearest to you? What surprised you when you compared a prediction with a real measurement? Which formula do you now trust the most, and which do you want more practice with? Share your answers with your teacher or your AI tutor (or write them down if neither is available), and set yourself one goal for the coming week."
       ]
     }
   ],
   "reference": {
     "rules": [
       {
-        "title": "Getting the units right is one of",
+        "title": "Converting Between Units of Length, Area and Volume",
         "text": "Getting the units right is one of the most important habits in this whole unit. In the metric system every step is a power of ten, which makes conversion tidy once you know the rule. For length: 10 mm = 1 cm, 100 cm = 1 m, 1000 m = 1 km. For area you must square those numbers, because area has two dimensions. Since 1 m = 100 cm, an area of 1 m² = 100 × 100 = 10 000 cm². For volume you must cube them: since 1 m = 100 cm, a volume of 1 m³ = 100 × 100 × 100 = 1 000 000 cm³. A very useful fact for water is that 1 litre = 1000 cm³, and 1000 litres = 1 m³."
       },
       {
-        "title": "A cuboid has six rectangular faces, and",
+        "title": "Surface Area of a Cuboid",
         "text": "A cuboid has six rectangular faces, and they come in three matching pairs: top and bottom, front and back, left and right. To find the surface area, work out the area of each different face, add the three, then double the total. With length l, width w and height h the rule is SA = 2(lw + lh + wh). A tidy method is to find the three different face areas, add them, and double."
       }
     ],
@@ -626,7 +626,7 @@
       "difficulty": "Round 1",
       "prompt": "Find the area of a rectangle 8 cm by 5 cm.",
       "answer": "1) 8 × 5 = 40 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
       "errorFeedback": "1) 8 × 5 = 40 cm²."
     },
     {
@@ -635,7 +635,7 @@
       "difficulty": "Round 1",
       "prompt": "Find the area of a triangle with base 6 cm and perpendicular height 4 cm.",
       "answer": "½ × 6 × 4 = 12 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
       "errorFeedback": "½ × 6 × 4 = 12 cm²."
     },
     {
@@ -644,7 +644,7 @@
       "difficulty": "Round 1",
       "prompt": "Find the area of a parallelogram with base 10 m and height 3 m.",
       "answer": "10 × 3 = 30 m².",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
       "errorFeedback": "10 × 3 = 30 m²."
     },
     {
@@ -653,7 +653,7 @@
       "difficulty": "Round 1",
       "prompt": "Find the volume of a cube with edge 4 cm.",
       "answer": "4³ = 64 cm³.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
       "errorFeedback": "4³ = 64 cm³."
     },
     {
@@ -662,7 +662,7 @@
       "difficulty": "Round 2",
       "prompt": "State the correct unit (cm², cm³, or cm): a) the area of a card, b) the water in a bottle, c) the length of a pencil.",
       "answer": "a) cm², b) cm³, c) cm.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
       "errorFeedback": "a) cm², b) cm³, c) cm."
     },
     {
@@ -671,7 +671,7 @@
       "difficulty": "Round 2",
       "prompt": "Find the area of a triangle with base 16 cm and height 9 cm.",
       "answer": "1) ½ × 16 × 9 = 72 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
       "errorFeedback": "1) ½ × 16 × 9 = 72 cm²."
     },
     {
@@ -679,54 +679,54 @@
       "outcomeId": "lo07",
       "difficulty": "Round 2",
       "prompt": "Find the area of a trapezium with parallel sides 7 cm and 13 cm and height 8 cm.",
-      "answer": "½ × (7 +",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "½ × (7 +"
+      "answer": "½ × (7 + 13) × 8 = ½ × 20 × 8 = 80 cm².",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "errorFeedback": "½ × (7 + 13) × 8 = ½ × 20 × 8 = 80 cm²."
     },
     {
       "id": "fl08",
       "outcomeId": "lo08",
       "difficulty": "Round 2",
       "prompt": "Find the volume of a cuboid 9 cm by 5 cm by 4 cm.",
-      "answer": "× 8 = ½ × 20 × 8 = 80 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "× 8 = ½ × 20 × 8 = 80 cm²."
+      "answer": "9 × 5 × 4 = 180 cm³.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "errorFeedback": "9 × 5 × 4 = 180 cm³."
     },
     {
       "id": "fl09",
       "outcomeId": "lo01",
       "difficulty": "Round 3",
       "prompt": "Find the surface area of a cuboid 6 cm by 4 cm by 5 cm.",
-      "answer": "9 × 5 × 4 = 180 cm³.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "9 × 5 × 4 = 180 cm³."
+      "answer": "Faces: 6 × 4 = 24, 6 × 5 = 30, 4 × 5 = 20; sum = 74; × 2 = 148 cm².",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "errorFeedback": "Faces: 6 × 4 = 24, 6 × 5 = 30, 4 × 5 = 20; sum = 74; × 2 = 148 cm²."
     },
     {
       "id": "fl10",
       "outcomeId": "lo02",
       "difficulty": "Round 3",
       "prompt": "A triangle has area 54 cm² and base 12 cm. Find its perpendicular height.",
-      "answer": "faces 6×4=24, 6×5=30, 4×5=20; sum 74; ×2 = 148 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "faces 6×4=24, 6×5=30, 4×5=20; sum 74; ×2 = 148 cm²."
+      "answer": "54 = ½ × 12 × h = 6h, so h = 9 cm.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "errorFeedback": "54 = ½ × 12 × h = 6h, so h = 9 cm."
     },
     {
       "id": "fl11",
       "outcomeId": "lo03",
       "difficulty": "Round 3",
       "prompt": "Find the area of a circle with radius 6 cm.",
-      "answer": "54 = ½ × 12 × h = 6h, so h = 9 cm.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "54 = ½ × 12 × h = 6h, so h = 9 cm."
+      "answer": "3.14 × 6² = 3.14 × 36 = 113.04 cm².",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "errorFeedback": "3.14 × 6² = 3.14 × 36 = 113.04 cm²."
     },
     {
       "id": "fl12",
       "outcomeId": "lo04",
       "difficulty": "Round 3",
       "prompt": "Convert: a) 2 m² to cm², b) 5000 cm³ to litres.",
-      "answer": "3.14 × 6² = 3.14 × 36 = 113.04 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "3.14 × 6² = 3.14 × 36 = 113.04 cm²."
+      "answer": "a) 2 m² = 2 × 10 000 = 20 000 cm². b) 5000 cm³ = 5000 ÷ 1000 = 5 litres.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Area or Perimeter.",
+      "errorFeedback": "a) 2 m² = 2 × 10 000 = 20 000 cm². b) 5000 cm³ = 5000 ÷ 1000 = 5 litres."
     }
   ],
   "realProblems": [
@@ -736,9 +736,9 @@
       "difficulty": "Core",
       "context": "Home",
       "prompt": "Farah paints the four walls of a rectangular room 5 m long, 4 m wide and 3 m high (ignore doors and windows). Find the total wall area. If 1 litre of paint covers 10 m², how many litres does she need?",
-      "answer": "Use the section 4: extension – real-world word problems guidance and explain each step.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "Use the section 4: extension – real-world word problems guidance and explain each step."
+      "answer": "Wall area = 2 × (5 + 4) × 3 = 18 × 3 = 54 m². Paint needed = 54 ÷ 10 = 5.4 litres.",
+      "hint": "Decide which idea the question is really about (Area, Perimeter, Volume), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "Wall area = 2 × (5 + 4) × 3 = 18 × 3 = 54 m². Paint needed = 54 ÷ 10 = 5.4 litres."
     },
     {
       "id": "rp02",
@@ -746,9 +746,9 @@
       "difficulty": "Core",
       "context": "Market",
       "prompt": "A swimming pool in Mombasa is 20 m long, 8 m wide and 1.5 m deep. Find its volume in cubic metres, then in litres.",
-      "answer": "Use the section 4: extension – real-world word problems guidance and explain each step.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "Use the section 4: extension – real-world word problems guidance and explain each step."
+      "answer": "Volume = 20 × 8 × 1.5 = 240 m³. In litres: 240 × 1000 = 240 000 litres.",
+      "hint": "Decide which idea the question is really about (Area, Perimeter, Volume), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "Volume = 20 × 8 × 1.5 = 240 m³. In litres: 240 × 1000 = 240 000 litres."
     },
     {
       "id": "rp03",
@@ -756,9 +756,9 @@
       "difficulty": "Core",
       "context": "Travel",
       "prompt": "Omar builds a triangular vegetable patch with base 8 m and perpendicular height 5 m. If each square metre holds 4 plants, how many plants can he grow?",
-      "answer": "Use the section 4: extension – real-world word problems guidance and explain each step.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "Use the section 4: extension – real-world word problems guidance and explain each step."
+      "answer": "Area = ½ × 8 × 5 = 20 m². Plants = 20 × 4 = 80 plants.",
+      "hint": "Decide which idea the question is really about (Area, Perimeter, Volume), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "Area = ½ × 8 × 5 = 20 m². Plants = 20 × 4 = 80 plants."
     },
     {
       "id": "rp04",
@@ -766,9 +766,9 @@
       "difficulty": "Challenge",
       "context": "School",
       "prompt": "A gift box is a cube of edge 15 cm. What area of wrapping paper is needed to cover it exactly, ignoring overlaps?",
-      "answer": "Use the section 4: extension – real-world word problems guidance and explain each step.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "Use the section 4: extension – real-world word problems guidance and explain each step."
+      "answer": "Surface area = 6 × 15² = 6 × 225 = 1 350 cm² of wrapping paper.",
+      "hint": "Decide which idea the question is really about (Area, Perimeter, Volume), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "Surface area = 6 × 15² = 6 × 225 = 1 350 cm² of wrapping paper."
     },
     {
       "id": "rp05",
@@ -776,19 +776,19 @@
       "difficulty": "Challenge",
       "context": "Community",
       "prompt": "A garden is a rectangle 15 m by 10 m with a circular pond of radius 3 m removed. Find the remaining grass area (use π ≈ 3.14).",
-      "answer": "Use the section 4: extension – real-world word problems guidance and explain each step.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "Use the section 4: extension – real-world word problems guidance and explain each step."
+      "answer": "Rectangle area = 15 × 10 = 150 m². Pond area = 3.14 × 3² = 3.14 × 9 = 28.26 m². Remaining = 150 − 28.26 = 121.74 m².",
+      "hint": "Decide which idea the question is really about (Area, Perimeter, Volume), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "Rectangle area = 15 × 10 = 150 m². Pond area = 3.14 × 3² = 3.14 × 9 = 28.26 m². Remaining = 150 − 28.26 = 121.74 m²."
     },
     {
       "id": "rp06",
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Daily life",
-      "prompt": "Convert: a) 2 m² to cm², b) 5000 cm³ to litres.",
-      "answer": "3.14 × 6² = 3.14 × 36 = 113.04 cm².",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "3.14 × 6² = 3.14 × 36 = 113.04 cm²."
+      "prompt": "A prayer mat measures 2 m by 1.5 m. Yusuf says its area is just \"3\" and does not write any unit. Explain what is wrong with Yusuf's answer, and give the area with the correct unit.",
+      "answer": "Yusuf is wrong to leave out the unit: area must always be given in square units. Area = 2 × 1.5 = 3 m² (not just \"3\").",
+      "hint": "Decide which idea the question is really about (Area, Perimeter, Volume), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "Yusuf is wrong to leave out the unit: area must always be given in square units. Area = 2 × 1.5 = 3 m² (not just \"3\")."
     }
   ],
   "reasoningPrompts": [
@@ -803,7 +803,7 @@
         "Perimeter",
         "Volume"
       ],
-      "modelAnswer": "1) (10 ×"
+      "modelAnswer": "(10 × 6) + (5 × 4) = 60 + 20 = 80 m²."
     },
     {
       "id": "reason02",
@@ -816,7 +816,7 @@
         "Volume",
         "Surface area"
       ],
-      "modelAnswer": "+ (5 ×"
+      "modelAnswer": "Cross-section = ½ × 10 × 6 = 30 cm², so V = 30 × 14 = 420 cm³."
     },
     {
       "id": "reason03",
@@ -829,7 +829,7 @@
         "Surface area",
         "Perpendicular height"
       ],
-      "modelAnswer": "= 60 + 20 = 80 m²."
+      "modelAnswer": "25 × 18 = 450 cm². Two holes: 2 × (4 × 4) = 32 cm². Remaining = 450 − 32 = 418 cm²."
     },
     {
       "id": "reason04",
@@ -842,7 +842,7 @@
         "Perpendicular height",
         "Parallelogram"
       ],
-      "modelAnswer": "cross-section ½ × 10 × 6 = 30 cm², so V = 30 × 14 = 420 cm³."
+      "modelAnswer": "360 = 9 × 4 × w = 36w, so w = 360 ÷ 36 = 10 cm."
     },
     {
       "id": "reason05",
@@ -855,7 +855,7 @@
         "Parallelogram",
         "Trapezium"
       ],
-      "modelAnswer": "(25 ×"
+      "modelAnswer": "240 = 20 × h, so h = 240 ÷ 20 = 12 m."
     },
     {
       "id": "reason06",
@@ -868,7 +868,7 @@
         "Perimeter",
         "Volume"
       ],
-      "modelAnswer": "Surface area is different from volume. Volume tells you how much space is *inside* a solid; surface area tells you how much material would *cover the outside*. Because it is made of flat faces, surface area is measured in square units, just like ordinary area. Think of wrapping a gift, painting a box, or cutting the cardboard to make a carton – all of these need surface area, not volume. A cuboid has six rectangular faces, and they come in three matching pairs: top and bottom, front and back, left and right. To…"
+      "modelAnswer": "Surface area is different from volume. Volume tells you how much space is *inside* a solid; surface area tells you how much material would *cover the outside*. Because it is made of flat faces, surface area is measured in square units, just like ordinary area. Think of wrapping a gift, painting a box, or cutting the cardboard to make a carton – all of these need surface area, not volume.\n\nA cuboid has six rectangular faces, and they come in three matching pairs: top and bottom, front and back, left and right. To find the surface area, work out the area of each different face, add the three, then double the total. With length l, width w and height h the rule is SA = 2(lw + lh + wh). A tidy method is to find the three different face areas, add them, and double."
     }
   ],
   "assessment": {
@@ -879,192 +879,192 @@
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Basic",
-        "question": "How many degrees are there in a right angle?",
+        "question": "Which unit would you use to measure the area of a classroom floor?",
         "options": [
-          "180",
-          "45",
-          "91",
-          "90"
+          "m³",
+          "cm",
+          "kg",
+          "m²"
         ],
-        "answer": "90",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "A right angle measures 90°."
+        "answer": "m²",
+        "hint": "Ask yourself what \"Area\" means here before you choose.",
+        "explanation": "Area is measured in square units; for a room, square metres (m²) make sense."
       },
       {
         "id": "q02",
         "type": "Application",
         "outcomeId": "lo02",
         "difficulty": "Basic",
-        "question": "How many sides does a pentagon have?",
+        "question": "Find the area of a triangle with base 10 cm and perpendicular height 6 cm.",
         "options": [
-          "4",
-          "7",
-          "5",
-          "6"
+          "60 cm²",
+          "30 cm²",
+          "16 cm²",
+          "36 cm²"
         ],
-        "answer": "5",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "A pentagon has 5 straight sides."
+        "answer": "30 cm²",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
+        "explanation": "A = ½ × base × height = ½ × 10 × 6 = 30 cm²."
       },
       {
         "id": "q03",
         "type": "Application",
         "outcomeId": "lo03",
         "difficulty": "Basic",
-        "question": "How many degrees are there in a straight line?",
+        "question": "Find the area of a parallelogram with base 9 m and height 5 m.",
         "options": [
-          "180",
-          "270",
-          "90",
-          "181"
+          "40 m²",
+          "22.5 m²",
+          "45 m²",
+          "14 m²"
         ],
-        "answer": "180",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "A straight line measures 180°."
+        "answer": "45 m²",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
+        "explanation": "A = base × height = 9 × 5 = 45 m²."
       },
       {
         "id": "q04",
         "type": "Application",
         "outcomeId": "lo04",
         "difficulty": "Basic",
-        "question": "How many vertices does a cube have?",
+        "question": "A compound shape is made from a rectangle of area 24 cm² joined to a triangle of area 10 cm². What is the total area?",
         "options": [
-          "9",
-          "7",
-          "10",
-          "8"
+          "14 cm²",
+          "34 cm²",
+          "240 cm²",
+          "17 cm²"
         ],
-        "answer": "8",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "A cube has 8 vertices."
+        "answer": "34 cm²",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
+        "explanation": "Add the two parts: 24 + 10 = 34 cm²."
       },
       {
         "id": "q05",
         "type": "Application",
         "outcomeId": "lo05",
         "difficulty": "Core",
-        "question": "How many sides does a triangle have?",
+        "question": "A triangular prism has a cross-sectional area of 12 cm² and a length of 7 cm. Find its volume.",
         "options": [
-          "2",
-          "5",
-          "3",
-          "4"
+          "48 cm³",
+          "84 cm²",
+          "19 cm³",
+          "84 cm³"
         ],
-        "answer": "3",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "A triangle has 3 straight sides."
+        "answer": "84 cm³",
+        "hint": "Ask yourself what \"Perpendicular height\" means here before you choose.",
+        "explanation": "V = area of cross-section × length = 12 × 7 = 84 cm³."
       },
       {
         "id": "q06",
         "type": "Application",
         "outcomeId": "lo06",
         "difficulty": "Core",
-        "question": "How many degrees are there in a full turn?",
+        "question": "Find the surface area of a cuboid measuring 4 cm by 3 cm by 2 cm.",
         "options": [
-          "450",
-          "270",
-          "180",
-          "360"
+          "24 cm²",
+          "52 cm²",
+          "48 cm²",
+          "26 cm²"
         ],
-        "answer": "360",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "A full turn measures 360°."
+        "answer": "52 cm²",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
+        "explanation": "Faces: 12 + 8 + 6 = 26 cm². Double for matching pairs: 2 × 26 = 52 cm²."
       },
       {
         "id": "q07",
         "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
-        "question": "How many edges does a cube have?",
+        "question": "How many cm² are there in 1 m²?",
         "options": [
-          "13",
-          "11",
-          "14",
-          "12"
+          "1,000",
+          "100,000",
+          "10,000",
+          "100"
         ],
-        "answer": "12",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "A cube has 12 edges."
+        "answer": "10,000",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
+        "explanation": "Since 1 m = 100 cm, 1 m² = 100 × 100 = 10,000 cm²."
       },
       {
         "id": "q08",
         "type": "Application",
         "outcomeId": "lo08",
         "difficulty": "Challenge",
-        "question": "How many sides does a octagon have?",
+        "question": "A rectangular water tank is 2 m long, 1.5 m wide and 1 m deep. About how many litres of water can it hold? (1 m³ = 1000 litres)",
         "options": [
-          "7",
-          "10",
-          "8",
-          "9"
+          "300 litres",
+          "30,000 litres",
+          "3,000 litres",
+          "4.5 litres"
         ],
-        "answer": "8",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "A octagon has 8 straight sides."
+        "answer": "3,000 litres",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
+        "explanation": "Volume = 2 × 1.5 × 1 = 3 m³ = 3 × 1000 = 3,000 litres."
       },
       {
         "id": "q09",
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Challenge",
-        "question": "How many faces does a cube have?",
+        "question": "Which statement correctly compares area and volume?",
         "options": [
-          "7",
-          "5",
-          "8",
-          "6"
+          "Area measures flat space in square units; volume measures solid space in cubic units.",
+          "Volume measures flat space; area measures solid space.",
+          "Area and volume are always measured in the same units.",
+          "Area is always bigger than volume."
         ],
-        "answer": "6",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "A cube has 6 faces."
+        "answer": "Area measures flat space in square units; volume measures solid space in cubic units.",
+        "hint": "Ask yourself what \"Cross-section\" means here before you choose.",
+        "explanation": "Area measures flat, 2D space in square units; volume measures solid, 3D space in cubic units."
       },
       {
         "id": "q10",
         "type": "Reasoning",
         "outcomeId": "lo02",
         "difficulty": "Challenge",
-        "question": "What does “Area” mean?",
+        "question": "A triangle has area 45 cm² and base 9 cm. Find its perpendicular height.",
         "options": [
-          "The flat space a 2D shape covers (square units)",
-          "The distance around the edge of a shape",
-          "The space a 3D solid fills (cubic units)",
-          "The total area of all the faces of a solid"
+          "5 cm",
+          "20 cm",
+          "10 cm",
+          "4.5 cm"
         ],
-        "answer": "The flat space a 2D shape covers (square units)",
-        "hint": "Use the Unit 15 Math Words & Symbols reference.",
-        "explanation": "Area means The flat space a 2D shape covers (square units)."
+        "answer": "10 cm",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
+        "explanation": "45 = ½ × 9 × h = 4.5h, so h = 45 ÷ 4.5 = 10 cm."
       },
       {
         "id": "q11",
         "type": "Reasoning",
         "outcomeId": "lo03",
         "difficulty": "Challenge",
-        "question": "What does “Perimeter” mean?",
+        "question": "Find the area of a trapezium with parallel sides 8 cm and 12 cm and height 5 cm.",
         "options": [
-          "The distance around the edge of a shape",
-          "The space a 3D solid fills (cubic units)",
-          "The total area of all the faces of a solid",
-          "The height measured at a right angle to the base"
+          "100 cm²",
+          "40 cm²",
+          "25 cm²",
+          "50 cm²"
         ],
-        "answer": "The distance around the edge of a shape",
-        "hint": "Use the Unit 15 Math Words & Symbols reference.",
-        "explanation": "Perimeter means The distance around the edge of a shape."
+        "answer": "50 cm²",
+        "hint": "Rule out the options you know are wrong, then check the one that is left.",
+        "explanation": "A = ½ × (a + b) × h = ½ × (8 + 12) × 5 = ½ × 20 × 5 = 50 cm²."
       },
       {
         "id": "q12",
         "type": "Reasoning",
         "outcomeId": "lo04",
         "difficulty": "Challenge",
-        "question": "What does “Volume” mean?",
+        "question": "A rectangular metal sheet is 15 cm by 10 cm. A rectangular hole 3 cm by 2 cm is cut from it. Find the remaining area.",
         "options": [
-          "The space a 3D solid fills (cubic units)",
-          "The total area of all the faces of a solid",
-          "The height measured at a right angle to the base",
-          "A quadrilateral with two pairs of parallel sides"
+          "156 cm²",
+          "50 cm²",
+          "144 cm²",
+          "138 cm²"
         ],
-        "answer": "The space a 3D solid fills (cubic units)",
-        "hint": "Use the Unit 15 Math Words & Symbols reference.",
-        "explanation": "Volume means The space a 3D solid fills (cubic units)."
+        "answer": "144 cm²",
+        "hint": "Estimate roughly what the answer should be, then pick the option closest to it.",
+        "explanation": "Whole sheet: 15 × 10 = 150 cm². Hole: 3 × 2 = 6 cm². Remaining: 150 − 6 = 144 cm²."
       }
     ]
   },
@@ -1080,52 +1080,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many degrees are there in a right angle?",
+            "prompt": "Which unit would you use to measure the area of a classroom floor?",
             "choices": [
-              "180",
-              "45",
-              "91",
-              "90"
+              "m³",
+              "cm",
+              "kg",
+              "m²"
             ],
-            "answer": "90",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A right angle measures 90°."
+            "answer": "m²",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "Area is measured in square units; for a room, square metres (m²) make sense."
           },
           {
-            "prompt": "How many vertices does a cube have?",
+            "prompt": "A compound shape is made from a rectangle of area 24 cm² joined to a triangle of area 10 cm². What is the total area?",
             "choices": [
-              "9",
-              "7",
-              "10",
-              "8"
+              "14 cm²",
+              "34 cm²",
+              "240 cm²",
+              "17 cm²"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 8 vertices."
+            "answer": "34 cm²",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Add the two parts: 24 + 10 = 34 cm²."
           },
           {
-            "prompt": "How many edges does a cube have?",
+            "prompt": "How many cm² are there in 1 m²?",
             "choices": [
-              "13",
-              "11",
-              "14",
-              "12"
+              "1,000",
+              "100,000",
+              "10,000",
+              "100"
             ],
-            "answer": "12",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 12 edges."
+            "answer": "10,000",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Since 1 m = 100 cm, 1 m² = 100 × 100 = 10,000 cm²."
           },
           {
-            "prompt": "What does “Area” mean?",
+            "prompt": "A triangle has area 45 cm² and base 9 cm. Find its perpendicular height.",
             "choices": [
-              "The flat space a 2D shape covers (square units)",
-              "The distance around the edge of a shape",
-              "The space a 3D solid fills (cubic units)",
-              "The total area of all the faces of a solid"
+              "5 cm",
+              "20 cm",
+              "10 cm",
+              "4.5 cm"
             ],
-            "answer": "The flat space a 2D shape covers (square units)",
-            "clue": "Use the Unit 15 Math Words & Symbols reference.",
-            "explanation": "Area means The flat space a 2D shape covers (square units)."
+            "answer": "10 cm",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "45 = ½ × 9 × h = 4.5h, so h = 45 ÷ 4.5 = 10 cm."
           }
         ]
       },
@@ -1138,52 +1138,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many sides does a pentagon have?",
+            "prompt": "Find the area of a triangle with base 10 cm and perpendicular height 6 cm.",
             "choices": [
-              "4",
-              "7",
-              "5",
-              "6"
+              "60 cm²",
+              "30 cm²",
+              "16 cm²",
+              "36 cm²"
             ],
-            "answer": "5",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A pentagon has 5 straight sides."
+            "answer": "30 cm²",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "A = ½ × base × height = ½ × 10 × 6 = 30 cm²."
           },
           {
-            "prompt": "How many sides does a triangle have?",
+            "prompt": "A triangular prism has a cross-sectional area of 12 cm² and a length of 7 cm. Find its volume.",
             "choices": [
-              "2",
-              "5",
-              "3",
-              "4"
+              "48 cm³",
+              "84 cm²",
+              "19 cm³",
+              "84 cm³"
             ],
-            "answer": "3",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A triangle has 3 straight sides."
+            "answer": "84 cm³",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "V = area of cross-section × length = 12 × 7 = 84 cm³."
           },
           {
-            "prompt": "How many sides does a octagon have?",
+            "prompt": "A rectangular water tank is 2 m long, 1.5 m wide and 1 m deep. About how many litres of water can it hold? (1 m³ = 1000 litres)",
             "choices": [
-              "7",
-              "10",
-              "8",
-              "9"
+              "300 litres",
+              "30,000 litres",
+              "3,000 litres",
+              "4.5 litres"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A octagon has 8 straight sides."
+            "answer": "3,000 litres",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Volume = 2 × 1.5 × 1 = 3 m³ = 3 × 1000 = 3,000 litres."
           },
           {
-            "prompt": "What does “Perimeter” mean?",
+            "prompt": "Find the area of a trapezium with parallel sides 8 cm and 12 cm and height 5 cm.",
             "choices": [
-              "The distance around the edge of a shape",
-              "The space a 3D solid fills (cubic units)",
-              "The total area of all the faces of a solid",
-              "The height measured at a right angle to the base"
+              "100 cm²",
+              "40 cm²",
+              "25 cm²",
+              "50 cm²"
             ],
-            "answer": "The distance around the edge of a shape",
-            "clue": "Use the Unit 15 Math Words & Symbols reference.",
-            "explanation": "Perimeter means The distance around the edge of a shape."
+            "answer": "50 cm²",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "A = ½ × (a + b) × h = ½ × (8 + 12) × 5 = ½ × 20 × 5 = 50 cm²."
           }
         ]
       },
@@ -1196,52 +1196,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many degrees are there in a straight line?",
+            "prompt": "Find the area of a parallelogram with base 9 m and height 5 m.",
             "choices": [
-              "180",
-              "270",
-              "90",
-              "181"
+              "40 m²",
+              "22.5 m²",
+              "45 m²",
+              "14 m²"
             ],
-            "answer": "180",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A straight line measures 180°."
+            "answer": "45 m²",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "A = base × height = 9 × 5 = 45 m²."
           },
           {
-            "prompt": "How many degrees are there in a full turn?",
+            "prompt": "Find the surface area of a cuboid measuring 4 cm by 3 cm by 2 cm.",
             "choices": [
-              "450",
-              "270",
-              "180",
-              "360"
+              "24 cm²",
+              "52 cm²",
+              "48 cm²",
+              "26 cm²"
             ],
-            "answer": "360",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A full turn measures 360°."
+            "answer": "52 cm²",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Faces: 12 + 8 + 6 = 26 cm². Double for matching pairs: 2 × 26 = 52 cm²."
           },
           {
-            "prompt": "How many faces does a cube have?",
+            "prompt": "Which statement correctly compares area and volume?",
             "choices": [
-              "7",
-              "5",
-              "8",
-              "6"
+              "Area measures flat space in square units; volume measures solid space in cubic units.",
+              "Volume measures flat space; area measures solid space.",
+              "Area and volume are always measured in the same units.",
+              "Area is always bigger than volume."
             ],
-            "answer": "6",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 6 faces."
+            "answer": "Area measures flat space in square units; volume measures solid space in cubic units.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Area measures flat, 2D space in square units; volume measures solid, 3D space in cubic units."
           },
           {
-            "prompt": "What does “Volume” mean?",
+            "prompt": "A rectangular metal sheet is 15 cm by 10 cm. A rectangular hole 3 cm by 2 cm is cut from it. Find the remaining area.",
             "choices": [
-              "The space a 3D solid fills (cubic units)",
-              "The total area of all the faces of a solid",
-              "The height measured at a right angle to the base",
-              "A quadrilateral with two pairs of parallel sides"
+              "156 cm²",
+              "50 cm²",
+              "144 cm²",
+              "138 cm²"
             ],
-            "answer": "The space a 3D solid fills (cubic units)",
-            "clue": "Use the Unit 15 Math Words & Symbols reference.",
-            "explanation": "Volume means The space a 3D solid fills (cubic units)."
+            "answer": "144 cm²",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Whole sheet: 15 × 10 = 150 cm². Hole: 3 × 2 = 6 cm². Remaining: 150 − 6 = 144 cm²."
           }
         ]
       },
@@ -1254,52 +1254,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many vertices does a cube have?",
+            "prompt": "A compound shape is made from a rectangle of area 24 cm² joined to a triangle of area 10 cm². What is the total area?",
             "choices": [
-              "9",
-              "7",
-              "10",
-              "8"
+              "14 cm²",
+              "34 cm²",
+              "240 cm²",
+              "17 cm²"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 8 vertices."
+            "answer": "34 cm²",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "Add the two parts: 24 + 10 = 34 cm²."
           },
           {
-            "prompt": "How many edges does a cube have?",
+            "prompt": "How many cm² are there in 1 m²?",
             "choices": [
-              "13",
-              "11",
-              "14",
-              "12"
+              "1,000",
+              "100,000",
+              "10,000",
+              "100"
             ],
-            "answer": "12",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 12 edges."
+            "answer": "10,000",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Since 1 m = 100 cm, 1 m² = 100 × 100 = 10,000 cm²."
           },
           {
-            "prompt": "What does “Area” mean?",
+            "prompt": "A triangle has area 45 cm² and base 9 cm. Find its perpendicular height.",
             "choices": [
-              "The flat space a 2D shape covers (square units)",
-              "The distance around the edge of a shape",
-              "The space a 3D solid fills (cubic units)",
-              "The total area of all the faces of a solid"
+              "5 cm",
+              "20 cm",
+              "10 cm",
+              "4.5 cm"
             ],
-            "answer": "The flat space a 2D shape covers (square units)",
-            "clue": "Use the Unit 15 Math Words & Symbols reference.",
-            "explanation": "Area means The flat space a 2D shape covers (square units)."
+            "answer": "10 cm",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "45 = ½ × 9 × h = 4.5h, so h = 45 ÷ 4.5 = 10 cm."
           },
           {
-            "prompt": "How many degrees are there in a right angle?",
+            "prompt": "Which unit would you use to measure the area of a classroom floor?",
             "choices": [
-              "180",
-              "45",
-              "91",
-              "90"
+              "m³",
+              "cm",
+              "kg",
+              "m²"
             ],
-            "answer": "90",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A right angle measures 90°."
+            "answer": "m²",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Area is measured in square units; for a room, square metres (m²) make sense."
           }
         ]
       },
@@ -1312,52 +1312,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many sides does a triangle have?",
+            "prompt": "A triangular prism has a cross-sectional area of 12 cm² and a length of 7 cm. Find its volume.",
             "choices": [
-              "2",
-              "5",
-              "3",
-              "4"
+              "48 cm³",
+              "84 cm²",
+              "19 cm³",
+              "84 cm³"
             ],
-            "answer": "3",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A triangle has 3 straight sides."
+            "answer": "84 cm³",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "V = area of cross-section × length = 12 × 7 = 84 cm³."
           },
           {
-            "prompt": "How many sides does a octagon have?",
+            "prompt": "A rectangular water tank is 2 m long, 1.5 m wide and 1 m deep. About how many litres of water can it hold? (1 m³ = 1000 litres)",
             "choices": [
-              "7",
-              "10",
-              "8",
-              "9"
+              "300 litres",
+              "30,000 litres",
+              "3,000 litres",
+              "4.5 litres"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A octagon has 8 straight sides."
+            "answer": "3,000 litres",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Volume = 2 × 1.5 × 1 = 3 m³ = 3 × 1000 = 3,000 litres."
           },
           {
-            "prompt": "What does “Perimeter” mean?",
+            "prompt": "Find the area of a trapezium with parallel sides 8 cm and 12 cm and height 5 cm.",
             "choices": [
-              "The distance around the edge of a shape",
-              "The space a 3D solid fills (cubic units)",
-              "The total area of all the faces of a solid",
-              "The height measured at a right angle to the base"
+              "100 cm²",
+              "40 cm²",
+              "25 cm²",
+              "50 cm²"
             ],
-            "answer": "The distance around the edge of a shape",
-            "clue": "Use the Unit 15 Math Words & Symbols reference.",
-            "explanation": "Perimeter means The distance around the edge of a shape."
+            "answer": "50 cm²",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "A = ½ × (a + b) × h = ½ × (8 + 12) × 5 = ½ × 20 × 5 = 50 cm²."
           },
           {
-            "prompt": "How many sides does a pentagon have?",
+            "prompt": "Find the area of a triangle with base 10 cm and perpendicular height 6 cm.",
             "choices": [
-              "4",
-              "7",
-              "5",
-              "6"
+              "60 cm²",
+              "30 cm²",
+              "16 cm²",
+              "36 cm²"
             ],
-            "answer": "5",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A pentagon has 5 straight sides."
+            "answer": "30 cm²",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "A = ½ × base × height = ½ × 10 × 6 = 30 cm²."
           }
         ]
       },
@@ -1370,52 +1370,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many degrees are there in a full turn?",
+            "prompt": "Find the surface area of a cuboid measuring 4 cm by 3 cm by 2 cm.",
             "choices": [
-              "450",
-              "270",
-              "180",
-              "360"
+              "24 cm²",
+              "52 cm²",
+              "48 cm²",
+              "26 cm²"
             ],
-            "answer": "360",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A full turn measures 360°."
+            "answer": "52 cm²",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "Faces: 12 + 8 + 6 = 26 cm². Double for matching pairs: 2 × 26 = 52 cm²."
           },
           {
-            "prompt": "How many faces does a cube have?",
+            "prompt": "Which statement correctly compares area and volume?",
             "choices": [
-              "7",
-              "5",
-              "8",
-              "6"
+              "Area measures flat space in square units; volume measures solid space in cubic units.",
+              "Volume measures flat space; area measures solid space.",
+              "Area and volume are always measured in the same units.",
+              "Area is always bigger than volume."
             ],
-            "answer": "6",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 6 faces."
+            "answer": "Area measures flat space in square units; volume measures solid space in cubic units.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Area measures flat, 2D space in square units; volume measures solid, 3D space in cubic units."
           },
           {
-            "prompt": "What does “Volume” mean?",
+            "prompt": "A rectangular metal sheet is 15 cm by 10 cm. A rectangular hole 3 cm by 2 cm is cut from it. Find the remaining area.",
             "choices": [
-              "The space a 3D solid fills (cubic units)",
-              "The total area of all the faces of a solid",
-              "The height measured at a right angle to the base",
-              "A quadrilateral with two pairs of parallel sides"
+              "156 cm²",
+              "50 cm²",
+              "144 cm²",
+              "138 cm²"
             ],
-            "answer": "The space a 3D solid fills (cubic units)",
-            "clue": "Use the Unit 15 Math Words & Symbols reference.",
-            "explanation": "Volume means The space a 3D solid fills (cubic units)."
+            "answer": "144 cm²",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Whole sheet: 15 × 10 = 150 cm². Hole: 3 × 2 = 6 cm². Remaining: 150 − 6 = 144 cm²."
           },
           {
-            "prompt": "How many degrees are there in a straight line?",
+            "prompt": "Find the area of a parallelogram with base 9 m and height 5 m.",
             "choices": [
-              "180",
-              "270",
-              "90",
-              "181"
+              "40 m²",
+              "22.5 m²",
+              "45 m²",
+              "14 m²"
             ],
-            "answer": "180",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A straight line measures 180°."
+            "answer": "45 m²",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "A = base × height = 9 × 5 = 45 m²."
           }
         ]
       },
@@ -1428,52 +1428,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many edges does a cube have?",
+            "prompt": "How many cm² are there in 1 m²?",
             "choices": [
-              "13",
-              "11",
-              "14",
-              "12"
+              "1,000",
+              "100,000",
+              "10,000",
+              "100"
             ],
-            "answer": "12",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 12 edges."
+            "answer": "10,000",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "Since 1 m = 100 cm, 1 m² = 100 × 100 = 10,000 cm²."
           },
           {
-            "prompt": "What does “Area” mean?",
+            "prompt": "A triangle has area 45 cm² and base 9 cm. Find its perpendicular height.",
             "choices": [
-              "The flat space a 2D shape covers (square units)",
-              "The distance around the edge of a shape",
-              "The space a 3D solid fills (cubic units)",
-              "The total area of all the faces of a solid"
+              "5 cm",
+              "20 cm",
+              "10 cm",
+              "4.5 cm"
             ],
-            "answer": "The flat space a 2D shape covers (square units)",
-            "clue": "Use the Unit 15 Math Words & Symbols reference.",
-            "explanation": "Area means The flat space a 2D shape covers (square units)."
+            "answer": "10 cm",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "45 = ½ × 9 × h = 4.5h, so h = 45 ÷ 4.5 = 10 cm."
           },
           {
-            "prompt": "How many degrees are there in a right angle?",
+            "prompt": "Which unit would you use to measure the area of a classroom floor?",
             "choices": [
-              "180",
-              "45",
-              "91",
-              "90"
+              "m³",
+              "cm",
+              "kg",
+              "m²"
             ],
-            "answer": "90",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A right angle measures 90°."
+            "answer": "m²",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Area is measured in square units; for a room, square metres (m²) make sense."
           },
           {
-            "prompt": "How many vertices does a cube have?",
+            "prompt": "A compound shape is made from a rectangle of area 24 cm² joined to a triangle of area 10 cm². What is the total area?",
             "choices": [
-              "9",
-              "7",
-              "10",
-              "8"
+              "14 cm²",
+              "34 cm²",
+              "240 cm²",
+              "17 cm²"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 8 vertices."
+            "answer": "34 cm²",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Add the two parts: 24 + 10 = 34 cm²."
           }
         ]
       },
@@ -1486,52 +1486,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many sides does a octagon have?",
+            "prompt": "A rectangular water tank is 2 m long, 1.5 m wide and 1 m deep. About how many litres of water can it hold? (1 m³ = 1000 litres)",
             "choices": [
-              "7",
-              "10",
-              "8",
-              "9"
+              "300 litres",
+              "30,000 litres",
+              "3,000 litres",
+              "4.5 litres"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A octagon has 8 straight sides."
+            "answer": "3,000 litres",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "Volume = 2 × 1.5 × 1 = 3 m³ = 3 × 1000 = 3,000 litres."
           },
           {
-            "prompt": "What does “Perimeter” mean?",
+            "prompt": "Find the area of a trapezium with parallel sides 8 cm and 12 cm and height 5 cm.",
             "choices": [
-              "The distance around the edge of a shape",
-              "The space a 3D solid fills (cubic units)",
-              "The total area of all the faces of a solid",
-              "The height measured at a right angle to the base"
+              "100 cm²",
+              "40 cm²",
+              "25 cm²",
+              "50 cm²"
             ],
-            "answer": "The distance around the edge of a shape",
-            "clue": "Use the Unit 15 Math Words & Symbols reference.",
-            "explanation": "Perimeter means The distance around the edge of a shape."
+            "answer": "50 cm²",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "A = ½ × (a + b) × h = ½ × (8 + 12) × 5 = ½ × 20 × 5 = 50 cm²."
           },
           {
-            "prompt": "How many sides does a pentagon have?",
+            "prompt": "Find the area of a triangle with base 10 cm and perpendicular height 6 cm.",
             "choices": [
-              "4",
-              "7",
-              "5",
-              "6"
+              "60 cm²",
+              "30 cm²",
+              "16 cm²",
+              "36 cm²"
             ],
-            "answer": "5",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A pentagon has 5 straight sides."
+            "answer": "30 cm²",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "A = ½ × base × height = ½ × 10 × 6 = 30 cm²."
           },
           {
-            "prompt": "How many sides does a triangle have?",
+            "prompt": "A triangular prism has a cross-sectional area of 12 cm² and a length of 7 cm. Find its volume.",
             "choices": [
-              "2",
-              "5",
-              "3",
-              "4"
+              "48 cm³",
+              "84 cm²",
+              "19 cm³",
+              "84 cm³"
             ],
-            "answer": "3",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A triangle has 3 straight sides."
+            "answer": "84 cm³",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "V = area of cross-section × length = 12 × 7 = 84 cm³."
           }
         ]
       },
@@ -1544,52 +1544,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "How many faces does a cube have?",
+            "prompt": "Which statement correctly compares area and volume?",
             "choices": [
-              "7",
-              "5",
-              "8",
-              "6"
+              "Area measures flat space in square units; volume measures solid space in cubic units.",
+              "Volume measures flat space; area measures solid space.",
+              "Area and volume are always measured in the same units.",
+              "Area is always bigger than volume."
             ],
-            "answer": "6",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 6 faces."
+            "answer": "Area measures flat space in square units; volume measures solid space in cubic units.",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "Area measures flat, 2D space in square units; volume measures solid, 3D space in cubic units."
           },
           {
-            "prompt": "What does “Volume” mean?",
+            "prompt": "A rectangular metal sheet is 15 cm by 10 cm. A rectangular hole 3 cm by 2 cm is cut from it. Find the remaining area.",
             "choices": [
-              "The space a 3D solid fills (cubic units)",
-              "The total area of all the faces of a solid",
-              "The height measured at a right angle to the base",
-              "A quadrilateral with two pairs of parallel sides"
+              "156 cm²",
+              "50 cm²",
+              "144 cm²",
+              "138 cm²"
             ],
-            "answer": "The space a 3D solid fills (cubic units)",
-            "clue": "Use the Unit 15 Math Words & Symbols reference.",
-            "explanation": "Volume means The space a 3D solid fills (cubic units)."
+            "answer": "144 cm²",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Whole sheet: 15 × 10 = 150 cm². Hole: 3 × 2 = 6 cm². Remaining: 150 − 6 = 144 cm²."
           },
           {
-            "prompt": "How many degrees are there in a straight line?",
+            "prompt": "Find the area of a parallelogram with base 9 m and height 5 m.",
             "choices": [
-              "180",
-              "270",
-              "90",
-              "181"
+              "40 m²",
+              "22.5 m²",
+              "45 m²",
+              "14 m²"
             ],
-            "answer": "180",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A straight line measures 180°."
+            "answer": "45 m²",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "A = base × height = 9 × 5 = 45 m²."
           },
           {
-            "prompt": "How many degrees are there in a full turn?",
+            "prompt": "Find the surface area of a cuboid measuring 4 cm by 3 cm by 2 cm.",
             "choices": [
-              "450",
-              "270",
-              "180",
-              "360"
+              "24 cm²",
+              "52 cm²",
+              "48 cm²",
+              "26 cm²"
             ],
-            "answer": "360",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A full turn measures 360°."
+            "answer": "52 cm²",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Faces: 12 + 8 + 6 = 26 cm². Double for matching pairs: 2 × 26 = 52 cm²."
           }
         ]
       },
@@ -1602,52 +1602,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Area” mean?",
+            "prompt": "A triangle has area 45 cm² and base 9 cm. Find its perpendicular height.",
             "choices": [
-              "The flat space a 2D shape covers (square units)",
-              "The distance around the edge of a shape",
-              "The space a 3D solid fills (cubic units)",
-              "The total area of all the faces of a solid"
+              "5 cm",
+              "20 cm",
+              "10 cm",
+              "4.5 cm"
             ],
-            "answer": "The flat space a 2D shape covers (square units)",
-            "clue": "Use the Unit 15 Math Words & Symbols reference.",
-            "explanation": "Area means The flat space a 2D shape covers (square units)."
+            "answer": "10 cm",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "45 = ½ × 9 × h = 4.5h, so h = 45 ÷ 4.5 = 10 cm."
           },
           {
-            "prompt": "How many degrees are there in a right angle?",
+            "prompt": "Which unit would you use to measure the area of a classroom floor?",
             "choices": [
-              "180",
-              "45",
-              "91",
-              "90"
+              "m³",
+              "cm",
+              "kg",
+              "m²"
             ],
-            "answer": "90",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A right angle measures 90°."
+            "answer": "m²",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "Area is measured in square units; for a room, square metres (m²) make sense."
           },
           {
-            "prompt": "How many vertices does a cube have?",
+            "prompt": "A compound shape is made from a rectangle of area 24 cm² joined to a triangle of area 10 cm². What is the total area?",
             "choices": [
-              "9",
-              "7",
-              "10",
-              "8"
+              "14 cm²",
+              "34 cm²",
+              "240 cm²",
+              "17 cm²"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 8 vertices."
+            "answer": "34 cm²",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Add the two parts: 24 + 10 = 34 cm²."
           },
           {
-            "prompt": "How many edges does a cube have?",
+            "prompt": "How many cm² are there in 1 m²?",
             "choices": [
-              "13",
-              "11",
-              "14",
-              "12"
+              "1,000",
+              "100,000",
+              "10,000",
+              "100"
             ],
-            "answer": "12",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 12 edges."
+            "answer": "10,000",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Since 1 m = 100 cm, 1 m² = 100 × 100 = 10,000 cm²."
           }
         ]
       },
@@ -1660,52 +1660,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Perimeter” mean?",
+            "prompt": "Find the area of a trapezium with parallel sides 8 cm and 12 cm and height 5 cm.",
             "choices": [
-              "The distance around the edge of a shape",
-              "The space a 3D solid fills (cubic units)",
-              "The total area of all the faces of a solid",
-              "The height measured at a right angle to the base"
+              "100 cm²",
+              "40 cm²",
+              "25 cm²",
+              "50 cm²"
             ],
-            "answer": "The distance around the edge of a shape",
-            "clue": "Use the Unit 15 Math Words & Symbols reference.",
-            "explanation": "Perimeter means The distance around the edge of a shape."
+            "answer": "50 cm²",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "A = ½ × (a + b) × h = ½ × (8 + 12) × 5 = ½ × 20 × 5 = 50 cm²."
           },
           {
-            "prompt": "How many sides does a pentagon have?",
+            "prompt": "Find the area of a triangle with base 10 cm and perpendicular height 6 cm.",
             "choices": [
-              "4",
-              "7",
-              "5",
-              "6"
+              "60 cm²",
+              "30 cm²",
+              "16 cm²",
+              "36 cm²"
             ],
-            "answer": "5",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A pentagon has 5 straight sides."
+            "answer": "30 cm²",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "A = ½ × base × height = ½ × 10 × 6 = 30 cm²."
           },
           {
-            "prompt": "How many sides does a triangle have?",
+            "prompt": "A triangular prism has a cross-sectional area of 12 cm² and a length of 7 cm. Find its volume.",
             "choices": [
-              "2",
-              "5",
-              "3",
-              "4"
+              "48 cm³",
+              "84 cm²",
+              "19 cm³",
+              "84 cm³"
             ],
-            "answer": "3",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A triangle has 3 straight sides."
+            "answer": "84 cm³",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "V = area of cross-section × length = 12 × 7 = 84 cm³."
           },
           {
-            "prompt": "How many sides does a octagon have?",
+            "prompt": "A rectangular water tank is 2 m long, 1.5 m wide and 1 m deep. About how many litres of water can it hold? (1 m³ = 1000 litres)",
             "choices": [
-              "7",
-              "10",
-              "8",
-              "9"
+              "300 litres",
+              "30,000 litres",
+              "3,000 litres",
+              "4.5 litres"
             ],
-            "answer": "8",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A octagon has 8 straight sides."
+            "answer": "3,000 litres",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Volume = 2 × 1.5 × 1 = 3 m³ = 3 × 1000 = 3,000 litres."
           }
         ]
       },
@@ -1718,52 +1718,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Volume” mean?",
+            "prompt": "A rectangular metal sheet is 15 cm by 10 cm. A rectangular hole 3 cm by 2 cm is cut from it. Find the remaining area.",
             "choices": [
-              "The space a 3D solid fills (cubic units)",
-              "The total area of all the faces of a solid",
-              "The height measured at a right angle to the base",
-              "A quadrilateral with two pairs of parallel sides"
+              "156 cm²",
+              "50 cm²",
+              "144 cm²",
+              "138 cm²"
             ],
-            "answer": "The space a 3D solid fills (cubic units)",
-            "clue": "Use the Unit 15 Math Words & Symbols reference.",
-            "explanation": "Volume means The space a 3D solid fills (cubic units)."
+            "answer": "144 cm²",
+            "clue": "Ask yourself what \"Area\" means here before you choose.",
+            "explanation": "Whole sheet: 15 × 10 = 150 cm². Hole: 3 × 2 = 6 cm². Remaining: 150 − 6 = 144 cm²."
           },
           {
-            "prompt": "How many degrees are there in a straight line?",
+            "prompt": "Find the area of a parallelogram with base 9 m and height 5 m.",
             "choices": [
-              "180",
-              "270",
-              "90",
-              "181"
+              "40 m²",
+              "22.5 m²",
+              "45 m²",
+              "14 m²"
             ],
-            "answer": "180",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A straight line measures 180°."
+            "answer": "45 m²",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
+            "explanation": "A = base × height = 9 × 5 = 45 m²."
           },
           {
-            "prompt": "How many degrees are there in a full turn?",
+            "prompt": "Find the surface area of a cuboid measuring 4 cm by 3 cm by 2 cm.",
             "choices": [
-              "450",
-              "270",
-              "180",
-              "360"
+              "24 cm²",
+              "52 cm²",
+              "48 cm²",
+              "26 cm²"
             ],
-            "answer": "360",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A full turn measures 360°."
+            "answer": "52 cm²",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
+            "explanation": "Faces: 12 + 8 + 6 = 26 cm². Double for matching pairs: 2 × 26 = 52 cm²."
           },
           {
-            "prompt": "How many faces does a cube have?",
+            "prompt": "Which statement correctly compares area and volume?",
             "choices": [
-              "7",
-              "5",
-              "8",
-              "6"
+              "Area measures flat space in square units; volume measures solid space in cubic units.",
+              "Volume measures flat space; area measures solid space.",
+              "Area and volume are always measured in the same units.",
+              "Area is always bigger than volume."
             ],
-            "answer": "6",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "A cube has 6 faces."
+            "answer": "Area measures flat space in square units; volume measures solid space in cubic units.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
+            "explanation": "Area measures flat, 2D space in square units; volume measures solid, 3D space in cubic units."
           }
         ]
       }

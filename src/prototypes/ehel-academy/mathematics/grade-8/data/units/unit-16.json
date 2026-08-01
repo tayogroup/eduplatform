@@ -62,38 +62,38 @@
     {
       "id": "concept-1-averages-choosing-the-right-one",
       "title": "Averages – Choosing the Right One",
-      "explanation": "An average is a single number that stands in for a whole set of values – a typical value. There are three averages you must know, and the skill in Year 8 is not just calculating them but choosing the one that describes the data most fairly. The mean is the total of all the values divided by how many values there are. Suppose seven students at Nuur Academy score 78, 82, 85, 79, 91, 88, 76 on a test. The mean is (78 + 82 + 85 + 79 + 91 + 88 + 76) ÷ 7 = 579 ÷ 7 = 82.7. The mean uses every single value, which is its…",
-      "example": "The median is the middle value once the data is placed in order. Ordering the same scores gives 76, 78, 79, 82, 85, 88, 91, so the median is 82. When there is an even number of values, the median is the mean of the two…"
+      "explanation": "An average is a single number that stands in for a whole set of values – a typical value. There are three averages you must know, and the skill in Year 8 is not just calculating them but choosing the one that describes the data most fairly.\n\nThe mean is the total of all the values divided by how many values there are. Suppose seven students at Nuur Academy score 78, 82, 85, 79, 91, 88, 76 on a test. The mean is (78 + 82 + 85 + 79 + 91 + 88 + 76) ÷ 7 = 579 ÷ 7 = 82.7. The mean uses every single value, which is its strength. But that is also its weakness: one unusual value can drag it a long way. If one student had scored 12 instead of 76, the mean would crash, even though most students did well.\n\nThe median is the middle value once the data is placed in order. Ordering the same scores gives 76, 78, 79, 82, 85, 88, 91, so the median is 82. When there is an even number of values, the median is the mean of the two middle values. The median’s great strength is that it is barely affected by an extreme value – it just reports the middle, no matter how odd the ends are. This is why the median is the fairer average for things like incomes or house prices, where a few very large values would distort the mean.\n\nThe mode is the value that appears most often. For the heights (cm) 165, 167, 165, 170, 168, 165, 172, the mode is 165 because it appears three times. A set can have no mode, one mode, or several modes. The mode is the only average that works for categories that are not numbers at all – you cannot take the mean of ‘favourite fruit’, but you can say the mode is mango.",
+      "example": "So which do you choose? Ask what the data is like. If the values are fairly even with no extreme outlier, the mean is usually best because it uses all the information. If there is an outlier or the data is skewed, the median is fairer. If the data is categorical, or you want the most common choice, use the mode. Being able to justify your choice in a sentence – ‘I used the median because the £4,000 value is an outlier that would inflate the mean’ – is exactly the kind of statistical reasoning this unit rewards."
     },
     {
       "id": "concept-2-spread-range-and-the-interquartile-range",
       "title": "Spread – Range and the Interquartile Range",
-      "explanation": "An average tells you where the *centre* of the data sits, but it says nothing about how *spread out* the values are. Two footballers might both average 12 goals a season, yet one scores steadily each year while the other swings wildly between 2 and 25. To capture this, you need a measure of spread. The simplest measure of spread is the range: the highest value minus the lowest. For the scores 76 to 91, the range is 91 − 76 = 15. The range is quick to find, but it has a serious flaw: it depends only on the two most…",
-      "example": "The interquartile range (IQR) fixes this. First you find the quartiles, which split the ordered data into four equal parts. Q1 (the lower quartile) has one quarter of the data below it; Q2 is the median; Q3 (the upper…"
+      "explanation": "An average tells you where the *centre* of the data sits, but it says nothing about how *spread out* the values are. Two footballers might both average 12 goals a season, yet one scores steadily each year while the other swings wildly between 2 and 25. To capture this, you need a measure of spread.\n\nThe simplest measure of spread is the range: the highest value minus the lowest. For the scores 76 to 91, the range is 91 − 76 = 15. The range is quick to find, but it has a serious flaw: it depends only on the two most extreme values, so a single outlier can make the spread look enormous when almost all the data is actually tightly packed.\n\nThe interquartile range (IQR) fixes this. First you find the quartiles, which split the ordered data into four equal parts. Q1 (the lower quartile) has one quarter of the data below it; Q2 is the median; Q3 (the upper quartile) has three quarters below it. The IQR is then Q3 − Q1, the spread of the middle 50% of the data. Because it throws away the extreme quarter at each end, the IQR is not fooled by outliers – it describes where the bulk of the data lives.\n\nLet us find the IQR for these eleven values: 12, 15, 18, 20, 22, 25, 28, 30, 35, 38, 42 (already in order). The median (Q2) is the 6th value, 25. The lower half is 12, 15, 18, 20, 22, and its middle value is 18, so Q1 = 18. The upper half is 28, 30, 35, 38, 42, and its middle value is 35, so Q3 = 35. Therefore IQR = 35 − 18 = 17. Compare this with the range, 42 − 12 = 30. The IQR of 17 tells us the central half of the data is packed more tightly than the full range suggests.",
+      "example": "A small measure of spread means the data is consistent (values close together); a large measure means the data is variable (values spread out). When you describe spread, always say what it means in the context: ‘the smaller IQR shows Class B’s marks were more consistent’ tells the reader something useful, whereas ‘the IQR is 17’ on its own does not."
     },
     {
       "id": "concept-3-comparing-two-distributions",
       "title": "Comparing Two Distributions",
-      "explanation": "A distribution is the whole picture of how a set of values is spread out. One of the most important skills in this unit is comparing two distributions – two classes, two players, two markets – and saying which is ‘better’ or how they differ. The golden rule is this: always compare an average AND a measure of spread, and always write your comparison in context. One number is never enough. Why both? Imagine two Year 8 classes sit the same maths test. Class A has a median of 62 and an IQR of 8. Class B has a median…",
-      "example": "Now the other case: same spread, different centre. Suppose Hassan and Yusuf both play in the school football team. Over ten matches Hassan’s pass-completion has a median of 70% with an IQR of 6, and Yusuf’s has a median…"
+      "explanation": "A distribution is the whole picture of how a set of values is spread out. One of the most important skills in this unit is comparing two distributions – two classes, two players, two markets – and saying which is ‘better’ or how they differ. The golden rule is this: always compare an average AND a measure of spread, and always write your comparison in context. One number is never enough.\n\nWhy both? Imagine two Year 8 classes sit the same maths test. Class A has a median of 62 and an IQR of 8. Class B has a median of 62 and an IQR of 20. Their averages are identical, so if you only reported the median you would say the classes performed ‘the same’. But the spreads tell a completely different story. Class A’s marks are bunched close to 62 – the class is consistent, and the teaching reached everyone. Class B’s marks are scattered widely – some students did very well while others struggled badly. A good comparison sentence would be: ‘Both classes have the same median mark of 62, but Class A has a much smaller IQR, so Class A’s results are more consistent while Class B has a wider spread of ability.’\n\nNow the other case: same spread, different centre. Suppose Hassan and Yusuf both play in the school football team. Over ten matches Hassan’s pass-completion has a median of 70% with an IQR of 6, and Yusuf’s has a median of 82% with an IQR of 6. Their consistency is the same, but Yusuf’s typical performance is higher. The comparison: ‘Yusuf has a higher median completion rate than Hassan, and since both have the same IQR they are equally consistent, so Yusuf is the stronger passer overall.’\n\nStatisticians often use box plots to compare distributions at a glance. A box plot is drawn from the five-number summary: minimum, Q1, median, Q3, maximum. The box stretches from Q1 to Q3 (so its width shows the IQR), a line inside marks the median, and ‘whiskers’ reach out to the minimum and maximum. When two box plots are stacked one above the other on the same scale, you can instantly see which has the higher median (compare the middle lines), which is more spread out (compare the box widths), and whether either is skewed (is the median line in the middle of its box, or pushed to one side?).",
+      "example": "When you compare using box plots, read them like sentences. A box that sits further to the right has generally higher values. A wider box means a larger IQR and more variability. If the median line is closer to Q1 than to Q3, more of the data is bunched at the lower end, so the distribution is skewed towards the higher values. Always translate what you see back into the real situation: ‘the water-collection times for the near well have a lower median and a narrower box, so that well is both quicker and more predictable than the far well.’"
     },
     {
       "id": "concept-4-scatter-graphs-and-correlation",
       "title": "Scatter Graphs and Correlation",
-      "explanation": "So far we have looked at one quantity at a time. A scatter graph lets you explore whether two quantities are related. You collect pairs of measurements – for each person, or day, or animal, you record two things – and plot each pair as a single point, with one variable on the x-axis and the other on the y-axis. For example, suppose you record the height and shoe size of six people: heights 155, 160, 165, 170, 175, 180 cm and shoe sizes 6, 7, 8, 9, 10, 11. Plotting the points (155, 6), (160, 7), (165, 8) and so on,…",
-      "example": "The pattern the points make is called correlation. There are three basic kinds:"
+      "explanation": "So far we have looked at one quantity at a time. A scatter graph lets you explore whether two quantities are related. You collect pairs of measurements – for each person, or day, or animal, you record two things – and plot each pair as a single point, with one variable on the x-axis and the other on the y-axis.\n\nFor example, suppose you record the height and shoe size of six people: heights 155, 160, 165, 170, 175, 180 cm and shoe sizes 6, 7, 8, 9, 10, 11. Plotting the points (155, 6), (160, 7), (165, 8) and so on, you would see the dots climbing steadily from bottom-left to top-right. That upward trend is a sign of a relationship between height and shoe size.\n\nThe pattern the points make is called correlation. There are three basic kinds:\n\nPositive correlation: as one variable increases, the other tends to increase. The points slope upward from left to right. Example: hours revised and test score.\n\nNegative correlation: as one variable increases, the other tends to decrease. The points slope downward from left to right. Example: temperature and sales of hot tea.\n\nNo correlation: there is no clear pattern; the points are scattered with no trend. Example: a student’s shoe size and their exam mark.\n\nCorrelation also has a strength. If the points lie very close to a straight line, the correlation is strong; if they show a trend but are quite scattered, it is weak; if they fall exactly on a line, it is perfect (rare in real data). So a full description of a scatter graph names both the direction and the strength: ‘there is a strong positive correlation between revision time and test score’ or ‘there is a weak negative correlation between age of a phone and its resale value’.\n\nWhen there is correlation, you can draw a line of best fit: a single straight line that passes as close as possible to as many points as possible, with roughly equal numbers of points above and below it. A good line of best fit passes through or near the ‘mean point’ (the point whose coordinates are the mean of the x-values and the mean of the y-values). You do not simply join the first and last dots, and the line does not have to pass through the origin – you balance it through the whole cloud of points.",
+      "example": "Once you have a line of best fit, you can make predictions. Reading a value from within the range of your data is called interpolation, and it is usually reliable. Reading a value from outside the range of your data is called extrapolation, and it is risky, because you are assuming the trend continues where you have no evidence. If Amina measured revision times between 1 and 5 hours, using her line to predict the score for 4 hours is fair interpolation; using it to predict the score for 20 hours of revision is extrapolation, and it may be nonsense – nobody can score more than 100%, and no one revises for twenty hours straight."
     },
     {
       "id": "concept-5-correlation-is-not-causation",
       "title": "Correlation Is Not Causation",
-      "explanation": "This is one of the most important ideas in all of statistics, and one of the easiest to get wrong. Just because two things are correlated – they rise and fall together – does not mean that one causes the other. A relationship in the data is a clue, not a proof. Here is the classic example. Across the year, ice-cream sales and cases of sunburn both go up and down together – a strong positive correlation. But ice cream does not cause sunburn, and sunburn does not cause people to buy ice cream. A third factor – hot,…",
-      "example": "Consider a real-feeling case. A study finds that children who eat breakfast tend to score higher on tests – a positive correlation. It is tempting to conclude ‘breakfast causes higher marks’. But think of the…"
+      "explanation": "This is one of the most important ideas in all of statistics, and one of the easiest to get wrong. Just because two things are correlated – they rise and fall together – does not mean that one causes the other. A relationship in the data is a clue, not a proof.\n\nHere is the classic example. Across the year, ice-cream sales and cases of sunburn both go up and down together – a strong positive correlation. But ice cream does not cause sunburn, and sunburn does not cause people to buy ice cream. A third factor – hot, sunny weather – causes both. This hidden third factor is called a confounding variable. Whenever you see a correlation, your first question should be: could some other factor be driving both?\n\nConsider a real-feeling case. A study finds that children who eat breakfast tend to score higher on tests – a positive correlation. It is tempting to conclude ‘breakfast causes higher marks’. But think of the confounders: children who eat breakfast may come from homes with more routine, more sleep, quieter study space, or more support with homework. Any of those could be the real cause, or part of it. The correlation is genuine and interesting, but it does not, by itself, prove that breakfast is the cause.",
+      "example": "To move from correlation towards causation, statisticians look for more: a controlled experiment where only one factor is changed, a plausible mechanism explaining *how* one thing could cause the other, and results that repeat across different studies. Even then they stay careful. In this unit you are not expected to prove causation – you are expected to spot when someone else has claimed it too quickly, and to name a possible confounding variable. That single habit will protect you from a huge amount of misleading argument for the rest of your life."
     },
     {
       "id": "concept-6-misleading-statistics-and-unfair-samples",
       "title": "Misleading Statistics and Unfair Samples",
-      "explanation": "Numbers can be used to inform you – or to fool you. Part of interpreting results is learning the common tricks, so you can spot them and refuse to be misled. Misleading scales. The most common trick is a graph whose y-axis does not start at zero. Suppose a company’s sales rose from £100 million to £110 million – a modest 10% rise. If the y-axis starts at £95 million, the bar for £110 looks about three times taller than the bar for £100, making a small change appear dramatic. Always check where the axis starts…",
-      "example": "Cherry-picking. Someone shows only the time period that flatters their case – ‘sales have risen every month since June’ – while hiding that sales fell sharply from January to June. Choosing a convenient start point, or…"
+      "explanation": "Numbers can be used to inform you – or to fool you. Part of interpreting results is learning the common tricks, so you can spot them and refuse to be misled.\n\nMisleading scales. The most common trick is a graph whose y-axis does not start at zero. Suppose a company’s sales rose from £100 million to £110 million – a modest 10% rise. If the y-axis starts at £95 million, the bar for £110 looks about three times taller than the bar for £100, making a small change appear dramatic. Always check where the axis starts before you believe a graph. Stretching or squashing an axis can make a steady trend look like a cliff or a flat line.\n\nCherry-picking. Someone shows only the time period that flatters their case – ‘sales have risen every month since June’ – while hiding that sales fell sharply from January to June. Choosing a convenient start point, or ignoring data that disagrees, is called cherry-picking. Always ask: what happened *before* the part they are showing me?\n\nUnfair averages. Because the mean, median and mode can differ, a person can quote whichever average best supports their argument. If a business owner wants to look generous, they might quote the mean salary, which a few high-paid managers pull upward, rather than the median, which most workers are actually near. Always ask *which* average is being quoted and whether it is the fair one.",
+      "example": "Biased samples. A conclusion about a whole population is only trustworthy if the sample it came from is representative. A survey about exercise habits conducted outside a gym will over-count fit, active people – that is selection bias. An online poll only reaches people who chose to respond, who often hold stronger opinions – voluntary-response bias. Leading questions like ‘Don’t you agree that…?’ nudge people toward a particular answer – response bias. To reduce bias you use fair sampling (ideally random), a large enough sample, and neutral question wording. When you read any statistic, ask: who was asked, how many, and how were they chosen?"
     }
   ],
   "explorations": [
@@ -102,72 +102,72 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "Averages – Choosing the Right One",
-      "context": "An average is a single number that stands in for a whole set of values – a typical value. There are three averages you must know, and the skill in Year 8 is not just calculating them but choosing the one that describes the data most fairly. The mean is the…",
+      "context": "An average is a single number that stands in for a whole set of values – a typical value. There are three averages you must know, and the skill in Year 8 is not just calculating them but choosing the one that describes the data most fairly.",
       "prompt": "Find the mean, median, mode and range of: 6, 9, 6, 12, 15, 6, 10.",
       "answer": "1) Sum = 64, mean ≈ 9.14; ordered 6,6,6,9,10,12,15, median = 9; mode = 6; range = 15 − 6 = 9.",
       "modelType": "model-1",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) Sum = 64, mean ≈ 9.14; ordered 6,6,6,9,10,12,15, median = 9; mode = 6; range = 15 − 6 = 9."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range.",
+      "explanation": "Averages – Choosing the Right One: An average is a single number that stands in for a whole set of values – a typical value. There are three averages you must know, and the skill in Year 8 is not just calculating them but choosing the one that describes the data most fairly."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Spread – Range and the Interquartile Range",
-      "context": "An average tells you where the *centre* of the data sits, but it says nothing about how *spread out* the values are. Two footballers might both average 12 goals a season, yet one scores steadily each year while the other swings wildly between 2 and 25. To…",
+      "context": "An average tells you where the *centre* of the data sits, but it says nothing about how *spread out* the values are. Two footballers might both average 12 goals a season, yet one scores steadily each year while the other swings wildly between 2 and 25.",
       "prompt": "Find the range of: 55, 48, 61, 39, 72, 50.",
       "answer": "Range = 72 − 39 = 33.",
       "modelType": "model-2",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "Range = 72 − 39 = 33."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range.",
+      "explanation": "Spread – Range and the Interquartile Range: An average tells you where the *centre* of the data sits, but it says nothing about how *spread out* the values are. Two footballers might both average 12 goals a season, yet one scores steadily each year while the other swings wildly between 2 and 25. To capture this, you need a measure of spread."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Comparing Two Distributions",
-      "context": "A distribution is the whole picture of how a set of values is spread out. One of the most important skills in this unit is comparing two distributions – two classes, two players, two markets – and saying which is ‘better’ or how they differ. The golden rule…",
+      "context": "A distribution is the whole picture of how a set of values is spread out. One of the most important skills in this unit is comparing two distributions – two classes, two players, two markets – and saying which is ‘better’ or how they differ.",
       "prompt": "Order and find the median of: 14, 8, 22, 11, 19, 6, 17.",
       "answer": "Ordered 6,8,11,14,17,19,22, median = 14.",
       "modelType": "model-3",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "Ordered 6,8,11,14,17,19,22, median = 14."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range.",
+      "explanation": "Comparing Two Distributions: A distribution is the whole picture of how a set of values is spread out. One of the most important skills in this unit is comparing two distributions – two classes, two players, two markets – and saying which is ‘better’ or how they differ. The golden rule is this: always compare an average AND a a measure of spread, and always write your comparison in context."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Scatter Graphs and Correlation",
-      "context": "So far we have looked at one quantity at a time. A scatter graph lets you explore whether two quantities are related. You collect pairs of measurements – for each person, or day, or animal, you record two things – and plot each pair as a single point, with…",
+      "context": "So far we have looked at one quantity at a time. A scatter graph lets you explore whether two quantities are related.",
       "prompt": "What is the mode of: 3, 7, 3, 9, 3, 5, 7?",
       "answer": "Mode = 3.",
       "modelType": "model-4",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "Mode = 3."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range.",
+      "explanation": "Scatter Graphs and Correlation: So far we have looked at one quantity at a time. A scatter graph lets you explore whether two quantities are related. You collect pairs of measurements – for each person, or day, or animal, you record two things – and plot each pair as a single point, with one variable on the x-axis and the other on the y-axis."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Correlation Is Not Causation",
-      "context": "This is one of the most important ideas in all of statistics, and one of the easiest to get wrong. Just because two things are correlated – they rise and fall together – does not mean that one causes the other. A relationship in the data is a clue, not a…",
+      "context": "This is one of the most important ideas in all of statistics, and one of the easiest to get wrong. Just because two things are correlated – they rise and fall together – does not mean that one causes the other.",
       "prompt": "A scatter graph’s points slope upward from left to right. Name the type of correlation.",
       "answer": "Positive correlation.",
       "modelType": "model-5",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "Positive correlation."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range.",
+      "explanation": "Correlation Is Not Causation: This is one of the most important ideas in all of statistics, and one of the easiest to get wrong. Just because two things are correlated – they rise and fall together – does not mean that one causes the other. A relationship in the data is a clue, not a proof."
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Misleading Statistics and Unfair Samples",
-      "context": "Numbers can be used to inform you – or to fool you. Part of interpreting results is learning the common tricks, so you can spot them and refuse to be misled. Misleading scales. The most common trick is a graph whose y-axis does not start at zero. Suppose a…",
+      "context": "Numbers can be used to inform you – or to fool you. Part of interpreting results is learning the common tricks, so you can spot them and refuse to be misled. Misleading scales. The most common trick is a graph whose y-axis does not start at zero.",
       "prompt": "If the mean of 5 numbers is 20, what is their total?",
       "answer": "Total = 20 × 5 = 100.",
       "modelType": "model-6",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "Total = 20 × 5 = 100."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range.",
+      "explanation": "Misleading Statistics and Unfair Samples: Numbers can be used to inform you – or to fool you. Part of interpreting results is learning the common tricks, so you can spot them and refuse to be misled."
     }
   ],
   "visualModels": [
@@ -176,7 +176,7 @@
       "outcomeId": "lo01",
       "title": "Averages – Choosing the Right One",
       "modelType": "concept-model-1",
-      "purpose": "An average is a single number that stands in for a whole set of values – a typical value. There are three averages you must know, and the skill in Year 8 is not just calculating them but choosing the one that describes…",
+      "purpose": "An average is a single number that stands in for a whole set of values – a typical value.",
       "defaultNumber": null
     },
     {
@@ -184,7 +184,7 @@
       "outcomeId": "lo02",
       "title": "Spread – Range and the Interquartile Range",
       "modelType": "concept-model-2",
-      "purpose": "An average tells you where the *centre* of the data sits, but it says nothing about how *spread out* the values are. Two footballers might both average 12 goals a season, yet one scores steadily each year while the…",
+      "purpose": "An average tells you where the *centre* of the data sits, but it says nothing about how *spread out* the values are.",
       "defaultNumber": null
     },
     {
@@ -192,7 +192,7 @@
       "outcomeId": "lo03",
       "title": "Comparing Two Distributions",
       "modelType": "concept-model-3",
-      "purpose": "A distribution is the whole picture of how a set of values is spread out. One of the most important skills in this unit is comparing two distributions – two classes, two players, two markets – and saying which is…",
+      "purpose": "A distribution is the whole picture of how a set of values is spread out.",
       "defaultNumber": null
     },
     {
@@ -200,7 +200,7 @@
       "outcomeId": "lo04",
       "title": "Scatter Graphs and Correlation",
       "modelType": "concept-model-4",
-      "purpose": "So far we have looked at one quantity at a time. A scatter graph lets you explore whether two quantities are related. You collect pairs of measurements – for each person, or day, or animal, you record two things – and…",
+      "purpose": "So far we have looked at one quantity at a time. A scatter graph lets you explore whether two quantities are related.",
       "defaultNumber": null
     },
     {
@@ -208,7 +208,7 @@
       "outcomeId": "lo05",
       "title": "Correlation Is Not Causation",
       "modelType": "concept-model-5",
-      "purpose": "This is one of the most important ideas in all of statistics, and one of the easiest to get wrong. Just because two things are correlated – they rise and fall together – does not mean that one causes the other. A…",
+      "purpose": "This is one of the most important ideas in all of statistics, and one of the easiest to get wrong. Just because two things are correlated – they rise and fall together – does not mean that one causes the other.",
       "defaultNumber": null
     },
     {
@@ -216,7 +216,7 @@
       "outcomeId": "lo06",
       "title": "Misleading Statistics and Unfair Samples",
       "modelType": "concept-model-6",
-      "purpose": "Numbers can be used to inform you – or to fool you. Part of interpreting results is learning the common tricks, so you can spot them and refuse to be misled. Misleading scales. The most common trick is a graph whose…",
+      "purpose": "Numbers can be used to inform you – or to fool you. Part of interpreting results is learning the common tricks, so you can spot them and refuse to be misled. Misleading scales.",
       "defaultNumber": null
     }
   ],
@@ -226,7 +226,7 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "title": "How to find the interquartile range",
-      "example": "Find the mean, median, mode and range of: 15, 18, 22, 18, 25, 30, 18, 27.",
+      "example": "Find Q1, Q3 and the IQR of: 12, 15, 18, 20, 22, 25, 28, 30, 35, 38, 42.",
       "steps": [
         "Put all the data in order from smallest to largest.",
         "Find the median (Q2) – the middle value.",
@@ -239,11 +239,11 @@
       "outcomeId": "lo02",
       "difficulty": "Core",
       "title": "How to compare two distributions",
-      "example": "Find the mean, median, mode and range of: 15, 18, 22, 18, 25, 30, 18, 27.",
+      "example": "Class A: median 64, IQR 6. Class B: median 58, IQR 15. Compare the two classes’ test performance.",
       "steps": [
         "Find an average (usually the median) for each set.",
         "Find a measure of spread (usually the IQR) for each set.",
-        "Check the how to compare two distributions result carefully."
+        "Check both measures use the same units so the comparison is fair."
       ]
     },
     {
@@ -251,11 +251,11 @@
       "outcomeId": "lo03",
       "difficulty": "Core",
       "title": "Compare the spreads: which is more consistent, and what does that mean?",
-      "example": "Find Q1, Q3 and the IQR of: 12, 15, 18, 20, 22, 25, 28, 30, 35, 38, 42.",
+      "example": "Class R: median 50, IQR 4. Class S: median 50, IQR 18. Write a full sentence comparing them.",
       "steps": [
         "Write one sentence covering both, in context.",
-        "Check the compare the spreads: which is more consistent, and what does that mean? result carefully.",
-        "Check the compare the spreads: which is more consistent, and what does that mean? result carefully."
+        "Compare the two spread values directly — the smaller spread is the more consistent set.",
+        "Check your sentence names both which set is more consistent and by how much."
       ]
     },
     {
@@ -263,7 +263,7 @@
       "outcomeId": "lo04",
       "difficulty": "Core",
       "title": "How to use a scatter graph",
-      "example": "Class A: median 64, IQR 6. Class B: median 58, IQR 15. Compare the two classes’ test performance.",
+      "example": "Temperature (°C) and ice-cream sales at a beach stall over six days: (24, 30), (26, 38), (28, 45), (30, 52), (32, 60), (34, 66). Plot the points, describe the correlation, draw a line of best fit, and use it to predict sales at 29°C.",
       "steps": [
         "Plot each pair of values as a point.",
         "Describe the correlation: direction (positive/negative/none) and strength (strong/weak).",
@@ -292,7 +292,7 @@
       "steps": [
         "Solution: Prediction (a) at 3 hours is inside the data range (1 to 5 hours), so it is interpolation and is reliable.",
         "Prediction (b) at 12 hours is outside the range, so it is extrapolation – unreliable, because there is no evidence the trend continues that far, and the score cannot exceed 100% anyway.",
-        "Check the interpolation vs extrapolation result carefully."
+        "Check by confirming whether your x-value falls inside or outside the original data range before trusting the prediction."
       ]
     }
   ],
@@ -303,15 +303,15 @@
       "difficulty": "Basic",
       "title": "Mean, median, mode and range",
       "prompt": "Find the mean, median, mode and range of: 15, 18, 22, 18, 25, 30, 18, 27.",
-      "solution": "Solution: There are 8 values. Mean = (15 + 18 + 22 + 18 + 25 + 30 + 18 + 27) ÷ 8 = 173 ÷ 8 = 21.625. To find the median, order them: 15, 18, 18, 18, 22, 25, 27, 30. With 8 values the median is the mean of the 4th and 5th: (18 + 22) ÷ 2 = 20. The mode is 18 (it appears three times). The range is 30 − 15 = 15. Worked Example 2: Which average is fairest? A small workshop pays five workers 200, 220, 210, 230 and 900 shillings a day. Which average best describes a typical wage? Solution: The mean is (200 + 220 + 210 +…"
+      "solution": "Solution: There are 8 values. Mean = (15 + 18 + 22 + 18 + 25 + 30 + 18 + 27) ÷ 8 = 173 ÷ 8 = 21.625. To find the median, order them: 15, 18, 18, 18, 22, 25, 27, 30. With 8 values the median is the mean of the 4th and 5th: (18 + 22) ÷ 2 = 20. The mode is 18 (it appears three times). The range is 30 − 15 = 15."
     },
     {
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Basic",
       "title": "Which average is fairest?",
-      "prompt": "Find the mean, median, mode and range of: 15, 18, 22, 18, 25, 30, 18, 27.",
-      "solution": "Solution: There are 8 values. Mean = (15 + 18 + 22 + 18 + 25 + 30 + 18 + 27) ÷ 8 = 173 ÷ 8 = 21.625. To find the median, order them: 15, 18, 18, 18, 22, 25, 27, 30. With 8 values the median is the mean of the 4th and 5th: (18 + 22) ÷ 2 = 20. The mode is 18 (it appears three times). The range is 30 − 15 = 15. Worked Example 2: Which average is fairest? A small workshop pays five workers 200, 220, 210, 230 and 900 shillings a day. Which average best describes a typical wage? Solution: The mean is (200 + 220 + 210 +…"
+      "prompt": "A small workshop pays five workers 200, 220, 210, 230 and 900 shillings a day. Which average best describes a typical wage?",
+      "solution": "Solution: The mean is (200 + 220 + 210 + 230 + 900) ÷ 5 = 1760 ÷ 5 = 352 shillings. But four of the five workers earn close to 200–230, and only one earns 900. Ordering the wages – 200, 210, 220, 230, 900 – the median is 220 shillings. The median is the fairer typical wage: the outlier of 900 pulls the mean far above what most workers actually earn."
     },
     {
       "id": "we03",
@@ -367,7 +367,7 @@
       "difficulty": "Challenge",
       "title": "Practice 9",
       "prompt": "Class P: median 48, IQR 6. Class Q: median 60, IQR 6. Write a full sentence comparing the two classes.",
-      "solution": "Both classes have the same IQR (6, equally consistent), but Class Q has the higher median (60 vs"
+      "solution": "Both classes have the same IQR (6, equally consistent), but Class Q has the higher median (60 vs 48), so Class Q performed better on average."
     },
     {
       "id": "we10",
@@ -375,7 +375,7 @@
       "difficulty": "Challenge",
       "title": "Practice 10",
       "prompt": "Class R: median 50, IQR 4. Class S: median 50, IQR 18. Write a full sentence comparing them.",
-      "solution": ", so Class Q performed better on average."
+      "solution": "Both classes have the same median (50), but Class S has a much larger IQR (18 vs 4), so Class R is far more consistent while Class S is very spread out."
     },
     {
       "id": "we11",
@@ -383,7 +383,7 @@
       "difficulty": "Challenge",
       "title": "Practice 11",
       "prompt": "For a scatter graph of ‘age of car’ against ‘resale value’, describe the type of correlation you would expect and explain why.",
-      "solution": "Both have the same median (50), but Class S has a much larger IQR (18 vs"
+      "solution": "Negative correlation: as a car’s age increases, its resale value tends to decrease, because older cars usually have higher mileage, more wear and outdated features. The relationship is likely fairly strong, though not perfect, since a car’s condition also affects its value."
     },
     {
       "id": "we12",
@@ -391,7 +391,7 @@
       "difficulty": "Challenge",
       "title": "Practice 12",
       "prompt": "Explain, with an example, the difference between interpolation and extrapolation.",
-      "solution": ", so Class R is far more consistent while Class S is very spread out."
+      "solution": "Interpolation is predicting a value that lies inside the range of the data you collected – this is usually reliable. Extrapolation is predicting a value outside that range – this is less reliable because there is no evidence the trend continues. For example, if revision time from 1 to 5 hours was recorded against test score, predicting the score for 3 hours of revision is interpolation, but predicting for 12 hours is extrapolation."
     }
   ],
   "practice": [
@@ -400,84 +400,84 @@
       "level": "Warm-up",
       "prompt": "Find the mean, median, mode and range of: 6, 9, 6, 12, 15, 6, 10.",
       "answer": "1) Sum = 64, mean ≈ 9.14; ordered 6,6,6,9,10,12,15, median = 9; mode = 6; range = 15 − 6 = 9.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range."
     },
     {
       "id": "p02",
       "level": "Warm-up",
       "prompt": "Find the range of: 55, 48, 61, 39, 72, 50.",
       "answer": "Range = 72 − 39 = 33.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range."
     },
     {
       "id": "p03",
       "level": "Warm-up",
       "prompt": "Order and find the median of: 14, 8, 22, 11, 19, 6, 17.",
       "answer": "Ordered 6,8,11,14,17,19,22, median = 14.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range."
     },
     {
       "id": "p04",
       "level": "Warm-up",
       "prompt": "What is the mode of: 3, 7, 3, 9, 3, 5, 7?",
       "answer": "Mode = 3.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range."
     },
     {
       "id": "p05",
       "level": "Warm-up",
       "prompt": "A scatter graph’s points slope upward from left to right. Name the type of correlation.",
       "answer": "Positive correlation.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range."
     },
     {
       "id": "p06",
       "level": "Warm-up",
       "prompt": "If the mean of 5 numbers is 20, what is their total?",
       "answer": "Total = 20 × 5 = 100.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range."
     },
     {
       "id": "p07",
       "level": "Core",
       "prompt": "For the data 10, 12, 14, 15, 18, 21, 24, 28, 30 find the median, Q1, Q3 and the IQR.",
       "answer": "1) 9 values in order; median (5th) = 18; lower half 10,12,14,15 → Q1 = (12+14)÷2 = 13; upper half 21,24,28,30 → Q3 = (24+28)÷2 = 26; IQR = 26 − 13 = 13.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range."
     },
     {
       "id": "p08",
       "level": "Core",
       "prompt": "A data set has an outlier of 500 among values near 20. Explain whether the mean or median is the fairer average, and why.",
       "answer": "The median is fairer because the outlier 500 hugely inflates the mean while the median stays among the typical values.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range."
     },
     {
       "id": "p09",
       "level": "Core",
       "prompt": "Class P: median 48, IQR 6. Class Q: median 60, IQR 6. Write a full sentence comparing the two classes.",
-      "answer": "Both classes have the same IQR (6, equally consistent), but Class Q has the higher median (60 vs",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "Both classes have the same IQR (6, equally consistent), but Class Q has the higher median (60 vs 48), so Class Q performed better on average.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range."
     },
     {
       "id": "p10",
       "level": "Core",
       "prompt": "Class R: median 50, IQR 4. Class S: median 50, IQR 18. Write a full sentence comparing them.",
-      "answer": ", so Class Q performed better on average.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "Both classes have the same median (50), but Class S has a much larger IQR (18 vs 4), so Class R is far more consistent while Class S is very spread out.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range."
     },
     {
       "id": "p11",
       "level": "Core",
       "prompt": "For a scatter graph of ‘age of car’ against ‘resale value’, describe the type of correlation you would expect and explain why.",
-      "answer": "Both have the same median (50), but Class S has a much larger IQR (18 vs",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "Negative correlation: as a car’s age increases, its resale value tends to decrease, because older cars usually have higher mileage, more wear and outdated features. The relationship is likely fairly strong, though not perfect, since a car’s condition also affects its value.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range."
     },
     {
       "id": "p12",
       "level": "Core",
       "prompt": "Explain, with an example, the difference between interpolation and extrapolation.",
-      "answer": ", so Class R is far more consistent while Class S is very spread out.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "Interpolation is predicting a value that lies inside the range of the data you collected – this is usually reliable. Extrapolation is predicting a value outside that range – this is less reliable because there is no evidence the trend continues. For example, if revision time from 1 to 5 hours was recorded against test score, predicting the score for 3 hours of revision is interpolation, but predicting for 12 hours is extrapolation.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range."
     }
   ],
   "activities": [
@@ -516,7 +516,7 @@
     },
     {
       "title": "The Correlation-or-Cause Debate",
-      "materials": "a partner or family member to debate with.",
+      "materials": "a partner, family member, or your AI tutor to debate with.",
       "steps": [
         "Write five ‘A goes with B’ statements, e.g. ‘towns with more phones have more illness’.",
         "For each, one person argues ‘A causes B’ and the other must find a confounding variable.",
@@ -526,7 +526,7 @@
     },
     {
       "title": "Compare Two Distributions (Group Task)",
-      "materials": "your data from Activity 1 and a classmate’s data on the same question.",
+      "materials": "your data from Activity 1 and a classmate’s data on the same question (or a second data set you collect yourself if no classmate is available).",
       "steps": [
         "Put both data sets side by side. Calculate the median and IQR for each.",
         "Write a full comparison sentence using both an average and a spread, in context.",
@@ -549,7 +549,7 @@
   "reference": {
     "rules": [
       {
-        "title": "A distribution is the whole picture of",
+        "title": "Always Compare an Average AND a Spread",
         "text": "A distribution is the whole picture of how a set of values is spread out. One of the most important skills in this unit is comparing two distributions – two classes, two players, two markets – and saying which is ‘better’ or how they differ. The golden rule is this: always compare an average AND a measure of spread, and always write your comparison in context. One number is never enough."
       }
     ],
@@ -637,7 +637,7 @@
       "difficulty": "Round 1",
       "prompt": "Find the mean, median, mode and range of: 6, 9, 6, 12, 15, 6, 10.",
       "answer": "1) Sum = 64, mean ≈ 9.14; ordered 6,6,6,9,10,12,15, median = 9; mode = 6; range = 15 − 6 = 9.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range.",
       "errorFeedback": "1) Sum = 64, mean ≈ 9.14; ordered 6,6,6,9,10,12,15, median = 9; mode = 6; range = 15 − 6 = 9."
     },
     {
@@ -646,7 +646,7 @@
       "difficulty": "Round 1",
       "prompt": "Find the range of: 55, 48, 61, 39, 72, 50.",
       "answer": "Range = 72 − 39 = 33.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range.",
       "errorFeedback": "Range = 72 − 39 = 33."
     },
     {
@@ -655,7 +655,7 @@
       "difficulty": "Round 1",
       "prompt": "Order and find the median of: 14, 8, 22, 11, 19, 6, 17.",
       "answer": "Ordered 6,8,11,14,17,19,22, median = 14.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range.",
       "errorFeedback": "Ordered 6,8,11,14,17,19,22, median = 14."
     },
     {
@@ -664,7 +664,7 @@
       "difficulty": "Round 1",
       "prompt": "What is the mode of: 3, 7, 3, 9, 3, 5, 7?",
       "answer": "Mode = 3.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range.",
       "errorFeedback": "Mode = 3."
     },
     {
@@ -673,7 +673,7 @@
       "difficulty": "Round 2",
       "prompt": "A scatter graph’s points slope upward from left to right. Name the type of correlation.",
       "answer": "Positive correlation.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range.",
       "errorFeedback": "Positive correlation."
     },
     {
@@ -682,7 +682,7 @@
       "difficulty": "Round 2",
       "prompt": "If the mean of 5 numbers is 20, what is their total?",
       "answer": "Total = 20 × 5 = 100.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range.",
       "errorFeedback": "Total = 20 × 5 = 100."
     },
     {
@@ -691,7 +691,7 @@
       "difficulty": "Round 2",
       "prompt": "For the data 10, 12, 14, 15, 18, 21, 24, 28, 30 find the median, Q1, Q3 and the IQR.",
       "answer": "1) 9 values in order; median (5th) = 18; lower half 10,12,14,15 → Q1 = (12+14)÷2 = 13; upper half 21,24,28,30 → Q3 = (24+28)÷2 = 26; IQR = 26 − 13 = 13.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range.",
       "errorFeedback": "1) 9 values in order; median (5th) = 18; lower half 10,12,14,15 → Q1 = (12+14)÷2 = 13; upper half 21,24,28,30 → Q3 = (24+28)÷2 = 26; IQR = 26 − 13 = 13."
     },
     {
@@ -700,7 +700,7 @@
       "difficulty": "Round 2",
       "prompt": "A data set has an outlier of 500 among values near 20. Explain whether the mean or median is the fairer average, and why.",
       "answer": "The median is fairer because the outlier 500 hugely inflates the mean while the median stays among the typical values.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range.",
       "errorFeedback": "The median is fairer because the outlier 500 hugely inflates the mean while the median stays among the typical values."
     },
     {
@@ -708,36 +708,36 @@
       "outcomeId": "lo01",
       "difficulty": "Round 3",
       "prompt": "Class P: median 48, IQR 6. Class Q: median 60, IQR 6. Write a full sentence comparing the two classes.",
-      "answer": "Both classes have the same IQR (6, equally consistent), but Class Q has the higher median (60 vs",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "Both classes have the same IQR (6, equally consistent), but Class Q has the higher median (60 vs"
+      "answer": "Both classes have the same IQR (6, equally consistent), but Class Q has the higher median (60 vs 48), so Class Q performed better on average.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range.",
+      "errorFeedback": "Both classes have the same IQR (6, equally consistent), but Class Q has the higher median (60 vs 48), so Class Q performed better on average."
     },
     {
       "id": "fl10",
       "outcomeId": "lo02",
       "difficulty": "Round 3",
       "prompt": "Class R: median 50, IQR 4. Class S: median 50, IQR 18. Write a full sentence comparing them.",
-      "answer": ", so Class Q performed better on average.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": ", so Class Q performed better on average."
+      "answer": "Both classes have the same median (50), but Class S has a much larger IQR (18 vs 4), so Class R is far more consistent while Class S is very spread out.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range.",
+      "errorFeedback": "Both classes have the same median (50), but Class S has a much larger IQR (18 vs 4), so Class R is far more consistent while Class S is very spread out."
     },
     {
       "id": "fl11",
       "outcomeId": "lo03",
       "difficulty": "Round 3",
       "prompt": "For a scatter graph of ‘age of car’ against ‘resale value’, describe the type of correlation you would expect and explain why.",
-      "answer": "Both have the same median (50), but Class S has a much larger IQR (18 vs",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "Both have the same median (50), but Class S has a much larger IQR (18 vs"
+      "answer": "Negative correlation: as a car’s age increases, its resale value tends to decrease, because older cars usually have higher mileage, more wear and outdated features. The relationship is likely fairly strong, though not perfect, since a car’s condition also affects its value.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range.",
+      "errorFeedback": "Negative correlation: as a car’s age increases, its resale value tends to decrease, because older cars usually have higher mileage, more wear and outdated features. The relationship is likely fairly strong, though not perfect, since a car’s condition also affects its value."
     },
     {
       "id": "fl12",
       "outcomeId": "lo04",
       "difficulty": "Round 3",
       "prompt": "Explain, with an example, the difference between interpolation and extrapolation.",
-      "answer": ", so Class R is far more consistent while Class S is very spread out.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": ", so Class R is far more consistent while Class S is very spread out."
+      "answer": "Interpolation is predicting a value that lies inside the range of the data you collected – this is usually reliable. Extrapolation is predicting a value outside that range – this is less reliable because there is no evidence the trend continues. For example, if revision time from 1 to 5 hours was recorded against test score, predicting the score for 3 hours of revision is interpolation, but predicting for 12 hours is extrapolation.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean / Median / Mode or Range.",
+      "errorFeedback": "Interpolation is predicting a value that lies inside the range of the data you collected – this is usually reliable. Extrapolation is predicting a value outside that range – this is less reliable because there is no evidence the trend continues. For example, if revision time from 1 to 5 hours was recorded against test score, predicting the score for 3 hours of revision is interpolation, but predicting for 12 hours is extrapolation."
     }
   ],
   "realProblems": [
@@ -747,9 +747,9 @@
       "difficulty": "Core",
       "context": "Home",
       "prompt": "The daily numbers of customers at Hassan’s Eastleigh shop over a week were 40, 44, 41, 43, 120, 42, 45. Find the mean and median. Explain which is the fairer typical value and why the other is misleading.",
-      "answer": "1) Mean = 475÷7 ≈ 67.9; ordered 40,41,42,43,44,45,120, median = 43. The median (43) is fairer; the mean is misleading because the outlier 120 (an unusually busy day) pulls it far above every other day.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "1) Mean = 475÷7 ≈ 67.9; ordered 40,41,42,43,44,45,120, median = 43. The median (43) is fairer; the mean is misleading because the outlier 120 (an unusually busy day) pulls it far above every other day."
+      "answer": "1) Mean = 375÷7 ≈ 53.6; ordered 40,41,42,43,44,45,120, median = 43. The median (43) is fairer; the mean is misleading because the outlier 120 (an unusually busy day) pulls it far above every other day.",
+      "hint": "Decide which idea the question is really about (Mean / Median / Mode, Range, Quartiles (Q1, Q3)), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "1) Mean = 375÷7 ≈ 53.6; ordered 40,41,42,43,44,45,120, median = 43. The median (43) is fairer; the mean is misleading because the outlier 120 (an unusually busy day) pulls it far above every other day."
     },
     {
       "id": "rp02",
@@ -757,9 +757,9 @@
       "difficulty": "Core",
       "context": "Market",
       "prompt": "Over 10 matches, two strikers both average 2 goals. Striker A: range 1. Striker B: range 6. Compare their consistency and say what extra information you would want before choosing one for a cup final.",
-      "answer": "Both average 2 goals, but Striker A (range",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "Both average 2 goals, but Striker A (range"
+      "answer": "Both average 2 goals, but Striker A (range 1) is far more consistent, while Striker B (range 6) is more variable; before choosing, you might want the medians, recent form, and the strength of the opposition faced.",
+      "hint": "Decide which idea the question is really about (Mean / Median / Mode, Range, Quartiles (Q1, Q3)), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "Both average 2 goals, but Striker A (range 1) is far more consistent, while Striker B (range 6) is more variable; before choosing, you might want the medians, recent form, and the strength of the opposition faced."
     },
     {
       "id": "rp03",
@@ -767,9 +767,9 @@
       "difficulty": "Core",
       "context": "Travel",
       "prompt": "Yusuf plots ‘hours of football training per week’ against ‘number of goals scored’ and finds a moderate positive correlation. Write a careful conclusion that does NOT claim causation, and name a confounding factor.",
-      "answer": "is far more consistent and Striker B (range",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "is far more consistent and Striker B (range"
+      "answer": "There is a moderate positive correlation, so players who train more tend to score more goals. However, this is not proof that training causes more goals – a confounding factor such as natural ability or match time could affect both.",
+      "hint": "Decide which idea the question is really about (Mean / Median / Mode, Range, Quartiles (Q1, Q3)), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "There is a moderate positive correlation, so players who train more tend to score more goals. However, this is not proof that training causes more goals – a confounding factor such as natural ability or match time could affect both."
     },
     {
       "id": "rp04",
@@ -777,9 +777,9 @@
       "difficulty": "Challenge",
       "context": "School",
       "prompt": "A drinks company advertises: ‘70% of people preferred our juice’. The survey was 20 people at the company’s own stall. Write a short paragraph critiquing this claim, mentioning sample size and bias.",
-      "answer": "is more variable; before choosing, you might want the medians, recent form, and the strength of the opposition faced.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "is more variable; before choosing, you might want the medians, recent form, and the strength of the opposition faced."
+      "answer": "The sample is both too small and biased: only 20 people were asked, which is far too few to represent everyone, and they were surveyed at the company’s own stall, where people are more likely to already like the product (selection bias). A fair survey would ask a larger, randomly chosen sample of people who are not already customers.",
+      "hint": "Decide which idea the question is really about (Mean / Median / Mode, Range, Quartiles (Q1, Q3)), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "The sample is both too small and biased: only 20 people were asked, which is far too few to represent everyone, and they were surveyed at the company’s own stall, where people are more likely to already like the product (selection bias). A fair survey would ask a larger, randomly chosen sample of people who are not already customers."
     },
     {
       "id": "rp05",
@@ -787,9 +787,9 @@
       "difficulty": "Challenge",
       "context": "Community",
       "prompt": "Temperature (°C) and ice-cream sales at a Kismaayo beach stall over six days: (24, 30), (26, 38), (28, 45), (30, 52), (32, 60), (34, 66). Describe the correlation, and use the trend to estimate sales at 29°C (interpolation). Then explain why estimating sales at 45°C would be unreliable.",
-      "answer": "Example: ‘There is a moderate positive correlation, so players who train more tend to score more goals. However, this is not proof that training causes more goals – a confounding factor such as natural ability or match time could affect both.’",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "Example: ‘There is a moderate positive correlation, so players who train more tend to score more goals. However, this is not proof that training causes more goals – a confounding factor such as natural ability or match time could affect both.’"
+      "answer": "There is a strong positive correlation: as temperature rises, ice-cream sales rise too. Using the trend, at 29°C (between the 28°C and 30°C data points) sales would be about 48–49 ice creams. Estimating sales at 45°C would be unreliable because it is far outside the measured range (24°C–34°C) – this is extrapolation, and there is no evidence the same trend continues at such extreme, unusual temperatures.",
+      "hint": "Decide which idea the question is really about (Mean / Median / Mode, Range, Quartiles (Q1, Q3)), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "There is a strong positive correlation: as temperature rises, ice-cream sales rise too. Using the trend, at 29°C (between the 28°C and 30°C data points) sales would be about 48–49 ice creams. Estimating sales at 45°C would be unreliable because it is far outside the measured range (24°C–34°C) – this is extrapolation, and there is no evidence the same trend continues at such extreme, unusual temperatures."
     },
     {
       "id": "rp06",
@@ -797,9 +797,9 @@
       "difficulty": "Core",
       "context": "Daily life",
       "prompt": "Explain, with an example, the difference between interpolation and extrapolation.",
-      "answer": ", so Class R is far more consistent while Class S is very spread out.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": ", so Class R is far more consistent while Class S is very spread out."
+      "answer": "Interpolation is predicting a value that lies inside the range of the data you collected – this is usually reliable. Extrapolation is predicting a value outside that range – this is less reliable because there is no evidence the trend continues. For example, if revision time from 1 to 5 hours was recorded against test score, predicting the score for 3 hours of revision is interpolation, but predicting for 12 hours is extrapolation.",
+      "hint": "Decide which idea the question is really about (Mean / Median / Mode, Range, Quartiles (Q1, Q3)), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "Interpolation is predicting a value that lies inside the range of the data you collected – this is usually reliable. Extrapolation is predicting a value outside that range – this is less reliable because there is no evidence the trend continues. For example, if revision time from 1 to 5 hours was recorded against test score, predicting the score for 3 hours of revision is interpolation, but predicting for 12 hours is extrapolation."
     }
   ],
   "reasoningPrompts": [
@@ -840,7 +840,7 @@
         "IQR",
         "Distribution"
       ],
-      "modelAnswer": "Either answer is acceptable with justification: Keeper A (IQR"
+      "modelAnswer": "Either answer is acceptable with justification: Keeper A (IQR 0) is perfectly consistent – you always know what to expect, which is useful in a tense match. Keeper B (IQR 3) is more variable – capable of outstanding games but also risky ones. A cautious manager might prefer Keeper A’s reliability; a manager chasing a win might gamble on Keeper B’s occasional brilliance."
     },
     {
       "id": "reason04",
@@ -853,7 +853,7 @@
         "Distribution",
         "Correlation"
       ],
-      "modelAnswer": "is perfectly consistent/predictable; Keeper B (IQR"
+      "modelAnswer": "Amina’s sample is biased because she only asked people who were already leaving the library – they are far more likely to enjoy reading than the average young person. This is selection bias: the sample is not representative of all young people. A fairer method would be to survey a random sample of young people from many different places (school, home, online), not just library visitors."
     },
     {
       "id": "reason05",
@@ -862,11 +862,11 @@
       "responseMode": "text",
       "prompt": "Explain the key idea in Correlation Is Not Causation.",
       "keyIdeas": [
-        "Mean / Median / Mode",
-        "Range",
-        "Quartiles (Q1, Q3)"
+        "Correlation",
+        "Causation",
+        "Confounding variable"
       ],
-      "modelAnswer": "This is one of the most important ideas in all of statistics, and one of the easiest to get wrong. Just because two things are correlated – they rise and fall together – does not mean that one causes the other. A relationship in the data is a clue, not a proof. Here is the classic example. Across the year, ice-cream sales and cases of sunburn both go up and down together – a strong positive correlation. But ice cream does not cause sunburn, and sunburn does not cause people to buy ice cream. A third factor – hot,…"
+      "modelAnswer": "This is one of the most important ideas in all of statistics, and one of the easiest to get wrong. Just because two things are correlated – they rise and fall together – does not mean that one causes the other. A relationship in the data is a clue, not a proof. Here is the classic example. Across the year, ice-cream sales and cases of sunburn both go up and down together – a strong positive correlation. But ice cream does not cause sunburn, and sunburn does not cause people to buy ice cream. A third factor – hot, sunny weather – causes both: more people buy ice cream AND more people get sunburnt on hot days. This hidden third factor is called a confounding variable, and it is why a correlation is always a clue, never proof, that one thing causes another."
     },
     {
       "id": "reason06",
@@ -875,11 +875,11 @@
       "responseMode": "text",
       "prompt": "Explain the key idea in Misleading Statistics and Unfair Samples.",
       "keyIdeas": [
-        "Mean / Median / Mode",
-        "Range",
-        "Quartiles (Q1, Q3)"
+        "Bias",
+        "Distribution",
+        "Outlier"
       ],
-      "modelAnswer": "Numbers can be used to inform you – or to fool you. Part of interpreting results is learning the common tricks, so you can spot them and refuse to be misled. Misleading scales. The most common trick is a graph whose y-axis does not start at zero. Suppose a company’s sales rose from £100 million to £110 million – a modest 10% rise. If the y-axis starts at £95 million, the bar for £110 looks about three times taller than the bar for £100, making a small change appear dramatic. Always check where the axis starts…"
+      "modelAnswer": "Numbers can be used to inform you – or to fool you. Part of interpreting results is learning the common tricks, so you can spot them and refuse to be misled. Misleading scales. The most common trick is a graph whose y-axis does not start at zero. Suppose a company’s sales rose from £100 million to £110 million – a modest 10% rise. If the y-axis starts at £95 million, the bar for £110 looks about three times taller than the bar for £100, making a small change appear dramatic. Always check where the axis starts before trusting a graph. Other tricks include cherry-picking a flattering time period and quoting results from a biased sample as if they represent everyone. The habit that protects you from all of these: read the axis, check the sample, and ask what has been left out before you believe a claim."
     }
   ],
   "assessment": {
@@ -898,7 +898,7 @@
           "1"
         ],
         "answer": "11",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Ask yourself what \"Mean / Median / Mode\" means here before you choose.",
         "explanation": "11 appears more than any other value, so it is the mode."
       },
       {
@@ -914,7 +914,7 @@
           "17"
         ],
         "answer": "11",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Work it out yourself first, then look for your answer among the options.",
         "explanation": "Range = largest − smallest = 17 − 6 = 11."
       },
       {
@@ -922,96 +922,96 @@
         "type": "Application",
         "outcomeId": "lo03",
         "difficulty": "Basic",
-        "question": "Here is some data: 7, 10, 3, 16, 2. What is the largest value?",
+        "question": "Class A has a median test score of 62 and an IQR of 5. Class B has a median test score of 70 and an IQR of 5. Which class performed better on average?",
         "options": [
-          "15",
-          "7",
-          "16",
-          "2"
+          "Class B",
+          "Class A",
+          "They performed equally",
+          "Cannot be determined"
         ],
-        "answer": "16",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Look for the biggest number: 16."
+        "answer": "Class B",
+        "hint": "Compare the medians first, then check what the equal IQRs tell you.",
+        "explanation": "Class B has the higher median (70 vs 62), so Class B performed better on average; both classes are equally consistent since they share the same IQR (5)."
       },
       {
         "id": "q04",
         "type": "Application",
         "outcomeId": "lo04",
         "difficulty": "Basic",
-        "question": "Here is some data: 18, 10, 9, 8, 7. What is the largest value?",
+        "question": "A scatter graph shows that as hours of sunshine increase, ice-cream sales also increase, and the points lie close to a straight line. What type of correlation is this?",
         "options": [
-          "7",
-          "17",
-          "19",
-          "18"
+          "Strong positive correlation",
+          "Strong negative correlation",
+          "Weak positive correlation",
+          "No correlation"
         ],
-        "answer": "18",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Look for the biggest number: 18."
+        "answer": "Strong positive correlation",
+        "hint": "Look at the direction (do both go up together?) and how close the points are to a line.",
+        "explanation": "Both variables increase together (positive), and the points lie close to a line, so the correlation is strong."
       },
       {
         "id": "q05",
         "type": "Application",
         "outcomeId": "lo05",
         "difficulty": "Core",
-        "question": "Here is some data: 3, 5, 9, 11, 20. What is the largest value?",
+        "question": "A scatter graph plots plant height against weeks of growth using data from week 1 to week 8. A line of best fit is used to predict the height at week 20. Why is this prediction unreliable?",
         "options": [
-          "21",
-          "20",
-          "3",
-          "19"
+          "Week 20 is far outside the data range, so this is extrapolation",
+          "Week 20 is inside the data range, so this is interpolation",
+          "A line of best fit can never be used to make predictions",
+          "The correlation must be negative"
         ],
-        "answer": "20",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Look for the biggest number: 20."
+        "answer": "Week 20 is far outside the data range, so this is extrapolation",
+        "hint": "Check whether the value you're predicting falls inside or outside the range of the original data.",
+        "explanation": "Predicting a value outside the collected data range is extrapolation, which is unreliable because there's no evidence the trend continues that far."
       },
       {
         "id": "q06",
         "type": "Application",
         "outcomeId": "lo06",
         "difficulty": "Core",
-        "question": "Here is some data: 14, 19, 1, 10, 11. What is the range?",
+        "question": "A study finds that towns with more fire stations also have more fires. Does this mean fire stations cause fires?",
         "options": [
-          "17",
-          "18",
-          "19",
-          "1"
+          "No – a confounding factor, such as town size, likely explains both",
+          "Yes – fire stations directly cause fires",
+          "Yes, but only in small towns",
+          "No – there is no correlation at all"
         ],
-        "answer": "18",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Range = largest − smallest = 19 − 1 = 18."
+        "answer": "No – a confounding factor, such as town size, likely explains both",
+        "hint": "Think about what a bigger town would have more of, besides fire stations.",
+        "explanation": "This is correlation, not causation. Larger towns have more of everything – more fire stations and more fires – so town size is a likely confounding variable."
       },
       {
         "id": "q07",
         "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
-        "question": "A tally shows these counts: 16, 4, 7, 11, 1. What is the total?",
+        "question": "A company's bar chart has a y-axis that starts at 90 instead of 0, making a rise from 100 to 105 look huge. What is misleading about this graph?",
         "options": [
-          "40",
-          "38",
-          "16",
-          "39"
+          "The truncated y-axis exaggerates a small change",
+          "The bars are the wrong colour",
+          "There are too many bars",
+          "The x-axis has no units"
         ],
-        "answer": "39",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Add them all: 16 + 4 + 7 + 11 + 1 = 39."
+        "answer": "The truncated y-axis exaggerates a small change",
+        "hint": "Check where the y-axis starts before judging how big a change looks.",
+        "explanation": "When a y-axis doesn't start at zero, small differences look dramatic. Always check the axis before trusting a graph."
       },
       {
         "id": "q08",
         "type": "Application",
         "outcomeId": "lo08",
         "difficulty": "Challenge",
-        "question": "Here is some data: 9, 10, 7, 19, 3, 9. Which value appears most often (the mode)?",
+        "question": "After comparing two classes' test results, a student writes: 'Class A did better because its median was higher.' What is missing from this conclusion?",
         "options": [
-          "3",
-          "10",
-          "9",
-          "19"
+          "A measure of spread (e.g. IQR) and a statement of the data's limitations",
+          "The exact test date",
+          "The names of every student",
+          "Nothing – the conclusion is complete"
         ],
-        "answer": "9",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "9 appears more than any other value, so it is the mode."
+        "answer": "A measure of spread (e.g. IQR) and a statement of the data's limitations",
+        "hint": "A strong conclusion always compares an average AND a spread, and notes any limitations.",
+        "explanation": "A complete evidence-based conclusion compares an average AND a measure of spread, and states any limitations of the data, such as sample size."
       },
       {
         "id": "q09",
@@ -1026,7 +1026,7 @@
           "17"
         ],
         "answer": "9",
-        "hint": "Work it out step by step, then check each option.",
+        "hint": "Ask yourself what \"Causation\" means here before you choose.",
         "explanation": "9 appears more than any other value, so it is the mode."
       },
       {
@@ -1034,48 +1034,48 @@
         "type": "Reasoning",
         "outcomeId": "lo02",
         "difficulty": "Challenge",
-        "question": "What does “Mean / Median / Mode” mean?",
+        "question": "What does “IQR” mean?",
         "options": [
-          "The three averages: total÷n / middle / most frequent",
+          "Q3 − Q1; spread of the middle 50%",
           "Highest minus lowest value",
           "Values splitting ordered data into quarters",
-          "Q3 − Q1; spread of the middle 50%"
+          "How a set of values is spread out"
         ],
-        "answer": "The three averages: total÷n / middle / most frequent",
+        "answer": "Q3 − Q1; spread of the middle 50%",
         "hint": "Use the Unit 16 Math Words & Symbols reference.",
-        "explanation": "Mean / Median / Mode means The three averages: total÷n / middle / most frequent."
+        "explanation": "IQR means Q3 − Q1; spread of the middle 50%."
       },
       {
         "id": "q11",
         "type": "Reasoning",
         "outcomeId": "lo03",
         "difficulty": "Challenge",
-        "question": "What does “Range” mean?",
+        "question": "What does “Distribution” mean?",
         "options": [
-          "Highest minus lowest value",
-          "Values splitting ordered data into quarters",
-          "Q3 − Q1; spread of the middle 50%",
-          "How a set of values is spread out"
+          "How a set of values is spread out",
+          "A relationship between two variables",
+          "A straight line through the trend of a scatter graph",
+          "Predicting inside / outside the data range"
         ],
-        "answer": "Highest minus lowest value",
+        "answer": "How a set of values is spread out",
         "hint": "Use the Unit 16 Math Words & Symbols reference.",
-        "explanation": "Range means Highest minus lowest value."
+        "explanation": "Distribution means How a set of values is spread out."
       },
       {
         "id": "q12",
         "type": "Reasoning",
         "outcomeId": "lo04",
         "difficulty": "Challenge",
-        "question": "What does “Quartiles (Q1, Q3)” mean?",
+        "question": "What does “Correlation” mean?",
         "options": [
-          "Values splitting ordered data into quarters",
-          "Q3 − Q1; spread of the middle 50%",
-          "How a set of values is spread out",
-          "A relationship between two variables"
+          "A relationship between two variables",
+          "A straight line through the trend of a scatter graph",
+          "Predicting inside / outside the data range",
+          "One thing actually making another happen"
         ],
-        "answer": "Values splitting ordered data into quarters",
+        "answer": "A relationship between two variables",
         "hint": "Use the Unit 16 Math Words & Symbols reference.",
-        "explanation": "Quartiles (Q1, Q3) means Values splitting ordered data into quarters."
+        "explanation": "Correlation means A relationship between two variables."
       }
     ]
   },
@@ -1099,44 +1099,44 @@
               "1"
             ],
             "answer": "11",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Mean / Median / Mode\" means here before you choose.",
             "explanation": "11 appears more than any other value, so it is the mode."
           },
           {
-            "prompt": "Here is some data: 18, 10, 9, 8, 7. What is the largest value?",
+            "prompt": "A scatter graph shows that as hours of sunshine increase, ice-cream sales also increase, and the points lie close to a straight line. What type of correlation is this?",
             "choices": [
-              "7",
-              "17",
-              "19",
-              "18"
+              "Strong positive correlation",
+              "Strong negative correlation",
+              "Weak positive correlation",
+              "No correlation"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 18."
+            "answer": "Strong positive correlation",
+            "clue": "Look at the direction (do both go up together?) and how close the points are to a line.",
+            "explanation": "Both variables increase together (positive), and the points lie close to a line, so the correlation is strong."
           },
           {
-            "prompt": "A tally shows these counts: 16, 4, 7, 11, 1. What is the total?",
+            "prompt": "A company's bar chart has a y-axis that starts at 90 instead of 0, making a rise from 100 to 105 look huge. What is misleading about this graph?",
             "choices": [
-              "40",
-              "38",
-              "16",
-              "39"
+              "The truncated y-axis exaggerates a small change",
+              "The bars are the wrong colour",
+              "There are too many bars",
+              "The x-axis has no units"
             ],
-            "answer": "39",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 16 + 4 + 7 + 11 + 1 = 39."
+            "answer": "The truncated y-axis exaggerates a small change",
+            "clue": "Check where the y-axis starts before judging how big a change looks.",
+            "explanation": "When a y-axis doesn't start at zero, small differences look dramatic. Always check the axis before trusting a graph."
           },
           {
-            "prompt": "What does “Mean / Median / Mode” mean?",
+            "prompt": "What does “IQR” mean?",
             "choices": [
-              "The three averages: total÷n / middle / most frequent",
+              "Q3 − Q1; spread of the middle 50%",
               "Highest minus lowest value",
               "Values splitting ordered data into quarters",
-              "Q3 − Q1; spread of the middle 50%"
+              "How a set of values is spread out"
             ],
-            "answer": "The three averages: total÷n / middle / most frequent",
+            "answer": "Q3 − Q1; spread of the middle 50%",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Mean / Median / Mode means The three averages: total÷n / middle / most frequent."
+            "explanation": "IQR means Q3 − Q1; spread of the middle 50%."
           }
         ]
       },
@@ -1157,44 +1157,44 @@
               "17"
             ],
             "answer": "11",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Mean / Median / Mode\" means here before you choose.",
             "explanation": "Range = largest − smallest = 17 − 6 = 11."
           },
           {
-            "prompt": "Here is some data: 3, 5, 9, 11, 20. What is the largest value?",
+            "prompt": "A scatter graph plots plant height against weeks of growth using data from week 1 to week 8. A line of best fit is used to predict the height at week 20. Why is this prediction unreliable?",
             "choices": [
-              "21",
-              "20",
-              "3",
-              "19"
+              "Week 20 is far outside the data range, so this is extrapolation",
+              "Week 20 is inside the data range, so this is interpolation",
+              "A line of best fit can never be used to make predictions",
+              "The correlation must be negative"
             ],
-            "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 20."
+            "answer": "Week 20 is far outside the data range, so this is extrapolation",
+            "clue": "Check whether the value you're predicting falls inside or outside the range of the original data.",
+            "explanation": "Predicting a value outside the collected data range is extrapolation, which is unreliable because there's no evidence the trend continues that far."
           },
           {
-            "prompt": "Here is some data: 9, 10, 7, 19, 3, 9. Which value appears most often (the mode)?",
+            "prompt": "After comparing two classes' test results, a student writes: 'Class A did better because its median was higher.' What is missing from this conclusion?",
             "choices": [
-              "3",
-              "10",
-              "9",
-              "19"
+              "A measure of spread (e.g. IQR) and a statement of the data's limitations",
+              "The exact test date",
+              "The names of every student",
+              "Nothing – the conclusion is complete"
             ],
-            "answer": "9",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "9 appears more than any other value, so it is the mode."
+            "answer": "A measure of spread (e.g. IQR) and a statement of the data's limitations",
+            "clue": "A strong conclusion always compares an average AND a spread, and notes any limitations.",
+            "explanation": "A complete evidence-based conclusion compares an average AND a measure of spread, and states any limitations of the data, such as sample size."
           },
           {
-            "prompt": "What does “Range” mean?",
+            "prompt": "What does “Distribution” mean?",
             "choices": [
-              "Highest minus lowest value",
-              "Values splitting ordered data into quarters",
-              "Q3 − Q1; spread of the middle 50%",
-              "How a set of values is spread out"
+              "How a set of values is spread out",
+              "A relationship between two variables",
+              "A straight line through the trend of a scatter graph",
+              "Predicting inside / outside the data range"
             ],
-            "answer": "Highest minus lowest value",
+            "answer": "How a set of values is spread out",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Range means Highest minus lowest value."
+            "explanation": "Distribution means How a set of values is spread out."
           }
         ]
       },
@@ -1207,28 +1207,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 7, 10, 3, 16, 2. What is the largest value?",
+            "prompt": "Class A has a median test score of 62 and an IQR of 5. Class B has a median test score of 70 and an IQR of 5. Which class performed better on average?",
             "choices": [
-              "15",
-              "7",
-              "16",
-              "2"
+              "Class B",
+              "Class A",
+              "They performed equally",
+              "Cannot be determined"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 16."
+            "answer": "Class B",
+            "clue": "Compare the medians first, then check what the equal IQRs tell you.",
+            "explanation": "Class B has the higher median (70 vs 62), so Class B performed better on average; both classes are equally consistent since they share the same IQR (5)."
           },
           {
-            "prompt": "Here is some data: 14, 19, 1, 10, 11. What is the range?",
+            "prompt": "A study finds that towns with more fire stations also have more fires. Does this mean fire stations cause fires?",
             "choices": [
-              "17",
-              "18",
-              "19",
-              "1"
+              "No – a confounding factor, such as town size, likely explains both",
+              "Yes – fire stations directly cause fires",
+              "Yes, but only in small towns",
+              "No – there is no correlation at all"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 19 − 1 = 18."
+            "answer": "No – a confounding factor, such as town size, likely explains both",
+            "clue": "Think about what a bigger town would have more of, besides fire stations.",
+            "explanation": "This is correlation, not causation. Larger towns have more of everything – more fire stations and more fires – so town size is a likely confounding variable."
           },
           {
             "prompt": "Here is some data: 9, 1, 17, 11, 3, 9. Which value appears most often (the mode)?",
@@ -1239,20 +1239,20 @@
               "17"
             ],
             "answer": "9",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "9 appears more than any other value, so it is the mode."
           },
           {
-            "prompt": "What does “Quartiles (Q1, Q3)” mean?",
+            "prompt": "What does “Correlation” mean?",
             "choices": [
-              "Values splitting ordered data into quarters",
-              "Q3 − Q1; spread of the middle 50%",
-              "How a set of values is spread out",
-              "A relationship between two variables"
+              "A relationship between two variables",
+              "A straight line through the trend of a scatter graph",
+              "Predicting inside / outside the data range",
+              "One thing actually making another happen"
             ],
-            "answer": "Values splitting ordered data into quarters",
+            "answer": "A relationship between two variables",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Quartiles (Q1, Q3) means Values splitting ordered data into quarters."
+            "explanation": "Correlation means A relationship between two variables."
           }
         ]
       },
@@ -1265,40 +1265,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 18, 10, 9, 8, 7. What is the largest value?",
+            "prompt": "A scatter graph shows that as hours of sunshine increase, ice-cream sales also increase, and the points lie close to a straight line. What type of correlation is this?",
             "choices": [
-              "7",
-              "17",
-              "19",
-              "18"
+              "Strong positive correlation",
+              "Strong negative correlation",
+              "Weak positive correlation",
+              "No correlation"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 18."
+            "answer": "Strong positive correlation",
+            "clue": "Look at the direction (do both go up together?) and how close the points are to a line.",
+            "explanation": "Both variables increase together (positive), and the points lie close to a line, so the correlation is strong."
           },
           {
-            "prompt": "A tally shows these counts: 16, 4, 7, 11, 1. What is the total?",
+            "prompt": "A company's bar chart has a y-axis that starts at 90 instead of 0, making a rise from 100 to 105 look huge. What is misleading about this graph?",
             "choices": [
-              "40",
-              "38",
-              "16",
-              "39"
+              "The truncated y-axis exaggerates a small change",
+              "The bars are the wrong colour",
+              "There are too many bars",
+              "The x-axis has no units"
             ],
-            "answer": "39",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 16 + 4 + 7 + 11 + 1 = 39."
+            "answer": "The truncated y-axis exaggerates a small change",
+            "clue": "Check where the y-axis starts before judging how big a change looks.",
+            "explanation": "When a y-axis doesn't start at zero, small differences look dramatic. Always check the axis before trusting a graph."
           },
           {
-            "prompt": "What does “Mean / Median / Mode” mean?",
+            "prompt": "What does “IQR” mean?",
             "choices": [
-              "The three averages: total÷n / middle / most frequent",
+              "Q3 − Q1; spread of the middle 50%",
               "Highest minus lowest value",
               "Values splitting ordered data into quarters",
-              "Q3 − Q1; spread of the middle 50%"
+              "How a set of values is spread out"
             ],
-            "answer": "The three averages: total÷n / middle / most frequent",
+            "answer": "Q3 − Q1; spread of the middle 50%",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Mean / Median / Mode means The three averages: total÷n / middle / most frequent."
+            "explanation": "IQR means Q3 − Q1; spread of the middle 50%."
           },
           {
             "prompt": "Here is some data: 11, 6, 17, 1, 18, 11. Which value appears most often (the mode)?",
@@ -1309,7 +1309,7 @@
               "1"
             ],
             "answer": "11",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "11 appears more than any other value, so it is the mode."
           }
         ]
@@ -1323,40 +1323,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 3, 5, 9, 11, 20. What is the largest value?",
+            "prompt": "A scatter graph plots plant height against weeks of growth using data from week 1 to week 8. A line of best fit is used to predict the height at week 20. Why is this prediction unreliable?",
             "choices": [
-              "21",
-              "20",
-              "3",
-              "19"
+              "Week 20 is far outside the data range, so this is extrapolation",
+              "Week 20 is inside the data range, so this is interpolation",
+              "A line of best fit can never be used to make predictions",
+              "The correlation must be negative"
             ],
-            "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 20."
+            "answer": "Week 20 is far outside the data range, so this is extrapolation",
+            "clue": "Check whether the value you're predicting falls inside or outside the range of the original data.",
+            "explanation": "Predicting a value outside the collected data range is extrapolation, which is unreliable because there's no evidence the trend continues that far."
           },
           {
-            "prompt": "Here is some data: 9, 10, 7, 19, 3, 9. Which value appears most often (the mode)?",
+            "prompt": "After comparing two classes' test results, a student writes: 'Class A did better because its median was higher.' What is missing from this conclusion?",
             "choices": [
-              "3",
-              "10",
-              "9",
-              "19"
+              "A measure of spread (e.g. IQR) and a statement of the data's limitations",
+              "The exact test date",
+              "The names of every student",
+              "Nothing – the conclusion is complete"
             ],
-            "answer": "9",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "9 appears more than any other value, so it is the mode."
+            "answer": "A measure of spread (e.g. IQR) and a statement of the data's limitations",
+            "clue": "A strong conclusion always compares an average AND a spread, and notes any limitations.",
+            "explanation": "A complete evidence-based conclusion compares an average AND a measure of spread, and states any limitations of the data, such as sample size."
           },
           {
-            "prompt": "What does “Range” mean?",
+            "prompt": "What does “Distribution” mean?",
             "choices": [
-              "Highest minus lowest value",
-              "Values splitting ordered data into quarters",
-              "Q3 − Q1; spread of the middle 50%",
-              "How a set of values is spread out"
+              "How a set of values is spread out",
+              "A relationship between two variables",
+              "A straight line through the trend of a scatter graph",
+              "Predicting inside / outside the data range"
             ],
-            "answer": "Highest minus lowest value",
+            "answer": "How a set of values is spread out",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Range means Highest minus lowest value."
+            "explanation": "Distribution means How a set of values is spread out."
           },
           {
             "prompt": "Here is some data: 10, 8, 6, 17, 13. What is the range?",
@@ -1367,7 +1367,7 @@
               "17"
             ],
             "answer": "11",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "Range = largest − smallest = 17 − 6 = 11."
           }
         ]
@@ -1381,16 +1381,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 14, 19, 1, 10, 11. What is the range?",
+            "prompt": "A study finds that towns with more fire stations also have more fires. Does this mean fire stations cause fires?",
             "choices": [
-              "17",
-              "18",
-              "19",
-              "1"
+              "No – a confounding factor, such as town size, likely explains both",
+              "Yes – fire stations directly cause fires",
+              "Yes, but only in small towns",
+              "No – there is no correlation at all"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 19 − 1 = 18."
+            "answer": "No – a confounding factor, such as town size, likely explains both",
+            "clue": "Think about what a bigger town would have more of, besides fire stations.",
+            "explanation": "This is correlation, not causation. Larger towns have more of everything – more fire stations and more fires – so town size is a likely confounding variable."
           },
           {
             "prompt": "Here is some data: 9, 1, 17, 11, 3, 9. Which value appears most often (the mode)?",
@@ -1401,32 +1401,32 @@
               "17"
             ],
             "answer": "9",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "9 appears more than any other value, so it is the mode."
           },
           {
-            "prompt": "What does “Quartiles (Q1, Q3)” mean?",
+            "prompt": "What does “Correlation” mean?",
             "choices": [
-              "Values splitting ordered data into quarters",
-              "Q3 − Q1; spread of the middle 50%",
-              "How a set of values is spread out",
-              "A relationship between two variables"
+              "A relationship between two variables",
+              "A straight line through the trend of a scatter graph",
+              "Predicting inside / outside the data range",
+              "One thing actually making another happen"
             ],
-            "answer": "Values splitting ordered data into quarters",
+            "answer": "A relationship between two variables",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Quartiles (Q1, Q3) means Values splitting ordered data into quarters."
+            "explanation": "Correlation means A relationship between two variables."
           },
           {
-            "prompt": "Here is some data: 7, 10, 3, 16, 2. What is the largest value?",
+            "prompt": "Class A has a median test score of 62 and an IQR of 5. Class B has a median test score of 70 and an IQR of 5. Which class performed better on average?",
             "choices": [
-              "15",
-              "7",
-              "16",
-              "2"
+              "Class B",
+              "Class A",
+              "They performed equally",
+              "Cannot be determined"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 16."
+            "answer": "Class B",
+            "clue": "Compare the medians first, then check what the equal IQRs tell you.",
+            "explanation": "Class B has the higher median (70 vs 62), so Class B performed better on average; both classes are equally consistent since they share the same IQR (5)."
           }
         ]
       },
@@ -1439,28 +1439,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "A tally shows these counts: 16, 4, 7, 11, 1. What is the total?",
+            "prompt": "A company's bar chart has a y-axis that starts at 90 instead of 0, making a rise from 100 to 105 look huge. What is misleading about this graph?",
             "choices": [
-              "40",
-              "38",
-              "16",
-              "39"
+              "The truncated y-axis exaggerates a small change",
+              "The bars are the wrong colour",
+              "There are too many bars",
+              "The x-axis has no units"
             ],
-            "answer": "39",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 16 + 4 + 7 + 11 + 1 = 39."
+            "answer": "The truncated y-axis exaggerates a small change",
+            "clue": "Check where the y-axis starts before judging how big a change looks.",
+            "explanation": "When a y-axis doesn't start at zero, small differences look dramatic. Always check the axis before trusting a graph."
           },
           {
-            "prompt": "What does “Mean / Median / Mode” mean?",
+            "prompt": "What does “IQR” mean?",
             "choices": [
-              "The three averages: total÷n / middle / most frequent",
+              "Q3 − Q1; spread of the middle 50%",
               "Highest minus lowest value",
               "Values splitting ordered data into quarters",
-              "Q3 − Q1; spread of the middle 50%"
+              "How a set of values is spread out"
             ],
-            "answer": "The three averages: total÷n / middle / most frequent",
+            "answer": "Q3 − Q1; spread of the middle 50%",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Mean / Median / Mode means The three averages: total÷n / middle / most frequent."
+            "explanation": "IQR means Q3 − Q1; spread of the middle 50%."
           },
           {
             "prompt": "Here is some data: 11, 6, 17, 1, 18, 11. Which value appears most often (the mode)?",
@@ -1471,20 +1471,20 @@
               "1"
             ],
             "answer": "11",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "11 appears more than any other value, so it is the mode."
           },
           {
-            "prompt": "Here is some data: 18, 10, 9, 8, 7. What is the largest value?",
+            "prompt": "A scatter graph shows that as hours of sunshine increase, ice-cream sales also increase, and the points lie close to a straight line. What type of correlation is this?",
             "choices": [
-              "7",
-              "17",
-              "19",
-              "18"
+              "Strong positive correlation",
+              "Strong negative correlation",
+              "Weak positive correlation",
+              "No correlation"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 18."
+            "answer": "Strong positive correlation",
+            "clue": "Look at the direction (do both go up together?) and how close the points are to a line.",
+            "explanation": "Both variables increase together (positive), and the points lie close to a line, so the correlation is strong."
           }
         ]
       },
@@ -1497,28 +1497,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 9, 10, 7, 19, 3, 9. Which value appears most often (the mode)?",
+            "prompt": "After comparing two classes' test results, a student writes: 'Class A did better because its median was higher.' What is missing from this conclusion?",
             "choices": [
-              "3",
-              "10",
-              "9",
-              "19"
+              "A measure of spread (e.g. IQR) and a statement of the data's limitations",
+              "The exact test date",
+              "The names of every student",
+              "Nothing – the conclusion is complete"
             ],
-            "answer": "9",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "9 appears more than any other value, so it is the mode."
+            "answer": "A measure of spread (e.g. IQR) and a statement of the data's limitations",
+            "clue": "A strong conclusion always compares an average AND a spread, and notes any limitations.",
+            "explanation": "A complete evidence-based conclusion compares an average AND a measure of spread, and states any limitations of the data, such as sample size."
           },
           {
-            "prompt": "What does “Range” mean?",
+            "prompt": "What does “Distribution” mean?",
             "choices": [
-              "Highest minus lowest value",
-              "Values splitting ordered data into quarters",
-              "Q3 − Q1; spread of the middle 50%",
-              "How a set of values is spread out"
+              "How a set of values is spread out",
+              "A relationship between two variables",
+              "A straight line through the trend of a scatter graph",
+              "Predicting inside / outside the data range"
             ],
-            "answer": "Highest minus lowest value",
+            "answer": "How a set of values is spread out",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Range means Highest minus lowest value."
+            "explanation": "Distribution means How a set of values is spread out."
           },
           {
             "prompt": "Here is some data: 10, 8, 6, 17, 13. What is the range?",
@@ -1529,20 +1529,20 @@
               "17"
             ],
             "answer": "11",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Rule out the options you know are wrong, then check the one that is left.",
             "explanation": "Range = largest − smallest = 17 − 6 = 11."
           },
           {
-            "prompt": "Here is some data: 3, 5, 9, 11, 20. What is the largest value?",
+            "prompt": "A scatter graph plots plant height against weeks of growth using data from week 1 to week 8. A line of best fit is used to predict the height at week 20. Why is this prediction unreliable?",
             "choices": [
-              "21",
-              "20",
-              "3",
-              "19"
+              "Week 20 is far outside the data range, so this is extrapolation",
+              "Week 20 is inside the data range, so this is interpolation",
+              "A line of best fit can never be used to make predictions",
+              "The correlation must be negative"
             ],
-            "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 20."
+            "answer": "Week 20 is far outside the data range, so this is extrapolation",
+            "clue": "Check whether the value you're predicting falls inside or outside the range of the original data.",
+            "explanation": "Predicting a value outside the collected data range is extrapolation, which is unreliable because there's no evidence the trend continues that far."
           }
         ]
       },
@@ -1563,44 +1563,44 @@
               "17"
             ],
             "answer": "9",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Ask yourself what \"Mean / Median / Mode\" means here before you choose.",
             "explanation": "9 appears more than any other value, so it is the mode."
           },
           {
-            "prompt": "What does “Quartiles (Q1, Q3)” mean?",
+            "prompt": "What does “Correlation” mean?",
             "choices": [
-              "Values splitting ordered data into quarters",
-              "Q3 − Q1; spread of the middle 50%",
-              "How a set of values is spread out",
-              "A relationship between two variables"
+              "A relationship between two variables",
+              "A straight line through the trend of a scatter graph",
+              "Predicting inside / outside the data range",
+              "One thing actually making another happen"
             ],
-            "answer": "Values splitting ordered data into quarters",
+            "answer": "A relationship between two variables",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Quartiles (Q1, Q3) means Values splitting ordered data into quarters."
+            "explanation": "Correlation means A relationship between two variables."
           },
           {
-            "prompt": "Here is some data: 7, 10, 3, 16, 2. What is the largest value?",
+            "prompt": "Class A has a median test score of 62 and an IQR of 5. Class B has a median test score of 70 and an IQR of 5. Which class performed better on average?",
             "choices": [
-              "15",
-              "7",
-              "16",
-              "2"
+              "Class B",
+              "Class A",
+              "They performed equally",
+              "Cannot be determined"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 16."
+            "answer": "Class B",
+            "clue": "Compare the medians first, then check what the equal IQRs tell you.",
+            "explanation": "Class B has the higher median (70 vs 62), so Class B performed better on average; both classes are equally consistent since they share the same IQR (5)."
           },
           {
-            "prompt": "Here is some data: 14, 19, 1, 10, 11. What is the range?",
+            "prompt": "A study finds that towns with more fire stations also have more fires. Does this mean fire stations cause fires?",
             "choices": [
-              "17",
-              "18",
-              "19",
-              "1"
+              "No – a confounding factor, such as town size, likely explains both",
+              "Yes – fire stations directly cause fires",
+              "Yes, but only in small towns",
+              "No – there is no correlation at all"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 19 − 1 = 18."
+            "answer": "No – a confounding factor, such as town size, likely explains both",
+            "clue": "Think about what a bigger town would have more of, besides fire stations.",
+            "explanation": "This is correlation, not causation. Larger towns have more of everything – more fire stations and more fires – so town size is a likely confounding variable."
           }
         ]
       },
@@ -1613,16 +1613,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Mean / Median / Mode” mean?",
+            "prompt": "What does “IQR” mean?",
             "choices": [
-              "The three averages: total÷n / middle / most frequent",
+              "Q3 − Q1; spread of the middle 50%",
               "Highest minus lowest value",
               "Values splitting ordered data into quarters",
-              "Q3 − Q1; spread of the middle 50%"
+              "How a set of values is spread out"
             ],
-            "answer": "The three averages: total÷n / middle / most frequent",
+            "answer": "Q3 − Q1; spread of the middle 50%",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Mean / Median / Mode means The three averages: total÷n / middle / most frequent."
+            "explanation": "IQR means Q3 − Q1; spread of the middle 50%."
           },
           {
             "prompt": "Here is some data: 11, 6, 17, 1, 18, 11. Which value appears most often (the mode)?",
@@ -1633,32 +1633,32 @@
               "1"
             ],
             "answer": "11",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "11 appears more than any other value, so it is the mode."
           },
           {
-            "prompt": "Here is some data: 18, 10, 9, 8, 7. What is the largest value?",
+            "prompt": "A scatter graph shows that as hours of sunshine increase, ice-cream sales also increase, and the points lie close to a straight line. What type of correlation is this?",
             "choices": [
-              "7",
-              "17",
-              "19",
-              "18"
+              "Strong positive correlation",
+              "Strong negative correlation",
+              "Weak positive correlation",
+              "No correlation"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 18."
+            "answer": "Strong positive correlation",
+            "clue": "Look at the direction (do both go up together?) and how close the points are to a line.",
+            "explanation": "Both variables increase together (positive), and the points lie close to a line, so the correlation is strong."
           },
           {
-            "prompt": "A tally shows these counts: 16, 4, 7, 11, 1. What is the total?",
+            "prompt": "A company's bar chart has a y-axis that starts at 90 instead of 0, making a rise from 100 to 105 look huge. What is misleading about this graph?",
             "choices": [
-              "40",
-              "38",
-              "16",
-              "39"
+              "The truncated y-axis exaggerates a small change",
+              "The bars are the wrong colour",
+              "There are too many bars",
+              "The x-axis has no units"
             ],
-            "answer": "39",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 16 + 4 + 7 + 11 + 1 = 39."
+            "answer": "The truncated y-axis exaggerates a small change",
+            "clue": "Check where the y-axis starts before judging how big a change looks.",
+            "explanation": "When a y-axis doesn't start at zero, small differences look dramatic. Always check the axis before trusting a graph."
           }
         ]
       },
@@ -1671,16 +1671,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Range” mean?",
+            "prompt": "What does “Distribution” mean?",
             "choices": [
-              "Highest minus lowest value",
-              "Values splitting ordered data into quarters",
-              "Q3 − Q1; spread of the middle 50%",
-              "How a set of values is spread out"
+              "How a set of values is spread out",
+              "A relationship between two variables",
+              "A straight line through the trend of a scatter graph",
+              "Predicting inside / outside the data range"
             ],
-            "answer": "Highest minus lowest value",
+            "answer": "How a set of values is spread out",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Range means Highest minus lowest value."
+            "explanation": "Distribution means How a set of values is spread out."
           },
           {
             "prompt": "Here is some data: 10, 8, 6, 17, 13. What is the range?",
@@ -1691,32 +1691,32 @@
               "17"
             ],
             "answer": "11",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Work it out yourself first, then look for your answer among the options.",
             "explanation": "Range = largest − smallest = 17 − 6 = 11."
           },
           {
-            "prompt": "Here is some data: 3, 5, 9, 11, 20. What is the largest value?",
+            "prompt": "A scatter graph plots plant height against weeks of growth using data from week 1 to week 8. A line of best fit is used to predict the height at week 20. Why is this prediction unreliable?",
             "choices": [
-              "21",
-              "20",
-              "3",
-              "19"
+              "Week 20 is far outside the data range, so this is extrapolation",
+              "Week 20 is inside the data range, so this is interpolation",
+              "A line of best fit can never be used to make predictions",
+              "The correlation must be negative"
             ],
-            "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 20."
+            "answer": "Week 20 is far outside the data range, so this is extrapolation",
+            "clue": "Check whether the value you're predicting falls inside or outside the range of the original data.",
+            "explanation": "Predicting a value outside the collected data range is extrapolation, which is unreliable because there's no evidence the trend continues that far."
           },
           {
-            "prompt": "Here is some data: 9, 10, 7, 19, 3, 9. Which value appears most often (the mode)?",
+            "prompt": "After comparing two classes' test results, a student writes: 'Class A did better because its median was higher.' What is missing from this conclusion?",
             "choices": [
-              "3",
-              "10",
-              "9",
-              "19"
+              "A measure of spread (e.g. IQR) and a statement of the data's limitations",
+              "The exact test date",
+              "The names of every student",
+              "Nothing – the conclusion is complete"
             ],
-            "answer": "9",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "9 appears more than any other value, so it is the mode."
+            "answer": "A measure of spread (e.g. IQR) and a statement of the data's limitations",
+            "clue": "A strong conclusion always compares an average AND a spread, and notes any limitations.",
+            "explanation": "A complete evidence-based conclusion compares an average AND a measure of spread, and states any limitations of the data, such as sample size."
           }
         ]
       },
@@ -1729,40 +1729,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Quartiles (Q1, Q3)” mean?",
+            "prompt": "What does “Correlation” mean?",
             "choices": [
-              "Values splitting ordered data into quarters",
-              "Q3 − Q1; spread of the middle 50%",
-              "How a set of values is spread out",
-              "A relationship between two variables"
+              "A relationship between two variables",
+              "A straight line through the trend of a scatter graph",
+              "Predicting inside / outside the data range",
+              "One thing actually making another happen"
             ],
-            "answer": "Values splitting ordered data into quarters",
+            "answer": "A relationship between two variables",
             "clue": "Use the Unit 16 Math Words & Symbols reference.",
-            "explanation": "Quartiles (Q1, Q3) means Values splitting ordered data into quarters."
+            "explanation": "Correlation means A relationship between two variables."
           },
           {
-            "prompt": "Here is some data: 7, 10, 3, 16, 2. What is the largest value?",
+            "prompt": "Class A has a median test score of 62 and an IQR of 5. Class B has a median test score of 70 and an IQR of 5. Which class performed better on average?",
             "choices": [
-              "15",
-              "7",
-              "16",
-              "2"
+              "Class B",
+              "Class A",
+              "They performed equally",
+              "Cannot be determined"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 16."
+            "answer": "Class B",
+            "clue": "Compare the medians first, then check what the equal IQRs tell you.",
+            "explanation": "Class B has the higher median (70 vs 62), so Class B performed better on average; both classes are equally consistent since they share the same IQR (5)."
           },
           {
-            "prompt": "Here is some data: 14, 19, 1, 10, 11. What is the range?",
+            "prompt": "A study finds that towns with more fire stations also have more fires. Does this mean fire stations cause fires?",
             "choices": [
-              "17",
-              "18",
-              "19",
-              "1"
+              "No – a confounding factor, such as town size, likely explains both",
+              "Yes – fire stations directly cause fires",
+              "Yes, but only in small towns",
+              "No – there is no correlation at all"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 19 − 1 = 18."
+            "answer": "No – a confounding factor, such as town size, likely explains both",
+            "clue": "Think about what a bigger town would have more of, besides fire stations.",
+            "explanation": "This is correlation, not causation. Larger towns have more of everything – more fire stations and more fires – so town size is a likely confounding variable."
           },
           {
             "prompt": "Here is some data: 9, 1, 17, 11, 3, 9. Which value appears most often (the mode)?",
@@ -1773,7 +1773,7 @@
               "17"
             ],
             "answer": "9",
-            "clue": "Work it out step by step, then check each option.",
+            "clue": "Estimate roughly what the answer should be, then pick the option closest to it.",
             "explanation": "9 appears more than any other value, so it is the mode."
           }
         ]

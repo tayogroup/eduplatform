@@ -56,44 +56,45 @@
     "Read and interpret information from many kinds of data display.",
     "Compare two data sets using grouped or side-by-side bar charts.",
     "Choose the most appropriate display for a given set of data.",
-    "Make observations, spot patterns, and draw sensible conclusions from data."
+    "Make observations, spot patterns, and draw sensible conclusions from data.",
+    "Read and compare data displays that use different scale intervals, checking each display's scale before comparing values."
   ],
   "concepts": [
     {
       "id": "concept-1-sorting-with-carroll-diagrams",
       "title": "Sorting with Carroll Diagrams",
-      "explanation": "Before we can display data, we often need to sort it – to put each item into the right group. One neat tool for sorting is the Carroll diagram, named after the writer Lewis Carroll, who loved logic puzzles. A Carroll diagram sorts items using only yes/no answers to two properties. Because each property is either true or not true, the diagram has exactly four boxes, showing every possible combination. Suppose we sort shapes by two properties: *Is it red?* and *Is it a triangle?* The grid looks like this, with the…",
-      "example": "Read any box by combining its row and its column. The top-left box holds shapes that are red and a triangle. The top-right box holds shapes that are not red but still a triangle – for example a blue triangle. The…"
+      "explanation": "Before we can display data, we often need to sort it – to put each item into the right group. One neat tool for sorting is the Carroll diagram, named after the writer Lewis Carroll, who loved logic puzzles. A Carroll diagram sorts items using only yes/no answers to two properties. Because each property is either true or not true, the diagram has exactly four boxes, showing every possible combination.\n\nSuppose we sort shapes by two properties: *Is it red?* and *Is it a triangle?* The grid looks like this, with the columns asking about colour and the rows asking about shape:\n\nRead any box by combining its row and its column. The top-left box holds shapes that are red and a triangle. The top-right box holds shapes that are not red but still a triangle – for example a blue triangle. The bottom-left holds shapes that are red but not a triangle, such as a red circle. The bottom-right holds shapes that are neither red nor a triangle, such as a green hexagon. Every shape in the world fits into exactly one of these four boxes, and none is left out.",
+      "example": "To use a Carroll diagram, follow four steps. First, choose the two properties you will sort by. Second, draw the grid with four boxes, labelling the columns for the first property (yes / no) and the rows for the second (yes / no). Third, take each item in turn and ask both questions. Fourth, place it in the one box where both answers fit. Carroll diagrams work just as well for numbers. If we sort the numbers 1 to 12 by *even?* and *multiple of 3?*, then 6 and 12 go in the ‘even and multiple of 3’ box, 3 and 9 go in the ‘odd and multiple of 3’ box, 2, 4, 8 and 10 go in ‘even and not multiple of 3’, and 1, 5, 7 and 11 go in ‘odd and not multiple of 3’."
     },
     {
       "id": "concept-2-sorting-with-venn-diagrams",
       "title": "Sorting with Venn Diagrams",
-      "explanation": "A Venn diagram is another way to sort, but it shows relationships using overlapping circles. Each circle stands for one property. An item that has that property goes inside the circle; an item that does not stays outside it. Where two circles overlap – a region called the intersection – we place items that have both properties at once. Anything with neither property sits outside all the circles but inside the surrounding rectangle. Imagine two circles labelled *Multiples of 2* and *Multiples of 3*, and we sort the…",
-      "example": "So the finished diagram looks like this: Multiples of 2 only – 2, 4, 8, 10; Both (the overlap) – 6, 12; Multiples of 3 only – 3, 9; Neither – 1, 5, 7, 11. A common wrong idea is to write 6 twice, once in each circle. Do…"
+      "explanation": "A Venn diagram is another way to sort, but it shows relationships using overlapping circles. Each circle stands for one property. An item that has that property goes inside the circle; an item that does not stays outside it. Where two circles overlap – a region called the intersection – we place items that have both properties at once. Anything with neither property sits outside all the circles but inside the surrounding rectangle.\n\nImagine two circles labelled *Multiples of 2* and *Multiples of 3*, and we sort the numbers 1 to 12. Multiples of 2 are 2, 4, 6, 8, 10, 12. Multiples of 3 are 3, 6, 9, 12. Notice that 6 and 12 appear in both lists – they are multiples of 2 *and* 3 – so they belong in the overlap. The number 4 is a multiple of 2 only, so it goes in the left circle but outside the overlap. The number 9 is a multiple of 3 only, so it goes in the right circle. And 1, 5, 7 and 11 are multiples of neither, so they sit outside both circles.\n\nSo the finished diagram looks like this: Multiples of 2 only – 2, 4, 8, 10; Both (the overlap) – 6, 12; Multiples of 3 only – 3, 9; Neither – 1, 5, 7, 11. A common wrong idea is to write 6 twice, once in each circle. Do not do this – an item that has both properties belongs in the overlap only, where the circles cross. The overlap is the single home for ‘both’.\n\nVenn diagrams can grow to three circles to sort by three properties at once. With circles for *Multiples of 2*, *Multiples of 3* and *Multiples of 5*, sorting the numbers 1 to 30 creates seven regions plus the outside. For example, 30 is a multiple of 2, 3 and 5, so it sits in the very centre where all three circles meet. The number 10 is a multiple of 2 and 5 (but not 3), so it goes where just those two circles overlap. The number 15 is a multiple of 3 and 5, and 6 is a multiple of 2 and 3. Working out three-circle diagrams takes patience: check each number against all three properties before you place it.",
+      "example": "Here is a subtle but important point that catches many learners. The size of a circle in a Venn diagram does *not* tell you how many items are inside it. A big circle might hold only two numbers, while a small one holds ten. Always count the items written in a region rather than judging by how large the circle looks. The circles are just homes for the data, not measuring cups."
     },
     {
       "id": "concept-3-pictograms-and-their-keys",
       "title": "Pictograms and Their Keys",
-      "explanation": "A pictogram (sometimes called a pictograph) displays data using pictures or symbols. Each symbol stands for a fixed number of items, and that number is written in the key. The key is the most important part of any pictogram – without it, you cannot tell what the pictures mean. A row of five apples could stand for five apples, or fifty, or five hundred, depending on the key. Here is a pictogram showing how many books six pupils at Nuur Academy read in one month. Read the key first: each diamond stands for 2 books.",
-      "example": "To read any row, count the symbols and multiply by the key value. Amina has 5 diamonds, and 5 × 2 = 10 books. Halima has 6 diamonds, and 6 × 2 = 12 books, the most of anyone. Ibrahim has just 2 diamonds, so 2 × 2 = 4…"
+      "explanation": "A pictogram (sometimes called a pictograph) displays data using pictures or symbols. Each symbol stands for a fixed number of items, and that number is written in the key. The key is the most important part of any pictogram – without it, you cannot tell what the pictures mean. A row of five apples could stand for five apples, or fifty, or five hundred, depending on the key.\n\nHere is a pictogram showing how many books six pupils at Nuur Academy read in one month. Read the key first: each diamond stands for 2 books.\n\nTo read any row, count the symbols and multiply by the key value. Amina has 5 diamonds, and 5 × 2 = 10 books. Halima has 6 diamonds, and 6 × 2 = 12 books, the most of anyone. Ibrahim has just 2 diamonds, so 2 × 2 = 4 books, the fewest. Pictograms make comparison easy: you can see instantly that Halima's row is the longest and Ibrahim's is the shortest, without even doing the multiplication.\n\nTo create a pictogram of your own, follow these steps. Decide what data you are showing. Choose a simple symbol that is easy to draw and count. Decide what each symbol will represent – 1, 2, 5 or 10 items work well. Draw the symbols in tidy rows, one row per category, keeping every symbol the same size and evenly spaced. Label each row, add a title that explains the whole picture, and – never forget – include a clear key. A pictogram without a key is like a letter with no words.",
+      "example": "Sometimes the data does not divide neatly by the key value, and we need a partial symbol. Suppose each symbol represents 4 ice creams and a stall sold 6 on Tuesday. That is one whole symbol (4) plus half a symbol, because half of 4 is 2, and 4 + 2 = 6. So we draw one full symbol and one half symbol. If a stall sold 10 ice creams with the same key, that is two whole symbols (8) plus a half (2), because 8 + 2 = 10. Reading partial symbols is the reverse: a full symbol counts as the key value, and a half symbol counts as half of it. Always work out what a half or quarter of the key value is before you add up."
     },
     {
       "id": "concept-4-bar-charts-building-and-reading",
       "title": "Bar Charts – Building and Reading",
-      "explanation": "A bar chart (or bar graph) shows data using rectangular bars. The height of each bar shows the value for that category: the taller the bar, the larger the amount. Bar charts are the workhorse of data display because they make it so easy to compare many categories at once and to spot the biggest and smallest at a glance. Every good bar chart has the same parts. The vertical axis (up the side) carries the scale – the numbers, which must start at zero. The horizontal axis (along the bottom) carries the categories.…",
+      "explanation": "A bar chart (or bar graph) shows data using rectangular bars. The height of each bar shows the value for that category: the taller the bar, the larger the amount. Bar charts are the workhorse of data display because they make it so easy to compare many categories at once and to spot the biggest and smallest at a glance. Every good bar chart has the same parts. The vertical axis (up the side) carries the scale – the numbers, which must start at zero. The horizontal axis (along the bottom) carries the categories.… Not every bar chart counts up in ones. To fit larger numbers on the page, a scale might count in 2s, 5s, 10s or even 20s instead, so always check the size of each step before you read a bar's value. This matters most when you compare two different charts about similar data: two bars that look exactly the same height can represent very different amounts if one chart's scale counts in 2s and the other counts in 10s. For example, a bar that reaches the 4th mark on a chart scaled in 5s represents 20, but a bar reaching the same-looking 4th mark on a chart scaled in 2s only represents 8. Before comparing values from two different displays, always read each one's scale label separately – never assume the steps are the same size just because the pictures look similar.",
       "example": "Here is a bar chart showing the favourite colours of a class. Picture bars rising from a baseline of zero:"
     },
     {
       "id": "concept-5-comparing-data-sets",
       "title": "Comparing Data Sets",
-      "explanation": "Often we want to compare two sets of data – boys and girls, this week and last week, Class A and Class B. Bar charts are perfect for this, and there are two neat ways to do it. In a side-by-side display, you draw two separate bar charts using the same scale and categories, then place them next to each other so the eye can compare matching bars. In a grouped bar chart, you draw two bars in each category, sitting right beside each other, using different colours or patterns and a key to tell them apart. Suppose we…",
-      "example": "A grouped bar chart of this data puts a boys' bar and a girls' bar side by side in each colour group. Straight away you can read the story. Blue is the boys' favourite (12), while purple is by far the girls' favourite…"
+      "explanation": "Often we want to compare two sets of data – boys and girls, this week and last week, Class A and Class B. Bar charts are perfect for this, and there are two neat ways to do it. In a side-by-side display, you draw two separate bar charts using the same scale and categories, then place them next to each other so the eye can compare matching bars. In a grouped bar chart, you draw two bars in each category, sitting right beside each other, using different colours or patterns and a key to tell them apart.\n\nSuppose we record favourite colours for boys and girls in the same class:\n\nA grouped bar chart of this data puts a boys' bar and a girls' bar side by side in each colour group. Straight away you can read the story. Blue is the boys' favourite (12), while purple is by far the girls' favourite (14). For red and green the two groups are fairly close, but for purple the gap is huge – girls chose it 14 times against just 2 for boys, a difference of 12. When you compare data sets, always look for three things: where the groups are similar, where they are different, and which category shows the biggest difference of all.",
+      "example": "Comparison is where data really starts to tell a story. Imagine two pictograms of vehicles passing Yusuf's school, one counted in the morning and one in the afternoon, with each symbol worth 5 vehicles. If cars rose from 6 symbols (30 vehicles) in the morning to 8 symbols (40 vehicles) in the afternoon, while buses barely changed, you could say confidently that car traffic grows in the afternoon while bus traffic stays steady. Notice how you must read both displays with the same key and then compare category by category. That careful, matched comparison is exactly what mathematicians, scientists and shopkeepers do every day."
     },
     {
       "id": "concept-6-interpreting-and-drawing-conclusions",
       "title": "Interpreting and Drawing Conclusions",
-      "explanation": "Building a display is only half the work; the real prize is interpreting it – explaining what it tells you. When you look at any chart or diagram, train yourself to ask a set of questions. Which category has the highest value, and which the lowest? What is the difference between two categories? Is there a pattern or trend – do the values rise, fall, or stay level as you move along? Are there any unusual values that stand out from the rest? And what is the total across all the categories? Once you have made your…",
-      "example": "Building a display is only half the work; the real prize is interpreting it – explaining what it tells you. When you look at any chart or diagram, train yourself to ask a set of questions. Which category has the highest…"
+      "explanation": "Building a display is only half the work; the real prize is interpreting it – explaining what it tells you. When you look at any chart or diagram, train yourself to ask a set of questions. Which category has the highest value, and which the lowest? What is the difference between two categories? Is there a pattern or trend – do the values rise, fall, or stay level as you move along? Are there any unusual values that stand out from the rest? And what is the total across all the categories?\n\nOnce you have made your observations, you can go further and draw conclusions – sensible ideas about *why* the data looks as it does. Suppose a bar chart of visitors to a theme park over a year peaks sharply in July and August and dips low in the winter months. An observation is simply ‘July and August are the busiest months’. A conclusion goes deeper: ‘The park is busiest in summer, probably because the weather is warm and schools are closed, so families have time to visit.’ Good conclusions are always linked to the data and to the real world; they never come from thin air.",
+      "example": "Building a display is only half the work; the real prize is interpreting it – explaining what it tells you. When you look at any chart or diagram, train yourself to ask a set of questions. Which category has the highest value, and which the lowest? What is the difference between two categories? Is there a pattern or trend – do the values rise, fall, or stay level as you move along? Are there any unusual values that stand out from the rest? And what is the total across all the categories?"
     }
   ],
   "explorations": [
@@ -102,72 +103,72 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "Sorting with Carroll Diagrams",
-      "context": "Before we can display data, we often need to sort it – to put each item into the right group. One neat tool for sorting is the Carroll diagram, named after the writer Lewis Carroll, who loved logic puzzles. A Carroll diagram sorts items using only yes/no…",
+      "context": "Before we can display data, we often need to sort it – to put each item into the right group. One neat tool for sorting is the Carroll diagram, named after the writer Lewis Carroll, who loved logic puzzles.",
       "prompt": "A pictogram uses ☺ = 2 people. How many people do 4 symbols show?",
       "answer": "1) 4 × 2 = 8 people.",
       "modelType": "model-1",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) 4 × 2 = 8 people."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram.",
+      "explanation": "Sorting with Carroll Diagrams: Before we can display data, we often need to sort it – to put each item into the right group. One neat tool for sorting is the Carroll diagram, named after the writer Lewis Carroll, who loved logic puzzles. A Carroll diagram sorts items using only yes/no answers to two properties. Because each property is either true or not true, the diagram has exactly four boxes, showing every possible combination."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Sorting with Venn Diagrams",
-      "context": "A Venn diagram is another way to sort, but it shows relationships using overlapping circles. Each circle stands for one property. An item that has that property goes inside the circle; an item that does not stays outside it. Where two circles overlap – a…",
+      "context": "A Venn diagram is another way to sort, but it shows relationships using overlapping circles. Each circle stands for one property. An item that has that property goes inside the circle; an item that does not stays outside it.",
       "prompt": "In a Venn diagram of *even* and *multiple of 3*, where does 6 belong?",
-      "answer": "In the overlap (even and a multiple of",
+      "answer": "In the overlap (even and a multiple of 3), since 6 is both even and a multiple of 3.",
       "modelType": "model-2",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "In the overlap (even and a multiple of"
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram.",
+      "explanation": "Sorting with Venn Diagrams: A Venn diagram is another way to sort, but it shows relationships using overlapping circles. Each circle stands for one property. An item that has that property goes inside the circle; an item that does not stays outside it. Where two circles overlap – a region called the intersection – we place items that have both properties at once."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Pictograms and Their Keys",
-      "context": "A pictogram (sometimes called a pictograph) displays data using pictures or symbols. Each symbol stands for a fixed number of items, and that number is written in the key. The key is the most important part of any pictogram – without it, you cannot tell what…",
+      "context": "A pictogram (sometimes called a pictograph) displays data using pictures or symbols. Each symbol stands for a fixed number of items, and that number is written in the key.",
       "prompt": "Name the display best used for sorting shapes by ‘red / not red’ and ‘triangle / not triangle’.",
-      "answer": ".",
+      "answer": "A Carroll diagram.",
       "modelType": "model-3",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram.",
+      "explanation": "Pictograms and Their Keys: A pictogram (sometimes called a pictograph) displays data using pictures or symbols. Each symbol stands for a fixed number of items, and that number is written in the key. The key is the most important part of any pictogram – without it, you cannot tell what the pictures mean. A row of five apples could stand for five apples, or fifty, or five hundred, depending on the key."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Bar Charts – Building and Reading",
-      "context": "A bar chart (or bar graph) shows data using rectangular bars. The height of each bar shows the value for that category: the taller the bar, the larger the amount. Bar charts are the workhorse of data display because they make it so easy to compare many…",
+      "context": "A bar chart (or bar graph) shows data using rectangular bars. The height of each bar shows the value for that category: the taller the bar, the larger the amount.",
       "prompt": "A bar for blue reaches 6 on the scale. What does this tell you?",
-      "answer": "A Carroll diagram.",
+      "answer": "Six students chose blue.",
       "modelType": "model-4",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "A Carroll diagram."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram.",
+      "explanation": "Bar Charts – Building and Reading: A bar chart (or bar graph) shows data using rectangular bars. The height of each bar shows the value for that category: the taller the bar, the larger the amount. Bar charts are the workhorse of data display because they make it so easy to compare many categories at once and to spot the biggest and smallest at a glance."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Comparing Data Sets",
-      "context": "Often we want to compare two sets of data – boys and girls, this week and last week, Class A and Class B. Bar charts are perfect for this, and there are two neat ways to do it. In a side-by-side display, you draw two separate bar charts using the same scale…",
+      "context": "Often we want to compare two sets of data – boys and girls, this week and last week, Class A and Class B. Bar charts are perfect for this, and there are two neat ways to do it.",
       "prompt": "True or False: the scale on a bar chart should start at zero.",
-      "answer": "Six students chose blue.",
+      "answer": "True — a bar chart's scale must always start at zero, otherwise the bar heights are not a fair comparison.",
       "modelType": "model-5",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "Six students chose blue."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram.",
+      "explanation": "Comparing Data Sets: Often we want to compare two sets of data – boys and girls, this week and last week, Class A and Class B. Bar charts are perfect for this, and there are two neat ways to do it. In a side-by-side display, you draw two separate bar charts using the same scale and categories, then place them next to each other so the eye can compare matching bars."
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Interpreting and Drawing Conclusions",
-      "context": "Building a display is only half the work; the real prize is interpreting it – explaining what it tells you. When you look at any chart or diagram, train yourself to ask a set of questions. Which category has the highest value, and which the lowest? What is…",
+      "context": "Building a display is only half the work; the real prize is interpreting it – explaining what it tells you. When you look at any chart or diagram, train yourself to ask a set of questions. Which category has the highest value, and which the lowest?",
       "prompt": "Each ♦ = 2 books. Amina has 5 diamonds, Halima has 6, Ibrahim has 2. How many books did each read?",
       "answer": "1) Amina 10, Halima 12, Ibrahim 4 books.",
       "modelType": "model-6",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) Amina 10, Halima 12, Ibrahim 4 books."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram.",
+      "explanation": "Interpreting and Drawing Conclusions: Building a display is only half the work; the real prize is interpreting it – explaining what it tells you. When you look at any chart or diagram, train yourself to ask a set of questions. Which category has the highest value, and which the lowest? What is the difference between two categories? Is there a pattern or trend – do the values rise, fall, or stay level as you move along?"
     }
   ],
   "visualModels": [
@@ -176,7 +177,7 @@
       "outcomeId": "lo01",
       "title": "Sorting with Carroll Diagrams",
       "modelType": "concept-model-1",
-      "purpose": "Before we can display data, we often need to sort it – to put each item into the right group. One neat tool for sorting is the Carroll diagram, named after the writer Lewis Carroll, who loved logic puzzles. A Carroll…",
+      "purpose": "Before we can display data, we often need to sort it – to put each item into the right group. One neat tool for sorting is the Carroll diagram, named after the writer Lewis Carroll, who loved logic puzzles.",
       "defaultNumber": null
     },
     {
@@ -184,7 +185,7 @@
       "outcomeId": "lo02",
       "title": "Sorting with Venn Diagrams",
       "modelType": "concept-model-2",
-      "purpose": "A Venn diagram is another way to sort, but it shows relationships using overlapping circles. Each circle stands for one property. An item that has that property goes inside the circle; an item that does not stays…",
+      "purpose": "A Venn diagram is another way to sort, but it shows relationships using overlapping circles. Each circle stands for one property.",
       "defaultNumber": null
     },
     {
@@ -192,7 +193,7 @@
       "outcomeId": "lo03",
       "title": "Pictograms and Their Keys",
       "modelType": "concept-model-3",
-      "purpose": "A pictogram (sometimes called a pictograph) displays data using pictures or symbols. Each symbol stands for a fixed number of items, and that number is written in the key. The key is the most important part of any…",
+      "purpose": "A pictogram (sometimes called a pictograph) displays data using pictures or symbols. Each symbol stands for a fixed number of items, and that number is written in the key.",
       "defaultNumber": null
     },
     {
@@ -200,7 +201,7 @@
       "outcomeId": "lo04",
       "title": "Bar Charts – Building and Reading",
       "modelType": "concept-model-4",
-      "purpose": "A bar chart (or bar graph) shows data using rectangular bars. The height of each bar shows the value for that category: the taller the bar, the larger the amount. Bar charts are the workhorse of data display because…",
+      "purpose": "A bar chart (or bar graph) shows data using rectangular bars. The height of each bar shows the value for that category: the taller the bar, the larger the amount.",
       "defaultNumber": null
     },
     {
@@ -208,7 +209,7 @@
       "outcomeId": "lo05",
       "title": "Comparing Data Sets",
       "modelType": "concept-model-5",
-      "purpose": "Often we want to compare two sets of data – boys and girls, this week and last week, Class A and Class B. Bar charts are perfect for this, and there are two neat ways to do it. In a side-by-side display, you draw two…",
+      "purpose": "Often we want to compare two sets of data – boys and girls, this week and last week, Class A and Class B. Bar charts are perfect for this, and there are two neat ways to do it.",
       "defaultNumber": null
     },
     {
@@ -216,7 +217,7 @@
       "outcomeId": "lo06",
       "title": "Interpreting and Drawing Conclusions",
       "modelType": "concept-model-6",
-      "purpose": "Building a display is only half the work; the real prize is interpreting it – explaining what it tells you. When you look at any chart or diagram, train yourself to ask a set of questions. Which category has the highest…",
+      "purpose": "Building a display is only half the work; the real prize is interpreting it – explaining what it tells you. When you look at any chart or diagram, train yourself to ask a set of questions.",
       "defaultNumber": null
     }
   ],
@@ -279,9 +280,9 @@
       "title": "Read a bar chart",
       "example": "A bar chart of museum visitors shows Mon 150, Tue 200, Wed 250, Thu 200, Fri 250, Sat 300, Sun 150. What was the total for the week, and how many more came on Saturday than Monday?",
       "steps": [
-        "Solution: Add every bar for the total: 150 + 200 + 250 + 200 + 250 + 300 + 150 = 1550 visitors.",
+        "Solution: Add every bar for the total: 150 + 200 + 250 + 200 + 250 + 300 + 150 = 1500 visitors.",
         "Saturday had 300 and Monday had 150, so the difference is 300 − 150 = 150 more visitors on Saturday.",
-        "Check the read a bar chart result carefully."
+        "Check your total by adding the seven bars again in a different order."
       ]
     },
     {
@@ -336,7 +337,7 @@
       "difficulty": "Intermediate",
       "title": "Read a bar chart",
       "prompt": "A bar chart of museum visitors shows Mon 150, Tue 200, Wed 250, Thu 200, Fri 250, Sat 300, Sun 150. What was the total for the week, and how many more came on Saturday than Monday?",
-      "solution": "Solution: Add every bar for the total: 150 + 200 + 250 + 200 + 250 + 300 + 150 = 1550 visitors. Saturday had 300 and Monday had 150, so the difference is 300 − 150 = 150 more visitors on Saturday."
+      "solution": "Solution: Add every bar for the total: 150 + 200 + 250 + 200 + 250 + 300 + 150 = 1,500 visitors. Saturday had 300 and Monday had 150, so the difference is 300 − 150 = 150 more visitors on Saturday."
     },
     {
       "id": "we06",
@@ -392,7 +393,7 @@
       "difficulty": "Challenge",
       "title": "Practice 12",
       "prompt": "Sort the numbers 1 to 30 into a three-circle Venn diagram of multiples of 2, 3 and 5. Where does 30 go, and where does 10 go?",
-      "solution": "1) 30 sits in the centre where all three circles meet (multiple of 2, 3 and"
+      "solution": "1) 30 sits in the centre where all three circles meet, because it is a multiple of 2, 3 and 5; 10 sits where the 2 and 5 circles overlap, since it is a multiple of 2 and 5 but not of 3."
     }
   ],
   "practice": [
@@ -401,84 +402,84 @@
       "level": "Warm-up",
       "prompt": "A pictogram uses ☺ = 2 people. How many people do 4 symbols show?",
       "answer": "1) 4 × 2 = 8 people.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram."
     },
     {
       "id": "p02",
       "level": "Warm-up",
       "prompt": "In a Venn diagram of *even* and *multiple of 3*, where does 6 belong?",
-      "answer": "In the overlap (even and a multiple of",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "In the overlap (even and a multiple of 3), since 6 is both even and a multiple of 3.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram."
     },
     {
       "id": "p03",
       "level": "Warm-up",
       "prompt": "Name the display best used for sorting shapes by ‘red / not red’ and ‘triangle / not triangle’.",
-      "answer": ".",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "A Carroll diagram.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram."
     },
     {
       "id": "p04",
       "level": "Warm-up",
       "prompt": "A bar for blue reaches 6 on the scale. What does this tell you?",
-      "answer": "A Carroll diagram.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "Six students chose blue.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram."
     },
     {
       "id": "p05",
       "level": "Warm-up",
       "prompt": "True or False: the scale on a bar chart should start at zero.",
-      "answer": "Six students chose blue.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "True — a bar chart's scale must always start at zero, otherwise the bar heights are not a fair comparison.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram."
     },
     {
       "id": "p06",
       "level": "Core",
       "prompt": "Each ♦ = 2 books. Amina has 5 diamonds, Halima has 6, Ibrahim has 2. How many books did each read?",
       "answer": "1) Amina 10, Halima 12, Ibrahim 4 books.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram."
     },
     {
       "id": "p07",
       "level": "Core",
       "prompt": "A bar chart shows Red 5, Blue 6, Green 8, Yellow 5 students. Find the total and the most popular colour.",
       "answer": "Total 5 + 6 + 8 + 5 = 24; green most popular (8).",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram."
     },
     {
       "id": "p08",
       "level": "Core",
       "prompt": "Each symbol on a pictogram is worth 4. Write, in whole and half symbols, how to show: a) 8 b) 6 c) 10.",
       "answer": "a) 2 whole symbols; b) 1 whole and 1 half; c) 2 whole and 1 half.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram."
     },
     {
       "id": "p09",
       "level": "Core",
       "prompt": "Sort the numbers 1 to 12 into a Carroll diagram of *even?* and *multiple of 3?* List all four boxes.",
       "answer": "Even & mult of 3: 6, 12. Even & not: 2, 4, 8, 10. Odd & mult of 3: 3, 9. Odd & not: 1, 5, 7, 11.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram."
     },
     {
       "id": "p10",
       "level": "Core",
       "prompt": "A pictogram of vehicles uses ☺ = 5. Cars = 6 symbols, buses = 2, bicycles = 3. How many of each, and how many altogether?",
       "answer": "Cars 30, buses 10, bicycles 15; total 55.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram."
     },
     {
       "id": "p11",
       "level": "Core",
       "prompt": "Choose the best display for each: a) comparing points of five teams; b) numbers that are multiples of both 2 and 5.",
       "answer": "a) bar chart; b) Venn diagram.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram."
     },
     {
       "id": "p12",
       "level": "Challenge",
       "prompt": "Sort the numbers 1 to 30 into a three-circle Venn diagram of multiples of 2, 3 and 5. Where does 30 go, and where does 10 go?",
-      "answer": "1) 30 sits in the centre where all three circles meet (multiple of 2, 3 and",
-      "hint": "Identify the key mathematical idea before calculating or explaining."
+      "answer": "1) 30 sits in the centre where all three circles meet, because it is a multiple of 2, 3 and 5; 10 sits where the 2 and 5 circles overlap, since it is a multiple of 2 and 5 but not of 3.",
+      "hint": "Decide which idea the question is really about (Data, Carroll diagram, Venn diagram), then work one step at a time and check the answer is sensible."
     }
   ],
   "activities": [
@@ -628,7 +629,7 @@
       "difficulty": "Round 1",
       "prompt": "A pictogram uses ☺ = 2 people. How many people do 4 symbols show?",
       "answer": "1) 4 × 2 = 8 people.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram.",
       "errorFeedback": "1) 4 × 2 = 8 people."
     },
     {
@@ -636,36 +637,36 @@
       "outcomeId": "lo02",
       "difficulty": "Round 1",
       "prompt": "In a Venn diagram of *even* and *multiple of 3*, where does 6 belong?",
-      "answer": "In the overlap (even and a multiple of",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "In the overlap (even and a multiple of"
+      "answer": "In the overlap (even and a multiple of 3), since 6 is both even and a multiple of 3.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram.",
+      "errorFeedback": "In the overlap (even and a multiple of 3), since 6 is both even and a multiple of 3."
     },
     {
       "id": "fl03",
       "outcomeId": "lo03",
       "difficulty": "Round 1",
       "prompt": "Name the display best used for sorting shapes by ‘red / not red’ and ‘triangle / not triangle’.",
-      "answer": ".",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "."
+      "answer": "A Carroll diagram.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram.",
+      "errorFeedback": "A Carroll diagram."
     },
     {
       "id": "fl04",
       "outcomeId": "lo04",
       "difficulty": "Round 1",
       "prompt": "A bar for blue reaches 6 on the scale. What does this tell you?",
-      "answer": "A Carroll diagram.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "A Carroll diagram."
+      "answer": "Six students chose blue.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram.",
+      "errorFeedback": "Six students chose blue."
     },
     {
       "id": "fl05",
       "outcomeId": "lo05",
       "difficulty": "Round 2",
       "prompt": "True or False: the scale on a bar chart should start at zero.",
-      "answer": "Six students chose blue.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "Six students chose blue."
+      "answer": "True — a bar chart's scale must always start at zero, otherwise the bar heights are not a fair comparison.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram.",
+      "errorFeedback": "True — a bar chart's scale must always start at zero, otherwise the bar heights are not a fair comparison."
     },
     {
       "id": "fl06",
@@ -673,7 +674,7 @@
       "difficulty": "Round 2",
       "prompt": "Each ♦ = 2 books. Amina has 5 diamonds, Halima has 6, Ibrahim has 2. How many books did each read?",
       "answer": "1) Amina 10, Halima 12, Ibrahim 4 books.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram.",
       "errorFeedback": "1) Amina 10, Halima 12, Ibrahim 4 books."
     },
     {
@@ -682,7 +683,7 @@
       "difficulty": "Round 2",
       "prompt": "A bar chart shows Red 5, Blue 6, Green 8, Yellow 5 students. Find the total and the most popular colour.",
       "answer": "Total 5 + 6 + 8 + 5 = 24; green most popular (8).",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram.",
       "errorFeedback": "Total 5 + 6 + 8 + 5 = 24; green most popular (8)."
     },
     {
@@ -691,7 +692,7 @@
       "difficulty": "Round 2",
       "prompt": "Each symbol on a pictogram is worth 4. Write, in whole and half symbols, how to show: a) 8 b) 6 c) 10.",
       "answer": "a) 2 whole symbols; b) 1 whole and 1 half; c) 2 whole and 1 half.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram.",
       "errorFeedback": "a) 2 whole symbols; b) 1 whole and 1 half; c) 2 whole and 1 half."
     },
     {
@@ -700,7 +701,7 @@
       "difficulty": "Round 3",
       "prompt": "Sort the numbers 1 to 12 into a Carroll diagram of *even?* and *multiple of 3?* List all four boxes.",
       "answer": "Even & mult of 3: 6, 12. Even & not: 2, 4, 8, 10. Odd & mult of 3: 3, 9. Odd & not: 1, 5, 7, 11.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram.",
       "errorFeedback": "Even & mult of 3: 6, 12. Even & not: 2, 4, 8, 10. Odd & mult of 3: 3, 9. Odd & not: 1, 5, 7, 11."
     },
     {
@@ -709,7 +710,7 @@
       "difficulty": "Round 3",
       "prompt": "A pictogram of vehicles uses ☺ = 5. Cars = 6 symbols, buses = 2, bicycles = 3. How many of each, and how many altogether?",
       "answer": "Cars 30, buses 10, bicycles 15; total 55.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram.",
       "errorFeedback": "Cars 30, buses 10, bicycles 15; total 55."
     },
     {
@@ -718,7 +719,7 @@
       "difficulty": "Round 3",
       "prompt": "Choose the best display for each: a) comparing points of five teams; b) numbers that are multiples of both 2 and 5.",
       "answer": "a) bar chart; b) Venn diagram.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Data or Carroll diagram.",
       "errorFeedback": "a) bar chart; b) Venn diagram."
     },
     {
@@ -726,9 +727,9 @@
       "outcomeId": "lo04",
       "difficulty": "Round 3",
       "prompt": "Sort the numbers 1 to 30 into a three-circle Venn diagram of multiples of 2, 3 and 5. Where does 30 go, and where does 10 go?",
-      "answer": "1) 30 sits in the centre where all three circles meet (multiple of 2, 3 and",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "1) 30 sits in the centre where all three circles meet (multiple of 2, 3 and"
+      "answer": "1) 30 sits in the centre where all three circles meet, because it is a multiple of 2, 3 and 5; 10 sits where the 2 and 5 circles overlap, since it is a multiple of 2 and 5 but not of 3.",
+      "hint": "Decide which idea the question is really about (Data, Carroll diagram, Venn diagram), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "1) 30 sits in the centre where all three circles meet, because it is a multiple of 2, 3 and 5; 10 sits where the 2 and 5 circles overlap, since it is a multiple of 2 and 5 but not of 3."
     }
   ],
   "realProblems": [
@@ -739,7 +740,7 @@
       "context": "Home",
       "prompt": "At the Kismaayo market, Sagal tallies drinks sold: camel milk IIII IIII (9), tea IIII I (6), juice IIII (5). Draw this as a pictogram (symbol = 1) and say which sold most and the total sold.",
       "answer": "1) Camel milk 9, tea 6, juice 5 – camel milk sold most; total 20 drinks.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Data, Carroll diagram, Venn diagram), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) Camel milk 9, tea 6, juice 5 – camel milk sold most; total 20 drinks."
     },
     {
@@ -749,7 +750,7 @@
       "context": "Market",
       "prompt": "Yusuf counts vehicles before Asr with each symbol worth 5: cars 8 symbols, bajaj 5 symbols, buses 2 symbols. How many of each, and how many more cars than buses?",
       "answer": "Cars 40, bajaj 25, buses 10; 40 − 10 = 30 more cars than buses.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Data, Carroll diagram, Venn diagram), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "Cars 40, bajaj 25, buses 10; 40 − 10 = 30 more cars than buses."
     },
     {
@@ -759,7 +760,7 @@
       "context": "Travel",
       "prompt": "A grouped bar chart compares favourite colours for boys and girls: purple 2 boys and 14 girls; blue 12 boys and 7 girls. Which colour shows the biggest difference, and how big is it?",
       "answer": "Purple shows the biggest difference: 14 − 2 = 12.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Data, Carroll diagram, Venn diagram), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "Purple shows the biggest difference: 14 − 2 = 12."
     },
     {
@@ -769,7 +770,7 @@
       "context": "School",
       "prompt": "A school of 100 pupils travels like this: 45 walk, 30 by car, 15 cycle, 10 by bus. What fraction walk, and which display would show this data well?",
       "answer": "45 out of 100 = 45/100 = 9/20 walk; a bar chart (or pictogram) shows it well.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Data, Carroll diagram, Venn diagram), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "45 out of 100 = 45/100 = 9/20 walk; a bar chart (or pictogram) shows it well."
     },
     {
@@ -779,7 +780,7 @@
       "context": "Community",
       "prompt": "A theme-park bar chart peaks in July (45 thousand) and is lowest in December (5 thousand). How many more visitors came in July than December, and give two reasons for the summer peak.",
       "answer": "45 − 5 = 40 thousand more in July; reasons: warm weather and school holidays in summer.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Data, Carroll diagram, Venn diagram), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "45 − 5 = 40 thousand more in July; reasons: warm weather and school holidays in summer."
     },
     {
@@ -788,9 +789,9 @@
       "difficulty": "Core",
       "context": "Daily life",
       "prompt": "Sort the numbers 1 to 30 into a three-circle Venn diagram of multiples of 2, 3 and 5. Where does 30 go, and where does 10 go?",
-      "answer": "1) 30 sits in the centre where all three circles meet (multiple of 2, 3 and",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "1) 30 sits in the centre where all three circles meet (multiple of 2, 3 and"
+      "answer": "1) 30 sits in the centre where all three circles meet, because it is a multiple of 2, 3 and 5; 10 sits where the 2 and 5 circles overlap, since it is a multiple of 2 and 5 but not of 3.",
+      "hint": "Decide which idea the question is really about (Data, Carroll diagram, Venn diagram), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "1) 30 sits in the centre where all three circles meet, because it is a multiple of 2, 3 and 5; 10 sits where the 2 and 5 circles overlap, since it is a multiple of 2 and 5 but not of 3."
     }
   ],
   "reasoningPrompts": [
@@ -805,7 +806,7 @@
         "Carroll diagram",
         "Venn diagram"
       ],
-      "modelAnswer": "1) 30 sits in the centre where all three circles meet (multiple of 2, 3 and"
+      "modelAnswer": "1) 30 sits in the centre where all three circles meet, because it is a multiple of 2, 3 and 5; 10 sits where the 2 and 5 circles overlap, since it is a multiple of 2 and 5 but not of 3."
     },
     {
       "id": "reason02",
@@ -818,7 +819,7 @@
         "Venn diagram",
         "Intersection"
       ],
-      "modelAnswer": "; 10 sits where the 2 and 5 circles overlap (not"
+      "modelAnswer": "Total = 150 + 200 + 250 + 200 + 250 + 300 + 150 = 1,500 visitors; busiest day = Saturday (300); average = 1,500 ÷ 7 ≈ 214 per day."
     },
     {
       "id": "reason03",
@@ -831,7 +832,7 @@
         "Intersection",
         "Pictogram"
       ],
-      "modelAnswer": "."
+      "modelAnswer": "Class A collected 15 × 5 = 75; Class B collected 12 × 5 = 60. Class A collected 75 − 60 = 15 more items of recycling."
     },
     {
       "id": "reason04",
@@ -844,7 +845,7 @@
         "Pictogram",
         "Key"
       ],
-      "modelAnswer": "Total 1550; busiest Saturday (300); average 1550 ÷ 7 ≈ 221 per day."
+      "modelAnswer": "Circles in a Venn diagram are usually drawn about the same size no matter how many items belong inside them — the size is just for drawing the shape, not a measurement. You must always count the actual numbers written inside each region rather than judging by how big the circle looks."
     },
     {
       "id": "reason05",
@@ -857,7 +858,7 @@
         "Carroll diagram",
         "Venn diagram"
       ],
-      "modelAnswer": "Often we want to compare two sets of data – boys and girls, this week and last week, Class A and Class B. Bar charts are perfect for this, and there are two neat ways to do it. In a side-by-side display, you draw two separate bar charts using the same scale and categories, then place them next to each other so the eye can compare matching bars. In a grouped bar chart, you draw two bars in each category, sitting right beside each other, using different colours or patterns and a key to tell them apart. Suppose we…"
+      "modelAnswer": "Often we want to compare two sets of data – boys and girls, this week and last week, Class A and Class B. Bar charts are perfect for this, and there are two neat ways to do it. In a side-by-side display, you draw two separate bar charts using the same scale and categories, then place them next to each other so the eye can compare matching bars. In a grouped bar chart, you draw two bars in each category, sitting right beside each other, using different colours or patterns and a key to tell them apart.\n\nSuppose we record favourite colours for boys and girls in the same class:"
     },
     {
       "id": "reason06",
@@ -870,7 +871,7 @@
         "Carroll diagram",
         "Venn diagram"
       ],
-      "modelAnswer": "Building a display is only half the work; the real prize is interpreting it – explaining what it tells you. When you look at any chart or diagram, train yourself to ask a set of questions. Which category has the highest value, and which the lowest? What is the difference between two categories? Is there a pattern or trend – do the values rise, fall, or stay level as you move along? Are there any unusual values that stand out from the rest? And what is the total across all the categories? Once you have made your…"
+      "modelAnswer": "Building a display is only half the work; the real prize is interpreting it – explaining what it tells you. When you look at any chart or diagram, train yourself to ask a set of questions. Which category has the highest value, and which the lowest? What is the difference between two categories? Is there a pattern or trend – do the values rise, fall, or stay level as you move along? Are there any unusual values that stand out from the rest? And what is the total across all the categories?\n\nOnce you have made your observations, you can go further and draw conclusions – sensible ideas about *why* the data looks as it does. Suppose a bar chart of visitors to a theme park over a year peaks sharply in July and August and dips low in the winter months. An observation is simply ‘July and August are the busiest months’. A conclusion goes deeper: ‘The park is busiest in summer, probably because the weather is warm and schools are closed, so families have time to visit.’ Good conclusions are always linked to the data and to the real world; they never come from thin air."
     }
   ],
   "assessment": {
@@ -881,144 +882,144 @@
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Basic",
-        "question": "Here is some data: 5, 16, 7, 10, 4. What is the largest value?",
+        "question": "In a Carroll diagram sorting numbers by 'even?' and 'greater than 10?', where does the number 8 belong?",
         "options": [
-          "5",
-          "16",
-          "4",
-          "15"
+          "Even and not greater than 10",
+          "Even and greater than 10",
+          "Odd and not greater than 10",
+          "Odd and greater than 10"
         ],
-        "answer": "16",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Look for the biggest number: 16."
+        "answer": "Even and not greater than 10",
+        "hint": "Test the number against both yes/no questions in turn.",
+        "explanation": "8 is even (it ends in 8) and it is not greater than 10, so it belongs in the 'even and not greater than 10' box."
       },
       {
         "id": "q02",
         "type": "Application",
         "outcomeId": "lo02",
         "difficulty": "Basic",
-        "question": "A tally shows these counts: 9, 20, 10, 4, 15. What is the total?",
+        "question": "In a Venn diagram of 'multiples of 3' and 'multiples of 4', where does 12 belong?",
         "options": [
-          "57",
-          "20",
-          "58",
-          "59"
+          "Multiples of 3 only",
+          "Multiples of 4 only",
+          "Both rings (the overlap)",
+          "Neither ring"
         ],
-        "answer": "58",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Add them all: 9 + 20 + 10 + 4 + 15 = 58."
+        "answer": "Both rings (the overlap)",
+        "hint": "Check whether the number divides exactly by each property.",
+        "explanation": "12 ÷ 3 = 4 and 12 ÷ 4 = 3, so 12 is a multiple of both 3 and 4. It belongs in the overlap where the two rings meet."
       },
       {
         "id": "q03",
         "type": "Application",
         "outcomeId": "lo03",
         "difficulty": "Basic",
-        "question": "Here is some data: 6, 2, 16, 1, 3. What is the range?",
+        "question": "A pictogram key shows ☺ = 4 books. A row has 3 whole symbols and one half symbol. How many books does this row show?",
         "options": [
-          "16",
-          "1",
           "14",
-          "15"
+          "12",
+          "16",
+          "10"
         ],
-        "answer": "15",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Range = largest − smallest = 16 − 1 = 15."
+        "answer": "14",
+        "hint": "Multiply the whole symbols by the key value, then add the half symbol.",
+        "explanation": "3 whole symbols = 3 × 4 = 12 books. A half symbol is worth half of 4, which is 2. So 12 + 2 = 14 books."
       },
       {
         "id": "q04",
         "type": "Application",
         "outcomeId": "lo04",
         "difficulty": "Basic",
-        "question": "A tally shows these counts: 13, 8, 12, 11, 20. What is the total?",
+        "question": "Which of these is NOT something every good bar chart must have?",
         "options": [
-          "63",
-          "20",
-          "64",
-          "65"
+          "A scale that starts at zero",
+          "Labelled axes and a title",
+          "Bars of different widths",
+          "Equal gaps between the bars"
         ],
-        "answer": "64",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Add them all: 13 + 8 + 12 + 11 + 20 = 64."
+        "answer": "Bars of different widths",
+        "hint": "Think about what stays the same and what changes between bars.",
+        "explanation": "Every bar in a bar chart should be the same width — only the height changes to show the value. A good bar chart also needs a zero-starting scale, labelled axes, a title, and equal gaps between bars."
       },
       {
         "id": "q05",
         "type": "Application",
         "outcomeId": "lo05",
         "difficulty": "Core",
-        "question": "Here is some data: 13, 18, 20, 10, 17. What is the largest value?",
+        "question": "A bar chart shows Monday 20, Tuesday 35, Wednesday 15 visitors. How many more visitors came on Tuesday than Wednesday?",
         "options": [
           "20",
-          "10",
-          "19",
-          "13"
+          "15",
+          "35",
+          "50"
         ],
         "answer": "20",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Look for the biggest number: 20."
+        "hint": "Read the two bar heights, then subtract.",
+        "explanation": "Tuesday had 35 and Wednesday had 15, so the difference is 35 − 15 = 20 more visitors."
       },
       {
         "id": "q06",
         "type": "Application",
         "outcomeId": "lo06",
         "difficulty": "Core",
-        "question": "Here is some data: 10, 14, 17, 13, 12, 10. Which value appears most often (the mode)?",
+        "question": "A grouped bar chart compares favourite fruit for two classes: mango is chosen by 6 pupils in Class A and 14 in Class B. How many more pupils in Class B chose mango?",
         "options": [
-          "11",
-          "10",
-          "17",
+          "8",
+          "20",
+          "6",
           "14"
         ],
-        "answer": "10",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "10 appears more than any other value, so it is the mode."
+        "answer": "8",
+        "hint": "Subtract the smaller bar from the larger bar.",
+        "explanation": "Subtract the smaller amount from the larger: 14 − 6 = 8 more pupils in Class B chose mango."
       },
       {
         "id": "q07",
         "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
-        "question": "Here is some data: 7, 2, 20, 17, 14. What is the range?",
+        "question": "Which display would be best for showing which numbers from 1 to 20 are multiples of both 2 and 3?",
         "options": [
-          "18",
-          "20",
-          "2",
-          "19"
+          "Venn diagram",
+          "Bar chart",
+          "Pictogram",
+          "Carroll diagram with three rows"
         ],
-        "answer": "18",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Range = largest − smallest = 20 − 2 = 18."
+        "answer": "Venn diagram",
+        "hint": "Think about which display shows overlap between two groups clearly.",
+        "explanation": "A Venn diagram with overlapping circles for 'multiples of 2' and 'multiples of 3' is the natural way to show numbers that belong to one, both, or neither group."
       },
       {
         "id": "q08",
         "type": "Application",
         "outcomeId": "lo08",
         "difficulty": "Challenge",
-        "question": "Here is some data: 8, 18, 14, 7, 9. What is the largest value?",
+        "question": "A bar chart of ice-cream sales is highest in June and July and lowest in December and January. Which is the best conclusion?",
         "options": [
-          "18",
-          "7",
-          "17",
-          "8"
+          "Ice cream sells better in hot months than in cold months",
+          "Ice cream is only sold in June and July",
+          "The shop closes in December and January",
+          "Nobody buys ice cream in winter"
         ],
-        "answer": "18",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Look for the biggest number: 18."
+        "answer": "Ice cream sells better in hot months than in cold months",
+        "hint": "A good conclusion is supported by the pattern, without overstating it.",
+        "explanation": "The pattern of high sales in summer and low sales in winter supports a sensible, moderate conclusion linking sales to warm weather, unlike the more extreme or unsupported statements in the other options."
       },
       {
         "id": "q09",
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Challenge",
-        "question": "A tally shows these counts: 13, 9, 4, 17, 19. What is the total?",
+        "question": "In a Carroll diagram sorting shapes by 'red?' and 'triangle?', a blue triangle belongs in which box?",
         "options": [
-          "61",
-          "19",
-          "62",
-          "63"
+          "Red and triangle",
+          "Not red and triangle",
+          "Red and not triangle",
+          "Not red and not triangle"
         ],
-        "answer": "62",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Add them all: 13 + 9 + 4 + 17 + 19 = 62."
+        "answer": "Not red and triangle",
+        "hint": "Test the shape against both yes/no questions.",
+        "explanation": "A blue triangle is not red, but it is a triangle, so it goes in the 'not red and triangle' box."
       },
       {
         "id": "q10",
@@ -1082,40 +1083,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 5, 16, 7, 10, 4. What is the largest value?",
+            "prompt": "In a Carroll diagram sorting numbers by 'even?' and 'greater than 10?', where does the number 8 belong?",
             "choices": [
-              "5",
-              "16",
-              "4",
-              "15"
+              "Even and not greater than 10",
+              "Even and greater than 10",
+              "Odd and not greater than 10",
+              "Odd and greater than 10"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 16."
+            "answer": "Even and not greater than 10",
+            "clue": "Test the number against both yes/no questions in turn.",
+            "explanation": "8 is even (it ends in 8) and it is not greater than 10, so it belongs in the 'even and not greater than 10' box."
           },
           {
-            "prompt": "A tally shows these counts: 13, 8, 12, 11, 20. What is the total?",
+            "prompt": "Which of these is NOT something every good bar chart must have?",
             "choices": [
-              "63",
-              "20",
-              "64",
-              "65"
+              "A scale that starts at zero",
+              "Labelled axes and a title",
+              "Bars of different widths",
+              "Equal gaps between the bars"
             ],
-            "answer": "64",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 13 + 8 + 12 + 11 + 20 = 64."
+            "answer": "Bars of different widths",
+            "clue": "Think about what stays the same and what changes between bars.",
+            "explanation": "Every bar in a bar chart should be the same width — only the height changes to show the value. A good bar chart also needs a zero-starting scale, labelled axes, a title, and equal gaps between bars."
           },
           {
-            "prompt": "Here is some data: 7, 2, 20, 17, 14. What is the range?",
+            "prompt": "Which display would be best for showing which numbers from 1 to 20 are multiples of both 2 and 3?",
             "choices": [
-              "18",
-              "20",
-              "2",
-              "19"
+              "Venn diagram",
+              "Bar chart",
+              "Pictogram",
+              "Carroll diagram with three rows"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 20 − 2 = 18."
+            "answer": "Venn diagram",
+            "clue": "Think about which display shows overlap between two groups clearly.",
+            "explanation": "A Venn diagram with overlapping circles for 'multiples of 2' and 'multiples of 3' is the natural way to show numbers that belong to one, both, or neither group."
           },
           {
             "prompt": "What does “Data” mean?",
@@ -1140,40 +1141,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "A tally shows these counts: 9, 20, 10, 4, 15. What is the total?",
+            "prompt": "In a Venn diagram of 'multiples of 3' and 'multiples of 4', where does 12 belong?",
             "choices": [
-              "57",
-              "20",
-              "58",
-              "59"
+              "Multiples of 3 only",
+              "Multiples of 4 only",
+              "Both rings (the overlap)",
+              "Neither ring"
             ],
-            "answer": "58",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 9 + 20 + 10 + 4 + 15 = 58."
+            "answer": "Both rings (the overlap)",
+            "clue": "Check whether the number divides exactly by each property.",
+            "explanation": "12 ÷ 3 = 4 and 12 ÷ 4 = 3, so 12 is a multiple of both 3 and 4. It belongs in the overlap where the two rings meet."
           },
           {
-            "prompt": "Here is some data: 13, 18, 20, 10, 17. What is the largest value?",
+            "prompt": "A bar chart shows Monday 20, Tuesday 35, Wednesday 15 visitors. How many more visitors came on Tuesday than Wednesday?",
             "choices": [
               "20",
-              "10",
-              "19",
-              "13"
+              "15",
+              "35",
+              "50"
             ],
             "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 20."
+            "clue": "Read the two bar heights, then subtract.",
+            "explanation": "Tuesday had 35 and Wednesday had 15, so the difference is 35 − 15 = 20 more visitors."
           },
           {
-            "prompt": "Here is some data: 8, 18, 14, 7, 9. What is the largest value?",
+            "prompt": "A bar chart of ice-cream sales is highest in June and July and lowest in December and January. Which is the best conclusion?",
             "choices": [
-              "18",
-              "7",
-              "17",
-              "8"
+              "Ice cream sells better in hot months than in cold months",
+              "Ice cream is only sold in June and July",
+              "The shop closes in December and January",
+              "Nobody buys ice cream in winter"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 18."
+            "answer": "Ice cream sells better in hot months than in cold months",
+            "clue": "A good conclusion is supported by the pattern, without overstating it.",
+            "explanation": "The pattern of high sales in summer and low sales in winter supports a sensible, moderate conclusion linking sales to warm weather, unlike the more extreme or unsupported statements in the other options."
           },
           {
             "prompt": "What does “Carroll diagram” mean?",
@@ -1198,40 +1199,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 6, 2, 16, 1, 3. What is the range?",
+            "prompt": "A pictogram key shows ☺ = 4 books. A row has 3 whole symbols and one half symbol. How many books does this row show?",
             "choices": [
-              "16",
-              "1",
               "14",
-              "15"
+              "12",
+              "16",
+              "10"
             ],
-            "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 16 − 1 = 15."
+            "answer": "14",
+            "clue": "Multiply the whole symbols by the key value, then add the half symbol.",
+            "explanation": "3 whole symbols = 3 × 4 = 12 books. A half symbol is worth half of 4, which is 2. So 12 + 2 = 14 books."
           },
           {
-            "prompt": "Here is some data: 10, 14, 17, 13, 12, 10. Which value appears most often (the mode)?",
+            "prompt": "A grouped bar chart compares favourite fruit for two classes: mango is chosen by 6 pupils in Class A and 14 in Class B. How many more pupils in Class B chose mango?",
             "choices": [
-              "11",
-              "10",
-              "17",
+              "8",
+              "20",
+              "6",
               "14"
             ],
-            "answer": "10",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "10 appears more than any other value, so it is the mode."
+            "answer": "8",
+            "clue": "Subtract the smaller bar from the larger bar.",
+            "explanation": "Subtract the smaller amount from the larger: 14 − 6 = 8 more pupils in Class B chose mango."
           },
           {
-            "prompt": "A tally shows these counts: 13, 9, 4, 17, 19. What is the total?",
+            "prompt": "In a Carroll diagram sorting shapes by 'red?' and 'triangle?', a blue triangle belongs in which box?",
             "choices": [
-              "61",
-              "19",
-              "62",
-              "63"
+              "Red and triangle",
+              "Not red and triangle",
+              "Red and not triangle",
+              "Not red and not triangle"
             ],
-            "answer": "62",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 13 + 9 + 4 + 17 + 19 = 62."
+            "answer": "Not red and triangle",
+            "clue": "Test the shape against both yes/no questions.",
+            "explanation": "A blue triangle is not red, but it is a triangle, so it goes in the 'not red and triangle' box."
           },
           {
             "prompt": "What does “Venn diagram” mean?",
@@ -1256,28 +1257,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "A tally shows these counts: 13, 8, 12, 11, 20. What is the total?",
+            "prompt": "Which of these is NOT something every good bar chart must have?",
             "choices": [
-              "63",
-              "20",
-              "64",
-              "65"
+              "A scale that starts at zero",
+              "Labelled axes and a title",
+              "Bars of different widths",
+              "Equal gaps between the bars"
             ],
-            "answer": "64",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 13 + 8 + 12 + 11 + 20 = 64."
+            "answer": "Bars of different widths",
+            "clue": "Think about what stays the same and what changes between bars.",
+            "explanation": "Every bar in a bar chart should be the same width — only the height changes to show the value. A good bar chart also needs a zero-starting scale, labelled axes, a title, and equal gaps between bars."
           },
           {
-            "prompt": "Here is some data: 7, 2, 20, 17, 14. What is the range?",
+            "prompt": "Which display would be best for showing which numbers from 1 to 20 are multiples of both 2 and 3?",
             "choices": [
-              "18",
-              "20",
-              "2",
-              "19"
+              "Venn diagram",
+              "Bar chart",
+              "Pictogram",
+              "Carroll diagram with three rows"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 20 − 2 = 18."
+            "answer": "Venn diagram",
+            "clue": "Think about which display shows overlap between two groups clearly.",
+            "explanation": "A Venn diagram with overlapping circles for 'multiples of 2' and 'multiples of 3' is the natural way to show numbers that belong to one, both, or neither group."
           },
           {
             "prompt": "What does “Data” mean?",
@@ -1292,16 +1293,16 @@
             "explanation": "Data means Information collected to answer a question."
           },
           {
-            "prompt": "Here is some data: 5, 16, 7, 10, 4. What is the largest value?",
+            "prompt": "In a Carroll diagram sorting numbers by 'even?' and 'greater than 10?', where does the number 8 belong?",
             "choices": [
-              "5",
-              "16",
-              "4",
-              "15"
+              "Even and not greater than 10",
+              "Even and greater than 10",
+              "Odd and not greater than 10",
+              "Odd and greater than 10"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 16."
+            "answer": "Even and not greater than 10",
+            "clue": "Test the number against both yes/no questions in turn.",
+            "explanation": "8 is even (it ends in 8) and it is not greater than 10, so it belongs in the 'even and not greater than 10' box."
           }
         ]
       },
@@ -1314,28 +1315,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 13, 18, 20, 10, 17. What is the largest value?",
+            "prompt": "A bar chart shows Monday 20, Tuesday 35, Wednesday 15 visitors. How many more visitors came on Tuesday than Wednesday?",
             "choices": [
               "20",
-              "10",
-              "19",
-              "13"
+              "15",
+              "35",
+              "50"
             ],
             "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 20."
+            "clue": "Read the two bar heights, then subtract.",
+            "explanation": "Tuesday had 35 and Wednesday had 15, so the difference is 35 − 15 = 20 more visitors."
           },
           {
-            "prompt": "Here is some data: 8, 18, 14, 7, 9. What is the largest value?",
+            "prompt": "A bar chart of ice-cream sales is highest in June and July and lowest in December and January. Which is the best conclusion?",
             "choices": [
-              "18",
-              "7",
-              "17",
-              "8"
+              "Ice cream sells better in hot months than in cold months",
+              "Ice cream is only sold in June and July",
+              "The shop closes in December and January",
+              "Nobody buys ice cream in winter"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 18."
+            "answer": "Ice cream sells better in hot months than in cold months",
+            "clue": "A good conclusion is supported by the pattern, without overstating it.",
+            "explanation": "The pattern of high sales in summer and low sales in winter supports a sensible, moderate conclusion linking sales to warm weather, unlike the more extreme or unsupported statements in the other options."
           },
           {
             "prompt": "What does “Carroll diagram” mean?",
@@ -1350,16 +1351,16 @@
             "explanation": "Carroll diagram means A grid sorting items by two yes/no properties."
           },
           {
-            "prompt": "A tally shows these counts: 9, 20, 10, 4, 15. What is the total?",
+            "prompt": "In a Venn diagram of 'multiples of 3' and 'multiples of 4', where does 12 belong?",
             "choices": [
-              "57",
-              "20",
-              "58",
-              "59"
+              "Multiples of 3 only",
+              "Multiples of 4 only",
+              "Both rings (the overlap)",
+              "Neither ring"
             ],
-            "answer": "58",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 9 + 20 + 10 + 4 + 15 = 58."
+            "answer": "Both rings (the overlap)",
+            "clue": "Check whether the number divides exactly by each property.",
+            "explanation": "12 ÷ 3 = 4 and 12 ÷ 4 = 3, so 12 is a multiple of both 3 and 4. It belongs in the overlap where the two rings meet."
           }
         ]
       },
@@ -1372,28 +1373,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 10, 14, 17, 13, 12, 10. Which value appears most often (the mode)?",
+            "prompt": "A grouped bar chart compares favourite fruit for two classes: mango is chosen by 6 pupils in Class A and 14 in Class B. How many more pupils in Class B chose mango?",
             "choices": [
-              "11",
-              "10",
-              "17",
+              "8",
+              "20",
+              "6",
               "14"
             ],
-            "answer": "10",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "10 appears more than any other value, so it is the mode."
+            "answer": "8",
+            "clue": "Subtract the smaller bar from the larger bar.",
+            "explanation": "Subtract the smaller amount from the larger: 14 − 6 = 8 more pupils in Class B chose mango."
           },
           {
-            "prompt": "A tally shows these counts: 13, 9, 4, 17, 19. What is the total?",
+            "prompt": "In a Carroll diagram sorting shapes by 'red?' and 'triangle?', a blue triangle belongs in which box?",
             "choices": [
-              "61",
-              "19",
-              "62",
-              "63"
+              "Red and triangle",
+              "Not red and triangle",
+              "Red and not triangle",
+              "Not red and not triangle"
             ],
-            "answer": "62",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 13 + 9 + 4 + 17 + 19 = 62."
+            "answer": "Not red and triangle",
+            "clue": "Test the shape against both yes/no questions.",
+            "explanation": "A blue triangle is not red, but it is a triangle, so it goes in the 'not red and triangle' box."
           },
           {
             "prompt": "What does “Venn diagram” mean?",
@@ -1408,16 +1409,16 @@
             "explanation": "Venn diagram means Overlapping circles showing how groups relate."
           },
           {
-            "prompt": "Here is some data: 6, 2, 16, 1, 3. What is the range?",
+            "prompt": "A pictogram key shows ☺ = 4 books. A row has 3 whole symbols and one half symbol. How many books does this row show?",
             "choices": [
-              "16",
-              "1",
               "14",
-              "15"
+              "12",
+              "16",
+              "10"
             ],
-            "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 16 − 1 = 15."
+            "answer": "14",
+            "clue": "Multiply the whole symbols by the key value, then add the half symbol.",
+            "explanation": "3 whole symbols = 3 × 4 = 12 books. A half symbol is worth half of 4, which is 2. So 12 + 2 = 14 books."
           }
         ]
       },
@@ -1430,16 +1431,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 7, 2, 20, 17, 14. What is the range?",
+            "prompt": "Which display would be best for showing which numbers from 1 to 20 are multiples of both 2 and 3?",
             "choices": [
-              "18",
-              "20",
-              "2",
-              "19"
+              "Venn diagram",
+              "Bar chart",
+              "Pictogram",
+              "Carroll diagram with three rows"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 20 − 2 = 18."
+            "answer": "Venn diagram",
+            "clue": "Think about which display shows overlap between two groups clearly.",
+            "explanation": "A Venn diagram with overlapping circles for 'multiples of 2' and 'multiples of 3' is the natural way to show numbers that belong to one, both, or neither group."
           },
           {
             "prompt": "What does “Data” mean?",
@@ -1454,28 +1455,28 @@
             "explanation": "Data means Information collected to answer a question."
           },
           {
-            "prompt": "Here is some data: 5, 16, 7, 10, 4. What is the largest value?",
+            "prompt": "In a Carroll diagram sorting numbers by 'even?' and 'greater than 10?', where does the number 8 belong?",
             "choices": [
-              "5",
-              "16",
-              "4",
-              "15"
+              "Even and not greater than 10",
+              "Even and greater than 10",
+              "Odd and not greater than 10",
+              "Odd and greater than 10"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 16."
+            "answer": "Even and not greater than 10",
+            "clue": "Test the number against both yes/no questions in turn.",
+            "explanation": "8 is even (it ends in 8) and it is not greater than 10, so it belongs in the 'even and not greater than 10' box."
           },
           {
-            "prompt": "A tally shows these counts: 13, 8, 12, 11, 20. What is the total?",
+            "prompt": "Which of these is NOT something every good bar chart must have?",
             "choices": [
-              "63",
-              "20",
-              "64",
-              "65"
+              "A scale that starts at zero",
+              "Labelled axes and a title",
+              "Bars of different widths",
+              "Equal gaps between the bars"
             ],
-            "answer": "64",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 13 + 8 + 12 + 11 + 20 = 64."
+            "answer": "Bars of different widths",
+            "clue": "Think about what stays the same and what changes between bars.",
+            "explanation": "Every bar in a bar chart should be the same width — only the height changes to show the value. A good bar chart also needs a zero-starting scale, labelled axes, a title, and equal gaps between bars."
           }
         ]
       },
@@ -1488,16 +1489,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 8, 18, 14, 7, 9. What is the largest value?",
+            "prompt": "A bar chart of ice-cream sales is highest in June and July and lowest in December and January. Which is the best conclusion?",
             "choices": [
-              "18",
-              "7",
-              "17",
-              "8"
+              "Ice cream sells better in hot months than in cold months",
+              "Ice cream is only sold in June and July",
+              "The shop closes in December and January",
+              "Nobody buys ice cream in winter"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 18."
+            "answer": "Ice cream sells better in hot months than in cold months",
+            "clue": "A good conclusion is supported by the pattern, without overstating it.",
+            "explanation": "The pattern of high sales in summer and low sales in winter supports a sensible, moderate conclusion linking sales to warm weather, unlike the more extreme or unsupported statements in the other options."
           },
           {
             "prompt": "What does “Carroll diagram” mean?",
@@ -1512,28 +1513,28 @@
             "explanation": "Carroll diagram means A grid sorting items by two yes/no properties."
           },
           {
-            "prompt": "A tally shows these counts: 9, 20, 10, 4, 15. What is the total?",
+            "prompt": "In a Venn diagram of 'multiples of 3' and 'multiples of 4', where does 12 belong?",
             "choices": [
-              "57",
-              "20",
-              "58",
-              "59"
+              "Multiples of 3 only",
+              "Multiples of 4 only",
+              "Both rings (the overlap)",
+              "Neither ring"
             ],
-            "answer": "58",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 9 + 20 + 10 + 4 + 15 = 58."
+            "answer": "Both rings (the overlap)",
+            "clue": "Check whether the number divides exactly by each property.",
+            "explanation": "12 ÷ 3 = 4 and 12 ÷ 4 = 3, so 12 is a multiple of both 3 and 4. It belongs in the overlap where the two rings meet."
           },
           {
-            "prompt": "Here is some data: 13, 18, 20, 10, 17. What is the largest value?",
+            "prompt": "A bar chart shows Monday 20, Tuesday 35, Wednesday 15 visitors. How many more visitors came on Tuesday than Wednesday?",
             "choices": [
               "20",
-              "10",
-              "19",
-              "13"
+              "15",
+              "35",
+              "50"
             ],
             "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 20."
+            "clue": "Read the two bar heights, then subtract.",
+            "explanation": "Tuesday had 35 and Wednesday had 15, so the difference is 35 − 15 = 20 more visitors."
           }
         ]
       },
@@ -1546,16 +1547,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "A tally shows these counts: 13, 9, 4, 17, 19. What is the total?",
+            "prompt": "In a Carroll diagram sorting shapes by 'red?' and 'triangle?', a blue triangle belongs in which box?",
             "choices": [
-              "61",
-              "19",
-              "62",
-              "63"
+              "Red and triangle",
+              "Not red and triangle",
+              "Red and not triangle",
+              "Not red and not triangle"
             ],
-            "answer": "62",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 13 + 9 + 4 + 17 + 19 = 62."
+            "answer": "Not red and triangle",
+            "clue": "Test the shape against both yes/no questions.",
+            "explanation": "A blue triangle is not red, but it is a triangle, so it goes in the 'not red and triangle' box."
           },
           {
             "prompt": "What does “Venn diagram” mean?",
@@ -1570,28 +1571,28 @@
             "explanation": "Venn diagram means Overlapping circles showing how groups relate."
           },
           {
-            "prompt": "Here is some data: 6, 2, 16, 1, 3. What is the range?",
+            "prompt": "A pictogram key shows ☺ = 4 books. A row has 3 whole symbols and one half symbol. How many books does this row show?",
             "choices": [
-              "16",
-              "1",
               "14",
-              "15"
+              "12",
+              "16",
+              "10"
             ],
-            "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 16 − 1 = 15."
+            "answer": "14",
+            "clue": "Multiply the whole symbols by the key value, then add the half symbol.",
+            "explanation": "3 whole symbols = 3 × 4 = 12 books. A half symbol is worth half of 4, which is 2. So 12 + 2 = 14 books."
           },
           {
-            "prompt": "Here is some data: 10, 14, 17, 13, 12, 10. Which value appears most often (the mode)?",
+            "prompt": "A grouped bar chart compares favourite fruit for two classes: mango is chosen by 6 pupils in Class A and 14 in Class B. How many more pupils in Class B chose mango?",
             "choices": [
-              "11",
-              "10",
-              "17",
+              "8",
+              "20",
+              "6",
               "14"
             ],
-            "answer": "10",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "10 appears more than any other value, so it is the mode."
+            "answer": "8",
+            "clue": "Subtract the smaller bar from the larger bar.",
+            "explanation": "Subtract the smaller amount from the larger: 14 − 6 = 8 more pupils in Class B chose mango."
           }
         ]
       },
@@ -1616,40 +1617,40 @@
             "explanation": "Data means Information collected to answer a question."
           },
           {
-            "prompt": "Here is some data: 5, 16, 7, 10, 4. What is the largest value?",
+            "prompt": "In a Carroll diagram sorting numbers by 'even?' and 'greater than 10?', where does the number 8 belong?",
             "choices": [
-              "5",
-              "16",
-              "4",
-              "15"
+              "Even and not greater than 10",
+              "Even and greater than 10",
+              "Odd and not greater than 10",
+              "Odd and greater than 10"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 16."
+            "answer": "Even and not greater than 10",
+            "clue": "Test the number against both yes/no questions in turn.",
+            "explanation": "8 is even (it ends in 8) and it is not greater than 10, so it belongs in the 'even and not greater than 10' box."
           },
           {
-            "prompt": "A tally shows these counts: 13, 8, 12, 11, 20. What is the total?",
+            "prompt": "Which of these is NOT something every good bar chart must have?",
             "choices": [
-              "63",
-              "20",
-              "64",
-              "65"
+              "A scale that starts at zero",
+              "Labelled axes and a title",
+              "Bars of different widths",
+              "Equal gaps between the bars"
             ],
-            "answer": "64",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 13 + 8 + 12 + 11 + 20 = 64."
+            "answer": "Bars of different widths",
+            "clue": "Think about what stays the same and what changes between bars.",
+            "explanation": "Every bar in a bar chart should be the same width — only the height changes to show the value. A good bar chart also needs a zero-starting scale, labelled axes, a title, and equal gaps between bars."
           },
           {
-            "prompt": "Here is some data: 7, 2, 20, 17, 14. What is the range?",
+            "prompt": "Which display would be best for showing which numbers from 1 to 20 are multiples of both 2 and 3?",
             "choices": [
-              "18",
-              "20",
-              "2",
-              "19"
+              "Venn diagram",
+              "Bar chart",
+              "Pictogram",
+              "Carroll diagram with three rows"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 20 − 2 = 18."
+            "answer": "Venn diagram",
+            "clue": "Think about which display shows overlap between two groups clearly.",
+            "explanation": "A Venn diagram with overlapping circles for 'multiples of 2' and 'multiples of 3' is the natural way to show numbers that belong to one, both, or neither group."
           }
         ]
       },
@@ -1674,40 +1675,40 @@
             "explanation": "Carroll diagram means A grid sorting items by two yes/no properties."
           },
           {
-            "prompt": "A tally shows these counts: 9, 20, 10, 4, 15. What is the total?",
+            "prompt": "In a Venn diagram of 'multiples of 3' and 'multiples of 4', where does 12 belong?",
             "choices": [
-              "57",
-              "20",
-              "58",
-              "59"
+              "Multiples of 3 only",
+              "Multiples of 4 only",
+              "Both rings (the overlap)",
+              "Neither ring"
             ],
-            "answer": "58",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 9 + 20 + 10 + 4 + 15 = 58."
+            "answer": "Both rings (the overlap)",
+            "clue": "Check whether the number divides exactly by each property.",
+            "explanation": "12 ÷ 3 = 4 and 12 ÷ 4 = 3, so 12 is a multiple of both 3 and 4. It belongs in the overlap where the two rings meet."
           },
           {
-            "prompt": "Here is some data: 13, 18, 20, 10, 17. What is the largest value?",
+            "prompt": "A bar chart shows Monday 20, Tuesday 35, Wednesday 15 visitors. How many more visitors came on Tuesday than Wednesday?",
             "choices": [
               "20",
-              "10",
-              "19",
-              "13"
+              "15",
+              "35",
+              "50"
             ],
             "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 20."
+            "clue": "Read the two bar heights, then subtract.",
+            "explanation": "Tuesday had 35 and Wednesday had 15, so the difference is 35 − 15 = 20 more visitors."
           },
           {
-            "prompt": "Here is some data: 8, 18, 14, 7, 9. What is the largest value?",
+            "prompt": "A bar chart of ice-cream sales is highest in June and July and lowest in December and January. Which is the best conclusion?",
             "choices": [
-              "18",
-              "7",
-              "17",
-              "8"
+              "Ice cream sells better in hot months than in cold months",
+              "Ice cream is only sold in June and July",
+              "The shop closes in December and January",
+              "Nobody buys ice cream in winter"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 18."
+            "answer": "Ice cream sells better in hot months than in cold months",
+            "clue": "A good conclusion is supported by the pattern, without overstating it.",
+            "explanation": "The pattern of high sales in summer and low sales in winter supports a sensible, moderate conclusion linking sales to warm weather, unlike the more extreme or unsupported statements in the other options."
           }
         ]
       },
@@ -1732,40 +1733,40 @@
             "explanation": "Venn diagram means Overlapping circles showing how groups relate."
           },
           {
-            "prompt": "Here is some data: 6, 2, 16, 1, 3. What is the range?",
+            "prompt": "A pictogram key shows ☺ = 4 books. A row has 3 whole symbols and one half symbol. How many books does this row show?",
             "choices": [
-              "16",
-              "1",
               "14",
-              "15"
+              "12",
+              "16",
+              "10"
             ],
-            "answer": "15",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 16 − 1 = 15."
+            "answer": "14",
+            "clue": "Multiply the whole symbols by the key value, then add the half symbol.",
+            "explanation": "3 whole symbols = 3 × 4 = 12 books. A half symbol is worth half of 4, which is 2. So 12 + 2 = 14 books."
           },
           {
-            "prompt": "Here is some data: 10, 14, 17, 13, 12, 10. Which value appears most often (the mode)?",
+            "prompt": "A grouped bar chart compares favourite fruit for two classes: mango is chosen by 6 pupils in Class A and 14 in Class B. How many more pupils in Class B chose mango?",
             "choices": [
-              "11",
-              "10",
-              "17",
+              "8",
+              "20",
+              "6",
               "14"
             ],
-            "answer": "10",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "10 appears more than any other value, so it is the mode."
+            "answer": "8",
+            "clue": "Subtract the smaller bar from the larger bar.",
+            "explanation": "Subtract the smaller amount from the larger: 14 − 6 = 8 more pupils in Class B chose mango."
           },
           {
-            "prompt": "A tally shows these counts: 13, 9, 4, 17, 19. What is the total?",
+            "prompt": "In a Carroll diagram sorting shapes by 'red?' and 'triangle?', a blue triangle belongs in which box?",
             "choices": [
-              "61",
-              "19",
-              "62",
-              "63"
+              "Red and triangle",
+              "Not red and triangle",
+              "Red and not triangle",
+              "Not red and not triangle"
             ],
-            "answer": "62",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 13 + 9 + 4 + 17 + 19 = 62."
+            "answer": "Not red and triangle",
+            "clue": "Test the shape against both yes/no questions.",
+            "explanation": "A blue triangle is not red, but it is a triangle, so it goes in the 'not red and triangle' box."
           }
         ]
       }

@@ -49,8 +49,6 @@
     "poster": null
   },
   "outcomes": [
-    "This unit is designed for self-paced learning. You move at your own speed. Read each explanation slowly, copy every worked example onto paper and try it yourself before you look at the solution, and only move on when you feel steady. Your AI tutor is available day and night to set you fresh questions, explain a step a different way, or mark your working. Your teacher will also meet with you about twice a week to help with anything that feels tricky.",
-    "Why does probability matter? It sits behind weather forecasts, medical tests, insurance, quality control in factories, sport, and every game of chance ever invented. A doctor reading a test result, a shopkeeper deciding how much stock to buy, a meteorologist warning of floods – all of them use probability. Learning it well trains you to think clearly about risk and to avoid being fooled by claims that only *sound* convincing. Keep a pencil, paper and, if you can, a coin and a die beside you as you read, because probability is a subject you must do, not just watch.",
     "Describe probability as a measure of likelihood on a scale from 0 to 1.",
     "Calculate theoretical probability for equally likely outcomes using the basic formula.",
     "Express a probability as a fraction, decimal or percentage and convert between them.",
@@ -64,38 +62,38 @@
     {
       "id": "concept-1-the-probability-scale",
       "title": "The Probability Scale",
-      "explanation": "Probability measures how likely an event is, using a number between 0 and 1. Think of it as a ruler. At the far left, 0 means the event is impossible – it can never happen. At the far right, 1 means the event is certain – it must happen. Exactly halfway, at 0.5, the event has an even chance: it is just as likely to happen as not. It helps to picture the scale like a road with markers along it: 0, then 0.25, then 0.5, then 0.75, then 1. Near 0 the event is very unlikely; near 1 it is very likely; around the middle…",
-      "example": "Because every probability lies between 0 and 1, you have a built-in check on your own work. If you ever calculate a probability that is negative, or greater than 1, you have made a mistake somewhere – stop and find it.…"
+      "explanation": "Probability measures how likely an event is, using a number between 0 and 1. Think of it as a ruler. At the far left, 0 means the event is impossible – it can never happen. At the far right, 1 means the event is certain – it must happen. Exactly halfway, at 0.5, the event has an even chance: it is just as likely to happen as not.\n\nIt helps to picture the scale like a road with markers along it: 0, then 0.25, then 0.5, then 0.75, then 1. Near 0 the event is very unlikely; near 1 it is very likely; around the middle it could easily go either way. Rolling a 7 on an ordinary die sits at 0; the sun rising tomorrow sits at 1; a fair coin landing on heads sits at exactly 0.5.\n\nBecause every probability lies between 0 and 1, you have a built-in check on your own work. If you ever calculate a probability that is negative, or greater than 1, you have made a mistake somewhere – stop and find it. A probability of 2, or of −0.3, simply cannot exist. This single rule, 0 ≤ P(A) ≤ 1, will catch many errors before they cost you mark.",
+      "example": "We can write probability in three equivalent ways: as a fraction such as 1/4, as a decimal such as 0.25, or as a percentage such as 25%. They all mean the same thing. To turn a fraction into a decimal, divide the top by the bottom; to turn a decimal into a percentage, multiply by 100. So 3/8 = 0.375 = 37.5%. Being comfortable moving between these three forms is a skill you will use throughout the unit, so practise it until it feels automatic."
     },
     {
       "id": "concept-2-theoretical-probability",
       "title": "Theoretical Probability",
-      "explanation": "When all outcomes are equally likely – as with a fair coin, a fair die, or a well-shuffled deck – we can work out probability by pure reasoning, without doing any experiment at all. This is called theoretical probability, and it comes from one formula: P(event) = number of favourable outcomes ÷ total number of possible outcomes.",
-      "example": "A favourable outcome simply means an outcome that counts as the event you want – there is nothing lucky or unlucky about the word. Suppose you roll a fair six-sided die. The total number of possible outcomes is 6,…"
+      "explanation": "When all outcomes are equally likely – as with a fair coin, a fair die, or a well-shuffled deck – we can work out probability by pure reasoning, without doing any experiment at all. This is called theoretical probability, and it comes from one formula:\n\nP(event) = number of favourable outcomes ÷ total number of possible outcomes.\n\nA favourable outcome simply means an outcome that counts as the event you want – there is nothing lucky or unlucky about the word. Suppose you roll a fair six-sided die. The total number of possible outcomes is 6, because the die can show 1, 2, 3, 4, 5 or 6. The probability of rolling a 3 is 1/6, because just one of those six outcomes is a 3. The probability of rolling an even number is 3/6 = 1/2, because three outcomes (2, 4 and 6) are even.\n\nConsider a spinner divided into 8 equal sections: 3 are red, 2 blue, 2 green and 1 yellow. Because the sections are equal, each is equally likely, so the total is 8. Then P(red) = 3/8 = 0.375, P(blue) = 2/8 = 1/4 = 0.25, P(green) = 2/8 = 1/4, and P(yellow) = 1/8 = 0.125. Notice something important: if you add all four probabilities you get 3/8 + 2/8 + 2/8 + 1/8 = 8/8 = 1. The probabilities of all the separate outcomes always add up to 1, because one of them is certain to happen.",
+      "example": "This 'sum to 1' rule is another powerful check. If Yusuf calculates the chances of the four spinner colours and they add up to more than 1, he knows at once that he has slipped somewhere. Keep it in your toolkit alongside the 0-to-1 rule from Concept 1."
     },
     {
       "id": "concept-3-complementary-and-mutually-exclusive-events",
       "title": "Complementary and Mutually Exclusive Events",
-      "explanation": "The complement of an event A is simply 'A does not happen'. Because an event either happens or it does not, these two possibilities must together cover everything, so their probabilities add to 1. That gives a very useful rule: Using the spinner from Concept 2, P(red) = 3/8, so P(not red) = 1 − 3/8 = 5/8 = 0.625. This shortcut saves a lot of work. To find the chance of 'not red' the long way you would add P(blue) + P(green) + P(yellow); the complement lets you subtract from 1 in a single step. Whenever a question…",
-      "example": "Two events are mutually exclusive when they cannot both happen at the same time. On a single die roll, 'rolling a 2' and 'rolling a 5' are mutually exclusive, because one roll cannot be both a 2 and a 5. When events are…"
+      "explanation": "The complement of an event A is simply 'A does not happen'. Because an event either happens or it does not, these two possibilities must together cover everything, so their probabilities add to 1. That gives a very useful rule:\n\nUsing the spinner from Concept 2, P(red) = 3/8, so P(not red) = 1 − 3/8 = 5/8 = 0.625. This shortcut saves a lot of work. To find the chance of 'not red' the long way you would add P(blue) + P(green) + P(yellow); the complement lets you subtract from 1 in a single step. Whenever a question asks for 'at least one' or 'not', think about whether the complement is quicker.\n\nTwo events are mutually exclusive when they cannot both happen at the same time. On a single die roll, 'rolling a 2' and 'rolling a 5' are mutually exclusive, because one roll cannot be both a 2 and a 5. When events are mutually exclusive, you find the chance of one or the other by adding:\n\nP(A or B) = P(A) + P(B) (only when A and B are mutually exclusive).\n\nSo the probability of rolling a 2 or a 5 is 1/6 + 1/6 = 2/6 = 1/3. Be careful: this addition only works when the events cannot overlap. If two events can happen together – for example 'rolling an even number' and 'rolling a number greater than 3' both include the outcome 6 – then simply adding would count the shared outcome twice. In that general case you subtract the overlap: P(A or B) = P(A) + P(B) − P(A and B). For now, most of our 'or' problems will use mutually exclusive events, where plain addition is correct.",
+      "example": "A quick way to picture mutually exclusive events is two baskets that never share an item: an outcome drops into one basket or the other, never both. When the baskets can share – the same outcome could belong to either – the events are not mutually exclusive, and you must watch for double counting."
     },
     {
       "id": "concept-4-experimental-probability-and-the-law-of-large-numbers",
       "title": "Experimental Probability and the Law of Large Numbers",
-      "explanation": "Theoretical probability tells you what *should* happen if everything is fair and perfectly balanced. But real coins are slightly worn, real dice have tiny flaws, and some situations have no neat theory at all. In those cases we run an experiment and use the results. Experimental probability, also called relative frequency, is defined as: Experimental probability = number of times the event happened ÷ total number of trials.",
-      "example": "Suppose Hassan flips a coin 100 times and gets 47 heads. His experimental probability of heads is 47/100 = 0.47. The theoretical value is 0.5, so his result is close but not exactly equal. That difference is completely…"
+      "explanation": "Theoretical probability tells you what *should* happen if everything is fair and perfectly balanced. But real coins are slightly worn, real dice have tiny flaws, and some situations have no neat theory at all. In those cases we run an experiment and use the results. Experimental probability, also called relative frequency, is defined as:\n\nExperimental probability = number of times the event happened ÷ total number of trials.\n\nSuppose Hassan flips a coin 100 times and gets 47 heads. His experimental probability of heads is 47/100 = 0.47. The theoretical value is 0.5, so his result is close but not exactly equal. That difference is completely normal – it is just the natural variation you get in any finite experiment. If he flipped only 10 times he might get 7 heads (0.7) or 3 heads (0.3), values that stray much further from 0.5. Small samples wander; that is their nature.\n\nHere is the key idea, known as the Law of Large Numbers: as the number of trials grows, the experimental probability tends to settle down towards the theoretical probability. Flip a fair coin ten times and heads might land on 30% or 70% of them. Flip it a thousand times and the fraction of heads will almost always sit very close to 50%. More trials means a more reliable estimate. This is exactly why scientists repeat experiments many times rather than trusting a single result.",
+      "example": "Experimental probability also lets you predict an expected frequency – how many times you expect an event over many trials. If P(green) on a spinner is 1/4 and Khadija spins 40 times, she expects about 40 × 1/4 = 10 greens. 'Expected' does not mean she will get exactly 10 – she might get 8 or 12 – but 10 is the best single prediction. Expected frequency = probability × number of trials."
     },
     {
       "id": "concept-5-sample-space-diagrams-and-two-way-tables",
       "title": "Sample Space Diagrams and Two-Way Tables",
-      "explanation": "When an experiment has two stages – rolling two dice, flipping two coins, or spinning then rolling – the neatest way to see every possible result is a sample space diagram. This is a grid that lists all the combinations. Because you can see every outcome, you can count the favourable ones directly and read off the probability. Take rolling two dice and looking at the total. One die gives 6 outcomes; a second die also gives 6; together there are 6 × 6 = 36 equally likely outcomes. If you make a 6-by-6 grid with the…",
-      "example": "A two-way table organises data by two categories at once, and it is perfect for probability drawn from real surveys. Imagine a survey of 75 students recording favourite subject against whether they are boys or girls.…"
+      "explanation": "When an experiment has two stages – rolling two dice, flipping two coins, or spinning then rolling – the neatest way to see every possible result is a sample space diagram. This is a grid that lists all the combinations. Because you can see every outcome, you can count the favourable ones directly and read off the probability.\n\nTake rolling two dice and looking at the total. One die gives 6 outcomes; a second die also gives 6; together there are 6 × 6 = 36 equally likely outcomes. If you make a 6-by-6 grid with the first die down the side and the second die across the top, each cell holds one total. Counting the cells shows, for example, that a total of 7 appears in 6 cells, so P(total = 7) = 6/36 = 1/6. A total of 2 appears in just 1 cell (1 and 1), so P(2) = 1/36. A total of 11 appears in 2 cells (5 and 6, 6 and 5), so P(11) = 2/36 = 1/18.\n\nA two-way table organises data by two categories at once, and it is perfect for probability drawn from real surveys. Imagine a survey of 75 students recording favourite subject against whether they are boys or girls. The rows are Boys and Girls, the columns are Maths, Science and English, and the final row and column hold the totals.",
+      "example": "You read probabilities straight from the table. P(likes Maths) = 25/75 = 1/3, because 25 of the 75 students chose Maths. P(is a girl) = 40/75 = 8/15. P(is a girl and likes Science) = 18/75 = 6/25, using the single cell where the Girls row meets the Science column. You can even find a conditional probability – the chance of one thing given another. P(likes Science given the student is a girl) = 18/40 = 9/20, because you now look only at the 40 girls and ask how many of them chose Science. Two-way tables make these calculations tidy and reliable."
     },
     {
       "id": "concept-6-independent-events-and-the-multiplication-rule",
       "title": "Independent Events and the Multiplication Rule",
-      "explanation": "Two events are independent when the outcome of one has no effect on the outcome of the other. Flipping a coin and rolling a die are independent: the coin does not know or care what the die does. For independent events there is a clean rule for the chance that both happen: P(A and B) = P(A) × P(B) (for independent events).",
-      "example": "So the probability of flipping a head and rolling a 6 is P(head) × P(6) = 1/2 × 1/6 = 1/12. The probability that two rolled dice both show 6 is 1/6 × 1/6 = 1/36 – which agrees with the sample space diagram in Concept 5,…"
+      "explanation": "Two events are independent when the outcome of one has no effect on the outcome of the other. Flipping a coin and rolling a die are independent: the coin does not know or care what the die does. For independent events there is a clean rule for the chance that both happen:\n\nP(A and B) = P(A) × P(B) (for independent events).\n\nSo the probability of flipping a head and rolling a 6 is P(head) × P(6) = 1/2 × 1/6 = 1/12. The probability that two rolled dice both show 6 is 1/6 × 1/6 = 1/36 – which agrees with the sample space diagram in Concept 5, where '6 and 6' was 1 cell out of 36. Multiplying works because each of the 6 outcomes of the first die pairs with each of the 6 outcomes of the second.\n\nWatch the language carefully. 'And' with independent events means multiply; 'or' with mutually exclusive events means add. Mixing these up is one of the most common errors in the whole topic, so pause each time and ask: am I combining outcomes into a single bigger set (or, add), or am I asking for two things to happen together (and, multiply)?",
+      "example": "A famous trap here is the gambler's fallacy. After tossing five heads in a row, it feels as though tails is 'due'. It is not. Each toss is independent, so the probability of the next head is still 1/2, no matter what came before. Coins have no memory. The five past heads do not change the future; a run of heads is unusual, but from any point onward each new toss is a fresh 50-50 event."
     }
   ],
   "explorations": [
@@ -104,72 +102,72 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "The Probability Scale",
-      "context": "Probability measures how likely an event is, using a number between 0 and 1. Think of it as a ruler. At the far left, 0 means the event is impossible – it can never happen. At the far right, 1 means the event is certain – it must happen. Exactly halfway, at…",
+      "context": "Probability measures how likely an event is, using a number between 0 and 1. Think of it as a ruler. At the far left, 0 means the event is impossible – it can never happen. At the far right, 1 means the event is certain – it must happen.",
       "prompt": "Write each probability as a decimal and a percentage: a) 1/4 b) 3/5 c) 7/8.",
       "answer": "1) a) 0.25 = 25%, b) 0.6 = 60%, c) 0.875 = 87.5%.",
       "modelType": "model-1",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) a) 0.25 = 25%, b) 0.6 = 60%, c) 0.875 = 87.5%."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space.",
+      "explanation": "The Probability Scale: Probability measures how likely an event is, using a number between 0 and 1. Think of it as a ruler. At the far left, 0 means the event is impossible – it can never happen. At the far right, 1 means the event is certain – it must happen. Exactly halfway, at 0.5, the event has an even chance: it is just as likely to happen as not."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Theoretical Probability",
-      "context": "When all outcomes are equally likely – as with a fair coin, a fair die, or a well-shuffled deck – we can work out probability by pure reasoning, without doing any experiment at all. This is called theoretical probability, and it comes from one formula:…",
+      "context": "When all outcomes are equally likely – as with a fair coin, a fair die, or a well-shuffled deck – we can work out probability by pure reasoning, without doing any experiment at all.",
       "prompt": "A fair die is rolled. Find: a) P(5) b) P(odd number) c) P(number less than 3).",
       "answer": "a) 1/6, b) 3/6 = 1/2, c) 2/6 = 1/3.",
       "modelType": "model-2",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "a) 1/6, b) 3/6 = 1/2, c) 2/6 = 1/3."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space.",
+      "explanation": "Theoretical Probability: When all outcomes are equally likely – as with a fair coin, a fair die, or a well-shuffled deck – we can work out probability by pure reasoning, without doing any experiment at all. This is called theoretical probability, and it comes from one formula:"
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Complementary and Mutually Exclusive Events",
-      "context": "The complement of an event A is simply 'A does not happen'. Because an event either happens or it does not, these two possibilities must together cover everything, so their probabilities add to 1. That gives a very useful rule: Using the spinner from Concept…",
+      "context": "The complement of an event A is simply 'A does not happen'. Because an event either happens or it does not, these two possibilities must together cover everything, so their probabilities add to 1.",
       "prompt": "If P(rain) = 0.35, find P(no rain).",
       "answer": "1 − 0.35 = 0.65.",
       "modelType": "model-3",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1 − 0.35 = 0.65."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space.",
+      "explanation": "Complementary and Mutually Exclusive Events: The complement of an event A is simply 'A does not happen'. Because an event either happens or it does not, these two possibilities must together cover everything, so their probabilities add to 1. That gives a very useful rule:"
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Experimental Probability and the Law of Large Numbers",
-      "context": "Theoretical probability tells you what *should* happen if everything is fair and perfectly balanced. But real coins are slightly worn, real dice have tiny flaws, and some situations have no neat theory at all. In those cases we run an experiment and use the…",
+      "context": "Theoretical probability tells you what *should* happen if everything is fair and perfectly balanced. But real coins are slightly worn, real dice have tiny flaws, and some situations have no neat theory at all.",
       "prompt": "A bag holds 4 red, 3 blue and 3 yellow counters. Find P(red) and P(yellow).",
       "answer": "P(red) = 4/10 = 2/5, P(yellow) = 3/10.",
       "modelType": "model-4",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "P(red) = 4/10 = 2/5, P(yellow) = 3/10."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space.",
+      "explanation": "Experimental Probability and the Law of Large Numbers: Theoretical probability tells you what *should* happen if everything is fair and perfectly balanced. But real coins are slightly worn, real dice have tiny flaws, and some situations have no neat theory at all. In those cases we run an experiment and use the results. Experimental probability, also called relative frequency, is the number of times the event happened divided by the total number of trials."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Sample Space Diagrams and Two-Way Tables",
-      "context": "When an experiment has two stages – rolling two dice, flipping two coins, or spinning then rolling – the neatest way to see every possible result is a sample space diagram. This is a grid that lists all the combinations. Because you can see every outcome, you…",
+      "context": "When an experiment has two stages – rolling two dice, flipping two coins, or spinning then rolling – the neatest way to see every possible result is a sample space diagram. This is a grid that lists all the combinations.",
       "prompt": "State whether each pair is mutually exclusive: a) 'roll a 2' and 'roll a 4'; b) 'roll an even number' and 'roll a 6'.",
-      "answer": "a) mutually exclusive (cannot be both 2 and",
+      "answer": "a) Mutually exclusive (cannot roll both 2 and 4 on the same roll); b) Not mutually exclusive (a 6 is also an even number, so the two events overlap).",
       "modelType": "model-5",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "a) mutually exclusive (cannot be both 2 and"
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space.",
+      "explanation": "Sample Space Diagrams and Two-Way Tables: When an experiment has two stages – rolling two dice, flipping two coins, or spinning then rolling – the neatest way to see every possible result is a sample space diagram. This is a grid that lists all the combinations. Because you can see every outcome, you can count the favourable ones directly and read off the probability."
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Independent Events and the Multiplication Rule",
-      "context": "Two events are independent when the outcome of one has no effect on the outcome of the other. Flipping a coin and rolling a die are independent: the coin does not know or care what the die does. For independent events there is a clean rule for the chance that…",
+      "context": "Two events are independent when the outcome of one has no effect on the outcome of the other. Flipping a coin and rolling a die are independent: the coin does not know or care what the die does.",
       "prompt": "A spinner has 10 equal sections: 4 red, 3 blue, 2 green, 1 white. Find P(red), P(blue), P(not white), and check that all four colour probabilities add to 1.",
       "answer": "1) P(red) = 4/10 = 2/5, P(blue) = 3/10, P(not white) = 9/10; check 4/10 + 3/10 + 2/10 + 1/10 = 10/10 = 1.",
       "modelType": "model-6",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) P(red) = 4/10 = 2/5, P(blue) = 3/10, P(not white) = 9/10; check 4/10 + 3/10 + 2/10 + 1/10 = 10/10 = 1."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space.",
+      "explanation": "Independent Events and the Multiplication Rule: Two events are independent when the outcome of one has no effect on the outcome of the other. Flipping a coin and rolling a die are independent: the coin does not know or care what the die does. For independent events there is a clean rule for the chance that both happen:"
     }
   ],
   "visualModels": [
@@ -178,7 +176,7 @@
       "outcomeId": "lo01",
       "title": "The Probability Scale",
       "modelType": "concept-model-1",
-      "purpose": "Probability measures how likely an event is, using a number between 0 and 1. Think of it as a ruler. At the far left, 0 means the event is impossible – it can never happen. At the far right, 1 means the event is certain…",
+      "purpose": "Probability measures how likely an event is, using a number between 0 and 1. Think of it as a ruler. At the far left, 0 means the event is impossible – it can never happen.",
       "defaultNumber": null
     },
     {
@@ -186,7 +184,7 @@
       "outcomeId": "lo02",
       "title": "Theoretical Probability",
       "modelType": "concept-model-2",
-      "purpose": "When all outcomes are equally likely – as with a fair coin, a fair die, or a well-shuffled deck – we can work out probability by pure reasoning, without doing any experiment at all. This is called theoretical…",
+      "purpose": "When all outcomes are equally likely – as with a fair coin, a fair die, or a well-shuffled deck – we can work out probability by pure reasoning, without doing any experiment at all.",
       "defaultNumber": null
     },
     {
@@ -194,7 +192,7 @@
       "outcomeId": "lo03",
       "title": "Complementary and Mutually Exclusive Events",
       "modelType": "concept-model-3",
-      "purpose": "The complement of an event A is simply 'A does not happen'. Because an event either happens or it does not, these two possibilities must together cover everything, so their probabilities add to 1. That gives a very…",
+      "purpose": "The complement of an event A is simply 'A does not happen'. Because an event either happens or it does not, these two possibilities must together cover everything, so their probabilities add to 1.",
       "defaultNumber": null
     },
     {
@@ -202,7 +200,7 @@
       "outcomeId": "lo04",
       "title": "Experimental Probability and the Law of Large Numbers",
       "modelType": "concept-model-4",
-      "purpose": "Theoretical probability tells you what *should* happen if everything is fair and perfectly balanced. But real coins are slightly worn, real dice have tiny flaws, and some situations have no neat theory at all. In those…",
+      "purpose": "Theoretical probability tells you what *should* happen if everything is fair and perfectly balanced. But real coins are slightly worn, real dice have tiny flaws, and some situations have no neat theory at all.",
       "defaultNumber": null
     },
     {
@@ -210,7 +208,7 @@
       "outcomeId": "lo05",
       "title": "Sample Space Diagrams and Two-Way Tables",
       "modelType": "concept-model-5",
-      "purpose": "When an experiment has two stages – rolling two dice, flipping two coins, or spinning then rolling – the neatest way to see every possible result is a sample space diagram. This is a grid that lists all the…",
+      "purpose": "When an experiment has two stages – rolling two dice, flipping two coins, or spinning then rolling – the neatest way to see every possible result is a sample space diagram.",
       "defaultNumber": null
     },
     {
@@ -218,7 +216,7 @@
       "outcomeId": "lo06",
       "title": "Independent Events and the Multiplication Rule",
       "modelType": "concept-model-6",
-      "purpose": "Two events are independent when the outcome of one has no effect on the outcome of the other. Flipping a coin and rolling a die are independent: the coin does not know or care what the die does. For independent events…",
+      "purpose": "Two events are independent when the outcome of one has no effect on the outcome of the other. Flipping a coin and rolling a die are independent: the coin does not know or care what the die does.",
       "defaultNumber": null
     }
   ],
@@ -241,7 +239,7 @@
       "outcomeId": "lo02",
       "difficulty": "Core",
       "title": "Decide: is it 'and' (both) or 'or' (either)?",
-      "example": "Using the same bag (5 red, 3 blue, 2 green), find P(not green).",
+      "example": "A fair die is rolled. Find P(rolling a 2 or a 5).",
       "steps": [
         "For 'or' with mutually exclusive events, add the probabilities.",
         "For 'and' with independent events, multiply the probabilities.",
@@ -253,7 +251,7 @@
       "outcomeId": "lo03",
       "difficulty": "Core",
       "title": "How to use a tree diagram",
-      "example": "A fair die is rolled. Find P(rolling a 1 or a 6).",
+      "example": "A fair coin is flipped twice. Draw a tree diagram to find P(exactly one head).",
       "steps": [
         "Draw branches for the first event with probabilities.",
         "From each outcome, draw branches for the second event.",
@@ -371,7 +369,7 @@
       "difficulty": "Challenge",
       "title": "Practice 9",
       "prompt": "A spinner lands on green with probability 2/5. In 80 spins, how many greens are expected?",
-      "solution": "= 5/6."
+      "solution": "Solution: P(green) = 2/5. Expected number of greens in 80 spins = 2/5 × 80 = 32."
     },
     {
       "id": "we10",
@@ -379,7 +377,7 @@
       "difficulty": "Challenge",
       "title": "Practice 10",
       "prompt": "A coin is flipped and a die rolled. Find P(head and a 3) and P(tail and an even number).",
-      "solution": "Experimental P(heads) = 96/200 = 0.48; theoretical = 0.5; very close, as expected with many trials."
+      "solution": "Solution: These are independent events. P(head) = 1/2 and P(3) = 1/6, so P(head and a 3) = 1/2 × 1/6 = 1/12. P(tail) = 1/2 and P(even number) = 3/6 = 1/2, so P(tail and an even number) = 1/2 × 1/2 = 1/4."
     },
     {
       "id": "we11",
@@ -387,7 +385,7 @@
       "difficulty": "Challenge",
       "title": "Practice 11",
       "prompt": "Two fair dice are rolled. Using a sample space diagram, find P(total = 6) and P(total = 9).",
-      "solution": "2/5 × 80 = 32 greens."
+      "solution": "Solution: There are 6 × 6 = 36 equally likely outcomes. A total of 6 comes from (1,5), (2,4), (3,3), (4,2), (5,1) – 5 outcomes – so P(total = 6) = 5/36. A total of 9 comes from (3,6), (4,5), (5,4), (6,3) – 4 outcomes – so P(total = 9) = 4/36 = 1/9."
     },
     {
       "id": "we12",
@@ -404,84 +402,84 @@
       "level": "Warm-up",
       "prompt": "Write each probability as a decimal and a percentage: a) 1/4 b) 3/5 c) 7/8.",
       "answer": "1) a) 0.25 = 25%, b) 0.6 = 60%, c) 0.875 = 87.5%.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space."
     },
     {
       "id": "p02",
       "level": "Warm-up",
       "prompt": "A fair die is rolled. Find: a) P(5) b) P(odd number) c) P(number less than 3).",
       "answer": "a) 1/6, b) 3/6 = 1/2, c) 2/6 = 1/3.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space."
     },
     {
       "id": "p03",
       "level": "Warm-up",
       "prompt": "If P(rain) = 0.35, find P(no rain).",
       "answer": "1 − 0.35 = 0.65.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space."
     },
     {
       "id": "p04",
       "level": "Warm-up",
       "prompt": "A bag holds 4 red, 3 blue and 3 yellow counters. Find P(red) and P(yellow).",
       "answer": "P(red) = 4/10 = 2/5, P(yellow) = 3/10.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space."
     },
     {
       "id": "p05",
       "level": "Warm-up",
       "prompt": "State whether each pair is mutually exclusive: a) 'roll a 2' and 'roll a 4'; b) 'roll an even number' and 'roll a 6'.",
-      "answer": "a) mutually exclusive (cannot be both 2 and",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "a) Mutually exclusive (cannot roll both 2 and 4 on the same roll); b) Not mutually exclusive (a 6 is also an even number, so the two events overlap).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space."
     },
     {
       "id": "p06",
       "level": "Core",
       "prompt": "A spinner has 10 equal sections: 4 red, 3 blue, 2 green, 1 white. Find P(red), P(blue), P(not white), and check that all four colour probabilities add to 1.",
       "answer": "1) P(red) = 4/10 = 2/5, P(blue) = 3/10, P(not white) = 9/10; check 4/10 + 3/10 + 2/10 + 1/10 = 10/10 = 1.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space."
     },
     {
       "id": "p07",
       "level": "Core",
       "prompt": "A die is rolled. Find P(2 or 5) and P(a number greater than 1).",
-      "answer": "P(2 or",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "P(2 or 5) = 1/6 + 1/6 = 2/6 = 1/3; P(a number greater than 1) = 5/6 (the numbers 2, 3, 4, 5 and 6 all count).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space."
     },
     {
       "id": "p08",
       "level": "Core",
       "prompt": "A coin is flipped 200 times and lands on heads 96 times. Find the experimental P(heads) and compare it with the theoretical value.",
-      "answer": "= 1/6 + 1/6 = 1/3; P(>",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "Experimental P(heads) = 96/200 = 0.48; theoretical P(heads) = 0.5. The two values are close, as expected with many trials.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space."
     },
     {
       "id": "p09",
       "level": "Core",
       "prompt": "A spinner lands on green with probability 2/5. In 80 spins, how many greens are expected?",
-      "answer": "= 5/6.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "P(green) = 2/5; expected greens in 80 spins = 2/5 × 80 = 32.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space."
     },
     {
       "id": "p10",
       "level": "Core",
       "prompt": "A coin is flipped and a die rolled. Find P(head and a 3) and P(tail and an even number).",
-      "answer": "Experimental P(heads) = 96/200 = 0.48; theoretical = 0.5; very close, as expected with many trials.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "P(head and a 3) = 1/2 × 1/6 = 1/12; P(tail and an even number) = 1/2 × 1/2 = 1/4.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space."
     },
     {
       "id": "p11",
       "level": "Core",
       "prompt": "Two fair dice are rolled. Using a sample space diagram, find P(total = 6) and P(total = 9).",
-      "answer": "2/5 × 80 = 32 greens.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "There are 36 equally likely outcomes. P(total = 6) = 5/36 (from (1,5), (2,4), (3,3), (4,2), (5,1)); P(total = 9) = 4/36 = 1/9 (from (3,6), (4,5), (5,4), (6,3)).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space."
     },
     {
       "id": "p12",
       "level": "Challenge",
       "prompt": "A bag holds 5 red and 3 blue beads. Two are drawn without replacement. Find P(both red), P(both blue) and P(one of each colour).",
       "answer": "1) P(both red) = 5/8 × 4/7 = 20/56 = 5/14; P(both blue) = 3/8 × 2/7 = 6/56 = 3/28; P(one of each) = 1 − 5/14 − 3/28 = 28/28 − 10/28 − 3/28 = 15/28.",
-      "hint": "Identify the key mathematical idea before calculating or explaining."
+      "hint": "Decide which idea the question is really about (Outcome, Sample space, Event), then work one step at a time and check the answer is sensible."
     }
   ],
   "activities": [
@@ -514,7 +512,7 @@
         "Invent a simple two-player game of chance – for example, Player A wins if two coins match, Player B wins if they differ.",
         "Work out each player's theoretical probability of winning.",
         "Decide whether your game is fair (equal chances). If it is not, change a rule to make it fair.",
-        "Test the game 20 times with a partner and compare the actual win rates with your theory.",
+        "Test the game 20 times with a partner, or by playing both roles yourself if no partner is available, and compare the actual win rates with your theory.",
         "For the two-coin example, both HH/TT (match) and HT/TH (differ) give 2 out of 4, so that game is already fair – can you design one that is not, then fix it?"
       ]
     },
@@ -537,7 +535,7 @@
         "Survey at least 15 people and record each answer.",
         "Organise your results in a two-way table with row and column totals.",
         "Calculate five different probabilities from your table, including at least one conditional probability such as P(prefers bariis given male).",
-        "Present your table to your teacher and explain one interesting relationship you found in the data."
+        "Present your table to your teacher (or your AI tutor if your teacher is not available) and explain one interesting relationship you found in the data."
       ]
     },
     {
@@ -548,30 +546,30 @@
         "Each evening, record whether it actually rained.",
         "At the end of the week, compare the forecasts with reality. On the days the forecast said 70% or more, did it usually rain?",
         "Write a short paragraph on what '30% chance of rain' really means and why weather is described with probability.",
-        "After your activities, talk or write about these questions: How did your experimental results compare with the theoretical predictions? What happened to the accuracy as you did more trials? Which activity made the difference between independent and dependent events clearest? Which idea would you like more practice with? Share your answers with your teacher at your next session."
+        "After your activities, talk or write about these questions: How did your experimental results compare with the theoretical predictions? What happened to the accuracy as you did more trials? Which activity made the difference between independent and dependent events clearest? Which idea would you like more practice with? Share your answers with your teacher, or with your AI tutor if you want feedback sooner."
       ]
     }
   ],
   "reference": {
     "rules": [
       {
-        "title": "Because every probability lies between 0 and",
-        "text": "Because every probability lies between 0 and 1, you have a built-in check on your own work. If you ever calculate a probability that is negative, or greater than 1, you have made a mistake somewhere – stop and find it. A probability of 2, or of −0.3, simply cannot exist. This single rule, 0 ≤ P(A) ≤ 1, will catch many errors before they cost you marks."
+        "title": "The 0-to-1 Rule",
+        "text": "Because every probability lies between 0 and 1, you have a built-in check on your own work. If you ever calculate a probability that is negative, or greater than 1, you have made a mistake somewhere – stop and find it. A probability of 2, or of −0.3, simply cannot exist. This single rule, 0 ≤ P(A) ≤ 1, will catch many errors before they cost you mark."
       },
       {
-        "title": "This 'sum to 1' rule is another",
+        "title": "The Sum-to-1 Rule",
         "text": "This 'sum to 1' rule is another powerful check. If Yusuf calculates the chances of the four spinner colours and they add up to more than 1, he knows at once that he has slipped somewhere. Keep it in your toolkit alongside the 0-to-1 rule from Concept 1."
       },
       {
-        "title": "The complement of an event A is",
+        "title": "The Complement Rule",
         "text": "The complement of an event A is simply 'A does not happen'. Because an event either happens or it does not, these two possibilities must together cover everything, so their probabilities add to 1. That gives a very useful rule:"
       },
       {
-        "title": "Two events are independent when the outcome",
+        "title": "The Independent Multiplication Rule",
         "text": "Two events are independent when the outcome of one has no effect on the outcome of the other. Flipping a coin and rolling a die are independent: the coin does not know or care what the die does. For independent events there is a clean rule for the chance that both happen:"
       },
       {
-        "title": "You have now met seven big ideas",
+        "title": "Unit Summary: Seven Big Ideas",
         "text": "You have now met seven big ideas: the probability scale, theoretical probability, complements and mutually exclusive events, experimental probability with the Law of Large Numbers, sample space diagrams and two-way tables, independent events with the multiplication rule, and tree diagrams with dependent events. These ideas are not separate islands – they work as one toolkit."
       }
     ],
@@ -619,16 +617,16 @@
         "Multiply independent 'and' events"
       ],
       [
-        "A calculation slip",
-        "Gambler's fallacy"
+        "Gambler's fallacy",
+        "Thinking a coin or die is \"due\" a result — each trial is independent of past results."
       ],
       [
-        "Thinking coins remember",
-        "Ignoring replacement"
+        "Ignoring replacement",
+        "Forgetting that removing an item without replacement changes the probabilities for the next draw."
       ],
       [
-        "Treating dependent as independent",
-        "P(A|B) = P(B|A)"
+        "Confusing conditional probabilities",
+        "Assuming P(A|B) = P(B|A) — these are usually different."
       ]
     ]
   },
@@ -639,7 +637,7 @@
       "difficulty": "Round 1",
       "prompt": "Write each probability as a decimal and a percentage: a) 1/4 b) 3/5 c) 7/8.",
       "answer": "1) a) 0.25 = 25%, b) 0.6 = 60%, c) 0.875 = 87.5%.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space.",
       "errorFeedback": "1) a) 0.25 = 25%, b) 0.6 = 60%, c) 0.875 = 87.5%."
     },
     {
@@ -648,7 +646,7 @@
       "difficulty": "Round 1",
       "prompt": "A fair die is rolled. Find: a) P(5) b) P(odd number) c) P(number less than 3).",
       "answer": "a) 1/6, b) 3/6 = 1/2, c) 2/6 = 1/3.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space.",
       "errorFeedback": "a) 1/6, b) 3/6 = 1/2, c) 2/6 = 1/3."
     },
     {
@@ -657,7 +655,7 @@
       "difficulty": "Round 1",
       "prompt": "If P(rain) = 0.35, find P(no rain).",
       "answer": "1 − 0.35 = 0.65.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space.",
       "errorFeedback": "1 − 0.35 = 0.65."
     },
     {
@@ -666,7 +664,7 @@
       "difficulty": "Round 1",
       "prompt": "A bag holds 4 red, 3 blue and 3 yellow counters. Find P(red) and P(yellow).",
       "answer": "P(red) = 4/10 = 2/5, P(yellow) = 3/10.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space.",
       "errorFeedback": "P(red) = 4/10 = 2/5, P(yellow) = 3/10."
     },
     {
@@ -674,9 +672,9 @@
       "outcomeId": "lo05",
       "difficulty": "Round 2",
       "prompt": "State whether each pair is mutually exclusive: a) 'roll a 2' and 'roll a 4'; b) 'roll an even number' and 'roll a 6'.",
-      "answer": "a) mutually exclusive (cannot be both 2 and",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "a) mutually exclusive (cannot be both 2 and"
+      "answer": "a) Mutually exclusive (cannot roll both 2 and 4 on the same roll); b) Not mutually exclusive (a 6 is also an even number, so the two events overlap).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space.",
+      "errorFeedback": "a) Mutually exclusive (cannot roll both 2 and 4 on the same roll); b) Not mutually exclusive (a 6 is also an even number, so the two events overlap)."
     },
     {
       "id": "fl06",
@@ -684,7 +682,7 @@
       "difficulty": "Round 2",
       "prompt": "A spinner has 10 equal sections: 4 red, 3 blue, 2 green, 1 white. Find P(red), P(blue), P(not white), and check that all four colour probabilities add to 1.",
       "answer": "1) P(red) = 4/10 = 2/5, P(blue) = 3/10, P(not white) = 9/10; check 4/10 + 3/10 + 2/10 + 1/10 = 10/10 = 1.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space.",
       "errorFeedback": "1) P(red) = 4/10 = 2/5, P(blue) = 3/10, P(not white) = 9/10; check 4/10 + 3/10 + 2/10 + 1/10 = 10/10 = 1."
     },
     {
@@ -692,45 +690,45 @@
       "outcomeId": "lo07",
       "difficulty": "Round 2",
       "prompt": "A die is rolled. Find P(2 or 5) and P(a number greater than 1).",
-      "answer": "P(2 or",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "P(2 or"
+      "answer": "P(2 or 5) = 1/6 + 1/6 = 2/6 = 1/3; P(a number greater than 1) = 5/6 (the numbers 2, 3, 4, 5 and 6 all count).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space.",
+      "errorFeedback": "P(2 or 5) = 1/6 + 1/6 = 2/6 = 1/3; P(a number greater than 1) = 5/6 (the numbers 2, 3, 4, 5 and 6 all count)."
     },
     {
       "id": "fl08",
       "outcomeId": "lo08",
       "difficulty": "Round 2",
       "prompt": "A coin is flipped 200 times and lands on heads 96 times. Find the experimental P(heads) and compare it with the theoretical value.",
-      "answer": "= 1/6 + 1/6 = 1/3; P(>",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "= 1/6 + 1/6 = 1/3; P(>"
+      "answer": "Experimental P(heads) = 96/200 = 0.48; theoretical P(heads) = 0.5. The two values are close, as expected with many trials.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space.",
+      "errorFeedback": "Experimental P(heads) = 96/200 = 0.48; theoretical P(heads) = 0.5. The two values are close, as expected with many trials."
     },
     {
       "id": "fl09",
-      "outcomeId": "lo09",
+      "outcomeId": "lo01",
       "difficulty": "Round 3",
       "prompt": "A spinner lands on green with probability 2/5. In 80 spins, how many greens are expected?",
-      "answer": "= 5/6.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "= 5/6."
+      "answer": "P(green) = 2/5; expected greens in 80 spins = 2/5 × 80 = 32.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space.",
+      "errorFeedback": "P(green) = 2/5; expected greens in 80 spins = 2/5 × 80 = 32."
     },
     {
       "id": "fl10",
-      "outcomeId": "lo10",
+      "outcomeId": "lo02",
       "difficulty": "Round 3",
       "prompt": "A coin is flipped and a die rolled. Find P(head and a 3) and P(tail and an even number).",
-      "answer": "Experimental P(heads) = 96/200 = 0.48; theoretical = 0.5; very close, as expected with many trials.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "Experimental P(heads) = 96/200 = 0.48; theoretical = 0.5; very close, as expected with many trials."
+      "answer": "P(head and a 3) = 1/2 × 1/6 = 1/12; P(tail and an even number) = 1/2 × 1/2 = 1/4.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space.",
+      "errorFeedback": "P(head and a 3) = 1/2 × 1/6 = 1/12; P(tail and an even number) = 1/2 × 1/2 = 1/4."
     },
     {
       "id": "fl11",
       "outcomeId": "lo01",
       "difficulty": "Round 3",
       "prompt": "Two fair dice are rolled. Using a sample space diagram, find P(total = 6) and P(total = 9).",
-      "answer": "2/5 × 80 = 32 greens.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "2/5 × 80 = 32 greens."
+      "answer": "There are 36 equally likely outcomes. P(total = 6) = 5/36 (from (1,5), (2,4), (3,3), (4,2), (5,1)); P(total = 9) = 4/36 = 1/9 (from (3,6), (4,5), (5,4), (6,3)).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Sample space.",
+      "errorFeedback": "There are 36 equally likely outcomes. P(total = 6) = 5/36 (from (1,5), (2,4), (3,3), (4,2), (5,1)); P(total = 9) = 4/36 = 1/9 (from (3,6), (4,5), (5,4), (6,3))."
     },
     {
       "id": "fl12",
@@ -738,7 +736,7 @@
       "difficulty": "Round 3",
       "prompt": "A bag holds 5 red and 3 blue beads. Two are drawn without replacement. Find P(both red), P(both blue) and P(one of each colour).",
       "answer": "1) P(both red) = 5/8 × 4/7 = 20/56 = 5/14; P(both blue) = 3/8 × 2/7 = 6/56 = 3/28; P(one of each) = 1 − 5/14 − 3/28 = 28/28 − 10/28 − 3/28 = 15/28.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Outcome, Sample space, Event), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) P(both red) = 5/8 × 4/7 = 20/56 = 5/14; P(both blue) = 3/8 × 2/7 = 6/56 = 3/28; P(one of each) = 1 − 5/14 − 3/28 = 28/28 − 10/28 − 3/28 = 15/28."
     }
   ],
@@ -749,9 +747,9 @@
       "difficulty": "Core",
       "context": "Home",
       "prompt": "A carnival game in Kismaayo costs 3 shillings. You roll two dice and win 15 shillings if the total is 7. Find the probability of winning, and the expected number of wins in 36 games.",
-      "answer": "1) P(total",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "1) P(total"
+      "answer": "P(total = 7) = 6/36 = 1/6 (from (1,6), (2,5), (3,4), (4,3), (5,2), (6,1)); expected wins in 36 games = 1/6 × 36 = 6.",
+      "hint": "Decide which idea the question is really about (Outcome, Sample space, Event), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "P(total = 7) = 6/36 = 1/6 (from (1,6), (2,5), (3,4), (4,3), (5,2), (6,1)); expected wins in 36 games = 1/6 × 36 = 6."
     },
     {
       "id": "rp02",
@@ -759,9 +757,9 @@
       "difficulty": "Core",
       "context": "Market",
       "prompt": "The weather forecast gives a 60% chance of rain today and, independently, a 40% chance tomorrow. Find P(rain both days), P(no rain either day) and P(rain on exactly one of the two days).",
-      "answer": "= 6/36 = 1/6; expected wins in 36 games = 1/6 × 36 = 6.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "= 6/36 = 1/6; expected wins in 36 games = 1/6 × 36 = 6."
+      "answer": "P(rain both days) = 0.6 × 0.4 = 0.24; P(no rain either day) = 0.4 × 0.6 = 0.24; P(rain on exactly one day) = 0.6 × 0.6 + 0.4 × 0.4 = 0.36 + 0.16 = 0.52.",
+      "hint": "Decide which idea the question is really about (Outcome, Sample space, Event), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "P(rain both days) = 0.6 × 0.4 = 0.24; P(no rain either day) = 0.4 × 0.6 = 0.24; P(rain on exactly one day) = 0.6 × 0.6 + 0.4 × 0.4 = 0.36 + 0.16 = 0.52."
     },
     {
       "id": "rp03",
@@ -769,9 +767,9 @@
       "difficulty": "Core",
       "context": "Travel",
       "prompt": "A survey of 200 students recorded favourite sport by gender: Male – 45 football, 25 basketball, 20 athletics (90 total); Female – 35 football, 40 basketball, 35 athletics (110 total). Find P(plays football), P(is female) and P(plays athletics given the student is female).",
-      "answer": "P(rain both) = 0.6 × 0.4 = 0.24; P(no rain either) = 0.4 × 0.6 = 0.24; P(exactly one day) = 0.6 × 0.6 + 0.4 × 0.4 = 0.36 + 0.16 = 0.52.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "P(rain both) = 0.6 × 0.4 = 0.24; P(no rain either) = 0.4 × 0.6 = 0.24; P(exactly one day) = 0.6 × 0.6 + 0.4 × 0.4 = 0.36 + 0.16 = 0.52."
+      "answer": "P(plays football) = 80/200 = 2/5; P(is female) = 110/200 = 11/20; P(athletics | female) = 35/110 = 7/22.",
+      "hint": "Decide which idea the question is really about (Outcome, Sample space, Event), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "P(plays football) = 80/200 = 2/5; P(is female) = 110/200 = 11/20; P(athletics | female) = 35/110 = 7/22."
     },
     {
       "id": "rp04",
@@ -779,9 +777,9 @@
       "difficulty": "Challenge",
       "context": "School",
       "prompt": "A bag holds 6 mangoes, of which 2 are unripe. Halima picks two without replacement for the family. Find the probability that both are ripe.",
-      "answer": "P(football) = 80/200 = 2/5; P(female) = 110/200 = 11/20; P(athletics | female) = 35/110 = 7/22.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "P(football) = 80/200 = 2/5; P(female) = 110/200 = 11/20; P(athletics | female) = 35/110 = 7/22."
+      "answer": "Ripe mangoes = 4 of 6 (2 are unripe). P(both ripe) = 4/6 × 3/5 = 12/30 = 2/5.",
+      "hint": "Decide which idea the question is really about (Outcome, Sample space, Event), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "Ripe mangoes = 4 of 6 (2 are unripe). P(both ripe) = 4/6 × 3/5 = 12/30 = 2/5."
     },
     {
       "id": "rp05",
@@ -789,9 +787,9 @@
       "difficulty": "Challenge",
       "context": "Community",
       "prompt": "A basketball player makes 75% of free throws. Assuming shots are independent, find the probability she makes all three of her next three attempts.",
-      "answer": "Ripe mangoes = 4 of 6; P(both ripe) = 4/6 × 3/5 = 12/30 = 2/5.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "Ripe mangoes = 4 of 6; P(both ripe) = 4/6 × 3/5 = 12/30 = 2/5."
+      "answer": "P(all three) = 0.75 × 0.75 × 0.75 = 27/64 = 0.421875 (about 42%).",
+      "hint": "Decide which idea the question is really about (Outcome, Sample space, Event), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "P(all three) = 0.75 × 0.75 × 0.75 = 27/64 = 0.421875 (about 42%)."
     },
     {
       "id": "rp06",
@@ -800,7 +798,7 @@
       "context": "Daily life",
       "prompt": "A bag holds 5 red and 3 blue beads. Two are drawn without replacement. Find P(both red), P(both blue) and P(one of each colour).",
       "answer": "1) P(both red) = 5/8 × 4/7 = 20/56 = 5/14; P(both blue) = 3/8 × 2/7 = 6/56 = 3/28; P(one of each) = 1 − 5/14 − 3/28 = 28/28 − 10/28 − 3/28 = 15/28.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Outcome, Sample space, Event), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) P(both red) = 5/8 × 4/7 = 20/56 = 5/14; P(both blue) = 3/8 × 2/7 = 6/56 = 3/28; P(one of each) = 1 − 5/14 − 3/28 = 28/28 − 10/28 − 3/28 = 15/28."
     }
   ],
@@ -868,7 +866,7 @@
         "Sample space",
         "Event"
       ],
-      "modelAnswer": "When an experiment has two stages – rolling two dice, flipping two coins, or spinning then rolling – the neatest way to see every possible result is a sample space diagram. This is a grid that lists all the combinations. Because you can see every outcome, you can count the favourable ones directly and read off the probability. Take rolling two dice and looking at the total. One die gives 6 outcomes; a second die also gives 6; together there are 6 × 6 = 36 equally likely outcomes. If you make a 6-by-6 grid with the…"
+      "modelAnswer": "When an experiment has two stages – rolling two dice, flipping two coins, or spinning then rolling – the neatest way to see every possible result is a sample space diagram. This is a grid that lists all the combinations. Because you can see every outcome, you can count the favourable ones directly and read off the probability. Take rolling two dice and looking at the total. One die gives 6 outcomes; a second die also gives 6; together there are 6 × 6 = 36 equally likely outcomes. If you make a 6-by-6 grid with the totals filled in, you can count how many cells give any target total and read its probability straight off the diagram."
     },
     {
       "id": "reason06",
@@ -892,144 +890,144 @@
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Basic",
-        "question": "Here is some data: 4, 1, 12, 18, 17. What is the largest value?",
+        "question": "On the probability scale, which value means an event is certain to happen?",
         "options": [
-          "4",
-          "18",
+          "0",
+          "0.5",
           "1",
-          "17"
+          "2"
         ],
-        "answer": "18",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Look for the biggest number: 18."
+        "answer": "1",
+        "hint": "Think about what each end of the 0-to-1 scale represents.",
+        "explanation": "A probability of 1 means the event is certain; 0 means impossible, and 0.5 means an even chance."
       },
       {
         "id": "q02",
         "type": "Application",
         "outcomeId": "lo02",
         "difficulty": "Basic",
-        "question": "A tally shows these counts: 18, 1, 10, 11, 9. What is the total?",
+        "question": "A bag contains 3 red counters and 7 blue counters. One counter is drawn at random. What is P(red)?",
         "options": [
-          "50",
-          "48",
-          "18",
-          "49"
+          "3/10",
+          "7/10",
+          "3/7",
+          "1/3"
         ],
-        "answer": "49",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Add them all: 18 + 1 + 10 + 11 + 9 = 49."
+        "answer": "3/10",
+        "hint": "P(event) = favourable outcomes ÷ total outcomes.",
+        "explanation": "There are 3 red counters out of 10 total, so P(red) = 3/10."
       },
       {
         "id": "q03",
         "type": "Application",
         "outcomeId": "lo03",
         "difficulty": "Basic",
-        "question": "Here is some data: 20, 6, 18, 10, 12. What is the range?",
+        "question": "Write the probability 3/4 as a percentage.",
         "options": [
-          "20",
-          "6",
-          "15",
-          "14"
+          "34%",
+          "75%",
+          "43%",
+          "0.34%"
         ],
-        "answer": "14",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Range = largest − smallest = 20 − 6 = 14."
+        "answer": "75%",
+        "hint": "Divide the numerator by the denominator, then multiply by 100.",
+        "explanation": "3/4 = 0.75 = 75%."
       },
       {
         "id": "q04",
         "type": "Application",
         "outcomeId": "lo04",
         "difficulty": "Basic",
-        "question": "Here is some data: 11, 17, 9, 7, 6, 11. Which value appears most often (the mode)?",
+        "question": "If P(it rains tomorrow) = 0.3, what is P(it does not rain tomorrow)?",
         "options": [
-          "17",
-          "6",
-          "12",
-          "11"
+          "0.3",
+          "0.03",
+          "0.7",
+          "1.3"
         ],
-        "answer": "11",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "11 appears more than any other value, so it is the mode."
+        "answer": "0.7",
+        "hint": "Use the complement rule: P(not A) = 1 − P(A).",
+        "explanation": "1 − 0.3 = 0.7."
       },
       {
         "id": "q05",
         "type": "Application",
         "outcomeId": "lo05",
         "difficulty": "Core",
-        "question": "Here is some data: 19, 15, 18, 17, 2. What is the range?",
+        "question": "A fair die is rolled. What is P(rolling a 2 or a 5)?",
         "options": [
-          "2",
-          "18",
-          "17",
-          "19"
+          "1/6",
+          "1/3",
+          "2/3",
+          "1/2"
         ],
-        "answer": "17",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Range = largest − smallest = 19 − 2 = 17."
+        "answer": "1/3",
+        "hint": "For mutually exclusive events, add the individual probabilities.",
+        "explanation": "P(2 or 5) = 1/6 + 1/6 = 2/6 = 1/3."
       },
       {
         "id": "q06",
         "type": "Application",
         "outcomeId": "lo06",
         "difficulty": "Core",
-        "question": "A tally shows these counts: 19, 16, 15, 11, 18. What is the total?",
+        "question": "A coin is flipped 50 times and lands on heads 21 times. What is the experimental probability of heads?",
         "options": [
-          "78",
-          "19",
-          "79",
-          "80"
+          "21/50",
+          "29/50",
+          "1/2",
+          "21/29"
         ],
-        "answer": "79",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Add them all: 19 + 16 + 15 + 11 + 18 = 79."
+        "answer": "21/50",
+        "hint": "Experimental probability = number of successes ÷ number of trials.",
+        "explanation": "21 heads out of 50 flips gives an experimental probability of 21/50 = 0.42."
       },
       {
         "id": "q07",
         "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
-        "question": "Here is some data: 10, 9, 7, 1, 17, 10. Which value appears most often (the mode)?",
+        "question": "A spinner lands on red with probability 1/4. If it is spun 120 times, how many reds are expected?",
         "options": [
-          "17",
-          "1",
-          "9",
-          "10"
+          "24",
+          "30",
+          "40",
+          "120"
         ],
-        "answer": "10",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "10 appears more than any other value, so it is the mode."
+        "answer": "30",
+        "hint": "Expected frequency = probability × number of trials.",
+        "explanation": "1/4 × 120 = 30."
       },
       {
         "id": "q08",
         "type": "Application",
         "outcomeId": "lo08",
         "difficulty": "Challenge",
-        "question": "Here is some data: 19, 9, 3, 18, 2. What is the range?",
+        "question": "Two fair coins are flipped together. Using a sample space diagram, how many equally likely outcomes are there?",
         "options": [
           "2",
-          "18",
-          "17",
-          "19"
+          "3",
+          "4",
+          "8"
         ],
-        "answer": "17",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Range = largest − smallest = 19 − 2 = 17."
+        "answer": "4",
+        "hint": "List every combination: HH, HT, TH, TT.",
+        "explanation": "Each coin has 2 outcomes, so there are 2 × 2 = 4 equally likely outcomes in the sample space."
       },
       {
         "id": "q09",
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Challenge",
-        "question": "Here is some data: 6, 9, 1, 10, 11. What is the largest value?",
+        "question": "Which of these events has a probability closest to 0?",
         "options": [
-          "11",
-          "1",
-          "10",
-          "6"
+          "Rolling an even number on a fair die",
+          "The sun rising tomorrow",
+          "Picking a red ball from a bag of 1 red and 99 blue balls",
+          "Flipping a coin and getting heads or tails"
         ],
-        "answer": "11",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Look for the biggest number: 11."
+        "answer": "Picking a red ball from a bag of 1 red and 99 blue balls",
+        "hint": "The event closest to 0 is the least likely to happen.",
+        "explanation": "P(red) = 1/100 = 0.01, which is very close to 0 (impossible), making it the least likely event listed."
       },
       {
         "id": "q10",
@@ -1093,40 +1091,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 4, 1, 12, 18, 17. What is the largest value?",
+            "prompt": "On the probability scale, which value means an event is certain to happen?",
             "choices": [
-              "4",
-              "18",
+              "0",
+              "0.5",
               "1",
-              "17"
+              "2"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 18."
+            "answer": "1",
+            "clue": "Think about what each end of the 0-to-1 scale represents.",
+            "explanation": "A probability of 1 means the event is certain; 0 means impossible, and 0.5 means an even chance."
           },
           {
-            "prompt": "Here is some data: 11, 17, 9, 7, 6, 11. Which value appears most often (the mode)?",
+            "prompt": "If P(it rains tomorrow) = 0.3, what is P(it does not rain tomorrow)?",
             "choices": [
-              "17",
-              "6",
-              "12",
-              "11"
+              "0.3",
+              "0.03",
+              "0.7",
+              "1.3"
             ],
-            "answer": "11",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "11 appears more than any other value, so it is the mode."
+            "answer": "0.7",
+            "clue": "Use the complement rule: P(not A) = 1 − P(A).",
+            "explanation": "1 − 0.3 = 0.7."
           },
           {
-            "prompt": "Here is some data: 10, 9, 7, 1, 17, 10. Which value appears most often (the mode)?",
+            "prompt": "A spinner lands on red with probability 1/4. If it is spun 120 times, how many reds are expected?",
             "choices": [
-              "17",
-              "1",
-              "9",
-              "10"
+              "24",
+              "30",
+              "40",
+              "120"
             ],
-            "answer": "10",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "10 appears more than any other value, so it is the mode."
+            "answer": "30",
+            "clue": "Expected frequency = probability × number of trials.",
+            "explanation": "1/4 × 120 = 30."
           },
           {
             "prompt": "What does “Outcome” mean?",
@@ -1151,40 +1149,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "A tally shows these counts: 18, 1, 10, 11, 9. What is the total?",
+            "prompt": "A bag contains 3 red counters and 7 blue counters. One counter is drawn at random. What is P(red)?",
             "choices": [
-              "50",
-              "48",
-              "18",
-              "49"
+              "3/10",
+              "7/10",
+              "3/7",
+              "1/3"
             ],
-            "answer": "49",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 18 + 1 + 10 + 11 + 9 = 49."
+            "answer": "3/10",
+            "clue": "P(event) = favourable outcomes ÷ total outcomes.",
+            "explanation": "There are 3 red counters out of 10 total, so P(red) = 3/10."
           },
           {
-            "prompt": "Here is some data: 19, 15, 18, 17, 2. What is the range?",
+            "prompt": "A fair die is rolled. What is P(rolling a 2 or a 5)?",
             "choices": [
-              "2",
-              "18",
-              "17",
-              "19"
+              "1/6",
+              "1/3",
+              "2/3",
+              "1/2"
             ],
-            "answer": "17",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 19 − 2 = 17."
+            "answer": "1/3",
+            "clue": "For mutually exclusive events, add the individual probabilities.",
+            "explanation": "P(2 or 5) = 1/6 + 1/6 = 2/6 = 1/3."
           },
           {
-            "prompt": "Here is some data: 19, 9, 3, 18, 2. What is the range?",
+            "prompt": "Two fair coins are flipped together. Using a sample space diagram, how many equally likely outcomes are there?",
             "choices": [
               "2",
-              "18",
-              "17",
-              "19"
+              "3",
+              "4",
+              "8"
             ],
-            "answer": "17",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 19 − 2 = 17."
+            "answer": "4",
+            "clue": "List every combination: HH, HT, TH, TT.",
+            "explanation": "Each coin has 2 outcomes, so there are 2 × 2 = 4 equally likely outcomes in the sample space."
           },
           {
             "prompt": "What does “Sample space” mean?",
@@ -1209,40 +1207,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 20, 6, 18, 10, 12. What is the range?",
+            "prompt": "Write the probability 3/4 as a percentage.",
             "choices": [
-              "20",
-              "6",
-              "15",
-              "14"
+              "34%",
+              "75%",
+              "43%",
+              "0.34%"
             ],
-            "answer": "14",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 20 − 6 = 14."
+            "answer": "75%",
+            "clue": "Divide the numerator by the denominator, then multiply by 100.",
+            "explanation": "3/4 = 0.75 = 75%."
           },
           {
-            "prompt": "A tally shows these counts: 19, 16, 15, 11, 18. What is the total?",
+            "prompt": "A coin is flipped 50 times and lands on heads 21 times. What is the experimental probability of heads?",
             "choices": [
-              "78",
-              "19",
-              "79",
-              "80"
+              "21/50",
+              "29/50",
+              "1/2",
+              "21/29"
             ],
-            "answer": "79",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 19 + 16 + 15 + 11 + 18 = 79."
+            "answer": "21/50",
+            "clue": "Experimental probability = number of successes ÷ number of trials.",
+            "explanation": "21 heads out of 50 flips gives an experimental probability of 21/50 = 0.42."
           },
           {
-            "prompt": "Here is some data: 6, 9, 1, 10, 11. What is the largest value?",
+            "prompt": "Which of these events has a probability closest to 0?",
             "choices": [
-              "11",
-              "1",
-              "10",
-              "6"
+              "Rolling an even number on a fair die",
+              "The sun rising tomorrow",
+              "Picking a red ball from a bag of 1 red and 99 blue balls",
+              "Flipping a coin and getting heads or tails"
             ],
-            "answer": "11",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 11."
+            "answer": "Picking a red ball from a bag of 1 red and 99 blue balls",
+            "clue": "The event closest to 0 is the least likely to happen.",
+            "explanation": "P(red) = 1/100 = 0.01, which is very close to 0 (impossible), making it the least likely event listed."
           },
           {
             "prompt": "What does “Event” mean?",
@@ -1267,28 +1265,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 11, 17, 9, 7, 6, 11. Which value appears most often (the mode)?",
+            "prompt": "If P(it rains tomorrow) = 0.3, what is P(it does not rain tomorrow)?",
             "choices": [
-              "17",
-              "6",
-              "12",
-              "11"
+              "0.3",
+              "0.03",
+              "0.7",
+              "1.3"
             ],
-            "answer": "11",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "11 appears more than any other value, so it is the mode."
+            "answer": "0.7",
+            "clue": "Use the complement rule: P(not A) = 1 − P(A).",
+            "explanation": "1 − 0.3 = 0.7."
           },
           {
-            "prompt": "Here is some data: 10, 9, 7, 1, 17, 10. Which value appears most often (the mode)?",
+            "prompt": "A spinner lands on red with probability 1/4. If it is spun 120 times, how many reds are expected?",
             "choices": [
-              "17",
-              "1",
-              "9",
-              "10"
+              "24",
+              "30",
+              "40",
+              "120"
             ],
-            "answer": "10",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "10 appears more than any other value, so it is the mode."
+            "answer": "30",
+            "clue": "Expected frequency = probability × number of trials.",
+            "explanation": "1/4 × 120 = 30."
           },
           {
             "prompt": "What does “Outcome” mean?",
@@ -1303,16 +1301,16 @@
             "explanation": "Outcome means A single possible result of a trial."
           },
           {
-            "prompt": "Here is some data: 4, 1, 12, 18, 17. What is the largest value?",
+            "prompt": "On the probability scale, which value means an event is certain to happen?",
             "choices": [
-              "4",
-              "18",
+              "0",
+              "0.5",
               "1",
-              "17"
+              "2"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 18."
+            "answer": "1",
+            "clue": "Think about what each end of the 0-to-1 scale represents.",
+            "explanation": "A probability of 1 means the event is certain; 0 means impossible, and 0.5 means an even chance."
           }
         ]
       },
@@ -1325,28 +1323,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 19, 15, 18, 17, 2. What is the range?",
+            "prompt": "A fair die is rolled. What is P(rolling a 2 or a 5)?",
             "choices": [
-              "2",
-              "18",
-              "17",
-              "19"
+              "1/6",
+              "1/3",
+              "2/3",
+              "1/2"
             ],
-            "answer": "17",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 19 − 2 = 17."
+            "answer": "1/3",
+            "clue": "For mutually exclusive events, add the individual probabilities.",
+            "explanation": "P(2 or 5) = 1/6 + 1/6 = 2/6 = 1/3."
           },
           {
-            "prompt": "Here is some data: 19, 9, 3, 18, 2. What is the range?",
+            "prompt": "Two fair coins are flipped together. Using a sample space diagram, how many equally likely outcomes are there?",
             "choices": [
               "2",
-              "18",
-              "17",
-              "19"
+              "3",
+              "4",
+              "8"
             ],
-            "answer": "17",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 19 − 2 = 17."
+            "answer": "4",
+            "clue": "List every combination: HH, HT, TH, TT.",
+            "explanation": "Each coin has 2 outcomes, so there are 2 × 2 = 4 equally likely outcomes in the sample space."
           },
           {
             "prompt": "What does “Sample space” mean?",
@@ -1361,16 +1359,16 @@
             "explanation": "Sample space means The set of all possible outcomes."
           },
           {
-            "prompt": "A tally shows these counts: 18, 1, 10, 11, 9. What is the total?",
+            "prompt": "A bag contains 3 red counters and 7 blue counters. One counter is drawn at random. What is P(red)?",
             "choices": [
-              "50",
-              "48",
-              "18",
-              "49"
+              "3/10",
+              "7/10",
+              "3/7",
+              "1/3"
             ],
-            "answer": "49",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 18 + 1 + 10 + 11 + 9 = 49."
+            "answer": "3/10",
+            "clue": "P(event) = favourable outcomes ÷ total outcomes.",
+            "explanation": "There are 3 red counters out of 10 total, so P(red) = 3/10."
           }
         ]
       },
@@ -1383,28 +1381,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "A tally shows these counts: 19, 16, 15, 11, 18. What is the total?",
+            "prompt": "A coin is flipped 50 times and lands on heads 21 times. What is the experimental probability of heads?",
             "choices": [
-              "78",
-              "19",
-              "79",
-              "80"
+              "21/50",
+              "29/50",
+              "1/2",
+              "21/29"
             ],
-            "answer": "79",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 19 + 16 + 15 + 11 + 18 = 79."
+            "answer": "21/50",
+            "clue": "Experimental probability = number of successes ÷ number of trials.",
+            "explanation": "21 heads out of 50 flips gives an experimental probability of 21/50 = 0.42."
           },
           {
-            "prompt": "Here is some data: 6, 9, 1, 10, 11. What is the largest value?",
+            "prompt": "Which of these events has a probability closest to 0?",
             "choices": [
-              "11",
-              "1",
-              "10",
-              "6"
+              "Rolling an even number on a fair die",
+              "The sun rising tomorrow",
+              "Picking a red ball from a bag of 1 red and 99 blue balls",
+              "Flipping a coin and getting heads or tails"
             ],
-            "answer": "11",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 11."
+            "answer": "Picking a red ball from a bag of 1 red and 99 blue balls",
+            "clue": "The event closest to 0 is the least likely to happen.",
+            "explanation": "P(red) = 1/100 = 0.01, which is very close to 0 (impossible), making it the least likely event listed."
           },
           {
             "prompt": "What does “Event” mean?",
@@ -1419,16 +1417,16 @@
             "explanation": "Event means An outcome or group of outcomes you want."
           },
           {
-            "prompt": "Here is some data: 20, 6, 18, 10, 12. What is the range?",
+            "prompt": "Write the probability 3/4 as a percentage.",
             "choices": [
-              "20",
-              "6",
-              "15",
-              "14"
+              "34%",
+              "75%",
+              "43%",
+              "0.34%"
             ],
-            "answer": "14",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 20 − 6 = 14."
+            "answer": "75%",
+            "clue": "Divide the numerator by the denominator, then multiply by 100.",
+            "explanation": "3/4 = 0.75 = 75%."
           }
         ]
       },
@@ -1441,16 +1439,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 10, 9, 7, 1, 17, 10. Which value appears most often (the mode)?",
+            "prompt": "A spinner lands on red with probability 1/4. If it is spun 120 times, how many reds are expected?",
             "choices": [
-              "17",
-              "1",
-              "9",
-              "10"
+              "24",
+              "30",
+              "40",
+              "120"
             ],
-            "answer": "10",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "10 appears more than any other value, so it is the mode."
+            "answer": "30",
+            "clue": "Expected frequency = probability × number of trials.",
+            "explanation": "1/4 × 120 = 30."
           },
           {
             "prompt": "What does “Outcome” mean?",
@@ -1465,28 +1463,28 @@
             "explanation": "Outcome means A single possible result of a trial."
           },
           {
-            "prompt": "Here is some data: 4, 1, 12, 18, 17. What is the largest value?",
+            "prompt": "On the probability scale, which value means an event is certain to happen?",
             "choices": [
-              "4",
-              "18",
+              "0",
+              "0.5",
               "1",
-              "17"
+              "2"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 18."
+            "answer": "1",
+            "clue": "Think about what each end of the 0-to-1 scale represents.",
+            "explanation": "A probability of 1 means the event is certain; 0 means impossible, and 0.5 means an even chance."
           },
           {
-            "prompt": "Here is some data: 11, 17, 9, 7, 6, 11. Which value appears most often (the mode)?",
+            "prompt": "If P(it rains tomorrow) = 0.3, what is P(it does not rain tomorrow)?",
             "choices": [
-              "17",
-              "6",
-              "12",
-              "11"
+              "0.3",
+              "0.03",
+              "0.7",
+              "1.3"
             ],
-            "answer": "11",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "11 appears more than any other value, so it is the mode."
+            "answer": "0.7",
+            "clue": "Use the complement rule: P(not A) = 1 − P(A).",
+            "explanation": "1 − 0.3 = 0.7."
           }
         ]
       },
@@ -1499,16 +1497,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 19, 9, 3, 18, 2. What is the range?",
+            "prompt": "Two fair coins are flipped together. Using a sample space diagram, how many equally likely outcomes are there?",
             "choices": [
               "2",
-              "18",
-              "17",
-              "19"
+              "3",
+              "4",
+              "8"
             ],
-            "answer": "17",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 19 − 2 = 17."
+            "answer": "4",
+            "clue": "List every combination: HH, HT, TH, TT.",
+            "explanation": "Each coin has 2 outcomes, so there are 2 × 2 = 4 equally likely outcomes in the sample space."
           },
           {
             "prompt": "What does “Sample space” mean?",
@@ -1523,28 +1521,28 @@
             "explanation": "Sample space means The set of all possible outcomes."
           },
           {
-            "prompt": "A tally shows these counts: 18, 1, 10, 11, 9. What is the total?",
+            "prompt": "A bag contains 3 red counters and 7 blue counters. One counter is drawn at random. What is P(red)?",
             "choices": [
-              "50",
-              "48",
-              "18",
-              "49"
+              "3/10",
+              "7/10",
+              "3/7",
+              "1/3"
             ],
-            "answer": "49",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 18 + 1 + 10 + 11 + 9 = 49."
+            "answer": "3/10",
+            "clue": "P(event) = favourable outcomes ÷ total outcomes.",
+            "explanation": "There are 3 red counters out of 10 total, so P(red) = 3/10."
           },
           {
-            "prompt": "Here is some data: 19, 15, 18, 17, 2. What is the range?",
+            "prompt": "A fair die is rolled. What is P(rolling a 2 or a 5)?",
             "choices": [
-              "2",
-              "18",
-              "17",
-              "19"
+              "1/6",
+              "1/3",
+              "2/3",
+              "1/2"
             ],
-            "answer": "17",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 19 − 2 = 17."
+            "answer": "1/3",
+            "clue": "For mutually exclusive events, add the individual probabilities.",
+            "explanation": "P(2 or 5) = 1/6 + 1/6 = 2/6 = 1/3."
           }
         ]
       },
@@ -1557,16 +1555,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 6, 9, 1, 10, 11. What is the largest value?",
+            "prompt": "Which of these events has a probability closest to 0?",
             "choices": [
-              "11",
-              "1",
-              "10",
-              "6"
+              "Rolling an even number on a fair die",
+              "The sun rising tomorrow",
+              "Picking a red ball from a bag of 1 red and 99 blue balls",
+              "Flipping a coin and getting heads or tails"
             ],
-            "answer": "11",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 11."
+            "answer": "Picking a red ball from a bag of 1 red and 99 blue balls",
+            "clue": "The event closest to 0 is the least likely to happen.",
+            "explanation": "P(red) = 1/100 = 0.01, which is very close to 0 (impossible), making it the least likely event listed."
           },
           {
             "prompt": "What does “Event” mean?",
@@ -1581,28 +1579,28 @@
             "explanation": "Event means An outcome or group of outcomes you want."
           },
           {
-            "prompt": "Here is some data: 20, 6, 18, 10, 12. What is the range?",
+            "prompt": "Write the probability 3/4 as a percentage.",
             "choices": [
-              "20",
-              "6",
-              "15",
-              "14"
+              "34%",
+              "75%",
+              "43%",
+              "0.34%"
             ],
-            "answer": "14",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 20 − 6 = 14."
+            "answer": "75%",
+            "clue": "Divide the numerator by the denominator, then multiply by 100.",
+            "explanation": "3/4 = 0.75 = 75%."
           },
           {
-            "prompt": "A tally shows these counts: 19, 16, 15, 11, 18. What is the total?",
+            "prompt": "A coin is flipped 50 times and lands on heads 21 times. What is the experimental probability of heads?",
             "choices": [
-              "78",
-              "19",
-              "79",
-              "80"
+              "21/50",
+              "29/50",
+              "1/2",
+              "21/29"
             ],
-            "answer": "79",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 19 + 16 + 15 + 11 + 18 = 79."
+            "answer": "21/50",
+            "clue": "Experimental probability = number of successes ÷ number of trials.",
+            "explanation": "21 heads out of 50 flips gives an experimental probability of 21/50 = 0.42."
           }
         ]
       },
@@ -1627,40 +1625,40 @@
             "explanation": "Outcome means A single possible result of a trial."
           },
           {
-            "prompt": "Here is some data: 4, 1, 12, 18, 17. What is the largest value?",
+            "prompt": "On the probability scale, which value means an event is certain to happen?",
             "choices": [
-              "4",
-              "18",
+              "0",
+              "0.5",
               "1",
-              "17"
+              "2"
             ],
-            "answer": "18",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 18."
+            "answer": "1",
+            "clue": "Think about what each end of the 0-to-1 scale represents.",
+            "explanation": "A probability of 1 means the event is certain; 0 means impossible, and 0.5 means an even chance."
           },
           {
-            "prompt": "Here is some data: 11, 17, 9, 7, 6, 11. Which value appears most often (the mode)?",
+            "prompt": "If P(it rains tomorrow) = 0.3, what is P(it does not rain tomorrow)?",
             "choices": [
-              "17",
-              "6",
-              "12",
-              "11"
+              "0.3",
+              "0.03",
+              "0.7",
+              "1.3"
             ],
-            "answer": "11",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "11 appears more than any other value, so it is the mode."
+            "answer": "0.7",
+            "clue": "Use the complement rule: P(not A) = 1 − P(A).",
+            "explanation": "1 − 0.3 = 0.7."
           },
           {
-            "prompt": "Here is some data: 10, 9, 7, 1, 17, 10. Which value appears most often (the mode)?",
+            "prompt": "A spinner lands on red with probability 1/4. If it is spun 120 times, how many reds are expected?",
             "choices": [
-              "17",
-              "1",
-              "9",
-              "10"
+              "24",
+              "30",
+              "40",
+              "120"
             ],
-            "answer": "10",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "10 appears more than any other value, so it is the mode."
+            "answer": "30",
+            "clue": "Expected frequency = probability × number of trials.",
+            "explanation": "1/4 × 120 = 30."
           }
         ]
       },
@@ -1685,40 +1683,40 @@
             "explanation": "Sample space means The set of all possible outcomes."
           },
           {
-            "prompt": "A tally shows these counts: 18, 1, 10, 11, 9. What is the total?",
+            "prompt": "A bag contains 3 red counters and 7 blue counters. One counter is drawn at random. What is P(red)?",
             "choices": [
-              "50",
-              "48",
-              "18",
-              "49"
+              "3/10",
+              "7/10",
+              "3/7",
+              "1/3"
             ],
-            "answer": "49",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 18 + 1 + 10 + 11 + 9 = 49."
+            "answer": "3/10",
+            "clue": "P(event) = favourable outcomes ÷ total outcomes.",
+            "explanation": "There are 3 red counters out of 10 total, so P(red) = 3/10."
           },
           {
-            "prompt": "Here is some data: 19, 15, 18, 17, 2. What is the range?",
+            "prompt": "A fair die is rolled. What is P(rolling a 2 or a 5)?",
             "choices": [
-              "2",
-              "18",
-              "17",
-              "19"
+              "1/6",
+              "1/3",
+              "2/3",
+              "1/2"
             ],
-            "answer": "17",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 19 − 2 = 17."
+            "answer": "1/3",
+            "clue": "For mutually exclusive events, add the individual probabilities.",
+            "explanation": "P(2 or 5) = 1/6 + 1/6 = 2/6 = 1/3."
           },
           {
-            "prompt": "Here is some data: 19, 9, 3, 18, 2. What is the range?",
+            "prompt": "Two fair coins are flipped together. Using a sample space diagram, how many equally likely outcomes are there?",
             "choices": [
               "2",
-              "18",
-              "17",
-              "19"
+              "3",
+              "4",
+              "8"
             ],
-            "answer": "17",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 19 − 2 = 17."
+            "answer": "4",
+            "clue": "List every combination: HH, HT, TH, TT.",
+            "explanation": "Each coin has 2 outcomes, so there are 2 × 2 = 4 equally likely outcomes in the sample space."
           }
         ]
       },
@@ -1743,53 +1741,53 @@
             "explanation": "Event means An outcome or group of outcomes you want."
           },
           {
-            "prompt": "Here is some data: 20, 6, 18, 10, 12. What is the range?",
+            "prompt": "Write the probability 3/4 as a percentage.",
             "choices": [
-              "20",
-              "6",
-              "15",
-              "14"
+              "34%",
+              "75%",
+              "43%",
+              "0.34%"
             ],
-            "answer": "14",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 20 − 6 = 14."
+            "answer": "75%",
+            "clue": "Divide the numerator by the denominator, then multiply by 100.",
+            "explanation": "3/4 = 0.75 = 75%."
           },
           {
-            "prompt": "A tally shows these counts: 19, 16, 15, 11, 18. What is the total?",
+            "prompt": "A coin is flipped 50 times and lands on heads 21 times. What is the experimental probability of heads?",
             "choices": [
-              "78",
-              "19",
-              "79",
-              "80"
+              "21/50",
+              "29/50",
+              "1/2",
+              "21/29"
             ],
-            "answer": "79",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 19 + 16 + 15 + 11 + 18 = 79."
+            "answer": "21/50",
+            "clue": "Experimental probability = number of successes ÷ number of trials.",
+            "explanation": "21 heads out of 50 flips gives an experimental probability of 21/50 = 0.42."
           },
           {
-            "prompt": "Here is some data: 6, 9, 1, 10, 11. What is the largest value?",
+            "prompt": "Which of these events has a probability closest to 0?",
             "choices": [
-              "11",
-              "1",
-              "10",
-              "6"
+              "Rolling an even number on a fair die",
+              "The sun rising tomorrow",
+              "Picking a red ball from a bag of 1 red and 99 blue balls",
+              "Flipping a coin and getting heads or tails"
             ],
-            "answer": "11",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 11."
+            "answer": "Picking a red ball from a bag of 1 red and 99 blue balls",
+            "clue": "The event closest to 0 is the least likely to happen.",
+            "explanation": "P(red) = 1/100 = 0.01, which is very close to 0 (impossible), making it the least likely event listed."
           }
         ]
       }
     ]
   },
   "selfAssessment": [
-    "I can this unit is designed for self-paced learning. You move at your own speed. Read each explanation slowly, copy every worked example onto paper and try it yourself before you look at the solution, and only move on when you feel steady. Your AI tutor is available day and night to set you fresh questions, explain a step a different way, or mark your working. Your teacher will also meet with you about twice a week to help with anything that feels tricky.",
-    "I can why does probability matter? It sits behind weather forecasts, medical tests, insurance, quality control in factories, sport, and every game of chance ever invented. A doctor reading a test result, a shopkeeper deciding how much stock to buy, a meteorologist warning of floods – all of them use probability. Learning it well trains you to think clearly about risk and to avoid being fooled by claims that only *sound* convincing. Keep a pencil, paper and, if you can, a coin and a die beside you as you read, because probability is a subject you must do, not just watch.",
     "I can describe probability as a measure of likelihood on a scale from 0 to 1.",
     "I can calculate theoretical probability for equally likely outcomes using the basic formula.",
     "I can express a probability as a fraction, decimal or percentage and convert between them.",
     "I can find the probability of an event not happening using the complement.",
     "I can add probabilities for mutually exclusive events.",
-    "I can run experiments to find experimental probability (relative frequency) and compare it with theory."
+    "I can run experiments to find experimental probability (relative frequency) and compare it with theory.",
+    "I can use the idea of expected frequency to predict results over many trials.",
+    "I can list all outcomes with a sample space diagram or two-way table."
   ]
 }

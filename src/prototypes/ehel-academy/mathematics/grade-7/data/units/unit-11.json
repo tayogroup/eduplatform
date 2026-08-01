@@ -56,44 +56,45 @@
     "Draw a straight-line graph using a table of values and using gradient and intercept.",
     "Read values from a graph, including interpolation and extrapolation.",
     "Find the point where two lines intersect and explain what it means.",
-    "Interpret real-life graphs such as distance–time and cost graphs."
+    "Interpret real-life graphs such as distance–time and cost graphs.",
+    "Recognise and draw straight-line graphs that are parallel to an axis, such as x = 3 (a vertical line) and y = −2 (a horizontal line)."
   ],
   "concepts": [
     {
       "id": "concept-1-the-coordinate-plane",
       "title": "The Coordinate Plane",
-      "explanation": "The grid we use for graphing is called the coordinate plane, or the Cartesian plane after the French mathematician René Descartes. It is built from two number lines that cross at right angles. The horizontal line is the x-axis; positive numbers run to the right and negative numbers to the left. The vertical line is the y-axis; positive numbers run upward and negative numbers downward. The point where they cross is the origin, written (0, 0). To plot the point (3, 2), start at the origin, move 3 units right along…",
+      "explanation": "The grid we use for graphing is called the coordinate plane, or the Cartesian plane after the French mathematician René Descartes. It is built from two number lines that cross at right angles. The horizontal line is the x-axis; positive numbers run to the right and negative numbers to the left. The vertical line is the y-axis; positive numbers run upward and negative numbers downward. The point where they cross is the origin, written (0, 0). To plot the point (3, 2), start at the origin, move 3 units right along the x-axis, then 2 units up, and mark the point.",
       "example": "The two axes cut the plane into four regions called quadrants, numbered anticlockwise starting from the top right:"
     },
     {
       "id": "concept-2-functions-and-relationships",
       "title": "Functions and Relationships",
-      "explanation": "A function is a rule that links two quantities so that each input gives exactly one output. Think of a function as a machine: you put a number in, the machine follows its rule, and one number comes out. If the rule is “multiply by 2, then add 1”, then putting in 3 gives 2×3 + 1 = 7. We can write this rule as an equation, y = 2x + 1, where x is the input and y is the output. The input is called the independent variable because you are free to choose it, and the output is called the dependent variable because its…",
-      "example": "One relationship can be shown in several matching ways, and a strong mathematician can move between them:"
+      "explanation": "A function is a rule that links two quantities so that each input gives exactly one output. Think of a function as a machine: you put a number in, the machine follows its rule, and one number comes out. If the rule is “multiply by 2, then add 1”, then putting in 3 gives 2×3 + 1 = 7. We can write this rule as an equation, y = 2x + 1, where x is the input and y is the output.\n\nThe input is called the independent variable because you are free to choose it, and the output is called the dependent variable because its value depends on your choice. In a journey, time is usually the independent variable (you decide which moment to look at) and distance is the dependent variable (it depends on how long you have travelled). We normally put the independent variable on the horizontal x-axis and the dependent variable on the vertical y-axis.\n\nOne relationship can be shown in several matching ways, and a strong mathematician can move between them:\n\nIn words: “y is one more than twice x.”\n\nAs a table of values: pairs of x and y that fit the rule.\n\nAs a graph: a line or curve on the coordinate plane.",
+      "example": "A table of values is the bridge between an equation and a graph. To build one, choose some x-values, put each into the rule, and record the y-value it produces. For y = 2x + 1: when x = 0, y = 1; when x = 1, y = 3; when x = 2, y = 5. This gives the points (0, 1), (1, 3) and (2, 5), which we can then plot. Each point is a single example of the rule; the full graph shows *every* example at once. That is the quiet power of a graph – it holds an endless list of number pairs in one picture."
     },
     {
       "id": "concept-3-linear-functions-and-y-mx-c",
       "title": "Linear Functions and y = mx + c",
-      "explanation": "A linear function is one whose graph is a perfectly straight line. Every linear function can be written in the form y = mx + c, where m is the gradient (how steep the line is) and c is the y-intercept (where the line crosses the y-axis). These two numbers tell you everything you need to draw the line, so it is worth understanding each one carefully. The sign of the gradient tells you the direction of the line:",
-      "example": "Positive gradient (m > 0): the line goes up from left to right."
+      "explanation": "A linear function is one whose graph is a perfectly straight line. Every linear function can be written in the form y = mx + c, where m is the gradient (how steep the line is) and c is the y-intercept (where the line crosses the y-axis). These two numbers tell you everything you need to draw the line, so it is worth understanding each one carefully.\n\nThe sign of the gradient tells you the direction of the line:\n\nPositive gradient (m > 0): the line goes up from left to right.\n\nNegative gradient (m < 0): the line goes down from left to right.\n\nZero gradient (m = 0): the line is horizontal, like y = 3.\n\nA vertical line such as x = 2 has an undefined gradient, because x never changes.\n\nThe y-intercept c is the value of y when x = 0, so it is where the line meets the y-axis. In y = 3x + 5, putting x = 0 gives y = 5, so the line crosses the y-axis at the point (0, 5). In a real situation the y-intercept is often a starting amount: a fixed charge before any distance is travelled, or the water already in a tank before it begins to fill.",
+      "example": "Let us read a full equation. In y = 2x − 1, the gradient is 2 and the y-intercept is −1. So the line crosses the y-axis at (0, −1) and, from there, climbs 2 units for every 1 unit across. Compare this with y = −0.5x + 4, whose gradient is −0.5 (a gentle downward slope) and whose y-intercept is 4. Just by reading m and c you can already picture each line before drawing a single point. Two lines with the same gradient are parallel – they never meet – which is why y = 2x + 1 and y = 2x − 3 run side by side forever."
     },
     {
       "id": "concept-4-drawing-straight-line-graphs",
       "title": "Drawing Straight-Line Graphs",
-      "explanation": "There are two reliable methods for drawing the graph of a linear function. Learn both, because each is quicker in different situations. Choose three or four x-values, work out each matching y-value, plot the points, and join them with a ruled straight line. Three points is enough, and the third acts as a check: if the three do not lie in a straight line, one of them is wrong. For y = 2x − 1 we might choose x = 0, 1, 2 and 3, giving y = −1, 1, 3 and 5. That produces the points (0, −1), (1, 1), (2, 3) and (3, 5).…",
-      "example": "Always label your axes with the variable and any units, choose a sensible scale so the line fills the grid, and extend the line a little beyond your points with arrows to show it continues. A graph without labels is…"
+      "explanation": "There are two reliable methods for drawing the graph of a linear function. Learn both, because each is quicker in different situations. Choose three or four x-values, work out each matching y-value, plot the points, and join them with a ruled straight line. Three points is enough, and the third acts as a check: if the three do not lie in a straight line, one of them is wrong. For y = 2x − 1 we might choose x = 0, 1, 2 and 3, giving y = −1, 1, 3 and 5. That produces the points (0, −1), (1, 1), (2, 3) and (3, 5).… Two special straight lines do not fit the table-of-values pattern above, because they only involve one variable. The equation x = 3 means 'the x-coordinate is always 3, whatever y is' – this draws a vertical line passing through 3 on the x-axis, parallel to the y-axis. The equation y = −2 means 'the y-coordinate is always −2, whatever x is' – this draws a horizontal line passing through −2 on the y-axis, parallel to the x-axis. These lines are easy to spot: if the equation only contains x, the line is vertical; if it only contains y, the line is horizontal.",
+      "example": "Always label your axes with the variable and any units, choose a sensible scale so the line fills the grid, and extend the line a little beyond your points with arrows to show it continues. A graph without labels is… To draw y = 4, rule a horizontal line through every point where the y-coordinate is 4, such as (−2, 4), (0, 4) and (3, 4). To draw x = −1, rule a vertical line through every point where the x-coordinate is −1, such as (−1, −3), (−1, 0) and (−1, 5)."
     },
     {
       "id": "concept-5-reading-and-interpreting-graphs",
       "title": "Reading and Interpreting Graphs",
-      "explanation": "Drawing a graph is only half the skill; the other half is reading one that is already drawn. Graphs answer questions quickly once you know how to look. Direct reading finds a value straight from the line. To answer “what is y when x = 4?”, go up from 4 on the x-axis until you meet the line, then across to the y-axis to read the value. To answer “when is y = 10?”, do the reverse: start at 10 on the y-axis, go across to the line, then down to the x-axis.",
-      "example": "Interpolation means reading a value between points you already know – for example estimating the temperature at 2:30 pm when you have readings at 2:00 and 3:00. Because the values sit inside the data, interpolation is…"
+      "explanation": "Drawing a graph is only half the skill; the other half is reading one that is already drawn. Graphs answer questions quickly once you know how to look.\n\nDirect reading finds a value straight from the line. To answer “what is y when x = 4?”, go up from 4 on the x-axis until you meet the line, then across to the y-axis to read the value. To answer “when is y = 10?”, do the reverse: start at 10 on the y-axis, go across to the line, then down to the x-axis.\n\nInterpolation means reading a value between points you already know – for example estimating the temperature at 2:30 pm when you have readings at 2:00 and 3:00. Because the values sit inside the data, interpolation is usually trustworthy. Extrapolation means extending the line beyond the data to predict a value – for example guessing the temperature at 6:00 pm from readings that stop at 4:00. Extrapolation can be useful but is riskier, because the pattern may not continue; a plant that grows steadily for a week will not keep growing at the same rate forever.\n\nThe gradient of a real graph carries meaning. On a distance–time graph the gradient is the speed; a steeper line means faster travel, and a horizontal segment means the object is not moving at all. On a cost graph the gradient is the price per unit. Always ask what the steepness of a line is telling you about the situation, not just about the numbers.",
+      "example": "Two lines drawn on the same axes may cross. The point of intersection is the one pair (x, y) that fits both rules at the same time. If Omar's savings follow one line and his brother Idris's follow another, the point where the lines cross is the moment their savings are equal. We can check an intersection with algebra: to find where y = 2x + 1 meets y = −x + 4, set 2x + 1 = −x + 4, giving 3x = 3, so x = 1 and y = 3. The lines meet at (1, 3), exactly where the graph shows."
     },
     {
       "id": "concept-6-real-life-graphs",
       "title": "Real-Life Graphs",
-      "explanation": "The reason graphs matter is that they describe the real world. Many everyday situations follow a linear rule, and putting them on a graph makes the story easy to read. Distance–time graphs show a journey. Time goes on the x-axis and distance on the y-axis. A straight sloping line means steady speed; the steeper the line, the faster the travel. A flat, horizontal line means a stop – time passes but distance does not change. Suppose Hassan cycles from his home towards the masjid at a steady 12 km/h. After t hours he…",
-      "example": "Cost graphs often have a fixed charge plus a rate. A taxi in Nairobi might charge a flat 200 shillings plus 100 shillings per kilometre. The cost of a journey of d kilometres is C = 100d + 200. Here the y-intercept 200…"
+      "explanation": "The reason graphs matter is that they describe the real world. Many everyday situations follow a linear rule, and putting them on a graph makes the story easy to read.\n\nDistance–time graphs show a journey. Time goes on the x-axis and distance on the y-axis. A straight sloping line means steady speed; the steeper the line, the faster the travel. A flat, horizontal line means a stop – time passes but distance does not change. Suppose Hassan cycles from his home towards the masjid at a steady 12 km/h. After t hours he has travelled d = 12t kilometres, a straight line through the origin with gradient 12. If he rests for a while, the graph is flat during the rest, then slopes up again when he sets off.\n\nCost graphs often have a fixed charge plus a rate. A taxi in Nairobi might charge a flat 200 shillings plus 100 shillings per kilometre. The cost of a journey of d kilometres is C = 100d + 200. Here the y-intercept 200 is the fixed charge you pay before moving at all, and the gradient 100 is the price of each extra kilometre. Reading the graph, you can find the cost of any journey, or work backwards from a budget to see how far you can afford to travel.\n\nConversion graphs turn one unit into another. Because the rule is linear, a single straight line lets you convert either way just by reading across and up. For example, converting temperatures with F = 1.8C + 32 gives a straight line: the gradient 1.8 shows that each 1°C rise is a 1.8°F rise, and the y-intercept 32 shows that 0°C equals 32°F. The same idea converts between shillings and dollars, or kilometres and miles: draw the line once, then read off any conversion you need.\n\nYou have now met six connected ideas: the coordinate plane, functions and tables, the form y = mx + c, drawing straight lines, reading graphs, and real-life graphs. These are not separate topics – they are one story told in different ways. An equation such as C = 100d + 200 becomes a table of values, the table becomes plotted points, the points become a line, and the line lets you read off answers to real questions about a taxi fare. Being able to travel in any direction round this circle – from equation to graph and back again – is what it means to truly understand graphs.",
+      "example": "The best way to fix these ideas in your memory is to use them with real numbers around you. Time a walk to the shop and sketch the distance–time graph. Work out the cost of buying different numbers of mangoes and plot the line. Every time you connect a graph to something real, your understanding grows stronger, and the harder mathematics of later years – simultaneous equations, quadratic curves, and eventually calculus – will feel like familiar ground. Now let us practise together with some worked examples."
     }
   ],
   "explorations": [
@@ -102,72 +103,72 @@
       "outcomeId": "lo01",
       "difficulty": "Discover",
       "title": "The Coordinate Plane",
-      "context": "The grid we use for graphing is called the coordinate plane, or the Cartesian plane after the French mathematician René Descartes. It is built from two number lines that cross at right angles. The horizontal line is the x-axis; positive numbers run to the…",
+      "context": "The grid we use for graphing is called the coordinate plane, or the Cartesian plane after the French mathematician René Descartes. It is built from two number lines that cross at right angles.",
       "prompt": "Write the coordinates of a point that is 3 right and 4 up from the origin.",
-      "answer": "1) (3,",
+      "answer": "(3, 4).",
       "modelType": "model-1",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) (3,"
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "explanation": "The Coordinate Plane: The grid we use for graphing is called the coordinate plane, or the Cartesian plane after the French mathematician René Descartes. It is built from two number lines that cross at right angles. The horizontal line is the x-axis; positive numbers run to the right and negative numbers to the left. The vertical line is the y-axis; positive numbers run upward and negative numbers downward."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
       "title": "Functions and Relationships",
-      "context": "A function is a rule that links two quantities so that each input gives exactly one output. Think of a function as a machine: you put a number in, the machine follows its rule, and one number comes out. If the rule is “multiply by 2, then add 1”, then putting…",
+      "context": "A function is a rule that links two quantities so that each input gives exactly one output. Think of a function as a machine: you put a number in, the machine follows its rule, and one number comes out.",
       "prompt": "State the quadrant of each point: a) (2, 5) b) (−3, 1) c) (−4, −2) d) (6, −1).",
-      "answer": ".",
+      "answer": "a) Quadrant I; b) Quadrant II; c) Quadrant III; d) Quadrant IV.",
       "modelType": "model-2",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "explanation": "Functions and Relationships: A function is a rule that links two quantities so that each input gives exactly one output. Think of a function as a machine: you put a number in, the machine follows its rule, and one number comes out. If the rule is “multiply by 2, then add 1”, then putting in 3 gives 2×3 + 1 = 7. We can write this rule as an equation, y = 2x + 1, where x is the input and y is the output."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
       "title": "Linear Functions and y = mx + c",
-      "context": "A linear function is one whose graph is a perfectly straight line. Every linear function can be written in the form y = mx + c, where m is the gradient (how steep the line is) and c is the y-intercept (where the line crosses the y-axis). These two numbers…",
+      "context": "A linear function is one whose graph is a perfectly straight line. Every linear function can be written in the form y = mx + c, where m is the gradient (how steep the line is) and c is the y-intercept (where the line crosses the y-axis).",
       "prompt": "Write the gradient and y-intercept of each line: a) y = 3x + 2 b) y = −x + 5 c) y = 4x.",
-      "answer": "a) I, b) II, c) III, d) IV.",
+      "answer": "a) gradient 3, intercept 2; b) gradient −1, intercept 5; c) gradient 4, intercept 0.",
       "modelType": "model-3",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "a) I, b) II, c) III, d) IV."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "explanation": "Linear Functions and y = mx + c: A linear function is one whose graph is a perfectly straight line. Every linear function can be written in the form y = mx + c, where m is the gradient (how steep the line is) and c is the y-intercept (where the line crosses the y-axis). These two numbers tell you everything you need to draw the line, so it is worth understanding each one carefully."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
       "title": "Drawing Straight-Line Graphs",
-      "context": "There are two reliable methods for drawing the graph of a linear function. Learn both, because each is quicker in different situations. Choose three or four x-values, work out each matching y-value, plot the points, and join them with a ruled straight line.…",
+      "context": "There are two reliable methods for drawing the graph of a linear function. Learn both, because each is quicker in different situations.",
       "prompt": "Complete the table for y = 2x + 1: x = 0, 1, 2, 3.",
-      "answer": "a) gradient 3, intercept 2; b) gradient −1, intercept 5; c) gradient 4, intercept 0.",
+      "answer": "x = 0, 1, 2, 3 → y = 1, 3, 5, 7.",
       "modelType": "model-4",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "a) gradient 3, intercept 2; b) gradient −1, intercept 5; c) gradient 4, intercept 0."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "explanation": "Drawing Straight-Line Graphs: There are two reliable methods for drawing the graph of a linear function. Learn both, because each is quicker in different situations. Choose three or four x-values, work out each matching y-value, plot the points, and join them with a ruled straight line. Three points is enough, and the third acts as a check: if the three do not lie in a straight line, one of them is wrong."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
       "title": "Reading and Interpreting Graphs",
-      "context": "Drawing a graph is only half the skill; the other half is reading one that is already drawn. Graphs answer questions quickly once you know how to look. Direct reading finds a value straight from the line. To answer “what is y when x = 4?”, go up from 4 on the…",
+      "context": "Drawing a graph is only half the skill; the other half is reading one that is already drawn. Graphs answer questions quickly once you know how to look. Direct reading finds a value straight from the line.",
       "prompt": "True or false: the point (0, 0) is called the origin.",
-      "answer": "y = 1, 3, 5, 7.",
+      "answer": "True. The point (0, 0), where the axes cross, is called the origin.",
       "modelType": "model-5",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "y = 1, 3, 5, 7."
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "explanation": "Reading and Interpreting Graphs: Drawing a graph is only half the skill; the other half is reading one that is already drawn. Graphs answer questions quickly once you know how to look."
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
       "title": "Real-Life Graphs",
-      "context": "The reason graphs matter is that they describe the real world. Many everyday situations follow a linear rule, and putting them on a graph makes the story easy to read. Distance–time graphs show a journey. Time goes on the x-axis and distance on the y-axis. A…",
+      "context": "The reason graphs matter is that they describe the real world. Many everyday situations follow a linear rule, and putting them on a graph makes the story easy to read. Distance–time graphs show a journey. Time goes on the x-axis and distance on the y-axis.",
       "prompt": "Find the gradient of the line through each pair: a) (1, 2) and (4, 11) b) (0, 5) and (2, 1).",
-      "answer": "1) a) (11 −",
+      "answer": "a) gradient = (11 − 2) ÷ (4 − 1) = 9 ÷ 3 = 3; b) gradient = (1 − 5) ÷ (2 − 0) = −4 ÷ 2 = −2.",
       "modelType": "model-6",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "explanation": "1) a) (11 −"
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "explanation": "Real-Life Graphs: The reason graphs matter is that they describe the real world. Many everyday situations follow a linear rule, and putting them on a graph makes the story easy to read."
     }
   ],
   "visualModels": [
@@ -176,7 +177,7 @@
       "outcomeId": "lo01",
       "title": "The Coordinate Plane",
       "modelType": "concept-model-1",
-      "purpose": "The grid we use for graphing is called the coordinate plane, or the Cartesian plane after the French mathematician René Descartes. It is built from two number lines that cross at right angles. The horizontal line is the…",
+      "purpose": "The grid we use for graphing is called the coordinate plane, or the Cartesian plane after the French mathematician René Descartes. It is built from two number lines that cross at right angles.",
       "defaultNumber": null
     },
     {
@@ -184,7 +185,7 @@
       "outcomeId": "lo02",
       "title": "Functions and Relationships",
       "modelType": "concept-model-2",
-      "purpose": "A function is a rule that links two quantities so that each input gives exactly one output. Think of a function as a machine: you put a number in, the machine follows its rule, and one number comes out. If the rule is…",
+      "purpose": "A function is a rule that links two quantities so that each input gives exactly one output. Think of a function as a machine: you put a number in, the machine follows its rule, and one number comes out.",
       "defaultNumber": null
     },
     {
@@ -192,7 +193,7 @@
       "outcomeId": "lo03",
       "title": "Linear Functions and y = mx + c",
       "modelType": "concept-model-3",
-      "purpose": "A linear function is one whose graph is a perfectly straight line. Every linear function can be written in the form y = mx + c, where m is the gradient (how steep the line is) and c is the y-intercept (where the line…",
+      "purpose": "A linear function is one whose graph is a perfectly straight line.",
       "defaultNumber": null
     },
     {
@@ -200,7 +201,7 @@
       "outcomeId": "lo04",
       "title": "Drawing Straight-Line Graphs",
       "modelType": "concept-model-4",
-      "purpose": "There are two reliable methods for drawing the graph of a linear function. Learn both, because each is quicker in different situations. Choose three or four x-values, work out each matching y-value, plot the points, and…",
+      "purpose": "There are two reliable methods for drawing the graph of a linear function. Learn both, because each is quicker in different situations.",
       "defaultNumber": null
     },
     {
@@ -208,7 +209,7 @@
       "outcomeId": "lo05",
       "title": "Reading and Interpreting Graphs",
       "modelType": "concept-model-5",
-      "purpose": "Drawing a graph is only half the skill; the other half is reading one that is already drawn. Graphs answer questions quickly once you know how to look. Direct reading finds a value straight from the line. To answer…",
+      "purpose": "Drawing a graph is only half the skill; the other half is reading one that is already drawn. Graphs answer questions quickly once you know how to look. Direct reading finds a value straight from the line.",
       "defaultNumber": null
     },
     {
@@ -216,7 +217,7 @@
       "outcomeId": "lo06",
       "title": "Real-Life Graphs",
       "modelType": "concept-model-6",
-      "purpose": "The reason graphs matter is that they describe the real world. Many everyday situations follow a linear rule, and putting them on a graph makes the story easy to read. Distance–time graphs show a journey. Time goes on…",
+      "purpose": "The reason graphs matter is that they describe the real world. Many everyday situations follow a linear rule, and putting them on a graph makes the story easy to read. Distance–time graphs show a journey.",
       "defaultNumber": null
     }
   ],
@@ -367,9 +368,9 @@
       "id": "we09",
       "outcomeId": "lo01",
       "difficulty": "Challenge",
-      "title": "Practice 9",
+      "title": "Write an equation from gradient and intercept",
       "prompt": "Write the equation of the line with gradient 3 that crosses the y-axis at (0, −2).",
-      "solution": "÷(2 −"
+      "solution": "Solution: Using y = mx + c with m = 3 and y-intercept c = −2, the equation is y = 3x − 2."
     },
     {
       "id": "we10",
@@ -377,23 +378,23 @@
       "difficulty": "Challenge",
       "title": "State whether each pair of lines is parallel",
       "prompt": "State whether each pair of lines is parallel: a) y = 2x + 1 and y = 2x − 5 b) y = 3x and y = −3x.",
-      "solution": "= −4÷2 = −2."
+      "solution": "Solution: a) Both lines have gradient 2, so they are parallel. b) The gradients are 3 and −3, which are different, so these lines are not parallel."
     },
     {
       "id": "we11",
       "outcomeId": "lo03",
       "difficulty": "Challenge",
-      "title": "Practice 11",
+      "title": "Interpret a distance-time graph",
       "prompt": "On a distance–time graph, describe what each part means: a) a steep upward line b) a flat horizontal line.",
-      "solution": "a) (0, −4); b) 0 = 2x − 4 → x = 2, so (2,"
+      "solution": "Solution: a) A steep upward line means the object is moving away quickly — a fast, steady speed (a large positive gradient). b) A flat horizontal line means the object has stopped; time is passing but the distance is not changing."
     },
     {
       "id": "we12",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
-      "title": "Practice 12",
+      "title": "Check an intersection by substitution",
       "prompt": "Find where y = 3x − 1 and y = x + 5 intersect, and check your answer by substitution.",
-      "solution": "1) 3x − 1 = x + 5 → 2x = 6 → x = 3, y = 8, so (3,"
+      "solution": "Solution: 3x − 1 = x + 5 → 2x = 6 → x = 3. Then y = 3(3) − 1 = 8. The lines meet at (3, 8). Check: x + 5 = 3 + 5 = 8 ✓."
     }
   ],
   "practice": [
@@ -401,85 +402,85 @@
       "id": "p01",
       "level": "Warm-up",
       "prompt": "Write the coordinates of a point that is 3 right and 4 up from the origin.",
-      "answer": "1) (3,",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "(3, 4).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p02",
       "level": "Warm-up",
       "prompt": "State the quadrant of each point: a) (2, 5) b) (−3, 1) c) (−4, −2) d) (6, −1).",
-      "answer": ".",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "a) Quadrant I; b) Quadrant II; c) Quadrant III; d) Quadrant IV.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p03",
       "level": "Warm-up",
       "prompt": "Write the gradient and y-intercept of each line: a) y = 3x + 2 b) y = −x + 5 c) y = 4x.",
-      "answer": "a) I, b) II, c) III, d) IV.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "a) gradient 3, intercept 2; b) gradient −1, intercept 5; c) gradient 4, intercept 0.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p04",
       "level": "Warm-up",
       "prompt": "Complete the table for y = 2x + 1: x = 0, 1, 2, 3.",
-      "answer": "a) gradient 3, intercept 2; b) gradient −1, intercept 5; c) gradient 4, intercept 0.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "x = 0, 1, 2, 3 → y = 1, 3, 5, 7.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p05",
       "level": "Warm-up",
       "prompt": "True or false: the point (0, 0) is called the origin.",
-      "answer": "y = 1, 3, 5, 7.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "True. The point (0, 0), where the axes cross, is called the origin.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p06",
       "level": "Core",
       "prompt": "Find the gradient of the line through each pair: a) (1, 2) and (4, 11) b) (0, 5) and (2, 1).",
-      "answer": "1) a) (11 −",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "a) gradient = (11 − 2) ÷ (4 − 1) = 9 ÷ 3 = 3; b) gradient = (1 − 5) ÷ (2 − 0) = −4 ÷ 2 = −2.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p07",
       "level": "Core",
       "prompt": "For y = 2x − 4, find where the line crosses a) the y-axis and b) the x-axis.",
-      "answer": "÷(4 −",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "y-axis at (0, −4); x-axis at (2, 0), since 0 = 2x − 4 → x = 2.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p08",
       "level": "Core",
       "prompt": "Make a table of values for y = −x + 3 using x = −1, 0, 1, 2, then say which quadrant the point at x = 2 lies in.",
-      "answer": "= 9÷3 = 3; b) (1 −",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "x = −1 → y = 4; x = 0 → y = 3; x = 1 → y = 2; x = 2 → y = 1. The point (2, 1) lies in Quadrant I.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p09",
       "level": "Core",
       "prompt": "Write the equation of the line with gradient 3 that crosses the y-axis at (0, −2).",
-      "answer": "÷(2 −",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "y = 3x − 2 (gradient m = 3, y-intercept c = −2).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p10",
       "level": "Core",
       "prompt": "State whether each pair of lines is parallel: a) y = 2x + 1 and y = 2x − 5 b) y = 3x and y = −3x.",
-      "answer": "= −4÷2 = −2.",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "a) Parallel (both have gradient 2). b) Not parallel (gradients 3 and −3 are different).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p11",
       "level": "Core",
       "prompt": "On a distance–time graph, describe what each part means: a) a steep upward line b) a flat horizontal line.",
-      "answer": "a) (0, −4); b) 0 = 2x − 4 → x = 2, so (2,",
-      "hint": "Represent the information, name the rule, then solve one step at a time."
+      "answer": "a) A steep upward line means a fast, steady speed (large positive gradient). b) A flat horizontal line means the object has stopped — time passes but distance stays the same.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin."
     },
     {
       "id": "p12",
       "level": "Challenge",
       "prompt": "Find where y = 3x − 1 and y = x + 5 intersect, and check your answer by substitution.",
-      "answer": "1) 3x − 1 = x + 5 → 2x = 6 → x = 3, y = 8, so (3,",
-      "hint": "Identify the key mathematical idea before calculating or explaining."
+      "answer": "3x − 1 = x + 5 → 2x = 6 → x = 3; y = 3(3) − 1 = 8. The lines meet at (3, 8). Check: x + 5 = 3 + 5 = 8 ✓.",
+      "hint": "Decide which idea the question is really about (Coordinates, Origin, Quadrant), then work one step at a time and check the answer is sensible."
     }
   ],
   "activities": [
@@ -489,7 +490,7 @@
       "steps": [
         "Draw two number lines crossing at right angles to make x- and y-axes, numbered from −5 to 5.",
         "Call out coordinates like (3, −2) and place a stone at each point.",
-        "Ask a partner to name the quadrant of every stone you place.",
+        "Ask a partner (or your AI tutor, or check it yourself) to name the quadrant of every stone you place.",
         "Join four stones to make a square or rectangle, then read off all four corner coordinates.",
         "Keep your grid – you can use it for the plotting games below."
       ]
@@ -500,7 +501,7 @@
       "steps": [
         "Choose a simple shape – a house, a boat, or a star.",
         "Draw it on the grid and write down the coordinates of each corner in order.",
-        "Give only the list of coordinates to a friend and let them plot and join the points.",
+        "Give only the list of coordinates to a friend or your AI tutor, and let them plot and join the points.",
         "Compare their picture with your original. Did the coordinates describe it exactly?"
       ]
     },
@@ -508,7 +509,7 @@
       "title": "The Gradient Walk",
       "materials": "an outdoor space and a way to measure steps.",
       "steps": [
-        "Walk at a steady pace and have a partner call out the time every 10 seconds.",
+        "Walk at a steady pace and have a partner, or a phone timer with beeps, call out the time every 10 seconds.",
         "Count how many steps you have taken at each call and record the pairs (time, steps).",
         "Plot the points on squared paper – they should lie roughly on a straight line.",
         "Work out the gradient (steps per second). That gradient is your walking speed!",
@@ -542,35 +543,35 @@
         "Think of a real journey, such as cycling to the masjid, resting, then cycling home.",
         "Sketch a distance–time graph that tells this story, using sloped lines for movement and flat lines for stops.",
         "Write two sentences describing what happens in each part of your graph.",
-        "Swap graphs with a friend and try to tell each other's journey story from the graph alone.",
-        "After your activities, talk or write about: Which activity helped you understand gradient best? What was the trickiest part of plotting or reading a graph? What would you like more practice with? Share your answers with your teacher at your next session."
+        "Swap graphs with a friend, or your AI tutor if no one else is available, and try to tell each other's journey story from the graph alone.",
+        "After your activities, talk or write about: Which activity helped you understand gradient best? What was the trickiest part of plotting or reading a graph? What would you like more practice with? Share your answers with your teacher or your AI tutor at your next session."
       ]
     }
   ],
   "reference": {
     "rules": [
       {
-        "title": "A function is a rule that links",
+        "title": "Defining a Function",
         "text": "A function is a rule that links two quantities so that each input gives exactly one output. Think of a function as a machine: you put a number in, the machine follows its rule, and one number comes out. If the rule is “multiply by 2, then add 1”, then putting in 3 gives 2×3 + 1 = 7. We can write this rule as an equation, y = 2x + 1, where x is the input and y is the output."
       },
       {
-        "title": "A table of values is the bridge",
+        "title": "Building a Table of Values",
         "text": "A table of values is the bridge between an equation and a graph. To build one, choose some x-values, put each into the rule, and record the y-value it produces. For y = 2x + 1: when x = 0, y = 1; when x = 1, y = 3; when x = 2, y = 5. This gives the points (0, 1), (1, 3) and (2, 5), which we can then plot. Each point is a single example of the rule; the full graph shows *every* example at once. That is the quiet power of a graph – it holds an endless list of number pairs in one picture."
       },
       {
-        "title": "Choose three or four x-values, work out",
+        "title": "Plotting from a Table of Values",
         "text": "Choose three or four x-values, work out each matching y-value, plot the points, and join them with a ruled straight line. Three points is enough, and the third acts as a check: if the three do not lie in a straight line, one of them is wrong. For y = 2x − 1 we might choose x = 0, 1, 2 and 3, giving y = −1, 1, 3 and 5. That produces the points (0, −1), (1, 1), (2, 3) and (3, 5). Plot them and rule a line through all four."
       },
       {
-        "title": "Read m and c straight from the",
+        "title": "Reading m and c from an Equation",
         "text": "Read m and c straight from the equation. Plot the y-intercept first, then use the gradient to step to more points. For y = 2x − 1: plot the intercept at (0, −1). The gradient is 2 = 2/1, so from (0, −1) move 1 right and 2 up to reach (1, 1); repeat to reach (2, 3). Rule the line. For a negative gradient such as −3, you step 1 right and 3 down each time."
       },
       {
-        "title": "A third handy idea is to use",
+        "title": "Using the Two Intercepts",
         "text": "A third handy idea is to use the two intercepts. Find the y-intercept by setting x = 0, and the x-intercept by setting y = 0, then rule a line through both. For y = 2x − 6, setting x = 0 gives (0, −6) and setting y = 0 gives 0 = 2x − 6, so x = 3 and the point (3, 0). Two well-separated points are all you need for a straight line."
       },
       {
-        "title": "The reason graphs matter is that they",
+        "title": "Why Real-Life Graphs Matter",
         "text": "The reason graphs matter is that they describe the real world. Many everyday situations follow a linear rule, and putting them on a graph makes the story easy to read."
       }
     ],
@@ -633,108 +634,108 @@
       "outcomeId": "lo01",
       "difficulty": "Round 1",
       "prompt": "Write the coordinates of a point that is 3 right and 4 up from the origin.",
-      "answer": "1) (3,",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "1) (3,"
+      "answer": "(3, 4).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "errorFeedback": "(3, 4)."
     },
     {
       "id": "fl02",
       "outcomeId": "lo02",
       "difficulty": "Round 1",
       "prompt": "State the quadrant of each point: a) (2, 5) b) (−3, 1) c) (−4, −2) d) (6, −1).",
-      "answer": ".",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "."
+      "answer": "a) Quadrant I; b) Quadrant II; c) Quadrant III; d) Quadrant IV.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "errorFeedback": "a) Quadrant I; b) Quadrant II; c) Quadrant III; d) Quadrant IV."
     },
     {
       "id": "fl03",
       "outcomeId": "lo03",
       "difficulty": "Round 1",
       "prompt": "Write the gradient and y-intercept of each line: a) y = 3x + 2 b) y = −x + 5 c) y = 4x.",
-      "answer": "a) I, b) II, c) III, d) IV.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "a) I, b) II, c) III, d) IV."
+      "answer": "a) gradient 3, intercept 2; b) gradient −1, intercept 5; c) gradient 4, intercept 0.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "errorFeedback": "a) gradient 3, intercept 2; b) gradient −1, intercept 5; c) gradient 4, intercept 0."
     },
     {
       "id": "fl04",
       "outcomeId": "lo04",
       "difficulty": "Round 1",
       "prompt": "Complete the table for y = 2x + 1: x = 0, 1, 2, 3.",
-      "answer": "a) gradient 3, intercept 2; b) gradient −1, intercept 5; c) gradient 4, intercept 0.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "a) gradient 3, intercept 2; b) gradient −1, intercept 5; c) gradient 4, intercept 0."
+      "answer": "x = 0, 1, 2, 3 → y = 1, 3, 5, 7.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "errorFeedback": "x = 0, 1, 2, 3 → y = 1, 3, 5, 7."
     },
     {
       "id": "fl05",
       "outcomeId": "lo05",
       "difficulty": "Round 2",
       "prompt": "True or false: the point (0, 0) is called the origin.",
-      "answer": "y = 1, 3, 5, 7.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "y = 1, 3, 5, 7."
+      "answer": "True. The point (0, 0), where the axes cross, is called the origin.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "errorFeedback": "True. The point (0, 0), where the axes cross, is called the origin."
     },
     {
       "id": "fl06",
       "outcomeId": "lo06",
       "difficulty": "Round 2",
       "prompt": "Find the gradient of the line through each pair: a) (1, 2) and (4, 11) b) (0, 5) and (2, 1).",
-      "answer": "1) a) (11 −",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "1) a) (11 −"
+      "answer": "a) gradient = (11 − 2) ÷ (4 − 1) = 9 ÷ 3 = 3; b) gradient = (1 − 5) ÷ (2 − 0) = −4 ÷ 2 = −2.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "errorFeedback": "a) gradient = (11 − 2) ÷ (4 − 1) = 9 ÷ 3 = 3; b) gradient = (1 − 5) ÷ (2 − 0) = −4 ÷ 2 = −2."
     },
     {
       "id": "fl07",
       "outcomeId": "lo07",
       "difficulty": "Round 2",
       "prompt": "For y = 2x − 4, find where the line crosses a) the y-axis and b) the x-axis.",
-      "answer": "÷(4 −",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "÷(4 −"
+      "answer": "y-axis at (0, −4); x-axis at (2, 0), since 0 = 2x − 4 → x = 2.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "errorFeedback": "y-axis at (0, −4); x-axis at (2, 0), since 0 = 2x − 4 → x = 2."
     },
     {
       "id": "fl08",
       "outcomeId": "lo08",
       "difficulty": "Round 2",
       "prompt": "Make a table of values for y = −x + 3 using x = −1, 0, 1, 2, then say which quadrant the point at x = 2 lies in.",
-      "answer": "= 9÷3 = 3; b) (1 −",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "= 9÷3 = 3; b) (1 −"
+      "answer": "x = −1 → y = 4; x = 0 → y = 3; x = 1 → y = 2; x = 2 → y = 1. The point (2, 1) lies in Quadrant I.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "errorFeedback": "x = −1 → y = 4; x = 0 → y = 3; x = 1 → y = 2; x = 2 → y = 1. The point (2, 1) lies in Quadrant I."
     },
     {
       "id": "fl09",
       "outcomeId": "lo01",
       "difficulty": "Round 3",
       "prompt": "Write the equation of the line with gradient 3 that crosses the y-axis at (0, −2).",
-      "answer": "÷(2 −",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "÷(2 −"
+      "answer": "y = 3x − 2 (gradient m = 3, y-intercept c = −2).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "errorFeedback": "y = 3x − 2 (gradient m = 3, y-intercept c = −2)."
     },
     {
       "id": "fl10",
       "outcomeId": "lo02",
       "difficulty": "Round 3",
       "prompt": "State whether each pair of lines is parallel: a) y = 2x + 1 and y = 2x − 5 b) y = 3x and y = −3x.",
-      "answer": "= −4÷2 = −2.",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "= −4÷2 = −2."
+      "answer": "a) Parallel (both have gradient 2). b) Not parallel (gradients 3 and −3 are different).",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "errorFeedback": "a) Parallel (both have gradient 2). b) Not parallel (gradients 3 and −3 are different)."
     },
     {
       "id": "fl11",
       "outcomeId": "lo03",
       "difficulty": "Round 3",
       "prompt": "On a distance–time graph, describe what each part means: a) a steep upward line b) a flat horizontal line.",
-      "answer": "a) (0, −4); b) 0 = 2x − 4 → x = 2, so (2,",
-      "hint": "Represent the information, name the rule, then solve one step at a time.",
-      "errorFeedback": "a) (0, −4); b) 0 = 2x − 4 → x = 2, so (2,"
+      "answer": "a) A steep upward line means a fast, steady speed (large positive gradient). b) A flat horizontal line means the object has stopped — time passes but distance stays the same.",
+      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Coordinates or Origin.",
+      "errorFeedback": "a) A steep upward line means a fast, steady speed (large positive gradient). b) A flat horizontal line means the object has stopped — time passes but distance stays the same."
     },
     {
       "id": "fl12",
       "outcomeId": "lo04",
       "difficulty": "Round 3",
       "prompt": "Find where y = 3x − 1 and y = x + 5 intersect, and check your answer by substitution.",
-      "answer": "1) 3x − 1 = x + 5 → 2x = 6 → x = 3, y = 8, so (3,",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "1) 3x − 1 = x + 5 → 2x = 6 → x = 3, y = 8, so (3,"
+      "answer": "3x − 1 = x + 5 → 2x = 6 → x = 3; y = 3(3) − 1 = 8. The lines meet at (3, 8). Check: x + 5 = 3 + 5 = 8 ✓.",
+      "hint": "Decide which idea the question is really about (Coordinates, Origin, Quadrant), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "3x − 1 = x + 5 → 2x = 6 → x = 3; y = 3(3) − 1 = 8. The lines meet at (3, 8). Check: x + 5 = 3 + 5 = 8 ✓."
     }
   ],
   "realProblems": [
@@ -745,7 +746,7 @@
       "context": "Home",
       "prompt": "A market trader in Kismaayo sells bariis (rice) at 80 shillings per scoop, with a fixed sack charge of 100 shillings. Write the cost rule C for s scoops, and find the cost of 6 scoops.",
       "answer": "1) C = 80s + 100; for 6 scoops, C = 480 + 100 = 580 shillings.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Coordinates, Origin, Quadrant), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "1) C = 80s + 100; for 6 scoops, C = 480 + 100 = 580 shillings."
     },
     {
@@ -755,7 +756,7 @@
       "context": "Market",
       "prompt": "Ibrahim walks to the masjid at a steady speed, covering 3 km in 40 minutes. What is his speed in km per hour, and how long would 4.5 km take at the same pace?",
       "answer": "3 km in 40 min = 4.5 km/h; 4.5 km at 4.5 km/h takes 1 hour (60 min).",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Coordinates, Origin, Quadrant), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "3 km in 40 min = 4.5 km/h; 4.5 km at 4.5 km/h takes 1 hour (60 min)."
     },
     {
@@ -765,7 +766,7 @@
       "context": "Travel",
       "prompt": "A tank in Berbera holds 300 litres and fills at 20 litres per minute. Write the rule for litres L after t minutes, and find when it holds 500 litres.",
       "answer": "L = 300 + 20t; 500 = 300 + 20t → 20t = 200 → t = 10 minutes.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Coordinates, Origin, Quadrant), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "L = 300 + 20t; 500 = 300 + 20t → 20t = 200 → t = 10 minutes."
     },
     {
@@ -775,7 +776,7 @@
       "context": "School",
       "prompt": "A conversion line changes kilometres to miles with roughly M = 0.6K. Use it to convert 20 km to miles, and 12 miles back to kilometres (to the nearest whole number).",
       "answer": "20 km ≈ 12 miles; 12 miles ÷ 0.6 = 20 km.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Coordinates, Origin, Quadrant), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "20 km ≈ 12 miles; 12 miles ÷ 0.6 = 20 km."
     },
     {
@@ -785,7 +786,7 @@
       "context": "Community",
       "prompt": "Two phone plans: Plan A costs 100 + 5t shillings and Plan B costs 40 + 8t shillings for t messages. For how many messages do the plans cost the same, and what is that cost?",
       "answer": "100 + 5t = 40 + 8t → 60 = 3t → t = 20 messages; cost = 100 + 100 = 200 shillings.",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
+      "hint": "Decide which idea the question is really about (Coordinates, Origin, Quadrant), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "100 + 5t = 40 + 8t → 60 = 3t → t = 20 messages; cost = 100 + 100 = 200 shillings."
     },
     {
@@ -793,10 +794,10 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Daily life",
-      "prompt": "Find where y = 3x − 1 and y = x + 5 intersect, and check your answer by substitution.",
-      "answer": "1) 3x − 1 = x + 5 → 2x = 6 → x = 3, y = 8, so (3,",
-      "hint": "Identify the key mathematical idea before calculating or explaining.",
-      "errorFeedback": "1) 3x − 1 = x + 5 → 2x = 6 → x = 3, y = 8, so (3,"
+      "prompt": "A market map places the fruit stall at (3, −2) and the spice stall at (−4, −2), using the market gate as the origin. Which quadrant is each stall in, and how far apart are they horizontally?",
+      "answer": "The fruit stall (3, −2) is in Quadrant IV; the spice stall (−4, −2) is in Quadrant III. They are 7 units apart horizontally, since 3 − (−4) = 7.",
+      "hint": "Decide which idea the question is really about (Coordinates, Origin, Quadrant), then work one step at a time and check the answer is sensible.",
+      "errorFeedback": "The fruit stall (3, −2) is in Quadrant IV; the spice stall (−4, −2) is in Quadrant III. They are 7 units apart horizontally, since 3 − (−4) = 7."
     }
   ],
   "reasoningPrompts": [
@@ -811,7 +812,7 @@
         "Origin",
         "Quadrant"
       ],
-      "modelAnswer": "1) 3x − 1 = x + 5 → 2x = 6 → x = 3, y = 8, so (3,"
+      "modelAnswer": "3x − 1 = x + 5 → 2x = 6 → x = 3, y = 8. The lines meet at (3, 8). Check: x + 5 = 3 + 5 = 8 ✓."
     },
     {
       "id": "reason02",
@@ -824,7 +825,7 @@
         "Quadrant",
         "Gradient"
       ],
-      "modelAnswer": "; check 3 + 5 = 8 ✓."
+      "modelAnswer": "Gradient = (16 − 7) ÷ (5 − 2) = 9 ÷ 3 = 3. Using (2, 7): 7 = 3(2) + c → c = 1. So the equation is y = 3x + 1. Check: 3(5) + 1 = 16 ✓."
     },
     {
       "id": "reason03",
@@ -837,7 +838,7 @@
         "Gradient",
         "y-intercept"
       ],
-      "modelAnswer": "gradient = (16 −"
+      "modelAnswer": "No, Sagal is not quite right. Steepness depends on the size (absolute value) of the gradient, not on whether the number looks ‘bigger’ as a signed value. y = 2x has gradient 2, and y = −5x has gradient −5; since |−5| = 5 is greater than 2, y = −5x is actually the steeper line, even though −5 is less than 2."
     },
     {
       "id": "reason04",
@@ -850,7 +851,7 @@
         "y-intercept",
         "x-intercept"
       ],
-      "modelAnswer": "÷(5 −"
+      "modelAnswer": "Since the line passes through (0, 4), c = 4. Gradient m = (0 − 4) ÷ (3 − 0) = −4 ÷ 3 = −4/3. So m = −4/3 and c = 4."
     },
     {
       "id": "reason05",
@@ -876,7 +877,7 @@
         "Origin",
         "Quadrant"
       ],
-      "modelAnswer": "The reason graphs matter is that they describe the real world. Many everyday situations follow a linear rule, and putting them on a graph makes the story easy to read. Distance–time graphs show a journey. Time goes on the x-axis and distance on the y-axis. A straight sloping line means steady speed; the steeper the line, the faster the travel. A flat, horizontal line means a stop – time passes but distance does not change. Suppose Hassan cycles from his home towards the masjid at a steady 12 km/h. After t hours he…"
+      "modelAnswer": "Graphs describe real situations. On a distance–time graph, time goes on the x-axis and distance on the y-axis: a straight sloping line means steady speed, and a flat horizontal line means the object has stopped. For example, if Hassan cycles at a steady 12 km/h, after t hours he has travelled d = 12t km — a straight line through the origin with gradient 12. Cost graphs often have a fixed charge plus a rate, like a taxi charging 200 shillings plus 100 shillings per kilometre: C = 100d + 200, where 200 is the y-intercept (the starting fee) and 100 is the gradient (the cost per km)."
     }
   ],
   "assessment": {
@@ -887,144 +888,144 @@
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Basic",
-        "question": "Here is some data: 7, 13, 10, 9, 8, 7. Which value appears most often (the mode)?",
+        "question": "Point P has coordinates (4, −3). What are the x-coordinate and y-coordinate of P?",
         "options": [
-          "13",
-          "8",
-          "6",
-          "7"
+          "x = 4, y = −3",
+          "x = −3, y = 4",
+          "x = 4, y = 3",
+          "x = −4, y = −3"
         ],
-        "answer": "7",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "7 appears more than any other value, so it is the mode."
+        "answer": "x = 4, y = −3",
+        "hint": "In (x, y), the first number is always the x-coordinate.",
+        "explanation": "In (x, y), the first number is the x-coordinate and the second is the y-coordinate, so x = 4 and y = −3."
       },
       {
         "id": "q02",
         "type": "Application",
         "outcomeId": "lo02",
         "difficulty": "Basic",
-        "question": "Here is some data: 7, 18, 6, 17, 20. What is the largest value?",
+        "question": "Which quadrant contains the point (−5, 2)?",
         "options": [
-          "20",
-          "6",
-          "19",
-          "7"
+          "Quadrant I",
+          "Quadrant II",
+          "Quadrant III",
+          "Quadrant IV"
         ],
-        "answer": "20",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Look for the biggest number: 20."
+        "answer": "Quadrant II",
+        "hint": "Check the sign of x first, then the sign of y.",
+        "explanation": "x is negative (left) and y is positive (up), so the point lies in Quadrant II (top-left)."
       },
       {
         "id": "q03",
         "type": "Application",
         "outcomeId": "lo03",
         "difficulty": "Basic",
-        "question": "A tally shows these counts: 2, 1, 6, 17, 15. What is the total?",
+        "question": "For the linear function y = 5x − 3, what is the value of c, the y-intercept?",
         "options": [
-          "42",
-          "40",
-          "17",
-          "41"
+          "5",
+          "−3",
+          "3",
+          "8"
         ],
-        "answer": "41",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Add them all: 2 + 1 + 6 + 17 + 15 = 41."
+        "answer": "−3",
+        "hint": "In y = mx + c, c is the constant term.",
+        "explanation": "In y = mx + c, c is the constant term, so c = −3."
       },
       {
         "id": "q04",
         "type": "Application",
         "outcomeId": "lo04",
         "difficulty": "Basic",
-        "question": "Here is some data: 9, 5, 12, 8, 11. What is the range?",
+        "question": "Find the gradient of the line passing through (1, 4) and (3, 10).",
         "options": [
-          "8",
-          "7",
-          "12",
-          "5"
+          "2",
+          "3",
+          "6",
+          "1/3"
         ],
-        "answer": "7",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Range = largest − smallest = 12 − 5 = 7."
+        "answer": "3",
+        "hint": "Gradient = change in y ÷ change in x.",
+        "explanation": "Gradient = (10 − 4) ÷ (3 − 1) = 6 ÷ 2 = 3."
       },
       {
         "id": "q05",
         "type": "Application",
         "outcomeId": "lo05",
         "difficulty": "Core",
-        "question": "Here is some data: 18, 2, 11, 7, 13. What is the range?",
+        "question": "For y = 2x − 3, what is the y-value when x = 4 (a point you would plot to draw the line)?",
         "options": [
-          "17",
-          "16",
-          "18",
-          "2"
+          "5",
+          "1",
+          "8",
+          "11"
         ],
-        "answer": "16",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Range = largest − smallest = 18 − 2 = 16."
+        "answer": "5",
+        "hint": "Substitute x = 4 into the equation.",
+        "explanation": "y = 2(4) − 3 = 8 − 3 = 5, giving the point (4, 5) to plot."
       },
       {
         "id": "q06",
         "type": "Application",
         "outcomeId": "lo06",
         "difficulty": "Core",
-        "question": "Here is some data: 20, 13, 9, 6, 14, 20. Which value appears most often (the mode)?",
+        "question": "A straight-line graph shows y = 10 when x = 2 and y = 20 when x = 4. Using interpolation, what is the best estimate for y when x = 3?",
         "options": [
-          "20",
-          "6",
-          "13",
-          "21"
+          "12",
+          "15",
+          "18",
+          "25"
         ],
-        "answer": "20",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "20 appears more than any other value, so it is the mode."
+        "answer": "15",
+        "hint": "x = 3 is halfway between x = 2 and x = 4.",
+        "explanation": "x = 3 is halfway between 2 and 4, so on a straight line y is halfway between 10 and 20, which is 15."
       },
       {
         "id": "q07",
         "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
-        "question": "Here is some data: 17, 7, 2, 8, 19, 17. Which value appears most often (the mode)?",
+        "question": "Find the point where the lines y = x + 1 and y = −x + 5 intersect.",
         "options": [
-          "19",
-          "2",
-          "7",
-          "17"
+          "(2, 3)",
+          "(1, 2)",
+          "(3, 2)",
+          "(4, 5)"
         ],
-        "answer": "17",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "17 appears more than any other value, so it is the mode."
+        "answer": "(2, 3)",
+        "hint": "Set the two expressions for y equal to each other.",
+        "explanation": "x + 1 = −x + 5 → 2x = 4 → x = 2; then y = 2 + 1 = 3. The lines meet at (2, 3)."
       },
       {
         "id": "q08",
         "type": "Application",
         "outcomeId": "lo08",
         "difficulty": "Challenge",
-        "question": "A tally shows these counts: 11, 1, 18, 5, 3. What is the total?",
+        "question": "A taxi cost graph follows C = 50d + 150 (shillings), where d is the distance in km. What does the number 150 represent?",
         "options": [
-          "39",
-          "37",
-          "18",
-          "38"
+          "The cost per kilometre",
+          "The fixed charge before the taxi moves",
+          "The total distance travelled",
+          "The speed of the taxi"
         ],
-        "answer": "38",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Add them all: 11 + 1 + 18 + 5 + 3 = 38."
+        "answer": "The fixed charge before the taxi moves",
+        "hint": "This number is the y-intercept — the value of C when d = 0.",
+        "explanation": "150 is the y-intercept: the fixed charge you pay even before travelling, since C = 150 when d = 0."
       },
       {
         "id": "q09",
         "type": "Application",
         "outcomeId": "lo01",
         "difficulty": "Challenge",
-        "question": "A tally shows these counts: 1, 17, 7, 16, 12. What is the total?",
+        "question": "Which ordered pair describes a point 2 units left and 5 units down from the origin?",
         "options": [
-          "52",
-          "17",
-          "53",
-          "54"
+          "(2, 5)",
+          "(−2, 5)",
+          "(−2, −5)",
+          "(2, −5)"
         ],
-        "answer": "53",
-        "hint": "Work it out step by step, then check each option.",
-        "explanation": "Add them all: 1 + 17 + 7 + 16 + 12 = 53."
+        "answer": "(−2, −5)",
+        "hint": "Left means negative x; down means negative y.",
+        "explanation": "Left means negative x, and down means negative y, so the point is (−2, −5)."
       },
       {
         "id": "q10",
@@ -1088,40 +1089,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 7, 13, 10, 9, 8, 7. Which value appears most often (the mode)?",
+            "prompt": "Point P has coordinates (4, −3). What are the x-coordinate and y-coordinate of P?",
             "choices": [
-              "13",
-              "8",
-              "6",
-              "7"
+              "x = 4, y = −3",
+              "x = −3, y = 4",
+              "x = 4, y = 3",
+              "x = −4, y = −3"
             ],
-            "answer": "7",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "7 appears more than any other value, so it is the mode."
+            "answer": "x = 4, y = −3",
+            "clue": "In (x, y), the first number is always the x-coordinate.",
+            "explanation": "In (x, y), the first number is the x-coordinate and the second is the y-coordinate, so x = 4 and y = −3."
           },
           {
-            "prompt": "Here is some data: 9, 5, 12, 8, 11. What is the range?",
+            "prompt": "Find the gradient of the line passing through (1, 4) and (3, 10).",
             "choices": [
-              "8",
-              "7",
-              "12",
-              "5"
-            ],
-            "answer": "7",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 12 − 5 = 7."
-          },
-          {
-            "prompt": "Here is some data: 17, 7, 2, 8, 19, 17. Which value appears most often (the mode)?",
-            "choices": [
-              "19",
               "2",
-              "7",
-              "17"
+              "3",
+              "6",
+              "1/3"
             ],
-            "answer": "17",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "17 appears more than any other value, so it is the mode."
+            "answer": "3",
+            "clue": "Gradient = change in y ÷ change in x.",
+            "explanation": "Gradient = (10 − 4) ÷ (3 − 1) = 6 ÷ 2 = 3."
+          },
+          {
+            "prompt": "Find the point where the lines y = x + 1 and y = −x + 5 intersect.",
+            "choices": [
+              "(2, 3)",
+              "(1, 2)",
+              "(3, 2)",
+              "(4, 5)"
+            ],
+            "answer": "(2, 3)",
+            "clue": "Set the two expressions for y equal to each other.",
+            "explanation": "x + 1 = −x + 5 → 2x = 4 → x = 2; then y = 2 + 1 = 3. The lines meet at (2, 3)."
           },
           {
             "prompt": "What does “Coordinates” mean?",
@@ -1146,40 +1147,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 7, 18, 6, 17, 20. What is the largest value?",
+            "prompt": "Which quadrant contains the point (−5, 2)?",
             "choices": [
-              "20",
-              "6",
-              "19",
-              "7"
+              "Quadrant I",
+              "Quadrant II",
+              "Quadrant III",
+              "Quadrant IV"
             ],
-            "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 20."
+            "answer": "Quadrant II",
+            "clue": "Check the sign of x first, then the sign of y.",
+            "explanation": "x is negative (left) and y is positive (up), so the point lies in Quadrant II (top-left)."
           },
           {
-            "prompt": "Here is some data: 18, 2, 11, 7, 13. What is the range?",
+            "prompt": "For y = 2x − 3, what is the y-value when x = 4 (a point you would plot to draw the line)?",
             "choices": [
-              "17",
-              "16",
-              "18",
-              "2"
+              "5",
+              "1",
+              "8",
+              "11"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 18 − 2 = 16."
+            "answer": "5",
+            "clue": "Substitute x = 4 into the equation.",
+            "explanation": "y = 2(4) − 3 = 8 − 3 = 5, giving the point (4, 5) to plot."
           },
           {
-            "prompt": "A tally shows these counts: 11, 1, 18, 5, 3. What is the total?",
+            "prompt": "A taxi cost graph follows C = 50d + 150 (shillings), where d is the distance in km. What does the number 150 represent?",
             "choices": [
-              "39",
-              "37",
-              "18",
-              "38"
+              "The cost per kilometre",
+              "The fixed charge before the taxi moves",
+              "The total distance travelled",
+              "The speed of the taxi"
             ],
-            "answer": "38",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 11 + 1 + 18 + 5 + 3 = 38."
+            "answer": "The fixed charge before the taxi moves",
+            "clue": "This number is the y-intercept — the value of C when d = 0.",
+            "explanation": "150 is the y-intercept: the fixed charge you pay even before travelling, since C = 150 when d = 0."
           },
           {
             "prompt": "What does “Origin” mean?",
@@ -1204,40 +1205,40 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "A tally shows these counts: 2, 1, 6, 17, 15. What is the total?",
+            "prompt": "For the linear function y = 5x − 3, what is the value of c, the y-intercept?",
             "choices": [
-              "42",
-              "40",
-              "17",
-              "41"
+              "5",
+              "−3",
+              "3",
+              "8"
             ],
-            "answer": "41",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 2 + 1 + 6 + 17 + 15 = 41."
+            "answer": "−3",
+            "clue": "In y = mx + c, c is the constant term.",
+            "explanation": "In y = mx + c, c is the constant term, so c = −3."
           },
           {
-            "prompt": "Here is some data: 20, 13, 9, 6, 14, 20. Which value appears most often (the mode)?",
+            "prompt": "A straight-line graph shows y = 10 when x = 2 and y = 20 when x = 4. Using interpolation, what is the best estimate for y when x = 3?",
             "choices": [
-              "20",
-              "6",
-              "13",
-              "21"
+              "12",
+              "15",
+              "18",
+              "25"
             ],
-            "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "20 appears more than any other value, so it is the mode."
+            "answer": "15",
+            "clue": "x = 3 is halfway between x = 2 and x = 4.",
+            "explanation": "x = 3 is halfway between 2 and 4, so on a straight line y is halfway between 10 and 20, which is 15."
           },
           {
-            "prompt": "A tally shows these counts: 1, 17, 7, 16, 12. What is the total?",
+            "prompt": "Which ordered pair describes a point 2 units left and 5 units down from the origin?",
             "choices": [
-              "52",
-              "17",
-              "53",
-              "54"
+              "(2, 5)",
+              "(−2, 5)",
+              "(−2, −5)",
+              "(2, −5)"
             ],
-            "answer": "53",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 1 + 17 + 7 + 16 + 12 = 53."
+            "answer": "(−2, −5)",
+            "clue": "Left means negative x; down means negative y.",
+            "explanation": "Left means negative x, and down means negative y, so the point is (−2, −5)."
           },
           {
             "prompt": "What does “Quadrant” mean?",
@@ -1262,28 +1263,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 9, 5, 12, 8, 11. What is the range?",
+            "prompt": "Find the gradient of the line passing through (1, 4) and (3, 10).",
             "choices": [
-              "8",
-              "7",
-              "12",
-              "5"
+              "2",
+              "3",
+              "6",
+              "1/3"
             ],
-            "answer": "7",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 12 − 5 = 7."
+            "answer": "3",
+            "clue": "Gradient = change in y ÷ change in x.",
+            "explanation": "Gradient = (10 − 4) ÷ (3 − 1) = 6 ÷ 2 = 3."
           },
           {
-            "prompt": "Here is some data: 17, 7, 2, 8, 19, 17. Which value appears most often (the mode)?",
+            "prompt": "Find the point where the lines y = x + 1 and y = −x + 5 intersect.",
             "choices": [
-              "19",
-              "2",
-              "7",
-              "17"
+              "(2, 3)",
+              "(1, 2)",
+              "(3, 2)",
+              "(4, 5)"
             ],
-            "answer": "17",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "17 appears more than any other value, so it is the mode."
+            "answer": "(2, 3)",
+            "clue": "Set the two expressions for y equal to each other.",
+            "explanation": "x + 1 = −x + 5 → 2x = 4 → x = 2; then y = 2 + 1 = 3. The lines meet at (2, 3)."
           },
           {
             "prompt": "What does “Coordinates” mean?",
@@ -1298,16 +1299,16 @@
             "explanation": "Coordinates means An ordered pair (x, y) giving a position."
           },
           {
-            "prompt": "Here is some data: 7, 13, 10, 9, 8, 7. Which value appears most often (the mode)?",
+            "prompt": "Point P has coordinates (4, −3). What are the x-coordinate and y-coordinate of P?",
             "choices": [
-              "13",
-              "8",
-              "6",
-              "7"
+              "x = 4, y = −3",
+              "x = −3, y = 4",
+              "x = 4, y = 3",
+              "x = −4, y = −3"
             ],
-            "answer": "7",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "7 appears more than any other value, so it is the mode."
+            "answer": "x = 4, y = −3",
+            "clue": "In (x, y), the first number is always the x-coordinate.",
+            "explanation": "In (x, y), the first number is the x-coordinate and the second is the y-coordinate, so x = 4 and y = −3."
           }
         ]
       },
@@ -1320,28 +1321,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 18, 2, 11, 7, 13. What is the range?",
+            "prompt": "For y = 2x − 3, what is the y-value when x = 4 (a point you would plot to draw the line)?",
             "choices": [
-              "17",
-              "16",
-              "18",
-              "2"
+              "5",
+              "1",
+              "8",
+              "11"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 18 − 2 = 16."
+            "answer": "5",
+            "clue": "Substitute x = 4 into the equation.",
+            "explanation": "y = 2(4) − 3 = 8 − 3 = 5, giving the point (4, 5) to plot."
           },
           {
-            "prompt": "A tally shows these counts: 11, 1, 18, 5, 3. What is the total?",
+            "prompt": "A taxi cost graph follows C = 50d + 150 (shillings), where d is the distance in km. What does the number 150 represent?",
             "choices": [
-              "39",
-              "37",
-              "18",
-              "38"
+              "The cost per kilometre",
+              "The fixed charge before the taxi moves",
+              "The total distance travelled",
+              "The speed of the taxi"
             ],
-            "answer": "38",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 11 + 1 + 18 + 5 + 3 = 38."
+            "answer": "The fixed charge before the taxi moves",
+            "clue": "This number is the y-intercept — the value of C when d = 0.",
+            "explanation": "150 is the y-intercept: the fixed charge you pay even before travelling, since C = 150 when d = 0."
           },
           {
             "prompt": "What does “Origin” mean?",
@@ -1356,16 +1357,16 @@
             "explanation": "Origin means The point (0, 0) where the axes cross."
           },
           {
-            "prompt": "Here is some data: 7, 18, 6, 17, 20. What is the largest value?",
+            "prompt": "Which quadrant contains the point (−5, 2)?",
             "choices": [
-              "20",
-              "6",
-              "19",
-              "7"
+              "Quadrant I",
+              "Quadrant II",
+              "Quadrant III",
+              "Quadrant IV"
             ],
-            "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 20."
+            "answer": "Quadrant II",
+            "clue": "Check the sign of x first, then the sign of y.",
+            "explanation": "x is negative (left) and y is positive (up), so the point lies in Quadrant II (top-left)."
           }
         ]
       },
@@ -1378,28 +1379,28 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 20, 13, 9, 6, 14, 20. Which value appears most often (the mode)?",
+            "prompt": "A straight-line graph shows y = 10 when x = 2 and y = 20 when x = 4. Using interpolation, what is the best estimate for y when x = 3?",
             "choices": [
-              "20",
-              "6",
-              "13",
-              "21"
+              "12",
+              "15",
+              "18",
+              "25"
             ],
-            "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "20 appears more than any other value, so it is the mode."
+            "answer": "15",
+            "clue": "x = 3 is halfway between x = 2 and x = 4.",
+            "explanation": "x = 3 is halfway between 2 and 4, so on a straight line y is halfway between 10 and 20, which is 15."
           },
           {
-            "prompt": "A tally shows these counts: 1, 17, 7, 16, 12. What is the total?",
+            "prompt": "Which ordered pair describes a point 2 units left and 5 units down from the origin?",
             "choices": [
-              "52",
-              "17",
-              "53",
-              "54"
+              "(2, 5)",
+              "(−2, 5)",
+              "(−2, −5)",
+              "(2, −5)"
             ],
-            "answer": "53",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 1 + 17 + 7 + 16 + 12 = 53."
+            "answer": "(−2, −5)",
+            "clue": "Left means negative x; down means negative y.",
+            "explanation": "Left means negative x, and down means negative y, so the point is (−2, −5)."
           },
           {
             "prompt": "What does “Quadrant” mean?",
@@ -1414,16 +1415,16 @@
             "explanation": "Quadrant means One of the four regions of the plane."
           },
           {
-            "prompt": "A tally shows these counts: 2, 1, 6, 17, 15. What is the total?",
+            "prompt": "For the linear function y = 5x − 3, what is the value of c, the y-intercept?",
             "choices": [
-              "42",
-              "40",
-              "17",
-              "41"
+              "5",
+              "−3",
+              "3",
+              "8"
             ],
-            "answer": "41",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 2 + 1 + 6 + 17 + 15 = 41."
+            "answer": "−3",
+            "clue": "In y = mx + c, c is the constant term.",
+            "explanation": "In y = mx + c, c is the constant term, so c = −3."
           }
         ]
       },
@@ -1436,16 +1437,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Here is some data: 17, 7, 2, 8, 19, 17. Which value appears most often (the mode)?",
+            "prompt": "Find the point where the lines y = x + 1 and y = −x + 5 intersect.",
             "choices": [
-              "19",
-              "2",
-              "7",
-              "17"
+              "(2, 3)",
+              "(1, 2)",
+              "(3, 2)",
+              "(4, 5)"
             ],
-            "answer": "17",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "17 appears more than any other value, so it is the mode."
+            "answer": "(2, 3)",
+            "clue": "Set the two expressions for y equal to each other.",
+            "explanation": "x + 1 = −x + 5 → 2x = 4 → x = 2; then y = 2 + 1 = 3. The lines meet at (2, 3)."
           },
           {
             "prompt": "What does “Coordinates” mean?",
@@ -1460,28 +1461,28 @@
             "explanation": "Coordinates means An ordered pair (x, y) giving a position."
           },
           {
-            "prompt": "Here is some data: 7, 13, 10, 9, 8, 7. Which value appears most often (the mode)?",
+            "prompt": "Point P has coordinates (4, −3). What are the x-coordinate and y-coordinate of P?",
             "choices": [
-              "13",
-              "8",
-              "6",
-              "7"
+              "x = 4, y = −3",
+              "x = −3, y = 4",
+              "x = 4, y = 3",
+              "x = −4, y = −3"
             ],
-            "answer": "7",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "7 appears more than any other value, so it is the mode."
+            "answer": "x = 4, y = −3",
+            "clue": "In (x, y), the first number is always the x-coordinate.",
+            "explanation": "In (x, y), the first number is the x-coordinate and the second is the y-coordinate, so x = 4 and y = −3."
           },
           {
-            "prompt": "Here is some data: 9, 5, 12, 8, 11. What is the range?",
+            "prompt": "Find the gradient of the line passing through (1, 4) and (3, 10).",
             "choices": [
-              "8",
-              "7",
-              "12",
-              "5"
+              "2",
+              "3",
+              "6",
+              "1/3"
             ],
-            "answer": "7",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 12 − 5 = 7."
+            "answer": "3",
+            "clue": "Gradient = change in y ÷ change in x.",
+            "explanation": "Gradient = (10 − 4) ÷ (3 − 1) = 6 ÷ 2 = 3."
           }
         ]
       },
@@ -1494,16 +1495,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "A tally shows these counts: 11, 1, 18, 5, 3. What is the total?",
+            "prompt": "A taxi cost graph follows C = 50d + 150 (shillings), where d is the distance in km. What does the number 150 represent?",
             "choices": [
-              "39",
-              "37",
-              "18",
-              "38"
+              "The cost per kilometre",
+              "The fixed charge before the taxi moves",
+              "The total distance travelled",
+              "The speed of the taxi"
             ],
-            "answer": "38",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 11 + 1 + 18 + 5 + 3 = 38."
+            "answer": "The fixed charge before the taxi moves",
+            "clue": "This number is the y-intercept — the value of C when d = 0.",
+            "explanation": "150 is the y-intercept: the fixed charge you pay even before travelling, since C = 150 when d = 0."
           },
           {
             "prompt": "What does “Origin” mean?",
@@ -1518,28 +1519,28 @@
             "explanation": "Origin means The point (0, 0) where the axes cross."
           },
           {
-            "prompt": "Here is some data: 7, 18, 6, 17, 20. What is the largest value?",
+            "prompt": "Which quadrant contains the point (−5, 2)?",
             "choices": [
-              "20",
-              "6",
-              "19",
-              "7"
+              "Quadrant I",
+              "Quadrant II",
+              "Quadrant III",
+              "Quadrant IV"
             ],
-            "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 20."
+            "answer": "Quadrant II",
+            "clue": "Check the sign of x first, then the sign of y.",
+            "explanation": "x is negative (left) and y is positive (up), so the point lies in Quadrant II (top-left)."
           },
           {
-            "prompt": "Here is some data: 18, 2, 11, 7, 13. What is the range?",
+            "prompt": "For y = 2x − 3, what is the y-value when x = 4 (a point you would plot to draw the line)?",
             "choices": [
-              "17",
-              "16",
-              "18",
-              "2"
+              "5",
+              "1",
+              "8",
+              "11"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 18 − 2 = 16."
+            "answer": "5",
+            "clue": "Substitute x = 4 into the equation.",
+            "explanation": "y = 2(4) − 3 = 8 − 3 = 5, giving the point (4, 5) to plot."
           }
         ]
       },
@@ -1552,16 +1553,16 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "A tally shows these counts: 1, 17, 7, 16, 12. What is the total?",
+            "prompt": "Which ordered pair describes a point 2 units left and 5 units down from the origin?",
             "choices": [
-              "52",
-              "17",
-              "53",
-              "54"
+              "(2, 5)",
+              "(−2, 5)",
+              "(−2, −5)",
+              "(2, −5)"
             ],
-            "answer": "53",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 1 + 17 + 7 + 16 + 12 = 53."
+            "answer": "(−2, −5)",
+            "clue": "Left means negative x; down means negative y.",
+            "explanation": "Left means negative x, and down means negative y, so the point is (−2, −5)."
           },
           {
             "prompt": "What does “Quadrant” mean?",
@@ -1576,28 +1577,28 @@
             "explanation": "Quadrant means One of the four regions of the plane."
           },
           {
-            "prompt": "A tally shows these counts: 2, 1, 6, 17, 15. What is the total?",
+            "prompt": "For the linear function y = 5x − 3, what is the value of c, the y-intercept?",
             "choices": [
-              "42",
-              "40",
-              "17",
-              "41"
+              "5",
+              "−3",
+              "3",
+              "8"
             ],
-            "answer": "41",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 2 + 1 + 6 + 17 + 15 = 41."
+            "answer": "−3",
+            "clue": "In y = mx + c, c is the constant term.",
+            "explanation": "In y = mx + c, c is the constant term, so c = −3."
           },
           {
-            "prompt": "Here is some data: 20, 13, 9, 6, 14, 20. Which value appears most often (the mode)?",
+            "prompt": "A straight-line graph shows y = 10 when x = 2 and y = 20 when x = 4. Using interpolation, what is the best estimate for y when x = 3?",
             "choices": [
-              "20",
-              "6",
-              "13",
-              "21"
+              "12",
+              "15",
+              "18",
+              "25"
             ],
-            "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "20 appears more than any other value, so it is the mode."
+            "answer": "15",
+            "clue": "x = 3 is halfway between x = 2 and x = 4.",
+            "explanation": "x = 3 is halfway between 2 and 4, so on a straight line y is halfway between 10 and 20, which is 15."
           }
         ]
       },
@@ -1622,40 +1623,40 @@
             "explanation": "Coordinates means An ordered pair (x, y) giving a position."
           },
           {
-            "prompt": "Here is some data: 7, 13, 10, 9, 8, 7. Which value appears most often (the mode)?",
+            "prompt": "Point P has coordinates (4, −3). What are the x-coordinate and y-coordinate of P?",
             "choices": [
-              "13",
-              "8",
-              "6",
-              "7"
+              "x = 4, y = −3",
+              "x = −3, y = 4",
+              "x = 4, y = 3",
+              "x = −4, y = −3"
             ],
-            "answer": "7",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "7 appears more than any other value, so it is the mode."
+            "answer": "x = 4, y = −3",
+            "clue": "In (x, y), the first number is always the x-coordinate.",
+            "explanation": "In (x, y), the first number is the x-coordinate and the second is the y-coordinate, so x = 4 and y = −3."
           },
           {
-            "prompt": "Here is some data: 9, 5, 12, 8, 11. What is the range?",
+            "prompt": "Find the gradient of the line passing through (1, 4) and (3, 10).",
             "choices": [
-              "8",
-              "7",
-              "12",
-              "5"
-            ],
-            "answer": "7",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 12 − 5 = 7."
-          },
-          {
-            "prompt": "Here is some data: 17, 7, 2, 8, 19, 17. Which value appears most often (the mode)?",
-            "choices": [
-              "19",
               "2",
-              "7",
-              "17"
+              "3",
+              "6",
+              "1/3"
             ],
-            "answer": "17",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "17 appears more than any other value, so it is the mode."
+            "answer": "3",
+            "clue": "Gradient = change in y ÷ change in x.",
+            "explanation": "Gradient = (10 − 4) ÷ (3 − 1) = 6 ÷ 2 = 3."
+          },
+          {
+            "prompt": "Find the point where the lines y = x + 1 and y = −x + 5 intersect.",
+            "choices": [
+              "(2, 3)",
+              "(1, 2)",
+              "(3, 2)",
+              "(4, 5)"
+            ],
+            "answer": "(2, 3)",
+            "clue": "Set the two expressions for y equal to each other.",
+            "explanation": "x + 1 = −x + 5 → 2x = 4 → x = 2; then y = 2 + 1 = 3. The lines meet at (2, 3)."
           }
         ]
       },
@@ -1680,40 +1681,40 @@
             "explanation": "Origin means The point (0, 0) where the axes cross."
           },
           {
-            "prompt": "Here is some data: 7, 18, 6, 17, 20. What is the largest value?",
+            "prompt": "Which quadrant contains the point (−5, 2)?",
             "choices": [
-              "20",
-              "6",
-              "19",
-              "7"
+              "Quadrant I",
+              "Quadrant II",
+              "Quadrant III",
+              "Quadrant IV"
             ],
-            "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Look for the biggest number: 20."
+            "answer": "Quadrant II",
+            "clue": "Check the sign of x first, then the sign of y.",
+            "explanation": "x is negative (left) and y is positive (up), so the point lies in Quadrant II (top-left)."
           },
           {
-            "prompt": "Here is some data: 18, 2, 11, 7, 13. What is the range?",
+            "prompt": "For y = 2x − 3, what is the y-value when x = 4 (a point you would plot to draw the line)?",
             "choices": [
-              "17",
-              "16",
-              "18",
-              "2"
+              "5",
+              "1",
+              "8",
+              "11"
             ],
-            "answer": "16",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Range = largest − smallest = 18 − 2 = 16."
+            "answer": "5",
+            "clue": "Substitute x = 4 into the equation.",
+            "explanation": "y = 2(4) − 3 = 8 − 3 = 5, giving the point (4, 5) to plot."
           },
           {
-            "prompt": "A tally shows these counts: 11, 1, 18, 5, 3. What is the total?",
+            "prompt": "A taxi cost graph follows C = 50d + 150 (shillings), where d is the distance in km. What does the number 150 represent?",
             "choices": [
-              "39",
-              "37",
-              "18",
-              "38"
+              "The cost per kilometre",
+              "The fixed charge before the taxi moves",
+              "The total distance travelled",
+              "The speed of the taxi"
             ],
-            "answer": "38",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 11 + 1 + 18 + 5 + 3 = 38."
+            "answer": "The fixed charge before the taxi moves",
+            "clue": "This number is the y-intercept — the value of C when d = 0.",
+            "explanation": "150 is the y-intercept: the fixed charge you pay even before travelling, since C = 150 when d = 0."
           }
         ]
       },
@@ -1738,40 +1739,40 @@
             "explanation": "Quadrant means One of the four regions of the plane."
           },
           {
-            "prompt": "A tally shows these counts: 2, 1, 6, 17, 15. What is the total?",
+            "prompt": "For the linear function y = 5x − 3, what is the value of c, the y-intercept?",
             "choices": [
-              "42",
-              "40",
-              "17",
-              "41"
+              "5",
+              "−3",
+              "3",
+              "8"
             ],
-            "answer": "41",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 2 + 1 + 6 + 17 + 15 = 41."
+            "answer": "−3",
+            "clue": "In y = mx + c, c is the constant term.",
+            "explanation": "In y = mx + c, c is the constant term, so c = −3."
           },
           {
-            "prompt": "Here is some data: 20, 13, 9, 6, 14, 20. Which value appears most often (the mode)?",
+            "prompt": "A straight-line graph shows y = 10 when x = 2 and y = 20 when x = 4. Using interpolation, what is the best estimate for y when x = 3?",
             "choices": [
-              "20",
-              "6",
-              "13",
-              "21"
+              "12",
+              "15",
+              "18",
+              "25"
             ],
-            "answer": "20",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "20 appears more than any other value, so it is the mode."
+            "answer": "15",
+            "clue": "x = 3 is halfway between x = 2 and x = 4.",
+            "explanation": "x = 3 is halfway between 2 and 4, so on a straight line y is halfway between 10 and 20, which is 15."
           },
           {
-            "prompt": "A tally shows these counts: 1, 17, 7, 16, 12. What is the total?",
+            "prompt": "Which ordered pair describes a point 2 units left and 5 units down from the origin?",
             "choices": [
-              "52",
-              "17",
-              "53",
-              "54"
+              "(2, 5)",
+              "(−2, 5)",
+              "(−2, −5)",
+              "(2, −5)"
             ],
-            "answer": "53",
-            "clue": "Work it out step by step, then check each option.",
-            "explanation": "Add them all: 1 + 17 + 7 + 16 + 12 = 53."
+            "answer": "(−2, −5)",
+            "clue": "Left means negative x; down means negative y.",
+            "explanation": "Left means negative x, and down means negative y, so the point is (−2, −5)."
           }
         ]
       }

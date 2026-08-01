@@ -18,7 +18,13 @@ const grades = process.argv.slice(2).length ? process.argv.slice(2).map(Number) 
 // into an icon ("[Star] Big Idea…", "[!] Did You Know?"). Those tags are
 // layout instructions, not words for the learner, so strip them here rather
 // than letting 91 of them show up mid-sentence on screen.
-const SOURCE_MARKER = /\[(?:Star|Tip|Fact|Look|Safety|Note|Warning|Key|!)\]\s*/gi;
+// Named tags are listed one by one on purpose. Stripping every bracketed word
+// looks tidier but breaks the experiment splitter in grab(): it stops a section
+// at /^safety\b/, so removing "[SAFE]" turns "[SAFE] Safety First — use ONLY a
+// 1.5 V battery…" into a section boundary and the safety guidance behind it is
+// dropped from the unit altogether. Add tags here only after checking they do
+// not begin a line the splitter treats as a heading.
+const SOURCE_MARKER = /\[(?:Star|Tip|Fact|Look|Safety|Note|Warning|Key|Sort|Recipe|!)\]\s*/gi;
 const tidy = (value = "") => String(value)
   .replace(/�/g, "–")
   .replace(SOURCE_MARKER, "")
@@ -42,6 +48,25 @@ const paragraphs = (values = []) => values
   .join("\n\n");
 
 const EMPTY_DOC = { blocks: [], source_file: "(not provided)" };
+
+// Reference "key idea" cards are lifted from lesson lines that open "Remember…".
+// Deleting just the word left whatever followed it as the whole card, so a
+// learner met a rule starting mid-clause: "that the Earth's crust is not one
+// smooth shell", "how heat makes materials expand", "This! Heating: parts move
+// faster". Drop the full lead-in — the word plus the connective it governs —
+// and restore the capital the sentence lost with it.
+function openingLine(text) {
+  const raw = String(text).trim();
+  // "Remember this!" is one lead-in, not the word plus a sentence — taking only
+  // the first word left cards opening "This! Heating: parts move faster".
+  const rest = raw.replace(/^Remember(?:\s+this)?\b[\s:!,.]*/i, "").trim();
+  if (!rest) return raw;
+  // Drop the lead-in only where what follows already stands as a sentence.
+  // In "Remember how heat makes…" or "Remember too that not every decomposer…"
+  // the word governs the clause, so removing it leaves the card opening
+  // mid-sentence — worse than the repetition it was meant to avoid.
+  return /^[A-Z0-9]/.test(rest) ? rest : raw;
+}
 
 // Reviewer corrections, keyed grade → unit file → category → item id → field.
 // The reviewed scripts come back as a workbook, not as source-pack edits, so
@@ -853,7 +878,7 @@ function buildGrade(grade) {
     if (!rules.length) {
       rules = lesson.blocks.map((block) => tidy(block.text))
         .filter((text) => /^remember\b/i.test(text) && text.length > 25 && !ADULT_ADDRESSED.test(text)).slice(0, 6)
-        .map((text, index) => ({ title: `Key idea ${index + 1}`, text: text.replace(/^Remember[:!]?\s*/i, "") }));
+        .map((text, index) => ({ title: `Key idea ${index + 1}`, text: openingLine(text) }));
     }
 
     let commonMistakes = [];

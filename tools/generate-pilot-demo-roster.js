@@ -34,26 +34,68 @@ const SURNAME = [
 ];
 
 const roster = JSON.parse(fs.readFileSync(FILE, "utf8"));
-let total = 0;
+const pad2 = (n) => String(n).padStart(2, "0");
 
+// Adult intake cohorts are keyed by CEFR level + intake month and carry no
+// `grade`. Keying off grade alone produced usernames like `ehel-pilot-sundefined-01`
+// with firstname/lastname dropped by JSON.stringify, so the two shapes are
+// built separately.
+const isAdult = (c) => typeof c.intake === "string" && Number.isInteger(c.cefrLevel);
+
+const DEMO_DOMAIN = "ehel.example.com";
+const isDemo = (m) => typeof m.email === "string" && m.email.endsWith(`@${DEMO_DOMAIN}`);
+
+// This tool replaces a roster outright. That is fine for demo members, but a
+// cohort holding hand-authored real learners must not be silently destroyed by
+// a demo seeder, so those are skipped unless --force says otherwise.
+const FORCE = process.argv.includes("--force");
+const kept = [];
+
+let total = 0;
 for (const cohort of roster.cohorts) {
-  const g = cohort.grade;
+  const current = cohort.members || [];
+  if (current.length && !current.every(isDemo) && !FORCE) {
+    kept.push(`${cohort.idnumber} (${current.length} member(s))`);
+    continue;
+  }
+
   const members = [];
   for (let n = 1; n <= PER; n++) {
-    const idx = (g - 1) * PER + (n - 1); // global running index → stable names
-    const nn = String(n).padStart(2, "0");
-    const username = `ehel-pilot-s${g}-${nn}`;
-    members.push({
-      username,
-      firstname: GIVEN[idx % GIVEN.length],
-      lastname: `${SURNAME[g % SURNAME.length]} (S${g})`,
-      email: `${username}@ehel.example.com`,
-    });
+    const nn = pad2(n);
+    if (isAdult(cohort)) {
+      const lvl = cohort.cefrLevel;
+      const compact = cohort.intake.replace("-", "");
+      // Seeded from level + intake, so names stay put when another intake opens.
+      const idx = Number(compact) + lvl + (n - 1);
+      const username = `ehel-intensive-l${pad2(lvl)}-${compact}-${nn}`;
+      members.push({
+        username,
+        firstname: GIVEN[idx % GIVEN.length],
+        lastname: `${SURNAME[(lvl + n) % SURNAME.length]} (L${lvl})`,
+        email: `${username}@${DEMO_DOMAIN}`,
+      });
+    } else {
+      const g = cohort.grade;
+      const idx = (g - 1) * PER + (n - 1); // global running index → stable names
+      const username = `ehel-pilot-s${g}-${nn}`;
+      members.push({
+        username,
+        firstname: GIVEN[idx % GIVEN.length],
+        lastname: `${SURNAME[g % SURNAME.length]} (S${g})`,
+        email: `${username}@${DEMO_DOMAIN}`,
+      });
+    }
     total++;
   }
   cohort.members = members;
 }
 
 fs.writeFileSync(FILE, JSON.stringify(roster, null, 2) + "\n");
-console.log(`Wrote ${total} demo students across ${roster.cohorts.length} cohorts → ${path.relative(process.cwd(), FILE)}`);
-console.log("All usernames prefixed ehel-pilot- ; all emails @ehel.example.com (non-routable).");
+const seeded = roster.cohorts.length - kept.length;
+console.log(`Wrote ${total} demo students across ${seeded} cohorts → ${path.relative(process.cwd(), FILE)}`);
+console.log(`All emails @${DEMO_DOMAIN} (non-routable); usernames prefixed ehel-pilot- (school) or ehel-intensive- (adult).`);
+if (kept.length) {
+  console.log(`\nLEFT ALONE — these hold members that are not demo accounts:`);
+  for (const k of kept) console.log(`  ${k}`);
+  console.log("Pass --force to overwrite them with demo students.");
+}

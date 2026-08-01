@@ -66,7 +66,11 @@ function textsForUnit(unit, category) {
     case "visualModels": return (unit.visualModels || []).map((m) => `${m.title}. ${m.purpose}`);
     case "methods": return (unit.methods || []).map((m) => `${m.title}. Example: ${m.example}. ${(m.steps || []).join(" ")}`);
     case "workedExamples": return (unit.workedExamples || []).map((w) => `${w.title}. ${w.prompt}. Solution: ${w.solution}`);
-    case "realProblems": return (unit.realProblems || []).map((p) => `${p.context}. ${p.prompt}`);
+    // The real-problems page narrates the prompt alone — the context is shown
+    // in the eyebrow, not read out (course-ui.js "Listen to problem"). Sending
+    // `${p.context}. ${p.prompt}` here produced clips under a hash the UI never
+    // asks for, so every one of them was born orphaned.
+    case "realProblems": return (unit.realProblems || []).map((p) => p.prompt);
     default: return [];
   }
 }

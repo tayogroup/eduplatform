@@ -6,7 +6,8 @@
 // this tool only scaffolds the cohort→course structure from catalog.json and
 // PRESERVES any members already filled in on rerun.
 //
-// Usage: node tools/generate-ehel-cohorts.js [--out <path>] [--catalog <path>] [--year <YYYY>]
+// Usage: node tools/generate-ehel-cohorts.js [--out <path>] [--catalog <path>]
+//                                            [--year <YYYY>] [--intake <YYYY-MM>]
 //
 // --year stamps the academic year into each cohort idnumber
 // (ehel-pilot-gNN-<year>) and name — the Canvas-terms pattern: next year's
@@ -14,6 +15,13 @@
 // last year's cohort instead of being overwritten. Omit --year to keep any
 // year already stamped in the existing cohorts.json (or none for legacy ids).
 // Rosters are preserved across a year change (matched by grade).
+//
+// --intake opens a NEW adult intake (ehel-intensive-lNN-<YYYY-MM>), one cohort
+// per authored CEFR level. Intensive English is not taught on an academic
+// calendar — a learner starts Level 1 when they enrol — so for the adult
+// courses the thing that makes a new cohort is the intake month, not September.
+// Existing intakes and their rosters are always carried through, so omitting
+// --intake is safe: a rerun to pick up a new course never drops an intake.
 
 const fs = require("fs");
 const path = require("path");
@@ -82,16 +90,95 @@ const cohorts = [...byGrade.values()]
     };
   });
 
+// ---- Adult intakes --------------------------------------------------------
+// Intensive English is not taught on an academic calendar, so its cohorts are
+// cut by intake month rather than by year: someone who starts Level 1 in March
+// is a different cohort from someone who starts in September, and each intake
+// keeps its own history. Same reason --year exists for the school cohorts,
+// applied to the axis this course actually runs on.
+const INTAKE_RE = /^\d{4}-(0[1-9]|1[0-2])$/;
+const ADULT_ID_RE = /^ehel-intensive-l(\d{2})-(\d{4}-\d{2})$/;
+const MONTHS = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"];
+const intakeLabel = (intake) => {
+  const [y, m] = intake.split("-");
+  return `${MONTHS[Number(m) - 1]} ${y}`;
+};
+
+const intakeArg = arg("--intake", "");
+if (intakeArg && !INTAKE_RE.test(intakeArg)) {
+  console.error(`--intake must be YYYY-MM (got "${intakeArg}")`);
+  process.exit(1);
+}
+
+// The intensive levels the catalog actually carries, keyed by level number.
+const intensiveCourses = new Map();
+for (const c of catalog.courses) {
+  if (c.subjectKey === "intensive-eng") intensiveCourses.set(c.stage, c);
+}
+
+// Every intake already in the file is carried through untouched. This is what
+// makes a bare rerun safe: regenerating to pick up a new course must never drop
+// a live intake or the roster somebody typed into it.
+const adultKeys = new Map(); // "level|intake" → members
+for (const c of existing.cohorts || []) {
+  const m = ADULT_ID_RE.exec(c.idnumber || "");
+  if (m) adultKeys.set(`${Number(m[1])}|${m[2]}`, c.members || []);
+}
+// --intake opens that intake across every authored level, leaving any intake
+// already present alone.
+if (intakeArg) {
+  for (const level of intensiveCourses.keys()) {
+    const key = `${level}|${intakeArg}`;
+    if (!adultKeys.has(key)) adultKeys.set(key, []);
+  }
+}
+
+const orphaned = [];
+const adultCohorts = [...adultKeys.entries()]
+  .map(([key, members]) => {
+    const [level, intake] = key.split("|");
+    return { level: Number(level), intake, members };
+  })
+  // A cohort pointing at a level the catalog no longer carries would enrol into
+  // a course that does not exist, so it is dropped — loudly, never silently.
+  .filter((a) => { if (intensiveCourses.has(a.level)) return true; orphaned.push(a); return false; })
+  .sort((a, b) => a.intake.localeCompare(b.intake) || a.level - b.level)
+  .map((a) => ({
+    idnumber: `ehel-intensive-l${pad2(a.level)}-${a.intake}`,
+    name: `Ehel Intensive English — Level ${a.level} (${intakeLabel(a.intake)})`,
+    cefrLevel: a.level,
+    intake: a.intake,
+    level: "Intensive English",
+    courses: [intensiveCourses.get(a.level).idnumber],
+    // Roster: fill with { "username" or "email", "firstname", "lastname" }.
+    members: a.members,
+  }));
+
+for (const o of orphaned) {
+  console.warn(`WARNING: dropped ehel-intensive-l${pad2(o.level)}-${o.intake} — level ${o.level} is not in the`
+    + ` catalog; ${o.members.length} member(s) not carried over (recover from git if unintended)`);
+}
+
+const allCohorts = [...cohorts, ...adultCohorts];
+
 const out = {
   catalog: "ehel-academy",
   contract: "1.0",
   ...(YEAR ? { academicYear: YEAR } : {}),
   memberSchema: { required: "username OR email", optional: ["firstname", "lastname"] },
-  cohorts,
+  cohorts: allCohorts,
 };
 fs.writeFileSync(OUT, JSON.stringify(out, null, 2) + "\n");
 
-const totalMembers = cohorts.reduce((n, c) => n + c.members.length, 0);
-console.log(`cohorts: ${cohorts.length} (one per grade) → ${path.relative(ROOT, OUT)}`);
-console.log(`courses mapped: ${cohorts.reduce((n, c) => n + c.courses.length, 0)} | members rostered: ${totalMembers}`);
+const totalMembers = allCohorts.reduce((n, c) => n + c.members.length, 0);
+console.log(`cohorts: ${cohorts.length} school (one per grade)`
+  + ` + ${adultCohorts.length} adult intake${adultCohorts.length === 1 ? "" : "s"} → ${path.relative(ROOT, OUT)}`);
+if (adultCohorts.length) {
+  const intakes = [...new Set(adultCohorts.map((c) => c.intake))].sort();
+  console.log(`adult intakes: ${intakes.join(", ")}`);
+} else if (intensiveCourses.size) {
+  console.log(`${intensiveCourses.size} intensive course(s) have no cohort yet — open one with --intake YYYY-MM.`);
+}
+console.log(`courses mapped: ${allCohorts.reduce((n, c) => n + c.courses.length, 0)} | members rostered: ${totalMembers}`);
 if (totalMembers === 0) console.log("Rosters are empty — add learners to cohorts.json (members[]) before running the Moodle cohort-sync task.");

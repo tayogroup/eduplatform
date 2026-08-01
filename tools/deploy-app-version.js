@@ -16,7 +16,12 @@
 // by the other tools and are unaffected. Shared modules (course-shell.js,
 // progress-client.js) go to app/shared/ (short-cached; imported via ../../shared/).
 //
-// Usage: BUNNY_KEY=… node tools/deploy-app-version.js [v2]   (default tag: v1)
+// Usage: BUNNY_KEY=… node tools/deploy-app-version.js [v2] [--shell] [subject…]
+//   default tag: v1. Name one or more subjects (english mathematics science
+//   computing) to release only those and leave the rest on their current version;
+//   omit for all. A one-subject --shell release also skips app/shared/, since
+//   v{TAG}/ already carries those modules and app/shared/ is read by every subject.
+//   e.g. BUNNY_KEY=… node tools/deploy-app-version.js v111 --shell english
 
 const fs = require("fs"), path = require("path"), crypto = require("crypto");
 const ROOT = path.resolve(__dirname, "..");
@@ -27,10 +32,27 @@ const STORAGE = "https://storage.bunnycdn.com";
 const KEY = process.env.BUNNY_KEY;
 const MANIFEST = path.join(ROOT, ".bunny-appver-manifest.json");
 const CONCURRENCY = 10;
-const SUBJECTS = ["english", "mathematics", "science", "computing"];
+const ALL_SUBJECTS = ["english", "mathematics", "science", "computing"];
 
 if (!KEY) { console.error("BUNNY_KEY not set"); process.exit(1); }
-const TAG = (process.argv.slice(2).find((a) => /^v\d+$/.test(a))) || "v1";
+const argv = process.argv.slice(2);
+const TAG = (argv.find((a) => /^v\d+$/.test(a))) || "v1";
+// Optional subject filter: name one or more subjects to release only those. The
+// release pointer is already per-subject (app/{subject}/index.html + current.json),
+// so a single-subject cutover is well defined -- there was just no way to ask for
+// one, which meant shipping a fix to one course rewrote every course's pointer and
+// dragged in whatever else happened to be sitting in the tree. Omit to release all,
+// exactly as before.
+const picked = argv.filter((a) => !a.startsWith("--") && !/^v\d+$/.test(a));
+const unknown = picked.filter((s) => !ALL_SUBJECTS.includes(s));
+if (unknown.length) {
+  // Fail rather than fall back to every subject: a typo'd name would otherwise
+  // silently widen a one-subject release into a full one.
+  console.error(`unknown subject(s): ${unknown.join(", ")}\nexpected any of: ${ALL_SUBJECTS.join(", ")}`);
+  process.exit(1);
+}
+const SUBJECTS = picked.length ? picked : ALL_SUBJECTS;
+const PARTIAL = picked.length > 0;
 // --shell: package the unified shell (P1.5) instead of the per-subject apps.
 // Each subject's v{TAG}/ becomes self-contained: course-ui.js (the subject
 // module), course-app.js (the shell core), the subject's visual modules, and
@@ -108,10 +130,19 @@ function buildItems() {
     items.push({ remote: `app/${subject}/current.json`, buf: Buffer.from(JSON.stringify(current, null, 2) + "\n"), always: true });
   }
   // Shared modules imported via ../../shared/ (course-shell.js, progress-client.js).
-  const topShared = path.join(EHEL, "shared");
-  for (const name of fs.readdirSync(topShared)) {
-    if (!/\.(js|css)$/.test(name)) continue;
-    items.push({ remote: `app/shared/${name}`, buf: fs.readFileSync(path.join(topShared, name)) });
+  //
+  // Skipped for a single-subject shell release: v{TAG}/ already carries its own
+  // copies of these (see the SHELL block above, which is what makes the version
+  // path self-contained), while app/shared/ is read by every OTHER subject too.
+  // Writing it during a one-subject cutover would push whatever else is currently
+  // in ehel-academy/shared/ into courses this release was never meant to touch.
+  // Non-shell releases still need it: there, subjects import ../../shared/ directly.
+  if (!(PARTIAL && SHELL)) {
+    const topShared = path.join(EHEL, "shared");
+    for (const name of fs.readdirSync(topShared)) {
+      if (!/\.(js|css)$/.test(name)) continue;
+      items.push({ remote: `app/shared/${name}`, buf: fs.readFileSync(path.join(topShared, name)) });
+    }
   }
   return items;
 }
@@ -126,7 +157,8 @@ async function put(remote, buf) {
   const manifest = fs.existsSync(MANIFEST) ? JSON.parse(fs.readFileSync(MANIFEST, "utf8")) : {};
   const all = buildItems();
   const todo = all.filter((x) => x.always || manifest[x.remote] !== sha1(x.buf));
-  console.log(`tag: ${TAG} | items: ${all.length} | to upload: ${todo.length} (${todo.filter((x) => x.always).length} pointer files always sent)`);
+  console.log(`tag: ${TAG} | subjects: ${SUBJECTS.join(",")}${PARTIAL ? ` (partial release — ${ALL_SUBJECTS.filter((s) => !SUBJECTS.includes(s)).join(",")} left on their current version)` : " (all)"}${SHELL ? " | shell" : ""}`);
+  console.log(`items: ${all.length} | to upload: ${todo.length} (${todo.filter((x) => x.always).length} pointer files always sent)`);
   let done = 0, failed = 0;
   const save = () => fs.writeFileSync(MANIFEST, JSON.stringify(manifest, null, 0));
   let idx = 0;

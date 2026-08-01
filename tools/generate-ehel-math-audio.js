@@ -9,11 +9,18 @@
 //
 // Usage:
 //   node tools/generate-ehel-math-audio.js [category ...] [grade ...] [--dry] [--budget N] [--force]
-//   categories: concepts explorations visualModels methods workedExamples realProblems
-//   (default = concepts workedExamples realProblems — the highest-value set)
+//   categories: see tools/lib/ehel-math-narration.js (default = all of them, so
+//   no Listen button is left falling back to the paid runtime endpoint)
 
 const fs = require("fs");
 const path = require("path");
+
+// One definition of what maths narrates, shared with the pruner and the
+// coverage check, over the hash in lib/ehel-narration-hash.js. Previously this
+// file carried its own copies of cyrb53, clean and the per-category templates;
+// three copies of the same thing is how the pruner came to count 102 more
+// reachable strings than the generator.
+const narration = require("./lib/ehel-math-narration");
 
 const ROOT = path.resolve(__dirname, "..");
 const MATH = path.join(ROOT, "src", "prototypes", "ehel-academy", "mathematics");
@@ -22,10 +29,10 @@ const API_BASE = "https://api.elevenlabs.io/v1";
 const VOICE_ID = "XfNU2rGpBa01ckF309OY";
 const MODEL_ID = "eleven_multilingual_v2";
 
-const ALL_CATS = ["concepts", "explorations", "visualModels", "methods", "workedExamples", "realProblems"];
+const ALL_CATS = narration.CATEGORIES;
 const args = process.argv.slice(2);
 const cats = args.filter((a) => ALL_CATS.includes(a));
-const catList = cats.length ? cats : ["concepts", "workedExamples", "realProblems"];
+const catList = cats.length ? cats : ALL_CATS;
 const grades = args.filter((a) => /^[1-8]$/.test(a)).map(Number);
 const gradeList = grades.length ? grades : [1, 2, 3, 4, 5, 6, 7, 8];
 const dry = args.includes("--dry");
@@ -44,36 +51,11 @@ function loadDotEnv() {
 loadDotEnv();
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-// cyrb53 — identical to the copy in mathematics/shared/course-ui.js.
-function cyrb53(str, seed = 0) {
-  let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
-  for (let i = 0; i < str.length; i += 1) {
-    const ch = str.charCodeAt(i);
-    h1 = Math.imul(h1 ^ ch, 2654435761);
-    h2 = Math.imul(h2 ^ ch, 1597334677);
-  }
-  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-  return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(16);
-}
-const clean = (t) => String(t || "").replace(/\s+/g, " ").trim();
-
-// The exact strings each Listen button narrates — must match course-ui.js.
-function textsForUnit(unit, category) {
-  switch (category) {
-    case "concepts": return (unit.concepts || []).map((c) => `${c.title}. ${c.explanation}. Example: ${c.example}`);
-    case "explorations": return (unit.explorations || []).map((e) => `${e.title}. ${e.context}. ${e.explanation}`);
-    case "visualModels": return (unit.visualModels || []).map((m) => `${m.title}. ${m.purpose}`);
-    case "methods": return (unit.methods || []).map((m) => `${m.title}. Example: ${m.example}. ${(m.steps || []).join(" ")}`);
-    case "workedExamples": return (unit.workedExamples || []).map((w) => `${w.title}. ${w.prompt}. Solution: ${w.solution}`);
-    // The real-problems page narrates the prompt alone — the context is shown
-    // in the eyebrow, not read out (course-ui.js "Listen to problem"). Sending
-    // `${p.context}. ${p.prompt}` here produced clips under a hash the UI never
-    // asks for, so every one of them was born orphaned.
-    case "realProblems": return (unit.realProblems || []).map((p) => p.prompt);
-    default: return [];
-  }
-}
+// Hash, normalisation and the exact text of every Listen button come from the
+// shared definition, so what is bought here is what the pruner keeps and the
+// coverage check verifies. Confirmed byte-identical to the copies this file
+// used to carry: 5,626 shared-category strings, zero differences.
+const { cyrb53, clean, textsForUnit, textsForCapstone } = narration;
 
 async function tts(text) {
   const key = process.env.ELEVENLABS_API_KEY;
@@ -92,21 +74,27 @@ async function tts(text) {
   // De-dup by hash across the whole run (same text on different pages → one file).
   const seen = new Set();
   const queue = [];
+  const enqueue = (raw) => {
+    const c = clean(raw);
+    if (c.length < narration.MIN_CHARS) return;
+    const key = cyrb53(c);
+    if (seen.has(key)) return;
+    seen.add(key);
+    queue.push({ key, text: c, chars: c.length });
+  };
   for (const grade of gradeList) {
     const dir = path.join(MATH, `grade-${grade}`, "data", "units");
     if (!fs.existsSync(dir)) continue;
     for (const f of fs.readdirSync(dir).filter((x) => x.endsWith(".json")).sort()) {
       const unit = JSON.parse(fs.readFileSync(path.join(dir, f), "utf8"));
-      for (const cat of catList) {
-        for (const raw of textsForUnit(unit, cat)) {
-          const c = clean(raw);
-          if (c.length < 8) continue;
-          const key = cyrb53(c);
-          if (seen.has(key)) continue;
-          seen.add(key);
-          queue.push({ key, text: c, chars: c.length });
-        }
-      }
+      for (const cat of catList) textsForUnit(unit, cat).forEach(enqueue);
+    }
+    // The capstone lives beside the units, not inside them, and carries its own
+    // Listen buttons — driving question, each stage, and the capstone quiz.
+    const capstoneFile = path.join(MATH, `grade-${grade}`, "data", "grade-capstone.json");
+    if (fs.existsSync(capstoneFile)) {
+      const capstone = JSON.parse(fs.readFileSync(capstoneFile, "utf8"));
+      for (const cat of catList) textsForCapstone(capstone, cat).forEach(enqueue);
     }
   }
   const totalChars = queue.reduce((s, q) => s + q.chars, 0);

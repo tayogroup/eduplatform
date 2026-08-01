@@ -21,9 +21,18 @@ const MAX_PARAGRAPHS = 40;
 // Text written to whoever is sitting with the learner, not to the learner.
 // "the child" is deliberately absent: Stage 3 word problems legitimately say
 // "the child with 8 collected 8/30", and flagging those would be wrong.
+//
+// Year 1 is exempt (ADULT_VOICE_EXEMPT below). A five-year-old cannot read a
+// course, so Stage 1 is a parent-led one by design: it is sourced from a parent
+// guide and keeps its "How to teach it:" sections and "🗣 Suggested dialogue
+// You: / Child:" blocks, which only make sense addressed to the adult. Holding
+// it to the solo-learner rule produced prose that addressed the learner in the
+// explainer and the parent in the dialogue two lines later.
 const ADULT_ADDRESSED = /\byour child\b|\b(?:let|ask|encourage|remind|tell|watch|guide) (?:the|your) child\b|the child'?s own work|read alone by the child|taught with you|teaches? (?:the child|children) that|helps? the child|many young children|the child'?s first|children learn [^.]*best|this guide is written for/i;
 const TEACHER_REQUIRED = /\bhand (?:it )?in to your teacher\b|\bask your teacher to mark\b|\bwait for your teacher\b|\byour teacher will tell you\b|explain each step to your teacher or tutor\.$/i;
 const SOURCE_MARKER = /\[(?:Star|Tip|Fact|Look|Safety|Note|Warning|Key|!)\]/;
+// Grades whose course is led by an adult rather than read solo.
+const ADULT_VOICE_EXEMPT = new Set(["grade-1"]);
 
 // Sections the app renders unconditionally; an empty one is a blank screen.
 const REQUIRED_SECTIONS = ["outcomes", "concepts", "practice", "fluency", "realProblems",
@@ -126,7 +135,9 @@ for (const gradeDir of fs.readdirSync(mathRoot).filter((n) => /^grade-\d+$/.test
     }
 
     walk(unit, (text) => {
-      if (ADULT_ADDRESSED.test(text)) fail(label, `text addresses a supervising adult: "${text.slice(0, 90)}"`);
+      if (!ADULT_VOICE_EXEMPT.has(gradeDir) && ADULT_ADDRESSED.test(text)) {
+        fail(label, `text addresses a supervising adult: "${text.slice(0, 90)}"`);
+      }
       if (TEACHER_REQUIRED.test(text)) fail(label, `text requires a teacher with no solo path: "${text.slice(0, 90)}"`);
       if (SOURCE_MARKER.test(text)) fail(label, `raw source markup reaches the learner: "${text.slice(0, 90)}"`);
     });

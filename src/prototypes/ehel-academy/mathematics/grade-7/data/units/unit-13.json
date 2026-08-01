@@ -154,7 +154,7 @@
       "answer": "1 − 0.35 = 0.65.",
       "modelType": "model-5",
       "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Event.",
-      "explanation": "Calculating Theoretical Probability: Now we reach the heart of the unit: the formula for theoretical probability. When every outcome is equally likely, the probability of an event is the number of outcomes that make the event happen, divided by the total number of possible outcomes:"
+      "explanation": "Calculating Theoretical Probability: Now we reach the heart of the unit: the formula for theoretical probability. When every outcome is equally likely, the probability of an event is the number of favourable outcomes divided by the total number of possible outcomes, written P(event) = favourable outcomes ÷ total outcomes. Rolling a 4 on a fair dice gives one favourable outcome out of six, so P(4) = 1/6. Every probability lies between 0 and 1, and the probabilities of all the possible outcomes add to 1."
     },
     {
       "id": "explore-6",
@@ -166,7 +166,7 @@
       "answer": "1) a) 1/10, b) 5/10 = 1/2, c) multiples of 3 are 3,6,9 → 3/10.",
       "modelType": "model-6",
       "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Outcome or Event.",
-      "explanation": "The 'Not' Rule and Mutually Exclusive Events: Sometimes it is easier to work out the chance of an event not happening than the chance of it happening. There is a beautiful rule for this. Since all the probabilities in an experiment add up to 1, the probability that an event does not happen is 1 minus the probability that it does:"
+      "explanation": "The 'Not' Rule and Mutually Exclusive Events: Sometimes it is easier to work out the chance of an event not happening than the chance of it happening. There is a beautiful rule for this."
     }
   ],
   "visualModels": [
@@ -227,7 +227,7 @@
       "title": "How to calculate a theoretical probability",
       "example": "A fair six-sided die is rolled once. Find P(rolling a number less than 3), as a fraction, a decimal and a percentage.",
       "steps": [
-        "List the sample space – every possible outcome.",
+        "List the sample space — every possible outcome.",
         "Count the total number of outcomes.",
         "Count how many outcomes are favourable (make the event happen).",
         "Write P = favourable ÷ total, then simplify the fraction.",
@@ -266,8 +266,8 @@
       "title": "Two-stage sample space",
       "example": "A coin is flipped and a die is rolled. List the sample space and find P(heads and an even number).",
       "steps": [
-        "Solution: The sample space has 2 × 6 = 12 equally likely outcomes: H1, H2, H3, H4, H5, H6, T1, T2, T3, T4, T5, T6.",
-        "The favourable outcomes (heads with an even number) are H2, H4 and H6 – that is 3.",
+        "The sample space has 2 × 6 = 12 equally likely outcomes: H1, H2, H3, H4, H5, H6, T1, T2, T3, T4, T5, T6.",
+        "The favourable outcomes (heads with an even number) are H2, H4 and H6 — that is 3.",
         "So P(heads and even) = 3/12 = 1/4 = 0.25 = 25%."
       ]
     },
@@ -278,7 +278,7 @@
       "title": "Experimental probability",
       "example": "Hassan spins a spinner 40 times. It lands on 'star' 16 times. Find the experimental probability of landing on a star, and compare it with a theoretical value of 1/4 for a fair spinner.",
       "steps": [
-        "Solution: Experimental probability = 16/40 = 2/5 = 0.4 = 40%.",
+        "Experimental probability = 16/40 = 2/5 = 0.4 = 40%.",
         "The theoretical value is 1/4 = 0.25 = 25%.",
         "The experimental result (40%) is noticeably higher than 25%, but 40 spins is not very many.",
         "To decide whether the spinner is really biased, Hassan should spin it many more times and see whether the relative frequency settles near 25% or stays high."
@@ -291,7 +291,7 @@
       "title": "Using the complement to save work",
       "example": "A spinner has 10 equal sectors numbered 1 to 10. Find the probability of not landing on a multiple of 5.",
       "steps": [
-        "Solution: The multiples of 5 from 1 to 10 are 5 and 10, so P(multiple of 5) = 2/10 = 1/5.",
+        "The multiples of 5 from 1 to 10 are 5 and 10, so P(multiple of 5) = 2/10 = 1/5.",
         "Using the complement rule, P(not a multiple of 5) = 1 − 1/5 = 4/5 = 0.8 = 80%.",
         "This was quicker than listing the eight other numbers."
       ]
@@ -304,7 +304,7 @@
       "difficulty": "Basic",
       "title": "A single die",
       "prompt": "A fair six-sided die is rolled once. Find P(rolling a number less than 3), as a fraction, a decimal and a percentage.",
-      "solution": "Solution: The numbers less than 3 are 1 and 2, so there are 2 favourable outcomes out of 6. P = 2/6 = 1/3. As a decimal, 1 ÷ 3 = 0.33 (to 2 d.p.). As a percentage, 0.33 × 100 = 33% (to the nearest whole). So P(less than 3) = 1/3 ≈ 0.33 ≈ 33%."
+      "solution": "The numbers less than 3 are 1 and 2, so there are 2 favourable outcomes out of 6. P = 2/6 = 1/3. As a decimal, 1 ÷ 3 = 0.33 (to 2 d.p.). As a percentage, 0.33 × 100 = 33% (to the nearest whole). So P(less than 3) = 1/3 ≈ 0.33 ≈ 33%."
     },
     {
       "id": "we02",
@@ -312,7 +312,7 @@
       "difficulty": "Basic",
       "title": "Marbles in a bag",
       "prompt": "A bag holds 5 red, 2 blue and 3 green marbles. One is drawn at random. Find P(red) and P(not red).",
-      "solution": "Solution: Total marbles = 5 + 2 + 3 = 10. P(red) = 5/10 = 1/2 = 0.5 = 50%. For the complement, P(not red) = 1 − 1/2 = 1/2. You can check directly: 'not red' means blue or green = 2 + 3 = 5 out of 10 = 1/2. Both methods agree."
+      "solution": "Total marbles = 5 + 2 + 3 = 10. P(red) = 5/10 = 1/2 = 0.5 = 50%. For the complement, P(not red) = 1 − 1/2 = 1/2. You can check directly: 'not red' means blue or green = 2 + 3 = 5 out of 10 = 1/2. Both methods agree."
     },
     {
       "id": "we03",
@@ -320,7 +320,7 @@
       "difficulty": "Basic",
       "title": "Mutually exclusive events",
       "prompt": "A fair die is rolled. Find the probability of rolling a 1 or a 4.",
-      "solution": "Solution: 'Rolling a 1' and 'rolling a 4' cannot both happen on one roll, so they are mutually exclusive and we may add. P(1) = 1/6 and P(4) = 1/6, so P(1 or 4) = 1/6 + 1/6 = 2/6 = 1/3."
+      "solution": "'Rolling a 1' and 'rolling a 4' cannot both happen on one roll, so they are mutually exclusive and we may add. P(1) = 1/6 and P(4) = 1/6, so P(1 or 4) = 1/6 + 1/6 = 2/6 = 1/3."
     },
     {
       "id": "we04",
@@ -328,7 +328,7 @@
       "difficulty": "Basic",
       "title": "Two-stage sample space",
       "prompt": "A coin is flipped and a die is rolled. List the sample space and find P(heads and an even number).",
-      "solution": "Solution: The sample space has 2 × 6 = 12 equally likely outcomes: H1, H2, H3, H4, H5, H6, T1, T2, T3, T4, T5, T6. The favourable outcomes (heads with an even number) are H2, H4 and H6 – that is 3. So P(heads and even) = 3/12 = 1/4 = 0.25 = 25%."
+      "solution": "The sample space has 2 × 6 = 12 equally likely outcomes: H1, H2, H3, H4, H5, H6, T1, T2, T3, T4, T5, T6. The favourable outcomes (heads with an even number) are H2, H4 and H6 — that is 3. So P(heads and even) = 3/12 = 1/4 = 0.25 = 25%."
     },
     {
       "id": "we05",
@@ -336,7 +336,7 @@
       "difficulty": "Intermediate",
       "title": "Experimental probability",
       "prompt": "Hassan spins a spinner 40 times. It lands on 'star' 16 times. Find the experimental probability of landing on a star, and compare it with a theoretical value of 1/4 for a fair spinner.",
-      "solution": "Solution: Experimental probability = 16/40 = 2/5 = 0.4 = 40%. The theoretical value is 1/4 = 0.25 = 25%. The experimental result (40%) is noticeably higher than 25%, but 40 spins is not very many. To decide whether the spinner is really biased, Hassan should spin it many more times and see whether the relative frequency settles near 25% or stays high."
+      "solution": "Experimental probability = 16/40 = 2/5 = 0.4 = 40%. The theoretical value is 1/4 = 0.25 = 25%. The experimental result (40%) is noticeably higher than 25%, but 40 spins is not very many. To decide whether the spinner is really biased, Hassan should spin it many more times and see whether the relative frequency settles near 25% or stays high."
     },
     {
       "id": "we06",
@@ -344,7 +344,7 @@
       "difficulty": "Intermediate",
       "title": "Using the complement to save work",
       "prompt": "A spinner has 10 equal sectors numbered 1 to 10. Find the probability of not landing on a multiple of 5.",
-      "solution": "Solution: The multiples of 5 from 1 to 10 are 5 and 10, so P(multiple of 5) = 2/10 = 1/5. Using the complement rule, P(not a multiple of 5) = 1 − 1/5 = 4/5 = 0.8 = 80%. This was quicker than listing the eight other numbers."
+      "solution": "The multiples of 5 from 1 to 10 are 5 and 10, so P(multiple of 5) = 2/10 = 1/5. Using the complement rule, P(not a multiple of 5) = 1 − 1/5 = 4/5 = 0.8 = 80%. This was quicker than listing the eight other numbers."
     },
     {
       "id": "we07",
@@ -352,7 +352,7 @@
       "difficulty": "Intermediate",
       "title": "Total of two dice",
       "prompt": "Two fair dice are rolled and the scores are added. Find P(total of 7).",
-      "solution": "Solution: There are 6 × 6 = 36 equally likely outcomes. The pairs giving a total of 7 are (1,6), (2,5), (3,4), (4,3), (5,2) and (6,1) – that is 6 favourable outcomes. So P(total of 7) = 6/36 = 1/6. This is why 7 is the most common total when rolling two dice."
+      "solution": "There are 6 × 6 = 36 equally likely outcomes. The pairs giving a total of 7 are (1,6), (2,5), (3,4), (4,3), (5,2) and (6,1) — that is 6 favourable outcomes. So P(total of 7) = 6/36 = 1/6. This is why 7 is the most common total when rolling two dice."
     },
     {
       "id": "we08",
@@ -360,7 +360,7 @@
       "difficulty": "Intermediate",
       "title": "Reasoning backwards",
       "prompt": "In a bag of red and yellow sweets, the probability of drawing a red is 3/5. There are 20 sweets in total. How many are red, and how many are yellow?",
-      "solution": "Solution: P(red) = 3/5 means 3 out of every 5 sweets are red. Of 20 sweets, red = 3/5 × 20 = 12. Yellow = 20 − 12 = 8. Check: P(yellow) = 8/20 = 2/5, and 3/5 + 2/5 = 1, as it must."
+      "solution": "P(red) = 3/5 means 3 out of every 5 sweets are red. Of 20 sweets, red = 3/5 × 20 = 12. Yellow = 20 − 12 = 8. Check: P(yellow) = 8/20 = 2/5, and 3/5 + 2/5 = 1, as it must."
     },
     {
       "id": "we09",
@@ -368,7 +368,7 @@
       "difficulty": "Challenge",
       "title": "Practice 9",
       "prompt": "A coin is flipped and a die is rolled. List the sample space, then find P(heads and an odd number).",
-      "solution": "Solution: Sample space: H1–H6, T1–T6 (12 outcomes). Heads with an odd number = H1, H3, H5 → P(heads and odd) = 3/12 = 1/4."
+      "solution": "Sample space: H1–H6, T1–T6 (12 outcomes). Heads with an odd number = H1, H3, H5 → P(heads and odd) = 3/12 = 1/4."
     },
     {
       "id": "we10",
@@ -376,7 +376,7 @@
       "difficulty": "Challenge",
       "title": "Convert to fractions in simplest form",
       "prompt": "Convert to fractions in simplest form: a) 20% b) 75% c) 60%.",
-      "solution": "Solution: a) 20% = 20/100 = 1/5, b) 75% = 75/100 = 3/4, c) 60% = 60/100 = 3/5."
+      "solution": "a) 20% = 20/100 = 1/5, b) 75% = 75/100 = 3/4, c) 60% = 60/100 = 3/5."
     },
     {
       "id": "we11",
@@ -384,7 +384,7 @@
       "difficulty": "Challenge",
       "title": "Practice 11",
       "prompt": "A spinner is spun 60 times and lands on 'blue' 27 times. Find the experimental probability of blue as a fraction, a decimal and a percentage.",
-      "solution": "Solution: Experimental probability of blue = 27/60 = 9/20 = 0.45 = 45%."
+      "solution": "Experimental probability of blue = 27/60 = 9/20 = 0.45 = 45%."
     },
     {
       "id": "we12",

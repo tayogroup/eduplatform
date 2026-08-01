@@ -229,7 +229,7 @@
       "example": "Find Q1, Q3 and the IQR of: 12, 15, 18, 20, 22, 25, 28, 30, 35, 38, 42.",
       "steps": [
         "Put all the data in order from smallest to largest.",
-        "Find the median (Q2) – the middle value.",
+        "Find the median (Q2) — the middle value.",
         "Find Q1, the median of the lower half, and Q3, the median of the upper half.",
         "Calculate IQR = Q3 − Q1."
       ]
@@ -268,7 +268,7 @@
         "Plot each pair of values as a point.",
         "Describe the correlation: direction (positive/negative/none) and strength (strong/weak).",
         "Draw a line of best fit balancing points above and below.",
-        "Predict by interpolation (inside the data – reliable) or note extrapolation (outside – risky)."
+        "Predict by interpolation (inside the data — reliable) or note extrapolation (outside — risky)."
       ]
     },
     {
@@ -278,7 +278,7 @@
       "title": "Describing correlation",
       "example": "On a scatter graph of ‘hours of revision’ against ‘test score’, the points rise from bottom-left to top-right and lie fairly close to a straight line. Describe the correlation and what it means.",
       "steps": [
-        "Solution: The points slope upward and lie close to a line, so there is a strong positive correlation between revision time and test score.",
+        "The points slope upward and lie close to a line, so there is a strong positive correlation between revision time and test score.",
         "In context: students who revised for longer tended to score higher marks.",
         "(Remember: this is a link, not proof that revision alone causes the higher score.)"
       ]
@@ -290,8 +290,8 @@
       "title": "Interpolation vs extrapolation",
       "example": "Farah’s scatter graph covers revision times from 1 to 5 hours. She uses her line of best fit to predict the score for (a) 3 hours and (b) 12 hours. Which prediction is reliable?",
       "steps": [
-        "Solution: Prediction (a) at 3 hours is inside the data range (1 to 5 hours), so it is interpolation and is reliable.",
-        "Prediction (b) at 12 hours is outside the range, so it is extrapolation – unreliable, because there is no evidence the trend continues that far, and the score cannot exceed 100% anyway.",
+        "Prediction (a) at 3 hours is inside the data range (1 to 5 hours), so it is interpolation and is reliable.",
+        "Prediction (b) at 12 hours is outside the range, so it is extrapolation — unreliable, because there is no evidence the trend continues that far, and the score cannot exceed 100% anyway.",
         "Check by confirming whether your x-value falls inside or outside the original data range before trusting the prediction."
       ]
     }
@@ -303,7 +303,7 @@
       "difficulty": "Basic",
       "title": "Mean, median, mode and range",
       "prompt": "Find the mean, median, mode and range of: 15, 18, 22, 18, 25, 30, 18, 27.",
-      "solution": "Solution: There are 8 values. Mean = (15 + 18 + 22 + 18 + 25 + 30 + 18 + 27) ÷ 8 = 173 ÷ 8 = 21.625. To find the median, order them: 15, 18, 18, 18, 22, 25, 27, 30. With 8 values the median is the mean of the 4th and 5th: (18 + 22) ÷ 2 = 20. The mode is 18 (it appears three times). The range is 30 − 15 = 15."
+      "solution": "There are 8 values. Mean = (15 + 18 + 22 + 18 + 25 + 30 + 18 + 27) ÷ 8 = 173 ÷ 8 = 21.625. To find the median, order them: 15, 18, 18, 18, 22, 25, 27, 30. With 8 values the median is the mean of the 4th and 5th: (18 + 22) ÷ 2 = 20. The mode is 18 (it appears three times). The range is 30 − 15 = 15."
     },
     {
       "id": "we02",
@@ -311,7 +311,7 @@
       "difficulty": "Basic",
       "title": "Which average is fairest?",
       "prompt": "A small workshop pays five workers 200, 220, 210, 230 and 900 shillings a day. Which average best describes a typical wage?",
-      "solution": "Solution: The mean is (200 + 220 + 210 + 230 + 900) ÷ 5 = 1760 ÷ 5 = 352 shillings. But four of the five workers earn close to 200–230, and only one earns 900. Ordering the wages – 200, 210, 220, 230, 900 – the median is 220 shillings. The median is the fairer typical wage: the outlier of 900 pulls the mean far above what most workers actually earn."
+      "solution": "The mean is (200 + 220 + 210 + 230 + 900) ÷ 5 = 1760 ÷ 5 = 352 shillings. But four of the five workers earn close to 200–230, and only one earns 900. Ordering the wages — 200, 210, 220, 230, 900 — the median is 220 shillings. The median is the fairer typical wage: the outlier of 900 pulls the mean far above what most workers actually earn."
     },
     {
       "id": "we03",
@@ -319,7 +319,7 @@
       "difficulty": "Basic",
       "title": "Interquartile range",
       "prompt": "Find Q1, Q3 and the IQR of: 12, 15, 18, 20, 22, 25, 28, 30, 35, 38, 42.",
-      "solution": "Solution: There are 11 values in order. The median (Q2) is the 6th value, 25. The lower half (below the median) is 12, 15, 18, 20, 22, so Q1 = 18. The upper half is 28, 30, 35, 38, 42, so Q3 = 35. Therefore IQR = 35 − 18 = 17. This is smaller than the range (30), showing the middle half of the data is more tightly packed than the extremes suggest."
+      "solution": "There are 11 values in order. The median (Q2) is the 6th value, 25. The lower half (below the median) is 12, 15, 18, 20, 22, so Q1 = 18. The upper half is 28, 30, 35, 38, 42, so Q3 = 35. Therefore IQR = 35 − 18 = 17. This is smaller than the range (30), showing the middle half of the data is more tightly packed than the extremes suggest."
     },
     {
       "id": "we04",
@@ -327,7 +327,7 @@
       "difficulty": "Basic",
       "title": "Comparing two distributions",
       "prompt": "Class A: median 64, IQR 6. Class B: median 58, IQR 15. Compare the two classes’ test performance.",
-      "solution": "Solution: ‘Class A has a higher median (64 vs 58), so Class A performed better on average. Class A also has a smaller IQR (6 vs 15), so Class A’s marks are more consistent, while Class B’s marks are much more spread out.’ A full comparison names the average and the spread, both in context – that is what earns full marks."
+      "solution": "‘Class A has a higher median (64 vs 58), so Class A performed better on average. Class A also has a smaller IQR (6 vs 15), so Class A’s marks are more consistent, while Class B’s marks are much more spread out.’ A full comparison names the average and the spread, both in context — that is what earns full marks."
     },
     {
       "id": "we05",
@@ -335,7 +335,7 @@
       "difficulty": "Intermediate",
       "title": "Describing correlation",
       "prompt": "On a scatter graph of ‘hours of revision’ against ‘test score’, the points rise from bottom-left to top-right and lie fairly close to a straight line. Describe the correlation and what it means.",
-      "solution": "Solution: The points slope upward and lie close to a line, so there is a strong positive correlation between revision time and test score. In context: students who revised for longer tended to score higher marks. (Remember: this is a link, not proof that revision alone causes the higher score.)"
+      "solution": "The points slope upward and lie close to a line, so there is a strong positive correlation between revision time and test score. In context: students who revised for longer tended to score higher marks. (Remember: this is a link, not proof that revision alone causes the higher score.)"
     },
     {
       "id": "we06",
@@ -343,15 +343,15 @@
       "difficulty": "Intermediate",
       "title": "Interpolation vs extrapolation",
       "prompt": "Farah’s scatter graph covers revision times from 1 to 5 hours. She uses her line of best fit to predict the score for (a) 3 hours and (b) 12 hours. Which prediction is reliable?",
-      "solution": "Solution: Prediction (a) at 3 hours is inside the data range (1 to 5 hours), so it is interpolation and is reliable. Prediction (b) at 12 hours is outside the range, so it is extrapolation – unreliable, because there is no evidence the trend continues that far, and the score cannot exceed 100% anyway."
+      "solution": "Prediction (a) at 3 hours is inside the data range (1 to 5 hours), so it is interpolation and is reliable. Prediction (b) at 12 hours is outside the range, so it is extrapolation — unreliable, because there is no evidence the trend continues that far, and the score cannot exceed 100% anyway."
     },
     {
       "id": "we07",
       "outcomeId": "lo07",
       "difficulty": "Intermediate",
       "title": "Correlation vs causation",
-      "prompt": "A newspaper reports: ‘Towns with more mobile phones have more cases of illness – phones are making people sick.’ Critique this conclusion.",
-      "solution": "Solution: The conclusion mistakes correlation for causation. A likely confounding variable is population size: bigger towns have more of *everything* – more phones and more illness cases – without one causing the other. A fair comparison would use rates (cases per 1000 people), not raw totals. So the newspaper’s claim is not supported by the evidence given."
+      "prompt": "A newspaper reports: ‘Towns with more mobile phones have more cases of illness — phones are making people sick.’ Critique this conclusion.",
+      "solution": "The conclusion mistakes correlation for causation. A likely confounding variable is population size: bigger towns have more of *everything* — more phones and more illness cases — without one causing the other. A fair comparison would use rates (cases per 1000 people), not raw totals. So the newspaper’s claim is not supported by the evidence given."
     },
     {
       "id": "we08",
@@ -359,7 +359,7 @@
       "difficulty": "Intermediate",
       "title": "Critiquing a claim",
       "prompt": "‘A survey outside the Hargeisa sports stadium found that 95% of people exercise daily, so most people in the city are very active.’ What is wrong with this conclusion?",
-      "solution": "Solution: The sample is biased. People outside a sports stadium are far more likely to exercise than the general public, so this is selection bias – the sample is not representative of the whole city. The 95% figure describes stadium-goers, not everyone. A fair study would sample people from many different places across the city, chosen at random."
+      "solution": "The sample is biased. People outside a sports stadium are far more likely to exercise than the general public, so this is selection bias — the sample is not representative of the whole city. The 95% figure describes stadium-goers, not everyone. A fair study would sample people from many different places across the city, chosen at random."
     },
     {
       "id": "we09",
@@ -391,7 +391,7 @@
       "difficulty": "Challenge",
       "title": "Practice 12",
       "prompt": "Explain, with an example, the difference between interpolation and extrapolation.",
-      "solution": "Interpolation is predicting a value that lies inside the range of the data you collected – this is usually reliable. Extrapolation is predicting a value outside that range – this is less reliable because there is no evidence the trend continues. For example, if revision time from 1 to 5 hours was recorded against test score, predicting the score for 3 hours of revision is interpolation, but predicting for 12 hours is extrapolation."
+      "solution": "Interpolation is predicting a value that lies inside the range of the data you collected — this is usually reliable. Extrapolation is predicting a value outside that range — this is less reliable because there is no evidence the trend continues. For example, if revision time from 1 to 5 hours was recorded against test score, predicting the score for 3 hours of revision is interpolation, but predicting for 12 hours is extrapolation."
     }
   ],
   "practice": [
@@ -767,9 +767,9 @@
       "difficulty": "Core",
       "context": "Travel",
       "prompt": "Yusuf plots ‘hours of football training per week’ against ‘number of goals scored’ and finds a moderate positive correlation. Write a careful conclusion that does NOT claim causation, and name a confounding factor.",
-      "answer": "There is a moderate positive correlation, so players who train more tend to score more goals. However, this is not proof that training causes more goals – a confounding factor such as natural ability or match time could affect both.",
+      "answer": "There is a moderate positive correlation, so players who train more tend to score more goals. However, this is not proof that training causes more goals — a confounding factor such as natural ability or match time could affect both.",
       "hint": "Decide which idea the question is really about (Mean / Median / Mode, Range, Quartiles (Q1, Q3)), then work one step at a time and check the answer is sensible.",
-      "errorFeedback": "There is a moderate positive correlation, so players who train more tend to score more goals. However, this is not proof that training causes more goals – a confounding factor such as natural ability or match time could affect both."
+      "errorFeedback": "There is a moderate positive correlation, so players who train more tend to score more goals. However, this is not proof that training causes more goals — a confounding factor such as natural ability or match time could affect both."
     },
     {
       "id": "rp04",
@@ -787,9 +787,9 @@
       "difficulty": "Challenge",
       "context": "Community",
       "prompt": "Temperature (°C) and ice-cream sales at a Kismaayo beach stall over six days: (24, 30), (26, 38), (28, 45), (30, 52), (32, 60), (34, 66). Describe the correlation, and use the trend to estimate sales at 29°C (interpolation). Then explain why estimating sales at 45°C would be unreliable.",
-      "answer": "There is a strong positive correlation: as temperature rises, ice-cream sales rise too. Using the trend, at 29°C (between the 28°C and 30°C data points) sales would be about 48–49 ice creams. Estimating sales at 45°C would be unreliable because it is far outside the measured range (24°C–34°C) – this is extrapolation, and there is no evidence the same trend continues at such extreme, unusual temperatures.",
+      "answer": "There is a strong positive correlation: as temperature rises, ice-cream sales rise too. Using the trend, at 29°C (between the 28°C and 30°C data points) sales would be about 48–49 ice creams. Estimating sales at 45°C would be unreliable because it is far outside the measured range (24°C–34°C) — this is extrapolation, and there is no evidence the same trend continues at such extreme, unusual temperatures.",
       "hint": "Decide which idea the question is really about (Mean / Median / Mode, Range, Quartiles (Q1, Q3)), then work one step at a time and check the answer is sensible.",
-      "errorFeedback": "There is a strong positive correlation: as temperature rises, ice-cream sales rise too. Using the trend, at 29°C (between the 28°C and 30°C data points) sales would be about 48–49 ice creams. Estimating sales at 45°C would be unreliable because it is far outside the measured range (24°C–34°C) – this is extrapolation, and there is no evidence the same trend continues at such extreme, unusual temperatures."
+      "errorFeedback": "There is a strong positive correlation: as temperature rises, ice-cream sales rise too. Using the trend, at 29°C (between the 28°C and 30°C data points) sales would be about 48–49 ice creams. Estimating sales at 45°C would be unreliable because it is far outside the measured range (24°C–34°C) — this is extrapolation, and there is no evidence the same trend continues at such extreme, unusual temperatures."
     },
     {
       "id": "rp06",
@@ -797,9 +797,9 @@
       "difficulty": "Core",
       "context": "Daily life",
       "prompt": "Explain, with an example, the difference between interpolation and extrapolation.",
-      "answer": "Interpolation is predicting a value that lies inside the range of the data you collected – this is usually reliable. Extrapolation is predicting a value outside that range – this is less reliable because there is no evidence the trend continues. For example, if revision time from 1 to 5 hours was recorded against test score, predicting the score for 3 hours of revision is interpolation, but predicting for 12 hours is extrapolation.",
+      "answer": "Interpolation is predicting a value that lies inside the range of the data you collected — this is usually reliable. Extrapolation is predicting a value outside that range — this is less reliable because there is no evidence the trend continues. For example, if revision time from 1 to 5 hours was recorded against test score, predicting the score for 3 hours of revision is interpolation, but predicting for 12 hours is extrapolation.",
       "hint": "Decide which idea the question is really about (Mean / Median / Mode, Range, Quartiles (Q1, Q3)), then work one step at a time and check the answer is sensible.",
-      "errorFeedback": "Interpolation is predicting a value that lies inside the range of the data you collected – this is usually reliable. Extrapolation is predicting a value outside that range – this is less reliable because there is no evidence the trend continues. For example, if revision time from 1 to 5 hours was recorded against test score, predicting the score for 3 hours of revision is interpolation, but predicting for 12 hours is extrapolation."
+      "errorFeedback": "Interpolation is predicting a value that lies inside the range of the data you collected — this is usually reliable. Extrapolation is predicting a value outside that range — this is less reliable because there is no evidence the trend continues. For example, if revision time from 1 to 5 hours was recorded against test score, predicting the score for 3 hours of revision is interpolation, but predicting for 12 hours is extrapolation."
     }
   ],
   "reasoningPrompts": [

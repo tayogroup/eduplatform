@@ -111,6 +111,10 @@ async function tts(text) {
   if (dry) return;
 
   let sent = 0, made = 0, reused = 0;
+  // A clip that exhausts its retries is simply absent afterwards, and the file
+  // is named by a hash, so nothing downstream can tell a missing clip from one
+  // that was never queued. Track them and exit non-zero so a gap is visible.
+  const failed = [];
   for (const item of queue) {
     const out = path.join(OUT_DIR, `${item.key}.mp3`);
     if (!force && fs.existsSync(out) && fs.statSync(out).size > 1000) { reused += 1; continue; }
@@ -124,8 +128,15 @@ async function tts(text) {
         console.log("ok");
       } catch (e) { console.log(`retry ${attempt}: ${e.message.slice(0, 70)}`); await sleep(1500 * attempt); }
     }
+    if (!ok) failed.push(item);
     await sleep(350);
   }
   console.log("\n──────── summary ────────");
   console.log(`generated: ${made} | reused: ${reused} | characters sent: ${sent.toLocaleString()}`);
+  if (failed.length) {
+    console.error(`\nFAILED after 3 attempts: ${failed.length} clip(s) — re-run to fill the gaps.`);
+    for (const item of failed.slice(0, 20)) console.error(`  ${item.key} (${item.chars} chars) ${item.text.slice(0, 60)}…`);
+    if (failed.length > 20) console.error(`  …and ${failed.length - 20} more`);
+    process.exitCode = 1;
+  }
 })();

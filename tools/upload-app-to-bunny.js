@@ -36,6 +36,7 @@ const TREES = [
   { name: "science", src: path.join(EHEL, "science"), dest: "app/science", excludeTop: ["media"] },
   { name: "computing", src: path.join(EHEL, "computing"), dest: "app/computing", excludeTop: ["media"] },
   { name: "global-perspectives", src: path.join(EHEL, "global-perspectives"), dest: "app/global-perspectives", excludeTop: ["media"] },
+  { name: "intensive-english", src: path.join(EHEL, "intensive-english"), dest: "app/intensive-english", excludeTop: ["media"] },
   { name: "vocabulary", src: path.join(EHEL, "vocabulary"), dest: "app/vocabulary", excludeTop: [] },
   { name: "shared", src: path.join(EHEL, "shared"), dest: "app/shared", excludeTop: [] },
 ];
@@ -57,7 +58,10 @@ const ctFor = (f) => CT[path.extname(f).toLowerCase()] || "application/octet-str
 // Recursively list files under `dir`, skipping any path segment named in `skip`
 // (top-level names in `skipTop`), and skips per-grade data/ dirs anywhere
 // (grade-N/data/ — that JSON is the content tier, uploaded separately).
-const DATA_DIR_RE = /(^|\/)grade-\d+\/data$/;
+// level-N/ as well as grade-N/: Intensive English's stages are CEFR levels, and
+// matching only grade-N here would have uploaded all 40 units of JSON into the
+// app tree — redundant, unreferenced, and served from content/ anyway.
+const DATA_DIR_RE = /(^|\/)(grade|level)-\d+\/data$/;
 function walk(root, rel = "", skipTop = []) {
   const out = [];
   const abs = path.join(root, rel);

@@ -11,8 +11,8 @@
 // Re-deploy safe: a content-hash manifest means only changed files are sent.
 // Access key from env (BUNNY_KEY), never hard-coded.
 //
-// Usage: BUNNY_KEY=… node tools/upload-content-to-bunny.js [english|mathematics|science|computing]…
-//   (no args = all three)
+// Usage: BUNNY_KEY=… node tools/upload-content-to-bunny.js [subject …]
+//   (no args = every subject below)
 
 const fs = require("fs"), path = require("path"), crypto = require("crypto");
 const ROOT = path.resolve(__dirname, "..");
@@ -25,7 +25,18 @@ const MANIFEST = path.join(ROOT, ".bunny-content-manifest.json");
 const CONCURRENCY = 12;
 
 if (!KEY) { console.error("BUNNY_KEY not set"); process.exit(1); }
-const SUBJECTS = ["english", "mathematics", "science", "computing", "global-perspectives"];
+const SUBJECTS = ["english", "mathematics", "science", "computing", "global-perspectives",
+  "intensive-english"];
+
+// Most subjects number their stages as school grades and keep them in grade-N/.
+// Intensive English's stages are CEFR levels in level-N/. Only the local folder
+// name differs — remotely they occupy the same gNN slot, which is what the app
+// asks for via dataRootUrl, so the remote path needs no special case.
+//
+// Hard-coding `grade-${n}` here meant this tool walked nothing for such a
+// course and reported success having uploaded zero unit files.
+const STAGE_DIR = { "intensive-english": (n) => `level-${n}` };
+const stageDirFor = (subject, n) => (STAGE_DIR[subject] || ((x) => `grade-${x}`))(n);
 // An unrecognised argument used to be dropped by this filter, so a typo — or a
 // subject nobody had wired up yet — ran to completion, reported success, and
 // uploaded the default set instead of what was asked for. Same guard the media
@@ -56,7 +67,7 @@ function buildList() {
   const list = [];
   for (const subject of subjectList) {
     for (let g = 1; g <= 12; g += 1) {
-      const dataDir = path.join(EHEL, subject, `grade-${g}`, "data");
+      const dataDir = path.join(EHEL, subject, stageDirFor(subject, g), "data");
       if (!fs.existsSync(dataDir)) continue;
       const gg = String(g).padStart(2, "0");
       for (const rel of walk(dataDir)) {

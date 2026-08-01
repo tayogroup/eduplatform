@@ -31,8 +31,17 @@ loadDotEnv();
 const KEY = process.env.BUNNY_KEY;
 
 if (!KEY) { console.error("BUNNY_KEY not set (checked the environment and .env)"); process.exit(1); }
-const subjects = process.argv.slice(2).filter((s) => ["english", "mathematics", "science", "computing"].includes(s));
-const subjectList = subjects.length ? subjects : ["english", "mathematics", "science", "computing"];
+const SUBJECTS = ["english", "mathematics", "science", "computing", "intensive-english"];
+// An unrecognised argument used to be dropped by this filter, so a typo — or a
+// subject nobody had wired up yet — ran to completion, reported success, and
+// uploaded the default set instead of what was asked for.
+const unknown = process.argv.slice(2).filter((s) => !s.startsWith("--") && !SUBJECTS.includes(s));
+if (unknown.length) {
+  console.error(`unknown subject(s): ${unknown.join(", ")}\nknown: ${SUBJECTS.join(", ")}`);
+  process.exit(1);
+}
+const subjects = process.argv.slice(2).filter((s) => SUBJECTS.includes(s));
+const subjectList = subjects.length ? subjects : SUBJECTS;
 
 // Science narration text, hashes and per-grade placement come from the shared
 // module the generator and pruner use. This file used to carry its own copy,
@@ -48,6 +57,10 @@ const { cyrb53, clean } = scienceNarration;
 // makes this upload the only copy that reaches anyone, so a clip missed here
 // is a Listen button that silently falls back to the paid runtime endpoint.
 const computingNarration = require("./lib/ehel-computing-narration");
+
+// Intensive English stages are CEFR levels held in level-N/, but they occupy
+// the same gNN slot in the deploy path as every other subject's grades.
+const intensiveNarration = require("./lib/ehel-intensive-narration");
 
 // Mathematics now comes from the same shared definition as the generator, the
 // pruner and the coverage check. The copy that used to live here listed only
@@ -71,15 +84,20 @@ function buildList() {
       }
     }
   }
-  for (const subject of ["mathematics", "science", "computing"]) {
+  // Each subject's own narration module owns the mapping — a lookup rather
+  // than a chain of ternaries, so adding a course is one line here and cannot
+  // silently fall through to another subject's map.
+  const NARRATION = {
+    mathematics: mathNarration,
+    science: scienceNarration,
+    computing: computingNarration,
+    "intensive-english": intensiveNarration,
+  };
+  for (const subject of Object.keys(NARRATION)) {
     if (!subjectList.includes(subject)) continue;
     const ttsDir = path.join(EHEL, subject, "media", "audio", "tts");
     if (!fs.existsSync(ttsDir)) continue;
-    const map = subject === "science"
-      ? scienceNarration.hashGradeMap(path.join(EHEL, "science"))
-      : subject === "computing"
-        ? computingNarration.hashGradeMap(path.join(EHEL, "computing"))
-        : mathNarration.hashGradeMap(path.join(EHEL, "mathematics"));
+    const map = NARRATION[subject].hashGradeMap(path.join(EHEL, subject));
     let orphans = 0;
     for (const f of fs.readdirSync(ttsDir)) {
       if (!f.endsWith(".mp3")) continue;

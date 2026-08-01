@@ -9,6 +9,9 @@
 //
 // Every string below is annotated with the line it mirrors.
 
+const fs = require("fs");
+const path = require("path");
+
 const { cyrb53, clean, MIN_CHARS } = require("./ehel-narration-hash");
 
 // Speaking is deliberately absent: it is narrated by the app (line 348) but was
@@ -62,4 +65,36 @@ function clipsForUnit(unit, categories = CATEGORIES) {
   return out;
 }
 
-module.exports = { CATEGORIES, textsForUnit, clipsForUnit };
+// Every hash one level needs. The uploader fans the flat local cache out into
+// the per-stage deploy tree with this, so a text shared by two levels is
+// uploaded under both.
+function hashesForLevel(courseRoot, level, categories = CATEGORIES) {
+  const unitDir = path.join(courseRoot, `level-${level}`, "data", "units");
+  const out = new Set();
+  if (!fs.existsSync(unitDir)) return out;
+  for (const file of fs.readdirSync(unitDir)) {
+    if (!/^unit-\d+\.json$/.test(file)) continue;
+    const unit = JSON.parse(fs.readFileSync(path.join(unitDir, file), "utf8"));
+    for (const clip of clipsForUnit(unit, categories)) out.add(clip.hash);
+  }
+  return out;
+}
+
+// hash -> the levels that claim it. Named for the shape the uploader expects
+// from every subject; this course's stages are CEFR levels, not school grades,
+// but they occupy the same gNN slot in the deploy path.
+function hashGradeMap(courseRoot, categories = CATEGORIES) {
+  const map = new Map();
+  for (const entry of fs.readdirSync(courseRoot)) {
+    const match = entry.match(/^level-(\d+)$/);
+    if (!match) continue;
+    const level = Number(match[1]);
+    for (const key of hashesForLevel(courseRoot, level, categories)) {
+      if (!map.has(key)) map.set(key, new Set());
+      map.get(key).add(level);
+    }
+  }
+  return map;
+}
+
+module.exports = { cyrb53, clean, MIN_CHARS, CATEGORIES, textsForUnit, clipsForUnit, hashesForLevel, hashGradeMap };

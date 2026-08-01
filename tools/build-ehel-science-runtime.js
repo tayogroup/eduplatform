@@ -43,6 +43,120 @@ const paragraphs = (values = []) => values
 
 const EMPTY_DOC = { blocks: [], source_file: "(not provided)" };
 
+// Reviewer corrections, keyed grade → unit file → category → item id → field.
+// The reviewed scripts come back as a workbook, not as source-pack edits, so
+// tools/apply-ehel-science-script-review.py lands them here and the build lays
+// them over the generated content. Without this pass every rebuild would quietly
+// throw the review away.
+const reviewPath = path.join(sciRoot, "data", "script-review.json");
+const scriptReview = fs.existsSync(reviewPath)
+  ? (JSON.parse(fs.readFileSync(reviewPath, "utf8")).overrides || {})
+  : {};
+const reviewStats = { applied: 0, missed: [] };
+
+// Where each exported category's fields live inside a built unit. Returns the
+// object a field should be written to, or null when the item has gone from the
+// content (a source pack changed under a review) — reported, never guessed at.
+function reviewTarget(unit, category, itemId) {
+  const find = (list, id) => (list || []).find((entry) => entry.id === id) || null;
+  const indexed = (list, prefix) => {
+    const n = Number(String(itemId).slice(prefix.length));
+    return Number.isFinite(n) ? (list || [])[n - 1] || null : null;
+  };
+  switch (category) {
+    case "Unit Overview": return { unitOverview: unit.unit, learningPath: unit.unit, outcomes: unit };
+    case "Concept": return find(unit.concepts, itemId);
+    case "Exploration": return find(unit.explorations, itemId);
+    case "Visual Model": return find(unit.visualModels, itemId);
+    case "Method": return find(unit.methods, itemId);
+    case "Worked Example": return find(unit.workedExamples, itemId);
+    case "Practice": return find(unit.practice, itemId);
+    case "Activity": return indexed(unit.activities, "activity-");
+    case "Fluency": return find(unit.fluency, itemId);
+    case "Real Problem": return find(unit.realProblems, itemId);
+    case "Reasoning Prompt": return find(unit.reasoningPrompts, itemId);
+    case "Assessment Question": return find((unit.assessment || {}).questions, itemId);
+    case "Game Round": {
+      const match = String(itemId).match(/^(.*)-r(\d+)$/);
+      if (!match) return null;
+      const game = ((unit.games || {}).games || []).find((entry) => entry.id === match[1]);
+      const round = game && (game.rounds || [])[Number(match[2]) - 1];
+      return round ? { round, game } : null;
+    }
+    case "Reference": {
+      const ref = unit.reference || {};
+      if (itemId.startsWith("rule-")) return indexed(ref.rules, "rule-");
+      if (itemId.startsWith("term-")) return indexed(ref.terms, "term-");
+      if (itemId.startsWith("vocab-")) return indexed(ref.vocabulary, "vocab-");
+      if (itemId.startsWith("mistake-")) return indexed(ref.commonMistakes, "mistake-");
+      if (itemId.startsWith("connection-")) return indexed(ref.connections, "connection-");
+      return null;
+    }
+    case "Self Assessment": return unit.selfAssessment ? { list: unit.selfAssessment, itemId } : null;
+    default: return null;
+  }
+}
+
+function applyReviewFields(unit, category, itemId, fields, label) {
+  const target = reviewTarget(unit, category, itemId);
+  if (!target) { reviewStats.missed.push(`${label} ${category}/${itemId} (item not found)`); return; }
+  for (const [field, value] of Object.entries(fields)) {
+    if (category === "Unit Overview") {
+      target[field][field === "outcomes" ? "outcomes" : field] = value;
+    } else if (category === "Game Round") {
+      if (field === "gameTitle") target.game.title = value;
+      else if (field === "gameSkill") target.game.skill = value;
+      else target.round[field] = value;
+    } else if (category === "Self Assessment") {
+      const n = Number(String(itemId).slice("can-".length));
+      if (!Number.isFinite(n) || !target.list[n - 1]) {
+        reviewStats.missed.push(`${label} ${category}/${itemId} (slot not found)`);
+        continue;
+      }
+      target.list[n - 1] = value;
+    } else if (category === "Reference" && itemId.startsWith("term-")) {
+      target[field === "term" ? 0 : 1] = value;
+    } else if (category === "Reference" && itemId.startsWith("mistake-")) {
+      target[field === "mistake" ? 0 : 1] = value;
+    } else {
+      target[field] = value;
+    }
+    reviewStats.applied += 1;
+  }
+}
+
+function applyScriptReview(unit, grade, unitNumber) {
+  const items = ((scriptReview[`grade-${grade}`] || {})[`unit-${unitNumber}`]) || {};
+  for (const [category, byId] of Object.entries(items)) {
+    for (const [itemId, fields] of Object.entries(byId)) {
+      applyReviewFields(unit, category, itemId, fields, `grade ${grade} unit ${unitNumber}:`);
+    }
+  }
+}
+
+function applyCapstoneReview(capstone, grade) {
+  const items = ((scriptReview[`grade-${grade}`] || {}).capstone || {}).Capstone || {};
+  const project = capstone.project || {};
+  for (const [itemId, fields] of Object.entries(items)) {
+    let target = null;
+    if (itemId === "capstone-overview") target = { overview: capstone, drivingQuestion: project, finalProduct: project };
+    else if (itemId.startsWith("capstone-stage-")) target = (project.stages || [])[Number(itemId.slice(15)) - 1] || null;
+    else if (itemId.startsWith("capstone-evidence-")) target = { list: project.evidenceChecklist, index: Number(itemId.slice(18)) - 1 };
+    else target = ((capstone.quiz || {}).questions || []).find((q) => `capstone-${q.id}` === itemId) || null;
+
+    if (!target || (target.list && !target.list[target.index])) {
+      reviewStats.missed.push(`grade ${grade} capstone: ${itemId} (item not found)`);
+      continue;
+    }
+    for (const [field, value] of Object.entries(fields)) {
+      if (itemId === "capstone-overview") target[field][field] = value;
+      else if (field === "evidence") target.list[target.index] = value;
+      else target[field] = value;
+      reviewStats.applied += 1;
+    }
+  }
+}
+
 // Hand-authored Grade 1 content. The Grade 1 source is a parent/teacher
 // guide, not a student workbook, so it lacks concept headings, named
 // experiments and multiple-choice questions. These age-5-6 overrides give
@@ -1296,6 +1410,9 @@ function buildGrade(grade) {
   const builtUnits = [];
   source.units.forEach((unitMeta, position) => {
     const runtime = buildUnit(unitMeta, position);
+    // Reviewed prose wins over the generated text, and must land before the
+    // capstone samples questions out of the unit assessments.
+    applyScriptReview(runtime, grade, unitMeta.unit);
     builtUnits.push(runtime);
     for (const key of ["outcomes", "concepts", "practice", "workedExamples", "activities"]) {
       if (!runtime[key] || !runtime[key].length) warnings.push(`grade ${grade} unit ${unitMeta.unit}: empty ${key}`);
@@ -1391,6 +1508,7 @@ function buildGrade(grade) {
     quiz: { passPercent: 80, questions: capstoneQuestions },
     reviewStatus: "Curriculum review required",
   };
+  applyCapstoneReview(gradeCapstone, grade);
   fs.writeFileSync(path.join(gradeDir, "data", "grade-capstone.json"), `${JSON.stringify(gradeCapstone, null, 2)}\n`, "utf8");
 
   const indexHtml = `<!doctype html>
@@ -1407,6 +1525,11 @@ function buildGrade(grade) {
 
 const allWarnings = [];
 for (const grade of grades) allWarnings.push(...buildGrade(grade));
+console.log(`\nReviewer corrections applied: ${reviewStats.applied}`);
+if (reviewStats.missed.length) {
+  console.log(`Review entries with no matching item (${reviewStats.missed.length}) — re-run tools/apply-ehel-science-script-review.py:`);
+  for (const miss of reviewStats.missed) console.log(`  - ${miss}`);
+}
 if (allWarnings.length) {
   console.log(`\nWarnings (${allWarnings.length}):`);
   for (const warning of allWarnings) console.log(`  - ${warning}`);

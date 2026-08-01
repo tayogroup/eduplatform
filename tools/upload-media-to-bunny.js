@@ -21,38 +21,41 @@ if (!KEY) { console.error("BUNNY_KEY not set"); process.exit(1); }
 const subjects = process.argv.slice(2).filter((s) => ["english", "mathematics", "science"].includes(s));
 const subjectList = subjects.length ? subjects : ["english", "mathematics", "science"];
 
-// --- cyrb53, identical to the generators + UIs ---
-function cyrb53(str, seed = 0) {
-  let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
-  for (let i = 0; i < str.length; i += 1) { const ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }
-  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
-  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-  return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(16);
-}
-const clean = (t) => String(t || "").replace(/\s+/g, " ").trim();
-function textsForUnit(u, cat) {
-  switch (cat) {
-    case "concepts": return (u.concepts || []).map((c) => `${c.title}. ${c.explanation}. Example: ${c.example}`);
-    case "explorations": return (u.explorations || []).map((e) => `${e.title}. ${e.context}. ${e.explanation}`);
-    case "visualModels": return (u.visualModels || []).map((m) => `${m.title}. ${m.purpose}`);
-    case "methods": return (u.methods || []).map((m) => `${m.title}. Example: ${m.example}. ${(m.steps || []).join(" ")}`);
-    case "workedExamples": return (u.workedExamples || []).map((w) => `${w.title}. ${w.prompt}. Solution: ${w.solution}`);
-    case "realProblems": return (u.realProblems || []).map((p) => `${p.context}. ${p.prompt}`);
+// Science narration text, hashes and per-grade placement come from the shared
+// module the generator and pruner use. This file used to carry its own copy,
+// which fell behind: it still mapped Real Problems by an older text shape and
+// knew nothing of the practice, game, word-card, assessment or capstone
+// buttons, so those clips landed in _unmapped/ — uploaded, paid for, and never
+// requested by the app.
+const scienceNarration = require("./lib/ehel-science-narration");
+const { cyrb53, clean } = scienceNarration;
+
+// Mathematics has its own, smaller set of narrated categories. These mirror
+// tools/generate-ehel-math-audio.js exactly — including realProblems reading
+// the prompt alone, which the copy in this file used to get wrong.
+const MATH_CATS = ["concepts", "explorations", "visualModels", "methods", "workedExamples", "realProblems"];
+function mathTextsForUnit(unit, category) {
+  switch (category) {
+    case "concepts": return (unit.concepts || []).map((c) => `${c.title}. ${c.explanation}. Example: ${c.example}`);
+    case "explorations": return (unit.explorations || []).map((e) => `${e.title}. ${e.context}. ${e.explanation}`);
+    case "visualModels": return (unit.visualModels || []).map((m) => `${m.title}. ${m.purpose}`);
+    case "methods": return (unit.methods || []).map((m) => `${m.title}. Example: ${m.example}. ${(m.steps || []).join(" ")}`);
+    case "workedExamples": return (unit.workedExamples || []).map((w) => `${w.title}. ${w.prompt}. Solution: ${w.solution}`);
+    case "realProblems": return (unit.realProblems || []).map((p) => p.prompt);
     default: return [];
   }
 }
-const CATS = ["concepts", "explorations", "visualModels", "methods", "workedExamples", "realProblems"];
 
-// Map each tts hash → the grade(s) it belongs to (for per-grade placement).
-function hashGradeMap(subject) {
+function mathematicsHashGradeMap() {
   const map = new Map();
   for (let g = 1; g <= 12; g += 1) {
-    const dir = path.join(EHEL, subject, `grade-${g}`, "data", "units");
+    const dir = path.join(EHEL, "mathematics", `grade-${g}`, "data", "units");
     if (!fs.existsSync(dir)) continue;
     for (const f of fs.readdirSync(dir).filter((x) => x.endsWith(".json"))) {
-      const u = JSON.parse(fs.readFileSync(path.join(dir, f), "utf8"));
-      for (const cat of CATS) for (const t of textsForUnit(u, cat)) {
-        const c = clean(t); if (c.length < 8) continue;
+      const unit = JSON.parse(fs.readFileSync(path.join(dir, f), "utf8"));
+      for (const cat of MATH_CATS) for (const t of mathTextsForUnit(unit, cat)) {
+        const c = clean(t);
+        if (c.length < 8) continue;
         const key = cyrb53(c);
         if (!map.has(key)) map.set(key, new Set());
         map.get(key).add(g);
@@ -68,7 +71,7 @@ function buildList() {
   if (subjectList.includes("english")) {
     const base = path.join(EHEL, "english", "media", "audio");
     for (let g = 1; g <= 12; g += 1) {
-      for (const cat of ["readings", "grammar", "speaking", "vocabulary"]) {
+      for (const cat of ["readings", "grammar", "speaking", "vocabulary", "dictionary"]) {
         const d = path.join(base, `grade-${g}`, cat);
         if (!fs.existsSync(d)) continue;
         for (const f of fs.readdirSync(d)) if (f.endsWith(".mp3"))
@@ -80,16 +83,22 @@ function buildList() {
     if (!subjectList.includes(subject)) continue;
     const ttsDir = path.join(EHEL, subject, "media", "audio", "tts");
     if (!fs.existsSync(ttsDir)) continue;
-    const map = hashGradeMap(subject);
+    const map = subject === "science"
+      ? scienceNarration.hashGradeMap(path.join(EHEL, "science"))
+      : mathematicsHashGradeMap();
     let orphans = 0;
     for (const f of fs.readdirSync(ttsDir)) {
       if (!f.endsWith(".mp3")) continue;
       const hash = f.replace(/\.mp3$/, "");
       const grades = map.get(hash);
-      if (!grades) { orphans += 1; list.push({ local: path.join(ttsDir, f), remote: `media/${subject}/_unmapped/audio/tts/${f}` }); continue; }
+      // No grade claims this text, so no Listen button can ask for it. It used
+      // to be uploaded to _unmapped/, a path no UI ever requests — bandwidth
+      // and storage spent on a file that could not be played. Leave it local
+      // and say so; tools/prune-ehel-course-audio.mjs clears them out.
+      if (!grades) { orphans += 1; continue; }
       for (const g of grades) list.push({ local: path.join(ttsDir, f), remote: `media/${subject}/g${String(g).padStart(2, "0")}/audio/tts/${f}` });
     }
-    if (orphans) console.log(`  ${subject}: ${orphans} unmapped tts files → _unmapped/`);
+    if (orphans) console.log(`  ${subject}: ${orphans} unreachable tts file(s) skipped — run tools/prune-ehel-course-audio.mjs ${subject}`);
   }
   return list;
 }

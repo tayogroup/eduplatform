@@ -420,6 +420,107 @@ const QUESTIONS = [
     answer: "a) Rainfall is steady at roughly 20–26 mm. b) 120 mm. c) Not automatically — first check whether it is a recording error or a real storm. Only a genuine error should be removed; a real value is part of the data.",
     hint: "A trend is the overall direction once the bumps are ignored. An outlier sits far from the rest, and the first question is always whether it is real.",
   },
+  // unit-2 again holds a shift: the terms card had a simplify question, the
+  // simplify card had an expansion, and the factorising card had a terms
+  // question. Two move home; factorising and substitution need writing.
+  {
+    grade: 8, unit: "unit-2", id: "explore-1", teaches: "Variables, Terms and Expressions",
+    replaces: "Simplify: a) 5x + 3x b) 7a − 4a + 2a c) 9m + m − 3m.",
+    prompt: "For the expression 6x − 9: a) state the coefficient b) state the constant c) how many terms does it have?",
+    answer: "a) 6, b) −9, c) two terms, 6x and −9.",
+    hint: "A term is a part separated by + or −. The coefficient is the number multiplying the letter, and a constant has no letter at all.",
+  },
+  {
+    grade: 8, unit: "unit-2", id: "explore-3", teaches: "Simplifying by Collecting Like Terms",
+    replaces: "Expand: a) 4(x + 5) b) 3(2y − 1).",
+    prompt: "Simplify: a) 6x + 4y − 2x + 3y b) 3a² + 5a − 2a² + 4a − 1.",
+    answer: "a) 4x + 7y. b) a² + 9a − 1.",
+    hint: "Only terms with exactly the same letter and the same power can be combined. Carry the sign in front of each term along with it.",
+  },
+  {
+    grade: 8, unit: "unit-2", id: "explore-5", teaches: "Factorising Expressions",
+    replaces: "State the coefficient and constant in 6x − 9.",
+    prompt: "Factorise: a) 4x + 20 b) 6y − 9 c) 10a + 15b. Then check (a) by expanding it again.",
+    answer: "a) 4(x + 5), b) 3(2y − 3), c) 5(2a + 3b). Checking (a): 4(x + 5) = 4x + 20.",
+    hint: "Find the largest number that divides every term, write it outside the bracket and what is left inside. Expanding again should return exactly what you started with.",
+  },
+  {
+    grade: 8, unit: "unit-2", id: "explore-6", teaches: "Formulae and Substitution",
+    replaces: "Simplify: a) 6x + 4y − 2x + 3y b) 3a² + 5a − 2a² + 4a − 1.",
+    prompt: "The area of a triangle is A = ½bh. a) Find A when b = 10 and h = 6. b) Find A when b = 7 and h = 4. c) Rearrange the formula to make h the subject.",
+    answer: "a) ½ × 10 × 6 = 30. b) ½ × 7 × 4 = 14. c) h = 2A ÷ b.",
+    hint: "Put the numbers in place of the letters, then work out the arithmetic. To rearrange, undo each operation applied to the letter you want on its own.",
+  },
+  {
+    grade: 8, unit: "unit-3", id: "explore-5", teaches: "Rounding to Significant Figures",
+    replaces: "How many significant figures? a) 0.00456 b) 5,607 c) 0.5670.",
+    prompt: "Round to the number of significant figures given: a) 4,782 to 2 s.f. b) 0.003914 to 2 s.f. c) 25.96 to 3 s.f.",
+    answer: "a) 4,800, b) 0.0039, c) 26.0.",
+    hint: "Count significant figures from the first non-zero digit, then look at the next digit to decide whether to round up. Keep the place value with zeros.",
+  },
+  {
+    grade: 8, unit: "unit-9", id: "explore-6", teaches: "Tables of Values and Linear Graphs",
+    replaces: "For f(x) = 3x + 5, find a) f(2) b) f(0) c) f(−1).",
+    prompt: "For y = 2x + 1: a) complete a table of values for x = −1, 0, 1, 2, 3 b) what shape does the graph take? c) where does it cross the y-axis?",
+    answer: "a) y = −1, 1, 3, 5, 7. b) A straight line. c) At (0, 1), which is the value of y when x = 0.",
+    hint: "Work out y for each x in turn and set them side by side. Any rule of the form y = mx + c plots as a straight line.",
+  },
+  {
+    grade: 8, unit: "unit-10", id: "explore-5", teaches: "Simple Interest",
+    replaces: "Convert to a decimal: a) 45% b) 6% c) 125% d) 0.5%.",
+    prompt: "5,000 shillings is saved at 4% simple interest a year. a) Find one year's interest. b) Find the total interest after 3 years. c) What is the balance then?",
+    answer: "a) 4% of 5,000 = 200 shillings. b) 200 × 3 = 600 shillings. c) 5,000 + 600 = 5,600 shillings.",
+    hint: "Simple interest is paid on the original amount every year, so one year's interest just multiplies by the number of years.",
+  },
+  {
+    grade: 8, unit: "unit-10", id: "explore-6", teaches: "Profit and Loss",
+    replaces: "Increase 240 by 10% and decrease 240 by 10%. Are the answers the same distance from 240?",
+    prompt: "A trader buys a goat for 4,000 shillings and sells it for 4,600. a) Find the profit. b) Give the profit as a percentage of the cost price. c) What would selling at 3,600 give instead?",
+    answer: "a) 600 shillings. b) 600 ÷ 4,000 × 100 = 15%. c) A loss of 400 shillings, which is 10% of the cost price.",
+    hint: "Profit and loss are always measured against the cost price, never the selling price. Find the difference first, then compare it with what was paid.",
+  },
+  {
+    grade: 8, unit: "unit-12", id: "explore-1", teaches: "Understanding and Writing Ratios",
+    replaces: "Share 150 g in the ratio 2:3:5.",
+    prompt: "Express each as a ratio in its simplest form: a) ³⁄₅ b) 40% c) 500 g to 2 kg.",
+    answer: "a) 3:5. b) 40:100 = 2:5. c) 500:2,000 = 1:4.",
+    hint: "Put both quantities into the same unit first, then divide each side by their highest common factor.",
+  },
+  {
+    grade: 8, unit: "unit-12", id: "explore-6", teaches: "Scale and Maps",
+    replaces: "Express as ratios in simplest form: a) 3/5 b) 40% c) 500 g to 2 kg.",
+    prompt: "A map has a scale of 1:25,000. a) A road measures 8 cm on the map — how long is it really, in kilometres? b) A river is 5 km long — how long is it on the map?",
+    answer: "a) 8 × 25,000 = 200,000 cm, which is 2 km. b) 5 km is 500,000 cm, and 500,000 ÷ 25,000 = 20 cm.",
+    hint: "Multiply by the scale factor to go from map to real life and divide to come back. Convert to kilometres last, remembering 100,000 cm make 1 km.",
+  },
+  {
+    grade: 8, unit: "unit-14", id: "explore-2", teaches: "Distance and Midpoint",
+    replaces: "Find the distance between A(1, 2) and B(4, 6).",
+    prompt: "For A(1, 2) and B(4, 6): a) find the distance AB b) find the midpoint of AB.",
+    answer: "a) 5 units — the horizontal gap is 3 and the vertical gap is 4, so √(3² + 4²) = √25 = 5. b) The midpoint is ((1 + 4) ÷ 2, (2 + 6) ÷ 2) = (2.5, 4).",
+    hint: "For the distance, make a right-angled triangle from the horizontal and vertical gaps. For the midpoint, average the two x-values and average the two y-values.",
+  },
+  {
+    grade: 8, unit: "unit-16", id: "explore-1", teaches: "Averages – Choosing the Right One",
+    replaces: "Find the mean, median, mode and range of: 6, 9, 6, 12, 15, 6, 10.",
+    prompt: "House prices on a street, in millions, are 2, 2, 3, 3, 40. a) Find the mean and the median. b) Which better describes a typical house here, and why?",
+    answer: "a) Mean = 50 ÷ 5 = 10 million; median = 3 million. b) The median, because the single 40-million house drags the mean far above every other price on the street.",
+    hint: "Work out both, then ask which one a buyer would recognise. One extreme value shifts the mean a long way but barely moves the median.",
+  },
+  {
+    grade: 8, unit: "unit-16", id: "explore-2", teaches: "Spread – Range and the Interquartile Range",
+    replaces: "Find the range of: 55, 48, 61, 39, 72, 50.",
+    prompt: "For 4, 6, 7, 9, 11, 13, 15, 40: a) find the range b) find the interquartile range c) which describes the spread more fairly, and why?",
+    answer: "a) 40 − 4 = 36. b) Lower quartile (6 + 7) ÷ 2 = 6.5, upper quartile (13 + 15) ÷ 2 = 14, so the IQR is 7.5. c) The IQR, because the single value 40 inflates the range while the middle half stays tightly grouped.",
+    hint: "The range uses only the two extremes, so one unusual value controls it. The interquartile range looks at the middle half and ignores the tails.",
+  },
+  {
+    grade: 8, unit: "unit-16", id: "explore-6", teaches: "Misleading Statistics and Unfair Samples",
+    replaces: "If the mean of 5 numbers is 20, what is their total?",
+    prompt: "An advert claims '9 out of 10 people prefer our soap', based on asking 10 people outside the company's own factory. a) Give two reasons this is misleading. b) What would make the claim trustworthy?",
+    answer: "a) The sample is tiny, and people outside the factory are likely to be staff or their families, so they are biased towards the product. b) A large sample chosen at random from ordinary shoppers, with the size and method stated in the advert.",
+    hint: "Ask two things of any statistic: how many people were asked, and who was asked. A claim can be perfectly true of its sample and still tell you nothing.",
+  },
 ];
 
 const norm = (s) => String(s || "").replace(/\s+/g, " ").trim();

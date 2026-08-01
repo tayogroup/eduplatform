@@ -231,6 +231,79 @@ const QUESTIONS = [
     answer: "a) D is (1, 5). b) D shares its x-coordinate with A and its y-coordinate with C, because opposite sides of a rectangle are parallel and equal.",
     hint: "Sketch the three points first. The fourth corner lines up vertically with one of them and horizontally with another.",
   },
+  {
+    grade: 6, unit: "unit-3", id: "explore-5", teaches: "The Range – Measuring the Spread",
+    replaces: "Find the median of the even set 4, 7, 9, 12, 15, 18 by averaging the two middle values.",
+    prompt: "Class A scores 6, 7, 7, 8, 9 and Class B scores 2, 5, 7, 9, 14. a) Find the range of each. b) Which class is more spread out?",
+    answer: "a) Class A: 9 − 6 = 3. Class B: 14 − 2 = 12. b) Class B, because its range is four times larger even though the middle scores are similar.",
+    hint: "The range is the largest value minus the smallest. It says nothing about the typical score — only how far apart the extremes lie.",
+  },
+  {
+    grade: 6, unit: "unit-3", id: "explore-6", teaches: "Comparing Data and Choosing the Right Average",
+    replaces: "Find the range of 78, 85, 92, 68, 88, 75, 90.",
+    prompt: "Shop A sells 20, 22, 21, 23, 24 and Shop B sells 1, 2, 21, 40, 46. Both have a mean of 22. a) Which average describes Shop B better, and why? b) What does comparing the ranges add?",
+    answer: "a) The median, 21 — Shop B's values swing so widely that a mean of 22 hides it. b) Shop A's range is 4 and Shop B's is 45, so Shop A is steady and Shop B unpredictable, though their averages look identical.",
+    hint: "When two sets share an average, look at the spread. The average tells you the middle; the range tells you how far the values roam from it.",
+  },
+  // This question was sitting on unit-4's equations card. It is exactly what
+  // "Written Methods and Checking Your Work" teaches, so it moves here rather
+  // than being rewritten, and the equations card gets one of its own below.
+  {
+    grade: 6, unit: "unit-4", id: "explore-2", teaches: "Written Methods and Checking Your Work",
+    replaces: "Work out: a) −8 + 5 b) 6 + (−9) c) −4 + (−6).",
+    prompt: "Calculate exactly with a written column method, then check each against an estimate: a) 56,789 + 23,456 b) 123,456 − 78,234.",
+    answer: "a) 80,245, and the estimate 57,000 + 23,000 = 80,000 agrees. b) 45,222, and the estimate 123,000 − 78,000 = 45,000 agrees.",
+    hint: "Line the digits up by place value and work from the right. Then round both numbers and redo it roughly — if the two answers sit far apart, something slipped.",
+  },
+  {
+    grade: 6, unit: "unit-4", id: "explore-5", teaches: "Using Letters to Represent Numbers",
+    replaces: "Fill the comparisons with < or >: a) −4 ___ −7 b) −2 ___ 1 c) 0 ___ −5.",
+    prompt: "A bag holds n mangoes. Write an expression for a) 5 more than n b) three times n c) n shared equally between 4. d) What is each worth when n = 12?",
+    answer: "a) n + 5, b) 3n, c) n ÷ 4. d) With n = 12 they are 17, 36 and 3.",
+    hint: "A letter simply stands for a number you do not know yet. Write what you would do to the number, putting the letter where the number would go.",
+  },
+  {
+    grade: 6, unit: "unit-4", id: "explore-6", teaches: "Simple Equations and Perimeter Expressions",
+    replaces: "Calculate exactly and check with an estimate: a) 56,789 + 23,456 b) 123,456 − 78,234.",
+    prompt: "A rectangle has width w and length w + 3. a) Write an expression for its perimeter. b) Solve 2w + 7 = 19 to find w.",
+    answer: "a) Perimeter = 2w + 2(w + 3) = 4w + 6. b) 2w = 19 − 7 = 12, so w = 6.",
+    hint: "Perimeter adds every side, so account for two widths and two lengths. To solve an equation, undo each operation in turn until the letter stands alone.",
+  },
+  {
+    grade: 6, unit: "unit-7", id: "explore-4", teaches: "Composite Shapes",
+    replaces: "How many minutes are in 2.5 hours?",
+    prompt: "An L-shape is a 6 cm by 4 cm rectangle with a 2 cm by 2 cm square cut from one corner. Find its area and explain the method you chose.",
+    answer: "6 × 4 = 24 cm², less 2 × 2 = 4 cm², giving 20 cm². The method is to take the whole rectangle and subtract the missing piece.",
+    hint: "Either split the shape into simple ones and add, or take a simple shape and subtract what is missing. Both work — pick whichever needs fewer steps.",
+  },
+  {
+    grade: 6, unit: "unit-9", id: "explore-3", teaches: "Calculating Probability",
+    replaces: "Convert to a percentage: a) 1/4 b) 3/5 c) 0.35",
+    prompt: "A bag holds 4 red, 3 blue and 5 green counters. Find a) P(red) b) P(not green) c) the total of all three colour probabilities.",
+    answer: "There are 12 counters. a) 4/12 = 1/3. b) 7/12. c) 4/12 + 3/12 + 5/12 = 1.",
+    hint: "Probability is favourable outcomes over total outcomes. All the possible outcomes together must come to 1, which is a quick way to check your working.",
+  },
+  {
+    grade: 6, unit: "unit-14", id: "explore-4", teaches: "Dividing by a Fraction – Using the Reciprocal",
+    replaces: "Calculate 0.5 × 0.8.",
+    prompt: "Work out a) 3 ÷ ½ b) ¾ ÷ ⅔. c) Why is the answer to (a) bigger than 3?",
+    answer: "a) 3 × ²⁄₁ = 6. b) ¾ × ³⁄₂ = ⁹⁄₈, or 1⅛. c) You are asking how many halves fit into 3, and halves are small, so a lot of them fit.",
+    hint: "Dividing by a fraction is the same as multiplying by its reciprocal — turn the second fraction upside down, then multiply.",
+  },
+  {
+    grade: 6, unit: "unit-15", id: "explore-1", teaches: "Types of Data",
+    replaces: "Find the range of: 30, 12, 45, 19, 28.",
+    prompt: "Say whether each is discrete or continuous, and why: a) the number of goats in a pen b) the mass of a sack of rice c) the shoe sizes a shop sells.",
+    answer: "a) Discrete — goats are counted in whole numbers. b) Continuous — mass is measured and can take any value in a range. c) Discrete — sizes come in fixed steps, not every value between.",
+    hint: "Ask whether the data is counted or measured. Counted data lands on separate values; measured data can fall anywhere in between.",
+  },
+  {
+    grade: 6, unit: "unit-17", id: "explore-5", teaches: "Rotations (Turning)",
+    replaces: "Name the quadrant for each point: a) (3, 5) b) (-1, 2) c) (4, -4) d) (-3, -1).",
+    prompt: "A point at (3, 1) is rotated 90° clockwise about the origin. a) Where does it land? b) Does a rotation change the shape's size? c) What stays fixed during any rotation?",
+    answer: "a) At (1, −3). b) No — a rotation never changes size or shape. c) The centre of rotation; every other point sweeps along a circle around it.",
+    hint: "Turn the paper itself and watch one corner travel. A 90° clockwise turn about the origin sends the point (x, y) to (y, −x).",
+  },
 ];
 
 const norm = (s) => String(s || "").replace(/\s+/g, " ").trim();

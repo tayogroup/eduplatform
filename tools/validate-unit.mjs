@@ -99,17 +99,35 @@ function articleHits(s) {
 const words = (s) => String(s || "").trim().split(/\s+/).filter(Boolean);
 const norm = (s) => String(s || "").trim();
 const isBlank = (s) => typeof s !== "string" || !s.trim();
+const reEscape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+// Match the final part of a headword, allowing the inflection English adds there:
+// "cleaner" also matches "cleaners", "centimetre" also "centimetres". Parts under
+// four letters must match whole, so "arm" does not match "army".
+function tailPattern(part) {
+  return part.length >= 4
+    ? `${reEscape(part.slice(0, Math.max(4, part.length - 2)))}[a-z]*`
+    : `${reEscape(part)}\\b`;
+}
 function containsWord(sentence, word) {
   if (!word) return true;
   const t = String(sentence).toLowerCase();
-  const w = String(word).toLowerCase();
+  const w = String(word).toLowerCase().trim();
   if (t.includes(w)) return true;                          // whole word / phrase
-  const bare = w.replace(/[^a-z]/g, "");
-  if (bare.length >= 4) {                                   // allow inflection
-    const stem = bare.slice(0, Math.max(4, bare.length - 2));
-    return t.replace(/[^a-z]+/g, " ").split(" ").some((tok) => tok.startsWith(stem));
-  }
-  return new RegExp(`\\b${bare}\\b`).test(t.replace(/[^a-z]+/g, " "));
+  // A multi-word headword is stored hyphenated ("window-cleaner", "in-front-of")
+  // while the sentences write it the natural way ("window cleaner", "in front of").
+  // Collapsing it to "windowcleaner" and looking for one token starting with
+  // "windowclean" could never match two separate tokens, so every multi-word entry
+  // failed this check no matter how correct the sentence was. Treat each separator
+  // as hyphen, whitespace, or nothing instead.
+  // Split on non-letters, dropping digits as the old code did. Grades 3-8 have no
+  // masterWord, so the headword is derived from the vocabularyId tail and can carry
+  // a numeric prefix ("1-benign"); keeping the digit as a part would demand a
+  // literal "1" before the word in every sentence.
+  const parts = w.split(/[^a-z]+/).filter(Boolean);
+  if (!parts.length) return false;
+  const lead = parts.slice(0, -1).map(reEscape).join("[-\\s]?");
+  const sep = parts.length > 1 ? "[-\\s]?" : "";
+  return new RegExp(`\\b${lead}${sep}${tailPattern(parts[parts.length - 1])}`).test(t);
 }
 function* allStrings(obj, p = "") {
   if (Array.isArray(obj)) {

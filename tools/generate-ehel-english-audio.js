@@ -35,7 +35,7 @@ const MODEL_ID = "eleven_multilingual_v2";
 
 // --- args ---
 const args = process.argv.slice(2);
-const category = args.find((a) => /^(readings|grammar|speaking|vocabulary|dictionary)$/.test(a)) || "readings";
+const category = args.find((a) => /^(readings|grammar|speaking|vocabulary|dictionary|writing|activities)$/.test(a)) || "readings";
 const grades = args.filter((a) => /^[1-8]$/.test(a)).map(Number);
 const gradeList = grades.length ? grades : [1, 2, 3, 4, 5, 6, 7, 8];
 const dry = args.includes("--dry");
@@ -190,6 +190,34 @@ function itemsForUnit(unit, grade) {
     }
     return items;
   }
+  // The writing task and the activity instructions read aloud. Both keep the full
+  // descriptor shape rather than the four-field one the generic path writes, so the
+  // pending placeholders' slow/cue/status fields survive being filled in.
+  if (category === "writing" || category === "activities") {
+    const list = category === "writing" ? (unit.writing || []) : (unit.activities || []);
+    const idKey = category === "writing" ? "writingId" : "activityId";
+    const textKey = category === "writing" ? "promptAndInstructions" : "instructionsAndItems";
+    return list.map((entry) => {
+      const id = entry[idKey];
+      const source = `./${dir}/${id}.mp3`;
+      const prev = entry.audio || {};
+      return {
+        id, ref: entry, title: entry.title,
+        text: narration(entry[textKey]),
+        source,
+        output: path.join(ENGLISH, dir, `${id}.mp3`),
+        done: prev.available === true && prev.source === source,
+        apply() {
+          entry.audio = {
+            ...prev, source, normal: source, slow: source,
+            provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
+            slowPlaybackRate: prev.slowPlaybackRate ?? 0.76,
+            available: true, status: "Generated",
+          };
+        },
+      };
+    });
+  }
   // speaking
   return (unit.speaking || []).map((s) => ({
     id: s.speakingId, ref: s, title: s.title,
@@ -199,6 +227,13 @@ function itemsForUnit(unit, grade) {
   }));
 }
 
+// A request that never answers used to hang the whole run: fetch has no default
+// timeout, so the promise never settled, the retry loop below never fired, and the
+// process sat there indefinitely. Two runs stalled mid-clip for over 40 minutes and
+// looked identical to slow progress, because a hung request produces no output at
+// all. Abort instead, so it surfaces as a normal retryable failure.
+const TTS_TIMEOUT_MS = 120000;
+
 async function tts(text) {
   const key = process.env.ELEVENLABS_API_KEY;
   if (!key) throw new Error("ELEVENLABS_API_KEY is not set (check .env).");
@@ -206,8 +241,11 @@ async function tts(text) {
     method: "POST",
     headers: { "Content-Type": "application/json", "xi-api-key": key },
     body: JSON.stringify({ text, model_id: MODEL_ID, voice_settings: { stability: 0.62, similarity_boost: 0.82, style: 0.18, use_speaker_boost: true } }),
+    signal: AbortSignal.timeout(TTS_TIMEOUT_MS),
   });
   if (!r.ok) throw new Error(`ElevenLabs ${r.status}: ${(await r.text()).slice(0, 300)}`);
+  // The same signal also aborts the response stream, so a stalled download rejects
+  // here rather than hanging — no separate guard needed.
   return Buffer.from(await r.arrayBuffer());
 }
 
@@ -261,7 +299,7 @@ function writeMerged(filePath, pristine, mutated) {
   return { written: true, changes: applied, rebased };
 }
 
-(async () => {
+async function main() {
   let charsSent = 0, generated = 0, reused = 0, skipped = 0, charsTotal = 0, count = 0;
   // filePath -> { pristine, mutated }. A run holds these for as long as it takes
   // to narrate a grade, so the file on disk can move underneath us; keeping the
@@ -361,4 +399,10 @@ function writeMerged(filePath, pristine, mutated) {
     console.log(`characters sent this run: ${charsSent.toLocaleString()}`);
     console.log(`data files updated: ${dirtyFiles.size}${rebasedFiles ? ` (${rebasedFiles} merged onto concurrent edits)` : ""}`);
   }
-})();
+}
+
+// Only narrate when run as a CLI, so the merge helpers below can be required by
+// tests/tools/generate-ehel-english-audio.merge.test.js without billing anyone.
+if (require.main === module) main();
+
+module.exports = { changedLeaves, setPath, writeMerged };

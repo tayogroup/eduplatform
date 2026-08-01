@@ -139,10 +139,10 @@
       "difficulty": "Explore",
       "title": "Quartiles and the Interquartile Range",
       "context": "To describe spread more fairly, we split ordered data into four equal parts using quartiles. Imagine lining up all the values from smallest to largest. The median cuts the line in half.",
-      "prompt": "Find the range of 14, 6, 22, 9, 30.",
-      "answer": "Range = 30 − 6 = 24.",
+      "prompt": "For 3, 5, 7, 8, 12, 15, 21, 22: a) find the lower and upper quartiles b) find the interquartile range c) why is the IQR fairer than the range?",
+      "answer": "a) Lower quartile (5 + 7) ÷ 2 = 6; upper quartile (15 + 21) ÷ 2 = 18. b) IQR = 18 − 6 = 12. c) The IQR uses only the middle half, so a single extreme value cannot stretch it the way it stretches the range.",
       "modelType": "model-4",
-      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean or Median.",
+      "hint": "Split the ordered data into two halves, then find the middle of each half. The IQR is the gap between those two middles.",
       "explanation": "Quartiles and the Interquartile Range: To describe spread more fairly, we split ordered data into four equal parts using quartiles. Imagine lining up all the values from smallest to largest. The median cuts the line in half. The lower quartile (Q1) sits a quarter of the way along, and the upper quartile (Q3) sits three-quarters of the way along."
     },
     {
@@ -151,10 +151,10 @@
       "difficulty": "Explore",
       "title": "Trends, Patterns and Outliers",
       "context": "Once data is displayed, one of your main jobs is to describe its overall shape rather than getting lost in single points. On a line graph, look first for the trend – the general direction of travel.",
-      "prompt": "For the data 4, 7, 7, 8, 9, 10, 11, find the mean, median, mode and range.",
-      "answer": "1) Mean = 56 ÷ 7 = 8; median = 8; mode = 7; range = 11 − 4 = 7.",
+      "prompt": "Monthly rainfall in mm: 20, 22, 25, 24, 120, 26, 23. a) Describe the trend. b) Which value is an outlier? c) Should it be removed, and what must you check first?",
+      "answer": "a) Rainfall is steady at roughly 20–26 mm. b) 120 mm. c) Not automatically — first check whether it is a recording error or a real storm. Only a genuine error should be removed; a real value is part of the data.",
       "modelType": "model-5",
-      "hint": "Show the information first — a bar model, a number line or a jotting. Then name which idea you are using: Mean or Median.",
+      "hint": "A trend is the overall direction once the bumps are ignored. An outlier sits far from the rest, and the first question is always whether it is real.",
       "explanation": "Trends, Patterns and Outliers: Once data is displayed, one of your main jobs is to describe its overall shape rather than getting lost in single points. On a line graph, look first for the trend – the general direction of travel. An upward trend shows something growing, a downward trend shows decline, and a flat trend shows little change."
     },
     {

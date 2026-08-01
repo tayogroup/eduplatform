@@ -304,6 +304,122 @@ const QUESTIONS = [
     answer: "a) At (1, −3). b) No — a rotation never changes size or shape. c) The centre of rotation; every other point sweeps along a circle around it.",
     hint: "Turn the paper itself and watch one corner travel. A 90° clockwise turn about the origin sends the point (x, y) to (y, −x).",
   },
+  {
+    grade: 7, unit: "unit-1", id: "explore-3", teaches: "Multiplying and Dividing Integers",
+    replaces: "Write the opposite of each: a) 9 b) -14 c) 0.",
+    prompt: "Work out a) (−6) × 4 b) (−7) × (−3) c) 20 ÷ (−5) d) (−36) ÷ (−9).",
+    answer: "a) −24, b) 21, c) −4, d) 4.",
+    hint: "Two signs the same give a positive answer; two signs different give a negative one. Work out the digits first, then decide the sign.",
+  },
+  {
+    grade: 7, unit: "unit-1", id: "explore-4", teaches: "Multiples and the Lowest Common Multiple (LCM)",
+    replaces: "Calculate: a) (-6) + (-5) b) (-9) + 4 c) 7 + (-12).",
+    prompt: "a) List the first six multiples of 4 and of 6. b) What is the LCM of 4 and 6? c) Two buses leave together, one every 4 minutes and one every 6 — when do they next leave together?",
+    answer: "a) 4, 8, 12, 16, 20, 24 and 6, 12, 18, 24, 30, 36. b) 12. c) After 12 minutes.",
+    hint: "The lowest common multiple is the first number to appear in both lists. Timetable questions like (c) are LCM questions in disguise.",
+  },
+  // unit-2's cards each hold the next one's question, so three of these are
+  // relocations: expanding moves back to the expanding card, substitution to
+  // the substitution card, and only the equations card needs a new question.
+  {
+    grade: 7, unit: "unit-2", id: "explore-3", teaches: "Expanding Brackets",
+    replaces: "Name the coefficient of x in: 5x + 3y − 7.",
+    prompt: "Expand: a) 2(x + 3) b) 5(a + 4) c) 3(2y + 1).",
+    answer: "a) 2x + 6, b) 5a + 20, c) 6y + 3.",
+    hint: "Multiply the term outside the bracket by every term inside it in turn. Nothing inside is left untouched.",
+  },
+  {
+    grade: 7, unit: "unit-2", id: "explore-4", teaches: "Substituting into Formulae",
+    replaces: "Expand: a) 2(x + 3) b) 5(a + 4) c) 3(2y + 1).",
+    prompt: "If y = 5, find the value of a) 2y b) y + 8 c) 3y − 1.",
+    answer: "a) 10, b) 13, c) 14.",
+    hint: "Replace the letter with its value, then do the arithmetic. Remember 2y means 2 × y, so put the multiplication back in.",
+  },
+  {
+    grade: 7, unit: "unit-2", id: "explore-5", teaches: "Constructing and Solving Equations",
+    replaces: "If y = 5, find the value of: a) 2y b) y + 8 c) 3y − 1.",
+    prompt: "A number is doubled and then 7 is added, giving 23. a) Write this as an equation. b) Solve it. c) Check your answer against the original wording.",
+    answer: "a) 2n + 7 = 23. b) 2n = 16, so n = 8. c) Double 8 is 16, and 16 + 7 = 23, so it works.",
+    hint: "Turn each phrase into symbols in the order it is written, then undo the operations in reverse until the letter stands alone.",
+  },
+  {
+    grade: 7, unit: "unit-6", id: "explore-3", teaches: "Collecting Data – Samples and Bias",
+    replaces: "Find the mean of: 6, 9, 12, 8, 5.",
+    prompt: "To find the favourite sport of a whole school, Amina asks only the football team. a) Why is this sample biased? b) Suggest a fairer way to choose it.",
+    answer: "a) The football team is far more likely to say football, so the sample does not represent the school. b) Pick at random across every year group, so each student has an equal chance of being asked.",
+    hint: "A sample is biased when some groups are likelier to be chosen than others. Ask whether every member of the population had a fair chance.",
+  },
+  {
+    grade: 7, unit: "unit-9", id: "explore-5", teaches: "Finding the nth Term of an Arithmetic Sequence",
+    replaces: "Is 5, 10, 20, 40, … arithmetic? Explain in one sentence.",
+    prompt: "For the sequence 5, 8, 11, 14, … a) find the nth term rule b) use it to find the 20th term.",
+    answer: "a) The common difference is 3 and the first term is 5, so the nth term is 3n + 2. b) 3 × 20 + 2 = 62.",
+    hint: "Multiply n by the common difference, then adjust by whatever is needed to make the first term come out right.",
+  },
+  {
+    grade: 7, unit: "unit-11", id: "explore-2", teaches: "Functions and Relationships",
+    replaces: "State the quadrant of each point: a) (2, 5) b) (−3, 1) c) (−4, −2) d) (6, −1).",
+    prompt: "A function is 'multiply by 3, then subtract 2'. a) Give the outputs for inputs 1, 2 and 5. b) Write the function using x. c) Which input gives an output of 13?",
+    answer: "a) 1, 4 and 13. b) y = 3x − 2. c) x = 5, since 3 × 5 − 2 = 13.",
+    hint: "A function sends each input to exactly one output. Work forwards for outputs, and undo the steps in reverse to find an input.",
+  },
+  {
+    grade: 7, unit: "unit-11", id: "explore-6", teaches: "Real-Life Graphs",
+    replaces: "Find the gradient of the line through each pair: a) (1, 2) and (4, 11) b) (0, 5) and (2, 1).",
+    prompt: "A taxi fare graph starts at 200 shillings and rises by 100 shillings for every kilometre. a) What does the starting value mean? b) What does the steepness mean? c) What is the fare for 6 km?",
+    answer: "a) A fixed charge of 200 shillings before any distance is travelled. b) The cost per kilometre, 100 shillings each. c) 200 + 6 × 100 = 800 shillings.",
+    hint: "On a real-life graph the starting value is what you pay before anything happens, and the steepness is the rate of change.",
+  },
+  {
+    grade: 7, unit: "unit-12", id: "explore-5", teaches: "Direct Proportion and the Unitary Method",
+    replaces: "Are the ratios 2:3 and 6:9 equivalent? Show how you know.",
+    prompt: "Five identical books cost 1,250 shillings. Using the unitary method, find a) the cost of one book b) the cost of 8 books.",
+    answer: "a) 1,250 ÷ 5 = 250 shillings. b) 250 × 8 = 2,000 shillings.",
+    hint: "The unitary method always finds the value of one first, then scales up to however many are needed.",
+  },
+  {
+    grade: 7, unit: "unit-12", id: "explore-6", teaches: "Scale, Maps and Scale Factors",
+    replaces: "Write the ratio of 1 hour to 20 minutes in its simplest form.",
+    prompt: "A map has a scale of 1:50,000. a) What real distance does 3 cm on the map represent, in kilometres? b) How long on the map is a road that is 10 km long?",
+    answer: "a) 3 × 50,000 = 150,000 cm, which is 1.5 km. b) 10 km is 1,000,000 cm, and 1,000,000 ÷ 50,000 = 20 cm.",
+    hint: "A scale of 1:50,000 means 1 cm on the map is 50,000 cm in real life. Convert to kilometres at the end, remembering 100,000 cm make 1 km.",
+  },
+  // unit-14's plotting and reflection cards hold each other's questions.
+  {
+    grade: 7, unit: "unit-14", id: "explore-2", teaches: "Plotting and Reading Points Accurately",
+    replaces: "Reflect the point (4, 5) in the x-axis.",
+    prompt: "A point sits 3 units left and 4 units up from the origin. a) Write its coordinates. b) Which coordinate is written first, and why does the order matter?",
+    answer: "a) (−3, 4). b) The x-coordinate comes first. (−3, 4) and (4, −3) are different points, so the order cannot be swapped.",
+    hint: "Always read across before you read up. Left of the origin makes x negative, and below it makes y negative.",
+  },
+  {
+    grade: 7, unit: "unit-14", id: "explore-3", teaches: "Translation – Sliding a Shape",
+    replaces: "Name the quadrant of each point: a) (2, 7) b) (-5, 1) c) (-3, -8) d) (6, -2).",
+    prompt: "A triangle has corners (1, 1), (4, 1) and (1, 3), and is translated 3 right and 2 down. a) Give the new corners. b) Does it change size or turn?",
+    answer: "a) (4, −1), (7, −1) and (4, 1). b) No — a translation slides every point the same way, so size, shape and facing are all unchanged.",
+    hint: "Apply the slide to every corner: 3 right adds 3 to each x, and 2 down takes 2 from each y.",
+  },
+  {
+    grade: 7, unit: "unit-14", id: "explore-4", teaches: "Reflection – Flipping in a Mirror Line",
+    replaces: "A point is 3 units left and 4 units up from the origin. Write its coordinates.",
+    prompt: "a) Reflect the point (4, 5) in the x-axis. b) Now reflect (4, 5) in the y-axis instead. c) Which coordinate changes sign in each case?",
+    answer: "a) (4, −5). b) (−4, 5). c) Reflecting in the x-axis changes the sign of y; reflecting in the y-axis changes the sign of x.",
+    hint: "The mirror line stays still, so the coordinate measured across it flips sign while the other one is untouched.",
+  },
+  {
+    grade: 7, unit: "unit-16", id: "explore-4", teaches: "Quartiles and the Interquartile Range",
+    replaces: "Find the range of 14, 6, 22, 9, 30.",
+    prompt: "For 3, 5, 7, 8, 12, 15, 21, 22: a) find the lower and upper quartiles b) find the interquartile range c) why is the IQR fairer than the range?",
+    answer: "a) Lower quartile (5 + 7) ÷ 2 = 6; upper quartile (15 + 21) ÷ 2 = 18. b) IQR = 18 − 6 = 12. c) The IQR uses only the middle half, so a single extreme value cannot stretch it the way it stretches the range.",
+    hint: "Split the ordered data into two halves, then find the middle of each half. The IQR is the gap between those two middles.",
+  },
+  {
+    grade: 7, unit: "unit-16", id: "explore-5", teaches: "Trends, Patterns and Outliers",
+    replaces: "For the data 4, 7, 7, 8, 9, 10, 11, find the mean, median, mode and range.",
+    prompt: "Monthly rainfall in mm: 20, 22, 25, 24, 120, 26, 23. a) Describe the trend. b) Which value is an outlier? c) Should it be removed, and what must you check first?",
+    answer: "a) Rainfall is steady at roughly 20–26 mm. b) 120 mm. c) Not automatically — first check whether it is a recording error or a real storm. Only a genuine error should be removed; a real value is part of the data.",
+    hint: "A trend is the overall direction once the bumps are ignored. An outlier sits far from the rest, and the first question is always whether it is real.",
+  },
 ];
 
 const norm = (s) => String(s || "").replace(/\s+/g, " ").trim();

@@ -1,3 +1,22 @@
-/* Local-dev alias for the dated shared-css snapshot (see course-ui-20260722a.css
- * for rationale). Revision e: grammar full-bleed removes the page scrollbar. */
+/* Local-dev alias for the dated shared-css snapshot. Revision e: grammar
+ * full-bleed removes the page scrollbar.
+ *
+ * WHY A DATED FILENAME: the Bunny pull zone ignores query strings, so ?v=
+ * cache-busting never worked — a new filename is the only reliable cache-bust.
+ * Every other subject imports this dated path rather than course-ui.css directly:
+ * mathematics, science, computing, intensive-english and kiswahili. On the CDN,
+ * app/english/shared/course-ui-20260723e.css is a FULL SNAPSHOT of course-ui.css
+ * uploaded at release time; locally this one-line alias keeps dev servers tracking
+ * the live file. Do not delete or rename it without repointing those importers.
+ *
+ * WHEN SHARED STYLES CHANGE AGAIN: mint a new dated alias like this one, repoint
+ * the other subjects' course-ui.css imports at it, upload the full course-ui.css
+ * content to the new dated CDN path, and ship a new shell vN. The superseded alias
+ * can then be dropped locally — the CDN keeps its snapshot, so older releases that
+ * still reference it keep rendering.
+ *
+ * Revisions 20260722a and 20260723a-d were retired that way and removed locally
+ * (their CDN snapshots remain). This file carries the rationale that used to live
+ * in 20260722a.
+ */
 @import url("./course-ui.css");

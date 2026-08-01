@@ -1,0 +1,2301 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T20:13:37.825Z",
+  "stage": {
+    "id": "s08",
+    "label": "Stage 8"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t01",
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "comp-g08-u02",
+    "unitNo": 2,
+    "unitTitle": "Managing Data",
+    "unitOverview": "In this unit — Managing Data — you will work through models and simulators, features and key features, simulators and data, spreadsheet models, building leila's model in libreoffice calc, what, the goal seek tool, data and its purpose, the parts of a database, accurate data and consistent formats, validation, creating the database and its validation in libreoffice base, searching a database with a query and data collection forms. Everything you need is here: explainers to read, examples to copy, things to build, practice with answers, and a project at the end. Every tool used is free and runs in a web browser.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Lower Secondary Computing",
+    "code": "0868",
+    "stage": 8
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-8-Content-Package",
+    "framework": "Cambridge Lower Secondary Computing 0868 — Stage 8",
+    "sourceArchive": "Year 8-20260801T201049Z-1-001.zip",
+    "sourceAudience": "student",
+    "sourceDocuments": [
+      "Year 8/Unit 2/Year 8 - Unit 2 Lesson.docx",
+      "Year 8/Unit 2/Year 8 - Unit 2 Activities & Projects.docx",
+      "Year 8/Unit 2/Year 8 - Unit 2 Practice & Quiz.docx",
+      "Year 8/Unit 2/Year 8 - Unit 2 Reference.docx"
+    ],
+    "sourceBlockCount": 1049,
+    "transformation": "Structured from the Cambridge Lower Secondary Computing 0868 — Stage 8 Lesson, Activities & Projects, Practice & Quiz and Reference booklets for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Explain what a model is and what a simulator is, and give real examples of each.",
+    "Identify the features and key features of a simulator.",
+    "Describe the data a simulator needs as input, and the data a programmer needs to build one.",
+    "Explain what a spreadsheet model is and how it uses cells, cell references and formulas.",
+    "Write correct LibreOffice Calc formulas using =SUM(), =AVERAGE(), =MAX(), =MIN() and arithmetic.",
+    "Use the Goal Seek tool to work backwards from a goal to the value that achieves it.",
+    "Explain the purpose of data and decide whether an item of data is necessary for a task.",
+    "Identify when data is incomplete or missing and say why that is a problem.",
+    "Name the parts of a database: table, field, record and primary key.",
+    "Explain why a consistent format matters when you search for data."
+  ],
+  "toolkit": [
+    {
+      "name": "A free spreadsheet",
+      "url": "Google Sheets, or LibreOffice Calc",
+      "steps": [
+        "Open a new blank spreadsheet.",
+        "Put your field names in row 1, one per column.",
+        "Type one record per row underneath.",
+        "Use Insert → Chart to turn your data into a graph."
+      ],
+      "note": "Any free spreadsheet works — the ideas are the same in all of them."
+    },
+    {
+      "name": "A simple database",
+      "url": "A spreadsheet in database layout, or LibreOffice Base",
+      "steps": [
+        "Give every field a clear name and one kind of data.",
+        "Enter one record per row.",
+        "Sort on a field to put records in order.",
+        "Filter or search to find the records that match a condition."
+      ],
+      "note": "A spreadsheet laid out with fields and records works as a database for this unit."
+    }
+  ],
+  "tutorPrompts": [
+    "Give me five examples of simulators used in real life, and for each one tell me what data it needs.",
+    "What is the difference between a feature and a key feature of a simulator? Please use a simple example.",
+    "Big Idea 4: Spreadsheet models",
+    "In LibreOffice Calc, how do I change a value and watch the total update? Walk me through one example.",
+    "Why might raising a price not always increase profit in real life, even if the spreadsheet says it will?",
+    "Big Idea 7: The Goal Seek tool",
+    "Explain Goal Seek in LibreOffice Calc as if I were teaching it to a friend. Use the idea of working backwards from a goal.",
+    "My Goal Seek says it cannot find a solution. What are the common reasons for that, and how do I fix them?"
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-models-and-simulators",
+      "title": "Models and simulators",
+      "explanation": "A simulator is a special kind of model. It is a copy of a system or scenario that helps people develop and practise skills safely. Think about a driving simulator. A learner can practise steering, braking and turning on a screen, long before they sit in a real car on a busy Hargeisa street. If they make a mistake in the simulator, nobody is hurt and nothing is damaged - they simply try again.\n\nSimulators are used in many important areas of life. A surgeon practises a difficult operation on a surgery simulator before ever touching a real patient, so no lives are put at risk while they learn. A pilot trains in a flight simulator before flying a real aeroplane full of passengers. Simulators are also used in space exploration, in manufacturing, and in retail to plan how a shop should be laid out. The common thread is always the same: a simulator lets you learn, test and plan without the cost or the danger of using the real system.\n\nOne of the earliest flight simulators was the Link Trainer.",
+      "example": "It was created by an American inventor called Edwin Link, who began building it in 1927; it went on sale in 1929. He made it because there was a real need for a safe way to teach new pilots how to use an aeroplane's controls before they ever left the ground."
+    },
+    {
+      "id": "concept-2-features-and-key-features",
+      "title": "Features and key features",
+      "explanation": "When you use a simulator, all the information shown on the screen and all the options you can choose are called the features. In a flight simulator, the features include the speed reading, the dials, the view from the cockpit window, the buttons to change aeroplane, and the controls to steer left and right. Some features matter more than others. A key feature is one that is especially important or useful. In a flight simulator, the display that shows the aeroplane's speed is a key feature, because without knowing the speed the pilot cannot fly safely.\n\nLearning to spot the key features of any system is a real computing skill. When you design your own models later, you will have to decide which pieces of information are the most important to show - and which are just nice extras. A good designer puts the key features where the user will notice them first.",
+      "example": "Learning to spot the key features of any system is a real computing skill. When you design your own models later, you will have to decide which pieces of information are the most important to show - and which are just nice extras. A good designer puts the key features where the user will notice them first."
+    },
+    {
+      "id": "concept-3-simulators-and-data",
+      "title": "Simulators and data",
+      "explanation": "A simulator cannot do anything until you give it data. Data is the information the simulator processes to produce an output. In a flight simulator, the data you input might be the speed you set with the number keys, the direction you choose with the arrow keys, and the moment you decide to take off. A real pilot inputs the same kinds of data to a real aeroplane - they set the speed and steer in different directions - just using proper controls instead of a keyboard and mouse.\n\nMuch of this data is vital. What would happen in the simulator if you never set a speed? The aeroplane would just sit still. What if you could not turn left or right? It could only fly in a straight line. This shows why choosing the right data is such an important part of any model. There is a second kind of data too: the data a programmer needs to build the simulator in the first place, such as how high and how fast the aeroplane is allowed to fly, and what controls the user will have. So data is needed both to build a model and to run it.",
+      "example": "Much of this data is vital. What would happen in the simulator if you never set a speed? The aeroplane would just sit still. What if you could not turn left or right? It could only fly in a straight line. This shows why choosing the right data is such an important part of any model. There is a second kind of data too: the data a programmer needs to build the simulator in the first place, such as how high and how fast the aeroplane is allowed to fly, and what controls the user will have. So data is needed both to build a model and to run it."
+    },
+    {
+      "id": "concept-4-spreadsheet-models",
+      "title": "Spreadsheet models",
+      "explanation": "Now we move to the kind of model you will build yourself: a spreadsheet model. A spreadsheet is a grid of boxes called cells, arranged in lettered columns (A, B, C, ...) and numbered rows (1, 2, 3, ...). Every cell has an address made from its column letter and row number, called a cell reference. The cell in column F, row 7 is written F7. Cell references are how you tell the spreadsheet which numbers to use.\n\nA spreadsheet becomes a model when you add formulas. A formula is an instruction that calculates a result, and in LibreOffice Calc a formula always begins with an equals sign =. Instead of typing an answer, you type a formula that works the answer out from other cells. The magic is this: when you change one of those cells, every formula that uses it recalculates instantly. That is exactly what lets a spreadsheet answer what-if questions.\n\nYou can use a spreadsheet model to analyse a business, such as Leila's stall: how much money it takes in (its revenue), how much it spends, and how much profit is left over. If the profit is too low, you can model a change - a higher price, or selling more items - and see the result before you risk it in real life. You can also analyse things like students' test scores, using formulas to find the highest, the lowest and the average score.\n\nHere are the four functions you will use most. A function is a ready-made formula with a name.\n\nThe part in brackets, like E3:E6, is a range - it means 'every cell from E3 to E6'. The colon : is what makes it a range. Getting that colon right is important: E3:E6 means four cells, but E3-E6 would try to subtract E6 from E3, which is not what you want at all.\n\nFormula — What it does · Example use\n\n=SUM(E3:E6) — Adds up all the numbers from cell E3 down to E6. · Total of a column\n\n=AVERAGE(F3:F6) — Finds the mean (adds them up, divides by how many). · Average profit\n\n=MAX(F3:F6) — Gives the largest number in the range. · Best-selling profit",
+      "example": "=MIN(F3:F6) — Gives the smallest number in the range. · Weakest profit"
+    },
+    {
+      "id": "concept-5-building-leila-s-model-in-libreoffice-calc",
+      "title": "Building Leila's model in LibreOffice Calc",
+      "explanation": "Let us build Leila's stall model step by step. Open LibreOffice Calc. You will type the headings in row 2, then one row for each product. Here is exactly what the finished model looks like. The grey top row and left column show the cell references so you can see where everything goes.\n\nThe prices are in Somali shillings, written Sh for short. You type the plain facts into columns A to D (the item name, its cost to make, its selling price and how many were sold). Columns E and F, and the totals in row 7, are not typed in - they are calculated by formulas. Here are those formulas.\n\nThe formulas behind Leila's model\n\nLet us read the profit formula for casiir, in cell F3. It is =(C3-B3)*D3. The brackets are worked out first: C3-B3 is the price minus the cost, which is 5000-2000 = 3000 shillings of profit on one cup. Then *D3 multiplies that by the number sold, 30, giving 90000. The spreadsheet shows 90000 in cell F3. The total profit in F7 uses =SUM(F3:F6), which adds 90000 + 80000 + 62500 + 30000 to give 262500 shillings.\n\nYou do not have to type the formula into every row. Type it once in E3 and F3, then use the fill handle - the small square at the bottom-right corner of the selected cell - and drag it down to row 6. Calc copies the formula and adjusts the references automatically: E3 was =C3*D3, so E4 becomes =C4*D4, E5 becomes =C5*D5, and so on. This clever behaviour is called a relative reference, and it saves you a great deal of typing.\n\nRow — A · B · C · D · E · F\n\n2 — Item · Cost (Sh) · Price (Sh) · Number sold · Revenue (Sh) · Profit (Sh)\n\n3 — Casiir · 2000 · 5000 · 30 · 150000 · 90000\n\n4 — Shaah · 1000 · 3000 · 40 · 120000 · 80000\n\n5 — Sambuus · 1500 · 4000 · 25 · 100000 · 62500\n\n6 — Buskut · 1000 · 2500 · 20 · 50000 · 30000",
+      "example": "7 — Totals · 115 · 420000 · 262500"
+    },
+    {
+      "id": "concept-6-what",
+      "title": "What",
+      "explanation": "Now the model earns its keep. What-if analysis means asking a question that begins 'What if...?', changing a value, and watching the effect ripple through the other cells. Because the formulas recalculate the instant you press Enter, you see the answer immediately. This is far faster and safer than trying a change in real life.\n\nLeila's first question is: What if I raise the price of casiir from 5000 to 6000 shillings? To test it, click cell C3, type 6000, and press Enter. Watch what happens. The revenue in E3 jumps from 150000 to 180000. The profit in F3 climbs from 90000 to 120000, because now each cup earns 6000-2000 = 4000 shillings and she sells 30 of them. The total profit in F7 rises from 262500 to 292500. In one keystroke, Leila can see that raising the price by 1000 shillings would add 30000 shillings to her profit - if her customers are still happy to buy.",
+      "example": "That last point matters. A model is only as good as the thinking behind it. The spreadsheet assumes Leila still sells 30 cups at the higher price, but in real life a higher price might mean fewer sales. A wise data manager tests several what-if questions and uses good judgement, rather than trusting one number blindly. Try more questions yourself: What if she sells 45 cups of casiir? What if the cost of sambuus rises by 500 shillings? Change the value and read the new totals."
+    },
+    {
+      "id": "concept-7-the-goal-seek-tool",
+      "title": "The Goal Seek tool",
+      "explanation": "What-if analysis works forwards: you change an input and see the new output. But sometimes you know the output you want and need to find the input that reaches it. For that, Calc has a brilliant tool called Goal Seek. You set the goal, and Goal Seek works backwards to find the value that achieves it. In LibreOffice Calc you open it from the Tools menu: click Tools > Goal Seek.\n\nThe Goal Seek dialog has three boxes. Formula cell is the cell that holds the result you care about (it must contain a formula). Target value is the number you want that cell to reach. Variable cell is the single cell Calc is allowed to change to hit the target (it must hold a plain number, not a formula). Let us try Leila's next question.\n\nWhat if Leila wants her total profit to be exactly 300000 shillings - what price must she charge for casiir? Here the goal is the total profit in F7, and the value we will let Calc change is the casiir price in C3. Fill the dialog in like this.\n\nGoal Seek settings for Leila's 300000 profit question\n\nVariable cell: C3 (the casiir price, which Calc will change)\n\nClick OK. Calc asks 'Insert the result into the variable cell?' - click Yes to keep it. The casiir price in C3 changes to 6250, and the total profit in F7 now reads exactly 300000. Goal Seek has worked backwards from the goal to the answer: casiir must be sold at 6250 shillings for the stall to make 300000 shillings of total profit. You can check it by hand: (6250-2000)*30 = 127500 profit on casiir, and 127500 + 80000 + 62500 + 30000 = 300000.\n\nGoal Seek can change any single input. Suppose instead Leila asks: How many cups of shaah must I sell to make 100000 shillings profit on shaah alone? The shaah profit is in F4, and the number sold is in D4. Set Formula cell F4, Target value 100000, Variable cell D4, and click OK. Calc sets D4 to 50, because each shaah earns 3000-1000 = 2000 shillings of profit, and 2000*50 = 100000.",
+      "example": "You have learned to model data in a spreadsheet. Now you will learn to store and manage data in a database. A database is an organised store of data that you can search, sort and update quickly and reliably. Where a spreadsheet is brilliant for calculating, a database is brilliant for keeping large amounts of data tidy, accurate and easy to find."
+    },
+    {
+      "id": "concept-8-data-and-its-purpose",
+      "title": "Data and its purpose",
+      "explanation": "Before you collect any data, you must ask one simple question: what is it for? The purpose of data is the reason you need it. Collecting data with a clear purpose keeps your database useful; collecting data for no reason just clutters it up and can even invade people's privacy.\n\nImagine Sami is a helper in the Ehel Academy library, and some new volunteers are starting. To decide what jobs to give each volunteer, Sami needs some data: their name, their age, whether they have volunteered before, which tasks they enjoy, and whether they have any disability that affects lifting or carrying. Every one of those items has a clear purpose - it helps him give safe, suitable jobs. But he does not need their favourite colour or favourite drink. That data has no purpose for this task, so it should not be collected.",
+      "example": "Data can also be incomplete or missing, and that causes problems. If Sami does not know that a volunteer has a back injury, he might ask them to carry a heavy box of books and cause harm. If he does not know which tasks a volunteer enjoys, he might give them a job they dislike. So a good data manager checks two things: that every item of data collected is necessary (it has a purpose), and that the data is complete (nothing important is missing)."
+    },
+    {
+      "id": "concept-9-the-parts-of-a-database",
+      "title": "The parts of a database",
+      "explanation": "A database stores its data in one or more tables. A table looks a lot like a spreadsheet grid, but the words we use are different and precise. Look at the Ehel Academy library's book-reviews table below, then we will name every part.\n\nA field is one column of the table - all the data about one aspect of every record. ReviewerAge is a field; so is BookTitle. A record is one row of the table - all the data about a single thing. The whole of row 3 (Maya, 13, The Clever Fox, 5) is one record: everything the database knows about that one review. So fields go down as columns, and records go across as rows.\n\nThe first field, ReviewID, is special. It is the primary key: a field where every record has a unique value, so no two records can ever be mistaken for each other. Even if two students called Leila both review the same book, their reviews still have different ReviewID numbers, so the database can always tell them apart. A good primary key is never left blank and is never repeated. In LibreOffice Base you can let the database fill it in automatically, counting 1, 2, 3, 4 for you.\n\nThe word database has been used since the 1960s, when computers first became powerful enough to store large collections of data.\n\nToday almost everything you use runs on databases: your school register, the shop that sells you a sim card in Hargeisa, the hospital that keeps your health records, and every app on a phone.\n\nReviewID — ReviewerName · ReviewerAge · BookTitle · ReviewScore\n\n1 — Leila · 13 · Wildlife of the Golis · 5\n\n2 — Ben · 12 · Journey to the Stars · 4\n\n3 — Maya · 13 · The Clever Fox · 5\n\n4 — Rohan · 14 · Sailing the Red Sea · 3\n\n5 — Nora · 13 · The Golden Lamp · 4",
+      "example": "6 — Sami · 12 · Mountains of Sanaag · 2"
+    },
+    {
+      "id": "concept-10-accurate-data-and-consistent-formats",
+      "title": "Accurate data and consistent formats",
+      "explanation": "When you search a database, you want to find every record that matches - no more and no fewer. That only works if the data has been entered in a consistent format. The format of a field is the agreed structure of the data in it. Look at what goes wrong when a 'date of birth' field is filled in every-which-way.\n\nSuppose you search for everyone born on 11 January 2001. If you search for 11/01/2001 you find John Jones. But Sebastian Wong was born on the very same day - his date is just written as '11th January 01', so the search misses him. Search for 11.01.2001 and you find nobody at all, because no record is written that way. The data is not wrong, exactly, but it is inconsistent, and inconsistent data gives wrong search results.\n\nThe fix is to agree one format for every field and stick to it - for example, all dates written as DD/MM/YYYY (day / month / year). In a database you enforce this by choosing the right field type (a real Date field only accepts real dates) and by adding validation, which is our next big idea.\n\nFirst name — Last name · Date of birth\n\nJohn — Jones · 11/01/2001\n\nSue — Begum · 16.06.83\n\nNatasha — Johansson · 12th October 2002\n\nSebastian — Wong · 11th January 01",
+      "example": "Paulo — Valdez · 14/12/1999"
+    },
+    {
+      "id": "concept-11-validation",
+      "title": "Validation",
+      "explanation": "Validation means setting rules that check data as it is entered, and rejecting anything that breaks the rules. Validation cannot tell whether data is true - it cannot know if you really are 13 - but it can stop obvious mistakes, like a blank name, a score of 99, or a phone number with letters in it. Here are the four validation checks you need to know, and how each one is done in LibreOffice Base.\n\nNotice the last column. This is an important difference from the textbook, which uses Microsoft Access. In Access you type a rule such as Is Not Null or >=1 And <=5 into a 'Validation Rule' box. LibreOffice Base works differently and has no such box in the table designer. Instead, a presence check is the field property Entry required = Yes; a length check is the Length property of a text field; and a range check is set on the form by giving a numeric control a Min value and a Max value. The idea is identical; only the method changes.\n\nValidation check — What it does · How you do it in LibreOffice Base\n\nPresence check — Stops a field being left blank (empty). The simplest rule. · Field property: Entry required = Yes\n\nFormat check — Makes sure data follows a set pattern, such as a real date. · Use the correct field type (Date [DATE]) and a format\n\nLength check — Limits how many characters may be entered in a field. · Text field property: Length (for example 25)",
+      "example": "Range check — Keeps a number within set limits, such as 1 to 5. · Form control Min value / Max value (or an SQL CHECK)"
+    },
+    {
+      "id": "concept-12-creating-the-database-and-its-validation-in-libreoffice-base",
+      "title": "Creating the database and its validation in LibreOffice Base",
+      "explanation": "Now you build the library database. Open LibreOffice Base. The Database Wizard appears; choose Create a new database, click Next, keep the default embedded database, then Finish, and save the file as EhelLibrary.odb. You now have an empty database. In the left panel, click Tables, then Create Table in Design View.\n\nDesign View is where you describe each field. It shows a grid with a Field Name column, a Field Type column, and a Description column, with a Field Properties panel beneath it. Type in the five fields for the book-reviews table like this.\n\nTo make ReviewID the primary key, right-click the small grey box to the left of its row and choose Primary Key; a little key icon appears. In its Field Properties, set AutoValue to Yes so Base numbers each record automatically. For the presence checks, click each of the other fields in turn and set Entry required to Yes - now none of them can be left blank. For the length check, click ReviewerName and set its Length to 25, so a name can be at most 25 characters. Save the table (press Ctrl+S) and name it BookReviews.\n\nThe range check on ReviewScore (it must be 1 to 5) is set slightly differently, because Base does this on the data-entry form rather than in the table. When you build your form (Big Idea 14), you click the box for the review score, open its Control Properties, and set Min value to 1 and Max value to 5. Now the form refuses any score below 1 or above 5. Confident students can instead add a rule directly with Tools > SQL by typing an SQL CHECK constraint, but the form method is easier and works well.\n\nOptional: the same range check written as SQL (Tools > SQL)\n\nADD CHECK ( \"ReviewScore\" >= 1 AND \"ReviewScore\" <= 5 );\n\nField name — Field type · Key properties to set\n\nReviewID — Integer [INTEGER] · Primary key; AutoValue = Yes (counts 1, 2, 3 for you)\n\nReviewerName — Text [VARCHAR] · Entry required = Yes; Length = 25\n\nReviewerAge — Small Integer [SMALLINT] · Entry required = Yes; range 5 to 100\n\nBookTitle — Text [VARCHAR] · Entry required = Yes; Length = 60",
+      "example": "ReviewScore — Small Integer [SMALLINT] · Entry required = Yes; range 1 to 5"
+    },
+    {
+      "id": "concept-13-searching-a-database-with-a-query",
+      "title": "Searching a database with a query",
+      "explanation": "The whole point of a database is that you can search it. A search is called a query, and a query finds every record that matches a criterion - a rule such as 'the score is greater than or equal to 4'. In LibreOffice Base, click Queries, then Create Query in Design View. Add the BookReviews table, double-click the fields you want to see so they drop into the grid, and type your rule into the Criterion row under the right field. Then press F5 (or click Run Query) to see the results.\n\nFor example, the librarian asks: which reviews gave a score of 4 or more? Under the ReviewScore field you type the criterion >= 4 and run the query. Using our six records, the answer is four reviews: Leila (5), Ben (4), Maya (5) and Nora (4). Rohan (3) and Sami (2) are correctly left out. You can do the very same thing by writing SQL, the language databases understand. Switch to SQL view and type this.\n\nA query: reviews scoring 4 or more (returns 4 records)\n\nSELECT \"ReviewerName\", \"BookTitle\", \"ReviewScore\"\n\nRead the SQL like a sentence: SELECT these fields, FROM this table, WHERE this criterion is true. In LibreOffice Base, field and table names go inside double quotes, like \"ReviewScore\". You can change the criterion to ask other questions. WHERE \"ReviewerAge\" < 13 finds the reviewers younger than 13 - that is Ben and Sami, who are both 12. WHERE \"ReviewScore\" = 5 finds the top reviews, Leila and Maya. You can even sort the results: adding ORDER BY \"ReviewScore\" DESC lists them from the highest score to the lowest.",
+      "example": "The comparison operators you use in a criterion are the same ones you met in maths: < less than, > greater than, <= less than or equal to, >= greater than or equal to, = equal to, and <> not equal to. Choosing the right operator is the difference between finding the right records and finding the wrong ones, so read your criterion carefully before you run it."
+    },
+    {
+      "id": "concept-14-data-collection-forms",
+      "title": "Data collection forms",
+      "explanation": "Typing straight into a table works, but it is not friendly for other people. A data collection form is a tidy screen that gathers data one record at a time and stores it in the database. Forms are where your range check lives, and a good form makes sure people enter data correctly and in the same format every time.\n\nIn LibreOffice Base, click Forms, then Use Wizard to Create Form. The Form Wizard guides you through simple steps: choose the BookReviews table, move the fields you want onto the form with the >> button, arrange them, and click Finish. Your form appears with a labelled box for each field. To add the range check, switch the form to design mode, click the review-score box, open its Control Properties, and set Min value to 1 and Max value to 5. Now anyone can use the form to add a review, moving to a new record with the arrow at the bottom of the window.\n\nA wizard, by the way, is simply a help tool that guides you through creating something one step at a time - like an instruction manual built into the software. You will meet wizards all over LibreOffice.\n\nOnce a form exists, you should evaluate it - judge how good it is. Ask yourself these questions about any data collection form.\n\nAre the instructions clear, so the user knows what to do?\n\nAre the questions in a logical order (for example, name before age)?\n\nIs a format set, so everyone enters data the same way (all dates DD/MM/YYYY)?\n\nIs there enough space for the user to answer each question?",
+      "example": "For any multiple-choice question, are all the answer options provided?"
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "The formulas behind Leila's model",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "E3 =C3*D3 (revenue = price x number sold)",
+        "F3 =(C3-B3)*D3 (profit = (price - cost) x number sold)",
+        "E7 =SUM(E3:E6) (total revenue)",
+        "F7 =SUM(F3:F6) (total profit)",
+        "D7 =SUM(D3:D6) (total number sold)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-2",
+      "title": "Goal Seek settings for Leila's 300000 profit question",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "Tools > Goal Seek",
+        "Formula cell: F7 (the total profit)",
+        "Target value: 300000 (the profit Leila wants)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Modelling in LibreOffice Calc (Subunit 2.1)",
+      "context": "Modelling in LibreOffice Calc (Subunit 2.1): work through the steps below and see what happens. This is models and simulators in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Activity 1 - Type in Leila's data",
+      "answer": "Task: start the stall model by typing the raw facts. Open a new Calc spreadsheet. In cell A2 type Item. In B2 type Cost (Sh). In C2 type Price (Sh). In D2 type Number sold. In A3 type Casiir, then fill row 3: B3 = 2000, C3 = 5000, D3 = 30. In A4 type Shaah: B4 = 1000, C4 = 3000, D4 = 40. In A5 type Sambuus: B5 = 1500, C5 = 4000, D5 = 25.",
+      "modelType": "model-1",
+      "hint": "Start here: Task: start the stall model by typing the raw facts. Open a new Calc spreadsheet.",
+      "explanation": "Models and simulators: A simulator is a special kind of model. It is a copy of a system or scenario that helps people develop and practise skills safely. Think about a driving simulator. A learner can practise steering, braking and turning on a screen, long before they sit in a real car on a busy Hargeisa street. If they…"
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Databases in LibreOffice Base (Subunit 2.2)",
+      "context": "Databases in LibreOffice Base (Subunit 2.2): work through the steps below and see what happens. This is features and key features in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Activity 7 - Create the database and the table",
+      "answer": "Task: create the library database and design the book-reviews table. In the Database Wizard, choose Create a new database and click Next, then Finish. Open LibreOffice Base. Save it as EhelLibrary.odb. In the left panel click Tables, then Create Table in Design View. Add the fields with these names and types: ReviewID (Integer [INTEGER]), ReviewerName (Text [VARCHAR]), ReviewerAge (Small Integer [SMALLINT]), BookTitle (Text [VARCHAR]), ReviewScore (Small Integer [SMALLINT]). Right-click the grey box to the left of ReviewID and choose Primary Key. With ReviewID selected, set AutoValue to Yes in the Field Properties.",
+      "modelType": "model-2",
+      "hint": "Start here: Task: create the library database and design the book-reviews table.",
+      "explanation": "Features and key features: When you use a simulator, all the information shown on the screen and all the options you can choose are called the features. In a flight simulator, the features include the speed reading, the dials, the view from the cockpit window, the buttons to change aeroplane, and the controls to steer left…"
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "A spreadsheet model for a small business",
+      "context": "A spreadsheet model for a small business: work through the steps below and see what happens. This is simulators and data in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Plan. List three or four products with a cost, a price and a number sold. Choose a small Hargeisa business (a fruit stall, a phone-credit kiosk, a tailor).",
+      "answer": "Design. Decide your columns and which cells will be formulas (revenue, profit, totals). Create. Build it in Calc. Use =(price-cost)*number for profit and =SUM() for the totals; add =AVERAGE(), =MAX() and =MIN(). Test. Ask two what-if questions by changing values, and use Goal Seek once to hit a chosen profit. Evaluate. Write two sentences: is the model useful, and what would you improve?",
+      "modelType": "model-3",
+      "hint": "Start here: Design. Decide your columns and which cells will be formulas (revenue, profit, totals).",
+      "explanation": "Simulators and data: A simulator cannot do anything until you give it data. Data is the information the simulator processes to produce an output. In a flight simulator, the data you input might be the speed you set with the number keys, the direction you choose with the arrow keys, and the moment you decide to take…"
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Design and query a database",
+      "context": "Design and query a database: work through the steps below and see what happens. This is spreadsheet models in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "A Hargeisa games shop, Hilaac Games & Toys, needs a database so it can search for games by age, number of players, theme and maker. Build it in Base.",
+      "answer": "Plan. List the fields the shop needs. A good set is: GameID (primary key, AutoValue), GameName, MinAge, MinPlayers, MaxPlayers, Theme, Maker, PlayMinutes. Design. Decide the field type and validation for each: presence checks on the important fields, a length check on the text fields, and a range check on MinAge (say 3 to 18). Create. Make the table Games in Design View, set the primary key and validation, and enter at least six games. Test. Evaluate. Can the database answer every question the shop asked? If not, which field is missing? Write down your improvement.",
+      "modelType": "model-4",
+      "hint": "Start here: Plan. List the fields the shop needs. A good set is: GameID (primary key, AutoValue), GameName, MinAge, MinPlayers, MaxPlayers, Theme, Maker,…",
+      "explanation": "Spreadsheet models: Now we move to the kind of model you will build yourself: a spreadsheet model. A spreadsheet is a grid of boxes called cells, arranged in lettered columns (A, B, C, ...) and numbered rows (1, 2, 3, ...). Every cell has an address made from its column letter and row number, called a cell reference.…"
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Activities & Projects",
+      "context": "Activities & Projects: work through the steps below and see what happens. This is building leila's model in libreoffice calc in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Year 8 - Unit 2 - Managing Data - Ehel Academy Computing",
+      "answer": "How to Use This Document This is your hands-on workbook. Each activity gives you a task, the exact steps or formula, the expected result, and an AI-tutor prompt in case you get stuck. Do every activity yourself in LibreOffice - reading is not the same as doing. Work in order: Part A builds Leila's spreadsheet model in Calc, and Part B builds the Ehel Academy library database in Base. Then the Final Project brings both together. Setting Up LibreOffice Calc and Base (do this once) LibreOffice is free and open-source. You only need to install it one time. Open your web browser and go to libreoffice.org.",
+      "modelType": "model-5",
+      "hint": "Start here: How to Use This Document",
+      "explanation": "Building Leila's model in LibreOffice Calc: Let us build Leila's stall model step by step. Open LibreOffice Calc. You will type the headings in row 2, then one row for each product. Here is exactly what the finished model looks like. The grey top row and left column show the cell references so you can see where everything goes."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Setting Up LibreOffice Calc and Base (do this once)",
+      "context": "Setting Up LibreOffice Calc and Base (do this once): work through the steps below and see what happens. This is what in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "LibreOffice is free and open-source. You only need to install it one time.",
+      "answer": "Open your web browser and go to libreoffice.org. Click Download, choose the version for your computer (Windows, macOS or Linux), and download the installer. Open the downloaded file and follow the installer. Accept the normal options and wait for it to finish. Open LibreOffice. From the Start Center you can click Calc Spreadsheet to make a spreadsheet, or Base Database to make a database. To save a spreadsheet, use File > Save As and keep the LibreOffice format .ods. A database saves as .odb.",
+      "modelType": "model-6",
+      "hint": "Start here: Open your web browser and go to libreoffice.org.",
+      "explanation": "What: Now the model earns its keep. What-if analysis means asking a question that begins 'What if...?', changing a value, and watching the effect ripple through the other cells. Because the formulas recalculate the instant you press Enter, you see the answer immediately. This is far faster and safer than…"
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Models and simulators",
+      "modelType": "concept-model-1",
+      "purpose": "A simulator is a special kind of model. It is a copy of a system or scenario that helps people develop and practise skills safely. Think about a driving simulator. A learner can practise steering, braking and turning on…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Features and key features",
+      "modelType": "concept-model-2",
+      "purpose": "When you use a simulator, all the information shown on the screen and all the options you can choose are called the features. In a flight simulator, the features include the speed reading, the dials, the view from the…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Simulators and data",
+      "modelType": "concept-model-3",
+      "purpose": "A simulator cannot do anything until you give it data. Data is the information the simulator processes to produce an output. In a flight simulator, the data you input might be the speed you set with the number keys, the…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Spreadsheet models",
+      "modelType": "concept-model-4",
+      "purpose": "Now we move to the kind of model you will build yourself: a spreadsheet model. A spreadsheet is a grid of boxes called cells, arranged in lettered columns (A, B, C, ...) and numbered rows (1, 2, 3, ...). Every cell has…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Building Leila's model in LibreOffice Calc",
+      "modelType": "concept-model-5",
+      "purpose": "Let us build Leila's stall model step by step. Open LibreOffice Calc. You will type the headings in row 2, then one row for each product. Here is exactly what the finished model looks like. The grey top row and left…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "What",
+      "modelType": "concept-model-6",
+      "purpose": "Now the model earns its keep. What-if analysis means asking a question that begins 'What if...?', changing a value, and watching the effect ripple through the other cells. Because the formulas recalculate the instant…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-7",
+      "outcomeId": "lo07",
+      "title": "The Goal Seek tool",
+      "modelType": "concept-model-7",
+      "purpose": "What-if analysis works forwards: you change an input and see the new output. But sometimes you know the output you want and need to find the input that reaches it. For that, Calc has a brilliant tool called Goal Seek.…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-8",
+      "outcomeId": "lo08",
+      "title": "Data and its purpose",
+      "modelType": "concept-model-8",
+      "purpose": "Before you collect any data, you must ask one simple question: what is it for? The purpose of data is the reason you need it. Collecting data with a clear purpose keeps your database useful; collecting data for no…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-9",
+      "outcomeId": "lo09",
+      "title": "The parts of a database",
+      "modelType": "concept-model-9",
+      "purpose": "A database stores its data in one or more tables. A table looks a lot like a spreadsheet grid, but the words we use are different and precise. Look at the Ehel Academy library's book-reviews table below, then we will…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-10",
+      "outcomeId": "lo10",
+      "title": "Accurate data and consistent formats",
+      "modelType": "concept-model-10",
+      "purpose": "When you search a database, you want to find every record that matches - no more and no fewer. That only works if the data has been entered in a consistent format. The format of a field is the agreed structure of the…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-11",
+      "outcomeId": "lo01",
+      "title": "Validation",
+      "modelType": "concept-model-11",
+      "purpose": "Validation means setting rules that check data as it is entered, and rejecting anything that breaks the rules. Validation cannot tell whether data is true - it cannot know if you really are 13 - but it can stop obvious…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-12",
+      "outcomeId": "lo02",
+      "title": "Creating the database and its validation in LibreOffice Base",
+      "modelType": "concept-model-12",
+      "purpose": "Now you build the library database. Open LibreOffice Base. The Database Wizard appears; choose Create a new database, click Next, keep the default embedded database, then Finish, and save the file as EhelLibrary.odb.…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-13",
+      "outcomeId": "lo03",
+      "title": "Searching a database with a query",
+      "modelType": "concept-model-13",
+      "purpose": "The whole point of a database is that you can search it. A search is called a query, and a query finds every record that matches a criterion - a rule such as 'the score is greater than or equal to 4'. In LibreOffice…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-14",
+      "outcomeId": "lo04",
+      "title": "Data collection forms",
+      "modelType": "concept-model-14",
+      "purpose": "Typing straight into a table works, but it is not friendly for other people. A data collection form is a tidy screen that gathers data one record at a time and stores it in the database. Forms are where your range check…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with models and simulators",
+      "example": "It was created by an American inventor called Edwin Link, who began building it in 1927; it went on sale in 1929. He made it because there was a real need for a safe way to teach new pilots how to use an aeroplane's controls before they ever left the ground.",
+      "steps": [
+        "A simulator is a special kind of model. It is a copy of a system or scenario that helps people develop and practise skills safely. Think about a driving simulator. A learner can practise steering, braking and turning on…",
+        "Simulators are used in many important areas of life. A surgeon practises a difficult operation on a surgery simulator before ever touching a real patient, so no lives are put at risk while they learn. A pilot trains in…",
+        "One of the earliest flight simulators was the Link Trainer."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with features and key features",
+      "example": "Learning to spot the key features of any system is a real computing skill. When you design your own models later, you will have to decide which pieces of information are the most important to show - and which are just nice extras. A good designer puts the key…",
+      "steps": [
+        "Read the concept card for features and key features and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with simulators and data",
+      "example": "Much of this data is vital. What would happen in the simulator if you never set a speed? The aeroplane would just sit still. What if you could not turn left or right? It could only fly in a straight line. This shows why choosing the right data is such an…",
+      "steps": [
+        "Read the concept card for simulators and data and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with spreadsheet models",
+      "example": "=MIN(F3:F6) — Gives the smallest number in the range. · Weakest profit",
+      "steps": [
+        "Now we move to the kind of model you will build yourself: a spreadsheet model. A spreadsheet is a grid of boxes called cells, arranged in lettered columns (A, B, C, ...) and numbered rows (1, 2, 3, ...). Every cell has…",
+        "A spreadsheet becomes a model when you add formulas. A formula is an instruction that calculates a result, and in LibreOffice Calc a formula always begins with an equals sign =. Instead of typing an answer, you type a…",
+        "You can use a spreadsheet model to analyse a business, such as Leila's stall: how much money it takes in (its revenue), how much it spends, and how much profit is left over. If the profit is too low, you can model a…",
+        "Here are the four functions you will use most. A function is a ready-made formula with a name."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with building leila's model in libreoffice calc",
+      "example": "7 — Totals · 115 · 420000 · 262500",
+      "steps": [
+        "Let us build Leila's stall model step by step. Open LibreOffice Calc. You will type the headings in row 2, then one row for each product. Here is exactly what the finished model looks like. The grey top row and left…",
+        "The prices are in Somali shillings, written Sh for short. You type the plain facts into columns A to D (the item name, its cost to make, its selling price and how many were sold). Columns E and F, and the totals in row…",
+        "Let us read the profit formula for casiir, in cell F3. It is =(C3-B3)*D3. The brackets are worked out first: C3-B3 is the price minus the cost, which is 5000-2000 = 3000 shillings of profit on one cup. Then *D3…",
+        "You do not have to type the formula into every row. Type it once in E3 and F3, then use the fill handle - the small square at the bottom-right corner of the selected cell - and drag it down to row 6. Calc copies the…"
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "How to work with what",
+      "example": "That last point matters. A model is only as good as the thinking behind it. The spreadsheet assumes Leila still sells 30 cups at the higher price, but in real life a higher price might mean fewer sales. A wise data manager tests several what-if questions and…",
+      "steps": [
+        "Read the concept card for what and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-7",
+      "outcomeId": "lo07",
+      "difficulty": "Challenge",
+      "title": "How to work with the goal seek tool",
+      "example": "You have learned to model data in a spreadsheet. Now you will learn to store and manage data in a database. A database is an organised store of data that you can search, sort and update quickly and reliably. Where a spreadsheet is brilliant for calculating, a…",
+      "steps": [
+        "What-if analysis works forwards: you change an input and see the new output. But sometimes you know the output you want and need to find the input that reaches it. For that, Calc has a brilliant tool called Goal Seek.…",
+        "The Goal Seek dialog has three boxes. Formula cell is the cell that holds the result you care about (it must contain a formula). Target value is the number you want that cell to reach. Variable cell is the single cell…",
+        "What if Leila wants her total profit to be exactly 300000 shillings - what price must she charge for casiir? Here the goal is the total profit in F7, and the value we will let Calc change is the casiir price in C3. Fill…",
+        "Goal Seek settings for Leila's 300000 profit question"
+      ]
+    },
+    {
+      "id": "method-8",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "How to work with data and its purpose",
+      "example": "Data can also be incomplete or missing, and that causes problems. If Sami does not know that a volunteer has a back injury, he might ask them to carry a heavy box of books and cause harm. If he does not know which tasks a volunteer enjoys, he might give them…",
+      "steps": [
+        "Read the concept card for data and its purpose and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Models and simulators",
+      "prompt": "Explain in your own words: Models and simulators.",
+      "solution": "A simulator is a special kind of model. It is a copy of a system or scenario that helps people develop and practise skills safely. Think about a driving simulator. A learner can practise steering, braking and turning on a screen, long before they sit in a real car on a busy Hargeisa street. If they make a mistake in the simulator, nobody is hurt and nothing is damaged - they simply try again.\n\nSimulators are used in many important areas of life. A surgeon practises a difficult operation on a surgery simulator before ever touching a real patient, so no lives are put at risk while they learn. A pilot trains in a flight simulator before flying a real aeroplane full of passengers. Simulators are also used in space exploration, in manufacturing, and in retail to plan how a shop should be laid out. The common thread is always the same: a simulator lets you learn, test and plan without the cost or the danger of using the real system.\n\nOne of the earliest flight simulators was the Link Trainer.\n\nFor example: It was created by an American inventor called Edwin Link, who began building it in 1927; it went on sale in 1929. He made it because there was a real need for a safe way to teach new pilots how to use an aeroplane's controls before they ever left the ground."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Features and key features",
+      "prompt": "Explain in your own words: Features and key features.",
+      "solution": "When you use a simulator, all the information shown on the screen and all the options you can choose are called the features. In a flight simulator, the features include the speed reading, the dials, the view from the cockpit window, the buttons to change aeroplane, and the controls to steer left and right. Some features matter more than others. A key feature is one that is especially important or useful. In a flight simulator, the display that shows the aeroplane's speed is a key feature, because without knowing the speed the pilot cannot fly safely.\n\nLearning to spot the key features of any system is a real computing skill. When you design your own models later, you will have to decide which pieces of information are the most important to show - and which are just nice extras. A good designer puts the key features where the user will notice them first.\n\nFor example: Learning to spot the key features of any system is a real computing skill. When you design your own models later, you will have to decide which pieces of information are the most important to show - and which are just nice extras. A good designer puts the key features where the user will notice them first."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Simulators and data",
+      "prompt": "Explain in your own words: Simulators and data.",
+      "solution": "A simulator cannot do anything until you give it data. Data is the information the simulator processes to produce an output. In a flight simulator, the data you input might be the speed you set with the number keys, the direction you choose with the arrow keys, and the moment you decide to take off. A real pilot inputs the same kinds of data to a real aeroplane - they set the speed and steer in different directions - just using proper controls instead of a keyboard and mouse.\n\nMuch of this data is vital. What would happen in the simulator if you never set a speed? The aeroplane would just sit still. What if you could not turn left or right? It could only fly in a straight line. This shows why choosing the right data is such an important part of any model. There is a second kind of data too: the data a programmer needs to build the simulator in the first place, such as how high and how fast the aeroplane is allowed to fly, and what controls the user will have. So data is needed both to build a model and to run it.\n\nFor example: Much of this data is vital. What would happen in the simulator if you never set a speed? The aeroplane would just sit still. What if you could not turn left or right? It could only fly in a straight line. This shows why choosing the right data is such an important part of any model. There is a second kind of data too: the data a programmer needs to build the simulator in the first place, such as how high and how fast the aeroplane is allowed to fly, and what controls the user will have. So data is needed both to build a model and to run it."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Spreadsheet models",
+      "prompt": "Explain in your own words: Spreadsheet models.",
+      "solution": "Now we move to the kind of model you will build yourself: a spreadsheet model. A spreadsheet is a grid of boxes called cells, arranged in lettered columns (A, B, C, ...) and numbered rows (1, 2, 3, ...). Every cell has an address made from its column letter and row number, called a cell reference. The cell in column F, row 7 is written F7. Cell references are how you tell the spreadsheet which numbers to use.\n\nA spreadsheet becomes a model when you add formulas. A formula is an instruction that calculates a result, and in LibreOffice Calc a formula always begins with an equals sign =. Instead of typing an answer, you type a formula that works the answer out from other cells. The magic is this: when you change one of those cells, every formula that uses it recalculates instantly. That is exactly what lets a spreadsheet answer what-if questions.\n\nYou can use a spreadsheet model to analyse a business, such as Leila's stall: how much money it takes in (its revenue), how much it spends, and how much profit is left over. If the profit is too low, you can model a change - a higher price, or selling more items - and see the result before you risk it in real life. You can also analyse things like students' test scores, using formulas to find the highest, the lowest and the average score.\n\nHere are the four functions you will use most. A function is a ready-made formula with a name.\n\nThe part in brackets, like E3:E6, is a range - it means 'every cell from E3 to E6'. The colon : is what makes it a range. Getting that colon right is important: E3:E6 means four cells, but E3-E6 would try to subtract E6 from E3, which is not what you want at all.\n\nFormula — What it does · Example use\n\n=SUM(E3:E6) — Adds up all the numbers from cell E3 down to E6. · Total of a column\n\n=AVERAGE(F3:F6) — Finds the mean (adds them up, divides by how many). · Average profit\n\n=MAX(F3:F6) — Gives the largest number in the range. · Best-selling profit\n\nFor example: =MIN(F3:F6) — Gives the smallest number in the range. · Weakest profit"
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Building Leila's model in LibreOffice Calc",
+      "prompt": "Explain in your own words: Building Leila's model in LibreOffice Calc.",
+      "solution": "Let us build Leila's stall model step by step. Open LibreOffice Calc. You will type the headings in row 2, then one row for each product. Here is exactly what the finished model looks like. The grey top row and left column show the cell references so you can see where everything goes.\n\nThe prices are in Somali shillings, written Sh for short. You type the plain facts into columns A to D (the item name, its cost to make, its selling price and how many were sold). Columns E and F, and the totals in row 7, are not typed in - they are calculated by formulas. Here are those formulas.\n\nThe formulas behind Leila's model\n\nLet us read the profit formula for casiir, in cell F3. It is =(C3-B3)*D3. The brackets are worked out first: C3-B3 is the price minus the cost, which is 5000-2000 = 3000 shillings of profit on one cup. Then *D3 multiplies that by the number sold, 30, giving 90000. The spreadsheet shows 90000 in cell F3. The total profit in F7 uses =SUM(F3:F6), which adds 90000 + 80000 + 62500 + 30000 to give 262500 shillings.\n\nYou do not have to type the formula into every row. Type it once in E3 and F3, then use the fill handle - the small square at the bottom-right corner of the selected cell - and drag it down to row 6. Calc copies the formula and adjusts the references automatically: E3 was =C3*D3, so E4 becomes =C4*D4, E5 becomes =C5*D5, and so on. This clever behaviour is called a relative reference, and it saves you a great deal of typing.\n\nRow — A · B · C · D · E · F\n\n2 — Item · Cost (Sh) · Price (Sh) · Number sold · Revenue (Sh) · Profit (Sh)\n\n3 — Casiir · 2000 · 5000 · 30 · 150000 · 90000\n\n4 — Shaah · 1000 · 3000 · 40 · 120000 · 80000\n\n5 — Sambuus · 1500 · 4000 · 25 · 100000 · 62500\n\n6 — Buskut · 1000 · 2500 · 20 · 50000 · 30000\n\nFor example: 7 — Totals · 115 · 420000 · 262500"
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: What",
+      "prompt": "Explain in your own words: What.",
+      "solution": "Now the model earns its keep. What-if analysis means asking a question that begins 'What if...?', changing a value, and watching the effect ripple through the other cells. Because the formulas recalculate the instant you press Enter, you see the answer immediately. This is far faster and safer than trying a change in real life.\n\nLeila's first question is: What if I raise the price of casiir from 5000 to 6000 shillings? To test it, click cell C3, type 6000, and press Enter. Watch what happens. The revenue in E3 jumps from 150000 to 180000. The profit in F3 climbs from 90000 to 120000, because now each cup earns 6000-2000 = 4000 shillings and she sells 30 of them. The total profit in F7 rises from 262500 to 292500. In one keystroke, Leila can see that raising the price by 1000 shillings would add 30000 shillings to her profit - if her customers are still happy to buy.\n\nFor example: That last point matters. A model is only as good as the thinking behind it. The spreadsheet assumes Leila still sells 30 cups at the higher price, but in real life a higher price might mean fewer sales. A wise data manager tests several what-if questions and uses good judgement, rather than trusting one number blindly. Try more questions yourself: What if she sells 45 cups of casiir? What if the cost of sambuus rises by 500 shillings? Change the value and read the new totals."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "A model is best described as: (a) A real system (b) A representation of a real-life system (c) A type of database (d) A spreadsheet formula",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "A simulator is useful mainly because it lets people: (a) Save money on computers (b) Practise and test safely (c) Avoid learning (d) Delete data",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "In a spreadsheet, every formula must begin with: (a) A colon (b) A letter (c) An equals sign (d) A bracket",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "Which formula adds the numbers from F3 to F6? (a) =SUM(F3-F6) (b) =ADD(F3:F6) (c) =SUM(F3:F6) (d) =TOTAL(F3,F6)",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "What-if analysis means: (a) Deleting a value (b) Changing a value to see the effect (c) Printing a sheet (d) Sorting data",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p06",
+      "level": "Warm-up",
+      "prompt": "In LibreOffice Calc, Goal Seek is found on which menu? (a) File (b) Insert (c) Tools (d) Format",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p07",
+      "level": "Warm-up",
+      "prompt": "In Goal Seek, the Variable cell must contain: (a) A formula (b) A plain number (c) Text (d) A date",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p08",
+      "level": "Warm-up",
+      "prompt": "One row of a database table is called a: (a) Field (b) Record (c) Query (d) Key",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p09",
+      "level": "Warm-up",
+      "prompt": "One column of a database table is called a: (a) Record (b) Row (c) Field (d) Form",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p10",
+      "level": "Warm-up",
+      "prompt": "A primary key is a field where every record has a value that is: (a) Blank (b) The same (c) Unique (d) A number only",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p11",
+      "level": "Warm-up",
+      "prompt": "Which validation rule stops a field being left blank? (a) Range check (b) Length check (c) Presence check (d) Format check",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p12",
+      "level": "Warm-up",
+      "prompt": "Which validation rule keeps a number between 1 and 5? (a) Presence check (b) Range check (c) Length check (d) Spell check",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p13",
+      "level": "Warm-up",
+      "prompt": "In LibreOffice Base, a presence check is set by: (a) Typing 'Is Not Null' (b) Setting Entry required = Yes (c) Setting Length (d) Adding a form",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p14",
+      "level": "Warm-up",
+      "prompt": "A query is: (a) A blank record (b) A question that searches a database (c) A type of field (d) A spreadsheet cell",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p15",
+      "level": "Warm-up",
+      "prompt": "In a query, >= means: (a) Greater than (b) Less than (c) Greater than or equal to (d) Not equal to",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p16",
+      "level": "Core",
+      "prompt": "In your own words, what is the difference between a model and a simulator?",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Modelling in LibreOffice Calc (Subunit 2.1)",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Activity 1 - Type in Leila's data",
+        "Task: start the stall model by typing the raw facts. Open a new Calc spreadsheet.",
+        "In cell A2 type Item. In B2 type Cost (Sh). In C2 type Price (Sh). In D2 type Number sold.",
+        "In A3 type Casiir, then fill row 3: B3 = 2000, C3 = 5000, D3 = 30.",
+        "In A4 type Shaah: B4 = 1000, C4 = 3000, D4 = 40.",
+        "In A5 type Sambuus: B5 = 1500, C5 = 4000, D5 = 25."
+      ]
+    },
+    {
+      "title": "Databases in LibreOffice Base (Subunit 2.2)",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Activity 7 - Create the database and the table",
+        "Task: create the library database and design the book-reviews table.",
+        "In the Database Wizard, choose Create a new database and click Next, then Finish. Open LibreOffice Base. Save it as EhelLibrary.odb.",
+        "In the left panel click Tables, then Create Table in Design View.",
+        "Add the fields with these names and types: ReviewID (Integer [INTEGER]), ReviewerName (Text [VARCHAR]), ReviewerAge (Small Integer [SMALLINT]), BookTitle (Text [VARCHAR]), ReviewScore (Small Integer [SMALLINT]).",
+        "Right-click the grey box to the left of ReviewID and choose Primary Key. With ReviewID selected, set AutoValue to Yes in the Field Properties."
+      ]
+    },
+    {
+      "title": "A spreadsheet model for a small business",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Plan. List three or four products with a cost, a price and a number sold. Choose a small Hargeisa business (a fruit stall, a phone-credit kiosk, a tailor).",
+        "Design. Decide your columns and which cells will be formulas (revenue, profit, totals).",
+        "Create. Build it in Calc. Use =(price-cost)*number for profit and =SUM() for the totals; add =AVERAGE(), =MAX() and =MIN().",
+        "Test. Ask two what-if questions by changing values, and use Goal Seek once to hit a chosen profit.",
+        "Evaluate. Write two sentences: is the model useful, and what would you improve?"
+      ]
+    },
+    {
+      "title": "Design and query a database",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "A Hargeisa games shop, Hilaac Games & Toys, needs a database so it can search for games by age, number of players, theme and maker. Build it in Base.",
+        "Plan. List the fields the shop needs. A good set is: GameID (primary key, AutoValue), GameName, MinAge, MinPlayers, MaxPlayers, Theme, Maker, PlayMinutes.",
+        "Design. Decide the field type and validation for each: presence checks on the important fields, a length check on the text fields, and a range check on MinAge (say 3 to 18).",
+        "Create. Make the table Games in Design View, set the primary key and validation, and enter at least six games.",
+        "Test.",
+        "Evaluate. Can the database answer every question the shop asked? If not, which field is missing? Write down your improvement."
+      ]
+    },
+    {
+      "title": "Activities & Projects",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Year 8 - Unit 2 - Managing Data - Ehel Academy Computing",
+        "How to Use This Document",
+        "This is your hands-on workbook. Each activity gives you a task, the exact steps or formula, the expected result, and an AI-tutor prompt in case you get stuck. Do every activity yourself in LibreOffice - reading is not the same as doing. Work in order: Part A builds Leila's spreadsheet model in Calc, and Part B builds the Ehel Academy library database in Base. Then the Final Project brings both together.",
+        "Setting Up LibreOffice Calc and Base (do this once)",
+        "LibreOffice is free and open-source. You only need to install it one time.",
+        "Open your web browser and go to libreoffice.org."
+      ]
+    },
+    {
+      "title": "Setting Up LibreOffice Calc and Base (do this once)",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "LibreOffice is free and open-source. You only need to install it one time.",
+        "Open your web browser and go to libreoffice.org.",
+        "Click Download, choose the version for your computer (Windows, macOS or Linux), and download the installer.",
+        "Open the downloaded file and follow the installer. Accept the normal options and wait for it to finish.",
+        "Open LibreOffice. From the Start Center you can click Calc Spreadsheet to make a spreadsheet, or Base Database to make a database.",
+        "To save a spreadsheet, use File > Save As and keep the LibreOffice format .ods. A database saves as .odb."
+      ]
+    },
+    {
+      "title": "Finding your way around",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "In Calc, the boxes are cells. The Name Box on the left of the toolbar shows the reference of the cell you have selected, such as F7.",
+        "In Base, the left panel lists Tables, Queries, Forms and Reports. You will mostly use Tables, Queries and Forms in this unit.",
+        "If anything looks different from these notes, ask your AI tutor - LibreOffice versions vary slightly, but the ideas are always the same.",
+        "Before you touch the computer, think for five minutes. List three simulators you have seen or used (for example a driving simulator, a football video game, or a weather forecast). For each one, write down one key feature and one item of data it needs. Bring your list to your next teacher session.",
+        "Activity 1 - Type in Leila's data",
+        "Task: start the stall model by typing the raw facts. Open a new Calc spreadsheet."
+      ]
+    },
+    {
+      "title": "Warm Up",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Before you touch the computer, think for five minutes. List three simulators you have seen or used (for example a driving simulator, a football video game, or a weather forecast). For each one, write down one key feature and one item of data it needs. Bring your list to your next teacher session.",
+        "Activity 1 - Type in Leila's data",
+        "Task: start the stall model by typing the raw facts. Open a new Calc spreadsheet.",
+        "In cell A2 type Item. In B2 type Cost (Sh). In C2 type Price (Sh). In D2 type Number sold.",
+        "In A3 type Casiir, then fill row 3: B3 = 2000, C3 = 5000, D3 = 30.",
+        "In A4 type Shaah: B4 = 1000, C4 = 3000, D4 = 40."
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "The cell shows text like C3*D3, not a number",
+      "cause": "You forgot the equals sign.",
+      "fix": "Start the formula with =, e.g. =C3*D3."
+    },
+    {
+      "symptom": "=SUM(F3-F6) gives one odd number",
+      "cause": "A dash was used instead of a colon.",
+      "fix": "Use a colon for a range: =SUM(F3:F6)."
+    },
+    {
+      "symptom": "Profit is wrong with =C3-B3*D3",
+      "cause": "Multiplication happened before subtraction.",
+      "fix": "Add brackets: =(C3-B3)*D3."
+    },
+    {
+      "symptom": "Goal Seek says no solution / cannot change",
+      "cause": "The variable cell holds a formula.",
+      "fix": "Point it at a plain number, such as C3."
+    },
+    {
+      "symptom": "Base lets you save a blank field",
+      "cause": "No presence check on that field.",
+      "fix": "Set Entry required = Yes in Design View."
+    },
+    {
+      "symptom": "A number search misses records",
+      "cause": "Mixed formats, or the wrong operator.",
+      "fix": "Use one format; check >= vs > and =."
+    },
+    {
+      "symptom": "Base SQL query errors on the names",
+      "cause": "Field/table names not in double quotes.",
+      "fix": "Quote them: WHERE \"ReviewScore\" >= 4."
+    },
+    {
+      "symptom": "The range check does nothing",
+      "cause": "Min/Max set on the wrong control, or not saved.",
+      "fix": "Set Min value and Max value on the score box, then save the form."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "!",
+        "text": "Every Calc formula begins with an equals sign. A range uses a colon: SUM(F3:F6) means F3, F4, F5, F6. Type raw facts yourself; let formulas work out the totals."
+      },
+      {
+        "title": "!",
+        "text": "Goal Seek is on the Tools menu in LibreOffice Calc. Formula cell = the goal; Target value = the number you want; Variable cell = the value Calc may change. The variable cell must be a plain number, never a formula."
+      },
+      {
+        "title": "!",
+        "text": "A field is a column; a record is a row; the primary key is unique. Presence check = Entry required Yes; Length check = the Length property; Range check = form Min/Max value. In Base SQL, put field and table names in double quotes."
+      },
+      {
+        "title": "!",
+        "text": "Every formula in Calc starts with an equals sign. If you type C3*D3 without the =, Calc shows the letters as text instead of calculating. A range uses a colon: SUM(F3:F6) means F3, F4, F5 and F6. Type the raw facts yourself; let formulas work out the totals. That way, when a fact changes, the totals fix themselves. Big Idea 6: What-if analysis Now the model earns its keep. What-if analysis means asking a question that begins 'What if...?', changing a value, and watching the effect ripple through the other cells. Because the formulas recalculate the instant you press Enter, you see the answer immediately. This is far faster and safer than trying a change in real life. Leila's first question is: What if I raise the price of casiir from 5000 to 6000 shillings? To test it, click cell C3, type 6000, and press Enter. Watch what happens. The revenue in E3 jumps from 150000 to 180000. The profit in F3 climbs from 90000 to 120000, because now each cup earns 6000-2000 = 4000 shillings and she sells 30 of them. The total profit in F7 rises from 262500 to 292500. In one keystroke, Leila can see that raising the price by 1000 shillings would add 30000 shillings to her profit - if her customers are still happy to buy."
+      },
+      {
+        "title": "!",
+        "text": "In LibreOffice Calc, Goal Seek lives under the Tools menu (Tools then Goal Seek). Formula cell = the goal (must hold a formula). Target value = the number you want. Variable cell = the one value Calc may change (must hold a plain number). The Microsoft Excel version calls these Set cell, To value, and By changing cell - the same idea, different words."
+      },
+      {
+        "title": "!",
+        "text": "Presence check in Base = the field property Entry required set to Yes. Length check in Base = the Length property of a text (VARCHAR) field. Range check in Base = a form control's Min value and Max value (or an SQL CHECK). Base has no Validation Rule box like Microsoft Access."
+      }
+    ],
+    "terms": [
+      [
+        "AutoValue",
+        "A Base field property that numbers records automatically (used for a primary key)."
+      ],
+      [
+        "cell",
+        "One box in a spreadsheet, named by its column letter and row number, such as F7."
+      ],
+      [
+        "cell reference",
+        "The address of a cell, such as B3, used inside formulas."
+      ],
+      [
+        "criterion",
+        "A rule a query uses to choose records, such as greater than or equal to 4."
+      ],
+      [
+        "data",
+        "Raw facts and figures, such as names, ages, prices and scores."
+      ],
+      [
+        "data collection form",
+        "A tidy screen used to gather data one record at a time and store it."
+      ],
+      [
+        "database",
+        "An organised store of data that you can search, sort and update."
+      ],
+      [
+        "Entry required",
+        "The Base field property that, set to Yes, makes a presence check."
+      ],
+      [
+        "feature",
+        "Information shown or an option you can choose in a simulator."
+      ],
+      [
+        "field",
+        "One column of a table; all the data about one aspect of every record."
+      ],
+      [
+        "fill handle",
+        "The small square at the corner of a cell you drag to copy a formula down."
+      ],
+      [
+        "format",
+        "The agreed structure of the data in a field, such as DD/MM/YYYY for dates."
+      ],
+      [
+        "format check",
+        "A validation rule that makes sure data follows a set pattern."
+      ],
+      [
+        "formula",
+        "An instruction in a cell that calculates a result; it starts with an equals sign."
+      ],
+      [
+        "function",
+        "A ready-made formula with a name, such as SUM, AVERAGE, MAX or MIN."
+      ],
+      [
+        "Goal Seek",
+        "A Calc tool (Tools menu) that finds the input needed to reach a chosen result."
+      ],
+      [
+        "key feature",
+        "A feature that is especially important or useful."
+      ],
+      [
+        "length check",
+        "A validation rule that limits how many characters may be entered."
+      ],
+      [
+        "model",
+        "A representation of a real-life system or situation."
+      ],
+      [
+        "null",
+        "A database word meaning unknown or missing - no value entered."
+      ],
+      [
+        "presence check",
+        "A validation rule that stops a field being left blank."
+      ],
+      [
+        "primary key",
+        "A field where every record has a unique value, so no two records are the same."
+      ],
+      [
+        "purpose",
+        "The reason data is collected - what it is for."
+      ],
+      [
+        "query",
+        "A question you ask a database to find records that match a criterion."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "AutoValue",
+        "meaning": "A Base field property that numbers records automatically (used for a primary key).",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "cell",
+        "meaning": "One box in a spreadsheet, named by its column letter and row number, such as F7.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "cell reference",
+        "meaning": "The address of a cell, such as B3, used inside formulas.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "criterion",
+        "meaning": "A rule a query uses to choose records, such as greater than or equal to 4.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "data",
+        "meaning": "Raw facts and figures, such as names, ages, prices and scores.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "data collection form",
+        "meaning": "A tidy screen used to gather data one record at a time and store it.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "database",
+        "meaning": "An organised store of data that you can search, sort and update.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "Entry required",
+        "meaning": "The Base field property that, set to Yes, makes a presence check.",
+        "example": "",
+        "letter": "E"
+      },
+      {
+        "term": "feature",
+        "meaning": "Information shown or an option you can choose in a simulator.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "field",
+        "meaning": "One column of a table; all the data about one aspect of every record.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "fill handle",
+        "meaning": "The small square at the corner of a cell you drag to copy a formula down.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "format",
+        "meaning": "The agreed structure of the data in a field, such as DD/MM/YYYY for dates.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "format check",
+        "meaning": "A validation rule that makes sure data follows a set pattern.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "formula",
+        "meaning": "An instruction in a cell that calculates a result; it starts with an equals sign.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "function",
+        "meaning": "A ready-made formula with a name, such as SUM, AVERAGE, MAX or MIN.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "Goal Seek",
+        "meaning": "A Calc tool (Tools menu) that finds the input needed to reach a chosen result.",
+        "example": "",
+        "letter": "G"
+      },
+      {
+        "term": "key feature",
+        "meaning": "A feature that is especially important or useful.",
+        "example": "",
+        "letter": "K"
+      },
+      {
+        "term": "length check",
+        "meaning": "A validation rule that limits how many characters may be entered.",
+        "example": "",
+        "letter": "L"
+      },
+      {
+        "term": "model",
+        "meaning": "A representation of a real-life system or situation.",
+        "example": "",
+        "letter": "M"
+      },
+      {
+        "term": "null",
+        "meaning": "A database word meaning unknown or missing - no value entered.",
+        "example": "",
+        "letter": "N"
+      },
+      {
+        "term": "presence check",
+        "meaning": "A validation rule that stops a field being left blank.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "primary key",
+        "meaning": "A field where every record has a unique value, so no two records are the same.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "purpose",
+        "meaning": "The reason data is collected - what it is for.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "query",
+        "meaning": "A question you ask a database to find records that match a criterion.",
+        "example": "",
+        "letter": "Q"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "The cell shows text like C3*D3, not a number",
+        "You forgot the equals sign. Start the formula with =, e.g. =C3*D3."
+      ],
+      [
+        "=SUM(F3-F6) gives one odd number",
+        "A dash was used instead of a colon. Use a colon for a range: =SUM(F3:F6)."
+      ],
+      [
+        "Profit is wrong with =C3-B3*D3",
+        "Multiplication happened before subtraction. Add brackets: =(C3-B3)*D3."
+      ],
+      [
+        "Goal Seek says no solution / cannot change",
+        "The variable cell holds a formula. Point it at a plain number, such as C3."
+      ],
+      [
+        "Base lets you save a blank field",
+        "No presence check on that field. Set Entry required = Yes in Design View."
+      ],
+      [
+        "A number search misses records",
+        "Mixed formats, or the wrong operator. Use one format; check >= vs > and =."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "A model is best described as: (a) A real system (b) A representation of a real-life system (c) A type of database (d) A spreadsheet formula",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "A simulator is useful mainly because it lets people: (a) Save money on computers (b) Practise and test safely (c) Avoid learning (d) Delete data",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "In a spreadsheet, every formula must begin with: (a) A colon (b) A letter (c) An equals sign (d) A bracket",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Which formula adds the numbers from F3 to F6? (a) =SUM(F3-F6) (b) =ADD(F3:F6) (c) =SUM(F3:F6) (d) =TOTAL(F3,F6)",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "What-if analysis means: (a) Deleting a value (b) Changing a value to see the effect (c) Printing a sheet (d) Sorting data",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "In LibreOffice Calc, Goal Seek is found on which menu? (a) File (b) Insert (c) Tools (d) Format",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "In Goal Seek, the Variable cell must contain: (a) A formula (b) A plain number (c) Text (d) A date",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "One row of a database table is called a: (a) Field (b) Record (c) Query (d) Key",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "One column of a database table is called a: (a) Record (b) Row (c) Field (d) Form",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "A primary key is a field where every record has a value that is: (a) Blank (b) The same (c) Unique (d) A number only",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "Which validation rule stops a field being left blank? (a) Range check (b) Length check (c) Presence check (d) Format check",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "Which validation rule keeps a number between 1 and 5? (a) Presence check (b) Range check (c) Length check (d) Spell check",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what AutoValue and cell mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Copy each item and fill in the blank (shown as ____) so it does the job described.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — AutoValue, cell, cell reference — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "Profit for row 3 = (price minus cost) times number sold: F3 = ____",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — AutoValue, cell, cell reference — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Total profit for rows 3 to 6: F7 = ____",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — AutoValue, cell, cell reference — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "Average of the profits in F3 to F6: = ____ (F3:F6)",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — AutoValue, cell, cell reference — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Travel",
+      "prompt": "A query to find reviews with a score of exactly 5: WHERE \"ReviewScore\" ____ 5",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — AutoValue, cell, cell reference — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "context": "Health",
+      "prompt": "A query to find reviewers aged 13 or over: WHERE \"ReviewerAge\" ____ 13",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — AutoValue, cell, cell reference — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "In your own words, what is the difference between a model and a simulator?",
+      "keyIdeas": [
+        "AutoValue",
+        "cell",
+        "cell reference"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "State one key feature a flight simulator should have, and say why it is a key feature.",
+      "keyIdeas": [
+        "cell",
+        "cell reference",
+        "criterion"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "What does what-if analysis let you do? Give one example question.",
+      "keyIdeas": [
+        "cell reference",
+        "criterion",
+        "data"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "In LibreOffice Calc, explain what the Goal Seek tool does.",
+      "keyIdeas": [
+        "criterion",
+        "data",
+        "data collection form"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Name the four parts of a database: give the words for a row, a column, the whole store, and the unique field.",
+      "keyIdeas": [
+        "data",
+        "data collection form",
+        "database"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Why must the data in a field be in a consistent format? Give an example of a problem it prevents.",
+      "keyIdeas": [
+        "data collection form",
+        "database",
+        "Entry required"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "project": {
+    "title": "Unit 2 Project: Managing Data",
+    "brief": "Bring together everything from Managing Data into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your managing data project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "My project shows that I understand models and simulators.",
+      "My project shows that I understand features and key features.",
+      "My project shows that I understand simulators and data.",
+      "My project shows that I understand spreadsheet models.",
+      "My project shows that I understand building leila's model in libreoffice calc."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “AutoValue” mean in computing?",
+        "options": [
+          "A Base field property that numbers records automatically (used for a primary key).",
+          "One box in a spreadsheet, named by its column letter and row number, such as F7.",
+          "The address of a cell, such as B3, used inside formulas.",
+          "A rule a query uses to choose records, such as greater than or equal to 4."
+        ],
+        "answer": "A Base field property that numbers records automatically (used for a primary key).",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "AutoValue means a Base field property that numbers records automatically (used for a primary key).."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “cell” mean in computing?",
+        "options": [
+          "One box in a spreadsheet, named by its column letter and row number, such as F7.",
+          "The address of a cell, such as B3, used inside formulas.",
+          "A rule a query uses to choose records, such as greater than or equal to 4.",
+          "Raw facts and figures, such as names, ages, prices and scores."
+        ],
+        "answer": "One box in a spreadsheet, named by its column letter and row number, such as F7.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Cell means one box in a spreadsheet, named by its column letter and row number, such as F7.."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “cell reference” mean in computing?",
+        "options": [
+          "The address of a cell, such as B3, used inside formulas.",
+          "A rule a query uses to choose records, such as greater than or equal to 4.",
+          "Raw facts and figures, such as names, ages, prices and scores.",
+          "A tidy screen used to gather data one record at a time and store it."
+        ],
+        "answer": "The address of a cell, such as B3, used inside formulas.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Cell reference means the address of a cell, such as B3, used inside formulas.."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “criterion” mean in computing?",
+        "options": [
+          "A rule a query uses to choose records, such as greater than or equal to 4.",
+          "Raw facts and figures, such as names, ages, prices and scores.",
+          "A tidy screen used to gather data one record at a time and store it.",
+          "An organised store of data that you can search, sort and update."
+        ],
+        "answer": "A rule a query uses to choose records, such as greater than or equal to 4.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Criterion means a rule a query uses to choose records, such as greater than or equal to 4.."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “data” mean in computing?",
+        "options": [
+          "Raw facts and figures, such as names, ages, prices and scores.",
+          "A tidy screen used to gather data one record at a time and store it.",
+          "An organised store of data that you can search, sort and update.",
+          "The Base field property that, set to Yes, makes a presence check."
+        ],
+        "answer": "Raw facts and figures, such as names, ages, prices and scores.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Data means raw facts and figures, such as names, ages, prices and scores.."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “data collection form” mean in computing?",
+        "options": [
+          "A tidy screen used to gather data one record at a time and store it.",
+          "An organised store of data that you can search, sort and update.",
+          "The Base field property that, set to Yes, makes a presence check.",
+          "Information shown or an option you can choose in a simulator."
+        ],
+        "answer": "A tidy screen used to gather data one record at a time and store it.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Data collection form means a tidy screen used to gather data one record at a time and store it.."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: An organised store of data that you can search, sort and update.?",
+        "options": [
+          "database",
+          "Entry required",
+          "feature",
+          "field"
+        ],
+        "answer": "database",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Database means an organised store of data that you can search, sort and update.."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: The Base field property that, set to Yes, makes a presence check.?",
+        "options": [
+          "Entry required",
+          "feature",
+          "field",
+          "fill handle"
+        ],
+        "answer": "Entry required",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Entry required means the Base field property that, set to Yes, makes a presence check.."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo09",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Information shown or an option you can choose in a simulator.?",
+        "options": [
+          "feature",
+          "field",
+          "fill handle",
+          "format"
+        ],
+        "answer": "feature",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Feature means information shown or an option you can choose in a simulator.."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: One column of a table; all the data about one aspect of every record.?",
+        "options": [
+          "field",
+          "fill handle",
+          "format",
+          "format check"
+        ],
+        "answer": "field",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Field means one column of a table; all the data about one aspect of every record.."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The small square at the corner of a cell you drag to copy a formula down.?",
+        "options": [
+          "fill handle",
+          "format",
+          "format check",
+          "formula"
+        ],
+        "answer": "fill handle",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Fill handle means the small square at the corner of a cell you drag to copy a formula down.."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The agreed structure of the data in a field, such as DD/MM/YYYY for dates.?",
+        "options": [
+          "format",
+          "format check",
+          "formula",
+          "function"
+        ],
+        "answer": "format",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Format means the agreed structure of the data in a field, such as DD/MM/YYYY for dates.."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u2-game-1",
+        "icon": "?",
+        "skill": "AutoValue",
+        "title": "Quick Match: AutoValue",
+        "description": "Practise autovalue through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “AutoValue” mean in computing?",
+            "choices": [
+              "A Base field property that numbers records automatically (used for a primary key).",
+              "One box in a spreadsheet, named by its column letter and row number, such as F7.",
+              "The address of a cell, such as B3, used inside formulas.",
+              "A rule a query uses to choose records, such as greater than or equal to 4."
+            ],
+            "answer": "A Base field property that numbers records automatically (used for a primary key).",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "AutoValue means a Base field property that numbers records automatically (used for a primary key).."
+          },
+          {
+            "prompt": "What does “criterion” mean in computing?",
+            "choices": [
+              "A rule a query uses to choose records, such as greater than or equal to 4.",
+              "Raw facts and figures, such as names, ages, prices and scores.",
+              "A tidy screen used to gather data one record at a time and store it.",
+              "An organised store of data that you can search, sort and update."
+            ],
+            "answer": "A rule a query uses to choose records, such as greater than or equal to 4.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Criterion means a rule a query uses to choose records, such as greater than or equal to 4.."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An organised store of data that you can search, sort and update.?",
+            "choices": [
+              "database",
+              "Entry required",
+              "feature",
+              "field"
+            ],
+            "answer": "database",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Database means an organised store of data that you can search, sort and update.."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: One column of a table; all the data about one aspect of every record.?",
+            "choices": [
+              "field",
+              "fill handle",
+              "format",
+              "format check"
+            ],
+            "answer": "field",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Field means one column of a table; all the data about one aspect of every record.."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-2",
+        "icon": "★",
+        "skill": "cell",
+        "title": "Concept Quest: cell",
+        "description": "Practise cell through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “cell” mean in computing?",
+            "choices": [
+              "One box in a spreadsheet, named by its column letter and row number, such as F7.",
+              "The address of a cell, such as B3, used inside formulas.",
+              "A rule a query uses to choose records, such as greater than or equal to 4.",
+              "Raw facts and figures, such as names, ages, prices and scores."
+            ],
+            "answer": "One box in a spreadsheet, named by its column letter and row number, such as F7.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell means one box in a spreadsheet, named by its column letter and row number, such as F7.."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Raw facts and figures, such as names, ages, prices and scores.",
+              "A tidy screen used to gather data one record at a time and store it.",
+              "An organised store of data that you can search, sort and update.",
+              "The Base field property that, set to Yes, makes a presence check."
+            ],
+            "answer": "Raw facts and figures, such as names, ages, prices and scores.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data means raw facts and figures, such as names, ages, prices and scores.."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The Base field property that, set to Yes, makes a presence check.?",
+            "choices": [
+              "Entry required",
+              "feature",
+              "field",
+              "fill handle"
+            ],
+            "answer": "Entry required",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Entry required means the Base field property that, set to Yes, makes a presence check.."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The small square at the corner of a cell you drag to copy a formula down.?",
+            "choices": [
+              "fill handle",
+              "format",
+              "format check",
+              "formula"
+            ],
+            "answer": "fill handle",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Fill handle means the small square at the corner of a cell you drag to copy a formula down.."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-3",
+        "icon": "◫",
+        "skill": "cell reference",
+        "title": "Debug Detective: cell reference",
+        "description": "Practise cell reference through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “cell reference” mean in computing?",
+            "choices": [
+              "The address of a cell, such as B3, used inside formulas.",
+              "A rule a query uses to choose records, such as greater than or equal to 4.",
+              "Raw facts and figures, such as names, ages, prices and scores.",
+              "A tidy screen used to gather data one record at a time and store it."
+            ],
+            "answer": "The address of a cell, such as B3, used inside formulas.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell reference means the address of a cell, such as B3, used inside formulas.."
+          },
+          {
+            "prompt": "What does “data collection form” mean in computing?",
+            "choices": [
+              "A tidy screen used to gather data one record at a time and store it.",
+              "An organised store of data that you can search, sort and update.",
+              "The Base field property that, set to Yes, makes a presence check.",
+              "Information shown or an option you can choose in a simulator."
+            ],
+            "answer": "A tidy screen used to gather data one record at a time and store it.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data collection form means a tidy screen used to gather data one record at a time and store it.."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Information shown or an option you can choose in a simulator.?",
+            "choices": [
+              "feature",
+              "field",
+              "fill handle",
+              "format"
+            ],
+            "answer": "feature",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Feature means information shown or an option you can choose in a simulator.."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The agreed structure of the data in a field, such as DD/MM/YYYY for dates.?",
+            "choices": [
+              "format",
+              "format check",
+              "formula",
+              "function"
+            ],
+            "answer": "format",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Format means the agreed structure of the data in a field, such as DD/MM/YYYY for dates.."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-4",
+        "icon": "→",
+        "skill": "criterion",
+        "title": "Algorithm Runner: criterion",
+        "description": "Practise criterion through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “criterion” mean in computing?",
+            "choices": [
+              "A rule a query uses to choose records, such as greater than or equal to 4.",
+              "Raw facts and figures, such as names, ages, prices and scores.",
+              "A tidy screen used to gather data one record at a time and store it.",
+              "An organised store of data that you can search, sort and update."
+            ],
+            "answer": "A rule a query uses to choose records, such as greater than or equal to 4.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Criterion means a rule a query uses to choose records, such as greater than or equal to 4.."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An organised store of data that you can search, sort and update.?",
+            "choices": [
+              "database",
+              "Entry required",
+              "feature",
+              "field"
+            ],
+            "answer": "database",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Database means an organised store of data that you can search, sort and update.."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: One column of a table; all the data about one aspect of every record.?",
+            "choices": [
+              "field",
+              "fill handle",
+              "format",
+              "format check"
+            ],
+            "answer": "field",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Field means one column of a table; all the data about one aspect of every record.."
+          },
+          {
+            "prompt": "What does “AutoValue” mean in computing?",
+            "choices": [
+              "A Base field property that numbers records automatically (used for a primary key).",
+              "One box in a spreadsheet, named by its column letter and row number, such as F7.",
+              "The address of a cell, such as B3, used inside formulas.",
+              "A rule a query uses to choose records, such as greater than or equal to 4."
+            ],
+            "answer": "A Base field property that numbers records automatically (used for a primary key).",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "AutoValue means a Base field property that numbers records automatically (used for a primary key).."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-5",
+        "icon": "Σ",
+        "skill": "data",
+        "title": "Vocabulary Vault: data",
+        "description": "Practise data through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Raw facts and figures, such as names, ages, prices and scores.",
+              "A tidy screen used to gather data one record at a time and store it.",
+              "An organised store of data that you can search, sort and update.",
+              "The Base field property that, set to Yes, makes a presence check."
+            ],
+            "answer": "Raw facts and figures, such as names, ages, prices and scores.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data means raw facts and figures, such as names, ages, prices and scores.."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The Base field property that, set to Yes, makes a presence check.?",
+            "choices": [
+              "Entry required",
+              "feature",
+              "field",
+              "fill handle"
+            ],
+            "answer": "Entry required",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Entry required means the Base field property that, set to Yes, makes a presence check.."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The small square at the corner of a cell you drag to copy a formula down.?",
+            "choices": [
+              "fill handle",
+              "format",
+              "format check",
+              "formula"
+            ],
+            "answer": "fill handle",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Fill handle means the small square at the corner of a cell you drag to copy a formula down.."
+          },
+          {
+            "prompt": "What does “cell” mean in computing?",
+            "choices": [
+              "One box in a spreadsheet, named by its column letter and row number, such as F7.",
+              "The address of a cell, such as B3, used inside formulas.",
+              "A rule a query uses to choose records, such as greater than or equal to 4.",
+              "Raw facts and figures, such as names, ages, prices and scores."
+            ],
+            "answer": "One box in a spreadsheet, named by its column letter and row number, such as F7.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell means one box in a spreadsheet, named by its column letter and row number, such as F7.."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-6",
+        "icon": "◇",
+        "skill": "data collection form",
+        "title": "Challenge Cards: data collection form",
+        "description": "Practise data collection form through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “data collection form” mean in computing?",
+            "choices": [
+              "A tidy screen used to gather data one record at a time and store it.",
+              "An organised store of data that you can search, sort and update.",
+              "The Base field property that, set to Yes, makes a presence check.",
+              "Information shown or an option you can choose in a simulator."
+            ],
+            "answer": "A tidy screen used to gather data one record at a time and store it.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data collection form means a tidy screen used to gather data one record at a time and store it.."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Information shown or an option you can choose in a simulator.?",
+            "choices": [
+              "feature",
+              "field",
+              "fill handle",
+              "format"
+            ],
+            "answer": "feature",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Feature means information shown or an option you can choose in a simulator.."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The agreed structure of the data in a field, such as DD/MM/YYYY for dates.?",
+            "choices": [
+              "format",
+              "format check",
+              "formula",
+              "function"
+            ],
+            "answer": "format",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Format means the agreed structure of the data in a field, such as DD/MM/YYYY for dates.."
+          },
+          {
+            "prompt": "What does “cell reference” mean in computing?",
+            "choices": [
+              "The address of a cell, such as B3, used inside formulas.",
+              "A rule a query uses to choose records, such as greater than or equal to 4.",
+              "Raw facts and figures, such as names, ages, prices and scores.",
+              "A tidy screen used to gather data one record at a time and store it."
+            ],
+            "answer": "The address of a cell, such as B3, used inside formulas.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell reference means the address of a cell, such as B3, used inside formulas.."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-7",
+        "icon": "⚡",
+        "skill": "database",
+        "title": "Think Fast: database",
+        "description": "Practise database through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: An organised store of data that you can search, sort and update.?",
+            "choices": [
+              "database",
+              "Entry required",
+              "feature",
+              "field"
+            ],
+            "answer": "database",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Database means an organised store of data that you can search, sort and update.."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: One column of a table; all the data about one aspect of every record.?",
+            "choices": [
+              "field",
+              "fill handle",
+              "format",
+              "format check"
+            ],
+            "answer": "field",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Field means one column of a table; all the data about one aspect of every record.."
+          },
+          {
+            "prompt": "What does “AutoValue” mean in computing?",
+            "choices": [
+              "A Base field property that numbers records automatically (used for a primary key).",
+              "One box in a spreadsheet, named by its column letter and row number, such as F7.",
+              "The address of a cell, such as B3, used inside formulas.",
+              "A rule a query uses to choose records, such as greater than or equal to 4."
+            ],
+            "answer": "A Base field property that numbers records automatically (used for a primary key).",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "AutoValue means a Base field property that numbers records automatically (used for a primary key).."
+          },
+          {
+            "prompt": "What does “criterion” mean in computing?",
+            "choices": [
+              "A rule a query uses to choose records, such as greater than or equal to 4.",
+              "Raw facts and figures, such as names, ages, prices and scores.",
+              "A tidy screen used to gather data one record at a time and store it.",
+              "An organised store of data that you can search, sort and update."
+            ],
+            "answer": "A rule a query uses to choose records, such as greater than or equal to 4.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Criterion means a rule a query uses to choose records, such as greater than or equal to 4.."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-8",
+        "icon": "☁",
+        "skill": "Entry required",
+        "title": "Explain It: Entry required",
+        "description": "Practise entry required through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The Base field property that, set to Yes, makes a presence check.?",
+            "choices": [
+              "Entry required",
+              "feature",
+              "field",
+              "fill handle"
+            ],
+            "answer": "Entry required",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Entry required means the Base field property that, set to Yes, makes a presence check.."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The small square at the corner of a cell you drag to copy a formula down.?",
+            "choices": [
+              "fill handle",
+              "format",
+              "format check",
+              "formula"
+            ],
+            "answer": "fill handle",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Fill handle means the small square at the corner of a cell you drag to copy a formula down.."
+          },
+          {
+            "prompt": "What does “cell” mean in computing?",
+            "choices": [
+              "One box in a spreadsheet, named by its column letter and row number, such as F7.",
+              "The address of a cell, such as B3, used inside formulas.",
+              "A rule a query uses to choose records, such as greater than or equal to 4.",
+              "Raw facts and figures, such as names, ages, prices and scores."
+            ],
+            "answer": "One box in a spreadsheet, named by its column letter and row number, such as F7.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell means one box in a spreadsheet, named by its column letter and row number, such as F7.."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Raw facts and figures, such as names, ages, prices and scores.",
+              "A tidy screen used to gather data one record at a time and store it.",
+              "An organised store of data that you can search, sort and update.",
+              "The Base field property that, set to Yes, makes a presence check."
+            ],
+            "answer": "Raw facts and figures, such as names, ages, prices and scores.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data means raw facts and figures, such as names, ages, prices and scores.."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-9",
+        "icon": "⌂",
+        "skill": "feature",
+        "title": "Real-Life Round: feature",
+        "description": "Practise feature through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Information shown or an option you can choose in a simulator.?",
+            "choices": [
+              "feature",
+              "field",
+              "fill handle",
+              "format"
+            ],
+            "answer": "feature",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Feature means information shown or an option you can choose in a simulator.."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The agreed structure of the data in a field, such as DD/MM/YYYY for dates.?",
+            "choices": [
+              "format",
+              "format check",
+              "formula",
+              "function"
+            ],
+            "answer": "format",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Format means the agreed structure of the data in a field, such as DD/MM/YYYY for dates.."
+          },
+          {
+            "prompt": "What does “cell reference” mean in computing?",
+            "choices": [
+              "The address of a cell, such as B3, used inside formulas.",
+              "A rule a query uses to choose records, such as greater than or equal to 4.",
+              "Raw facts and figures, such as names, ages, prices and scores.",
+              "A tidy screen used to gather data one record at a time and store it."
+            ],
+            "answer": "The address of a cell, such as B3, used inside formulas.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell reference means the address of a cell, such as B3, used inside formulas.."
+          },
+          {
+            "prompt": "What does “data collection form” mean in computing?",
+            "choices": [
+              "A tidy screen used to gather data one record at a time and store it.",
+              "An organised store of data that you can search, sort and update.",
+              "The Base field property that, set to Yes, makes a presence check.",
+              "Information shown or an option you can choose in a simulator."
+            ],
+            "answer": "A tidy screen used to gather data one record at a time and store it.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data collection form means a tidy screen used to gather data one record at a time and store it.."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-10",
+        "icon": "!",
+        "skill": "field",
+        "title": "Spot the Bug: field",
+        "description": "Practise field through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: One column of a table; all the data about one aspect of every record.?",
+            "choices": [
+              "field",
+              "fill handle",
+              "format",
+              "format check"
+            ],
+            "answer": "field",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Field means one column of a table; all the data about one aspect of every record.."
+          },
+          {
+            "prompt": "What does “AutoValue” mean in computing?",
+            "choices": [
+              "A Base field property that numbers records automatically (used for a primary key).",
+              "One box in a spreadsheet, named by its column letter and row number, such as F7.",
+              "The address of a cell, such as B3, used inside formulas.",
+              "A rule a query uses to choose records, such as greater than or equal to 4."
+            ],
+            "answer": "A Base field property that numbers records automatically (used for a primary key).",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "AutoValue means a Base field property that numbers records automatically (used for a primary key).."
+          },
+          {
+            "prompt": "What does “criterion” mean in computing?",
+            "choices": [
+              "A rule a query uses to choose records, such as greater than or equal to 4.",
+              "Raw facts and figures, such as names, ages, prices and scores.",
+              "A tidy screen used to gather data one record at a time and store it.",
+              "An organised store of data that you can search, sort and update."
+            ],
+            "answer": "A rule a query uses to choose records, such as greater than or equal to 4.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Criterion means a rule a query uses to choose records, such as greater than or equal to 4.."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An organised store of data that you can search, sort and update.?",
+            "choices": [
+              "database",
+              "Entry required",
+              "feature",
+              "field"
+            ],
+            "answer": "database",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Database means an organised store of data that you can search, sort and update.."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-11",
+        "icon": "≡",
+        "skill": "fill handle",
+        "title": "Mastery Mix: fill handle",
+        "description": "Practise fill handle through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The small square at the corner of a cell you drag to copy a formula down.?",
+            "choices": [
+              "fill handle",
+              "format",
+              "format check",
+              "formula"
+            ],
+            "answer": "fill handle",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Fill handle means the small square at the corner of a cell you drag to copy a formula down.."
+          },
+          {
+            "prompt": "What does “cell” mean in computing?",
+            "choices": [
+              "One box in a spreadsheet, named by its column letter and row number, such as F7.",
+              "The address of a cell, such as B3, used inside formulas.",
+              "A rule a query uses to choose records, such as greater than or equal to 4.",
+              "Raw facts and figures, such as names, ages, prices and scores."
+            ],
+            "answer": "One box in a spreadsheet, named by its column letter and row number, such as F7.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell means one box in a spreadsheet, named by its column letter and row number, such as F7.."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Raw facts and figures, such as names, ages, prices and scores.",
+              "A tidy screen used to gather data one record at a time and store it.",
+              "An organised store of data that you can search, sort and update.",
+              "The Base field property that, set to Yes, makes a presence check."
+            ],
+            "answer": "Raw facts and figures, such as names, ages, prices and scores.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data means raw facts and figures, such as names, ages, prices and scores.."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The Base field property that, set to Yes, makes a presence check.?",
+            "choices": [
+              "Entry required",
+              "feature",
+              "field",
+              "fill handle"
+            ],
+            "answer": "Entry required",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Entry required means the Base field property that, set to Yes, makes a presence check.."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-12",
+        "icon": "T",
+        "skill": "format",
+        "title": "Unit Champion: format",
+        "description": "Practise format through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The agreed structure of the data in a field, such as DD/MM/YYYY for dates.?",
+            "choices": [
+              "format",
+              "format check",
+              "formula",
+              "function"
+            ],
+            "answer": "format",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Format means the agreed structure of the data in a field, such as DD/MM/YYYY for dates.."
+          },
+          {
+            "prompt": "What does “cell reference” mean in computing?",
+            "choices": [
+              "The address of a cell, such as B3, used inside formulas.",
+              "A rule a query uses to choose records, such as greater than or equal to 4.",
+              "Raw facts and figures, such as names, ages, prices and scores.",
+              "A tidy screen used to gather data one record at a time and store it."
+            ],
+            "answer": "The address of a cell, such as B3, used inside formulas.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell reference means the address of a cell, such as B3, used inside formulas.."
+          },
+          {
+            "prompt": "What does “data collection form” mean in computing?",
+            "choices": [
+              "A tidy screen used to gather data one record at a time and store it.",
+              "An organised store of data that you can search, sort and update.",
+              "The Base field property that, set to Yes, makes a presence check.",
+              "Information shown or an option you can choose in a simulator."
+            ],
+            "answer": "A tidy screen used to gather data one record at a time and store it.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data collection form means a tidy screen used to gather data one record at a time and store it.."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Information shown or an option you can choose in a simulator.?",
+            "choices": [
+              "feature",
+              "field",
+              "fill handle",
+              "format"
+            ],
+            "answer": "feature",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Feature means information shown or an option you can choose in a simulator.."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can explain what a model is and what a simulator is, and give real examples of each.",
+    "I can identify the features and key features of a simulator.",
+    "I can describe the data a simulator needs as input, and the data a programmer needs to build one.",
+    "I can explain what a spreadsheet model is and how it uses cells, cell references and formulas.",
+    "I can write correct LibreOffice Calc formulas using =SUM(), =AVERAGE(), =MAX(), =MIN() and arithmetic.",
+    "I can use the Goal Seek tool to work backwards from a goal to the value that achieves it.",
+    "I can explain the purpose of data and decide whether an item of data is necessary for a task.",
+    "I can identify when data is incomplete or missing and say why that is a problem.",
+    "I can name the parts of a database: table, field, record and primary key.",
+    "I can explain why a consistent format matters when you search for data."
+  ]
+}

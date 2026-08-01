@@ -1,0 +1,2223 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T20:13:37.917Z",
+  "stage": {
+    "id": "s08",
+    "label": "Stage 8"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t02",
+    "label": "Term 2"
+  },
+  "unit": {
+    "unitId": "comp-g08-u04",
+    "unitNo": 4,
+    "unitTitle": "Computer Systems",
+    "unitOverview": "A computer system is hardware and software working together to take in data (input), process it, store it, and give back a result (output). This unit looks at that system from the inside out, across five connected topics. Each topic answers a big question.\n\n4.1 Computer architectures answers: what are the main parts inside a computer, and how do they work together? You will meet the CPU, primary memory (RAM and ROM), secondary storage, and the famous von Neumann design that almost every computer still follows today.\n\n4.2 Types of software answers: what is the difference between the programs you choose to run and the programs that keep the computer alive? You will separate application software from system software, and study the operating system and utility software.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Lower Secondary Computing",
+    "code": "0868",
+    "stage": 8
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-8-Content-Package",
+    "framework": "Cambridge Lower Secondary Computing 0868 — Stage 8",
+    "sourceArchive": "Year 8-20260801T201049Z-1-001.zip",
+    "sourceAudience": "student",
+    "sourceDocuments": [
+      "Year 8/Unit 4/Year 8 - Unit 4 Lesson.docx",
+      "Year 8/Unit 4/Year 8 - Unit 4 Activities & Projects.docx",
+      "Year 8/Unit 4/Year 8 - Unit 4 Practice & Quiz.docx",
+      "Year 8/Unit 4/Year 8 - Unit 4 Reference.docx"
+    ],
+    "sourceBlockCount": 1122,
+    "transformation": "Structured from the Cambridge Lower Secondary Computing 0868 — Stage 8 Lesson, Activities & Projects, Practice & Quiz and Reference booklets for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Name three machines around you that contain a computer but that you would not normally call a computer.",
+    "explain what primary memory is and describe the difference between RAM and ROM, including volatile and non-volatile storage",
+    "describe the role of the CPU and its main parts (the control unit, the ALU and registers)",
+    "explain how the parts of a computer are connected in the von Neumann architecture, and describe the fetch-decode-execute cycle",
+    "explain the difference between application software and system software",
+    "describe the purpose of an operating system and list the tasks it carries out",
+    "explain the purpose of utility software, including defragmenting",
+    "explain how text is represented using the ASCII character set, and why extended ASCII was created",
+    "describe how images and sound are represented in binary, and explain data compression",
+    "explain what a logic gate is and how it relates to Boolean logic"
+  ],
+  "toolkit": [
+    {
+      "name": "Python",
+      "url": "python.microbit.org or any Python editor",
+      "steps": [
+        "Open the editor and start a new file.",
+        "Type your program one line at a time.",
+        "Run it and read any error message from the bottom up.",
+        "Fix one error at a time, then run it again."
+      ],
+      "note": "Python is a text language: spelling and indentation both matter."
+    },
+    {
+      "name": "A free spreadsheet",
+      "url": "Google Sheets, or LibreOffice Calc",
+      "steps": [
+        "Open a new blank spreadsheet.",
+        "Put your field names in row 1, one per column.",
+        "Type one record per row underneath.",
+        "Use Insert → Chart to turn your data into a graph."
+      ],
+      "note": "Any free spreadsheet works — the ideas are the same in all of them."
+    }
+  ],
+  "tutorPrompts": [
+    "Ask: 'Explain the difference between the control unit and the ALU using a simple everyday comparison.'",
+    "Ask: 'What does clock speed in gigahertz actually mean, and does a higher number always mean a faster computer?'",
+    "Then explain the three main parts of the CPU back to your tutor in your own words.",
+    "Primary memory: RAM and ROM",
+    "Ask: 'List the operating systems on the devices in a typical school, and say which are free and open-source.'",
+    "Ask: 'Give me a real example for each of the six main jobs of an operating system.'",
+    "Utility software",
+    "Ask: 'Give me five denary numbers between 20 and 200 and let me convert each to binary, then check my answers one at a time.'"
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-computer-architectures",
+      "title": "Computer Architectures",
+      "explanation": "Architecture normally means the design of a building. In computing, computer architecture means the design of a computer: what its main parts are and how they are connected. Just as a house has rooms with different jobs joined by hallways, a computer has components with different jobs joined by wires. Let us walk through the rooms.\n\nThe computer system: input, process, storage, output",
+      "example": "At the highest level, every computer does four things. It takes in data through input devices like a keyboard, mouse, camera or microphone. It processes that data in the CPU. It stores data in memory and storage. And it gives back results through output devices like a screen, speakers or a printer. Keep this simple four-part picture in your head, because everything else fits inside it."
+    },
+    {
+      "id": "concept-2-the-cpu",
+      "title": "The CPU",
+      "explanation": "The central processing unit, or CPU, is the piece of hardware that processes all the data. It is often called the brain of the computer, and that is a fair name: nothing happens without it. The CPU works by repeatedly fetching an instruction, working out what it means, and carrying it out, over and over, billions of times a second. It is astonishingly fast, but also astonishingly simple in what each single step does.\n\nInside the CPU there are three main parts you should know. The control unit (CU) is like a manager: it directs everything, fetching each instruction and telling the other parts what to do and when. The arithmetic logic unit (ALU) is the calculator: it does the sums (arithmetic like adding and subtracting) and the comparisons (logic, such as 'is this bigger than that?'). Here is a beautiful connection to look forward to: the ALU is itself built from thousands of the very logic gates you will meet in topic 4.4. The third part is a small set of registers, which are tiny, ultra-fast storage boxes inside the CPU that hold the exact piece of data the CPU is working on at this instant.\n\nTwo more words describe how powerful a CPU is. Its clock speed, measured in gigahertz (GHz), is how many cycles it can do each second; one gigahertz is one billion cycles per second, so a 3.0 GHz CPU races through three billion cycles every second. Many modern CPUs also have several cores, which are like having more than one brain, so the computer can genuinely work on several tasks at the same time. A quad-core CPU has four.\n\nThe CPU is fast, but it needs somewhere close by to keep the data and instructions it is using right now. That is the job of primary memory: memory the CPU can reach directly, through wires that connect the two. There are two types of primary memory, and telling them apart is a classic exam favourite, so learn the difference carefully.\n\nRAM (random access memory) stores data and software temporarily, while they wait for the CPU to use them. When you open a game or a document, it is loaded into RAM so the CPU can get at it quickly. RAM is constantly changing as different data flows to the CPU. The crucial point is that RAM is volatile: it needs power to hold its contents. The moment you switch the computer off, everything in RAM is lost. That is exactly why you must save your work to storage before closing down, and why an unsaved document vanishes if the power cuts out.\n\nROM (read-only memory) stores data permanently. It holds the essential instructions the computer needs to boot up (start) every time it is switched on. Because those start-up instructions must be the same each time, the contents of ROM do not normally change. ROM is non-volatile: it keeps its contents even with the power off. This is why a computer knows how to begin waking up the instant you press the power button, before any operating system has loaded.\n\nThe table below sums up the difference. If you remember only one thing, remember that RAM is temporary and volatile while ROM is permanent and non-volatile.\n\nRAM and ROM are both types of primary memory, but they behave in opposite ways.\n\nA helpful memory trick: RAM data disappears when the power is Removed; ROM data Remains.",
+      "example": "Adding more RAM to a computer often makes it feel faster, because it can keep more programs ready at once."
+    },
+    {
+      "id": "concept-3-secondary-storage-and-the-memory-hierarchy",
+      "title": "Secondary storage and the memory hierarchy",
+      "explanation": "If RAM forgets everything when the power goes off, where do your files live when the computer is switched off? The answer is secondary storage: devices such as hard disk drives (HDD), solid-state drives (SSD), USB memory sticks and SD cards. Secondary storage is non-volatile, so it keeps your photos, documents and apps safely for years. It is much larger than RAM, but also much slower for the CPU to reach, which is why data is copied from storage into RAM when you want to use it.\n\nThis gives us a neat ladder called the memory hierarchy. At the top are the registers inside the CPU: tiniest but fastest. Just below sits cache, a small pool of very fast memory that keeps the most-used data even closer to the CPU. Then comes RAM, larger but slower. At the bottom is secondary storage, largest of all but slowest. As you go down the ladder the storage gets bigger and cheaper but slower, and as you go up it gets smaller and dearer but faster. Good design uses each level for what it does best.\n\nHow are all these parts wired together? The design used by almost every computer today was described in 1945 by a mathematician named John von Neumann, and it is called the von Neumann architecture. Its big idea, which felt revolutionary at the time, is the stored-program concept: both the program instructions and the data they work on are kept together in the same memory. Before this, machines had to be physically rewired to do a new job; afterwards, you could simply load a new program, exactly as you install a new app today.\n\nIn this design the CPU, the main memory and the input/output devices are all joined by bundles of wires called buses. The address bus carries where in memory to look, the data bus carries the actual data back and forth, and the control bus carries the timing and command signals. You do not need to memorise every wire, but you should be able to say that the CPU, memory and input/output are connected by buses, and that instructions and data live together in memory.\n\nSo what does the CPU actually do, step by step, all day long? It runs the fetch-decode-execute cycle. This is the heartbeat of the computer, and it repeats billions of times each second.\n\nFetch: the control unit fetches the next instruction from main memory (RAM).\n\nDecode: the control unit decodes the instruction, working out exactly what it is asking the CPU to do.\n\nExecute: the CPU carries out the instruction. This might mean the ALU does a calculation, or data is moved, or a result is stored back in memory.",
+      "example": "Then the cycle starts again with the next instruction, and the next, and the next. Every game you play, every message you send, every weather app that works out the forecast for your town, is really just millions of these tiny fetch-decode-execute steps happening faster than you can imagine. When you understand this cycle, you understand the true engine of computing."
+    },
+    {
+      "id": "concept-4-types-of-software",
+      "title": "Types of Software",
+      "explanation": "Hardware is useless on its own; it needs software to tell it what to do. Software is the set of programs and instructions that run on the hardware. It splits into two big families, and knowing which family a program belongs to is a key skill for this topic.\n\nApplication software versus system software\n\nApplication software is the software you choose to use to get a particular job done. When Sofia edits a video, when you write in a word processor, browse the web, send a message, work in a spreadsheet or play a game, you are using application software. Each application does a specific task for the user.\n\nSystem software is the software the computer itself needs to function. You do not usually open it to do a task; instead it runs quietly in the background, making everything else possible. The two most important examples of system software are the operating system and utility software. A good way to remember the difference: application software works for you, while system software works for the computer so that you can use it at all.\n\nThe operating system and its jobs\n\nThe operating system (OS) is the most important piece of system software. Its purpose is to let you interact with the hardware and to run your applications. In short, it is what lets you use the computer at all. Examples you may know include Microsoft Windows, macOS, Android, iOS and the free and open-source Linux. Interestingly, the very first computers had no operating system; operating systems slowly came into being as people added easier ways to control the machine, including the user interface we take for granted today.\n\nThe operating system is responsible for a whole set of important tasks. Learn this list, because 'describe the jobs of an operating system' is a very common question.\n\nProviding a user interface so you can communicate with the computer through windows, icons, menus, buttons and text.\n\nMemory management, controlling the movement of data between memory and the CPU so programs get the memory they need.\n\nManaging files, letting you create, open, move, copy, rename and delete files and folders.\n\nManaging user accounts, keeping each person's data separate and letting them protect it with a password.\n\nRunning application software on the hardware, so your apps can actually work.\n\nManaging input and output devices such as the keyboard, mouse, microphone, monitor, speakers and printer.\n\nThink how much of this you rely on without noticing. When Grace logs into her own school account and finds her files exactly as she left them, that is the OS managing accounts and files. When she plugs in headphones and the sound switches to them, that is the OS managing devices. The OS is the quiet servant behind every click.\n\nThe other main type of system software is utility software. If the operating system is the manager of the house, utility software is the housekeeper: it maintains the computer and keeps everything working correctly and tidily. Utility programs do jobs such as scanning for viruses (antivirus), backing up your files, compressing data to save space, and finding programs you have not used in a long time and offering to remove them.\n\nOne classic utility task is defragmenting. Sometimes when a file is saved, there is not one space big enough to hold it in a single piece, so the computer splits it into fragments stored in different places on the drive. Over time this makes files slower to open, because the drive must gather the scattered pieces. A defragmenter reorganises the stored data so that the pieces of each file sit together again, tidy and quick to read. (Note that solid-state drives are treated differently and are not defragmented in the same way, but the idea of tidying data is the same.)\n\nQuestion — Application software · System software\n\nWho is it for? — The user, to do a specific task · The computer, to keep it running\n\nDo you open it directly? — Yes, you choose to run it · Usually no, it runs in the background\n\nExamples — Word processor, web browser, game, spreadsheet, messaging app, video editor · Operating system, utility software (e.g. antivirus, defragmenter)",
+      "example": "Could the computer work without it? — Yes, the computer still runs · No, the computer needs it to work"
+    },
+    {
+      "id": "concept-5-data-representation",
+      "title": "Data Representation",
+      "explanation": "Here we answer Theo's question from the club: how can a machine that only knows on and off store a number, a word, a photograph and a song? The answer is that all data is turned into binary, and this topic shows you exactly how.\n\nInside a computer, every wire and every tiny switch (called a transistor) is in one of just two states: electricity flowing or not flowing, which we write as 1 or 0. Because there are only two states, computers use the binary number system, which has only two digits. A single binary digit, a 1 or a 0, is called a bit. Bits are grouped into blocks of eight called a byte. One byte can represent 256 different patterns, and it is the basic unit we measure storage in: a kilobyte, megabyte, gigabyte and terabyte are ever-larger numbers of bytes.\n\nTo understand binary, first look again at the number system you already use every day: denary, also called base 10, which uses the ten digits 0 to 9. The clever idea that makes it work is place value: the position of a digit tells you how much it is worth. In denary, each place is ten times bigger than the one to its right: ones, tens, hundreds, thousands, and so on.\n\nFor example, the number 4152 is not just four digits in a row. Reading the place values, it means 4 thousands, 1 hundred, 5 tens and 2 ones, which we add together to make four thousand one hundred and fifty-two:\n\nDenary place values for 4152 (each place is 10x the one on its right)",
+      "example": "Meaning : 4000 + 100 + 50 + 2 = 4152"
+    },
+    {
+      "id": "concept-6-binary-place-value-and-converting-binary-to-denary",
+      "title": "Binary place value and converting binary to denary",
+      "explanation": "Binary works in exactly the same way, except that each place is twice as big as the one to its right instead of ten times. Starting from the right, the place values are 1, 2, 4, 8, 16, 32, 64, 128, and so on, doubling each time. A binary digit in a place is simply a switch: 1 means 'count this place value' and 0 means 'do not'. To convert a binary number to denary, you add up the place values that have a 1 beneath them.\n\nHere is the 4-bit binary number 1010. It has a 1 in the eights place and a 1 in the twos place, so it is 8 + 2 = 10:\n\nReading binary 1010 as denary 10",
+      "example": "Because most data is stored in bytes, you will usually work with 8 bits, whose place values are 128, 64, 32, 16, 8, 4, 2, 1. Here is 00110011. It has 1s in the 32, 16, 2 and 1 places, giving 32 + 16 + 2 + 1 = 51:"
+    },
+    {
+      "id": "concept-7-reading-the-byte-00110011-as-denary-51",
+      "title": "Reading the byte 00110011 as denary 51",
+      "explanation": "Place value : 128 64 32 16 8 4 2 1\n\nThe largest value one byte can hold is 11111111, which is 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1 = 255. Together with zero, that is the 256 patterns we mentioned earlier. This is why so many limits in computing, like the brightness of a colour, stop at 255.\n\nGoing the other way, from denary to binary, is just as systematic. Write out the place values, then, working from the largest place on the left, ask each time: does my number fit into this place value? If yes, write a 1 and subtract that value; if no, write a 0 and move on. Let us convert the denary number 100 into an 8-bit binary number.\n\nIs 100 greater than or equal to 128? No. Write 0. (100 left)\n\nIs 100 greater than or equal to 64? Yes. Write 1, subtract: 100 - 64 = 36. (36 left)\n\nIs 36 greater than or equal to 32? Yes. Write 1, subtract: 36 - 32 = 4. (4 left)\n\nIs 4 greater than or equal to 16? No. Write 0. (4 left)\n\nIs 4 greater than or equal to 8? No. Write 0. (4 left)\n\nIs 4 greater than or equal to 4? Yes. Write 1, subtract: 4 - 4 = 0. (0 left)",
+      "example": "Nothing left, so the last two places are 0 and 0."
+    },
+    {
+      "id": "concept-8-hexadecimal",
+      "title": "Hexadecimal",
+      "explanation": "Long strings of 1s and 0s are hard for humans to read and easy to copy wrongly. Programmers therefore often use hexadecimal, or hex, which is base 16. Because 16 is more than 10, hex needs six extra digit-symbols after 9, so it borrows the letters A to F: A is 10, B is 11, C is 12, D is 13, E is 14 and F is 15.\n\nThe reason hex is so useful is a lovely piece of mathematics: one hex digit is worth exactly four bits (a group of four bits is called a nibble). Four bits can make 16 patterns, and hex has exactly 16 digits, so they match perfectly. This means a whole byte of eight bits becomes just two neat hex digits. To convert binary to hex, split the bits into nibbles of four and write the hex digit for each. For example 11001010 splits into 1100 and 1010, which are C and A, so the byte is hex CA:\n\nThe byte 11001010 written in hexadecimal as CA\n\nTo turn a hex number into denary, multiply the left digit by 16 and add the right digit. So hex CA is (12 x 16) + 10 = 192 + 10 = 202, and if you convert the binary 11001010 straight to denary you also get 128 + 64 + 8 + 2 = 202. Everything agrees. You will see hex most often when describing colours: the colour code #FF0000 means full red and no green or blue, because FF in hex is 255, the maximum. The full conversion guide, with a table of all 16 values, is in your Reference document.\n\nNumbers are one thing, but how does a computer store the letter A or the symbol !? It uses a character set: an agreed list that gives every character its own binary value. The most famous is ASCII, which uses 7 bits to code 128 different characters, covering the English letters, the digits 0 to 9, and common symbols. In practice each character is usually stored in a full byte of 8 bits.",
+      "example": "For example, capital A has the value 65, which is 01000001 in binary, and lowercase a has the value 97, which is 01100001. Notice that uppercase and lowercase letters have different values. To us, A and a are the same letter in two styles, but to a computer they are two completely different symbols that need two different codes. The values run in order, so B is 66, C is 67, and so on:"
+    },
+    {
+      "id": "concept-9-a-few-ascii-codes-note",
+      "title": "A few ASCII codes (note",
+      "explanation": "To store a whole word, you simply store the code for each character in order. Because English ASCII cannot cover the many characters used by other languages around the world, extended ASCII was created. It uses 8 bits per character, doubling the range to 256 characters. (Modern computers now use an even bigger system called Unicode to cover thousands of characters from every language and writing system in the world, but the idea is exactly the same: every character gets a number.)\n\nA digital image of the kind a phone camera makes is a bitmap, which means it is built from a grid of tiny coloured squares called pixels (short for 'picture elements'). Each pixel is a single solid colour, and that colour is stored as a binary number. When there are enough small pixels, your eye blends them into a smooth picture, just as many tiles make a mosaic.\n\nTwo settings decide how an image looks and how big its file is. The resolution is how many pixels the image has, usually given as width times height; more pixels means more detail but a bigger file. The colour depth (or bit depth) is how many bits are used for each pixel, which decides how many colours are possible. With 1 bit per pixel you get only 2 colours (black and white). With 8 bits you get 256 colours. Photographs usually use 24-bit colour, which gives over sixteen million colours by using 8 bits each for red, green and blue light mixed together. This is the same red-green-blue idea behind those hex colour codes like #FF0000. The more pixels and the greater the colour depth, the larger the file: an uncompressed image file size is roughly width x height x colour depth.\n\nSound in the real world is a smooth, continuous wave in the air; it is analogue. A computer, though, is digital and can only store numbers, so it must turn the wave into numbers by sampling it. Sampling means measuring the height of the sound wave many times a second and storing each measurement as a binary number.\n\nTwo settings control the quality. The sample rate is how many measurements are taken per second, measured in hertz (Hz); music on a CD uses 44,100 samples per second (44.1 kHz). The bit depth is how many bits each sample uses, which decides how precisely each measurement is recorded; CD sound uses 16 bits per sample. A higher sample rate and a higher bit depth give a more faithful, better-quality recording, but they also make the file larger. It is the same trade-off as with images: more detail always costs more storage.\n\nAs you have seen, even a short word or a small picture becomes a long stream of bits, and real files with thousands of words or millions of pixels can grow huge. Data compression solves this by reducing the size of a file, either by changing the data it stores or by changing the way it is stored. Smaller files fit more onto your storage and send faster over the internet, which is why you sometimes meet a message saying a file is too large to upload.",
+      "example": "Here is one simple idea behind compression. Take the tongue-twister 'red lorry, yellow lorry' repeated over and over. Instead of storing every word every time, the computer can store each different word once, together with how many times it appears and where. Because the phrase only uses three different words, this stores far less data, and the computer can rebuild the full phrase perfectly when the file is opened."
+    },
+    {
+      "id": "concept-10-logic-gates-and-truth-tables",
+      "title": "Logic Gates and Truth Tables",
+      "explanation": "We now reach the tiny components the CPU itself is built from. Deep inside every computer, the circuits contain millions of logic gates. A logic gate is a tiny piece of hardware that uses Boolean logic to control the flow of electricity. Understanding gates is understanding how a computer 'thinks'.\n\nBoolean logic and what a gate does\n\nBoolean logic, named after the mathematician George Boole, works with just two values: true and false, which we write as 1 and 0, exactly matching electricity flowing or not flowing. A logic gate takes one or more inputs, each a 1 or a 0, and produces a single output, also a 1 or a 0, following a fixed rule. By wiring many gates together, engineers build circuits that can add numbers, compare them and make decisions; that is literally what the ALU inside the CPU is. In this topic you will learn the three most important gates: NOT, AND and OR.\n\nThe tool we use to describe a gate completely is a truth table: a table that lists every possible combination of inputs and shows the output for each one. Because every input is either 0 or 1, the number of rows is easy to predict. A gate with one input has 2 possible inputs, so its truth table has 2 rows. A gate with two inputs has 4 combinations, so its truth table has 4 rows.\n\nThe NOT gate is the simplest of all. It has just one input, and its rule is that the output is the opposite (the reverse) of the input. If the input is 0 the output is 1; if the input is 1 the output is 0. It simply flips the value. Its standard symbol is a triangle with a small circle at its tip, and that little circle is the clue that it inverts. Because it has one input, its truth table has just two rows:\n\nThe AND gate has two inputs, and its rule is strict: the output is 1 only if both inputs are 1. If either input is 0, or both are, the output is 0. Think of it like a rule that needs two conditions to be true at once: 'you may go out to play only if your homework is done and the weather is fine'. Both must be true. With two inputs there are four combinations, so the truth table has four rows:\n\nRead down the output column and notice the single 1, right at the bottom, where both inputs are 1. That one row is the whole personality of the AND gate.\n\nThe OR gate also has two inputs, but it is generous where AND is strict: its output is 1 if either input is 1, or both are. The output is only 0 when both inputs are 0. Think of it as 'you may have a snack if there are apples or there are bananas' — either one will do. Its truth table, again with four rows, is the near-opposite of the AND gate:\n\nThis time the output column has a single 0, right at the top, where both inputs are 0. Comparing the AND and OR tables side by side is the best way to keep them straight: AND has one 1, OR has one 0.\n\nNOT, AND and OR are only the beginning. Engineers also use gates called NAND, NOR and XOR.\n\nA NAND gate is simply an AND gate followed by a NOT, and remarkably, every other gate can be built out of NAND gates alone.\n\nThe ALU inside your CPU is built from many thousands of these gates wired cleverly together.\n\nThe real power appears when gates are joined so that the output of one becomes the input of another. Suppose you feed inputs A and B into an AND gate, and then send that gate's output through a NOT gate. To work out the result, you take it one gate at a time: first fill in the AND column, then flip each value for the NOT column. When A is 1 and B is 1, the AND output is 1, and the NOT then flips it to 0. For every other combination the AND output is 0, which the NOT flips to 1. Building small truth tables column by column like this is how you predict what any circuit will do, and it is exactly the skill you will practise in the free logic-gate simulator.\n\nInput — Output (NOT) · Input A · Input B · Output (A AND B) · Input A · Input B · Output (A OR B)\n\n0 — 1 · 0 · 0 · 0 · 0 · 0 · 0\n\n1 — 0 · 0 · 1 · 0 · 0 · 1 · 1\n\n1 — 0 · 0 · 1 · 0 · 1",
+      "example": "1 — 1 · 1 · 1 · 1 · 1"
+    },
+    {
+      "id": "concept-11-augmented-reality-and-ai",
+      "title": "Augmented Reality and AI",
+      "explanation": "In this final topic we move from the inside of the computer to its cutting edge: machines that can learn, that can act on their own, and that can add to the world we see. These technologies are already part of life in East Africa, from mobile-money fraud checks to farming sensors, and they will shape the careers many of you go into. We will explore them with wonder, and also with the care and responsibility that such powerful tools deserve.\n\nArtificial intelligence: rules versus learning\n\nArtificial intelligence (AI) is a simulation of human intelligence by a computer system: the computer takes in information from its surroundings and produces a sensible output based on how it processes that information. But there are really two different kinds, and telling them apart is the key idea of this topic.\n\nThe first kind uses preprogrammed rules. A character in a video game might be told, in advance, 'if the player moves forward, move back' or 'always turn to face the player'. This can feel intelligent, but the system is not learning anything; it is only following fixed rules a programmer wrote. Change nothing and it will behave exactly the same forever.\n\nThe second kind can learn, and this is called machine learning. A machine-learning system processes the data it receives, learns patterns from it, and adapts its own rules as a result, so it makes better decisions in future. Every machine-learning system is a kind of AI, but not every AI uses machine learning. That is the distinction to remember: rule-based AI follows fixed instructions; machine learning improves itself from data.\n\nImagine Maya wants an AI that can look at a photo and say whether it shows a bird. She cannot possibly write a rule for every bird in the world. Instead she trains the system by showing it many, many labelled examples: 'this is a bird', 'this is not a bird', again and again. At first the system guesses poorly, because it has too little data. But as it sees more examples it gradually learns the features that birds tend to share, such as a beak, feathers, wings and two legs. Eventually you can show it a brand-new photo it has never seen, and it can decide, on its own, whether it is a bird.\n\nThe system learns by asking itself questions it has worked out from the data: does this have feathers? does it have a beak? does it have wings? The more good examples it is given, the smarter it becomes, and it can even learn tricky cases, such as a bird standing so its legs are hidden, if you show it examples of those too. This is genuinely how the image recognition in your phone works, and you will try it yourself with the free Teachable Machine tool in your Activities document. It is also worth knowing about the Turing Test, an idea from the mathematician Alan Turing: a test of whether a computer can answer questions so convincingly that a human cannot tell it is a machine.\n\nMachine learning needs data, and lots of it, to learn well. The quality of what it learns depends on the quality of the examples it is given.\n\nThis is why a model trained only on birds from one country may struggle with birds from another.\n\nIt is also why the people who build AI must think carefully about which examples they choose.\n\nAutonomous programming and robotics\n\nAutonomous programming is when a computer system captures data from its environment and, based on that data, finds a solution and makes decisions to produce an output, all without direct human control. The system gathers its data using sensors: input devices that take readings from the world, such as a temperature sensor that measures how hot a room is. Because the sensors and the decisions happen without a person, the system can run on its own.\n\nA simple example is an air-conditioning system: it reads the temperature from a sensor and decides by itself whether to send warmer or cooler air. In East Africa's hot climate this kind of automatic control is genuinely useful. Rohan's soil-sensor idea from the club is the same principle: sensors read the moisture and temperature of the soil, and the system could decide when crops need watering, helping farmers save water and grow more.\n\nAutonomous programming becomes even more powerful in robotics. In a car factory, a robot that sprays paint uses sensors to check the temperature is right, that it is the correct distance from the car, and that the car is in the right place, and then it sprays perfectly, with no human touching it. If the robot also has AI, it can learn from the data its sensors gather and make smarter decisions next time. A famous example is NASA's Mars rovers, such as Perseverance, which use autonomous programming and AI to sense obstacles and learn how to drive around the planet Mars, far too distant to steer by hand from Earth.\n\nTo augment something means to make it better, bigger or more effective by adding to it. Augmented reality (AR) applies this to what you see: you look at a real place or object through a device such as your phone, and the computer adds computer-generated information or objects over the top of the real view. This is different from virtual reality, which replaces the world entirely; AR keeps the real world and simply enhances it.\n\nAR is already used in many contexts. In entertainment, games like Pokemon GO place 3D characters into your real surroundings on the screen, and playful camera filters that give you animal ears use the same technology. In retail, an AR mirror lets a shopper see how clothes, glasses or a hairstyle would look without trying them on, and furniture apps show how a sofa would look in your own room before you buy it. In cars, an AR heads-up display shows the driver useful information across the windscreen.\n\nThe context most exciting for the club is education. AR can place a beating, moving model of the human body in front of you so you can see where the organs are, far better than a flat picture in a book. It can bring history to life: instead of only reading about an artefact, you could see a 3D model of it float in the room and turn it to look at every side. This is exactly Leila's idea, using AR to let a child point a phone at a printed picture of the Laas Geel rock art and watch the ancient painted cattle and people appear in 3D, with facts about the people who made them thousands of years ago. A local treasure, taught with a modern tool.\n\nThese technologies are powerful, and with power comes responsibility. As thoughtful learners, you are learning to seek what is beneficial and to be honest, fair and careful of others' rights, and those same values make you a wise user of technology. Grace and Sami in the club are right to keep asking hard questions, so let us ask them too.\n\nAI can be wrong, and can be biased. A model only knows what it was trained on, so if its examples were unfair or incomplete, its decisions will be too. Never assume an AI's answer is automatically correct; check important information against a trusted source.\n\nPrivacy matters. AI and AR often use cameras, microphones and personal data. Think about what data a tool collects, and never share private information about yourself or others without permission.\n\nHonesty and your own effort. You have a wonderful AI tutor, but its job is to help you understand, not to do your work for you. Using it to think harder is excellent; copying its answers to pretend they are yours is a form of dishonesty that also robs you of learning.\n\nKeep a human in charge. Autonomous systems should be designed so a person can always check, correct and switch them off. The most important decisions should never be left to a machine alone.\n\nBe kind and truthful with what you create. AR and AI can make convincing fake images and videos. A responsible person does not spread what is false or hurtful, even when the tools make it easy.",
+      "example": "Used this way, with skill in one hand and good character in the other, these technologies can be a real and lasting source of benefit for your family and your community. That is the attitude the Digital Makers Club, and this whole course, hopes to leave you with."
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "Binary : 1100 1010",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "Nibble : 12 10 (in denary)",
+        "Hex : C A -> CA"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "The data-representation and logic workbook",
+      "context": "The data-representation and logic workbook: work through the steps below and see what happens. This is computer architectures in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "On paper or in a document, complete all of the following and mark them Show your technical skills.",
+      "answer": "Convert three denary numbers of your choice (between 20 and 255) into binary, and check each one. Convert two of those bytes into hexadecimal by splitting them into nibbles. Write your full name in ASCII binary. Draw a completed truth table for the NOT, AND and OR gates.",
+      "modelType": "model-1",
+      "hint": "Start here: Convert three denary numbers of your choice (between 20 and 255) into binary, and check each one.",
+      "explanation": "Computer Architectures: Architecture normally means the design of a building. In computing, computer architecture means the design of a computer: what its main parts are and how they are connected. Just as a house has rooms with different jobs joined by hallways, a computer has components with different jobs joined by…"
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "The RAM and ROM infographic",
+      "context": "The RAM and ROM infographic: work through the steps below and see what happens. This is the cpu in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Design a clear one-page infographic that would help a younger learner understand the difference between RAM and ROM. Include what each stands for, whether it is volatile or non-volatile, whether it is temporary or permanent, and its main job. Use a simple picture or icon for each.",
+      "answer": "Compare what you built with the worked example, and note any difference.",
+      "modelType": "model-2",
+      "hint": "Do one step at a time, and check the result before you move on.",
+      "explanation": "The CPU: The central processing unit, or CPU, is the piece of hardware that processes all the data. It is often called the brain of the computer, and that is a fair name: nothing happens without it. The CPU works by repeatedly fetching an instruction, working out what it means, and carrying it out, over and…"
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "The design concept: a smart tool for East Africa",
+      "context": "The design concept: a smart tool for East Africa: work through the steps below and see what happens. This is secondary storage and the memory hierarchy in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Design (on paper or as slides) a technology concept that uses AI, AR or autonomous programming to help your community. You could develop one of the club's ideas or invent your own. Your design must answer these questions For example: an AR app that teaches you about Laas Geel; a soil-sensor system that helps farmers water crops wisely; an AI that recognises local birds or plants; or an AR translator for the Somali language.",
+      "answer": "What problem does your idea solve, and who does it help? Which technology does it use: augmented reality, machine learning, autonomous programming, or a mix? What data or sensors does it need, and where does that data come from? If it uses machine learning, what examples would you train it on? How will you use it responsibly, thinking about accuracy, privacy, honesty and keeping a human in charge?",
+      "modelType": "model-3",
+      "hint": "Start here: What problem does your idea solve, and who does it help?",
+      "explanation": "Secondary storage and the memory hierarchy: If RAM forgets everything when the power goes off, where do your files live when the computer is switched off? The answer is secondary storage: devices such as hard disk drives (HDD), solid-state drives (SSD), USB memory sticks and SD cards. Secondary storage is non-volatile, so it keeps your…"
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "How to Use These Activities",
+      "context": "How to Use These Activities: work through the steps below and see what happens. This is types of software in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "There is one activity set for each subunit, then a big end-of-unit project that pulls everything together. Work through them in order, because later activities build on earlier ones. Most of this unit can be done with pen and paper; a few activities use free browser tools. Always try each task yourself first, then use the 'Ask Your AI Tutor' prompt to check your work or get unstuck.",
+      "answer": "Pen and paper (your most important tool for conversions and truth tables). A web browser for the optional online tools: CircuitVerse for logic gates, and Quick, Draw! and Teachable Machine for AI. Your own device's settings page, to look at its real RAM, storage and processor. Stay safe: only visit trusted sites, and check the exact web addresses with your teacher first. Activities 4.1 - Computer Architectures",
+      "modelType": "model-4",
+      "hint": "Start here: Pen and paper (your most important tool for conversions and truth tables).",
+      "explanation": "Types of Software: Hardware is useless on its own; it needs software to tell it what to do. Software is the set of programs and instructions that run on the hardware. It splits into two big families, and knowing which family a program belongs to is a key skill for this topic."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Activities 4.1 - Computer Architectures",
+      "context": "Activities 4.1 - Computer Architectures: work through the steps below and see what happens. This is data representation in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Activity 4.1a - Explore the computer inside your device",
+      "answer": "Your task: find out what hardware is really inside the device you use. Open the 'About' or 'System' information page in your device's settings. Write down the processor (CPU) name and its clock speed in GHz, the amount of RAM, and the total storage and how much is free. Work out roughly how many times bigger your storage is than your RAM. Write one sentence explaining why the computer needs both a small fast RAM and a large slow storage.",
+      "modelType": "model-5",
+      "hint": "Start here: Your task: find out what hardware is really inside the device you use.",
+      "explanation": "Data Representation: Here we answer Theo's question from the club: how can a machine that only knows on and off store a number, a word, a photograph and a song? The answer is that all data is turned into binary, and this topic shows you exactly how."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Ask Your AI Tutor",
+      "context": "Ask Your AI Tutor: work through the steps below and see what happens. This is binary place value and converting binary to denary in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Ask: 'I have this much RAM and this much storage (give the numbers). Explain what each one does for my device.'",
+      "answer": "Activity 4.1b - RAM or ROM? Sort the statements Your task: decide whether each statement describes RAM or ROM. Write your answers, then check them. Loses all its data when the power is switched off. Holds the instructions used to boot up the computer. Is volatile storage.",
+      "modelType": "model-6",
+      "hint": "Start here: Activity 4.1b - RAM or ROM? Sort the statements",
+      "explanation": "Binary place value and converting binary to denary: Binary works in exactly the same way, except that each place is twice as big as the one to its right instead of ten times. Starting from the right, the place values are 1, 2, 4, 8, 16, 32, 64, 128, and so on, doubling each time. A binary digit in a place is simply a switch: 1 means 'count this…"
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Computer Architectures",
+      "modelType": "concept-model-1",
+      "purpose": "Architecture normally means the design of a building. In computing, computer architecture means the design of a computer: what its main parts are and how they are connected. Just as a house has rooms with different jobs…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "The CPU",
+      "modelType": "concept-model-2",
+      "purpose": "The central processing unit, or CPU, is the piece of hardware that processes all the data. It is often called the brain of the computer, and that is a fair name: nothing happens without it. The CPU works by repeatedly…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Secondary storage and the memory hierarchy",
+      "modelType": "concept-model-3",
+      "purpose": "If RAM forgets everything when the power goes off, where do your files live when the computer is switched off? The answer is secondary storage: devices such as hard disk drives (HDD), solid-state drives (SSD), USB…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Types of Software",
+      "modelType": "concept-model-4",
+      "purpose": "Hardware is useless on its own; it needs software to tell it what to do. Software is the set of programs and instructions that run on the hardware. It splits into two big families, and knowing which family a program…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Data Representation",
+      "modelType": "concept-model-5",
+      "purpose": "Here we answer Theo's question from the club: how can a machine that only knows on and off store a number, a word, a photograph and a song? The answer is that all data is turned into binary, and this topic shows you…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Binary place value and converting binary to denary",
+      "modelType": "concept-model-6",
+      "purpose": "Binary works in exactly the same way, except that each place is twice as big as the one to its right instead of ten times. Starting from the right, the place values are 1, 2, 4, 8, 16, 32, 64, 128, and so on, doubling…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-7",
+      "outcomeId": "lo07",
+      "title": "Reading the byte 00110011 as denary 51",
+      "modelType": "concept-model-7",
+      "purpose": "Place value : 128 64 32 16 8 4 2 1",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-8",
+      "outcomeId": "lo08",
+      "title": "Hexadecimal",
+      "modelType": "concept-model-8",
+      "purpose": "Long strings of 1s and 0s are hard for humans to read and easy to copy wrongly. Programmers therefore often use hexadecimal, or hex, which is base 16. Because 16 is more than 10, hex needs six extra digit-symbols after…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-9",
+      "outcomeId": "lo09",
+      "title": "A few ASCII codes (note",
+      "modelType": "concept-model-9",
+      "purpose": "To store a whole word, you simply store the code for each character in order. Because English ASCII cannot cover the many characters used by other languages around the world, extended ASCII was created. It uses 8 bits…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-10",
+      "outcomeId": "lo10",
+      "title": "Logic Gates and Truth Tables",
+      "modelType": "concept-model-10",
+      "purpose": "We now reach the tiny components the CPU itself is built from. Deep inside every computer, the circuits contain millions of logic gates. A logic gate is a tiny piece of hardware that uses Boolean logic to control the…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-11",
+      "outcomeId": "lo01",
+      "title": "Augmented Reality and AI",
+      "modelType": "concept-model-11",
+      "purpose": "In this final topic we move from the inside of the computer to its cutting edge: machines that can learn, that can act on their own, and that can add to the world we see. These technologies are already part of life in…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with computer architectures",
+      "example": "At the highest level, every computer does four things. It takes in data through input devices like a keyboard, mouse, camera or microphone. It processes that data in the CPU. It stores data in memory and storage. And it gives back results through output…",
+      "steps": [
+        "Read the concept card for computer architectures and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with the cpu",
+      "example": "Adding more RAM to a computer often makes it feel faster, because it can keep more programs ready at once.",
+      "steps": [
+        "The central processing unit, or CPU, is the piece of hardware that processes all the data. It is often called the brain of the computer, and that is a fair name: nothing happens without it. The CPU works by repeatedly…",
+        "Inside the CPU there are three main parts you should know. The control unit (CU) is like a manager: it directs everything, fetching each instruction and telling the other parts what to do and when. The arithmetic logic…",
+        "Two more words describe how powerful a CPU is. Its clock speed, measured in gigahertz (GHz), is how many cycles it can do each second; one gigahertz is one billion cycles per second, so a 3.0 GHz CPU races through three…",
+        "The CPU is fast, but it needs somewhere close by to keep the data and instructions it is using right now. That is the job of primary memory: memory the CPU can reach directly, through wires that connect the two. There…"
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with secondary storage and the memory hierarchy",
+      "example": "Then the cycle starts again with the next instruction, and the next, and the next. Every game you play, every message you send, every weather app that works out the forecast for your town, is really just millions of these tiny fetch-decode-execute steps…",
+      "steps": [
+        "If RAM forgets everything when the power goes off, where do your files live when the computer is switched off? The answer is secondary storage: devices such as hard disk drives (HDD), solid-state drives (SSD), USB…",
+        "This gives us a neat ladder called the memory hierarchy. At the top are the registers inside the CPU: tiniest but fastest. Just below sits cache, a small pool of very fast memory that keeps the most-used data even…",
+        "How are all these parts wired together? The design used by almost every computer today was described in 1945 by a mathematician named John von Neumann, and it is called the von Neumann architecture. Its big idea, which…",
+        "In this design the CPU, the main memory and the input/output devices are all joined by bundles of wires called buses. The address bus carries where in memory to look, the data bus carries the actual data back and forth,…"
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with types of software",
+      "example": "Could the computer work without it? — Yes, the computer still runs · No, the computer needs it to work",
+      "steps": [
+        "Hardware is useless on its own; it needs software to tell it what to do. Software is the set of programs and instructions that run on the hardware. It splits into two big families, and knowing which family a program…",
+        "Application software versus system software",
+        "Application software is the software you choose to use to get a particular job done. When Sofia edits a video, when you write in a word processor, browse the web, send a message, work in a spreadsheet or play a game,…",
+        "System software is the software the computer itself needs to function. You do not usually open it to do a task; instead it runs quietly in the background, making everything else possible. The two most important examples…"
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with data representation",
+      "example": "Meaning : 4000 + 100 + 50 + 2 = 4152",
+      "steps": [
+        "Here we answer Theo's question from the club: how can a machine that only knows on and off store a number, a word, a photograph and a song? The answer is that all data is turned into binary, and this topic shows you…",
+        "Inside a computer, every wire and every tiny switch (called a transistor) is in one of just two states: electricity flowing or not flowing, which we write as 1 or 0. Because there are only two states, computers use the…",
+        "To understand binary, first look again at the number system you already use every day: denary, also called base 10, which uses the ten digits 0 to 9. The clever idea that makes it work is place value: the position of a…",
+        "For example, the number 4152 is not just four digits in a row. Reading the place values, it means 4 thousands, 1 hundred, 5 tens and 2 ones, which we add together to make four thousand one hundred and fifty-two:"
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "How to work with binary place value and converting binary to denary",
+      "example": "Because most data is stored in bytes, you will usually work with 8 bits, whose place values are 128, 64, 32, 16, 8, 4, 2, 1. Here is 00110011. It has 1s in the 32, 16, 2 and 1 places, giving 32 + 16 + 2 + 1 = 51:",
+      "steps": [
+        "Read the concept card for binary place value and converting binary to denary and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-7",
+      "outcomeId": "lo07",
+      "difficulty": "Challenge",
+      "title": "How to work with reading the byte 00110011 as denary 51",
+      "example": "Nothing left, so the last two places are 0 and 0.",
+      "steps": [
+        "The largest value one byte can hold is 11111111, which is 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1 = 255. Together with zero, that is the 256 patterns we mentioned earlier. This is why so many limits in computing, like the…",
+        "Going the other way, from denary to binary, is just as systematic. Write out the place values, then, working from the largest place on the left, ask each time: does my number fit into this place value? If yes, write a 1…",
+        "Is 100 greater than or equal to 128? No. Write 0. (100 left)",
+        "Is 100 greater than or equal to 64? Yes. Write 1, subtract: 100 - 64 = 36. (36 left)"
+      ]
+    },
+    {
+      "id": "method-8",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "How to work with hexadecimal",
+      "example": "For example, capital A has the value 65, which is 01000001 in binary, and lowercase a has the value 97, which is 01100001. Notice that uppercase and lowercase letters have different values. To us, A and a are the same letter in two styles, but to a computer…",
+      "steps": [
+        "Long strings of 1s and 0s are hard for humans to read and easy to copy wrongly. Programmers therefore often use hexadecimal, or hex, which is base 16. Because 16 is more than 10, hex needs six extra digit-symbols after…",
+        "The reason hex is so useful is a lovely piece of mathematics: one hex digit is worth exactly four bits (a group of four bits is called a nibble). Four bits can make 16 patterns, and hex has exactly 16 digits, so they…",
+        "The byte 11001010 written in hexadecimal as CA",
+        "To turn a hex number into denary, multiply the left digit by 16 and add the right digit. So hex CA is (12 x 16) + 10 = 192 + 10 = 202, and if you convert the binary 11001010 straight to denary you also get 128 + 64 + 8…"
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Computer Architectures",
+      "prompt": "Which type of primary memory is volatile? (a) ROM (b) RAM (c) SSD (d) the CPU",
+      "solution": "(b) RAM. RAM is volatile, so it loses its data when the power is off; ROM is non-volatile."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: The CPU",
+      "prompt": "Which part of the CPU does the calculations and comparisons? (a) the control unit (b) the register (c) the ALU (d) the cache",
+      "solution": "(c) the ALU. The arithmetic logic unit does the sums and the comparisons."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Secondary storage and the memory hierarchy",
+      "prompt": "What does ROM mainly store? (a) the file you are editing (b) the boot-up instructions (c) open applications (d) nothing",
+      "solution": "(b) the boot-up instructions. ROM holds the permanent instructions to start the computer."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Types of Software",
+      "prompt": "In the von Neumann architecture, instructions and data are stored... (a) in separate memories (b) in the same memory (c) only in the CPU (d) only on the internet",
+      "solution": "(b) in the same memory. That is the stored-program idea at the heart of von Neumann architecture."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Data Representation",
+      "prompt": "Which is an example of system software? (a) a web browser (b) a game (c) an operating system (d) a word processor",
+      "solution": "(c) an operating system. The others are all application software."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Binary place value and converting binary to denary",
+      "prompt": "What is the denary value of the binary number 1010? (a) 8 (b) 10 (c) 12 (d) 20",
+      "solution": "(b) 10. 1010 = 8 + 2 = 10."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Worked example 7: Reading the byte 00110011 as denary 51",
+      "prompt": "What is the denary number 12 in binary? (a) 1010 (b) 1100 (c) 0110 (d) 1110",
+      "solution": "(b) 1100. 12 = 8 + 4, so the 8 and 4 places have a 1, giving 1100."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "Worked example 8: Hexadecimal",
+      "prompt": "How many bits does standard ASCII use to code each character? (a) 4 (b) 7 (c) 16 (d) 32",
+      "solution": "(b) 7. Standard ASCII uses 7 bits for 128 characters; extended ASCII uses 8 bits."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo09",
+      "difficulty": "Challenge",
+      "title": "Worked example 9: A few ASCII codes (note",
+      "prompt": "What is the hexadecimal digit for denary 15? (a) E (b) F (c) 10 (d) 15",
+      "solution": "(b) F. In hex, A=10, B=11, C=12, D=13, E=14, F=15."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo10",
+      "difficulty": "Challenge",
+      "title": "Worked example 10: Logic Gates and Truth Tables",
+      "prompt": "For a NOT gate, if the input is 0, the output is... (a) 0 (b) 1 (c) both (d) neither",
+      "solution": "(b) 1. A NOT gate outputs the opposite of its input."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Which type of primary memory is volatile? (a) ROM (b) RAM (c) SSD (d) the CPU",
+      "answer": "(b) RAM. RAM is volatile, so it loses its data when the power is off; ROM is non-volatile.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Which part of the CPU does the calculations and comparisons? (a) the control unit (b) the register (c) the ALU (d) the cache",
+      "answer": "(c) the ALU. The arithmetic logic unit does the sums and the comparisons.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "What does ROM mainly store? (a) the file you are editing (b) the boot-up instructions (c) open applications (d) nothing",
+      "answer": "(b) the boot-up instructions. ROM holds the permanent instructions to start the computer.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "In the von Neumann architecture, instructions and data are stored... (a) in separate memories (b) in the same memory (c) only in the CPU (d) only on the internet",
+      "answer": "(b) in the same memory. That is the stored-program idea at the heart of von Neumann architecture.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "Which is an example of system software? (a) a web browser (b) a game (c) an operating system (d) a word processor",
+      "answer": "(c) an operating system. The others are all application software.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p06",
+      "level": "Warm-up",
+      "prompt": "What is the denary value of the binary number 1010? (a) 8 (b) 10 (c) 12 (d) 20",
+      "answer": "(b) 10. 1010 = 8 + 2 = 10.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p07",
+      "level": "Warm-up",
+      "prompt": "What is the denary number 12 in binary? (a) 1010 (b) 1100 (c) 0110 (d) 1110",
+      "answer": "(b) 1100. 12 = 8 + 4, so the 8 and 4 places have a 1, giving 1100.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p08",
+      "level": "Warm-up",
+      "prompt": "How many bits does standard ASCII use to code each character? (a) 4 (b) 7 (c) 16 (d) 32",
+      "answer": "(b) 7. Standard ASCII uses 7 bits for 128 characters; extended ASCII uses 8 bits.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p09",
+      "level": "Warm-up",
+      "prompt": "What is the hexadecimal digit for denary 15? (a) E (b) F (c) 10 (d) 15",
+      "answer": "(b) F. In hex, A=10, B=11, C=12, D=13, E=14, F=15.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p10",
+      "level": "Warm-up",
+      "prompt": "How many bits are in one byte? (a) 1 (b) 4 (c) 8 (d) 16",
+      "answer": "(c) 8. A byte is 8 bits.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p11",
+      "level": "Warm-up",
+      "prompt": "For a NOT gate, if the input is 0, the output is... (a) 0 (b) 1 (c) both (d) neither",
+      "answer": "(b) 1. A NOT gate outputs the opposite of its input.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p12",
+      "level": "Warm-up",
+      "prompt": "An AND gate outputs 1 when... (a) either input is 1 (b) both inputs are 1 (c) both inputs are 0 (d) never",
+      "answer": "(b) both inputs are 1. That is the only row where an AND gate outputs 1.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p13",
+      "level": "Warm-up",
+      "prompt": "Which describes machine learning? (a) AI that follows only fixed rules (b) AI that learns from data and adapts (c) a type of monitor (d) a logic gate",
+      "answer": "(b) AI that learns from data and adapts. Rule-based AI only follows fixed instructions.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p14",
+      "level": "Warm-up",
+      "prompt": "Augmented reality means... (a) replacing the world with a virtual one (b) adding computer-generated content over the real world (c) a faster CPU (d) deleting data",
+      "answer": "(b) adding computer-generated content over the real world. VR replaces the world instead.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p15",
+      "level": "Warm-up",
+      "prompt": "A system that senses its environment and decides with no human control uses... (a) autonomous programming (b) a spreadsheet (c) ROM (d) a browser",
+      "answer": "(a) autonomous programming. It senses and decides with no direct human control.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p16",
+      "level": "Core",
+      "prompt": "Answer in one or two full sentences.",
+      "answer": "Similarity: both are primary memory the CPU can access directly (both are hardware that stores data). Difference: RAM is volatile and temporary; ROM is non-volatile and permanent.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
+    }
+  ],
+  "activities": [
+    {
+      "title": "The data-representation and logic workbook",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "On paper or in a document, complete all of the following and mark them Show your technical skills.",
+        "Convert three denary numbers of your choice (between 20 and 255) into binary, and check each one.",
+        "Convert two of those bytes into hexadecimal by splitting them into nibbles.",
+        "Write your full name in ASCII binary.",
+        "Draw a completed truth table for the NOT, AND and OR gates."
+      ]
+    },
+    {
+      "title": "The RAM and ROM infographic",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Design a clear one-page infographic that would help a younger learner understand the difference between RAM and ROM. Include what each stands for, whether it is volatile or non-volatile, whether it is temporary or permanent, and its main job. Use a simple picture or icon for each."
+      ]
+    },
+    {
+      "title": "The design concept: a smart tool for East Africa",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Design (on paper or as slides) a technology concept that uses AI, AR or autonomous programming to help your community. You could develop one of the club's ideas or invent your own. Your design must answer these questions For example: an AR app that teaches you about Laas Geel; a soil-sensor system that helps farmers water crops wisely; an AI that recognises local birds or plants; or an AR translator for the Somali language.",
+        "What problem does your idea solve, and who does it help?",
+        "Which technology does it use: augmented reality, machine learning, autonomous programming, or a mix?",
+        "What data or sensors does it need, and where does that data come from?",
+        "If it uses machine learning, what examples would you train it on?",
+        "How will you use it responsibly, thinking about accuracy, privacy, honesty and keeping a human in charge?"
+      ]
+    },
+    {
+      "title": "How to Use These Activities",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "There is one activity set for each subunit, then a big end-of-unit project that pulls everything together. Work through them in order, because later activities build on earlier ones. Most of this unit can be done with pen and paper; a few activities use free browser tools. Always try each task yourself first, then use the 'Ask Your AI Tutor' prompt to check your work or get unstuck.",
+        "Pen and paper (your most important tool for conversions and truth tables).",
+        "A web browser for the optional online tools: CircuitVerse for logic gates, and Quick, Draw! and Teachable Machine for AI.",
+        "Your own device's settings page, to look at its real RAM, storage and processor.",
+        "Stay safe: only visit trusted sites, and check the exact web addresses with your teacher first.",
+        "Activities 4.1 - Computer Architectures"
+      ]
+    },
+    {
+      "title": "Activities 4.1 - Computer Architectures",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Activity 4.1a - Explore the computer inside your device",
+        "Your task: find out what hardware is really inside the device you use.",
+        "Open the 'About' or 'System' information page in your device's settings.",
+        "Write down the processor (CPU) name and its clock speed in GHz, the amount of RAM, and the total storage and how much is free.",
+        "Work out roughly how many times bigger your storage is than your RAM.",
+        "Write one sentence explaining why the computer needs both a small fast RAM and a large slow storage."
+      ]
+    },
+    {
+      "title": "Ask Your AI Tutor",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Ask: 'I have this much RAM and this much storage (give the numbers). Explain what each one does for my device.'",
+        "Activity 4.1b - RAM or ROM? Sort the statements",
+        "Your task: decide whether each statement describes RAM or ROM. Write your answers, then check them.",
+        "Loses all its data when the power is switched off.",
+        "Holds the instructions used to boot up the computer.",
+        "Is volatile storage."
+      ]
+    },
+    {
+      "title": "Activities 4.2 - Types of Software",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Activity 4.2a - Application or system software?",
+        "Your task: sort each program into application software or system software.",
+        "The operating system (for example Windows, Android or Linux).",
+        "Antivirus software.",
+        "A word processor."
+      ]
+    },
+    {
+      "title": "Activities 4.3 - Data Representation",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Activity 4.3a - Binary to denary",
+        "Your task: convert each 8-bit binary number to denary by adding the place values. Show your working.",
+        "Add up the place values wherever there is a 1",
+        "Place value guide: 128 64 32 16 8 4 2 1"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "It is easy to think the CPU stores your files. It does not.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "It is easy to think the CPU stores your files. It does not. The CPU processes data; your files are stored in RAM while in use and in secondary storage when saved. The CPU only holds a tiny amount of data at a time, in its registers, just long enough to work on it."
+    },
+    {
+      "symptom": "Some learners think the letter A is stored as the shape of an A. It is not.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Some learners think the letter A is stored as the shape of an A. It is not. A is stored as the number 65 in binary. The shape you see on screen is drawn separately from that code. This is why the same text can appear in many different fonts: the code stays 65, only the drawing changes. Representing images A digital image of the kind a phone camera makes is a bitmap, which means it is built from a grid of tiny coloured squares called pixels (short for 'picture elements'). Each pixel is a single solid colour, and that colour is stored as a binary number. When there are enough small pixels, your eye blends them into a smooth picture, just as many tiles make a mosaic. Two settings decide how an image looks and how big its file is. The resolution is how many pixels the image has, usually given as width times height; more pixels means more detail but a bigger file. The colour depth (or bit depth) is how many bits are used for each pixel, which decides how many colours are possible. With 1 bit per pixel you get only 2 colours (black and white). With 8 bits you get 256 colours. Photographs usually use 24-bit colour, which gives over sixteen million colours by using 8 bits each for red, green and blue light mixed together. This is the same red-green-blue idea behind those hex colour codes like #FF0000. The more pixels and the greater the colour depth, the larger the file: an uncompressed image file size is roughly width x height x colour depth."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Keep personal information private",
+      "text": "Your full name, address, school, phone number, birthday and passwords are personal information. Never type them into a game, an app or a website, and never send them to someone you only know online."
+    },
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "RAM vs ROM",
+        "text": "RAM: temporary, volatile, changing, holds what is in use now. Data is lost when power is Removed. ROM: permanent, non-volatile, holds boot instructions. Data Remains when power is off."
+      },
+      {
+        "title": "the place values",
+        "text": "Binary byte place values: 128, 64, 32, 16, 8, 4, 2, 1. Write them down first, every single time you convert. It prevents most mistakes."
+      },
+      {
+        "title": "hexadecimal",
+        "text": "One hex digit = one nibble = 4 bits. A whole byte = two hex digits. After 9 comes A(10), B(11), C(12), D(13), E(14), F(15)."
+      },
+      {
+        "title": "the logic gates",
+        "text": "NOT flips the input. AND outputs 1 only when both inputs are 1. OR outputs 1 when at least one is 1. 1 input = 2 rows; 2 inputs = 4 rows."
+      },
+      {
+        "title": "AI and AR",
+        "text": "Machine learning learns from data and adapts; rule-based AI only follows fixed rules. Augmented reality adds to the real world; virtual reality replaces it. Always use both responsibly."
+      }
+    ],
+    "terms": [
+      [
+        "ALU (arithmetic logic unit)",
+        "The part of the CPU that performs calculations and logic comparisons."
+      ],
+      [
+        "application software",
+        "Software the user chooses to run to do a specific task, e.g. a browser or game."
+      ],
+      [
+        "ASCII",
+        "A character set using 7 bits to code 128 characters; extended ASCII uses 8 bits for 256."
+      ],
+      [
+        "augmented",
+        "Made better, bigger or more effective by having things added to it."
+      ],
+      [
+        "augmented reality (AR)",
+        "A view of the real world with computer-generated information or objects added over the top."
+      ],
+      [
+        "autonomous programming",
+        "When a system captures data from its environment and makes decisions with no direct human control."
+      ],
+      [
+        "binary",
+        "A base-2 number system using only 1 and 0; the language all data is stored in."
+      ],
+      [
+        "bit",
+        "A single binary digit, a 1 or a 0."
+      ],
+      [
+        "Boolean",
+        "A system of logic using only two values: true and false, or 1 and 0."
+      ],
+      [
+        "byte",
+        "A group of 8 bits."
+      ],
+      [
+        "cache",
+        "A small, very fast memory close to the CPU that stores frequently used data."
+      ],
+      [
+        "character set",
+        "A list of characters and the binary code that represents each one."
+      ],
+      [
+        "clock speed",
+        "How many cycles a CPU does each second, measured in gigahertz (GHz)."
+      ],
+      [
+        "colour depth",
+        "The number of bits used to store the colour of each pixel; more bits means more colours."
+      ],
+      [
+        "control unit (CU)",
+        "The part of the CPU that directs operations and fetches and decodes instructions."
+      ],
+      [
+        "CPU (central processing unit)",
+        "The hardware that processes all data by fetching and carrying out instructions."
+      ],
+      [
+        "data compression",
+        "Reducing the size of a file by changing the data stored or the way it is stored."
+      ],
+      [
+        "defragmenting",
+        "A utility task that reorganises scattered file fragments so each file's pieces sit together."
+      ],
+      [
+        "denary",
+        "The base-10 number system humans normally use, with digits 0 to 9."
+      ],
+      [
+        "extended ASCII",
+        "A character set using 8-bit values, so it can code 256 different characters."
+      ],
+      [
+        "fetch-decode-execute cycle",
+        "The repeating cycle the CPU uses to run each instruction."
+      ],
+      [
+        "hexadecimal",
+        "A base-16 number system using 0 to 9 and A to F; a short way to write binary."
+      ],
+      [
+        "input",
+        "Data given to a computer, e.g. by typing or from a sensor."
+      ],
+      [
+        "interface",
+        "The part of the OS that lets a user communicate with the computer (windows, icons, menus)."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "ALU (arithmetic logic unit)",
+        "meaning": "The part of the CPU that performs calculations and logic comparisons.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "application software",
+        "meaning": "Software the user chooses to run to do a specific task, e.g. a browser or game.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "ASCII",
+        "meaning": "A character set using 7 bits to code 128 characters; extended ASCII uses 8 bits for 256.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "augmented",
+        "meaning": "Made better, bigger or more effective by having things added to it.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "augmented reality (AR)",
+        "meaning": "A view of the real world with computer-generated information or objects added over the top.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "autonomous programming",
+        "meaning": "When a system captures data from its environment and makes decisions with no direct human control.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "binary",
+        "meaning": "A base-2 number system using only 1 and 0; the language all data is stored in.",
+        "example": "",
+        "letter": "B"
+      },
+      {
+        "term": "bit",
+        "meaning": "A single binary digit, a 1 or a 0.",
+        "example": "",
+        "letter": "B"
+      },
+      {
+        "term": "Boolean",
+        "meaning": "A system of logic using only two values: true and false, or 1 and 0.",
+        "example": "",
+        "letter": "B"
+      },
+      {
+        "term": "byte",
+        "meaning": "A group of 8 bits.",
+        "example": "",
+        "letter": "B"
+      },
+      {
+        "term": "cache",
+        "meaning": "A small, very fast memory close to the CPU that stores frequently used data.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "character set",
+        "meaning": "A list of characters and the binary code that represents each one.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "clock speed",
+        "meaning": "How many cycles a CPU does each second, measured in gigahertz (GHz).",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "colour depth",
+        "meaning": "The number of bits used to store the colour of each pixel; more bits means more colours.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "control unit (CU)",
+        "meaning": "The part of the CPU that directs operations and fetches and decodes instructions.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "CPU (central processing unit)",
+        "meaning": "The hardware that processes all data by fetching and carrying out instructions.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "data compression",
+        "meaning": "Reducing the size of a file by changing the data stored or the way it is stored.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "defragmenting",
+        "meaning": "A utility task that reorganises scattered file fragments so each file's pieces sit together.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "denary",
+        "meaning": "The base-10 number system humans normally use, with digits 0 to 9.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "extended ASCII",
+        "meaning": "A character set using 8-bit values, so it can code 256 different characters.",
+        "example": "",
+        "letter": "E"
+      },
+      {
+        "term": "fetch-decode-execute cycle",
+        "meaning": "The repeating cycle the CPU uses to run each instruction.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "hexadecimal",
+        "meaning": "A base-16 number system using 0 to 9 and A to F; a short way to write binary.",
+        "example": "",
+        "letter": "H"
+      },
+      {
+        "term": "input",
+        "meaning": "Data given to a computer, e.g. by typing or from a sensor.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "interface",
+        "meaning": "The part of the OS that lets a user communicate with the computer (windows, icons, menus).",
+        "example": "",
+        "letter": "I"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "It is easy to think the CPU stores your files. It does not.",
+        "It is easy to think the CPU stores your files. It does not. The CPU processes data; your files are stored in RAM while in use and in secondary storage when saved. The CPU only holds a tiny amount of data at a time, in its registers, just long enough to work on it."
+      ],
+      [
+        "Some learners think the letter A is stored as the shape of an A. It is not.",
+        "Some learners think the letter A is stored as the shape of an A. It is not. A is stored as the number 65 in binary. The shape you see on screen is drawn separately from that code. This is why the same text can appear in many different fonts: the code stays 65, only the drawing changes. Representing images A digital image of the kind a phone camera makes is a bitmap, which means it is built from a grid of tiny coloured squares called pixels (short for 'picture elements'). Each pixel is a single solid colour, and that colour is stored as a binary number. When there are enough small pixels, your eye blends them into a smooth picture, just as many tiles make a mosaic. Two settings decide how an image looks and how big its file is. The resolution is how many pixels the image has, usually given as width times height; more pixels means more detail but a bigger file. The colour depth (or bit depth) is how many bits are used for each pixel, which decides how many colours are possible. With 1 bit per pixel you get only 2 colours (black and white). With 8 bits you get 256 colours. Photographs usually use 24-bit colour, which gives over sixteen million colours by using 8 bits each for red, green and blue light mixed together. This is the same red-green-blue idea behind those hex colour codes like #FF0000. The more pixels and the greater the colour depth, the larger the file: an uncompressed image file size is roughly width x height x colour depth."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Which type of primary memory is volatile? (a) ROM (b) RAM (c) SSD (d) the CPU",
+      "answer": "(b) RAM. RAM is volatile, so it loses its data when the power is off; ROM is non-volatile.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words.",
+      "errorFeedback": "(b) RAM. RAM is volatile, so it loses its data when the power is off; ROM is non-volatile."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Which part of the CPU does the calculations and comparisons? (a) the control unit (b) the register (c) the ALU (d) the cache",
+      "answer": "(c) the ALU. The arithmetic logic unit does the sums and the comparisons.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words.",
+      "errorFeedback": "(c) the ALU. The arithmetic logic unit does the sums and the comparisons."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "What does ROM mainly store? (a) the file you are editing (b) the boot-up instructions (c) open applications (d) nothing",
+      "answer": "(b) the boot-up instructions. ROM holds the permanent instructions to start the computer.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words.",
+      "errorFeedback": "(b) the boot-up instructions. ROM holds the permanent instructions to start the computer."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "In the von Neumann architecture, instructions and data are stored... (a) in separate memories (b) in the same memory (c) only in the CPU (d) only on the internet",
+      "answer": "(b) in the same memory. That is the stored-program idea at the heart of von Neumann architecture.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words.",
+      "errorFeedback": "(b) in the same memory. That is the stored-program idea at the heart of von Neumann architecture."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Which is an example of system software? (a) a web browser (b) a game (c) an operating system (d) a word processor",
+      "answer": "(c) an operating system. The others are all application software.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words.",
+      "errorFeedback": "(c) an operating system. The others are all application software."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "What is the denary value of the binary number 1010? (a) 8 (b) 10 (c) 12 (d) 20",
+      "answer": "(b) 10. 1010 = 8 + 2 = 10.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words.",
+      "errorFeedback": "(b) 10. 1010 = 8 + 2 = 10."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "What is the denary number 12 in binary? (a) 1010 (b) 1100 (c) 0110 (d) 1110",
+      "answer": "(b) 1100. 12 = 8 + 4, so the 8 and 4 places have a 1, giving 1100.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words.",
+      "errorFeedback": "(b) 1100. 12 = 8 + 4, so the 8 and 4 places have a 1, giving 1100."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "How many bits does standard ASCII use to code each character? (a) 4 (b) 7 (c) 16 (d) 32",
+      "answer": "(b) 7. Standard ASCII uses 7 bits for 128 characters; extended ASCII uses 8 bits.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words.",
+      "errorFeedback": "(b) 7. Standard ASCII uses 7 bits for 128 characters; extended ASCII uses 8 bits."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "What is the hexadecimal digit for denary 15? (a) E (b) F (c) 10 (d) 15",
+      "answer": "(b) F. In hex, A=10, B=11, C=12, D=13, E=14, F=15.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words.",
+      "errorFeedback": "(b) F. In hex, A=10, B=11, C=12, D=13, E=14, F=15."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "How many bits are in one byte? (a) 1 (b) 4 (c) 8 (d) 16",
+      "answer": "(c) 8. A byte is 8 bits.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words.",
+      "errorFeedback": "(c) 8. A byte is 8 bits."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "For a NOT gate, if the input is 0, the output is... (a) 0 (b) 1 (c) both (d) neither",
+      "answer": "(b) 1. A NOT gate outputs the opposite of its input.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words.",
+      "errorFeedback": "(b) 1. A NOT gate outputs the opposite of its input."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "An AND gate outputs 1 when... (a) either input is 1 (b) both inputs are 1 (c) both inputs are 0 (d) never",
+      "answer": "(b) both inputs are 1. That is the only row where an AND gate outputs 1.",
+      "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words.",
+      "errorFeedback": "(b) both inputs are 1. That is the only row where an AND gate outputs 1."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Copy each table and fill in the missing output values.",
+      "answer": "D1 - NOT gate: input 0 gives output 1; input 1 gives output 0.",
+      "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: D1 - NOT gate: input 0 gives output 1; input 1 gives output 0."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "D1 - NOT gate",
+      "answer": "D2 - AND gate outputs (top to bottom): 0, 0, 0, 1. Only 1-and-1 gives 1.",
+      "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: D2 - AND gate outputs (top to bottom): 0, 0, 0, 1. Only 1-and-1 gives 1."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "D2 - AND gate",
+      "answer": "D3 - OR gate outputs (top to bottom): 0, 1, 1, 1. Only 0-and-0 gives 0.",
+      "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: D3 - OR gate outputs (top to bottom): 0, 1, 1, 1. Only 0-and-0 gives 0."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "D4 - Name the gate",
+      "answer": "D4 - Name the gate: the output is 1 whenever at least one input is 1, and 0 only when both are 0, so it is an OR gate.",
+      "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: D4 - Name the gate: the output is 1 whenever at least one input is 1, and 0 only when both are 0, so it is an OR gate."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Travel",
+      "prompt": "Look at this completed truth table and name the logic gate it describes.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "context": "Health",
+      "prompt": "E1 - The lost homework",
+      "answer": "E1: His essay was held in RAM while he typed, and RAM is volatile, so it needs power to keep its contents. When the power cut out, everything in RAM was lost. He should have saved it to secondary storage (which is non-volatile), so it would survive a power cut.",
+      "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: E1: His essay was held in RAM while he typed, and RAM is volatile, so it needs power to keep its contents. When the power cut out, everything in RAM was lost. He should have saved it to secondary storage (which is non-volatile), so it would survive a power cut."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Answer in one or two full sentences.",
+      "keyIdeas": [
+        "ALU (arithmetic logic unit)",
+        "application software",
+        "ASCII"
+      ],
+      "modelAnswer": "Similarity: both are primary memory the CPU can access directly (both are hardware that stores data). Difference: RAM is volatile and temporary; ROM is non-volatile and permanent."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Give one similarity and one difference between RAM and ROM.",
+      "keyIdeas": [
+        "application software",
+        "ASCII",
+        "augmented"
+      ],
+      "modelAnswer": "Control unit directs operations and fetches/decodes instructions; ALU does arithmetic and logic; registers are tiny ultra-fast stores for the data being worked on right now."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Name the three main parts of the CPU and say what each one does.",
+      "keyIdeas": [
+        "ASCII",
+        "augmented",
+        "augmented reality (AR)"
+      ],
+      "modelAnswer": "Fetch the next instruction from memory; decode it to work out what it means; execute it (for example the ALU does a calculation or data is stored). Then repeat."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Describe the three steps of the fetch-decode-execute cycle.",
+      "keyIdeas": [
+        "augmented",
+        "augmented reality (AR)",
+        "autonomous programming"
+      ],
+      "modelAnswer": "Application software does a task for the user (e.g. a web browser); system software keeps the computer running (e.g. the operating system)."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Explain the difference between application software and system software, with an example of each.",
+      "keyIdeas": [
+        "augmented reality (AR)",
+        "autonomous programming",
+        "binary"
+      ],
+      "modelAnswer": "Any three of: providing a user interface; memory management; managing files; managing user accounts; running applications; managing input/output devices."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "List three tasks that an operating system carries out.",
+      "keyIdeas": [
+        "autonomous programming",
+        "binary",
+        "bit"
+      ],
+      "modelAnswer": "Utility software maintains and tidies the computer (the 'housekeeper'). Defragmenting reorganises scattered file fragments so the pieces of each file are stored together, making files quicker to open."
+    }
+  ],
+  "project": {
+    "title": "A Technology Idea for Your Community",
+    "brief": "This is the Digital Makers Club challenge, and your chance to bring the whole unit together. You will produce a small portfolio in three parts. You are not expected to build a finished product; you are designing and explaining an idea clearly, showing that you understand the computer systems behind it.",
+    "steps": [
+      "Plan first: write down what your computer systems project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "My project shows that I understand computer architectures.",
+      "My project shows that I understand the cpu.",
+      "My project shows that I understand secondary storage and the memory hierarchy.",
+      "My project shows that I understand types of software.",
+      "My project shows that I understand data representation."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "Which type of primary memory is volatile?",
+        "options": [
+          "ROM",
+          "RAM",
+          "SSD",
+          "the CPU"
+        ],
+        "answer": "RAM",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "RAM. RAM is volatile, so it loses its data when the power is off; ROM is non-volatile."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "Which part of the CPU does the calculations and comparisons?",
+        "options": [
+          "the control unit",
+          "the register",
+          "the ALU",
+          "the cache"
+        ],
+        "answer": "the ALU",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "the ALU. The arithmetic logic unit does the sums and the comparisons."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does ROM mainly store?",
+        "options": [
+          "the file you are editing",
+          "the boot-up instructions",
+          "open applications",
+          "nothing"
+        ],
+        "answer": "the boot-up instructions",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "the boot-up instructions. ROM holds the permanent instructions to start the computer."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "In the von Neumann architecture, instructions and data are stored...",
+        "options": [
+          "in separate memories",
+          "in the same memory",
+          "only in the CPU",
+          "only on the internet"
+        ],
+        "answer": "in the same memory",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "in the same memory. That is the stored-program idea at the heart of von Neumann architecture."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "Which is an example of system software?",
+        "options": [
+          "a web browser",
+          "a game",
+          "an operating system",
+          "a word processor"
+        ],
+        "answer": "an operating system",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "an operating system. The others are all application software."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What is the denary value of the binary number 1010?",
+        "options": [
+          "8",
+          "10",
+          "12",
+          "20"
+        ],
+        "answer": "10",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "10. 1010 = 8 + 2 = 10."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "What is the denary number 12 in binary?",
+        "options": [
+          "1010",
+          "1100",
+          "0110",
+          "1110"
+        ],
+        "answer": "1100",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "1100. 12 = 8 + 4, so the 8 and 4 places have a 1, giving 1100."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "How many bits does standard ASCII use to code each character?",
+        "options": [
+          "4",
+          "7",
+          "16",
+          "32"
+        ],
+        "answer": "7",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "7. Standard ASCII uses 7 bits for 128 characters; extended ASCII uses 8 bits."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo09",
+        "difficulty": "Core",
+        "question": "What is the hexadecimal digit for denary 15?",
+        "options": [
+          "E",
+          "F",
+          "10",
+          "15"
+        ],
+        "answer": "F",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "F. In hex, A=10, B=11, C=12, D=13, E=14, F=15."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "How many bits are in one byte?",
+        "options": [
+          "1",
+          "4",
+          "8",
+          "16"
+        ],
+        "answer": "8",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "8. A byte is 8 bits."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "For a NOT gate, if the input is 0, the output is...",
+        "options": [
+          "0",
+          "1",
+          "both",
+          "neither"
+        ],
+        "answer": "1",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "1. A NOT gate outputs the opposite of its input."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "An AND gate outputs 1 when...",
+        "options": [
+          "either input is 1",
+          "both inputs are 1",
+          "both inputs are 0",
+          "never"
+        ],
+        "answer": "both inputs are 1",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "both inputs are 1. That is the only row where an AND gate outputs 1."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u4-game-1",
+        "icon": "?",
+        "skill": "ALU (arithmetic logic unit)",
+        "title": "Quick Match: ALU (arithmetic logic unit)",
+        "description": "Practise alu (arithmetic logic unit) through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which type of primary memory is volatile?",
+            "choices": [
+              "ROM",
+              "RAM",
+              "SSD",
+              "the CPU"
+            ],
+            "answer": "RAM",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "RAM. RAM is volatile, so it loses its data when the power is off; ROM is non-volatile."
+          },
+          {
+            "prompt": "In the von Neumann architecture, instructions and data are stored...",
+            "choices": [
+              "in separate memories",
+              "in the same memory",
+              "only in the CPU",
+              "only on the internet"
+            ],
+            "answer": "in the same memory",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "in the same memory. That is the stored-program idea at the heart of von Neumann architecture."
+          },
+          {
+            "prompt": "What is the denary number 12 in binary?",
+            "choices": [
+              "1010",
+              "1100",
+              "0110",
+              "1110"
+            ],
+            "answer": "1100",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "1100. 12 = 8 + 4, so the 8 and 4 places have a 1, giving 1100."
+          },
+          {
+            "prompt": "How many bits are in one byte?",
+            "choices": [
+              "1",
+              "4",
+              "8",
+              "16"
+            ],
+            "answer": "8",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "8. A byte is 8 bits."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-2",
+        "icon": "★",
+        "skill": "application software",
+        "title": "Concept Quest: application software",
+        "description": "Practise application software through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which part of the CPU does the calculations and comparisons?",
+            "choices": [
+              "the control unit",
+              "the register",
+              "the ALU",
+              "the cache"
+            ],
+            "answer": "the ALU",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "the ALU. The arithmetic logic unit does the sums and the comparisons."
+          },
+          {
+            "prompt": "Which is an example of system software?",
+            "choices": [
+              "a web browser",
+              "a game",
+              "an operating system",
+              "a word processor"
+            ],
+            "answer": "an operating system",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "an operating system. The others are all application software."
+          },
+          {
+            "prompt": "How many bits does standard ASCII use to code each character?",
+            "choices": [
+              "4",
+              "7",
+              "16",
+              "32"
+            ],
+            "answer": "7",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "7. Standard ASCII uses 7 bits for 128 characters; extended ASCII uses 8 bits."
+          },
+          {
+            "prompt": "For a NOT gate, if the input is 0, the output is...",
+            "choices": [
+              "0",
+              "1",
+              "both",
+              "neither"
+            ],
+            "answer": "1",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "1. A NOT gate outputs the opposite of its input."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-3",
+        "icon": "◫",
+        "skill": "ASCII",
+        "title": "Debug Detective: ASCII",
+        "description": "Practise ascii through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does ROM mainly store?",
+            "choices": [
+              "the file you are editing",
+              "the boot-up instructions",
+              "open applications",
+              "nothing"
+            ],
+            "answer": "the boot-up instructions",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "the boot-up instructions. ROM holds the permanent instructions to start the computer."
+          },
+          {
+            "prompt": "What is the denary value of the binary number 1010?",
+            "choices": [
+              "8",
+              "10",
+              "12",
+              "20"
+            ],
+            "answer": "10",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "10. 1010 = 8 + 2 = 10."
+          },
+          {
+            "prompt": "What is the hexadecimal digit for denary 15?",
+            "choices": [
+              "E",
+              "F",
+              "10",
+              "15"
+            ],
+            "answer": "F",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "F. In hex, A=10, B=11, C=12, D=13, E=14, F=15."
+          },
+          {
+            "prompt": "An AND gate outputs 1 when...",
+            "choices": [
+              "either input is 1",
+              "both inputs are 1",
+              "both inputs are 0",
+              "never"
+            ],
+            "answer": "both inputs are 1",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "both inputs are 1. That is the only row where an AND gate outputs 1."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-4",
+        "icon": "→",
+        "skill": "augmented",
+        "title": "Algorithm Runner: augmented",
+        "description": "Practise augmented through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "In the von Neumann architecture, instructions and data are stored...",
+            "choices": [
+              "in separate memories",
+              "in the same memory",
+              "only in the CPU",
+              "only on the internet"
+            ],
+            "answer": "in the same memory",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "in the same memory. That is the stored-program idea at the heart of von Neumann architecture."
+          },
+          {
+            "prompt": "What is the denary number 12 in binary?",
+            "choices": [
+              "1010",
+              "1100",
+              "0110",
+              "1110"
+            ],
+            "answer": "1100",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "1100. 12 = 8 + 4, so the 8 and 4 places have a 1, giving 1100."
+          },
+          {
+            "prompt": "How many bits are in one byte?",
+            "choices": [
+              "1",
+              "4",
+              "8",
+              "16"
+            ],
+            "answer": "8",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "8. A byte is 8 bits."
+          },
+          {
+            "prompt": "Which type of primary memory is volatile?",
+            "choices": [
+              "ROM",
+              "RAM",
+              "SSD",
+              "the CPU"
+            ],
+            "answer": "RAM",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "RAM. RAM is volatile, so it loses its data when the power is off; ROM is non-volatile."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-5",
+        "icon": "Σ",
+        "skill": "augmented reality (AR)",
+        "title": "Vocabulary Vault: augmented reality (AR)",
+        "description": "Practise augmented reality (ar) through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which is an example of system software?",
+            "choices": [
+              "a web browser",
+              "a game",
+              "an operating system",
+              "a word processor"
+            ],
+            "answer": "an operating system",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "an operating system. The others are all application software."
+          },
+          {
+            "prompt": "How many bits does standard ASCII use to code each character?",
+            "choices": [
+              "4",
+              "7",
+              "16",
+              "32"
+            ],
+            "answer": "7",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "7. Standard ASCII uses 7 bits for 128 characters; extended ASCII uses 8 bits."
+          },
+          {
+            "prompt": "For a NOT gate, if the input is 0, the output is...",
+            "choices": [
+              "0",
+              "1",
+              "both",
+              "neither"
+            ],
+            "answer": "1",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "1. A NOT gate outputs the opposite of its input."
+          },
+          {
+            "prompt": "Which part of the CPU does the calculations and comparisons?",
+            "choices": [
+              "the control unit",
+              "the register",
+              "the ALU",
+              "the cache"
+            ],
+            "answer": "the ALU",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "the ALU. The arithmetic logic unit does the sums and the comparisons."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-6",
+        "icon": "◇",
+        "skill": "autonomous programming",
+        "title": "Challenge Cards: autonomous programming",
+        "description": "Practise autonomous programming through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What is the denary value of the binary number 1010?",
+            "choices": [
+              "8",
+              "10",
+              "12",
+              "20"
+            ],
+            "answer": "10",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "10. 1010 = 8 + 2 = 10."
+          },
+          {
+            "prompt": "What is the hexadecimal digit for denary 15?",
+            "choices": [
+              "E",
+              "F",
+              "10",
+              "15"
+            ],
+            "answer": "F",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "F. In hex, A=10, B=11, C=12, D=13, E=14, F=15."
+          },
+          {
+            "prompt": "An AND gate outputs 1 when...",
+            "choices": [
+              "either input is 1",
+              "both inputs are 1",
+              "both inputs are 0",
+              "never"
+            ],
+            "answer": "both inputs are 1",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "both inputs are 1. That is the only row where an AND gate outputs 1."
+          },
+          {
+            "prompt": "What does ROM mainly store?",
+            "choices": [
+              "the file you are editing",
+              "the boot-up instructions",
+              "open applications",
+              "nothing"
+            ],
+            "answer": "the boot-up instructions",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "the boot-up instructions. ROM holds the permanent instructions to start the computer."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-7",
+        "icon": "⚡",
+        "skill": "binary",
+        "title": "Think Fast: binary",
+        "description": "Practise binary through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What is the denary number 12 in binary?",
+            "choices": [
+              "1010",
+              "1100",
+              "0110",
+              "1110"
+            ],
+            "answer": "1100",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "1100. 12 = 8 + 4, so the 8 and 4 places have a 1, giving 1100."
+          },
+          {
+            "prompt": "How many bits are in one byte?",
+            "choices": [
+              "1",
+              "4",
+              "8",
+              "16"
+            ],
+            "answer": "8",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "8. A byte is 8 bits."
+          },
+          {
+            "prompt": "Which type of primary memory is volatile?",
+            "choices": [
+              "ROM",
+              "RAM",
+              "SSD",
+              "the CPU"
+            ],
+            "answer": "RAM",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "RAM. RAM is volatile, so it loses its data when the power is off; ROM is non-volatile."
+          },
+          {
+            "prompt": "In the von Neumann architecture, instructions and data are stored...",
+            "choices": [
+              "in separate memories",
+              "in the same memory",
+              "only in the CPU",
+              "only on the internet"
+            ],
+            "answer": "in the same memory",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "in the same memory. That is the stored-program idea at the heart of von Neumann architecture."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-8",
+        "icon": "☁",
+        "skill": "bit",
+        "title": "Explain It: bit",
+        "description": "Practise bit through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "How many bits does standard ASCII use to code each character?",
+            "choices": [
+              "4",
+              "7",
+              "16",
+              "32"
+            ],
+            "answer": "7",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "7. Standard ASCII uses 7 bits for 128 characters; extended ASCII uses 8 bits."
+          },
+          {
+            "prompt": "For a NOT gate, if the input is 0, the output is...",
+            "choices": [
+              "0",
+              "1",
+              "both",
+              "neither"
+            ],
+            "answer": "1",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "1. A NOT gate outputs the opposite of its input."
+          },
+          {
+            "prompt": "Which part of the CPU does the calculations and comparisons?",
+            "choices": [
+              "the control unit",
+              "the register",
+              "the ALU",
+              "the cache"
+            ],
+            "answer": "the ALU",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "the ALU. The arithmetic logic unit does the sums and the comparisons."
+          },
+          {
+            "prompt": "Which is an example of system software?",
+            "choices": [
+              "a web browser",
+              "a game",
+              "an operating system",
+              "a word processor"
+            ],
+            "answer": "an operating system",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "an operating system. The others are all application software."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-9",
+        "icon": "⌂",
+        "skill": "Boolean",
+        "title": "Real-Life Round: Boolean",
+        "description": "Practise boolean through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What is the hexadecimal digit for denary 15?",
+            "choices": [
+              "E",
+              "F",
+              "10",
+              "15"
+            ],
+            "answer": "F",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "F. In hex, A=10, B=11, C=12, D=13, E=14, F=15."
+          },
+          {
+            "prompt": "An AND gate outputs 1 when...",
+            "choices": [
+              "either input is 1",
+              "both inputs are 1",
+              "both inputs are 0",
+              "never"
+            ],
+            "answer": "both inputs are 1",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "both inputs are 1. That is the only row where an AND gate outputs 1."
+          },
+          {
+            "prompt": "What does ROM mainly store?",
+            "choices": [
+              "the file you are editing",
+              "the boot-up instructions",
+              "open applications",
+              "nothing"
+            ],
+            "answer": "the boot-up instructions",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "the boot-up instructions. ROM holds the permanent instructions to start the computer."
+          },
+          {
+            "prompt": "What is the denary value of the binary number 1010?",
+            "choices": [
+              "8",
+              "10",
+              "12",
+              "20"
+            ],
+            "answer": "10",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "10. 1010 = 8 + 2 = 10."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-10",
+        "icon": "!",
+        "skill": "byte",
+        "title": "Spot the Bug: byte",
+        "description": "Practise byte through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "How many bits are in one byte?",
+            "choices": [
+              "1",
+              "4",
+              "8",
+              "16"
+            ],
+            "answer": "8",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "8. A byte is 8 bits."
+          },
+          {
+            "prompt": "Which type of primary memory is volatile?",
+            "choices": [
+              "ROM",
+              "RAM",
+              "SSD",
+              "the CPU"
+            ],
+            "answer": "RAM",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "RAM. RAM is volatile, so it loses its data when the power is off; ROM is non-volatile."
+          },
+          {
+            "prompt": "In the von Neumann architecture, instructions and data are stored...",
+            "choices": [
+              "in separate memories",
+              "in the same memory",
+              "only in the CPU",
+              "only on the internet"
+            ],
+            "answer": "in the same memory",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "in the same memory. That is the stored-program idea at the heart of von Neumann architecture."
+          },
+          {
+            "prompt": "What is the denary number 12 in binary?",
+            "choices": [
+              "1010",
+              "1100",
+              "0110",
+              "1110"
+            ],
+            "answer": "1100",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "1100. 12 = 8 + 4, so the 8 and 4 places have a 1, giving 1100."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-11",
+        "icon": "≡",
+        "skill": "cache",
+        "title": "Mastery Mix: cache",
+        "description": "Practise cache through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "For a NOT gate, if the input is 0, the output is...",
+            "choices": [
+              "0",
+              "1",
+              "both",
+              "neither"
+            ],
+            "answer": "1",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "1. A NOT gate outputs the opposite of its input."
+          },
+          {
+            "prompt": "Which part of the CPU does the calculations and comparisons?",
+            "choices": [
+              "the control unit",
+              "the register",
+              "the ALU",
+              "the cache"
+            ],
+            "answer": "the ALU",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "the ALU. The arithmetic logic unit does the sums and the comparisons."
+          },
+          {
+            "prompt": "Which is an example of system software?",
+            "choices": [
+              "a web browser",
+              "a game",
+              "an operating system",
+              "a word processor"
+            ],
+            "answer": "an operating system",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "an operating system. The others are all application software."
+          },
+          {
+            "prompt": "How many bits does standard ASCII use to code each character?",
+            "choices": [
+              "4",
+              "7",
+              "16",
+              "32"
+            ],
+            "answer": "7",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "7. Standard ASCII uses 7 bits for 128 characters; extended ASCII uses 8 bits."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-12",
+        "icon": "T",
+        "skill": "character set",
+        "title": "Unit Champion: character set",
+        "description": "Practise character set through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "An AND gate outputs 1 when...",
+            "choices": [
+              "either input is 1",
+              "both inputs are 1",
+              "both inputs are 0",
+              "never"
+            ],
+            "answer": "both inputs are 1",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "both inputs are 1. That is the only row where an AND gate outputs 1."
+          },
+          {
+            "prompt": "What does ROM mainly store?",
+            "choices": [
+              "the file you are editing",
+              "the boot-up instructions",
+              "open applications",
+              "nothing"
+            ],
+            "answer": "the boot-up instructions",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "the boot-up instructions. ROM holds the permanent instructions to start the computer."
+          },
+          {
+            "prompt": "What is the denary value of the binary number 1010?",
+            "choices": [
+              "8",
+              "10",
+              "12",
+              "20"
+            ],
+            "answer": "10",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "10. 1010 = 8 + 2 = 10."
+          },
+          {
+            "prompt": "What is the hexadecimal digit for denary 15?",
+            "choices": [
+              "E",
+              "F",
+              "10",
+              "15"
+            ],
+            "answer": "F",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "F. In hex, A=10, B=11, C=12, D=13, E=14, F=15."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can name three machines around you that contain a computer but that you would not normally call a computer.",
+    "I can explain what primary memory is and describe the difference between RAM and ROM, including volatile and non-volatile storage",
+    "I can describe the role of the CPU and its main parts (the control unit, the ALU and registers)",
+    "I can explain how the parts of a computer are connected in the von Neumann architecture, and describe the fetch-decode-execute cycle",
+    "I can explain the difference between application software and system software",
+    "I can describe the purpose of an operating system and list the tasks it carries out",
+    "I can explain the purpose of utility software, including defragmenting",
+    "I can explain how text is represented using the ASCII character set, and why extended ASCII was created",
+    "I can describe how images and sound are represented in binary, and explain data compression",
+    "I can explain what a logic gate is and how it relates to Boolean logic"
+  ]
+}

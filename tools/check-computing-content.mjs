@@ -30,6 +30,13 @@ const CLASSROOM_ONLY = /\bon the board\b|\bthe big sheet\b|\bphotocopy\b|\bhand 
 const TEACHER_REQUIRED = /\bhand (?:it )?in to your teacher\b|\bask your teacher to mark\b|\bwait for your teacher\b|\byour teacher will tell you\b|\bshow it to your teacher\b(?!.*\bor\b)/i;
 // Third-person prose about the learner that the guide conversion should have
 // rewritten ("First, they learn to put the steps in order").
+//
+// Only meaningful on the Teacher & Parent Guide stages, because that is the
+// only place the conversion runs. The student books are written to the learner
+// already, and there "they" routinely means somebody else — "a surgeon
+// practises on a simulator so no lives are at risk while they learn" is correct
+// prose, not a conversion artefact. Applied to those, this reports good writing
+// as a defect.
 const THIRD_PERSON_LEARNER = /\bthey (?:learn|only need|will learn|already know|are experts)\b/i;
 
 // Modules whose text must differ per unit. A single string repeated across
@@ -200,11 +207,14 @@ for (const gradeDir of gradeDirs) {
       }
     }
 
+    // Stages 1-4 ship as Teacher & Parent Guides and are rewritten; 5-8 ship
+    // as student books and are carried across as written.
+    const fromGuide = unit.provenance?.sourceAudience === "teacher-guide";
     walk(unit, (text, where) => {
       if (ADULT_ADDRESSED.test(text)) fail(label, `${where} addresses a supervising adult: "${text.slice(0, 90)}"`);
       if (CLASSROOM_ONLY.test(text)) fail(label, `${where} needs classroom staging a solo learner cannot do: "${text.slice(0, 90)}"`);
       if (TEACHER_REQUIRED.test(text)) fail(label, `${where} requires a teacher with no solo path: "${text.slice(0, 90)}"`);
-      if (THIRD_PERSON_LEARNER.test(text)) fail(label, `${where} talks about the learner instead of to them: "${text.slice(0, 90)}"`);
+      if (fromGuide && THIRD_PERSON_LEARNER.test(text)) fail(label, `${where} talks about the learner instead of to them: "${text.slice(0, 90)}"`);
     });
 
     const stage = Number(unit.cambridge?.stage);

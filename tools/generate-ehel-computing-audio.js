@@ -32,8 +32,21 @@ const ALL_CATS = narration.CATEGORIES;
 const args = process.argv.slice(2);
 const cats = args.filter((a) => ALL_CATS.includes(a));
 const catList = cats.length ? cats : ALL_CATS;
-const grades = args.filter((a) => /^[1-7]$/.test(a)).map(Number);
-const gradeList = grades.length ? grades : [1, 2, 3, 4, 5, 6, 7];
+// Stages are read off disk, not hard-coded: a new stage pack used to be
+// silently ignored here — "8" did not match the range, so the argument was
+// dropped and the run quietly covered 1-7 instead of failing.
+const STAGES = fs.readdirSync(COMPUTING)
+  .map((entry) => /^grade-(\d+)$/.exec(entry))
+  .filter(Boolean)
+  .map((m) => Number(m[1]))
+  .sort((a, b) => a - b);
+const grades = args.filter((a) => /^\d+$/.test(a)).map(Number);
+const unknown = grades.filter((g) => !STAGES.includes(g));
+if (unknown.length) {
+  console.error(`No content package for stage(s) ${unknown.join(", ")}. Available: ${STAGES.join(", ")}.`);
+  process.exit(2);
+}
+const gradeList = grades.length ? grades : STAGES;
 const dry = args.includes("--dry");
 const force = args.includes("--force");
 // --orphans lists clips on disk that no current Listen button asks for. They

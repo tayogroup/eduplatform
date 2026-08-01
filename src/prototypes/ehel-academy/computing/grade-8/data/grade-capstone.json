@@ -1,0 +1,307 @@
+{
+  "schemaVersion": "Ehel Computing Stage Capstone v1.0",
+  "stage": {
+    "id": "s08",
+    "label": "Stage 8"
+  },
+  "title": "Build a Stage 8 Computing Showcase",
+  "overview": "Bring together everything from Stage 8 Computing into one showcase: a working program, the data behind it, a clear explanation of how it runs, and the safety rules you followed while making it.",
+  "project": {
+    "drivingQuestion": "How can I use the computing I learned in Stage 8 to build something that solves a real problem for someone in my community — and explain exactly how it works?",
+    "finalProduct": "A working program or digital product, the plan and algorithm behind it, a test-and-debug log, a data display, and a spoken or written explanation of your design decisions.",
+    "stages": [
+      {
+        "id": "plan",
+        "title": "1. Plan and decompose",
+        "units": [
+          1,
+          2
+        ],
+        "prompt": "Choose a real problem. Using the ideas from Units 1, 2, break it into smaller parts and write the algorithm before you write any code.",
+        "evidence": "A decomposed problem and a written algorithm or flowchart"
+      },
+      {
+        "id": "build",
+        "title": "2. Build it",
+        "units": [
+          3,
+          4
+        ],
+        "prompt": "Build your program or product using the tools from Units 3, 4. Build the smallest working version first, then add one feature at a time.",
+        "evidence": "A working program or digital product"
+      },
+      {
+        "id": "test",
+        "title": "3. Test, debug and improve",
+        "units": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "prompt": "Test your work against your success criteria. Keep a log of every bug: what you saw, what caused it, and how you fixed it.",
+        "evidence": "A test-and-debug log with at least three entries"
+      },
+      {
+        "id": "share",
+        "title": "4. Share it safely",
+        "units": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "prompt": "Present your showcase. Explain three design decisions, show your data, and say which online-safety rules from Units 1, 2, 3, 4 you followed and why.",
+        "evidence": "A spoken, written or recorded explanation covering design, data and safety"
+      }
+    ],
+    "evidenceChecklist": [
+      "A decomposed problem with a written algorithm or flowchart",
+      "A working program or digital product",
+      "A test-and-debug log with at least three fixed bugs",
+      "Data collected, organised and displayed",
+      "Success criteria, each one ticked off with evidence",
+      "An explanation of your design decisions and the safety rules you followed"
+    ],
+    "rubric": [
+      {
+        "criterion": "Computational thinking",
+        "secure": "The problem is decomposed, the algorithm is precise, and the pattern behind it is named."
+      },
+      {
+        "criterion": "Programming and debugging",
+        "secure": "The program runs, meets its criteria, and every bug found is logged with its cause and fix."
+      },
+      {
+        "criterion": "Data and information",
+        "secure": "Data is collected accurately, organised sensibly and displayed so it answers a question."
+      },
+      {
+        "criterion": "Safe and responsible use",
+        "secure": "Personal information is protected, sources are credited, and safety choices are explained."
+      }
+    ]
+  },
+  "quiz": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "cap-u01-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “Algorithm” mean in computing?",
+        "options": [
+          "A set of ordered steps that are followed to solve a problem or complete a task.",
+          "A way of planning a program that is halfway between everyday English and real code; it has no fixed syntax.",
+          "A programming language, such as Python, designed to be easy for humans to read and write.",
+          "A named location in memory that stores one item of data, which can change while the program runs."
+        ],
+        "answer": "A set of ordered steps that are followed to solve a problem or complete a task.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Algorithm means a set of ordered steps that are followed to solve a problem or complete a task..",
+        "unitNo": 1,
+        "unitTitle": "Computational Thinking and Programming"
+      },
+      {
+        "id": "cap-u01-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Assignment” mean in computing?",
+        "options": [
+          "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
+          "The name given to a variable, constant or sub-routine.",
+          "Choosing which code to run based on whether a condition is true or false.",
+          "A comparison test that gives a result of either true or false."
+        ],
+        "answer": "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Assignment means storing a value in a variable, shown by <- in pseudocode or = in Python..",
+        "unitNo": 1,
+        "unitTitle": "Computational Thinking and Programming"
+      },
+      {
+        "id": "cap-u01-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: AND, OR or NOT - used to combine or reverse conditions.?",
+        "options": [
+          "Boolean operator",
+          "Indentation",
+          "Linear search",
+          "Data type"
+        ],
+        "answer": "Boolean operator",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Boolean operator means aND, OR or NOT - used to combine or reverse conditions..",
+        "unitNo": 1,
+        "unitTitle": "Computational Thinking and Programming"
+      },
+      {
+        "id": "cap-u02-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “AutoValue” mean in computing?",
+        "options": [
+          "A Base field property that numbers records automatically (used for a primary key).",
+          "One box in a spreadsheet, named by its column letter and row number, such as F7.",
+          "The address of a cell, such as B3, used inside formulas.",
+          "A rule a query uses to choose records, such as greater than or equal to 4."
+        ],
+        "answer": "A Base field property that numbers records automatically (used for a primary key).",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "AutoValue means a Base field property that numbers records automatically (used for a primary key)..",
+        "unitNo": 2,
+        "unitTitle": "Managing Data"
+      },
+      {
+        "id": "cap-u02-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “data” mean in computing?",
+        "options": [
+          "Raw facts and figures, such as names, ages, prices and scores.",
+          "A tidy screen used to gather data one record at a time and store it.",
+          "An organised store of data that you can search, sort and update.",
+          "The Base field property that, set to Yes, makes a presence check."
+        ],
+        "answer": "Raw facts and figures, such as names, ages, prices and scores.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Data means raw facts and figures, such as names, ages, prices and scores..",
+        "unitNo": 2,
+        "unitTitle": "Managing Data"
+      },
+      {
+        "id": "cap-u02-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: One column of a table; all the data about one aspect of every record.?",
+        "options": [
+          "field",
+          "fill handle",
+          "format",
+          "format check"
+        ],
+        "answer": "field",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Field means one column of a table; all the data about one aspect of every record..",
+        "unitNo": 2,
+        "unitTitle": "Managing Data"
+      },
+      {
+        "id": "cap-u03-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “network” mean in computing?",
+        "options": [
+          "A group of devices connected together so they can share data.",
+          "The physical parts needed to build a network, such as cables and routers.",
+          "Personal area network - a tiny network around one person's own devices.",
+          "Local area network - devices connected within one building or site."
+        ],
+        "answer": "A group of devices connected together so they can share data.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Network means a group of devices connected together so they can share data..",
+        "unitNo": 3,
+        "unitTitle": "Networks and Digital Communication"
+      },
+      {
+        "id": "cap-u03-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “WAN” mean in computing?",
+        "options": [
+          "Wide area network - devices connected across a large area, even worldwide.",
+          "Internet service provider - a company that provides an internet connection.",
+          "The shape or layout in which the devices in a network are connected.",
+          "A device that connects devices in a LAN and directs data to the right one."
+        ],
+        "answer": "Wide area network - devices connected across a large area, even worldwide.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "WAN means wide area network - devices connected across a large area, even worldwide..",
+        "unitNo": 3,
+        "unitTitle": "Networks and Digital Communication"
+      },
+      {
+        "id": "cap-u03-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A cable of copper wire that carries data as electrical signals.?",
+        "options": [
+          "copper cable",
+          "fibre optic cable",
+          "interference",
+          "crosstalk"
+        ],
+        "answer": "copper cable",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Copper cable means a cable of copper wire that carries data as electrical signals..",
+        "unitNo": 3,
+        "unitTitle": "Networks and Digital Communication"
+      },
+      {
+        "id": "cap-u04-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "Which type of primary memory is volatile?",
+        "options": [
+          "ROM",
+          "RAM",
+          "SSD",
+          "the CPU"
+        ],
+        "answer": "RAM",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "RAM. RAM is volatile, so it loses its data when the power is off; ROM is non-volatile.",
+        "unitNo": 4,
+        "unitTitle": "Computer Systems"
+      },
+      {
+        "id": "cap-u04-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "Which is an example of system software?",
+        "options": [
+          "a web browser",
+          "a game",
+          "an operating system",
+          "a word processor"
+        ],
+        "answer": "an operating system",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "an operating system. The others are all application software.",
+        "unitNo": 4,
+        "unitTitle": "Computer Systems"
+      },
+      {
+        "id": "cap-u04-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "How many bits are in one byte?",
+        "options": [
+          "1",
+          "4",
+          "8",
+          "16"
+        ],
+        "answer": "8",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "8. A byte is 8 bits.",
+        "unitNo": 4,
+        "unitTitle": "Computer Systems"
+      }
+    ]
+  },
+  "reviewStatus": "Curriculum review required"
+}

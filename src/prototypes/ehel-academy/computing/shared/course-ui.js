@@ -9,6 +9,11 @@ const params = new URLSearchParams(location.search);
 const stageNumber = Number(params.get("stage") || params.get("grade") || document.documentElement.dataset.stage || 2);
 const unitNumber = Number(params.get("unit") || 1);
 const stageRootUrl = new URL(`./grade-${stageNumber}/`, location.href);
+// How many stages have a content package. The picker must not offer a stage
+// with nothing behind it, and the guard must not reject one that exists — so
+// the two are driven from one number. Cambridge Primary Computing 0672 covers
+// Stages 1-6 and Lower Secondary 0868 covers 7-9; raise this as packs land.
+const STAGE_COUNT = 8;
 // Deployed (Bunny): per-unit data lives in a separate content tree
 // (…/content/computing/gNN/), edited and cached on its own cadence, independent
 // of the versioned app code. Locally it sits beside the app under grade-N/data/.
@@ -1259,7 +1264,7 @@ function renderTeacher() {
 
 async function init() {
   try {
-    if (stageNumber < 1 || stageNumber > 7 || unitNumber < 1 || unitNumber > 20) throw new Error(`The requested Stage ${stageNumber} Computing unit is unavailable.`);
+    if (stageNumber < 1 || stageNumber > STAGE_COUNT || unitNumber < 1 || unitNumber > 20) throw new Error(`The requested Stage ${stageNumber} Computing unit is unavailable.`);
     const [manifestResponse, courseResponse, capstoneResponse] = await Promise.all([
       fetch(new URL("course-manifest.json", dataRootUrl)),
       fetch(new URL(`units/unit-${unitNumber}.json`, dataRootUrl)),
@@ -1271,10 +1276,7 @@ async function init() {
     document.title = `${stage.label} Computing | Unit ${course.unit.unitNo}: ${course.unit.unitTitle}`;
     $("#course-label").textContent = `${stage.label} · ${course.subject} · ${course.term.label}`;
     $("#unit-title").textContent = course.unit.unitTitle;
-    // Computing ships Stages 1-7: Cambridge Primary Computing 0672 covers 1-6
-    // and Lower Secondary 0868 begins at 7. Offering Stage 8 would list a
-    // course that has no content package behind it.
-    $("#stage-select").innerHTML = Array.from({ length: 7 }, (_, index) => index + 1).map((stage) => `<option value="${stage}" ${stage === stageNumber ? "selected" : ""}>Stage ${stage}</option>`).join("");
+    $("#stage-select").innerHTML = Array.from({ length: STAGE_COUNT }, (_, index) => index + 1).map((stage) => `<option value="${stage}" ${stage === stageNumber ? "selected" : ""}>Stage ${stage}</option>`).join("");
     $("#stage-select").addEventListener("change", () => { location.href = `?stage=${Number($("#stage-select").value)}&unit=1#overview`; });
     const unitOptions = manifest.units.map((unit) => `<option value="${unit.number}" ${unit.number === unitNumber ? "selected" : ""}>Unit ${unit.number}: ${escapeHtml(unit.title)}</option>`).join("");
     for (const picker of [$("#unit-select"), $("#top-unit-select")]) picker.innerHTML = unitOptions;

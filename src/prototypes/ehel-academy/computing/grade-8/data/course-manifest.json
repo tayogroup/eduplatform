@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "Ehel Computing Course Manifest v1.0",
+  "stage": {
+    "id": "s08",
+    "label": "Stage 8"
+  },
+  "subject": "Computing",
+  "defaultUnit": 1,
+  "sourcePackage": "Ehel-Academy-Computing-Grade-8-Content-Package",
+  "cambridgeFramework": "Cambridge Lower Secondary Computing 0868 — Stage 8",
+  "sourceAudience": "student",
+  "packageReviewStatus": "Built v1.0 - self-teaching content pass complete; curriculum review pending",
+  "units": [
+    {
+      "number": 1,
+      "id": "comp-g08-u01",
+      "termId": "t01",
+      "title": "Computational Thinking and Programming",
+      "data": "./data/units/unit-1.json",
+      "sourceDocumentCount": 4,
+      "implementationStatus": "Complete runtime package",
+      "reviewStatus": "Imported - curriculum review required"
+    },
+    {
+      "number": 2,
+      "id": "comp-g08-u02",
+      "termId": "t01",
+      "title": "Managing Data",
+      "data": "./data/units/unit-2.json",
+      "sourceDocumentCount": 4,
+      "implementationStatus": "Complete runtime package",
+      "reviewStatus": "Imported - curriculum review required"
+    },
+    {
+      "number": 3,
+      "id": "comp-g08-u03",
+      "termId": "t02",
+      "title": "Networks and Digital Communication",
+      "data": "./data/units/unit-3.json",
+      "sourceDocumentCount": 4,
+      "implementationStatus": "Complete runtime package",
+      "reviewStatus": "Imported - curriculum review required"
+    },
+    {
+      "number": 4,
+      "id": "comp-g08-u04",
+      "termId": "t02",
+      "title": "Computer Systems",
+      "data": "./data/units/unit-4.json",
+      "sourceDocumentCount": 4,
+      "implementationStatus": "Complete runtime package",
+      "reviewStatus": "Imported - curriculum review required"
+    }
+  ],
+  "finalAssessment": {
+    "id": "comp-s08-capstone-quiz-v1",
+    "title": "Stage 8 Computing Capstone Quiz",
+    "data": "./data/grade-capstone.json",
+    "placement": "After the Stage 8 capstone project",
+    "questionCount": 12,
+    "passPercent": 80,
+    "reviewStatus": "Built v1.0 - curriculum review pending"
+  }
+}

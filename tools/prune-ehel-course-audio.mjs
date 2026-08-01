@@ -24,7 +24,7 @@ import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const SUBJECTS = ["science", "mathematics", "computing"];
+const SUBJECTS = ["science", "mathematics", "computing", "global-perspectives"];
 const subject = process.argv.slice(2).find((a) => SUBJECTS.includes(a));
 if (!subject) {
   console.error(`Usage: node tools/prune-ehel-course-audio.mjs <${SUBJECTS.join("|")}> [--delete] [--force]`);
@@ -61,6 +61,13 @@ for (const entry of fs.readdirSync(SUBJECT_ROOT)) {
   }
 }
 
+// A subject whose narration has not been generated yet has no cache directory
+// at all. That is the normal first state for a newly added course, so it
+// reports nothing to prune rather than dying on ENOENT.
+if (!fs.existsSync(TTS)) {
+  console.log(`${subject}: no narration cache at ${path.relative(ROOT, TTS)} — nothing to prune.`);
+  process.exit(0);
+}
 const onDisk = fs.readdirSync(TTS).filter((f) => f.endsWith(".mp3"));
 const orphans = onDisk.filter((f) => !reachable.has(path.basename(f, ".mp3")));
 

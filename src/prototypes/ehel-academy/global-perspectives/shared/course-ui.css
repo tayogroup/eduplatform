@@ -1,0 +1,82 @@
+/* Global Perspectives skin.
+   The design system is the English course's stylesheet, which every Ehel
+   subject imports; only the palette and the few GP-specific blocks live here. */
+@import url("../../english/shared/course-ui-20260723e.css");
+
+:root {
+  --gp: #6d4aff;
+  --gp-dark: #452c9e;
+  --gp-soft: #f1edff;
+  --gp-amber: #f6a609;
+}
+
+.brand-mark { background: var(--gp); }
+.approval-banner { border-left: 5px solid var(--gp); background: var(--gp-soft); }
+
+.unit-banner.gp-banner { min-height: 320px; background: linear-gradient(125deg, #171436 0%, #452c9e 55%, #2d6cdf 100%); }
+.unit-banner.gp-banner::after { background: linear-gradient(90deg, rgba(16,14,42,.92), rgba(16,14,42,.12)); }
+
+/* The six transferable skills. A unit is one skill end to end, so the skill is
+   shown as a chip everywhere the unit is named. */
+.skill-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; border-radius: 999px; background: var(--gp-soft); color: var(--gp-dark); font: 800 12px/1.4 Arial, sans-serif; letter-spacing: .02em; }
+.skill-chip.is-research { background: #e7f1ff; color: #14458c; }
+.skill-chip.is-analysis { background: #eaf7ee; color: #17603a; }
+.skill-chip.is-evaluation { background: #fff3e0; color: #8a4b06; }
+.skill-chip.is-reflection { background: var(--gp-soft); color: var(--gp-dark); }
+.skill-chip.is-collaboration { background: #fdeef4; color: #8d2b52; }
+.skill-chip.is-communication { background: #e6f7f6; color: #0f5f5c; }
+
+.concept-grid, .task-grid, .reference-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; }
+.concept-card { border-top: 5px solid var(--gp); }
+.concept-body > p { margin: 0 0 12px; line-height: 1.65; }
+.concept-body > p:last-child { margin-bottom: 0; }
+
+/* Callout boxes carried over from the source books. Each marker has a fixed
+   job, so each gets a fixed colour — a learner should recognise "this is the
+   tutor talking" without reading the label. */
+.gp-box { margin: 14px 0; padding: 14px 16px; border-radius: 10px; border-left: 5px solid var(--gp); background: #fbfaff; }
+.gp-box h4 { margin: 0 0 8px; font: 800 15px/1.4 Arial, sans-serif; color: var(--gp-dark); display: flex; align-items: center; gap: 8px; }
+.gp-box ul { margin: 0; padding-left: 18px; }
+.gp-box li { margin: 0 0 6px; line-height: 1.6; }
+.gp-box li:last-child { margin-bottom: 0; }
+.gp-box p { margin: 0 0 8px; line-height: 1.6; }
+.gp-box p:last-child { margin-bottom: 0; }
+.gp-box.is-tutor { border-left-color: #2d6cdf; background: #f2f7ff; }
+.gp-box.is-bigIdea { border-left-color: var(--gp-amber); background: #fff9ec; }
+.gp-box.is-model { border-left-color: #0f766e; background: #eefaf7; }
+.gp-box.is-speak { border-left-color: #b8437a; background: #fdf2f7; }
+.gp-box.is-teacher { border-left-color: #7a5b12; background: #fdf7e6; }
+.gp-box.is-reflect { border-left-color: var(--gp); background: var(--gp-soft); }
+
+/* Source tables (the "how sure can I be?" grid, the sources guide, the
+   friendship-rules ticker) carry real teaching, so they must stay readable on a
+   phone rather than forcing the page sideways. */
+.gp-table-wrap { overflow-x: auto; margin: 12px 0; }
+.gp-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.gp-table th, .gp-table td { padding: 9px 11px; border: 1px solid #dfe5ee; text-align: left; vertical-align: top; line-height: 1.5; }
+.gp-table th { background: var(--gp-soft); color: var(--gp-dark); font-weight: 800; }
+.gp-table tr:nth-child(even) td { background: #fafbfe; }
+
+.goal-columns { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; }
+.goal-column { padding: 15px; border-radius: 10px; background: #fbfaff; border-top: 4px solid var(--gp); }
+.goal-column h3 { margin: 0 0 10px; font-size: 15px; color: var(--gp-dark); }
+.goal-column ul { margin: 0; padding-left: 18px; }
+.goal-column li { margin-bottom: 7px; line-height: 1.55; }
+
+.answer-reveal { margin-top: 10px; }
+.answer-reveal summary { cursor: pointer; font-weight: 800; color: var(--gp-dark); }
+.answer-reveal .answer-body { margin-top: 9px; padding: 11px 13px; border-radius: 8px; background: var(--gp-soft); line-height: 1.6; }
+
+/* The grown-up's guide is the one part of a Stage 1-3 unit NOT addressed to the
+   learner, so it is visually separated rather than sitting in the same voice as
+   the lesson around it. */
+.grownup-guide { border: 2px dashed #c9c2e8; border-radius: 12px; padding: 16px 18px; background: #fcfbff; }
+.grownup-guide .grownup-flag { display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; border-radius: 999px; background: var(--gp-dark); color: #fff; font: 800 12px/1.4 Arial, sans-serif; }
+
+.project-step { counter-increment: gpstep; }
+.project-step h3::before { content: counter(gpstep) ". "; color: var(--gp); font-weight: 800; }
+.project-steps { counter-reset: gpstep; }
+
+@media (max-width: 900px) {
+  .concept-grid, .task-grid, .reference-grid, .goal-columns { grid-template-columns: 1fr; }
+}

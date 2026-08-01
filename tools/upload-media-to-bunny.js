@@ -31,7 +31,7 @@ loadDotEnv();
 const KEY = process.env.BUNNY_KEY;
 
 if (!KEY) { console.error("BUNNY_KEY not set (checked the environment and .env)"); process.exit(1); }
-const SUBJECTS = ["english", "mathematics", "science", "computing", "intensive-english"];
+const SUBJECTS = ["english", "mathematics", "science", "computing", "intensive-english", "global-perspectives"];
 // An unrecognised argument used to be dropped by this filter, so a typo — or a
 // subject nobody had wired up yet — ran to completion, reported success, and
 // uploaded the default set instead of what was asked for.
@@ -68,6 +68,11 @@ const intensiveNarration = require("./lib/ehel-intensive-narration");
 // strings — every clip from the other seven categories would have landed in
 // _unmapped/: uploaded, paid for, and unreachable by the app.
 const mathNarration = require("./lib/ehel-math-narration");
+
+// Global Perspectives uses the same flat-local / per-grade-remote layout as
+// Science and Computing, so it needs no special case beyond its own narration
+// definition.
+const globalPerspectivesNarration = require("./lib/ehel-global-perspectives-narration");
 // Build the [{local, remote}] upload list.
 function buildList() {
   const list = [];
@@ -92,6 +97,7 @@ function buildList() {
     science: scienceNarration,
     computing: computingNarration,
     "intensive-english": intensiveNarration,
+    "global-perspectives": globalPerspectivesNarration,
   };
   for (const subject of Object.keys(NARRATION)) {
     if (!subjectList.includes(subject)) continue;

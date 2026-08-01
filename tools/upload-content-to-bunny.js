@@ -25,8 +25,18 @@ const MANIFEST = path.join(ROOT, ".bunny-content-manifest.json");
 const CONCURRENCY = 12;
 
 if (!KEY) { console.error("BUNNY_KEY not set"); process.exit(1); }
-const subjects = process.argv.slice(2).filter((s) => ["english", "mathematics", "science", "computing"].includes(s));
-const subjectList = subjects.length ? subjects : ["english", "mathematics", "science", "computing"];
+const SUBJECTS = ["english", "mathematics", "science", "computing", "global-perspectives"];
+// An unrecognised argument used to be dropped by this filter, so a typo — or a
+// subject nobody had wired up yet — ran to completion, reported success, and
+// uploaded the default set instead of what was asked for. Same guard the media
+// uploader already carries.
+const unknown = process.argv.slice(2).filter((s) => !s.startsWith("--") && !SUBJECTS.includes(s));
+if (unknown.length) {
+  console.error(`unknown subject(s): ${unknown.join(", ")}\nknown: ${SUBJECTS.join(", ")}`);
+  process.exit(1);
+}
+const subjects = process.argv.slice(2).filter((s) => SUBJECTS.includes(s));
+const subjectList = subjects.length ? subjects : SUBJECTS;
 
 const sha1 = (buf) => crypto.createHash("sha1").update(buf).digest("hex");
 

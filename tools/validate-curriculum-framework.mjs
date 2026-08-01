@@ -36,7 +36,7 @@ const CURRICULUM_DIR = path.join(ROOT, "src", "curriculum");
 const files = args.length
   ? args
   : (fs.existsSync(CURRICULUM_DIR)
-    ? fs.readdirSync(CURRICULUM_DIR).filter((f) => /^cambridge-(?:english|science)-\d+\.json$/.test(f)).sort().map((f) => path.join(CURRICULUM_DIR, f))
+    ? fs.readdirSync(CURRICULUM_DIR).filter((f) => /^cambridge-(?:english|science|global-perspectives)-\d+\.json$/.test(f)).sort().map((f) => path.join(CURRICULUM_DIR, f))
     : []);
 if (!files.length) {
   console.error(`usage: node tools/validate-curriculum-framework.mjs [--quiet] [<framework.json> ...]\n(no framework files found in ${CURRICULUM_DIR})`);
@@ -51,7 +51,13 @@ if (!files.length) {
 //   English  0058/0861          7Rv.01, 8SLm.02   (dotted, 2-digit)
 //   Science  0893 lower sec.    7TWSm.01, 9ESs.03, 7SIC.01, 8Bs.02
 //   Science  0846 primary       1Ep1, 3Cc2        (no dot, 1-2 digits)
-const CODE_RE = /^([1-9])((?:SL|R|W|TWS|ES|SIC|[EBCP])[a-z]?)\.?(\d{1,2})$/;
+//   Global Perspectives 0838/1129   1Rq.01, 5Fv.01, 7Ml.01
+//     A/F/M appear only here. Cambridge prints no codes in the Global
+//     Perspectives frameworks, so those are assigned during extraction — see
+//     `codeScheme` in the file and the extractor's header. Reflection takes F
+//     and Communication takes M because R and C belong to Research and
+//     Collaboration.
+const CODE_RE = /^([1-9])((?:SL|R|W|TWS|ES|SIC|[EBCPAFM])[a-z]?)\.?(\d{1,2})$/;
 // Page furniture that has been observed glued onto objective text, plus the
 // headings that sit between sections in the source PDFs. Any of these inside an
 // objective means the parser ran past the end of the bullet.
@@ -91,7 +97,7 @@ function validate(file) {
   }
   // The unit validator resolves a framework by filename from the unit's declared
   // code, so a filename that disagrees with curriculumCode loads the wrong file.
-  const fileCode = /cambridge-(?:english|science)-(\d+)\.json$/.exec(path.basename(file))?.[1];
+  const fileCode = /cambridge-(?:english|science|global-perspectives)-(\d+)\.json$/.exec(path.basename(file))?.[1];
   if (fileCode) F(String(fw.curriculumCode) === fileCode, "metadata: curriculumCode ≠ filename", `${fw.curriculumCode} vs ${fileCode}`);
   if (!isBlank(fw.source)) F(!PLACEHOLDER.test(fw.source), "metadata: source looks like a placeholder", fw.source);
 

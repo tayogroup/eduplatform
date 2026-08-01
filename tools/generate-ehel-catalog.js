@@ -27,6 +27,10 @@ const SUBJECTS = {
   mathematics: { key: "math", name: "Mathematics", code: { primary: "0096", lowersec: "0862" } },
   science: { key: "sci", name: "Science", code: { primary: "0846", lowersec: "0893" } },
   computing: { key: "comp", name: "Computing", code: { primary: "0672", lowersec: "0868" } },
+  // Global Perspectives is the one subject whose Lower Secondary code is not in
+  // the 08xx family: Cambridge publishes Primary as 0838 and Lower Secondary as
+  // 1129.
+  "global-perspectives": { key: "gp", name: "Global Perspectives", code: { primary: "0838", lowersec: "1129" } },
 };
 // Cambridge level by stage: Primary = Stages 1–6, Lower Secondary = Stages 7–9.
 const levelForStage = (n) => (n <= 6 ? "primary" : "lowersec");

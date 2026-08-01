@@ -711,6 +711,13 @@ function escapeHtml(value = "") {
   return sharedEscapeHtml(value);
 }
 
+// Narration clips live in one shared tree (english/media/audio/grade-N/{cat}/)
+// beside the app, not under the per-grade app folder, so rebasing them against
+// gradeRootUrl produced english/grade-N/media/audio/grade-N/… and 404ed on every
+// clip in local dev. Deployed builds are unaffected either way: resolveMediaUrl
+// discards this prefix when it rewrites to the Bunny media tree.
+const SHARED_AUDIO = /(^|\/)media\/audio\/grade-\d+\//;
+
 function resolveGradeAssets(value) {
   const assetKeys = new Set(["source", "normal", "slow", "image", "lectureVideo", "lecturePoster", "lectureCaptions"]);
   if (Array.isArray(value)) {
@@ -719,7 +726,8 @@ function resolveGradeAssets(value) {
   }
   if (!value || typeof value !== "object") return value;
   for (const [key, item] of Object.entries(value)) {
-    if (assetKeys.has(key) && typeof item === "string" && /^(\.\.?[/\\])/.test(item)) value[key] = new URL(item.replace(/\\/g, "/"), gradeRootUrl).href;
+    if (assetKeys.has(key) && typeof item === "string" && SHARED_AUDIO.test(item)) continue;
+    else if (assetKeys.has(key) && typeof item === "string" && /^(\.\.?[/\\])/.test(item)) value[key] = new URL(item.replace(/\\/g, "/"), gradeRootUrl).href;
     else resolveGradeAssets(item);
   }
   return value;

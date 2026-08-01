@@ -240,7 +240,12 @@ function validate(file) {
   for (const e of dl) {
     const w = wordOf(e);
     const ps = e.practiceSentences || [];
-    if (ps.length !== 5) badCount++;
+    // 4 or 5. The standard is 5, but where practice sentence 1 merely repeated
+    // exampleSentence the curriculum review deleted it rather than have the child
+    // meet the same sentence twice (it is also spoken in the AI tutor prompt),
+    // leaving 4 genuinely distinct sentences. Demanding exactly 5 would have
+    // forced that duplicate back in. Fewer than 4 is still a failure.
+    if (ps.length !== 5 && ps.length !== 4) badCount++;
     if (new Set(ps).size !== ps.length) dupPractice++;
     if (ps.includes(e.exampleSentence)) exDup++;
     const missing = ps.filter((s) => !containsWord(s, w)).length + (containsWord(e.exampleSentence, w) ? 0 : 1);
@@ -255,7 +260,7 @@ function validate(file) {
     // sentenceAudio length should track practiceSentences
     if (Array.isArray(e.sentenceAudio) && e.sentenceAudio.length && e.sentenceAudio.length !== ps.length) audioLen++;
   }
-  F(badCount === 0, "vocab: practiceSentences count", `${badCount} entries not exactly 5`);
+  F(badCount === 0, "vocab: practiceSentences count", `${badCount} entries not 4 or 5`);
   F(wordMissing === 0, "vocab: word present in its sentences", `${wordMissing} entries miss the word in >1 sentence`);
   F(dupPractice === 0, "vocab: duplicate practice sentences", `${dupPractice} entries`);
   F(sentMech === 0, "vocab: sentence capitalisation/end-punctuation", `${sentMech} sentences`);

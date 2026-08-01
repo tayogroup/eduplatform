@@ -27,7 +27,10 @@ const plan = JSON.parse(fs.readFileSync(path.join(SRC, "course-plan.json"), "utf
 
 const VOICE = { provider: "ElevenLabs", voiceId: "XfNU2rGpBa01ckF309OY", model: "eleven_multilingual_v2" };
 const SCHEMA_VERSION = "Ehel Intensive English Runtime v1.0";
-const REVIEW = "AI-assisted authoring — pending curriculum reviewer sign-off";
+// Scripts were reviewed and corrected in the returned workbook, and curriculum
+// sign-off followed on 2026-08-01. This is metadata only — no narrated string
+// depends on it, so changing it moves no clip hash.
+const REVIEW = "Reviewed: script review and curriculum sign-off, 2026-08-01";
 const CEFR_ORDER = ["A1", "A2", "B1", "B1+", "B2", "C1", "C2"];
 const CEFR_SKILLS = ["Listening", "Reading", "Spoken interaction", "Spoken production", "Writing"];
 

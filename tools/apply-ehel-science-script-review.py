@@ -384,10 +384,18 @@ def main() -> None:
                              f"outside its options ({', '.join(touched)}) — not applied")
                 grading += 1
                 continue
-            for field in control:
-                if field not in parsed:
-                    notes.append(f"{sheet} row {index + 2}: {category}/{item_id} drops '{field}' — not applied")
-                    skipped += 1
+            # A field the reviewed text no longer contains means the row was
+            # restructured, not edited — most often two fields merged onto one
+            # line. The remaining split is then wrong, so the whole row is
+            # abandoned. Applying the rest would write the merged text into
+            # whichever field survived: this once put an 818-character safety
+            # passage into a rule's title, while reporting the row as skipped.
+            dropped = [field for field in control if field not in parsed]
+            if dropped:
+                notes.append(f"{sheet} row {index + 2}: {category}/{item_id} drops "
+                             f"{', '.join(repr(f) for f in dropped)} — whole row skipped")
+                skipped += 1
+                continue
             if not edits:
                 continue
             slot = overrides.setdefault(f"grade-{grade}", {}).setdefault(unit_key, {}) \

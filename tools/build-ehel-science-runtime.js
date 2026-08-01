@@ -870,6 +870,14 @@ function buildGrade(grade) {
       }
       commonMistakes = commonMistakes.filter((pair) => pair.length === 2);
     }
+    // Some reference tables ship with their own column headings as the first
+    // row ("Common mistake" / "Why it is wrong"), which the table reader picks
+    // up as if it were a mistake. It carries no science, and a learner sees a
+    // card whose heading and body are both placeholder labels. Four of these
+    // reached the courses before a reviewer spotted them.
+    const PLACEHOLDER_MISTAKE = /^(common mistake|misconception|why people think it|why it is wrong|correction|the truth)$/i;
+    commonMistakes = commonMistakes.filter(
+      (pair) => !PLACEHOLDER_MISTAKE.test(String(pair[0] || "").trim()));
 
     // Cross-curricular / cross-unit connections: authored in almost every
     // reference doc but previously unused.

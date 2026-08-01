@@ -1,0 +1,1313 @@
+{
+  "schemaVersion": "Ehel Intensive English Course Plan v1.0",
+  "course": "Ehel Intensive English",
+  "subject": "English",
+  "audience": "Adults and older teenagers of any first language, beginner to proficient, studying intensively",
+  "designModel": "Grade 1 English — unit 0 sounds module, full-screen pattern carousel, one idea per screen, audio on every line",
+  "frameworks": {
+    "cefr": {
+      "name": "Common European Framework of Reference for Languages",
+      "role": "Defines what a learner can DO at the end of each level, and therefore what each level's exit assessment tests. This is the framework the course reports against.",
+      "levelsUsed": [
+        "A1",
+        "A2",
+        "B1",
+        "B2",
+        "C1",
+        "C2"
+      ],
+      "structure": "Six CEFR levels collapse into five course levels: A1 and A2 combine into Level 1, and each level above is one CEFR level."
+    },
+    "cambridge": {
+      "name": "Cambridge Primary English 0058 and Cambridge Lower Secondary English 0861",
+      "role": "Defines the language inventory, progression and text types, because the source material is built against it. Every outcome keeps the objective code of the source unit it came from.",
+      "data": [
+        "src/curriculum/cambridge-english-0058.json",
+        "src/curriculum/cambridge-english-0861.json"
+      ],
+      "coverage": "0058 covers stages 1-6, 0861 covers stages 7-9."
+    },
+    "howTheyRelate": "They are not the same axis and must not be treated as one. Cambridge grades measure a child progressing through school in English; CEFR levels measure what any user can do in a second language. A grade band supplies this course's language content; a CEFR level sets its target. The mapping below is a claim about what the compressed content delivers to an adult L2 learner, not a claim that grade N equals CEFR X."
+  },
+  "sourceMaterial": "src/prototypes/ehel-academy/english/grade-{1..8} — 81 units, 2212 vocabulary items, 486 grammar lessons. Analysis: inputs/ehel-english-intensive-source/grade-1-8-analysis.json",
+  "compressionPrinciple": "Grades 1-8 teach 16 language patterns more than once, because children need spiral return. Adults do not. Each pattern is taught ONCE here, at the point it first becomes useful, and then recycled through later units' tasks rather than re-taught. That is where the 81-to-40 compression comes from — not from cutting language. A card that CONTRASTS patterns already taught is not a re-teach, but it must be flagged with \"contrast\": true so the duplication gate can allow it explicitly rather than by accident.",
+  "whatIsDropped": [
+    "Child-world topics with no adult use (Fun and Games, All About Bugs, animal sounds, costumes) — their grammar is kept, their topic is replaced with an adult context that carries the same pattern.",
+    "Repeat teaching of a pattern already taught. The second and third pass become practice inside a later unit, not a grammar lesson.",
+    "Per-grade capstones (five of them across grades 1-4, five across 5-8) collapse into one capstone per level.",
+    "Whole-alphabet phonics. Adult learners arrive already literate in some script and mostly decoding Latin letters. Unit 0 teaches the sounds and syllable shapes that are hard in English, and lets the learner find out by testing themselves which of those are hard for them."
+  ],
+  "levels": [
+    {
+      "number": 1,
+      "id": "l1",
+      "label": "Level 1 — Foundation",
+      "cefr": [
+        "A1",
+        "A2"
+      ],
+      "cefrName": "Beginner and Elementary",
+      "cefrBands": [
+        {
+          "cefr": "A1",
+          "cefrName": "Beginner",
+          "units": [
+            0,
+            9
+          ],
+          "canDo": "Understand and use basic words and set phrases for immediate needs, and interact slowly with a patient speaker."
+        },
+        {
+          "cefr": "A2",
+          "cefrName": "Elementary",
+          "units": [
+            10,
+            19
+          ],
+          "canDo": "Follow short, simple information and hold basic exchanges about familiar, everyday matters."
+        }
+      ],
+      "sourceGrades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "sourceUnitCount": 41,
+      "exitDescriptor": "Exits at a secure A2. Can handle everyday personal, practical and workplace situations: introduce themselves, describe people, places and routines, talk about the past and the future, follow and give instructions, ask for what they need, and write a short connected text.",
+      "exitAssessment": "A2 exit test across the four skills. Passing it is the entry condition for Level 2.",
+      "defaultUnit": 0,
+      "units": [
+        {
+          "number": 0,
+          "title": "The Sounds That Are Hard",
+          "source": [
+            {
+              "grade": 1,
+              "units": [
+                0
+              ]
+            }
+          ],
+          "patterns": [
+            "th (/θ/ and /ð/)",
+            "/v/, /f/, /w/ and /b/",
+            "/r/ and /l/",
+            "consonant clusters at the start and end of a word",
+            "long and short vowels: ship and sheep",
+            "blending: reading a word you have never seen"
+          ],
+          "note": "Not the whole alphabet. This unit teaches the six things learners most often find hard in English, and it opens with a self-check so the learner discovers which of the six are hard FOR THEM. Which ones those are depends on the learner's first language, and the course never assumes what that is."
+        },
+        {
+          "number": 1,
+          "title": "Who I Am",
+          "source": [
+            {
+              "grade": 1,
+              "units": [
+                1,
+                2
+              ]
+            },
+            {
+              "grade": 2,
+              "units": [
+                1
+              ]
+            },
+            {
+              "grade": 3,
+              "units": [
+                1
+              ]
+            }
+          ],
+          "patterns": [
+            "to be: am, is, are",
+            "I / you / he / she / it / we / they",
+            "possessive my, your, his, her",
+            "numbers and age",
+            "greetings and the calendar"
+          ]
+        },
+        {
+          "number": 2,
+          "title": "My Family and My Home",
+          "source": [
+            {
+              "grade": 1,
+              "units": [
+                2
+              ]
+            },
+            {
+              "grade": 2,
+              "units": [
+                8
+              ]
+            },
+            {
+              "grade": 3,
+              "units": [
+                1
+              ]
+            }
+          ],
+          "patterns": [
+            "have got / has got",
+            "possessive 's",
+            "there is / there are",
+            "prepositions of place"
+          ]
+        },
+        {
+          "number": 3,
+          "title": "Learning English",
+          "source": [
+            {
+              "grade": 1,
+              "units": [
+                1
+              ]
+            },
+            {
+              "grade": 2,
+              "units": [
+                1
+              ]
+            },
+            {
+              "grade": 3,
+              "units": [
+                2
+              ]
+            }
+          ],
+          "patterns": [
+            "can and can't for ability",
+            "like / likes and the third-person -s",
+            "classroom and study language",
+            "asking someone to repeat or slow down"
+          ]
+        },
+        {
+          "number": 4,
+          "title": "Numbers, Money and Measuring",
+          "source": [
+            {
+              "grade": 1,
+              "units": [
+                2
+              ]
+            },
+            {
+              "grade": 2,
+              "units": [
+                5
+              ]
+            },
+            {
+              "grade": 3,
+              "units": [
+                8
+              ]
+            }
+          ],
+          "patterns": [
+            "cardinal and ordinal numbers",
+            "how much / how many",
+            "comparing with -er than",
+            "quantifiers: some, a lot of, a little"
+          ]
+        },
+        {
+          "number": 5,
+          "title": "My Day, My Week",
+          "source": [
+            {
+              "grade": 3,
+              "units": [
+                3
+              ]
+            },
+            {
+              "grade": 2,
+              "units": [
+                1
+              ]
+            }
+          ],
+          "patterns": [
+            "present simple for routine",
+            "adverbs of frequency",
+            "telling the time",
+            "prepositions of time: at, on, in"
+          ]
+        },
+        {
+          "number": 6,
+          "title": "Food, Markets and Cooking",
+          "source": [
+            {
+              "grade": 2,
+              "units": [
+                3
+              ]
+            },
+            {
+              "grade": 4,
+              "units": [
+                3
+              ]
+            }
+          ],
+          "patterns": [
+            "units and containers: a packet of, a bottle of, a slice of",
+            "some and any",
+            "imperatives for a recipe",
+            "sequencing: first, then, after that"
+          ],
+          "note": "Countability itself is taught in Unit 4, through how much/how many and a little/a few. This unit APPLIES it to containers and measures rather than teaching it again."
+        },
+        {
+          "number": 7,
+          "title": "The Body, Illness and the Clinic",
+          "source": [
+            {
+              "grade": 1,
+              "units": [
+                6
+              ]
+            },
+            {
+              "grade": 2,
+              "units": [
+                3
+              ]
+            },
+            {
+              "grade": 4,
+              "units": [
+                3
+              ]
+            }
+          ],
+          "patterns": [
+            "saying what is wrong: I have got a …, my … hurts, I feel …",
+            "should and shouldn't for advice",
+            "reading a medicine label: dose, frequency and warnings"
+          ],
+          "note": "Obligation (must, mustn't, have to) belongs to Unit 17, and the past simple to Unit 14, so this unit stays on symptom language, advice, and reading a label. Three patterns, not four."
+        },
+        {
+          "number": 8,
+          "title": "Clothes, Colours and Buying Things",
+          "source": [
+            {
+              "grade": 1,
+              "units": [
+                4
+              ]
+            },
+            {
+              "grade": 2,
+              "units": [
+                4
+              ]
+            }
+          ],
+          "patterns": [
+            "adjectives before the noun",
+            "this, that, these, those",
+            "asking for a different one: size, colour or price",
+            "too and enough"
+          ],
+          "note": "Asking a price is taught in Unit 4. This unit covers what you say AFTER the price — asking for a different size, colour or price."
+        },
+        {
+          "number": 9,
+          "title": "Finding My Way",
+          "source": [
+            {
+              "grade": 1,
+              "units": [
+                9
+              ]
+            },
+            {
+              "grade": 2,
+              "units": [
+                9
+              ]
+            },
+            {
+              "grade": 3,
+              "units": [
+                4
+              ]
+            },
+            {
+              "grade": 4,
+              "units": [
+                9
+              ]
+            }
+          ],
+          "patterns": [
+            "words for movement: along, past, across, through, towards",
+            "giving a route: turn, take, go straight on",
+            "asking the way politely: excuse me, could you tell me …?"
+          ],
+          "note": "Static place prepositions are taught in Unit 2 and imperatives in Units 3 and 6 — this unit APPLIES both to routes rather than teaching them again. It also owns polite requests, since it comes before Unit 18. Left and right are Unit 3 vocabulary and are recycled here, not re-listed."
+        },
+        {
+          "number": 10,
+          "title": "Travel and Transport",
+          "source": [
+            {
+              "grade": 1,
+              "units": [
+                7
+              ]
+            },
+            {
+              "grade": 4,
+              "units": [
+                9
+              ]
+            }
+          ],
+          "patterns": [
+            "present continuous: happening now and arranged for later",
+            "would like to",
+            "buying a ticket: times, platforms and returns"
+          ],
+          "note": "Owns the present continuous entirely — both the now use and the arranged-future use — so Unit 15 does not teach it again. Going to belongs to Unit 15."
+        },
+        {
+          "number": 11,
+          "title": "Work and Jobs",
+          "source": [
+            {
+              "grade": 2,
+              "units": [
+                2
+              ]
+            },
+            {
+              "grade": 3,
+              "units": [
+                4
+              ]
+            },
+            {
+              "grade": 4,
+              "units": [
+                6
+              ]
+            }
+          ],
+          "patterns": [
+            "have to and do not have to for obligation",
+            "describing what a job involves",
+            "adverbs of degree: very, quite, really"
+          ],
+          "note": "Third-person -s is taught in Unit 3 and the present simple in Unit 5; both are used here, not retaught. Wh- questions belong to Unit 16. This unit owns have to; must and mustn't belong to Unit 17."
+        },
+        {
+          "number": 12,
+          "title": "Describing People and Things",
+          "source": [
+            {
+              "grade": 1,
+              "units": [
+                6
+              ]
+            },
+            {
+              "grade": 3,
+              "units": [
+                6
+              ]
+            },
+            {
+              "grade": 4,
+              "units": [
+                1
+              ]
+            }
+          ],
+          "patterns": [
+            "adjectives of character and appearance",
+            "superlatives: the -est and the most",
+            "adverbs of manner",
+            "as … as"
+          ],
+          "note": "Comparatives are taught in Unit 4, including more and the irregulars. This unit owns superlatives only."
+        },
+        {
+          "number": 13,
+          "title": "Weather, Land and Water",
+          "source": [
+            {
+              "grade": 1,
+              "units": [
+                8
+              ]
+            },
+            {
+              "grade": 2,
+              "units": [
+                4,
+                7
+              ]
+            },
+            {
+              "grade": 3,
+              "units": [
+                7
+              ]
+            },
+            {
+              "grade": 4,
+              "units": [
+                2
+              ]
+            }
+          ],
+          "patterns": [
+            "will for prediction and for decisions",
+            "describing a place",
+            "because and so"
+          ],
+          "note": "Owns will entirely, so Unit 15 contrasts it rather than teaching it. Present simple for facts is Unit 5 and is used here, not retaught."
+        },
+        {
+          "number": 14,
+          "title": "Telling What Happened",
+          "source": [
+            {
+              "grade": 2,
+              "units": [
+                4
+              ]
+            },
+            {
+              "grade": 3,
+              "units": [
+                2,
+                3,
+                5
+              ]
+            }
+          ],
+          "patterns": [
+            "past simple: regular -ed",
+            "past simple: the irregular verbs that matter",
+            "past questions and negatives",
+            "ago and last: the past time markers"
+          ],
+          "note": "The two past-simple cards are deliberate progression within one unit. Time markers are narrowed to the past-specific ones; at, on and in are Unit 5."
+        },
+        {
+          "number": 15,
+          "title": "Plans and the Future",
+          "source": [
+            {
+              "grade": 2,
+              "units": [
+                8
+              ]
+            },
+            {
+              "grade": 3,
+              "units": [
+                8
+              ]
+            },
+            {
+              "grade": 4,
+              "units": [
+                9
+              ]
+            }
+          ],
+          "patterns": [
+            "going to for plans",
+            "choosing between will, going to and the present continuous",
+            "arranging to meet: shall we, how about"
+          ],
+          "note": "Will is taught in Unit 13 and the present continuous in Unit 10. What is new here is choosing between the three, which is a genuine difficulty and not a re-teach. The contrast card names three forms taught in Units 10 and 13 and is flagged as a contrast rather than a re-teach: a card that only compares must be marked, because the duplication check cannot tell the difference and tuning it quiet would hide real collisions.",
+          "contrastPatterns": [
+            "choosing between will, going to and the present continuous"
+          ],
+          "contrast": true
+        },
+        {
+          "number": 16,
+          "title": "Asking Well",
+          "source": [
+            {
+              "grade": 2,
+              "units": [
+                2,
+                6
+              ]
+            },
+            {
+              "grade": 3,
+              "units": [
+                1,
+                5
+              ]
+            },
+            {
+              "grade": 4,
+              "units": [
+                1
+              ]
+            }
+          ],
+          "patterns": [
+            "the full wh- question system",
+            "yes/no questions and short answers",
+            "question tags"
+          ],
+          "note": "Asking someone to repeat is Unit 3 and polite requests are Unit 9. This unit owns question FORM."
+        },
+        {
+          "number": 17,
+          "title": "Instructions, Rules and Advice",
+          "source": [
+            {
+              "grade": 2,
+              "units": [
+                3
+              ]
+            },
+            {
+              "grade": 3,
+              "units": [
+                4
+              ]
+            },
+            {
+              "grade": 4,
+              "units": [
+                5,
+                6
+              ]
+            }
+          ],
+          "patterns": [
+            "must and mustn't for rules",
+            "allowed and not allowed: can, cannot, no + -ing",
+            "reading a public sign or safety notice"
+          ],
+          "note": "Should is Unit 7 and have to is Unit 11, so this unit owns must and mustn't only. Imperatives are Units 3 and 6 and sequencing is Unit 6; both are applied here, not retaught."
+        },
+        {
+          "number": 18,
+          "title": "Getting Help and Getting Things Done",
+          "source": [
+            {
+              "grade": 3,
+              "units": [
+                4
+              ]
+            },
+            {
+              "grade": 4,
+              "units": [
+                4,
+                6
+              ]
+            }
+          ],
+          "patterns": [
+            "explaining a problem: it does not work, it is broken",
+            "so that for purpose",
+            "filling in a form and making an appointment"
+          ],
+          "note": "Because and so are taught in Unit 13, so this unit adds so that for purpose only. Polite requests are Unit 9."
+        },
+        {
+          "number": 19,
+          "title": "Level 1 Capstone — My English Life",
+          "source": [
+            {
+              "grade": 1,
+              "units": [
+                10
+              ]
+            },
+            {
+              "grade": 2,
+              "units": [
+                10
+              ]
+            },
+            {
+              "grade": 3,
+              "units": [
+                10
+              ]
+            },
+            {
+              "grade": 4,
+              "units": [
+                10
+              ]
+            }
+          ],
+          "patterns": [
+            "everything in Level 1, applied",
+            "finding your own errors: listen twice, sort into two lists"
+          ],
+          "note": "Replaces four separate per-grade capstones. Portfolio, spoken presentation, and the Level 1 exit assessment.",
+          "contrast": true
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "id": "l2",
+      "label": "Level 2 — Independence",
+      "cefr": [
+        "B1"
+      ],
+      "cefrName": "Intermediate",
+      "cefrBands": [
+        {
+          "cefr": "B1",
+          "cefrName": "Intermediate",
+          "units": [
+            1,
+            10
+          ],
+          "canDo": "Cope with routine situations, follow the main points of clear standard input, and produce simple connected text."
+        },
+        {
+          "cefr": "B1+",
+          "cefrName": "Intermediate, approaching Upper-Intermediate",
+          "units": [
+            11,
+            20
+          ],
+          "canDo": "Sustain an argument, report what others said, and write formally for a real purpose — the bridge into B2."
+        }
+      ],
+      "sourceGrades": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "sourceUnitCount": 40,
+      "exitDescriptor": "Exits at a secure B1 reaching towards B2. The learner becomes an independent user: can follow the main points of clear standard input, take part in extended discussion on familiar and unfamiliar topics, read and judge a source, report what other people said, write formally for a real purpose, and argue a position with support.",
+      "exitAssessment": "B1 exit test across the four skills. This is the level that matters commercially — it is where a learner becomes an independent user and qualifies for foundation and pathway steps.",
+      "defaultUnit": 1,
+      "units": [
+        {
+          "number": 1,
+          "title": "Telling My Story",
+          "source": [
+            {
+              "grade": 5,
+              "units": [
+                1
+              ]
+            },
+            {
+              "grade": 7,
+              "units": [
+                1
+              ]
+            }
+          ],
+          "patterns": [
+            "adjective + preposition: good at, interested in, worried about",
+            "used to for past habits and states that are now over",
+            "ordering a life story: by then, at that point, some years later"
+          ]
+        },
+        {
+          "number": 2,
+          "title": "Saying It Precisely",
+          "source": [
+            {
+              "grade": 5,
+              "units": [
+                3
+              ]
+            },
+            {
+              "grade": 6,
+              "units": [
+                9
+              ]
+            },
+            {
+              "grade": 8,
+              "units": [
+                6
+              ]
+            }
+          ],
+          "patterns": [
+            "ordering two or more adjectives: a small round wooden table",
+            "comparative adverbs: more carefully, better, faster",
+            "gradable and non-gradable adjectives: very cold, absolutely freezing"
+          ],
+          "note": "Comparatives are taught in grades 3, 5, 6 and 8 in the source. Once here."
+        },
+        {
+          "number": 3,
+          "title": "Experience and Change",
+          "source": [
+            {
+              "grade": 5,
+              "units": [
+                8
+              ]
+            },
+            {
+              "grade": 6,
+              "units": [
+                1
+              ]
+            }
+          ],
+          "patterns": [
+            "present perfect: form and use",
+            "for and since",
+            "present perfect continuous",
+            "present perfect versus past simple"
+          ],
+          "contrast": true
+        },
+        {
+          "number": 4,
+          "title": "Packing More Into a Sentence",
+          "source": [
+            {
+              "grade": 5,
+              "units": [
+                4
+              ]
+            },
+            {
+              "grade": 6,
+              "units": [
+                3
+              ]
+            },
+            {
+              "grade": 7,
+              "units": [
+                1,
+                3
+              ]
+            }
+          ],
+          "patterns": [
+            "defining relative clauses",
+            "non-defining relative clauses and the comma rule",
+            "relative clauses with where and whose",
+            "complex noun phrases"
+          ]
+        },
+        {
+          "number": 5,
+          "title": "If and Unless",
+          "source": [
+            {
+              "grade": 5,
+              "units": [
+                5
+              ]
+            },
+            {
+              "grade": 6,
+              "units": [
+                2
+              ]
+            },
+            {
+              "grade": 8,
+              "units": [
+                2,
+                3
+              ]
+            }
+          ],
+          "patterns": [
+            "zero conditional",
+            "first conditional",
+            "second conditional",
+            "unless"
+          ]
+        },
+        {
+          "number": 6,
+          "title": "Joining Ideas",
+          "source": [
+            {
+              "grade": 5,
+              "units": [
+                6
+              ]
+            },
+            {
+              "grade": 6,
+              "units": [
+                5
+              ]
+            },
+            {
+              "grade": 8,
+              "units": [
+                1
+              ]
+            }
+          ],
+          "patterns": [
+            "subordinating conjunctions beyond because and so",
+            "connective adverbs between sentences: however, therefore, moreover",
+            "although, while, whereas"
+          ]
+        },
+        {
+          "number": 7,
+          "title": "Opinions and Disagreement",
+          "source": [
+            {
+              "grade": 5,
+              "units": [
+                7
+              ]
+            },
+            {
+              "grade": 6,
+              "units": [
+                5
+              ]
+            }
+          ],
+          "patterns": [
+            "fact versus opinion",
+            "opinion and belief phrases",
+            "agreeing and disagreeing politely",
+            "tone awareness"
+          ]
+        },
+        {
+          "number": 8,
+          "title": "Building Words",
+          "source": [
+            {
+              "grade": 5,
+              "units": [
+                6,
+                9
+              ]
+            },
+            {
+              "grade": 6,
+              "units": [
+                6
+              ]
+            },
+            {
+              "grade": 7,
+              "units": [
+                6
+              ]
+            }
+          ],
+          "patterns": [
+            "prefixes un-, dis-, in-",
+            "suffixes -ible, -able, -ous",
+            "compound nouns: closed, hyphenated, open",
+            "abstract nouns"
+          ]
+        },
+        {
+          "number": 9,
+          "title": "Reporting What People Said",
+          "source": [
+            {
+              "grade": 6,
+              "units": [
+                5,
+                6
+              ]
+            },
+            {
+              "grade": 7,
+              "units": [
+                8
+              ]
+            },
+            {
+              "grade": 8,
+              "units": [
+                7
+              ]
+            }
+          ],
+          "patterns": [
+            "reported statements: tense and pronoun shift",
+            "reported questions",
+            "reported commands",
+            "said and told, time-word shifts"
+          ]
+        },
+        {
+          "number": 10,
+          "title": "The Passive Voice",
+          "source": [
+            {
+              "grade": 6,
+              "units": [
+                8
+              ]
+            },
+            {
+              "grade": 7,
+              "units": [
+                3,
+                4,
+                5
+              ]
+            },
+            {
+              "grade": 8,
+              "units": [
+                2,
+                4
+              ]
+            }
+          ],
+          "patterns": [
+            "present passive",
+            "past passive",
+            "modal + passive",
+            "future and continuous passive"
+          ],
+          "note": "The source teaches passive across grades 4, 6, 7 and 8. Once here, then used in the report-writing unit."
+        },
+        {
+          "number": 11,
+          "title": "Narrating the Past",
+          "source": [
+            {
+              "grade": 6,
+              "units": [
+                7
+              ]
+            },
+            {
+              "grade": 7,
+              "units": [
+                8
+              ]
+            },
+            {
+              "grade": 8,
+              "units": [
+                7
+              ]
+            }
+          ],
+          "patterns": [
+            "past continuous, with while, when and until",
+            "past simple versus past continuous",
+            "past perfect",
+            "participle clauses: having finished, walking home"
+          ],
+          "contrast": true
+        },
+        {
+          "number": 12,
+          "title": "Verb Patterns",
+          "source": [
+            {
+              "grade": 7,
+              "units": [
+                5,
+                7
+              ]
+            },
+            {
+              "grade": 8,
+              "units": [
+                1,
+                7
+              ]
+            }
+          ],
+          "patterns": [
+            "gerund and infinitive after a verb",
+            "-ing forms as subject and object",
+            "multi-word and phrasal verbs",
+            "adjective + infinitive"
+          ]
+        },
+        {
+          "number": 13,
+          "title": "Certainty and Possibility",
+          "source": [
+            {
+              "grade": 7,
+              "units": [
+                3
+              ]
+            },
+            {
+              "grade": 8,
+              "units": [
+                5
+              ]
+            }
+          ],
+          "patterns": [
+            "modals of deduction: must be, might be, can't be",
+            "past modals: should have, could have, must have",
+            "could and might for possibility"
+          ]
+        },
+        {
+          "number": 14,
+          "title": "Work, Careers and Applying",
+          "source": [
+            {
+              "grade": 6,
+              "units": [
+                6
+              ]
+            },
+            {
+              "grade": 7,
+              "units": [
+                7
+              ]
+            }
+          ],
+          "patterns": [
+            "profession suffixes: -er, -or, -ist, -ian",
+            "the language of a CV and a covering letter",
+            "answering an interview question with evidence"
+          ]
+        },
+        {
+          "number": 15,
+          "title": "Money, Enterprise and Being a Customer",
+          "source": [
+            {
+              "grade": 6,
+              "units": [
+                5
+              ]
+            },
+            {
+              "grade": 8,
+              "units": [
+                4
+              ]
+            }
+          ],
+          "patterns": [
+            "partitive expressions: a piece of, a bar of, a great deal of",
+            "the language of price, value and contract",
+            "making a complaint and asking for a remedy"
+          ]
+        },
+        {
+          "number": 16,
+          "title": "Media, Technology and Judging a Source",
+          "source": [
+            {
+              "grade": 7,
+              "units": [
+                8,
+                9
+              ]
+            },
+            {
+              "grade": 8,
+              "units": [
+                8
+              ]
+            }
+          ],
+          "patterns": [
+            "vague attribution: sources say, it is understood, critics argue",
+            "both, either and neither",
+            "discourse markers: actually, in fact, mind you",
+            "spotting bias in a source"
+          ]
+        },
+        {
+          "number": 17,
+          "title": "Environment and Resources",
+          "source": [
+            {
+              "grade": 6,
+              "units": [
+                3,
+                7
+              ]
+            },
+            {
+              "grade": 7,
+              "units": [
+                5
+              ]
+            },
+            {
+              "grade": 8,
+              "units": [
+                3,
+                5,
+                6
+              ]
+            }
+          ],
+          "patterns": [
+            "hedging a claim: tends to, is likely to, appears to",
+            "cause and effect chains: leads to, results in, is caused by",
+            "citing a source: according to, research suggests"
+          ]
+        },
+        {
+          "number": 18,
+          "title": "Writing Formally",
+          "source": [
+            {
+              "grade": 8,
+              "units": [
+                3,
+                5
+              ]
+            }
+          ],
+          "patterns": [
+            "formal register versus informal register",
+            "the formal letter, the email and the report",
+            "clauses ending with a preposition, and when to avoid them"
+          ]
+        },
+        {
+          "number": 19,
+          "title": "Making an Argument",
+          "source": [
+            {
+              "grade": 7,
+              "units": [
+                6
+              ]
+            },
+            {
+              "grade": 8,
+              "units": [
+                4
+              ]
+            }
+          ],
+          "patterns": [
+            "claim, evidence, warrant",
+            "persuasive devices and their honest use",
+            "rebutting a counter-argument"
+          ]
+        },
+        {
+          "number": 20,
+          "title": "Level 2 Capstone — My English Voice",
+          "source": [
+            {
+              "grade": 5,
+              "units": [
+                10
+              ]
+            },
+            {
+              "grade": 6,
+              "units": [
+                10
+              ]
+            },
+            {
+              "grade": 7,
+              "units": [
+                10
+              ]
+            },
+            {
+              "grade": 8,
+              "units": [
+                10
+              ]
+            }
+          ],
+          "patterns": [
+            "everything in Level 2, applied"
+          ],
+          "note": "Replaces four per-grade capstones. Extended written piece, a presentation with questions, and the Level 2 exit assessment.",
+          "contrast": true
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "l3",
+      "label": "Level 3 — Upper-Intermediate",
+      "cefr": [
+        "B2"
+      ],
+      "cefrName": "Upper-Intermediate",
+      "status": "Planned — blocked on source material",
+      "sourceGrades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "exitDescriptor": "Can follow concrete and abstract discussion, interact with reasonable fluency, and write clear, detailed text on a range of topics. The common benchmark for many undergraduate courses and mixed-language workplaces.",
+      "blockedBy": "Grades 9-12 do not exist in this repository — English, Mathematics and Science all stop at grade 8. Level 3 cannot be planned in detail until that material is authored.",
+      "units": []
+    },
+    {
+      "number": 4,
+      "id": "l4",
+      "label": "Level 4 — Advanced",
+      "cefr": [
+        "C1"
+      ],
+      "cefrName": "Advanced",
+      "status": "Planned — no source material identified",
+      "sourceGrades": [],
+      "exitDescriptor": "Can use English flexibly for complex, demanding purposes and grasp implicit meaning in long, involved texts. Expected by many postgraduate courses and by roles built on persuasion or writing.",
+      "blockedBy": "C1 sits above the school curriculum this course compresses. Grades 9-12 will not reach it on their own — Level 4 needs its own source material (academic writing, extended argument, register control), which does not exist here and was not part of the grade 1-12 plan.",
+      "units": []
+    },
+    {
+      "number": 5,
+      "id": "l5",
+      "label": "Level 5 — Proficient",
+      "cefr": [
+        "C2"
+      ],
+      "cefrName": "Proficient",
+      "status": "Planned — confirm demand before building",
+      "sourceGrades": [],
+      "exitDescriptor": "Can understand almost everything read or heard and express fine shades of meaning precisely, at near-native command.",
+      "blockedBy": "Needs its own source material, as Level 4 does.",
+      "note": "Worth a commercial decision before it is built. C2 is rarely set as a minimum requirement by anyone — it marks the top of the scale rather than an entry point — so a five-level course may sell on completeness while almost nobody enrols in Level 5. Levels 2 and 3 (B1 and B2) are where the demand sits.",
+      "units": []
+    }
+  ],
+  "teachingLanguage": "English. The course is monolingual: it explains English in English, at a level the learner can already read, so it works for a class with no shared first language.",
+  "selfTeaching": "The course must be completable with no teacher present. Every exercise carries a learner-facing answer key, every task that would need a partner has a solo alternative, every practice is preceded by a worked example, and the learner diagnoses their own errors rather than waiting to be corrected. A teacher, where one exists, is an accelerator and never a dependency."
+}

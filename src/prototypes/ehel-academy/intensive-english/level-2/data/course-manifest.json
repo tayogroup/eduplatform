@@ -1,0 +1,338 @@
+{
+ "schemaVersion": "Ehel Intensive English Course Manifest v1.0",
+ "course": "Ehel Intensive English",
+ "subject": "English",
+ "audience": "Adults and older teenagers of any first language, beginner to proficient, studying intensively",
+ "frameworks": {
+  "cefr": {
+   "name": "Common European Framework of Reference for Languages",
+   "role": "Defines what a learner can DO at the end of each level, and therefore what each level's exit assessment tests. This is the framework the course reports against.",
+   "levelsUsed": [
+    "A1",
+    "A2",
+    "B1",
+    "B2",
+    "C1",
+    "C2"
+   ],
+   "structure": "Six CEFR levels collapse into five course levels: A1 and A2 combine into Level 1, and each level above is one CEFR level."
+  },
+  "cambridge": {
+   "name": "Cambridge Primary English 0058 and Cambridge Lower Secondary English 0861",
+   "role": "Defines the language inventory, progression and text types, because the source material is built against it. Every outcome keeps the objective code of the source unit it came from.",
+   "data": [
+    "src/curriculum/cambridge-english-0058.json",
+    "src/curriculum/cambridge-english-0861.json"
+   ],
+   "coverage": "0058 covers stages 1-6, 0861 covers stages 7-9."
+  },
+  "howTheyRelate": "They are not the same axis and must not be treated as one. Cambridge grades measure a child progressing through school in English; CEFR levels measure what any user can do in a second language. A grade band supplies this course's language content; a CEFR level sets its target. The mapping below is a claim about what the compressed content delivers to an adult L2 learner, not a claim that grade N equals CEFR X."
+ },
+ "level": {
+  "number": 2,
+  "id": "l2",
+  "label": "Level 2 — Independence",
+  "cefr": [
+   "B1"
+  ],
+  "cefrName": "Intermediate",
+  "cefrBands": [
+   {
+    "cefr": "B1",
+    "cefrName": "Intermediate",
+    "units": [
+     1,
+     10
+    ],
+    "canDo": "Cope with routine situations, follow the main points of clear standard input, and produce simple connected text."
+   },
+   {
+    "cefr": "B1+",
+    "cefrName": "Intermediate, approaching Upper-Intermediate",
+    "units": [
+     11,
+     20
+    ],
+    "canDo": "Sustain an argument, report what others said, and write formally for a real purpose — the bridge into B2."
+   }
+  ],
+  "exitDescriptor": "Exits at a secure B1 reaching towards B2. The learner becomes an independent user: can follow the main points of clear standard input, take part in extended discussion on familiar and unfamiliar topics, read and judge a source, report what other people said, write formally for a real purpose, and argue a position with support.",
+  "exitAssessment": "B1 exit test across the four skills. This is the level that matters commercially — it is where a learner becomes an independent user and qualifies for foundation and pathway steps."
+ },
+ "levels": [
+  {
+   "number": 1,
+   "id": "l1",
+   "label": "Level 1 — Foundation",
+   "cefr": [
+    "A1",
+    "A2"
+   ],
+   "unitCount": 20,
+   "status": "Open"
+  },
+  {
+   "number": 2,
+   "id": "l2",
+   "label": "Level 2 — Independence",
+   "cefr": [
+    "B1"
+   ],
+   "unitCount": 20,
+   "status": "Open"
+  },
+  {
+   "number": 3,
+   "id": "l3",
+   "label": "Level 3 — Upper-Intermediate",
+   "cefr": [
+    "B2"
+   ],
+   "unitCount": 0,
+   "status": "Planned — blocked on source material"
+  },
+  {
+   "number": 4,
+   "id": "l4",
+   "label": "Level 4 — Advanced",
+   "cefr": [
+    "C1"
+   ],
+   "unitCount": 0,
+   "status": "Planned — no source material identified"
+  },
+  {
+   "number": 5,
+   "id": "l5",
+   "label": "Level 5 — Proficient",
+   "cefr": [
+    "C2"
+   ],
+   "unitCount": 0,
+   "status": "Planned — confirm demand before building"
+  }
+ ],
+ "defaultUnit": 1,
+ "units": [
+  {
+   "number": 1,
+   "id": "ien-l2-u01",
+   "title": "Telling My Story",
+   "data": "./data/units/unit-1.json",
+   "cefr": "B1",
+   "patterns": 3,
+   "source": "G5U1 G7U1",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 2,
+   "id": "ien-l2-u02",
+   "title": "Saying It Precisely",
+   "data": "./data/units/unit-2.json",
+   "cefr": "B1",
+   "patterns": 3,
+   "source": "G5U3 G6U9 G8U6",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 3,
+   "id": "ien-l2-u03",
+   "title": "Experience and Change",
+   "data": "./data/units/unit-3.json",
+   "cefr": "B1",
+   "patterns": 4,
+   "source": "G5U8 G6U1",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 4,
+   "id": "ien-l2-u04",
+   "title": "Packing More Into a Sentence",
+   "data": "./data/units/unit-4.json",
+   "cefr": "B1",
+   "patterns": 4,
+   "source": "G5U4 G6U3 G7U1,G7U3",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 5,
+   "id": "ien-l2-u05",
+   "title": "If and Unless",
+   "data": "./data/units/unit-5.json",
+   "cefr": "B1",
+   "patterns": 4,
+   "source": "G5U5 G6U2 G8U2,G8U3",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 6,
+   "id": "ien-l2-u06",
+   "title": "Joining Ideas",
+   "data": "./data/units/unit-6.json",
+   "cefr": "B1",
+   "patterns": 3,
+   "source": "G5U6 G6U5 G8U1",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 7,
+   "id": "ien-l2-u07",
+   "title": "Opinions and Disagreement",
+   "data": "./data/units/unit-7.json",
+   "cefr": "B1",
+   "patterns": 4,
+   "source": "G5U7 G6U5",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 8,
+   "id": "ien-l2-u08",
+   "title": "Building Words",
+   "data": "./data/units/unit-8.json",
+   "cefr": "B1",
+   "patterns": 4,
+   "source": "G5U6,G5U9 G6U6 G7U6",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 9,
+   "id": "ien-l2-u09",
+   "title": "Reporting What People Said",
+   "data": "./data/units/unit-9.json",
+   "cefr": "B1",
+   "patterns": 4,
+   "source": "G6U5,G6U6 G7U8 G8U7",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 10,
+   "id": "ien-l2-u10",
+   "title": "The Passive Voice",
+   "data": "./data/units/unit-10.json",
+   "cefr": "B1",
+   "patterns": 4,
+   "source": "G6U8 G7U3,G7U4,G7U5 G8U2,G8U4",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 11,
+   "id": "ien-l2-u11",
+   "title": "Narrating the Past",
+   "data": "./data/units/unit-11.json",
+   "cefr": "B1",
+   "patterns": 4,
+   "source": "G6U7 G7U8 G8U7",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 12,
+   "id": "ien-l2-u12",
+   "title": "Verb Patterns",
+   "data": "./data/units/unit-12.json",
+   "cefr": "B1",
+   "patterns": 4,
+   "source": "G7U5,G7U7 G8U1,G8U7",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 13,
+   "id": "ien-l2-u13",
+   "title": "Certainty and Possibility",
+   "data": "./data/units/unit-13.json",
+   "cefr": "B1",
+   "patterns": 3,
+   "source": "G7U3 G8U5",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 14,
+   "id": "ien-l2-u14",
+   "title": "Work, Careers and Applying",
+   "data": "./data/units/unit-14.json",
+   "cefr": "B1",
+   "patterns": 3,
+   "source": "G6U6 G7U7",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 15,
+   "id": "ien-l2-u15",
+   "title": "Money, Enterprise and Being a Customer",
+   "data": "./data/units/unit-15.json",
+   "cefr": "B1",
+   "patterns": 3,
+   "source": "G6U5 G8U4",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 16,
+   "id": "ien-l2-u16",
+   "title": "Media, Technology and Judging a Source",
+   "data": "./data/units/unit-16.json",
+   "cefr": "B1",
+   "patterns": 4,
+   "source": "G7U8,G7U9 G8U8",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 17,
+   "id": "ien-l2-u17",
+   "title": "Environment and Resources",
+   "data": "./data/units/unit-17.json",
+   "cefr": "B1",
+   "patterns": 3,
+   "source": "G6U3,G6U7 G7U5 G8U3,G8U5,G8U6",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 18,
+   "id": "ien-l2-u18",
+   "title": "Writing Formally",
+   "data": "./data/units/unit-18.json",
+   "cefr": "B1",
+   "patterns": 3,
+   "source": "G8U3,G8U5",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 19,
+   "id": "ien-l2-u19",
+   "title": "Making an Argument",
+   "data": "./data/units/unit-19.json",
+   "cefr": "B1",
+   "patterns": 3,
+   "source": "G7U6 G8U4",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 20,
+   "id": "ien-l2-u20",
+   "title": "Level 2 Capstone — My English Voice",
+   "data": "./data/units/unit-20.json",
+   "cefr": "B1",
+   "patterns": 1,
+   "source": "G5U10 G6U10 G7U10 G8U10",
+   "vocabularyCount": 20,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  }
+ ]
+}

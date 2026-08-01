@@ -1,0 +1,339 @@
+{
+ "schemaVersion": "Ehel Intensive English Course Manifest v1.0",
+ "course": "Ehel Intensive English",
+ "subject": "English",
+ "audience": "Adults and older teenagers of any first language, beginner to proficient, studying intensively",
+ "frameworks": {
+  "cefr": {
+   "name": "Common European Framework of Reference for Languages",
+   "role": "Defines what a learner can DO at the end of each level, and therefore what each level's exit assessment tests. This is the framework the course reports against.",
+   "levelsUsed": [
+    "A1",
+    "A2",
+    "B1",
+    "B2",
+    "C1",
+    "C2"
+   ],
+   "structure": "Six CEFR levels collapse into five course levels: A1 and A2 combine into Level 1, and each level above is one CEFR level."
+  },
+  "cambridge": {
+   "name": "Cambridge Primary English 0058 and Cambridge Lower Secondary English 0861",
+   "role": "Defines the language inventory, progression and text types, because the source material is built against it. Every outcome keeps the objective code of the source unit it came from.",
+   "data": [
+    "src/curriculum/cambridge-english-0058.json",
+    "src/curriculum/cambridge-english-0861.json"
+   ],
+   "coverage": "0058 covers stages 1-6, 0861 covers stages 7-9."
+  },
+  "howTheyRelate": "They are not the same axis and must not be treated as one. Cambridge grades measure a child progressing through school in English; CEFR levels measure what any user can do in a second language. A grade band supplies this course's language content; a CEFR level sets its target. The mapping below is a claim about what the compressed content delivers to an adult L2 learner, not a claim that grade N equals CEFR X."
+ },
+ "level": {
+  "number": 1,
+  "id": "l1",
+  "label": "Level 1 — Foundation",
+  "cefr": [
+   "A1",
+   "A2"
+  ],
+  "cefrName": "Beginner and Elementary",
+  "cefrBands": [
+   {
+    "cefr": "A1",
+    "cefrName": "Beginner",
+    "units": [
+     0,
+     9
+    ],
+    "canDo": "Understand and use basic words and set phrases for immediate needs, and interact slowly with a patient speaker."
+   },
+   {
+    "cefr": "A2",
+    "cefrName": "Elementary",
+    "units": [
+     10,
+     19
+    ],
+    "canDo": "Follow short, simple information and hold basic exchanges about familiar, everyday matters."
+   }
+  ],
+  "exitDescriptor": "Exits at a secure A2. Can handle everyday personal, practical and workplace situations: introduce themselves, describe people, places and routines, talk about the past and the future, follow and give instructions, ask for what they need, and write a short connected text.",
+  "exitAssessment": "A2 exit test across the four skills. Passing it is the entry condition for Level 2."
+ },
+ "levels": [
+  {
+   "number": 1,
+   "id": "l1",
+   "label": "Level 1 — Foundation",
+   "cefr": [
+    "A1",
+    "A2"
+   ],
+   "unitCount": 20,
+   "status": "Open"
+  },
+  {
+   "number": 2,
+   "id": "l2",
+   "label": "Level 2 — Independence",
+   "cefr": [
+    "B1"
+   ],
+   "unitCount": 20,
+   "status": "Open"
+  },
+  {
+   "number": 3,
+   "id": "l3",
+   "label": "Level 3 — Upper-Intermediate",
+   "cefr": [
+    "B2"
+   ],
+   "unitCount": 0,
+   "status": "Planned — blocked on source material"
+  },
+  {
+   "number": 4,
+   "id": "l4",
+   "label": "Level 4 — Advanced",
+   "cefr": [
+    "C1"
+   ],
+   "unitCount": 0,
+   "status": "Planned — no source material identified"
+  },
+  {
+   "number": 5,
+   "id": "l5",
+   "label": "Level 5 — Proficient",
+   "cefr": [
+    "C2"
+   ],
+   "unitCount": 0,
+   "status": "Planned — confirm demand before building"
+  }
+ ],
+ "defaultUnit": 0,
+ "units": [
+  {
+   "number": 0,
+   "id": "ien-l1-u00",
+   "title": "The Sounds That Are Hard",
+   "data": "./data/units/unit-0.json",
+   "cefr": "A1",
+   "patterns": 6,
+   "source": "G1U0",
+   "vocabularyCount": 30,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 1,
+   "id": "ien-l1-u01",
+   "title": "Who I Am",
+   "data": "./data/units/unit-1.json",
+   "cefr": "A1",
+   "patterns": 5,
+   "source": "G1U1,G1U2 G2U1 G3U1",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 2,
+   "id": "ien-l1-u02",
+   "title": "My Family and My Home",
+   "data": "./data/units/unit-2.json",
+   "cefr": "A1",
+   "patterns": 4,
+   "source": "G1U2 G2U8 G3U1",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 3,
+   "id": "ien-l1-u03",
+   "title": "Learning English",
+   "data": "./data/units/unit-3.json",
+   "cefr": "A1",
+   "patterns": 4,
+   "source": "G1U1 G2U1 G3U2",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 4,
+   "id": "ien-l1-u04",
+   "title": "Numbers, Money and Measuring",
+   "data": "./data/units/unit-4.json",
+   "cefr": "A1",
+   "patterns": 4,
+   "source": "G1U2 G2U5 G3U8",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 5,
+   "id": "ien-l1-u05",
+   "title": "My Day, My Week",
+   "data": "./data/units/unit-5.json",
+   "cefr": "A1",
+   "patterns": 4,
+   "source": "G3U3 G2U1",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 6,
+   "id": "ien-l1-u06",
+   "title": "Food, Markets and Cooking",
+   "data": "./data/units/unit-6.json",
+   "cefr": "A1",
+   "patterns": 4,
+   "source": "G2U3 G4U3",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 7,
+   "id": "ien-l1-u07",
+   "title": "The Body, Illness and the Clinic",
+   "data": "./data/units/unit-7.json",
+   "cefr": "A1",
+   "patterns": 3,
+   "source": "G1U6 G2U3 G4U3",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 8,
+   "id": "ien-l1-u08",
+   "title": "Clothes, Colours and Buying Things",
+   "data": "./data/units/unit-8.json",
+   "cefr": "A1",
+   "patterns": 4,
+   "source": "G1U4 G2U4",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 9,
+   "id": "ien-l1-u09",
+   "title": "Finding My Way",
+   "data": "./data/units/unit-9.json",
+   "cefr": "A1",
+   "patterns": 3,
+   "source": "G1U9 G2U9 G3U4 G4U9",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 10,
+   "id": "ien-l1-u10",
+   "title": "Travel and Transport",
+   "data": "./data/units/unit-10.json",
+   "cefr": "A1",
+   "patterns": 3,
+   "source": "G1U7 G4U9",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 11,
+   "id": "ien-l1-u11",
+   "title": "Work and Jobs",
+   "data": "./data/units/unit-11.json",
+   "cefr": "A2",
+   "patterns": 3,
+   "source": "G2U2 G3U4 G4U6",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 12,
+   "id": "ien-l1-u12",
+   "title": "Describing People and Things",
+   "data": "./data/units/unit-12.json",
+   "cefr": "A2",
+   "patterns": 4,
+   "source": "G1U6 G3U6 G4U1",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 13,
+   "id": "ien-l1-u13",
+   "title": "Weather, Land and Water",
+   "data": "./data/units/unit-13.json",
+   "cefr": "A2",
+   "patterns": 3,
+   "source": "G1U8 G2U4,G2U7 G3U7 G4U2",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 14,
+   "id": "ien-l1-u14",
+   "title": "Telling What Happened",
+   "data": "./data/units/unit-14.json",
+   "cefr": "A2",
+   "patterns": 4,
+   "source": "G2U4 G3U2,G3U3,G3U5",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 15,
+   "id": "ien-l1-u15",
+   "title": "Plans and the Future",
+   "data": "./data/units/unit-15.json",
+   "cefr": "A2",
+   "patterns": 3,
+   "source": "G2U8 G3U8 G4U9",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 16,
+   "id": "ien-l1-u16",
+   "title": "Asking Well",
+   "data": "./data/units/unit-16.json",
+   "cefr": "A2",
+   "patterns": 3,
+   "source": "G2U2,G2U6 G3U1,G3U5 G4U1",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 17,
+   "id": "ien-l1-u17",
+   "title": "Instructions, Rules and Advice",
+   "data": "./data/units/unit-17.json",
+   "cefr": "A2",
+   "patterns": 3,
+   "source": "G2U3 G3U4 G4U5,G4U6",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 18,
+   "id": "ien-l1-u18",
+   "title": "Getting Help and Getting Things Done",
+   "data": "./data/units/unit-18.json",
+   "cefr": "A2",
+   "patterns": 3,
+   "source": "G3U4 G4U4,G4U6",
+   "vocabularyCount": 29,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  },
+  {
+   "number": 19,
+   "id": "ien-l1-u19",
+   "title": "Level 1 Capstone — My English Life",
+   "data": "./data/units/unit-19.json",
+   "cefr": "A2",
+   "patterns": 2,
+   "source": "G1U10 G2U10 G3U10 G4U10",
+   "vocabularyCount": 20,
+   "status": "AI-assisted authoring — pending curriculum reviewer sign-off"
+  }
+ ]
+}

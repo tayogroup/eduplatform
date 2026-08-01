@@ -9,7 +9,7 @@
 //              progressDefaults, gradeDefaults, courseKey, mediaSubject,
 //              ttsPurpose, sections, nonCountable, gradeSections, renderers,
 //              load(ctx), onReady(ctx), extendSummary?(progress, base),
-//              staticVoiceUrl?(text), isSectionDone?(id) }
+//              staticVoiceUrl?(text), isSectionDone?(id), stageDir?(stage) }
 //   bind(ctx) — populates the module's shell-provided `let` bindings so the
 //   renderer bodies (kept verbatim from the original apps) run unchanged.
 //
@@ -35,7 +35,10 @@ export function createCourseApp(config) {
   // it instantly rather than after a fetch.
   mountLessonGate({ subjectKey: config.subjectKey, stage: stageNumber });
 
-  const stageRootUrl = new URL(`./grade-${stageNumber}/`, location.href);
+  // Subjects whose stage axis is not a school grade name their folders
+  // themselves (Kiswahili's stages are competency tracks, not grades).
+  const stageDir = config.stageDir ? config.stageDir(stageNumber) : `grade-${stageNumber}`;
+  const stageRootUrl = new URL(`./${stageDir}/`, location.href);
   const IS_LOCAL_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
   const dataRootUrl = IS_LOCAL_DEV
     ? new URL("data/", stageRootUrl)

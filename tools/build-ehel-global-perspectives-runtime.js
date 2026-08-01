@@ -814,8 +814,13 @@ function buildUnit(unit, grade, framework) {
     // Anything still addressed to the adult is the guide's voice leaking
     // through a learner-facing document; it belongs to nobody on this page.
     .filter((box) => learnerSafe(box.title) && box.lines.every((line) => learnerSafe(line)));
+  // Prefixed "box-" because the callout roles and the unit's other collections
+  // share a namespace: `reflectionPrompts` and `reflection` both numbered
+  // themselves "reflect-1", so two different items carried the same id. Nothing
+  // in the runtime keyed off it, but the review workbook does — an ambiguous id
+  // means a reviewer's edit can be attributed to the wrong item.
   const pick = (role) => callouts.filter((c) => c.role === role).map((c, index) => ({
-    id: `${role}-${index + 1}`, title: c.title, lines: c.lines, source: c.source,
+    id: `box-${role}-${index + 1}`, title: c.title, lines: c.lines, source: c.source,
   }));
 
   const objectives = objectivesForUnit(unit, grade.stage, framework);
@@ -920,6 +925,60 @@ function writeJson(file, value) {
   fs.writeFileSync(file, `${JSON.stringify(value, null, 2)}\n`, "utf8");
 }
 
+// ---------------------------------------------------------------------------
+// Reviewed script overrides
+// ---------------------------------------------------------------------------
+// This directory is generated, so a reviewer's corrections cannot live in it —
+// the next build would overwrite them. They live in data/script-review.json,
+// written by apply-ehel-global-perspectives-script-review.py, and are laid over
+// every rebuild here. Keys are JSON paths into the built unit
+// ("explainers.4.body", "practice.11.answer"), so this needs no knowledge of
+// the exporter's item-id scheme.
+const REVIEW_PATH = path.join(COURSE_DIR, "data", "script-review.json");
+
+function loadReview() {
+  if (!fs.existsSync(REVIEW_PATH)) return {};
+  try {
+    return JSON.parse(fs.readFileSync(REVIEW_PATH, "utf8")).overrides || {};
+  } catch (error) {
+    console.error(`error: ${REVIEW_PATH} is not readable JSON — ${error.message}`);
+    process.exit(1);
+  }
+}
+
+/** Set one dotted path on a built unit. Returns false if the path is not there. */
+function setPath(target, dotted, value) {
+  const parts = dotted.split(".");
+  let node = target;
+  for (const key of parts.slice(0, -1)) {
+    if (node == null) return false;
+    node = Array.isArray(node) ? node[Number(key)] : node[key];
+  }
+  const last = parts[parts.length - 1];
+  if (node == null) return false;
+  // A path that no longer resolves means the content moved under the review —
+  // applying it blind would write a stray key nothing renders, so it is
+  // refused and reported instead.
+  if (Array.isArray(node)) {
+    const index = Number(last);
+    if (!Number.isInteger(index) || index >= node.length) return false;
+    node[index] = value;
+    return true;
+  }
+  if (!(last in node)) return false;
+  node[last] = value;
+  return true;
+}
+
+function applyReview(built, overrides, label, stale) {
+  let applied = 0;
+  for (const [dotted, value] of Object.entries(overrides || {})) {
+    if (setPath(built, dotted, value)) applied += 1;
+    else stale.push(`${label}: ${dotted}`);
+  }
+  return applied;
+}
+
 function gradeIndexHtml(year) {
   return `<!doctype html>
 <html lang="en" data-stage="${year}">
@@ -947,7 +1006,10 @@ function main() {
 
   const frameworks = new Map();
   const warnings = [];
+  const staleOverrides = [];
+  const review = loadReview();
   let unitsWritten = 0;
+  let reviewApplied = 0;
 
   for (const grade of model.grades) {
     if (requested.length && !requested.includes(grade.year)) continue;
@@ -960,6 +1022,14 @@ function main() {
 
     for (const unit of grade.units) {
       const built = buildUnit(unit, grade, framework);
+      // Reviewed corrections go on last, so they win over anything the builder
+      // derived — that is the whole point of the review.
+      reviewApplied += applyReview(
+        built,
+        (review[`grade-${grade.year}`] || {})[`unit-${unit.unitNo}`],
+        `grade-${grade.year}/unit-${unit.unitNo}`,
+        staleOverrides,
+      );
       writeJson(path.join(gradeDir, "data", "units", `unit-${unit.unitNo}.json`), built);
       unitsWritten += 1;
       manifestUnits.push({
@@ -1020,6 +1090,18 @@ function main() {
   }
 
   console.log(`\n${unitsWritten} unit file(s) written.`);
+  if (Object.keys(review).length) {
+    console.log(`Script review: ${reviewApplied} field(s) applied.`);
+  }
+  if (staleOverrides.length) {
+    // A stale override is review that is no longer reaching the content — the
+    // reviewer's correction is silently absent from what ships. Loud on
+    // purpose.
+    console.log(`\n${staleOverrides.length} override(s) no longer match the content and were NOT applied:`);
+    for (const stale of staleOverrides.slice(0, 20)) console.log(`  ${stale}`);
+    if (staleOverrides.length > 20) console.log(`  … and ${staleOverrides.length - 20} more`);
+    console.log("  Re-export the workbook and re-apply the review.");
+  }
   if (warnings.length) {
     console.log("\nThin sections (a pack that did not carry that part):");
     for (const warning of warnings) console.log(`  ${warning}`);

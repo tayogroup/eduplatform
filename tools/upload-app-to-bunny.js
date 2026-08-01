@@ -13,7 +13,7 @@
 // Re-deploy safe: a content-hash manifest means only changed files are sent.
 // Access key from env (BUNNY_KEY), never hard-coded.
 //
-// Usage: BUNNY_KEY=… node tools/upload-app-to-bunny.js [english|mathematics|science|vocabulary|shared]…
+// Usage: BUNNY_KEY=… node tools/upload-app-to-bunny.js [english|mathematics|science|computing|vocabulary|shared]…
 //   (no args = everything)
 
 const fs = require("fs"), path = require("path"), crypto = require("crypto");
@@ -34,6 +34,7 @@ const TREES = [
   { name: "english", src: path.join(EHEL, "english"), dest: "app/english", excludeTop: ["media"] },
   { name: "mathematics", src: path.join(EHEL, "mathematics"), dest: "app/mathematics", excludeTop: ["media"] },
   { name: "science", src: path.join(EHEL, "science"), dest: "app/science", excludeTop: ["media"] },
+  { name: "computing", src: path.join(EHEL, "computing"), dest: "app/computing", excludeTop: ["media"] },
   { name: "vocabulary", src: path.join(EHEL, "vocabulary"), dest: "app/vocabulary", excludeTop: [] },
   { name: "shared", src: path.join(EHEL, "shared"), dest: "app/shared", excludeTop: [] },
 ];

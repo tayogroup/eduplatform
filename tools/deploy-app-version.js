@@ -27,7 +27,7 @@ const STORAGE = "https://storage.bunnycdn.com";
 const KEY = process.env.BUNNY_KEY;
 const MANIFEST = path.join(ROOT, ".bunny-appver-manifest.json");
 const CONCURRENCY = 10;
-const SUBJECTS = ["english", "mathematics", "science"];
+const SUBJECTS = ["english", "mathematics", "science", "computing"];
 
 if (!KEY) { console.error("BUNNY_KEY not set"); process.exit(1); }
 const TAG = (process.argv.slice(2).find((a) => /^v\d+$/.test(a))) || "v1";
@@ -65,7 +65,7 @@ function versionIndexHtml(html) {
 // a stale cached shared file.
 function shellSubjectModule(subject) {
   return fs.readFileSync(path.join(EHEL, "shell", "subjects", `${subject}.js`), "utf8")
-    .replace(/\.\.\/\.\.\/(?:english|mathematics|science)\/shared\/([A-Za-z0-9_-]+\.js)(\?v=[^"']*)?/g, "./$1")
+    .replace(/\.\.\/\.\.\/(?:english|mathematics|science|computing)\/shared\/([A-Za-z0-9_-]+\.js)(\?v=[^"']*)?/g, "./$1")
     .replace(/\.\.\/\.\.\/shared\/(course-shell|progress-client)\.js(\?v=[^"']*)?/g, "./$1.js")
     .replace(/\.\.\/course-app\.js(\?v=[^"']*)?/g, "./course-app.js");
 }

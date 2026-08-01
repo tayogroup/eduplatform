@@ -1,0 +1,751 @@
+{
+  "schemaVersion": "Ehel Computing Stage Capstone v1.0",
+  "stage": {
+    "id": "s03",
+    "label": "Stage 3"
+  },
+  "title": "Build a Stage 3 Computing Showcase",
+  "overview": "Bring together everything from Stage 3 Computing into one showcase: a working program, the data behind it, a clear explanation of how it runs, and the safety rules you followed while making it.",
+  "project": {
+    "drivingQuestion": "How can I use the computing I learned in Stage 3 to build something that solves a real problem for someone in my community — and explain exactly how it works?",
+    "finalProduct": "A working program or digital product, the plan and algorithm behind it, a test-and-debug log, a data display, and a spoken or written explanation of your design decisions.",
+    "stages": [
+      {
+        "id": "plan",
+        "title": "1. Plan and decompose",
+        "units": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "prompt": "Choose a real problem. Using the ideas from Units 1, 2, 3, 4, break it into smaller parts and write the algorithm before you write any code.",
+        "evidence": "A decomposed problem and a written algorithm or flowchart"
+      },
+      {
+        "id": "build",
+        "title": "2. Build it",
+        "units": [
+          5,
+          6,
+          7,
+          8
+        ],
+        "prompt": "Build your program or product using the tools from Units 5, 6, 7, 8. Build the smallest working version first, then add one feature at a time.",
+        "evidence": "A working program or digital product"
+      },
+      {
+        "id": "test",
+        "title": "3. Test, debug and improve",
+        "units": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "prompt": "Test your work against your success criteria. Keep a log of every bug: what you saw, what caused it, and how you fixed it.",
+        "evidence": "A test-and-debug log with at least three entries"
+      },
+      {
+        "id": "share",
+        "title": "4. Share it safely",
+        "units": [
+          9,
+          10,
+          11,
+          12
+        ],
+        "prompt": "Present your showcase. Explain three design decisions, show your data, and say which online-safety rules from Units 9, 10, 11, 12 you followed and why.",
+        "evidence": "A spoken, written or recorded explanation covering design, data and safety"
+      }
+    ],
+    "evidenceChecklist": [
+      "A decomposed problem with a written algorithm or flowchart",
+      "A working program or digital product",
+      "A test-and-debug log with at least three fixed bugs",
+      "Data collected, organised and displayed",
+      "Success criteria, each one ticked off with evidence",
+      "An explanation of your design decisions and the safety rules you followed"
+    ],
+    "rubric": [
+      {
+        "criterion": "Computational thinking",
+        "secure": "The problem is decomposed, the algorithm is precise, and the pattern behind it is named."
+      },
+      {
+        "criterion": "Programming and debugging",
+        "secure": "The program runs, meets its criteria, and every bug found is logged with its cause and fix."
+      },
+      {
+        "criterion": "Data and information",
+        "secure": "Data is collected accurately, organised sensibly and displayed so it answers a question."
+      },
+      {
+        "criterion": "Safe and responsible use",
+        "secure": "Personal information is protected, sources are credited, and safety choices are explained."
+      }
+    ]
+  },
+  "quiz": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "cap-u01-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “algorithm” mean in computing?",
+        "options": [
+          "A set of steps for doing a job, in the right order.",
+          "One step that tells you what to do.",
+          "The right sequence the steps must go in.",
+          "To change something."
+        ],
+        "answer": "A set of steps for doing a job, in the right order.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Algorithm means a set of steps for doing a job, in the right order.",
+        "unitNo": 1,
+        "unitTitle": "Making Programs Clear"
+      },
+      {
+        "id": "cap-u01-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “correct” mean in computing?",
+        "options": [
+          "To fix a mistake.",
+          "Getting the job done in the fewest steps or least time.",
+          "Short — no extra steps.",
+          "To put something back to how it started."
+        ],
+        "answer": "To fix a mistake.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Correct means to fix a mistake.",
+        "unitNo": 1,
+        "unitTitle": "Making Programs Clear"
+      },
+      {
+        "id": "cap-u01-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A free website where you join coloured blocks to make a program.?",
+        "options": [
+          "Scratch",
+          "sprite",
+          "backdrop",
+          "algorithm"
+        ],
+        "answer": "Scratch",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Scratch means a free website where you join coloured blocks to make a program.",
+        "unitNo": 1,
+        "unitTitle": "Making Programs Clear"
+      },
+      {
+        "id": "cap-u02-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “hardware” mean in computing?",
+        "options": [
+          "The real parts of a computer that you can touch.",
+          "The instructions (apps) that tell the hardware what to do.",
+          "Another name for software.",
+          "Hardware that puts information INTO the computer."
+        ],
+        "answer": "The real parts of a computer that you can touch.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Hardware means the real parts of a computer that you can touch.",
+        "unitNo": 2,
+        "unitTitle": "Hardware and Software Work Together"
+      },
+      {
+        "id": "cap-u02-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “output device” mean in computing?",
+        "options": [
+          "Hardware that shows the result OUT to us.",
+          "Hardware that keeps files to use later.",
+          "Needs a person to work it.",
+          "Works with little or no help from a person."
+        ],
+        "answer": "Hardware that shows the result OUT to us.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Output device means hardware that shows the result OUT to us.",
+        "unitNo": 2,
+        "unitTitle": "Hardware and Software Work Together"
+      },
+      {
+        "id": "cap-u02-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Reads the black lines on products to find the price.?",
+        "options": [
+          "barcode reader",
+          "biometric",
+          "bug",
+          "hardware"
+        ],
+        "answer": "barcode reader",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Barcode reader means reads the black lines on products to find the price.",
+        "unitNo": 2,
+        "unitTitle": "Hardware and Software Work Together"
+      },
+      {
+        "id": "cap-u03-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “data” mean in computing?",
+        "options": [
+          "Facts and numbers that we collect.",
+          "To gather data.",
+          "Small marks to count, made in groups of five.",
+          "Data set out in rows and columns."
+        ],
+        "answer": "Facts and numbers that we collect.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Data means facts and numbers that we collect.",
+        "unitNo": 3,
+        "unitTitle": "Be a Data Expert"
+      },
+      {
+        "id": "cap-u03-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “categorical data” mean in computing?",
+        "options": [
+          "Data that goes in groups or words.",
+          "Number data that is only whole numbers.",
+          "A chart that uses pictures, with a key.",
+          "A chart made of blocks; taller means more."
+        ],
+        "answer": "Data that goes in groups or words.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Categorical data means data that goes in groups or words.",
+        "unitNo": 3,
+        "unitTitle": "Be a Data Expert"
+      },
+      {
+        "id": "cap-u03-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A chart with columns standing up.?",
+        "options": [
+          "column chart",
+          "pie chart",
+          "key",
+          "input device"
+        ],
+        "answer": "column chart",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Column chart means a chart with columns standing up.",
+        "unitNo": 3,
+        "unitTitle": "Be a Data Expert"
+      },
+      {
+        "id": "cap-u04-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “algorithm” mean in computing?",
+        "options": [
+          "A set of steps for doing a job, in the right order.",
+          "Getting the job done in the fewest steps or least time.",
+          "Short — no extra steps.",
+          "Doing the same thing over and over again."
+        ],
+        "answer": "A set of steps for doing a job, in the right order.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Algorithm means a set of steps for doing a job, in the right order.",
+        "unitNo": 4,
+        "unitTitle": "Be a Designer"
+      },
+      {
+        "id": "cap-u04-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “repeat” mean in computing?",
+        "options": [
+          "To do the same steps again.",
+          "An algorithm built from Scratch blocks.",
+          "A character or object in Scratch.",
+          "The picture behind the sprites."
+        ],
+        "answer": "To do the same steps again.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Repeat means to do the same steps again.",
+        "unitNo": 4,
+        "unitTitle": "Be a Designer"
+      },
+      {
+        "id": "cap-u04-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A sprite that has no code and just sits there.?",
+        "options": [
+          "static object",
+          "algorithm",
+          "efficient",
+          "concise"
+        ],
+        "answer": "static object",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Static object means a sprite that has no code and just sits there.",
+        "unitNo": 4,
+        "unitTitle": "Be a Designer"
+      },
+      {
+        "id": "cap-u05-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “network” mean in computing?",
+        "options": [
+          "Devices joined together so they can share and send messages.",
+          "A machine like a computer, tablet, phone or printer.",
+          "Joined with a cable you can see.",
+          "Joined through the air, with no cable."
+        ],
+        "answer": "Devices joined together so they can share and send messages.",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Network means devices joined together so they can share and send messages.",
+        "unitNo": 5,
+        "unitTitle": "Networks Are Everywhere"
+      },
+      {
+        "id": "cap-u05-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “share” mean in computing?",
+        "options": [
+          "To let others use the same thing.",
+          "Something you can do on a network.",
+          "One machine that prints, scans and copies.",
+          "The pages we look at on the internet."
+        ],
+        "answer": "To let others use the same thing.",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Share means to let others use the same thing.",
+        "unitNo": 5,
+        "unitTitle": "Networks Are Everywhere"
+      },
+      {
+        "id": "cap-u05-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: An extra copy of your work, kept safe.?",
+        "options": [
+          "backup",
+          "virus",
+          "personal information",
+          "network"
+        ],
+        "answer": "backup",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Backup means an extra copy of your work, kept safe.",
+        "unitNo": 5,
+        "unitTitle": "Networks Are Everywhere"
+      },
+      {
+        "id": "cap-u06-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “logical thinking” mean in computing?",
+        "options": [
+          "Thinking carefully to solve a problem in a way that makes sense.",
+          "A set of steps for doing a job, in the right order.",
+          "A character or object in Scratch.",
+          "The picture behind the sprites — the setting."
+        ],
+        "answer": "Thinking carefully to solve a problem in a way that makes sense.",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Logical thinking means thinking carefully to solve a problem in a way that makes sense.",
+        "unitNo": 6,
+        "unitTitle": "Be a Storyteller"
+      },
+      {
+        "id": "cap-u06-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “costume” mean in computing?",
+        "options": [
+          "A different look for the same sprite.",
+          "A block that makes a sprite show words in a speech bubble.",
+          "A sprite that has no code. It just stays still.",
+          "A plan of your story, drawn in boxes, scene by scene."
+        ],
+        "answer": "A different look for the same sprite.",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Costume means a different look for the same sprite.",
+        "unitNo": 6,
+        "unitTitle": "Be a Storyteller"
+      },
+      {
+        "id": "cap-u06-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Blocks joined together to tell the computer what to do.?",
+        "options": [
+          "program",
+          "edit",
+          "logical thinking",
+          "algorithm"
+        ],
+        "answer": "program",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Program means blocks joined together to tell the computer what to do.",
+        "unitNo": 6,
+        "unitTitle": "Be a Storyteller"
+      },
+      {
+        "id": "cap-u07-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “file” mean in computing?",
+        "options": [
+          "A piece of work saved on a computer.",
+          "A file with letters and numbers.",
+          "A file with sound.",
+          "A file with a picture."
+        ],
+        "answer": "A piece of work saved on a computer.",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "File means a piece of work saved on a computer.",
+        "unitNo": 7,
+        "unitTitle": "Computers and Robots"
+      },
+      {
+        "id": "cap-u07-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “video file” mean in computing?",
+        "options": [
+          "A file with moving pictures and sound.",
+          "A machine that a computer tells what to do.",
+          "What we put in.",
+          "What comes out and makes the machine act."
+        ],
+        "answer": "A file with moving pictures and sound.",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Video file means a file with moving pictures and sound.",
+        "unitNo": 7,
+        "unitTitle": "Computers and Robots"
+      },
+      {
+        "id": "cap-u07-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A device on the internet that can send and get information.?",
+        "options": [
+          "smart device",
+          "robot",
+          "program",
+          "instruction"
+        ],
+        "answer": "smart device",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Smart device means a device on the internet that can send and get information.",
+        "unitNo": 7,
+        "unitTitle": "Computers and Robots"
+      },
+      {
+        "id": "cap-u08-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “algorithm” mean in computing?",
+        "options": [
+          "A set of steps for doing a job, in the right order.",
+          "To say what will happen before it happens.",
+          "What we put in to start the program.",
+          "What the program makes happen."
+        ],
+        "answer": "A set of steps for doing a job, in the right order.",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Algorithm means a set of steps for doing a job, in the right order.",
+        "unitNo": 8,
+        "unitTitle": "Be a Musician"
+      },
+      {
+        "id": "cap-u08-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “input device” mean in computing?",
+        "options": [
+          "The part we use to put the input in.",
+          "How loudly or quietly a sound is played.",
+          "Steps or notes in the right order.",
+          "A tune — musical notes played in an order."
+        ],
+        "answer": "The part we use to put the input in.",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Input device means the part we use to put the input in.",
+        "unitNo": 8,
+        "unitTitle": "Be a Musician"
+      },
+      {
+        "id": "cap-u08-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The thing that starts a program.?",
+        "options": [
+          "event",
+          "Scratch",
+          "sprite",
+          "algorithm"
+        ],
+        "answer": "event",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Event means the thing that starts a program.",
+        "unitNo": 8,
+        "unitTitle": "Be a Musician"
+      },
+      {
+        "id": "cap-u09-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “cipher” mean in computing?",
+        "options": [
+          "A set of rules that turns a normal message into a secret one.",
+          "The normal message that anyone can read.",
+          "The secret message that only makes sense if you know the cipher.",
+          "A kind of cipher that swaps each letter for a letter, number or symbol."
+        ],
+        "answer": "A set of rules that turns a normal message into a secret one.",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Cipher means a set of rules that turns a normal message into a secret one.",
+        "unitNo": 9,
+        "unitTitle": "Sending Secret Messages"
+      },
+      {
+        "id": "cap-u09-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “encode” mean in computing?",
+        "options": [
+          "To turn a normal message into a secret one.",
+          "To turn a secret message back into a normal one.",
+          "The chart that shows what each letter turns into.",
+          "Computers joined together so they can share."
+        ],
+        "answer": "To turn a normal message into a secret one.",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Encode means to turn a normal message into a secret one.",
+        "unitNo": 9,
+        "unitTitle": "Sending Secret Messages"
+      },
+      {
+        "id": "cap-u09-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A set of rules that turns a normal message into a secret one.?",
+        "options": [
+          "cipher",
+          "plain text",
+          "ciphertext",
+          "code"
+        ],
+        "answer": "cipher",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Cipher means a set of rules that turns a normal message into a secret one.",
+        "unitNo": 9,
+        "unitTitle": "Sending Secret Messages"
+      },
+      {
+        "id": "cap-u10-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “sub-task” mean in computing?",
+        "options": [
+          "A small task that is part of a bigger task.",
+          "Breaking a big job into smaller jobs.",
+          "A set of steps for a job, in the right order.",
+          "An algorithm made in code, like Scratch blocks."
+        ],
+        "answer": "A small task that is part of a bigger task.",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Sub-task means a small task that is part of a bigger task.",
+        "unitNo": 10,
+        "unitTitle": "Be a Game Developer"
+      },
+      {
+        "id": "cap-u10-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “error” mean in computing?",
+        "options": [
+          "A mistake.",
+          "A mistake in a program that stops it working right.",
+          "To run a program and check it does the right thing.",
+          "To find and fix the mistakes in a program."
+        ],
+        "answer": "A mistake.",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Error means a mistake.",
+        "unitNo": 10,
+        "unitTitle": "Be a Game Developer"
+      },
+      {
+        "id": "cap-u10-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A character or object in Scratch.?",
+        "options": [
+          "sprite",
+          "costume",
+          "backdrop",
+          "sub-task"
+        ],
+        "answer": "sprite",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Sprite means a character or object in Scratch.",
+        "unitNo": 10,
+        "unitTitle": "Be a Game Developer"
+      },
+      {
+        "id": "cap-u11-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “spreadsheet” mean in computing?",
+        "options": [
+          "A program that shows data in a table of boxes.",
+          "Facts we keep, like names, ages or prices.",
+          "A line of cells that goes across. A number names it.",
+          "A line of cells that goes up and down. A letter names it."
+        ],
+        "answer": "A program that shows data in a table of boxes.",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Spreadsheet means a program that shows data in a table of boxes.",
+        "unitNo": 11,
+        "unitTitle": "Be a Data Designer"
+      },
+      {
+        "id": "cap-u11-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “cell” mean in computing?",
+        "options": [
+          "One box where a row and a column cross.",
+          "The column letter and row number of a cell.",
+          "The cell you have clicked on. It has a border.",
+          "The little box that shows the active cell's address."
+        ],
+        "answer": "One box where a row and a column cross.",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Cell means one box where a row and a column cross.",
+        "unitNo": 11,
+        "unitTitle": "Be a Data Designer"
+      },
+      {
+        "id": "cap-u11-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The way something looks.?",
+        "options": [
+          "format",
+          "Text",
+          "Number",
+          "Date"
+        ],
+        "answer": "format",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Format means the way something looks.",
+        "unitNo": 11,
+        "unitTitle": "Be a Data Designer"
+      },
+      {
+        "id": "cap-u12-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “input” mean in computing?",
+        "options": [
+          "The data we give to an algorithm — what we put in, or what starts it.",
+          "The result we get out after the steps have run.",
+          "A set of steps for doing a job, in the right order.",
+          "To put something back to how it started."
+        ],
+        "answer": "The data we give to an algorithm — what we put in, or what starts it.",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Input means the data we give to an algorithm — what we put in, or what starts it.",
+        "unitNo": 12,
+        "unitTitle": "Be a Problem Solver"
+      },
+      {
+        "id": "cap-u12-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “event block” mean in computing?",
+        "options": [
+          "A Scratch block that starts a program when something happens.",
+          "Pressing something with the mouse.",
+          "Pushing a key down on the keyboard.",
+          "A character or object in Scratch."
+        ],
+        "answer": "A Scratch block that starts a program when something happens.",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Event block means a Scratch block that starts a program when something happens.",
+        "unitNo": 12,
+        "unitTitle": "Be a Problem Solver"
+      },
+      {
+        "id": "cap-u12-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The picture behind the sprite in Scratch.?",
+        "options": [
+          "backdrop",
+          "coordinates",
+          "bug",
+          "debug"
+        ],
+        "answer": "backdrop",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Backdrop means the picture behind the sprite in Scratch.",
+        "unitNo": 12,
+        "unitTitle": "Be a Problem Solver"
+      }
+    ]
+  },
+  "reviewStatus": "Curriculum review required"
+}

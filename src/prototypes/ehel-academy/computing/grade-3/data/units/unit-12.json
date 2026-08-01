@@ -1,0 +1,1809 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.613Z",
+  "stage": {
+    "id": "s03",
+    "label": "Stage 3"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t03",
+    "label": "Term 3"
+  },
+  "unit": {
+    "unitId": "comp-g03-u12",
+    "unitNo": 12,
+    "unitTitle": "Be a Problem Solver",
+    "unitOverview": "Welcome to Unit 12, the very last unit of Year 3 Computing at Ehel Academy. Be a Problem Solver. In this unit they pull their skills together around one big idea: every algorithm and every program has an input and an output. An input is the data we give to an algorithm — what we put in, or what starts it off. An output is the result — what comes out after the steps have run.\n\nThis unit names that idea and uses it to plan and build small programs. You already know inputs and outputs from everyday life, even without the words: press a button on the remote (input) and the channel changes (output); put fruit in a blender (input) and out comes a smoothie (output).",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 3
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-3-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 3",
+    "sourceArchive": "Year 3-20260801T055744Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 3/Unit 12/Year 3 - Unit 12 Teacher Guide.docx",
+      "Year 3/Unit 12/Year 3 - Unit 12 Activity Sheet.docx",
+      "Year 3/Unit 12/Year 3 - Unit 12 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 415,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 3 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Identify the input(s) and the output of an algorithm, in everyday activities and in written steps.",
+    "Understand that an input is the data we give to an algorithm, and an output is the result of processing it.",
+    "Create a simple algorithm that turns an input into an output, such as a number machine.",
+    "Break a big job into small steps in the right order (decomposition).",
+    "In Scratch, use an event block (green flag, sprite clicked, key pressed) as the input that starts a program.",
+    "In Scratch, build a program that resets a sprite to its starting costume and position.",
+    "Plan, test and fix a program — find a bug, correct it, and run it again."
+  ],
+  "toolkit": [
+    {
+      "name": "Scratch",
+      "url": "scratch.mit.edu",
+      "steps": [
+        "Go to scratch.mit.edu and click Create.",
+        "Drag blocks from the palette on the left into the code area.",
+        "Make variables in the orange Variables section.",
+        "Click the green flag to run and the red circle to stop."
+      ],
+      "note": "Runs in a web browser. Free, with nothing to download."
+    }
+  ],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-inputs-and-outputs-are-everywhere",
+      "title": "Inputs and outputs are everywhere",
+      "explanation": "Every algorithm has an input and an output. The input is the data we give it — what we put in, or the thing that starts it. The output is the result we get out. Inputs and outputs are all around us, every single day.\n\nWatch. I press this button — that is the input, the thing I put in.",
+      "example": "The television changes channel — that is the output, the result. Input goes in, output comes out.",
+      "checkYourself": "A common slip is to name the machine (the blender) as the input — gently steer you to the thing we put in (the fruit) and the result that comes out (the smoothie). Can you point to the input (what goes in / what starts it) and the output (the result)?"
+    },
+    {
+      "id": "concept-2-break-a-big-job-into-small-steps",
+      "title": "Break a big job into small steps",
+      "explanation": "A good problem solver takes a big job and breaks it into small steps in the right order. Those steps are an algorithm. An algorithm can have one or more inputs and it gives an output. Naming the inputs and the output helps us check the algorithm does its job.\n\nWhen a job feels big, we do not panic. We break it into small steps, one at a time. That is what a problem solver does.",
+      "example": "Find one real example of break a big job into small steps around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you point to which steps are the inputs and which is the output? Can you list the steps in a sensible order? Do not worry about perfect wording — the thinking is what matters."
+    },
+    {
+      "id": "concept-3-plan-a-reset-before-we-code",
+      "title": "Plan a reset (before we code)",
+      "explanation": "Before we build a program, a problem solver plans it on paper first. Today we plan a special kind of algorithm: a reset. A reset sends a character back to exactly where it started, so we can play again. In Scratch the input for a reset is clicking the green flag, and the output is the character jumping to its starting spot.\n\nThink of a board game. After each go, we put the counter back on Start.",
+      "example": "Our Scratch character needs the same thing, or the next go begins in the wrong place. Clicking the green flag is the input; going back to the start is the output.",
+      "checkYourself": "When you fill in the Frog plan, do the coordinates match the numbers given? Watch the minus signs."
+    },
+    {
+      "id": "concept-4-code-the-reset-in-scratch",
+      "title": "Code the reset in Scratch",
+      "explanation": "Now we turn our plan into a real program. In Scratch we join coloured blocks. The block at the very top that starts everything is called an event block (it is shaped like a hat). The event block is our input. The blocks under it are the outputs — the actions that happen.\n\nDelete the cat sprite, add the Horse sprite (the Add Sprite button, bottom right), and choose the Farm backdrop. Open Scratch at scratch.mit.edu and click Create on the projector. By now you know the Scratch screen well.",
+      "example": "Do it yourself: code the reset in Scratch. Work through it slowly, then check what you did against the explanation above.",
+      "checkYourself": "Can you pick the right event block for each input? Can you click the green flag to test the reset? Can you find a block by its colour group and join it to the stack?"
+    },
+    {
+      "id": "concept-5-test-it-and-fix-the-bugs",
+      "title": "Test it and fix the bugs",
+      "explanation": "A real problem solver does not stop when the program is built. You test it — run it and watch carefully — and if it does not do what the plan said, they hunt for the bug and fix it. Finding and fixing a bug is called debugging, and it is the most important problem-solving skill of all.\n\nEven the best coders get bugs. A bug is not a failure — it is a clue.",
+      "example": "We run it, watch what really happens, compare it to our plan, and find the one block that is wrong. It should send the Horse to the bottom-left, but the Horse goes to the wrong place",
+      "checkYourself": "When something is wrong, Can you look back at your plan and check block by block, instead of starting over? Does you test by running the program, rather than assuming it works? Praise calm, careful debugging."
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "Session 4 — Code the reset in Scratch — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 4 — Code the reset in Scratch.",
+      "lines": [
+        "when green flag clicked",
+        "go to x: (-100) y: (-45)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-2",
+      "title": "Session 4 — Code the reset in Scratch — listing 2",
+      "language": "Scratch blocks",
+      "intro": "From Session 4 — Code the reset in Scratch.",
+      "lines": [
+        "when this sprite clicked",
+        "switch costume to (horse-b)",
+        "wait (1) seconds",
+        "switch costume to (horse-a)",
+        "go to (random position)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-3",
+      "title": "Session 5 — Test it and fix the bugs — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 5 — Test it and fix the bugs.",
+      "lines": [
+        "when green flag clicked",
+        "go to x: (100) y: (-45)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Input and Output Detective",
+      "context": "work through the steps below and see what happens. This is inputs and outputs are everywhere in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "For each thing, write the input (what goes in) and the output (what comes out). The first one is done for you.",
+      "answer": "Match: Thing → Input (goes in) / Output (comes out) Match: Remote control → press a button / the channel changes",
+      "modelType": "model-1",
+      "hint": "Start here: Match: Thing → Input (goes in) / Output (comes out)",
+      "explanation": "Inputs and outputs are everywhere: Every algorithm has an input and an output. The input is the data we give it — what we put in, or the thing that starts it. The output is the result we get out. Inputs and outputs are all around us, every single day."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Match the Input to the Output",
+      "context": "work through the steps below and see what happens. This is break a big job into small steps in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Draw a line from each input to the output it makes.",
+      "answer": "Match: Input → Output Match: Fruit in a blender → toast Match: Bread in a toaster → ice Match: Dirty clothes in a washing machine → smoothie Match: Cake mix in an oven → clean clothes",
+      "modelType": "model-2",
+      "hint": "Start here: Match: Input → Output",
+      "explanation": "Break a big job into small steps: A good problem solver takes a big job and breaks it into small steps in the right order. Those steps are an algorithm. An algorithm can have one or more inputs and it gives an output. Naming the inputs and the output helps us check the algorithm does its job."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Break the Big Job into Small Steps",
+      "context": "work through the steps below and see what happens. This is plan a reset (before we code) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Leila is making orange juice, but her steps are mixed up! Write 2, 3, 4 and 5 in the empty boxes to put them in order. Start and Stop are done for you.",
+      "answer": "[ ] Pour the juice into a glass [ 1 ] Start [ ] Mix it all together [ ] Get the water, the sugar and the orange [ ] Add water, then the orange, then sugar to the jug",
+      "modelType": "model-3",
+      "hint": "Start here: [ ] Pour the juice into a glass",
+      "explanation": "Plan a reset (before we code): Before we build a program, a problem solver plans it on paper first. Today we plan a special kind of algorithm: a reset. A reset sends a character back to exactly where it started, so we can play again. In Scratch the input for a reset is clicking the green flag, and the output is the character…"
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "The Number Machine",
+      "context": "work through the steps below and see what happens. This is code the reset in scratch in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "This machine takes two numbers in and gives an answer out. Follow it with 3 and 4.",
+      "answer": "Step 1 Start Step 2 Enter the first number (3) Step 3 Enter the second number (4) Step 4 Add the two numbers Step 5 Show the answer",
+      "modelType": "model-4",
+      "hint": "Start here: Step 1 Start",
+      "explanation": "Code the reset in Scratch: Now we turn our plan into a real program. In Scratch we join coloured blocks. The block at the very top that starts everything is called an event block (it is shaped like a hat). The event block is our input. The blocks under it are the outputs — the actions that happen."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Spot the Bug and Fix It",
+      "context": "work through the steps below and see what happens. This is test it and fix the bugs in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Sami planned to reset his Horse to the bottom-left of the stage, at x: -100 y: -45. But when he runs it, the Horse goes to the wrong side! Here is his plan. One number has a bug.",
+      "answer": "when green flag clicked go to x: (100) y: (-45) Circle the bug. Then write what the step should say It should say: go to x: __________ y: (-45)",
+      "modelType": "model-5",
+      "hint": "Start here: when green flag clicked",
+      "explanation": "Test it and fix the bugs: A real problem solver does not stop when the program is built. You test it — run it and watch carefully — and if it does not do what the plan said, they hunt for the bug and fix it. Finding and fixing a bug is called debugging, and it is the most important problem-solving skill of all."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Plan a Reset for the Frog",
+      "context": "work through the steps below and see what happens. This is inputs and outputs are everywhere in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "A reset sends a sprite back to its start spot when you click the green flag. Fill in the blanks to finish the plan for a Frog that starts at x: 72 y: -40.",
+      "answer": "Step 1 Start when the __________ flag is clicked Step 2 Go to x: ______ y: ______ Step 3 Stop",
+      "modelType": "model-6",
+      "hint": "Start here: Step 1 Start when the __________ flag is clicked",
+      "explanation": "Inputs and outputs are everywhere: Every algorithm has an input and an output. The input is the data we give it — what we put in, or the thing that starts it. The output is the result we get out. Inputs and outputs are all around us, every single day."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Inputs and outputs are everywhere",
+      "modelType": "concept-model-1",
+      "purpose": "Every algorithm has an input and an output. The input is the data we give it — what we put in, or the thing that starts it. The output is the result we get out. Inputs and outputs are all around us, every single day.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Break a big job into small steps",
+      "modelType": "concept-model-2",
+      "purpose": "A good problem solver takes a big job and breaks it into small steps in the right order. Those steps are an algorithm. An algorithm can have one or more inputs and it gives an output. Naming the inputs and the output…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Plan a reset (before we code)",
+      "modelType": "concept-model-3",
+      "purpose": "Before we build a program, a problem solver plans it on paper first. Today we plan a special kind of algorithm: a reset. A reset sends a character back to exactly where it started, so we can play again. In Scratch the…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Code the reset in Scratch",
+      "modelType": "concept-model-4",
+      "purpose": "Now we turn our plan into a real program. In Scratch we join coloured blocks. The block at the very top that starts everything is called an event block (it is shaped like a hat). The event block is our input. The blocks…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Test it and fix the bugs",
+      "modelType": "concept-model-5",
+      "purpose": "A real problem solver does not stop when the program is built. You test it — run it and watch carefully — and if it does not do what the plan said, they hunt for the bug and fix it. Finding and fixing a bug is called…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with inputs and outputs are everywhere",
+      "example": "The television changes channel — that is the output, the result. Input goes in, output comes out.",
+      "steps": [
+        "Read the concept card for inputs and outputs are everywhere and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with break a big job into small steps",
+      "example": "Find one real example of break a big job into small steps around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for break a big job into small steps and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with plan a reset (before we code)",
+      "example": "Our Scratch character needs the same thing, or the next go begins in the wrong place. Clicking the green flag is the input; going back to the start is the output.",
+      "steps": [
+        "Read the concept card for plan a reset (before we code) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with code the reset in scratch",
+      "example": "Do it yourself: code the reset in Scratch. Work through it slowly, then check what you did against the explanation above.",
+      "steps": [
+        "Read the concept card for code the reset in scratch and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with test it and fix the bugs",
+      "example": "We run it, watch what really happens, compare it to our plan, and find the one block that is wrong. It should send the Horse to the bottom-left, but the Horse goes to the wrong place",
+      "steps": [
+        "Read the concept card for test it and fix the bugs and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Inputs and outputs are everywhere",
+      "prompt": "Write the input and the output for a toaster.",
+      "solution": "Input: a slice of bread; Output: toast. (Accept sensible wording.)"
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Break a big job into small steps",
+      "prompt": "Which block is the input (the one that starts the program)? ([ ] when green flag clicked)",
+      "solution": "when green flag clicked (the event block)."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Inputs and outputs are everywhere",
+      "prompt": "Explain in your own words: Inputs and outputs are everywhere.",
+      "solution": "Every algorithm has an input and an output. The input is the data we give it — what we put in, or the thing that starts it. The output is the result we get out. Inputs and outputs are all around us, every single day.\n\nWatch. I press this button — that is the input, the thing I put in.\n\nFor example: The television changes channel — that is the output, the result. Input goes in, output comes out."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Break a big job into small steps",
+      "prompt": "Explain in your own words: Break a big job into small steps.",
+      "solution": "A good problem solver takes a big job and breaks it into small steps in the right order. Those steps are an algorithm. An algorithm can have one or more inputs and it gives an output. Naming the inputs and the output helps us check the algorithm does its job.\n\nWhen a job feels big, we do not panic. We break it into small steps, one at a time. That is what a problem solver does.\n\nFor example: Find one real example of break a big job into small steps around you, or on a device you use. Say out loud what it is and why it fits."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Plan a reset (before we code)",
+      "prompt": "Explain in your own words: Plan a reset (before we code).",
+      "solution": "Before we build a program, a problem solver plans it on paper first. Today we plan a special kind of algorithm: a reset. A reset sends a character back to exactly where it started, so we can play again. In Scratch the input for a reset is clicking the green flag, and the output is the character jumping to its starting spot.\n\nThink of a board game. After each go, we put the counter back on Start.\n\nFor example: Our Scratch character needs the same thing, or the next go begins in the wrong place. Clicking the green flag is the input; going back to the start is the output."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Code the reset in Scratch",
+      "prompt": "Explain in your own words: Code the reset in Scratch.",
+      "solution": "Now we turn our plan into a real program. In Scratch we join coloured blocks. The block at the very top that starts everything is called an event block (it is shaped like a hat). The event block is our input. The blocks under it are the outputs — the actions that happen.\n\nDelete the cat sprite, add the Horse sprite (the Add Sprite button, bottom right), and choose the Farm backdrop. Open Scratch at scratch.mit.edu and click Create on the projector. By now you know the Scratch screen well.\n\nFor example: Do it yourself: code the reset in Scratch. Work through it slowly, then check what you did against the explanation above."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Fill in the words. An",
+      "answer": "input; output.",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Write the input and the output for a toaster.",
+      "answer": "Input: a slice of bread; Output: toast. (Accept sensible wording.)",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "Which block is the input (the one that starts the program)? ([ ] when green flag clicked)",
+      "answer": "when green flag clicked (the event block).",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Follow this number machine with 6 and 3. What is the answer?",
+      "answer": "9.",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "A sprite floats away and will not come back to the start. Which block resets its position? ([ ] wait ( ) seconds)",
+      "answer": "go to x: ( ) y: ( ).",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "Fill in the words. We",
+      "answer": "click; press.",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Input and Output Detective",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "For each thing, write the input (what goes in) and the output (what comes out). The first one is done for you.",
+        "Match: Thing → Input (goes in) / Output (comes out)",
+        "Match: Remote control → press a button / the channel changes"
+      ]
+    },
+    {
+      "title": "Match the Input to the Output",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Draw a line from each input to the output it makes.",
+        "Match: Input → Output",
+        "Match: Fruit in a blender → toast",
+        "Match: Bread in a toaster → ice",
+        "Match: Dirty clothes in a washing machine → smoothie",
+        "Match: Cake mix in an oven → clean clothes"
+      ]
+    },
+    {
+      "title": "Break the Big Job into Small Steps",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Leila is making orange juice, but her steps are mixed up! Write 2, 3, 4 and 5 in the empty boxes to put them in order. Start and Stop are done for you.",
+        "[ ] Pour the juice into a glass",
+        "[ 1 ] Start",
+        "[ ] Mix it all together",
+        "[ ] Get the water, the sugar and the orange",
+        "[ ] Add water, then the orange, then sugar to the jug"
+      ]
+    },
+    {
+      "title": "The Number Machine",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "This machine takes two numbers in and gives an answer out. Follow it with 3 and 4.",
+        "Step 1 Start",
+        "Step 2 Enter the first number (3)",
+        "Step 3 Enter the second number (4)",
+        "Step 4 Add the two numbers",
+        "Step 5 Show the answer"
+      ]
+    },
+    {
+      "title": "Spot the Bug and Fix It",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Sami planned to reset his Horse to the bottom-left of the stage, at x: -100 y: -45. But when he runs it, the Horse goes to the wrong side! Here is his plan. One number has a bug.",
+        "when green flag clicked",
+        "go to x: (100) y: (-45)",
+        "Circle the bug. Then write what the step should say",
+        "It should say: go to x: __________ y: (-45)"
+      ]
+    },
+    {
+      "title": "Plan a Reset for the Frog",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A reset sends a sprite back to its start spot when you click the green flag. Fill in the blanks to finish the plan for a Frog that starts at x: 72 y: -40.",
+        "Step 1 Start when the __________ flag is clicked",
+        "Step 2 Go to x: ______ y: ______",
+        "Step 3 Stop"
+      ]
+    },
+    {
+      "title": "Try it in Scratch!",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Now build the Horse in Scratch.",
+        "Go to scratch.mit.edu and click Create. Delete the cat sprite.",
+        "Click Add Sprite (bottom right) and choose Horse.",
+        "Click Choose a Backdrop and pick Farm.",
+        "Build the reset script. Clicking the green flag is the input",
+        "when green flag clicked"
+      ]
+    },
+    {
+      "title": "Plan It (break the job into steps)",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Before we code, we plan. Theo is making a fruit smoothie, but his steps are mixed up! Write 2, 3, 4 and 5 in the empty boxes to put them in order.",
+        "[ ] Pour it into a cup",
+        "[ 1 ] Start",
+        "[ ] Blend it all together",
+        "[ ] Put the fruit in the blender",
+        "[ ] Add the milk and the honey"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "The machine is the input.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "The input is the data or thing we put in (the fruit), not the machine (the blender). The output is the result (the smoothie)."
+    },
+    {
+      "symptom": "Output means the screen.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "An output is the result of the steps. It might be a smoothie, an answer, or a sprite moving — not always something on a screen."
+    },
+    {
+      "symptom": "The green flag block makes the sprite move.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "The green flag is only the input — the start signal. The blocks under it are the outputs that do the moving."
+    },
+    {
+      "symptom": "Reset means stop or delete.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Reset does not stop or remove anything. It puts the sprite back to its start costume and position, ready to run again. Use the board-game counter picture."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Inputs and outputs are everywhere",
+        "text": "Every algorithm has an input and an output."
+      },
+      {
+        "title": "Break a big job into small steps",
+        "text": "A good problem solver takes a big job and breaks it into small steps in the right order."
+      },
+      {
+        "title": "Plan a reset (before we code)",
+        "text": "Before we build a program, a problem solver plans it on paper first."
+      },
+      {
+        "title": "Code the reset in Scratch",
+        "text": "Now we turn our plan into a real program."
+      },
+      {
+        "title": "Test it and fix the bugs",
+        "text": "A real problem solver does not stop when the program is built."
+      }
+    ],
+    "terms": [
+      [
+        "input",
+        "The data we give to an algorithm — what we put in, or what starts it."
+      ],
+      [
+        "output",
+        "The result we get out after the steps have run."
+      ],
+      [
+        "algorithm",
+        "A set of steps for doing a job, in the right order."
+      ],
+      [
+        "reset",
+        "To put something back to how it started."
+      ],
+      [
+        "event block",
+        "A Scratch block that starts a program when something happens."
+      ],
+      [
+        "clicked",
+        "Pressing something with the mouse."
+      ],
+      [
+        "pressed",
+        "Pushing a key down on the keyboard."
+      ],
+      [
+        "sprite",
+        "A character or object in Scratch."
+      ],
+      [
+        "costume",
+        "A different picture for the same sprite."
+      ],
+      [
+        "backdrop",
+        "The picture behind the sprite in Scratch."
+      ],
+      [
+        "coordinates",
+        "Two numbers, x and y, that give a spot on the stage."
+      ],
+      [
+        "bug",
+        "A mistake in the steps or code that stops it working."
+      ],
+      [
+        "debug",
+        "To find a bug and fix it."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "input",
+        "meaning": "The data we give to an algorithm — what we put in, or what starts it.",
+        "example": "The fruit you put in a blender.",
+        "letter": "I"
+      },
+      {
+        "term": "output",
+        "meaning": "The result we get out after the steps have run.",
+        "example": "The smoothie that comes out.",
+        "letter": "O"
+      },
+      {
+        "term": "algorithm",
+        "meaning": "A set of steps for doing a job, in the right order.",
+        "example": "The steps for making juice.",
+        "letter": "A"
+      },
+      {
+        "term": "reset",
+        "meaning": "To put something back to how it started.",
+        "example": "A game character goes back to the start spot.",
+        "letter": "R"
+      },
+      {
+        "term": "event block",
+        "meaning": "A Scratch block that starts a program when something happens.",
+        "example": "when green flag clicked.",
+        "letter": "E"
+      },
+      {
+        "term": "clicked",
+        "meaning": "Pressing something with the mouse.",
+        "example": "You click the green flag or a sprite.",
+        "letter": "C"
+      },
+      {
+        "term": "pressed",
+        "meaning": "Pushing a key down on the keyboard.",
+        "example": "You press the space key.",
+        "letter": "P"
+      },
+      {
+        "term": "sprite",
+        "meaning": "A character or object in Scratch.",
+        "example": "The Horse, the Frog, the Batter.",
+        "letter": "S"
+      },
+      {
+        "term": "costume",
+        "meaning": "A different picture for the same sprite.",
+        "example": "horse-a and horse-b.",
+        "letter": "C"
+      },
+      {
+        "term": "backdrop",
+        "meaning": "The picture behind the sprite in Scratch.",
+        "example": "A farm, a tree, a ball field.",
+        "letter": "B"
+      },
+      {
+        "term": "coordinates",
+        "meaning": "Two numbers, x and y, that give a spot on the stage.",
+        "example": "x is left-right, y is up-down.",
+        "letter": "C"
+      },
+      {
+        "term": "bug",
+        "meaning": "A mistake in the steps or code that stops it working.",
+        "example": "A missing minus sign.",
+        "letter": "B"
+      },
+      {
+        "term": "debug",
+        "meaning": "To find a bug and fix it.",
+        "example": "Change the wrong block, then run it again.",
+        "letter": "D"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "The machine is the input.",
+        "The input is the data or thing we put in (the fruit), not the machine (the blender). The output is the result (the smoothie)."
+      ],
+      [
+        "Output means the screen.",
+        "An output is the result of the steps. It might be a smoothie, an answer, or a sprite moving — not always something on a screen."
+      ],
+      [
+        "The green flag block makes the sprite move.",
+        "The green flag is only the input — the start signal. The blocks under it are the outputs that do the moving."
+      ],
+      [
+        "Reset means stop or delete.",
+        "Reset does not stop or remove anything. It puts the sprite back to its start costume and position, ready to run again. Use the board-game counter picture."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Fill in the words. An",
+      "answer": "input; output.",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "input; output."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Write the input and the output for a toaster.",
+      "answer": "Input: a slice of bread; Output: toast. (Accept sensible wording.)",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Input: a slice of bread; Output: toast. (Accept sensible wording.)"
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Which block is the input (the one that starts the program)? ([ ] when green flag clicked)",
+      "answer": "when green flag clicked (the event block).",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "when green flag clicked (the event block)."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Follow this number machine with 6 and 3. What is the answer?",
+      "answer": "9.",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "9."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "A sprite floats away and will not come back to the start. Which block resets its position? ([ ] wait ( ) seconds)",
+      "answer": "go to x: ( ) y: ( ).",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "go to x: ( ) y: ( )."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Fill in the words. We",
+      "answer": "click; press.",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "click; press."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Fill in the words. We",
+      "answer": "click; press.",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: click; press."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "A sprite floats away and will not come back to the start. Which block resets its position? ([ ] wait ( ) seconds)",
+      "answer": "go to x: ( ) y: ( ).",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: go to x: ( ) y: ( )."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Fill in the words. We",
+      "answer": "click; press.",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: click; press."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "Fill in the words. An",
+      "answer": "input; output.",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: input; output."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Which block is the input (the one that starts the program)? ([ ] when green flag clicked)",
+      "keyIdeas": [
+        "input",
+        "output",
+        "algorithm"
+      ],
+      "modelAnswer": "when green flag clicked (the event block)."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Follow this number machine with 6 and 3. What is the answer?",
+      "keyIdeas": [
+        "output",
+        "algorithm",
+        "reset"
+      ],
+      "modelAnswer": "9."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A sprite floats away and will not come back to the start. Which block resets its position? ([ ] wait ( ) seconds)",
+      "keyIdeas": [
+        "algorithm",
+        "reset",
+        "event block"
+      ],
+      "modelAnswer": "go to x: ( ) y: ( )."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in code the reset in scratch, and give one example of your own.",
+      "keyIdeas": [
+        "input",
+        "output",
+        "algorithm"
+      ],
+      "modelAnswer": "Now we turn our plan into a real program. In Scratch we join coloured blocks. The block at the very top that starts everything is called an event block (it is shaped like a hat). The event block is our input. The blocks under it are the outputs — the actions that happen.\n\nDelete the cat sprite, add the Horse sprite (the Add Sprite button, bottom right), and choose the Farm backdrop. Open Scratch at scratch.mit.edu and click Create on the projector. By now you know the Scratch screen well."
+    }
+  ],
+  "project": {
+    "title": "Unit 12 Project: Be a Problem Solver",
+    "brief": "Bring together everything from Be a Problem Solver into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your be a problem solver project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I put the smoothie steps in order and named the inputs and output.",
+      "I filled in the plans for the Pitcher (J and K).",
+      "I found the input and outputs for the Batter (L and M).",
+      "I built the Pitcher and Batter in Scratch.",
+      "When I click the green flag, both players reset to their start spots.",
+      "When I press the 1 key, the game plays — and I fixed any bugs!"
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “input” mean in computing?",
+        "options": [
+          "The data we give to an algorithm — what we put in, or what starts it.",
+          "The result we get out after the steps have run.",
+          "A set of steps for doing a job, in the right order.",
+          "To put something back to how it started."
+        ],
+        "answer": "The data we give to an algorithm — what we put in, or what starts it.",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Input means the data we give to an algorithm — what we put in, or what starts it."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “output” mean in computing?",
+        "options": [
+          "The result we get out after the steps have run.",
+          "A set of steps for doing a job, in the right order.",
+          "To put something back to how it started.",
+          "A Scratch block that starts a program when something happens."
+        ],
+        "answer": "The result we get out after the steps have run.",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Output means the result we get out after the steps have run."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “algorithm” mean in computing?",
+        "options": [
+          "A set of steps for doing a job, in the right order.",
+          "To put something back to how it started.",
+          "A Scratch block that starts a program when something happens.",
+          "Pressing something with the mouse."
+        ],
+        "answer": "A set of steps for doing a job, in the right order.",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “reset” mean in computing?",
+        "options": [
+          "To put something back to how it started.",
+          "A Scratch block that starts a program when something happens.",
+          "Pressing something with the mouse.",
+          "Pushing a key down on the keyboard."
+        ],
+        "answer": "To put something back to how it started.",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Reset means to put something back to how it started."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “event block” mean in computing?",
+        "options": [
+          "A Scratch block that starts a program when something happens.",
+          "Pressing something with the mouse.",
+          "Pushing a key down on the keyboard.",
+          "A character or object in Scratch."
+        ],
+        "answer": "A Scratch block that starts a program when something happens.",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Event block means a Scratch block that starts a program when something happens."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “clicked” mean in computing?",
+        "options": [
+          "Pressing something with the mouse.",
+          "Pushing a key down on the keyboard.",
+          "A character or object in Scratch.",
+          "A different picture for the same sprite."
+        ],
+        "answer": "Pressing something with the mouse.",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Clicked means pressing something with the mouse."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Pushing a key down on the keyboard.?",
+        "options": [
+          "pressed",
+          "sprite",
+          "costume",
+          "backdrop"
+        ],
+        "answer": "pressed",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Pressed means pushing a key down on the keyboard."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A character or object in Scratch.?",
+        "options": [
+          "sprite",
+          "costume",
+          "backdrop",
+          "coordinates"
+        ],
+        "answer": "sprite",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Sprite means a character or object in Scratch."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A different picture for the same sprite.?",
+        "options": [
+          "costume",
+          "backdrop",
+          "coordinates",
+          "bug"
+        ],
+        "answer": "costume",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Costume means a different picture for the same sprite."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The picture behind the sprite in Scratch.?",
+        "options": [
+          "backdrop",
+          "coordinates",
+          "bug",
+          "debug"
+        ],
+        "answer": "backdrop",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Backdrop means the picture behind the sprite in Scratch."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Two numbers, x and y, that give a spot on the stage.?",
+        "options": [
+          "coordinates",
+          "bug",
+          "debug",
+          "input"
+        ],
+        "answer": "coordinates",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Coordinates means two numbers, x and y, that give a spot on the stage."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A mistake in the steps or code that stops it working.?",
+        "options": [
+          "bug",
+          "debug",
+          "input",
+          "output"
+        ],
+        "answer": "bug",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Bug means a mistake in the steps or code that stops it working."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u12-game-1",
+        "icon": "?",
+        "skill": "input",
+        "title": "Quick Match: input",
+        "description": "Practise input through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “input” mean in computing?",
+            "choices": [
+              "The data we give to an algorithm — what we put in, or what starts it.",
+              "The result we get out after the steps have run.",
+              "A set of steps for doing a job, in the right order.",
+              "To put something back to how it started."
+            ],
+            "answer": "The data we give to an algorithm — what we put in, or what starts it.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Input means the data we give to an algorithm — what we put in, or what starts it."
+          },
+          {
+            "prompt": "What does “reset” mean in computing?",
+            "choices": [
+              "To put something back to how it started.",
+              "A Scratch block that starts a program when something happens.",
+              "Pressing something with the mouse.",
+              "Pushing a key down on the keyboard."
+            ],
+            "answer": "To put something back to how it started.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Reset means to put something back to how it started."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Pushing a key down on the keyboard.?",
+            "choices": [
+              "pressed",
+              "sprite",
+              "costume",
+              "backdrop"
+            ],
+            "answer": "pressed",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Pressed means pushing a key down on the keyboard."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The picture behind the sprite in Scratch.?",
+            "choices": [
+              "backdrop",
+              "coordinates",
+              "bug",
+              "debug"
+            ],
+            "answer": "backdrop",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprite in Scratch."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-2",
+        "icon": "★",
+        "skill": "output",
+        "title": "Concept Quest: output",
+        "description": "Practise output through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “output” mean in computing?",
+            "choices": [
+              "The result we get out after the steps have run.",
+              "A set of steps for doing a job, in the right order.",
+              "To put something back to how it started.",
+              "A Scratch block that starts a program when something happens."
+            ],
+            "answer": "The result we get out after the steps have run.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Output means the result we get out after the steps have run."
+          },
+          {
+            "prompt": "What does “event block” mean in computing?",
+            "choices": [
+              "A Scratch block that starts a program when something happens.",
+              "Pressing something with the mouse.",
+              "Pushing a key down on the keyboard.",
+              "A character or object in Scratch."
+            ],
+            "answer": "A Scratch block that starts a program when something happens.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Event block means a Scratch block that starts a program when something happens."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A character or object in Scratch.?",
+            "choices": [
+              "sprite",
+              "costume",
+              "backdrop",
+              "coordinates"
+            ],
+            "answer": "sprite",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Two numbers, x and y, that give a spot on the stage.?",
+            "choices": [
+              "coordinates",
+              "bug",
+              "debug",
+              "input"
+            ],
+            "answer": "coordinates",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Coordinates means two numbers, x and y, that give a spot on the stage."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-3",
+        "icon": "◫",
+        "skill": "algorithm",
+        "title": "Debug Detective: algorithm",
+        "description": "Practise algorithm through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps for doing a job, in the right order.",
+              "To put something back to how it started.",
+              "A Scratch block that starts a program when something happens.",
+              "Pressing something with the mouse."
+            ],
+            "answer": "A set of steps for doing a job, in the right order.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          },
+          {
+            "prompt": "What does “clicked” mean in computing?",
+            "choices": [
+              "Pressing something with the mouse.",
+              "Pushing a key down on the keyboard.",
+              "A character or object in Scratch.",
+              "A different picture for the same sprite."
+            ],
+            "answer": "Pressing something with the mouse.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Clicked means pressing something with the mouse."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A different picture for the same sprite.?",
+            "choices": [
+              "costume",
+              "backdrop",
+              "coordinates",
+              "bug"
+            ],
+            "answer": "costume",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Costume means a different picture for the same sprite."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A mistake in the steps or code that stops it working.?",
+            "choices": [
+              "bug",
+              "debug",
+              "input",
+              "output"
+            ],
+            "answer": "bug",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Bug means a mistake in the steps or code that stops it working."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-4",
+        "icon": "→",
+        "skill": "reset",
+        "title": "Algorithm Runner: reset",
+        "description": "Practise reset through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “reset” mean in computing?",
+            "choices": [
+              "To put something back to how it started.",
+              "A Scratch block that starts a program when something happens.",
+              "Pressing something with the mouse.",
+              "Pushing a key down on the keyboard."
+            ],
+            "answer": "To put something back to how it started.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Reset means to put something back to how it started."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Pushing a key down on the keyboard.?",
+            "choices": [
+              "pressed",
+              "sprite",
+              "costume",
+              "backdrop"
+            ],
+            "answer": "pressed",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Pressed means pushing a key down on the keyboard."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The picture behind the sprite in Scratch.?",
+            "choices": [
+              "backdrop",
+              "coordinates",
+              "bug",
+              "debug"
+            ],
+            "answer": "backdrop",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprite in Scratch."
+          },
+          {
+            "prompt": "What does “input” mean in computing?",
+            "choices": [
+              "The data we give to an algorithm — what we put in, or what starts it.",
+              "The result we get out after the steps have run.",
+              "A set of steps for doing a job, in the right order.",
+              "To put something back to how it started."
+            ],
+            "answer": "The data we give to an algorithm — what we put in, or what starts it.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Input means the data we give to an algorithm — what we put in, or what starts it."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-5",
+        "icon": "Σ",
+        "skill": "event block",
+        "title": "Vocabulary Vault: event block",
+        "description": "Practise event block through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “event block” mean in computing?",
+            "choices": [
+              "A Scratch block that starts a program when something happens.",
+              "Pressing something with the mouse.",
+              "Pushing a key down on the keyboard.",
+              "A character or object in Scratch."
+            ],
+            "answer": "A Scratch block that starts a program when something happens.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Event block means a Scratch block that starts a program when something happens."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A character or object in Scratch.?",
+            "choices": [
+              "sprite",
+              "costume",
+              "backdrop",
+              "coordinates"
+            ],
+            "answer": "sprite",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Two numbers, x and y, that give a spot on the stage.?",
+            "choices": [
+              "coordinates",
+              "bug",
+              "debug",
+              "input"
+            ],
+            "answer": "coordinates",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Coordinates means two numbers, x and y, that give a spot on the stage."
+          },
+          {
+            "prompt": "What does “output” mean in computing?",
+            "choices": [
+              "The result we get out after the steps have run.",
+              "A set of steps for doing a job, in the right order.",
+              "To put something back to how it started.",
+              "A Scratch block that starts a program when something happens."
+            ],
+            "answer": "The result we get out after the steps have run.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Output means the result we get out after the steps have run."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-6",
+        "icon": "◇",
+        "skill": "clicked",
+        "title": "Challenge Cards: clicked",
+        "description": "Practise clicked through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “clicked” mean in computing?",
+            "choices": [
+              "Pressing something with the mouse.",
+              "Pushing a key down on the keyboard.",
+              "A character or object in Scratch.",
+              "A different picture for the same sprite."
+            ],
+            "answer": "Pressing something with the mouse.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Clicked means pressing something with the mouse."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A different picture for the same sprite.?",
+            "choices": [
+              "costume",
+              "backdrop",
+              "coordinates",
+              "bug"
+            ],
+            "answer": "costume",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Costume means a different picture for the same sprite."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A mistake in the steps or code that stops it working.?",
+            "choices": [
+              "bug",
+              "debug",
+              "input",
+              "output"
+            ],
+            "answer": "bug",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Bug means a mistake in the steps or code that stops it working."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps for doing a job, in the right order.",
+              "To put something back to how it started.",
+              "A Scratch block that starts a program when something happens.",
+              "Pressing something with the mouse."
+            ],
+            "answer": "A set of steps for doing a job, in the right order.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-7",
+        "icon": "⚡",
+        "skill": "pressed",
+        "title": "Think Fast: pressed",
+        "description": "Practise pressed through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Pushing a key down on the keyboard.?",
+            "choices": [
+              "pressed",
+              "sprite",
+              "costume",
+              "backdrop"
+            ],
+            "answer": "pressed",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Pressed means pushing a key down on the keyboard."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The picture behind the sprite in Scratch.?",
+            "choices": [
+              "backdrop",
+              "coordinates",
+              "bug",
+              "debug"
+            ],
+            "answer": "backdrop",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprite in Scratch."
+          },
+          {
+            "prompt": "What does “input” mean in computing?",
+            "choices": [
+              "The data we give to an algorithm — what we put in, or what starts it.",
+              "The result we get out after the steps have run.",
+              "A set of steps for doing a job, in the right order.",
+              "To put something back to how it started."
+            ],
+            "answer": "The data we give to an algorithm — what we put in, or what starts it.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Input means the data we give to an algorithm — what we put in, or what starts it."
+          },
+          {
+            "prompt": "What does “reset” mean in computing?",
+            "choices": [
+              "To put something back to how it started.",
+              "A Scratch block that starts a program when something happens.",
+              "Pressing something with the mouse.",
+              "Pushing a key down on the keyboard."
+            ],
+            "answer": "To put something back to how it started.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Reset means to put something back to how it started."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-8",
+        "icon": "☁",
+        "skill": "sprite",
+        "title": "Explain It: sprite",
+        "description": "Practise sprite through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A character or object in Scratch.?",
+            "choices": [
+              "sprite",
+              "costume",
+              "backdrop",
+              "coordinates"
+            ],
+            "answer": "sprite",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Two numbers, x and y, that give a spot on the stage.?",
+            "choices": [
+              "coordinates",
+              "bug",
+              "debug",
+              "input"
+            ],
+            "answer": "coordinates",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Coordinates means two numbers, x and y, that give a spot on the stage."
+          },
+          {
+            "prompt": "What does “output” mean in computing?",
+            "choices": [
+              "The result we get out after the steps have run.",
+              "A set of steps for doing a job, in the right order.",
+              "To put something back to how it started.",
+              "A Scratch block that starts a program when something happens."
+            ],
+            "answer": "The result we get out after the steps have run.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Output means the result we get out after the steps have run."
+          },
+          {
+            "prompt": "What does “event block” mean in computing?",
+            "choices": [
+              "A Scratch block that starts a program when something happens.",
+              "Pressing something with the mouse.",
+              "Pushing a key down on the keyboard.",
+              "A character or object in Scratch."
+            ],
+            "answer": "A Scratch block that starts a program when something happens.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Event block means a Scratch block that starts a program when something happens."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-9",
+        "icon": "⌂",
+        "skill": "costume",
+        "title": "Real-Life Round: costume",
+        "description": "Practise costume through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A different picture for the same sprite.?",
+            "choices": [
+              "costume",
+              "backdrop",
+              "coordinates",
+              "bug"
+            ],
+            "answer": "costume",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Costume means a different picture for the same sprite."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A mistake in the steps or code that stops it working.?",
+            "choices": [
+              "bug",
+              "debug",
+              "input",
+              "output"
+            ],
+            "answer": "bug",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Bug means a mistake in the steps or code that stops it working."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps for doing a job, in the right order.",
+              "To put something back to how it started.",
+              "A Scratch block that starts a program when something happens.",
+              "Pressing something with the mouse."
+            ],
+            "answer": "A set of steps for doing a job, in the right order.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          },
+          {
+            "prompt": "What does “clicked” mean in computing?",
+            "choices": [
+              "Pressing something with the mouse.",
+              "Pushing a key down on the keyboard.",
+              "A character or object in Scratch.",
+              "A different picture for the same sprite."
+            ],
+            "answer": "Pressing something with the mouse.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Clicked means pressing something with the mouse."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-10",
+        "icon": "!",
+        "skill": "backdrop",
+        "title": "Spot the Bug: backdrop",
+        "description": "Practise backdrop through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The picture behind the sprite in Scratch.?",
+            "choices": [
+              "backdrop",
+              "coordinates",
+              "bug",
+              "debug"
+            ],
+            "answer": "backdrop",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprite in Scratch."
+          },
+          {
+            "prompt": "What does “input” mean in computing?",
+            "choices": [
+              "The data we give to an algorithm — what we put in, or what starts it.",
+              "The result we get out after the steps have run.",
+              "A set of steps for doing a job, in the right order.",
+              "To put something back to how it started."
+            ],
+            "answer": "The data we give to an algorithm — what we put in, or what starts it.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Input means the data we give to an algorithm — what we put in, or what starts it."
+          },
+          {
+            "prompt": "What does “reset” mean in computing?",
+            "choices": [
+              "To put something back to how it started.",
+              "A Scratch block that starts a program when something happens.",
+              "Pressing something with the mouse.",
+              "Pushing a key down on the keyboard."
+            ],
+            "answer": "To put something back to how it started.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Reset means to put something back to how it started."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Pushing a key down on the keyboard.?",
+            "choices": [
+              "pressed",
+              "sprite",
+              "costume",
+              "backdrop"
+            ],
+            "answer": "pressed",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Pressed means pushing a key down on the keyboard."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-11",
+        "icon": "≡",
+        "skill": "coordinates",
+        "title": "Mastery Mix: coordinates",
+        "description": "Practise coordinates through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Two numbers, x and y, that give a spot on the stage.?",
+            "choices": [
+              "coordinates",
+              "bug",
+              "debug",
+              "input"
+            ],
+            "answer": "coordinates",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Coordinates means two numbers, x and y, that give a spot on the stage."
+          },
+          {
+            "prompt": "What does “output” mean in computing?",
+            "choices": [
+              "The result we get out after the steps have run.",
+              "A set of steps for doing a job, in the right order.",
+              "To put something back to how it started.",
+              "A Scratch block that starts a program when something happens."
+            ],
+            "answer": "The result we get out after the steps have run.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Output means the result we get out after the steps have run."
+          },
+          {
+            "prompt": "What does “event block” mean in computing?",
+            "choices": [
+              "A Scratch block that starts a program when something happens.",
+              "Pressing something with the mouse.",
+              "Pushing a key down on the keyboard.",
+              "A character or object in Scratch."
+            ],
+            "answer": "A Scratch block that starts a program when something happens.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Event block means a Scratch block that starts a program when something happens."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A character or object in Scratch.?",
+            "choices": [
+              "sprite",
+              "costume",
+              "backdrop",
+              "coordinates"
+            ],
+            "answer": "sprite",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-12",
+        "icon": "T",
+        "skill": "bug",
+        "title": "Unit Champion: bug",
+        "description": "Practise bug through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A mistake in the steps or code that stops it working.?",
+            "choices": [
+              "bug",
+              "debug",
+              "input",
+              "output"
+            ],
+            "answer": "bug",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Bug means a mistake in the steps or code that stops it working."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps for doing a job, in the right order.",
+              "To put something back to how it started.",
+              "A Scratch block that starts a program when something happens.",
+              "Pressing something with the mouse."
+            ],
+            "answer": "A set of steps for doing a job, in the right order.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          },
+          {
+            "prompt": "What does “clicked” mean in computing?",
+            "choices": [
+              "Pressing something with the mouse.",
+              "Pushing a key down on the keyboard.",
+              "A character or object in Scratch.",
+              "A different picture for the same sprite."
+            ],
+            "answer": "Pressing something with the mouse.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Clicked means pressing something with the mouse."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A different picture for the same sprite.?",
+            "choices": [
+              "costume",
+              "backdrop",
+              "coordinates",
+              "bug"
+            ],
+            "answer": "costume",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Costume means a different picture for the same sprite."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can identify the input(s) and the output of an algorithm, in everyday activities and in written steps.",
+    "I can understand that an input is the data we give to an algorithm, and an output is the result of processing it.",
+    "I can create a simple algorithm that turns an input into an output, such as a number machine.",
+    "I can break a big job into small steps in the right order (decomposition).",
+    "I can in Scratch, use an event block (green flag, sprite clicked, key pressed) as the input that starts a program.",
+    "I can in Scratch, build a program that resets a sprite to its starting costume and position.",
+    "I can plan, test and fix a program — find a bug, correct it, and run it again."
+  ]
+}

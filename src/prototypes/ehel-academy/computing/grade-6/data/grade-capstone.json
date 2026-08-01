@@ -1,0 +1,307 @@
+{
+  "schemaVersion": "Ehel Computing Stage Capstone v1.0",
+  "stage": {
+    "id": "s06",
+    "label": "Stage 6"
+  },
+  "title": "Build a Stage 6 Computing Showcase",
+  "overview": "Bring together everything from Stage 6 Computing into one showcase: a working program, the data behind it, a clear explanation of how it runs, and the safety rules you followed while making it.",
+  "project": {
+    "drivingQuestion": "How can I use the computing I learned in Stage 6 to build something that solves a real problem for someone in my community — and explain exactly how it works?",
+    "finalProduct": "A working program or digital product, the plan and algorithm behind it, a test-and-debug log, a data display, and a spoken or written explanation of your design decisions.",
+    "stages": [
+      {
+        "id": "plan",
+        "title": "1. Plan and decompose",
+        "units": [
+          1,
+          2
+        ],
+        "prompt": "Choose a real problem. Using the ideas from Units 1, 2, break it into smaller parts and write the algorithm before you write any code.",
+        "evidence": "A decomposed problem and a written algorithm or flowchart"
+      },
+      {
+        "id": "build",
+        "title": "2. Build it",
+        "units": [
+          3,
+          4
+        ],
+        "prompt": "Build your program or product using the tools from Units 3, 4. Build the smallest working version first, then add one feature at a time.",
+        "evidence": "A working program or digital product"
+      },
+      {
+        "id": "test",
+        "title": "3. Test, debug and improve",
+        "units": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "prompt": "Test your work against your success criteria. Keep a log of every bug: what you saw, what caused it, and how you fixed it.",
+        "evidence": "A test-and-debug log with at least three entries"
+      },
+      {
+        "id": "share",
+        "title": "4. Share it safely",
+        "units": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "prompt": "Present your showcase. Explain three design decisions, show your data, and say which online-safety rules from Units 1, 2, 3, 4 you followed and why.",
+        "evidence": "A spoken, written or recorded explanation covering design, data and safety"
+      }
+    ],
+    "evidenceChecklist": [
+      "A decomposed problem with a written algorithm or flowchart",
+      "A working program or digital product",
+      "A test-and-debug log with at least three fixed bugs",
+      "Data collected, organised and displayed",
+      "Success criteria, each one ticked off with evidence",
+      "An explanation of your design decisions and the safety rules you followed"
+    ],
+    "rubric": [
+      {
+        "criterion": "Computational thinking",
+        "secure": "The problem is decomposed, the algorithm is precise, and the pattern behind it is named."
+      },
+      {
+        "criterion": "Programming and debugging",
+        "secure": "The program runs, meets its criteria, and every bug found is logged with its cause and fix."
+      },
+      {
+        "criterion": "Data and information",
+        "secure": "Data is collected accurately, organised sensibly and displayed so it answers a question."
+      },
+      {
+        "criterion": "Safe and responsible use",
+        "secure": "Personal information is protected, sources are credited, and safety choices are explained."
+      }
+    ]
+  },
+  "quiz": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "cap-u01-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "In a flowchart, which shape is used for a decision?",
+        "options": [
+          "oval",
+          "rectangle",
+          "diamond",
+          "arrow"
+        ],
+        "answer": "oval",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "1 (c) diamond. The diamond asks a Yes/No question and chooses a path. The oval is for Start/End.",
+        "unitNo": 1,
+        "unitTitle": "Computational Thinking and Programming"
+      },
+      {
+        "id": "cap-u01-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "A variable is best described as:",
+        "options": [
+          "a fixed number",
+          "a named box that stores a value that can change",
+          "a type of loop",
+          "a sound"
+        ],
+        "answer": "a named box that stores a value that can change",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "6 (b) a named box that stores a value that can change. That is exactly what a variable is.",
+        "unitNo": 1,
+        "unitTitle": "Computational Thinking and Programming"
+      },
+      {
+        "id": "cap-u01-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "What does 'random' mean in programming?",
+        "options": [
+          "always the same",
+          "an outcome you cannot predict",
+          "very fast",
+          "broken"
+        ],
+        "answer": "an outcome you cannot predict",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "11 (b) an outcome you cannot predict. Like rolling a dice — you cannot know the result in advance.",
+        "unitNo": 1,
+        "unitTitle": "Computational Thinking and Programming"
+      },
+      {
+        "id": "cap-u02-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “attribute” mean in computing?",
+        "options": [
+          "The data found in one field of one record in a database.",
+          "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+          "Data that can be grouped into categories, such as favourite colour.",
+          "One box in a spreadsheet grid, where a row and a column meet."
+        ],
+        "answer": "The data found in one field of one record in a database.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Attribute means the data found in one field of one record in a database..",
+        "unitNo": 2,
+        "unitTitle": "Managing Data"
+      },
+      {
+        "id": "cap-u02-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “cell reference” mean in computing?",
+        "options": [
+          "A cell's address, made of its column letter and row number, such as B3.",
+          "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+          "To work together with others on the same task.",
+          "Numerical data that can take any value, including decimals, such as temperature."
+        ],
+        "answer": "A cell's address, made of its column letter and row number, such as B3.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Cell means one box in a spreadsheet grid, where a row and a column meet.",
+        "unitNo": 2,
+        "unitTitle": "Managing Data"
+      },
+      {
+        "id": "cap-u02-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: An organised set of data, made up of records and fields.?",
+        "options": [
+          "database",
+          "data logger",
+          "data type",
+          "discrete data"
+        ],
+        "answer": "database",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Criteria means the requirements or conditions you search for to find matching data.",
+        "unitNo": 2,
+        "unitTitle": "Managing Data"
+      },
+      {
+        "id": "cap-u03-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “server” mean in computing?",
+        "options": [
+          "A computer that provides services such as storage and programs to other computers in a network.",
+          "A large group of connected servers working together in one place.",
+          "A private network inside one organisation, only for its members — like a school's own network.",
+          "Playing a video or sound file over an internet connection instead of downloading it first."
+        ],
+        "answer": "A computer that provides services such as storage and programs to other computers in a network.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Server means a computer that provides services such as storage and programs to other computers in a network.",
+        "unitNo": 3,
+        "unitTitle": "Networks and Digital Communication"
+      },
+      {
+        "id": "cap-u03-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “wireless” mean in computing?",
+        "options": [
+          "Sending data without wires or cables, using radio waves instead.",
+          "A type of energy used to carry data through the air over long distances.",
+          "A way to connect devices to the internet using radio waves instead of wires, through a router.",
+          "A huge network of communication towers that mobile phones connect to."
+        ],
+        "answer": "Sending data without wires or cables, using radio waves instead.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Wireless means sending data without wires or cables, using radio waves instead.",
+        "unitNo": 3,
+        "unitTitle": "Networks and Digital Communication"
+      },
+      {
+        "id": "cap-u03-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A small parcel of data — part of a file that travels through a network.?",
+        "options": [
+          "packet",
+          "bandwidth",
+          "network overload",
+          "malware"
+        ],
+        "answer": "packet",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Packet means a small parcel of data — part of a file that travels through a network.",
+        "unitNo": 3,
+        "unitTitle": "Networks and Digital Communication"
+      },
+      {
+        "id": "cap-u04-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “hardware” mean in computing?",
+        "options": [
+          "The physical parts of a computer that you can touch, such as the keyboard, screen and processor.",
+          "The programs and code that run on a computer. You cannot touch software.",
+          "An individual part of something larger, for example one part of a computer.",
+          "The range of tasks that a device or piece of software can do."
+        ],
+        "answer": "The physical parts of a computer that you can touch, such as the keyboard, screen and processor.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Hardware means the physical parts of a computer that you can touch, such as the keyboard, screen and processor.",
+        "unitNo": 4,
+        "unitTitle": "Computer Systems"
+      },
+      {
+        "id": "cap-u04-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “aesthetics” mean in computing?",
+        "options": [
+          "How something looks or appears to people.",
+          "How long something lasts, or its ability to keep being useful.",
+          "Suitable for the job we want to use it for.",
+          "Software that is free of charge — you do not pay to use it."
+        ],
+        "answer": "How something looks or appears to people.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Aesthetics means how something looks or appears to people.",
+        "unitNo": 4,
+        "unitTitle": "Computer Systems"
+      },
+      {
+        "id": "cap-u04-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A way of writing commands to create a program a computer can understand.?",
+        "options": [
+          "programming language",
+          "programming environment",
+          "block-based language",
+          "text-based language"
+        ],
+        "answer": "programming language",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Programming language means a way of writing commands to create a program a computer can understand.",
+        "unitNo": 4,
+        "unitTitle": "Computer Systems"
+      }
+    ]
+  },
+  "reviewStatus": "Curriculum review required"
+}

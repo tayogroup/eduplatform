@@ -1,0 +1,2079 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:01.231Z",
+  "stage": {
+    "id": "s07",
+    "label": "Stage 7"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t03",
+    "label": "Term 3"
+  },
+  "unit": {
+    "unitId": "comp-g07-u05",
+    "unitNo": 5,
+    "unitTitle": "Living with AI: Digital Data",
+    "unitOverview": "Welcome to Unit 5. In this unit you will explore one of the most exciting and fast-changing parts of computing today: artificial intelligence (AI) and the way digital devices store and use data. Every day you touch technology that seems almost clever. When a phone unlocks by looking at a face, when a search engine finishes your sentence, when a weather app warns a farmer near Baidoa that rain is coming, or when a message app suggests the next word in Somali or English, you are living with AI.\n\nYou will start by learning the difference between the two big families of software: systems software and application software. Then you will revisit what AI really means, discover how it is used across many industries, examine how digital data is stored as bits and bytes, and look closely at how image recognition lets a computer recognise objects in a picture. Along the way you will also meet logic gates, the tiny decision-makers hidden inside every digital device.\n\nThis is a self-paced unit. That means you move at your own speed. Everything in this unit can be explored with free, open-source software and the device you already own. You do not need to buy anything.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Lower Secondary Computing",
+    "code": "0868",
+    "stage": 7
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-7-Content-Package",
+    "framework": "Cambridge Lower Secondary Computing 0868 — Stage 7",
+    "sourceArchive": "Year 7-20260801T055809Z-1-001.zip",
+    "sourceAudience": "student",
+    "sourceDocuments": [
+      "Year 7/Unit 5/Year 7 - Unit 5 Lesson.docx",
+      "Year 7/Unit 5/Year 7 - Unit 5 Activities & Projects.docx",
+      "Year 7/Unit 5/Year 7 - Unit 5 Practice & Quiz.docx",
+      "Year 7/Unit 5/Year 7 - Unit 5 Reference.docx"
+    ],
+    "sourceBlockCount": 814,
+    "transformation": "Structured from the Cambridge Lower Secondary Computing 0868 — Stage 7 Lesson, Activities & Projects, Practice & Quiz and Reference booklets for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Explain the difference between systems software and application software, and give examples of each.",
+    "Explain what artificial intelligence (AI) means in your own words.",
+    "Describe how AI uses information from its surroundings (input) to make a decision (process) and produce a result (output).",
+    "Evaluate the design of a device or an AI system and suggest improvements.",
+    "Explain how AI works in a range of everyday applications.",
+    "Explain how AI helps automate tasks in industries such as farming, health, transport and business.",
+    "Explain how image recognition is used in AI applications, step by step.",
+    "Describe how an analogue image is converted into digital format using pixels.",
+    "Explain what a binary number is and how it represents images, sound, text and numbers.",
+    "Explain how data storage is measured, from a single bit up to a terabyte."
+  ],
+  "toolkit": [
+    {
+      "name": "micro:bit simulator",
+      "url": "makecode.microbit.org (blocks) or python.microbit.org (Python)",
+      "steps": [
+        "Open makecode.microbit.org for blocks, or python.microbit.org for Python.",
+        "Write your code in the editor.",
+        "The micro:bit simulator on the left runs your code straight away.",
+        "Click the on-screen A and B buttons, and use the shake control, to test your inputs."
+      ],
+      "note": "You do not need to own a real micro:bit — the simulator does everything."
+    },
+    {
+      "name": "A free spreadsheet",
+      "url": "Google Sheets, or LibreOffice Calc",
+      "steps": [
+        "Open a new blank spreadsheet.",
+        "Put your field names in row 1, one per column.",
+        "Type one record per row underneath.",
+        "Use Insert → Chart to turn your data into a graph."
+      ],
+      "note": "Any free spreadsheet works — the ideas are the same in all of them."
+    }
+  ],
+  "tutorPrompts": [
+    "If any of the ideas above feel fuzzy, warm up with this prompt:",
+    "I am starting a unit on AI and digital data. Please remind me, in simple words, of the difference between analogue and digital data, with one everyday example of each. Then ask me a question to check I understood.",
+    "Concept 1: Systems Software and Application Software",
+    "Systems software",
+    "Paste this to your AI tutor to test yourself:",
+    "Give me a list of 10 pieces of software found on a normal phone. Ask me one at a time to say whether each is systems software or application software, and correct me kindly if I am wrong.",
+    "Concept 2: What Is Artificial Intelligence?",
+    "Pick the industry that interests you most and try this:"
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-systems-software-and-application-software",
+      "title": "Systems Software and Application Software",
+      "explanation": "Every digital device needs software. Software is the word for the programs and instructions that tell a device how to complete a task. You cannot touch software; it is different from hardware, which is the physical part you can hold, such as the screen or the battery. All software falls into two main groups.\n\nSystems software is the software that runs and manages the device itself. The most important piece of systems software is the operating system (OS). The operating system manages all the hardware, keeps programs running smoothly, and provides a user interface so you can interact with the machine. Without an operating system, the hardware would just be useless metal and glass. Examples of operating systems include Windows, macOS, Linux, Android and iOS. On your own device, the OS is what you see the moment you switch it on, before you open anything.\n\nSystems software also includes utility programs. These are small helper tools that keep the device healthy and safe, such as antivirus software, a file manager, a backup tool, or a program that cleans up unwanted files to free space. You rarely think about utilities, but they work quietly in the background.\n\nApplication software (often just called 'apps') is software that helps *you*, the user, carry out a task you actually want to do. Examples include a web browser, a word processor, a spreadsheet, an image editor, a calculator, a messaging app, a game, a maps app, or a camera app. Application software serves the user; systems software serves the machine. Both are needed. The OS is like the manager of a shop who keeps the lights on and the doors open; the applications are like the workers who serve each customer's particular request.\n\nHere is a clear comparison you should learn well, because it is one of the main objectives of this unit.\n\nApplication packages such as the Google App Suite or Microsoft Office are called integrated applications. The programs inside them (documents, spreadsheets, slides) share a similar look and can pass data between each other, so once you learn one, the others feel familiar.\n\nFeature — Systems software · Application software\n\nMain job — Runs and manages the device and its hardware · Helps you do a specific task you want to do\n\nWho it serves — Serves the computer and the other software · Serves you, the user\n\nExamples — Operating systems (Windows, Android, Linux, iOS, macOS); utilities (antivirus, file manager, backup, disk cleanup) · Browser, word processor, spreadsheet, image editor, games, messaging apps, camera app\n\nNeeded to use the device? — Yes. Without the operating system the hardware is useless · No. The device still runs; you just cannot do that one task",
+      "example": "When it starts — Automatically, as soon as you switch the device on · When you choose to open it"
+    },
+    {
+      "id": "concept-2-what-is-artificial-intelligence",
+      "title": "What Is Artificial Intelligence?",
+      "explanation": "Artificial intelligence (AI) is technology that lets a digital device act or think in a way that is similar to a human. AI can do tasks that we usually think need human intelligence, such as understanding speech, recognising images, driving a vehicle, translating languages, or answering questions in a conversation.\n\nThe key feature of modern AI is that it can learn from experience. This is called machine learning. Instead of a programmer writing a rule for every single situation, the AI is shown huge amounts of example data and finds the patterns by itself. A special type of machine learning called a neural network is loosely inspired by the way the human brain uses connected cells. Because it learns, an AI system can *improve over time*. A digital assistant recognises your voice more clearly the more you use it; a music app recommends songs closer to your taste; a keyboard predicts your next word more accurately.\n\nIt is important to be honest about what this 'intelligence' really is. An AI does not understand the world the way you do, and it does not have feelings, beliefs or a conscience. It is a very powerful pattern-finder built by people. Remembering this will help you judge when to trust it and when to think for yourself.\n\nHow an AI system works: input, process, output\n\nEvery AI system, no matter how clever, follows the same three-step model that all computers follow.\n\nInput — the system collects data from its surroundings, for example a voice command through a microphone, a picture through a camera, or a reading from a sensor.\n\nProcess — the system analyses that data. For example, it analyses the voice pattern to work out the words, then follows its program to decide what to do.\n\nOutput — the system produces a result, such as switching a light on, reading out the weather, unlocking a phone, or displaying an answer on screen.\n\nFor example, when someone asks a digital assistant, 'What will the weather be like today?', the microphone captures the voice (input), a service analyses the sound and picks out the key words and looks up the forecast (process), and a spoken answer plays through the speaker (output). Keep this input-process-output pattern in your mind. You will use it to describe every AI system in this unit, including your Final Project.",
+      "example": "Many people picture AI as walking, talking robots. In truth, most AI is invisible. It lives inside apps, smart heating systems, spam filters and cameras. A smart fridge, a bank's fraud checker and a phone's face unlock all use AI, and none of them looks like a robot."
+    },
+    {
+      "id": "concept-3-ai-across-industries",
+      "title": "AI Across Industries",
+      "explanation": "AI already affects how people live, work, shop and spend their free time. Companies and organisations collect large amounts of data and use AI to analyse it at high speed and make decisions automatically, without a human giving each instruction. Let us look at how AI helps in several industries, with examples close to home in East Africa.\n\nNotice the common thread: an AI system takes in data, finds patterns, and makes or suggests a decision faster than a human could. This is why AI is so useful in industries that handle huge amounts of information.\n\nA word that comes up again and again with AI is automate. To automate a task means to let a device complete it on its own, with little or no human help, by using sensors and program instructions. Automation is why AI is so valuable in industry: a system can watch, decide and act day and night without tiring. A device that uses sensors and connects to other devices is called a smart device, and the technology behind it is called smart technology (SMART stands for Self-Monitoring, Analysis and Reporting Technology).\n\nWhen several smart devices in one house are connected together, often through a digital assistant and the internet, we call it a smart home. In a smart home a family might switch lights on and off, adjust the heating or cooling, or check a security camera, all from a single phone. Each of these actions still follows input, process, output. Think about how this could serve a household responsibly: a smart light that switches off automatically when a room is empty saves electricity and money, which is a responsible use of energy and resources. As you design your own AI system later in this unit, you will decide which sensors and outputs your smart device needs.\n\nIndustry — How AI is used · Example close to home\n\nAgriculture and livestock — AI studies photos of leaves to spot crop disease early, predicts rainfall, and checks the health of animals. · An app that lets Sami photograph a sorghum leaf and warns him if it shows signs of disease before it spreads to the whole field.\n\nHealthcare — AI helps doctors diagnose illness, plan treatment, and monitor patients using devices such as smart watches. · A rural clinic uses AI to read an X-ray and flag possible pneumonia, so a nurse knows which patients need a doctor first.\n\nTransport — Driverless features and cameras use image recognition to read road signs, spot obstacles and react quickly. · AI traffic cameras in a growing city adjust the traffic lights when they detect a build-up of cars, easing the jam.\n\nBusiness and finance — AI predicts future sales from past data, and spots unusual card activity to detect fraud. · A bank's AI notices a card being used in two distant places within minutes and sends the owner a warning text.\n\nRetail and advertising — AI studies what people search for and buy, then targets adverts and suggestions at each person. · After Nadia searches online for a phone case, she suddenly sees adverts for phone cases in her apps.\n\nManufacturing — AI controls machines that build and package products with little human help. · A factory line fills and seals cans of food, or assembles parts, guided by an automated AI system.\n\nCustomer service — Chatbots answer common questions in a conversation, and pass harder ones to a human. · A travel website's chatbot answers Maya's question about a booking instantly, at any hour of the day.",
+      "example": "Gaming — AI controls non-player characters (NPCs) and makes a game harder as the player improves. · A game gets tougher for Leo the more he plays, keeping it challenging and fun."
+    },
+    {
+      "id": "concept-4-how-ai-collects-data-sensors",
+      "title": "How AI Collects Data - Sensors",
+      "explanation": "AI systems need data before they can decide anything. Some data comes from a keyboard, a touchscreen or a microphone. A great deal of it, though, comes from sensors. A sensor is a device that gathers information from its surroundings and turns it into data the computer can process. Sensors are the 'senses' of a smart device.\n\nPoint a TV remote at your phone's camera and press a button. On the screen you may see a small purple or red flash. That is infrared light, invisible to your eyes but visible to the camera. Security systems use infrared sensors to detect people in the dark.\n\nSensor — Data it collects · Example use in an AI system\n\nTemperature — Change in heat in the environment · Body-temperature scanners at an airport spot a possibly ill traveller and, combined with facial recognition, help prevent illness spreading.\n\nProximity — How close a nearby object is · A driverless car detects an obstacle in the road; a forklift warns a worker who is standing too close.\n\nInfrared — Heat given off by an object, and invisible light · Drones with infrared cameras count endangered animals over remote land; security systems detect an intruder in the dark.\n\nHumidity — Amount of water in the air · A smart cooling system keeps a building or a store of grain at a comfortable, safe moisture level.",
+      "example": "Touch/pressure — How much force is applied to a surface · A robotic hand senses how hard it is gripping so it can pick up a date or an egg without crushing it."
+    },
+    {
+      "id": "concept-5-how-image-recognition-works-step-by-step",
+      "title": "How Image Recognition Works, Step by Step",
+      "explanation": "Image recognition is one of the most powerful uses of AI. It means a computer looking at a picture and identifying what is in it by studying the lines, colours, textures and shapes. Face unlock, driverless cars reading signs, and an app that spots crop disease all use image recognition. Here is how it works, step by step.\n\nCapture the image. A camera or sensor takes a picture. As you will learn in Concept 6, the picture is stored as a grid of pixels, and each pixel's colour is written as a binary number.\n\nPrepare the image. The system may resize the picture, adjust the brightness, or turn it into a standard format so that different images can be compared fairly.\n\nFind the features. The AI scans the image for patterns: edges, corners, curves, colours and textures. It breaks a complex picture down into simple features. This is the computational-thinking skill of decomposition.\n\nCompare with what it has learned. During its training the AI was shown thousands of labelled example pictures, for example many photos of ripe dates and unripe dates. It compares the features it found with the patterns it learned. This training is machine learning, often using a neural network.\n\nMake a prediction. The system works out how confident it is for each possible answer and chooses the most likely one, for example 'this is a ripe date, 92 percent confident'.\n\nAct on the result (output). The prediction is used to do something useful: unlock the phone, sort the dates into baskets, flag a diseased leaf, or read a car's number plate.\n\nLearn and improve. When people confirm whether the answer was right or wrong, that feedback helps the model do better next time.\n\nThink about Nadia sorting dates at the market. An image-recognition app could look at each date and sort it into 'ripe', 'unripe' or 'damaged' far faster than by hand. Or think about Sami: he photographs a leaf, and the app compares it with thousands of leaf images to warn him that a disease may be starting. Image recognition also keeps devices secure: face unlock still recognises you when you change your hair, wear glasses, or stand in poor light, because it learned the stable features of your face rather than one exact picture.\n\nImage recognition is powerful, but it is not perfect, and a good computer scientist is honest about its limits. A model can only recognise things similar to the examples it was trained on. If it never saw a certain type of date, an unusual leaf disease, or a face in very dim light, it may guess wrongly, yet still report a high confidence. If the training pictures were unfair or incomplete, the system can be biased and treat some people or things unfairly. This is why serious uses, such as in a clinic or for security, keep a human in charge to check important decisions. The lesson is simple: let image recognition help you, but do not switch off your own judgement.",
+      "example": "\"I want to design an image-recognition app that sorts good dates from bad ones at a market. Walk me through what the app would need at each step: capture, prepare, find features, compare, predict and act. Then ask me one question to check I followed.\""
+    },
+    {
+      "id": "concept-6-representing-and-storing-digital-data",
+      "title": "Representing and Storing Digital Data",
+      "explanation": "AI systems process images, sound, text and numbers. But a computer cannot store any of these the way you see them. Deep inside, a computer only understands binary: patterns of 1s and 0s. A single binary digit (a 1 or a 0) is called a bit. Everything — every photo, every song, every word — is turned into bits before a device can store or process it. When AI collects data from the world, that data is often analogue and must be converted into binary first.\n\nRepresenting images: bitmap graphics\n\nOne way to store a picture is as a bitmap graphic (also called a raster image). A bitmap is made of tiny dots called pixels (short for 'picture element'), arranged on a grid. Each pixel is given a group of binary digits that describes its colour. In a picture using only black and white, each pixel needs just 1 bit: for example 1 for black and 0 for white.\n\nThe number of bits used per pixel is called the colour depth. More bits mean more possible colours. With a colour depth of 1 you get 2 colours. With a colour depth of 2 you get 4 colours (00, 01, 10, 11). With a colour depth of 8 you get 256 colours, and with 24 bits you get over 16 million colours — enough for a lifelike photograph. The number of pixels in the image is its resolution, measured in pixels per inch (ppi). Higher resolution means a sharper picture, but also more pixels, more bits and therefore a bigger file size.\n\nTo work out the storage for a bitmap, multiply the number of pixels by the colour depth. For a small picture that is 10 pixels wide and 10 pixels high with a colour depth of 1: (10 x 10) x 1 = 100 bits. If the same grid uses a colour depth of 2: (10 x 10) x 2 = 200 bits. If you zoom right into a bitmap on screen you can see the individual pixel squares, and each one can be edited or deleted.\n\nRepresenting images: vector graphics\n\nA second way to store an image is as a vector graphic. Instead of recording every pixel, a vector image stores a set of instructions describing shapes: draw a line of this length, place a circle here, fill this petal with this colour. Because it stores instructions rather than every dot, a vector image usually takes up less memory and can be resized without becoming blurry. Logos and simple diagrams are often vectors; detailed photographs are usually bitmaps.\n\nSound enters a computer as an analogue signal through a microphone. Because a computer cannot store analogue data, the sound wave is turned into binary by an analogue-to-digital converter (ADC). Text is stored using a code that gives every character its own binary pattern. A common code is ASCII, where each character is stored in one byte (8 bits). For example, in ASCII the capital letter H is 01001000 and the capital letter O is 01001111. Each key you press sends its unique binary pattern to the processor, the part of the computer that carries out instructions.\n\nMeasuring data storage: from bits to terabytes\n\nBecause single bits are tiny, we group and scale them up. 8 bits make 1 byte, and one byte is roughly enough to store one character. The units then climb in big steps. Traditionally in computing each step is 1024 (which is 2 to the power of 10, because computers work in powers of two), although people often round this to about 1000 to keep the mental maths simple.\n\nStrictly speaking, engineers now call 1000-byte units kilobytes (kB) and 1024-byte units kibibytes (KiB), to avoid confusion. At your level it is fine to learn that a byte is 8 bits and the units go up in steps of about a thousand. The important idea is that bigger files need more storage.\n\nStoring a photo as millions of pixels, or as a set of shape instructions, are two different abstractions of the same picture. Choosing the right way to represent data for the job at hand is a key computing skill.\n\nUnit — Size · Roughly enough for\n\nBit — 1 binary digit (0 or 1) · The answer to a single yes/no question\n\nByte — 8 bits · One character, such as the letter A\n\nKilobyte (KB) — 1024 bytes · A short paragraph of plain text\n\nMegabyte (MB) — 1024 KB · A photo or about a minute of music\n\nGigabyte (GB) — 1024 MB · A long film in fairly good quality",
+      "example": "Terabyte (TB) — 1024 GB · Thousands of films, or a huge photo library"
+    },
+    {
+      "id": "concept-7-logic-gates-and-boolean-logic",
+      "title": "Logic Gates and Boolean Logic",
+      "explanation": "How does a device actually 'decide' anything using only 1s and 0s? The answer is logic gates. A logic gate is a tiny circuit that takes one or two inputs and produces a single output. Inputs and outputs are electrical signals that are either ON or OFF, which is perfect for representing 1 or 0. Logic gates are the building blocks of every digital circuit, found in door bells, burglar alarms, street lights and the processor of your phone.\n\nLogic gates work using Boolean logic, a kind of maths where every value is either true or false (1 or 0). A condition is a statement that is checked to see whether it is true or false. The three most common gates are AND, OR and NOT.\n\nAn AND gate has two inputs and outputs 1 only when both inputs are 1. Think of deciding whether you can make a cheese sandwich: you need bread AND cheese. Only when you have both can you make the sandwich.\n\nAn OR gate has two inputs and outputs 1 when either input is 1 (or both). Think of deciding whether to play a game online: you will play if friend A is online OR friend B is online. You are happy if either one, or both, are there.\n\nA NOT gate is the simplest gate. It has only one input, and its output is always the opposite of the input. It is also called an inverter. Think of a home alarm: if you ARE in the house (1) the alarm is OFF (0); if you are NOT in the house (0) the alarm is ON (1).",
+      "example": "For complex decisions, the output of one gate can become the input of another, forming a logic circuit. Every task your processor performs is built from millions of these tiny true/false operations happening incredibly fast."
+    },
+    {
+      "id": "concept-8-a-balanced-look-at-living-with-ai",
+      "title": "A Balanced Look at Living with AI",
+      "explanation": "AI is powerful, and power always brings responsibility. A thoughtful person weighs the benefits against the risks rather than simply cheering or fearing. Here is a fair look at both sides.\n\nFewer errors and more accuracy — for example, AI has made weather forecasting more reliable, which helps farmers and fishers plan.\n\nAlways available — an AI can monitor a factory or answer a question at any hour, without tiring.\n\nFaster decisions — a self-driving system can react to danger more quickly than a human in some situations.\n\nProgress in research — AI helps discover medicines, plan where to build clinics, and study the environment.\n\nHelp for people who are excluded — AI can translate languages, read text aloud for people who cannot see well, and bring learning to remote places.\n\nCost — AI systems and the devices around them are expensive to build and maintain.\n\nJobs — because AI can work quickly and without breaks, some people worry it will replace human workers.\n\nNo feelings or wisdom — an AI decides using data and patterns only. It cannot truly understand a person's circumstances, mercy, or dignity.\n\nPrivacy — to work well, AI often collects a lot of personal data, sometimes through text files called cookies, without people fully realising.\n\nBias and mistakes — if an AI learns from unfair or incomplete data, it can make unfair or wrong decisions and still sound confident.\n\nOver-reliance — if we trust AI blindly, we may stop thinking, checking and learning for ourselves.\n\nYou carry a helpful compass here: the shared values of honesty, fairness, responsibility and respect for others. Ask of any AI tool: Is it honest? Is it fair to everyone? Does it protect people's privacy and dignity? Does it help my community without causing harm? Technology is a tool; the responsibility for using it well belongs to the human being, not the machine. A good rule is to let AI *assist* your thinking, never *replace* it.\n\nResearchers are trying to build AI that can respond to human emotions, sometimes called artificial empathy. Even so, a machine copying the signs of care is not the same as a human who truly cares. Real compassion still comes from people.\n\nInput A — Input B · Output (A AND B) · Input A · Input B · Output (A OR B) · Input · Output (NOT)\n\n0 — 0 · 0 · 0 · 0 · 0 · 0 · 1\n\n0 — 1 · 0 · 0 · 1 · 1 · 1 · 0",
+      "example": "1 — 0 · 0 · 1 · 0 · 1"
+    }
+  ],
+  "codeExamples": [],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Purpose and software type",
+      "context": "work through the steps below and see what happens. This is systems software and application software in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Name your app and describe the problem it solves and who it helps.",
+      "answer": "State whether your app is systems software or application software, and explain why, with examples of each type to support your answer.",
+      "modelType": "model-1",
+      "hint": "Start here: State whether your app is systems software or application software, and explain why, with examples of each type to support your answer.",
+      "explanation": "Systems Software and Application Software: Every digital device needs software. Software is the word for the programs and instructions that tell a device how to complete a task. You cannot touch software; it is different from hardware, which is the physical part you can hold, such as the screen or the battery. All software falls into two…"
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "How it works",
+      "context": "work through the steps below and see what happens. This is what is artificial intelligence? in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Describe the input: what images and data does it collect, and using what camera or sensors?",
+      "answer": "Describe the process: explain, using the seven image-recognition steps, how it identifies what is in a picture. Describe the output: what does the user see or what action happens? Explain how the app might improve over time as more people use it.",
+      "modelType": "model-2",
+      "hint": "Start here: Describe the process: explain, using the seven image-recognition steps, how it identifies what is in a picture.",
+      "explanation": "What Is Artificial Intelligence?: Artificial intelligence (AI) is technology that lets a digital device act or think in a way that is similar to a human. AI can do tasks that we usually think need human intelligence, such as understanding speech, recognising images, driving a vehicle, translating languages, or answering questions…"
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Data and storage",
+      "context": "work through the steps below and see what happens. This is ai across industries in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Explain how a photo is stored as pixels in binary, and mention colour depth and resolution.",
+      "answer": "Estimate the storage needed for one photo your app captures, showing your calculation. Explain how the letters and numbers of a user's password could be stored as binary (ASCII).",
+      "modelType": "model-3",
+      "hint": "Start here: Estimate the storage needed for one photo your app captures, showing your calculation.",
+      "explanation": "AI Across Industries: AI already affects how people live, work, shop and spend their free time. Companies and organisations collect large amounts of data and use AI to analyse it at high speed and make decisions automatically, without a human giving each instruction. Let us look at how AI helps in several industries,…"
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Responsibility",
+      "context": "work through the steps below and see what happens. This is how ai collects data — sensors in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Describe one clear benefit of your app for the community.",
+      "answer": "Describe one risk or concern (for example privacy, cost, internet access, or the app being wrong) and how you would reduce it. Write two sentences on using your app honestly and fairly, so it helps people without causing harm.",
+      "modelType": "model-4",
+      "hint": "Start here: Describe one risk or concern (for example privacy, cost, internet access, or the app being wrong) and how you would reduce it.",
+      "explanation": "How AI Collects Data — Sensors: AI systems need data before they can decide anything. Some data comes from a keyboard, a touchscreen or a microphone. A great deal of it, though, comes from sensors. A sensor is a device that gathers information from its surroundings and turns it into data the computer can process. Sensors are the…"
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Sketch",
+      "context": "work through the steps below and see what happens. This is how image recognition works, step by step in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Sketch the main screen of your app, labelling the input area, the result area, and one button.",
+      "answer": "Design a simple logo for your app on a 10 by 10 grid with a colour depth of 2, and include a colour key. Evaluation Review your Final Project, then ask a partner or your AI tutor to review it too. Check that your project. clearly states the problem and who it helps correctly identifies the app as application software, with a good reason",
+      "modelType": "model-5",
+      "hint": "Start here: Design a simple logo for your app on a 10 by 10 grid with a colour depth of 2, and include a colour key.",
+      "explanation": "How Image Recognition Works, Step by Step: Image recognition is one of the most powerful uses of AI. It means a computer looking at a picture and identifying what is in it by studying the lines, colours, textures and shapes. Face unlock, driverless cars reading signs, and an app that spots crop disease all use image recognition. Here is how…"
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Living with AI: Digital Data",
+      "context": "work through the steps below and see what happens. This is representing and storing digital data in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Year 7 — Unit 5 — Activities & Projects",
+      "answer": "How to Use This Booklet These activities help you practise and stretch the ideas from your Lesson guide. They follow the same journey as the Cambridge textbook: Practise tasks build your skills, Go Further tasks stretch you, Challenge Yourself tasks push you harder, and the Final Project brings everything together. Every activity lists clear steps, a prompt you can give your AI tutor, and guidance or an answer key so you can check your work. You can do all of these with free, open-source or built-in software. Before You Start Free tools that help with this unit: your device's Task Manager (Windows) or Activity Monitor (macOS) to see running software; a free image editor such as GIMP to zoom into pixels; LibreOffice for tables and notes; and Google's Teachable Machine, a free website that trains an image-recognition model in your browser with no coding. Activity 1: Audit the software on your device",
+      "modelType": "model-6",
+      "hint": "Start here: How to Use This Booklet",
+      "explanation": "Representing and Storing Digital Data: AI systems process images, sound, text and numbers. But a computer cannot store any of these the way you see them. Deep inside, a computer only understands binary: patterns of 1s and 0s. A single binary digit (a 1 or a 0) is called a bit. Everything — every photo, every song, every word — is turned…"
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Systems Software and Application Software",
+      "modelType": "concept-model-1",
+      "purpose": "Every digital device needs software. Software is the word for the programs and instructions that tell a device how to complete a task. You cannot touch software; it is different from hardware, which is the physical part…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "What Is Artificial Intelligence?",
+      "modelType": "concept-model-2",
+      "purpose": "Artificial intelligence (AI) is technology that lets a digital device act or think in a way that is similar to a human. AI can do tasks that we usually think need human intelligence, such as understanding speech,…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "AI Across Industries",
+      "modelType": "concept-model-3",
+      "purpose": "AI already affects how people live, work, shop and spend their free time. Companies and organisations collect large amounts of data and use AI to analyse it at high speed and make decisions automatically, without a…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "How AI Collects Data - Sensors",
+      "modelType": "concept-model-4",
+      "purpose": "AI systems need data before they can decide anything. Some data comes from a keyboard, a touchscreen or a microphone. A great deal of it, though, comes from sensors. A sensor is a device that gathers information from…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "How Image Recognition Works, Step by Step",
+      "modelType": "concept-model-5",
+      "purpose": "Image recognition is one of the most powerful uses of AI. It means a computer looking at a picture and identifying what is in it by studying the lines, colours, textures and shapes. Face unlock, driverless cars reading…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Representing and Storing Digital Data",
+      "modelType": "concept-model-6",
+      "purpose": "AI systems process images, sound, text and numbers. But a computer cannot store any of these the way you see them. Deep inside, a computer only understands binary: patterns of 1s and 0s. A single binary digit (a 1 or a…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-7",
+      "outcomeId": "lo07",
+      "title": "Logic Gates and Boolean Logic",
+      "modelType": "concept-model-7",
+      "purpose": "How does a device actually 'decide' anything using only 1s and 0s? The answer is logic gates. A logic gate is a tiny circuit that takes one or two inputs and produces a single output. Inputs and outputs are electrical…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-8",
+      "outcomeId": "lo08",
+      "title": "A Balanced Look at Living with AI",
+      "modelType": "concept-model-8",
+      "purpose": "AI is powerful, and power always brings responsibility. A thoughtful person weighs the benefits against the risks rather than simply cheering or fearing. Here is a fair look at both sides.",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with systems software and application software",
+      "example": "When it starts — Automatically, as soon as you switch the device on · When you choose to open it",
+      "steps": [
+        "Every digital device needs software. Software is the word for the programs and instructions that tell a device how to complete a task. You cannot touch software; it is different from hardware, which is the physical part…",
+        "Systems software is the software that runs and manages the device itself. The most important piece of systems software is the operating system (OS). The operating system manages all the hardware, keeps programs running…",
+        "Systems software also includes utility programs. These are small helper tools that keep the device healthy and safe, such as antivirus software, a file manager, a backup tool, or a program that cleans up unwanted files…",
+        "Application software (often just called 'apps') is software that helps *you*, the user, carry out a task you actually want to do. Examples include a web browser, a word processor, a spreadsheet, an image editor, a…"
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with what is artificial intelligence?",
+      "example": "Many people picture AI as walking, talking robots. In truth, most AI is invisible. It lives inside apps, smart heating systems, spam filters and cameras. A smart fridge, a bank's fraud checker and a phone's face unlock all use AI, and none of them looks like…",
+      "steps": [
+        "Artificial intelligence (AI) is technology that lets a digital device act or think in a way that is similar to a human. AI can do tasks that we usually think need human intelligence, such as understanding speech,…",
+        "The key feature of modern AI is that it can learn from experience. This is called machine learning. Instead of a programmer writing a rule for every single situation, the AI is shown huge amounts of example data and…",
+        "It is important to be honest about what this 'intelligence' really is. An AI does not understand the world the way you do, and it does not have feelings, beliefs or a conscience. It is a very powerful pattern-finder…",
+        "How an AI system works: input, process, output"
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with ai across industries",
+      "example": "Gaming — AI controls non-player characters (NPCs) and makes a game harder as the player improves. · A game gets tougher for Leo the more he plays, keeping it challenging and fun.",
+      "steps": [
+        "AI already affects how people live, work, shop and spend their free time. Companies and organisations collect large amounts of data and use AI to analyse it at high speed and make decisions automatically, without a…",
+        "Notice the common thread: an AI system takes in data, finds patterns, and makes or suggests a decision faster than a human could. This is why AI is so useful in industries that handle huge amounts of information.",
+        "A word that comes up again and again with AI is automate. To automate a task means to let a device complete it on its own, with little or no human help, by using sensors and program instructions. Automation is why AI is…",
+        "When several smart devices in one house are connected together, often through a digital assistant and the internet, we call it a smart home. In a smart home a family might switch lights on and off, adjust the heating or…"
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with how ai collects data - sensors",
+      "example": "Touch/pressure — How much force is applied to a surface · A robotic hand senses how hard it is gripping so it can pick up a date or an egg without crushing it.",
+      "steps": [
+        "AI systems need data before they can decide anything. Some data comes from a keyboard, a touchscreen or a microphone. A great deal of it, though, comes from sensors. A sensor is a device that gathers information from…",
+        "Point a TV remote at your phone's camera and press a button. On the screen you may see a small purple or red flash. That is infrared light, invisible to your eyes but visible to the camera. Security systems use infrared…",
+        "Sensor — Data it collects · Example use in an AI system",
+        "Temperature — Change in heat in the environment · Body-temperature scanners at an airport spot a possibly ill traveller and, combined with facial recognition, help prevent illness spreading."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with how image recognition works, step by step",
+      "example": "\"I want to design an image-recognition app that sorts good dates from bad ones at a market. Walk me through what the app would need at each step: capture, prepare, find features, compare, predict and act. Then ask me one question to check I followed.\"",
+      "steps": [
+        "Image recognition is one of the most powerful uses of AI. It means a computer looking at a picture and identifying what is in it by studying the lines, colours, textures and shapes. Face unlock, driverless cars reading…",
+        "Capture the image. A camera or sensor takes a picture. As you will learn in Concept 6, the picture is stored as a grid of pixels, and each pixel's colour is written as a binary number.",
+        "Prepare the image. The system may resize the picture, adjust the brightness, or turn it into a standard format so that different images can be compared fairly.",
+        "Find the features. The AI scans the image for patterns: edges, corners, curves, colours and textures. It breaks a complex picture down into simple features. This is the computational-thinking skill of decomposition."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "How to work with representing and storing digital data",
+      "example": "Terabyte (TB) — 1024 GB · Thousands of films, or a huge photo library",
+      "steps": [
+        "AI systems process images, sound, text and numbers. But a computer cannot store any of these the way you see them. Deep inside, a computer only understands binary: patterns of 1s and 0s. A single binary digit (a 1 or a…",
+        "One way to store a picture is as a bitmap graphic (also called a raster image). A bitmap is made of tiny dots called pixels (short for 'picture element'), arranged on a grid. Each pixel is given a group of binary digits…",
+        "The number of bits used per pixel is called the colour depth. More bits mean more possible colours. With a colour depth of 1 you get 2 colours. With a colour depth of 2 you get 4 colours (00, 01, 10, 11). With a colour…",
+        "To work out the storage for a bitmap, multiply the number of pixels by the colour depth. For a small picture that is 10 pixels wide and 10 pixels high with a colour depth of 1: (10 x 10) x 1 = 100 bits. If the same grid…"
+      ]
+    },
+    {
+      "id": "method-7",
+      "outcomeId": "lo07",
+      "difficulty": "Challenge",
+      "title": "How to work with logic gates and boolean logic",
+      "example": "For complex decisions, the output of one gate can become the input of another, forming a logic circuit. Every task your processor performs is built from millions of these tiny true/false operations happening incredibly fast.",
+      "steps": [
+        "How does a device actually 'decide' anything using only 1s and 0s? The answer is logic gates. A logic gate is a tiny circuit that takes one or two inputs and produces a single output. Inputs and outputs are electrical…",
+        "Logic gates work using Boolean logic, a kind of maths where every value is either true or false (1 or 0). A condition is a statement that is checked to see whether it is true or false. The three most common gates are…",
+        "An AND gate has two inputs and outputs 1 only when both inputs are 1. Think of deciding whether you can make a cheese sandwich: you need bread AND cheese. Only when you have both can you make the sandwich.",
+        "An OR gate has two inputs and outputs 1 when either input is 1 (or both). Think of deciding whether to play a game online: you will play if friend A is online OR friend B is online. You are happy if either one, or both,…"
+      ]
+    },
+    {
+      "id": "method-8",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "How to work with a balanced look at living with ai",
+      "example": "1 — 0 · 0 · 1 · 0 · 1",
+      "steps": [
+        "AI is powerful, and power always brings responsibility. A thoughtful person weighs the benefits against the risks rather than simply cheering or fearing. Here is a fair look at both sides.",
+        "Fewer errors and more accuracy — for example, AI has made weather forecasting more reliable, which helps farmers and fishers plan.",
+        "Always available — an AI can monitor a factory or answer a question at any hour, without tiring.",
+        "Faster decisions — a self-driving system can react to danger more quickly than a human in some situations."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Systems Software and Application Software",
+      "prompt": "Explain in your own words: Systems Software and Application Software.",
+      "solution": "Every digital device needs software. Software is the word for the programs and instructions that tell a device how to complete a task. You cannot touch software; it is different from hardware, which is the physical part you can hold, such as the screen or the battery. All software falls into two main groups.\n\nSystems software is the software that runs and manages the device itself. The most important piece of systems software is the operating system (OS). The operating system manages all the hardware, keeps programs running smoothly, and provides a user interface so you can interact with the machine. Without an operating system, the hardware would just be useless metal and glass. Examples of operating systems include Windows, macOS, Linux, Android and iOS. On your own device, the OS is what you see the moment you switch it on, before you open anything.\n\nSystems software also includes utility programs. These are small helper tools that keep the device healthy and safe, such as antivirus software, a file manager, a backup tool, or a program that cleans up unwanted files to free space. You rarely think about utilities, but they work quietly in the background.\n\nApplication software (often just called 'apps') is software that helps *you*, the user, carry out a task you actually want to do. Examples include a web browser, a word processor, a spreadsheet, an image editor, a calculator, a messaging app, a game, a maps app, or a camera app. Application software serves the user; systems software serves the machine. Both are needed. The OS is like the manager of a shop who keeps the lights on and the doors open; the applications are like the workers who serve each customer's particular request.\n\nHere is a clear comparison you should learn well, because it is one of the main objectives of this unit.\n\nApplication packages such as the Google App Suite or Microsoft Office are called integrated applications. The programs inside them (documents, spreadsheets, slides) share a similar look and can pass data between each other, so once you learn one, the others feel familiar.\n\nFeature — Systems software · Application software\n\nMain job — Runs and manages the device and its hardware · Helps you do a specific task you want to do\n\nWho it serves — Serves the computer and the other software · Serves you, the user\n\nExamples — Operating systems (Windows, Android, Linux, iOS, macOS); utilities (antivirus, file manager, backup, disk cleanup) · Browser, word processor, spreadsheet, image editor, games, messaging apps, camera app\n\nNeeded to use the device? — Yes. Without the operating system the hardware is useless · No. The device still runs; you just cannot do that one task\n\nFor example: When it starts — Automatically, as soon as you switch the device on · When you choose to open it"
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: What Is Artificial Intelligence?",
+      "prompt": "Explain in your own words: What Is Artificial Intelligence.",
+      "solution": "Artificial intelligence (AI) is technology that lets a digital device act or think in a way that is similar to a human. AI can do tasks that we usually think need human intelligence, such as understanding speech, recognising images, driving a vehicle, translating languages, or answering questions in a conversation.\n\nThe key feature of modern AI is that it can learn from experience. This is called machine learning. Instead of a programmer writing a rule for every single situation, the AI is shown huge amounts of example data and finds the patterns by itself. A special type of machine learning called a neural network is loosely inspired by the way the human brain uses connected cells. Because it learns, an AI system can *improve over time*. A digital assistant recognises your voice more clearly the more you use it; a music app recommends songs closer to your taste; a keyboard predicts your next word more accurately.\n\nIt is important to be honest about what this 'intelligence' really is. An AI does not understand the world the way you do, and it does not have feelings, beliefs or a conscience. It is a very powerful pattern-finder built by people. Remembering this will help you judge when to trust it and when to think for yourself.\n\nHow an AI system works: input, process, output\n\nEvery AI system, no matter how clever, follows the same three-step model that all computers follow.\n\nInput — the system collects data from its surroundings, for example a voice command through a microphone, a picture through a camera, or a reading from a sensor.\n\nProcess — the system analyses that data. For example, it analyses the voice pattern to work out the words, then follows its program to decide what to do.\n\nOutput — the system produces a result, such as switching a light on, reading out the weather, unlocking a phone, or displaying an answer on screen.\n\nFor example, when someone asks a digital assistant, 'What will the weather be like today?', the microphone captures the voice (input), a service analyses the sound and picks out the key words and looks up the forecast (process), and a spoken answer plays through the speaker (output). Keep this input-process-output pattern in your mind. You will use it to describe every AI system in this unit, including your Final Project.\n\nFor example: Many people picture AI as walking, talking robots. In truth, most AI is invisible. It lives inside apps, smart heating systems, spam filters and cameras. A smart fridge, a bank's fraud checker and a phone's face unlock all use AI, and none of them looks like a robot."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: AI Across Industries",
+      "prompt": "Explain in your own words: AI Across Industries.",
+      "solution": "AI already affects how people live, work, shop and spend their free time. Companies and organisations collect large amounts of data and use AI to analyse it at high speed and make decisions automatically, without a human giving each instruction. Let us look at how AI helps in several industries, with examples close to home in East Africa.\n\nNotice the common thread: an AI system takes in data, finds patterns, and makes or suggests a decision faster than a human could. This is why AI is so useful in industries that handle huge amounts of information.\n\nA word that comes up again and again with AI is automate. To automate a task means to let a device complete it on its own, with little or no human help, by using sensors and program instructions. Automation is why AI is so valuable in industry: a system can watch, decide and act day and night without tiring. A device that uses sensors and connects to other devices is called a smart device, and the technology behind it is called smart technology (SMART stands for Self-Monitoring, Analysis and Reporting Technology).\n\nWhen several smart devices in one house are connected together, often through a digital assistant and the internet, we call it a smart home. In a smart home a family might switch lights on and off, adjust the heating or cooling, or check a security camera, all from a single phone. Each of these actions still follows input, process, output. Think about how this could serve a household responsibly: a smart light that switches off automatically when a room is empty saves electricity and money, which is a responsible use of energy and resources. As you design your own AI system later in this unit, you will decide which sensors and outputs your smart device needs.\n\nIndustry — How AI is used · Example close to home\n\nAgriculture and livestock — AI studies photos of leaves to spot crop disease early, predicts rainfall, and checks the health of animals. · An app that lets Sami photograph a sorghum leaf and warns him if it shows signs of disease before it spreads to the whole field.\n\nHealthcare — AI helps doctors diagnose illness, plan treatment, and monitor patients using devices such as smart watches. · A rural clinic uses AI to read an X-ray and flag possible pneumonia, so a nurse knows which patients need a doctor first.\n\nTransport — Driverless features and cameras use image recognition to read road signs, spot obstacles and react quickly. · AI traffic cameras in a growing city adjust the traffic lights when they detect a build-up of cars, easing the jam.\n\nBusiness and finance — AI predicts future sales from past data, and spots unusual card activity to detect fraud. · A bank's AI notices a card being used in two distant places within minutes and sends the owner a warning text.\n\nRetail and advertising — AI studies what people search for and buy, then targets adverts and suggestions at each person. · After Nadia searches online for a phone case, she suddenly sees adverts for phone cases in her apps.\n\nManufacturing — AI controls machines that build and package products with little human help. · A factory line fills and seals cans of food, or assembles parts, guided by an automated AI system.\n\nCustomer service — Chatbots answer common questions in a conversation, and pass harder ones to a human. · A travel website's chatbot answers Maya's question about a booking instantly, at any hour of the day.\n\nFor example: Gaming — AI controls non-player characters (NPCs) and makes a game harder as the player improves. · A game gets tougher for Leo the more he plays, keeping it challenging and fun."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: How AI Collects Data - Sensors",
+      "prompt": "Explain in your own words: How AI Collects Data — Sensors.",
+      "solution": "AI systems need data before they can decide anything. Some data comes from a keyboard, a touchscreen or a microphone. A great deal of it, though, comes from sensors. A sensor is a device that gathers information from its surroundings and turns it into data the computer can process. Sensors are the 'senses' of a smart device.\n\nPoint a TV remote at your phone's camera and press a button. On the screen you may see a small purple or red flash. That is infrared light, invisible to your eyes but visible to the camera. Security systems use infrared sensors to detect people in the dark.\n\nSensor — Data it collects · Example use in an AI system\n\nTemperature — Change in heat in the environment · Body-temperature scanners at an airport spot a possibly ill traveller and, combined with facial recognition, help prevent illness spreading.\n\nProximity — How close a nearby object is · A driverless car detects an obstacle in the road; a forklift warns a worker who is standing too close.\n\nInfrared — Heat given off by an object, and invisible light · Drones with infrared cameras count endangered animals over remote land; security systems detect an intruder in the dark.\n\nHumidity — Amount of water in the air · A smart cooling system keeps a building or a store of grain at a comfortable, safe moisture level.\n\nFor example: Touch/pressure — How much force is applied to a surface · A robotic hand senses how hard it is gripping so it can pick up a date or an egg without crushing it."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: How Image Recognition Works, Step by Step",
+      "prompt": "Explain in your own words: How Image Recognition Works, Step by Step.",
+      "solution": "Image recognition is one of the most powerful uses of AI. It means a computer looking at a picture and identifying what is in it by studying the lines, colours, textures and shapes. Face unlock, driverless cars reading signs, and an app that spots crop disease all use image recognition. Here is how it works, step by step.\n\nCapture the image. A camera or sensor takes a picture. As you will learn in Concept 6, the picture is stored as a grid of pixels, and each pixel's colour is written as a binary number.\n\nPrepare the image. The system may resize the picture, adjust the brightness, or turn it into a standard format so that different images can be compared fairly.\n\nFind the features. The AI scans the image for patterns: edges, corners, curves, colours and textures. It breaks a complex picture down into simple features. This is the computational-thinking skill of decomposition.\n\nCompare with what it has learned. During its training the AI was shown thousands of labelled example pictures, for example many photos of ripe dates and unripe dates. It compares the features it found with the patterns it learned. This training is machine learning, often using a neural network.\n\nMake a prediction. The system works out how confident it is for each possible answer and chooses the most likely one, for example 'this is a ripe date, 92 percent confident'.\n\nAct on the result (output). The prediction is used to do something useful: unlock the phone, sort the dates into baskets, flag a diseased leaf, or read a car's number plate.\n\nLearn and improve. When people confirm whether the answer was right or wrong, that feedback helps the model do better next time.\n\nThink about Nadia sorting dates at the market. An image-recognition app could look at each date and sort it into 'ripe', 'unripe' or 'damaged' far faster than by hand. Or think about Sami: he photographs a leaf, and the app compares it with thousands of leaf images to warn him that a disease may be starting. Image recognition also keeps devices secure: face unlock still recognises you when you change your hair, wear glasses, or stand in poor light, because it learned the stable features of your face rather than one exact picture.\n\nImage recognition is powerful, but it is not perfect, and a good computer scientist is honest about its limits. A model can only recognise things similar to the examples it was trained on. If it never saw a certain type of date, an unusual leaf disease, or a face in very dim light, it may guess wrongly, yet still report a high confidence. If the training pictures were unfair or incomplete, the system can be biased and treat some people or things unfairly. This is why serious uses, such as in a clinic or for security, keep a human in charge to check important decisions. The lesson is simple: let image recognition help you, but do not switch off your own judgement.\n\nFor example: \"I want to design an image-recognition app that sorts good dates from bad ones at a market. Walk me through what the app would need at each step: capture, prepare, find features, compare, predict and act. Then ask me one question to check I followed.\""
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Representing and Storing Digital Data",
+      "prompt": "Explain in your own words: Representing and Storing Digital Data.",
+      "solution": "AI systems process images, sound, text and numbers. But a computer cannot store any of these the way you see them. Deep inside, a computer only understands binary: patterns of 1s and 0s. A single binary digit (a 1 or a 0) is called a bit. Everything — every photo, every song, every word — is turned into bits before a device can store or process it. When AI collects data from the world, that data is often analogue and must be converted into binary first.\n\nRepresenting images: bitmap graphics\n\nOne way to store a picture is as a bitmap graphic (also called a raster image). A bitmap is made of tiny dots called pixels (short for 'picture element'), arranged on a grid. Each pixel is given a group of binary digits that describes its colour. In a picture using only black and white, each pixel needs just 1 bit: for example 1 for black and 0 for white.\n\nThe number of bits used per pixel is called the colour depth. More bits mean more possible colours. With a colour depth of 1 you get 2 colours. With a colour depth of 2 you get 4 colours (00, 01, 10, 11). With a colour depth of 8 you get 256 colours, and with 24 bits you get over 16 million colours — enough for a lifelike photograph. The number of pixels in the image is its resolution, measured in pixels per inch (ppi). Higher resolution means a sharper picture, but also more pixels, more bits and therefore a bigger file size.\n\nTo work out the storage for a bitmap, multiply the number of pixels by the colour depth. For a small picture that is 10 pixels wide and 10 pixels high with a colour depth of 1: (10 x 10) x 1 = 100 bits. If the same grid uses a colour depth of 2: (10 x 10) x 2 = 200 bits. If you zoom right into a bitmap on screen you can see the individual pixel squares, and each one can be edited or deleted.\n\nRepresenting images: vector graphics\n\nA second way to store an image is as a vector graphic. Instead of recording every pixel, a vector image stores a set of instructions describing shapes: draw a line of this length, place a circle here, fill this petal with this colour. Because it stores instructions rather than every dot, a vector image usually takes up less memory and can be resized without becoming blurry. Logos and simple diagrams are often vectors; detailed photographs are usually bitmaps.\n\nSound enters a computer as an analogue signal through a microphone. Because a computer cannot store analogue data, the sound wave is turned into binary by an analogue-to-digital converter (ADC). Text is stored using a code that gives every character its own binary pattern. A common code is ASCII, where each character is stored in one byte (8 bits). For example, in ASCII the capital letter H is 01001000 and the capital letter O is 01001111. Each key you press sends its unique binary pattern to the processor, the part of the computer that carries out instructions.\n\nMeasuring data storage: from bits to terabytes\n\nBecause single bits are tiny, we group and scale them up. 8 bits make 1 byte, and one byte is roughly enough to store one character. The units then climb in big steps. Traditionally in computing each step is 1024 (which is 2 to the power of 10, because computers work in powers of two), although people often round this to about 1000 to keep the mental maths simple.\n\nStrictly speaking, engineers now call 1000-byte units kilobytes (kB) and 1024-byte units kibibytes (KiB), to avoid confusion. At your level it is fine to learn that a byte is 8 bits and the units go up in steps of about a thousand. The important idea is that bigger files need more storage.\n\nStoring a photo as millions of pixels, or as a set of shape instructions, are two different abstractions of the same picture. Choosing the right way to represent data for the job at hand is a key computing skill.\n\nUnit — Size · Roughly enough for\n\nBit — 1 binary digit (0 or 1) · The answer to a single yes/no question\n\nByte — 8 bits · One character, such as the letter A\n\nKilobyte (KB) — 1024 bytes · A short paragraph of plain text\n\nMegabyte (MB) — 1024 KB · A photo or about a minute of music\n\nGigabyte (GB) — 1024 MB · A long film in fairly good quality\n\nFor example: Terabyte (TB) — 1024 GB · Thousands of films, or a huge photo library"
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Which of these is systems software? (a) A web browser (b) An operating system (c) A game (d) A camera app",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Application software is best described as software that: (a) manages the hardware (b) starts automatically when you switch on (c) helps the user do a specific task (d) is impossible to remove",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Artificial intelligence is best described as: (a) any robot (b) technology that lets a computer act or think in a human-like way (c) the physical parts of a computer (d) a type of battery",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "The ability of an AI to learn and improve from data is called: (a) hardware (b) machine learning (c) a logic gate (d) resolution",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "A single binary digit (0 or 1) is called a: (a) byte (b) pixel (c) bit (d) file",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p06",
+      "level": "Warm-up",
+      "prompt": "How many bits are in one byte? (a) 2 (b) 4 (c) 8 (d) 16",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p07",
+      "level": "Warm-up",
+      "prompt": "A tiny dot that makes up a bitmap image is a: (a) vector (b) pixel (c) sensor (d) gate",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p08",
+      "level": "Warm-up",
+      "prompt": "The number of bits used to represent the colour of a pixel is the: (a) resolution (b) colour depth (c) bandwidth (d) byte",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p09",
+      "level": "Warm-up",
+      "prompt": "Which sensor would best help a driverless car detect an obstacle just ahead? (a) humidity (b) proximity (c) temperature (d) tilt",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p10",
+      "level": "Warm-up",
+      "prompt": "An AND gate outputs 1 only when: (a) either input is 1 (b) both inputs are 1 (c) the input is 0 (d) neither input is 1",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p11",
+      "level": "Warm-up",
+      "prompt": "A NOT gate always outputs: (a) 1 (b) 0 (c) the same as its input (d) the opposite of its input",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p12",
+      "level": "Warm-up",
+      "prompt": "Which is the correct order from smallest to largest? (a) byte, bit, KB, MB (b) bit, byte, KB, MB (c) bit, KB, byte, MB (d) MB, KB, byte, bit",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p13",
+      "level": "Warm-up",
+      "prompt": "Converting a sound wave into binary is done by a(n): (a) ADC (analogue-to-digital converter) (b) pixel (c) OR gate (d) cookie",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p14",
+      "level": "Warm-up",
+      "prompt": "Which is an example of image recognition? (a) A spam filter sorting emails (b) Face unlock on a phone (c) A thermostat reading temperature (d) A calculator adding numbers",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p15",
+      "level": "Core",
+      "prompt": "Android (the whole operating system)",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p16",
+      "level": "Core",
+      "prompt": "A web browser",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Purpose and software type",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Name your app and describe the problem it solves and who it helps.",
+        "State whether your app is systems software or application software, and explain why, with examples of each type to support your answer."
+      ]
+    },
+    {
+      "title": "How it works",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Describe the input: what images and data does it collect, and using what camera or sensors?",
+        "Describe the process: explain, using the seven image-recognition steps, how it identifies what is in a picture.",
+        "Describe the output: what does the user see or what action happens?",
+        "Explain how the app might improve over time as more people use it."
+      ]
+    },
+    {
+      "title": "Data and storage",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Explain how a photo is stored as pixels in binary, and mention colour depth and resolution.",
+        "Estimate the storage needed for one photo your app captures, showing your calculation.",
+        "Explain how the letters and numbers of a user's password could be stored as binary (ASCII)."
+      ]
+    },
+    {
+      "title": "Responsibility",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Describe one clear benefit of your app for the community.",
+        "Describe one risk or concern (for example privacy, cost, internet access, or the app being wrong) and how you would reduce it.",
+        "Write two sentences on using your app honestly and fairly, so it helps people without causing harm."
+      ]
+    },
+    {
+      "title": "Sketch",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Sketch the main screen of your app, labelling the input area, the result area, and one button.",
+        "Design a simple logo for your app on a 10 by 10 grid with a colour depth of 2, and include a colour key.",
+        "Evaluation",
+        "Review your Final Project, then ask a partner or your AI tutor to review it too. Check that your project.",
+        "clearly states the problem and who it helps",
+        "correctly identifies the app as application software, with a good reason"
+      ]
+    },
+    {
+      "title": "Living with AI: Digital Data",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Year 7 — Unit 5 — Activities & Projects",
+        "How to Use This Booklet",
+        "These activities help you practise and stretch the ideas from your Lesson guide. They follow the same journey as the Cambridge textbook: Practise tasks build your skills, Go Further tasks stretch you, Challenge Yourself tasks push you harder, and the Final Project brings everything together. Every activity lists clear steps, a prompt you can give your AI tutor, and guidance or an answer key so you can check your work. You can do all of these with free, open-source or built-in software.",
+        "Before You Start",
+        "Free tools that help with this unit: your device's Task Manager (Windows) or Activity Monitor (macOS) to see running software; a free image editor such as GIMP to zoom into pixels; LibreOffice for tables and notes; and Google's Teachable Machine, a free website that trains an image-recognition model in your browser with no coding.",
+        "Activity 1: Audit the software on your device"
+      ]
+    },
+    {
+      "title": "Year 7 - Unit 5 - Activities & Projects",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "How to Use This Booklet",
+        "These activities help you practise and stretch the ideas from your Lesson guide. They follow the same journey as the Cambridge textbook: Practise tasks build your skills, Go Further tasks stretch you, Challenge Yourself tasks push you harder, and the Final Project brings everything together. Every activity lists clear steps, a prompt you can give your AI tutor, and guidance or an answer key so you can check your work. You can do all of these with free, open-source or built-in software.",
+        "Before You Start",
+        "Free tools that help with this unit: your device's Task Manager (Windows) or Activity Monitor (macOS) to see running software; a free image editor such as GIMP to zoom into pixels; LibreOffice for tables and notes; and Google's Teachable Machine, a free website that trains an image-recognition model in your browser with no coding.",
+        "Activity 1: Audit the software on your device",
+        "Goal: tell systems software and application software apart on a device you really use."
+      ]
+    },
+    {
+      "title": "Before You Start",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Free tools that help with this unit: your device's Task Manager (Windows) or Activity Monitor (macOS) to see running software; a free image editor such as GIMP to zoom into pixels; LibreOffice for tables and notes; and Google's Teachable Machine, a free website that trains an image-recognition model in your browser with no coding.",
+        "Activity 1: Audit the software on your device",
+        "Goal: tell systems software and application software apart on a device you really use.",
+        "Open your device and make a list of at least 10 pieces of software on it (for example the operating system, a browser, a camera app, a file manager, an antivirus tool, a game).",
+        "Draw a two-column table headed Systems software and Application software.",
+        "Place each item in the correct column."
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "As you learn, watch out for these common mix",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "ups. Getting them right will make you stand out."
+    },
+    {
+      "symptom": "Make a keywords card. Write each keyword and a one",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Review it daily. Line definition in your own words."
+    },
+    {
+      "symptom": "Learn (15",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "20 minutes). Pause to ask your AI tutor about anything unclear. Read one concept from this guide slowly."
+    },
+    {
+      "symptom": "Practise (15",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "20 minutes). Complete the matching activity from your Activities booklet, or a few questions from Practice & Quiz."
+    },
+    {
+      "symptom": "Your next unit is 7.6 Sequencing and Pattern Recognition",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Getting the Message Across. There you will return to text-based programming with MicroPython, controlling a small physical device called the micro:bit. You will create a light sequence to send a message and learn to spot and reuse patterns to design a visual alarm. (If you do not have a physical micro:bit, a free online simulator lets you do everything in your web browser.)"
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Keep personal information private",
+      "text": "Your full name, address, school, phone number, birthday and passwords are personal information. Never type them into a game, an app or a website, and never send them to someone you only know online."
+    },
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "!",
+        "text": "8 bits = 1 byte. After that, each unit is about 1000 (traditionally 1024) times bigger than the one before. Bigger files need more storage. Handy formulas: bitmap storage (bits) = width x height x colour depth; bytes = bits divided by 8; number of colours = 2 raised to the colour depth. AI in the Real World"
+      },
+      {
+        "title": "! Software",
+        "text": "Systems software runs the device (the operating system and utilities). Application software helps you do a task. You need both."
+      },
+      {
+        "title": "! AI",
+        "text": "AI follows input, process, output. It learns from data (machine learning), improves over time, but has no true feelings or understanding."
+      },
+      {
+        "title": "! Data",
+        "text": "Everything becomes binary. A bit is 0 or 1; 8 bits make a byte. Images are pixels with a colour depth; sound is converted by an ADC; text uses codes like ASCII."
+      },
+      {
+        "title": "! Logic gates",
+        "text": "AND needs both inputs to be 1. OR needs at least one input to be 1. NOT flips the input to its opposite."
+      },
+      {
+        "title": "! Responsibility",
+        "text": "AI is a tool. Use it honestly and fairly, protect people's privacy and dignity, and let it assist your thinking without ever replacing it."
+      }
+    ],
+    "terms": [
+      [
+        "Software",
+        "The programs and instructions that tell a device what to do. You cannot touch software."
+      ],
+      [
+        "Hardware",
+        "The physical parts of a device that you can touch, such as the screen, keyboard and battery."
+      ],
+      [
+        "Systems software",
+        "Software that runs and manages the device itself, for example the operating system."
+      ],
+      [
+        "Operating system",
+        "The most important systems software; it manages the hardware and lets you use other programs."
+      ],
+      [
+        "Application software",
+        "Software that helps you do a task you want to do, such as a browser or a camera app."
+      ],
+      [
+        "Artificial intelligence (AI)",
+        "Technology that lets a computer act or think in a way similar to a human."
+      ],
+      [
+        "Machine learning",
+        "A type of AI that learns and improves by finding patterns in large amounts of data."
+      ],
+      [
+        "Automate",
+        "To let a device complete a task on its own, with little or no human help."
+      ],
+      [
+        "Image recognition",
+        "A computer identifying objects by studying the lines, colours, textures and shapes in a picture."
+      ],
+      [
+        "Sensor",
+        "A device that gathers data from its surroundings, such as temperature, light or distance."
+      ],
+      [
+        "Binary",
+        "A number system using only 0 and 1; the only language a computer truly understands."
+      ],
+      [
+        "Bit",
+        "A single binary digit, either 0 or 1. The smallest piece of data."
+      ],
+      [
+        "Byte",
+        "A group of 8 bits. Enough to store one character, such as the letter A."
+      ],
+      [
+        "Pixel",
+        "Short for 'picture element'; one tiny dot in a bitmap image."
+      ],
+      [
+        "Logic gate",
+        "A tiny circuit that takes one or two inputs and produces a single output, using Boolean logic."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "Software",
+        "meaning": "The programs and instructions that tell a device what to do. You cannot touch software.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "Hardware",
+        "meaning": "The physical parts of a device that you can touch, such as the screen, keyboard and battery.",
+        "example": "",
+        "letter": "H"
+      },
+      {
+        "term": "Systems software",
+        "meaning": "Software that runs and manages the device itself, for example the operating system.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "Operating system",
+        "meaning": "The most important systems software; it manages the hardware and lets you use other programs.",
+        "example": "",
+        "letter": "O"
+      },
+      {
+        "term": "Application software",
+        "meaning": "Software that helps you do a task you want to do, such as a browser or a camera app.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "Artificial intelligence (AI)",
+        "meaning": "Technology that lets a computer act or think in a way similar to a human.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "Machine learning",
+        "meaning": "A type of AI that learns and improves by finding patterns in large amounts of data.",
+        "example": "",
+        "letter": "M"
+      },
+      {
+        "term": "Automate",
+        "meaning": "To let a device complete a task on its own, with little or no human help.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "Image recognition",
+        "meaning": "A computer identifying objects by studying the lines, colours, textures and shapes in a picture.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "Sensor",
+        "meaning": "A device that gathers data from its surroundings, such as temperature, light or distance.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "Binary",
+        "meaning": "A number system using only 0 and 1; the only language a computer truly understands.",
+        "example": "",
+        "letter": "B"
+      },
+      {
+        "term": "Bit",
+        "meaning": "A single binary digit, either 0 or 1. The smallest piece of data.",
+        "example": "",
+        "letter": "B"
+      },
+      {
+        "term": "Byte",
+        "meaning": "A group of 8 bits. Enough to store one character, such as the letter A.",
+        "example": "",
+        "letter": "B"
+      },
+      {
+        "term": "Pixel",
+        "meaning": "Short for 'picture element'; one tiny dot in a bitmap image.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "Logic gate",
+        "meaning": "A tiny circuit that takes one or two inputs and produces a single output, using Boolean logic.",
+        "example": "",
+        "letter": "L"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "As you learn, watch out for these common mix",
+        "ups. Getting them right will make you stand out."
+      ],
+      [
+        "Make a keywords card. Write each keyword and a one",
+        "Review it daily. Line definition in your own words."
+      ],
+      [
+        "Learn (15",
+        "20 minutes). Pause to ask your AI tutor about anything unclear. Read one concept from this guide slowly."
+      ],
+      [
+        "Practise (15",
+        "20 minutes). Complete the matching activity from your Activities booklet, or a few questions from Practice & Quiz."
+      ],
+      [
+        "Twice a week",
+        "bring your notes and questions to your teacher session and discuss your Final Project progress."
+      ],
+      [
+        "Your next unit is 7.6 Sequencing and Pattern Recognition",
+        "Getting the Message Across. There you will return to text-based programming with MicroPython, controlling a small physical device called the micro:bit. You will create a light sequence to send a message and learn to spot and reuse patterns to design a visual alarm. (If you do not have a physical micro:bit, a free online simulator lets you do everything in your web browser.)"
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Which of these is systems software? (a) A web browser (b) An operating system (c) A game (d) A camera app",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Application software is best described as software that: (a) manages the hardware (b) starts automatically when you switch on (c) helps the user do a specific task (d) is impossible to remove",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Artificial intelligence is best described as: (a) any robot (b) technology that lets a computer act or think in a human-like way (c) the physical parts of a computer (d) a type of battery",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "The ability of an AI to learn and improve from data is called: (a) hardware (b) machine learning (c) a logic gate (d) resolution",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "A single binary digit (0 or 1) is called a: (a) byte (b) pixel (c) bit (d) file",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "How many bits are in one byte? (a) 2 (b) 4 (c) 8 (d) 16",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "A tiny dot that makes up a bitmap image is a: (a) vector (b) pixel (c) sensor (d) gate",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "The number of bits used to represent the colour of a pixel is the: (a) resolution (b) colour depth (c) bandwidth (d) byte",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "Which sensor would best help a driverless car detect an obstacle just ahead? (a) humidity (b) proximity (c) temperature (d) tilt",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "An AND gate outputs 1 only when: (a) either input is 1 (b) both inputs are 1 (c) the input is 0 (d) neither input is 1",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "A NOT gate always outputs: (a) 1 (b) 0 (c) the same as its input (d) the opposite of its input",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "Which is the correct order from smallest to largest? (a) byte, bit, KB, MB (b) bit, byte, KB, MB (c) bit, KB, byte, MB (d) MB, KB, byte, bit",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what Software and Hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Sami's farm: Sami photographs a sorghum leaf and an app tells him it may be diseased. Explain, using the image-recognition steps, how the app decides this. Name the input, the process and the output.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — Software, Hardware, Systems software — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "Nadia's market: Nadia wants a system to sort dates into ripe, unripe and damaged. Suggest which sensor(s) and which AI feature it should use, and describe one benefit and one concern.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — Software, Hardware, Systems software — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Storage worry: A clinic wants to store thousands of X-ray images. Explain why higher-resolution images need more storage, and suggest one sensible trade-off.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — Software, Hardware, Systems software — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "Fair use: A shopping app tracks everything Maya searches for and shows her adverts. Give one benefit and one privacy concern, and one thing the app should do to be fair.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — Software, Hardware, Systems software — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Travel",
+      "prompt": "Show your working.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — Software, Hardware, Systems software — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "context": "Health",
+      "prompt": "How many bits are needed to store a 10 by 10 bitmap with a colour depth of 1? Convert your answer to bytes.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — Software, Hardware, Systems software — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Android (the whole operating system)",
+      "keyIdeas": [
+        "Software",
+        "Hardware",
+        "Systems software"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A web browser",
+      "keyIdeas": [
+        "Hardware",
+        "Systems software",
+        "Operating system"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Antivirus program",
+      "keyIdeas": [
+        "Systems software",
+        "Operating system",
+        "Application software"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "A spreadsheet program",
+      "keyIdeas": [
+        "Operating system",
+        "Application software",
+        "Artificial intelligence (AI)"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "A file manager",
+      "keyIdeas": [
+        "Application software",
+        "Artificial intelligence (AI)",
+        "Machine learning"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "A mobile game",
+      "keyIdeas": [
+        "Artificial intelligence (AI)",
+        "Machine learning",
+        "Automate"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "project": {
+    "title": "Unit 5 Project: Living with AI: Digital Data",
+    "brief": "Bring together everything from Living with AI: Digital Data into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your living with ai: digital data project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "My project shows that I understand systems software and application software.",
+      "My project shows that I understand what is artificial intelligence?.",
+      "My project shows that I understand ai across industries.",
+      "My project shows that I understand how ai collects data — sensors.",
+      "My project shows that I understand how image recognition works, step by step."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “Software” mean in computing?",
+        "options": [
+          "The programs and instructions that tell a device what to do. You cannot touch software.",
+          "The physical parts of a device that you can touch, such as the screen, keyboard and battery.",
+          "Software that runs and manages the device itself, for example the operating system.",
+          "The most important systems software; it manages the hardware and lets you use other programs."
+        ],
+        "answer": "The programs and instructions that tell a device what to do. You cannot touch software.",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Software means the programs and instructions that tell a device what to do. You cannot touch software."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “Hardware” mean in computing?",
+        "options": [
+          "The physical parts of a device that you can touch, such as the screen, keyboard and battery.",
+          "Software that runs and manages the device itself, for example the operating system.",
+          "The most important systems software; it manages the hardware and lets you use other programs.",
+          "Software that helps you do a task you want to do, such as a browser or a camera app."
+        ],
+        "answer": "The physical parts of a device that you can touch, such as the screen, keyboard and battery.",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Hardware means the physical parts of a device that you can touch, such as the screen, keyboard and battery."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “Systems software” mean in computing?",
+        "options": [
+          "Software that runs and manages the device itself, for example the operating system.",
+          "The most important systems software; it manages the hardware and lets you use other programs.",
+          "Software that helps you do a task you want to do, such as a browser or a camera app.",
+          "Technology that lets a computer act or think in a way similar to a human."
+        ],
+        "answer": "Software that runs and manages the device itself, for example the operating system.",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Systems software means software that runs and manages the device itself, for example the operating system."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “Operating system” mean in computing?",
+        "options": [
+          "The most important systems software; it manages the hardware and lets you use other programs.",
+          "Software that helps you do a task you want to do, such as a browser or a camera app.",
+          "Technology that lets a computer act or think in a way similar to a human.",
+          "A type of AI that learns and improves by finding patterns in large amounts of data."
+        ],
+        "answer": "The most important systems software; it manages the hardware and lets you use other programs.",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Operating system means the most important systems software; it manages the hardware and lets you use other programs."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Application software” mean in computing?",
+        "options": [
+          "Software that helps you do a task you want to do, such as a browser or a camera app.",
+          "Technology that lets a computer act or think in a way similar to a human.",
+          "A type of AI that learns and improves by finding patterns in large amounts of data.",
+          "To let a device complete a task on its own, with little or no human help."
+        ],
+        "answer": "Software that helps you do a task you want to do, such as a browser or a camera app.",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Application software means software that helps you do a task you want to do, such as a browser or a camera app."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “Artificial intelligence (AI)” mean in computing?",
+        "options": [
+          "Technology that lets a computer act or think in a way similar to a human.",
+          "A type of AI that learns and improves by finding patterns in large amounts of data.",
+          "To let a device complete a task on its own, with little or no human help.",
+          "A computer identifying objects by studying the lines, colours, textures and shapes in a picture."
+        ],
+        "answer": "Technology that lets a computer act or think in a way similar to a human.",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Artificial intelligence (AI) means technology that lets a computer act or think in a way similar to a human."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A type of AI that learns and improves by finding patterns in large amounts of data.?",
+        "options": [
+          "Machine learning",
+          "Automate",
+          "Image recognition",
+          "Sensor"
+        ],
+        "answer": "Machine learning",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Machine learning means a type of AI that learns and improves by finding patterns in large amounts of data."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: To let a device complete a task on its own, with little or no human help.?",
+        "options": [
+          "Automate",
+          "Image recognition",
+          "Sensor",
+          "Binary"
+        ],
+        "answer": "Automate",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Automate means to let a device complete a task on its own, with little or no human help."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo09",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A computer identifying objects by studying the lines, colours, textures and shapes in a picture.?",
+        "options": [
+          "Image recognition",
+          "Sensor",
+          "Binary",
+          "Bit"
+        ],
+        "answer": "Image recognition",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Image recognition means a computer identifying objects by studying the lines, colours, textures and shapes in a picture."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A device that gathers data from its surroundings, such as temperature, light or distance.?",
+        "options": [
+          "Sensor",
+          "Binary",
+          "Bit",
+          "Byte"
+        ],
+        "answer": "Sensor",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Sensor means a device that gathers data from its surroundings, such as temperature, light or distance."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A number system using only 0 and 1; the only language a computer truly understands.?",
+        "options": [
+          "Binary",
+          "Bit",
+          "Byte",
+          "Pixel"
+        ],
+        "answer": "Binary",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Binary means a number system using only 0 and 1; the only language a computer truly understands."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A single binary digit, either 0 or 1. The smallest piece of data.?",
+        "options": [
+          "Bit",
+          "Byte",
+          "Pixel",
+          "Logic gate"
+        ],
+        "answer": "Bit",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Bit means a single binary digit, either 0 or 1. The smallest piece of data."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u5-game-1",
+        "icon": "?",
+        "skill": "Software",
+        "title": "Quick Match: Software",
+        "description": "Practise software through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Software” mean in computing?",
+            "choices": [
+              "The programs and instructions that tell a device what to do. You cannot touch software.",
+              "The physical parts of a device that you can touch, such as the screen, keyboard and battery.",
+              "Software that runs and manages the device itself, for example the operating system.",
+              "The most important systems software; it manages the hardware and lets you use other programs."
+            ],
+            "answer": "The programs and instructions that tell a device what to do. You cannot touch software.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Software means the programs and instructions that tell a device what to do. You cannot touch software."
+          },
+          {
+            "prompt": "What does “Operating system” mean in computing?",
+            "choices": [
+              "The most important systems software; it manages the hardware and lets you use other programs.",
+              "Software that helps you do a task you want to do, such as a browser or a camera app.",
+              "Technology that lets a computer act or think in a way similar to a human.",
+              "A type of AI that learns and improves by finding patterns in large amounts of data."
+            ],
+            "answer": "The most important systems software; it manages the hardware and lets you use other programs.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Operating system means the most important systems software; it manages the hardware and lets you use other programs."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A type of AI that learns and improves by finding patterns in large amounts of data.?",
+            "choices": [
+              "Machine learning",
+              "Automate",
+              "Image recognition",
+              "Sensor"
+            ],
+            "answer": "Machine learning",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Machine learning means a type of AI that learns and improves by finding patterns in large amounts of data."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A device that gathers data from its surroundings, such as temperature, light or distance.?",
+            "choices": [
+              "Sensor",
+              "Binary",
+              "Bit",
+              "Byte"
+            ],
+            "answer": "Sensor",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Sensor means a device that gathers data from its surroundings, such as temperature, light or distance."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-2",
+        "icon": "★",
+        "skill": "Hardware",
+        "title": "Concept Quest: Hardware",
+        "description": "Practise hardware through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Hardware” mean in computing?",
+            "choices": [
+              "The physical parts of a device that you can touch, such as the screen, keyboard and battery.",
+              "Software that runs and manages the device itself, for example the operating system.",
+              "The most important systems software; it manages the hardware and lets you use other programs.",
+              "Software that helps you do a task you want to do, such as a browser or a camera app."
+            ],
+            "answer": "The physical parts of a device that you can touch, such as the screen, keyboard and battery.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Hardware means the physical parts of a device that you can touch, such as the screen, keyboard and battery."
+          },
+          {
+            "prompt": "What does “Application software” mean in computing?",
+            "choices": [
+              "Software that helps you do a task you want to do, such as a browser or a camera app.",
+              "Technology that lets a computer act or think in a way similar to a human.",
+              "A type of AI that learns and improves by finding patterns in large amounts of data.",
+              "To let a device complete a task on its own, with little or no human help."
+            ],
+            "answer": "Software that helps you do a task you want to do, such as a browser or a camera app.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Application software means software that helps you do a task you want to do, such as a browser or a camera app."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To let a device complete a task on its own, with little or no human help.?",
+            "choices": [
+              "Automate",
+              "Image recognition",
+              "Sensor",
+              "Binary"
+            ],
+            "answer": "Automate",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Automate means to let a device complete a task on its own, with little or no human help."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A number system using only 0 and 1; the only language a computer truly understands.?",
+            "choices": [
+              "Binary",
+              "Bit",
+              "Byte",
+              "Pixel"
+            ],
+            "answer": "Binary",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Binary means a number system using only 0 and 1; the only language a computer truly understands."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-3",
+        "icon": "◫",
+        "skill": "Systems software",
+        "title": "Debug Detective: Systems software",
+        "description": "Practise systems software through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Systems software” mean in computing?",
+            "choices": [
+              "Software that runs and manages the device itself, for example the operating system.",
+              "The most important systems software; it manages the hardware and lets you use other programs.",
+              "Software that helps you do a task you want to do, such as a browser or a camera app.",
+              "Technology that lets a computer act or think in a way similar to a human."
+            ],
+            "answer": "Software that runs and manages the device itself, for example the operating system.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Systems software means software that runs and manages the device itself, for example the operating system."
+          },
+          {
+            "prompt": "What does “Artificial intelligence (AI)” mean in computing?",
+            "choices": [
+              "Technology that lets a computer act or think in a way similar to a human.",
+              "A type of AI that learns and improves by finding patterns in large amounts of data.",
+              "To let a device complete a task on its own, with little or no human help.",
+              "A computer identifying objects by studying the lines, colours, textures and shapes in a picture."
+            ],
+            "answer": "Technology that lets a computer act or think in a way similar to a human.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Artificial intelligence (AI) means technology that lets a computer act or think in a way similar to a human."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A computer identifying objects by studying the lines, colours, textures and shapes in a picture.?",
+            "choices": [
+              "Image recognition",
+              "Sensor",
+              "Binary",
+              "Bit"
+            ],
+            "answer": "Image recognition",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Image recognition means a computer identifying objects by studying the lines, colours, textures and shapes in a picture."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A single binary digit, either 0 or 1. The smallest piece of data.?",
+            "choices": [
+              "Bit",
+              "Byte",
+              "Pixel",
+              "Logic gate"
+            ],
+            "answer": "Bit",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Bit means a single binary digit, either 0 or 1. The smallest piece of data."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-4",
+        "icon": "→",
+        "skill": "Operating system",
+        "title": "Algorithm Runner: Operating system",
+        "description": "Practise operating system through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Operating system” mean in computing?",
+            "choices": [
+              "The most important systems software; it manages the hardware and lets you use other programs.",
+              "Software that helps you do a task you want to do, such as a browser or a camera app.",
+              "Technology that lets a computer act or think in a way similar to a human.",
+              "A type of AI that learns and improves by finding patterns in large amounts of data."
+            ],
+            "answer": "The most important systems software; it manages the hardware and lets you use other programs.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Operating system means the most important systems software; it manages the hardware and lets you use other programs."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A type of AI that learns and improves by finding patterns in large amounts of data.?",
+            "choices": [
+              "Machine learning",
+              "Automate",
+              "Image recognition",
+              "Sensor"
+            ],
+            "answer": "Machine learning",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Machine learning means a type of AI that learns and improves by finding patterns in large amounts of data."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A device that gathers data from its surroundings, such as temperature, light or distance.?",
+            "choices": [
+              "Sensor",
+              "Binary",
+              "Bit",
+              "Byte"
+            ],
+            "answer": "Sensor",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Sensor means a device that gathers data from its surroundings, such as temperature, light or distance."
+          },
+          {
+            "prompt": "What does “Software” mean in computing?",
+            "choices": [
+              "The programs and instructions that tell a device what to do. You cannot touch software.",
+              "The physical parts of a device that you can touch, such as the screen, keyboard and battery.",
+              "Software that runs and manages the device itself, for example the operating system.",
+              "The most important systems software; it manages the hardware and lets you use other programs."
+            ],
+            "answer": "The programs and instructions that tell a device what to do. You cannot touch software.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Software means the programs and instructions that tell a device what to do. You cannot touch software."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-5",
+        "icon": "Σ",
+        "skill": "Application software",
+        "title": "Vocabulary Vault: Application software",
+        "description": "Practise application software through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Application software” mean in computing?",
+            "choices": [
+              "Software that helps you do a task you want to do, such as a browser or a camera app.",
+              "Technology that lets a computer act or think in a way similar to a human.",
+              "A type of AI that learns and improves by finding patterns in large amounts of data.",
+              "To let a device complete a task on its own, with little or no human help."
+            ],
+            "answer": "Software that helps you do a task you want to do, such as a browser or a camera app.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Application software means software that helps you do a task you want to do, such as a browser or a camera app."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To let a device complete a task on its own, with little or no human help.?",
+            "choices": [
+              "Automate",
+              "Image recognition",
+              "Sensor",
+              "Binary"
+            ],
+            "answer": "Automate",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Automate means to let a device complete a task on its own, with little or no human help."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A number system using only 0 and 1; the only language a computer truly understands.?",
+            "choices": [
+              "Binary",
+              "Bit",
+              "Byte",
+              "Pixel"
+            ],
+            "answer": "Binary",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Binary means a number system using only 0 and 1; the only language a computer truly understands."
+          },
+          {
+            "prompt": "What does “Hardware” mean in computing?",
+            "choices": [
+              "The physical parts of a device that you can touch, such as the screen, keyboard and battery.",
+              "Software that runs and manages the device itself, for example the operating system.",
+              "The most important systems software; it manages the hardware and lets you use other programs.",
+              "Software that helps you do a task you want to do, such as a browser or a camera app."
+            ],
+            "answer": "The physical parts of a device that you can touch, such as the screen, keyboard and battery.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Hardware means the physical parts of a device that you can touch, such as the screen, keyboard and battery."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-6",
+        "icon": "◇",
+        "skill": "Artificial intelligence (AI)",
+        "title": "Challenge Cards: Artificial intelligence (AI)",
+        "description": "Practise artificial intelligence (ai) through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Artificial intelligence (AI)” mean in computing?",
+            "choices": [
+              "Technology that lets a computer act or think in a way similar to a human.",
+              "A type of AI that learns and improves by finding patterns in large amounts of data.",
+              "To let a device complete a task on its own, with little or no human help.",
+              "A computer identifying objects by studying the lines, colours, textures and shapes in a picture."
+            ],
+            "answer": "Technology that lets a computer act or think in a way similar to a human.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Artificial intelligence (AI) means technology that lets a computer act or think in a way similar to a human."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A computer identifying objects by studying the lines, colours, textures and shapes in a picture.?",
+            "choices": [
+              "Image recognition",
+              "Sensor",
+              "Binary",
+              "Bit"
+            ],
+            "answer": "Image recognition",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Image recognition means a computer identifying objects by studying the lines, colours, textures and shapes in a picture."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A single binary digit, either 0 or 1. The smallest piece of data.?",
+            "choices": [
+              "Bit",
+              "Byte",
+              "Pixel",
+              "Logic gate"
+            ],
+            "answer": "Bit",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Bit means a single binary digit, either 0 or 1. The smallest piece of data."
+          },
+          {
+            "prompt": "What does “Systems software” mean in computing?",
+            "choices": [
+              "Software that runs and manages the device itself, for example the operating system.",
+              "The most important systems software; it manages the hardware and lets you use other programs.",
+              "Software that helps you do a task you want to do, such as a browser or a camera app.",
+              "Technology that lets a computer act or think in a way similar to a human."
+            ],
+            "answer": "Software that runs and manages the device itself, for example the operating system.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Systems software means software that runs and manages the device itself, for example the operating system."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-7",
+        "icon": "⚡",
+        "skill": "Machine learning",
+        "title": "Think Fast: Machine learning",
+        "description": "Practise machine learning through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A type of AI that learns and improves by finding patterns in large amounts of data.?",
+            "choices": [
+              "Machine learning",
+              "Automate",
+              "Image recognition",
+              "Sensor"
+            ],
+            "answer": "Machine learning",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Machine learning means a type of AI that learns and improves by finding patterns in large amounts of data."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A device that gathers data from its surroundings, such as temperature, light or distance.?",
+            "choices": [
+              "Sensor",
+              "Binary",
+              "Bit",
+              "Byte"
+            ],
+            "answer": "Sensor",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Sensor means a device that gathers data from its surroundings, such as temperature, light or distance."
+          },
+          {
+            "prompt": "What does “Software” mean in computing?",
+            "choices": [
+              "The programs and instructions that tell a device what to do. You cannot touch software.",
+              "The physical parts of a device that you can touch, such as the screen, keyboard and battery.",
+              "Software that runs and manages the device itself, for example the operating system.",
+              "The most important systems software; it manages the hardware and lets you use other programs."
+            ],
+            "answer": "The programs and instructions that tell a device what to do. You cannot touch software.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Software means the programs and instructions that tell a device what to do. You cannot touch software."
+          },
+          {
+            "prompt": "What does “Operating system” mean in computing?",
+            "choices": [
+              "The most important systems software; it manages the hardware and lets you use other programs.",
+              "Software that helps you do a task you want to do, such as a browser or a camera app.",
+              "Technology that lets a computer act or think in a way similar to a human.",
+              "A type of AI that learns and improves by finding patterns in large amounts of data."
+            ],
+            "answer": "The most important systems software; it manages the hardware and lets you use other programs.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Operating system means the most important systems software; it manages the hardware and lets you use other programs."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-8",
+        "icon": "☁",
+        "skill": "Automate",
+        "title": "Explain It: Automate",
+        "description": "Practise automate through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To let a device complete a task on its own, with little or no human help.?",
+            "choices": [
+              "Automate",
+              "Image recognition",
+              "Sensor",
+              "Binary"
+            ],
+            "answer": "Automate",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Automate means to let a device complete a task on its own, with little or no human help."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A number system using only 0 and 1; the only language a computer truly understands.?",
+            "choices": [
+              "Binary",
+              "Bit",
+              "Byte",
+              "Pixel"
+            ],
+            "answer": "Binary",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Binary means a number system using only 0 and 1; the only language a computer truly understands."
+          },
+          {
+            "prompt": "What does “Hardware” mean in computing?",
+            "choices": [
+              "The physical parts of a device that you can touch, such as the screen, keyboard and battery.",
+              "Software that runs and manages the device itself, for example the operating system.",
+              "The most important systems software; it manages the hardware and lets you use other programs.",
+              "Software that helps you do a task you want to do, such as a browser or a camera app."
+            ],
+            "answer": "The physical parts of a device that you can touch, such as the screen, keyboard and battery.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Hardware means the physical parts of a device that you can touch, such as the screen, keyboard and battery."
+          },
+          {
+            "prompt": "What does “Application software” mean in computing?",
+            "choices": [
+              "Software that helps you do a task you want to do, such as a browser or a camera app.",
+              "Technology that lets a computer act or think in a way similar to a human.",
+              "A type of AI that learns and improves by finding patterns in large amounts of data.",
+              "To let a device complete a task on its own, with little or no human help."
+            ],
+            "answer": "Software that helps you do a task you want to do, such as a browser or a camera app.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Application software means software that helps you do a task you want to do, such as a browser or a camera app."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-9",
+        "icon": "⌂",
+        "skill": "Image recognition",
+        "title": "Real-Life Round: Image recognition",
+        "description": "Practise image recognition through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A computer identifying objects by studying the lines, colours, textures and shapes in a picture.?",
+            "choices": [
+              "Image recognition",
+              "Sensor",
+              "Binary",
+              "Bit"
+            ],
+            "answer": "Image recognition",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Image recognition means a computer identifying objects by studying the lines, colours, textures and shapes in a picture."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A single binary digit, either 0 or 1. The smallest piece of data.?",
+            "choices": [
+              "Bit",
+              "Byte",
+              "Pixel",
+              "Logic gate"
+            ],
+            "answer": "Bit",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Bit means a single binary digit, either 0 or 1. The smallest piece of data."
+          },
+          {
+            "prompt": "What does “Systems software” mean in computing?",
+            "choices": [
+              "Software that runs and manages the device itself, for example the operating system.",
+              "The most important systems software; it manages the hardware and lets you use other programs.",
+              "Software that helps you do a task you want to do, such as a browser or a camera app.",
+              "Technology that lets a computer act or think in a way similar to a human."
+            ],
+            "answer": "Software that runs and manages the device itself, for example the operating system.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Systems software means software that runs and manages the device itself, for example the operating system."
+          },
+          {
+            "prompt": "What does “Artificial intelligence (AI)” mean in computing?",
+            "choices": [
+              "Technology that lets a computer act or think in a way similar to a human.",
+              "A type of AI that learns and improves by finding patterns in large amounts of data.",
+              "To let a device complete a task on its own, with little or no human help.",
+              "A computer identifying objects by studying the lines, colours, textures and shapes in a picture."
+            ],
+            "answer": "Technology that lets a computer act or think in a way similar to a human.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Artificial intelligence (AI) means technology that lets a computer act or think in a way similar to a human."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-10",
+        "icon": "!",
+        "skill": "Sensor",
+        "title": "Spot the Bug: Sensor",
+        "description": "Practise sensor through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A device that gathers data from its surroundings, such as temperature, light or distance.?",
+            "choices": [
+              "Sensor",
+              "Binary",
+              "Bit",
+              "Byte"
+            ],
+            "answer": "Sensor",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Sensor means a device that gathers data from its surroundings, such as temperature, light or distance."
+          },
+          {
+            "prompt": "What does “Software” mean in computing?",
+            "choices": [
+              "The programs and instructions that tell a device what to do. You cannot touch software.",
+              "The physical parts of a device that you can touch, such as the screen, keyboard and battery.",
+              "Software that runs and manages the device itself, for example the operating system.",
+              "The most important systems software; it manages the hardware and lets you use other programs."
+            ],
+            "answer": "The programs and instructions that tell a device what to do. You cannot touch software.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Software means the programs and instructions that tell a device what to do. You cannot touch software."
+          },
+          {
+            "prompt": "What does “Operating system” mean in computing?",
+            "choices": [
+              "The most important systems software; it manages the hardware and lets you use other programs.",
+              "Software that helps you do a task you want to do, such as a browser or a camera app.",
+              "Technology that lets a computer act or think in a way similar to a human.",
+              "A type of AI that learns and improves by finding patterns in large amounts of data."
+            ],
+            "answer": "The most important systems software; it manages the hardware and lets you use other programs.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Operating system means the most important systems software; it manages the hardware and lets you use other programs."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A type of AI that learns and improves by finding patterns in large amounts of data.?",
+            "choices": [
+              "Machine learning",
+              "Automate",
+              "Image recognition",
+              "Sensor"
+            ],
+            "answer": "Machine learning",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Machine learning means a type of AI that learns and improves by finding patterns in large amounts of data."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-11",
+        "icon": "≡",
+        "skill": "Binary",
+        "title": "Mastery Mix: Binary",
+        "description": "Practise binary through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A number system using only 0 and 1; the only language a computer truly understands.?",
+            "choices": [
+              "Binary",
+              "Bit",
+              "Byte",
+              "Pixel"
+            ],
+            "answer": "Binary",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Binary means a number system using only 0 and 1; the only language a computer truly understands."
+          },
+          {
+            "prompt": "What does “Hardware” mean in computing?",
+            "choices": [
+              "The physical parts of a device that you can touch, such as the screen, keyboard and battery.",
+              "Software that runs and manages the device itself, for example the operating system.",
+              "The most important systems software; it manages the hardware and lets you use other programs.",
+              "Software that helps you do a task you want to do, such as a browser or a camera app."
+            ],
+            "answer": "The physical parts of a device that you can touch, such as the screen, keyboard and battery.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Hardware means the physical parts of a device that you can touch, such as the screen, keyboard and battery."
+          },
+          {
+            "prompt": "What does “Application software” mean in computing?",
+            "choices": [
+              "Software that helps you do a task you want to do, such as a browser or a camera app.",
+              "Technology that lets a computer act or think in a way similar to a human.",
+              "A type of AI that learns and improves by finding patterns in large amounts of data.",
+              "To let a device complete a task on its own, with little or no human help."
+            ],
+            "answer": "Software that helps you do a task you want to do, such as a browser or a camera app.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Application software means software that helps you do a task you want to do, such as a browser or a camera app."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To let a device complete a task on its own, with little or no human help.?",
+            "choices": [
+              "Automate",
+              "Image recognition",
+              "Sensor",
+              "Binary"
+            ],
+            "answer": "Automate",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Automate means to let a device complete a task on its own, with little or no human help."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-12",
+        "icon": "T",
+        "skill": "Bit",
+        "title": "Unit Champion: Bit",
+        "description": "Practise bit through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A single binary digit, either 0 or 1. The smallest piece of data.?",
+            "choices": [
+              "Bit",
+              "Byte",
+              "Pixel",
+              "Logic gate"
+            ],
+            "answer": "Bit",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Bit means a single binary digit, either 0 or 1. The smallest piece of data."
+          },
+          {
+            "prompt": "What does “Systems software” mean in computing?",
+            "choices": [
+              "Software that runs and manages the device itself, for example the operating system.",
+              "The most important systems software; it manages the hardware and lets you use other programs.",
+              "Software that helps you do a task you want to do, such as a browser or a camera app.",
+              "Technology that lets a computer act or think in a way similar to a human."
+            ],
+            "answer": "Software that runs and manages the device itself, for example the operating system.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Systems software means software that runs and manages the device itself, for example the operating system."
+          },
+          {
+            "prompt": "What does “Artificial intelligence (AI)” mean in computing?",
+            "choices": [
+              "Technology that lets a computer act or think in a way similar to a human.",
+              "A type of AI that learns and improves by finding patterns in large amounts of data.",
+              "To let a device complete a task on its own, with little or no human help.",
+              "A computer identifying objects by studying the lines, colours, textures and shapes in a picture."
+            ],
+            "answer": "Technology that lets a computer act or think in a way similar to a human.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Artificial intelligence (AI) means technology that lets a computer act or think in a way similar to a human."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A computer identifying objects by studying the lines, colours, textures and shapes in a picture.?",
+            "choices": [
+              "Image recognition",
+              "Sensor",
+              "Binary",
+              "Bit"
+            ],
+            "answer": "Image recognition",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Image recognition means a computer identifying objects by studying the lines, colours, textures and shapes in a picture."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can explain the difference between systems software and application software, and give examples of each.",
+    "I can explain what artificial intelligence (AI) means in your own words.",
+    "I can describe how AI uses information from its surroundings (input) to make a decision (process) and produce a result (output).",
+    "I can evaluate the design of a device or an AI system and suggest improvements.",
+    "I can explain how AI works in a range of everyday applications.",
+    "I can explain how AI helps automate tasks in industries such as farming, health, transport and business.",
+    "I can explain how image recognition is used in AI applications, step by step.",
+    "I can describe how an analogue image is converted into digital format using pixels.",
+    "I can explain what a binary number is and how it represents images, sound, text and numbers.",
+    "I can explain how data storage is measured, from a single bit up to a terabyte."
+  ]
+}

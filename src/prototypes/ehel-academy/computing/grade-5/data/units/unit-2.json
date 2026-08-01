@@ -1,0 +1,2302 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.887Z",
+  "stage": {
+    "id": "s05",
+    "label": "Stage 5"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t01",
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "comp-g05-u02",
+    "unitNo": 2,
+    "unitTitle": "Managing Data",
+    "unitOverview": "In this unit — Managing Data — you will work through collecting and storing data, data and information are not the same, the tools we use to collect and store data, a free, open, restricting cells, representing data, bar charts, the parts of a chart, a formula that uses cell references, worked example: ehel academy test scores, average of test 1, using data, worked example: aunt nora's juice shop in hargeisa and changing one cell updates every formula that uses it. Everything you need is here: explainers to read, examples to copy, things to build, practice with answers, and a project at the end. Every tool used is free and runs in a web browser.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 5
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-5-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 5",
+    "sourceArchive": "Year 5-20260801T055755Z-1-001.zip",
+    "sourceAudience": "student",
+    "sourceDocuments": [
+      "Year 5/Unit 2/Year 5 - Unit 2 Lesson.docx",
+      "Year 5/Unit 2/Year 5 - Unit 2 Activities & Projects.docx",
+      "Year 5/Unit 2/Year 5 - Unit 2 Practice & Quiz.docx",
+      "Year 5/Unit 2/Year 5 - Unit 2 Reference.docx"
+    ],
+    "sourceBlockCount": 1282,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 5 Lesson, Activities & Projects, Practice & Quiz and Reference booklets for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Describe the computing tools you can use in a statistical investigation.",
+    "Explain the difference between data and information.",
+    "Use questions and forms to collect different types of data.",
+    "Use validation rules in spreadsheet cells to help avoid mistakes in your data.",
+    "Use arithmetic operators (+, -, *, /) in spreadsheet calculations.",
+    "Write formulas using cell references, and use the built-in functions SUM and AVERAGE.",
+    "Explain what happens to calculations and charts when you change the data in a spreadsheet.",
+    "Use your data skills together to run a full data investigation for a small business.",
+    "Explain the difference between categorical, discrete and continuous data using fruit and temperature as examples.",
+    "Use a cell reference (like B3) in a formula, and the answer updates by itself when that cell changes."
+  ],
+  "toolkit": [
+    {
+      "name": "A free spreadsheet",
+      "url": "Google Sheets, or LibreOffice Calc",
+      "steps": [
+        "Open a new blank spreadsheet.",
+        "Put your field names in row 1, one per column.",
+        "Type one record per row underneath.",
+        "Use Insert → Chart to turn your data into a graph."
+      ],
+      "note": "Any free spreadsheet works — the ideas are the same in all of them."
+    },
+    {
+      "name": "A simple database",
+      "url": "A spreadsheet in database layout, or LibreOffice Base",
+      "steps": [
+        "Give every field a clear name and one kind of data.",
+        "Enter one record per row.",
+        "Sort on a field to put records in order.",
+        "Filter or search to find the records that match a condition."
+      ],
+      "note": "A spreadsheet laid out with fields and records works as a database for this unit."
+    }
+  ],
+  "tutorPrompts": [
+    "I have installed LibreOffice. Can you tell me in one simple sentence what LibreOffice Calc is for?",
+    "What does the .ods file ending mean, and why is a free, open file format a good thing?",
+    "In LibreOffice Calc, how do I use Data Validity to make a cell accept only a whole number between 1 and 5?",
+    "Explain the difference between categorical, discrete and continuous data using fruit and temperature as examples.",
+    "I typed SUM(B2:B6) but nothing happened. What did I forget at the very start of the formula?",
+    "Explain the difference between the SUM function and the AVERAGE function using my test scores as an example.",
+    "In LibreOffice Calc, what is the difference between Ctrl+F and Find & Replace with Find All?",
+    "Give me a real example of how a shop near me could use search criteria to help its customers."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-collecting-and-storing-data",
+      "title": "Collecting and Storing Data",
+      "explanation": "Before you can manage data, you have to collect it. And before you collect it, you have to plan. Good data managers never just grab numbers randomly; they think carefully about what they want to find out and how they will find it out. This careful, planned way of collecting data is called a statistical investigation.\n\nWhat is a statistical investigation?\n\nA statistical investigation is when we collect data to answer a question. The data we collect is called statistics. For example, an ice-cream shop owner might ask, 'Which flavour of ice cream is the most popular?' To find out, she counts how many scoops of each flavour she sells, and then she analyses that data. To analyse data means to look closely at it, find patterns in it, and think carefully about what it means. This is useful, because once she knows the most popular flavour she can buy more of it and never run out.",
+      "example": "In our scenario, Leila is doing a statistical investigation. Her question is, 'What is the favourite fruit of the learners in my class?' She will collect data from her classmates, store it neatly, and then analyse it to find the answer."
+    },
+    {
+      "id": "concept-2-data-and-information-are-not-the-same",
+      "title": "Data and information are not the same",
+      "explanation": "Here is an idea that many people get muddled, so read it slowly. Data is meaningless facts or figures on their own, like the number 7 or the word green. By itself, green does not tell you anything useful. Information is data that has been given meaning. When we say 'green is the most popular colour in the class', that is information, because now the fact means something. Managing data well is really the art of turning plain data into useful information.\n\nHere is the key difference to remember. Discrete data is counted and is always a whole value — you cannot have half a pet or three-and-a-bit customers. Continuous data is measured and can be any value at all, like a temperature of 24.5 degrees or a height of 1.42 metres. In Leila's fruit investigation, the type of fruit ('mango', 'banana') is categorical, and the number of learners who chose each fruit is discrete. In Zane's temperature investigation, each reading is continuous.\n\nBefore you collect a single number, ask yourself four planning questions. Answering them first saves you a lot of trouble later.\n\nWhat data do I want to collect? For example, 'the favourite fruit of each learner in my class'.\n\nHow will I collect the data? With a form, a data logger, a survey, or a spreadsheet.\n\nHow will I organise the data? Usually by putting it into a spreadsheet in a sensible order.",
+      "example": "How will I use the data to get information? Perhaps by counting, calculating, and drawing a chart to make the pattern clear."
+    },
+    {
+      "id": "concept-3-the-tools-we-use-to-collect-and-store-data",
+      "title": "The tools we use to collect and store data",
+      "explanation": "Humans are not very good at collecting and organising lots of data by hand — we forget things, make mistakes, and it takes ages. Computers are far better: they do not forget, and they measure and calculate very quickly. Here are the most useful computing tools for a statistical investigation.\n\nData loggers — a data logger is a device that reads and records data from the world automatically (by itself, with no human help) and continuously (carrying on until you tell it to stop). It uses sensors. For example, a data logger could record the temperature of a fish tank every five minutes, all day and night. Data loggers are excellent for collecting continuous data like temperature, light level or a person's pulse.\n\nSpreadsheets — such as LibreOffice Calc. A spreadsheet stores data in a neat grid of cells, and it can add up columns, do other calculations, and draw charts in an instant. It is designed to make working with numbers easy.\n\nDatabases — a database stores related data of many types (not just numbers) in an organised way. It can be paper-based, like a diary or calendar, or digital. Databases make it easy to find, sort and analyse data, and they can hold enormous amounts — far more than a spreadsheet.\n\nForms — a form is a list of questions with spaces for people to mark or write their answers. A good form makes people enter their data in the same way, so it is easy to organise. Forms can be on paper or on a screen.\n\nDocument production tools — word processors and presentation programs let you put text and pictures together to make a report or a presentation, which is a good way to share the results of your investigation.\n\nA data logger works day and night without ever getting tired or bored.\n\nScientists put data loggers in places no human could stay, like the top of a mountain or the bottom of the sea, and leave them for months to record the temperature or the weather all by themselves.\n\nSome hotels use data loggers in a control system: when the temperature reaches 23 degrees a cooling system switches on by itself, and if it falls to 18 degrees the heating turns on.\n\nLet us help Leila. Her question is, 'What is the favourite fruit in my class?' She designs a simple form with one clear question — 'What is your favourite fruit?' — and a list of choices to tick: Mango, Banana, Orange, Watermelon, Dates, and a space for 'other'. Giving people a list of choices is clever, because it stops one person writing 'mango', another writing 'Mangoes' and another writing 'MANGO' — which would be three different answers to the computer, even though they mean the same fruit.\n\nAfter every classmate has filled in the form, Leila counts up the answers and stores them in a LibreOffice Calc spreadsheet. She organises the data in two columns — the fruit, and the number of learners who chose it — and sorts it from most popular to least popular:",
+      "example": "Now the data has become information. Leila can see straight away that mango is the favourite fruit in her class, chosen by 9 learners, and that dates were chosen by the fewest. The type of fruit is categorical data, and the number of learners who chose each fruit is discrete data. If Leila adds up the numbers 9 + 6 + 4 + 4 + 2, she finds that 25 learners answered her form altogether."
+    },
+    {
+      "id": "concept-4-a-free-open",
+      "title": "A free, open",
+      "explanation": "Some online form tools need an account and are not free or open-source. You do not need them! You can build a tidy digital data-entry form right inside LibreOffice Calc, using its validation rules. A validation rule is like a helpful gatekeeper: it only lets good data in. Here is how Leila makes the fruit column accept only the fruits on her list:\n\nType the heading Fruit in cell A1.\n\nSelect the cells where people will enter data, for example A2:A26.\n\nOn the Criteria tab, set Allow to List.\n\nIn the Entries box, type the choices, one per line: Mango, Banana, Orange, Watermelon, Dates.\n\nClick OK. Now every one of those cells shows a little drop-down arrow, and nobody can type a fruit that is not on the list or misspell one by accident.",
+      "example": "This is exactly how the online form's drop-down list works, but it is free and open-source and needs no account at all."
+    },
+    {
+      "id": "concept-5-restricting-cells",
+      "title": "Restricting cells",
+      "explanation": "It is very easy to enter data incorrectly. If Zara typed a birthday as 3112 instead of 31/12, she would never find that birthday again when she searched. If Karim typed ouzzle instead of puzzle, the spreadsheet would treat it as a different word. Validation rules limit the kind of data a cell will accept, and this stops many of these mistakes before they happen. In LibreOffice Calc you set them with Data > Validity. A cell can be made to accept:\n\nonly decimal numbers, for example a temperature;\n\nonly text from a list you provide, like a drop-down of Yes and No;\n\nonly numbers between two limits, for example a score from 1 to 5 (so the cell would refuse a 6).\n\nImagine Zane is scoring the school lunch out of 5. He selects the score column, opens Data > Validity, sets Allow to Whole Numbers, the condition to between, Minimum 1 and Maximum 5. On the Error Alert tab he chooses the Stop action. Now the cell politely refuses any score below 1 or above 5, and even refuses a word — so his data stays clean and correct.\n\nType of data — What it is · Examples · Row · A · B\n\nCategorical — Data that can be grouped into categories. It is often made of words. · Favourite colour, type of pet, book titles, people's names. · 1 · Fruit · Number of learners\n\nDiscrete — Numerical data that can only be certain values, usually whole numbers you count. · Number of learners, number of customer reviews, number of pets. · 2 · Mango · 9",
+      "example": "Continuous — Numerical data that can take ANY value in a range, usually measured, not counted. · Temperature, weight, height, length, the time taken to do something. · 3 · Banana · 6"
+    },
+    {
+      "id": "concept-6-representing-data",
+      "title": "Representing Data",
+      "explanation": "Once you have collected some data, you can represent it — that is, show it — in different ways. A good representation makes the meaning of the data leap out at you. In this subunit you will learn to represent data in tables, bar charts and line graphs, and you will learn to calculate with formulas and functions in LibreOffice Calc.\n\nThe simplest way to represent data is in a table of rows and columns, exactly like a spreadsheet. A table makes it easy to see which pieces of data go together. Here is a table Leila made about how the 24 learners in her class travel to school:\n\nBy reading the table we get information: most learners walk to school, and very few come by car. If we add up the numbers 12 + 9 + 3 we get 24, the whole class. Because 12 is half of 24, we can even say that half the class walks to school. A table like this is much easier to read than the same facts written out in a long sentence.\n\nBut a table is not always enough. Imagine a table showing the eye colour of everyone in a big city, with numbers like 252780, 344700 and 574500. Those numbers are so big that it is hard to get a clear picture of which is largest. This is exactly when a chart becomes useful.",
+      "example": "A chart (or graph) is like a picture of your data. Charts make it much quicker and easier to see patterns and to summarise information. There are several kinds, and a good data manager chooses the kind that best suits the data. The two you will use most are the bar chart and the line graph."
+    },
+    {
+      "id": "concept-7-bar-charts",
+      "title": "Bar charts",
+      "explanation": "A bar chart has a separate coloured bar for each category. The longer the bar, the greater the value. Because bar charts work by counting how many times each option is chosen, they are perfect for categorical data (like favourite fruit) and discrete data (like a number of votes). Here is Leila's fruit data again, ready to become a bar chart:\n\nOn the bar chart, mango would have the tallest bar and dates the shortest. You can see the winner in a single glance, without reading any numbers at all. To make this chart in LibreOffice Calc, Leila follows these steps:\n\nSelect the data, including the headings: click and drag across the Fruit column and the Number column together.\n\nOpen the menu Insert > Chart. The Chart Wizard appears.\n\nIn Step 1 — Choose a Chart Type, pick Column for bars that stand up tall (or Bar for bars that lie sideways). Click Next.\n\nIn Steps 2 and 3, make sure 'First row as label' and 'First column as label' are ticked, then click Next.\n\nIn Step 4 — Chart Elements, type a clear Title such as 'Favourite fruit in our class', label the axes, and tick Display legend. Click Finish.\n\nClick anywhere outside the chart to leave edit mode. Your bar chart is done!\n\nMore than half of all the people in the world have brown eyes — that is around 4 billion people!",
+      "example": "Different countries have very different eye-colour patterns, so a chart of eye colour in one country can look quite different from a chart in another."
+    },
+    {
+      "id": "concept-8-the-parts-of-a-chart",
+      "title": "The parts of a chart",
+      "explanation": "Bar charts and line graphs have two lines called axes. The y axis goes up and down (it is vertical) and usually shows the scale, like the number of learners. The x axis goes from side to side (it is horizontal) and usually shows the categories or the time. The title you put on each axis is called a label, and labels explain what each axis measures. The little key that tells you what each colour means is called the legend. A chart without labels is like a letter with no address — nobody can be sure what it means.\n\nBar charts can be drawn two ways. A column chart has vertical bars going up; a bar chart in LibreOffice has horizontal bars going across. Both show the same information — you simply choose whichever is easier to read.\n\nLine graphs: for continuous data\n\nA line graph is best for continuous data that changes over time, because the sloping lines show you how the data rises and falls between the points. Let us help Zane. He set up a data logger to record the temperature in his Mogadishu classroom every hour. This is his data:\n\nTo draw this by hand, you would mark a dot for each temperature at the right height above its time, then join the dots with straight lines. LibreOffice Calc does it for you: select the data, choose Insert > Chart, and pick the Line chart type in the wizard. The finished line climbs from the cool early morning up to a peak at 32 degrees at 1 o'clock, then slopes back down as the afternoon cools. The shape of the line tells the story instantly, which is why Zane chooses the club's outdoor games for the cooler early morning. This temperature data is a perfect example of continuous data.\n\nWhy not use a bar chart for this? Because temperature flows smoothly from one reading to the next, and the lines show that flow. And why not use a line graph for favourite fruit? Because the fruits are separate categories, not a smooth change over time — joining 'mango' to 'banana' with a line would make no sense at all. Choosing the right chart is a real skill.\n\nSometimes you make a chart and then realise a different kind would be clearer. Happily, this is easy to change in LibreOffice Calc: double-click the chart to enter edit mode, then right-click it and choose Chart Type, pick Line (or Column), and click OK. Click outside to finish. You can also change the style and labels to suit who will read the chart. Good choices matter:\n\nFor a reader who is colour-blind and cannot tell red from green, choose different colours (like blue and orange) or add clear labels to each line, so the colours are not the only clue.\n\nFor a chart shown on a small screen, keep it simple: a summary with big, clear text.\n\nFor a chart shown on a big screen to a whole room, you can show lots of detail and many data points.\n\nYou can change the title, the axis labels, the gridlines, the colours and the size of the text to make any chart clearer.\n\nA spreadsheet is also a brilliant calculator. In maths you already use operators — the symbols for calculations. In a spreadsheet, some of the symbols are different, so learn these four carefully:\n\nThe two to watch are multiply and divide. On paper you write 6 x 4, but in a spreadsheet you type an asterisk: =6*4, which returns 24. On paper you write a division sign, but in a spreadsheet you type a forward slash: =20/4, which returns 5.",
+      "example": "A formula is an instruction to do a calculation, and in a spreadsheet a formula must always begin with an equals sign =. The = tells LibreOffice Calc, 'Do not treat this as ordinary text — work it out for me.' The real magic is that instead of typing a number in a formula, you usually type a cell reference — the address of the cell where that number lives, like A1 or B3. Look at this tiny example:"
+    },
+    {
+      "id": "concept-9-a-formula-that-uses-cell-references",
+      "title": "A formula that uses cell references",
+      "explanation": "The formula =A1+A2 means 'the value in cell A1 plus the value in cell A2'. It shows 9. Here is the clever part: if you later change A1 from 3 to 5, the result in A3 updates all by itself to 11. You never have to work it out again. Because of this, always put a formula in a cell of its own, not in one of the cells you are calculating with.\n\nSometimes a formula would be very long. Imagine adding up twenty test scores with + signs — it would take ages and be easy to get wrong. That is why spreadsheets have functions: ready-made calculations built into the software. To use one, type =, then the function name, then the cell range in brackets. A range is all the cells between and including two cells, written with a colon : that means 'to'. So B2:B6 means every cell from B2 to B6. The two functions you will use most are:\n\nThe two functions you will use most\n\n=SUM(B2:B6) adds up every value from B2 to B6\n\n=AVERAGE(B2:B6) finds the average (mean) of every value from B2 to B6",
+      "example": "The SUM function adds up all the values in the range. The AVERAGE function finds the average: it adds up the values and then divides by how many there are. For example, for the four values 3, 7, 4, 6, the average is 3 + 7 + 4 + 6 = 20, then 20 / 4 = 5. So the average is 5."
+    },
+    {
+      "id": "concept-10-worked-example-ehel-academy-test-scores",
+      "title": "Worked example: Ehel Academy test scores",
+      "explanation": "The class has done three maths tests this term, each marked out of 10. Their teacher types the marks into LibreOffice Calc and wants to work out each learner's total and percentage, and the total and average for each test. Here is the data:\n\nFirst, the total for each learner. In cell E2 you type =B2+C2+D2 and press Enter; it shows 24, because 8 + 7 + 9 = 24. You can copy this formula down to E6 (select E2 and press Ctrl+D, or drag the little handle at the corner of the cell). LibreOffice cleverly changes the row numbers for you, so E3 becomes =B3+C3+D3. Here are all the totals:\n\nColumn E: each learner's total out of 30\n\nNext, the percentage. Each learner could score 30 in total (10 on each of the three tests), so the percentage is the total divided by 30. In cell F2 you type =E2/30. This shows 0.8 at first, because 24 divided by 30 is 0.8. To make it look like a percentage, keep F2 selected and click the percentage button (marked %) on the Formatting toolbar. Now it shows 80.00%. Leila scored 80%. Nora scored 28/30, which is 0.9333..., or 93.33% — and that is why some percentages have decimal places, because 28 does not divide evenly by 30.",
+      "example": "Now the teacher wants the total and the average for each test, using functions. She puts the totals in row 7 and the averages in row 8:"
+    },
+    {
+      "id": "concept-11-average-of-test-1",
+      "title": "Average of Test 1",
+      "explanation": "Average of Test 2: in C8 type =AVERAGE(C2:C6) -> 8\n\nAverage of Test 3: in D8 type =AVERAGE(D2:D6) -> 8.2\n\nLet us check by hand so you can see the software is right. Test 1 scores are 8, 6, 9, 7 and 10, which add up to 40; divide by the 5 learners and the average is 8. Test 3 scores are 9, 7, 8, 8 and 9, which add up to 41; divide by 5 and the average is 8.2. The .2 is a decimal because 41 does not divide evenly by 5 — this is completely normal for an average. Everything the spreadsheet worked out matches our pencil-and-paper check.\n\nA single LibreOffice Calc spreadsheet has 1,048,576 rows and 16,384 columns.\n\nThat is more than 17 billion cells in one sheet — far more than anyone could ever fill by hand.\n\nCalc also has more than 500 ready-made functions waiting for you, though SUM and AVERAGE are the two you will use most this year.\n\nHow they travel — Number of learners · Fruit · Number of learners · Time · Temperature (degrees C) · Operator · Meaning · Example formula · Row · A · B · C · D · E · F\n\nWalk — 12 · Mango · 9 · 8:00 · 24 · + · add · =B2+C2 · 1 · Name · Test 1 · Test 2 · Test 3 · Total · Percentage\n\nBus — 9 · Banana · 6 · 9:00 · 25 · — · subtract · =B2-C2 · 2 · Leila · 8 · 7 · 9 · =B2+C2+D2 · =E2/30\n\nCar — 3 · Orange · 4 · 10:00 · 27 · * · multiply · =B2*C2 · 3 · Sami · 6 · 8 · 7 · =B3+C3+D3 · =E3/30\n\nWatermelon — 4 · 11:00 · 29 · / · divide · =B2/C2 · 4 · Nadia · 9 · 10 · 8 · =B4+C4+D4 · =E4/30\n\nDates — 2 · 12:00 · 31 · 5 · Zane · 7 · 6 · 8 · =B5+C5+D5 · =E5/30",
+      "example": "13:00 — 32 · 6 · Nora · 10 · 9 · 9 · =B6+C6+D6 · =E6/30"
+    },
+    {
+      "id": "concept-12-using-data",
+      "title": "Using Data",
+      "explanation": "You can now collect data, store it, represent it and calculate with it. In this last subunit you will learn two more powerful skills: what happens when you change data in a spreadsheet, and how to find exactly the data you need in a big spreadsheet in seconds. Then you will put everything together in a real investigation.\n\nWhat happens when we change data?",
+      "example": "Sometimes we need to change the data in a spreadsheet — maybe we spot a mistake, or we get new information, or a price changes. Spreadsheets are very clever about this. When you change a piece of data, every formula and every chart that uses that data updates instantly, all by itself. You never have to redo your calculations or redraw your charts by hand."
+    },
+    {
+      "id": "concept-13-worked-example-aunt-nora-s-juice-shop-in-hargeisa",
+      "title": "Worked example: Aunt Nora's juice shop in Hargeisa",
+      "explanation": "Aunt Nora recorded, for one week, how many customers came into her juice shop each day and how much money she took, all in Somali shillings. She uses a formula to work out the average spend per customer each day: the takings divided by the number of customers. Here is her spreadsheet:\n\nColumn D divides the takings by the customers to find the average spend. For example, D4 is =C4/B4, which is 150000 / 25 = 6000 shillings per customer on Monday. Nora can also find her weekly totals with SUM: =SUM(B2:B8) gives 255 customers for the week, and =SUM(C2:C8) gives 1480000 shillings taken for the week.",
+      "example": "Now watch what happens when data changes. Nora realises she forgot to count 5 customers who came in on Monday while she stepped out — there were really 30, not 25. She clicks cell B4, types 30, and presses Enter. Instantly, two things update by themselves:"
+    },
+    {
+      "id": "concept-14-changing-one-cell-updates-every-formula-that-uses-it",
+      "title": "Changing one cell updates every formula that uses it",
+      "explanation": "Before: B4 = 25 -> D4 =C4/B4 = 150000 / 25 = 6000\n\nAfter: B4 = 30 -> D4 =C4/B4 = 150000 / 30 = 5000\n\nThe weekly total customers =SUM(B2:B8) changes from 255 to 260.\n\nThe average spend for Monday drops from 6000 to 5000 shillings, and the weekly customer total rises from 255 to 260. But notice that the takings in cell C4 stayed exactly the same at 150000. Why? Because C4 holds a number that Nora typed in herself, not a formula — so nothing told it to change. Only cells with a formula recalculate. This is an important idea: typed values stay put, but formulas react to change.\n\nThe very same thing happens to charts. If Nora had made a bar chart of her daily customers, the Monday bar would have grown taller by itself the moment she changed 25 to 30. She never has to touch the chart. This is why spreadsheets are so powerful for a shop owner: she can try out a change and see the effect on all her totals and charts in a single second.\n\nSpreadsheets often hold a great deal of data, and it is slow to find one thing by reading every row. Instead we use search criteria — the words or conditions we search for to find data that matches. You already use search criteria every time you type words into a search engine on the internet. Shops do this too: a supermarket can search its records for every customer who often buys dates, and then send just those customers a special offer on dates.",
+      "example": "Here is a spreadsheet of Stage 5 learner records at Ehel Academy. Imagine trying to answer questions about it just by reading — now imagine doing it with a search tool."
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "Column E: each learner's total out of 30",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "E2 =B2+C2+D2 -> 8 + 7 + 9 = 24",
+        "E3 =B3+C3+D3 -> 6 + 8 + 7 = 21",
+        "E4 =B4+C4+D4 -> 9 + 10 + 8 = 27",
+        "E5 =B5+C5+D5 -> 7 + 6 + 8 = 21",
+        "E6 =B6+C6+D6 -> 10 + 9 + 9 = 28"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-2",
+      "title": "Common formulas and functions",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "=B2+C2 add the values in B2 and C2",
+        "=B2-C2 subtract C2 from B2",
+        "=B2*C2 multiply B2 by C2 (* means multiply)",
+        "=B2/C2 divide B2 by C2 (/ means divide)",
+        "=SUM(B2:B8) add up everything from B2 to B8",
+        "=AVERAGE(B2:B8) find the mean of B2 to B8",
+        "=MAX(B2:B8) the largest value from B2 to B8",
+        "=MIN(B2:B8) the smallest value from B2 to B8"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Create a form and collect data (2.1)",
+      "context": "work through the steps below and see what happens. This is collecting and storing data in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "With your partner, decide on three pieces of data to collect, for example: people's favourite juice flavour, whether they need a sugar-free option, and how much they would pay for one drink in shillings.",
+      "answer": "Decide the question type: a drop-down list for the flavour (categorical), a Yes/No list for sugar-free, and a validated number for the price (discrete). Write clear questions for each piece of data. Build the form in LibreOffice Calc using Data > Validity for the drop-down lists and the number rule, so only sensible answers are accepted. Ask as many classmates as you can to fill it in (you may add made-up answers for practice).",
+      "modelType": "model-1",
+      "hint": "Start here: Decide the question type: a drop-down list for the flavour (categorical), a Yes/No list for sugar-free, and a validated number for the price…",
+      "explanation": "Collecting and Storing Data: Before you can manage data, you have to collect it. And before you collect it, you have to plan. Good data managers never just grab numbers randomly; they think carefully about what they want to find out and how they will find it out. This careful, planned way of collecting data is called a…"
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Make a spreadsheet and charts (2.2)",
+      "context": "work through the steps below and see what happens. This is data and information are not the same in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Organise your data into tidy columns with clear headings.",
+      "answer": "Count how many people chose each flavour, and make a column (bar) chart with Insert > Chart so the most popular flavour stands out. Use =AVERAGE(.) to find the average price people are willing to pay — this helps you set your prices. Give every chart a clear title and labels.",
+      "modelType": "model-2",
+      "hint": "Start here: Count how many people chose each flavour, and make a column (bar) chart with Insert > Chart so the most popular flavour stands out.",
+      "explanation": "Data and information are not the same: Here is an idea that many people get muddled, so read it slowly. Data is meaningless facts or figures on their own, like the number 7 or the word green. By itself, green does not tell you anything useful. Information is data that has been given meaning. When we say 'green is the most popular colour…"
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Predict your sales and money (2.3)",
+      "context": "work through the steps below and see what happens. This is the tools we use to collect and store data in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Make a new sheet listing each item you will sell and the price you have chosen.",
+      "answer": "Make up a sensible number of sales for each item, based on your survey. Use a formula like =B2*C2 (price times number sold) to work out the money from each item, then =SUM(.) to find your total income for the week. Try changing one price or one number of sales, and watch your total income update by itself.",
+      "modelType": "model-3",
+      "hint": "Start here: Make up a sensible number of sales for each item, based on your survey.",
+      "explanation": "The tools we use to collect and store data: Humans are not very good at collecting and organising lots of data by hand — we forget things, make mistakes, and it takes ages. Computers are far better: they do not forget, and they measure and calculate very quickly. Here are the most useful computing tools for a statistical investigation."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Write a report or presentation",
+      "context": "work through the steps below and see what happens. This is a free, open in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Include one or two of your data tables and charts, and write about the decisions they helped you make — for example, 'Most people chose mango juice, so we will make more of it.' Finish with a sentence saying whether you think your cafe would be a success, and why.",
+      "answer": "Check my project plan and tell me whether I have used a form, a spreadsheet, a chart and a formula. Help me write a clear recommendation for my cafe based on my most popular flavour, without doing it for me. Evaluation (Peer Review) Was the data collected with a sensible validation rule, so it is clean? Are the formulas correct, and do SUM and AVERAGE return the right answers?",
+      "modelType": "model-4",
+      "hint": "Start here: Check my project plan and tell me whether I have used a form, a spreadsheet, a chart and a formula.",
+      "explanation": "A free, open: Some online form tools need an account and are not free or open-source. You do not need them! You can build a tidy digital data-entry form right inside LibreOffice Calc, using its validation rules. A validation rule is like a helpful gatekeeper: it only lets good data in. Here is how Leila makes…"
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Activities & Projects",
+      "context": "work through the steps below and see what happens. This is restricting cells in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Year 5 — Unit 2 — Managing Data",
+      "answer": "How to Use This Document This is your hands-on workbook. Each activity gives you a task, the exact steps to follow in LibreOffice Calc, the expected result, and an AI-tutor prompt in case you get stuck. Do every task yourself on the computer — reading is not enough; you learn data skills by doing them. Work in order, because each activity builds on the one before, just like the ideas in your Lesson. Getting Started with LibreOffice Calc Open the LibreOffice Start Centre (or find LibreOffice in your programs list). Click Calc Spreadsheet. A blank grid of cells appears.",
+      "modelType": "model-5",
+      "hint": "Start here: How to Use This Document",
+      "explanation": "Restricting cells: It is very easy to enter data incorrectly. If Zara typed a birthday as 3112 instead of 31/12, she would never find that birthday again when she searched. If Karim typed ouzzle instead of puzzle, the spreadsheet would treat it as a different word. Validation rules limit the kind of data a cell will…"
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Year 5 - Unit 2 - Managing Data",
+      "context": "work through the steps below and see what happens. This is representing data in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "How to Use This Document",
+      "answer": "This is your hands-on workbook. Each activity gives you a task, the exact steps to follow in LibreOffice Calc, the expected result, and an AI-tutor prompt in case you get stuck. Do every task yourself on the computer — reading is not enough; you learn data skills by doing them. Work in order, because each activity builds on the one before, just like the ideas in your Lesson. Getting Started with LibreOffice Calc Open the LibreOffice Start Centre (or find LibreOffice in your programs list). Click Calc Spreadsheet. A blank grid of cells appears. Notice the Name Box at the top-left (it shows your selected cell's reference, like A1) and the Input Line next to it (where you can see and type what is in a cell).",
+      "modelType": "model-6",
+      "hint": "Start here: This is your hands-on workbook. Each activity gives you a task, the exact steps to follow in LibreOffice Calc, the expected result, and an AI-tutor…",
+      "explanation": "Representing Data: Once you have collected some data, you can represent it — that is, show it — in different ways. A good representation makes the meaning of the data leap out at you. In this subunit you will learn to represent data in tables, bar charts and line graphs, and you will learn to calculate with formulas…"
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Collecting and Storing Data",
+      "modelType": "concept-model-1",
+      "purpose": "Before you can manage data, you have to collect it. And before you collect it, you have to plan. Good data managers never just grab numbers randomly; they think carefully about what they want to find out and how they…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Data and information are not the same",
+      "modelType": "concept-model-2",
+      "purpose": "Here is an idea that many people get muddled, so read it slowly. Data is meaningless facts or figures on their own, like the number 7 or the word green. By itself, green does not tell you anything useful. Information is…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "The tools we use to collect and store data",
+      "modelType": "concept-model-3",
+      "purpose": "Humans are not very good at collecting and organising lots of data by hand — we forget things, make mistakes, and it takes ages. Computers are far better: they do not forget, and they measure and calculate very quickly.…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "A free, open",
+      "modelType": "concept-model-4",
+      "purpose": "Some online form tools need an account and are not free or open-source. You do not need them! You can build a tidy digital data-entry form right inside LibreOffice Calc, using its validation rules. A validation rule is…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Restricting cells",
+      "modelType": "concept-model-5",
+      "purpose": "It is very easy to enter data incorrectly. If Zara typed a birthday as 3112 instead of 31/12, she would never find that birthday again when she searched. If Karim typed ouzzle instead of puzzle, the spreadsheet would…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Representing Data",
+      "modelType": "concept-model-6",
+      "purpose": "Once you have collected some data, you can represent it — that is, show it — in different ways. A good representation makes the meaning of the data leap out at you. In this subunit you will learn to represent data in…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-7",
+      "outcomeId": "lo07",
+      "title": "Bar charts",
+      "modelType": "concept-model-7",
+      "purpose": "A bar chart has a separate coloured bar for each category. The longer the bar, the greater the value. Because bar charts work by counting how many times each option is chosen, they are perfect for categorical data (like…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-8",
+      "outcomeId": "lo08",
+      "title": "The parts of a chart",
+      "modelType": "concept-model-8",
+      "purpose": "Bar charts and line graphs have two lines called axes. The y axis goes up and down (it is vertical) and usually shows the scale, like the number of learners. The x axis goes from side to side (it is horizontal) and…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-9",
+      "outcomeId": "lo09",
+      "title": "A formula that uses cell references",
+      "modelType": "concept-model-9",
+      "purpose": "The formula =A1+A2 means 'the value in cell A1 plus the value in cell A2'. It shows 9. Here is the clever part: if you later change A1 from 3 to 5, the result in A3 updates all by itself to 11. You never have to work it…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-10",
+      "outcomeId": "lo10",
+      "title": "Worked example: Ehel Academy test scores",
+      "modelType": "concept-model-10",
+      "purpose": "The class has done three maths tests this term, each marked out of 10. Their teacher types the marks into LibreOffice Calc and wants to work out each learner's total and percentage, and the total and average for each…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-11",
+      "outcomeId": "lo01",
+      "title": "Average of Test 1",
+      "modelType": "concept-model-11",
+      "purpose": "Average of Test 2: in C8 type =AVERAGE(C2:C6) -> 8",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-12",
+      "outcomeId": "lo02",
+      "title": "Using Data",
+      "modelType": "concept-model-12",
+      "purpose": "You can now collect data, store it, represent it and calculate with it. In this last subunit you will learn two more powerful skills: what happens when you change data in a spreadsheet, and how to find exactly the data…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-13",
+      "outcomeId": "lo03",
+      "title": "Worked example: Aunt Nora's juice shop in Hargeisa",
+      "modelType": "concept-model-13",
+      "purpose": "Aunt Nora recorded, for one week, how many customers came into her juice shop each day and how much money she took, all in Somali shillings. She uses a formula to work out the average spend per customer each day: the…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-14",
+      "outcomeId": "lo04",
+      "title": "Changing one cell updates every formula that uses it",
+      "modelType": "concept-model-14",
+      "purpose": "Before: B4 = 25 -> D4 =C4/B4 = 150000 / 25 = 6000",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with collecting and storing data",
+      "example": "In our scenario, Leila is doing a statistical investigation. Her question is, 'What is the favourite fruit of the learners in my class?' She will collect data from her classmates, store it neatly, and then analyse it to find the answer.",
+      "steps": [
+        "Read the concept card for collecting and storing data and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with data and information are not the same",
+      "example": "How will I use the data to get information? Perhaps by counting, calculating, and drawing a chart to make the pattern clear.",
+      "steps": [
+        "Here is an idea that many people get muddled, so read it slowly. Data is meaningless facts or figures on their own, like the number 7 or the word green. By itself, green does not tell you anything useful. Information is…",
+        "Here is the key difference to remember. Discrete data is counted and is always a whole value — you cannot have half a pet or three-and-a-bit customers. Continuous data is measured and can be any value at all, like a…",
+        "Before you collect a single number, ask yourself four planning questions. Answering them first saves you a lot of trouble later.",
+        "What data do I want to collect? For example, 'the favourite fruit of each learner in my class'."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with the tools we use to collect and store data",
+      "example": "Now the data has become information. Leila can see straight away that mango is the favourite fruit in her class, chosen by 9 learners, and that dates were chosen by the fewest. The type of fruit is categorical data, and the number of learners who chose each…",
+      "steps": [
+        "Humans are not very good at collecting and organising lots of data by hand — we forget things, make mistakes, and it takes ages. Computers are far better: they do not forget, and they measure and calculate very quickly.…",
+        "Data loggers — a data logger is a device that reads and records data from the world automatically (by itself, with no human help) and continuously (carrying on until you tell it to stop). It uses sensors. For example, a…",
+        "Spreadsheets — such as LibreOffice Calc. A spreadsheet stores data in a neat grid of cells, and it can add up columns, do other calculations, and draw charts in an instant. It is designed to make working with numbers…",
+        "Databases — a database stores related data of many types (not just numbers) in an organised way. It can be paper-based, like a diary or calendar, or digital. Databases make it easy to find, sort and analyse data, and…"
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with a free, open",
+      "example": "This is exactly how the online form's drop-down list works, but it is free and open-source and needs no account at all.",
+      "steps": [
+        "Some online form tools need an account and are not free or open-source. You do not need them! You can build a tidy digital data-entry form right inside LibreOffice Calc, using its validation rules. A validation rule is…",
+        "Select the cells where people will enter data, for example A2:A26.",
+        "In the Entries box, type the choices, one per line: Mango, Banana, Orange, Watermelon, Dates.",
+        "Click OK. Now every one of those cells shows a little drop-down arrow, and nobody can type a fruit that is not on the list or misspell one by accident."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with restricting cells",
+      "example": "Continuous — Numerical data that can take ANY value in a range, usually measured, not counted. · Temperature, weight, height, length, the time taken to do something. · 3 · Banana · 6",
+      "steps": [
+        "It is very easy to enter data incorrectly. If Zara typed a birthday as 3112 instead of 31/12, she would never find that birthday again when she searched. If Karim typed ouzzle instead of puzzle, the spreadsheet would…",
+        "only decimal numbers, for example a temperature;",
+        "only text from a list you provide, like a drop-down of Yes and No;",
+        "only numbers between two limits, for example a score from 1 to 5 (so the cell would refuse a 6)."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "How to work with representing data",
+      "example": "A chart (or graph) is like a picture of your data. Charts make it much quicker and easier to see patterns and to summarise information. There are several kinds, and a good data manager chooses the kind that best suits the data. The two you will use most are…",
+      "steps": [
+        "Once you have collected some data, you can represent it — that is, show it — in different ways. A good representation makes the meaning of the data leap out at you. In this subunit you will learn to represent data in…",
+        "The simplest way to represent data is in a table of rows and columns, exactly like a spreadsheet. A table makes it easy to see which pieces of data go together. Here is a table Leila made about how the 24 learners in…",
+        "By reading the table we get information: most learners walk to school, and very few come by car. If we add up the numbers 12 + 9 + 3 we get 24, the whole class. Because 12 is half of 24, we can even say that half the…",
+        "But a table is not always enough. Imagine a table showing the eye colour of everyone in a big city, with numbers like 252780, 344700 and 574500. Those numbers are so big that it is hard to get a clear picture of which…"
+      ]
+    },
+    {
+      "id": "method-7",
+      "outcomeId": "lo07",
+      "difficulty": "Challenge",
+      "title": "How to work with bar charts",
+      "example": "Different countries have very different eye-colour patterns, so a chart of eye colour in one country can look quite different from a chart in another.",
+      "steps": [
+        "A bar chart has a separate coloured bar for each category. The longer the bar, the greater the value. Because bar charts work by counting how many times each option is chosen, they are perfect for categorical data (like…",
+        "On the bar chart, mango would have the tallest bar and dates the shortest. You can see the winner in a single glance, without reading any numbers at all. To make this chart in LibreOffice Calc, Leila follows these steps:",
+        "Select the data, including the headings: click and drag across the Fruit column and the Number column together.",
+        "Open the menu Insert > Chart. The Chart Wizard appears."
+      ]
+    },
+    {
+      "id": "method-8",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "How to work with the parts of a chart",
+      "example": "A formula is an instruction to do a calculation, and in a spreadsheet a formula must always begin with an equals sign =. The = tells LibreOffice Calc, 'Do not treat this as ordinary text — work it out for me.' The real magic is that instead of typing a number…",
+      "steps": [
+        "Bar charts and line graphs have two lines called axes. The y axis goes up and down (it is vertical) and usually shows the scale, like the number of learners. The x axis goes from side to side (it is horizontal) and…",
+        "Bar charts can be drawn two ways. A column chart has vertical bars going up; a bar chart in LibreOffice has horizontal bars going across. Both show the same information — you simply choose whichever is easier to read.",
+        "A line graph is best for continuous data that changes over time, because the sloping lines show you how the data rises and falls between the points. Let us help Zane. He set up a data logger to record the temperature in…",
+        "To draw this by hand, you would mark a dot for each temperature at the right height above its time, then join the dots with straight lines. LibreOffice Calc does it for you: select the data, choose Insert > Chart, and…"
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Collecting and Storing Data",
+      "prompt": "Explain in your own words: Collecting and Storing Data.",
+      "solution": "Before you can manage data, you have to collect it. And before you collect it, you have to plan. Good data managers never just grab numbers randomly; they think carefully about what they want to find out and how they will find it out. This careful, planned way of collecting data is called a statistical investigation.\n\nWhat is a statistical investigation?\n\nA statistical investigation is when we collect data to answer a question. The data we collect is called statistics. For example, an ice-cream shop owner might ask, 'Which flavour of ice cream is the most popular?' To find out, she counts how many scoops of each flavour she sells, and then she analyses that data. To analyse data means to look closely at it, find patterns in it, and think carefully about what it means. This is useful, because once she knows the most popular flavour she can buy more of it and never run out.\n\nFor example: In our scenario, Leila is doing a statistical investigation. Her question is, 'What is the favourite fruit of the learners in my class?' She will collect data from her classmates, store it neatly, and then analyse it to find the answer."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Data and information are not the same",
+      "prompt": "Explain in your own words: Data and information are not the same.",
+      "solution": "Here is an idea that many people get muddled, so read it slowly. Data is meaningless facts or figures on their own, like the number 7 or the word green. By itself, green does not tell you anything useful. Information is data that has been given meaning. When we say 'green is the most popular colour in the class', that is information, because now the fact means something. Managing data well is really the art of turning plain data into useful information.\n\nHere is the key difference to remember. Discrete data is counted and is always a whole value — you cannot have half a pet or three-and-a-bit customers. Continuous data is measured and can be any value at all, like a temperature of 24.5 degrees or a height of 1.42 metres. In Leila's fruit investigation, the type of fruit ('mango', 'banana') is categorical, and the number of learners who chose each fruit is discrete. In Zane's temperature investigation, each reading is continuous.\n\nBefore you collect a single number, ask yourself four planning questions. Answering them first saves you a lot of trouble later.\n\nWhat data do I want to collect? For example, 'the favourite fruit of each learner in my class'.\n\nHow will I collect the data? With a form, a data logger, a survey, or a spreadsheet.\n\nHow will I organise the data? Usually by putting it into a spreadsheet in a sensible order.\n\nFor example: How will I use the data to get information? Perhaps by counting, calculating, and drawing a chart to make the pattern clear."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: The tools we use to collect and store data",
+      "prompt": "Explain in your own words: The tools we use to collect and store data.",
+      "solution": "Humans are not very good at collecting and organising lots of data by hand — we forget things, make mistakes, and it takes ages. Computers are far better: they do not forget, and they measure and calculate very quickly. Here are the most useful computing tools for a statistical investigation.\n\nData loggers — a data logger is a device that reads and records data from the world automatically (by itself, with no human help) and continuously (carrying on until you tell it to stop). It uses sensors. For example, a data logger could record the temperature of a fish tank every five minutes, all day and night. Data loggers are excellent for collecting continuous data like temperature, light level or a person's pulse.\n\nSpreadsheets — such as LibreOffice Calc. A spreadsheet stores data in a neat grid of cells, and it can add up columns, do other calculations, and draw charts in an instant. It is designed to make working with numbers easy.\n\nDatabases — a database stores related data of many types (not just numbers) in an organised way. It can be paper-based, like a diary or calendar, or digital. Databases make it easy to find, sort and analyse data, and they can hold enormous amounts — far more than a spreadsheet.\n\nForms — a form is a list of questions with spaces for people to mark or write their answers. A good form makes people enter their data in the same way, so it is easy to organise. Forms can be on paper or on a screen.\n\nDocument production tools — word processors and presentation programs let you put text and pictures together to make a report or a presentation, which is a good way to share the results of your investigation.\n\nA data logger works day and night without ever getting tired or bored.\n\nScientists put data loggers in places no human could stay, like the top of a mountain or the bottom of the sea, and leave them for months to record the temperature or the weather all by themselves.\n\nSome hotels use data loggers in a control system: when the temperature reaches 23 degrees a cooling system switches on by itself, and if it falls to 18 degrees the heating turns on.\n\nLet us help Leila. Her question is, 'What is the favourite fruit in my class?' She designs a simple form with one clear question — 'What is your favourite fruit?' — and a list of choices to tick: Mango, Banana, Orange, Watermelon, Dates, and a space for 'other'. Giving people a list of choices is clever, because it stops one person writing 'mango', another writing 'Mangoes' and another writing 'MANGO' — which would be three different answers to the computer, even though they mean the same fruit.\n\nAfter every classmate has filled in the form, Leila counts up the answers and stores them in a LibreOffice Calc spreadsheet. She organises the data in two columns — the fruit, and the number of learners who chose it — and sorts it from most popular to least popular:\n\nFor example: Now the data has become information. Leila can see straight away that mango is the favourite fruit in her class, chosen by 9 learners, and that dates were chosen by the fewest. The type of fruit is categorical data, and the number of learners who chose each fruit is discrete data. If Leila adds up the numbers 9 + 6 + 4 + 4 + 2, she finds that 25 learners answered her form altogether."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: A free, open",
+      "prompt": "Explain in your own words: A free, open.",
+      "solution": "Some online form tools need an account and are not free or open-source. You do not need them! You can build a tidy digital data-entry form right inside LibreOffice Calc, using its validation rules. A validation rule is like a helpful gatekeeper: it only lets good data in. Here is how Leila makes the fruit column accept only the fruits on her list:\n\nType the heading Fruit in cell A1.\n\nSelect the cells where people will enter data, for example A2:A26.\n\nOn the Criteria tab, set Allow to List.\n\nIn the Entries box, type the choices, one per line: Mango, Banana, Orange, Watermelon, Dates.\n\nClick OK. Now every one of those cells shows a little drop-down arrow, and nobody can type a fruit that is not on the list or misspell one by accident.\n\nFor example: This is exactly how the online form's drop-down list works, but it is free and open-source and needs no account at all."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Restricting cells",
+      "prompt": "Explain in your own words: Restricting cells.",
+      "solution": "It is very easy to enter data incorrectly. If Zara typed a birthday as 3112 instead of 31/12, she would never find that birthday again when she searched. If Karim typed ouzzle instead of puzzle, the spreadsheet would treat it as a different word. Validation rules limit the kind of data a cell will accept, and this stops many of these mistakes before they happen. In LibreOffice Calc you set them with Data > Validity. A cell can be made to accept:\n\nonly decimal numbers, for example a temperature;\n\nonly text from a list you provide, like a drop-down of Yes and No;\n\nonly numbers between two limits, for example a score from 1 to 5 (so the cell would refuse a 6).\n\nImagine Zane is scoring the school lunch out of 5. He selects the score column, opens Data > Validity, sets Allow to Whole Numbers, the condition to between, Minimum 1 and Maximum 5. On the Error Alert tab he chooses the Stop action. Now the cell politely refuses any score below 1 or above 5, and even refuses a word — so his data stays clean and correct.\n\nType of data — What it is · Examples · Row · A · B\n\nCategorical — Data that can be grouped into categories. It is often made of words. · Favourite colour, type of pet, book titles, people's names. · 1 · Fruit · Number of learners\n\nDiscrete — Numerical data that can only be certain values, usually whole numbers you count. · Number of learners, number of customer reviews, number of pets. · 2 · Mango · 9\n\nFor example: Continuous — Numerical data that can take ANY value in a range, usually measured, not counted. · Temperature, weight, height, length, the time taken to do something. · 3 · Banana · 6"
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Representing Data",
+      "prompt": "Explain in your own words: Representing Data.",
+      "solution": "Once you have collected some data, you can represent it — that is, show it — in different ways. A good representation makes the meaning of the data leap out at you. In this subunit you will learn to represent data in tables, bar charts and line graphs, and you will learn to calculate with formulas and functions in LibreOffice Calc.\n\nThe simplest way to represent data is in a table of rows and columns, exactly like a spreadsheet. A table makes it easy to see which pieces of data go together. Here is a table Leila made about how the 24 learners in her class travel to school:\n\nBy reading the table we get information: most learners walk to school, and very few come by car. If we add up the numbers 12 + 9 + 3 we get 24, the whole class. Because 12 is half of 24, we can even say that half the class walks to school. A table like this is much easier to read than the same facts written out in a long sentence.\n\nBut a table is not always enough. Imagine a table showing the eye colour of everyone in a big city, with numbers like 252780, 344700 and 574500. Those numbers are so big that it is hard to get a clear picture of which is largest. This is exactly when a chart becomes useful.\n\nFor example: A chart (or graph) is like a picture of your data. Charts make it much quicker and easier to see patterns and to summarise information. There are several kinds, and a good data manager chooses the kind that best suits the data. The two you will use most are the bar chart and the line graph."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Which of these is continuous data? (a) Favourite fruit (b) Number of pets (c) Temperature (d) Number of goals",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "A statistical investigation is: (a) A type of chart (b) Collecting data to answer a question (c) A spreadsheet formula (d) A kind of cell",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Which is an example of information, not just data? (a) The number 7 (b) The word 'green' (c) 'Green is the most popular colour' (d) The letter B",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "A data logger is best for collecting: (a) Opinions (b) Names (c) Continuous data over time (d) Book titles",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "Every spreadsheet formula must begin with: (a) A colon (b) An equals sign (c) A bracket (d) A letter",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p06",
+      "level": "Warm-up",
+      "prompt": "In a spreadsheet, the symbol for multiply is: (a) x (b) * (c) / (d) +",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p07",
+      "level": "Warm-up",
+      "prompt": "Which formula correctly adds the values from B2 to B6? (a) =SUMB2:B6 (b) SUM(B2:B6) (c) =SUM(B2:B6) (d) =SUM(B2-B6)",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p08",
+      "level": "Warm-up",
+      "prompt": "The AVERAGE function calculates the: (a) Total (b) Largest value (c) Mean (d) Smallest value",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p09",
+      "level": "Warm-up",
+      "prompt": "Which chart is best for categorical data like favourite fruit? (a) Line graph (b) Bar chart (c) A single number (d) A formula",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p10",
+      "level": "Warm-up",
+      "prompt": "Which chart is best for showing temperature changing over a day? (a) Bar chart (b) Line graph (c) Table only (d) Pie of names",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p11",
+      "level": "Warm-up",
+      "prompt": "The key on a chart that shows what each colour means is called the: (a) Axis (b) Legend (c) Cell (d) Range",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p12",
+      "level": "Warm-up",
+      "prompt": "The y axis on a chart is: (a) Horizontal (b) Vertical (c) A colour (d) A title",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p13",
+      "level": "Warm-up",
+      "prompt": "In =SUM(B2:B8), the part B2:B8 is called a: (a) Legend (b) Range (c) Formula (d) Chart",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p14",
+      "level": "Warm-up",
+      "prompt": "When you change a number that a formula uses, the formula's answer: (a) Stays the same (b) Must be redone by hand (c) Updates by itself (d) Turns into text",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p15",
+      "level": "Warm-up",
+      "prompt": "To find a word quickly in a big spreadsheet you use: (a) A chart (b) The Find tool (c) The AVERAGE function (d) A legend",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p16",
+      "level": "Core",
+      "prompt": "In your own words, what is the difference between data and information? Give an example of each.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Create a form and collect data (2.1)",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "With your partner, decide on three pieces of data to collect, for example: people's favourite juice flavour, whether they need a sugar-free option, and how much they would pay for one drink in shillings.",
+        "Decide the question type: a drop-down list for the flavour (categorical), a Yes/No list for sugar-free, and a validated number for the price (discrete). Write clear questions for each piece of data.",
+        "Build the form in LibreOffice Calc using Data > Validity for the drop-down lists and the number rule, so only sensible answers are accepted.",
+        "Ask as many classmates as you can to fill it in (you may add made-up answers for practice)."
+      ]
+    },
+    {
+      "title": "Make a spreadsheet and charts (2.2)",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Organise your data into tidy columns with clear headings.",
+        "Count how many people chose each flavour, and make a column (bar) chart with Insert > Chart so the most popular flavour stands out.",
+        "Use =AVERAGE(.) to find the average price people are willing to pay — this helps you set your prices.",
+        "Give every chart a clear title and labels."
+      ]
+    },
+    {
+      "title": "Predict your sales and money (2.3)",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Make a new sheet listing each item you will sell and the price you have chosen.",
+        "Make up a sensible number of sales for each item, based on your survey.",
+        "Use a formula like =B2*C2 (price times number sold) to work out the money from each item, then =SUM(.) to find your total income for the week.",
+        "Try changing one price or one number of sales, and watch your total income update by itself."
+      ]
+    },
+    {
+      "title": "Write a report or presentation",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Include one or two of your data tables and charts, and write about the decisions they helped you make — for example, 'Most people chose mango juice, so we will make more of it.' Finish with a sentence saying whether you think your cafe would be a success, and why.",
+        "Check my project plan and tell me whether I have used a form, a spreadsheet, a chart and a formula.",
+        "Help me write a clear recommendation for my cafe based on my most popular flavour, without doing it for me.",
+        "Evaluation (Peer Review)",
+        "Was the data collected with a sensible validation rule, so it is clean?",
+        "Are the formulas correct, and do SUM and AVERAGE return the right answers?"
+      ]
+    },
+    {
+      "title": "Activities & Projects",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Year 5 — Unit 2 — Managing Data",
+        "How to Use This Document",
+        "This is your hands-on workbook. Each activity gives you a task, the exact steps to follow in LibreOffice Calc, the expected result, and an AI-tutor prompt in case you get stuck. Do every task yourself on the computer — reading is not enough; you learn data skills by doing them. Work in order, because each activity builds on the one before, just like the ideas in your Lesson.",
+        "Getting Started with LibreOffice Calc",
+        "Open the LibreOffice Start Centre (or find LibreOffice in your programs list).",
+        "Click Calc Spreadsheet. A blank grid of cells appears."
+      ]
+    },
+    {
+      "title": "Year 5 - Unit 2 - Managing Data",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "How to Use This Document",
+        "This is your hands-on workbook. Each activity gives you a task, the exact steps to follow in LibreOffice Calc, the expected result, and an AI-tutor prompt in case you get stuck. Do every task yourself on the computer — reading is not enough; you learn data skills by doing them. Work in order, because each activity builds on the one before, just like the ideas in your Lesson.",
+        "Getting Started with LibreOffice Calc",
+        "Open the LibreOffice Start Centre (or find LibreOffice in your programs list).",
+        "Click Calc Spreadsheet. A blank grid of cells appears.",
+        "Notice the Name Box at the top-left (it shows your selected cell's reference, like A1) and the Input Line next to it (where you can see and type what is in a cell)."
+      ]
+    },
+    {
+      "title": "Getting Started with LibreOffice Calc",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Open the LibreOffice Start Centre (or find LibreOffice in your programs list).",
+        "Click Calc Spreadsheet. A blank grid of cells appears.",
+        "Notice the Name Box at the top-left (it shows your selected cell's reference, like A1) and the Input Line next to it (where you can see and type what is in a cell).",
+        "Click any cell and start typing to enter data. Press Enter to move down, or Tab to move right.",
+        "Save your work with Ctrl+S. Give it a clear name; it will be saved as a .ods file.",
+        "Save early, save often"
+      ]
+    },
+    {
+      "title": "Save early, save often",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Press Ctrl+S after every few changes. Computers sometimes freeze, and unsaved work is lost work.",
+        "Use clear file names like amina_fruit.ods and khadija_shop.ods so you can find them again easily.",
+        "A green tick on a formula's answer is the software agreeing with you — but always sense-check it yourself.",
+        "Before you touch the computer, think like a data manager. On paper, write down three statistical investigations you could do at home or school. For each one, write the question you want to answer, the type of data you would collect (categorical, discrete or continuous), and which tool you would use to collect it. Bring your list to your next teacher session.",
+        "Part 2.1 — Collecting and Storing Data",
+        "Activity 1 — Sort the data types"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "What you might see",
+      "cause": "What it usually means",
+      "fix": "How to fix it"
+    },
+    {
+      "symptom": "The cell shows =SUM(B2:B8) as text, not a number",
+      "cause": "The cell is formatted as Text.",
+      "fix": "Set the cell format to Number (Format > Cells) and retype the formula."
+    },
+    {
+      "symptom": "#NAME? appears in the cell",
+      "cause": "The function name is misspelled or brackets are missing.",
+      "fix": "Check the spelling and that the range is inside brackets, e.g. =SUM(B2:B8)."
+    },
+    {
+      "symptom": "#DIV/0! appears in the cell",
+      "cause": "You divided by zero or by an empty cell.",
+      "fix": "Make sure the cell you divide by holds a number that is not zero."
+    },
+    {
+      "symptom": "The formula shows as words, not an answer",
+      "cause": "You forgot the equals sign.",
+      "fix": "Start the formula with =, for example =B2*C2."
+    },
+    {
+      "symptom": "My multiply does not work",
+      "cause": "You used x instead of *.",
+      "fix": "Use the asterisk * for multiply, e.g. =B2*C2."
+    },
+    {
+      "symptom": "A percentage shows as 0.8, not 80%",
+      "cause": "The cell is not formatted as a percentage.",
+      "fix": "Select the cell and click the % button on the Formatting toolbar."
+    },
+    {
+      "symptom": "My chart has no title or labels",
+      "cause": "They were skipped in the Chart Wizard.",
+      "fix": "Double-click the chart and add a title and axis labels in Insert > Titles."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Stay safe online",
+      "text": "Sometimes a form asks you for personal data, like your full name or your home address. Only give this kind of information to a person or a website that you and a trusted adult know and trust. If you are ever unsure about a form, stop and ask a trusted adult first. It is always fine to ask."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "!",
+        "text": "Data is meaningless facts on their own; information is data with meaning. Categorical = groups; discrete = whole numbers you count; continuous = any value you measure. A data logger records continuous data automatically and continuously."
+      },
+      {
+        "title": "!",
+        "text": "Every formula starts with an equals sign: =SUM(B2:B8). In a spreadsheet, * means multiply and / means divide. The colon : means 'to', so B2:B8 means every cell from B2 to B8."
+      },
+      {
+        "title": "!",
+        "text": "SUM adds up the values in a range. AVERAGE finds the mean of the values in a range. Only use AVERAGE on numbers, never on words like 'mango'. Put your formula in an empty cell, not in a cell you are calculating with."
+      },
+      {
+        "title": "!",
+        "text": "Use a bar chart for categories; use a line graph for change over time. Always give a chart a clear title and label both axes. Change one number, and every formula and chart that uses it updates by itself."
+      },
+      {
+        "title": "!",
+        "text": "Data is meaningless facts or figures on their own, like '7' or 'green'. Information is data with meaning, like 'green is the most popular colour in the class'. The whole point of managing data is to turn data into useful information. The three types of data Not all data is the same. Knowing which type you are collecting helps you choose the right tool to collect it and the right chart to show it. There are three types you need to know for this unit. Type of data"
+      },
+      {
+        "title": "!",
+        "text": "Validation rules are a helpful gatekeeper: they let good data in and keep bad data out. Data > Validity in LibreOffice Calc can force a cell to accept only whole numbers, only decimals, only dates, only times, or only items from a list. The Stop action refuses a wrong entry completely; a Warning action lets it in but warns the user first."
+      },
+      {
+        "title": "!",
+        "text": "Every formula must start with an equals sign. No equals sign, no calculation! In a spreadsheet, * means multiply and / means divide. Use a cell reference (like B3) in a formula, and the answer updates by itself when that cell changes. Calculations using functions: SUM and AVERAGE Sometimes a formula would be very long. Imagine adding up twenty test scores with + signs — it would take ages and be easy to get wrong. That is why spreadsheets have functions: ready-made calculations built into the software. To use one, type =, then the function name, then the cell range in brackets. A range is all the cells between and including two cells, written with a colon : that means 'to'. So B2:B6 means every cell from B2 to B6. The two functions you will use most are: The two functions you will use most"
+      },
+      {
+        "title": "!",
+        "text": "Change one cell, and every formula and chart that uses it updates by itself, instantly. A cell with a formula recalculates; a cell with a typed-in value does not change on its own. This is why we use cell references in formulas instead of typing the numbers straight in. Finding specific data with search criteria Spreadsheets often hold a great deal of data, and it is slow to find one thing by reading every row. Instead we use search criteria — the words or conditions we search for to find data that matches. You already use search criteria every time you type words into a search engine on the internet. Shops do this too: a supermarket can search its records for every customer who often buys dates, and then send just those customers a special offer on dates. Here is a spreadsheet of Stage 5 learner records at Ehel Academy. Imagine trying to answer questions about it just by reading — now imagine doing it with a search tool."
+      }
+    ],
+    "terms": [
+      [
+        "analyse",
+        "To look closely at data, find patterns, and think about what it means."
+      ],
+      [
+        "automatically",
+        "Done by itself, with no human help (as a data logger records readings)."
+      ],
+      [
+        "average",
+        "A middle value; add all the values and divide by how many there are. Also called the mean."
+      ],
+      [
+        "axis",
+        "A line on a chart. The x axis is horizontal; the y axis is vertical."
+      ],
+      [
+        "bar chart",
+        "A chart with a bar for each category; the longer the bar, the greater the value."
+      ],
+      [
+        "categorical data",
+        "Data grouped into categories, often words, such as favourite fruit."
+      ],
+      [
+        "cell",
+        "One box in a spreadsheet grid, where a row and a column meet."
+      ],
+      [
+        "cell reference",
+        "A cell's address, made of its column letter and row number, such as B3."
+      ],
+      [
+        "chart",
+        "A picture of data that makes patterns easy to see."
+      ],
+      [
+        "continuous data",
+        "Numerical data that can take any value in a range, such as temperature."
+      ],
+      [
+        "continuously",
+        "Carrying on without stopping until told to stop."
+      ],
+      [
+        "data",
+        "Meaningless facts or figures on their own, such as '7' or 'green'."
+      ],
+      [
+        "data logger",
+        "A device that records data from the world automatically and continuously, using sensors."
+      ],
+      [
+        "database",
+        "An organised store of related data, on paper or digital."
+      ],
+      [
+        "discrete data",
+        "Numerical data that can only be certain values, usually whole numbers you count."
+      ],
+      [
+        "form",
+        "A list of questions with spaces for people to write or choose answers."
+      ],
+      [
+        "formula",
+        "An instruction that does a calculation; it always begins with =."
+      ],
+      [
+        "function",
+        "A ready-made calculation built into the software, such as SUM or AVERAGE."
+      ],
+      [
+        "information",
+        "Data that has been given meaning, such as 'green is the most popular colour'."
+      ],
+      [
+        "label",
+        "The title on an axis or data point, explaining what it measures."
+      ],
+      [
+        "legend",
+        "A key on a chart that shows what each colour means."
+      ],
+      [
+        "LibreOffice Calc",
+        "Free, open-source spreadsheet software."
+      ],
+      [
+        "line graph",
+        "A chart that joins data points with lines; best for change over time."
+      ],
+      [
+        "numerical data",
+        "Data that is a number, such as 2, 14 or 3.6."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "analyse",
+        "meaning": "To look closely at data, find patterns, and think about what it means.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "automatically",
+        "meaning": "Done by itself, with no human help (as a data logger records readings).",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "average",
+        "meaning": "A middle value; add all the values and divide by how many there are. Also called the mean.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "axis",
+        "meaning": "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "bar chart",
+        "meaning": "A chart with a bar for each category; the longer the bar, the greater the value.",
+        "example": "",
+        "letter": "B"
+      },
+      {
+        "term": "categorical data",
+        "meaning": "Data grouped into categories, often words, such as favourite fruit.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "cell",
+        "meaning": "One box in a spreadsheet grid, where a row and a column meet.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "cell reference",
+        "meaning": "A cell's address, made of its column letter and row number, such as B3.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "chart",
+        "meaning": "A picture of data that makes patterns easy to see.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "continuous data",
+        "meaning": "Numerical data that can take any value in a range, such as temperature.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "continuously",
+        "meaning": "Carrying on without stopping until told to stop.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "data",
+        "meaning": "Meaningless facts or figures on their own, such as '7' or 'green'.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "data logger",
+        "meaning": "A device that records data from the world automatically and continuously, using sensors.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "database",
+        "meaning": "An organised store of related data, on paper or digital.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "discrete data",
+        "meaning": "Numerical data that can only be certain values, usually whole numbers you count.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "form",
+        "meaning": "A list of questions with spaces for people to write or choose answers.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "formula",
+        "meaning": "An instruction that does a calculation; it always begins with =.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "function",
+        "meaning": "A ready-made calculation built into the software, such as SUM or AVERAGE.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "information",
+        "meaning": "Data that has been given meaning, such as 'green is the most popular colour'.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "label",
+        "meaning": "The title on an axis or data point, explaining what it measures.",
+        "example": "",
+        "letter": "L"
+      },
+      {
+        "term": "legend",
+        "meaning": "A key on a chart that shows what each colour means.",
+        "example": "",
+        "letter": "L"
+      },
+      {
+        "term": "LibreOffice Calc",
+        "meaning": "Free, open-source spreadsheet software.",
+        "example": "",
+        "letter": "L"
+      },
+      {
+        "term": "line graph",
+        "meaning": "A chart that joins data points with lines; best for change over time.",
+        "example": "",
+        "letter": "L"
+      },
+      {
+        "term": "numerical data",
+        "meaning": "Data that is a number, such as 2, 14 or 3.6.",
+        "example": "",
+        "letter": "N"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "What you might see",
+        "What it usually means How to fix it"
+      ],
+      [
+        "The cell shows =SUM(B2:B8) as text, not a number",
+        "The cell is formatted as Text. Set the cell format to Number (Format > Cells) and retype the formula."
+      ],
+      [
+        "#NAME? appears in the cell",
+        "The function name is misspelled or brackets are missing. Check the spelling and that the range is inside brackets, e.g. =SUM(B2:B8)."
+      ],
+      [
+        "#DIV/0! appears in the cell",
+        "You divided by zero or by an empty cell. Make sure the cell you divide by holds a number that is not zero."
+      ],
+      [
+        "The formula shows as words, not an answer",
+        "You forgot the equals sign. Start the formula with =, for example =B2*C2."
+      ],
+      [
+        "My multiply does not work",
+        "You used x instead of *. Use the asterisk * for multiply, e.g. =B2*C2."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Which of these is continuous data? (a) Favourite fruit (b) Number of pets (c) Temperature (d) Number of goals",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "A statistical investigation is: (a) A type of chart (b) Collecting data to answer a question (c) A spreadsheet formula (d) A kind of cell",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Which is an example of information, not just data? (a) The number 7 (b) The word 'green' (c) 'Green is the most popular colour' (d) The letter B",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "A data logger is best for collecting: (a) Opinions (b) Names (c) Continuous data over time (d) Book titles",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Every spreadsheet formula must begin with: (a) A colon (b) An equals sign (c) A bracket (d) A letter",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "In a spreadsheet, the symbol for multiply is: (a) x (b) * (c) / (d) +",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "Which formula correctly adds the values from B2 to B6? (a) =SUMB2:B6 (b) SUM(B2:B6) (c) =SUM(B2:B6) (d) =SUM(B2-B6)",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "The AVERAGE function calculates the: (a) Total (b) Largest value (c) Mean (d) Smallest value",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "Which chart is best for categorical data like favourite fruit? (a) Line graph (b) Bar chart (c) A single number (d) A formula",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "Which chart is best for showing temperature changing over a day? (a) Bar chart (b) Line graph (c) Table only (d) Pie of names",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "The key on a chart that shows what each colour means is called the: (a) Axis (b) Legend (c) Cell (d) Range",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "The y axis on a chart is: (a) Horizontal (b) Vertical (c) A colour (d) A title",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Some of these formulas are written incorrectly. For each one, say whether it is correct or incorrect. If it is incorrect, write it out correctly.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "AVERAGE(B2:B6)",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "=AVERAGE(B2-B6)",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "=AVERAGE(B2B6)",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Travel",
+      "prompt": "Leila made a bar chart of the favourite fruit in her class. The bars had these heights: Mango 9, Banana 6, Orange 4, Watermelon 4, Dates 2. Answer the questions using those values.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "context": "Health",
+      "prompt": "Which fruit is the most popular?",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "In your own words, what is the difference between data and information? Give an example of each.",
+      "keyIdeas": [
+        "analyse",
+        "automatically",
+        "average"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "What is the difference between discrete and continuous data? Give an example of each.",
+      "keyIdeas": [
+        "automatically",
+        "average",
+        "axis"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Name three tools you can use to collect data in a statistical investigation.",
+      "keyIdeas": [
+        "average",
+        "axis",
+        "bar chart"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "What does a validation rule do, and why is it useful?",
+      "keyIdeas": [
+        "axis",
+        "bar chart",
+        "categorical data"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "What is a cell reference? Give an example.",
+      "keyIdeas": [
+        "bar chart",
+        "categorical data",
+        "cell"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Why must a formula always begin with =?",
+      "keyIdeas": [
+        "categorical data",
+        "cell",
+        "cell reference"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "project": {
+    "title": "Your Own Juice & Sweets Cafe",
+    "brief": "Imagine you and a partner are opening a small juice and sweets cafe near the school, called Barwaaqo Cafe. You do not yet know what to sell or what to charge. You will collect data from your classmates, organise it in a spreadsheet, make charts, and use formulas to predict how much money you might make. This project brings together everything in the unit.",
+    "steps": [
+      "Plan first: write down what your managing data project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "My project shows that I understand collecting and storing data.",
+      "My project shows that I understand data and information are not the same.",
+      "My project shows that I understand the tools we use to collect and store data.",
+      "My project shows that I understand a free, open.",
+      "My project shows that I understand restricting cells."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “analyse” mean in computing?",
+        "options": [
+          "To look closely at data, find patterns, and think about what it means.",
+          "Done by itself, with no human help (as a data logger records readings).",
+          "A middle value; add all the values and divide by how many there are. Also called the mean.",
+          "A line on a chart. The x axis is horizontal; the y axis is vertical."
+        ],
+        "answer": "To look closely at data, find patterns, and think about what it means.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Analyse means to look closely at data, find patterns, and think about what it means.."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “automatically” mean in computing?",
+        "options": [
+          "Done by itself, with no human help (as a data logger records readings).",
+          "A middle value; add all the values and divide by how many there are. Also called the mean.",
+          "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+          "A chart with a bar for each category; the longer the bar, the greater the value."
+        ],
+        "answer": "Done by itself, with no human help (as a data logger records readings).",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Analyse means to look closely at data, find patterns, and think about what it means."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “average” mean in computing?",
+        "options": [
+          "A middle value; add all the values and divide by how many there are. Also called the mean.",
+          "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+          "A chart with a bar for each category; the longer the bar, the greater the value.",
+          "Data grouped into categories, often words, such as favourite fruit."
+        ],
+        "answer": "A middle value; add all the values and divide by how many there are. Also called the mean.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Automatically means done by itself, with no human help (as a data logger records readings)."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “axis” mean in computing?",
+        "options": [
+          "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+          "A chart with a bar for each category; the longer the bar, the greater the value.",
+          "Data grouped into categories, often words, such as favourite fruit.",
+          "One box in a spreadsheet grid, where a row and a column meet."
+        ],
+        "answer": "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Average means a middle value; add all the values and divide by how many there are. Also called the mean."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “bar chart” mean in computing?",
+        "options": [
+          "A chart with a bar for each category; the longer the bar, the greater the value.",
+          "Data grouped into categories, often words, such as favourite fruit.",
+          "One box in a spreadsheet grid, where a row and a column meet.",
+          "A cell's address, made of its column letter and row number, such as B3."
+        ],
+        "answer": "A chart with a bar for each category; the longer the bar, the greater the value.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Axis means a line on a chart. The x axis is horizontal; the y axis is vertical."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “categorical data” mean in computing?",
+        "options": [
+          "Data grouped into categories, often words, such as favourite fruit.",
+          "One box in a spreadsheet grid, where a row and a column meet.",
+          "A cell's address, made of its column letter and row number, such as B3.",
+          "A picture of data that makes patterns easy to see."
+        ],
+        "answer": "Data grouped into categories, often words, such as favourite fruit.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Bar chart means a chart with a bar for each category; the longer the bar, the greater the value."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: One box in a spreadsheet grid, where a row and a column meet.?",
+        "options": [
+          "cell",
+          "cell reference",
+          "chart",
+          "continuous data"
+        ],
+        "answer": "cell",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Categorical data means data grouped into categories, often words, such as favourite fruit."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A cell's address, made of its column letter and row number, such as B3.?",
+        "options": [
+          "cell reference",
+          "chart",
+          "continuous data",
+          "continuously"
+        ],
+        "answer": "cell reference",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Cell means one box in a spreadsheet grid, where a row and a column meet."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo09",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A picture of data that makes patterns easy to see.?",
+        "options": [
+          "chart",
+          "continuous data",
+          "continuously",
+          "data"
+        ],
+        "answer": "chart",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Cell reference means a cell's address, made of its column letter and row number, such as B3."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Numerical data that can take any value in a range, such as temperature.?",
+        "options": [
+          "continuous data",
+          "continuously",
+          "data",
+          "data logger"
+        ],
+        "answer": "continuous data",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Chart means a picture of data that makes patterns easy to see."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Carrying on without stopping until told to stop.?",
+        "options": [
+          "continuously",
+          "data",
+          "data logger",
+          "database"
+        ],
+        "answer": "continuously",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Continuous data means numerical data that can take any value in a range, such as temperature."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Meaningless facts or figures on their own, such as '7' or 'green'.?",
+        "options": [
+          "data",
+          "data logger",
+          "database",
+          "discrete data"
+        ],
+        "answer": "data",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Continuously means carrying on without stopping until told to stop."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u2-game-1",
+        "icon": "?",
+        "skill": "analyse",
+        "title": "Quick Match: analyse",
+        "description": "Practise analyse through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “analyse” mean in computing?",
+            "choices": [
+              "To look closely at data, find patterns, and think about what it means.",
+              "Done by itself, with no human help (as a data logger records readings).",
+              "A middle value; add all the values and divide by how many there are. Also called the mean.",
+              "A line on a chart. The x axis is horizontal; the y axis is vertical."
+            ],
+            "answer": "To look closely at data, find patterns, and think about what it means.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Analyse means to look closely at data, find patterns, and think about what it means.."
+          },
+          {
+            "prompt": "What does “axis” mean in computing?",
+            "choices": [
+              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+              "A chart with a bar for each category; the longer the bar, the greater the value.",
+              "Data grouped into categories, often words, such as favourite fruit.",
+              "One box in a spreadsheet grid, where a row and a column meet."
+            ],
+            "answer": "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Average means a middle value; add all the values and divide by how many there are. Also called the mean."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: One box in a spreadsheet grid, where a row and a column meet.?",
+            "choices": [
+              "cell",
+              "cell reference",
+              "chart",
+              "continuous data"
+            ],
+            "answer": "cell",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Categorical data means data grouped into categories, often words, such as favourite fruit."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Numerical data that can take any value in a range, such as temperature.?",
+            "choices": [
+              "continuous data",
+              "continuously",
+              "data",
+              "data logger"
+            ],
+            "answer": "continuous data",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Chart means a picture of data that makes patterns easy to see."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-2",
+        "icon": "★",
+        "skill": "automatically",
+        "title": "Concept Quest: automatically",
+        "description": "Practise automatically through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “automatically” mean in computing?",
+            "choices": [
+              "Done by itself, with no human help (as a data logger records readings).",
+              "A middle value; add all the values and divide by how many there are. Also called the mean.",
+              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+              "A chart with a bar for each category; the longer the bar, the greater the value."
+            ],
+            "answer": "Done by itself, with no human help (as a data logger records readings).",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Analyse means to look closely at data, find patterns, and think about what it means."
+          },
+          {
+            "prompt": "What does “bar chart” mean in computing?",
+            "choices": [
+              "A chart with a bar for each category; the longer the bar, the greater the value.",
+              "Data grouped into categories, often words, such as favourite fruit.",
+              "One box in a spreadsheet grid, where a row and a column meet.",
+              "A cell's address, made of its column letter and row number, such as B3."
+            ],
+            "answer": "A chart with a bar for each category; the longer the bar, the greater the value.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Axis means a line on a chart. The x axis is horizontal; the y axis is vertical."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A cell's address, made of its column letter and row number, such as B3.?",
+            "choices": [
+              "cell reference",
+              "chart",
+              "continuous data",
+              "continuously"
+            ],
+            "answer": "cell reference",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell means one box in a spreadsheet grid, where a row and a column meet."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Carrying on without stopping until told to stop.?",
+            "choices": [
+              "continuously",
+              "data",
+              "data logger",
+              "database"
+            ],
+            "answer": "continuously",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Continuous data means numerical data that can take any value in a range, such as temperature."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-3",
+        "icon": "◫",
+        "skill": "average",
+        "title": "Debug Detective: average",
+        "description": "Practise average through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “average” mean in computing?",
+            "choices": [
+              "A middle value; add all the values and divide by how many there are. Also called the mean.",
+              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+              "A chart with a bar for each category; the longer the bar, the greater the value.",
+              "Data grouped into categories, often words, such as favourite fruit."
+            ],
+            "answer": "A middle value; add all the values and divide by how many there are. Also called the mean.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Automatically means done by itself, with no human help (as a data logger records readings)."
+          },
+          {
+            "prompt": "What does “categorical data” mean in computing?",
+            "choices": [
+              "Data grouped into categories, often words, such as favourite fruit.",
+              "One box in a spreadsheet grid, where a row and a column meet.",
+              "A cell's address, made of its column letter and row number, such as B3.",
+              "A picture of data that makes patterns easy to see."
+            ],
+            "answer": "Data grouped into categories, often words, such as favourite fruit.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Bar chart means a chart with a bar for each category; the longer the bar, the greater the value."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A picture of data that makes patterns easy to see.?",
+            "choices": [
+              "chart",
+              "continuous data",
+              "continuously",
+              "data"
+            ],
+            "answer": "chart",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell reference means a cell's address, made of its column letter and row number, such as B3."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Meaningless facts or figures on their own, such as '7' or 'green'.?",
+            "choices": [
+              "data",
+              "data logger",
+              "database",
+              "discrete data"
+            ],
+            "answer": "data",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Continuously means carrying on without stopping until told to stop."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-4",
+        "icon": "→",
+        "skill": "axis",
+        "title": "Algorithm Runner: axis",
+        "description": "Practise axis through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “axis” mean in computing?",
+            "choices": [
+              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+              "A chart with a bar for each category; the longer the bar, the greater the value.",
+              "Data grouped into categories, often words, such as favourite fruit.",
+              "One box in a spreadsheet grid, where a row and a column meet."
+            ],
+            "answer": "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Average means a middle value; add all the values and divide by how many there are. Also called the mean."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: One box in a spreadsheet grid, where a row and a column meet.?",
+            "choices": [
+              "cell",
+              "cell reference",
+              "chart",
+              "continuous data"
+            ],
+            "answer": "cell",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Categorical data means data grouped into categories, often words, such as favourite fruit."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Numerical data that can take any value in a range, such as temperature.?",
+            "choices": [
+              "continuous data",
+              "continuously",
+              "data",
+              "data logger"
+            ],
+            "answer": "continuous data",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Chart means a picture of data that makes patterns easy to see."
+          },
+          {
+            "prompt": "What does “analyse” mean in computing?",
+            "choices": [
+              "To look closely at data, find patterns, and think about what it means.",
+              "Done by itself, with no human help (as a data logger records readings).",
+              "A middle value; add all the values and divide by how many there are. Also called the mean.",
+              "A line on a chart. The x axis is horizontal; the y axis is vertical."
+            ],
+            "answer": "To look closely at data, find patterns, and think about what it means.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Analyse means to look closely at data, find patterns, and think about what it means.."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-5",
+        "icon": "Σ",
+        "skill": "bar chart",
+        "title": "Vocabulary Vault: bar chart",
+        "description": "Practise bar chart through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “bar chart” mean in computing?",
+            "choices": [
+              "A chart with a bar for each category; the longer the bar, the greater the value.",
+              "Data grouped into categories, often words, such as favourite fruit.",
+              "One box in a spreadsheet grid, where a row and a column meet.",
+              "A cell's address, made of its column letter and row number, such as B3."
+            ],
+            "answer": "A chart with a bar for each category; the longer the bar, the greater the value.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Axis means a line on a chart. The x axis is horizontal; the y axis is vertical."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A cell's address, made of its column letter and row number, such as B3.?",
+            "choices": [
+              "cell reference",
+              "chart",
+              "continuous data",
+              "continuously"
+            ],
+            "answer": "cell reference",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell means one box in a spreadsheet grid, where a row and a column meet."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Carrying on without stopping until told to stop.?",
+            "choices": [
+              "continuously",
+              "data",
+              "data logger",
+              "database"
+            ],
+            "answer": "continuously",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Continuous data means numerical data that can take any value in a range, such as temperature."
+          },
+          {
+            "prompt": "What does “automatically” mean in computing?",
+            "choices": [
+              "Done by itself, with no human help (as a data logger records readings).",
+              "A middle value; add all the values and divide by how many there are. Also called the mean.",
+              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+              "A chart with a bar for each category; the longer the bar, the greater the value."
+            ],
+            "answer": "Done by itself, with no human help (as a data logger records readings).",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Analyse means to look closely at data, find patterns, and think about what it means."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-6",
+        "icon": "◇",
+        "skill": "categorical data",
+        "title": "Challenge Cards: categorical data",
+        "description": "Practise categorical data through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “categorical data” mean in computing?",
+            "choices": [
+              "Data grouped into categories, often words, such as favourite fruit.",
+              "One box in a spreadsheet grid, where a row and a column meet.",
+              "A cell's address, made of its column letter and row number, such as B3.",
+              "A picture of data that makes patterns easy to see."
+            ],
+            "answer": "Data grouped into categories, often words, such as favourite fruit.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Bar chart means a chart with a bar for each category; the longer the bar, the greater the value."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A picture of data that makes patterns easy to see.?",
+            "choices": [
+              "chart",
+              "continuous data",
+              "continuously",
+              "data"
+            ],
+            "answer": "chart",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell reference means a cell's address, made of its column letter and row number, such as B3."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Meaningless facts or figures on their own, such as '7' or 'green'.?",
+            "choices": [
+              "data",
+              "data logger",
+              "database",
+              "discrete data"
+            ],
+            "answer": "data",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Continuously means carrying on without stopping until told to stop."
+          },
+          {
+            "prompt": "What does “average” mean in computing?",
+            "choices": [
+              "A middle value; add all the values and divide by how many there are. Also called the mean.",
+              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+              "A chart with a bar for each category; the longer the bar, the greater the value.",
+              "Data grouped into categories, often words, such as favourite fruit."
+            ],
+            "answer": "A middle value; add all the values and divide by how many there are. Also called the mean.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Automatically means done by itself, with no human help (as a data logger records readings)."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-7",
+        "icon": "⚡",
+        "skill": "cell",
+        "title": "Think Fast: cell",
+        "description": "Practise cell through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: One box in a spreadsheet grid, where a row and a column meet.?",
+            "choices": [
+              "cell",
+              "cell reference",
+              "chart",
+              "continuous data"
+            ],
+            "answer": "cell",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Categorical data means data grouped into categories, often words, such as favourite fruit."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Numerical data that can take any value in a range, such as temperature.?",
+            "choices": [
+              "continuous data",
+              "continuously",
+              "data",
+              "data logger"
+            ],
+            "answer": "continuous data",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Chart means a picture of data that makes patterns easy to see."
+          },
+          {
+            "prompt": "What does “analyse” mean in computing?",
+            "choices": [
+              "To look closely at data, find patterns, and think about what it means.",
+              "Done by itself, with no human help (as a data logger records readings).",
+              "A middle value; add all the values and divide by how many there are. Also called the mean.",
+              "A line on a chart. The x axis is horizontal; the y axis is vertical."
+            ],
+            "answer": "To look closely at data, find patterns, and think about what it means.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Analyse means to look closely at data, find patterns, and think about what it means.."
+          },
+          {
+            "prompt": "What does “axis” mean in computing?",
+            "choices": [
+              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+              "A chart with a bar for each category; the longer the bar, the greater the value.",
+              "Data grouped into categories, often words, such as favourite fruit.",
+              "One box in a spreadsheet grid, where a row and a column meet."
+            ],
+            "answer": "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Average means a middle value; add all the values and divide by how many there are. Also called the mean."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-8",
+        "icon": "☁",
+        "skill": "cell reference",
+        "title": "Explain It: cell reference",
+        "description": "Practise cell reference through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A cell's address, made of its column letter and row number, such as B3.?",
+            "choices": [
+              "cell reference",
+              "chart",
+              "continuous data",
+              "continuously"
+            ],
+            "answer": "cell reference",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell means one box in a spreadsheet grid, where a row and a column meet."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Carrying on without stopping until told to stop.?",
+            "choices": [
+              "continuously",
+              "data",
+              "data logger",
+              "database"
+            ],
+            "answer": "continuously",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Continuous data means numerical data that can take any value in a range, such as temperature."
+          },
+          {
+            "prompt": "What does “automatically” mean in computing?",
+            "choices": [
+              "Done by itself, with no human help (as a data logger records readings).",
+              "A middle value; add all the values and divide by how many there are. Also called the mean.",
+              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+              "A chart with a bar for each category; the longer the bar, the greater the value."
+            ],
+            "answer": "Done by itself, with no human help (as a data logger records readings).",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Analyse means to look closely at data, find patterns, and think about what it means."
+          },
+          {
+            "prompt": "What does “bar chart” mean in computing?",
+            "choices": [
+              "A chart with a bar for each category; the longer the bar, the greater the value.",
+              "Data grouped into categories, often words, such as favourite fruit.",
+              "One box in a spreadsheet grid, where a row and a column meet.",
+              "A cell's address, made of its column letter and row number, such as B3."
+            ],
+            "answer": "A chart with a bar for each category; the longer the bar, the greater the value.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Axis means a line on a chart. The x axis is horizontal; the y axis is vertical."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-9",
+        "icon": "⌂",
+        "skill": "chart",
+        "title": "Real-Life Round: chart",
+        "description": "Practise chart through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A picture of data that makes patterns easy to see.?",
+            "choices": [
+              "chart",
+              "continuous data",
+              "continuously",
+              "data"
+            ],
+            "answer": "chart",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell reference means a cell's address, made of its column letter and row number, such as B3."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Meaningless facts or figures on their own, such as '7' or 'green'.?",
+            "choices": [
+              "data",
+              "data logger",
+              "database",
+              "discrete data"
+            ],
+            "answer": "data",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Continuously means carrying on without stopping until told to stop."
+          },
+          {
+            "prompt": "What does “average” mean in computing?",
+            "choices": [
+              "A middle value; add all the values and divide by how many there are. Also called the mean.",
+              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+              "A chart with a bar for each category; the longer the bar, the greater the value.",
+              "Data grouped into categories, often words, such as favourite fruit."
+            ],
+            "answer": "A middle value; add all the values and divide by how many there are. Also called the mean.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Automatically means done by itself, with no human help (as a data logger records readings)."
+          },
+          {
+            "prompt": "What does “categorical data” mean in computing?",
+            "choices": [
+              "Data grouped into categories, often words, such as favourite fruit.",
+              "One box in a spreadsheet grid, where a row and a column meet.",
+              "A cell's address, made of its column letter and row number, such as B3.",
+              "A picture of data that makes patterns easy to see."
+            ],
+            "answer": "Data grouped into categories, often words, such as favourite fruit.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Bar chart means a chart with a bar for each category; the longer the bar, the greater the value."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-10",
+        "icon": "!",
+        "skill": "continuous data",
+        "title": "Spot the Bug: continuous data",
+        "description": "Practise continuous data through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Numerical data that can take any value in a range, such as temperature.?",
+            "choices": [
+              "continuous data",
+              "continuously",
+              "data",
+              "data logger"
+            ],
+            "answer": "continuous data",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Chart means a picture of data that makes patterns easy to see."
+          },
+          {
+            "prompt": "What does “analyse” mean in computing?",
+            "choices": [
+              "To look closely at data, find patterns, and think about what it means.",
+              "Done by itself, with no human help (as a data logger records readings).",
+              "A middle value; add all the values and divide by how many there are. Also called the mean.",
+              "A line on a chart. The x axis is horizontal; the y axis is vertical."
+            ],
+            "answer": "To look closely at data, find patterns, and think about what it means.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Analyse means to look closely at data, find patterns, and think about what it means.."
+          },
+          {
+            "prompt": "What does “axis” mean in computing?",
+            "choices": [
+              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+              "A chart with a bar for each category; the longer the bar, the greater the value.",
+              "Data grouped into categories, often words, such as favourite fruit.",
+              "One box in a spreadsheet grid, where a row and a column meet."
+            ],
+            "answer": "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Average means a middle value; add all the values and divide by how many there are. Also called the mean."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: One box in a spreadsheet grid, where a row and a column meet.?",
+            "choices": [
+              "cell",
+              "cell reference",
+              "chart",
+              "continuous data"
+            ],
+            "answer": "cell",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Categorical data means data grouped into categories, often words, such as favourite fruit."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-11",
+        "icon": "≡",
+        "skill": "continuously",
+        "title": "Mastery Mix: continuously",
+        "description": "Practise continuously through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Carrying on without stopping until told to stop.?",
+            "choices": [
+              "continuously",
+              "data",
+              "data logger",
+              "database"
+            ],
+            "answer": "continuously",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Continuous data means numerical data that can take any value in a range, such as temperature."
+          },
+          {
+            "prompt": "What does “automatically” mean in computing?",
+            "choices": [
+              "Done by itself, with no human help (as a data logger records readings).",
+              "A middle value; add all the values and divide by how many there are. Also called the mean.",
+              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+              "A chart with a bar for each category; the longer the bar, the greater the value."
+            ],
+            "answer": "Done by itself, with no human help (as a data logger records readings).",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Analyse means to look closely at data, find patterns, and think about what it means."
+          },
+          {
+            "prompt": "What does “bar chart” mean in computing?",
+            "choices": [
+              "A chart with a bar for each category; the longer the bar, the greater the value.",
+              "Data grouped into categories, often words, such as favourite fruit.",
+              "One box in a spreadsheet grid, where a row and a column meet.",
+              "A cell's address, made of its column letter and row number, such as B3."
+            ],
+            "answer": "A chart with a bar for each category; the longer the bar, the greater the value.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Axis means a line on a chart. The x axis is horizontal; the y axis is vertical."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A cell's address, made of its column letter and row number, such as B3.?",
+            "choices": [
+              "cell reference",
+              "chart",
+              "continuous data",
+              "continuously"
+            ],
+            "answer": "cell reference",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell means one box in a spreadsheet grid, where a row and a column meet."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-12",
+        "icon": "T",
+        "skill": "data",
+        "title": "Unit Champion: data",
+        "description": "Practise data through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Meaningless facts or figures on their own, such as '7' or 'green'.?",
+            "choices": [
+              "data",
+              "data logger",
+              "database",
+              "discrete data"
+            ],
+            "answer": "data",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Continuously means carrying on without stopping until told to stop."
+          },
+          {
+            "prompt": "What does “average” mean in computing?",
+            "choices": [
+              "A middle value; add all the values and divide by how many there are. Also called the mean.",
+              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+              "A chart with a bar for each category; the longer the bar, the greater the value.",
+              "Data grouped into categories, often words, such as favourite fruit."
+            ],
+            "answer": "A middle value; add all the values and divide by how many there are. Also called the mean.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Automatically means done by itself, with no human help (as a data logger records readings)."
+          },
+          {
+            "prompt": "What does “categorical data” mean in computing?",
+            "choices": [
+              "Data grouped into categories, often words, such as favourite fruit.",
+              "One box in a spreadsheet grid, where a row and a column meet.",
+              "A cell's address, made of its column letter and row number, such as B3.",
+              "A picture of data that makes patterns easy to see."
+            ],
+            "answer": "Data grouped into categories, often words, such as favourite fruit.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Bar chart means a chart with a bar for each category; the longer the bar, the greater the value."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A picture of data that makes patterns easy to see.?",
+            "choices": [
+              "chart",
+              "continuous data",
+              "continuously",
+              "data"
+            ],
+            "answer": "chart",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell reference means a cell's address, made of its column letter and row number, such as B3."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can describe the computing tools you can use in a statistical investigation.",
+    "I can explain the difference between data and information.",
+    "I can use questions and forms to collect different types of data.",
+    "I can use validation rules in spreadsheet cells to help avoid mistakes in your data.",
+    "I can use arithmetic operators (+, -, *, /) in spreadsheet calculations.",
+    "I can write formulas using cell references, and use the built-in functions SUM and AVERAGE.",
+    "I can explain what happens to calculations and charts when you change the data in a spreadsheet.",
+    "I can use your data skills together to run a full data investigation for a small business.",
+    "I can explain the difference between categorical, discrete and continuous data using fruit and temperature as examples.",
+    "I can use a cell reference (like B3) in a formula, and the answer updates by itself when that cell changes."
+  ]
+}

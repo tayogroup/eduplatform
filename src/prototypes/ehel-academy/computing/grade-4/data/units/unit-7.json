@@ -1,0 +1,1775 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.722Z",
+  "stage": {
+    "id": "s04",
+    "label": "Stage 4"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t02",
+    "label": "Term 2"
+  },
+  "unit": {
+    "unitId": "comp-g04-u07",
+    "unitNo": 7,
+    "unitTitle": "Be a Data Boss",
+    "unitOverview": "The big idea is the data table — a grid with rows and columns. They then learn about data types — the kind of data a field is allowed to hold — and finally how to search a data table to answer real questions, such as “How many items are in the Snacks section?”\n\nIn Sessions 4 and 5 they move the same skills onto a computer, building a small data table in a free spreadsheet. Most of this unit is unplugged: you draw and label data tables in their notebooks, sort facts by type, and search tables by hand. Alongside the content, you practise two thinking skills from the syllabus: they group items that belong together, and they decide which field to look in before they start a search.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 4
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-4-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 4",
+    "sourceArchive": "Year 4-20260801T055750Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 4/Unit 7/Year 4 - Unit 7 Teacher Guide.docx",
+      "Year 4/Unit 7/Year 4 - Unit 7 Activity Sheet.docx",
+      "Year 4/Unit 7/Year 4 - Unit 7 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 504,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 4 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Explain that a database is an organised collection of data, and that a data table stores data in rows and columns.",
+    "Name and point to the three parts of a data table: field (column), record (row) and data item (one fact in a cell).",
+    "Tell the difference between data (raw facts) and information (data that answers a question or has meaning).",
+    "Name the main data types — Text, Number, Date/Time and Yes/No — and recognise Currency as the special number type used for money.",
+    "Choose the correct data type for a field, including the tricky case where a contact number is stored as Text (because it is not used for sums).",
+    "Explain the rule that every cell in one field must use the same data type and format.",
+    "Search a data table to answer a question by first choosing the correct field, then scanning, counting or matching.",
+    "Enter data into the cells of a spreadsheet in LibreOffice Calc, format the header row, and format a column as currency.",
+    "Design a small data table of their own, choose sensible data types, enter records, and write questions the table can answer.",
+    "Before this unit (from the syllabus), children should already be able to enter data into the cells of a spreadsheet, format cells, tell data apart from information, and know that a database can be physical (on paper) or digital (on a computer). This unit builds directly on those skills."
+  ],
+  "toolkit": [
+    {
+      "name": "A free spreadsheet",
+      "url": "Google Sheets, or LibreOffice Calc",
+      "steps": [
+        "Open a new blank spreadsheet.",
+        "Put your field names in row 1, one per column.",
+        "Type one record per row underneath.",
+        "Use Insert → Chart to turn your data into a graph."
+      ],
+      "note": "Any free spreadsheet works — the ideas are the same in all of them."
+    },
+    {
+      "name": "A simple database",
+      "url": "A spreadsheet in database layout, or LibreOffice Base",
+      "steps": [
+        "Give every field a clear name and one kind of data.",
+        "Enter one record per row.",
+        "Sort on a field to put records in order.",
+        "Filter or search to find the records that match a condition."
+      ],
+      "note": "A spreadsheet laid out with fields and records works as a database for this unit."
+    }
+  ],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-data-data-tables-records-and-fields-unplugged",
+      "title": "Data, data tables, records and fields (unplugged)",
+      "explanation": "A database is an organised collection of facts. We keep data organised so we can find it quickly. The tidiest way is a data table — a grid of rows and columns.\n\nCheck yourself: Can you count the fields and records correctly? Can you see that a record goes across (a row), not down? Can you point to a field, a record and a data item and use the right word for each?",
+      "example": "Teach the three parts using the register below: a field is a column (one kind of information, like Age); a record is a row (everything about one child); and a data item is one fact in one cell (like the 9 in Leila's Age cell). Also separate data (raw facts: “Leila”, \"9 “) from information (” Leila is 9 years old\").",
+      "checkYourself": "Can you count the fields and records correctly? Can you see that a record goes across (a row), not down? Can you point to a field, a record and a data item and use the right word for each?"
+    },
+    {
+      "id": "concept-2-data-types-unplugged",
+      "title": "Data types (unplugged)",
+      "explanation": "Every field has a data type — the kind of data it is allowed to hold. Teach the four main types: Text (letters and other characters), Number (only numbers, and you can do sums with them), Date/Time (a date or a time), and Yes/No (only one of two values).",
+      "example": "Then add Currency as the money type — a Number shown with a money sign like $3.00. The key rule: every cell in one field must use the same data type and format.",
+      "checkYourself": "Can you know you cannot do sums on Text? Does you pick Text for a contact number and explain why?"
+    },
+    {
+      "id": "concept-3-searching-a-data-table-to-answer-questions-unplugged",
+      "title": "Searching a data table to answer questions (unplugged)",
+      "explanation": "People keep data so they can answer questions with it. To search a data table, use two steps: Step 1 — choose the right field (which column has the answer?), then Step 2 — scan, count or match down that field. This “field first” habit is the thinking skill of the unit: decide where to look before you look.",
+      "example": "Find one real example of searching a data table to answer questions around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you count matches accurately and read across a record to the right cell? Does you name the field before searching?"
+    },
+    {
+      "id": "concept-4-from-paper-to-screen-a-data-table-in-libreoffice-calc-on-screen",
+      "title": "From paper to screen: a data table in LibreOffice Calc (on-screen)",
+      "explanation": "The same data table works on a computer, where it is quicker to change and search. Five Friends. Teach that a spreadsheet is a giant grid: columns have letters (A, B, C.), rows have numbers (1, 2, 3.), and each box is a cell with an address like A1. The header row (row 1) holds the field names; each record goes on its own row underneath.\n\nThis is exactly the layout you build Model it on the projector, step by step, and have you copy each step.",
+      "example": "Find one real example of from paper to screen: a data table in LibreOffice Calc (on-screen) around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you put field names in row 1 and one record per row? Can you remember to save? Can you type into the correct cell?"
+    },
+    {
+      "id": "concept-5-be-a-data-boss-your-own-class-database-project",
+      "title": "Be a data boss: your own class database (project)",
+      "explanation": "A data boss can design a data table, choose the right data type for every field, enter records neatly, and then search their table to answer questions.\n\nBooks in our class corner. Then invent two records together so they see a record fill up across the row.",
+      "example": "Finally, write one search question the table can answer, such as “How many books have more than 100 pages?”, and show which field answers it. Write the data type next to each field before entering any data, so the plan comes first.",
+      "checkYourself": "Are the fields sensible and each given a correct data type? Are there at least five complete records? Do the search questions actually match the fields in the table, and are the answers correct?"
+    }
+  ],
+  "codeExamples": [],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Sort the Facts into Groups",
+      "context": "work through the steps below and see what happens. This is data, data tables, records and fields (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Here is a jumble of facts. Sort each one into the right group by writing it under the correct heading. One is done for you.",
+      "answer": "Facts: Sami 9 $3.00 Yes 12/03/2017 Sambusa 150 No 8:00 a.m. $1.50 4A Tip: if you would never add it up in a sum, it is probably Text. Match: Text → Number / Date/Time / Yes/No / Money (Currency) Match: Sami → 9 / 12/03/2017 / Yes / $3.00",
+      "modelType": "model-1",
+      "hint": "Start here: Facts: Sami 9 $3.00 Yes 12/03/2017 Sambusa 150 No 8:00 a.m. $1.50 4A",
+      "explanation": "Data, data tables, records and fields (unplugged): A database is an organised collection of facts. We keep data organised so we can find it quickly. The tidiest way is a data table — a grid of rows and columns."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Label the Parts of a Data Table",
+      "context": "work through the steps below and see what happens. This is data types (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "This is the Ehel Academy Class 4 register. Use it to answer the questions.",
+      "answer": "Colour one whole field blue. A field is a ____________ (across / down). Colour one whole record green. A record is a ____________ (across / down). Draw a circle around one data item (one single fact in one box). How many fields are there? __________ How many records? __________ Whose data is in the third record? ______________________________",
+      "modelType": "model-2",
+      "hint": "Start here: Colour one whole field blue. A field is a ____________ (across / down).",
+      "explanation": "Data types (unplugged): Every field has a data type — the kind of data it is allowed to hold. Teach the four main types: Text (letters and other characters), Number (only numbers, and you can do sums with them), Date/Time (a date or a time), and Yes/No (only one of two values)."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Match the Field to its Data Type",
+      "context": "work through the steps below and see what happens. This is searching a data table to answer questions (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Careful — one is a trap! Draw a line from each field to the correct data type.",
+      "answer": "Which field was the trap, and why? ________________________________________________ Match: Field → Data type Match: Name → Number Match: Age → Yes/No Match: Date of Birth → Currency",
+      "modelType": "model-3",
+      "hint": "Start here: Which field was the trap, and why? ________________________________________________",
+      "explanation": "Searching a data table to answer questions (unplugged): People keep data so they can answer questions with it. To search a data table, use two steps: Step 1 — choose the right field (which column has the answer?), then Step 2 — scan, count or match down that field. This “field first” habit is the thinking skill of the unit: decide where to look before…"
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "True or False?",
+      "context": "work through the steps below and see what happens. This is from paper to screen: a data table in libreoffice calc (on-screen) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Write True or False next to each sentence.",
+      "answer": "Each column in a data table is a field. __________ You cannot do sums (calculations) on Text data. __________ A field can hold a different data type in every cell. __________ A Text field can only hold letters. __________ A Yes/No field can store lots of different values. __________",
+      "modelType": "model-4",
+      "hint": "Start here: Each column in a data table is a field. __________",
+      "explanation": "From paper to screen: a data table in LibreOffice Calc (on-screen): The same data table works on a computer, where it is quicker to change and search. Five Friends. Teach that a spreadsheet is a giant grid: columns have letters (A, B, C.), rows have numbers (1, 2, 3.), and each box is a cell with an address like A1. The header row (row 1) holds the field names;…"
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Be a Data Detective: Search the Table",
+      "context": "work through the steps below and see what happens. This is be a data boss: your own class database (project) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "This is the Ehel Academy tuck-shop data table. Search it to answer the questions. Remember: choose the field first, then count or match!",
+      "answer": "Which items are in the Drinks section? ______________________________ Which items are in the Snacks section? ______________________________ What is the price of Rice? __________ Which item sold exactly 200? ______________________________ Which item sold the most? ______________ Which sold the fewest? ______________",
+      "modelType": "model-5",
+      "hint": "Start here: Which items are in the Drinks section? ______________________________",
+      "explanation": "Be a data boss: your own class database (project): A data boss can design a data table, choose the right data type for every field, enter records neatly, and then search their table to answer questions."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Which Field Did You Look In?",
+      "context": "work through the steps below and see what happens. This is data, data tables, records and fields (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "A good data boss knows where to look. Write the field name you searched first.",
+      "answer": "To find which items are Snacks, look in the ______________ field first. To find the price of Rice, look in the ______________ field first, then read across to the ______________ field.",
+      "modelType": "model-6",
+      "hint": "Start here: To find which items are Snacks, look in the ______________ field first.",
+      "explanation": "Data, data tables, records and fields (unplugged): A database is an organised collection of facts. We keep data organised so we can find it quickly. The tidiest way is a data table — a grid of rows and columns."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Data, data tables, records and fields (unplugged)",
+      "modelType": "concept-model-1",
+      "purpose": "A database is an organised collection of facts. We keep data organised so we can find it quickly. The tidiest way is a data table — a grid of rows and columns.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Data types (unplugged)",
+      "modelType": "concept-model-2",
+      "purpose": "Every field has a data type — the kind of data it is allowed to hold. Teach the four main types: Text (letters and other characters), Number (only numbers, and you can do sums with them), Date/Time (a date or a time),…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Searching a data table to answer questions (unplugged)",
+      "modelType": "concept-model-3",
+      "purpose": "People keep data so they can answer questions with it. To search a data table, use two steps: Step 1 — choose the right field (which column has the answer?), then Step 2 — scan, count or match down that field. This…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "From paper to screen: a data table in LibreOffice Calc (on-screen)",
+      "modelType": "concept-model-4",
+      "purpose": "The same data table works on a computer, where it is quicker to change and search. Five Friends. Teach that a spreadsheet is a giant grid: columns have letters (A, B, C.), rows have numbers (1, 2, 3.), and each box is a…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Be a data boss: your own class database (project)",
+      "modelType": "concept-model-5",
+      "purpose": "A data boss can design a data table, choose the right data type for every field, enter records neatly, and then search their table to answer questions.",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with data, data tables, records and fields (unplugged)",
+      "example": "Teach the three parts using the register below: a field is a column (one kind of information, like Age); a record is a row (everything about one child); and a data item is one fact in one cell (like the 9 in Leila's Age cell). Also separate data (raw facts:…",
+      "steps": [
+        "Read the concept card for data, data tables, records and fields (unplugged) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with data types (unplugged)",
+      "example": "Then add Currency as the money type — a Number shown with a money sign like $3.00. The key rule: every cell in one field must use the same data type and format.",
+      "steps": [
+        "Read the concept card for data types (unplugged) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with searching a data table to answer questions (unplugged)",
+      "example": "Find one real example of searching a data table to answer questions around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for searching a data table to answer questions (unplugged) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with from paper to screen: a data table in libreoffice calc (on-screen)",
+      "example": "Find one real example of from paper to screen: a data table in LibreOffice Calc (on-screen) around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for from paper to screen: a data table in libreoffice calc (on-screen) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with be a data boss: your own class database (project)",
+      "example": "Finally, write one search question the table can answer, such as “How many books have more than 100 pages?”, and show which field answers it. Write the data type next to each field before entering any data, so the plan comes first.",
+      "steps": [
+        "Read the concept card for be a data boss: your own class database (project) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Data, data tables, records and fields (unplugged)",
+      "prompt": "Explain in your own words: Data, data tables, records and fields (unplugged).",
+      "solution": "A database is an organised collection of facts. We keep data organised so we can find it quickly. The tidiest way is a data table — a grid of rows and columns.\n\nCheck yourself: Can you count the fields and records correctly? Can you see that a record goes across (a row), not down? Can you point to a field, a record and a data item and use the right word for each?\n\nFor example: Teach the three parts using the register below: a field is a column (one kind of information, like Age); a record is a row (everything about one child); and a data item is one fact in one cell (like the 9 in Leila's Age cell). Also separate data (raw facts: “Leila”, \"9 “) from information (” Leila is 9 years old\")."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Data types (unplugged)",
+      "prompt": "Explain in your own words: Data types (unplugged).",
+      "solution": "Every field has a data type — the kind of data it is allowed to hold. Teach the four main types: Text (letters and other characters), Number (only numbers, and you can do sums with them), Date/Time (a date or a time), and Yes/No (only one of two values).\n\nFor example: Then add Currency as the money type — a Number shown with a money sign like $3.00. The key rule: every cell in one field must use the same data type and format."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Searching a data table to answer questions (unplugged)",
+      "prompt": "Explain in your own words: Searching a data table to answer questions (unplugged).",
+      "solution": "People keep data so they can answer questions with it. To search a data table, use two steps: Step 1 — choose the right field (which column has the answer?), then Step 2 — scan, count or match down that field. This “field first” habit is the thinking skill of the unit: decide where to look before you look.\n\nFor example: Find one real example of searching a data table to answer questions around you, or on a device you use. Say out loud what it is and why it fits."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: From paper to screen: a data table in LibreOffice Calc (on-screen)",
+      "prompt": "Explain in your own words: From paper to screen: a data table in LibreOffice Calc (on-screen).",
+      "solution": "The same data table works on a computer, where it is quicker to change and search. Five Friends. Teach that a spreadsheet is a giant grid: columns have letters (A, B, C.), rows have numbers (1, 2, 3.), and each box is a cell with an address like A1. The header row (row 1) holds the field names; each record goes on its own row underneath.\n\nThis is exactly the layout you build Model it on the projector, step by step, and have you copy each step.\n\nFor example: Find one real example of from paper to screen: a data table in LibreOffice Calc (on-screen) around you, or on a device you use. Say out loud what it is and why it fits."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Be a data boss: your own class database (project)",
+      "prompt": "Explain in your own words: Be a data boss: your own class database (project).",
+      "solution": "A data boss can design a data table, choose the right data type for every field, enter records neatly, and then search their table to answer questions.\n\nBooks in our class corner. Then invent two records together so they see a record fill up across the row.\n\nFor example: Finally, write one search question the table can answer, such as “How many books have more than 100 pages?”, and show which field answers it. Write the data type next to each field before entering any data, so the plan comes first."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "What is a database, and what is a data table?",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Explain what a field, a record and a data item are.",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "Why is a contact number stored as Text and not Number?",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "How many people are travelling to Mogadishu? Which field do you look in first?",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "Which trip was in May, and which destination costs $250.00?",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Sort the Facts into Groups",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Here is a jumble of facts. Sort each one into the right group by writing it under the correct heading. One is done for you.",
+        "Facts: Sami 9 $3.00 Yes 12/03/2017 Sambusa 150 No 8:00 a.m. $1.50 4A",
+        "Tip: if you would never add it up in a sum, it is probably Text.",
+        "Match: Text → Number / Date/Time / Yes/No / Money (Currency)",
+        "Match: Sami → 9 / 12/03/2017 / Yes / $3.00"
+      ]
+    },
+    {
+      "title": "Label the Parts of a Data Table",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "This is the Ehel Academy Class 4 register. Use it to answer the questions.",
+        "Colour one whole field blue. A field is a ____________ (across / down).",
+        "Colour one whole record green. A record is a ____________ (across / down).",
+        "Draw a circle around one data item (one single fact in one box).",
+        "How many fields are there? __________ How many records? __________",
+        "Whose data is in the third record? ______________________________"
+      ]
+    },
+    {
+      "title": "Match the Field to its Data Type",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Careful — one is a trap! Draw a line from each field to the correct data type.",
+        "Which field was the trap, and why? ________________________________________________",
+        "Match: Field → Data type",
+        "Match: Name → Number",
+        "Match: Age → Yes/No",
+        "Match: Date of Birth → Currency"
+      ]
+    },
+    {
+      "title": "True or False?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Write True or False next to each sentence.",
+        "Each column in a data table is a field. __________",
+        "You cannot do sums (calculations) on Text data. __________",
+        "A field can hold a different data type in every cell. __________",
+        "A Text field can only hold letters. __________",
+        "A Yes/No field can store lots of different values. __________"
+      ]
+    },
+    {
+      "title": "Be a Data Detective: Search the Table",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "This is the Ehel Academy tuck-shop data table. Search it to answer the questions. Remember: choose the field first, then count or match!",
+        "Which items are in the Drinks section? ______________________________",
+        "Which items are in the Snacks section? ______________________________",
+        "What is the price of Rice? __________",
+        "Which item sold exactly 200? ______________________________",
+        "Which item sold the most? ______________ Which sold the fewest? ______________"
+      ]
+    },
+    {
+      "title": "Which Field Did You Look In?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A good data boss knows where to look. Write the field name you searched first.",
+        "To find which items are Snacks, look in the ______________ field first.",
+        "To find the price of Rice, look in the ______________ field first, then read across to the ______________ field."
+      ]
+    },
+    {
+      "title": "Try it on the Computer: Build a Table in LibreOffice Calc",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Now make a real data table on the computer! You will build a “Five Friends” table. Follow the steps in order.",
+        "You will see a grid: columns have letters (A, B, C) and rows have numbers (1, 2, 3). Open LibreOffice Calc.",
+        "Type the other field names across row 1: Age, Favourite Food, Likes Football, Pocket Money. Click cell A1 and type Name. Press Tab to move right.",
+        "Select row 1 and click the Bold button (B) so the field names stand out.",
+        "Type each friend on its own row, starting in row 2.",
+        "Select the money cells E2 to E6. Choose Format, then Cells, then Currency, so each one shows like $2.00."
+      ]
+    },
+    {
+      "title": "Name the Data Types",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Look at your Five Friends table. Write the data type for each field.",
+        "Name = ______________",
+        "Age = ______________",
+        "Favourite Food = ______________",
+        "Likes Football = ______________",
+        "Pocket Money = ______________"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "A record goes down a column.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No. A record is a whole row — everything about one person or thing. A field is the column. Trace a row across with your finger to show it."
+    },
+    {
+      "symptom": "A phone number is a Number.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No. We never add phone numbers together, and they have hyphens, so they are stored as Text."
+    },
+    {
+      "symptom": "Data and information are the same thing.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Not quite. Data is the raw fact ("
+    },
+    {
+      "symptom": "); information is that fact given meaning (",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Leila is 9 years old"
+    },
+    {
+      "symptom": "A Yes/No field can hold Maybe.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No. A Yes/No type has exactly two values — Yes or No. Nothing else fits."
+    },
+    {
+      "symptom": "A Text field can only hold letters.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No. Text can also hold digits, hyphens and spaces — anything we are not going to calculate with, like 063-456-789 or 4A."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Data, data tables, records and fields (unplugged)",
+        "text": "A database is an organised collection of facts."
+      },
+      {
+        "title": "Data types (unplugged)",
+        "text": "Every field has a data type — the kind of data it is allowed to hold."
+      },
+      {
+        "title": "Searching a data table to answer questions (unplugged)",
+        "text": "People keep data so they can answer questions with it."
+      },
+      {
+        "title": "From paper to screen: a data table in LibreOffice Calc (on-screen)",
+        "text": "The same data table works on a computer, where it is quicker to change and search."
+      },
+      {
+        "title": "Be a data boss: your own class database (project)",
+        "text": "A data boss can design a data table, choose the right data type for every field, enter records neatly, and then search their table to answer questions."
+      }
+    ],
+    "terms": [
+      [
+        "database",
+        "An organised collection of data kept in one place."
+      ],
+      [
+        "data table",
+        "A grid that stores data in rows and columns."
+      ],
+      [
+        "data",
+        "Raw facts and figures, on their own."
+      ],
+      [
+        "information",
+        "Data that has meaning or answers a question."
+      ],
+      [
+        "field",
+        "A column in a data table — one kind of information."
+      ],
+      [
+        "record",
+        "A row in a data table — all the data about one person or thing."
+      ],
+      [
+        "data item",
+        "One single fact in one cell."
+      ],
+      [
+        "data type",
+        "The kind of data a field is allowed to store."
+      ],
+      [
+        "Currency",
+        "The special number type used for money."
+      ],
+      [
+        "format",
+        "The way data is arranged or shown."
+      ],
+      [
+        "search",
+        "To look through a data table to find an answer."
+      ],
+      [
+        "field first",
+        "Choosing which column to look in before you search."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "database",
+        "meaning": "An organised collection of data kept in one place.",
+        "example": "The school register of all the children.",
+        "letter": "D"
+      },
+      {
+        "term": "data table",
+        "meaning": "A grid that stores data in rows and columns.",
+        "example": "The tuck-shop price list.",
+        "letter": "D"
+      },
+      {
+        "term": "data",
+        "meaning": "Raw facts and figures, on their own.",
+        "example": "Leila, 9, Yes, $3.00.",
+        "letter": "D"
+      },
+      {
+        "term": "information",
+        "meaning": "Data that has meaning or answers a question.",
+        "example": "\"Leila is 9 years old.\"",
+        "letter": "I"
+      },
+      {
+        "term": "field",
+        "meaning": "A column in a data table — one kind of information.",
+        "example": "The Age column.",
+        "letter": "F"
+      },
+      {
+        "term": "record",
+        "meaning": "A row in a data table — all the data about one person or thing.",
+        "example": "Everything about Leila in one row.",
+        "letter": "R"
+      },
+      {
+        "term": "data item",
+        "meaning": "One single fact in one cell.",
+        "example": "The number 9 in Leila's Age cell.",
+        "letter": "D"
+      },
+      {
+        "term": "data type",
+        "meaning": "The kind of data a field is allowed to store.",
+        "example": "Text, Number, Date/Time, Yes/No.",
+        "letter": "D"
+      },
+      {
+        "term": "Currency",
+        "meaning": "The special number type used for money.",
+        "example": "$3.00 in the Price field.",
+        "letter": "C"
+      },
+      {
+        "term": "format",
+        "meaning": "The way data is arranged or shown.",
+        "example": "Writing a date as 12/03/2017.",
+        "letter": "F"
+      },
+      {
+        "term": "search",
+        "meaning": "To look through a data table to find an answer.",
+        "example": "Counting how many items are Snacks.",
+        "letter": "S"
+      },
+      {
+        "term": "field first",
+        "meaning": "Choosing which column to look in before you search.",
+        "example": "For prices, look in the Price field.",
+        "letter": "F"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "A record goes down a column.",
+        "No. A record is a whole row — everything about one person or thing. A field is the column. Trace a row across with your finger to show it."
+      ],
+      [
+        "A phone number is a Number.",
+        "No. We never add phone numbers together, and they have hyphens, so they are stored as Text."
+      ],
+      [
+        "Data and information are the same thing.",
+        "Not quite. Data is the raw fact ("
+      ],
+      [
+        "); information is that fact given meaning (",
+        "Leila is 9 years old"
+      ],
+      [
+        "A Yes/No field can hold Maybe.",
+        "No. A Yes/No type has exactly two values — Yes or No. Nothing else fits."
+      ],
+      [
+        "A Text field can only hold letters.",
+        "No. Text can also hold digits, hyphens and spaces — anything we are not going to calculate with, like 063-456-789 or 4A."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "What is a database, and what is a data table?",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Explain what a field, a record and a data item are.",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Why is a contact number stored as Text and not Number?",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "How many people are travelling to Mogadishu? Which field do you look in first?",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Which trip was in May, and which destination costs $250.00?",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "How many people are travelling to Mogadishu? Which field do you look in first?",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "Which trip was in May, and which destination costs $250.00?",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "What is a database, and what is a data table?",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "Explain what a field, a record and a data item are.",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Why is a contact number stored as Text and not Number?",
+      "keyIdeas": [
+        "database",
+        "data table",
+        "data"
+      ],
+      "modelAnswer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "How many people are travelling to Mogadishu? Which field do you look in first?",
+      "keyIdeas": [
+        "data table",
+        "data",
+        "information"
+      ],
+      "modelAnswer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Which trip was in May, and which destination costs $250.00?",
+      "keyIdeas": [
+        "data",
+        "information",
+        "field"
+      ],
+      "modelAnswer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in from paper to screen: a data table in libreoffice calc (on-screen), and give one example of your own.",
+      "keyIdeas": [
+        "database",
+        "data table",
+        "data"
+      ],
+      "modelAnswer": "The same data table works on a computer, where it is quicker to change and search. Five Friends. Teach that a spreadsheet is a giant grid: columns have letters (A, B, C.), rows have numbers (1, 2, 3.), and each box is a cell with an address like A1. The header row (row 1) holds the field names; each record goes on its own row underneath.\n\nThis is exactly the layout you build Model it on the projector, step by step, and have you copy each step."
+    }
+  ],
+  "project": {
+    "title": "Unit 7 Project: Be a Data Boss",
+    "brief": "Bring together everything from Be a Data Boss into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your be a data boss project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I chose a topic and planned my fields.",
+      "I wrote the correct data type next to each field.",
+      "I built a table with at least five records.",
+      "I kept each field the same data type all the way down.",
+      "I wrote three questions my table can answer.",
+      "I said which field I look in first for each question."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “database” mean in computing?",
+        "options": [
+          "An organised collection of data kept in one place.",
+          "A grid that stores data in rows and columns.",
+          "Raw facts and figures, on their own.",
+          "Data that has meaning or answers a question."
+        ],
+        "answer": "An organised collection of data kept in one place.",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Database means an organised collection of data kept in one place."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “data table” mean in computing?",
+        "options": [
+          "A grid that stores data in rows and columns.",
+          "Raw facts and figures, on their own.",
+          "Data that has meaning or answers a question.",
+          "A column in a data table — one kind of information."
+        ],
+        "answer": "A grid that stores data in rows and columns.",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Data table means a grid that stores data in rows and columns."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “data” mean in computing?",
+        "options": [
+          "Raw facts and figures, on their own.",
+          "Data that has meaning or answers a question.",
+          "A column in a data table — one kind of information.",
+          "A row in a data table — all the data about one person or thing."
+        ],
+        "answer": "Raw facts and figures, on their own.",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Data means raw facts and figures, on their own."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “information” mean in computing?",
+        "options": [
+          "Data that has meaning or answers a question.",
+          "A column in a data table — one kind of information.",
+          "A row in a data table — all the data about one person or thing.",
+          "One single fact in one cell."
+        ],
+        "answer": "Data that has meaning or answers a question.",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Information means data that has meaning or answers a question."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “field” mean in computing?",
+        "options": [
+          "A column in a data table — one kind of information.",
+          "A row in a data table — all the data about one person or thing.",
+          "One single fact in one cell.",
+          "The kind of data a field is allowed to store."
+        ],
+        "answer": "A column in a data table — one kind of information.",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Field means a column in a data table — one kind of information."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “record” mean in computing?",
+        "options": [
+          "A row in a data table — all the data about one person or thing.",
+          "One single fact in one cell.",
+          "The kind of data a field is allowed to store.",
+          "The special number type used for money."
+        ],
+        "answer": "A row in a data table — all the data about one person or thing.",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Record means a row in a data table — all the data about one person or thing."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: One single fact in one cell.?",
+        "options": [
+          "data item",
+          "data type",
+          "Currency",
+          "format"
+        ],
+        "answer": "data item",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Data item means one single fact in one cell."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: The kind of data a field is allowed to store.?",
+        "options": [
+          "data type",
+          "Currency",
+          "format",
+          "search"
+        ],
+        "answer": "data type",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Data type means the kind of data a field is allowed to store."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo09",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: The special number type used for money.?",
+        "options": [
+          "Currency",
+          "format",
+          "search",
+          "field first"
+        ],
+        "answer": "Currency",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Currency means the special number type used for money."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The way data is arranged or shown.?",
+        "options": [
+          "format",
+          "search",
+          "field first",
+          "database"
+        ],
+        "answer": "format",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Format means the way data is arranged or shown."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: To look through a data table to find an answer.?",
+        "options": [
+          "search",
+          "field first",
+          "database",
+          "data table"
+        ],
+        "answer": "search",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Search means to look through a data table to find an answer."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Choosing which column to look in before you search.?",
+        "options": [
+          "field first",
+          "database",
+          "data table",
+          "data"
+        ],
+        "answer": "field first",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Field first means choosing which column to look in before you search."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u7-game-1",
+        "icon": "?",
+        "skill": "database",
+        "title": "Quick Match: database",
+        "description": "Practise database through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “database” mean in computing?",
+            "choices": [
+              "An organised collection of data kept in one place.",
+              "A grid that stores data in rows and columns.",
+              "Raw facts and figures, on their own.",
+              "Data that has meaning or answers a question."
+            ],
+            "answer": "An organised collection of data kept in one place.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Database means an organised collection of data kept in one place."
+          },
+          {
+            "prompt": "What does “information” mean in computing?",
+            "choices": [
+              "Data that has meaning or answers a question.",
+              "A column in a data table — one kind of information.",
+              "A row in a data table — all the data about one person or thing.",
+              "One single fact in one cell."
+            ],
+            "answer": "Data that has meaning or answers a question.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Information means data that has meaning or answers a question."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: One single fact in one cell.?",
+            "choices": [
+              "data item",
+              "data type",
+              "Currency",
+              "format"
+            ],
+            "answer": "data item",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data item means one single fact in one cell."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The way data is arranged or shown.?",
+            "choices": [
+              "format",
+              "search",
+              "field first",
+              "database"
+            ],
+            "answer": "format",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Format means the way data is arranged or shown."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-2",
+        "icon": "★",
+        "skill": "data table",
+        "title": "Concept Quest: data table",
+        "description": "Practise data table through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “data table” mean in computing?",
+            "choices": [
+              "A grid that stores data in rows and columns.",
+              "Raw facts and figures, on their own.",
+              "Data that has meaning or answers a question.",
+              "A column in a data table — one kind of information."
+            ],
+            "answer": "A grid that stores data in rows and columns.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data table means a grid that stores data in rows and columns."
+          },
+          {
+            "prompt": "What does “field” mean in computing?",
+            "choices": [
+              "A column in a data table — one kind of information.",
+              "A row in a data table — all the data about one person or thing.",
+              "One single fact in one cell.",
+              "The kind of data a field is allowed to store."
+            ],
+            "answer": "A column in a data table — one kind of information.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Field means a column in a data table — one kind of information."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The kind of data a field is allowed to store.?",
+            "choices": [
+              "data type",
+              "Currency",
+              "format",
+              "search"
+            ],
+            "answer": "data type",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data type means the kind of data a field is allowed to store."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To look through a data table to find an answer.?",
+            "choices": [
+              "search",
+              "field first",
+              "database",
+              "data table"
+            ],
+            "answer": "search",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Search means to look through a data table to find an answer."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-3",
+        "icon": "◫",
+        "skill": "data",
+        "title": "Debug Detective: data",
+        "description": "Practise data through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Raw facts and figures, on their own.",
+              "Data that has meaning or answers a question.",
+              "A column in a data table — one kind of information.",
+              "A row in a data table — all the data about one person or thing."
+            ],
+            "answer": "Raw facts and figures, on their own.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data means raw facts and figures, on their own."
+          },
+          {
+            "prompt": "What does “record” mean in computing?",
+            "choices": [
+              "A row in a data table — all the data about one person or thing.",
+              "One single fact in one cell.",
+              "The kind of data a field is allowed to store.",
+              "The special number type used for money."
+            ],
+            "answer": "A row in a data table — all the data about one person or thing.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Record means a row in a data table — all the data about one person or thing."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The special number type used for money.?",
+            "choices": [
+              "Currency",
+              "format",
+              "search",
+              "field first"
+            ],
+            "answer": "Currency",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Currency means the special number type used for money."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Choosing which column to look in before you search.?",
+            "choices": [
+              "field first",
+              "database",
+              "data table",
+              "data"
+            ],
+            "answer": "field first",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Field first means choosing which column to look in before you search."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-4",
+        "icon": "→",
+        "skill": "information",
+        "title": "Algorithm Runner: information",
+        "description": "Practise information through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “information” mean in computing?",
+            "choices": [
+              "Data that has meaning or answers a question.",
+              "A column in a data table — one kind of information.",
+              "A row in a data table — all the data about one person or thing.",
+              "One single fact in one cell."
+            ],
+            "answer": "Data that has meaning or answers a question.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Information means data that has meaning or answers a question."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: One single fact in one cell.?",
+            "choices": [
+              "data item",
+              "data type",
+              "Currency",
+              "format"
+            ],
+            "answer": "data item",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data item means one single fact in one cell."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The way data is arranged or shown.?",
+            "choices": [
+              "format",
+              "search",
+              "field first",
+              "database"
+            ],
+            "answer": "format",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Format means the way data is arranged or shown."
+          },
+          {
+            "prompt": "What does “database” mean in computing?",
+            "choices": [
+              "An organised collection of data kept in one place.",
+              "A grid that stores data in rows and columns.",
+              "Raw facts and figures, on their own.",
+              "Data that has meaning or answers a question."
+            ],
+            "answer": "An organised collection of data kept in one place.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Database means an organised collection of data kept in one place."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-5",
+        "icon": "Σ",
+        "skill": "field",
+        "title": "Vocabulary Vault: field",
+        "description": "Practise field through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “field” mean in computing?",
+            "choices": [
+              "A column in a data table — one kind of information.",
+              "A row in a data table — all the data about one person or thing.",
+              "One single fact in one cell.",
+              "The kind of data a field is allowed to store."
+            ],
+            "answer": "A column in a data table — one kind of information.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Field means a column in a data table — one kind of information."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The kind of data a field is allowed to store.?",
+            "choices": [
+              "data type",
+              "Currency",
+              "format",
+              "search"
+            ],
+            "answer": "data type",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data type means the kind of data a field is allowed to store."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To look through a data table to find an answer.?",
+            "choices": [
+              "search",
+              "field first",
+              "database",
+              "data table"
+            ],
+            "answer": "search",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Search means to look through a data table to find an answer."
+          },
+          {
+            "prompt": "What does “data table” mean in computing?",
+            "choices": [
+              "A grid that stores data in rows and columns.",
+              "Raw facts and figures, on their own.",
+              "Data that has meaning or answers a question.",
+              "A column in a data table — one kind of information."
+            ],
+            "answer": "A grid that stores data in rows and columns.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data table means a grid that stores data in rows and columns."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-6",
+        "icon": "◇",
+        "skill": "record",
+        "title": "Challenge Cards: record",
+        "description": "Practise record through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “record” mean in computing?",
+            "choices": [
+              "A row in a data table — all the data about one person or thing.",
+              "One single fact in one cell.",
+              "The kind of data a field is allowed to store.",
+              "The special number type used for money."
+            ],
+            "answer": "A row in a data table — all the data about one person or thing.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Record means a row in a data table — all the data about one person or thing."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The special number type used for money.?",
+            "choices": [
+              "Currency",
+              "format",
+              "search",
+              "field first"
+            ],
+            "answer": "Currency",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Currency means the special number type used for money."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Choosing which column to look in before you search.?",
+            "choices": [
+              "field first",
+              "database",
+              "data table",
+              "data"
+            ],
+            "answer": "field first",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Field first means choosing which column to look in before you search."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Raw facts and figures, on their own.",
+              "Data that has meaning or answers a question.",
+              "A column in a data table — one kind of information.",
+              "A row in a data table — all the data about one person or thing."
+            ],
+            "answer": "Raw facts and figures, on their own.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data means raw facts and figures, on their own."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-7",
+        "icon": "⚡",
+        "skill": "data item",
+        "title": "Think Fast: data item",
+        "description": "Practise data item through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: One single fact in one cell.?",
+            "choices": [
+              "data item",
+              "data type",
+              "Currency",
+              "format"
+            ],
+            "answer": "data item",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data item means one single fact in one cell."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The way data is arranged or shown.?",
+            "choices": [
+              "format",
+              "search",
+              "field first",
+              "database"
+            ],
+            "answer": "format",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Format means the way data is arranged or shown."
+          },
+          {
+            "prompt": "What does “database” mean in computing?",
+            "choices": [
+              "An organised collection of data kept in one place.",
+              "A grid that stores data in rows and columns.",
+              "Raw facts and figures, on their own.",
+              "Data that has meaning or answers a question."
+            ],
+            "answer": "An organised collection of data kept in one place.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Database means an organised collection of data kept in one place."
+          },
+          {
+            "prompt": "What does “information” mean in computing?",
+            "choices": [
+              "Data that has meaning or answers a question.",
+              "A column in a data table — one kind of information.",
+              "A row in a data table — all the data about one person or thing.",
+              "One single fact in one cell."
+            ],
+            "answer": "Data that has meaning or answers a question.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Information means data that has meaning or answers a question."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-8",
+        "icon": "☁",
+        "skill": "data type",
+        "title": "Explain It: data type",
+        "description": "Practise data type through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The kind of data a field is allowed to store.?",
+            "choices": [
+              "data type",
+              "Currency",
+              "format",
+              "search"
+            ],
+            "answer": "data type",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data type means the kind of data a field is allowed to store."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To look through a data table to find an answer.?",
+            "choices": [
+              "search",
+              "field first",
+              "database",
+              "data table"
+            ],
+            "answer": "search",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Search means to look through a data table to find an answer."
+          },
+          {
+            "prompt": "What does “data table” mean in computing?",
+            "choices": [
+              "A grid that stores data in rows and columns.",
+              "Raw facts and figures, on their own.",
+              "Data that has meaning or answers a question.",
+              "A column in a data table — one kind of information."
+            ],
+            "answer": "A grid that stores data in rows and columns.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data table means a grid that stores data in rows and columns."
+          },
+          {
+            "prompt": "What does “field” mean in computing?",
+            "choices": [
+              "A column in a data table — one kind of information.",
+              "A row in a data table — all the data about one person or thing.",
+              "One single fact in one cell.",
+              "The kind of data a field is allowed to store."
+            ],
+            "answer": "A column in a data table — one kind of information.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Field means a column in a data table — one kind of information."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-9",
+        "icon": "⌂",
+        "skill": "Currency",
+        "title": "Real-Life Round: Currency",
+        "description": "Practise currency through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The special number type used for money.?",
+            "choices": [
+              "Currency",
+              "format",
+              "search",
+              "field first"
+            ],
+            "answer": "Currency",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Currency means the special number type used for money."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Choosing which column to look in before you search.?",
+            "choices": [
+              "field first",
+              "database",
+              "data table",
+              "data"
+            ],
+            "answer": "field first",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Field first means choosing which column to look in before you search."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Raw facts and figures, on their own.",
+              "Data that has meaning or answers a question.",
+              "A column in a data table — one kind of information.",
+              "A row in a data table — all the data about one person or thing."
+            ],
+            "answer": "Raw facts and figures, on their own.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data means raw facts and figures, on their own."
+          },
+          {
+            "prompt": "What does “record” mean in computing?",
+            "choices": [
+              "A row in a data table — all the data about one person or thing.",
+              "One single fact in one cell.",
+              "The kind of data a field is allowed to store.",
+              "The special number type used for money."
+            ],
+            "answer": "A row in a data table — all the data about one person or thing.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Record means a row in a data table — all the data about one person or thing."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-10",
+        "icon": "!",
+        "skill": "format",
+        "title": "Spot the Bug: format",
+        "description": "Practise format through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The way data is arranged or shown.?",
+            "choices": [
+              "format",
+              "search",
+              "field first",
+              "database"
+            ],
+            "answer": "format",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Format means the way data is arranged or shown."
+          },
+          {
+            "prompt": "What does “database” mean in computing?",
+            "choices": [
+              "An organised collection of data kept in one place.",
+              "A grid that stores data in rows and columns.",
+              "Raw facts and figures, on their own.",
+              "Data that has meaning or answers a question."
+            ],
+            "answer": "An organised collection of data kept in one place.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Database means an organised collection of data kept in one place."
+          },
+          {
+            "prompt": "What does “information” mean in computing?",
+            "choices": [
+              "Data that has meaning or answers a question.",
+              "A column in a data table — one kind of information.",
+              "A row in a data table — all the data about one person or thing.",
+              "One single fact in one cell."
+            ],
+            "answer": "Data that has meaning or answers a question.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Information means data that has meaning or answers a question."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: One single fact in one cell.?",
+            "choices": [
+              "data item",
+              "data type",
+              "Currency",
+              "format"
+            ],
+            "answer": "data item",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data item means one single fact in one cell."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-11",
+        "icon": "≡",
+        "skill": "search",
+        "title": "Mastery Mix: search",
+        "description": "Practise search through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To look through a data table to find an answer.?",
+            "choices": [
+              "search",
+              "field first",
+              "database",
+              "data table"
+            ],
+            "answer": "search",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Search means to look through a data table to find an answer."
+          },
+          {
+            "prompt": "What does “data table” mean in computing?",
+            "choices": [
+              "A grid that stores data in rows and columns.",
+              "Raw facts and figures, on their own.",
+              "Data that has meaning or answers a question.",
+              "A column in a data table — one kind of information."
+            ],
+            "answer": "A grid that stores data in rows and columns.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data table means a grid that stores data in rows and columns."
+          },
+          {
+            "prompt": "What does “field” mean in computing?",
+            "choices": [
+              "A column in a data table — one kind of information.",
+              "A row in a data table — all the data about one person or thing.",
+              "One single fact in one cell.",
+              "The kind of data a field is allowed to store."
+            ],
+            "answer": "A column in a data table — one kind of information.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Field means a column in a data table — one kind of information."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The kind of data a field is allowed to store.?",
+            "choices": [
+              "data type",
+              "Currency",
+              "format",
+              "search"
+            ],
+            "answer": "data type",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data type means the kind of data a field is allowed to store."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-12",
+        "icon": "T",
+        "skill": "field first",
+        "title": "Unit Champion: field first",
+        "description": "Practise field first through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Choosing which column to look in before you search.?",
+            "choices": [
+              "field first",
+              "database",
+              "data table",
+              "data"
+            ],
+            "answer": "field first",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Field first means choosing which column to look in before you search."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Raw facts and figures, on their own.",
+              "Data that has meaning or answers a question.",
+              "A column in a data table — one kind of information.",
+              "A row in a data table — all the data about one person or thing."
+            ],
+            "answer": "Raw facts and figures, on their own.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data means raw facts and figures, on their own."
+          },
+          {
+            "prompt": "What does “record” mean in computing?",
+            "choices": [
+              "A row in a data table — all the data about one person or thing.",
+              "One single fact in one cell.",
+              "The kind of data a field is allowed to store.",
+              "The special number type used for money."
+            ],
+            "answer": "A row in a data table — all the data about one person or thing.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Record means a row in a data table — all the data about one person or thing."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The special number type used for money.?",
+            "choices": [
+              "Currency",
+              "format",
+              "search",
+              "field first"
+            ],
+            "answer": "Currency",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Currency means the special number type used for money."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can explain that a database is an organised collection of data, and that a data table stores data in rows and columns.",
+    "I can name and point to the three parts of a data table: field (column), record (row) and data item (one fact in a cell).",
+    "I can tell the difference between data (raw facts) and information (data that answers a question or has meaning).",
+    "I can name the main data types — Text, Number, Date/Time and Yes/No — and recognise Currency as the special number type used for money.",
+    "I can choose the correct data type for a field, including the tricky case where a contact number is stored as Text (because it is not used for sums).",
+    "I can explain the rule that every cell in one field must use the same data type and format.",
+    "I can search a data table to answer a question by first choosing the correct field, then scanning, counting or matching.",
+    "I can enter data into the cells of a spreadsheet in LibreOffice Calc, format the header row, and format a column as currency.",
+    "I can design a small data table of their own, choose sensible data types, enter records, and write questions the table can answer.",
+    "I can before this unit (from the syllabus), children should already be able to enter data into the cells of a spreadsheet, format cells, tell data apart from information, and know that a database can be physical (on paper) or digital (on a computer). This unit builds directly on those skills."
+  ]
+}

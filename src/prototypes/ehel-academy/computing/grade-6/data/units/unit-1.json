@@ -1,0 +1,2450 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:01.003Z",
+  "stage": {
+    "id": "s06",
+    "label": "Stage 6"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t01",
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "comp-g06-u01",
+    "unitNo": 1,
+    "unitTitle": "Computational Thinking and Programming",
+    "unitOverview": "Welcome to Unit 1 of Year 6 Computing at Ehel Academy! This is the biggest and most exciting unit of the whole year. In it, you will learn how to think like a computer programmer and how to build real, working programs that solve real problems. A computer only does exactly what you tell it to do, so the skill you are learning is how to give clear, correct instructions. We call this computational thinking.\n\nThis unit has six parts (we call them subunits). Each part teaches you a new tool for your programming toolbox. By the end you will be able to plan a program with a flowchart, build it using the three big building blocks of all programs, tidy your code with sub-routines, plan a bigger project, test it carefully, and even put a program onto a tiny hand-held computer called the micro:bit.\n\nYou are learning self-paced. That means you move through this guide at your own speed. You have this written guide, a set of Activities to do on the computer, a Practice & Quiz booklet, and a Reference booklet. Whenever you see an Ask Your AI Tutor box, that is a good moment to open a chat and ask a question in your own words.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 6
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-6-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 6",
+    "sourceArchive": "Year 6-20260801T055758Z-1-001.zip",
+    "sourceAudience": "student",
+    "sourceDocuments": [
+      "Year 6/Unit 1/Year 6 - Unit 1 Lesson.docx",
+      "Year 6/Unit 1/Year 6 - Unit 1 Activities & Projects.docx",
+      "Year 6/Unit 1/Year 6 - Unit 1 Practice & Quiz.docx",
+      "Year 6/Unit 1/Year 6 - Unit 1 Reference.docx"
+    ],
+    "sourceBlockCount": 1328,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 6 Lesson, Activities & Projects, Practice & Quiz and Reference booklets for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "An evaluation is much stronger when you have success criteria — a clear list of what the program should do to be a success. Without criteria, feedback is vague ('I liked it, but it was a bit small'). With criteria, feedback is useful. Compare these two evaluations of an animation:",
+    "Weak (no criteria): 'I really liked the animation. The polar bear did a backflip, but it was a bit small.'",
+    "Strong (with criteria): 'The sprites could be improved by making the polar bear bigger and the llama smaller. The text only showed for one second — it should stay for three or four seconds so the user can read it. I liked how a repeat loop was used for the backflip.'",
+    "The strong evaluation is better because it checks the program against clear criteria (sprite sizes, text timing, use of loops) and says exactly how to improve.",
+    "Everything the user sees and hears is the user experience (sometimes shortened to UX). It does not include the code, because users almost never see the code. Programmers think hard about UX: where the menus go, how the screen looks, which buttons show. Good UX makes a program a pleasure to use; bad UX makes it frustrating.",
+    "Systematic means careful and organised, following a sensible method — not just testing at random. To test the rock, paper, scissors game systematically, Zara tests it 15 times: five times entering 'rock', five times 'paper', and five times 'scissors'. Each time she records what happened. The more times a program works correctly, the more confident she can be that there are no bugs.",
+    "Here is the testing table she uses:",
+    "She also tests with unexpected data. What if the user types bananas, or a number, or a single letter? A well-made program should not crash — it should politely handle input it did not expect, for example by saying 'Please type rock, paper or scissors.' Thinking about unexpected data is a key part of good testing.",
+    "Improving code and software updates",
+    "Testing and evaluating never really stop. Have you noticed how apps and devices sometimes ask you to install an update? That is because teams of developers keep improving their programs even after they are released. They fix bugs they missed, and they add improvements to the user experience. When you accept an update, you get their newest and best version. It is always wise to install updates, because they often include security improvements that keep your device safe."
+  ],
+  "toolkit": [
+    {
+      "name": "Scratch",
+      "url": "scratch.mit.edu",
+      "steps": [
+        "Go to scratch.mit.edu and click Create.",
+        "Drag blocks from the palette on the left into the code area.",
+        "Make variables in the orange Variables section.",
+        "Click the green flag to run and the red circle to stop."
+      ],
+      "note": "Runs in a web browser. Free, with nothing to download."
+    },
+    {
+      "name": "micro:bit simulator",
+      "url": "makecode.microbit.org (blocks) or python.microbit.org (Python)",
+      "steps": [
+        "Open makecode.microbit.org for blocks, or python.microbit.org for Python.",
+        "Write your code in the editor.",
+        "The micro:bit simulator on the left runs your code straight away.",
+        "Click the on-screen A and B buttons, and use the shake control, to test your inputs."
+      ],
+      "note": "You do not need to own a real micro:bit — the simulator does everything."
+    },
+    {
+      "name": "Python",
+      "url": "python.microbit.org or any Python editor",
+      "steps": [
+        "Open the editor and start a new file.",
+        "Type your program one line at a time.",
+        "Run it and read any error message from the bottom up.",
+        "Fix one error at a time, then run it again."
+      ],
+      "note": "Python is a text language: spelling and indentation both matter."
+    },
+    {
+      "name": "A free spreadsheet",
+      "url": "Google Sheets, or LibreOffice Calc",
+      "steps": [
+        "Open a new blank spreadsheet.",
+        "Put your field names in row 1, one per column.",
+        "Type one record per row underneath.",
+        "Use Insert → Chart to turn your data into a graph."
+      ],
+      "note": "Any free spreadsheet works — the ideas are the same in all of them."
+    },
+    {
+      "name": "A simple database",
+      "url": "A spreadsheet in database layout, or LibreOffice Base",
+      "steps": [
+        "Give every field a clear name and one kind of data.",
+        "Enter one record per row.",
+        "Sort on a field to put records in order.",
+        "Filter or search to find the records that match a condition."
+      ],
+      "note": "A spreadsheet laid out with fields and records works as a database for this unit."
+    }
+  ],
+  "tutorPrompts": [
+    "Ask: 'Give me a real-life task and describe it as an algorithm with an IF ... THEN ... ELSE decision in it, like the morning routine flowchart.'",
+    "Then try: 'Check my flowchart — I will describe the shapes I used and you tell me if I chose the right ones.'",
+    "Predicting the outcome of a flowchart",
+    "To predict means to say what you think will happen before it happens. To predict the outcome of a flowchart, you follow every step to the end. Here is a flowchart for fixing a computer that will not switch on:",
+    "Troubleshooting flowchart",
+    "Ask: 'Why are loops useful? Give me a Scratch example where a repeat loop saves me from copying the same block ten times.'",
+    "Variables and input variables",
+    "An input variable asks the user for information and stores it. In Scratch, the ask [ ] and wait block creates an input variable: whatever the user types is stored in the special answer variable."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-planning-flowcharts",
+      "title": "Planning Flowcharts",
+      "explanation": "Before a programmer writes any code, they usually make a plan. One of the best ways to plan is to draw a flowchart. A flowchart is a diagram that shows every step of an algorithm. An algorithm is just a set of step-by-step instructions — like a recipe, or the directions from your home to school.\n\nYou have already met algorithms in earlier years. In Scratch you build an algorithm out of blocks. You can also write an algorithm in words, or say it out loud. A flowchart is one more way to show the same idea, but as a picture. Pictures are easy to follow with your finger, and they help you spot mistakes before you start coding.\n\nYou always begin at the Start shape at the top. Then you follow the arrow to the next step, and the next, until you reach the End shape. Here is a simple flowchart for making breakfast, written as text so you can read it top to bottom:\n\nA simple flowchart shown as text (each | is a connector arrow)\n\nIf you follow this with your finger, the result is clear: you end up eating breakfast. This flowchart uses sequence only — one step after another, always in the same order.\n\nThe shape of each box tells you what kind of step it is. This is important: the shape gives information all by itself. Here are the five shapes you must know.\n\nThe decision shape is the most powerful one. It works just like a conditional statement (IF ... THEN ... ELSE) in code. It asks a question that can only be answered Yes or No, and then the flowchart follows a different arrow depending on the answer.\n\nHere is Maya's morning-routine flowchart. Notice the decision: 'Is it a school day?'. Depending on the answer, she takes out different clothes.\n\nIs it a school day? --- No ---> Take out your weekend clothes\n\nLet us predict the result. If it IS a school day, we follow the Yes arrow: we take out the school uniform, then eat breakfast, then finish. If it is NOT a school day, we follow the No arrow: we take out weekend clothes, then eat breakfast, then finish. Both paths join back together before breakfast. This is exactly how selection works in a real program.\n\nSo what is the big difference between the breakfast flowchart and this morning-routine flowchart? The breakfast flowchart has only ONE path — everybody follows the exact same steps in the exact same order. The morning-routine flowchart has TWO possible paths because of the decision diamond. Depending on the answer to the question, you take a different route. A flowchart with no decision does the same thing every single time; a flowchart with a decision can behave differently depending on the situation. That is what makes decisions so useful.\n\nTo predict means to say what you think will happen before it happens. To predict the outcome of a flowchart, you follow every step to the end. Here is a flowchart for fixing a computer that will not switch on:\n\nIs the computer plugged into the mains? --- No ---> Plug the computer into the mains\n\nIs the power cable plugged into the computer? --- No ---> Plug the power cable in\n\nPredict the result if the computer is already plugged into the mains AND the cable is already plugged in: both decisions answer Yes, so we skip straight past both 'plug in' steps and reach the End. The prediction is: the computer should already be working, so we do not need to do anything. People use flowcharts like this in real life to predict things such as which patients might need certain healthcare, or whether the price of gold will rise or fall.\n\nEngineers use flowcharts to show how to build machines, and businesses use them to explain how to do a job. A robot that plays chess can be programmed with a flowchart — if you understand the flowchart, you can predict its next move!\n\nShape name — What it looks like · What it means\n\nStart or End — Oval (rounded) shape · Shows the very beginning and the very end of the flowchart.\n\nConnector — Arrow · Shows the order to follow the steps in.\n\nInput or Output — Parallelogram (leaning rectangle) · Getting information from the user, or giving information to the user.\n\nProcess — Rectangle · An action the program does, such as a calculation.",
+      "example": "Decision — Diamond · Asks a Yes/No question and chooses which path to follow next."
+    },
+    {
+      "id": "concept-2-programming-constructs",
+      "title": "Programming Constructs",
+      "explanation": "A programming construct is a programming idea you use to build programs. There are three big ones, and almost every program ever written uses them: sequence, selection and iteration. Think of them as the three main tools in your toolbox.\n\nSequence is the order in which instructions run. In Scratch, blocks run from the top of the stack to the bottom. If the instructions are in the wrong order, the program will not work the way you want. Making breakfast is a sequence: you cannot eat the cereal before you pour the milk!\n\nSelection means choosing which commands to run. A conditional statement is one way to use selection. It tells your program to run one set of instructions OR another set, depending on whether a condition is true or false. A condition is a situation the computer checks, such as 'is the answer less than 10?'.",
+      "example": "Here is a worked example. Maya builds a program that asks the user to pick a number, then tells them if it has one digit or two."
+    },
+    {
+      "id": "concept-3-scratch",
+      "title": "Scratch",
+      "explanation": "Trace the result. If the user types 5, the condition answer < 10 is true, so Scratch runs the first branch and says 'You picked a one-digit number'. If the user types 15, the condition is false, so Scratch runs the ELSE branch and says 'You picked a two-digit number'. The clever part is that the program works even though we do not know in advance which number the user will choose.\n\nIteration means repeating something. In Scratch we call iterators 'repeat' blocks or loops. A forever loop repeats forever. A repeat (10) block repeats a set number of times. Loops are useful because they save you from writing the same block again and again.",
+      "example": "Leo writes a counting program using a variable and a loop:"
+    },
+    {
+      "id": "concept-4-data-types",
+      "title": "Data types",
+      "explanation": "Computers organise data into data types. You need three of them in this unit.\n\nInteger — a whole number, such as 3. The numbers 3.14 and the word 'three' are NOT integers. You can do maths with integers.\n\nCharacter — a single letter, symbol or number, such as A, !, or 4. Your keyboard is full of characters. Strong passwords mix letters, symbols and numbers.\n\nString — two or more characters joined together, such as a word or a sentence. Strings can include spaces and are used for messages. The Scratch say [ ] block needs a string.\n\nIn Scratch, if you type a string where only an integer is accepted, Scratch changes it to 0. That is why trying to add the words 'three' + 'five' gives 0 — you cannot add two words together like numbers!",
+      "example": "A chatbot is a program designed to talk with a user in a human-like way. Maya builds one that uses both a string input (your name) and an integer input (your birth year), and it even does a calculation. Here is her correct code:"
+    },
+    {
+      "id": "concept-5-scratch-chatbot-using-string-and-integer-data",
+      "title": "Scratch chatbot using string and integer data",
+      "explanation": "say (join [You are about ] (join ((current [year v]) — (birthYear)) [ years old!])) for 3 seconds\n\nTrace the result. Suppose the user types Ben then 2015. The chatbot says 'Hello! My name is Robo.', then 'Nice to meet you, Ben', then it works out the age and says 'You are about 11 years old!'. Notice we use the current [year] block (the same clock block you met in the talking clock) instead of typing this year's number ourselves, so the age is always right — in 2026 the block gives 2026, so 2026 — 2015 = 11. The name is a string; the year is used as an integer in the subtraction; and join glues the pieces of the message together.\n\nChatbots are only programs following an algorithm, so their answers are not always reliable. Some hackers build chatbots to steal personal information. Only chat with a chatbot on a website or app you trust, and never share private details.",
+      "example": "Leo wants to help his grandmother Nora hear the time. Scratch has a Text to Speech extension (click 'Add Extension' at the bottom-left of the screen) and blocks that read the current hour and minute. Here is a working talking clock:"
+    },
+    {
+      "id": "concept-6-sub",
+      "title": "Sub",
+      "explanation": "A sub-routine is a section of code, separate from the main code, that does one specific job. The clever thing is that you can use it again and again. Programmers use sub-routines to make code easier to read and to avoid writing the same instructions many times.\n\nThere are two important words. To define a sub-routine means to give it a name and write all its instructions. To call a sub-routine means to use it — like calling a friend's name in the yard and they respond. You can call the same sub-routine many times, and different parts of your program can call it.\n\nImagine a gymnast's routine. A 'handstand' has four steps and a 'forward roll' has three steps. If you wrote out every step every time, the instructions would be enormous. Instead, you define each move once, then just call it:\n\nUsing sub-routines to keep a routine short\n\n4 Put your feet back on the floor\n\nSee how short Routine 1 is? The same handstand and forward roll sub-routines could be used in a completely different Routine 2 as well. That is the power of sub-routines: define once, call anywhere.\n\nA good quiz game usually needs two variables: one for the score and one for the lives. Here is the exact two-variable algorithm from your textbook, which we will use again in the quiz:\n\nAn algorithm that uses two variables\n\nTrace the result. At the start, Score is 0 and Lives is 3 — this is called initialisation. If the player answers 7, the condition is true, so Score becomes 1 and Lives stays 3. If the player answers 5, the condition is false, so the ELSE branch runs: Lives becomes 2 and Score stays 0. To start with 5 lives, change set Lives to 3 into set Lives to 5. To give 2 points for a correct answer, change change Score by 1 into change Score by 2.\n\nThe same variable in two different sprites\n\nThe answer variable is shared, so two sprites can both use it. Leo makes a sprite that asks a question and a second sprite (Maya's sprite) that reacts to the same answer, using a broadcast to connect them:\n\nTwo sprites sharing the answer variable\n\nTrace the result. If the user types basketball, Sprite 1 says 'I love basketball' and then broadcasts a message. Sprite 2 hears the message and says 'basketball is a great sport too!'. Both sprites used the SAME answer variable in their own separate scripts.\n\nSub-routines in Scratch: broadcast and receive\n\nScratch is a block-based language: you drag and drop blocks. To make a sub-routine in Scratch, you use the broadcast [ ] block to send a message, and a when I receive [ ] block to catch it and run the sub-routine. (There is also a 'Make a Block' button that does something similar, in a more powerful way.)\n\nHere is Maya's spelling quiz. The user must spell the word 'variable'. Getting it right or wrong each calls a sub-routine:\n\nSpelling quiz with two sub-routines\n\nTrace the result. If the user types variable exactly, the correct sub-routine runs: a 'Tada' sound plays, the score goes up by 1, it says 'Correct!', and the backdrop changes to Party. If the user types anything else, the wrong sub-routine runs: a 'Clang' sound plays, a life is lost, it says 'Not quite...', and the backdrop turns red. Because these actions are in sub-routines, EVERY question can reuse them — you do not rewrite them for each question.\n\nInitialisation means getting everything ready at the start of a program. In a car game, blocks like go to x: (-100) y: (110) and point in direction (90) reset the car to the same starting place every time the green flag is clicked. Here is a car game that uses a sub-routine called 'Off course!':\n\nCar game with an 'Off course!' sub-routine and initialisation\n\n--- Sub-routine: Off course! ---\n\nTrace the result. The car starts at the same place each time (initialisation). The forever loop keeps checking: if the car touches the black edge of the track, it broadcasts 'Off course!'. The sub-routine then says 'Off course!' and puts the car back at the start. If you added a second car for a two-player game, it could call the SAME 'Off course!' sub-routine — no need to rewrite it. Two sprites that affect each other like this are said to interrelate.\n\nThere is one more big reason to love sub-routines: they make your programs much easier to test and fix. If the same actions were copied into ten different places and you found a mistake, you would have to fix it ten times — and you might miss one. With a sub-routine, that code lives in ONE place, so you fix the bug once and it is corrected everywhere the sub-routine is called. As your programs grow bigger, this becomes one of the most valuable skills you can have.",
+      "example": "The 'Off course!' sub-routine above was made with the broadcast block. Scratch also has a Make a Block button that lets you build your own custom blocks. It works in a similar way to broadcast, but you can use it in more powerful ways as your programs get bigger."
+    },
+    {
+      "id": "concept-7-planning-programs",
+      "title": "Planning Programs",
+      "explanation": "Programmers plan before they code. A good plan makes a program far more likely to succeed. In this subunit, Zara plans and builds a rock, paper, scissors game where the user plays against the computer.\n\nDecomposition means breaking a big problem into smaller parts you can work on one at a time. Zara decomposes her rock, paper, scissors game like this:\n\nWelcome the user and explain the rules.\n\nLet the computer make a random choice of rock, paper or scissors, and store it.\n\nLet the user type their choice, and store it.",
+      "example": "Show the result and keep the score."
+    },
+    {
+      "id": "concept-8-interface-prompts-and-prototypes",
+      "title": "Interface, prompts and prototypes",
+      "explanation": "The interface is what the user sees on the screen: the sprites, the backdrops and the messages. A prompt is a message that shows the program is waiting for input, such as 'Type rock, paper or scissors'. Before building the whole game, programmers make a prototype — a basic first version that users can test and give feedback on. It is much easier to fix mistakes at the prototype stage.\n\nPeople who work on how a program looks are called front-end developers. People who work on the code the user does not see are called back-end developers. Even famous game consoles like the Nintendo DS started life as a prototype!\n\nRandom means an outcome you cannot predict, like a dice roll. Scratch has a pick random ( ) to ( ) block. Prioritising means deciding what to build first — and it usually makes sense to build the hardest, most important parts first. Zara prioritises (1) the computer's random choice and (2) working out the winner.\n\nHere is a common bug and its fix. Zara first wrote three separate IF blocks, each with its own pick random 1 to 3. Because a NEW random number was picked in each IF, the answers did not match up and sometimes nothing was said. The fix is to pick the random number ONCE and store it in a variable:",
+      "example": "Trace the result. The random number is chosen a single time and stored in computerChoice. Say it is 2; then computerWord is set to 'paper', and the sprite says 'I chose paper'. Because we stored the number, every IF checks the SAME value — the bug is gone."
+    },
+    {
+      "id": "concept-9-turning-combinations-into-conditionals",
+      "title": "Turning combinations into conditionals",
+      "explanation": "To decide the winner, Zara lists every possible combination. There are 3 choices for the user and 3 for the computer, so there are 9 combinations in total. Here they all are:\n\nNow she turns the table into conditionals. Here is the branch for when the user chooses rock (the other two branches follow the same pattern):\n\nThe 'user chose rock' branch of the winner logic",
+      "example": "Trace the result. If the user types rock and the computer chose scissors, the middle IF is true and the game says 'You win! Rock beats scissors.'. You would build matching branches for paper and scissors too. A handy tip: right-click a section of blocks and choose Duplicate so you do not have to rebuild the same blocks nine times."
+    },
+    {
+      "id": "concept-10-evaluating-and-testing-programs",
+      "title": "Evaluating and Testing Programs",
+      "explanation": "Building a program is only half the job. Good programmers then evaluate and test their work. Evaluation means thinking about what you like, what you dislike, and how the program could be improved. It is one of the main ways we keep getting better.\n\nAn evaluation is much stronger when you have success criteria — a clear list of what the program should do to be a success. Without criteria, feedback is vague ('I liked it, but it was a bit small'). With criteria, feedback is useful. Compare these two evaluations of an animation:\n\nWeak (no criteria): 'I really liked the animation. The polar bear did a backflip, but it was a bit small.'\n\nStrong (with criteria): 'The sprites could be improved by making the polar bear bigger and the llama smaller. The text only showed for one second — it should stay for three or four seconds so the user can read it. I liked how a repeat loop was used for the backflip.'\n\nThe strong evaluation is better because it checks the program against clear criteria (sprite sizes, text timing, use of loops) and says exactly how to improve.\n\nEverything the user sees and hears is the user experience (sometimes shortened to UX). It does not include the code, because users almost never see the code. Programmers think hard about UX: where the menus go, how the screen looks, which buttons show. Good UX makes a program a pleasure to use; bad UX makes it frustrating.\n\nSystematic means careful and organised, following a sensible method — not just testing at random. To test the rock, paper, scissors game systematically, Zara tests it 15 times: five times entering 'rock', five times 'paper', and five times 'scissors'. Each time she records what happened. The more times a program works correctly, the more confident she can be that there are no bugs.\n\nHere is the testing table she uses:\n\nShe also tests with unexpected data. What if the user types bananas, or a number, or a single letter? A well-made program should not crash — it should politely handle input it did not expect, for example by saying 'Please type rock, paper or scissors.' Thinking about unexpected data is a key part of good testing.\n\nImproving code and software updates\n\nTesting and evaluating never really stop. Have you noticed how apps and devices sometimes ask you to install an update? That is because teams of developers keep improving their programs even after they are released. They fix bugs they missed, and they add improvements to the user experience. When you accept an update, you get their newest and best version. It is always wise to install updates, because they often include security improvements that keep your device safe.\n\nYou can work the same way. When a classmate or your teacher finds something to improve in your program, do not feel bad — the biggest technology companies in the world improve their programs all the time. Make the change, then save your project with a note like 'version 2' or 'version 3', so you can see how your work has grown.\n\nOne famous online game was released before it had been properly tested. It was full of bugs, players around the world complained, the reviews were terrible, and the company had to give everyone their money back — losing millions. Testing matters!\n\nAttempt — User choice · Computer choice · Who should win? · Who did win? · Correct?\n\n1 — rock · scissors · User · User · Yes\n\n2 — rock · paper · Computer · Computer · Yes\n\n3 — paper · rock · User · User · Yes",
+      "example": "... — ... · ... · ... · ... · ..."
+    },
+    {
+      "id": "concept-11-using-variables-with-a-physical-device",
+      "title": "Using Variables with a Physical Device",
+      "explanation": "Now for something different: a physical programming device — a small computer you can hold in your hand and program yourself. The one we use is the BBC micro:bit. It has inputs (buttons A and B, a microphone, sensors) and outputs (a grid of LED lights and a tiny speaker).\n\nYou do NOT need to own a micro:bit\n\nGo to makecode.microbit.org (blocks) or python.microbit.org (Python). A picture of a micro:bit appears on the left of the screen. When you run your code, this simulator behaves exactly like a real micro:bit — you can click its buttons with your mouse. Everything in this unit can be done with the free online simulator alone.\n\nEvery computer, including the micro:bit, follows the IPO model: it takes in data (input), works on it (process), then gives data out (output). For example: you press buttons on a calculator (input), it works out the answer (process), and it shows the answer on the screen (output). All of this happens very quickly.\n\nLong ago, computers filled whole rooms, but scientists made them smaller and smaller until the portable game console was born — a little computer you could carry outside and play games on. The micro:bit is like your very own tiny games console: once you download your game onto it and attach a battery pack, you can take your program out to the school yard, just like Sami wants to.\n\nThe first ever machine that could be called a computer was designed in 1837 by an English mathematician, Charles Babbage. He called it the Analytical Engine. Ada Lovelace, the daughter of the poet Lord Byron, was one of the first people ever to write instructions for this machine — which makes her one of the first computer programmers in history!\n\nFunctions: sub-routines for the micro:bit\n\nIn Scratch you made sub-routines with broadcast. MakeCode has no broadcast block — instead you use a function. A function is a separate section of code that runs when it is called from the main code, and it can be called many times. It does exactly what a sub-routine does: it makes code clearer, reduces repetition, and makes bugs easier to fix (you only fix the function once).\n\nHere is a simple MakeCode function example. Button A shows a heart; button B shows a duck:\n\nThe very same program can be written in MicroPython at python.microbit.org. This is real, text-based code that runs on the simulator:\n\nTrace the result. The while True: loop runs forever. Each time around, it checks the buttons. If you click button A, the function show_heart() is called and a heart appears on the LED screen. If you click button B, show_duck() is called and a duck appears. Pressing the simulator's reset button starts it again.\n\nNow for Sami's pocket game. The micro:bit shows a number from 1 to 9. The player guesses whether the NEXT number will be higher (press A) or lower (press B). A correct guess adds to the score; a wrong guess ends the streak. Here it is in MakeCode:\n\nMakeCode: 'higher or lower' game using variables, inputs and functions\n\non button A pressed: // A means \"I think higher\"\n\non button B pressed: // B means \"I think lower\"\n\nAnd here is the same game in MicroPython, which you can paste into python.microbit.org and run on the simulator:\n\nThe same 'higher or lower' game in MicroPython",
+      "example": "Trace the result. The score starts at 0 and a first number (say 4) shows on the screen. The player presses A because they think the next number will be higher. The program picks a new number, say 7. Because 7 > 4, the guess is correct: the score becomes 1 and a happy face flashes. The new current number is now 7, and play continues. A wrong guess shows a sad face and resets the score to 0. This game uses inputs (buttons A and B), a variable (score and current), selection (the IF checks), and produces output (the number and the face on the LED screen)."
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "Scratch: selection with IF ... THEN ... ELSE",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "when green flag clicked",
+        "ask [Pick a number between 1 and 20] and wait",
+        "if <(answer) < 10> then",
+        "say [You picked a one-digit number] for 2 seconds",
+        "else",
+        "say [You picked a two-digit number] for 2 seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-2",
+      "title": "Scratch: a loop that counts from 1 to 20",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "when green flag clicked",
+        "set [number v] to 0",
+        "repeat 20",
+        "change [number v] by 1",
+        "say (number) for 0.5 seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-3",
+      "title": "Scratch chatbot using string and integer data",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "when green flag clicked",
+        "say [Hello! My name is Robo.] for 2 seconds",
+        "ask [What is your name?] and wait",
+        "set [userName v] to (answer)",
+        "say (join [Nice to meet you, ] (userName)) for 2 seconds",
+        "ask [Which year were you born?] and wait",
+        "set [birthYear v] to (answer)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-4",
+      "title": "Scratch talking clock (needs the Text to Speech extension)",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "when green flag clicked",
+        "set [hourNow v] to (current [hour v])",
+        "set [minNow v] to (current [minute v])"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-5",
+      "title": "An algorithm that uses two variables",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "when green flag clicked",
+        "set [Score v] to 0",
+        "set [Lives v] to 3",
+        "say [Welcome to this quiz!] for 2 seconds",
+        "ask [What is 3 + 4?] and wait",
+        "if <(answer) = 7> then",
+        "change [Score v] by 1",
+        "else",
+        "change [Lives v] by -1"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-6",
+      "title": "Two sprites sharing the answer variable",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "--- Sprite 1 (Leo) ---",
+        "when green flag clicked",
+        "ask [What is your favourite sport?] and wait",
+        "say (join [I love ] (answer)) for 2 seconds",
+        "broadcast [question answered]",
+        "--- Sprite 2 (Maya) ---",
+        "when I receive [question answered]",
+        "say (join (answer) [ is a great sport too!]) for 2 seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-7",
+      "title": "1.3 Sub-routines — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From 1.3 Sub-routines.",
+      "lines": [
+        "when green flag clicked",
+        "set [score v] to 0",
+        "set [lives v] to 3",
+        "ask [Spell the word you hear: (variable)] and wait",
+        "if <(answer) = [variable]> then",
+        "broadcast [correct]",
+        "else",
+        "broadcast [wrong]"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-8",
+      "title": "1.3 Sub-routines — listing 2",
+      "language": "Scratch blocks",
+      "intro": "From 1.3 Sub-routines.",
+      "lines": [
+        "when I receive [correct]",
+        "play sound [Tada] until done",
+        "change [score v] by 1",
+        "say [Correct!] for 2 seconds",
+        "switch backdrop to [Party]"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-9",
+      "title": "1.3 Sub-routines — listing 3",
+      "language": "Scratch blocks",
+      "intro": "From 1.3 Sub-routines.",
+      "lines": [
+        "when I receive [wrong]",
+        "play sound [Clang] until done",
+        "change [lives v] by -1",
+        "say [Not quite...] for 2 seconds",
+        "switch backdrop to [red]"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-10",
+      "title": "1.3 Sub-routines — listing 4",
+      "language": "Scratch blocks",
+      "intro": "From 1.3 Sub-routines.",
+      "lines": [
+        "when green flag clicked",
+        "go to x: (-100) y: (110)",
+        "point in direction (90)",
+        "forever",
+        "if <touching color [black]?> then",
+        "broadcast [Off course!]"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Welcome, computer choice, user choice",
+      "context": "work through the steps below and see what happens. This is planning flowcharts in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "when green flag clicked",
+      "answer": "set [score v] to 0 Rock, paper, scissors!] for 2 seconds set [computerChoice v] to (pick random 1 to 3) if <(computerChoice) = 1> then set [computerWord v] to [rock]",
+      "modelType": "model-1",
+      "hint": "Start here: set [score v] to 0",
+      "explanation": "Planning Flowcharts: Before a programmer writes any code, they usually make a plan. One of the best ways to plan is to draw a flowchart. A flowchart is a diagram that shows every step of an algorithm. An algorithm is just a set of step-by-step instructions — like a recipe, or the directions from your home to school."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "All nine winner conditionals",
+      "context": "work through the steps below and see what happens. This is programming constructs in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "if <(userWord) = [rock]> then",
+      "answer": "if <(computerWord) = [rock]> then Say [Draw!] for 2 seconds. if <(computerWord) = [scissors]> then Rock beats scissors.] for 2 seconds if <(computerWord) = [paper]> then",
+      "modelType": "model-2",
+      "hint": "Start here: if <(computerWord) = [rock]> then",
+      "explanation": "Programming Constructs: A programming construct is a programming idea you use to build programs. There are three big ones, and almost every program ever written uses them: sequence, selection and iteration. Think of them as the three main tools in your toolbox."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Activities and Projects",
+      "context": "work through the steps below and see what happens. This is scratch in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Year 6 — Unit 1 — Computational Thinking and Programming",
+      "answer": "How to Use This Booklet Each activity below tells you the task, gives you the exact code or flowchart to build, tells you the expected result so you can check your work, and gives you an AI-tutor prompt to try. Do them in order, and take your time. All the software is free. Open a web browser and go to scratch.mit.edu. Click Create at the top. The Scratch editor opens — no download or account needed. On the left are the coloured blocks. In the middle you drag blocks to build code. On the top-right is the stage where your sprite lives.",
+      "modelType": "model-3",
+      "hint": "Start here: How to Use This Booklet",
+      "explanation": "Scratch: Trace the result. If the user types 5, the condition answer < 10 is true, so Scratch runs the first branch and says 'You picked a one-digit number'. If the user types 15, the condition is false, so Scratch runs the ELSE branch and says 'You picked a two-digit number'. The clever part is that the…"
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Scratch",
+      "context": "work through the steps below and see what happens. This is data types in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Open a web browser and go to scratch.mit.edu.",
+      "answer": "Click Create at the top. The Scratch editor opens — no download or account needed. On the left are the coloured blocks. In the middle you drag blocks to build code. On the top-right is the stage where your sprite lives. To add the Text to Speech blocks, click the Add Extension button at the bottom-left, then choose Text to Speech. Click the green flag to run your program, and the red stop sign to stop it. For blocks, go to makecode.microbit.org and click New Project. For Python, go to python.microbit.org.",
+      "modelType": "model-4",
+      "hint": "Start here: Click Create at the top. The Scratch editor opens — no download or account needed.",
+      "explanation": "Data types: Computers organise data into data types. You need three of them in this unit."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Flowchart tool",
+      "context": "work through the steps below and see what happens. This is scratch chatbot using string and integer data in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Go to app.diagrams.net (also called draw.io). Choose to save to your device.",
+      "answer": "Drag shapes from the left: use the oval for Start/End, the rectangle for a process, the diamond for a decision, and the parallelogram for input/output. Join shapes with arrows to show the order. Paper and a pencil are perfectly fine too. 1.1 Flowchart Activities Activity 1.1a — Draw a 'making tea' flowchart Task: Draw a flowchart for making a cup of tea. It must include one decision. Use the correct shapes: oval for Start/End, rectangle for a process, diamond for a decision.",
+      "modelType": "model-5",
+      "hint": "Start here: Drag shapes from the left: use the oval for Start/End, the rectangle for a process, the diamond for a decision, and the parallelogram for…",
+      "explanation": "Scratch chatbot using string and integer data: say (join [You are about ] (join ((current [year v]) — (birthYear)) [ years old!])) for 3 seconds"
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Wait",
+      "context": "work through the steps below and see what happens. This is sub in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Has the kettle boiled? --- No ---> (go back to Wait)",
+      "answer": "Pour the water onto the tea Add one spoonful of sugar",
+      "modelType": "model-6",
+      "hint": "Start here: Pour the water onto the tea",
+      "explanation": "Sub: A sub-routine is a section of code, separate from the main code, that does one specific job. The clever thing is that you can use it again and again. Programmers use sub-routines to make code easier to read and to avoid writing the same instructions many times."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Planning Flowcharts",
+      "modelType": "concept-model-1",
+      "purpose": "Before a programmer writes any code, they usually make a plan. One of the best ways to plan is to draw a flowchart. A flowchart is a diagram that shows every step of an algorithm. An algorithm is just a set of…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Programming Constructs",
+      "modelType": "concept-model-2",
+      "purpose": "A programming construct is a programming idea you use to build programs. There are three big ones, and almost every program ever written uses them: sequence, selection and iteration. Think of them as the three main…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Scratch",
+      "modelType": "concept-model-3",
+      "purpose": "Trace the result. If the user types 5, the condition answer < 10 is true, so Scratch runs the first branch and says 'You picked a one-digit number'. If the user types 15, the condition is false, so Scratch runs the ELSE…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Data types",
+      "modelType": "concept-model-4",
+      "purpose": "Computers organise data into data types. You need three of them in this unit.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Scratch chatbot using string and integer data",
+      "modelType": "concept-model-5",
+      "purpose": "say (join [You are about ] (join ((current [year v]) — (birthYear)) [ years old!])) for 3 seconds",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Sub",
+      "modelType": "concept-model-6",
+      "purpose": "A sub-routine is a section of code, separate from the main code, that does one specific job. The clever thing is that you can use it again and again. Programmers use sub-routines to make code easier to read and to avoid…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-7",
+      "outcomeId": "lo07",
+      "title": "Planning Programs",
+      "modelType": "concept-model-7",
+      "purpose": "Programmers plan before they code. A good plan makes a program far more likely to succeed. In this subunit, Zara plans and builds a rock, paper, scissors game where the user plays against the computer.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-8",
+      "outcomeId": "lo08",
+      "title": "Interface, prompts and prototypes",
+      "modelType": "concept-model-8",
+      "purpose": "The interface is what the user sees on the screen: the sprites, the backdrops and the messages. A prompt is a message that shows the program is waiting for input, such as 'Type rock, paper or scissors'. Before building…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-9",
+      "outcomeId": "lo09",
+      "title": "Turning combinations into conditionals",
+      "modelType": "concept-model-9",
+      "purpose": "To decide the winner, Zara lists every possible combination. There are 3 choices for the user and 3 for the computer, so there are 9 combinations in total. Here they all are:",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-10",
+      "outcomeId": "lo10",
+      "title": "Evaluating and Testing Programs",
+      "modelType": "concept-model-10",
+      "purpose": "Building a program is only half the job. Good programmers then evaluate and test their work. Evaluation means thinking about what you like, what you dislike, and how the program could be improved. It is one of the main…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-11",
+      "outcomeId": "lo01",
+      "title": "Using Variables with a Physical Device",
+      "modelType": "concept-model-11",
+      "purpose": "Now for something different: a physical programming device — a small computer you can hold in your hand and program yourself. The one we use is the BBC micro:bit. It has inputs (buttons A and B, a microphone, sensors)…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with planning flowcharts",
+      "example": "Decision — Diamond · Asks a Yes/No question and chooses which path to follow next.",
+      "steps": [
+        "Before a programmer writes any code, they usually make a plan. One of the best ways to plan is to draw a flowchart. A flowchart is a diagram that shows every step of an algorithm. An algorithm is just a set of…",
+        "You have already met algorithms in earlier years. In Scratch you build an algorithm out of blocks. You can also write an algorithm in words, or say it out loud. A flowchart is one more way to show the same idea, but as…",
+        "You always begin at the Start shape at the top. Then you follow the arrow to the next step, and the next, until you reach the End shape. Here is a simple flowchart for making breakfast, written as text so you can read…",
+        "A simple flowchart shown as text (each | is a connector arrow)"
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with programming constructs",
+      "example": "Here is a worked example. Maya builds a program that asks the user to pick a number, then tells them if it has one digit or two.",
+      "steps": [
+        "A programming construct is a programming idea you use to build programs. There are three big ones, and almost every program ever written uses them: sequence, selection and iteration. Think of them as the three main…",
+        "Sequence is the order in which instructions run. In Scratch, blocks run from the top of the stack to the bottom. If the instructions are in the wrong order, the program will not work the way you want. Making breakfast…",
+        "Selection means choosing which commands to run. A conditional statement is one way to use selection. It tells your program to run one set of instructions OR another set, depending on whether a condition is true or…"
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with scratch",
+      "example": "Leo writes a counting program using a variable and a loop:",
+      "steps": [
+        "Read the concept card for scratch and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with data types",
+      "example": "A chatbot is a program designed to talk with a user in a human-like way. Maya builds one that uses both a string input (your name) and an integer input (your birth year), and it even does a calculation. Here is her correct code:",
+      "steps": [
+        "Computers organise data into data types. You need three of them in this unit.",
+        "Integer — a whole number, such as 3. The numbers 3.14 and the word 'three' are NOT integers. You can do maths with integers.",
+        "Character — a single letter, symbol or number, such as A, !, or 4. Your keyboard is full of characters. Strong passwords mix letters, symbols and numbers.",
+        "String — two or more characters joined together, such as a word or a sentence. Strings can include spaces and are used for messages. The Scratch say [ ] block needs a string."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with scratch chatbot using string and integer data",
+      "example": "Leo wants to help his grandmother Nora hear the time. Scratch has a Text to Speech extension (click 'Add Extension' at the bottom-left of the screen) and blocks that read the current hour and minute. Here is a working talking clock:",
+      "steps": [
+        "say (join [You are about ] (join ((current [year v]) — (birthYear)) [ years old!])) for 3 seconds",
+        "Trace the result. Suppose the user types Ben then 2015. The chatbot says 'Hello! My name is Robo.', then 'Nice to meet you, Ben', then it works out the age and says 'You are about 11 years old!'. Notice we use the…",
+        "Chatbots are only programs following an algorithm, so their answers are not always reliable. Some hackers build chatbots to steal personal information. Only chat with a chatbot on a website or app you trust, and never…"
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "How to work with sub",
+      "example": "The 'Off course!' sub-routine above was made with the broadcast block. Scratch also has a Make a Block button that lets you build your own custom blocks. It works in a similar way to broadcast, but you can use it in more powerful ways as your programs get…",
+      "steps": [
+        "A sub-routine is a section of code, separate from the main code, that does one specific job. The clever thing is that you can use it again and again. Programmers use sub-routines to make code easier to read and to avoid…",
+        "There are two important words. To define a sub-routine means to give it a name and write all its instructions. To call a sub-routine means to use it — like calling a friend's name in the yard and they respond. You can…",
+        "Imagine a gymnast's routine. A 'handstand' has four steps and a 'forward roll' has three steps. If you wrote out every step every time, the instructions would be enormous. Instead, you define each move once, then just…",
+        "Using sub-routines to keep a routine short"
+      ]
+    },
+    {
+      "id": "method-7",
+      "outcomeId": "lo07",
+      "difficulty": "Challenge",
+      "title": "How to work with planning programs",
+      "example": "Show the result and keep the score.",
+      "steps": [
+        "Programmers plan before they code. A good plan makes a program far more likely to succeed. In this subunit, Zara plans and builds a rock, paper, scissors game where the user plays against the computer.",
+        "Decomposition means breaking a big problem into smaller parts you can work on one at a time. Zara decomposes her rock, paper, scissors game like this:",
+        "Let the computer make a random choice of rock, paper or scissors, and store it.",
+        "Let the user type their choice, and store it."
+      ]
+    },
+    {
+      "id": "method-8",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "How to work with interface, prompts and prototypes",
+      "example": "Trace the result. The random number is chosen a single time and stored in computerChoice. Say it is 2; then computerWord is set to 'paper', and the sprite says 'I chose paper'. Because we stored the number, every IF checks the SAME value — the bug is gone.",
+      "steps": [
+        "The interface is what the user sees on the screen: the sprites, the backdrops and the messages. A prompt is a message that shows the program is waiting for input, such as 'Type rock, paper or scissors'. Before building…",
+        "People who work on how a program looks are called front-end developers. People who work on the code the user does not see are called back-end developers. Even famous game consoles like the Nintendo DS started life as a…",
+        "Random means an outcome you cannot predict, like a dice roll. Scratch has a pick random ( ) to ( ) block. Prioritising means deciding what to build first — and it usually makes sense to build the hardest, most important…",
+        "Here is a common bug and its fix. Zara first wrote three separate IF blocks, each with its own pick random 1 to 3. Because a NEW random number was picked in each IF, the answers did not match up and sometimes nothing…"
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Planning Flowcharts",
+      "prompt": "In a flowchart, which shape is used for a decision? (a) oval (b) rectangle (c) diamond (d) arrow",
+      "solution": "1 (c) diamond. The diamond asks a Yes/No question and chooses a path. The oval is for Start/End."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Programming Constructs",
+      "prompt": "Which construct means 'repeating something'? (a) sequence (b) selection (c) iteration (d) variable",
+      "solution": "2 (c) iteration. Iteration means repeating, using loops such as repeat or forever."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Scratch",
+      "prompt": "Which of these is an integer? (a) 3.14 (b) 7 (c) 'three' (d) hello",
+      "solution": "3 (b) 7. An integer is a whole number. 3.14 is a decimal and 'three' is a word (string)."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Data types",
+      "prompt": "What does the Scratch join block do? (a) adds two numbers (b) joins two strings together (c) compares two numbers (d) repeats code",
+      "solution": "4 (b) joins two strings together. join glues text together, for example 'Hello ' + name."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Scratch chatbot using string and integer data",
+      "prompt": "Which symbol is the multiply operator in programming? (a) x (b) * (c) / (d) +",
+      "solution": "5 (b) *. We use * for multiply and / for divide in programming."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Sub",
+      "prompt": "A variable is best described as: (a) a fixed number (b) a named box that stores a value that can change (c) a type of loop (d) a sound",
+      "solution": "6 (b) a named box that stores a value that can change. That is exactly what a variable is."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Worked example 7: Planning Programs",
+      "prompt": "To use a sub-routine you must first: (a) delete it (b) define it (c) print it (d) hide it",
+      "solution": "7 (b) define it. First you define a sub-routine (name it and write its steps), then you can call it."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "Worked example 8: Interface, prompts and prototypes",
+      "prompt": "In Scratch, which block sends a message to run a sub-routine? (a) say (b) ask (c) broadcast (d) wait",
+      "solution": "8 (c) broadcast. The broadcast block sends a message that a when I receive block catches."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo09",
+      "difficulty": "Challenge",
+      "title": "Worked example 9: Turning combinations into conditionals",
+      "prompt": "What does IPO stand for? (a) In-Program-Output (b) Input-Process-Output (c) Input-Print-Order (d) Iterate-Process-Output",
+      "solution": "9 (b) Input-Process-Output. The computer takes in data, works on it, then gives data out."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo10",
+      "difficulty": "Challenge",
+      "title": "Worked example 10: Evaluating and Testing Programs",
+      "prompt": "On a micro:bit, which of these is an OUTPUT? (a) button A (b) the microphone (c) the LED screen (d) the accelerometer",
+      "solution": "10 (c) the LED screen. The screen is an output. Buttons, microphone and accelerometer are inputs."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "In a flowchart, which shape is used for a decision? (a) oval (b) rectangle (c) diamond (d) arrow",
+      "answer": "1 (c) diamond. The diamond asks a Yes/No question and chooses a path. The oval is for Start/End.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Which construct means 'repeating something'? (a) sequence (b) selection (c) iteration (d) variable",
+      "answer": "2 (c) iteration. Iteration means repeating, using loops such as repeat or forever.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Which of these is an integer? (a) 3.14 (b) 7 (c) 'three' (d) hello",
+      "answer": "3 (b) 7. An integer is a whole number. 3.14 is a decimal and 'three' is a word (string).",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "What does the Scratch join block do? (a) adds two numbers (b) joins two strings together (c) compares two numbers (d) repeats code",
+      "answer": "4 (b) joins two strings together. join glues text together, for example 'Hello ' + name.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "Which symbol is the multiply operator in programming? (a) x (b) * (c) / (d) +",
+      "answer": "5 (b) *. We use * for multiply and / for divide in programming.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p06",
+      "level": "Warm-up",
+      "prompt": "A variable is best described as: (a) a fixed number (b) a named box that stores a value that can change (c) a type of loop (d) a sound",
+      "answer": "6 (b) a named box that stores a value that can change. That is exactly what a variable is.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p07",
+      "level": "Warm-up",
+      "prompt": "To use a sub-routine you must first: (a) delete it (b) define it (c) print it (d) hide it",
+      "answer": "7 (b) define it. First you define a sub-routine (name it and write its steps), then you can call it.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p08",
+      "level": "Warm-up",
+      "prompt": "In Scratch, which block sends a message to run a sub-routine? (a) say (b) ask (c) broadcast (d) wait",
+      "answer": "8 (c) broadcast. The broadcast block sends a message that a when I receive block catches.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p09",
+      "level": "Warm-up",
+      "prompt": "What does IPO stand for? (a) In-Program-Output (b) Input-Process-Output (c) Input-Print-Order (d) Iterate-Process-Output",
+      "answer": "9 (b) Input-Process-Output. The computer takes in data, works on it, then gives data out.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p10",
+      "level": "Warm-up",
+      "prompt": "On a micro:bit, which of these is an OUTPUT? (a) button A (b) the microphone (c) the LED screen (d) the accelerometer",
+      "answer": "10 (c) the LED screen. The screen is an output. Buttons, microphone and accelerometer are inputs.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p11",
+      "level": "Warm-up",
+      "prompt": "What does 'random' mean in programming? (a) always the same (b) an outcome you cannot predict (c) very fast (d) broken",
+      "answer": "11 (b) an outcome you cannot predict. Like rolling a dice — you cannot know the result in advance.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p12",
+      "level": "Warm-up",
+      "prompt": "Success criteria are: (a) the list of things a program must do to be a success (b) bugs in the code (c) the code the user sees (d) a type of loop",
+      "answer": "12 (a) the list of things a program must do to be a success. Criteria make evaluation useful.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p13",
+      "level": "Core",
+      "prompt": "Name the five shapes used in a flowchart and say what each one is for.",
+      "answer": "Oval = Start/End; Arrow (connector) = order of steps; Parallelogram = input/output; Rectangle = a process/action; Diamond = a decision (Yes/No question).",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p14",
+      "level": "Core",
+      "prompt": "Explain the difference between a character and a string. Give an example of each.",
+      "answer": "A character is ONE symbol, letter or number (for example A or !). A string is TWO or more characters together, such as the word Hargeisa or a whole sentence.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p15",
+      "level": "Core",
+      "prompt": "What is the difference between a forever loop and a repeat (10) loop?",
+      "answer": "A forever loop repeats its blocks endlessly until you stop the program. A repeat (10) loop repeats its blocks exactly 10 times, then moves on.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p16",
+      "level": "Core",
+      "prompt": "What does it mean to 'initialise' a variable? Why is it important?",
+      "answer": "To initialise means to set a variable to its starting value (for example set score to 0) at the beginning. It is important so the program does not keep old values from a previous run.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Welcome, computer choice, user choice",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "when green flag clicked",
+        "set [score v] to 0",
+        "Rock, paper, scissors!] for 2 seconds",
+        "set [computerChoice v] to (pick random 1 to 3)",
+        "if <(computerChoice) = 1> then",
+        "set [computerWord v] to [rock]"
+      ]
+    },
+    {
+      "title": "All nine winner conditionals",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "if <(userWord) = [rock]> then",
+        "if <(computerWord) = [rock]> then",
+        "Say [Draw!] for 2 seconds.",
+        "if <(computerWord) = [scissors]> then",
+        "Rock beats scissors.] for 2 seconds",
+        "if <(computerWord) = [paper]> then"
+      ]
+    },
+    {
+      "title": "Activities and Projects",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Year 6 — Unit 1 — Computational Thinking and Programming",
+        "How to Use This Booklet",
+        "Each activity below tells you the task, gives you the exact code or flowchart to build, tells you the expected result so you can check your work, and gives you an AI-tutor prompt to try. Do them in order, and take your time. All the software is free.",
+        "Open a web browser and go to scratch.mit.edu.",
+        "Click Create at the top. The Scratch editor opens — no download or account needed.",
+        "On the left are the coloured blocks. In the middle you drag blocks to build code. On the top-right is the stage where your sprite lives."
+      ]
+    },
+    {
+      "title": "Scratch",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Open a web browser and go to scratch.mit.edu.",
+        "Click Create at the top. The Scratch editor opens — no download or account needed.",
+        "On the left are the coloured blocks. In the middle you drag blocks to build code. On the top-right is the stage where your sprite lives.",
+        "To add the Text to Speech blocks, click the Add Extension button at the bottom-left, then choose Text to Speech.",
+        "Click the green flag to run your program, and the red stop sign to stop it.",
+        "For blocks, go to makecode.microbit.org and click New Project. For Python, go to python.microbit.org."
+      ]
+    },
+    {
+      "title": "Flowchart tool",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Go to app.diagrams.net (also called draw.io). Choose to save to your device.",
+        "Drag shapes from the left: use the oval for Start/End, the rectangle for a process, the diamond for a decision, and the parallelogram for input/output.",
+        "Join shapes with arrows to show the order. Paper and a pencil are perfectly fine too.",
+        "1.1 Flowchart Activities",
+        "Activity 1.1a — Draw a 'making tea' flowchart",
+        "Task: Draw a flowchart for making a cup of tea. It must include one decision. Use the correct shapes: oval for Start/End, rectangle for a process, diamond for a decision."
+      ]
+    },
+    {
+      "title": "Wait",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Has the kettle boiled? --- No ---> (go back to Wait)",
+        "Pour the water onto the tea",
+        "Add one spoonful of sugar"
+      ]
+    },
+    {
+      "title": "Pour the water onto the tea",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Add one spoonful of sugar",
+        "Expected result: Your flowchart starts and ends with an oval. The decision 'Has the kettle boiled?' is a diamond with a 'No' arrow that loops back to 'Wait', and a 'Yes' arrow that continues. All arrows point the right way.",
+        "Ask Your AI Tutor"
+      ]
+    },
+    {
+      "title": "Add one spoonful of sugar",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Expected result: Your flowchart starts and ends with an oval. The decision 'Has the kettle boiled?' is a diamond with a 'No' arrow that loops back to 'Wait', and a 'Yes' arrow that continues. All arrows point the right way.",
+        "Ask Your AI Tutor",
+        "Ask: 'I will describe my tea flowchart shape by shape. Please check I used the oval, rectangle and diamond correctly and that my No arrow loops back to the right place.'",
+        "Activity 1.1b — Build the space animation in Scratch"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "The program uses an empty answer",
+      "cause": "The say/ask blocks are in the wrong order",
+      "fix": "Put the ask block BEFORE you use answer."
+    },
+    {
+      "symptom": "Rock, paper, scissors gives wrong results",
+      "cause": "A new random number is picked in each IF",
+      "fix": "Pick random once, store it in a variable, then check the variable."
+    },
+    {
+      "symptom": "Score keeps its value from last time",
+      "cause": "The variable was not initialised",
+      "fix": "Add set score to 0 at the start."
+    },
+    {
+      "symptom": "'Variable' counts as wrong in the quiz",
+      "cause": "Capital letters differ from small letters",
+      "fix": "Ask for lower case, or check for both spellings."
+    },
+    {
+      "symptom": "'One minutes past ten' sounds wrong",
+      "cause": "No singular/plural check",
+      "fix": "Use a conditional: say 'minute' when the value is 1."
+    },
+    {
+      "symptom": "Adding two words gives 0",
+      "cause": "Strings cannot be added like numbers",
+      "fix": "Only use arithmetic on integers; use join for strings."
+    },
+    {
+      "symptom": "Wrong answer does nothing",
+      "cause": "Missing ELSE branch",
+      "fix": "Add an else to handle the wrong answer."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Keep personal information private",
+      "text": "Your full name, address, school, phone number, birthday and passwords are personal information. Never type them into a game, an app or a website, and never send them to someone you only know online."
+    },
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "!",
+        "text": "A decision diamond must always have exactly one Yes arrow and one No arrow leaving it. Both paths should eventually lead to the End."
+      },
+      {
+        "title": "Plan before you code",
+        "text": "A flowchart or a written algorithm on paper saves you time later. Decompose big problems into small parts and build the hardest part first."
+      },
+      {
+        "title": "Initialise your variables",
+        "text": "At the start of every program, set your variables (score, lives) to their starting values so old values do not carry over."
+      },
+      {
+        "title": "Sub-routines save work",
+        "text": "Define a job once, then call it many times. When you need to change it, you only change it in one place."
+      },
+      {
+        "title": "Test systematically",
+        "text": "Test every case several times, including strange inputs. A bug is a clue, not a failure — fix it and your program gets better."
+      },
+      {
+        "title": "The micro:bit follows IPO",
+        "text": "Input (buttons, shake) then Process (your code) then Output (LED screen, speaker). You can do it all on the free online simulator."
+      },
+      {
+        "title": "!",
+        "text": "A bug is not a failure — it is a clue. Test one small thing at a time, read your blocks slowly from the top, and ask your AI tutor to help you trace what the program does step by step."
+      }
+    ],
+    "terms": [
+      [
+        "algorithm",
+        "A set of step-by-step instructions to complete a task."
+      ],
+      [
+        "flowchart",
+        "A diagram that shows each step of an algorithm using special shapes."
+      ],
+      [
+        "decision",
+        "A flowchart shape (a diamond) that asks a Yes/No question and chooses a path."
+      ],
+      [
+        "sequence",
+        "The order in which instructions run — top to bottom."
+      ],
+      [
+        "selection",
+        "Choosing which commands to run, usually with an IF ... THEN ... ELSE block."
+      ],
+      [
+        "iteration",
+        "Repeating instructions. Also called a loop or a 'repeat' block."
+      ],
+      [
+        "condition",
+        "A situation that is either true or false, which the program checks."
+      ],
+      [
+        "variable",
+        "A named box that stores a value that can change, such as a score."
+      ],
+      [
+        "input variable",
+        "A variable that stores information the user types in."
+      ],
+      [
+        "operator",
+        "A symbol that does an action, such as + to add or > to compare."
+      ],
+      [
+        "arithmetic operator",
+        "An operator for maths: + — * and /."
+      ],
+      [
+        "comparison operator",
+        "An operator that compares two values: greater than, less than, equal to."
+      ],
+      [
+        "integer",
+        "The data type for a whole number, such as 7 (but not 7.5)."
+      ],
+      [
+        "character",
+        "The data type for one single letter, symbol or number, such as A or ! or 4."
+      ],
+      [
+        "string",
+        "The data type for two or more characters together, such as a word or message."
+      ],
+      [
+        "procedure",
+        "A small section of code you can use again and again."
+      ],
+      [
+        "sub-routine",
+        "A separate section of code that does one job and can be called many times."
+      ],
+      [
+        "define",
+        "To give a sub-routine a name and write the instructions inside it."
+      ],
+      [
+        "call",
+        "To use (run) a sub-routine from your main code."
+      ],
+      [
+        "broadcast",
+        "A Scratch block that sends a message to run a sub-routine."
+      ],
+      [
+        "initialisation",
+        "Getting everything ready at the start, such as resetting a score to 0."
+      ],
+      [
+        "interrelate",
+        "When two objects are connected so each one affects the other."
+      ],
+      [
+        "decomposition",
+        "Breaking a big problem into smaller parts that are easier to solve."
+      ],
+      [
+        "interface",
+        "The part of a program the user sees on the screen."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "algorithm",
+        "meaning": "A set of step-by-step instructions to complete a task.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "flowchart",
+        "meaning": "A diagram that shows each step of an algorithm using special shapes.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "decision",
+        "meaning": "A flowchart shape (a diamond) that asks a Yes/No question and chooses a path.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "sequence",
+        "meaning": "The order in which instructions run — top to bottom.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "selection",
+        "meaning": "Choosing which commands to run, usually with an IF ... THEN ... ELSE block.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "iteration",
+        "meaning": "Repeating instructions. Also called a loop or a 'repeat' block.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "condition",
+        "meaning": "A situation that is either true or false, which the program checks.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "variable",
+        "meaning": "A named box that stores a value that can change, such as a score.",
+        "example": "",
+        "letter": "V"
+      },
+      {
+        "term": "input variable",
+        "meaning": "A variable that stores information the user types in.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "operator",
+        "meaning": "A symbol that does an action, such as + to add or > to compare.",
+        "example": "",
+        "letter": "O"
+      },
+      {
+        "term": "arithmetic operator",
+        "meaning": "An operator for maths: + — * and /.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "comparison operator",
+        "meaning": "An operator that compares two values: greater than, less than, equal to.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "integer",
+        "meaning": "The data type for a whole number, such as 7 (but not 7.5).",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "character",
+        "meaning": "The data type for one single letter, symbol or number, such as A or ! or 4.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "string",
+        "meaning": "The data type for two or more characters together, such as a word or message.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "procedure",
+        "meaning": "A small section of code you can use again and again.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "sub-routine",
+        "meaning": "A separate section of code that does one job and can be called many times.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "define",
+        "meaning": "To give a sub-routine a name and write the instructions inside it.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "call",
+        "meaning": "To use (run) a sub-routine from your main code.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "broadcast",
+        "meaning": "A Scratch block that sends a message to run a sub-routine.",
+        "example": "",
+        "letter": "B"
+      },
+      {
+        "term": "initialisation",
+        "meaning": "Getting everything ready at the start, such as resetting a score to 0.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "interrelate",
+        "meaning": "When two objects are connected so each one affects the other.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "decomposition",
+        "meaning": "Breaking a big problem into smaller parts that are easier to solve.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "interface",
+        "meaning": "The part of a program the user sees on the screen.",
+        "example": "",
+        "letter": "I"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "The program uses an empty answer",
+        "The say/ask blocks are in the wrong order Put the ask block BEFORE you use answer."
+      ],
+      [
+        "Rock, paper, scissors gives wrong results",
+        "A new random number is picked in each IF Pick random once, store it in a variable, then check the variable."
+      ],
+      [
+        "Score keeps its value from last time",
+        "The variable was not initialised Add set score to 0 at the start."
+      ],
+      [
+        "'Variable' counts as wrong in the quiz",
+        "Capital and lowercase letters are treated differently. Ask for lowercase, or check for both spellings."
+      ],
+      [
+        "'One minutes past ten' sounds wrong",
+        "No singular/plural check Use a conditional: say 'minute' when the value is 1."
+      ],
+      [
+        "Adding two words gives 0",
+        "Strings cannot be added like numbers Only use arithmetic on integers; use join for strings."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "In a flowchart, which shape is used for a decision? (a) oval (b) rectangle (c) diamond (d) arrow",
+      "answer": "1 (c) diamond. The diamond asks a Yes/No question and chooses a path. The oval is for Start/End.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words.",
+      "errorFeedback": "1 (c) diamond. The diamond asks a Yes/No question and chooses a path. The oval is for Start/End."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Which construct means 'repeating something'? (a) sequence (b) selection (c) iteration (d) variable",
+      "answer": "2 (c) iteration. Iteration means repeating, using loops such as repeat or forever.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words.",
+      "errorFeedback": "2 (c) iteration. Iteration means repeating, using loops such as repeat or forever."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Which of these is an integer? (a) 3.14 (b) 7 (c) 'three' (d) hello",
+      "answer": "3 (b) 7. An integer is a whole number. 3.14 is a decimal and 'three' is a word (string).",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words.",
+      "errorFeedback": "3 (b) 7. An integer is a whole number. 3.14 is a decimal and 'three' is a word (string)."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "What does the Scratch join block do? (a) adds two numbers (b) joins two strings together (c) compares two numbers (d) repeats code",
+      "answer": "4 (b) joins two strings together. join glues text together, for example 'Hello ' + name.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words.",
+      "errorFeedback": "4 (b) joins two strings together. join glues text together, for example 'Hello ' + name."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Which symbol is the multiply operator in programming? (a) x (b) * (c) / (d) +",
+      "answer": "5 (b) *. We use * for multiply and / for divide in programming.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words.",
+      "errorFeedback": "5 (b) *. We use * for multiply and / for divide in programming."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "A variable is best described as: (a) a fixed number (b) a named box that stores a value that can change (c) a type of loop (d) a sound",
+      "answer": "6 (b) a named box that stores a value that can change. That is exactly what a variable is.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words.",
+      "errorFeedback": "6 (b) a named box that stores a value that can change. That is exactly what a variable is."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "To use a sub-routine you must first: (a) delete it (b) define it (c) print it (d) hide it",
+      "answer": "7 (b) define it. First you define a sub-routine (name it and write its steps), then you can call it.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words.",
+      "errorFeedback": "7 (b) define it. First you define a sub-routine (name it and write its steps), then you can call it."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "In Scratch, which block sends a message to run a sub-routine? (a) say (b) ask (c) broadcast (d) wait",
+      "answer": "8 (c) broadcast. The broadcast block sends a message that a when I receive block catches.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words.",
+      "errorFeedback": "8 (c) broadcast. The broadcast block sends a message that a when I receive block catches."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "What does IPO stand for? (a) In-Program-Output (b) Input-Process-Output (c) Input-Print-Order (d) Iterate-Process-Output",
+      "answer": "9 (b) Input-Process-Output. The computer takes in data, works on it, then gives data out.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words.",
+      "errorFeedback": "9 (b) Input-Process-Output. The computer takes in data, works on it, then gives data out."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "On a micro:bit, which of these is an OUTPUT? (a) button A (b) the microphone (c) the LED screen (d) the accelerometer",
+      "answer": "10 (c) the LED screen. The screen is an output. Buttons, microphone and accelerometer are inputs.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words.",
+      "errorFeedback": "10 (c) the LED screen. The screen is an output. Buttons, microphone and accelerometer are inputs."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "What does 'random' mean in programming? (a) always the same (b) an outcome you cannot predict (c) very fast (d) broken",
+      "answer": "11 (b) an outcome you cannot predict. Like rolling a dice — you cannot know the result in advance.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words.",
+      "errorFeedback": "11 (b) an outcome you cannot predict. Like rolling a dice — you cannot know the result in advance."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "Success criteria are: (a) the list of things a program must do to be a success (b) bugs in the code (c) the code the user sees (d) a type of loop",
+      "answer": "12 (a) the list of things a program must do to be a success. Criteria make evaluation useful.",
+      "hint": "Look back at what algorithm and flowchart mean in this unit, then answer in your own words.",
+      "errorFeedback": "12 (a) the list of things a program must do to be a success. Criteria make evaluation useful."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Copy each snippet and fill the gap marked _____.",
+      "answer": "D1. set — the block is set [score v] to 0.",
+      "hint": "Work out which idea this is about — algorithm, flowchart, decision — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: D1. set — the block is set [score v] to 0."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "D1. Make the score start at zero:",
+      "answer": "D2. repeat — the block is repeat 10.",
+      "hint": "Work out which idea this is about — algorithm, flowchart, decision — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: D2. repeat — the block is repeat 10."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "_____ [score v] to 0",
+      "answer": "D4. (answer) — the block is set [guess v] to (answer), using Scratch's built-in answer variable.",
+      "hint": "Work out which idea this is about — algorithm, flowchart, decision — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: D4. (answer) — the block is set [guess v] to (answer), using Scratch's built-in answer variable."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "D2. Repeat the wave 10 times:",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — algorithm, flowchart, decision — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Travel",
+      "prompt": "wait 0.2 seconds",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — algorithm, flowchart, decision — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "context": "Health",
+      "prompt": "D3. Only say 'Correct!' if the answer is 42:",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — algorithm, flowchart, decision — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Name the five shapes used in a flowchart and say what each one is for.",
+      "keyIdeas": [
+        "algorithm",
+        "flowchart",
+        "decision"
+      ],
+      "modelAnswer": "Oval = Start/End; Arrow (connector) = order of steps; Parallelogram = input/output; Rectangle = a process/action; Diamond = a decision (Yes/No question)."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the difference between a character and a string. Give an example of each.",
+      "keyIdeas": [
+        "flowchart",
+        "decision",
+        "sequence"
+      ],
+      "modelAnswer": "A character is ONE symbol, letter or number (for example A or !). A string is TWO or more characters together, such as the word Hargeisa or a whole sentence."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "What is the difference between a forever loop and a repeat (10) loop?",
+      "keyIdeas": [
+        "decision",
+        "sequence",
+        "selection"
+      ],
+      "modelAnswer": "A forever loop repeats its blocks endlessly until you stop the program. A repeat (10) loop repeats its blocks exactly 10 times, then moves on."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "What does it mean to 'initialise' a variable? Why is it important?",
+      "keyIdeas": [
+        "sequence",
+        "selection",
+        "iteration"
+      ],
+      "modelAnswer": "To initialise means to set a variable to its starting value (for example set score to 0) at the beginning. It is important so the program does not keep old values from a previous run."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Explain what a sub-routine is and give one reason programmers use them.",
+      "keyIdeas": [
+        "selection",
+        "iteration",
+        "condition"
+      ],
+      "modelAnswer": "A sub-routine is a separate section of code that does one job and can be called many times. Programmers use them to avoid repeating code and to make programs easier to read and fix."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "What is the difference between the interface and the code of a program?",
+      "keyIdeas": [
+        "iteration",
+        "condition",
+        "variable"
+      ],
+      "modelAnswer": "The interface is what the user SEES and hears (sprites, backdrops, messages). The code is the instructions behind the scenes, which the user almost never sees."
+    }
+  ],
+  "project": {
+    "title": "Create a Scratch Quiz",
+    "brief": "This is your big project — it brings together everything from the whole unit. Working alone or with a partner, you will design, build, test and evaluate your own quiz game in Scratch. This is the perfect chance to build Maya's spelling quiz idea, or invent your own topic (times tables, capital cities, or world festivals such as Eid and Christmas).",
+    "steps": [
+      "Complete these six steps in order. Each one uses a skill from a different subunit.",
+      "Write success criteria (from 1.5). List what your quiz must do — for example: a friendly greeting, at least five questions, a score variable, and a final score shown at the end.",
+      "Draw a flowchart (from 1.1). Show the algorithm for one question: ask, check the answer with a decision, then add a point or lose a life.",
+      "Create a project plan (from 1.4). Decompose the quiz into parts (welcome, questions, scoring, ending) and decide the order to build them.",
+      "Create a prototype (from 1.4). Build a simple first version — just the welcome screen and one working question — and test it.",
+      "Develop the program (from 1.2 and 1.3). Add the rest of the questions. Use variables for score and lives, and sub-routines for the 'correct' and 'wrong' actions so you do not repeat code.",
+      "Test and evaluate (from 1.5). Test systematically with right answers, wrong answers and unexpected input. Then evaluate against your success criteria and note what you would improve.",
+      "Ideas to make it special: different levels with different backdrops; questions that get harder as you progress; different reactions for right and wrong answers; a countdown timer; and sprite animations to celebrate a win."
+    ],
+    "successCriteria": [
+      "Task: Write a list of success criteria for a good rock, paper, scissors game. A criterion is something the game MUST do to be a success.",
+      "The game welcomes the user and explains the rules.",
+      "The computer's choice is random and cannot be predicted.",
+      "The program correctly announces the winner for all nine combinations.",
+      "The program handles unexpected input politely (does not crash).",
+      "The score updates correctly after each round.",
+      "Expected result: A clear list you can use to judge any rock, paper, scissors game — your own or a friend's."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "In a flowchart, which shape is used for a decision?",
+        "options": [
+          "oval",
+          "rectangle",
+          "diamond",
+          "arrow"
+        ],
+        "answer": "oval",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "1 (c) diamond. The diamond asks a Yes/No question and chooses a path. The oval is for Start/End."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "Which construct means 'repeating something'?",
+        "options": [
+          "sequence",
+          "selection",
+          "iteration",
+          "variable"
+        ],
+        "answer": "iteration",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "2 (c) iteration. Iteration means repeating, using loops such as repeat or forever."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "Which of these is an integer?",
+        "options": [
+          "3.14",
+          "7",
+          "'three'",
+          "hello"
+        ],
+        "answer": "3.14",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "3 (b) 7. An integer is a whole number. 3.14 is a decimal and 'three' is a word (string)."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does the Scratch join block do?",
+        "options": [
+          "adds two numbers",
+          "joins two strings together",
+          "compares two numbers",
+          "repeats code"
+        ],
+        "answer": "joins two strings together",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "4 (b) joins two strings together. join glues text together, for example 'Hello ' + name."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "A variable is best described as:",
+        "options": [
+          "a fixed number",
+          "a named box that stores a value that can change",
+          "a type of loop",
+          "a sound"
+        ],
+        "answer": "a named box that stores a value that can change",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "6 (b) a named box that stores a value that can change. That is exactly what a variable is."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "To use a sub-routine you must first:",
+        "options": [
+          "delete it",
+          "define it",
+          "print it",
+          "hide it"
+        ],
+        "answer": "define it",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "7 (b) define it. First you define a sub-routine (name it and write its steps), then you can call it."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "In Scratch, which block sends a message to run a sub-routine?",
+        "options": [
+          "say",
+          "ask",
+          "broadcast",
+          "wait"
+        ],
+        "answer": "broadcast",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "8 (c) broadcast. The broadcast block sends a message that a when I receive block catches."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "What does IPO stand for?",
+        "options": [
+          "In-Program-Output",
+          "Input-Process-Output",
+          "Input-Print-Order",
+          "Iterate-Process-Output"
+        ],
+        "answer": "Input-Process-Output",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "9 (b) Input-Process-Output. The computer takes in data, works on it, then gives data out."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo09",
+        "difficulty": "Core",
+        "question": "On a micro:bit, which of these is an OUTPUT?",
+        "options": [
+          "button A",
+          "the microphone",
+          "the LED screen",
+          "the accelerometer"
+        ],
+        "answer": "the LED screen",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "10 (c) the LED screen. The screen is an output. Buttons, microphone and accelerometer are inputs."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "What does 'random' mean in programming?",
+        "options": [
+          "always the same",
+          "an outcome you cannot predict",
+          "very fast",
+          "broken"
+        ],
+        "answer": "an outcome you cannot predict",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "11 (b) an outcome you cannot predict. Like rolling a dice — you cannot know the result in advance."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Success criteria are:",
+        "options": [
+          "the list of things a program must do to be a success",
+          "bugs in the code",
+          "the code the user sees",
+          "a type of loop"
+        ],
+        "answer": "the list of things a program must do to be a success",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "12 (a) the list of things a program must do to be a success. Criteria make evaluation useful."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: An operator that compares two values: greater than, less than, equal to.?",
+        "options": [
+          "comparison operator",
+          "integer",
+          "character",
+          "string"
+        ],
+        "answer": "comparison operator",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Comparison operator means an operator that compares two values: greater than, less than, equal to."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u1-game-1",
+        "icon": "?",
+        "skill": "algorithm",
+        "title": "Quick Match: algorithm",
+        "description": "Practise algorithm through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "In a flowchart, which shape is used for a decision?",
+            "choices": [
+              "oval",
+              "rectangle",
+              "diamond",
+              "arrow"
+            ],
+            "answer": "oval",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "1 (c) diamond. The diamond asks a Yes/No question and chooses a path. The oval is for Start/End."
+          },
+          {
+            "prompt": "What does the Scratch join block do?",
+            "choices": [
+              "adds two numbers",
+              "joins two strings together",
+              "compares two numbers",
+              "repeats code"
+            ],
+            "answer": "joins two strings together",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "4 (b) joins two strings together. join glues text together, for example 'Hello ' + name."
+          },
+          {
+            "prompt": "In Scratch, which block sends a message to run a sub-routine?",
+            "choices": [
+              "say",
+              "ask",
+              "broadcast",
+              "wait"
+            ],
+            "answer": "broadcast",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "8 (c) broadcast. The broadcast block sends a message that a when I receive block catches."
+          },
+          {
+            "prompt": "What does 'random' mean in programming?",
+            "choices": [
+              "always the same",
+              "an outcome you cannot predict",
+              "very fast",
+              "broken"
+            ],
+            "answer": "an outcome you cannot predict",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "11 (b) an outcome you cannot predict. Like rolling a dice — you cannot know the result in advance."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-2",
+        "icon": "★",
+        "skill": "flowchart",
+        "title": "Concept Quest: flowchart",
+        "description": "Practise flowchart through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which construct means 'repeating something'?",
+            "choices": [
+              "sequence",
+              "selection",
+              "iteration",
+              "variable"
+            ],
+            "answer": "iteration",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "2 (c) iteration. Iteration means repeating, using loops such as repeat or forever."
+          },
+          {
+            "prompt": "A variable is best described as:",
+            "choices": [
+              "a fixed number",
+              "a named box that stores a value that can change",
+              "a type of loop",
+              "a sound"
+            ],
+            "answer": "a named box that stores a value that can change",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "6 (b) a named box that stores a value that can change. That is exactly what a variable is."
+          },
+          {
+            "prompt": "What does IPO stand for?",
+            "choices": [
+              "In-Program-Output",
+              "Input-Process-Output",
+              "Input-Print-Order",
+              "Iterate-Process-Output"
+            ],
+            "answer": "Input-Process-Output",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "9 (b) Input-Process-Output. The computer takes in data, works on it, then gives data out."
+          },
+          {
+            "prompt": "Success criteria are:",
+            "choices": [
+              "the list of things a program must do to be a success",
+              "bugs in the code",
+              "the code the user sees",
+              "a type of loop"
+            ],
+            "answer": "the list of things a program must do to be a success",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "12 (a) the list of things a program must do to be a success. Criteria make evaluation useful."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-3",
+        "icon": "◫",
+        "skill": "decision",
+        "title": "Debug Detective: decision",
+        "description": "Practise decision through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which of these is an integer?",
+            "choices": [
+              "3.14",
+              "7",
+              "'three'",
+              "hello"
+            ],
+            "answer": "3.14",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "3 (b) 7. An integer is a whole number. 3.14 is a decimal and 'three' is a word (string)."
+          },
+          {
+            "prompt": "To use a sub-routine you must first:",
+            "choices": [
+              "delete it",
+              "define it",
+              "print it",
+              "hide it"
+            ],
+            "answer": "define it",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "7 (b) define it. First you define a sub-routine (name it and write its steps), then you can call it."
+          },
+          {
+            "prompt": "On a micro:bit, which of these is an OUTPUT?",
+            "choices": [
+              "button A",
+              "the microphone",
+              "the LED screen",
+              "the accelerometer"
+            ],
+            "answer": "the LED screen",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "10 (c) the LED screen. The screen is an output. Buttons, microphone and accelerometer are inputs."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An operator that compares two values: greater than, less than, equal to.?",
+            "choices": [
+              "comparison operator",
+              "integer",
+              "character",
+              "string"
+            ],
+            "answer": "comparison operator",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Comparison operator means an operator that compares two values: greater than, less than, equal to."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-4",
+        "icon": "→",
+        "skill": "sequence",
+        "title": "Algorithm Runner: sequence",
+        "description": "Practise sequence through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does the Scratch join block do?",
+            "choices": [
+              "adds two numbers",
+              "joins two strings together",
+              "compares two numbers",
+              "repeats code"
+            ],
+            "answer": "joins two strings together",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "4 (b) joins two strings together. join glues text together, for example 'Hello ' + name."
+          },
+          {
+            "prompt": "In Scratch, which block sends a message to run a sub-routine?",
+            "choices": [
+              "say",
+              "ask",
+              "broadcast",
+              "wait"
+            ],
+            "answer": "broadcast",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "8 (c) broadcast. The broadcast block sends a message that a when I receive block catches."
+          },
+          {
+            "prompt": "What does 'random' mean in programming?",
+            "choices": [
+              "always the same",
+              "an outcome you cannot predict",
+              "very fast",
+              "broken"
+            ],
+            "answer": "an outcome you cannot predict",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "11 (b) an outcome you cannot predict. Like rolling a dice — you cannot know the result in advance."
+          },
+          {
+            "prompt": "In a flowchart, which shape is used for a decision?",
+            "choices": [
+              "oval",
+              "rectangle",
+              "diamond",
+              "arrow"
+            ],
+            "answer": "oval",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "1 (c) diamond. The diamond asks a Yes/No question and chooses a path. The oval is for Start/End."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-5",
+        "icon": "Σ",
+        "skill": "selection",
+        "title": "Vocabulary Vault: selection",
+        "description": "Practise selection through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "A variable is best described as:",
+            "choices": [
+              "a fixed number",
+              "a named box that stores a value that can change",
+              "a type of loop",
+              "a sound"
+            ],
+            "answer": "a named box that stores a value that can change",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "6 (b) a named box that stores a value that can change. That is exactly what a variable is."
+          },
+          {
+            "prompt": "What does IPO stand for?",
+            "choices": [
+              "In-Program-Output",
+              "Input-Process-Output",
+              "Input-Print-Order",
+              "Iterate-Process-Output"
+            ],
+            "answer": "Input-Process-Output",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "9 (b) Input-Process-Output. The computer takes in data, works on it, then gives data out."
+          },
+          {
+            "prompt": "Success criteria are:",
+            "choices": [
+              "the list of things a program must do to be a success",
+              "bugs in the code",
+              "the code the user sees",
+              "a type of loop"
+            ],
+            "answer": "the list of things a program must do to be a success",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "12 (a) the list of things a program must do to be a success. Criteria make evaluation useful."
+          },
+          {
+            "prompt": "Which construct means 'repeating something'?",
+            "choices": [
+              "sequence",
+              "selection",
+              "iteration",
+              "variable"
+            ],
+            "answer": "iteration",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "2 (c) iteration. Iteration means repeating, using loops such as repeat or forever."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-6",
+        "icon": "◇",
+        "skill": "iteration",
+        "title": "Challenge Cards: iteration",
+        "description": "Practise iteration through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "To use a sub-routine you must first:",
+            "choices": [
+              "delete it",
+              "define it",
+              "print it",
+              "hide it"
+            ],
+            "answer": "define it",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "7 (b) define it. First you define a sub-routine (name it and write its steps), then you can call it."
+          },
+          {
+            "prompt": "On a micro:bit, which of these is an OUTPUT?",
+            "choices": [
+              "button A",
+              "the microphone",
+              "the LED screen",
+              "the accelerometer"
+            ],
+            "answer": "the LED screen",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "10 (c) the LED screen. The screen is an output. Buttons, microphone and accelerometer are inputs."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An operator that compares two values: greater than, less than, equal to.?",
+            "choices": [
+              "comparison operator",
+              "integer",
+              "character",
+              "string"
+            ],
+            "answer": "comparison operator",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Comparison operator means an operator that compares two values: greater than, less than, equal to."
+          },
+          {
+            "prompt": "Which of these is an integer?",
+            "choices": [
+              "3.14",
+              "7",
+              "'three'",
+              "hello"
+            ],
+            "answer": "3.14",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "3 (b) 7. An integer is a whole number. 3.14 is a decimal and 'three' is a word (string)."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-7",
+        "icon": "⚡",
+        "skill": "condition",
+        "title": "Think Fast: condition",
+        "description": "Practise condition through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "In Scratch, which block sends a message to run a sub-routine?",
+            "choices": [
+              "say",
+              "ask",
+              "broadcast",
+              "wait"
+            ],
+            "answer": "broadcast",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "8 (c) broadcast. The broadcast block sends a message that a when I receive block catches."
+          },
+          {
+            "prompt": "What does 'random' mean in programming?",
+            "choices": [
+              "always the same",
+              "an outcome you cannot predict",
+              "very fast",
+              "broken"
+            ],
+            "answer": "an outcome you cannot predict",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "11 (b) an outcome you cannot predict. Like rolling a dice — you cannot know the result in advance."
+          },
+          {
+            "prompt": "In a flowchart, which shape is used for a decision?",
+            "choices": [
+              "oval",
+              "rectangle",
+              "diamond",
+              "arrow"
+            ],
+            "answer": "oval",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "1 (c) diamond. The diamond asks a Yes/No question and chooses a path. The oval is for Start/End."
+          },
+          {
+            "prompt": "What does the Scratch join block do?",
+            "choices": [
+              "adds two numbers",
+              "joins two strings together",
+              "compares two numbers",
+              "repeats code"
+            ],
+            "answer": "joins two strings together",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "4 (b) joins two strings together. join glues text together, for example 'Hello ' + name."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-8",
+        "icon": "☁",
+        "skill": "variable",
+        "title": "Explain It: variable",
+        "description": "Practise variable through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does IPO stand for?",
+            "choices": [
+              "In-Program-Output",
+              "Input-Process-Output",
+              "Input-Print-Order",
+              "Iterate-Process-Output"
+            ],
+            "answer": "Input-Process-Output",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "9 (b) Input-Process-Output. The computer takes in data, works on it, then gives data out."
+          },
+          {
+            "prompt": "Success criteria are:",
+            "choices": [
+              "the list of things a program must do to be a success",
+              "bugs in the code",
+              "the code the user sees",
+              "a type of loop"
+            ],
+            "answer": "the list of things a program must do to be a success",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "12 (a) the list of things a program must do to be a success. Criteria make evaluation useful."
+          },
+          {
+            "prompt": "Which construct means 'repeating something'?",
+            "choices": [
+              "sequence",
+              "selection",
+              "iteration",
+              "variable"
+            ],
+            "answer": "iteration",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "2 (c) iteration. Iteration means repeating, using loops such as repeat or forever."
+          },
+          {
+            "prompt": "A variable is best described as:",
+            "choices": [
+              "a fixed number",
+              "a named box that stores a value that can change",
+              "a type of loop",
+              "a sound"
+            ],
+            "answer": "a named box that stores a value that can change",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "6 (b) a named box that stores a value that can change. That is exactly what a variable is."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-9",
+        "icon": "⌂",
+        "skill": "input variable",
+        "title": "Real-Life Round: input variable",
+        "description": "Practise input variable through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "On a micro:bit, which of these is an OUTPUT?",
+            "choices": [
+              "button A",
+              "the microphone",
+              "the LED screen",
+              "the accelerometer"
+            ],
+            "answer": "the LED screen",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "10 (c) the LED screen. The screen is an output. Buttons, microphone and accelerometer are inputs."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An operator that compares two values: greater than, less than, equal to.?",
+            "choices": [
+              "comparison operator",
+              "integer",
+              "character",
+              "string"
+            ],
+            "answer": "comparison operator",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Comparison operator means an operator that compares two values: greater than, less than, equal to."
+          },
+          {
+            "prompt": "Which of these is an integer?",
+            "choices": [
+              "3.14",
+              "7",
+              "'three'",
+              "hello"
+            ],
+            "answer": "3.14",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "3 (b) 7. An integer is a whole number. 3.14 is a decimal and 'three' is a word (string)."
+          },
+          {
+            "prompt": "To use a sub-routine you must first:",
+            "choices": [
+              "delete it",
+              "define it",
+              "print it",
+              "hide it"
+            ],
+            "answer": "define it",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "7 (b) define it. First you define a sub-routine (name it and write its steps), then you can call it."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-10",
+        "icon": "!",
+        "skill": "operator",
+        "title": "Spot the Bug: operator",
+        "description": "Practise operator through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does 'random' mean in programming?",
+            "choices": [
+              "always the same",
+              "an outcome you cannot predict",
+              "very fast",
+              "broken"
+            ],
+            "answer": "an outcome you cannot predict",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "11 (b) an outcome you cannot predict. Like rolling a dice — you cannot know the result in advance."
+          },
+          {
+            "prompt": "In a flowchart, which shape is used for a decision?",
+            "choices": [
+              "oval",
+              "rectangle",
+              "diamond",
+              "arrow"
+            ],
+            "answer": "oval",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "1 (c) diamond. The diamond asks a Yes/No question and chooses a path. The oval is for Start/End."
+          },
+          {
+            "prompt": "What does the Scratch join block do?",
+            "choices": [
+              "adds two numbers",
+              "joins two strings together",
+              "compares two numbers",
+              "repeats code"
+            ],
+            "answer": "joins two strings together",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "4 (b) joins two strings together. join glues text together, for example 'Hello ' + name."
+          },
+          {
+            "prompt": "In Scratch, which block sends a message to run a sub-routine?",
+            "choices": [
+              "say",
+              "ask",
+              "broadcast",
+              "wait"
+            ],
+            "answer": "broadcast",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "8 (c) broadcast. The broadcast block sends a message that a when I receive block catches."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-11",
+        "icon": "≡",
+        "skill": "arithmetic operator",
+        "title": "Mastery Mix: arithmetic operator",
+        "description": "Practise arithmetic operator through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Success criteria are:",
+            "choices": [
+              "the list of things a program must do to be a success",
+              "bugs in the code",
+              "the code the user sees",
+              "a type of loop"
+            ],
+            "answer": "the list of things a program must do to be a success",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "12 (a) the list of things a program must do to be a success. Criteria make evaluation useful."
+          },
+          {
+            "prompt": "Which construct means 'repeating something'?",
+            "choices": [
+              "sequence",
+              "selection",
+              "iteration",
+              "variable"
+            ],
+            "answer": "iteration",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "2 (c) iteration. Iteration means repeating, using loops such as repeat or forever."
+          },
+          {
+            "prompt": "A variable is best described as:",
+            "choices": [
+              "a fixed number",
+              "a named box that stores a value that can change",
+              "a type of loop",
+              "a sound"
+            ],
+            "answer": "a named box that stores a value that can change",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "6 (b) a named box that stores a value that can change. That is exactly what a variable is."
+          },
+          {
+            "prompt": "What does IPO stand for?",
+            "choices": [
+              "In-Program-Output",
+              "Input-Process-Output",
+              "Input-Print-Order",
+              "Iterate-Process-Output"
+            ],
+            "answer": "Input-Process-Output",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "9 (b) Input-Process-Output. The computer takes in data, works on it, then gives data out."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-12",
+        "icon": "T",
+        "skill": "comparison operator",
+        "title": "Unit Champion: comparison operator",
+        "description": "Practise comparison operator through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: An operator that compares two values: greater than, less than, equal to.?",
+            "choices": [
+              "comparison operator",
+              "integer",
+              "character",
+              "string"
+            ],
+            "answer": "comparison operator",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Comparison operator means an operator that compares two values: greater than, less than, equal to."
+          },
+          {
+            "prompt": "Which of these is an integer?",
+            "choices": [
+              "3.14",
+              "7",
+              "'three'",
+              "hello"
+            ],
+            "answer": "3.14",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "3 (b) 7. An integer is a whole number. 3.14 is a decimal and 'three' is a word (string)."
+          },
+          {
+            "prompt": "To use a sub-routine you must first:",
+            "choices": [
+              "delete it",
+              "define it",
+              "print it",
+              "hide it"
+            ],
+            "answer": "define it",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "7 (b) define it. First you define a sub-routine (name it and write its steps), then you can call it."
+          },
+          {
+            "prompt": "On a micro:bit, which of these is an OUTPUT?",
+            "choices": [
+              "button A",
+              "the microphone",
+              "the LED screen",
+              "the accelerometer"
+            ],
+            "answer": "the LED screen",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "10 (c) the LED screen. The screen is an output. Buttons, microphone and accelerometer are inputs."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can an evaluation is much stronger when you have success criteria — a clear list of what the program should do to be a success. Without criteria, feedback is vague ('I liked it, but it was a bit small'). With criteria, feedback is useful. Compare these two evaluations of an animation:",
+    "I can weak (no criteria): 'I really liked the animation. The polar bear did a backflip, but it was a bit small.'",
+    "I can strong (with criteria): 'The sprites could be improved by making the polar bear bigger and the llama smaller. The text only showed for one second — it should stay for three or four seconds so the user can read it. I liked how a repeat loop was used for the backflip.'",
+    "I can the strong evaluation is better because it checks the program against clear criteria (sprite sizes, text timing, use of loops) and says exactly how to improve.",
+    "I can everything the user sees and hears is the user experience (sometimes shortened to UX). It does not include the code, because users almost never see the code. Programmers think hard about UX: where the menus go, how the screen looks, which buttons show. Good UX makes a program a pleasure to use; bad UX makes it frustrating.",
+    "I can systematic means careful and organised, following a sensible method — not just testing at random. To test the rock, paper, scissors game systematically, Zara tests it 15 times: five times entering 'rock', five times 'paper', and five times 'scissors'. Each time she records what happened. The more times a program works correctly, the more confident she can be that there are no bugs.",
+    "I can here is the testing table she uses:",
+    "I can she also tests with unexpected data. What if the user types bananas, or a number, or a single letter? A well-made program should not crash — it should politely handle input it did not expect, for example by saying 'Please type rock, paper or scissors.' Thinking about unexpected data is a key part of good testing.",
+    "I can improving code and software updates",
+    "I can testing and evaluating never really stop. Have you noticed how apps and devices sometimes ask you to install an update? That is because teams of developers keep improving their programs even after they are released. They fix bugs they missed, and they add improvements to the user experience. When you accept an update, you get their newest and best version. It is always wise to install updates, because they often include security improvements that keep your device safe."
+  ]
+}

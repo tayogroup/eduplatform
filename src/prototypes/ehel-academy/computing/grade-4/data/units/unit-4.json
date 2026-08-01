@@ -1,0 +1,1850 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.674Z",
+  "stage": {
+    "id": "s04",
+    "label": "Stage 4"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t01",
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "comp-g04-u04",
+    "unitNo": 4,
+    "unitTitle": "Be a Storyteller",
+    "unitOverview": "Welcome to Unit 4 of Year 4 Computing at Ehel Academy. Be a Storyteller. It is a unit about repetition — the way stories and songs, and computer programs, do the same thing again and again. You become storytellers who notice that a good story is full of repeats, and then you learn how a computer handles a repeat neatly using a loop.\n\nThink of how many stories work: a character knocks three times, three travellers ask the same question, a song's chorus comes back after every verse. In our own day we repeat actions too, like stirring a pot round and round. Repetition is everywhere — and that is the big idea of this unit. In computing we give it a name: iteration.\n\nFirst, a loop is a set of instructions that is repeated. Second, one single pass through those instructions is called an iteration — so if a loop runs four times, there are four iterations. Third, a counter keeps track of how many times the loop has run, and a loop that repeats a set, known number of times is called a count-controlled loop. Fourth, you learn to use repetition to make a long algorithm shorter, and then to build it in Scratch with the Repeat block.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 4
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-4-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 4",
+    "sourceArchive": "Year 4-20260801T055750Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 4/Unit 4/Year 4 - Unit 4 Teacher Guide.docx",
+      "Year 4/Unit 4/Year 4 - Unit 4 Activity Sheet.docx",
+      "Year 4/Unit 4/Year 4 - Unit 4 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 421,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 4 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Explain that a loop is a set of instructions that is repeated, and give an example from a story or a song.",
+    "Understand that an iteration is one single pass through the repeated steps, and count the iterations in an algorithm.",
+    "Understand that a counter keeps track of how many times a loop has run.",
+    "Recognise a count-controlled loop — a loop that repeats a set (known) number of times.",
+    "Use repetition to make a long algorithm shorter, keeping the same result.",
+    "Follow and correct an algorithm that uses repetition (put a jumbled story back in order).",
+    "In Scratch, build a program using the Repeat block (a count-controlled loop) and change the counter number."
+  ],
+  "toolkit": [
+    {
+      "name": "Scratch",
+      "url": "scratch.mit.edu",
+      "steps": [
+        "Go to scratch.mit.edu and click Create.",
+        "Drag blocks from the palette on the left into the code area.",
+        "Make variables in the orange Variables section.",
+        "Click the green flag to run and the red circle to stop."
+      ],
+      "note": "Runs in a web browser. Free, with nothing to download."
+    }
+  ],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-stories-that-repeat-loops-and-iterations",
+      "title": "Stories that repeat: loops and iterations",
+      "explanation": "A loop is a set of instructions that is repeated. When we go through those instructions one time, that is one iteration. If the loop runs several times, there are several iterations.\n\nStart with a story — storytellers already know all about repeats. Tell it slowly, counting the repeats on your fingers.",
+      "example": "Find one real example of stories that repeat: loops and iterations around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you count the iterations correctly (three, in Nora's story)? Can you point to the steps that repeat?"
+    },
+    {
+      "id": "concept-2-the-counter-and-the-count-controlled-loop",
+      "title": "The counter and the count-controlled loop",
+      "explanation": "A counter keeps track of how many times a loop has run. When we know the exact number of times to repeat, we can write the loop in a short way and say “repeat these steps N times”. A loop that repeats a set, known number of times is called a count-controlled loop. This makes a long algorithm much shorter.\n\nPicture the sports day at Ehel Academy. Karim is running a four-lap race.",
+      "example": "Each lap he runs down the track and the crowd cheers. Written out in full, the algorithm is long",
+      "checkYourself": "repeat ___ times. Can you understand that the short version does the SAME job as the long one?"
+    },
+    {
+      "id": "concept-3-into-scratch-the-repeat-block",
+      "title": "Into Scratch: the Repeat block",
+      "explanation": "The same idea works on the computer. In Scratch, the Repeat block is a count-controlled loop. It is a C-shaped block from the Control group: you drop the steps you want to repeat inside its mouth, and you type the counter number at the top.\n\nFirst build the LONG way — the repeated blocks written out four times — and run it with the green flag Open Scratch at scratch.mit.edu, click Create, and keep the Cat sprite (it has two costumes, so it looks like it is walking). Choose a simple backdrop like Blue Sky. Tell you our storyteller cat is going to walk across to greet a friend, taking four steps.",
+      "example": "Find one real example of into Scratch: the Repeat block around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you drop the repeated blocks INSIDE the C-shape (not underneath it)? Can you change the counter number and predict what will happen? Can you find the repeat ( ) block in the Control group?"
+    },
+    {
+      "id": "concept-4-a-loop-that-draws-the-square",
+      "title": "A loop that draws: the square",
+      "explanation": "A count-controlled loop can draw a shape. To draw a square you do the same two steps four times: move forward, then turn a right-angle (90 degrees). This is a perfect four-iteration count-controlled loop, and it makes a lovely picture for a story scene (a window, a picture frame, a floor tile).\n\nFirst show the idea unplugged.",
+      "example": "Find one real example of a loop that draws: the square around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Are the two repeated blocks inside the repeat block? Does you add the Pen extension and use pen down?"
+    },
+    {
+      "id": "concept-5-tell-your-repeating-story-put-it-together",
+      "title": "Tell your repeating story (put it together)",
+      "explanation": "You build a short Scratch story where a count-controlled loop does the repeating part. Changing the counter number changes how many times the repeat happens — so the storyteller is in control.\n\nLong ago, on a clear night, Nora looked up and counted the stars. Add the Star sprite and a night backdrop (like Stars or Night City), make sure the Pen extension is on (for the stamp block), and build this together",
+      "example": "Find one real example of tell your repeating story (put it together) around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you change the counter and predict the new number of stars? Can you point to the Repeat block and say how many iterations there are? Does you run the program and count the stamps?"
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "Session 3 — Into Scratch: the Repeat block — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 3 — Into Scratch: the Repeat block.",
+      "lines": [
+        "when green flag clicked",
+        "go to x: (-180) y: (-40)",
+        "move (60) steps"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-2",
+      "title": "next costume",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "wait (0.5) seconds",
+        "move (60) steps"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-3",
+      "title": "next costume (2)",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "wait (0.5) seconds",
+        "say (Hello!) for (2) seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-4",
+      "title": "Session 3 — Into Scratch: the Repeat block — listing 2",
+      "language": "Scratch blocks",
+      "intro": "From Session 3 — Into Scratch: the Repeat block.",
+      "lines": [
+        "when green flag clicked",
+        "go to x: (-180) y: (-40)",
+        "repeat (4)",
+        "move (60) steps"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-5",
+      "title": "erase all",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "go to x: (0) y: (0)",
+        "point in direction (90)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-6",
+      "title": "pen down",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "repeat (4)",
+        "move (100) steps",
+        "turn (90) degrees clockwise",
+        "wait (0.5) seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-7",
+      "title": "erase all (2)",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "go to x: (-200) y: (120)",
+        "say (One night, Nora counted the stars...) for (2) seconds",
+        "repeat (5)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-8",
+      "title": "stamp",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "change x by (100)",
+        "wait (0.5) seconds",
+        "say (Five stars!) for (2) seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "A Story That Repeats",
+      "context": "work through the steps below and see what happens. This is stories that repeat: loops and iterations in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Here is a story about Nora sharing dates with her neighbours. The four story cards are out of order. Write 1, 2, 3, 4 to put them in the right order.",
+      "answer": "[ ] She knocks on the door and says “Hello”. [ ] Nora fills her basket with dates. [ ] She gives you some dates. [ ] She walks to a neighbour's door. Nora does the same thing at three houses. Answer these",
+      "modelType": "model-1",
+      "hint": "Start here: [ ] She knocks on the door and says “Hello”.",
+      "explanation": "Stories that repeat: loops and iterations: A loop is a set of instructions that is repeated. When we go through those instructions one time, that is one iteration. If the loop runs several times, there are several iterations."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "One Iteration",
+      "context": "work through the steps below and see what happens. This is the counter and the count-controlled loop in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Here are the steps Nora repeats at each house. Doing all four steps one time is called one iteration.",
+      "answer": "Step 1 Walk to a house Step 2 Knock on the door Step 4 Give you some dates Nora does these steps at 3 houses. Fill in the blanks One trip through steps 1 to 4 is one _______________________.",
+      "modelType": "model-2",
+      "hint": "Start here: Step 1 Walk to a house",
+      "explanation": "The counter and the count-controlled loop: A counter keeps track of how many times a loop has run. When we know the exact number of times to repeat, we can write the loop in a short way and say “repeat these steps N times”. A loop that repeats a set, known number of times is called a count-controlled loop. This makes a long algorithm much…"
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Make it Shorter",
+      "context": "work through the steps below and see what happens. This is into scratch: the repeat block in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Karim is running a four-lap race on sports day. His algorithm is very long! First, circle the two steps that keep coming back.",
+      "answer": "Step 1 Start running Step 2 Run down the track Step 3 Cheer with the crowd Step 4 Run down the track Step 5 Cheer with the crowd",
+      "modelType": "model-3",
+      "hint": "Start here: Step 1 Start running",
+      "explanation": "Into Scratch: the Repeat block: The same idea works on the computer. In Scratch, the Repeat block is a count-controlled loop. It is a C-shaped block from the Control group: you drop the steps you want to repeat inside its mouth, and you type the counter number at the top."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Count the Iterations",
+      "context": "work through the steps below and see what happens. This is a loop that draws: the square in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "The counter is the number that says how many times to repeat. For each loop, write how many iterations there are.",
+      "answer": "a) Repeat steps 2 and 3, four times. Iterations = _______ Counter = _______ b) Nora shares dates at three houses. Iterations = _______ Counter = _______ c) A square has four sides (move and turn). Iterations = _______ Counter = _______",
+      "modelType": "model-4",
+      "hint": "Start here: a) Repeat steps 2 and 3, four times. Iterations = _______ Counter = _______",
+      "explanation": "A loop that draws: the square: A count-controlled loop can draw a shape. To draw a square you do the same two steps four times: move forward, then turn a right-angle (90 degrees). This is a perfect four-iteration count-controlled loop, and it makes a lovely picture for a story scene (a window, a picture frame, a floor tile)."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Try it in Scratch: The Repeat Block",
+      "context": "work through the steps below and see what happens. This is tell your repeating story (put it together) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Make a cat walk across the screen and say hello — using a Repeat block!",
+      "answer": "Go to scratch.mit.edu and click Create. Click Choose a Backdrop (bottom right) and pick Blue Sky. From the orange Control group, drag out repeat (10) and change the 10 to 4. Drag these blocks and put the middle three INSIDE the repeat block (the block hugs them) when green flag clicked",
+      "modelType": "model-5",
+      "hint": "Start here: Go to scratch.mit.edu and click Create.",
+      "explanation": "Tell your repeating story (put it together): You build a short Scratch story where a count-controlled loop does the repeating part. Changing the counter number changes how many times the repeat happens — so the storyteller is in control."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Try it in Scratch: Draw a Square",
+      "context": "work through the steps below and see what happens. This is stories that repeat: loops and iterations in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "A count-controlled loop can draw! Make a square for your story scene (a window or a floor tile).",
+      "answer": "Click Add Extension (bottom left) and choose Pen. Build this program. Put the move and turn blocks INSIDE the repeat block. when green flag clicked erase all go to x: (0) y: (0)",
+      "modelType": "model-6",
+      "hint": "Start here: Click Add Extension (bottom left) and choose Pen.",
+      "explanation": "Stories that repeat: loops and iterations: A loop is a set of instructions that is repeated. When we go through those instructions one time, that is one iteration. If the loop runs several times, there are several iterations."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Stories that repeat: loops and iterations",
+      "modelType": "concept-model-1",
+      "purpose": "A loop is a set of instructions that is repeated. When we go through those instructions one time, that is one iteration. If the loop runs several times, there are several iterations.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "The counter and the count-controlled loop",
+      "modelType": "concept-model-2",
+      "purpose": "A counter keeps track of how many times a loop has run. When we know the exact number of times to repeat, we can write the loop in a short way and say “repeat these steps N times”. A loop that repeats a set, known…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Into Scratch: the Repeat block",
+      "modelType": "concept-model-3",
+      "purpose": "The same idea works on the computer. In Scratch, the Repeat block is a count-controlled loop. It is a C-shaped block from the Control group: you drop the steps you want to repeat inside its mouth, and you type the…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "A loop that draws: the square",
+      "modelType": "concept-model-4",
+      "purpose": "A count-controlled loop can draw a shape. To draw a square you do the same two steps four times: move forward, then turn a right-angle (90 degrees). This is a perfect four-iteration count-controlled loop, and it makes a…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Tell your repeating story (put it together)",
+      "modelType": "concept-model-5",
+      "purpose": "You build a short Scratch story where a count-controlled loop does the repeating part. Changing the counter number changes how many times the repeat happens — so the storyteller is in control.",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with stories that repeat: loops and iterations",
+      "example": "Find one real example of stories that repeat: loops and iterations around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for stories that repeat: loops and iterations and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with the counter and the count-controlled loop",
+      "example": "Each lap he runs down the track and the crowd cheers. Written out in full, the algorithm is long",
+      "steps": [
+        "Read the concept card for the counter and the count-controlled loop and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with into scratch: the repeat block",
+      "example": "Find one real example of into Scratch: the Repeat block around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for into scratch: the repeat block and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with a loop that draws: the square",
+      "example": "Find one real example of a loop that draws: the square around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for a loop that draws: the square and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with tell your repeating story (put it together)",
+      "example": "Find one real example of tell your repeating story (put it together) around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for tell your repeating story (put it together) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Stories that repeat: loops and iterations",
+      "prompt": "Fill in the words. A",
+      "solution": "a count-controlled loop; the counter."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: The counter and the count-controlled loop",
+      "prompt": "Look at this loop. How many iterations are there?",
+      "solution": "4 iterations (the repeated steps happen four times in total)."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Into Scratch: the Repeat block",
+      "prompt": "In Scratch, which block do you use for a count-controlled loop? ([ ] move (10) steps [ ] repeat (10) [ ] say (Hello!))",
+      "solution": "repeat (10) — the Repeat block, from the orange Control group."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: A loop that draws: the square",
+      "prompt": "Make this shorter. Maya eats 5 dates. Before each bite she picks one up. Fill in the counter.",
+      "solution": "(c) With two more guests, change the counter to 8."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Stories that repeat: loops and iterations",
+      "prompt": "Explain in your own words: Stories that repeat: loops and iterations.",
+      "solution": "A loop is a set of instructions that is repeated. When we go through those instructions one time, that is one iteration. If the loop runs several times, there are several iterations.\n\nStart with a story — storytellers already know all about repeats. Tell it slowly, counting the repeats on your fingers.\n\nFor example: Find one real example of stories that repeat: loops and iterations around you, or on a device you use. Say out loud what it is and why it fits."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: The counter and the count-controlled loop",
+      "prompt": "Explain in your own words: The counter and the count-controlled loop.",
+      "solution": "A counter keeps track of how many times a loop has run. When we know the exact number of times to repeat, we can write the loop in a short way and say “repeat these steps N times”. A loop that repeats a set, known number of times is called a count-controlled loop. This makes a long algorithm much shorter.\n\nPicture the sports day at Ehel Academy. Karim is running a four-lap race.\n\nFor example: Each lap he runs down the track and the crowd cheers. Written out in full, the algorithm is long"
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "True or false? A loop is a set of instructions that is repeated. True / False",
+      "answer": "True.",
+      "hint": "Look back at what loop and repetition mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Fill in the word. One single pass through the repeated steps is called one",
+      "answer": "an iteration.",
+      "hint": "Look back at what loop and repetition mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "Fill in the words. A",
+      "answer": "a count-controlled loop; the counter.",
+      "hint": "Look back at what loop and repetition mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Look at this loop. How many iterations are there?",
+      "answer": "4 iterations (the repeated steps happen four times in total).",
+      "hint": "Look back at what loop and repetition mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "In Scratch, which block do you use for a count-controlled loop? ([ ] move (10) steps [ ] repeat (10) [ ] say (Hello!))",
+      "answer": "repeat (10) — the Repeat block, from the orange Control group.",
+      "hint": "Look back at what loop and repetition mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "Make this shorter. Maya eats 5 dates. Before each bite she picks one up. Fill in the counter.",
+      "answer": "(c) With two more guests, change the counter to 8.",
+      "hint": "Look back at what loop and repetition mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "A Story That Repeats",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Here is a story about Nora sharing dates with her neighbours. The four story cards are out of order. Write 1, 2, 3, 4 to put them in the right order.",
+        "[ ] She knocks on the door and says “Hello”.",
+        "[ ] Nora fills her basket with dates.",
+        "[ ] She gives you some dates.",
+        "[ ] She walks to a neighbour's door.",
+        "Nora does the same thing at three houses. Answer these"
+      ]
+    },
+    {
+      "title": "One Iteration",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Here are the steps Nora repeats at each house. Doing all four steps one time is called one iteration.",
+        "Step 1 Walk to a house",
+        "Step 2 Knock on the door",
+        "Step 4 Give you some dates",
+        "Nora does these steps at 3 houses. Fill in the blanks",
+        "One trip through steps 1 to 4 is one _______________________."
+      ]
+    },
+    {
+      "title": "Make it Shorter",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Karim is running a four-lap race on sports day. His algorithm is very long! First, circle the two steps that keep coming back.",
+        "Step 1 Start running",
+        "Step 2 Run down the track",
+        "Step 3 Cheer with the crowd",
+        "Step 4 Run down the track",
+        "Step 5 Cheer with the crowd"
+      ]
+    },
+    {
+      "title": "Count the Iterations",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "The counter is the number that says how many times to repeat. For each loop, write how many iterations there are.",
+        "a) Repeat steps 2 and 3, four times. Iterations = _______ Counter = _______",
+        "b) Nora shares dates at three houses. Iterations = _______ Counter = _______",
+        "c) A square has four sides (move and turn). Iterations = _______ Counter = _______"
+      ]
+    },
+    {
+      "title": "Try it in Scratch: The Repeat Block",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Make a cat walk across the screen and say hello — using a Repeat block!",
+        "Go to scratch.mit.edu and click Create.",
+        "Click Choose a Backdrop (bottom right) and pick Blue Sky.",
+        "From the orange Control group, drag out repeat (10) and change the 10 to 4.",
+        "Drag these blocks and put the middle three INSIDE the repeat block (the block hugs them)",
+        "when green flag clicked"
+      ]
+    },
+    {
+      "title": "Try it in Scratch: Draw a Square",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A count-controlled loop can draw! Make a square for your story scene (a window or a floor tile).",
+        "Click Add Extension (bottom left) and choose Pen.",
+        "Build this program. Put the move and turn blocks INSIDE the repeat block.",
+        "when green flag clicked",
+        "erase all",
+        "go to x: (0) y: (0)"
+      ]
+    },
+    {
+      "title": "Fix the Jumbled Story",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Sami is pouring shaah (tea) for three guests. His steps got jumbled! Write 1 to 5 to put them in the correct order.",
+        "[ ] Repeat steps 2 and 3, three times",
+        "[ ] Pour shaah into a cup",
+        "[ ] Start",
+        "[ ] Stop",
+        "[ ] Give the cup to a guest"
+      ]
+    },
+    {
+      "title": "Be a Storyteller: Plan Your Repeating Story",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "You are the storyteller! Plan a short Scratch story that has a part which repeats.",
+        "My story is about: ______________________________________________",
+        "My sprite (character) will be: ____________________ My backdrop will be: ____________________",
+        "The part that repeats is: ______________________________________________",
+        "It will repeat _______ times. (This is my counter!)",
+        "Draw a picture of your story here."
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "One iteration means one instruction.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — one iteration is one full pass through ALL the repeated steps. Nora knocking, saying hello and giving dates is one iteration, not three."
+    },
+    {
+      "symptom": "A longer program is a better program.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "You think more blocks means more work done. Show that the Repeat version does the very same job — shorter is smarter here."
+    },
+    {
+      "symptom": "repeat (4) means do it once, then 4 more times.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — repeat (4) means the steps happen four times in total. Count the runs out loud together to prove it."
+    },
+    {
+      "symptom": "The blocks go next to the repeat block.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "The repeated blocks must sit INSIDE the C-shaped repeat block, hugged by its arms — not stacked underneath it."
+    },
+    {
+      "symptom": "A count-controlled loop and a forever loop are the same.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "A count-controlled loop repeats a set number of times and then stops; a forever loop never stops on its own."
+    },
+    {
+      "symptom": "The counter is just decoration.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "The counter is the number that decides how many iterations happen. Change it and the result changes — that is the whole point."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Stories that repeat: loops and iterations",
+        "text": "A loop is a set of instructions that is repeated."
+      },
+      {
+        "title": "The counter and the count-controlled loop",
+        "text": "A counter keeps track of how many times a loop has run."
+      },
+      {
+        "title": "Into Scratch: the Repeat block",
+        "text": "The same idea works on the computer."
+      },
+      {
+        "title": "A loop that draws: the square",
+        "text": "A count-controlled loop can draw a shape."
+      },
+      {
+        "title": "Tell your repeating story (put it together)",
+        "text": "You build a short Scratch story where a count-controlled loop does the repeating part."
+      }
+    ],
+    "terms": [
+      [
+        "loop",
+        "A set of instructions that is repeated."
+      ],
+      [
+        "repetition",
+        "Doing the same thing again and again."
+      ],
+      [
+        "iteration",
+        "One single pass through the repeated steps."
+      ],
+      [
+        "counter",
+        "Keeps track of how many times a loop has run."
+      ],
+      [
+        "count-controlled loop",
+        "A loop that repeats a set, known number of times."
+      ],
+      [
+        "Repeat block",
+        "The Scratch block used for a count-controlled loop."
+      ],
+      [
+        "algorithm",
+        "A set of steps for doing a job, in the right order."
+      ],
+      [
+        "program",
+        "An algorithm built from Scratch blocks."
+      ],
+      [
+        "sprite",
+        "A character or object in Scratch."
+      ],
+      [
+        "backdrop",
+        "The picture behind the sprites."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "loop",
+        "meaning": "A set of instructions that is repeated.",
+        "example": "Push left foot, push right foot, over and over on a bike.",
+        "letter": "L"
+      },
+      {
+        "term": "repetition",
+        "meaning": "Doing the same thing again and again.",
+        "example": "The chorus of a song comes back each time.",
+        "letter": "R"
+      },
+      {
+        "term": "iteration",
+        "meaning": "One single pass through the repeated steps.",
+        "example": "Knocking on one door and saying hello = one iteration.",
+        "letter": "I"
+      },
+      {
+        "term": "counter",
+        "meaning": "Keeps track of how many times a loop has run.",
+        "example": "1, 2, 3 laps... the counter counts the laps.",
+        "letter": "C"
+      },
+      {
+        "term": "count-controlled loop",
+        "meaning": "A loop that repeats a set, known number of times.",
+        "example": "Repeat these steps 4 times, then stop.",
+        "letter": "C"
+      },
+      {
+        "term": "Repeat block",
+        "meaning": "The Scratch block used for a count-controlled loop.",
+        "example": "repeat (4) wrapped around the steps.",
+        "letter": "R"
+      },
+      {
+        "term": "algorithm",
+        "meaning": "A set of steps for doing a job, in the right order.",
+        "example": "The steps to draw a square.",
+        "letter": "A"
+      },
+      {
+        "term": "program",
+        "meaning": "An algorithm built from Scratch blocks.",
+        "example": "The blocks that make the star stamp 5 times.",
+        "letter": "P"
+      },
+      {
+        "term": "sprite",
+        "meaning": "A character or object in Scratch.",
+        "example": "A star, a cat, a person.",
+        "letter": "S"
+      },
+      {
+        "term": "backdrop",
+        "meaning": "The picture behind the sprites.",
+        "example": "A night sky full of stars.",
+        "letter": "B"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "One iteration means one instruction.",
+        "No — one iteration is one full pass through ALL the repeated steps. Nora knocking, saying hello and giving dates is one iteration, not three."
+      ],
+      [
+        "A longer program is a better program.",
+        "You think more blocks means more work done. Show that the Repeat version does the very same job — shorter is smarter here."
+      ],
+      [
+        "repeat (4) means do it once, then 4 more times.",
+        "No — repeat (4) means the steps happen four times in total. Count the runs out loud together to prove it."
+      ],
+      [
+        "The blocks go next to the repeat block.",
+        "The repeated blocks must sit INSIDE the C-shaped repeat block, hugged by its arms — not stacked underneath it."
+      ],
+      [
+        "A count-controlled loop and a forever loop are the same.",
+        "A count-controlled loop repeats a set number of times and then stops; a forever loop never stops on its own."
+      ],
+      [
+        "The counter is just decoration.",
+        "The counter is the number that decides how many iterations happen. Change it and the result changes — that is the whole point."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "True or false? A loop is a set of instructions that is repeated. True / False",
+      "answer": "True.",
+      "hint": "Look back at what loop and repetition mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "True."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Fill in the word. One single pass through the repeated steps is called one",
+      "answer": "an iteration.",
+      "hint": "Look back at what loop and repetition mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "an iteration."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Fill in the words. A",
+      "answer": "a count-controlled loop; the counter.",
+      "hint": "Look back at what loop and repetition mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "a count-controlled loop; the counter."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Look at this loop. How many iterations are there?",
+      "answer": "4 iterations (the repeated steps happen four times in total).",
+      "hint": "Look back at what loop and repetition mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "4 iterations (the repeated steps happen four times in total)."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "In Scratch, which block do you use for a count-controlled loop? ([ ] move (10) steps [ ] repeat (10) [ ] say (Hello!))",
+      "answer": "repeat (10) — the Repeat block, from the orange Control group.",
+      "hint": "Look back at what loop and repetition mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "repeat (10) — the Repeat block, from the orange Control group."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Make this shorter. Maya eats 5 dates. Before each bite she picks one up. Fill in the counter.",
+      "answer": "(c) With two more guests, change the counter to 8.",
+      "hint": "Look back at what loop and repetition mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "(c) With two more guests, change the counter to 8."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Make this shorter. Maya eats 5 dates. Before each bite she picks one up. Fill in the counter.",
+      "answer": "(c) With two more guests, change the counter to 8.",
+      "hint": "Look back at what loop and repetition mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: (c) With two more guests, change the counter to 8."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "In Scratch, which block do you use for a count-controlled loop? ([ ] move (10) steps [ ] repeat (10) [ ] say (Hello!))",
+      "answer": "repeat (10) — the Repeat block, from the orange Control group.",
+      "hint": "Look back at what loop and repetition mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: repeat (10) — the Repeat block, from the orange Control group."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Make this shorter. Maya eats 5 dates. Before each bite she picks one up. Fill in the counter.",
+      "answer": "(c) With two more guests, change the counter to 8.",
+      "hint": "Look back at what loop and repetition mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: (c) With two more guests, change the counter to 8."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "True or false? A loop is a set of instructions that is repeated. True / False",
+      "answer": "True.",
+      "hint": "Look back at what loop and repetition mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: True."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Fill in the words. A",
+      "keyIdeas": [
+        "loop",
+        "repetition",
+        "iteration"
+      ],
+      "modelAnswer": "a count-controlled loop; the counter."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Look at this loop. How many iterations are there?",
+      "keyIdeas": [
+        "repetition",
+        "iteration",
+        "counter"
+      ],
+      "modelAnswer": "4 iterations (the repeated steps happen four times in total)."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "In Scratch, which block do you use for a count-controlled loop? ([ ] move (10) steps [ ] repeat (10) [ ] say (Hello!))",
+      "keyIdeas": [
+        "iteration",
+        "counter",
+        "count-controlled loop"
+      ],
+      "modelAnswer": "repeat (10) — the Repeat block, from the orange Control group."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in a loop that draws: the square, and give one example of your own.",
+      "keyIdeas": [
+        "loop",
+        "repetition",
+        "iteration"
+      ],
+      "modelAnswer": "A count-controlled loop can draw a shape. To draw a square you do the same two steps four times: move forward, then turn a right-angle (90 degrees). This is a perfect four-iteration count-controlled loop, and it makes a lovely picture for a story scene (a window, a picture frame, a floor tile).\n\nFirst show the idea unplugged."
+    }
+  ],
+  "project": {
+    "title": "Unit 4 Project: Be a Storyteller",
+    "brief": "Bring together everything from Be a Storyteller into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your be a storyteller project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I made Leila's lantern algorithm shorter with a counter.",
+      "I counted the iterations in Theo's cup algorithm.",
+      "My Scratch story uses a Repeat block.",
+      "The repeated blocks are INSIDE the repeat block.",
+      "I changed the counter and saw the number of stars change.",
+      "My story has a beginning and an end (a say block at the start and the end)."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "True or false? A loop is a set of instructions that is repeated.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "answer": "True",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "True."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “repetition” mean in computing?",
+        "options": [
+          "Doing the same thing again and again.",
+          "One single pass through the repeated steps.",
+          "Keeps track of how many times a loop has run.",
+          "A loop that repeats a set, known number of times."
+        ],
+        "answer": "Doing the same thing again and again.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Repetition means doing the same thing again and again."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “iteration” mean in computing?",
+        "options": [
+          "One single pass through the repeated steps.",
+          "Keeps track of how many times a loop has run.",
+          "A loop that repeats a set, known number of times.",
+          "The Scratch block used for a count-controlled loop."
+        ],
+        "answer": "One single pass through the repeated steps.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Iteration means one single pass through the repeated steps."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “counter” mean in computing?",
+        "options": [
+          "Keeps track of how many times a loop has run.",
+          "A loop that repeats a set, known number of times.",
+          "The Scratch block used for a count-controlled loop.",
+          "A set of steps for doing a job, in the right order."
+        ],
+        "answer": "Keeps track of how many times a loop has run.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Counter means keeps track of how many times a loop has run."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “count-controlled loop” mean in computing?",
+        "options": [
+          "A loop that repeats a set, known number of times.",
+          "The Scratch block used for a count-controlled loop.",
+          "A set of steps for doing a job, in the right order.",
+          "An algorithm built from Scratch blocks."
+        ],
+        "answer": "A loop that repeats a set, known number of times.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Count-controlled loop means a loop that repeats a set, known number of times."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “Repeat block” mean in computing?",
+        "options": [
+          "The Scratch block used for a count-controlled loop.",
+          "A set of steps for doing a job, in the right order.",
+          "An algorithm built from Scratch blocks.",
+          "A character or object in Scratch."
+        ],
+        "answer": "The Scratch block used for a count-controlled loop.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Repeat block means the Scratch block used for a count-controlled loop."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A set of steps for doing a job, in the right order.?",
+        "options": [
+          "algorithm",
+          "program",
+          "sprite",
+          "backdrop"
+        ],
+        "answer": "algorithm",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: An algorithm built from Scratch blocks.?",
+        "options": [
+          "program",
+          "sprite",
+          "backdrop",
+          "loop"
+        ],
+        "answer": "program",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Program means an algorithm built from Scratch blocks."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A character or object in Scratch.?",
+        "options": [
+          "sprite",
+          "backdrop",
+          "loop",
+          "repetition"
+        ],
+        "answer": "sprite",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Sprite means a character or object in Scratch."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The picture behind the sprites.?",
+        "options": [
+          "backdrop",
+          "loop",
+          "repetition",
+          "iteration"
+        ],
+        "answer": "backdrop",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Backdrop means the picture behind the sprites."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A set of instructions that is repeated.?",
+        "options": [
+          "loop",
+          "repetition",
+          "iteration",
+          "counter"
+        ],
+        "answer": "loop",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Loop means a set of instructions that is repeated."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Doing the same thing again and again.?",
+        "options": [
+          "repetition",
+          "iteration",
+          "counter",
+          "count-controlled loop"
+        ],
+        "answer": "repetition",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Repetition means doing the same thing again and again."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u4-game-1",
+        "icon": "?",
+        "skill": "loop",
+        "title": "Quick Match: loop",
+        "description": "Practise loop through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "True or false? A loop is a set of instructions that is repeated.",
+            "choices": [
+              "True",
+              "False"
+            ],
+            "answer": "True",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "True."
+          },
+          {
+            "prompt": "What does “counter” mean in computing?",
+            "choices": [
+              "Keeps track of how many times a loop has run.",
+              "A loop that repeats a set, known number of times.",
+              "The Scratch block used for a count-controlled loop.",
+              "A set of steps for doing a job, in the right order."
+            ],
+            "answer": "Keeps track of how many times a loop has run.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Counter means keeps track of how many times a loop has run."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A set of steps for doing a job, in the right order.?",
+            "choices": [
+              "algorithm",
+              "program",
+              "sprite",
+              "backdrop"
+            ],
+            "answer": "algorithm",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The picture behind the sprites.?",
+            "choices": [
+              "backdrop",
+              "loop",
+              "repetition",
+              "iteration"
+            ],
+            "answer": "backdrop",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprites."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-2",
+        "icon": "★",
+        "skill": "repetition",
+        "title": "Concept Quest: repetition",
+        "description": "Practise repetition through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “repetition” mean in computing?",
+            "choices": [
+              "Doing the same thing again and again.",
+              "One single pass through the repeated steps.",
+              "Keeps track of how many times a loop has run.",
+              "A loop that repeats a set, known number of times."
+            ],
+            "answer": "Doing the same thing again and again.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Repetition means doing the same thing again and again."
+          },
+          {
+            "prompt": "What does “count-controlled loop” mean in computing?",
+            "choices": [
+              "A loop that repeats a set, known number of times.",
+              "The Scratch block used for a count-controlled loop.",
+              "A set of steps for doing a job, in the right order.",
+              "An algorithm built from Scratch blocks."
+            ],
+            "answer": "A loop that repeats a set, known number of times.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Count-controlled loop means a loop that repeats a set, known number of times."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An algorithm built from Scratch blocks.?",
+            "choices": [
+              "program",
+              "sprite",
+              "backdrop",
+              "loop"
+            ],
+            "answer": "program",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Program means an algorithm built from Scratch blocks."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A set of instructions that is repeated.?",
+            "choices": [
+              "loop",
+              "repetition",
+              "iteration",
+              "counter"
+            ],
+            "answer": "loop",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Loop means a set of instructions that is repeated."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-3",
+        "icon": "◫",
+        "skill": "iteration",
+        "title": "Debug Detective: iteration",
+        "description": "Practise iteration through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “iteration” mean in computing?",
+            "choices": [
+              "One single pass through the repeated steps.",
+              "Keeps track of how many times a loop has run.",
+              "A loop that repeats a set, known number of times.",
+              "The Scratch block used for a count-controlled loop."
+            ],
+            "answer": "One single pass through the repeated steps.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Iteration means one single pass through the repeated steps."
+          },
+          {
+            "prompt": "What does “Repeat block” mean in computing?",
+            "choices": [
+              "The Scratch block used for a count-controlled loop.",
+              "A set of steps for doing a job, in the right order.",
+              "An algorithm built from Scratch blocks.",
+              "A character or object in Scratch."
+            ],
+            "answer": "The Scratch block used for a count-controlled loop.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Repeat block means the Scratch block used for a count-controlled loop."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A character or object in Scratch.?",
+            "choices": [
+              "sprite",
+              "backdrop",
+              "loop",
+              "repetition"
+            ],
+            "answer": "sprite",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Doing the same thing again and again.?",
+            "choices": [
+              "repetition",
+              "iteration",
+              "counter",
+              "count-controlled loop"
+            ],
+            "answer": "repetition",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Repetition means doing the same thing again and again."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-4",
+        "icon": "→",
+        "skill": "counter",
+        "title": "Algorithm Runner: counter",
+        "description": "Practise counter through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “counter” mean in computing?",
+            "choices": [
+              "Keeps track of how many times a loop has run.",
+              "A loop that repeats a set, known number of times.",
+              "The Scratch block used for a count-controlled loop.",
+              "A set of steps for doing a job, in the right order."
+            ],
+            "answer": "Keeps track of how many times a loop has run.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Counter means keeps track of how many times a loop has run."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A set of steps for doing a job, in the right order.?",
+            "choices": [
+              "algorithm",
+              "program",
+              "sprite",
+              "backdrop"
+            ],
+            "answer": "algorithm",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The picture behind the sprites.?",
+            "choices": [
+              "backdrop",
+              "loop",
+              "repetition",
+              "iteration"
+            ],
+            "answer": "backdrop",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprites."
+          },
+          {
+            "prompt": "True or false? A loop is a set of instructions that is repeated.",
+            "choices": [
+              "True",
+              "False"
+            ],
+            "answer": "True",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "True."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-5",
+        "icon": "Σ",
+        "skill": "count-controlled loop",
+        "title": "Vocabulary Vault: count-controlled loop",
+        "description": "Practise count-controlled loop through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “count-controlled loop” mean in computing?",
+            "choices": [
+              "A loop that repeats a set, known number of times.",
+              "The Scratch block used for a count-controlled loop.",
+              "A set of steps for doing a job, in the right order.",
+              "An algorithm built from Scratch blocks."
+            ],
+            "answer": "A loop that repeats a set, known number of times.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Count-controlled loop means a loop that repeats a set, known number of times."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An algorithm built from Scratch blocks.?",
+            "choices": [
+              "program",
+              "sprite",
+              "backdrop",
+              "loop"
+            ],
+            "answer": "program",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Program means an algorithm built from Scratch blocks."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A set of instructions that is repeated.?",
+            "choices": [
+              "loop",
+              "repetition",
+              "iteration",
+              "counter"
+            ],
+            "answer": "loop",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Loop means a set of instructions that is repeated."
+          },
+          {
+            "prompt": "What does “repetition” mean in computing?",
+            "choices": [
+              "Doing the same thing again and again.",
+              "One single pass through the repeated steps.",
+              "Keeps track of how many times a loop has run.",
+              "A loop that repeats a set, known number of times."
+            ],
+            "answer": "Doing the same thing again and again.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Repetition means doing the same thing again and again."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-6",
+        "icon": "◇",
+        "skill": "Repeat block",
+        "title": "Challenge Cards: Repeat block",
+        "description": "Practise repeat block through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Repeat block” mean in computing?",
+            "choices": [
+              "The Scratch block used for a count-controlled loop.",
+              "A set of steps for doing a job, in the right order.",
+              "An algorithm built from Scratch blocks.",
+              "A character or object in Scratch."
+            ],
+            "answer": "The Scratch block used for a count-controlled loop.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Repeat block means the Scratch block used for a count-controlled loop."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A character or object in Scratch.?",
+            "choices": [
+              "sprite",
+              "backdrop",
+              "loop",
+              "repetition"
+            ],
+            "answer": "sprite",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Doing the same thing again and again.?",
+            "choices": [
+              "repetition",
+              "iteration",
+              "counter",
+              "count-controlled loop"
+            ],
+            "answer": "repetition",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Repetition means doing the same thing again and again."
+          },
+          {
+            "prompt": "What does “iteration” mean in computing?",
+            "choices": [
+              "One single pass through the repeated steps.",
+              "Keeps track of how many times a loop has run.",
+              "A loop that repeats a set, known number of times.",
+              "The Scratch block used for a count-controlled loop."
+            ],
+            "answer": "One single pass through the repeated steps.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Iteration means one single pass through the repeated steps."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-7",
+        "icon": "⚡",
+        "skill": "algorithm",
+        "title": "Think Fast: algorithm",
+        "description": "Practise algorithm through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A set of steps for doing a job, in the right order.?",
+            "choices": [
+              "algorithm",
+              "program",
+              "sprite",
+              "backdrop"
+            ],
+            "answer": "algorithm",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The picture behind the sprites.?",
+            "choices": [
+              "backdrop",
+              "loop",
+              "repetition",
+              "iteration"
+            ],
+            "answer": "backdrop",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprites."
+          },
+          {
+            "prompt": "True or false? A loop is a set of instructions that is repeated.",
+            "choices": [
+              "True",
+              "False"
+            ],
+            "answer": "True",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "True."
+          },
+          {
+            "prompt": "What does “counter” mean in computing?",
+            "choices": [
+              "Keeps track of how many times a loop has run.",
+              "A loop that repeats a set, known number of times.",
+              "The Scratch block used for a count-controlled loop.",
+              "A set of steps for doing a job, in the right order."
+            ],
+            "answer": "Keeps track of how many times a loop has run.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Counter means keeps track of how many times a loop has run."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-8",
+        "icon": "☁",
+        "skill": "program",
+        "title": "Explain It: program",
+        "description": "Practise program through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: An algorithm built from Scratch blocks.?",
+            "choices": [
+              "program",
+              "sprite",
+              "backdrop",
+              "loop"
+            ],
+            "answer": "program",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Program means an algorithm built from Scratch blocks."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A set of instructions that is repeated.?",
+            "choices": [
+              "loop",
+              "repetition",
+              "iteration",
+              "counter"
+            ],
+            "answer": "loop",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Loop means a set of instructions that is repeated."
+          },
+          {
+            "prompt": "What does “repetition” mean in computing?",
+            "choices": [
+              "Doing the same thing again and again.",
+              "One single pass through the repeated steps.",
+              "Keeps track of how many times a loop has run.",
+              "A loop that repeats a set, known number of times."
+            ],
+            "answer": "Doing the same thing again and again.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Repetition means doing the same thing again and again."
+          },
+          {
+            "prompt": "What does “count-controlled loop” mean in computing?",
+            "choices": [
+              "A loop that repeats a set, known number of times.",
+              "The Scratch block used for a count-controlled loop.",
+              "A set of steps for doing a job, in the right order.",
+              "An algorithm built from Scratch blocks."
+            ],
+            "answer": "A loop that repeats a set, known number of times.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Count-controlled loop means a loop that repeats a set, known number of times."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-9",
+        "icon": "⌂",
+        "skill": "sprite",
+        "title": "Real-Life Round: sprite",
+        "description": "Practise sprite through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A character or object in Scratch.?",
+            "choices": [
+              "sprite",
+              "backdrop",
+              "loop",
+              "repetition"
+            ],
+            "answer": "sprite",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Doing the same thing again and again.?",
+            "choices": [
+              "repetition",
+              "iteration",
+              "counter",
+              "count-controlled loop"
+            ],
+            "answer": "repetition",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Repetition means doing the same thing again and again."
+          },
+          {
+            "prompt": "What does “iteration” mean in computing?",
+            "choices": [
+              "One single pass through the repeated steps.",
+              "Keeps track of how many times a loop has run.",
+              "A loop that repeats a set, known number of times.",
+              "The Scratch block used for a count-controlled loop."
+            ],
+            "answer": "One single pass through the repeated steps.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Iteration means one single pass through the repeated steps."
+          },
+          {
+            "prompt": "What does “Repeat block” mean in computing?",
+            "choices": [
+              "The Scratch block used for a count-controlled loop.",
+              "A set of steps for doing a job, in the right order.",
+              "An algorithm built from Scratch blocks.",
+              "A character or object in Scratch."
+            ],
+            "answer": "The Scratch block used for a count-controlled loop.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Repeat block means the Scratch block used for a count-controlled loop."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-10",
+        "icon": "!",
+        "skill": "backdrop",
+        "title": "Spot the Bug: backdrop",
+        "description": "Practise backdrop through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The picture behind the sprites.?",
+            "choices": [
+              "backdrop",
+              "loop",
+              "repetition",
+              "iteration"
+            ],
+            "answer": "backdrop",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprites."
+          },
+          {
+            "prompt": "True or false? A loop is a set of instructions that is repeated.",
+            "choices": [
+              "True",
+              "False"
+            ],
+            "answer": "True",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "True."
+          },
+          {
+            "prompt": "What does “counter” mean in computing?",
+            "choices": [
+              "Keeps track of how many times a loop has run.",
+              "A loop that repeats a set, known number of times.",
+              "The Scratch block used for a count-controlled loop.",
+              "A set of steps for doing a job, in the right order."
+            ],
+            "answer": "Keeps track of how many times a loop has run.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Counter means keeps track of how many times a loop has run."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A set of steps for doing a job, in the right order.?",
+            "choices": [
+              "algorithm",
+              "program",
+              "sprite",
+              "backdrop"
+            ],
+            "answer": "algorithm",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-11",
+        "icon": "≡",
+        "skill": "loop",
+        "title": "Mastery Mix: loop",
+        "description": "Practise loop through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A set of instructions that is repeated.?",
+            "choices": [
+              "loop",
+              "repetition",
+              "iteration",
+              "counter"
+            ],
+            "answer": "loop",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Loop means a set of instructions that is repeated."
+          },
+          {
+            "prompt": "What does “repetition” mean in computing?",
+            "choices": [
+              "Doing the same thing again and again.",
+              "One single pass through the repeated steps.",
+              "Keeps track of how many times a loop has run.",
+              "A loop that repeats a set, known number of times."
+            ],
+            "answer": "Doing the same thing again and again.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Repetition means doing the same thing again and again."
+          },
+          {
+            "prompt": "What does “count-controlled loop” mean in computing?",
+            "choices": [
+              "A loop that repeats a set, known number of times.",
+              "The Scratch block used for a count-controlled loop.",
+              "A set of steps for doing a job, in the right order.",
+              "An algorithm built from Scratch blocks."
+            ],
+            "answer": "A loop that repeats a set, known number of times.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Count-controlled loop means a loop that repeats a set, known number of times."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An algorithm built from Scratch blocks.?",
+            "choices": [
+              "program",
+              "sprite",
+              "backdrop",
+              "loop"
+            ],
+            "answer": "program",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Program means an algorithm built from Scratch blocks."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-12",
+        "icon": "T",
+        "skill": "repetition",
+        "title": "Unit Champion: repetition",
+        "description": "Practise repetition through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Doing the same thing again and again.?",
+            "choices": [
+              "repetition",
+              "iteration",
+              "counter",
+              "count-controlled loop"
+            ],
+            "answer": "repetition",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Repetition means doing the same thing again and again."
+          },
+          {
+            "prompt": "What does “iteration” mean in computing?",
+            "choices": [
+              "One single pass through the repeated steps.",
+              "Keeps track of how many times a loop has run.",
+              "A loop that repeats a set, known number of times.",
+              "The Scratch block used for a count-controlled loop."
+            ],
+            "answer": "One single pass through the repeated steps.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Iteration means one single pass through the repeated steps."
+          },
+          {
+            "prompt": "What does “Repeat block” mean in computing?",
+            "choices": [
+              "The Scratch block used for a count-controlled loop.",
+              "A set of steps for doing a job, in the right order.",
+              "An algorithm built from Scratch blocks.",
+              "A character or object in Scratch."
+            ],
+            "answer": "The Scratch block used for a count-controlled loop.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Repeat block means the Scratch block used for a count-controlled loop."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A character or object in Scratch.?",
+            "choices": [
+              "sprite",
+              "backdrop",
+              "loop",
+              "repetition"
+            ],
+            "answer": "sprite",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can explain that a loop is a set of instructions that is repeated, and give an example from a story or a song.",
+    "I can understand that an iteration is one single pass through the repeated steps, and count the iterations in an algorithm.",
+    "I can understand that a counter keeps track of how many times a loop has run.",
+    "I can recognise a count-controlled loop — a loop that repeats a set (known) number of times.",
+    "I can use repetition to make a long algorithm shorter, keeping the same result.",
+    "I can follow and correct an algorithm that uses repetition (put a jumbled story back in order).",
+    "I can in Scratch, build a program using the Repeat block (a count-controlled loop) and change the counter number."
+  ]
+}

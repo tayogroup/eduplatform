@@ -1,0 +1,1812 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.749Z",
+  "stage": {
+    "id": "s04",
+    "label": "Stage 4"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t03",
+    "label": "Term 3"
+  },
+  "unit": {
+    "unitId": "comp-g04-u09",
+    "unitNo": 9,
+    "unitTitle": "Be a Code Cracker",
+    "unitOverview": "Welcome to Unit 9 of Year 4 Computing at Ehel Academy. This unit is called “Be a Code Cracker”, and it is all about keeping information safe. It is one of the most exciting units of the year, and — happily — it needs no computers at all. Everything is done with a pencil, paper and a bit of clever thinking.\n\nThere are three big ideas, and they fit together like a story. First, why do we need secrets? Because so much information now travels over networks and the internet — and when a network breaks (a network failure), or a bad person tries to steal information, that information is in danger. Second, the way we protect it is encryption: we disguise a message so only a person with the secret key can understand it.\n\nThe word cipher simply means a secret way of writing: to encrypt is to turn a normal message (plain text) into a scrambled one (ciphertext), and to decrypt is to turn it back. These are not made-up school codes — the Caesar cipher is over two thousand years old, used by the Roman leader Julius Caesar, and the Pigpen cipher has been used since the 1500s.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 4
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-4-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 4",
+    "sourceArchive": "Year 4-20260801T055750Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 4/Unit 9/Year 4 - Unit 9 Teacher Guide.docx",
+      "Year 4/Unit 9/Year 4 - Unit 9 Activity Sheet.docx",
+      "Year 4/Unit 9/Year 4 - Unit 9 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 366,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 4 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Explain that a network failure is when a fault in hardware or software stops a network working properly.",
+    "Give examples of problems caused by a network failure in a hospital, a school, for the police, and in a shop or bank.",
+    "Explain that encryption disguises a message so that only someone with the secret key can understand it.",
+    "Use the words plain text (before) and ciphertext (after), and say where and why encryption is used.",
+    "Explain that a cipher is a secret way of writing, and that Caesar and Pigpen are substitution ciphers (one letter is swapped for something else).",
+    "Encrypt and decrypt a message using the Caesar cipher with a chosen key, and know what to do when a letter goes past Z (wrap around to A).",
+    "Encrypt and decrypt a message using the Pigpen cipher, reading the symbols from the grid.",
+    "Invent a simple cipher of their own and understand why the person receiving a message needs the key.",
+    "Before this unit (from the syllabus), children should already know some things you can do on a network and its advantages and disadvantages, know what a cipher is, and be able to use a simple code to write and decode a short message. A two-minute recap — \"what is a network, and what do we use it for?\" — is enough to begin."
+  ],
+  "toolkit": [],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-networks-and-what-happens-when-they-fail",
+      "title": "Networks, and what happens when they fail",
+      "explanation": "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a fault in the hardware (the machines or cables) or the software (the programs) stops the network working properly. When the network is down, people cannot share files, send emails, reach the internet, or get to the information stored on the network.\n\nStart with a hook that shows why secrets matter.",
+      "example": "Find one real example of networks, and what happens when they fail around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you crack a simple number code using the A=1 rule?"
+    },
+    {
+      "id": "concept-2-what-is-encryption-and-why-do-we-use-it",
+      "title": "What is encryption, and why do we use it?",
+      "explanation": "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has been disguised. The normal message is called plain text; the disguised message is called ciphertext. A very important idea: encryption does not stop someone seeing the letters of a message — it stops them understanding it.\n\nEven if someone snatches it, they just see “KHOOR” and cannot understand it. Only Leo, who has the same key, can decrypt it back to “HELLO”.",
+      "example": "Answer this in your own words, out loud or on paper: What is encryption, and why do we use it? Then check your answer against the explanation above.",
+      "checkYourself": "Can you use “plain text”, “ciphertext” and “key” correctly? Can you give one reason encryption is important?"
+    },
+    {
+      "id": "concept-3-the-caesar-cipher-writing-secret-messages",
+      "title": "The Caesar cipher: writing secret messages",
+      "explanation": "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the key. Julius Caesar himself often used a key of 3. Because you swap each letter for another letter, it is called a substitution cipher.\n\nThe top row is the normal alphabet; the bottom row is the same alphabet shifted along by 3. To encrypt, find your letter on the top and write the letter underneath it. Give you the Caesar alphabet strip (below).",
+      "example": "Find one real example of the Caesar cipher: writing secret messages around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you handle the wrap-around at the end of the alphabet? Can you use the strip to encrypt a word correctly with a key of 3?"
+    },
+    {
+      "id": "concept-4-cracking-the-caesar-cipher-decrypting",
+      "title": "Cracking the Caesar cipher: decrypting",
+      "explanation": "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each letter 3 places back. On the alphabet strip, find the letter on the bottom row and read off the normal letter above it.\n\nWith a key of 3, decrypt KHOOR back to HELLO (K to H, H to E, O to L, O to L, R to O). Then try a whole sentence from the textbook, corrected here so it is exactly right: decrypt VHH BRX WRQLJKW with a key of 3 to reveal SEE YOU TONIGHT. Cracking a real sentence together is a thrilling moment — you can shout out the words as they appear.",
+      "example": "Find one real example of cracking the Caesar cipher: decrypting around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you understand that decrypting shifts the opposite way to encrypting? Can you check your answer makes a real word or sentence? Can you decrypt a Caesar message with a given key?"
+    },
+    {
+      "id": "concept-5-the-pigpen-cipher-and-invent-your-own",
+      "title": "The Pigpen cipher, and invent your own",
+      "explanation": "The Pigpen cipher is another substitution cipher, but instead of swapping a letter for a letter, it swaps each letter for a symbol. The alphabet is written into two grids and two crosses, and each letter's symbol is the shape around it. It has been used since the 1500s.\n\nThe first grid and the first cross use plain shapes; the second grid and second cross add a dot inside each shape.",
+      "example": "Find one real example of the Pigpen cipher, and invent your own around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you understand, from the no-key test, why the person receiving a message must have the key?"
+    }
+  ],
+  "codeExamples": [],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Crack the Number Code",
+      "context": "work through the steps below and see what happens. This is networks, and what happens when they fail in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Here is a secret code. Each number stands for a letter: A = 1, B = 2, C = 3, all the way to Z = 26. Work out the hidden word!",
+      "answer": "5 14 3 18 25 16 20 9 15 14 _ __ _ __ __ __ __ _ __ __ a) The hidden word is: ____________________________ b) Now write your own name in the number code ____________________________________________________________",
+      "modelType": "model-1",
+      "hint": "Start here: 5 14 3 18 25 16 20 9 15 14",
+      "explanation": "Networks, and what happens when they fail: A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a fault in the hardware (the machines or cables) or the software (the programs) stops the network working properly. When the network is down, people…"
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "When the Network Fails",
+      "context": "work through the steps below and see what happens. This is what is encryption, and why do we use it? in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "A network joins computers together so they can share. A network failure is when it stops working. Answer these",
+      "answer": "True or false? a) A network failure does not stop any services working. True / False b) A network failure can affect hospitals, schools, shops and the police. True / False c) The most common cause of network failure is human error (a person's mistake). True / False Match each problem to the right place.",
+      "modelType": "model-2",
+      "hint": "Start here: True or false?",
+      "explanation": "What is encryption, and why do we use it?: Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has been disguised. The normal message is called plain text; the disguised message is called ciphertext. A very important idea: encryption does not stop…"
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Match the Secret Words",
+      "context": "work through the steps below and see what happens. This is the caesar cipher: writing secret messages in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Draw a line from each word to its meaning.",
+      "answer": "Match: encryption → the secret that explains how a message was disguised Match: key → the scrambled message, after it is encrypted Match: plain text → disguising a message so only the right person understands it Match: ciphertext → crime done using computers or the internet Match: cybercrime → the normal message, before it is encrypted",
+      "modelType": "model-3",
+      "hint": "Start here: Match: encryption → the secret that explains how a message was disguised",
+      "explanation": "The Caesar cipher: writing secret messages: The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the key. Julius Caesar himself often used a key of 3. Because you swap each letter for another letter, it is called a substitution cipher."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "True or False: Encryption",
+      "context": "work through the steps below and see what happens. This is cracking the caesar cipher: decrypting in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Circle True or False for each one.",
+      "answer": "a) Encrypted data is called plain text. True / False b) Encryption turns information into a code. True / False c) Encryption needs a key. True / False d) Encryption helps keep emails safe from the wrong people. True / False e) Encryption stops a thief from understanding a message, even if they see it. True / False",
+      "modelType": "model-4",
+      "hint": "Start here: a) Encrypted data is called plain text. True / False",
+      "explanation": "Cracking the Caesar cipher: decrypting: To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each letter 3 places back. On the alphabet strip, find the letter on the bottom row and read off the normal letter above it."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Write in the Caesar Cipher (Key = 3)",
+      "context": "work through the steps below and see what happens. This is the pigpen cipher, and invent your own in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Julius Caesar hid messages by shifting every letter along the alphabet. Use this strip: find your letter on the top row, then write the letter underneath it.",
+      "answer": "Normal: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z Key = 3: D E F G H I J K L M N O P Q R S T U V W X Y Z A B C Encrypt these words. Write each secret letter under the normal letter. a) HELLO = __________________ b) FRIEND = __________________",
+      "modelType": "model-5",
+      "hint": "Start here: Normal: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z",
+      "explanation": "The Pigpen cipher, and invent your own: The Pigpen cipher is another substitution cipher, but instead of swapping a letter for a letter, it swaps each letter for a symbol. The alphabet is written into two grids and two crosses, and each letter's symbol is the shape around it. It has been used since the 1500s."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Change the Key (Key = 5)",
+      "context": "work through the steps below and see what happens. This is networks, and what happens when they fail in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "A different key makes a different code! This strip is shifted by 5.",
+      "answer": "Normal: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z Key = 5: F G H I J K L M N O P Q R S T U V W X Y Z A B C D E a) Encrypt the name THEO with key 5: __________________ b) Now encrypt your own name with key 5: __________________",
+      "modelType": "model-6",
+      "hint": "Start here: Normal: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z",
+      "explanation": "Networks, and what happens when they fail: A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a fault in the hardware (the machines or cables) or the software (the programs) stops the network working properly. When the network is down, people…"
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Networks, and what happens when they fail",
+      "modelType": "concept-model-1",
+      "purpose": "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a fault in the hardware (the machines or cables) or the software (the…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "What is encryption, and why do we use it?",
+      "modelType": "concept-model-2",
+      "purpose": "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has been disguised. The normal message is called plain text; the disguised…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "The Caesar cipher: writing secret messages",
+      "modelType": "concept-model-3",
+      "purpose": "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the key. Julius Caesar himself often used a key of 3. Because you swap each…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Cracking the Caesar cipher: decrypting",
+      "modelType": "concept-model-4",
+      "purpose": "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each letter 3 places back. On the alphabet strip, find the letter on the…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "The Pigpen cipher, and invent your own",
+      "modelType": "concept-model-5",
+      "purpose": "The Pigpen cipher is another substitution cipher, but instead of swapping a letter for a letter, it swaps each letter for a symbol. The alphabet is written into two grids and two crosses, and each letter's symbol is the…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with networks, and what happens when they fail",
+      "example": "Find one real example of networks, and what happens when they fail around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for networks, and what happens when they fail and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with what is encryption, and why do we use it?",
+      "example": "Answer this in your own words, out loud or on paper: What is encryption, and why do we use it? Then check your answer against the explanation above.",
+      "steps": [
+        "Read the concept card for what is encryption, and why do we use it? and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with the caesar cipher: writing secret messages",
+      "example": "Find one real example of the Caesar cipher: writing secret messages around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for the caesar cipher: writing secret messages and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with cracking the caesar cipher: decrypting",
+      "example": "Find one real example of cracking the Caesar cipher: decrypting around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for cracking the caesar cipher: decrypting and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with the pigpen cipher, and invent your own",
+      "example": "Find one real example of the Pigpen cipher, and invent your own around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for the pigpen cipher, and invent your own and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Networks, and what happens when they fail",
+      "prompt": "What is a network failure? Name one thing that can cause it.",
+      "solution": "A network failure is when a fault in the hardware or software stops a network working properly. Causes include human error (most common), or a hardware or software fault."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: What is encryption, and why do we use it?",
+      "prompt": "Write two things people cannot do when a network fails.",
+      "solution": "Any two of: share files, send emails, reach the internet, get to information stored on the network, log in to online lessons or quizzes."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: The Caesar cipher: writing secret messages",
+      "prompt": "What does encryption do to a message, and what is the key for?",
+      "solution": "Encryption disguises a message so only the right person can understand it. The key is the secret that explains how the message was disguised, and it lets the right person turn the message back into plain text."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Cracking the Caesar cipher: decrypting",
+      "prompt": "Explain the difference between plain text and ciphertext.",
+      "solution": "Plain text is the normal message before it is encrypted. Ciphertext is the scrambled message after it is encrypted."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: The Pigpen cipher, and invent your own",
+      "prompt": "Encrypt the word FRIEND using the Caesar cipher with a key of 3.",
+      "solution": "FRIEND with a Caesar key of 3 = IULHQG (F to I, R to U, I to L, E to H, N to Q, D to G)."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Networks, and what happens when they fail",
+      "prompt": "Crack this Caesar code (key of 3): WKH OHVVRQ LV IXQ",
+      "solution": "WKH OHVVRQ LV IXQ decrypted with a key of 3 = THE LESSON IS FUN (shift each letter 3 places back)."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Worked example 7: What is encryption, and why do we use it?",
+      "prompt": "In a Caesar cipher, what do you do when a letter goes past Z? Using a key of 3, what do Y and Z become?",
+      "solution": "You wrap around to the start of the alphabet. With a key of 3, Y becomes B and Z becomes C."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "What is a network failure? Name one thing that can cause it.",
+      "answer": "A network failure is when a fault in the hardware or software stops a network working properly. Causes include human error (most common), or a hardware or software fault.",
+      "hint": "Look back at what network and network failure mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Write two things people cannot do when a network fails.",
+      "answer": "Any two of: share files, send emails, reach the internet, get to information stored on the network, log in to online lessons or quizzes.",
+      "hint": "Look back at what network and network failure mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "What does encryption do to a message, and what is the key for?",
+      "answer": "Encryption disguises a message so only the right person can understand it. The key is the secret that explains how the message was disguised, and it lets the right person turn the message back into plain text.",
+      "hint": "Look back at what network and network failure mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Explain the difference between plain text and ciphertext.",
+      "answer": "Plain text is the normal message before it is encrypted. Ciphertext is the scrambled message after it is encrypted.",
+      "hint": "Look back at what network and network failure mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "Encrypt the word FRIEND using the Caesar cipher with a key of 3.",
+      "answer": "FRIEND with a Caesar key of 3 = IULHQG (F to I, R to U, I to L, E to H, N to Q, D to G).",
+      "hint": "Look back at what network and network failure mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "Crack this Caesar code (key of 3): WKH OHVVRQ LV IXQ",
+      "answer": "WKH OHVVRQ LV IXQ decrypted with a key of 3 = THE LESSON IS FUN (shift each letter 3 places back).",
+      "hint": "Look back at what network and network failure mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p07",
+      "level": "Challenge",
+      "prompt": "In a Caesar cipher, what do you do when a letter goes past Z? Using a key of 3, what do Y and Z become?",
+      "answer": "You wrap around to the start of the alphabet. With a key of 3, Y becomes B and Z becomes C.",
+      "hint": "Look back at what network and network failure mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Crack the Number Code",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Here is a secret code. Each number stands for a letter: A = 1, B = 2, C = 3, all the way to Z = 26. Work out the hidden word!",
+        "5 14 3 18 25 16 20 9 15 14",
+        "_ __ _ __ __ __ __ _ __ __",
+        "a) The hidden word is: ____________________________",
+        "b) Now write your own name in the number code",
+        "____________________________________________________________"
+      ]
+    },
+    {
+      "title": "When the Network Fails",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A network joins computers together so they can share. A network failure is when it stops working. Answer these",
+        "True or false?",
+        "a) A network failure does not stop any services working. True / False",
+        "b) A network failure can affect hospitals, schools, shops and the police. True / False",
+        "c) The most common cause of network failure is human error (a person's mistake). True / False",
+        "Match each problem to the right place."
+      ]
+    },
+    {
+      "title": "Match the Secret Words",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Draw a line from each word to its meaning.",
+        "Match: encryption → the secret that explains how a message was disguised",
+        "Match: key → the scrambled message, after it is encrypted",
+        "Match: plain text → disguising a message so only the right person understands it",
+        "Match: ciphertext → crime done using computers or the internet",
+        "Match: cybercrime → the normal message, before it is encrypted"
+      ]
+    },
+    {
+      "title": "True or False: Encryption",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Circle True or False for each one.",
+        "a) Encrypted data is called plain text. True / False",
+        "b) Encryption turns information into a code. True / False",
+        "c) Encryption needs a key. True / False",
+        "d) Encryption helps keep emails safe from the wrong people. True / False",
+        "e) Encryption stops a thief from understanding a message, even if they see it. True / False"
+      ]
+    },
+    {
+      "title": "Write in the Caesar Cipher (Key = 3)",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Julius Caesar hid messages by shifting every letter along the alphabet. Use this strip: find your letter on the top row, then write the letter underneath it.",
+        "Normal: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z",
+        "Key = 3: D E F G H I J K L M N O P Q R S T U V W X Y Z A B C",
+        "Encrypt these words. Write each secret letter under the normal letter.",
+        "a) HELLO = __________________",
+        "b) FRIEND = __________________"
+      ]
+    },
+    {
+      "title": "Change the Key (Key = 5)",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A different key makes a different code! This strip is shifted by 5.",
+        "Normal: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z",
+        "Key = 5: F G H I J K L M N O P Q R S T U V W X Y Z A B C D E",
+        "a) Encrypt the name THEO with key 5: __________________",
+        "b) Now encrypt your own name with key 5: __________________"
+      ]
+    },
+    {
+      "title": "Crack the Code! (Decrypt, Key = 3)",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "To crack a Caesar code, shift each letter backwards. Find the secret letter on the bottom row of the key-3 strip, then read the normal letter above it.",
+        "a) KHOOR = __________________",
+        "b) VHH BRX WRQLJKW = ________________________________",
+        "Tip: if your answer looks like nonsense, you shifted the wrong way."
+      ]
+    },
+    {
+      "title": "The Pigpen Cipher",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "The Pigpen cipher swaps each letter for the shape around it in these grids. The second grid and second cross add a dot.",
+        "GRID 1 (no dot) GRID 2 (add a dot)",
+        "A | B | C J | K | L",
+        "---+---+--- ---+---+---",
+        "D | E | F M | N | O",
+        "---+---+--- ---+---+---"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "Encryption hides the message so no one can see it.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No. A thief can still see and even copy the ciphertext — encryption stops them understanding it, not seeing it."
+    },
+    {
+      "symptom": "Encrypt and decrypt are the same thing.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "They are opposites. Encrypt turns plain text into ciphertext; decrypt turns ciphertext back into plain text."
+    },
+    {
+      "symptom": "Plain text means text with no colour or style.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "In this unit, plain text means the normal, un-scrambled message — nothing to do with fonts."
+    },
+    {
+      "symptom": "With a Caesar key of 3, you always turn A into 3.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — a Caesar cipher swaps a letter for a letter. A key of 3 turns A into D (three places along), not into the number 3."
+    },
+    {
+      "symptom": "When you reach Z you just stop.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — you wrap around to the beginning. With a key of 3, X to A, Y to B, Z to C."
+    },
+    {
+      "symptom": "To decrypt you shift the same way as encrypting.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — you shift the opposite way. If encrypting moved letters forward, decrypting moves them back."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Keep personal information private",
+      "text": "Your full name, address, school, phone number, birthday and passwords are personal information. Never type them into a game, an app or a website, and never send them to someone you only know online."
+    },
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Networks, and what happens when they fail",
+        "text": "A network is a set of computers and devices joined together so they can share things — files, messages and the internet."
+      },
+      {
+        "title": "What is encryption, and why do we use it?",
+        "text": "Encryption means disguising a message so that only certain people can understand it."
+      },
+      {
+        "title": "The Caesar cipher: writing secret messages",
+        "text": "The Caesar cipher is one of the oldest ways to encrypt."
+      },
+      {
+        "title": "Cracking the Caesar cipher: decrypting",
+        "text": "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards."
+      },
+      {
+        "title": "The Pigpen cipher, and invent your own",
+        "text": "The Pigpen cipher is another substitution cipher, but instead of swapping a letter for a letter, it swaps each letter for a symbol."
+      }
+    ],
+    "terms": [
+      [
+        "network",
+        "Computers and devices joined together so they can share."
+      ],
+      [
+        "network failure",
+        "When a fault in hardware or software stops a network working properly."
+      ],
+      [
+        "encryption",
+        "Disguising a message so only the right person can understand it."
+      ],
+      [
+        "key",
+        "The secret that explains how a message has been disguised."
+      ],
+      [
+        "cipher",
+        "A secret way of writing a message."
+      ],
+      [
+        "plain text",
+        "The normal message, before it is encrypted."
+      ],
+      [
+        "ciphertext",
+        "The scrambled message, after it is encrypted."
+      ],
+      [
+        "encrypt",
+        "To turn a normal message into a secret one."
+      ],
+      [
+        "decrypt",
+        "To turn a secret message back into a normal one."
+      ],
+      [
+        "substitution cipher",
+        "A cipher that swaps each letter for another letter or a symbol."
+      ],
+      [
+        "shift",
+        "How many places along the alphabet each letter moves in a Caesar cipher."
+      ],
+      [
+        "cybercrime",
+        "Crime done using computers or the internet."
+      ],
+      [
+        "hacker",
+        "A person who tries to get into a computer or network without permission."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "network",
+        "meaning": "Computers and devices joined together so they can share.",
+        "example": "The school computers all joined together.",
+        "letter": "N"
+      },
+      {
+        "term": "network failure",
+        "meaning": "When a fault in hardware or software stops a network working properly.",
+        "example": "The internet goes down and no one can log in.",
+        "letter": "N"
+      },
+      {
+        "term": "encryption",
+        "meaning": "Disguising a message so only the right person can understand it.",
+        "example": "Scrambling a note so a stranger cannot read it.",
+        "letter": "E"
+      },
+      {
+        "term": "key",
+        "meaning": "The secret that explains how a message has been disguised.",
+        "example": "Shift every letter forward by 3.",
+        "letter": "K"
+      },
+      {
+        "term": "cipher",
+        "meaning": "A secret way of writing a message.",
+        "example": "The Caesar cipher and the Pigpen cipher.",
+        "letter": "C"
+      },
+      {
+        "term": "plain text",
+        "meaning": "The normal message, before it is encrypted.",
+        "example": "MEET AT THE GATE",
+        "letter": "P"
+      },
+      {
+        "term": "ciphertext",
+        "meaning": "The scrambled message, after it is encrypted.",
+        "example": "PHHW DW WKH JDWH",
+        "letter": "C"
+      },
+      {
+        "term": "encrypt",
+        "meaning": "To turn a normal message into a secret one.",
+        "example": "Turn HELLO into KHOOR.",
+        "letter": "E"
+      },
+      {
+        "term": "decrypt",
+        "meaning": "To turn a secret message back into a normal one.",
+        "example": "Turn KHOOR back into HELLO.",
+        "letter": "D"
+      },
+      {
+        "term": "substitution cipher",
+        "meaning": "A cipher that swaps each letter for another letter or a symbol.",
+        "example": "Caesar swaps letters; Pigpen swaps in shapes.",
+        "letter": "S"
+      },
+      {
+        "term": "shift",
+        "meaning": "How many places along the alphabet each letter moves in a Caesar cipher.",
+        "example": "A shift of 3 turns A into D.",
+        "letter": "S"
+      },
+      {
+        "term": "cybercrime",
+        "meaning": "Crime done using computers or the internet.",
+        "example": "Stealing someone's password online.",
+        "letter": "C"
+      },
+      {
+        "term": "hacker",
+        "meaning": "A person who tries to get into a computer or network without permission.",
+        "example": "Someone trying to steal card numbers.",
+        "letter": "H"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "Encryption hides the message so no one can see it.",
+        "No. A thief can still see and even copy the ciphertext — encryption stops them understanding it, not seeing it."
+      ],
+      [
+        "Encrypt and decrypt are the same thing.",
+        "They are opposites. Encrypt turns plain text into ciphertext; decrypt turns ciphertext back into plain text."
+      ],
+      [
+        "Plain text means text with no colour or style.",
+        "In this unit, plain text means the normal, un-scrambled message — nothing to do with fonts."
+      ],
+      [
+        "With a Caesar key of 3, you always turn A into 3.",
+        "No — a Caesar cipher swaps a letter for a letter. A key of 3 turns A into D (three places along), not into the number 3."
+      ],
+      [
+        "When you reach Z you just stop.",
+        "No — you wrap around to the beginning. With a key of 3, X to A, Y to B, Z to C."
+      ],
+      [
+        "To decrypt you shift the same way as encrypting.",
+        "No — you shift the opposite way. If encrypting moved letters forward, decrypting moves them back."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "What is a network failure? Name one thing that can cause it.",
+      "answer": "A network failure is when a fault in the hardware or software stops a network working properly. Causes include human error (most common), or a hardware or software fault.",
+      "hint": "Look back at what network and network failure mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "A network failure is when a fault in the hardware or software stops a network working properly. Causes include human error (most common), or a hardware or software fault."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Write two things people cannot do when a network fails.",
+      "answer": "Any two of: share files, send emails, reach the internet, get to information stored on the network, log in to online lessons or quizzes.",
+      "hint": "Look back at what network and network failure mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Any two of: share files, send emails, reach the internet, get to information stored on the network, log in to online lessons or quizzes."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "What does encryption do to a message, and what is the key for?",
+      "answer": "Encryption disguises a message so only the right person can understand it. The key is the secret that explains how the message was disguised, and it lets the right person turn the message back into plain text.",
+      "hint": "Look back at what network and network failure mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Encryption disguises a message so only the right person can understand it. The key is the secret that explains how the message was disguised, and it lets the right person turn the message back into plain text."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Explain the difference between plain text and ciphertext.",
+      "answer": "Plain text is the normal message before it is encrypted. Ciphertext is the scrambled message after it is encrypted.",
+      "hint": "Look back at what network and network failure mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Plain text is the normal message before it is encrypted. Ciphertext is the scrambled message after it is encrypted."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Encrypt the word FRIEND using the Caesar cipher with a key of 3.",
+      "answer": "FRIEND with a Caesar key of 3 = IULHQG (F to I, R to U, I to L, E to H, N to Q, D to G).",
+      "hint": "Look back at what network and network failure mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "FRIEND with a Caesar key of 3 = IULHQG (F to I, R to U, I to L, E to H, N to Q, D to G)."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Crack this Caesar code (key of 3): WKH OHVVRQ LV IXQ",
+      "answer": "WKH OHVVRQ LV IXQ decrypted with a key of 3 = THE LESSON IS FUN (shift each letter 3 places back).",
+      "hint": "Look back at what network and network failure mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "WKH OHVVRQ LV IXQ decrypted with a key of 3 = THE LESSON IS FUN (shift each letter 3 places back)."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "In a Caesar cipher, what do you do when a letter goes past Z? Using a key of 3, what do Y and Z become?",
+      "answer": "You wrap around to the start of the alphabet. With a key of 3, Y becomes B and Z becomes C.",
+      "hint": "Look back at what network and network failure mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "You wrap around to the start of the alphabet. With a key of 3, Y becomes B and Z becomes C."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Crack this Caesar code (key of 3): WKH OHVVRQ LV IXQ",
+      "answer": "WKH OHVVRQ LV IXQ decrypted with a key of 3 = THE LESSON IS FUN (shift each letter 3 places back).",
+      "hint": "Look back at what network and network failure mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: WKH OHVVRQ LV IXQ decrypted with a key of 3 = THE LESSON IS FUN (shift each letter 3 places back)."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "In a Caesar cipher, what do you do when a letter goes past Z? Using a key of 3, what do Y and Z become?",
+      "answer": "You wrap around to the start of the alphabet. With a key of 3, Y becomes B and Z becomes C.",
+      "hint": "Look back at what network and network failure mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: You wrap around to the start of the alphabet. With a key of 3, Y becomes B and Z becomes C."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Crack this Caesar code (key of 3): WKH OHVVRQ LV IXQ",
+      "answer": "WKH OHVVRQ LV IXQ decrypted with a key of 3 = THE LESSON IS FUN (shift each letter 3 places back).",
+      "hint": "Look back at what network and network failure mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: WKH OHVVRQ LV IXQ decrypted with a key of 3 = THE LESSON IS FUN (shift each letter 3 places back)."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "In a Caesar cipher, what do you do when a letter goes past Z? Using a key of 3, what do Y and Z become?",
+      "answer": "You wrap around to the start of the alphabet. With a key of 3, Y becomes B and Z becomes C.",
+      "hint": "Look back at what network and network failure mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: You wrap around to the start of the alphabet. With a key of 3, Y becomes B and Z becomes C."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "What does encryption do to a message, and what is the key for?",
+      "keyIdeas": [
+        "network",
+        "network failure",
+        "encryption"
+      ],
+      "modelAnswer": "Encryption disguises a message so only the right person can understand it. The key is the secret that explains how the message was disguised, and it lets the right person turn the message back into plain text."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the difference between plain text and ciphertext.",
+      "keyIdeas": [
+        "network failure",
+        "encryption",
+        "key"
+      ],
+      "modelAnswer": "Plain text is the normal message before it is encrypted. Ciphertext is the scrambled message after it is encrypted."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Encrypt the word FRIEND using the Caesar cipher with a key of 3.",
+      "keyIdeas": [
+        "encryption",
+        "key",
+        "cipher"
+      ],
+      "modelAnswer": "FRIEND with a Caesar key of 3 = IULHQG (F to I, R to U, I to L, E to H, N to Q, D to G)."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in cracking the caesar cipher: decrypting, and give one example of your own.",
+      "keyIdeas": [
+        "network",
+        "network failure",
+        "encryption"
+      ],
+      "modelAnswer": "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each letter 3 places back. On the alphabet strip, find the letter on the bottom row and read off the normal letter above it.\n\nWith a key of 3, decrypt KHOOR back to HELLO (K to H, H to E, O to L, O to L, R to O). Then try a whole sentence from the textbook, corrected here so it is exactly right: decrypt VHH BRX WRQLJKW with a key of 3 to reveal SEE YOU TONIGHT. Cracking a real sentence together is a thrilling moment — you can shout out the words as they appear."
+    }
+  ],
+  "project": {
+    "title": "Unit 9 Project: Be a Code Cracker",
+    "brief": "Bring together everything from Be a Code Cracker into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your be a code cracker project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I explained what a network failure is.",
+      "I gave at least two problems a network failure causes.",
+      "I explained what encryption does and what the key is for.",
+      "I invented my own cipher with a key.",
+      "I tested my cipher on a friend, without the key and then with the key."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “network” mean in computing?",
+        "options": [
+          "Computers and devices joined together so they can share.",
+          "When a fault in hardware or software stops a network working properly.",
+          "Disguising a message so only the right person can understand it.",
+          "The secret that explains how a message has been disguised."
+        ],
+        "answer": "Computers and devices joined together so they can share.",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Network means computers and devices joined together so they can share."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “network failure” mean in computing?",
+        "options": [
+          "When a fault in hardware or software stops a network working properly.",
+          "Disguising a message so only the right person can understand it.",
+          "The secret that explains how a message has been disguised.",
+          "A secret way of writing a message."
+        ],
+        "answer": "When a fault in hardware or software stops a network working properly.",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Network failure means when a fault in hardware or software stops a network working properly."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “encryption” mean in computing?",
+        "options": [
+          "Disguising a message so only the right person can understand it.",
+          "The secret that explains how a message has been disguised.",
+          "A secret way of writing a message.",
+          "The normal message, before it is encrypted."
+        ],
+        "answer": "Disguising a message so only the right person can understand it.",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Encryption means disguising a message so only the right person can understand it."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “key” mean in computing?",
+        "options": [
+          "The secret that explains how a message has been disguised.",
+          "A secret way of writing a message.",
+          "The normal message, before it is encrypted.",
+          "The scrambled message, after it is encrypted."
+        ],
+        "answer": "The secret that explains how a message has been disguised.",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Key means the secret that explains how a message has been disguised."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “cipher” mean in computing?",
+        "options": [
+          "A secret way of writing a message.",
+          "The normal message, before it is encrypted.",
+          "The scrambled message, after it is encrypted.",
+          "To turn a normal message into a secret one."
+        ],
+        "answer": "A secret way of writing a message.",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Cipher means a secret way of writing a message."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “plain text” mean in computing?",
+        "options": [
+          "The normal message, before it is encrypted.",
+          "The scrambled message, after it is encrypted.",
+          "To turn a normal message into a secret one.",
+          "To turn a secret message back into a normal one."
+        ],
+        "answer": "The normal message, before it is encrypted.",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Plain text means the normal message, before it is encrypted."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: The scrambled message, after it is encrypted.?",
+        "options": [
+          "ciphertext",
+          "encrypt",
+          "decrypt",
+          "substitution cipher"
+        ],
+        "answer": "ciphertext",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Ciphertext means the scrambled message, after it is encrypted."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: To turn a normal message into a secret one.?",
+        "options": [
+          "encrypt",
+          "decrypt",
+          "substitution cipher",
+          "shift"
+        ],
+        "answer": "encrypt",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Encrypt means to turn a normal message into a secret one."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo09",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: To turn a secret message back into a normal one.?",
+        "options": [
+          "decrypt",
+          "substitution cipher",
+          "shift",
+          "cybercrime"
+        ],
+        "answer": "decrypt",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Decrypt means to turn a secret message back into a normal one."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A cipher that swaps each letter for another letter or a symbol.?",
+        "options": [
+          "substitution cipher",
+          "shift",
+          "cybercrime",
+          "hacker"
+        ],
+        "answer": "substitution cipher",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Substitution cipher means a cipher that swaps each letter for another letter or a symbol."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: How many places along the alphabet each letter moves in a Caesar cipher.?",
+        "options": [
+          "shift",
+          "cybercrime",
+          "hacker",
+          "network"
+        ],
+        "answer": "shift",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Shift means how many places along the alphabet each letter moves in a Caesar cipher."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Crime done using computers or the internet.?",
+        "options": [
+          "cybercrime",
+          "hacker",
+          "network",
+          "network failure"
+        ],
+        "answer": "cybercrime",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Cybercrime means crime done using computers or the internet."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u9-game-1",
+        "icon": "?",
+        "skill": "network",
+        "title": "Quick Match: network",
+        "description": "Practise network through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “network” mean in computing?",
+            "choices": [
+              "Computers and devices joined together so they can share.",
+              "When a fault in hardware or software stops a network working properly.",
+              "Disguising a message so only the right person can understand it.",
+              "The secret that explains how a message has been disguised."
+            ],
+            "answer": "Computers and devices joined together so they can share.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Network means computers and devices joined together so they can share."
+          },
+          {
+            "prompt": "What does “key” mean in computing?",
+            "choices": [
+              "The secret that explains how a message has been disguised.",
+              "A secret way of writing a message.",
+              "The normal message, before it is encrypted.",
+              "The scrambled message, after it is encrypted."
+            ],
+            "answer": "The secret that explains how a message has been disguised.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Key means the secret that explains how a message has been disguised."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The scrambled message, after it is encrypted.?",
+            "choices": [
+              "ciphertext",
+              "encrypt",
+              "decrypt",
+              "substitution cipher"
+            ],
+            "answer": "ciphertext",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Ciphertext means the scrambled message, after it is encrypted."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A cipher that swaps each letter for another letter or a symbol.?",
+            "choices": [
+              "substitution cipher",
+              "shift",
+              "cybercrime",
+              "hacker"
+            ],
+            "answer": "substitution cipher",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Substitution cipher means a cipher that swaps each letter for another letter or a symbol."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-2",
+        "icon": "★",
+        "skill": "network failure",
+        "title": "Concept Quest: network failure",
+        "description": "Practise network failure through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “network failure” mean in computing?",
+            "choices": [
+              "When a fault in hardware or software stops a network working properly.",
+              "Disguising a message so only the right person can understand it.",
+              "The secret that explains how a message has been disguised.",
+              "A secret way of writing a message."
+            ],
+            "answer": "When a fault in hardware or software stops a network working properly.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Network failure means when a fault in hardware or software stops a network working properly."
+          },
+          {
+            "prompt": "What does “cipher” mean in computing?",
+            "choices": [
+              "A secret way of writing a message.",
+              "The normal message, before it is encrypted.",
+              "The scrambled message, after it is encrypted.",
+              "To turn a normal message into a secret one."
+            ],
+            "answer": "A secret way of writing a message.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Cipher means a secret way of writing a message."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To turn a normal message into a secret one.?",
+            "choices": [
+              "encrypt",
+              "decrypt",
+              "substitution cipher",
+              "shift"
+            ],
+            "answer": "encrypt",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Encrypt means to turn a normal message into a secret one."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: How many places along the alphabet each letter moves in a Caesar cipher.?",
+            "choices": [
+              "shift",
+              "cybercrime",
+              "hacker",
+              "network"
+            ],
+            "answer": "shift",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Shift means how many places along the alphabet each letter moves in a Caesar cipher."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-3",
+        "icon": "◫",
+        "skill": "encryption",
+        "title": "Debug Detective: encryption",
+        "description": "Practise encryption through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “encryption” mean in computing?",
+            "choices": [
+              "Disguising a message so only the right person can understand it.",
+              "The secret that explains how a message has been disguised.",
+              "A secret way of writing a message.",
+              "The normal message, before it is encrypted."
+            ],
+            "answer": "Disguising a message so only the right person can understand it.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Encryption means disguising a message so only the right person can understand it."
+          },
+          {
+            "prompt": "What does “plain text” mean in computing?",
+            "choices": [
+              "The normal message, before it is encrypted.",
+              "The scrambled message, after it is encrypted.",
+              "To turn a normal message into a secret one.",
+              "To turn a secret message back into a normal one."
+            ],
+            "answer": "The normal message, before it is encrypted.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Plain text means the normal message, before it is encrypted."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To turn a secret message back into a normal one.?",
+            "choices": [
+              "decrypt",
+              "substitution cipher",
+              "shift",
+              "cybercrime"
+            ],
+            "answer": "decrypt",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Decrypt means to turn a secret message back into a normal one."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Crime done using computers or the internet.?",
+            "choices": [
+              "cybercrime",
+              "hacker",
+              "network",
+              "network failure"
+            ],
+            "answer": "cybercrime",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Cybercrime means crime done using computers or the internet."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-4",
+        "icon": "→",
+        "skill": "key",
+        "title": "Algorithm Runner: key",
+        "description": "Practise key through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “key” mean in computing?",
+            "choices": [
+              "The secret that explains how a message has been disguised.",
+              "A secret way of writing a message.",
+              "The normal message, before it is encrypted.",
+              "The scrambled message, after it is encrypted."
+            ],
+            "answer": "The secret that explains how a message has been disguised.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Key means the secret that explains how a message has been disguised."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The scrambled message, after it is encrypted.?",
+            "choices": [
+              "ciphertext",
+              "encrypt",
+              "decrypt",
+              "substitution cipher"
+            ],
+            "answer": "ciphertext",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Ciphertext means the scrambled message, after it is encrypted."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A cipher that swaps each letter for another letter or a symbol.?",
+            "choices": [
+              "substitution cipher",
+              "shift",
+              "cybercrime",
+              "hacker"
+            ],
+            "answer": "substitution cipher",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Substitution cipher means a cipher that swaps each letter for another letter or a symbol."
+          },
+          {
+            "prompt": "What does “network” mean in computing?",
+            "choices": [
+              "Computers and devices joined together so they can share.",
+              "When a fault in hardware or software stops a network working properly.",
+              "Disguising a message so only the right person can understand it.",
+              "The secret that explains how a message has been disguised."
+            ],
+            "answer": "Computers and devices joined together so they can share.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Network means computers and devices joined together so they can share."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-5",
+        "icon": "Σ",
+        "skill": "cipher",
+        "title": "Vocabulary Vault: cipher",
+        "description": "Practise cipher through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “cipher” mean in computing?",
+            "choices": [
+              "A secret way of writing a message.",
+              "The normal message, before it is encrypted.",
+              "The scrambled message, after it is encrypted.",
+              "To turn a normal message into a secret one."
+            ],
+            "answer": "A secret way of writing a message.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Cipher means a secret way of writing a message."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To turn a normal message into a secret one.?",
+            "choices": [
+              "encrypt",
+              "decrypt",
+              "substitution cipher",
+              "shift"
+            ],
+            "answer": "encrypt",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Encrypt means to turn a normal message into a secret one."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: How many places along the alphabet each letter moves in a Caesar cipher.?",
+            "choices": [
+              "shift",
+              "cybercrime",
+              "hacker",
+              "network"
+            ],
+            "answer": "shift",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Shift means how many places along the alphabet each letter moves in a Caesar cipher."
+          },
+          {
+            "prompt": "What does “network failure” mean in computing?",
+            "choices": [
+              "When a fault in hardware or software stops a network working properly.",
+              "Disguising a message so only the right person can understand it.",
+              "The secret that explains how a message has been disguised.",
+              "A secret way of writing a message."
+            ],
+            "answer": "When a fault in hardware or software stops a network working properly.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Network failure means when a fault in hardware or software stops a network working properly."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-6",
+        "icon": "◇",
+        "skill": "plain text",
+        "title": "Challenge Cards: plain text",
+        "description": "Practise plain text through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “plain text” mean in computing?",
+            "choices": [
+              "The normal message, before it is encrypted.",
+              "The scrambled message, after it is encrypted.",
+              "To turn a normal message into a secret one.",
+              "To turn a secret message back into a normal one."
+            ],
+            "answer": "The normal message, before it is encrypted.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Plain text means the normal message, before it is encrypted."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To turn a secret message back into a normal one.?",
+            "choices": [
+              "decrypt",
+              "substitution cipher",
+              "shift",
+              "cybercrime"
+            ],
+            "answer": "decrypt",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Decrypt means to turn a secret message back into a normal one."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Crime done using computers or the internet.?",
+            "choices": [
+              "cybercrime",
+              "hacker",
+              "network",
+              "network failure"
+            ],
+            "answer": "cybercrime",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Cybercrime means crime done using computers or the internet."
+          },
+          {
+            "prompt": "What does “encryption” mean in computing?",
+            "choices": [
+              "Disguising a message so only the right person can understand it.",
+              "The secret that explains how a message has been disguised.",
+              "A secret way of writing a message.",
+              "The normal message, before it is encrypted."
+            ],
+            "answer": "Disguising a message so only the right person can understand it.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Encryption means disguising a message so only the right person can understand it."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-7",
+        "icon": "⚡",
+        "skill": "ciphertext",
+        "title": "Think Fast: ciphertext",
+        "description": "Practise ciphertext through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The scrambled message, after it is encrypted.?",
+            "choices": [
+              "ciphertext",
+              "encrypt",
+              "decrypt",
+              "substitution cipher"
+            ],
+            "answer": "ciphertext",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Ciphertext means the scrambled message, after it is encrypted."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A cipher that swaps each letter for another letter or a symbol.?",
+            "choices": [
+              "substitution cipher",
+              "shift",
+              "cybercrime",
+              "hacker"
+            ],
+            "answer": "substitution cipher",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Substitution cipher means a cipher that swaps each letter for another letter or a symbol."
+          },
+          {
+            "prompt": "What does “network” mean in computing?",
+            "choices": [
+              "Computers and devices joined together so they can share.",
+              "When a fault in hardware or software stops a network working properly.",
+              "Disguising a message so only the right person can understand it.",
+              "The secret that explains how a message has been disguised."
+            ],
+            "answer": "Computers and devices joined together so they can share.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Network means computers and devices joined together so they can share."
+          },
+          {
+            "prompt": "What does “key” mean in computing?",
+            "choices": [
+              "The secret that explains how a message has been disguised.",
+              "A secret way of writing a message.",
+              "The normal message, before it is encrypted.",
+              "The scrambled message, after it is encrypted."
+            ],
+            "answer": "The secret that explains how a message has been disguised.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Key means the secret that explains how a message has been disguised."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-8",
+        "icon": "☁",
+        "skill": "encrypt",
+        "title": "Explain It: encrypt",
+        "description": "Practise encrypt through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To turn a normal message into a secret one.?",
+            "choices": [
+              "encrypt",
+              "decrypt",
+              "substitution cipher",
+              "shift"
+            ],
+            "answer": "encrypt",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Encrypt means to turn a normal message into a secret one."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: How many places along the alphabet each letter moves in a Caesar cipher.?",
+            "choices": [
+              "shift",
+              "cybercrime",
+              "hacker",
+              "network"
+            ],
+            "answer": "shift",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Shift means how many places along the alphabet each letter moves in a Caesar cipher."
+          },
+          {
+            "prompt": "What does “network failure” mean in computing?",
+            "choices": [
+              "When a fault in hardware or software stops a network working properly.",
+              "Disguising a message so only the right person can understand it.",
+              "The secret that explains how a message has been disguised.",
+              "A secret way of writing a message."
+            ],
+            "answer": "When a fault in hardware or software stops a network working properly.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Network failure means when a fault in hardware or software stops a network working properly."
+          },
+          {
+            "prompt": "What does “cipher” mean in computing?",
+            "choices": [
+              "A secret way of writing a message.",
+              "The normal message, before it is encrypted.",
+              "The scrambled message, after it is encrypted.",
+              "To turn a normal message into a secret one."
+            ],
+            "answer": "A secret way of writing a message.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Cipher means a secret way of writing a message."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-9",
+        "icon": "⌂",
+        "skill": "decrypt",
+        "title": "Real-Life Round: decrypt",
+        "description": "Practise decrypt through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To turn a secret message back into a normal one.?",
+            "choices": [
+              "decrypt",
+              "substitution cipher",
+              "shift",
+              "cybercrime"
+            ],
+            "answer": "decrypt",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Decrypt means to turn a secret message back into a normal one."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Crime done using computers or the internet.?",
+            "choices": [
+              "cybercrime",
+              "hacker",
+              "network",
+              "network failure"
+            ],
+            "answer": "cybercrime",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Cybercrime means crime done using computers or the internet."
+          },
+          {
+            "prompt": "What does “encryption” mean in computing?",
+            "choices": [
+              "Disguising a message so only the right person can understand it.",
+              "The secret that explains how a message has been disguised.",
+              "A secret way of writing a message.",
+              "The normal message, before it is encrypted."
+            ],
+            "answer": "Disguising a message so only the right person can understand it.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Encryption means disguising a message so only the right person can understand it."
+          },
+          {
+            "prompt": "What does “plain text” mean in computing?",
+            "choices": [
+              "The normal message, before it is encrypted.",
+              "The scrambled message, after it is encrypted.",
+              "To turn a normal message into a secret one.",
+              "To turn a secret message back into a normal one."
+            ],
+            "answer": "The normal message, before it is encrypted.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Plain text means the normal message, before it is encrypted."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-10",
+        "icon": "!",
+        "skill": "substitution cipher",
+        "title": "Spot the Bug: substitution cipher",
+        "description": "Practise substitution cipher through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A cipher that swaps each letter for another letter or a symbol.?",
+            "choices": [
+              "substitution cipher",
+              "shift",
+              "cybercrime",
+              "hacker"
+            ],
+            "answer": "substitution cipher",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Substitution cipher means a cipher that swaps each letter for another letter or a symbol."
+          },
+          {
+            "prompt": "What does “network” mean in computing?",
+            "choices": [
+              "Computers and devices joined together so they can share.",
+              "When a fault in hardware or software stops a network working properly.",
+              "Disguising a message so only the right person can understand it.",
+              "The secret that explains how a message has been disguised."
+            ],
+            "answer": "Computers and devices joined together so they can share.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Network means computers and devices joined together so they can share."
+          },
+          {
+            "prompt": "What does “key” mean in computing?",
+            "choices": [
+              "The secret that explains how a message has been disguised.",
+              "A secret way of writing a message.",
+              "The normal message, before it is encrypted.",
+              "The scrambled message, after it is encrypted."
+            ],
+            "answer": "The secret that explains how a message has been disguised.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Key means the secret that explains how a message has been disguised."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The scrambled message, after it is encrypted.?",
+            "choices": [
+              "ciphertext",
+              "encrypt",
+              "decrypt",
+              "substitution cipher"
+            ],
+            "answer": "ciphertext",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Ciphertext means the scrambled message, after it is encrypted."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-11",
+        "icon": "≡",
+        "skill": "shift",
+        "title": "Mastery Mix: shift",
+        "description": "Practise shift through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: How many places along the alphabet each letter moves in a Caesar cipher.?",
+            "choices": [
+              "shift",
+              "cybercrime",
+              "hacker",
+              "network"
+            ],
+            "answer": "shift",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Shift means how many places along the alphabet each letter moves in a Caesar cipher."
+          },
+          {
+            "prompt": "What does “network failure” mean in computing?",
+            "choices": [
+              "When a fault in hardware or software stops a network working properly.",
+              "Disguising a message so only the right person can understand it.",
+              "The secret that explains how a message has been disguised.",
+              "A secret way of writing a message."
+            ],
+            "answer": "When a fault in hardware or software stops a network working properly.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Network failure means when a fault in hardware or software stops a network working properly."
+          },
+          {
+            "prompt": "What does “cipher” mean in computing?",
+            "choices": [
+              "A secret way of writing a message.",
+              "The normal message, before it is encrypted.",
+              "The scrambled message, after it is encrypted.",
+              "To turn a normal message into a secret one."
+            ],
+            "answer": "A secret way of writing a message.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Cipher means a secret way of writing a message."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To turn a normal message into a secret one.?",
+            "choices": [
+              "encrypt",
+              "decrypt",
+              "substitution cipher",
+              "shift"
+            ],
+            "answer": "encrypt",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Encrypt means to turn a normal message into a secret one."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-12",
+        "icon": "T",
+        "skill": "cybercrime",
+        "title": "Unit Champion: cybercrime",
+        "description": "Practise cybercrime through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Crime done using computers or the internet.?",
+            "choices": [
+              "cybercrime",
+              "hacker",
+              "network",
+              "network failure"
+            ],
+            "answer": "cybercrime",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Cybercrime means crime done using computers or the internet."
+          },
+          {
+            "prompt": "What does “encryption” mean in computing?",
+            "choices": [
+              "Disguising a message so only the right person can understand it.",
+              "The secret that explains how a message has been disguised.",
+              "A secret way of writing a message.",
+              "The normal message, before it is encrypted."
+            ],
+            "answer": "Disguising a message so only the right person can understand it.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Encryption means disguising a message so only the right person can understand it."
+          },
+          {
+            "prompt": "What does “plain text” mean in computing?",
+            "choices": [
+              "The normal message, before it is encrypted.",
+              "The scrambled message, after it is encrypted.",
+              "To turn a normal message into a secret one.",
+              "To turn a secret message back into a normal one."
+            ],
+            "answer": "The normal message, before it is encrypted.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Plain text means the normal message, before it is encrypted."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To turn a secret message back into a normal one.?",
+            "choices": [
+              "decrypt",
+              "substitution cipher",
+              "shift",
+              "cybercrime"
+            ],
+            "answer": "decrypt",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Decrypt means to turn a secret message back into a normal one."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can explain that a network failure is when a fault in hardware or software stops a network working properly.",
+    "I can give examples of problems caused by a network failure in a hospital, a school, for the police, and in a shop or bank.",
+    "I can explain that encryption disguises a message so that only someone with the secret key can understand it.",
+    "I can use the words plain text (before) and ciphertext (after), and say where and why encryption is used.",
+    "I can explain that a cipher is a secret way of writing, and that Caesar and Pigpen are substitution ciphers (one letter is swapped for something else).",
+    "I can encrypt and decrypt a message using the Caesar cipher with a chosen key, and know what to do when a letter goes past Z (wrap around to A).",
+    "I can encrypt and decrypt a message using the Pigpen cipher, reading the symbols from the grid.",
+    "I can invent a simple cipher of their own and understand why the person receiving a message needs the key.",
+    "I can before this unit (from the syllabus), children should already know some things you can do on a network and its advantages and disadvantages, know what a cipher is, and be able to use a simple code to write and decode a short message. A two-minute recap — \"what is a network, and what do we use it for?\" — is enough to begin."
+  ]
+}

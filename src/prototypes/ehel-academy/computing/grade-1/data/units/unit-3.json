@@ -1,0 +1,1683 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.066Z",
+  "stage": {
+    "id": "s01",
+    "label": "Stage 1"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t01",
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "comp-g01-u03",
+    "unitNo": 3,
+    "unitTitle": "Be a Data Detective",
+    "unitOverview": "The big word for the unit is data. It sounds hard, but it is simple: data is information — numbers, words, pictures or sounds. When Leila counts the mangoes in the bowl, that is data. When Leo sorts his blocks into a red pile and a blue pile, he is being a data detective.\n\nA computing device is a machine that works with data, and it can answer our questions (a phone tells us the weather, a watch counts our steps).",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 1
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-1-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 1",
+    "sourceArchive": "Year 1-20260801T055729Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 1/Unit 3/Year 1 - Unit 3 Teacher Guide.docx",
+      "Year 1/Unit 3/Year 1 - Unit 3 Activity Sheet.docx",
+      "Year 1/Unit 3/Year 1 - Unit 3 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 258,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 1 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Say that data is information — numbers, words, pictures or sounds.",
+    "Say that a computing device works with data and can answer questions, and name one (a phone, a tablet, a watch).",
+    "Sort real things into groups that are the same in some way (by colour, size or kind).",
+    "Count how many things are in each group.",
+    "Colour a tiny block graph to show how many — one block for each thing.",
+    "Organise things by putting them in order (small to big, or 1, 2, 3).",
+    "These are spoken, hands-on skills — the child does not need to read or write to show them. Pointing, sorting and colouring are enough."
+  ],
+  "toolkit": [],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-data-is-all-around-us",
+      "title": "Data is all around us",
+      "explanation": "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a machine that works with data. The best part: a computing device can answer our questions.\n\nThis is a computing device. It is full of data — pictures, sounds, numbers. And it can answer our questions! Watch. What is the weather today?",
+      "example": "See — it gave us an answer. That answer is data too.",
+      "checkYourself": "Can you name one computing device?"
+    },
+    {
+      "id": "concept-2-sorting-into-groups",
+      "title": "Sorting into groups",
+      "explanation": "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by size (all the big ones together), or by kind (all the animals together, all the fruit together).\n\nTip out your basket of objects in the middle of the circle. Oh dear, all mixed up! Let us sort them — all the same-colour ones together. This is a group. Every one is red.",
+      "example": "We sorted by colour. Look, we can sort the same things in more than one way!",
+      "checkYourself": "you are all red. you are all big. Can you make a group where everything is the same in some way?"
+    },
+    {
+      "id": "concept-3-count-each-group-and-make-a-block-graph",
+      "title": "Count each group and make a block graph",
+      "explanation": "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of our data. This picture is called a block graph. A block graph makes it very easy to see which group has the most and which has the fewest.\n\nGo back to your sorted groups from Session 2. 1, 2, 3, 4 — four red ones. Now show you the magic. Let us make a picture of this. For every red one, I colour one block. Watch. Now we can SEE it.",
+      "example": "Which row is longer? That group has the most!",
+      "checkYourself": "Can you colour the right number of blocks? Can you point to the row with the most? Can you count a small group correctly (touching each one)?"
+    },
+    {
+      "id": "concept-4-putting-things-in-order",
+      "title": "Putting things in order",
+      "explanation": "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2, 3, 4. When data is in a good order, it is much easier to read.\n\nMuddle them up and ask: “Who is tallest? It is hard to tell.” Now line them up shortest to tallest: “Now it is easy!",
+      "example": "We put them in order by size.” Do the same with three objects — a small stone, a bigger one, the biggest. Choose three you of different heights (kindly, only if they are happy to help).",
+      "checkYourself": "Can you tell which is shortest and which is longest? Can you understand that order helps us read data? Can you put three things in order by size?"
+    },
+    {
+      "id": "concept-5-be-a-data-detective-class-survey",
+      "title": "Be a data detective! (class survey)",
+      "explanation": "A data detective asks a question, collects the answers (the data), sorts and counts each group, shows you on a block graph, and reads the graph to find the answer. This session runs the Mini-Project, “Our Favourite Fruit”.\n\nDetectives, here is our question: which fruit does our class like best — mango, banana or apple? Let us find out with data! We are collecting our data.",
+      "example": "Do it yourself: be a data detective! (class survey). Work through it slowly, then check what you did against the explanation above.",
+      "checkYourself": "Can you help count a group and colour the graph? Can you point to the favourite (the most) on the finished graph? Can you take part in collecting the data?"
+    }
+  ],
+  "codeExamples": [],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "What can it tell us?",
+      "context": "work through the steps below and see what happens. This is data is all around us in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "A computing device can answer questions. Draw a line from each device to the question it can answer.",
+      "answer": "Match: Device → Question it answers Match: 📱 phone → How many steps did I walk? Match: ⌚ watch → Who got the highest score? Match: 🎮 game → What is the weather today?",
+      "modelType": "model-1",
+      "hint": "Start here: Match: Device → Question it answers",
+      "explanation": "Data is all around us: Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a machine that works with data. The best part: a computing device can answer our questions."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Sort the animals",
+      "context": "work through the steps below and see what happens. This is sorting into groups in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Some animals live in the SEA. Some live on the LAND. Colour the SEA animals blue. Colour the LAND animals green.",
+      "answer": "🐟 fish 🐫 camel 🐳 whale 🐐 goat",
+      "modelType": "model-2",
+      "hint": "Start here: 🐟 fish 🐫 camel 🐳 whale 🐐 goat",
+      "explanation": "Sorting into groups: To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by size (all the big ones together), or by kind (all the animals together, all the fruit together)."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Count the fruit",
+      "context": "work through the steps below and see what happens. This is count each group and make a block graph in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Look at the basket. Count how many of each fruit. Write the number in the box.",
+      "answer": "🥭 🍌 🥭 🍎 🥭 🍌 🥭 mango = [ ] 🍌 banana = [ ] 🍎 apple = [ ]",
+      "modelType": "model-3",
+      "hint": "Start here: 🥭 🍌 🥭 🍎 🥭 🍌",
+      "explanation": "Count each group and make a block graph: Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of our data. This picture is called a block graph. A block graph makes it very easy to see which group has the most and which has the fewest."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Colour the block graph",
+      "context": "work through the steps below and see what happens. This is putting things in order in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Now colour one block for each fruit you counted.",
+      "answer": "Which fruit has the most blocks? Point to the longest row! Match: 1 → 2 / 3 / 4 / 5 / 6 / 7 / 8",
+      "modelType": "model-4",
+      "hint": "Start here: Which fruit has the most blocks? Point to the longest row!",
+      "explanation": "Putting things in order: To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2, 3, 4. When data is in a good order, it is much easier to read."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Put them in order",
+      "context": "work through the steps below and see what happens. This is be a data detective! (class survey) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Here are three bars. Write 1 by the shortest bar, 2 by the next, and 3 by the longest bar.",
+      "answer": "A #### C ######",
+      "modelType": "model-5",
+      "hint": "Start here: A ####",
+      "explanation": "Be a data detective! (class survey): A data detective asks a question, collects the answers (the data), sorts and counts each group, shows you on a block graph, and reads the graph to find the answer. This session runs the Mini-Project, “Our Favourite Fruit”."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Draw a computing device",
+      "context": "work through the steps below and see what happens. This is data is all around us in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "colour your Data Detective badge! Draw a computing device you use at home or at Ehel Academy (a phone, a tablet or a watch).",
+      "answer": "Did You Know? When a shop scans your food, it uses data to know the price! Every time you sort your toys into groups, you are being a data detective.",
+      "modelType": "model-6",
+      "hint": "Start here: Did You Know?",
+      "explanation": "Data is all around us: Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a machine that works with data. The best part: a computing device can answer our questions."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Data is all around us",
+      "modelType": "concept-model-1",
+      "purpose": "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a machine that works with data. The best part: a computing device can…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Sorting into groups",
+      "modelType": "concept-model-2",
+      "purpose": "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by size (all the big ones together), or by kind (all the animals together,…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Count each group and make a block graph",
+      "modelType": "concept-model-3",
+      "purpose": "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of our data. This picture is called a block graph. A block graph makes…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Putting things in order",
+      "modelType": "concept-model-4",
+      "purpose": "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2, 3, 4. When data is in a good order, it is much easier to read.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Be a data detective! (class survey)",
+      "modelType": "concept-model-5",
+      "purpose": "A data detective asks a question, collects the answers (the data), sorts and counts each group, shows you on a block graph, and reads the graph to find the answer. This session runs the Mini-Project, “Our Favourite…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with data is all around us",
+      "example": "See — it gave us an answer. That answer is data too.",
+      "steps": [
+        "Read the concept card for data is all around us and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with sorting into groups",
+      "example": "We sorted by colour. Look, we can sort the same things in more than one way!",
+      "steps": [
+        "Read the concept card for sorting into groups and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with count each group and make a block graph",
+      "example": "Which row is longer? That group has the most!",
+      "steps": [
+        "Read the concept card for count each group and make a block graph and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with putting things in order",
+      "example": "We put them in order by size.” Do the same with three objects — a small stone, a bigger one, the biggest. Choose three you of different heights (kindly, only if they are happy to help).",
+      "steps": [
+        "Read the concept card for putting things in order and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with be a data detective! (class survey)",
+      "example": "Do it yourself: be a data detective! (class survey). Work through it slowly, then check what you did against the explanation above.",
+      "steps": [
+        "Read the concept card for be a data detective! (class survey) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Data is all around us",
+      "prompt": "Explain in your own words: Data is all around us.",
+      "solution": "Data is a fancy word for information. Data can be numbers, words, pictures or sounds. A computing device — like a phone, a tablet or a watch — is a machine that works with data. The best part: a computing device can answer our questions.\n\nThis is a computing device. It is full of data — pictures, sounds, numbers. And it can answer our questions! Watch. What is the weather today?\n\nFor example: See — it gave us an answer. That answer is data too."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Sorting into groups",
+      "prompt": "Explain in your own words: Sorting into groups.",
+      "solution": "To sort means to put things into groups. Things in the same group are the same in some way. We can sort by colour (all the red ones together), by size (all the big ones together), or by kind (all the animals together, all the fruit together).\n\nTip out your basket of objects in the middle of the circle. Oh dear, all mixed up! Let us sort them — all the same-colour ones together. This is a group. Every one is red.\n\nFor example: We sorted by colour. Look, we can sort the same things in more than one way!"
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Count each group and make a block graph",
+      "prompt": "Explain in your own words: Count each group and make a block graph.",
+      "solution": "Once we have sorted things into groups, we can count each group to see how many. When we colour one block for each thing, we make a little picture of our data. This picture is called a block graph. A block graph makes it very easy to see which group has the most and which has the fewest.\n\nGo back to your sorted groups from Session 2. 1, 2, 3, 4 — four red ones. Now show you the magic. Let us make a picture of this. For every red one, I colour one block. Watch. Now we can SEE it.\n\nFor example: Which row is longer? That group has the most!"
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Putting things in order",
+      "prompt": "Explain in your own words: Putting things in order.",
+      "solution": "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2, 3, 4. When data is in a good order, it is much easier to read.\n\nMuddle them up and ask: “Who is tallest? It is hard to tell.” Now line them up shortest to tallest: “Now it is easy!\n\nFor example: We put them in order by size.” Do the same with three objects — a small stone, a bigger one, the biggest. Choose three you of different heights (kindly, only if they are happy to help)."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Be a data detective! (class survey)",
+      "prompt": "Explain in your own words: Be a data detective! (class survey).",
+      "solution": "A data detective asks a question, collects the answers (the data), sorts and counts each group, shows you on a block graph, and reads the graph to find the answer. This session runs the Mini-Project, “Our Favourite Fruit”.\n\nDetectives, here is our question: which fruit does our class like best — mango, banana or apple? Let us find out with data! We are collecting our data.\n\nFor example: Do it yourself: be a data detective! (class survey). Work through it slowly, then check what you did against the explanation above."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "How many children liked mango? [ ]",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what data and computing device mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Which fruit did the MOST children like?",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what data and computing device mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "Which fruit did the FEWEST children like?",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what data and computing device mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "How many children liked apple? [ ]",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what data and computing device mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "Put these numbers in order, smallest first: 3, 1, 2 ->",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what data and computing device mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "Circle the group that is fruit (not toys): (🥭 🍌 🍎 ⚽ 🚗)",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what data and computing device mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "What can it tell us?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A computing device can answer questions. Draw a line from each device to the question it can answer.",
+        "Match: Device → Question it answers",
+        "Match: 📱 phone → How many steps did I walk?",
+        "Match: ⌚ watch → Who got the highest score?",
+        "Match: 🎮 game → What is the weather today?"
+      ]
+    },
+    {
+      "title": "Sort the animals",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Some animals live in the SEA. Some live on the LAND. Colour the SEA animals blue. Colour the LAND animals green.",
+        "🐟 fish 🐫 camel 🐳 whale 🐐 goat"
+      ]
+    },
+    {
+      "title": "Count the fruit",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Look at the basket. Count how many of each fruit. Write the number in the box.",
+        "🥭 🍌 🥭 🍎 🥭 🍌",
+        "🥭 mango = [ ] 🍌 banana = [ ] 🍎 apple = [ ]"
+      ]
+    },
+    {
+      "title": "Colour the block graph",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Now colour one block for each fruit you counted.",
+        "Which fruit has the most blocks? Point to the longest row!",
+        "Match: 1 → 2 / 3 / 4 / 5 / 6 / 7 / 8"
+      ]
+    },
+    {
+      "title": "Put them in order",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Here are three bars. Write 1 by the shortest bar, 2 by the next, and 3 by the longest bar.",
+        "A ####",
+        "C ######"
+      ]
+    },
+    {
+      "title": "Draw a computing device",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "colour your Data Detective badge! Draw a computing device you use at home or at Ehel Academy (a phone, a tablet or a watch).",
+        "Did You Know?",
+        "When a shop scans your food, it uses data to know the price!",
+        "Every time you sort your toys into groups, you are being a data detective."
+      ]
+    },
+    {
+      "title": "Our Favourite Fruit",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Our question: Which fruit does our class like best — mango, banana or apple?",
+        "Ask each friend: mango, banana or apple?",
+        "Make one mark for each answer. That is our data!",
+        "Count how many chose each fruit.",
+        "Colour one block for you on the graph below.",
+        "Look at the graph. Which fruit has the most blocks? That is our class favourite!"
+      ]
+    },
+    {
+      "title": "Our Favourite Fruit: This is your real class data, so there is no single right answer. Check that each child was counted once, that the graph has one block per child with no gaps, and that the child can point to the fruit with the most blocks (the class favourite) and the one with the fewest. Worked example: if mango = 5, banana = 3, apple = 2, then the favourite is mango, the fewest is apple, and 10 children answered in all.",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Practice (the printed graph shows mango = 4, banana = 2, apple = 3)",
+        "How many liked mango? 4.",
+        "Mango (the longest row, 4 blocks). Which fruit did the most you like?",
+        "Banana (the shortest row, 2 blocks). Which fruit did the fewest you like?",
+        "How many liked apple? 3.",
+        "Numbers in order, smallest first: 1, 2, 3."
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": ". Just show the child the truth again gently, with a real object in your hands.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Data is only numbers."
+    },
+    {
+      "symptom": "Not only numbers. Data can be words, pictures and sounds too. A photo of the goat is data. The sound of a song is data.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Sorting means tidying up."
+    },
+    {
+      "symptom": "Tidying is putting things away. Sorting is making groups where everything is the same in some way. Say:",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "What makes this a group? How are they the same?"
+    },
+    {
+      "symptom": "There is only one right way to sort.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — we can sort the same things by colour, or by size, or by kind. All are correct. Sort one pile two different ways to show this. Counting the same thing twice, or skipping one. Very common. Always count by touching each thing once and moving it as you go, so nothing is counted twice or missed."
+    },
+    {
+      "symptom": "The tallest block graph row is the one at the top.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — it is the longest row, wherever it sits. Muddling sort and order. Sorting makes groups; ordering puts things in a line (small to big). Point along each row to compare length, not position. Keep the two words joined to a clear action: sort = groups, order = a line."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Data is all around us",
+        "text": "Data is a fancy word for information."
+      },
+      {
+        "title": "Sorting into groups",
+        "text": "To sort means to put things into groups."
+      },
+      {
+        "title": "Count each group and make a block graph",
+        "text": "Once we have sorted things into groups, we can count each group to see how many."
+      },
+      {
+        "title": "Putting things in order",
+        "text": "To organise data means to put it in order."
+      },
+      {
+        "title": "Be a data detective! (class survey)",
+        "text": "A data detective asks a question, collects the answers (the data), sorts and counts each group, shows you on a block graph, and reads the graph to find the answer."
+      }
+    ],
+    "terms": [
+      [
+        "data",
+        "Information. It can be numbers, words, pictures or sounds."
+      ],
+      [
+        "computing device",
+        "A machine that works with data. It can answer questions."
+      ],
+      [
+        "sort",
+        "To put things into groups that are the same in some way."
+      ],
+      [
+        "group",
+        "Things that are the same in some way, kept together."
+      ],
+      [
+        "count",
+        "To say how many."
+      ],
+      [
+        "order",
+        "To put things in a line — small to big, or 1, 2, 3."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "data",
+        "meaning": "Information. It can be numbers, words, pictures or sounds.",
+        "example": "How many mangoes are in the bowl.",
+        "letter": "D"
+      },
+      {
+        "term": "computing device",
+        "meaning": "A machine that works with data. It can answer questions.",
+        "example": "A phone, a tablet, a watch.",
+        "letter": "C"
+      },
+      {
+        "term": "sort",
+        "meaning": "To put things into groups that are the same in some way.",
+        "example": "All the red blocks together.",
+        "letter": "S"
+      },
+      {
+        "term": "group",
+        "meaning": "Things that are the same in some way, kept together.",
+        "example": "The group of big shells.",
+        "letter": "G"
+      },
+      {
+        "term": "count",
+        "meaning": "To say how many.",
+        "example": "1, 2, 3 mangoes.",
+        "letter": "C"
+      },
+      {
+        "term": "order",
+        "meaning": "To put things in a line — small to big, or 1, 2, 3.",
+        "example": "The shortest child first.",
+        "letter": "O"
+      }
+    ],
+    "commonMistakes": [
+      [
+        ". Just show the child the truth again gently, with a real object in your hands.",
+        "Data is only numbers."
+      ],
+      [
+        "Not only numbers. Data can be words, pictures and sounds too. A photo of the goat is data. The sound of a song is data.",
+        "Sorting means tidying up."
+      ],
+      [
+        "Tidying is putting things away. Sorting is making groups where everything is the same in some way. Say:",
+        "What makes this a group? How are they the same?"
+      ],
+      [
+        "There is only one right way to sort.",
+        "No — we can sort the same things by colour, or by size, or by kind. All are correct. Sort one pile two different ways to show this. Counting the same thing twice, or skipping one. Very common. Always count by touching each thing once and moving it as you go, so nothing is counted twice or missed."
+      ],
+      [
+        "The tallest block graph row is the one at the top.",
+        "No — it is the longest row, wherever it sits. Muddling sort and order. Sorting makes groups; ordering puts things in a line (small to big). Point along each row to compare length, not position. Keep the two words joined to a clear action: sort = groups, order = a line."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "How many children liked mango? [ ]",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what data and computing device mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Which fruit did the MOST children like?",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what data and computing device mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Which fruit did the FEWEST children like?",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what data and computing device mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "How many children liked apple? [ ]",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what data and computing device mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Put these numbers in order, smallest first: 3, 1, 2 ->",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what data and computing device mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Circle the group that is fruit (not toys): (🥭 🍌 🍎 ⚽ 🚗)",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what data and computing device mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Circle the group that is fruit (not toys): (🥭 🍌 🍎 ⚽ 🚗)",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what data and computing device mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "Put these numbers in order, smallest first: 3, 1, 2 ->",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what data and computing device mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Circle the group that is fruit (not toys): (🥭 🍌 🍎 ⚽ 🚗)",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what data and computing device mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "How many children liked mango? [ ]",
+      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "hint": "Look back at what data and computing device mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Which fruit did the FEWEST children like?",
+      "keyIdeas": [
+        "data",
+        "computing device",
+        "sort"
+      ],
+      "modelAnswer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "How many children liked apple? [ ]",
+      "keyIdeas": [
+        "computing device",
+        "sort",
+        "group"
+      ],
+      "modelAnswer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Put these numbers in order, smallest first: 3, 1, 2 ->",
+      "keyIdeas": [
+        "sort",
+        "group",
+        "count"
+      ],
+      "modelAnswer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in putting things in order, and give one example of your own.",
+      "keyIdeas": [
+        "data",
+        "computing device",
+        "sort"
+      ],
+      "modelAnswer": "To organise data means to put it in order. We can put things in order by size — from the smallest to the biggest. We can put numbers in order — 1, 2, 3, 4. When data is in a good order, it is much easier to read.\n\nMuddle them up and ask: “Who is tallest? It is hard to tell.” Now line them up shortest to tallest: “Now it is easy!"
+    }
+  ],
+  "project": {
+    "title": "My Data Detective Project",
+    "brief": "Bring together everything from Be a Data Detective into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your be a data detective project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I asked my friends the question.",
+      "I made one mark for each answer.",
+      "I counted each group.",
+      "I coloured one block for each child, with no gaps.",
+      "I found our class favourite fruit (the most).",
+      "Practice — Read the Graph",
+      "1. How many children liked mango? [ ]",
+      "2. Which fruit did the MOST children like? ______________________"
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “data” mean in computing?",
+        "options": [
+          "Information. It can be numbers, words, pictures or sounds.",
+          "A machine that works with data. It can answer questions.",
+          "To put things into groups that are the same in some way.",
+          "Things that are the same in some way, kept together."
+        ],
+        "answer": "Information. It can be numbers, words, pictures or sounds.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Data means information. It can be numbers, words, pictures or sounds."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “computing device” mean in computing?",
+        "options": [
+          "A machine that works with data. It can answer questions.",
+          "To put things into groups that are the same in some way.",
+          "Things that are the same in some way, kept together.",
+          "To say how many."
+        ],
+        "answer": "A machine that works with data. It can answer questions.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Computing device means a machine that works with data. It can answer questions."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “sort” mean in computing?",
+        "options": [
+          "To put things into groups that are the same in some way.",
+          "Things that are the same in some way, kept together.",
+          "To say how many.",
+          "To put things in a line — small to big, or 1, 2, 3."
+        ],
+        "answer": "To put things into groups that are the same in some way.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Sort means to put things into groups that are the same in some way."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “group” mean in computing?",
+        "options": [
+          "Things that are the same in some way, kept together.",
+          "To say how many.",
+          "To put things in a line — small to big, or 1, 2, 3.",
+          "Information. It can be numbers, words, pictures or sounds."
+        ],
+        "answer": "Things that are the same in some way, kept together.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Group means things that are the same in some way, kept together."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “count” mean in computing?",
+        "options": [
+          "To say how many.",
+          "To put things in a line — small to big, or 1, 2, 3.",
+          "Information. It can be numbers, words, pictures or sounds.",
+          "A machine that works with data. It can answer questions."
+        ],
+        "answer": "To say how many.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Count means to say how many."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “order” mean in computing?",
+        "options": [
+          "To put things in a line — small to big, or 1, 2, 3.",
+          "Information. It can be numbers, words, pictures or sounds.",
+          "A machine that works with data. It can answer questions.",
+          "To put things into groups that are the same in some way."
+        ],
+        "answer": "To put things in a line — small to big, or 1, 2, 3.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Order means to put things in a line — small to big, or 1, 2, 3."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Information. It can be numbers, words, pictures or sounds.?",
+        "options": [
+          "data",
+          "computing device",
+          "sort",
+          "group"
+        ],
+        "answer": "data",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Data means information. It can be numbers, words, pictures or sounds."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A machine that works with data. It can answer questions.?",
+        "options": [
+          "computing device",
+          "sort",
+          "group",
+          "count"
+        ],
+        "answer": "computing device",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Computing device means a machine that works with data. It can answer questions."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: To put things into groups that are the same in some way.?",
+        "options": [
+          "sort",
+          "group",
+          "count",
+          "order"
+        ],
+        "answer": "sort",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Sort means to put things into groups that are the same in some way."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Things that are the same in some way, kept together.?",
+        "options": [
+          "group",
+          "count",
+          "order",
+          "data"
+        ],
+        "answer": "group",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Group means things that are the same in some way, kept together."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: To say how many.?",
+        "options": [
+          "count",
+          "order",
+          "data",
+          "computing device"
+        ],
+        "answer": "count",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Count means to say how many."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: To put things in a line — small to big, or 1, 2, 3.?",
+        "options": [
+          "order",
+          "data",
+          "computing device",
+          "sort"
+        ],
+        "answer": "order",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Order means to put things in a line — small to big, or 1, 2, 3."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u3-game-1",
+        "icon": "?",
+        "skill": "data",
+        "title": "Quick Match: data",
+        "description": "Practise data through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Information. It can be numbers, words, pictures or sounds.",
+              "A machine that works with data. It can answer questions.",
+              "To put things into groups that are the same in some way.",
+              "Things that are the same in some way, kept together."
+            ],
+            "answer": "Information. It can be numbers, words, pictures or sounds.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Data means information. It can be numbers, words, pictures or sounds."
+          },
+          {
+            "prompt": "What does “group” mean in computing?",
+            "choices": [
+              "Things that are the same in some way, kept together.",
+              "To say how many.",
+              "To put things in a line — small to big, or 1, 2, 3.",
+              "Information. It can be numbers, words, pictures or sounds."
+            ],
+            "answer": "Things that are the same in some way, kept together.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Group means things that are the same in some way, kept together."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Information. It can be numbers, words, pictures or sounds.?",
+            "choices": [
+              "data",
+              "computing device",
+              "sort",
+              "group"
+            ],
+            "answer": "data",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Data means information. It can be numbers, words, pictures or sounds."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Things that are the same in some way, kept together.?",
+            "choices": [
+              "group",
+              "count",
+              "order",
+              "data"
+            ],
+            "answer": "group",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Group means things that are the same in some way, kept together."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-2",
+        "icon": "★",
+        "skill": "computing device",
+        "title": "Concept Quest: computing device",
+        "description": "Practise computing device through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “computing device” mean in computing?",
+            "choices": [
+              "A machine that works with data. It can answer questions.",
+              "To put things into groups that are the same in some way.",
+              "Things that are the same in some way, kept together.",
+              "To say how many."
+            ],
+            "answer": "A machine that works with data. It can answer questions.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Computing device means a machine that works with data. It can answer questions."
+          },
+          {
+            "prompt": "What does “count” mean in computing?",
+            "choices": [
+              "To say how many.",
+              "To put things in a line — small to big, or 1, 2, 3.",
+              "Information. It can be numbers, words, pictures or sounds.",
+              "A machine that works with data. It can answer questions."
+            ],
+            "answer": "To say how many.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Count means to say how many."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A machine that works with data. It can answer questions.?",
+            "choices": [
+              "computing device",
+              "sort",
+              "group",
+              "count"
+            ],
+            "answer": "computing device",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Computing device means a machine that works with data. It can answer questions."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To say how many.?",
+            "choices": [
+              "count",
+              "order",
+              "data",
+              "computing device"
+            ],
+            "answer": "count",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Count means to say how many."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-3",
+        "icon": "◫",
+        "skill": "sort",
+        "title": "Debug Detective: sort",
+        "description": "Practise sort through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “sort” mean in computing?",
+            "choices": [
+              "To put things into groups that are the same in some way.",
+              "Things that are the same in some way, kept together.",
+              "To say how many.",
+              "To put things in a line — small to big, or 1, 2, 3."
+            ],
+            "answer": "To put things into groups that are the same in some way.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Sort means to put things into groups that are the same in some way."
+          },
+          {
+            "prompt": "What does “order” mean in computing?",
+            "choices": [
+              "To put things in a line — small to big, or 1, 2, 3.",
+              "Information. It can be numbers, words, pictures or sounds.",
+              "A machine that works with data. It can answer questions.",
+              "To put things into groups that are the same in some way."
+            ],
+            "answer": "To put things in a line — small to big, or 1, 2, 3.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Order means to put things in a line — small to big, or 1, 2, 3."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To put things into groups that are the same in some way.?",
+            "choices": [
+              "sort",
+              "group",
+              "count",
+              "order"
+            ],
+            "answer": "sort",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Sort means to put things into groups that are the same in some way."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To put things in a line — small to big, or 1, 2, 3.?",
+            "choices": [
+              "order",
+              "data",
+              "computing device",
+              "sort"
+            ],
+            "answer": "order",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Order means to put things in a line — small to big, or 1, 2, 3."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-4",
+        "icon": "→",
+        "skill": "group",
+        "title": "Algorithm Runner: group",
+        "description": "Practise group through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “group” mean in computing?",
+            "choices": [
+              "Things that are the same in some way, kept together.",
+              "To say how many.",
+              "To put things in a line — small to big, or 1, 2, 3.",
+              "Information. It can be numbers, words, pictures or sounds."
+            ],
+            "answer": "Things that are the same in some way, kept together.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Group means things that are the same in some way, kept together."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Information. It can be numbers, words, pictures or sounds.?",
+            "choices": [
+              "data",
+              "computing device",
+              "sort",
+              "group"
+            ],
+            "answer": "data",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Data means information. It can be numbers, words, pictures or sounds."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Things that are the same in some way, kept together.?",
+            "choices": [
+              "group",
+              "count",
+              "order",
+              "data"
+            ],
+            "answer": "group",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Group means things that are the same in some way, kept together."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Information. It can be numbers, words, pictures or sounds.",
+              "A machine that works with data. It can answer questions.",
+              "To put things into groups that are the same in some way.",
+              "Things that are the same in some way, kept together."
+            ],
+            "answer": "Information. It can be numbers, words, pictures or sounds.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Data means information. It can be numbers, words, pictures or sounds."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-5",
+        "icon": "Σ",
+        "skill": "count",
+        "title": "Vocabulary Vault: count",
+        "description": "Practise count through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “count” mean in computing?",
+            "choices": [
+              "To say how many.",
+              "To put things in a line — small to big, or 1, 2, 3.",
+              "Information. It can be numbers, words, pictures or sounds.",
+              "A machine that works with data. It can answer questions."
+            ],
+            "answer": "To say how many.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Count means to say how many."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A machine that works with data. It can answer questions.?",
+            "choices": [
+              "computing device",
+              "sort",
+              "group",
+              "count"
+            ],
+            "answer": "computing device",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Computing device means a machine that works with data. It can answer questions."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To say how many.?",
+            "choices": [
+              "count",
+              "order",
+              "data",
+              "computing device"
+            ],
+            "answer": "count",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Count means to say how many."
+          },
+          {
+            "prompt": "What does “computing device” mean in computing?",
+            "choices": [
+              "A machine that works with data. It can answer questions.",
+              "To put things into groups that are the same in some way.",
+              "Things that are the same in some way, kept together.",
+              "To say how many."
+            ],
+            "answer": "A machine that works with data. It can answer questions.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Computing device means a machine that works with data. It can answer questions."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-6",
+        "icon": "◇",
+        "skill": "order",
+        "title": "Challenge Cards: order",
+        "description": "Practise order through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “order” mean in computing?",
+            "choices": [
+              "To put things in a line — small to big, or 1, 2, 3.",
+              "Information. It can be numbers, words, pictures or sounds.",
+              "A machine that works with data. It can answer questions.",
+              "To put things into groups that are the same in some way."
+            ],
+            "answer": "To put things in a line — small to big, or 1, 2, 3.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Order means to put things in a line — small to big, or 1, 2, 3."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To put things into groups that are the same in some way.?",
+            "choices": [
+              "sort",
+              "group",
+              "count",
+              "order"
+            ],
+            "answer": "sort",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Sort means to put things into groups that are the same in some way."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To put things in a line — small to big, or 1, 2, 3.?",
+            "choices": [
+              "order",
+              "data",
+              "computing device",
+              "sort"
+            ],
+            "answer": "order",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Order means to put things in a line — small to big, or 1, 2, 3."
+          },
+          {
+            "prompt": "What does “sort” mean in computing?",
+            "choices": [
+              "To put things into groups that are the same in some way.",
+              "Things that are the same in some way, kept together.",
+              "To say how many.",
+              "To put things in a line — small to big, or 1, 2, 3."
+            ],
+            "answer": "To put things into groups that are the same in some way.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Sort means to put things into groups that are the same in some way."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-7",
+        "icon": "⚡",
+        "skill": "data",
+        "title": "Think Fast: data",
+        "description": "Practise data through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Information. It can be numbers, words, pictures or sounds.?",
+            "choices": [
+              "data",
+              "computing device",
+              "sort",
+              "group"
+            ],
+            "answer": "data",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Data means information. It can be numbers, words, pictures or sounds."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Things that are the same in some way, kept together.?",
+            "choices": [
+              "group",
+              "count",
+              "order",
+              "data"
+            ],
+            "answer": "group",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Group means things that are the same in some way, kept together."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Information. It can be numbers, words, pictures or sounds.",
+              "A machine that works with data. It can answer questions.",
+              "To put things into groups that are the same in some way.",
+              "Things that are the same in some way, kept together."
+            ],
+            "answer": "Information. It can be numbers, words, pictures or sounds.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Data means information. It can be numbers, words, pictures or sounds."
+          },
+          {
+            "prompt": "What does “group” mean in computing?",
+            "choices": [
+              "Things that are the same in some way, kept together.",
+              "To say how many.",
+              "To put things in a line — small to big, or 1, 2, 3.",
+              "Information. It can be numbers, words, pictures or sounds."
+            ],
+            "answer": "Things that are the same in some way, kept together.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Group means things that are the same in some way, kept together."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-8",
+        "icon": "☁",
+        "skill": "computing device",
+        "title": "Explain It: computing device",
+        "description": "Practise computing device through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A machine that works with data. It can answer questions.?",
+            "choices": [
+              "computing device",
+              "sort",
+              "group",
+              "count"
+            ],
+            "answer": "computing device",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Computing device means a machine that works with data. It can answer questions."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To say how many.?",
+            "choices": [
+              "count",
+              "order",
+              "data",
+              "computing device"
+            ],
+            "answer": "count",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Count means to say how many."
+          },
+          {
+            "prompt": "What does “computing device” mean in computing?",
+            "choices": [
+              "A machine that works with data. It can answer questions.",
+              "To put things into groups that are the same in some way.",
+              "Things that are the same in some way, kept together.",
+              "To say how many."
+            ],
+            "answer": "A machine that works with data. It can answer questions.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Computing device means a machine that works with data. It can answer questions."
+          },
+          {
+            "prompt": "What does “count” mean in computing?",
+            "choices": [
+              "To say how many.",
+              "To put things in a line — small to big, or 1, 2, 3.",
+              "Information. It can be numbers, words, pictures or sounds.",
+              "A machine that works with data. It can answer questions."
+            ],
+            "answer": "To say how many.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Count means to say how many."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-9",
+        "icon": "⌂",
+        "skill": "sort",
+        "title": "Real-Life Round: sort",
+        "description": "Practise sort through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To put things into groups that are the same in some way.?",
+            "choices": [
+              "sort",
+              "group",
+              "count",
+              "order"
+            ],
+            "answer": "sort",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Sort means to put things into groups that are the same in some way."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To put things in a line — small to big, or 1, 2, 3.?",
+            "choices": [
+              "order",
+              "data",
+              "computing device",
+              "sort"
+            ],
+            "answer": "order",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Order means to put things in a line — small to big, or 1, 2, 3."
+          },
+          {
+            "prompt": "What does “sort” mean in computing?",
+            "choices": [
+              "To put things into groups that are the same in some way.",
+              "Things that are the same in some way, kept together.",
+              "To say how many.",
+              "To put things in a line — small to big, or 1, 2, 3."
+            ],
+            "answer": "To put things into groups that are the same in some way.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Sort means to put things into groups that are the same in some way."
+          },
+          {
+            "prompt": "What does “order” mean in computing?",
+            "choices": [
+              "To put things in a line — small to big, or 1, 2, 3.",
+              "Information. It can be numbers, words, pictures or sounds.",
+              "A machine that works with data. It can answer questions.",
+              "To put things into groups that are the same in some way."
+            ],
+            "answer": "To put things in a line — small to big, or 1, 2, 3.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Order means to put things in a line — small to big, or 1, 2, 3."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-10",
+        "icon": "!",
+        "skill": "group",
+        "title": "Spot the Bug: group",
+        "description": "Practise group through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Things that are the same in some way, kept together.?",
+            "choices": [
+              "group",
+              "count",
+              "order",
+              "data"
+            ],
+            "answer": "group",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Group means things that are the same in some way, kept together."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Information. It can be numbers, words, pictures or sounds.",
+              "A machine that works with data. It can answer questions.",
+              "To put things into groups that are the same in some way.",
+              "Things that are the same in some way, kept together."
+            ],
+            "answer": "Information. It can be numbers, words, pictures or sounds.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Data means information. It can be numbers, words, pictures or sounds."
+          },
+          {
+            "prompt": "What does “group” mean in computing?",
+            "choices": [
+              "Things that are the same in some way, kept together.",
+              "To say how many.",
+              "To put things in a line — small to big, or 1, 2, 3.",
+              "Information. It can be numbers, words, pictures or sounds."
+            ],
+            "answer": "Things that are the same in some way, kept together.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Group means things that are the same in some way, kept together."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Information. It can be numbers, words, pictures or sounds.?",
+            "choices": [
+              "data",
+              "computing device",
+              "sort",
+              "group"
+            ],
+            "answer": "data",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Data means information. It can be numbers, words, pictures or sounds."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-11",
+        "icon": "≡",
+        "skill": "count",
+        "title": "Mastery Mix: count",
+        "description": "Practise count through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To say how many.?",
+            "choices": [
+              "count",
+              "order",
+              "data",
+              "computing device"
+            ],
+            "answer": "count",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Count means to say how many."
+          },
+          {
+            "prompt": "What does “computing device” mean in computing?",
+            "choices": [
+              "A machine that works with data. It can answer questions.",
+              "To put things into groups that are the same in some way.",
+              "Things that are the same in some way, kept together.",
+              "To say how many."
+            ],
+            "answer": "A machine that works with data. It can answer questions.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Computing device means a machine that works with data. It can answer questions."
+          },
+          {
+            "prompt": "What does “count” mean in computing?",
+            "choices": [
+              "To say how many.",
+              "To put things in a line — small to big, or 1, 2, 3.",
+              "Information. It can be numbers, words, pictures or sounds.",
+              "A machine that works with data. It can answer questions."
+            ],
+            "answer": "To say how many.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Count means to say how many."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A machine that works with data. It can answer questions.?",
+            "choices": [
+              "computing device",
+              "sort",
+              "group",
+              "count"
+            ],
+            "answer": "computing device",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Computing device means a machine that works with data. It can answer questions."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-12",
+        "icon": "T",
+        "skill": "order",
+        "title": "Unit Champion: order",
+        "description": "Practise order through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To put things in a line — small to big, or 1, 2, 3.?",
+            "choices": [
+              "order",
+              "data",
+              "computing device",
+              "sort"
+            ],
+            "answer": "order",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Order means to put things in a line — small to big, or 1, 2, 3."
+          },
+          {
+            "prompt": "What does “sort” mean in computing?",
+            "choices": [
+              "To put things into groups that are the same in some way.",
+              "Things that are the same in some way, kept together.",
+              "To say how many.",
+              "To put things in a line — small to big, or 1, 2, 3."
+            ],
+            "answer": "To put things into groups that are the same in some way.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Sort means to put things into groups that are the same in some way."
+          },
+          {
+            "prompt": "What does “order” mean in computing?",
+            "choices": [
+              "To put things in a line — small to big, or 1, 2, 3.",
+              "Information. It can be numbers, words, pictures or sounds.",
+              "A machine that works with data. It can answer questions.",
+              "To put things into groups that are the same in some way."
+            ],
+            "answer": "To put things in a line — small to big, or 1, 2, 3.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Order means to put things in a line — small to big, or 1, 2, 3."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To put things into groups that are the same in some way.?",
+            "choices": [
+              "sort",
+              "group",
+              "count",
+              "order"
+            ],
+            "answer": "sort",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Sort means to put things into groups that are the same in some way."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can say that data is information — numbers, words, pictures or sounds.",
+    "I can say that a computing device works with data and can answer questions, and name one (a phone, a tablet, a watch).",
+    "I can sort real things into groups that are the same in some way (by colour, size or kind).",
+    "I can count how many things are in each group.",
+    "I can colour a tiny block graph to show how many — one block for each thing.",
+    "I can organise things by putting them in order (small to big, or 1, 2, 3).",
+    "I can these are spoken, hands-on skills — the child does not need to read or write to show them. Pointing, sorting and colouring are enough."
+  ]
+}

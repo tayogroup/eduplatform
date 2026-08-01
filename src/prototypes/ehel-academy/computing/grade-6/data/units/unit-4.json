@@ -1,0 +1,2206 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:01.094Z",
+  "stage": {
+    "id": "s06",
+    "label": "Stage 6"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t02",
+    "label": "Term 2"
+  },
+  "unit": {
+    "unitId": "comp-g06-u04",
+    "unitNo": 4,
+    "unitTitle": "Computer Systems",
+    "unitOverview": "Welcome to Unit 4, the final unit of Year 6. In this unit you become a computer detective. You will look at a computer from the outside and from the inside, and you will finally understand what all the parts are for, why some computers cost more than others, and how a computer stores your photos, songs and schoolwork as nothing more than 1s and 0s.\n\nA computer system is made of two things working together: hardware (the physical parts you can touch, like the keyboard and the screen) and software (the programs and code, which you cannot touch). Every phone, laptop, tablet and games console is a computer system. By the end of the unit you will be able to choose the right hardware and software for a job, understand the difference between two kinds of programming, explain how data is stored and measured, describe what is inside the case, and discuss how robots are used in industry, including right here in East Africa.\n\nThere are five parts to this unit, and it is best to work through them in order because each one builds on the last. First you will learn to select hardware and software (4.1). Then you will compare two ways of writing programs in different programming environments (4.2). Next you will discover how computers store data as binary and how we measure it (4.3). After that you will look inside a computer at the processor and memory (4.4). Finally, you will explore robots in industry (4.5) and design a robot for a real local task.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 6
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-6-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 6",
+    "sourceArchive": "Year 6-20260801T055758Z-1-001.zip",
+    "sourceAudience": "student",
+    "sourceDocuments": [
+      "Year 6/Unit 4/Year 6 - Unit 4 Lesson.docx",
+      "Year 6/Unit 4/Year 6 - Unit 4 Activities & Projects.docx",
+      "Year 6/Unit 4/Year 6 - Unit 4 Practice & Quiz.docx",
+      "Year 6/Unit 4/Year 6 - Unit 4 Reference.docx"
+    ],
+    "sourceBlockCount": 1015,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 6 Lesson, Activities & Projects, Practice & Quiz and Reference booklets for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Identify the hardware and software components in a computer system.",
+    "Explain the difference between a block-based and a text-based programming language.",
+    "Identify when a block-based or a text-based language should be used.",
+    "Explain why data must be changed into numbers (digitised) before a computer can process it.",
+    "Identify the units of storage used to show how large a storage device is, from a bit up to a TB.",
+    "Explain what a computer processor is and describe what it does.",
+    "Identify primary storage and secondary storage in a computer and discuss the role of each.",
+    "Explain what it means for a robot to be autonomous.",
+    "say [Hello!] for 1 seconds",
+    "Explain it to someone. Teaching a family member why a computer digitises sound is the fastest way to prove you understand it."
+  ],
+  "toolkit": [
+    {
+      "name": "Scratch",
+      "url": "scratch.mit.edu",
+      "steps": [
+        "Go to scratch.mit.edu and click Create.",
+        "Drag blocks from the palette on the left into the code area.",
+        "Make variables in the orange Variables section.",
+        "Click the green flag to run and the red circle to stop."
+      ],
+      "note": "Runs in a web browser. Free, with nothing to download."
+    },
+    {
+      "name": "Python",
+      "url": "python.microbit.org or any Python editor",
+      "steps": [
+        "Open the editor and start a new file.",
+        "Type your program one line at a time.",
+        "Run it and read any error message from the bottom up.",
+        "Fix one error at a time, then run it again."
+      ],
+      "note": "Python is a text language: spelling and indentation both matter."
+    },
+    {
+      "name": "A free spreadsheet",
+      "url": "Google Sheets, or LibreOffice Calc",
+      "steps": [
+        "Open a new blank spreadsheet.",
+        "Put your field names in row 1, one per column.",
+        "Type one record per row underneath.",
+        "Use Insert → Chart to turn your data into a graph."
+      ],
+      "note": "Any free spreadsheet works — the ideas are the same in all of them."
+    }
+  ],
+  "tutorPrompts": [
+    "Paste this to your AI tutor: 'I am choosing a computer for a school office in Hargeisa that stores records and prints letters. Which parts should be high quality and which can be basic, and why?'",
+    "Then check yourself: 'Explain the difference between hardware and software using one example of each. Here is my answer, please give me feedback: ...'",
+    "Then ask: 'In the Python line print(\"Hello!\"), what does each part do, and what would happen if I spelled print as prnt?'",
+    "Try this with your AI tutor: 'Ask me five storage-conversion questions, like how many bytes are in 3 KB. After each one, tell me if I am right and show the working.'",
+    "Then ask: 'Why must a computer digitise sound before it can store it? Explain it to me as if I were teaching my little brother.'",
+    "Then check yourself: 'A computer has a 3 GHz processor. About how many calculations can it do each second? Here is my answer, is it right: ...'"
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-selecting-hardware-and-software",
+      "title": "Selecting Hardware and Software",
+      "explanation": "Hardware and software: what is the difference?\n\nEvery computer uses hardware and software together. Hardware is all of the physical parts of a digital device — the parts you can pick up and touch. A keyboard, a mouse, a screen, a hard drive and a games controller are all hardware.\n\nSoftware is the range of programs you can run on a device. You cannot touch software; it is made of code stored on the computer. Software usually has to be installed before you can use it. Some software is very simple, like the tiny program inside a microwave oven. Some software is very complex, like a big video game or word processing software. Complex software needs better hardware to run smoothly — for example, a large game may need a faster processor and more RAM.\n\nHere is the simplest way to tell them apart: if you can touch it, it is hardware; if it is a program made of code, it is software. A screen is hardware; the game showing on the screen is software.\n\nEach physical part and each piece of software is called a component — an individual part of a larger device. A train is made of components too: a door, a seat and a window are all components of a train. In a computer, each component affects how the machine runs and how it looks. Here are the main hardware components you should know:\n\nSoftware components let the computer carry out the tasks we want. Word processing software lets us type letters; presentation software lets us make slideshows. Here are common types, with a free or open-source example of each so the Hargeisa lab can keep its costs low:\n\nWhen you choose hardware or software you weigh up several things at once. There are six factors to think about. A good choice usually balances all of them, rather than being the very best at only one.\n\nFunctionality is the range of tasks a device can do. An oven that can roast, grill and bake has high functionality; an oven that can only roast has low functionality. A computer that can do many tasks has high functionality. You can change functionality by adding or removing components.\n\nAesthetics means how something looks. People like different things — some want a plain black case, some want a see-through case with colourful lights, some want brushed metal. A keyboard that lights up does the same job as a plain one, but some people are happy to pay more because they prefer how it looks.\n\nSpeed is how quickly a computer can process data. Three components matter most here. The processor does the thinking; a faster processor loads and runs software more quickly. RAM holds what is being used right now; more RAM lets the computer do more tasks at the same time. Storage holds your files; faster storage lets the computer fetch data more quickly. An ordinary school or office computer does not need a really fast processor, but a computer editing large videos does.\n\nLongevity is how long something stays useful. Shoes that last three years have greater longevity than shoes that last one year. Software is fairly easy to upgrade — a free update can make a computer useful for longer. Hardware is harder to upgrade; often you must buy a new part. Higher longevity usually costs more up front because the parts are better quality.\n\nCost is how much you pay. The total cost of a computer depends on the cost of each component, plus any software you must buy. Some software is freeware (free), and some costs money. This is why the Hargeisa lab will use free tools like LibreOffice and GIMP wherever possible.\n\nFit for purpose ties everything together. Something is fit for purpose if it can do the job we want. Would you drive to school in a tractor, or take a caravan on holiday using a bicycle? Of course not — those are not fit for purpose. In the same way, the right computer depends on the person using it.\n\nFreeware is software you do not have to pay for. It often does everything a person needs for simple tasks. Paid-for software usually has extra features, better functionality, and sometimes help support and regular updates that give it more longevity. Compare two photo editors:",
+      "example": "For the Hargeisa lab, GIMP is the smart choice: it is free, it runs the media club's tasks well, and the money saved can buy more computers for more students. The lesson is not 'free is always best' or 'expensive is always best' — the lesson is to pick what is fit for purpose for the least sensible cost."
+    },
+    {
+      "id": "concept-2-cost-against-speed-aesthetics-and-longevity",
+      "title": "Cost against speed, aesthetics and longevity",
+      "explanation": "As with many things in life, faster usually costs more. When you post a parcel you can pay extra for it to arrive sooner; a faster processor or more RAM costs more money too. But beware: buying only one expensive component may not make the whole computer faster. A very fast, costly graphics card will not make typing a letter any quicker — although it will help a lot if you edit videos.\n\nAttractive devices often cost more. A brightly coloured phone usually costs more than a plain grey one. And higher longevity usually costs more up front but can save money over time. Look at Teacher Nadia comparing two processors for a lab computer:\n\nThe standard processor costs $50 less today. But the faster one lasts five years, so it works out at only $40 per year instead of $50 per year. Because it lasts longer, the faster processor actually costs less over time. If Teacher Nadia can afford it now, the faster processor is the better buy.",
+      "example": "It is estimated that the world throws away around 50 million tonnes of electronic waste every year. That is a huge amount of metal and plastic. When we upgrade a computer we often throw the old parts away, which can cause pollution. Choosing hardware with good longevity, and recycling old technology instead of dumping it, is kinder to the environment."
+    },
+    {
+      "id": "concept-3-choosing-for-a-purpose",
+      "title": "Choosing for a purpose",
+      "explanation": "Different users need different machines. The team rates each component as Low, Medium or High, where High means expensive and good quality, and Low means cheaper and basic. Here is the plan for three of the lab's computers:\n\nThe office computer needs to last a long time and keep records safely, but it does not need a powerful graphics card — so longevity is High but graphics is Low. The coding club is learning, so ordinary parts are fine. The media club edits large photos and sound files, so it needs a High rating almost everywhere. Every choice is made by asking one question: what does this user actually need?\n\nHardware — Software · Hardware component · What it does · Type of software · What it is for · A free example · Software · Cost · What it offers · Processor · Cost · Lasts · Cost each year · Better value? · Computer for... · Processor · RAM · Storage · Graphics card · Longevity\n\nWhat it is — The physical parts you can touch · Programs and code you cannot touch · Processor (CPU) · Carries out instructions and performs calculations — this is the 'brain' of the computer. · Word processing · Type letters, stories and documents · LibreOffice Writer (free) · GIMP · Free and open-source · Edits photos and creates pictures with a wide range of tools. Excellent for the media club and completely free. · Standard · $150 · 3 years · $50 per year · No · Office (school records) · Medium · Medium · Medium · Low · High\n\nExamples — Keyboard, mouse, screen, processor, RAM, hard drive, case · Web browser, word processor, games, antivirus, operating system · Motherboard · Connects all the hardware components together so they can work as one system. · Spreadsheet · Work with numbers, money and tables · LibreOffice Calc (free) · Adobe Photoshop · Paid-for · A professional photo editor with even more advanced features, but you must pay to use it. · Faster · $200 · 5 years · $40 per year · Yes · Coding club (learning to program) · Medium · Medium · Low · Low · Medium\n\nHow you get it — Bought as a physical object and plugged in or fitted · Installed or downloaded onto the computer · RAM · Holds the data and programs the computer is using right now. More RAM lets it do more at once. · Web browser · View web pages on the internet · Mozilla Firefox (free) · Media club (photo and sound editing) · High · High · High · High · Medium\n\nUpgrading it — Harder — you usually have to buy and fit a new part · Easier — you can often just update it · Hard drive or SSD · Stores programs and files so you can keep them. · Image editing · Change and improve photos and pictures · GIMP (free)\n\nGraphics card — Creates the pictures and images shown on the screen. A better card shows more detail. · Sound editing · Record and edit sound · Audacity (free)\n\nPower supply — Provides electricity to the computer. · Antivirus · Find and remove harmful software (malware) · Various free versions\n\nCase — Protects the components inside and reduces the risk of accidental damage. · Operating system · Manages the whole computer and its devices · Linux (free)\n\nWireless network card — Connects the computer to wi-fi so it can reach the internet.",
+      "example": "Barcode scanner — An input device that reads barcodes, for example in a shop or post office."
+    },
+    {
+      "id": "concept-4-programming-environments",
+      "title": "Programming Environments",
+      "explanation": "Programming languages and environments\n\nA programming language is a way of writing commands to create a program that tells a computer what to do. There are many programming languages, and different ones are designed for different jobs. Some are best for making games; some are best for writing software like word processors; some exist just for maths; some were made just to build web pages.\n\nWe write a programming language (also called code) inside a programming environment. A programming environment is a set of tools for writing and testing programs. One important tool is an editor, where you type your commands. Programming environments are also called development environments. The 'Create' screen in Scratch is a programming environment; so is a Python editor like Thonny.\n\nLearning to program is a bit like learning a foreign language. You can say 'Hello!' in Somali, Swahili and English — the idea is the same, but you write it differently in each language. In the same way, most programming languages let you use the same ideas (like repeating something, or making a decision), but you write them in different ways.\n\nBlock-based programming languages\n\nA block-based programming language lets you drag and drop coloured blocks of code with the mouse. The blocks 'click' together like puzzle pieces to build larger sections of code. The most famous block-based language is Scratch, which you used earlier in the course.\n\nIn Scratch, blocks that do similar jobs share a colour — for example, all the blocks that move a sprite are the same colour. This makes blocks easy to find, and because you drag them, you never have to remember exactly how to spell a command. That is why block-based languages are often used to teach new programmers, and why they are great for making simple games, animations and music quickly. Here is what a short Scratch program looks like written out as words — remember, you build this by dragging blocks, not by typing:\n\nBlock-based (Scratch), shown as words — you build it by dragging blocks\n\nBlock-based languages have limits, though. They are not suitable for building large, complicated games, or professional software like a full word processor.\n\nText-based programming languages\n\nA text-based programming language uses commands you type on the keyboard. Everything must be typed into a file before the program can run. This is very different from dragging blocks. Text-based languages can be harder to learn, because you must remember the commands, know what each one does, and spell them correctly. If you make a spelling mistake, the program will not work. It also takes longer to make fun things happen — a dancing cat that takes a minute to build in Scratch takes much longer to code as text.\n\nSo why use them? Because text-based languages are far more powerful. They can build advanced, challenging programs and let you use many different techniques. Almost every piece of software you use was written in a text-based language. A popular example is Python. Here is a Python program that prints the numbers 1 to 10 — the same idea as a common first Scratch project, but typed as text:\n\nAnd here is Python saying 'Hello!' ten times, so you can compare it directly with the Scratch blocks above. Notice how the command print must be spelled exactly right, and the line below for must be indented (pushed in with spaces):\n\nOther well-known text-based languages include C# (say 'C sharp') and C++ (say 'C plus plus'), which are very popular for writing computer games.\n\nThe right choice depends on the job. Use this comparison to decide:\n\nFor the Hargeisa coding club, the answer is clear: start with Scratch (block-based) so beginners can build working programs and enjoy quick success, then move on to Python (text-based) once they are ready for bigger challenges. A simple spelling quiz or a rocket-dodging-asteroids game is perfect for Scratch; a professional drawing program with hundreds of tools must be built in a text-based language.\n\nNo one knows exactly how many programming languages exist in the world — there are thousands, and new ones are still being created. Amazingly, some languages invented back in the 1950s are still used today. And the software that controls a robot explorer on Mars runs to millions of lines of code!\n\nBlock-based — Text-based\n\nHow you write it — Drag and drop coloured blocks · Type commands as words\n\nEase of learning — Easier — no spelling to remember · Harder — you must remember and spell commands\n\nSpeed of making fun things — Fast · Slower to get started\n\nGood for — Simple games, animations, music, first programs · Advanced software and large, complex games\n\nReal-world software — Rarely used for professional software · Almost all professional software is made this way",
+      "example": "Examples — Scratch · Python, C#, C++"
+    },
+    {
+      "id": "concept-5-storing-data",
+      "title": "Storing Data",
+      "explanation": "Two kinds of data: digital and analogue\n\nThere are two types of data: digital and analogue. Digital data is made of binary digits — only the numbers 0 and 1. You can think of 0 as electricity switched off and 1 as electricity switched on. Because a computer is full of tiny switches, it understands data made of 0s and 1s perfectly.\n\nAnalogue data is different. It is not limited to 0 and 1 — it is a smooth, continuous signal that can take any value, like a wave of light or sound. Something that is continuous keeps going without breaks, and on a graph it draws a smooth curving line. Humans and animals sense the world in analogue. The most common analogue data is sound: your ears hear as sound waves, which are vibrations travelling through the air. Your friends talking, traffic in the city, music from a radio — all of it reaches you as analogue sound waves.",
+      "example": "Here is the problem: computers cannot process analogue data. They only understand 0s and 1s. So before a computer can store or work with sound, we must turn the sound into numbers. Think of a row of light switches. Each switch is either on or off, and we write that as a 1 or a 0:"
+    },
+    {
+      "id": "concept-6-on-off-switches-become-the-binary-digits-1-and-0",
+      "title": "On/off switches become the binary digits 1 and 0",
+      "explanation": "Digitising: turning analogue into digital\n\nTo change analogue data into digital data, we digitise it. To digitise sound we use a microphone: the microphone detects the analogue sound waves, and a computer program turns them into digital data (numbers) that the computer can store and use. Computers can digitise other analogue things too, using different sensors — for example, sensors that detect heat or light.\n\nOnce data is digital, you can do a lot with it. You can store it on a drive, share it over the internet, and change it with programs. An audio editing program (like the free tool Audacity) can make a recording louder or quieter, add more sound, or delete parts of it — all by changing the digital numbers.\n\nThere are laws that protect most music, films and pictures from being copied and shared without permission. It is also simply fair: we respect what belongs to others. Always check that you are allowed to copy or send something before you do.\n\nBecause everything is stored as bits, we need a way to measure how much data there is. A single binary number (0 or 1) is called a bit — short for 'binary digit'. It is the smallest unit of storage. Bits are grouped into larger units, and each unit has a name. In this course, as in your textbook, each big unit is 1000 times the one before it.\n\nNotice the two simple rules hidden in that table. To go from bytes to bits, multiply by 8 (because 1 byte = 8 bits). To climb one step up the ladder — bytes to KB, KB to MB, MB to GB, GB to TB — multiply by 1000. To go back down the ladder, divide by 1000. Learning the order bit, nibble, byte, KB, MB, GB, TB by heart makes every storage question easy.\n\nDifferent sizes suit different jobs. Small files are measured in KB and MB — a photo might be 5 MB. Storage devices like hard drives and USB sticks are measured in GB. Huge storage, like the servers that hold web pages, is measured in TB. Here is roughly what fits into different devices:\n\nRAM is measured in GB. A modern computer often has 8 GB, 16 GB or 32 GB of RAM. RAM comes in smaller sizes than a hard drive because it is faster and more expensive to make.\n\nSSDs (solid state drives) are fast secondary storage, commonly 1 TB, 2 TB or 4 TB.\n\nHDDs (older hard disk drives) can hold a great deal — up to about 22 TB.\n\nUSB flash drives and memory cards are small so they fit in a pocket; common sizes are 128 GB and 256 GB.\n\nOne terabyte is an enormous amount. Roughly speaking, 1 TB could store about 250,000 songs, or around 1,000 hours of video, or roughly 85 million pages of text. So when Leila's tablet runs out of space for photos, adding a 4 TB SSD would give her room for many years of pictures.\n\nYou could store over 17,000 hours of music on just 1 terabyte of storage. If you played it without ever stopping, that is more than 700 days of music — almost two whole years of listening!\n\nUnit of storage — Number of bits · Also equal to...",
+      "example": "Bit — 1 · The smallest unit — a single 0 or 1"
+    },
+    {
+      "id": "concept-7-inside-a-computer",
+      "title": "Inside a Computer",
+      "explanation": "The processor in a computer is called the central processing unit, or CPU for short. Without the processor, a computer could not process data at all, which is why many people call the CPU the brain of the computer. Most CPUs are tiny — only about 2 square centimetres — yet they are made of many, many small parts.\n\nThe most important of those parts is the transistor. A transistor is a tiny device that controls the flow of electricity, rather like a microscopic switch. By connecting huge numbers of transistors together, the CPU can carry out calculations. Modern CPUs contain well over a billion transistors, and the most advanced ones have many billions — all packed into that fingernail-sized chip.\n\nHow fast is a CPU? Its speed is measured in gigahertz (GHz). A single hertz means 'one cycle per second', which we can think of as one simple calculation per second. A gigahertz is one billion hertz. So a CPU running at 1 GHz can perform about one billion calculations every second, and a 3 GHz CPU can do about three billion. This number of calculations per second is called the clock speed.\n\nA CPU is far faster than a human at sums, which is why we use computers for very hard calculations. Working out the path of a planet around the Sun by hand would take an extremely long time, but a computer can do it in moments.\n\nA modern CPU can contain well over a billion transistors. Lined up as people, a billion is more than twice the population of the whole European Union — all working together inside a chip smaller than a postage stamp.\n\nA computer needs somewhere to keep data. Computer systems usually have two kinds of storage, and knowing the difference is one of the most important ideas in this unit.\n\nPrimary storage is short-term and extremely fast. It usually loses its data when the power is turned off, which is why it is also called volatile storage. The main example is RAM (random access memory). RAM holds all the data and programs the computer is using right now. When you close a program or switch off, that working memory is cleared.\n\nSecondary storage is long-term. It keeps its data even when the computer is turned off, so it is also called persistent storage (the data persists — it keeps on existing). Secondary storage is where we keep programs and files we want to save. A common example is an SSD (solid state drive); hard drives and USB sticks are secondary storage too.\n\nWhy does the CPU need fast primary storage right beside it? Because the CPU makes billions of calculations every second, and it must be fed data just as fast. Primary storage costs more per gigabyte because it is made of high-quality materials that let the CPU reach the data almost instantly. Secondary storage is much cheaper and can hold enormous amounts, but it is slower to reach. This is the clearest comparison:\n\nMost computer systems need both. Primary storage gives the CPU the speed it needs to work; secondary storage gives you the space to keep your files safe for later. Phones, laptops, desktop computers and even smart watches all use both kinds of storage together.\n\nIf you opened up one of the Hargeisa lab computers (carefully, and only with an adult), here is what you would find and where. This is your labelled tour of the inside of a computer:\n\nFeature — Primary storage · Secondary storage · Part · Where you would find it · What it does\n\nSpeed — Extremely fast · A lot slower than primary storage · Motherboard · The large flat board covering the base of the case · Connects every other part together\n\nKeeps data when power is off? — No — it is volatile · Yes — it is persistent · Processor (CPU) · A small square chip on the motherboard, under a fan or cooler · Carries out all the instructions and calculations\n\nWhat it holds — Data and programs being used right now · Files and programs you want to keep · RAM · Thin sticks slotted upright into the motherboard · Primary storage — holds what is being used right now\n\nSize / capacity — Smaller (measured in GB) · Much larger (GB up to many TB) · SSD or hard drive · A small box or card connected to the motherboard · Secondary storage — keeps files and programs\n\nCost per gigabyte — Higher · Lower · Graphics card · A larger card plugged into the motherboard (in bigger computers) · Creates the images shown on the screen\n\nExample — RAM · SSD, hard drive, USB flash drive · Power supply · A metal box, usually in a corner, with a cable to the wall · Turns mains electricity into power the parts can use",
+      "example": "Cooling fans — Round fans attached to the case and the CPU · Blow away heat so the parts do not get too hot"
+    },
+    {
+      "id": "concept-8-robots-in-industry",
+      "title": "Robots in Industry",
+      "explanation": "A robot is a machine that we can program to carry out instructions by itself. When a robot works without help from humans, we say it is autonomous. Making a robot autonomous is difficult: to complete tasks on its own, a robot runs long, complex programs that take programmers a long time to write.\n\nRobots are used a great deal in industry. Industry means work that involves making or selling goods or services. A big part of industry is manufacturing — making large numbers of goods in factories using machines. Car factories and food factories both use many robots.\n\nWe often imagine that all robots look like people, but most robots do not look like us at all. They come in many shapes and sizes for many different jobs. Some are a simple robotic arm that lifts a box off a shelf. Some are large, twisting arms that weld cars together. Some are so small and accurate that they connect the tiny circuits inside electronic devices. Some even look like dogs and walk on four legs.\n\nRobots or humans? Advantages and disadvantages\n\nRobots and humans each have strengths and weaknesses, so factories often use both together. Study this comparison carefully:\n\nRobots in car manufacturing and warehouses\n\nBuilding cars can be dangerous, because engines and doors are very heavy, and every part must be fitted accurately so the car is safe. To make as many cars as possible, factories run through the day and often the night. Robots are perfect for this: they lift heavy parts humans cannot, they weld and measure with great accuracy, and they never need to rest. Yet there are still jobs robots cannot do well — fitting the thin electrical wires inside a car is too fiddly for a robot, so a human does it, because human hands are better at pushing small wires through small holes.\n\nLarge online shops use robots too. In huge warehouses, robots drive themselves around, collect the ordered items, and bring them to a place where they are packed and sent to the customer.\n\nRobots in food and farming — close to home\n\nThink how much food the world eats every day. Robots in food factories help produce it quickly. Because robots measure so accurately, they can fill hundreds of containers a minute, each with exactly the same amount. Robots can even harvest some crops automatically.\n\nThis is where Uncle Tariq's date farm comes in. In the Gulf and in parts of East Africa, large farms already use machines and robots to sort dates by size and quality, to remove stones and dust, and to pack the dates into boxes at high speed. A sorting robot uses a camera and sensors to check each date, then a robotic arm or gate moves it to the right box. For Uncle Tariq this could mean cleaner, more even packing and far faster work during the busy harvest — a real advantage when the whole crop ripens at once.\n\nBut the disadvantages matter too. A sorting robot is expensive to buy and could be hard to repair far from a big city. It can only sort dates the way it is programmed to, so a human is still needed to judge unusual cases, to care for the trees, and to handle anything the machine was not built for. The best answer for a small farm is often a mix: let a machine do the fast, repetitive sorting, and let skilled people do the parts that need judgement and care. Coffee farms in Ethiopia and busy ports like Berbera and Mombasa face exactly the same choice when they think about using robots.\n\nRobots — Humans\n\nAdvantages — Work all day and night with no breaks; very accurate; do not need to be paid; can work in dangerous places (for example underwater) · Work well in teams and can change jobs easily; can spot problems a robot would miss; need no complex program; are great at creative and caring tasks",
+      "example": "Disadvantages — Expensive to buy; can break down and be costly to fix; need complex programs; can only do the exact job they are programmed for · Make more mistakes than robots; must be paid; need breaks and time off; work more slowly than robots"
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "Block-based (Scratch), shown as words — you build it by dragging blocks",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "when green flag clicked",
+        "repeat 10",
+        "say [Hello!] for 1 seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-2",
+      "title": "4.2 Programming Environments — listing 1",
+      "language": "Python (micro:bit)",
+      "intro": "From 4.2 Programming Environments.",
+      "lines": [
+        "Text-based (Python): print the numbers 1 to 10",
+        "for number in range(1, 11):",
+        "print(number)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-3",
+      "title": "4.2 Programming Environments — listing 2",
+      "language": "Python (micro:bit)",
+      "intro": "From 4.2 Programming Environments.",
+      "lines": [
+        "Text-based (Python): say Hello! ten times",
+        "for count in range(10):",
+        "print(\"Hello!\")"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Design and advertise a new computer",
+      "context": "work through the steps below and see what happens. This is selecting hardware and software in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "It could be for a clinic, a vet, a farm office, or a design studio in Hargeisa. Choose a purpose for your computer.",
+      "answer": "Design it to be fit for purpose. Decide the processor, RAM, storage and graphics card, using Low / Medium / High and explaining each choice. Research rough prices for these parts on the internet. Choose software for it — say whether each program is free (like LibreOffice or GIMP) or paid-for, and why it is useful. Make a marketing poster or presentation showing what your computer looks like, its parts, its total price (a little above what it cost you to build, so your company makes a small profit), and its longevity. List five advantages the computer gives the person who buys it.",
+      "modelType": "model-1",
+      "hint": "Start here: Design it to be fit for purpose. Decide the processor, RAM, storage and graphics card, using Low / Medium / High and explaining each choice.",
+      "explanation": "Selecting Hardware and Software: Hardware and software: what is the difference?"
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Design a new robot",
+      "context": "work through the steps below and see what happens. This is cost against speed, aesthetics and longevity in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Think of an industry that interests you and how a robot could help.",
+      "answer": "Decide what the robot will look like and do, and draw it on a large sheet of paper. Label how it senses, how it moves things, and what it is programmed to do. Add five advantages the robot gives its owner. Write two or three sentences saying whether the job is best done by robots, humans, or a mix, and why. Expected Result (Task 2)",
+      "modelType": "model-2",
+      "hint": "Start here: Decide what the robot will look like and do, and draw it on a large sheet of paper.",
+      "explanation": "Cost against speed, aesthetics and longevity: As with many things in life, faster usually costs more. When you post a parcel you can pay extra for it to arrive sooner; a faster processor or more RAM costs more money too. But beware: buying only one expensive component may not make the whole computer faster. A very fast, costly graphics card…"
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Ehel Academy • Year 6 Computing • Hands-on Investigations",
+      "context": "work through the steps below and see what happens. This is choosing for a purpose in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Work through these activities in order. Each one tells you what to do, what to expect, and gives you a prompt for your AI tutor if you get stuck. Some activities use a computer and free software; others are unplugged (no computer needed) and just need a pen and paper. Do the thinking yourself — that is how the ideas stick.",
+      "answer": "Getting Started with Free Tools Everything in this unit can be done with free, open-source software. If you cannot install anything, you can still do every activity on paper — ask your teacher about using a school device during the twice-weekly sessions. Scratch (block-based coding): use it in a browser at scratch.mit.edu, no install needed. Python (text-based coding): download Thonny from thonny.org — it includes Python and is made for beginners. Python files end in .py. LibreOffice (documents, spreadsheets, presentations): free from libreoffice.org.",
+      "modelType": "model-3",
+      "hint": "Start here: Getting Started with Free Tools",
+      "explanation": "Choosing for a purpose: Different users need different machines. The team rates each component as Low, Medium or High, where High means expensive and good quality, and Low means cheaper and basic. Here is the plan for three of the lab's computers:"
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Getting Started with Free Tools",
+      "context": "work through the steps below and see what happens. This is programming environments in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Everything in this unit can be done with free, open-source software. If you cannot install anything, you can still do every activity on paper — ask your teacher about using a school device during the twice-weekly sessions.",
+      "answer": "Scratch (block-based coding): use it in a browser at scratch.mit.edu, no install needed. Python (text-based coding): download Thonny from thonny.org — it includes Python and is made for beginners. Python files end in .py. LibreOffice (documents, spreadsheets, presentations): free from libreoffice.org. GIMP (image editing) and Audacity (sound recording): both free and open-source. Goal: be able to tell hardware and software apart quickly.",
+      "modelType": "model-4",
+      "hint": "Start here: Scratch (block-based coding): use it in a browser at scratch.mit.edu, no install needed.",
+      "explanation": "Programming Environments: Programming languages and environments"
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Expected Result",
+      "context": "work through the steps below and see what happens. This is storing data in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Hardware: mouse, graphics card, motherboard, RAM, power supply. Software: web browser, antivirus program, word processor, operating system, a game. Anything you can physically touch is hardware; anything made of code is software.",
+      "answer": "Ask Your AI Tutor 'I put the operating system under software. Explain what an operating system does and why it is software and not hardware.' Activity 2 (Investigation) — Spec a Computer That Is Fit for Purpose Goal: choose components for a real user, using Low / Medium / High ratings. Pick one user for the Hargeisa lab: the office (school records), the coding club, or the media club (photo and sound editing).",
+      "modelType": "model-5",
+      "hint": "Start here: Ask Your AI Tutor",
+      "explanation": "Storing Data: Two kinds of data: digital and analogue"
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Ask Your AI Tutor",
+      "context": "work through the steps below and see what happens. This is on/off switches become the binary digits 1 and 0 in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "'I put the operating system under software. Explain what an operating system does and why it is software and not hardware.'",
+      "answer": "Activity 2 (Investigation) — Spec a Computer That Is Fit for Purpose Goal: choose components for a real user, using Low / Medium / High ratings. Pick one user for the Hargeisa lab: the office (school records), the coding club, or the media club (photo and sound editing). Make a table with these headings: Processor, RAM, Storage, Graphics card, Longevity. Rate each part Low, Medium or High for your chosen user. Remember, High means expensive and good quality.",
+      "modelType": "model-6",
+      "hint": "Start here: Activity 2 (Investigation) — Spec a Computer That Is Fit for Purpose",
+      "explanation": "On/off switches become the binary digits 1 and 0: Digitising: turning analogue into digital"
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Selecting Hardware and Software",
+      "modelType": "concept-model-1",
+      "purpose": "Hardware and software: what is the difference?",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Cost against speed, aesthetics and longevity",
+      "modelType": "concept-model-2",
+      "purpose": "As with many things in life, faster usually costs more. When you post a parcel you can pay extra for it to arrive sooner; a faster processor or more RAM costs more money too. But beware: buying only one expensive…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Choosing for a purpose",
+      "modelType": "concept-model-3",
+      "purpose": "Different users need different machines. The team rates each component as Low, Medium or High, where High means expensive and good quality, and Low means cheaper and basic. Here is the plan for three of the lab's…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Programming Environments",
+      "modelType": "concept-model-4",
+      "purpose": "Programming languages and environments",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Storing Data",
+      "modelType": "concept-model-5",
+      "purpose": "Two kinds of data: digital and analogue",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "On/off switches become the binary digits 1 and 0",
+      "modelType": "concept-model-6",
+      "purpose": "Digitising: turning analogue into digital",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-7",
+      "outcomeId": "lo07",
+      "title": "Inside a Computer",
+      "modelType": "concept-model-7",
+      "purpose": "The processor in a computer is called the central processing unit, or CPU for short. Without the processor, a computer could not process data at all, which is why many people call the CPU the brain of the computer. Most…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-8",
+      "outcomeId": "lo08",
+      "title": "Robots in Industry",
+      "modelType": "concept-model-8",
+      "purpose": "A robot is a machine that we can program to carry out instructions by itself. When a robot works without help from humans, we say it is autonomous. Making a robot autonomous is difficult: to complete tasks on its own, a…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with selecting hardware and software",
+      "example": "For the Hargeisa lab, GIMP is the smart choice: it is free, it runs the media club's tasks well, and the money saved can buy more computers for more students. The lesson is not 'free is always best' or 'expensive is always best' — the lesson is to pick what…",
+      "steps": [
+        "Hardware and software: what is the difference?",
+        "Every computer uses hardware and software together. Hardware is all of the physical parts of a digital device — the parts you can pick up and touch. A keyboard, a mouse, a screen, a hard drive and a games controller are…",
+        "Software is the range of programs you can run on a device. You cannot touch software; it is made of code stored on the computer. Software usually has to be installed before you can use it. Some software is very simple,…",
+        "Here is the simplest way to tell them apart: if you can touch it, it is hardware; if it is a program made of code, it is software. A screen is hardware; the game showing on the screen is software."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with cost against speed, aesthetics and longevity",
+      "example": "It is estimated that the world throws away around 50 million tonnes of electronic waste every year. That is a huge amount of metal and plastic. When we upgrade a computer we often throw the old parts away, which can cause pollution. Choosing hardware with…",
+      "steps": [
+        "As with many things in life, faster usually costs more. When you post a parcel you can pay extra for it to arrive sooner; a faster processor or more RAM costs more money too. But beware: buying only one expensive…",
+        "Attractive devices often cost more. A brightly coloured phone usually costs more than a plain grey one. And higher longevity usually costs more up front but can save money over time. Look at Teacher Nadia comparing two…",
+        "The standard processor costs $50 less today. But the faster one lasts five years, so it works out at only $40 per year instead of $50 per year. Because it lasts longer, the faster processor actually costs less over…"
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with choosing for a purpose",
+      "example": "Barcode scanner — An input device that reads barcodes, for example in a shop or post office.",
+      "steps": [
+        "Different users need different machines. The team rates each component as Low, Medium or High, where High means expensive and good quality, and Low means cheaper and basic. Here is the plan for three of the lab's…",
+        "The office computer needs to last a long time and keep records safely, but it does not need a powerful graphics card — so longevity is High but graphics is Low. The coding club is learning, so ordinary parts are fine.…",
+        "Hardware — Software · Hardware component · What it does · Type of software · What it is for · A free example · Software · Cost · What it offers · Processor · Cost · Lasts · Cost each year · Better value? · Computer…",
+        "What it is — The physical parts you can touch · Programs and code you cannot touch · Processor (CPU) · Carries out instructions and performs calculations — this is the 'brain' of the computer. · Word processing · Type…"
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with programming environments",
+      "example": "Examples — Scratch · Python, C#, C++",
+      "steps": [
+        "A programming language is a way of writing commands to create a program that tells a computer what to do. There are many programming languages, and different ones are designed for different jobs. Some are best for…",
+        "We write a programming language (also called code) inside a programming environment. A programming environment is a set of tools for writing and testing programs. One important tool is an editor, where you type your…",
+        "Learning to program is a bit like learning a foreign language. You can say 'Hello!' in Somali, Swahili and English — the idea is the same, but you write it differently in each language. In the same way, most programming…",
+        "A block-based programming language lets you drag and drop coloured blocks of code with the mouse. The blocks 'click' together like puzzle pieces to build larger sections of code. The most famous block-based language is…"
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with storing data",
+      "example": "Here is the problem: computers cannot process analogue data. They only understand 0s and 1s. So before a computer can store or work with sound, we must turn the sound into numbers. Think of a row of light switches. Each switch is either on or off, and we…",
+      "steps": [
+        "Read the concept card for storing data and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "How to work with on/off switches become the binary digits 1 and 0",
+      "example": "Bit — 1 · The smallest unit — a single 0 or 1",
+      "steps": [
+        "Digitising: turning analogue into digital",
+        "To change analogue data into digital data, we digitise it. To digitise sound we use a microphone: the microphone detects the analogue sound waves, and a computer program turns them into digital data (numbers) that the…",
+        "Once data is digital, you can do a lot with it. You can store it on a drive, share it over the internet, and change it with programs. An audio editing program (like the free tool Audacity) can make a recording louder or…",
+        "There are laws that protect most music, films and pictures from being copied and shared without permission. It is also simply fair: we respect what belongs to others. Always check that you are allowed to copy or send…"
+      ]
+    },
+    {
+      "id": "method-7",
+      "outcomeId": "lo07",
+      "difficulty": "Challenge",
+      "title": "How to work with inside a computer",
+      "example": "Cooling fans — Round fans attached to the case and the CPU · Blow away heat so the parts do not get too hot",
+      "steps": [
+        "The processor in a computer is called the central processing unit, or CPU for short. Without the processor, a computer could not process data at all, which is why many people call the CPU the brain of the computer. Most…",
+        "The most important of those parts is the transistor. A transistor is a tiny device that controls the flow of electricity, rather like a microscopic switch. By connecting huge numbers of transistors together, the CPU can…",
+        "How fast is a CPU? Its speed is measured in gigahertz (GHz). A single hertz means 'one cycle per second', which we can think of as one simple calculation per second. A gigahertz is one billion hertz. So a CPU running at…",
+        "A CPU is far faster than a human at sums, which is why we use computers for very hard calculations. Working out the path of a planet around the Sun by hand would take an extremely long time, but a computer can do it in…"
+      ]
+    },
+    {
+      "id": "method-8",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "How to work with robots in industry",
+      "example": "Disadvantages — Expensive to buy; can break down and be costly to fix; need complex programs; can only do the exact job they are programmed for · Make more mistakes than robots; must be paid; need breaks and time off; work more slowly than robots",
+      "steps": [
+        "A robot is a machine that we can program to carry out instructions by itself. When a robot works without help from humans, we say it is autonomous. Making a robot autonomous is difficult: to complete tasks on its own, a…",
+        "Robots are used a great deal in industry. Industry means work that involves making or selling goods or services. A big part of industry is manufacturing — making large numbers of goods in factories using machines. Car…",
+        "We often imagine that all robots look like people, but most robots do not look like us at all. They come in many shapes and sizes for many different jobs. Some are a simple robotic arm that lifts a box off a shelf. Some…",
+        "Robots or humans? Advantages and disadvantages"
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Selecting Hardware and Software",
+      "prompt": "Explain in your own words: Selecting Hardware and Software.",
+      "solution": "Hardware and software: what is the difference?\n\nEvery computer uses hardware and software together. Hardware is all of the physical parts of a digital device — the parts you can pick up and touch. A keyboard, a mouse, a screen, a hard drive and a games controller are all hardware.\n\nSoftware is the range of programs you can run on a device. You cannot touch software; it is made of code stored on the computer. Software usually has to be installed before you can use it. Some software is very simple, like the tiny program inside a microwave oven. Some software is very complex, like a big video game or word processing software. Complex software needs better hardware to run smoothly — for example, a large game may need a faster processor and more RAM.\n\nHere is the simplest way to tell them apart: if you can touch it, it is hardware; if it is a program made of code, it is software. A screen is hardware; the game showing on the screen is software.\n\nEach physical part and each piece of software is called a component — an individual part of a larger device. A train is made of components too: a door, a seat and a window are all components of a train. In a computer, each component affects how the machine runs and how it looks. Here are the main hardware components you should know:\n\nSoftware components let the computer carry out the tasks we want. Word processing software lets us type letters; presentation software lets us make slideshows. Here are common types, with a free or open-source example of each so the Hargeisa lab can keep its costs low:\n\nWhen you choose hardware or software you weigh up several things at once. There are six factors to think about. A good choice usually balances all of them, rather than being the very best at only one.\n\nFunctionality is the range of tasks a device can do. An oven that can roast, grill and bake has high functionality; an oven that can only roast has low functionality. A computer that can do many tasks has high functionality. You can change functionality by adding or removing components.\n\nAesthetics means how something looks. People like different things — some want a plain black case, some want a see-through case with colourful lights, some want brushed metal. A keyboard that lights up does the same job as a plain one, but some people are happy to pay more because they prefer how it looks.\n\nSpeed is how quickly a computer can process data. Three components matter most here. The processor does the thinking; a faster processor loads and runs software more quickly. RAM holds what is being used right now; more RAM lets the computer do more tasks at the same time. Storage holds your files; faster storage lets the computer fetch data more quickly. An ordinary school or office computer does not need a really fast processor, but a computer editing large videos does.\n\nLongevity is how long something stays useful. Shoes that last three years have greater longevity than shoes that last one year. Software is fairly easy to upgrade — a free update can make a computer useful for longer. Hardware is harder to upgrade; often you must buy a new part. Higher longevity usually costs more up front because the parts are better quality.\n\nCost is how much you pay. The total cost of a computer depends on the cost of each component, plus any software you must buy. Some software is freeware (free), and some costs money. This is why the Hargeisa lab will use free tools like LibreOffice and GIMP wherever possible.\n\nFit for purpose ties everything together. Something is fit for purpose if it can do the job we want. Would you drive to school in a tractor, or take a caravan on holiday using a bicycle? Of course not — those are not fit for purpose. In the same way, the right computer depends on the person using it.\n\nFreeware is software you do not have to pay for. It often does everything a person needs for simple tasks. Paid-for software usually has extra features, better functionality, and sometimes help support and regular updates that give it more longevity. Compare two photo editors:\n\nFor example: For the Hargeisa lab, GIMP is the smart choice: it is free, it runs the media club's tasks well, and the money saved can buy more computers for more students. The lesson is not 'free is always best' or 'expensive is always best' — the lesson is to pick what is fit for purpose for the least sensible cost."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Cost against speed, aesthetics and longevity",
+      "prompt": "Explain in your own words: Cost against speed, aesthetics and longevity.",
+      "solution": "As with many things in life, faster usually costs more. When you post a parcel you can pay extra for it to arrive sooner; a faster processor or more RAM costs more money too. But beware: buying only one expensive component may not make the whole computer faster. A very fast, costly graphics card will not make typing a letter any quicker — although it will help a lot if you edit videos.\n\nAttractive devices often cost more. A brightly coloured phone usually costs more than a plain grey one. And higher longevity usually costs more up front but can save money over time. Look at Teacher Nadia comparing two processors for a lab computer:\n\nThe standard processor costs $50 less today. But the faster one lasts five years, so it works out at only $40 per year instead of $50 per year. Because it lasts longer, the faster processor actually costs less over time. If Teacher Nadia can afford it now, the faster processor is the better buy.\n\nFor example: It is estimated that the world throws away around 50 million tonnes of electronic waste every year. That is a huge amount of metal and plastic. When we upgrade a computer we often throw the old parts away, which can cause pollution. Choosing hardware with good longevity, and recycling old technology instead of dumping it, is kinder to the environment."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Choosing for a purpose",
+      "prompt": "Explain in your own words: Choosing for a purpose.",
+      "solution": "Different users need different machines. The team rates each component as Low, Medium or High, where High means expensive and good quality, and Low means cheaper and basic. Here is the plan for three of the lab's computers:\n\nThe office computer needs to last a long time and keep records safely, but it does not need a powerful graphics card — so longevity is High but graphics is Low. The coding club is learning, so ordinary parts are fine. The media club edits large photos and sound files, so it needs a High rating almost everywhere. Every choice is made by asking one question: what does this user actually need?\n\nHardware — Software · Hardware component · What it does · Type of software · What it is for · A free example · Software · Cost · What it offers · Processor · Cost · Lasts · Cost each year · Better value? · Computer for... · Processor · RAM · Storage · Graphics card · Longevity\n\nWhat it is — The physical parts you can touch · Programs and code you cannot touch · Processor (CPU) · Carries out instructions and performs calculations — this is the 'brain' of the computer. · Word processing · Type letters, stories and documents · LibreOffice Writer (free) · GIMP · Free and open-source · Edits photos and creates pictures with a wide range of tools. Excellent for the media club and completely free. · Standard · $150 · 3 years · $50 per year · No · Office (school records) · Medium · Medium · Medium · Low · High\n\nExamples — Keyboard, mouse, screen, processor, RAM, hard drive, case · Web browser, word processor, games, antivirus, operating system · Motherboard · Connects all the hardware components together so they can work as one system. · Spreadsheet · Work with numbers, money and tables · LibreOffice Calc (free) · Adobe Photoshop · Paid-for · A professional photo editor with even more advanced features, but you must pay to use it. · Faster · $200 · 5 years · $40 per year · Yes · Coding club (learning to program) · Medium · Medium · Low · Low · Medium\n\nHow you get it — Bought as a physical object and plugged in or fitted · Installed or downloaded onto the computer · RAM · Holds the data and programs the computer is using right now. More RAM lets it do more at once. · Web browser · View web pages on the internet · Mozilla Firefox (free) · Media club (photo and sound editing) · High · High · High · High · Medium\n\nUpgrading it — Harder — you usually have to buy and fit a new part · Easier — you can often just update it · Hard drive or SSD · Stores programs and files so you can keep them. · Image editing · Change and improve photos and pictures · GIMP (free)\n\nGraphics card — Creates the pictures and images shown on the screen. A better card shows more detail. · Sound editing · Record and edit sound · Audacity (free)\n\nPower supply — Provides electricity to the computer. · Antivirus · Find and remove harmful software (malware) · Various free versions\n\nCase — Protects the components inside and reduces the risk of accidental damage. · Operating system · Manages the whole computer and its devices · Linux (free)\n\nWireless network card — Connects the computer to wi-fi so it can reach the internet.\n\nFor example: Barcode scanner — An input device that reads barcodes, for example in a shop or post office."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Programming Environments",
+      "prompt": "Explain in your own words: Programming Environments.",
+      "solution": "Programming languages and environments\n\nA programming language is a way of writing commands to create a program that tells a computer what to do. There are many programming languages, and different ones are designed for different jobs. Some are best for making games; some are best for writing software like word processors; some exist just for maths; some were made just to build web pages.\n\nWe write a programming language (also called code) inside a programming environment. A programming environment is a set of tools for writing and testing programs. One important tool is an editor, where you type your commands. Programming environments are also called development environments. The 'Create' screen in Scratch is a programming environment; so is a Python editor like Thonny.\n\nLearning to program is a bit like learning a foreign language. You can say 'Hello!' in Somali, Swahili and English — the idea is the same, but you write it differently in each language. In the same way, most programming languages let you use the same ideas (like repeating something, or making a decision), but you write them in different ways.\n\nBlock-based programming languages\n\nA block-based programming language lets you drag and drop coloured blocks of code with the mouse. The blocks 'click' together like puzzle pieces to build larger sections of code. The most famous block-based language is Scratch, which you used earlier in the course.\n\nIn Scratch, blocks that do similar jobs share a colour — for example, all the blocks that move a sprite are the same colour. This makes blocks easy to find, and because you drag them, you never have to remember exactly how to spell a command. That is why block-based languages are often used to teach new programmers, and why they are great for making simple games, animations and music quickly. Here is what a short Scratch program looks like written out as words — remember, you build this by dragging blocks, not by typing:\n\nBlock-based (Scratch), shown as words — you build it by dragging blocks\n\nBlock-based languages have limits, though. They are not suitable for building large, complicated games, or professional software like a full word processor.\n\nText-based programming languages\n\nA text-based programming language uses commands you type on the keyboard. Everything must be typed into a file before the program can run. This is very different from dragging blocks. Text-based languages can be harder to learn, because you must remember the commands, know what each one does, and spell them correctly. If you make a spelling mistake, the program will not work. It also takes longer to make fun things happen — a dancing cat that takes a minute to build in Scratch takes much longer to code as text.\n\nSo why use them? Because text-based languages are far more powerful. They can build advanced, challenging programs and let you use many different techniques. Almost every piece of software you use was written in a text-based language. A popular example is Python. Here is a Python program that prints the numbers 1 to 10 — the same idea as a common first Scratch project, but typed as text:\n\nAnd here is Python saying 'Hello!' ten times, so you can compare it directly with the Scratch blocks above. Notice how the command print must be spelled exactly right, and the line below for must be indented (pushed in with spaces):\n\nOther well-known text-based languages include C# (say 'C sharp') and C++ (say 'C plus plus'), which are very popular for writing computer games.\n\nThe right choice depends on the job. Use this comparison to decide:\n\nFor the Hargeisa coding club, the answer is clear: start with Scratch (block-based) so beginners can build working programs and enjoy quick success, then move on to Python (text-based) once they are ready for bigger challenges. A simple spelling quiz or a rocket-dodging-asteroids game is perfect for Scratch; a professional drawing program with hundreds of tools must be built in a text-based language.\n\nNo one knows exactly how many programming languages exist in the world — there are thousands, and new ones are still being created. Amazingly, some languages invented back in the 1950s are still used today. And the software that controls a robot explorer on Mars runs to millions of lines of code!\n\nBlock-based — Text-based\n\nHow you write it — Drag and drop coloured blocks · Type commands as words\n\nEase of learning — Easier — no spelling to remember · Harder — you must remember and spell commands\n\nSpeed of making fun things — Fast · Slower to get started\n\nGood for — Simple games, animations, music, first programs · Advanced software and large, complex games\n\nReal-world software — Rarely used for professional software · Almost all professional software is made this way\n\nFor example: Examples — Scratch · Python, C#, C++"
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Storing Data",
+      "prompt": "Explain in your own words: Storing Data.",
+      "solution": "Two kinds of data: digital and analogue\n\nThere are two types of data: digital and analogue. Digital data is made of binary digits — only the numbers 0 and 1. You can think of 0 as electricity switched off and 1 as electricity switched on. Because a computer is full of tiny switches, it understands data made of 0s and 1s perfectly.\n\nAnalogue data is different. It is not limited to 0 and 1 — it is a smooth, continuous signal that can take any value, like a wave of light or sound. Something that is continuous keeps going without breaks, and on a graph it draws a smooth curving line. Humans and animals sense the world in analogue. The most common analogue data is sound: your ears hear as sound waves, which are vibrations travelling through the air. Your friends talking, traffic in the city, music from a radio — all of it reaches you as analogue sound waves.\n\nFor example: Here is the problem: computers cannot process analogue data. They only understand 0s and 1s. So before a computer can store or work with sound, we must turn the sound into numbers. Think of a row of light switches. Each switch is either on or off, and we write that as a 1 or a 0:"
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: On/off switches become the binary digits 1 and 0",
+      "prompt": "Explain in your own words: On/off switches become the binary digits 1 and 0.",
+      "solution": "Digitising: turning analogue into digital\n\nTo change analogue data into digital data, we digitise it. To digitise sound we use a microphone: the microphone detects the analogue sound waves, and a computer program turns them into digital data (numbers) that the computer can store and use. Computers can digitise other analogue things too, using different sensors — for example, sensors that detect heat or light.\n\nOnce data is digital, you can do a lot with it. You can store it on a drive, share it over the internet, and change it with programs. An audio editing program (like the free tool Audacity) can make a recording louder or quieter, add more sound, or delete parts of it — all by changing the digital numbers.\n\nThere are laws that protect most music, films and pictures from being copied and shared without permission. It is also simply fair: we respect what belongs to others. Always check that you are allowed to copy or send something before you do.\n\nBecause everything is stored as bits, we need a way to measure how much data there is. A single binary number (0 or 1) is called a bit — short for 'binary digit'. It is the smallest unit of storage. Bits are grouped into larger units, and each unit has a name. In this course, as in your textbook, each big unit is 1000 times the one before it.\n\nNotice the two simple rules hidden in that table. To go from bytes to bits, multiply by 8 (because 1 byte = 8 bits). To climb one step up the ladder — bytes to KB, KB to MB, MB to GB, GB to TB — multiply by 1000. To go back down the ladder, divide by 1000. Learning the order bit, nibble, byte, KB, MB, GB, TB by heart makes every storage question easy.\n\nDifferent sizes suit different jobs. Small files are measured in KB and MB — a photo might be 5 MB. Storage devices like hard drives and USB sticks are measured in GB. Huge storage, like the servers that hold web pages, is measured in TB. Here is roughly what fits into different devices:\n\nRAM is measured in GB. A modern computer often has 8 GB, 16 GB or 32 GB of RAM. RAM comes in smaller sizes than a hard drive because it is faster and more expensive to make.\n\nSSDs (solid state drives) are fast secondary storage, commonly 1 TB, 2 TB or 4 TB.\n\nHDDs (older hard disk drives) can hold a great deal — up to about 22 TB.\n\nUSB flash drives and memory cards are small so they fit in a pocket; common sizes are 128 GB and 256 GB.\n\nOne terabyte is an enormous amount. Roughly speaking, 1 TB could store about 250,000 songs, or around 1,000 hours of video, or roughly 85 million pages of text. So when Leila's tablet runs out of space for photos, adding a 4 TB SSD would give her room for many years of pictures.\n\nYou could store over 17,000 hours of music on just 1 terabyte of storage. If you played it without ever stopping, that is more than 700 days of music — almost two whole years of listening!\n\nUnit of storage — Number of bits · Also equal to...\n\nFor example: Bit — 1 · The smallest unit — a single 0 or 1"
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Which of these is hardware? (a) a web browser; (b) a graphics card; (c) an antivirus program; (d) an operating system.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Which of these is software? (a) the motherboard; (b) the power supply; (c) a word processor; (d) the case.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Functionality means: (a) how a device looks; (b) how much it costs; (c) the range of tasks it can do; (d) how long it lasts.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "Aesthetics is about: (a) how something looks; (b) how fast it is; (c) how much data it stores; (d) how many transistors it has.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "Freeware is software that: (a) is illegal; (b) you do not pay for; (c) only works once; (d) has no features.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p06",
+      "level": "Warm-up",
+      "prompt": "Which language is block-based? (a) Python; (b) C++; (c) Scratch; (d) C#.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p07",
+      "level": "Warm-up",
+      "prompt": "Which language is text-based? (a) Scratch; (b) Python; (c) neither; (d) both.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p08",
+      "level": "Warm-up",
+      "prompt": "Analogue data is: (a) only 0s and 1s; (b) a smooth, continuous signal like sound; (c) always digital; (d) stored on a CPU.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p09",
+      "level": "Warm-up",
+      "prompt": "How many bits are in a byte? (a) 2; (b) 4; (c) 8; (d) 1000.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p10",
+      "level": "Warm-up",
+      "prompt": "A nibble is made of: (a) 2 bits; (b) 4 bits; (c) 8 bits; (d) 16 bits.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p11",
+      "level": "Warm-up",
+      "prompt": "Which is the largest unit of storage? (a) kilobyte; (b) megabyte; (c) gigabyte; (d) terabyte.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p12",
+      "level": "Warm-up",
+      "prompt": "The 'brain' of the computer is the: (a) RAM; (b) processor (CPU); (c) power supply; (d) case.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p13",
+      "level": "Warm-up",
+      "prompt": "A transistor is: (a) a type of screen; (b) a tiny switch controlling electricity in the CPU; (c) a storage device; (d) a programming language.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p14",
+      "level": "Warm-up",
+      "prompt": "Primary storage such as RAM is: (a) permanent; (b) volatile (loses data when off); (c) the largest storage; (d) the cheapest storage.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p15",
+      "level": "Warm-up",
+      "prompt": "A robot that works without human help is: (a) manual; (b) autonomous; (c) analogue; (d) volatile.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p16",
+      "level": "Core",
+      "prompt": "Answer in one or two sentences.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Design and advertise a new computer",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "It could be for a clinic, a vet, a farm office, or a design studio in Hargeisa. Choose a purpose for your computer.",
+        "Design it to be fit for purpose. Decide the processor, RAM, storage and graphics card, using Low / Medium / High and explaining each choice.",
+        "Research rough prices for these parts on the internet.",
+        "Choose software for it — say whether each program is free (like LibreOffice or GIMP) or paid-for, and why it is useful.",
+        "Make a marketing poster or presentation showing what your computer looks like, its parts, its total price (a little above what it cost you to build, so your company makes a small profit), and its longevity.",
+        "List five advantages the computer gives the person who buys it."
+      ]
+    },
+    {
+      "title": "Design a new robot",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Think of an industry that interests you and how a robot could help.",
+        "Decide what the robot will look like and do, and draw it on a large sheet of paper.",
+        "Label how it senses, how it moves things, and what it is programmed to do.",
+        "Add five advantages the robot gives its owner.",
+        "Write two or three sentences saying whether the job is best done by robots, humans, or a mix, and why.",
+        "Expected Result (Task 2)"
+      ]
+    },
+    {
+      "title": "Ehel Academy • Year 6 Computing • Hands-on Investigations",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Work through these activities in order. Each one tells you what to do, what to expect, and gives you a prompt for your AI tutor if you get stuck. Some activities use a computer and free software; others are unplugged (no computer needed) and just need a pen and paper. Do the thinking yourself — that is how the ideas stick.",
+        "Getting Started with Free Tools",
+        "Everything in this unit can be done with free, open-source software. If you cannot install anything, you can still do every activity on paper — ask your teacher about using a school device during the twice-weekly sessions.",
+        "Scratch (block-based coding): use it in a browser at scratch.mit.edu, no install needed.",
+        "Python (text-based coding): download Thonny from thonny.org — it includes Python and is made for beginners. Python files end in .py.",
+        "LibreOffice (documents, spreadsheets, presentations): free from libreoffice.org."
+      ]
+    },
+    {
+      "title": "Getting Started with Free Tools",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Everything in this unit can be done with free, open-source software. If you cannot install anything, you can still do every activity on paper — ask your teacher about using a school device during the twice-weekly sessions.",
+        "Scratch (block-based coding): use it in a browser at scratch.mit.edu, no install needed.",
+        "Python (text-based coding): download Thonny from thonny.org — it includes Python and is made for beginners. Python files end in .py.",
+        "LibreOffice (documents, spreadsheets, presentations): free from libreoffice.org.",
+        "GIMP (image editing) and Audacity (sound recording): both free and open-source.",
+        "Goal: be able to tell hardware and software apart quickly."
+      ]
+    },
+    {
+      "title": "Expected Result",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Hardware: mouse, graphics card, motherboard, RAM, power supply. Software: web browser, antivirus program, word processor, operating system, a game. Anything you can physically touch is hardware; anything made of code is software.",
+        "Ask Your AI Tutor",
+        "'I put the operating system under software. Explain what an operating system does and why it is software and not hardware.'",
+        "Activity 2 (Investigation) — Spec a Computer That Is Fit for Purpose",
+        "Goal: choose components for a real user, using Low / Medium / High ratings.",
+        "Pick one user for the Hargeisa lab: the office (school records), the coding club, or the media club (photo and sound editing)."
+      ]
+    },
+    {
+      "title": "Ask Your AI Tutor",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "'I put the operating system under software. Explain what an operating system does and why it is software and not hardware.'",
+        "Activity 2 (Investigation) — Spec a Computer That Is Fit for Purpose",
+        "Goal: choose components for a real user, using Low / Medium / High ratings.",
+        "Pick one user for the Hargeisa lab: the office (school records), the coding club, or the media club (photo and sound editing).",
+        "Make a table with these headings: Processor, RAM, Storage, Graphics card, Longevity.",
+        "Rate each part Low, Medium or High for your chosen user. Remember, High means expensive and good quality."
+      ]
+    },
+    {
+      "title": "In Thonny, type this program:",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "greeting.py — asks for a name and replies",
+        "Save it as greeting.py and run it.",
+        "Type your name when it asks, and press Enter.",
+        "Read the reply. Then change the message inside print(...) to say something of your own.",
+        "The program asks for your name, then greets you by name. This shows the input-process-output idea: it takes input (your name), processes it (joins it into a sentence) and outputs a greeting."
+      ]
+    },
+    {
+      "title": "Go Further",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Language research: find out one fact about the text-based language C# — when it was invented and one kind of software made with it — and write two sentences about it.",
+        "Storage record: find the largest single storage device you can (search for the biggest hard drive), and write down its size in TB. How many 4 TB SSDs would equal it?",
+        "Autonomous spotting: list three autonomous machines you have seen or heard of (for example a robot vacuum cleaner), and say what each one does without a human.",
+        "End-of-Unit Project — Design a Computer and a Robot",
+        "Imagine you own a company that makes computers and robots. This project brings the whole unit together. Work through both tasks and keep your designs.",
+        "Task 1 — Design and advertise a new computer"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "Misconception",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "hardware and software are the same. Truth: hardware is physical and you can touch it; software is programs made of code, and you cannot touch it."
+    },
+    {
+      "symptom": "Learn the storage ladder by heart",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "bit, nibble, byte, KB, MB, GB, TB. Say it out loud until it is automatic, and remember multiply by 1000 to go up, divide by 1000 to go down."
+    },
+    {
+      "symptom": "Warm up (5 min)",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "re-read yesterday's notes and say the storage ladder out loud."
+    },
+    {
+      "symptom": "Learn (10 min)",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Read the next part of this Lesson document carefully."
+    },
+    {
+      "symptom": "Do (20 min)",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "complete the matching activity from the Activities document, typing any code yourself."
+    },
+    {
+      "symptom": "Check (5 min)",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "compare your answers with the expected results and fix any differences."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "!",
+        "text": "Top Facts to Keep in Your Head Hardware = touch it. Software = code you run. Storage ladder: bit, nibble, byte, KB, MB, GB, TB. Up = x1000, down = divide by 1000, and 1 byte = 8 bits. The CPU is the brain; its speed is the clock speed in gigahertz; 1 GHz = one billion calculations per second. Primary storage (RAM) is fast but forgets when off. Secondary storage (SSD) is slower but remembers. Computers only understand 0s and 1s, so analogue data must be digitised first."
+      }
+    ],
+    "terms": [
+      [
+        "hardware",
+        "The physical parts of a computer that you can touch, such as the keyboard, screen and processor."
+      ],
+      [
+        "software",
+        "The programs and code that run on a computer. You cannot touch software."
+      ],
+      [
+        "component",
+        "An individual part of something larger, for example one part of a computer."
+      ],
+      [
+        "functionality",
+        "The range of tasks that a device or piece of software can do."
+      ],
+      [
+        "aesthetics",
+        "How something looks or appears to people."
+      ],
+      [
+        "longevity",
+        "How long something lasts, or its ability to keep being useful."
+      ],
+      [
+        "fit for purpose",
+        "Suitable for the job we want to use it for."
+      ],
+      [
+        "freeware",
+        "Software that is free of charge — you do not pay to use it."
+      ],
+      [
+        "upgrade",
+        "To improve something or replace it with a better version."
+      ],
+      [
+        "programming language",
+        "A way of writing commands to create a program a computer can understand."
+      ],
+      [
+        "programming environment",
+        "The software (a set of tools) that lets you write and test programs."
+      ],
+      [
+        "block-based language",
+        "A language where you drag and drop coloured blocks of code, for example Scratch."
+      ],
+      [
+        "text-based language",
+        "A language where you type commands as words, for example Python."
+      ],
+      [
+        "analogue",
+        "Data as a smooth, continuous wave, such as sound or light, that humans can sense."
+      ],
+      [
+        "digital",
+        "Data stored as binary digits — the numbers 0 and 1."
+      ],
+      [
+        "digitise",
+        "To convert analogue data into digital data so a computer can use it."
+      ],
+      [
+        "bit",
+        "A single binary digit, 0 or 1 — the smallest unit of storage."
+      ],
+      [
+        "byte",
+        "A group of 8 bits."
+      ],
+      [
+        "kilobyte / megabyte / gigabyte / terabyte",
+        "Larger units of storage; each is 1000 times the one before."
+      ],
+      [
+        "processor (CPU)",
+        "The part that carries out instructions and calculations — the 'brain' of the computer."
+      ],
+      [
+        "transistor",
+        "A tiny switch that controls the flow of electricity inside the processor."
+      ],
+      [
+        "clock speed",
+        "The number of calculations a processor can do each second, measured in gigahertz."
+      ],
+      [
+        "primary storage",
+        "Fast, short-term memory that loses its data when the power is off (volatile), such as RAM."
+      ],
+      [
+        "secondary storage",
+        "Long-term storage that keeps its data when the power is off (persistent), such as an SSD."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "hardware",
+        "meaning": "The physical parts of a computer that you can touch, such as the keyboard, screen and processor.",
+        "example": "",
+        "letter": "H"
+      },
+      {
+        "term": "software",
+        "meaning": "The programs and code that run on a computer. You cannot touch software.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "component",
+        "meaning": "An individual part of something larger, for example one part of a computer.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "functionality",
+        "meaning": "The range of tasks that a device or piece of software can do.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "aesthetics",
+        "meaning": "How something looks or appears to people.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "longevity",
+        "meaning": "How long something lasts, or its ability to keep being useful.",
+        "example": "",
+        "letter": "L"
+      },
+      {
+        "term": "fit for purpose",
+        "meaning": "Suitable for the job we want to use it for.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "freeware",
+        "meaning": "Software that is free of charge — you do not pay to use it.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "upgrade",
+        "meaning": "To improve something or replace it with a better version.",
+        "example": "",
+        "letter": "U"
+      },
+      {
+        "term": "programming language",
+        "meaning": "A way of writing commands to create a program a computer can understand.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "programming environment",
+        "meaning": "The software (a set of tools) that lets you write and test programs.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "block-based language",
+        "meaning": "A language where you drag and drop coloured blocks of code, for example Scratch.",
+        "example": "",
+        "letter": "B"
+      },
+      {
+        "term": "text-based language",
+        "meaning": "A language where you type commands as words, for example Python.",
+        "example": "",
+        "letter": "T"
+      },
+      {
+        "term": "analogue",
+        "meaning": "Data as a smooth, continuous wave, such as sound or light, that humans can sense.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "digital",
+        "meaning": "Data stored as binary digits — the numbers 0 and 1.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "digitise",
+        "meaning": "To convert analogue data into digital data so a computer can use it.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "bit",
+        "meaning": "A single binary digit, 0 or 1 — the smallest unit of storage.",
+        "example": "",
+        "letter": "B"
+      },
+      {
+        "term": "byte",
+        "meaning": "A group of 8 bits.",
+        "example": "",
+        "letter": "B"
+      },
+      {
+        "term": "kilobyte / megabyte / gigabyte / terabyte",
+        "meaning": "Larger units of storage; each is 1000 times the one before.",
+        "example": "",
+        "letter": "K"
+      },
+      {
+        "term": "processor (CPU)",
+        "meaning": "The part that carries out instructions and calculations — the 'brain' of the computer.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "transistor",
+        "meaning": "A tiny switch that controls the flow of electricity inside the processor.",
+        "example": "",
+        "letter": "T"
+      },
+      {
+        "term": "clock speed",
+        "meaning": "The number of calculations a processor can do each second, measured in gigahertz.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "primary storage",
+        "meaning": "Fast, short-term memory that loses its data when the power is off (volatile), such as RAM.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "secondary storage",
+        "meaning": "Long-term storage that keeps its data when the power is off (persistent), such as an SSD.",
+        "example": "",
+        "letter": "S"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "Misconception",
+        "hardware and software are the same. Truth: hardware is physical and you can touch it; software is programs made of code, and you cannot touch it."
+      ],
+      [
+        "Learn the storage ladder by heart",
+        "bit, nibble, byte, KB, MB, GB, TB. Say it out loud until it is automatic, and remember multiply by 1000 to go up, divide by 1000 to go down."
+      ],
+      [
+        "Warm up (5 min)",
+        "re-read yesterday's notes and say the storage ladder out loud."
+      ],
+      [
+        "Learn (10 min)",
+        "Read the next part of this Lesson document carefully."
+      ],
+      [
+        "Do (20 min)",
+        "complete the matching activity from the Activities document, typing any code yourself."
+      ],
+      [
+        "Check (5 min)",
+        "compare your answers with the expected results and fix any differences."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Which of these is hardware? (a) a web browser; (b) a graphics card; (c) an antivirus program; (d) an operating system.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Which of these is software? (a) the motherboard; (b) the power supply; (c) a word processor; (d) the case.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Functionality means: (a) how a device looks; (b) how much it costs; (c) the range of tasks it can do; (d) how long it lasts.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Aesthetics is about: (a) how something looks; (b) how fast it is; (c) how much data it stores; (d) how many transistors it has.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Freeware is software that: (a) is illegal; (b) you do not pay for; (c) only works once; (d) has no features.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Which language is block-based? (a) Python; (b) C++; (c) Scratch; (d) C#.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "Which language is text-based? (a) Scratch; (b) Python; (c) neither; (d) both.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "Analogue data is: (a) only 0s and 1s; (b) a smooth, continuous signal like sound; (c) always digital; (d) stored on a CPU.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "How many bits are in a byte? (a) 2; (b) 4; (c) 8; (d) 1000.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "A nibble is made of: (a) 2 bits; (b) 4 bits; (c) 8 bits; (d) 16 bits.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "Which is the largest unit of storage? (a) kilobyte; (b) megabyte; (c) gigabyte; (d) terabyte.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "The 'brain' of the computer is the: (a) RAM; (b) processor (CPU); (c) power supply; (d) case.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what hardware and software mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Sort or match each set. Write your answers, then check the key.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — hardware, software, component — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "Classify hardware or software: mouse, spreadsheet program, RAM, operating system, power supply, web browser.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — hardware, software, component — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Classify block-based or text-based: Scratch, Python, C++, drag-and-drop blocks, typed commands.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — hardware, software, component — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "Classify primary or secondary storage: RAM, SSD, hard drive, USB flash drive.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — hardware, software, component — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Travel",
+      "prompt": "Classify analogue or digital: a person singing, a saved music file, sound waves in the air, the numbers 0 and 1.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — hardware, software, component — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "context": "Health",
+      "prompt": "Match the part to its job: (i) processor, (ii) motherboard, (iii) graphics card, (iv) power supply — jobs: (A) provides electricity, (B) creates the images on screen, (C) carries out calculations, (D) connects all the parts together.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — hardware, software, component — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Answer in one or two sentences.",
+      "keyIdeas": [
+        "hardware",
+        "software",
+        "component"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the difference between hardware and software, with one example of each.",
+      "keyIdeas": [
+        "software",
+        "component",
+        "functionality"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Give a definition of the word functionality.",
+      "keyIdeas": [
+        "component",
+        "functionality",
+        "aesthetics"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "What does fit for purpose mean? Give one example of something that is not fit for purpose.",
+      "keyIdeas": [
+        "functionality",
+        "aesthetics",
+        "longevity"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Why might a computer with better-quality (higher longevity) parts save money over time?",
+      "keyIdeas": [
+        "aesthetics",
+        "longevity",
+        "fit for purpose"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Give one advantage and one disadvantage of using freeware instead of paid-for software.",
+      "keyIdeas": [
+        "longevity",
+        "fit for purpose",
+        "freeware"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "project": {
+    "title": "Design a Computer and a Robot",
+    "brief": "Imagine you own a company that makes computers and robots. This project brings the whole unit together. Work through both tasks and keep your designs.",
+    "steps": [
+      "Plan first: write down what your computer systems project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "My project shows that I understand selecting hardware and software.",
+      "My project shows that I understand cost against speed, aesthetics and longevity.",
+      "My project shows that I understand choosing for a purpose.",
+      "My project shows that I understand programming environments.",
+      "My project shows that I understand storing data."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “hardware” mean in computing?",
+        "options": [
+          "The physical parts of a computer that you can touch, such as the keyboard, screen and processor.",
+          "The programs and code that run on a computer. You cannot touch software.",
+          "An individual part of something larger, for example one part of a computer.",
+          "The range of tasks that a device or piece of software can do."
+        ],
+        "answer": "The physical parts of a computer that you can touch, such as the keyboard, screen and processor.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Hardware means the physical parts of a computer that you can touch, such as the keyboard, screen and processor."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “software” mean in computing?",
+        "options": [
+          "The programs and code that run on a computer. You cannot touch software.",
+          "An individual part of something larger, for example one part of a computer.",
+          "The range of tasks that a device or piece of software can do.",
+          "How something looks or appears to people."
+        ],
+        "answer": "The programs and code that run on a computer. You cannot touch software.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Software means the programs and code that run on a computer. You cannot touch software."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “component” mean in computing?",
+        "options": [
+          "An individual part of something larger, for example one part of a computer.",
+          "The range of tasks that a device or piece of software can do.",
+          "How something looks or appears to people.",
+          "How long something lasts, or its ability to keep being useful."
+        ],
+        "answer": "An individual part of something larger, for example one part of a computer.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Component means an individual part of something larger, for example one part of a computer."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “functionality” mean in computing?",
+        "options": [
+          "The range of tasks that a device or piece of software can do.",
+          "How something looks or appears to people.",
+          "How long something lasts, or its ability to keep being useful.",
+          "Suitable for the job we want to use it for."
+        ],
+        "answer": "The range of tasks that a device or piece of software can do.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Functionality means the range of tasks that a device or piece of software can do."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “aesthetics” mean in computing?",
+        "options": [
+          "How something looks or appears to people.",
+          "How long something lasts, or its ability to keep being useful.",
+          "Suitable for the job we want to use it for.",
+          "Software that is free of charge — you do not pay to use it."
+        ],
+        "answer": "How something looks or appears to people.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Aesthetics means how something looks or appears to people."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “longevity” mean in computing?",
+        "options": [
+          "How long something lasts, or its ability to keep being useful.",
+          "Suitable for the job we want to use it for.",
+          "Software that is free of charge — you do not pay to use it.",
+          "To improve something or replace it with a better version."
+        ],
+        "answer": "How long something lasts, or its ability to keep being useful.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Longevity means how long something lasts, or its ability to keep being useful."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Suitable for the job we want to use it for.?",
+        "options": [
+          "fit for purpose",
+          "freeware",
+          "upgrade",
+          "programming language"
+        ],
+        "answer": "fit for purpose",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Fit for purpose means suitable for the job we want to use it for."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Software that is free of charge — you do not pay to use it.?",
+        "options": [
+          "freeware",
+          "upgrade",
+          "programming language",
+          "programming environment"
+        ],
+        "answer": "freeware",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Freeware means software that is free of charge — you do not pay to use it."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo09",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: To improve something or replace it with a better version.?",
+        "options": [
+          "upgrade",
+          "programming language",
+          "programming environment",
+          "block-based language"
+        ],
+        "answer": "upgrade",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Upgrade means to improve something or replace it with a better version."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A way of writing commands to create a program a computer can understand.?",
+        "options": [
+          "programming language",
+          "programming environment",
+          "block-based language",
+          "text-based language"
+        ],
+        "answer": "programming language",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Programming language means a way of writing commands to create a program a computer can understand."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The software (a set of tools) that lets you write and test programs.?",
+        "options": [
+          "programming environment",
+          "block-based language",
+          "text-based language",
+          "analogue"
+        ],
+        "answer": "programming environment",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Programming environment means the software (a set of tools) that lets you write and test programs."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A language where you drag and drop coloured blocks of code, for example Scratch.?",
+        "options": [
+          "block-based language",
+          "text-based language",
+          "analogue",
+          "digital"
+        ],
+        "answer": "block-based language",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Block-based language means a language where you drag and drop coloured blocks of code, for example Scratch."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u4-game-1",
+        "icon": "?",
+        "skill": "hardware",
+        "title": "Quick Match: hardware",
+        "description": "Practise hardware through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “hardware” mean in computing?",
+            "choices": [
+              "The physical parts of a computer that you can touch, such as the keyboard, screen and processor.",
+              "The programs and code that run on a computer. You cannot touch software.",
+              "An individual part of something larger, for example one part of a computer.",
+              "The range of tasks that a device or piece of software can do."
+            ],
+            "answer": "The physical parts of a computer that you can touch, such as the keyboard, screen and processor.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Hardware means the physical parts of a computer that you can touch, such as the keyboard, screen and processor."
+          },
+          {
+            "prompt": "What does “functionality” mean in computing?",
+            "choices": [
+              "The range of tasks that a device or piece of software can do.",
+              "How something looks or appears to people.",
+              "How long something lasts, or its ability to keep being useful.",
+              "Suitable for the job we want to use it for."
+            ],
+            "answer": "The range of tasks that a device or piece of software can do.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Functionality means the range of tasks that a device or piece of software can do."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Suitable for the job we want to use it for.?",
+            "choices": [
+              "fit for purpose",
+              "freeware",
+              "upgrade",
+              "programming language"
+            ],
+            "answer": "fit for purpose",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Fit for purpose means suitable for the job we want to use it for."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A way of writing commands to create a program a computer can understand.?",
+            "choices": [
+              "programming language",
+              "programming environment",
+              "block-based language",
+              "text-based language"
+            ],
+            "answer": "programming language",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Programming language means a way of writing commands to create a program a computer can understand."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-2",
+        "icon": "★",
+        "skill": "software",
+        "title": "Concept Quest: software",
+        "description": "Practise software through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “software” mean in computing?",
+            "choices": [
+              "The programs and code that run on a computer. You cannot touch software.",
+              "An individual part of something larger, for example one part of a computer.",
+              "The range of tasks that a device or piece of software can do.",
+              "How something looks or appears to people."
+            ],
+            "answer": "The programs and code that run on a computer. You cannot touch software.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Software means the programs and code that run on a computer. You cannot touch software."
+          },
+          {
+            "prompt": "What does “aesthetics” mean in computing?",
+            "choices": [
+              "How something looks or appears to people.",
+              "How long something lasts, or its ability to keep being useful.",
+              "Suitable for the job we want to use it for.",
+              "Software that is free of charge — you do not pay to use it."
+            ],
+            "answer": "How something looks or appears to people.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Aesthetics means how something looks or appears to people."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Software that is free of charge — you do not pay to use it.?",
+            "choices": [
+              "freeware",
+              "upgrade",
+              "programming language",
+              "programming environment"
+            ],
+            "answer": "freeware",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Freeware means software that is free of charge — you do not pay to use it."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The software (a set of tools) that lets you write and test programs.?",
+            "choices": [
+              "programming environment",
+              "block-based language",
+              "text-based language",
+              "analogue"
+            ],
+            "answer": "programming environment",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Programming environment means the software (a set of tools) that lets you write and test programs."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-3",
+        "icon": "◫",
+        "skill": "component",
+        "title": "Debug Detective: component",
+        "description": "Practise component through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “component” mean in computing?",
+            "choices": [
+              "An individual part of something larger, for example one part of a computer.",
+              "The range of tasks that a device or piece of software can do.",
+              "How something looks or appears to people.",
+              "How long something lasts, or its ability to keep being useful."
+            ],
+            "answer": "An individual part of something larger, for example one part of a computer.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Component means an individual part of something larger, for example one part of a computer."
+          },
+          {
+            "prompt": "What does “longevity” mean in computing?",
+            "choices": [
+              "How long something lasts, or its ability to keep being useful.",
+              "Suitable for the job we want to use it for.",
+              "Software that is free of charge — you do not pay to use it.",
+              "To improve something or replace it with a better version."
+            ],
+            "answer": "How long something lasts, or its ability to keep being useful.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Longevity means how long something lasts, or its ability to keep being useful."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To improve something or replace it with a better version.?",
+            "choices": [
+              "upgrade",
+              "programming language",
+              "programming environment",
+              "block-based language"
+            ],
+            "answer": "upgrade",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Upgrade means to improve something or replace it with a better version."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A language where you drag and drop coloured blocks of code, for example Scratch.?",
+            "choices": [
+              "block-based language",
+              "text-based language",
+              "analogue",
+              "digital"
+            ],
+            "answer": "block-based language",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Block-based language means a language where you drag and drop coloured blocks of code, for example Scratch."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-4",
+        "icon": "→",
+        "skill": "functionality",
+        "title": "Algorithm Runner: functionality",
+        "description": "Practise functionality through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “functionality” mean in computing?",
+            "choices": [
+              "The range of tasks that a device or piece of software can do.",
+              "How something looks or appears to people.",
+              "How long something lasts, or its ability to keep being useful.",
+              "Suitable for the job we want to use it for."
+            ],
+            "answer": "The range of tasks that a device or piece of software can do.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Functionality means the range of tasks that a device or piece of software can do."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Suitable for the job we want to use it for.?",
+            "choices": [
+              "fit for purpose",
+              "freeware",
+              "upgrade",
+              "programming language"
+            ],
+            "answer": "fit for purpose",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Fit for purpose means suitable for the job we want to use it for."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A way of writing commands to create a program a computer can understand.?",
+            "choices": [
+              "programming language",
+              "programming environment",
+              "block-based language",
+              "text-based language"
+            ],
+            "answer": "programming language",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Programming language means a way of writing commands to create a program a computer can understand."
+          },
+          {
+            "prompt": "What does “hardware” mean in computing?",
+            "choices": [
+              "The physical parts of a computer that you can touch, such as the keyboard, screen and processor.",
+              "The programs and code that run on a computer. You cannot touch software.",
+              "An individual part of something larger, for example one part of a computer.",
+              "The range of tasks that a device or piece of software can do."
+            ],
+            "answer": "The physical parts of a computer that you can touch, such as the keyboard, screen and processor.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Hardware means the physical parts of a computer that you can touch, such as the keyboard, screen and processor."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-5",
+        "icon": "Σ",
+        "skill": "aesthetics",
+        "title": "Vocabulary Vault: aesthetics",
+        "description": "Practise aesthetics through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “aesthetics” mean in computing?",
+            "choices": [
+              "How something looks or appears to people.",
+              "How long something lasts, or its ability to keep being useful.",
+              "Suitable for the job we want to use it for.",
+              "Software that is free of charge — you do not pay to use it."
+            ],
+            "answer": "How something looks or appears to people.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Aesthetics means how something looks or appears to people."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Software that is free of charge — you do not pay to use it.?",
+            "choices": [
+              "freeware",
+              "upgrade",
+              "programming language",
+              "programming environment"
+            ],
+            "answer": "freeware",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Freeware means software that is free of charge — you do not pay to use it."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The software (a set of tools) that lets you write and test programs.?",
+            "choices": [
+              "programming environment",
+              "block-based language",
+              "text-based language",
+              "analogue"
+            ],
+            "answer": "programming environment",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Programming environment means the software (a set of tools) that lets you write and test programs."
+          },
+          {
+            "prompt": "What does “software” mean in computing?",
+            "choices": [
+              "The programs and code that run on a computer. You cannot touch software.",
+              "An individual part of something larger, for example one part of a computer.",
+              "The range of tasks that a device or piece of software can do.",
+              "How something looks or appears to people."
+            ],
+            "answer": "The programs and code that run on a computer. You cannot touch software.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Software means the programs and code that run on a computer. You cannot touch software."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-6",
+        "icon": "◇",
+        "skill": "longevity",
+        "title": "Challenge Cards: longevity",
+        "description": "Practise longevity through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “longevity” mean in computing?",
+            "choices": [
+              "How long something lasts, or its ability to keep being useful.",
+              "Suitable for the job we want to use it for.",
+              "Software that is free of charge — you do not pay to use it.",
+              "To improve something or replace it with a better version."
+            ],
+            "answer": "How long something lasts, or its ability to keep being useful.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Longevity means how long something lasts, or its ability to keep being useful."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To improve something or replace it with a better version.?",
+            "choices": [
+              "upgrade",
+              "programming language",
+              "programming environment",
+              "block-based language"
+            ],
+            "answer": "upgrade",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Upgrade means to improve something or replace it with a better version."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A language where you drag and drop coloured blocks of code, for example Scratch.?",
+            "choices": [
+              "block-based language",
+              "text-based language",
+              "analogue",
+              "digital"
+            ],
+            "answer": "block-based language",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Block-based language means a language where you drag and drop coloured blocks of code, for example Scratch."
+          },
+          {
+            "prompt": "What does “component” mean in computing?",
+            "choices": [
+              "An individual part of something larger, for example one part of a computer.",
+              "The range of tasks that a device or piece of software can do.",
+              "How something looks or appears to people.",
+              "How long something lasts, or its ability to keep being useful."
+            ],
+            "answer": "An individual part of something larger, for example one part of a computer.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Component means an individual part of something larger, for example one part of a computer."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-7",
+        "icon": "⚡",
+        "skill": "fit for purpose",
+        "title": "Think Fast: fit for purpose",
+        "description": "Practise fit for purpose through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Suitable for the job we want to use it for.?",
+            "choices": [
+              "fit for purpose",
+              "freeware",
+              "upgrade",
+              "programming language"
+            ],
+            "answer": "fit for purpose",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Fit for purpose means suitable for the job we want to use it for."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A way of writing commands to create a program a computer can understand.?",
+            "choices": [
+              "programming language",
+              "programming environment",
+              "block-based language",
+              "text-based language"
+            ],
+            "answer": "programming language",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Programming language means a way of writing commands to create a program a computer can understand."
+          },
+          {
+            "prompt": "What does “hardware” mean in computing?",
+            "choices": [
+              "The physical parts of a computer that you can touch, such as the keyboard, screen and processor.",
+              "The programs and code that run on a computer. You cannot touch software.",
+              "An individual part of something larger, for example one part of a computer.",
+              "The range of tasks that a device or piece of software can do."
+            ],
+            "answer": "The physical parts of a computer that you can touch, such as the keyboard, screen and processor.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Hardware means the physical parts of a computer that you can touch, such as the keyboard, screen and processor."
+          },
+          {
+            "prompt": "What does “functionality” mean in computing?",
+            "choices": [
+              "The range of tasks that a device or piece of software can do.",
+              "How something looks or appears to people.",
+              "How long something lasts, or its ability to keep being useful.",
+              "Suitable for the job we want to use it for."
+            ],
+            "answer": "The range of tasks that a device or piece of software can do.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Functionality means the range of tasks that a device or piece of software can do."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-8",
+        "icon": "☁",
+        "skill": "freeware",
+        "title": "Explain It: freeware",
+        "description": "Practise freeware through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Software that is free of charge — you do not pay to use it.?",
+            "choices": [
+              "freeware",
+              "upgrade",
+              "programming language",
+              "programming environment"
+            ],
+            "answer": "freeware",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Freeware means software that is free of charge — you do not pay to use it."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The software (a set of tools) that lets you write and test programs.?",
+            "choices": [
+              "programming environment",
+              "block-based language",
+              "text-based language",
+              "analogue"
+            ],
+            "answer": "programming environment",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Programming environment means the software (a set of tools) that lets you write and test programs."
+          },
+          {
+            "prompt": "What does “software” mean in computing?",
+            "choices": [
+              "The programs and code that run on a computer. You cannot touch software.",
+              "An individual part of something larger, for example one part of a computer.",
+              "The range of tasks that a device or piece of software can do.",
+              "How something looks or appears to people."
+            ],
+            "answer": "The programs and code that run on a computer. You cannot touch software.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Software means the programs and code that run on a computer. You cannot touch software."
+          },
+          {
+            "prompt": "What does “aesthetics” mean in computing?",
+            "choices": [
+              "How something looks or appears to people.",
+              "How long something lasts, or its ability to keep being useful.",
+              "Suitable for the job we want to use it for.",
+              "Software that is free of charge — you do not pay to use it."
+            ],
+            "answer": "How something looks or appears to people.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Aesthetics means how something looks or appears to people."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-9",
+        "icon": "⌂",
+        "skill": "upgrade",
+        "title": "Real-Life Round: upgrade",
+        "description": "Practise upgrade through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To improve something or replace it with a better version.?",
+            "choices": [
+              "upgrade",
+              "programming language",
+              "programming environment",
+              "block-based language"
+            ],
+            "answer": "upgrade",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Upgrade means to improve something or replace it with a better version."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A language where you drag and drop coloured blocks of code, for example Scratch.?",
+            "choices": [
+              "block-based language",
+              "text-based language",
+              "analogue",
+              "digital"
+            ],
+            "answer": "block-based language",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Block-based language means a language where you drag and drop coloured blocks of code, for example Scratch."
+          },
+          {
+            "prompt": "What does “component” mean in computing?",
+            "choices": [
+              "An individual part of something larger, for example one part of a computer.",
+              "The range of tasks that a device or piece of software can do.",
+              "How something looks or appears to people.",
+              "How long something lasts, or its ability to keep being useful."
+            ],
+            "answer": "An individual part of something larger, for example one part of a computer.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Component means an individual part of something larger, for example one part of a computer."
+          },
+          {
+            "prompt": "What does “longevity” mean in computing?",
+            "choices": [
+              "How long something lasts, or its ability to keep being useful.",
+              "Suitable for the job we want to use it for.",
+              "Software that is free of charge — you do not pay to use it.",
+              "To improve something or replace it with a better version."
+            ],
+            "answer": "How long something lasts, or its ability to keep being useful.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Longevity means how long something lasts, or its ability to keep being useful."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-10",
+        "icon": "!",
+        "skill": "programming language",
+        "title": "Spot the Bug: programming language",
+        "description": "Practise programming language through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A way of writing commands to create a program a computer can understand.?",
+            "choices": [
+              "programming language",
+              "programming environment",
+              "block-based language",
+              "text-based language"
+            ],
+            "answer": "programming language",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Programming language means a way of writing commands to create a program a computer can understand."
+          },
+          {
+            "prompt": "What does “hardware” mean in computing?",
+            "choices": [
+              "The physical parts of a computer that you can touch, such as the keyboard, screen and processor.",
+              "The programs and code that run on a computer. You cannot touch software.",
+              "An individual part of something larger, for example one part of a computer.",
+              "The range of tasks that a device or piece of software can do."
+            ],
+            "answer": "The physical parts of a computer that you can touch, such as the keyboard, screen and processor.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Hardware means the physical parts of a computer that you can touch, such as the keyboard, screen and processor."
+          },
+          {
+            "prompt": "What does “functionality” mean in computing?",
+            "choices": [
+              "The range of tasks that a device or piece of software can do.",
+              "How something looks or appears to people.",
+              "How long something lasts, or its ability to keep being useful.",
+              "Suitable for the job we want to use it for."
+            ],
+            "answer": "The range of tasks that a device or piece of software can do.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Functionality means the range of tasks that a device or piece of software can do."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Suitable for the job we want to use it for.?",
+            "choices": [
+              "fit for purpose",
+              "freeware",
+              "upgrade",
+              "programming language"
+            ],
+            "answer": "fit for purpose",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Fit for purpose means suitable for the job we want to use it for."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-11",
+        "icon": "≡",
+        "skill": "programming environment",
+        "title": "Mastery Mix: programming environment",
+        "description": "Practise programming environment through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The software (a set of tools) that lets you write and test programs.?",
+            "choices": [
+              "programming environment",
+              "block-based language",
+              "text-based language",
+              "analogue"
+            ],
+            "answer": "programming environment",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Programming environment means the software (a set of tools) that lets you write and test programs."
+          },
+          {
+            "prompt": "What does “software” mean in computing?",
+            "choices": [
+              "The programs and code that run on a computer. You cannot touch software.",
+              "An individual part of something larger, for example one part of a computer.",
+              "The range of tasks that a device or piece of software can do.",
+              "How something looks or appears to people."
+            ],
+            "answer": "The programs and code that run on a computer. You cannot touch software.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Software means the programs and code that run on a computer. You cannot touch software."
+          },
+          {
+            "prompt": "What does “aesthetics” mean in computing?",
+            "choices": [
+              "How something looks or appears to people.",
+              "How long something lasts, or its ability to keep being useful.",
+              "Suitable for the job we want to use it for.",
+              "Software that is free of charge — you do not pay to use it."
+            ],
+            "answer": "How something looks or appears to people.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Aesthetics means how something looks or appears to people."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Software that is free of charge — you do not pay to use it.?",
+            "choices": [
+              "freeware",
+              "upgrade",
+              "programming language",
+              "programming environment"
+            ],
+            "answer": "freeware",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Freeware means software that is free of charge — you do not pay to use it."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-12",
+        "icon": "T",
+        "skill": "block-based language",
+        "title": "Unit Champion: block-based language",
+        "description": "Practise block-based language through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A language where you drag and drop coloured blocks of code, for example Scratch.?",
+            "choices": [
+              "block-based language",
+              "text-based language",
+              "analogue",
+              "digital"
+            ],
+            "answer": "block-based language",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Block-based language means a language where you drag and drop coloured blocks of code, for example Scratch."
+          },
+          {
+            "prompt": "What does “component” mean in computing?",
+            "choices": [
+              "An individual part of something larger, for example one part of a computer.",
+              "The range of tasks that a device or piece of software can do.",
+              "How something looks or appears to people.",
+              "How long something lasts, or its ability to keep being useful."
+            ],
+            "answer": "An individual part of something larger, for example one part of a computer.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Component means an individual part of something larger, for example one part of a computer."
+          },
+          {
+            "prompt": "What does “longevity” mean in computing?",
+            "choices": [
+              "How long something lasts, or its ability to keep being useful.",
+              "Suitable for the job we want to use it for.",
+              "Software that is free of charge — you do not pay to use it.",
+              "To improve something or replace it with a better version."
+            ],
+            "answer": "How long something lasts, or its ability to keep being useful.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Longevity means how long something lasts, or its ability to keep being useful."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To improve something or replace it with a better version.?",
+            "choices": [
+              "upgrade",
+              "programming language",
+              "programming environment",
+              "block-based language"
+            ],
+            "answer": "upgrade",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Upgrade means to improve something or replace it with a better version."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can identify the hardware and software components in a computer system.",
+    "I can explain the difference between a block-based and a text-based programming language.",
+    "I can identify when a block-based or a text-based language should be used.",
+    "I can explain why data must be changed into numbers (digitised) before a computer can process it.",
+    "I can identify the units of storage used to show how large a storage device is, from a bit up to a TB.",
+    "I can explain what a computer processor is and describe what it does.",
+    "I can identify primary storage and secondary storage in a computer and discuss the role of each.",
+    "I can explain what it means for a robot to be autonomous.",
+    "I can say [Hello!] for 1 seconds",
+    "I can explain it to someone. Teaching a family member why a computer digitises sound is the fastest way to prove you understand it."
+  ]
+}

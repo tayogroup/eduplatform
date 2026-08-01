@@ -62,6 +62,78 @@ npm run validate:curriculum-units -- --strict-cambridge
 
 A framework failure usually means the extracted JSON is wrong, not the unit. The frameworks are parsed out of Cambridge's PDFs and the source documents are not in the repo, so fix the framework before re-pointing any mapping at it.
 
+## Ehel Academy subject pipelines
+
+Science and Computing are built from Word source packs in `~/Downloads`, not hand-edited. Each is `extract → build → check`:
+
+```bash
+npm run extract:computing-content && npm run build:computing && npm run check:computing
+```
+
+**Never hand-edit `src/prototypes/ehel-academy/{science,computing}/grade-*/data/`** — it is generated, and the next build overwrites it. Fix the builder instead.
+
+The Science and Computing packs are both exported from Google Drive as `Year <n>-<UTC stamp>-<part>.zip`, so a Downloads folder holds two subjects under indistinguishable filenames. `extract-ehel-computing-content.py` classifies each archive by what its documents say and only accepts Computing ones. The science extractor still picks by name alone, so **check which subject a `Year N` zip actually contains before running `extract:science-content`.**
+
+Computing spans Stages 1-7 (Cambridge Primary Computing 0672, Lower Secondary 0868). Stages 1-4 ship as Teacher & Parent Guides, so the builder rewrites their prose into learner-facing explainers (`learnerVoice`); Stages 5-7 ship student lesson books carried across as written. `check:computing` is the gate on that conversion — it fails on adult-addressed text, classroom staging, truncated explainers and modules duplicated across units.
+
+### Reviewed Science scripts
+
+Narration scripts are reviewed in a workbook, not in the repo: `export-ehel-science-scripts.py` flattens every learner-facing line into one sheet per grade, and the reviewed file comes back from OneDrive. Those corrections cannot be hand-applied to `science/grade-*/data/` (generated), so they live in `science/data/script-review.json` and the builder lays them over every rebuild:
+
+```bash
+python tools/apply-ehel-science-script-review.py --workbook <reviewed.xlsx>   # --dry to preview
+npm run build:science && npm run check:science
+```
+
+The apply step **merges** into the existing override file. It finds edits by diffing the workbook against the content on disk, which already carries any earlier review — so a re-run adds newly resolved rows instead of shrinking the file to just those. It also proves its parser on every row against the real JSON before trusting it on an edit, and refuses to apply half of an answer/options pair. Rows it reports as skipped need a human; they are not silently dropped.
+
+### Reviewed Computing scripts
+
+Same loop as Science, with its own tools. `export-ehel-computing-scripts.py` flattens every learner-facing line into one sheet per stage; the reviewed file comes back from OneDrive and lands in `computing/data/script-review.json`:
+
+```bash
+python tools/apply-ehel-computing-script-review.py --workbook <reviewed.xlsx> --grades 1   # --dry to preview
+npm run build:computing && npm run check:computing
+```
+
+Same safety model: the parser is proved against the real JSON on every row before it is trusted on an edit, and answer/option pairs are applied whole or not at all. Two computing-specific wrinkles — a Code Example's "Listing" line is `<title> (<language>)`, of which only the title is writable, and the exporter must force any cell starting with `=`, `+`, `-` or `@` to text or Excel reads the code as a formula and reports the workbook as corrupt.
+
+### Computing narration audio
+
+`generate-ehel-computing-audio.js` mirrors the Science generator, including the rule that its strings must match `computing/shared/course-ui.js` character for character. `check-computing-audio-coverage.mjs` is the gate and runs inside `check:computing`. It also fails when a category's template cannot be read out of the generator source at all — a multi-line `case` used to skip the wording comparison silently, which is how a drift would slip past the check meant to catch it.
+
+```bash
+node tools/generate-ehel-computing-audio.js 1 --dry        # characters, nothing sent
+node tools/generate-ehel-computing-audio.js 1 --budget 900 # prove the pipeline first
+node tools/generate-ehel-computing-audio.js 1              # the full stage
+node tools/generate-ehel-computing-audio.js --orphans      # clips no button asks for any more
+node tools/generate-ehel-computing-audio.js --orphans --prune
+```
+
+Any content change under an already-generated set — a builder fix, a returned review — moves the text, so its hash moves too and the old clip is orphaned. Re-running the generator fills the new hashes (it is idempotent, so nothing already correct is paid for twice); `--orphans` finds the dead files left behind. It refuses a narrowed run, because with a category or grade filter every other stage's clips would look orphaned.
+
+Clips land in `computing/media/audio/tts/<hash>.mp3`, which is where the app looks in local dev; the Bunny build remaps it to the per-stage `media/computing/gNN/` tree. Stage 1 alone is ~1,030 clips / ~201k characters, and ElevenLabs bills per character — always `--dry` first.
+
+### Science narration audio
+
+`generate-ehel-science-audio.js` pre-renders each Listen button to `media/audio/tts/<cyrb53(text)>.mp3`. The hash is over the button's exact text, so the generator's strings must match `science/shared/course-ui.js` character for character — otherwise the app requests a file that was never written, silently falls back to the paid runtime endpoint, and the clip is money spent on a file nobody serves. `check:science` gates this via `check-ehel-audio-coverage.mjs`, which fails when a Listen button appears that no generator category reproduces, when a template drifts, or when the two copies of `cyrb53` diverge. Run the generator with `--dry` first; it reports characters, and ElevenLabs bills per character.
+
+**`tools/lib/ehel-<subject>-narration.js` is the one definition** of what a course narrates and what each clip is called (`ehel-science-narration.js`, `ehel-math-narration.js`; the hash itself lives in `ehel-narration-hash.js`). Three tools must agree exactly and used to hold drifting copies — the generator (what to buy), `upload-media-to-bunny.js` (where each clip belongs in the deploy tree) and `prune-ehel-course-audio.mjs` (what nothing can reach). Change narrated text there, never in a copy.
+
+Mathematics works the same way and is gated by `check:math`. The two courses share a UI, so they share the button shapes; Mathematics simply has no vocabulary word-cards.
+
+The full local loop:
+
+```bash
+node tools/generate-ehel-science-audio.js 1 --dry        # cost first, then drop --dry
+node tools/prune-ehel-course-audio.mjs science          # report; --delete to remove orphans
+BUNNY_KEY=… node tools/upload-media-to-bunny.js science
+```
+
+Two paths, one cache: the course reads `./media/audio/tts/<hash>.mp3` in local dev, but `../../media/science/g<NN>/audio/tts/<hash>.mp3` once deployed. The flat local cache is fanned out per grade **at upload time** by `upload-media-to-bunny.js` — there is no copy in `dist/`, so a clip only reaches production through that upload. A text shared by two grades is uploaded under both. Clips no grade claims are skipped with a warning rather than uploaded, since no UI ever requests them.
+
+A content rebuild renames every clip whose text changed, orphaning the old file. Run the pruner after `build:science`, and note the orphans are only free to delete while git still has them.
+
 ## Git
 
 - Work on `main` (or feature branches off it). History before 2026-07-16 lived on `codex/*` branches, now merged and deleted.

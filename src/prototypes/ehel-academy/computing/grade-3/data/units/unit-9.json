@@ -1,0 +1,1754 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.567Z",
+  "stage": {
+    "id": "s03",
+    "label": "Stage 3"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t03",
+    "label": "Term 3"
+  },
+  "unit": {
+    "unitId": "comp-g03-u09",
+    "unitNo": 9,
+    "unitTitle": "Sending Secret Messages",
+    "unitOverview": "Welcome to Unit 9 of Year 3 Computing at Ehel Academy. This unit is all about secret messages — how we can hide the meaning of a message so that only the right person can read it. The big idea is the cipher: a set of rules for turning a normal message into a secret one, and back again.\n\nThere are two important new words. Plain text is the normal, easy-to-read message, like hello. Ciphertext is the secret, scrambled version that only makes sense if you know the cipher. A cipher is the rule that turns one into the other, and both friends know the rule; anyone else just sees a jumble. We say we encode a message to make it secret, and decode it to read it again.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 3
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-3-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 3",
+    "sourceArchive": "Year 3-20260801T055744Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 3/Unit 9/Year 3 - Unit 9 Teacher Guide.docx",
+      "Year 3/Unit 9/Year 3 - Unit 9 Activity Sheet.docx",
+      "Year 3/Unit 9/Year 3 - Unit 9 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 374,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 3 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Explain what a cipher is — a set of rules that turns plain text into ciphertext.",
+    "Tell the difference between plain text (the normal message) and ciphertext (the secret message).",
+    "Encode a short message using a simple code (make it secret).",
+    "Decode a short secret message back into plain text (read it).",
+    "Use at least two different codes: the flip-text cipher, a picture code, the letters-to-numbers code, and the reverse-alphabet code.",
+    "Say why we might use a cipher when sending information on a network."
+  ],
+  "toolkit": [
+    {
+      "name": "Scratch",
+      "url": "scratch.mit.edu",
+      "steps": [
+        "Go to scratch.mit.edu and click Create.",
+        "Drag blocks from the palette on the left into the code area.",
+        "Make variables in the orange Variables section.",
+        "Click the green flag to run and the red circle to stop."
+      ],
+      "note": "Runs in a web browser. Free, with nothing to download."
+    }
+  ],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-what-is-a-cipher-plain-text-and-ciphertext",
+      "title": "What is a cipher? Plain text and ciphertext",
+      "explanation": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it — but nobody else can.\n\nHave you ever wanted to tell your best friend something so that nobody else understands? Today we learn how to send secret messages — like a real spy or a code-breaker! before the vowel sound in a word, so. It does not have to be perfect — it is just to show that a secret language follows a rule.",
+      "example": "Answer this in your own words, out loud or on paper: What is a cipher? Plain text and ciphertext? Then check your answer against the explanation above.",
+      "checkYourself": "Can you point to where the cipher (the rule) does its work? Do not expect you to encode anything yet — that starts next session."
+    },
+    {
+      "id": "concept-2-the-flip-text-cipher",
+      "title": "The flip-text cipher",
+      "explanation": "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first code because there is no chart to remember — the rule *is* the code.\n\nwrite the letters in the opposite order: smeg. Same letters — just backwards. Now it is secret!",
+      "example": "Find one real example of the flip-text cipher around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you check your work by flipping back? Neat, careful letter-by-letter work matters more than speed here. Does you keep every letter (none dropped, none added) when you flip?"
+    },
+    {
+      "id": "concept-3-picture-codes-swapping-letters-for-symbols",
+      "title": "Picture codes: swapping letters for symbols",
+      "explanation": "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each letter becomes. As long as both friends have the same key, they can read each other's secret pictures.\n\nEncode meet together, drawing square, triangle, triangle, diamond. Then ask a child to be the decoder and read the pictures back using the key.",
+      "example": "Find one real example of picture codes: swapping letters for symbols around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you keep the shapes in the correct order (left to right), just like letters in a word? Does you use the key carefully, matching each picture to the right letter? Praise neat, in-order drawing."
+    },
+    {
+      "id": "concept-4-the-letters-to-numbers-code",
+      "title": "The letters-to-numbers code",
+      "explanation": "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the message tidy. This is the letters-to-numbers code.\n\nencode a word slowly: cat is c = 03, a = 01, t = 20, so cat becomes 03 01 20. Then decode one together: write 08 09 and you can look up h and i to read hi. Put the big number chart on the wall and count along it together: a is 1, b is 2, c is 3.",
+      "example": "Find one real example of the letters-to-numbers code around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you keep a small gap between letters so the numbers do not run together? Careful place-keeping is the whole skill here. Does you use two digits for every letter?"
+    },
+    {
+      "id": "concept-5-the-reverse-alphabet-code-and-being-a-code-breaker",
+      "title": "The reverse-alphabet code, and being a code-breaker",
+      "explanation": "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters code. The best surprise: the same rule hides *and* reveals, so encoding and decoding are the same action.\n\nThese two are partners. Then, to show the magic, encode svool again — it turns back into hello.",
+      "example": "You can gasp; it feels like real code-breaking. Write the alphabet forwards, then underneath write it backwards, so the pairs line up.",
+      "checkYourself": "Can you notice that the same rule decodes and encodes? In Task 8, Can you describe the pattern (front letter pairs with back letter) in your own words? Can you use the paired chart both ways?"
+    }
+  ],
+  "codeExamples": [],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Secret Language Warm-Up",
+      "context": "work through the steps below and see what happens. This is what is a cipher? plain text and ciphertext in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Add the sound \"ub “before the vowel in a word. So hello becomes” hub-ello “and Ivy becomes” ub-Ivy\". Play a talking game with a partner. Try saying these to your partner.",
+      "answer": "Your name. hello. friend. This is just for fun — there is no wrong answer. Giggle and enjoy your secret language!",
+      "modelType": "model-1",
+      "hint": "Start here: Your name.",
+      "explanation": "What is a cipher? Plain text and ciphertext: A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it — but nobody else can."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Plain Text or Ciphertext?",
+      "context": "work through the steps below and see what happens. This is the flip-text cipher in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "One message is plain text (easy to read). One is ciphertext (secret). Write the right label under each one.",
+      "answer": "Message A: hello Message B: olleh Message A is ________________________ Message B is ________________________ The secret rule here was: write the word ________________________.",
+      "modelType": "model-2",
+      "hint": "Start here: Message A: hello",
+      "explanation": "The flip-text cipher: Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first code because there is no chart to remember — the rule *is* the code."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "The Flip Code",
+      "context": "work through the steps below and see what happens. This is picture codes: swapping letters for symbols in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "The flip code writes a message backwards. To read it, flip it back! Work slowly from the last letter.",
+      "answer": "a) Layla sent this flipped name. Flip it back to read it oel -> ______________ b) Now YOU flip Max's name to make it secret max -> ______________",
+      "modelType": "model-3",
+      "hint": "Start here: a) Layla sent this flipped name. Flip it back to read it",
+      "explanation": "Picture codes: swapping letters for symbols: A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each letter becomes. As long as both friends have the same key, they can read each other's secret pictures."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "The Picture Code",
+      "context": "work through the steps below and see what happens. This is the letters-to-numbers code in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "This code swaps each letter for a picture. Use the key to read and write secret words.",
+      "answer": "a) Decode this secret word. Write the letters under the pictures. square triangle triangle diamond -> ______________ b) Now draw the pictures to encode the word yes Match: Letter → Picture Match: a → star",
+      "modelType": "model-4",
+      "hint": "Start here: a) Decode this secret word. Write the letters under the pictures.",
+      "explanation": "The letters-to-numbers code: We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the message tidy. This is the letters-to-numbers code."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Decode the Number Message",
+      "context": "work through the steps below and see what happens. This is the reverse-alphabet code, and being a code-breaker in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Leo sent you a message in the letters-to-numbers code. Use the chart to read it. Read the digits two at a time.",
+      "answer": "Code chart a = 01 b = 02 c = 03 d = 04 e = 05 f = 06 g = 07 h = 08 i = 09 j = 10 k = 11 l = 12 m = 13 n = 14 o = 15 p = 16 q = 17 r = 18 s = 19 t = 20 u = 21 v = 22 w = 23 x = 24 y = 25 z = 26",
+      "modelType": "model-5",
+      "hint": "Start here: Code chart",
+      "explanation": "The reverse-alphabet code, and being a code-breaker: In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters code. The best surprise: the same rule hides *and* reveals, so encoding and decoding are the same action."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Send a Number Message",
+      "context": "work through the steps below and see what happens. This is what is a cipher? plain text and ciphertext in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Remember: two digits for every letter (like 05, not 5). Use the same chart to encode a message.",
+      "answer": "a) Write the word smile in the number code smile -> ________________________ b) Now write YOUR name in the number code ________ -> ________________________",
+      "modelType": "model-6",
+      "hint": "Start here: a) Write the word smile in the number code",
+      "explanation": "What is a cipher? Plain text and ciphertext: A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it — but nobody else can."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "What is a cipher? Plain text and ciphertext",
+      "modelType": "concept-model-1",
+      "purpose": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it -…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "The flip-text cipher",
+      "modelType": "concept-model-2",
+      "purpose": "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first code because there is no chart to remember — the rule *is* the code.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Picture codes: swapping letters for symbols",
+      "modelType": "concept-model-3",
+      "purpose": "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each letter becomes. As long as both friends have the same key, they can…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "The letters-to-numbers code",
+      "modelType": "concept-model-4",
+      "purpose": "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the message tidy. This is the letters-to-numbers code.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "The reverse-alphabet code, and being a code-breaker",
+      "modelType": "concept-model-5",
+      "purpose": "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters code. The best surprise: the same rule hides *and* reveals, so…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with what is a cipher? plain text and ciphertext",
+      "example": "Answer this in your own words, out loud or on paper: What is a cipher? Plain text and ciphertext? Then check your answer against the explanation above.",
+      "steps": [
+        "Read the concept card for what is a cipher? plain text and ciphertext and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with the flip-text cipher",
+      "example": "Find one real example of the flip-text cipher around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for the flip-text cipher and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with picture codes: swapping letters for symbols",
+      "example": "Find one real example of picture codes: swapping letters for symbols around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for picture codes: swapping letters for symbols and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with the letters-to-numbers code",
+      "example": "Find one real example of the letters-to-numbers code around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for the letters-to-numbers code and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with the reverse-alphabet code, and being a code-breaker",
+      "example": "You can gasp; it feels like real code-breaking. Write the alphabet forwards, then underneath write it backwards, so the pairs line up.",
+      "steps": [
+        "Read the concept card for the reverse-alphabet code, and being a code-breaker and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: What is a cipher? Plain text and ciphertext",
+      "prompt": "Write true or false next to each one:",
+      "solution": "a) true; b) false; c) true."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: The flip-text cipher",
+      "prompt": "Decode this backwards-alphabet secret word:",
+      "solution": "hvxivg decodes to secret."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Picture codes: swapping letters for symbols",
+      "prompt": "Why might you use a cipher to send a message on a network? Write one reason.",
+      "solution": "Any sensible reason, e.g. so that people who should not see the message cannot read private information (like a home address or bank number) if they spy on the network."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: What is a cipher? Plain text and ciphertext",
+      "prompt": "Explain in your own words: What is a cipher? Plain text and ciphertext.",
+      "solution": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it — but nobody else can.\n\nHave you ever wanted to tell your best friend something so that nobody else understands? Today we learn how to send secret messages — like a real spy or a code-breaker! before the vowel sound in a word, so. It does not have to be perfect — it is just to show that a secret language follows a rule.\n\nFor example: Answer this in your own words, out loud or on paper: What is a cipher? Plain text and ciphertext? Then check your answer against the explanation above."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: The flip-text cipher",
+      "prompt": "Explain in your own words: The flip-text cipher.",
+      "solution": "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first code because there is no chart to remember — the rule *is* the code.\n\nwrite the letters in the opposite order: smeg. Same letters — just backwards. Now it is secret!\n\nFor example: Find one real example of the flip-text cipher around you, or on a device you use. Say out loud what it is and why it fits."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Picture codes: swapping letters for symbols",
+      "prompt": "Explain in your own words: Picture codes: swapping letters for symbols.",
+      "solution": "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each letter becomes. As long as both friends have the same key, they can read each other's secret pictures.\n\nEncode meet together, drawing square, triangle, triangle, diamond. Then ask a child to be the decoder and read the pictures back using the key.\n\nFor example: Find one real example of picture codes: swapping letters for symbols around you, or on a device you use. Say out loud what it is and why it fits."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Fill in the word. A",
+      "answer": "cipher.",
+      "hint": "Look back at what cipher and plain text mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Write true or false next to each one:",
+      "answer": "a) true; b) false; c) true.",
+      "hint": "Look back at what cipher and plain text mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "Write star in the flip code (backwards):",
+      "answer": "star becomes rats.",
+      "hint": "Look back at what cipher and plain text mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Write cat in the letters-to-numbers code (two digits each):",
+      "answer": "cat becomes 03 01 20.",
+      "hint": "Look back at what cipher and plain text mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "Decode this backwards-alphabet secret word:",
+      "answer": "hvxivg decodes to secret.",
+      "hint": "Look back at what cipher and plain text mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "Why might you use a cipher to send a message on a network? Write one reason.",
+      "answer": "Any sensible reason, e.g. so that people who should not see the message cannot read private information (like a home address or bank number) if they spy on the network.",
+      "hint": "Look back at what cipher and plain text mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Secret Language Warm-Up",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Add the sound \"ub “before the vowel in a word. So hello becomes” hub-ello “and Ivy becomes” ub-Ivy\". Play a talking game with a partner. Try saying these to your partner.",
+        "Your name.",
+        "hello.",
+        "friend.",
+        "This is just for fun — there is no wrong answer. Giggle and enjoy your secret language!"
+      ]
+    },
+    {
+      "title": "Plain Text or Ciphertext?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "One message is plain text (easy to read). One is ciphertext (secret). Write the right label under each one.",
+        "Message A: hello",
+        "Message B: olleh",
+        "Message A is ________________________",
+        "Message B is ________________________",
+        "The secret rule here was: write the word ________________________."
+      ]
+    },
+    {
+      "title": "The Flip Code",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "The flip code writes a message backwards. To read it, flip it back! Work slowly from the last letter.",
+        "a) Layla sent this flipped name. Flip it back to read it",
+        "oel -> ______________",
+        "b) Now YOU flip Max's name to make it secret",
+        "max -> ______________"
+      ]
+    },
+    {
+      "title": "The Picture Code",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "This code swaps each letter for a picture. Use the key to read and write secret words.",
+        "a) Decode this secret word. Write the letters under the pictures.",
+        "square triangle triangle diamond -> ______________",
+        "b) Now draw the pictures to encode the word yes",
+        "Match: Letter → Picture",
+        "Match: a → star"
+      ]
+    },
+    {
+      "title": "Decode the Number Message",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Leo sent you a message in the letters-to-numbers code. Use the chart to read it. Read the digits two at a time.",
+        "Code chart",
+        "a = 01 b = 02 c = 03 d = 04 e = 05 f = 06 g = 07",
+        "h = 08 i = 09 j = 10 k = 11 l = 12 m = 13",
+        "n = 14 o = 15 p = 16 q = 17 r = 18 s = 19 t = 20",
+        "u = 21 v = 22 w = 23 x = 24 y = 25 z = 26"
+      ]
+    },
+    {
+      "title": "Send a Number Message",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Remember: two digits for every letter (like 05, not 5). Use the same chart to encode a message.",
+        "a) Write the word smile in the number code",
+        "smile -> ________________________",
+        "b) Now write YOUR name in the number code",
+        "________ -> ________________________"
+      ]
+    },
+    {
+      "title": "The Backwards-Alphabet Code",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "In this code, a swaps with z, b with y, and so on. The same rule works both ways — it hides AND reveals!",
+        "Code chart",
+        "a = z b = y c = x d = w e = v f = u g = t",
+        "h = s i = r j = q k = p l = o m = n",
+        "n = m o = l p = k q = j r = i s = h t = g",
+        "u = f v = e w = d x = c y = b z = a"
+      ]
+    },
+    {
+      "title": "Make Your Own Code!",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "You are the code-maker now. Choose your own secret rule — maybe letters become shapes, or each letter moves one step along the alphabet.",
+        "My secret rule is: ________________________________________________",
+        "A secret word using my code: ________________________________________",
+        "Spot the pattern: In the backwards-alphabet code, a pairs with z and c pairs with x. What does d pair with? ______",
+        "Did You Know?",
+        "The ancient Greeks sent secret coded messages more than two thousand years ago — long before computers!"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "A cipher is the secret message.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — the cipher is the *rule*. The secret message it makes is the ciphertext. Point to the rule and the result separately."
+    },
+    {
+      "symptom": "Plain text and ciphertext are different words for the same thing.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Same message, two forms. Show both together: hello is plain text, svool is ciphertext."
+    },
+    {
+      "symptom": "You need a computer to use a cipher.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Not at all — people used codes long before computers. Everything in this unit is done with a pencil."
+    },
+    {
+      "symptom": "05 and 5 are the same in the number code.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "In this code every letter uses two digits, so it must be 05. A single digit breaks the message when a friend reads it back."
+    },
+    {
+      "symptom": "Only some of the word gets flipped.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "In flip-text the *whole* message reverses, every letter. Count the letters to check none went missing."
+    },
+    {
+      "symptom": "A secret code can never be worked out by anyone else.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Simple codes can be guessed, especially very short ones. That is exactly why the Mini-Project asks you to make a *new* code when the first is discovered — a real idea in keeping messages safe. Confusing the letter O and the number 0, or the letter I and the number 1. This causes real decoding bugs."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Keep personal information private",
+      "text": "Your full name, address, school, phone number, birthday and passwords are personal information. Never type them into a game, an app or a website, and never send them to someone you only know online."
+    },
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "What is a cipher? Plain text and ciphertext",
+        "text": "A cipher is a set of rules that turns a normal message into a secret one."
+      },
+      {
+        "title": "The flip-text cipher",
+        "text": "Our first real cipher is the flip-text cipher."
+      },
+      {
+        "title": "Picture codes: swapping letters for symbols",
+        "text": "A code can swap each letter for something else — not just another letter, but a little picture or symbol."
+      },
+      {
+        "title": "The letters-to-numbers code",
+        "text": "We can swap each letter for a number."
+      },
+      {
+        "title": "The reverse-alphabet code, and being a code-breaker",
+        "text": "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on."
+      }
+    ],
+    "terms": [
+      [
+        "cipher",
+        "A set of rules that turns a normal message into a secret one."
+      ],
+      [
+        "plain text",
+        "The normal message that anyone can read."
+      ],
+      [
+        "ciphertext",
+        "The secret message that only makes sense if you know the cipher."
+      ],
+      [
+        "code",
+        "A kind of cipher that swaps each letter for a letter, number or symbol."
+      ],
+      [
+        "encode",
+        "To turn a normal message into a secret one."
+      ],
+      [
+        "decode",
+        "To turn a secret message back into a normal one."
+      ],
+      [
+        "key",
+        "The chart that shows what each letter turns into."
+      ],
+      [
+        "network",
+        "Computers joined together so they can share."
+      ],
+      [
+        "private",
+        "Something kept safe, only for the right person to see."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "cipher",
+        "meaning": "A set of rules that turns a normal message into a secret one.",
+        "example": "Write every message backwards.",
+        "letter": "C"
+      },
+      {
+        "term": "plain text",
+        "meaning": "The normal message that anyone can read.",
+        "example": "hello",
+        "letter": "P"
+      },
+      {
+        "term": "ciphertext",
+        "meaning": "The secret message that only makes sense if you know the cipher.",
+        "example": "olleh",
+        "letter": "C"
+      },
+      {
+        "term": "code",
+        "meaning": "A kind of cipher that swaps each letter for a letter, number or symbol.",
+        "example": "a = 01, b = 02, c = 03",
+        "letter": "C"
+      },
+      {
+        "term": "encode",
+        "meaning": "To turn a normal message into a secret one.",
+        "example": "cat becomes 03 01 20",
+        "letter": "E"
+      },
+      {
+        "term": "decode",
+        "meaning": "To turn a secret message back into a normal one.",
+        "example": "03 01 20 becomes cat",
+        "letter": "D"
+      },
+      {
+        "term": "key",
+        "meaning": "The chart that shows what each letter turns into.",
+        "example": "The a = 01 code chart.",
+        "letter": "K"
+      },
+      {
+        "term": "network",
+        "meaning": "Computers joined together so they can share.",
+        "example": "The internet.",
+        "letter": "N"
+      },
+      {
+        "term": "private",
+        "meaning": "Something kept safe, only for the right person to see.",
+        "example": "Your home address.",
+        "letter": "P"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "A cipher is the secret message.",
+        "No — the cipher is the *rule*. The secret message it makes is the ciphertext. Point to the rule and the result separately."
+      ],
+      [
+        "Plain text and ciphertext are different words for the same thing.",
+        "Same message, two forms. Show both together: hello is plain text, svool is ciphertext."
+      ],
+      [
+        "You need a computer to use a cipher.",
+        "Not at all — people used codes long before computers. Everything in this unit is done with a pencil."
+      ],
+      [
+        "05 and 5 are the same in the number code.",
+        "In this code every letter uses two digits, so it must be 05. A single digit breaks the message when a friend reads it back."
+      ],
+      [
+        "Only some of the word gets flipped.",
+        "In flip-text the *whole* message reverses, every letter. Count the letters to check none went missing."
+      ],
+      [
+        "A secret code can never be worked out by anyone else.",
+        "Simple codes can be guessed, especially very short ones. That is exactly why the Mini-Project asks you to make a *new* code when the first is discovered — a real idea in keeping messages safe. Confusing the letter O and the number 0, or the letter I and the number 1. This causes real decoding bugs."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Fill in the word. A",
+      "answer": "cipher.",
+      "hint": "Look back at what cipher and plain text mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "cipher."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Write true or false next to each one:",
+      "answer": "a) true; b) false; c) true.",
+      "hint": "Look back at what cipher and plain text mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "a) true; b) false; c) true."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Write star in the flip code (backwards):",
+      "answer": "star becomes rats.",
+      "hint": "Look back at what cipher and plain text mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "star becomes rats."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Write cat in the letters-to-numbers code (two digits each):",
+      "answer": "cat becomes 03 01 20.",
+      "hint": "Look back at what cipher and plain text mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "cat becomes 03 01 20."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Decode this backwards-alphabet secret word:",
+      "answer": "hvxivg decodes to secret.",
+      "hint": "Look back at what cipher and plain text mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "hvxivg decodes to secret."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Why might you use a cipher to send a message on a network? Write one reason.",
+      "answer": "Any sensible reason, e.g. so that people who should not see the message cannot read private information (like a home address or bank number) if they spy on the network.",
+      "hint": "Look back at what cipher and plain text mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Any sensible reason, e.g. so that people who should not see the message cannot read private information (like a home address or bank number) if they spy on the network."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Why might you use a cipher to send a message on a network? Write one reason.",
+      "answer": "Any sensible reason, e.g. so that people who should not see the message cannot read private information (like a home address or bank number) if they spy on the network.",
+      "hint": "Look back at what cipher and plain text mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Any sensible reason, e.g. so that people who should not see the message cannot read private information (like a home address or bank number) if they spy on the network."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "Decode this backwards-alphabet secret word:",
+      "answer": "hvxivg decodes to secret.",
+      "hint": "Look back at what cipher and plain text mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: hvxivg decodes to secret."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Why might you use a cipher to send a message on a network? Write one reason.",
+      "answer": "Any sensible reason, e.g. so that people who should not see the message cannot read private information (like a home address or bank number) if they spy on the network.",
+      "hint": "Look back at what cipher and plain text mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Any sensible reason, e.g. so that people who should not see the message cannot read private information (like a home address or bank number) if they spy on the network."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "Fill in the word. A",
+      "answer": "cipher.",
+      "hint": "Look back at what cipher and plain text mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: cipher."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Write star in the flip code (backwards):",
+      "keyIdeas": [
+        "cipher",
+        "plain text",
+        "ciphertext"
+      ],
+      "modelAnswer": "star becomes rats."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Write cat in the letters-to-numbers code (two digits each):",
+      "keyIdeas": [
+        "plain text",
+        "ciphertext",
+        "code"
+      ],
+      "modelAnswer": "cat becomes 03 01 20."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Decode this backwards-alphabet secret word:",
+      "keyIdeas": [
+        "ciphertext",
+        "code",
+        "encode"
+      ],
+      "modelAnswer": "hvxivg decodes to secret."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in the letters-to-numbers code, and give one example of your own.",
+      "keyIdeas": [
+        "cipher",
+        "plain text",
+        "ciphertext"
+      ],
+      "modelAnswer": "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the message tidy. This is the letters-to-numbers code.\n\nencode a word slowly: cat is c = 03, a = 01, t = 20, so cat becomes 03 01 20. Then decode one together: write 08 09 and you can look up h and i to read hi. Put the big number chart on the wall and count along it together: a is 1, b is 2, c is 3."
+    }
+  ],
+  "project": {
+    "title": "Unit 9 Project: Sending Secret Messages",
+    "brief": "Bring together everything from Sending Secret Messages into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your sending secret messages project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I invented a secret code for my team.",
+      "I explained my code clearly so a teammate could use it.",
+      "I wrote the message in secret using my code.",
+      "I made a NEW code when my first one was discovered.",
+      "I wrote the message again using my new code."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “cipher” mean in computing?",
+        "options": [
+          "A set of rules that turns a normal message into a secret one.",
+          "The normal message that anyone can read.",
+          "The secret message that only makes sense if you know the cipher.",
+          "A kind of cipher that swaps each letter for a letter, number or symbol."
+        ],
+        "answer": "A set of rules that turns a normal message into a secret one.",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Cipher means a set of rules that turns a normal message into a secret one."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “plain text” mean in computing?",
+        "options": [
+          "The normal message that anyone can read.",
+          "The secret message that only makes sense if you know the cipher.",
+          "A kind of cipher that swaps each letter for a letter, number or symbol.",
+          "To turn a normal message into a secret one."
+        ],
+        "answer": "The normal message that anyone can read.",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Plain text means the normal message that anyone can read."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “ciphertext” mean in computing?",
+        "options": [
+          "The secret message that only makes sense if you know the cipher.",
+          "A kind of cipher that swaps each letter for a letter, number or symbol.",
+          "To turn a normal message into a secret one.",
+          "To turn a secret message back into a normal one."
+        ],
+        "answer": "The secret message that only makes sense if you know the cipher.",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Ciphertext means the secret message that only makes sense if you know the cipher."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “code” mean in computing?",
+        "options": [
+          "A kind of cipher that swaps each letter for a letter, number or symbol.",
+          "To turn a normal message into a secret one.",
+          "To turn a secret message back into a normal one.",
+          "The chart that shows what each letter turns into."
+        ],
+        "answer": "A kind of cipher that swaps each letter for a letter, number or symbol.",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Code means a kind of cipher that swaps each letter for a letter, number or symbol."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “encode” mean in computing?",
+        "options": [
+          "To turn a normal message into a secret one.",
+          "To turn a secret message back into a normal one.",
+          "The chart that shows what each letter turns into.",
+          "Computers joined together so they can share."
+        ],
+        "answer": "To turn a normal message into a secret one.",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Encode means to turn a normal message into a secret one."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “decode” mean in computing?",
+        "options": [
+          "To turn a secret message back into a normal one.",
+          "The chart that shows what each letter turns into.",
+          "Computers joined together so they can share.",
+          "Something kept safe, only for the right person to see."
+        ],
+        "answer": "To turn a secret message back into a normal one.",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Decode means to turn a secret message back into a normal one."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: The chart that shows what each letter turns into.?",
+        "options": [
+          "key",
+          "network",
+          "private",
+          "cipher"
+        ],
+        "answer": "key",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Key means the chart that shows what each letter turns into."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Computers joined together so they can share.?",
+        "options": [
+          "network",
+          "private",
+          "cipher",
+          "plain text"
+        ],
+        "answer": "network",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Network means computers joined together so they can share."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Something kept safe, only for the right person to see.?",
+        "options": [
+          "private",
+          "cipher",
+          "plain text",
+          "ciphertext"
+        ],
+        "answer": "private",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Private means something kept safe, only for the right person to see."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A set of rules that turns a normal message into a secret one.?",
+        "options": [
+          "cipher",
+          "plain text",
+          "ciphertext",
+          "code"
+        ],
+        "answer": "cipher",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Cipher means a set of rules that turns a normal message into a secret one."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The normal message that anyone can read.?",
+        "options": [
+          "plain text",
+          "ciphertext",
+          "code",
+          "encode"
+        ],
+        "answer": "plain text",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Plain text means the normal message that anyone can read."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo06",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The secret message that only makes sense if you know the cipher.?",
+        "options": [
+          "ciphertext",
+          "code",
+          "encode",
+          "decode"
+        ],
+        "answer": "ciphertext",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Ciphertext means the secret message that only makes sense if you know the cipher."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u9-game-1",
+        "icon": "?",
+        "skill": "cipher",
+        "title": "Quick Match: cipher",
+        "description": "Practise cipher through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “cipher” mean in computing?",
+            "choices": [
+              "A set of rules that turns a normal message into a secret one.",
+              "The normal message that anyone can read.",
+              "The secret message that only makes sense if you know the cipher.",
+              "A kind of cipher that swaps each letter for a letter, number or symbol."
+            ],
+            "answer": "A set of rules that turns a normal message into a secret one.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Cipher means a set of rules that turns a normal message into a secret one."
+          },
+          {
+            "prompt": "What does “code” mean in computing?",
+            "choices": [
+              "A kind of cipher that swaps each letter for a letter, number or symbol.",
+              "To turn a normal message into a secret one.",
+              "To turn a secret message back into a normal one.",
+              "The chart that shows what each letter turns into."
+            ],
+            "answer": "A kind of cipher that swaps each letter for a letter, number or symbol.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Code means a kind of cipher that swaps each letter for a letter, number or symbol."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The chart that shows what each letter turns into.?",
+            "choices": [
+              "key",
+              "network",
+              "private",
+              "cipher"
+            ],
+            "answer": "key",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Key means the chart that shows what each letter turns into."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A set of rules that turns a normal message into a secret one.?",
+            "choices": [
+              "cipher",
+              "plain text",
+              "ciphertext",
+              "code"
+            ],
+            "answer": "cipher",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Cipher means a set of rules that turns a normal message into a secret one."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-2",
+        "icon": "★",
+        "skill": "plain text",
+        "title": "Concept Quest: plain text",
+        "description": "Practise plain text through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “plain text” mean in computing?",
+            "choices": [
+              "The normal message that anyone can read.",
+              "The secret message that only makes sense if you know the cipher.",
+              "A kind of cipher that swaps each letter for a letter, number or symbol.",
+              "To turn a normal message into a secret one."
+            ],
+            "answer": "The normal message that anyone can read.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Plain text means the normal message that anyone can read."
+          },
+          {
+            "prompt": "What does “encode” mean in computing?",
+            "choices": [
+              "To turn a normal message into a secret one.",
+              "To turn a secret message back into a normal one.",
+              "The chart that shows what each letter turns into.",
+              "Computers joined together so they can share."
+            ],
+            "answer": "To turn a normal message into a secret one.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Encode means to turn a normal message into a secret one."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Computers joined together so they can share.?",
+            "choices": [
+              "network",
+              "private",
+              "cipher",
+              "plain text"
+            ],
+            "answer": "network",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Network means computers joined together so they can share."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The normal message that anyone can read.?",
+            "choices": [
+              "plain text",
+              "ciphertext",
+              "code",
+              "encode"
+            ],
+            "answer": "plain text",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Plain text means the normal message that anyone can read."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-3",
+        "icon": "◫",
+        "skill": "ciphertext",
+        "title": "Debug Detective: ciphertext",
+        "description": "Practise ciphertext through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “ciphertext” mean in computing?",
+            "choices": [
+              "The secret message that only makes sense if you know the cipher.",
+              "A kind of cipher that swaps each letter for a letter, number or symbol.",
+              "To turn a normal message into a secret one.",
+              "To turn a secret message back into a normal one."
+            ],
+            "answer": "The secret message that only makes sense if you know the cipher.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Ciphertext means the secret message that only makes sense if you know the cipher."
+          },
+          {
+            "prompt": "What does “decode” mean in computing?",
+            "choices": [
+              "To turn a secret message back into a normal one.",
+              "The chart that shows what each letter turns into.",
+              "Computers joined together so they can share.",
+              "Something kept safe, only for the right person to see."
+            ],
+            "answer": "To turn a secret message back into a normal one.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Decode means to turn a secret message back into a normal one."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Something kept safe, only for the right person to see.?",
+            "choices": [
+              "private",
+              "cipher",
+              "plain text",
+              "ciphertext"
+            ],
+            "answer": "private",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Private means something kept safe, only for the right person to see."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The secret message that only makes sense if you know the cipher.?",
+            "choices": [
+              "ciphertext",
+              "code",
+              "encode",
+              "decode"
+            ],
+            "answer": "ciphertext",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Ciphertext means the secret message that only makes sense if you know the cipher."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-4",
+        "icon": "→",
+        "skill": "code",
+        "title": "Algorithm Runner: code",
+        "description": "Practise code through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “code” mean in computing?",
+            "choices": [
+              "A kind of cipher that swaps each letter for a letter, number or symbol.",
+              "To turn a normal message into a secret one.",
+              "To turn a secret message back into a normal one.",
+              "The chart that shows what each letter turns into."
+            ],
+            "answer": "A kind of cipher that swaps each letter for a letter, number or symbol.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Code means a kind of cipher that swaps each letter for a letter, number or symbol."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The chart that shows what each letter turns into.?",
+            "choices": [
+              "key",
+              "network",
+              "private",
+              "cipher"
+            ],
+            "answer": "key",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Key means the chart that shows what each letter turns into."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A set of rules that turns a normal message into a secret one.?",
+            "choices": [
+              "cipher",
+              "plain text",
+              "ciphertext",
+              "code"
+            ],
+            "answer": "cipher",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Cipher means a set of rules that turns a normal message into a secret one."
+          },
+          {
+            "prompt": "What does “cipher” mean in computing?",
+            "choices": [
+              "A set of rules that turns a normal message into a secret one.",
+              "The normal message that anyone can read.",
+              "The secret message that only makes sense if you know the cipher.",
+              "A kind of cipher that swaps each letter for a letter, number or symbol."
+            ],
+            "answer": "A set of rules that turns a normal message into a secret one.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Cipher means a set of rules that turns a normal message into a secret one."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-5",
+        "icon": "Σ",
+        "skill": "encode",
+        "title": "Vocabulary Vault: encode",
+        "description": "Practise encode through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “encode” mean in computing?",
+            "choices": [
+              "To turn a normal message into a secret one.",
+              "To turn a secret message back into a normal one.",
+              "The chart that shows what each letter turns into.",
+              "Computers joined together so they can share."
+            ],
+            "answer": "To turn a normal message into a secret one.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Encode means to turn a normal message into a secret one."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Computers joined together so they can share.?",
+            "choices": [
+              "network",
+              "private",
+              "cipher",
+              "plain text"
+            ],
+            "answer": "network",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Network means computers joined together so they can share."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The normal message that anyone can read.?",
+            "choices": [
+              "plain text",
+              "ciphertext",
+              "code",
+              "encode"
+            ],
+            "answer": "plain text",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Plain text means the normal message that anyone can read."
+          },
+          {
+            "prompt": "What does “plain text” mean in computing?",
+            "choices": [
+              "The normal message that anyone can read.",
+              "The secret message that only makes sense if you know the cipher.",
+              "A kind of cipher that swaps each letter for a letter, number or symbol.",
+              "To turn a normal message into a secret one."
+            ],
+            "answer": "The normal message that anyone can read.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Plain text means the normal message that anyone can read."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-6",
+        "icon": "◇",
+        "skill": "decode",
+        "title": "Challenge Cards: decode",
+        "description": "Practise decode through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “decode” mean in computing?",
+            "choices": [
+              "To turn a secret message back into a normal one.",
+              "The chart that shows what each letter turns into.",
+              "Computers joined together so they can share.",
+              "Something kept safe, only for the right person to see."
+            ],
+            "answer": "To turn a secret message back into a normal one.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Decode means to turn a secret message back into a normal one."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Something kept safe, only for the right person to see.?",
+            "choices": [
+              "private",
+              "cipher",
+              "plain text",
+              "ciphertext"
+            ],
+            "answer": "private",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Private means something kept safe, only for the right person to see."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The secret message that only makes sense if you know the cipher.?",
+            "choices": [
+              "ciphertext",
+              "code",
+              "encode",
+              "decode"
+            ],
+            "answer": "ciphertext",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Ciphertext means the secret message that only makes sense if you know the cipher."
+          },
+          {
+            "prompt": "What does “ciphertext” mean in computing?",
+            "choices": [
+              "The secret message that only makes sense if you know the cipher.",
+              "A kind of cipher that swaps each letter for a letter, number or symbol.",
+              "To turn a normal message into a secret one.",
+              "To turn a secret message back into a normal one."
+            ],
+            "answer": "The secret message that only makes sense if you know the cipher.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Ciphertext means the secret message that only makes sense if you know the cipher."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-7",
+        "icon": "⚡",
+        "skill": "key",
+        "title": "Think Fast: key",
+        "description": "Practise key through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The chart that shows what each letter turns into.?",
+            "choices": [
+              "key",
+              "network",
+              "private",
+              "cipher"
+            ],
+            "answer": "key",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Key means the chart that shows what each letter turns into."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A set of rules that turns a normal message into a secret one.?",
+            "choices": [
+              "cipher",
+              "plain text",
+              "ciphertext",
+              "code"
+            ],
+            "answer": "cipher",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Cipher means a set of rules that turns a normal message into a secret one."
+          },
+          {
+            "prompt": "What does “cipher” mean in computing?",
+            "choices": [
+              "A set of rules that turns a normal message into a secret one.",
+              "The normal message that anyone can read.",
+              "The secret message that only makes sense if you know the cipher.",
+              "A kind of cipher that swaps each letter for a letter, number or symbol."
+            ],
+            "answer": "A set of rules that turns a normal message into a secret one.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Cipher means a set of rules that turns a normal message into a secret one."
+          },
+          {
+            "prompt": "What does “code” mean in computing?",
+            "choices": [
+              "A kind of cipher that swaps each letter for a letter, number or symbol.",
+              "To turn a normal message into a secret one.",
+              "To turn a secret message back into a normal one.",
+              "The chart that shows what each letter turns into."
+            ],
+            "answer": "A kind of cipher that swaps each letter for a letter, number or symbol.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Code means a kind of cipher that swaps each letter for a letter, number or symbol."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-8",
+        "icon": "☁",
+        "skill": "network",
+        "title": "Explain It: network",
+        "description": "Practise network through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Computers joined together so they can share.?",
+            "choices": [
+              "network",
+              "private",
+              "cipher",
+              "plain text"
+            ],
+            "answer": "network",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Network means computers joined together so they can share."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The normal message that anyone can read.?",
+            "choices": [
+              "plain text",
+              "ciphertext",
+              "code",
+              "encode"
+            ],
+            "answer": "plain text",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Plain text means the normal message that anyone can read."
+          },
+          {
+            "prompt": "What does “plain text” mean in computing?",
+            "choices": [
+              "The normal message that anyone can read.",
+              "The secret message that only makes sense if you know the cipher.",
+              "A kind of cipher that swaps each letter for a letter, number or symbol.",
+              "To turn a normal message into a secret one."
+            ],
+            "answer": "The normal message that anyone can read.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Plain text means the normal message that anyone can read."
+          },
+          {
+            "prompt": "What does “encode” mean in computing?",
+            "choices": [
+              "To turn a normal message into a secret one.",
+              "To turn a secret message back into a normal one.",
+              "The chart that shows what each letter turns into.",
+              "Computers joined together so they can share."
+            ],
+            "answer": "To turn a normal message into a secret one.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Encode means to turn a normal message into a secret one."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-9",
+        "icon": "⌂",
+        "skill": "private",
+        "title": "Real-Life Round: private",
+        "description": "Practise private through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Something kept safe, only for the right person to see.?",
+            "choices": [
+              "private",
+              "cipher",
+              "plain text",
+              "ciphertext"
+            ],
+            "answer": "private",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Private means something kept safe, only for the right person to see."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The secret message that only makes sense if you know the cipher.?",
+            "choices": [
+              "ciphertext",
+              "code",
+              "encode",
+              "decode"
+            ],
+            "answer": "ciphertext",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Ciphertext means the secret message that only makes sense if you know the cipher."
+          },
+          {
+            "prompt": "What does “ciphertext” mean in computing?",
+            "choices": [
+              "The secret message that only makes sense if you know the cipher.",
+              "A kind of cipher that swaps each letter for a letter, number or symbol.",
+              "To turn a normal message into a secret one.",
+              "To turn a secret message back into a normal one."
+            ],
+            "answer": "The secret message that only makes sense if you know the cipher.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Ciphertext means the secret message that only makes sense if you know the cipher."
+          },
+          {
+            "prompt": "What does “decode” mean in computing?",
+            "choices": [
+              "To turn a secret message back into a normal one.",
+              "The chart that shows what each letter turns into.",
+              "Computers joined together so they can share.",
+              "Something kept safe, only for the right person to see."
+            ],
+            "answer": "To turn a secret message back into a normal one.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Decode means to turn a secret message back into a normal one."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-10",
+        "icon": "!",
+        "skill": "cipher",
+        "title": "Spot the Bug: cipher",
+        "description": "Practise cipher through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A set of rules that turns a normal message into a secret one.?",
+            "choices": [
+              "cipher",
+              "plain text",
+              "ciphertext",
+              "code"
+            ],
+            "answer": "cipher",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Cipher means a set of rules that turns a normal message into a secret one."
+          },
+          {
+            "prompt": "What does “cipher” mean in computing?",
+            "choices": [
+              "A set of rules that turns a normal message into a secret one.",
+              "The normal message that anyone can read.",
+              "The secret message that only makes sense if you know the cipher.",
+              "A kind of cipher that swaps each letter for a letter, number or symbol."
+            ],
+            "answer": "A set of rules that turns a normal message into a secret one.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Cipher means a set of rules that turns a normal message into a secret one."
+          },
+          {
+            "prompt": "What does “code” mean in computing?",
+            "choices": [
+              "A kind of cipher that swaps each letter for a letter, number or symbol.",
+              "To turn a normal message into a secret one.",
+              "To turn a secret message back into a normal one.",
+              "The chart that shows what each letter turns into."
+            ],
+            "answer": "A kind of cipher that swaps each letter for a letter, number or symbol.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Code means a kind of cipher that swaps each letter for a letter, number or symbol."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The chart that shows what each letter turns into.?",
+            "choices": [
+              "key",
+              "network",
+              "private",
+              "cipher"
+            ],
+            "answer": "key",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Key means the chart that shows what each letter turns into."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-11",
+        "icon": "≡",
+        "skill": "plain text",
+        "title": "Mastery Mix: plain text",
+        "description": "Practise plain text through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The normal message that anyone can read.?",
+            "choices": [
+              "plain text",
+              "ciphertext",
+              "code",
+              "encode"
+            ],
+            "answer": "plain text",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Plain text means the normal message that anyone can read."
+          },
+          {
+            "prompt": "What does “plain text” mean in computing?",
+            "choices": [
+              "The normal message that anyone can read.",
+              "The secret message that only makes sense if you know the cipher.",
+              "A kind of cipher that swaps each letter for a letter, number or symbol.",
+              "To turn a normal message into a secret one."
+            ],
+            "answer": "The normal message that anyone can read.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Plain text means the normal message that anyone can read."
+          },
+          {
+            "prompt": "What does “encode” mean in computing?",
+            "choices": [
+              "To turn a normal message into a secret one.",
+              "To turn a secret message back into a normal one.",
+              "The chart that shows what each letter turns into.",
+              "Computers joined together so they can share."
+            ],
+            "answer": "To turn a normal message into a secret one.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Encode means to turn a normal message into a secret one."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Computers joined together so they can share.?",
+            "choices": [
+              "network",
+              "private",
+              "cipher",
+              "plain text"
+            ],
+            "answer": "network",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Network means computers joined together so they can share."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-12",
+        "icon": "T",
+        "skill": "ciphertext",
+        "title": "Unit Champion: ciphertext",
+        "description": "Practise ciphertext through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The secret message that only makes sense if you know the cipher.?",
+            "choices": [
+              "ciphertext",
+              "code",
+              "encode",
+              "decode"
+            ],
+            "answer": "ciphertext",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Ciphertext means the secret message that only makes sense if you know the cipher."
+          },
+          {
+            "prompt": "What does “ciphertext” mean in computing?",
+            "choices": [
+              "The secret message that only makes sense if you know the cipher.",
+              "A kind of cipher that swaps each letter for a letter, number or symbol.",
+              "To turn a normal message into a secret one.",
+              "To turn a secret message back into a normal one."
+            ],
+            "answer": "The secret message that only makes sense if you know the cipher.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Ciphertext means the secret message that only makes sense if you know the cipher."
+          },
+          {
+            "prompt": "What does “decode” mean in computing?",
+            "choices": [
+              "To turn a secret message back into a normal one.",
+              "The chart that shows what each letter turns into.",
+              "Computers joined together so they can share.",
+              "Something kept safe, only for the right person to see."
+            ],
+            "answer": "To turn a secret message back into a normal one.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Decode means to turn a secret message back into a normal one."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Something kept safe, only for the right person to see.?",
+            "choices": [
+              "private",
+              "cipher",
+              "plain text",
+              "ciphertext"
+            ],
+            "answer": "private",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Private means something kept safe, only for the right person to see."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can explain what a cipher is — a set of rules that turns plain text into ciphertext.",
+    "I can tell the difference between plain text (the normal message) and ciphertext (the secret message).",
+    "I can encode a short message using a simple code (make it secret).",
+    "I can decode a short secret message back into plain text (read it).",
+    "I can use at least two different codes: the flip-text cipher, a picture code, the letters-to-numbers code, and the reverse-alphabet code.",
+    "I can say why we might use a cipher when sending information on a network."
+  ]
+}

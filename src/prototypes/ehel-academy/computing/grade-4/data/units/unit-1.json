@@ -1,0 +1,1895 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.631Z",
+  "stage": {
+    "id": "s04",
+    "label": "Stage 4"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t01",
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "comp-g04-u01",
+    "unitNo": 1,
+    "unitTitle": "Be an Animator",
+    "unitOverview": "Welcome to Unit 1 of Year 4 Computing at Ehel Academy. You learn how a computer can make a character move by repeating instructions, and use that idea to build simple animations in Scratch. The big new idea is repetition — doing something over and over — and the tool for repetition in Scratch is the Forever block.\n\nAn animation is just a set of pictures shown one after another, fast, so it looks like movement. When you make a butterfly flap its wings forever, they are watching a loop happen before their eyes.\n\nFirst, to follow, understand and correct algorithms that use repetition — to read steps, spot where they repeat, and fix them if they are wrong. Second, to add comments to your code — short notes that explain what it does, like a label on a jar. Third, to develop programs with repetition in Scratch using the Forever block, so a character repeats an action without stopping.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 4
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-4-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 4",
+    "sourceArchive": "Year 4-20260801T055750Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 4/Unit 1/Year 4 - Unit 1 Teacher Guide.docx",
+      "Year 4/Unit 1/Year 4 - Unit 1 Activity Sheet.docx",
+      "Year 4/Unit 1/Year 4 - Unit 1 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 381,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 4 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "These objectives come straight from the source unit. By the end, the child should be able to:",
+    "Follow, understand and correct algorithms that use repetition — read steps that repeat, say what job they do, and fix them when a step is wrong.",
+    "Understand what a forever loop is — instructions that repeat over and over without stopping.",
+    "Add comments to blocks of code to explain what the code does.",
+    "Develop programs with repetition in Scratch using the Forever block.",
+    "Build a simple animation by switching costumes and moving a sprite inside a forever loop.",
+    "Before starting, it helps if the child already knows what an algorithm is (a set of steps in the right order) and has changed a block of code before. A quick reminder in Session 1 is enough — do not spend a whole session revising."
+  ],
+  "toolkit": [
+    {
+      "name": "Scratch",
+      "url": "scratch.mit.edu",
+      "steps": [
+        "Go to scratch.mit.edu and click Create.",
+        "Drag blocks from the palette on the left into the code area.",
+        "Make variables in the orange Variables section.",
+        "Click the green flag to run and the red circle to stop."
+      ],
+      "note": "Runs in a web browser. Free, with nothing to download."
+    }
+  ],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-what-is-repetition-loops-all-around-us-unplugged",
+      "title": "What is repetition? Loops all around us (unplugged)",
+      "explanation": "Repetition means doing something over and over. Loops are all around us — many things in the world repeat again and again. In computing, we use repetition to make a character repeat an action, and that is how animation works.\n\nHow did you know what to do next? Doing something over and over is called repetition. Start with a clapping game.",
+      "example": "Answer this in your own words, out loud or on paper: What is repetition? Loops all around us? Then check your answer against the explanation above.",
+      "checkYourself": "Can you point to the part of a pattern that repeats, and give an example of a real-life loop?"
+    },
+    {
+      "id": "concept-2-forever-loops-in-algorithms-unplugged",
+      "title": "Forever loops in algorithms (unplugged)",
+      "explanation": "A forever loop is repetition where the instructions repeat over and over without stopping. Instead of writing the same step again and again, we write it once and say “repeat forever”. March on the spot, forever. That is a forever loop.\n\nTry it: Ask you to follow the steps out loud first, then fill the gaps.\n\nCheck yourself: Can you replace a repeated step with “repeat forever” instead of copying it many times? Does you understand that a forever loop repeats until you stop it? Praise anyone who notices the forever version is shorter but does more.",
+      "example": "I gave the instruction once, and it repeated until I stopped it. I did not have to keep saying it.",
+      "checkYourself": "Can you replace a repeated step with “repeat forever” instead of copying it many times? Does you understand that a forever loop repeats until you stop it? Praise anyone who notices the forever version is shorter but does more."
+    },
+    {
+      "id": "concept-3-your-first-animation-in-scratch-the-forever-block",
+      "title": "Your first animation in Scratch (the Forever block)",
+      "explanation": "In Scratch we join coloured blocks to make a program. To repeat blocks over and over, we drop them inside the Forever block, in the Control group. Everything inside it repeats until we stop the program. We will use it to make a butterfly flap forever.\n\nour instructions. where we join them. where the animation happens. Delete the cat, click Add Sprite and choose Butterfly 2, then choose the Blue Sky backdrop. Open scratch.mit.edu and click Create on the projector.",
+      "example": "Find one real example of your first animation in Scratch (the Forever block) around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you drop the blocks inside the Forever block, not below it? Can you run it with the green flag and stop it with the red button? Can you find a block by its colour group and drag it?"
+    },
+    {
+      "id": "concept-4-adding-comments-and-a-walking-chick",
+      "title": "Adding comments, and a walking chick",
+      "explanation": "A comment is a note we add to our code to explain what it does. Comments help other people (and our future selves) understand the program, and help with debugging — finding and fixing mistakes. Unlike the rest of the code, a comment does not run. We will also make a chick that walks and changes costume forever.\n\nThe label does not change what is inside — it just reminds us. A comment is like a label for our code. Right-click a block. Choose Add Comment.",
+      "example": "A yellow box appears. Type what this part does.",
+      "checkYourself": "Can you understand comments do not run? Can you build the chick's forever loop and explain what the wait block does to the animation? Can you add a comment by right-clicking a block?"
+    },
+    {
+      "id": "concept-5-animating-a-moving-character-and-adding-sound",
+      "title": "Animating a moving character (and adding sound)",
+      "explanation": "We put together everything we know — repetition, the Forever block, moving, switching costumes, and comments — to animate a character that moves side to side, and we add a sound.\n\nAdd the Ballerina sprite (a built-in Scratch character) and the Theater 2 backdrop. We want the character to sway right, then back left, over and over.",
+      "example": "To move left we use a negative number, like move (-30) steps. Build this together Start a new Scratch project.",
+      "checkYourself": "Can you place start sound before the Forever block so it plays once, not inside it? Can you add a comment that clearly explains the loop? Can you use a negative number to move left?"
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "Session 3 — Your first animation in Scratch (the Forever block) — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 3 — Your first animation in Scratch (the Forever block).",
+      "lines": [
+        "when green flag clicked",
+        "switch costume to butterfly2-a",
+        "wait (0.5) seconds",
+        "switch costume to butterfly2-b",
+        "wait (0.5) seconds",
+        "switch costume to butterfly2-a",
+        "wait (0.5) seconds",
+        "switch costume to butterfly2-b",
+        "wait (0.5) seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-2",
+      "title": "Session 3 — Your first animation in Scratch (the Forever block) — listing 2",
+      "language": "Scratch blocks",
+      "intro": "From Session 3 — Your first animation in Scratch (the Forever block).",
+      "lines": [
+        "when green flag clicked",
+        "forever",
+        "switch costume to butterfly2-a",
+        "wait (0.5) seconds",
+        "switch costume to butterfly2-b",
+        "wait (0.5) seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-3",
+      "title": "Session 4 — Adding comments, and a walking chick — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 4 — Adding comments, and a walking chick.",
+      "lines": [
+        "when green flag clicked // start when the green flag is clicked",
+        "forever // flap the wings over and over",
+        "switch costume to butterfly2-a",
+        "wait (0.5) seconds",
+        "switch costume to butterfly2-b",
+        "wait (0.5) seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-4",
+      "title": "Session 4 — Adding comments, and a walking chick — listing 2",
+      "language": "Scratch blocks",
+      "intro": "From Session 4 — Adding comments, and a walking chick.",
+      "lines": [
+        "when green flag clicked",
+        "forever"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-5",
+      "title": "next costume",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "move (20) steps",
+        "wait (0.5) seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-6",
+      "title": "Session 5 — Animating a moving character (and adding sound) — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 5 — Animating a moving character (and adding sound).",
+      "lines": [
+        "when green flag clicked",
+        "go to x: (-66) y: (-57)",
+        "forever",
+        "move (30) steps"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-7",
+      "title": "next costume (2)",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "wait (1) seconds",
+        "move (-30) steps"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-8",
+      "title": "Session 5 — Animating a moving character (and adding sound) — listing 2",
+      "language": "Scratch blocks",
+      "intro": "From Session 5 — Animating a moving character (and adding sound).",
+      "lines": [
+        "when green flag clicked",
+        "go to x: (94) y: (-44)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-9",
+      "title": "start sound Dance Magic",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "forever",
+        "move (30) steps",
+        "wait (1) seconds",
+        "move (-30) steps"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-10",
+      "title": "Answer Key — Mini-Project & Practice — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Answer Key — Mini-Project & Practice.",
+      "lines": [
+        "when green flag clicked // open and close the mouth forever",
+        "forever"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Spot the Repeat",
+      "context": "work through the steps below and see what happens. This is what is repetition? loops all around us (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Leila made a movement pattern. Read it out loud and do the moves!",
+      "answer": "step, step, clap — step, step, clap — step, step, clap Circle one part that repeats. Then answer How many times does step, step, clap repeat? __________ What is the very next move after the last clap? __________",
+      "modelType": "model-1",
+      "hint": "Start here: step, step, clap — step, step, clap — step, step, clap",
+      "explanation": "What is repetition? Loops all around us (unplugged): Repetition means doing something over and over. Loops are all around us — many things in the world repeat again and again. In computing, we use repetition to make a character repeat an action, and that is how animation works."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Loops All Around Us",
+      "context": "work through the steps below and see what happens. This is forever loops in algorithms (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "A loop is something that repeats over and over. Tick the things that are loops. Leave the others blank.",
+      "answer": "[ ] The sun rises and sets every day. [ ] The days of the week: Sunday, Monday. Saturday, then start again. [ ] The day you were born. [ ] Spring, Summer, Autumn and Winter come round every year. [ ] We brush our teeth every morning and every night.",
+      "modelType": "model-2",
+      "hint": "Start here: [ ] The sun rises and sets every day.",
+      "explanation": "Forever loops in algorithms (unplugged): A forever loop is repetition where the instructions repeat over and over without stopping. Instead of writing the same step again and again, we write it once and say “repeat forever”. March on the spot, forever. That is a forever loop."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Match the Words",
+      "context": "work through the steps below and see what happens. This is your first animation in scratch (the forever block) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Draw a line from each word to what it means.",
+      "answer": "Match: repetition → finding and fixing mistakes in a program Match: forever loop → doing something over and over Match: comment → instructions that repeat and never stop Match: debugging → a note that explains what the code does",
+      "modelType": "model-3",
+      "hint": "Start here: Match: repetition → finding and fixing mistakes in a program",
+      "explanation": "Your first animation in Scratch (the Forever block): In Scratch we join coloured blocks to make a program. To repeat blocks over and over, we drop them inside the Forever block, in the Control group. Everything inside it repeats until we stop the program. We will use it to make a butterfly flap forever."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Finish the Forever Loop",
+      "context": "work through the steps below and see what happens. This is adding comments, and a walking chick in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "This algorithm makes a butterfly flap its wings. It shows the wings up, then the wings down. Right now it only flaps once. Fill in the gaps so it flaps forever.",
+      "answer": "Step 1 Start when the green flag is clicked Step 2 Show the wings-up picture for 0.5 seconds Step 3 Show the wings-down picture for 0.5 seconds Step 4 Repeat steps 2 and 3 ______________ Step 5 Stop",
+      "modelType": "model-4",
+      "hint": "Start here: Step 1 Start when the green flag is clicked",
+      "explanation": "Adding comments, and a walking chick: A comment is a note we add to our code to explain what it does. Comments help other people (and our future selves) understand the program, and help with debugging — finding and fixing mistakes. Unlike the rest of the code, a comment does not run. We will also make a chick that walks and changes…"
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Try it in Scratch!",
+      "context": "work through the steps below and see what happens. This is animating a moving character (and adding sound) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Now make a real butterfly flap its wings forever.",
+      "answer": "Go to scratch.mit.edu and click Create. Delete the cat. Click Add Sprite (bottom right) and choose Butterfly 2. Click Choose a Backdrop and pick Blue Sky. Find the orange Forever block in the Control group. Build this program. Put the costume and wait blocks inside the Forever block.",
+      "modelType": "model-5",
+      "hint": "Start here: Go to scratch.mit.edu and click Create.",
+      "explanation": "Animating a moving character (and adding sound): We put together everything we know — repetition, the Forever block, moving, switching costumes, and comments — to animate a character that moves side to side, and we add a sound."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Add a Comment",
+      "context": "work through the steps below and see what happens. This is what is repetition? loops all around us (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "A comment is a note that explains what your code does. In Scratch, right-click a block and choose Add Comment. A yellow box appears — type your note inside it.",
+      "answer": "Add a comment to your butterfly's Forever block. Write here what your comment says. My comment: ________________________________________________ Now think: when you click the green flag, does the comment run like the other blocks? Tick one. [ ] Yes, the comment runs. [ ] No, comments never run — they only help us read the code.",
+      "modelType": "model-6",
+      "hint": "Start here: Add a comment to your butterfly's Forever block. Write here what your comment says.",
+      "explanation": "What is repetition? Loops all around us (unplugged): Repetition means doing something over and over. Loops are all around us — many things in the world repeat again and again. In computing, we use repetition to make a character repeat an action, and that is how animation works."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "What is repetition? Loops all around us (unplugged)",
+      "modelType": "concept-model-1",
+      "purpose": "Repetition means doing something over and over. Loops are all around us — many things in the world repeat again and again. In computing, we use repetition to make a character repeat an action, and that is how animation…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Forever loops in algorithms (unplugged)",
+      "modelType": "concept-model-2",
+      "purpose": "A forever loop is repetition where the instructions repeat over and over without stopping. Instead of writing the same step again and again, we write it once and say “repeat forever”. March on the spot, forever. That is…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Your first animation in Scratch (the Forever block)",
+      "modelType": "concept-model-3",
+      "purpose": "In Scratch we join coloured blocks to make a program. To repeat blocks over and over, we drop them inside the Forever block, in the Control group. Everything inside it repeats until we stop the program. We will use it…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Adding comments, and a walking chick",
+      "modelType": "concept-model-4",
+      "purpose": "A comment is a note we add to our code to explain what it does. Comments help other people (and our future selves) understand the program, and help with debugging — finding and fixing mistakes. Unlike the rest of the…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Animating a moving character (and adding sound)",
+      "modelType": "concept-model-5",
+      "purpose": "We put together everything we know — repetition, the Forever block, moving, switching costumes, and comments — to animate a character that moves side to side, and we add a sound.",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with what is repetition? loops all around us (unplugged)",
+      "example": "Answer this in your own words, out loud or on paper: What is repetition? Loops all around us? Then check your answer against the explanation above.",
+      "steps": [
+        "Read the concept card for what is repetition? loops all around us (unplugged) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with forever loops in algorithms (unplugged)",
+      "example": "I gave the instruction once, and it repeated until I stopped it. I did not have to keep saying it.",
+      "steps": [
+        "Read the concept card for forever loops in algorithms (unplugged) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with your first animation in scratch (the forever block)",
+      "example": "Find one real example of your first animation in Scratch (the Forever block) around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for your first animation in scratch (the forever block) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with adding comments, and a walking chick",
+      "example": "A yellow box appears. Type what this part does.",
+      "steps": [
+        "Read the concept card for adding comments, and a walking chick and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with animating a moving character (and adding sound)",
+      "example": "To move left we use a negative number, like move (-30) steps. Build this together Start a new Scratch project.",
+      "steps": [
+        "Read the concept card for animating a moving character (and adding sound) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: What is repetition? Loops all around us (unplugged)",
+      "prompt": "What is a forever loop? Write one sentence.",
+      "solution": "A forever loop is instructions that repeat over and over and do not stop on their own (until you press the red stop button)."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Forever loops in algorithms (unplugged)",
+      "prompt": "Nadia copied the same steps to make a bird flap. Make it shorter using a forever loop.",
+      "solution": "Repeat forever { flap wings up; flap wings down }. The three copied pairs of steps become one forever loop, so the bird flaps without stopping."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Your first animation in Scratch (the Forever block)",
+      "prompt": "Why do we add comments to our code? Do comments run when we click the green flag?",
+      "solution": "We add comments to explain what the code does, to help other people understand it, and to help with debugging. Comments do not run when we click the green flag."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Adding comments, and a walking chick",
+      "prompt": "Fill in the word. Doing something over and over is called",
+      "solution": "repetition (accept \"a loop\")."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: What is repetition? Loops all around us (unplugged)",
+      "prompt": "Explain in your own words: What is repetition? Loops all around us (unplugged).",
+      "solution": "Repetition means doing something over and over. Loops are all around us — many things in the world repeat again and again. In computing, we use repetition to make a character repeat an action, and that is how animation works.\n\nHow did you know what to do next? Doing something over and over is called repetition. Start with a clapping game.\n\nFor example: Answer this in your own words, out loud or on paper: What is repetition? Loops all around us? Then check your answer against the explanation above."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Forever loops in algorithms (unplugged)",
+      "prompt": "Explain in your own words: Forever loops in algorithms (unplugged).",
+      "solution": "A forever loop is repetition where the instructions repeat over and over without stopping. Instead of writing the same step again and again, we write it once and say “repeat forever”. March on the spot, forever. That is a forever loop.\n\nTry it: Ask you to follow the steps out loud first, then fill the gaps.\n\nCheck yourself: Can you replace a repeated step with “repeat forever” instead of copying it many times? Does you understand that a forever loop repeats until you stop it? Praise anyone who notices the forever version is shorter but does more.\n\nFor example: I gave the instruction once, and it repeated until I stopped it. I did not have to keep saying it."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "What is a forever loop? Write one sentence.",
+      "answer": "A forever loop is instructions that repeat over and over and do not stop on their own (until you press the red stop button).",
+      "hint": "Look back at what repetition and loop mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Which Scratch block repeats the code inside it over and over? ([ ] wait ( ) seconds)",
+      "answer": "The Forever block.",
+      "hint": "Look back at what repetition and loop mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "Nadia copied the same steps to make a bird flap. Make it shorter using a forever loop.",
+      "answer": "Repeat forever { flap wings up; flap wings down }. The three copied pairs of steps become one forever loop, so the bird flaps without stopping.",
+      "hint": "Look back at what repetition and loop mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Why do we add comments to our code? Do comments run when we click the green flag?",
+      "answer": "We add comments to explain what the code does, to help other people understand it, and to help with debugging. Comments do not run when we click the green flag.",
+      "hint": "Look back at what repetition and loop mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "Which block switches a sprite to its next picture?",
+      "answer": "The next costume block.",
+      "hint": "Look back at what repetition and loop mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "Fill in the word. Doing something over and over is called",
+      "answer": "repetition (accept \"a loop\").",
+      "hint": "Look back at what repetition and loop mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Spot the Repeat",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Leila made a movement pattern. Read it out loud and do the moves!",
+        "step, step, clap — step, step, clap — step, step, clap",
+        "Circle one part that repeats. Then answer",
+        "How many times does step, step, clap repeat? __________",
+        "What is the very next move after the last clap? __________"
+      ]
+    },
+    {
+      "title": "Loops All Around Us",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A loop is something that repeats over and over. Tick the things that are loops. Leave the others blank.",
+        "[ ] The sun rises and sets every day.",
+        "[ ] The days of the week: Sunday, Monday. Saturday, then start again.",
+        "[ ] The day you were born.",
+        "[ ] Spring, Summer, Autumn and Winter come round every year.",
+        "[ ] We brush our teeth every morning and every night."
+      ]
+    },
+    {
+      "title": "Match the Words",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Draw a line from each word to what it means.",
+        "Match: repetition → finding and fixing mistakes in a program",
+        "Match: forever loop → doing something over and over",
+        "Match: comment → instructions that repeat and never stop",
+        "Match: debugging → a note that explains what the code does"
+      ]
+    },
+    {
+      "title": "Finish the Forever Loop",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "This algorithm makes a butterfly flap its wings. It shows the wings up, then the wings down. Right now it only flaps once. Fill in the gaps so it flaps forever.",
+        "Step 1 Start when the green flag is clicked",
+        "Step 2 Show the wings-up picture for 0.5 seconds",
+        "Step 3 Show the wings-down picture for 0.5 seconds",
+        "Step 4 Repeat steps 2 and 3 ______________",
+        "Step 5 Stop"
+      ]
+    },
+    {
+      "title": "Try it in Scratch!",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Now make a real butterfly flap its wings forever.",
+        "Go to scratch.mit.edu and click Create.",
+        "Delete the cat. Click Add Sprite (bottom right) and choose Butterfly 2.",
+        "Click Choose a Backdrop and pick Blue Sky.",
+        "Find the orange Forever block in the Control group.",
+        "Build this program. Put the costume and wait blocks inside the Forever block."
+      ]
+    },
+    {
+      "title": "Add a Comment",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A comment is a note that explains what your code does. In Scratch, right-click a block and choose Add Comment. A yellow box appears — type your note inside it.",
+        "Add a comment to your butterfly's Forever block. Write here what your comment says.",
+        "My comment: ________________________________________________",
+        "Now think: when you click the green flag, does the comment run like the other blocks? Tick one.",
+        "[ ] Yes, the comment runs. [ ] No, comments never run — they only help us read the code."
+      ]
+    },
+    {
+      "title": "Help the Chick Walk",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Sami wants the Chick sprite to walk forward and change its costume forever. Build this in Scratch",
+        "when green flag clicked",
+        "forever",
+        "next costume",
+        "wait (0.5) seconds",
+        "Now try taking out the wait (0.5) seconds block and click the green flag again. What happens to the chick?"
+      ]
+    },
+    {
+      "title": "Plan Your Character",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "First, plan your main character. It should switch costumes over and over — for example, a shark that opens and closes its mouth, or a fish that wiggles its tail. Fill in the algorithm for your character.",
+        "Step 1 Start when the green flag is clicked",
+        "Step 2 Go to the start position",
+        "Step 3 Show the picture: ______________________________",
+        "Step 4 Show the picture: ______________________________",
+        "Step 5 Repeat steps 3 and 4 ____________________________"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "A forever loop just means do it a lot of times.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — it means do it over and over with no end, until you press stop. Show the butterfly flapping and you can see it never stops on its own."
+    },
+    {
+      "symptom": "I need to copy the blocks many times to repeat them.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "This is the whole reason the Forever block exists — one Forever block does the job of many copied blocks, and is far tidier."
+    },
+    {
+      "symptom": "You can put blocks after a Forever block.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Nothing below a Forever block ever runs, because the loop never ends. Scratch will not even let a block snap on below it."
+    },
+    {
+      "symptom": "Comments make the program work / comments run like code.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Comments never run. Prove it by running the program with and without a comment — it behaves the same."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "What is repetition? Loops all around us (unplugged)",
+        "text": "Repetition means doing something over and over."
+      },
+      {
+        "title": "Forever loops in algorithms (unplugged)",
+        "text": "A forever loop is repetition where the instructions repeat over and over without stopping."
+      },
+      {
+        "title": "Your first animation in Scratch (the Forever block)",
+        "text": "In Scratch we join coloured blocks to make a program."
+      },
+      {
+        "title": "Adding comments, and a walking chick",
+        "text": "A comment is a note we add to our code to explain what it does."
+      },
+      {
+        "title": "Animating a moving character (and adding sound)",
+        "text": "We put together everything we know — repetition, the Forever block, moving, switching costumes, and comments — to animate a character that moves side to side, and we add a sound."
+      }
+    ],
+    "terms": [
+      [
+        "repetition",
+        "Doing something over and over."
+      ],
+      [
+        "loop",
+        "Code that repeats instructions for you."
+      ],
+      [
+        "forever loop",
+        "Instructions that repeat and never stop on their own."
+      ],
+      [
+        "Forever block",
+        "The Scratch block that repeats the code inside it until you stop the program."
+      ],
+      [
+        "animation",
+        "Pictures shown one after another so it looks like movement."
+      ],
+      [
+        "sprite",
+        "A character or object in Scratch."
+      ],
+      [
+        "costume",
+        "One of the pictures a sprite can wear."
+      ],
+      [
+        "backdrop",
+        "The picture behind the sprites."
+      ],
+      [
+        "random",
+        "Does not follow a pattern."
+      ],
+      [
+        "comment",
+        "A note that explains what the code does."
+      ],
+      [
+        "debugging",
+        "Finding and fixing mistakes in a program."
+      ],
+      [
+        "algorithm",
+        "A set of steps for doing a job, in the right order."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "repetition",
+        "meaning": "Doing something over and over.",
+        "example": "Flapping wings again and again.",
+        "letter": "R"
+      },
+      {
+        "term": "loop",
+        "meaning": "Code that repeats instructions for you.",
+        "example": "Say clap 3 times instead of clap, clap, clap.",
+        "letter": "L"
+      },
+      {
+        "term": "forever loop",
+        "meaning": "Instructions that repeat and never stop on their own.",
+        "example": "The sun rising every single day.",
+        "letter": "F"
+      },
+      {
+        "term": "Forever block",
+        "meaning": "The Scratch block that repeats the code inside it until you stop the program.",
+        "example": "Flap the wings forever.",
+        "letter": "F"
+      },
+      {
+        "term": "animation",
+        "meaning": "Pictures shown one after another so it looks like movement.",
+        "example": "A flip-book, or a flapping butterfly.",
+        "letter": "A"
+      },
+      {
+        "term": "sprite",
+        "meaning": "A character or object in Scratch.",
+        "example": "The butterfly, the chick, the shark.",
+        "letter": "S"
+      },
+      {
+        "term": "costume",
+        "meaning": "One of the pictures a sprite can wear.",
+        "example": "Wings up, then wings down.",
+        "letter": "C"
+      },
+      {
+        "term": "backdrop",
+        "meaning": "The picture behind the sprites.",
+        "example": "A blue sky, or under the sea.",
+        "letter": "B"
+      },
+      {
+        "term": "random",
+        "meaning": "Does not follow a pattern.",
+        "example": "Landing in a different spot each time.",
+        "letter": "R"
+      },
+      {
+        "term": "comment",
+        "meaning": "A note that explains what the code does.",
+        "example": "This part flaps the wings.",
+        "letter": "C"
+      },
+      {
+        "term": "debugging",
+        "meaning": "Finding and fixing mistakes in a program.",
+        "example": "Fixing a block that is in the wrong place.",
+        "letter": "D"
+      },
+      {
+        "term": "algorithm",
+        "meaning": "A set of steps for doing a job, in the right order.",
+        "example": "The steps to make the wings flap.",
+        "letter": "A"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "A forever loop just means do it a lot of times.",
+        "No — it means do it over and over with no end, until you press stop. Show the butterfly flapping and you can see it never stops on its own."
+      ],
+      [
+        "I need to copy the blocks many times to repeat them.",
+        "This is the whole reason the Forever block exists — one Forever block does the job of many copied blocks, and is far tidier."
+      ],
+      [
+        "You can put blocks after a Forever block.",
+        "Nothing below a Forever block ever runs, because the loop never ends. Scratch will not even let a block snap on below it."
+      ],
+      [
+        "Comments make the program work / comments run like code.",
+        "Comments never run. Prove it by running the program with and without a comment — it behaves the same."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "What is a forever loop? Write one sentence.",
+      "answer": "A forever loop is instructions that repeat over and over and do not stop on their own (until you press the red stop button).",
+      "hint": "Look back at what repetition and loop mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "A forever loop is instructions that repeat over and over and do not stop on their own (until you press the red stop button)."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Which Scratch block repeats the code inside it over and over? ([ ] wait ( ) seconds)",
+      "answer": "The Forever block.",
+      "hint": "Look back at what repetition and loop mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "The Forever block."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Nadia copied the same steps to make a bird flap. Make it shorter using a forever loop.",
+      "answer": "Repeat forever { flap wings up; flap wings down }. The three copied pairs of steps become one forever loop, so the bird flaps without stopping.",
+      "hint": "Look back at what repetition and loop mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Repeat forever { flap wings up; flap wings down }. The three copied pairs of steps become one forever loop, so the bird flaps without stopping."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Why do we add comments to our code? Do comments run when we click the green flag?",
+      "answer": "We add comments to explain what the code does, to help other people understand it, and to help with debugging. Comments do not run when we click the green flag.",
+      "hint": "Look back at what repetition and loop mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "We add comments to explain what the code does, to help other people understand it, and to help with debugging. Comments do not run when we click the green flag."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Which block switches a sprite to its next picture?",
+      "answer": "The next costume block.",
+      "hint": "Look back at what repetition and loop mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "The next costume block."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Fill in the word. Doing something over and over is called",
+      "answer": "repetition (accept \"a loop\").",
+      "hint": "Look back at what repetition and loop mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "repetition (accept \"a loop\")."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Fill in the word. Doing something over and over is called",
+      "answer": "repetition (accept \"a loop\").",
+      "hint": "Look back at what repetition and loop mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: repetition (accept \"a loop\")."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "Which block switches a sprite to its next picture?",
+      "answer": "The next costume block.",
+      "hint": "Look back at what repetition and loop mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: The next costume block."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Fill in the word. Doing something over and over is called",
+      "answer": "repetition (accept \"a loop\").",
+      "hint": "Look back at what repetition and loop mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: repetition (accept \"a loop\")."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "What is a forever loop? Write one sentence.",
+      "answer": "A forever loop is instructions that repeat over and over and do not stop on their own (until you press the red stop button).",
+      "hint": "Look back at what repetition and loop mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: A forever loop is instructions that repeat over and over and do not stop on their own (until you press the red stop button)."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Nadia copied the same steps to make a bird flap. Make it shorter using a forever loop.",
+      "keyIdeas": [
+        "repetition",
+        "loop",
+        "forever loop"
+      ],
+      "modelAnswer": "Repeat forever { flap wings up; flap wings down }. The three copied pairs of steps become one forever loop, so the bird flaps without stopping."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Why do we add comments to our code? Do comments run when we click the green flag?",
+      "keyIdeas": [
+        "loop",
+        "forever loop",
+        "Forever block"
+      ],
+      "modelAnswer": "We add comments to explain what the code does, to help other people understand it, and to help with debugging. Comments do not run when we click the green flag."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Which block switches a sprite to its next picture?",
+      "keyIdeas": [
+        "forever loop",
+        "Forever block",
+        "animation"
+      ],
+      "modelAnswer": "The next costume block."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in adding comments, and a walking chick, and give one example of your own.",
+      "keyIdeas": [
+        "repetition",
+        "loop",
+        "forever loop"
+      ],
+      "modelAnswer": "A comment is a note we add to our code to explain what it does. Comments help other people (and our future selves) understand the program, and help with debugging — finding and fixing mistakes. Unlike the rest of the code, a comment does not run. We will also make a chick that walks and changes costume forever.\n\nThe label does not change what is inside — it just reminds us. A comment is like a label for our code. Right-click a block. Choose Add Comment."
+    }
+  ],
+  "project": {
+    "title": "Unit 1 Project: Be an Animator",
+    "brief": "Bring together everything from Be an Animator into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your be an animator project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I chose an Underwater backdrop.",
+      "My main character switches costumes forever.",
+      "My main character moves around forever.",
+      "I added three more sprites and animated them.",
+      "I added comments to explain my code.",
+      "My movie runs when I click the green flag and stops with the red button."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “repetition” mean in computing?",
+        "options": [
+          "Doing something over and over.",
+          "Code that repeats instructions for you.",
+          "Instructions that repeat and never stop on their own.",
+          "The Scratch block that repeats the code inside it until you stop the program."
+        ],
+        "answer": "Doing something over and over.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Repetition means doing something over and over."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “loop” mean in computing?",
+        "options": [
+          "Code that repeats instructions for you.",
+          "Instructions that repeat and never stop on their own.",
+          "The Scratch block that repeats the code inside it until you stop the program.",
+          "Pictures shown one after another so it looks like movement."
+        ],
+        "answer": "Code that repeats instructions for you.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Loop means code that repeats instructions for you."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “forever loop” mean in computing?",
+        "options": [
+          "Instructions that repeat and never stop on their own.",
+          "The Scratch block that repeats the code inside it until you stop the program.",
+          "Pictures shown one after another so it looks like movement.",
+          "A character or object in Scratch."
+        ],
+        "answer": "Instructions that repeat and never stop on their own.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Forever loop means instructions that repeat and never stop on their own."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “Forever block” mean in computing?",
+        "options": [
+          "The Scratch block that repeats the code inside it until you stop the program.",
+          "Pictures shown one after another so it looks like movement.",
+          "A character or object in Scratch.",
+          "One of the pictures a sprite can wear."
+        ],
+        "answer": "The Scratch block that repeats the code inside it until you stop the program.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Forever block means the Scratch block that repeats the code inside it until you stop the program."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “animation” mean in computing?",
+        "options": [
+          "Pictures shown one after another so it looks like movement.",
+          "A character or object in Scratch.",
+          "One of the pictures a sprite can wear.",
+          "The picture behind the sprites."
+        ],
+        "answer": "Pictures shown one after another so it looks like movement.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Animation means pictures shown one after another so it looks like movement."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “sprite” mean in computing?",
+        "options": [
+          "A character or object in Scratch.",
+          "One of the pictures a sprite can wear.",
+          "The picture behind the sprites.",
+          "Does not follow a pattern."
+        ],
+        "answer": "A character or object in Scratch.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Sprite means a character or object in Scratch."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: One of the pictures a sprite can wear.?",
+        "options": [
+          "costume",
+          "backdrop",
+          "random",
+          "comment"
+        ],
+        "answer": "costume",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Costume means one of the pictures a sprite can wear."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: The picture behind the sprites.?",
+        "options": [
+          "backdrop",
+          "random",
+          "comment",
+          "debugging"
+        ],
+        "answer": "backdrop",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Backdrop means the picture behind the sprites."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Does not follow a pattern.?",
+        "options": [
+          "random",
+          "comment",
+          "debugging",
+          "algorithm"
+        ],
+        "answer": "random",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Random means does not follow a pattern."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A note that explains what the code does.?",
+        "options": [
+          "comment",
+          "debugging",
+          "algorithm",
+          "repetition"
+        ],
+        "answer": "comment",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Comment means a note that explains what the code does."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Finding and fixing mistakes in a program.?",
+        "options": [
+          "debugging",
+          "algorithm",
+          "repetition",
+          "loop"
+        ],
+        "answer": "debugging",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Debugging means finding and fixing mistakes in a program."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A set of steps for doing a job, in the right order.?",
+        "options": [
+          "algorithm",
+          "repetition",
+          "loop",
+          "forever loop"
+        ],
+        "answer": "algorithm",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u1-game-1",
+        "icon": "?",
+        "skill": "repetition",
+        "title": "Quick Match: repetition",
+        "description": "Practise repetition through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “repetition” mean in computing?",
+            "choices": [
+              "Doing something over and over.",
+              "Code that repeats instructions for you.",
+              "Instructions that repeat and never stop on their own.",
+              "The Scratch block that repeats the code inside it until you stop the program."
+            ],
+            "answer": "Doing something over and over.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Repetition means doing something over and over."
+          },
+          {
+            "prompt": "What does “Forever block” mean in computing?",
+            "choices": [
+              "The Scratch block that repeats the code inside it until you stop the program.",
+              "Pictures shown one after another so it looks like movement.",
+              "A character or object in Scratch.",
+              "One of the pictures a sprite can wear."
+            ],
+            "answer": "The Scratch block that repeats the code inside it until you stop the program.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Forever block means the Scratch block that repeats the code inside it until you stop the program."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: One of the pictures a sprite can wear.?",
+            "choices": [
+              "costume",
+              "backdrop",
+              "random",
+              "comment"
+            ],
+            "answer": "costume",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Costume means one of the pictures a sprite can wear."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A note that explains what the code does.?",
+            "choices": [
+              "comment",
+              "debugging",
+              "algorithm",
+              "repetition"
+            ],
+            "answer": "comment",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Comment means a note that explains what the code does."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-2",
+        "icon": "★",
+        "skill": "loop",
+        "title": "Concept Quest: loop",
+        "description": "Practise loop through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “loop” mean in computing?",
+            "choices": [
+              "Code that repeats instructions for you.",
+              "Instructions that repeat and never stop on their own.",
+              "The Scratch block that repeats the code inside it until you stop the program.",
+              "Pictures shown one after another so it looks like movement."
+            ],
+            "answer": "Code that repeats instructions for you.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Loop means code that repeats instructions for you."
+          },
+          {
+            "prompt": "What does “animation” mean in computing?",
+            "choices": [
+              "Pictures shown one after another so it looks like movement.",
+              "A character or object in Scratch.",
+              "One of the pictures a sprite can wear.",
+              "The picture behind the sprites."
+            ],
+            "answer": "Pictures shown one after another so it looks like movement.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Animation means pictures shown one after another so it looks like movement."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The picture behind the sprites.?",
+            "choices": [
+              "backdrop",
+              "random",
+              "comment",
+              "debugging"
+            ],
+            "answer": "backdrop",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprites."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Finding and fixing mistakes in a program.?",
+            "choices": [
+              "debugging",
+              "algorithm",
+              "repetition",
+              "loop"
+            ],
+            "answer": "debugging",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Debugging means finding and fixing mistakes in a program."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-3",
+        "icon": "◫",
+        "skill": "forever loop",
+        "title": "Debug Detective: forever loop",
+        "description": "Practise forever loop through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “forever loop” mean in computing?",
+            "choices": [
+              "Instructions that repeat and never stop on their own.",
+              "The Scratch block that repeats the code inside it until you stop the program.",
+              "Pictures shown one after another so it looks like movement.",
+              "A character or object in Scratch."
+            ],
+            "answer": "Instructions that repeat and never stop on their own.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Forever loop means instructions that repeat and never stop on their own."
+          },
+          {
+            "prompt": "What does “sprite” mean in computing?",
+            "choices": [
+              "A character or object in Scratch.",
+              "One of the pictures a sprite can wear.",
+              "The picture behind the sprites.",
+              "Does not follow a pattern."
+            ],
+            "answer": "A character or object in Scratch.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Does not follow a pattern.?",
+            "choices": [
+              "random",
+              "comment",
+              "debugging",
+              "algorithm"
+            ],
+            "answer": "random",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Random means does not follow a pattern."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A set of steps for doing a job, in the right order.?",
+            "choices": [
+              "algorithm",
+              "repetition",
+              "loop",
+              "forever loop"
+            ],
+            "answer": "algorithm",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-4",
+        "icon": "→",
+        "skill": "Forever block",
+        "title": "Algorithm Runner: Forever block",
+        "description": "Practise forever block through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Forever block” mean in computing?",
+            "choices": [
+              "The Scratch block that repeats the code inside it until you stop the program.",
+              "Pictures shown one after another so it looks like movement.",
+              "A character or object in Scratch.",
+              "One of the pictures a sprite can wear."
+            ],
+            "answer": "The Scratch block that repeats the code inside it until you stop the program.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Forever block means the Scratch block that repeats the code inside it until you stop the program."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: One of the pictures a sprite can wear.?",
+            "choices": [
+              "costume",
+              "backdrop",
+              "random",
+              "comment"
+            ],
+            "answer": "costume",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Costume means one of the pictures a sprite can wear."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A note that explains what the code does.?",
+            "choices": [
+              "comment",
+              "debugging",
+              "algorithm",
+              "repetition"
+            ],
+            "answer": "comment",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Comment means a note that explains what the code does."
+          },
+          {
+            "prompt": "What does “repetition” mean in computing?",
+            "choices": [
+              "Doing something over and over.",
+              "Code that repeats instructions for you.",
+              "Instructions that repeat and never stop on their own.",
+              "The Scratch block that repeats the code inside it until you stop the program."
+            ],
+            "answer": "Doing something over and over.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Repetition means doing something over and over."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-5",
+        "icon": "Σ",
+        "skill": "animation",
+        "title": "Vocabulary Vault: animation",
+        "description": "Practise animation through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “animation” mean in computing?",
+            "choices": [
+              "Pictures shown one after another so it looks like movement.",
+              "A character or object in Scratch.",
+              "One of the pictures a sprite can wear.",
+              "The picture behind the sprites."
+            ],
+            "answer": "Pictures shown one after another so it looks like movement.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Animation means pictures shown one after another so it looks like movement."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The picture behind the sprites.?",
+            "choices": [
+              "backdrop",
+              "random",
+              "comment",
+              "debugging"
+            ],
+            "answer": "backdrop",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprites."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Finding and fixing mistakes in a program.?",
+            "choices": [
+              "debugging",
+              "algorithm",
+              "repetition",
+              "loop"
+            ],
+            "answer": "debugging",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Debugging means finding and fixing mistakes in a program."
+          },
+          {
+            "prompt": "What does “loop” mean in computing?",
+            "choices": [
+              "Code that repeats instructions for you.",
+              "Instructions that repeat and never stop on their own.",
+              "The Scratch block that repeats the code inside it until you stop the program.",
+              "Pictures shown one after another so it looks like movement."
+            ],
+            "answer": "Code that repeats instructions for you.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Loop means code that repeats instructions for you."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-6",
+        "icon": "◇",
+        "skill": "sprite",
+        "title": "Challenge Cards: sprite",
+        "description": "Practise sprite through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “sprite” mean in computing?",
+            "choices": [
+              "A character or object in Scratch.",
+              "One of the pictures a sprite can wear.",
+              "The picture behind the sprites.",
+              "Does not follow a pattern."
+            ],
+            "answer": "A character or object in Scratch.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Does not follow a pattern.?",
+            "choices": [
+              "random",
+              "comment",
+              "debugging",
+              "algorithm"
+            ],
+            "answer": "random",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Random means does not follow a pattern."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A set of steps for doing a job, in the right order.?",
+            "choices": [
+              "algorithm",
+              "repetition",
+              "loop",
+              "forever loop"
+            ],
+            "answer": "algorithm",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          },
+          {
+            "prompt": "What does “forever loop” mean in computing?",
+            "choices": [
+              "Instructions that repeat and never stop on their own.",
+              "The Scratch block that repeats the code inside it until you stop the program.",
+              "Pictures shown one after another so it looks like movement.",
+              "A character or object in Scratch."
+            ],
+            "answer": "Instructions that repeat and never stop on their own.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Forever loop means instructions that repeat and never stop on their own."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-7",
+        "icon": "⚡",
+        "skill": "costume",
+        "title": "Think Fast: costume",
+        "description": "Practise costume through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: One of the pictures a sprite can wear.?",
+            "choices": [
+              "costume",
+              "backdrop",
+              "random",
+              "comment"
+            ],
+            "answer": "costume",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Costume means one of the pictures a sprite can wear."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A note that explains what the code does.?",
+            "choices": [
+              "comment",
+              "debugging",
+              "algorithm",
+              "repetition"
+            ],
+            "answer": "comment",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Comment means a note that explains what the code does."
+          },
+          {
+            "prompt": "What does “repetition” mean in computing?",
+            "choices": [
+              "Doing something over and over.",
+              "Code that repeats instructions for you.",
+              "Instructions that repeat and never stop on their own.",
+              "The Scratch block that repeats the code inside it until you stop the program."
+            ],
+            "answer": "Doing something over and over.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Repetition means doing something over and over."
+          },
+          {
+            "prompt": "What does “Forever block” mean in computing?",
+            "choices": [
+              "The Scratch block that repeats the code inside it until you stop the program.",
+              "Pictures shown one after another so it looks like movement.",
+              "A character or object in Scratch.",
+              "One of the pictures a sprite can wear."
+            ],
+            "answer": "The Scratch block that repeats the code inside it until you stop the program.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Forever block means the Scratch block that repeats the code inside it until you stop the program."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-8",
+        "icon": "☁",
+        "skill": "backdrop",
+        "title": "Explain It: backdrop",
+        "description": "Practise backdrop through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The picture behind the sprites.?",
+            "choices": [
+              "backdrop",
+              "random",
+              "comment",
+              "debugging"
+            ],
+            "answer": "backdrop",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprites."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Finding and fixing mistakes in a program.?",
+            "choices": [
+              "debugging",
+              "algorithm",
+              "repetition",
+              "loop"
+            ],
+            "answer": "debugging",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Debugging means finding and fixing mistakes in a program."
+          },
+          {
+            "prompt": "What does “loop” mean in computing?",
+            "choices": [
+              "Code that repeats instructions for you.",
+              "Instructions that repeat and never stop on their own.",
+              "The Scratch block that repeats the code inside it until you stop the program.",
+              "Pictures shown one after another so it looks like movement."
+            ],
+            "answer": "Code that repeats instructions for you.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Loop means code that repeats instructions for you."
+          },
+          {
+            "prompt": "What does “animation” mean in computing?",
+            "choices": [
+              "Pictures shown one after another so it looks like movement.",
+              "A character or object in Scratch.",
+              "One of the pictures a sprite can wear.",
+              "The picture behind the sprites."
+            ],
+            "answer": "Pictures shown one after another so it looks like movement.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Animation means pictures shown one after another so it looks like movement."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-9",
+        "icon": "⌂",
+        "skill": "random",
+        "title": "Real-Life Round: random",
+        "description": "Practise random through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Does not follow a pattern.?",
+            "choices": [
+              "random",
+              "comment",
+              "debugging",
+              "algorithm"
+            ],
+            "answer": "random",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Random means does not follow a pattern."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A set of steps for doing a job, in the right order.?",
+            "choices": [
+              "algorithm",
+              "repetition",
+              "loop",
+              "forever loop"
+            ],
+            "answer": "algorithm",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          },
+          {
+            "prompt": "What does “forever loop” mean in computing?",
+            "choices": [
+              "Instructions that repeat and never stop on their own.",
+              "The Scratch block that repeats the code inside it until you stop the program.",
+              "Pictures shown one after another so it looks like movement.",
+              "A character or object in Scratch."
+            ],
+            "answer": "Instructions that repeat and never stop on their own.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Forever loop means instructions that repeat and never stop on their own."
+          },
+          {
+            "prompt": "What does “sprite” mean in computing?",
+            "choices": [
+              "A character or object in Scratch.",
+              "One of the pictures a sprite can wear.",
+              "The picture behind the sprites.",
+              "Does not follow a pattern."
+            ],
+            "answer": "A character or object in Scratch.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-10",
+        "icon": "!",
+        "skill": "comment",
+        "title": "Spot the Bug: comment",
+        "description": "Practise comment through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A note that explains what the code does.?",
+            "choices": [
+              "comment",
+              "debugging",
+              "algorithm",
+              "repetition"
+            ],
+            "answer": "comment",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Comment means a note that explains what the code does."
+          },
+          {
+            "prompt": "What does “repetition” mean in computing?",
+            "choices": [
+              "Doing something over and over.",
+              "Code that repeats instructions for you.",
+              "Instructions that repeat and never stop on their own.",
+              "The Scratch block that repeats the code inside it until you stop the program."
+            ],
+            "answer": "Doing something over and over.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Repetition means doing something over and over."
+          },
+          {
+            "prompt": "What does “Forever block” mean in computing?",
+            "choices": [
+              "The Scratch block that repeats the code inside it until you stop the program.",
+              "Pictures shown one after another so it looks like movement.",
+              "A character or object in Scratch.",
+              "One of the pictures a sprite can wear."
+            ],
+            "answer": "The Scratch block that repeats the code inside it until you stop the program.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Forever block means the Scratch block that repeats the code inside it until you stop the program."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: One of the pictures a sprite can wear.?",
+            "choices": [
+              "costume",
+              "backdrop",
+              "random",
+              "comment"
+            ],
+            "answer": "costume",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Costume means one of the pictures a sprite can wear."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-11",
+        "icon": "≡",
+        "skill": "debugging",
+        "title": "Mastery Mix: debugging",
+        "description": "Practise debugging through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Finding and fixing mistakes in a program.?",
+            "choices": [
+              "debugging",
+              "algorithm",
+              "repetition",
+              "loop"
+            ],
+            "answer": "debugging",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Debugging means finding and fixing mistakes in a program."
+          },
+          {
+            "prompt": "What does “loop” mean in computing?",
+            "choices": [
+              "Code that repeats instructions for you.",
+              "Instructions that repeat and never stop on their own.",
+              "The Scratch block that repeats the code inside it until you stop the program.",
+              "Pictures shown one after another so it looks like movement."
+            ],
+            "answer": "Code that repeats instructions for you.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Loop means code that repeats instructions for you."
+          },
+          {
+            "prompt": "What does “animation” mean in computing?",
+            "choices": [
+              "Pictures shown one after another so it looks like movement.",
+              "A character or object in Scratch.",
+              "One of the pictures a sprite can wear.",
+              "The picture behind the sprites."
+            ],
+            "answer": "Pictures shown one after another so it looks like movement.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Animation means pictures shown one after another so it looks like movement."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The picture behind the sprites.?",
+            "choices": [
+              "backdrop",
+              "random",
+              "comment",
+              "debugging"
+            ],
+            "answer": "backdrop",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprites."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-12",
+        "icon": "T",
+        "skill": "algorithm",
+        "title": "Unit Champion: algorithm",
+        "description": "Practise algorithm through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A set of steps for doing a job, in the right order.?",
+            "choices": [
+              "algorithm",
+              "repetition",
+              "loop",
+              "forever loop"
+            ],
+            "answer": "algorithm",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          },
+          {
+            "prompt": "What does “forever loop” mean in computing?",
+            "choices": [
+              "Instructions that repeat and never stop on their own.",
+              "The Scratch block that repeats the code inside it until you stop the program.",
+              "Pictures shown one after another so it looks like movement.",
+              "A character or object in Scratch."
+            ],
+            "answer": "Instructions that repeat and never stop on their own.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Forever loop means instructions that repeat and never stop on their own."
+          },
+          {
+            "prompt": "What does “sprite” mean in computing?",
+            "choices": [
+              "A character or object in Scratch.",
+              "One of the pictures a sprite can wear.",
+              "The picture behind the sprites.",
+              "Does not follow a pattern."
+            ],
+            "answer": "A character or object in Scratch.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Does not follow a pattern.?",
+            "choices": [
+              "random",
+              "comment",
+              "debugging",
+              "algorithm"
+            ],
+            "answer": "random",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Random means does not follow a pattern."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can these objectives come straight from the source unit. By the end, the child should be able to:",
+    "I can follow, understand and correct algorithms that use repetition — read steps that repeat, say what job they do, and fix them when a step is wrong.",
+    "I can understand what a forever loop is — instructions that repeat over and over without stopping.",
+    "I can add comments to blocks of code to explain what the code does.",
+    "I can develop programs with repetition in Scratch using the Forever block.",
+    "I can build a simple animation by switching costumes and moving a sprite inside a forever loop.",
+    "I can before starting, it helps if the child already knows what an algorithm is (a set of steps in the right order) and has changed a block of code before. A quick reminder in Session 1 is enough — do not spend a whole session revising."
+  ]
+}

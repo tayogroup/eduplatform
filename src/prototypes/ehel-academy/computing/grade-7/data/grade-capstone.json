@@ -1,0 +1,415 @@
+{
+  "schemaVersion": "Ehel Computing Stage Capstone v1.0",
+  "stage": {
+    "id": "s07",
+    "label": "Stage 7"
+  },
+  "title": "Build a Stage 7 Computing Showcase",
+  "overview": "Bring together everything from Stage 7 Computing into one showcase: a working program, the data behind it, a clear explanation of how it runs, and the safety rules you followed while making it.",
+  "project": {
+    "drivingQuestion": "How can I use the computing I learned in Stage 7 to build something that solves a real problem for someone in my community — and explain exactly how it works?",
+    "finalProduct": "A working program or digital product, the plan and algorithm behind it, a test-and-debug log, a data display, and a spoken or written explanation of your design decisions.",
+    "stages": [
+      {
+        "id": "plan",
+        "title": "1. Plan and decompose",
+        "units": [
+          1,
+          2
+        ],
+        "prompt": "Choose a real problem. Using the ideas from Units 1, 2, break it into smaller parts and write the algorithm before you write any code.",
+        "evidence": "A decomposed problem and a written algorithm or flowchart"
+      },
+      {
+        "id": "build",
+        "title": "2. Build it",
+        "units": [
+          3,
+          4
+        ],
+        "prompt": "Build your program or product using the tools from Units 3, 4. Build the smallest working version first, then add one feature at a time.",
+        "evidence": "A working program or digital product"
+      },
+      {
+        "id": "test",
+        "title": "3. Test, debug and improve",
+        "units": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "prompt": "Test your work against your success criteria. Keep a log of every bug: what you saw, what caused it, and how you fixed it.",
+        "evidence": "A test-and-debug log with at least three entries"
+      },
+      {
+        "id": "share",
+        "title": "4. Share it safely",
+        "units": [
+          5,
+          6
+        ],
+        "prompt": "Present your showcase. Explain three design decisions, show your data, and say which online-safety rules from Units 5, 6 you followed and why.",
+        "evidence": "A spoken, written or recorded explanation covering design, data and safety"
+      }
+    ],
+    "evidenceChecklist": [
+      "A decomposed problem with a written algorithm or flowchart",
+      "A working program or digital product",
+      "A test-and-debug log with at least three fixed bugs",
+      "Data collected, organised and displayed",
+      "Success criteria, each one ticked off with evidence",
+      "An explanation of your design decisions and the safety rules you followed"
+    ],
+    "rubric": [
+      {
+        "criterion": "Computational thinking",
+        "secure": "The problem is decomposed, the algorithm is precise, and the pattern behind it is named."
+      },
+      {
+        "criterion": "Programming and debugging",
+        "secure": "The program runs, meets its criteria, and every bug found is logged with its cause and fix."
+      },
+      {
+        "criterion": "Data and information",
+        "secure": "Data is collected accurately, organised sensibly and displayed so it answers a question."
+      },
+      {
+        "criterion": "Safe and responsible use",
+        "secure": "Personal information is protected, sources are credited, and safety choices are explained."
+      }
+    ]
+  },
+  "quiz": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "cap-u01-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “text-based programming” mean in computing?",
+        "options": [
+          "Programming where you type the code as text, using a language such as Python.",
+          "Programming by dragging and dropping blocks that snap together, as in Scratch.",
+          "A popular, free, text-based programming language. You will use it all through this unit.",
+          "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs."
+        ],
+        "answer": "Programming where you type the code as text, using a language such as Python.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Text-based programming means programming where you type the code as text, using a language such as Python..",
+        "unitNo": 1,
+        "unitTitle": "Block It Out: Moving from Blocks to Text"
+      },
+      {
+        "id": "cap-u01-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Python shell” mean in computing?",
+        "options": [
+          "Python's interactive mode, where you type one command and see the result straight away.",
+          "A way of using Python where each command is run immediately in the shell.",
+          "Python's editor, where you type a list of commands, save them as a file, and run them together.",
+          "A Python command that outputs text or values onto the screen."
+        ],
+        "answer": "Python's interactive mode, where you type one command and see the result straight away.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "IDE (Integrated Development Environment) means a program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+        "unitNo": 1,
+        "unitTitle": "Block It Out: Moving from Blocks to Text"
+      },
+      {
+        "id": "cap-u01-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A whole number, such as 24 or -10.?",
+        "options": [
+          "integer",
+          "real / float",
+          "variable",
+          "input function"
+        ],
+        "answer": "integer",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "String means data made of letters, numbers or symbols, written inside quotation marks, e.g. \"Hello\".",
+        "unitNo": 1,
+        "unitTitle": "Block It Out: Moving from Blocks to Text"
+      },
+      {
+        "id": "cap-u02-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “accelerometer” mean in computing?",
+        "options": [
+          "A sensor that detects movement, tilt and gestures such as a shake.",
+          "A sequence of steps or instructions to solve a problem.",
+          "Following the flow of a flowchart with a specific input to predict the output.",
+          "Software for general or specific tasks, such as a browser or word processor."
+        ],
+        "answer": "A sensor that detects movement, tilt and gestures such as a shake.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Accelerometer means a sensor that detects movement, tilt and gestures such as a shake..",
+        "unitNo": 2,
+        "unitTitle": "Decomposing Problems: Creating a Smart Solution"
+      },
+      {
+        "id": "cap-u02-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “automate” mean in computing?",
+        "options": [
+          "To let sensors and a program run a device with little or no human interaction.",
+          "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+          "Any device that follows the input, process, output model.",
+          "The process of finding and removing errors from a program."
+        ],
+        "answer": "To let sensors and a program run a device with little or no human interaction.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Applications software means software for general or specific tasks, such as a browser or word processor.",
+        "unitNo": 2,
+        "unitTitle": "Decomposing Problems: Creating a Smart Solution"
+      },
+      {
+        "id": "cap-u02-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Another word for running a program.?",
+        "options": [
+          "execute",
+          "flashing the program",
+          "flowchart",
+          "gesture"
+        ],
+        "answer": "execute",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Decompose / decomposition means breaking a problem down into smaller parts.",
+        "unitNo": 2,
+        "unitTitle": "Decomposing Problems: Creating a Smart Solution"
+      },
+      {
+        "id": "cap-u03-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “connectivity” mean in computing?",
+        "options": [
+          "The way devices connect to each other to form a network.",
+          "A group of computers and devices connected so they can share data.",
+          "The huge global network that connects billions of devices worldwide.",
+          "A wireless method of connecting devices using radio waves, over a short range."
+        ],
+        "answer": "The way devices connect to each other to form a network.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Connectivity means the way devices connect to each other to form a network.",
+        "unitNo": 3,
+        "unitTitle": "Connections Are Made: Accessing the Internet"
+      },
+      {
+        "id": "cap-u03-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Bluetooth” mean in computing?",
+        "options": [
+          "A wireless method for connecting nearby devices using radio waves.",
+          "Mobile internet from phone masts, such as 4G and 5G.",
+          "The amount of data that can be sent in a certain amount of time.",
+          "How far a signal can travel using a transmission method."
+        ],
+        "answer": "A wireless method for connecting nearby devices using radio waves.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Bluetooth means a wireless method for connecting nearby devices using radio waves.",
+        "unitNo": 3,
+        "unitTitle": "Connections Are Made: Accessing the Internet"
+      },
+      {
+        "id": "cap-u03-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A powerful computer that stores and manages files and services for a network.?",
+        "options": [
+          "server",
+          "web server",
+          "IP address",
+          "URL"
+        ],
+        "answer": "server",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Server means a powerful computer that stores and manages files and services for a network.",
+        "unitNo": 3,
+        "unitTitle": "Connections Are Made: Accessing the Internet"
+      },
+      {
+        "id": "cap-u04-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “data” mean in computing?",
+        "options": [
+          "Raw facts and figures, for example a list of names or prices.",
+          "Examine something in detail so that you fully understand it.",
+          "A computer representation of a real-life situation, where data is changed to see what happens.",
+          "A more complex model that can predict the outcome of a real-world system, often using graphics."
+        ],
+        "answer": "Raw facts and figures, for example a list of names or prices.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Data means raw facts and figures, for example a list of names or prices.",
+        "unitNo": 4,
+        "unitTitle": "The Power of Data: Using Data Modelling"
+      },
+      {
+        "id": "cap-u04-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “factors” mean in computing?",
+        "options": [
+          "The key data items represented in a data model.",
+          "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+          "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
+          "The box where a row and a column meet; it can hold text, a number or a formula."
+        ],
+        "answer": "The key data items represented in a data model.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Factors means the key data items represented in a data model.",
+        "unitNo": 4,
+        "unitTitle": "The Power of Data: Using Data Modelling"
+      },
+      {
+        "id": "cap-u04-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A group of cells named by the first and last cell, for example B2:B8.?",
+        "options": [
+          "cell range",
+          "formula",
+          "function",
+          "relative reference"
+        ],
+        "answer": "cell range",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Cell range means a group of cells named by the first and last cell, for example B2:B8.",
+        "unitNo": 4,
+        "unitTitle": "The Power of Data: Using Data Modelling"
+      },
+      {
+        "id": "cap-u05-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “Software” mean in computing?",
+        "options": [
+          "The programs and instructions that tell a device what to do. You cannot touch software.",
+          "The physical parts of a device that you can touch, such as the screen, keyboard and battery.",
+          "Software that runs and manages the device itself, for example the operating system.",
+          "The most important systems software; it manages the hardware and lets you use other programs."
+        ],
+        "answer": "The programs and instructions that tell a device what to do. You cannot touch software.",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Software means the programs and instructions that tell a device what to do. You cannot touch software.",
+        "unitNo": 5,
+        "unitTitle": "Living with AI: Digital Data"
+      },
+      {
+        "id": "cap-u05-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Application software” mean in computing?",
+        "options": [
+          "Software that helps you do a task you want to do, such as a browser or a camera app.",
+          "Technology that lets a computer act or think in a way similar to a human.",
+          "A type of AI that learns and improves by finding patterns in large amounts of data.",
+          "To let a device complete a task on its own, with little or no human help."
+        ],
+        "answer": "Software that helps you do a task you want to do, such as a browser or a camera app.",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Application software means software that helps you do a task you want to do, such as a browser or a camera app.",
+        "unitNo": 5,
+        "unitTitle": "Living with AI: Digital Data"
+      },
+      {
+        "id": "cap-u05-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A device that gathers data from its surroundings, such as temperature, light or distance.?",
+        "options": [
+          "Sensor",
+          "Binary",
+          "Bit",
+          "Byte"
+        ],
+        "answer": "Sensor",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Sensor means a device that gathers data from its surroundings, such as temperature, light or distance.",
+        "unitNo": 5,
+        "unitTitle": "Living with AI: Digital Data"
+      },
+      {
+        "id": "cap-u06-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does a sequence mean in programming?",
+        "options": [
+          "a random set of steps",
+          "the specific order of instructions",
+          "a type of loop",
+          "a picture on the display"
+        ],
+        "answer": "the specific order of instructions",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "the specific order of instructions. A computer follows steps strictly in order.",
+        "unitNo": 6,
+        "unitTitle": "Sequencing and Pattern Recognition"
+      },
+      {
+        "id": "cap-u06-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What is the value range for LED brightness?",
+        "options": [
+          "0 to 1",
+          "0 to 9",
+          "1 to 100",
+          "0 to 255"
+        ],
+        "answer": "0 to 9",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "0 to 9. 0 is off, 9 is full brightness, and 1 to 8 are dimmer levels.",
+        "unitNo": 6,
+        "unitTitle": "Sequencing and Pattern Recognition"
+      },
+      {
+        "id": "cap-u06-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Pattern recognition is best described as:",
+        "options": [
+          "memorising code",
+          "looking for a pattern and using it to solve a problem",
+          "drawing pictures",
+          "deleting bugs"
+        ],
+        "answer": "looking for a pattern and using it to solve a problem",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "looking for a pattern and using it to solve a problem.",
+        "unitNo": 6,
+        "unitTitle": "Sequencing and Pattern Recognition"
+      }
+    ]
+  },
+  "reviewStatus": "Curriculum review required"
+}

@@ -1,0 +1,1792 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.363Z",
+  "stage": {
+    "id": "s02",
+    "label": "Stage 2"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t02",
+    "label": "Term 2"
+  },
+  "unit": {
+    "unitId": "comp-g02-u06",
+    "unitNo": 6,
+    "unitTitle": "Be a Designer",
+    "unitOverview": "The first idea is the algorithm. An algorithm is just a set of instructions in the right order. The second idea is the program. When we write our algorithm as blocks that a computer can follow, we have made a program. The third idea is debugging. A mistake in a program is called a bug. Finding it and fixing it is called debugging — and it is much faster and more fun when we work with a friend.\n\nThe free tool for this unit is ScratchJr. The source textbook names ScratchJr directly, so we use exactly the tool it intends. This is a colourful app made especially for you aged five to seven, so it is a perfect fit for Year 2. There is no reading of code and no typing — you simply drag picture blocks together and tap the green flag to see their character move. You join blocks like Start on Green Flag, Hop, Turn Right and Move Right to bring a dancer to life.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 2
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-2-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 2",
+    "sourceArchive": "Year 2-20260801T055735Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 2/Unit 6/Year 2 - Unit 6 Teacher Guide.docx",
+      "Year 2/Unit 6/Year 2 - Unit 6 Activity Sheet.docx",
+      "Year 2/Unit 6/Year 2 - Unit 6 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 380,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 2 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Follow and understand an algorithm — a set of instructions in the correct order.",
+    "Explain, in their own words, why the order of the steps matters.",
+    "Plan instructions for a character by writing a simple dance algorithm.",
+    "Turn an algorithm into a program in ScratchJr using blocks such as Start on Green Flag, Hop, Turn Right and Move Right.",
+    "Add a second character that starts to dance using the Start on Bump block.",
+    "Say what a bug is, and debug a short program by finding and fixing one mistake.",
+    "Explain why it is helpful to work with others when debugging.",
+    "Run a program with the green flag and check whether it did what they wanted."
+  ],
+  "toolkit": [
+    {
+      "name": "ScratchJr",
+      "url": "jrscratch.org (tablet app: ScratchJr)",
+      "steps": [
+        "Open ScratchJr on a tablet.",
+        "Tap the house, then tap the plus to start a new project.",
+        "Drag the coloured picture blocks together to make your character move.",
+        "Tap the green flag to run it."
+      ],
+      "note": "Made for ages 5-7. No reading needed and no account to create."
+    }
+  ],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-algorithms-putting-the-moves-in-the-right-order-unplugged",
+      "title": "Algorithms: putting the moves in the right order (unplugged)",
+      "explanation": "An algorithm is a set of instructions in the right order. If the order is wrong, the instructions do not work. A dance is a lovely example: the moves must come in the right order or the dance falls apart.\n\nStand up together and say: “Let us do a little dance! First we HOP. Then we TURN around. Then we STEP to the side.” Do it as a class, calling the moves in order. Now do it in a silly, muddled order — “Step, hop, turn. no wait, turn, step, hop!” — and you can giggle at how it goes wrong.",
+      "example": "When we put the moves in the right order, that is called an algorithm. Computers need their instructions in the right order too.",
+      "checkYourself": "you cannot land before you jump. Can you put the moves in an order that makes sense?"
+    },
+    {
+      "id": "concept-2-meet-scratchjr-make-a-character-move",
+      "title": "Meet ScratchJr: make a character move",
+      "explanation": "Today we open ScratchJr and meet the blocks. Blocks are picture instructions. We drag them together to make a character move. The yellow Start on Green Flag block starts everything when we tap the green flag.\n\ntap the blue plus to add a character (a person). The yellow blocks start things.",
+      "example": "The blue blocks make our character move. Open a new project and tap the picture button at the top to choose a Background.",
+      "checkYourself": "Can you drag and snap two or three blocks together and run the program with the green flag? Can you point to the green-flag block and say it starts the program? Can you add a background and a character?"
+    },
+    {
+      "id": "concept-3-design-a-dance-from-algorithm-to-program",
+      "title": "Design a dance: from algorithm to program",
+      "explanation": "Now we are real designers. First we plan the dance as an algorithm (the moves in order).\n\nTry it: Support you to plan on paper first, then build.\n\nCheck yourself: Can you run it and say whether it did what you wanted? Can you add a Start on Bump character? Does you build the blocks in the same order as the plan?",
+      "example": "Then we turn the algorithm into a program by dragging the matching blocks in ScratchJr. Same order on paper, same order in the app.",
+      "checkYourself": "Can you run it and say whether it did what you wanted? Can you add a Start on Bump character? Does you build the blocks in the same order as the plan?"
+    },
+    {
+      "id": "concept-4-bugs-and-debugging-fixing-it-together",
+      "title": "Bugs and debugging: fixing it together",
+      "explanation": "A bug is a mistake in a program. Finding and fixing it is called debugging. Everyone makes bugs — even the best programmers — so debugging is a normal, happy part of the job. And it is faster and easier with a friend: two pairs of eyes find the mistake sooner.\n\nA bug is just a mistake in our instructions. When we find it and fix it, we are debugging. It is like proofreading a story to find the letter that is wrong.",
+      "example": "Find one real example of bugs and debugging: fixing it together around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you understand that a bug is a mistake we can fix, not a disaster? Can you work kindly with a partner to find it? Can you find one wrong block and say what it should be?"
+    },
+    {
+      "id": "concept-5-be-a-designer-the-mini-project",
+      "title": "Be a designer: the Mini-Project",
+      "explanation": "This session and the Mini-Project go hand in hand. Now you are the designer. You will make a dancer for our Ehel Academy celebration.\n\nTry it: You complete the — plan a dance, build it with two characters (one using Start on Bump), find and fix the bug in with a partner, and then make it better with one extra block.\n\nCheck yourself: Does your program run and roughly match your plan? Did you find and fix the bug in Part C? Did you work well with your partner? Does you plan before building?",
+      "example": "First plan your moves, then build them, then check it works — and if there is a bug, find it with your partner. Keep routines short — three or four moves is plenty.",
+      "checkYourself": "Does your program run and roughly match your plan? Did you find and fix the bug in Part C? Did you work well with your partner? Does you plan before building?"
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "Start on Green Flag",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "Move Right (3)",
+        "Hop (2)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-2",
+      "title": "Start on Green Flag (2)",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "Turn Left (3)",
+        "Turn Right (3)",
+        "Hop (2)",
+        "Move Right (1)",
+        "Move Left (1)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-3",
+      "title": "Start on Bump",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "Move Up (4)",
+        "Hop (2)",
+        "Move Left (1)",
+        "Turn Right (12)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-4",
+      "title": "Start on Green Flag (3)",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "Move Right (4)",
+        "Turn Right (3)",
+        "Move Up (2)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-5",
+      "title": "Start on Green Flag (4)",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "Hop (2)",
+        "Turn Right (3)",
+        "Move Right (2)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-6",
+      "title": "Start on Bump (2)",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "Hop (2)",
+        "Turn Left (12)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Put the Dance in Order",
+      "context": "work through the steps below and see what happens. This is algorithms: putting the moves in the right order (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "These dance moves are all mixed up! Use your clever thinking. Write 1, 2, 3, 4, 5 in the boxes to put them in a good order.",
+      "answer": "[ ] Hop up high [ ] Start the dance [ ] Step to the side [ ] Turn around [ ] Stop the dance",
+      "modelType": "model-1",
+      "hint": "Start here: [ ] Hop up high",
+      "explanation": "Algorithms: putting the moves in the right order (unplugged): An algorithm is a set of instructions in the right order. If the order is wrong, the instructions do not work. A dance is a lovely example: the moves must come in the right order or the dance falls apart."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Match the Blocks",
+      "context": "work through the steps below and see what happens. This is meet scratchjr: make a character move in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "In ScratchJr we join picture blocks. Draw a line from each block to what it does.",
+      "answer": "Match: Block → What it does Match: Start on Green Flag → makes the character jump Match: Hop → ends the program Match: Turn Right → starts the program Match: End → spins the character to the right",
+      "modelType": "model-2",
+      "hint": "Start here: Match: Block → What it does",
+      "explanation": "Meet ScratchJr: make a character move: Today we open ScratchJr and meet the blocks. Blocks are picture instructions. We drag them together to make a character move. The yellow Start on Green Flag block starts everything when we tap the green flag."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "How Many Steps?",
+      "context": "work through the steps below and see what happens. This is design a dance: from algorithm to program in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "The dancer (D) wants to reach the star (S). Each square is one step. How many steps to reach the star?",
+      "answer": "My answer: the dancer needs __________ steps. Hint: you can go right, then down. Count each square you move.",
+      "modelType": "model-3",
+      "hint": "Start here: My answer: the dancer needs __________ steps.",
+      "explanation": "Design a dance: from algorithm to program: Now we are real designers. First we plan the dance as an algorithm (the moves in order)."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Spot the Bug!",
+      "context": "work through the steps below and see what happens. This is bugs and debugging: fixing it together in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "A bug is a mistake. This dancer should hop, then move to the RIGHT, then turn. But one block is wrong! Circle the block that is wrong.",
+      "answer": "Hop (2) Turn Right (3) Which block should it be instead? ________________________________ Tip: ask a friend to check with you. Two heads are better than one!",
+      "modelType": "model-4",
+      "hint": "Start here: Hop (2)",
+      "explanation": "Bugs and debugging: fixing it together: A bug is a mistake in a program. Finding and fixing it is called debugging. Everyone makes bugs — even the best programmers — so debugging is a normal, happy part of the job. And it is faster and easier with a friend: two pairs of eyes find the mistake sooner."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Make a Character Move",
+      "context": "work through the steps below and see what happens. This is be a designer: the mini-project in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Let us open ScratchJr and make a character move.",
+      "answer": "Open ScratchJr and tap the big + to start a new project. Tap the picture button at the top to choose a Background. Tap the blue + to add a character (a person). Drag these blocks and join them together Hop (2)",
+      "modelType": "model-5",
+      "hint": "Start here: Open ScratchJr and tap the big + to start a new project.",
+      "explanation": "Be a designer: the Mini-Project: This session and the Mini-Project go hand in hand. Now you are the designer. You will make a dancer for our Ehel Academy celebration."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Build the Dance Routine",
+      "context": "work through the steps below and see what happens. This is algorithms: putting the moves in the right order (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Now build a whole dance! Drag these blocks in this order, then tap the green flag.",
+      "answer": "Turn Left (3) Turn Right (3) Hop (2) Did your dancer do all the moves? Yes / Not yet",
+      "modelType": "model-6",
+      "hint": "Start here: Turn Left (3)",
+      "explanation": "Algorithms: putting the moves in the right order (unplugged): An algorithm is a set of instructions in the right order. If the order is wrong, the instructions do not work. A dance is a lovely example: the moves must come in the right order or the dance falls apart."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Algorithms: putting the moves in the right order (unplugged)",
+      "modelType": "concept-model-1",
+      "purpose": "An algorithm is a set of instructions in the right order. If the order is wrong, the instructions do not work. A dance is a lovely example: the moves must come in the right order or the dance falls apart.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Meet ScratchJr: make a character move",
+      "modelType": "concept-model-2",
+      "purpose": "Today we open ScratchJr and meet the blocks. Blocks are picture instructions. We drag them together to make a character move. The yellow Start on Green Flag block starts everything when we tap the green flag.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Design a dance: from algorithm to program",
+      "modelType": "concept-model-3",
+      "purpose": "Now we are real designers. First we plan the dance as an algorithm (the moves in order).",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Bugs and debugging: fixing it together",
+      "modelType": "concept-model-4",
+      "purpose": "A bug is a mistake in a program. Finding and fixing it is called debugging. Everyone makes bugs — even the best programmers — so debugging is a normal, happy part of the job. And it is faster and easier with a friend:…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Be a designer: the Mini-Project",
+      "modelType": "concept-model-5",
+      "purpose": "This session and the Mini-Project go hand in hand. Now you are the designer. You will make a dancer for our Ehel Academy celebration.",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with algorithms: putting the moves in the right order (unplugged)",
+      "example": "When we put the moves in the right order, that is called an algorithm. Computers need their instructions in the right order too.",
+      "steps": [
+        "Read the concept card for algorithms: putting the moves in the right order (unplugged) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with meet scratchjr: make a character move",
+      "example": "The blue blocks make our character move. Open a new project and tap the picture button at the top to choose a Background.",
+      "steps": [
+        "Read the concept card for meet scratchjr: make a character move and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with design a dance: from algorithm to program",
+      "example": "Then we turn the algorithm into a program by dragging the matching blocks in ScratchJr. Same order on paper, same order in the app.",
+      "steps": [
+        "Read the concept card for design a dance: from algorithm to program and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with bugs and debugging: fixing it together",
+      "example": "Find one real example of bugs and debugging: fixing it together around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for bugs and debugging: fixing it together and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with be a designer: the mini-project",
+      "example": "First plan your moves, then build them, then check it works — and if there is a bug, find it with your partner. Keep routines short — three or four moves is plenty.",
+      "steps": [
+        "Read the concept card for be a designer: the mini-project and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Algorithms: putting the moves in the right order (unplugged)",
+      "prompt": "What is an algorithm?",
+      "solution": "An algorithm is a set of instructions in the right order (like the moves of a dance)."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Meet ScratchJr: make a character move",
+      "prompt": "What does debug mean?",
+      "solution": "To debug means to find and fix a mistake in a program."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Design a dance: from algorithm to program",
+      "prompt": "Put these moves in order. Write 1, 2, 3 in the boxes.",
+      "solution": "Hop = 1, Turn = 2, Step ="
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Bugs and debugging: fixing it together",
+      "prompt": "You find a bug in your program. What should you do?",
+      "solution": "Find the wrong block and change it. It helps to ask a friend to look with you — two heads are better than one."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Algorithms: putting the moves in the right order (unplugged)",
+      "prompt": "Explain in your own words: Algorithms: putting the moves in the right order (unplugged).",
+      "solution": "An algorithm is a set of instructions in the right order. If the order is wrong, the instructions do not work. A dance is a lovely example: the moves must come in the right order or the dance falls apart.\n\nStand up together and say: “Let us do a little dance! First we HOP. Then we TURN around. Then we STEP to the side.” Do it as a class, calling the moves in order. Now do it in a silly, muddled order — “Step, hop, turn. no wait, turn, step, hop!” — and you can giggle at how it goes wrong.\n\nFor example: When we put the moves in the right order, that is called an algorithm. Computers need their instructions in the right order too."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Meet ScratchJr: make a character move",
+      "prompt": "Explain in your own words: Meet ScratchJr: make a character move.",
+      "solution": "Today we open ScratchJr and meet the blocks. Blocks are picture instructions. We drag them together to make a character move. The yellow Start on Green Flag block starts everything when we tap the green flag.\n\ntap the blue plus to add a character (a person). The yellow blocks start things.\n\nFor example: The blue blocks make our character move. Open a new project and tap the picture button at the top to choose a Background."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "What is an algorithm?",
+      "answer": "An algorithm is a set of instructions in the right order (like the moves of a dance).",
+      "hint": "Look back at what algorithm and order mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "What does debug mean?",
+      "answer": "To debug means to find and fix a mistake in a program.",
+      "hint": "Look back at what algorithm and order mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "Which block starts the program when you tap the green flag? ([ ] Hop)",
+      "answer": "Start on Green Flag.",
+      "hint": "Look back at what algorithm and order mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Put these moves in order. Write 1, 2, 3 in the boxes.",
+      "answer": "Hop = 1, Turn = 2, Step =",
+      "hint": "Look back at what algorithm and order mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "You find a bug in your program. What should you do?",
+      "answer": "Find the wrong block and change it. It helps to ask a friend to look with you — two heads are better than one.",
+      "hint": "Look back at what algorithm and order mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "Which block makes a character jump? ([ ] Say)",
+      "answer": "Hop.",
+      "hint": "Look back at what algorithm and order mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Put the Dance in Order",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "These dance moves are all mixed up! Use your clever thinking. Write 1, 2, 3, 4, 5 in the boxes to put them in a good order.",
+        "[ ] Hop up high",
+        "[ ] Start the dance",
+        "[ ] Step to the side",
+        "[ ] Turn around",
+        "[ ] Stop the dance"
+      ]
+    },
+    {
+      "title": "Match the Blocks",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "In ScratchJr we join picture blocks. Draw a line from each block to what it does.",
+        "Match: Block → What it does",
+        "Match: Start on Green Flag → makes the character jump",
+        "Match: Hop → ends the program",
+        "Match: Turn Right → starts the program",
+        "Match: End → spins the character to the right"
+      ]
+    },
+    {
+      "title": "How Many Steps?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "The dancer (D) wants to reach the star (S). Each square is one step. How many steps to reach the star?",
+        "My answer: the dancer needs __________ steps.",
+        "Hint: you can go right, then down. Count each square you move."
+      ]
+    },
+    {
+      "title": "Spot the Bug!",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A bug is a mistake. This dancer should hop, then move to the RIGHT, then turn. But one block is wrong! Circle the block that is wrong.",
+        "Hop (2)",
+        "Turn Right (3)",
+        "Which block should it be instead? ________________________________",
+        "Tip: ask a friend to check with you. Two heads are better than one!"
+      ]
+    },
+    {
+      "title": "Make a Character Move",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Let us open ScratchJr and make a character move.",
+        "Open ScratchJr and tap the big + to start a new project.",
+        "Tap the picture button at the top to choose a Background.",
+        "Tap the blue + to add a character (a person).",
+        "Drag these blocks and join them together",
+        "Hop (2)"
+      ]
+    },
+    {
+      "title": "Build the Dance Routine",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Now build a whole dance! Drag these blocks in this order, then tap the green flag.",
+        "Turn Left (3)",
+        "Turn Right (3)",
+        "Hop (2)",
+        "Did your dancer do all the moves? Yes / Not yet"
+      ]
+    },
+    {
+      "title": "Change a Number",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Find your Hop (2) block. Change the 2 to a 6, like this Let us make a change.",
+        "Hop (6)",
+        "Tap the green flag again. Does your dancer jump higher now? Yes / No",
+        "Did You Know?",
+        "A mistake in a program is called a bug. Long ago, a real moth flew into a big computer and stopped it working — a real bug!",
+        "A space robot once had a bug in its program and could not finish its trip to Mars. That is why we always check our code!"
+      ]
+    },
+    {
+      "title": "Plan Your Dance",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Write your dance moves in order. Pick from: Hop, Turn Right, Turn Left, Move Right, Move Left, Grow. Start is done for you.",
+        "Move 1: Start on Green Flag.",
+        "Move 2: ____________________.",
+        "Move 3: ____________________.",
+        "Move 4: ____________________.",
+        "This plan is your algorithm — your moves in the right order."
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "Your program runs but does the wrong thing.",
+      "cause": "The instructions are in the wrong order, or one is missing.",
+      "fix": "Read your steps out loud one at a time and act them out. The first step that does not match what you wanted is the bug."
+    },
+    {
+      "symptom": "Nothing happens when you run it.",
+      "cause": "There is no trigger, or the blocks are not joined together.",
+      "fix": "Check that your first block is a start block and that every block below it is snapped on."
+    },
+    {
+      "symptom": "It works once, then stops.",
+      "cause": "The instructions need to repeat.",
+      "fix": "Put the steps that should happen again inside a repeat or forever loop."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Algorithms: putting the moves in the right order (unplugged)",
+        "text": "An algorithm is a set of instructions in the right order."
+      },
+      {
+        "title": "Meet ScratchJr: make a character move",
+        "text": "Today we open ScratchJr and meet the blocks."
+      },
+      {
+        "title": "Design a dance: from algorithm to program",
+        "text": "Now we are real designers."
+      },
+      {
+        "title": "Bugs and debugging: fixing it together",
+        "text": "A bug is a mistake in a program."
+      },
+      {
+        "title": "Be a designer: the Mini-Project",
+        "text": "This session and the Mini-Project go hand in hand."
+      }
+    ],
+    "terms": [
+      [
+        "algorithm",
+        "A set of instructions in the right order."
+      ],
+      [
+        "order",
+        "Which step comes first, next and last."
+      ],
+      [
+        "program",
+        "An algorithm made from blocks the computer can follow."
+      ],
+      [
+        "ScratchJr",
+        "A free app where you join picture blocks to make things move."
+      ],
+      [
+        "block",
+        "One picture instruction you drag in ScratchJr."
+      ],
+      [
+        "bug",
+        "A mistake in a program."
+      ],
+      [
+        "debug",
+        "To find and fix the mistake."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "algorithm",
+        "meaning": "A set of instructions in the right order.",
+        "example": "The steps of a dance: hop, then turn, then step.",
+        "letter": "A"
+      },
+      {
+        "term": "order",
+        "meaning": "Which step comes first, next and last.",
+        "example": "You cannot land before you jump.",
+        "letter": "O"
+      },
+      {
+        "term": "program",
+        "meaning": "An algorithm made from blocks the computer can follow.",
+        "example": "The ScratchJr blocks that make the dancer move.",
+        "letter": "P"
+      },
+      {
+        "term": "ScratchJr",
+        "meaning": "A free app where you join picture blocks to make things move.",
+        "example": "We use it to make a dancer.",
+        "letter": "S"
+      },
+      {
+        "term": "block",
+        "meaning": "One picture instruction you drag in ScratchJr.",
+        "example": "The blue Hop block.",
+        "letter": "B"
+      },
+      {
+        "term": "bug",
+        "meaning": "A mistake in a program.",
+        "example": "The dancer turns the wrong way.",
+        "letter": "B"
+      },
+      {
+        "term": "debug",
+        "meaning": "To find and fix the mistake.",
+        "example": "We changed the wrong block for the right one.",
+        "letter": "D"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "The order does not matter.",
+        "It matters a lot. The same moves in a different order make a different dance — and some orders do not work at all (you cannot land before you jump). Show a muddled version to prove it."
+      ],
+      [
+        "A bug means I am bad at this.",
+        "Not at all. Everyone makes bugs, even expert programmers. A bug is just a mistake we can find and fix. Debugging is a normal, happy part of the work."
+      ],
+      [
+        "The character will fix its own mistake.",
+        "It will not. The computer does exactly what the blocks say, even if that is wrong. We have to find the wrong block and change it ourselves."
+      ],
+      [
+        "I must change lots of blocks to fix a bug.",
+        "Usually one small block is wrong. Change one thing, run it, and check — then change the next thing only if needed."
+      ],
+      [
+        "The green-flag block can go anywhere.",
+        "The Start on Green Flag block must sit at the top, or the blocks below it will not run when you tap the flag."
+      ],
+      [
+        "Every character needs blocks.",
+        "A character can have no blocks and simply stand still, like scenery. Only the characters we want to move need a program."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "What is an algorithm?",
+      "answer": "An algorithm is a set of instructions in the right order (like the moves of a dance).",
+      "hint": "Look back at what algorithm and order mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "An algorithm is a set of instructions in the right order (like the moves of a dance)."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "What does debug mean?",
+      "answer": "To debug means to find and fix a mistake in a program.",
+      "hint": "Look back at what algorithm and order mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "To debug means to find and fix a mistake in a program."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Which block starts the program when you tap the green flag? ([ ] Hop)",
+      "answer": "Start on Green Flag.",
+      "hint": "Look back at what algorithm and order mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Start on Green Flag."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Put these moves in order. Write 1, 2, 3 in the boxes.",
+      "answer": "Hop = 1, Turn = 2, Step =",
+      "hint": "Look back at what algorithm and order mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Hop = 1, Turn = 2, Step ="
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "You find a bug in your program. What should you do?",
+      "answer": "Find the wrong block and change it. It helps to ask a friend to look with you — two heads are better than one.",
+      "hint": "Look back at what algorithm and order mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Find the wrong block and change it. It helps to ask a friend to look with you — two heads are better than one."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Which block makes a character jump? ([ ] Say)",
+      "answer": "Hop.",
+      "hint": "Look back at what algorithm and order mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Hop."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Which block makes a character jump? ([ ] Say)",
+      "answer": "Hop.",
+      "hint": "Look back at what algorithm and order mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Hop."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "You find a bug in your program. What should you do?",
+      "answer": "Find the wrong block and change it. It helps to ask a friend to look with you — two heads are better than one.",
+      "hint": "Look back at what algorithm and order mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Find the wrong block and change it. It helps to ask a friend to look with you — two heads are better than one."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Which block makes a character jump? ([ ] Say)",
+      "answer": "Hop.",
+      "hint": "Look back at what algorithm and order mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Hop."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "What is an algorithm?",
+      "answer": "An algorithm is a set of instructions in the right order (like the moves of a dance).",
+      "hint": "Look back at what algorithm and order mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: An algorithm is a set of instructions in the right order (like the moves of a dance)."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Which block starts the program when you tap the green flag? ([ ] Hop)",
+      "keyIdeas": [
+        "algorithm",
+        "order",
+        "program"
+      ],
+      "modelAnswer": "Start on Green Flag."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Put these moves in order. Write 1, 2, 3 in the boxes.",
+      "keyIdeas": [
+        "order",
+        "program",
+        "ScratchJr"
+      ],
+      "modelAnswer": "Hop = 1, Turn = 2, Step ="
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "You find a bug in your program. What should you do?",
+      "keyIdeas": [
+        "program",
+        "ScratchJr",
+        "block"
+      ],
+      "modelAnswer": "Find the wrong block and change it. It helps to ask a friend to look with you — two heads are better than one."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in bugs and debugging: fixing it together, and give one example of your own.",
+      "keyIdeas": [
+        "algorithm",
+        "order",
+        "program"
+      ],
+      "modelAnswer": "A bug is a mistake in a program. Finding and fixing it is called debugging. Everyone makes bugs — even the best programmers — so debugging is a normal, happy part of the job. And it is faster and easier with a friend: two pairs of eyes find the mistake sooner.\n\nA bug is just a mistake in our instructions. When we find it and fix it, we are debugging. It is like proofreading a story to find the letter that is wrong."
+    }
+  ],
+  "project": {
+    "title": "Unit 6 Project: Be a Designer",
+    "brief": "Bring together everything from Be a Designer into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your be a designer project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I planned my dance moves in order.",
+      "I built my dancer in ScratchJr.",
+      "I added a second dancer that joins in on a bump.",
+      "I found and fixed the bug with my partner.",
+      "I added one more block to make it better.",
+      "I tapped the green flag to check my dance."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “algorithm” mean in computing?",
+        "options": [
+          "A set of instructions in the right order.",
+          "Which step comes first, next and last.",
+          "An algorithm made from blocks the computer can follow.",
+          "A free app where you join picture blocks to make things move."
+        ],
+        "answer": "A set of instructions in the right order.",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Algorithm means a set of instructions in the right order."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “order” mean in computing?",
+        "options": [
+          "Which step comes first, next and last.",
+          "An algorithm made from blocks the computer can follow.",
+          "A free app where you join picture blocks to make things move.",
+          "One picture instruction you drag in ScratchJr."
+        ],
+        "answer": "Which step comes first, next and last.",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Order means which step comes first, next and last."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “program” mean in computing?",
+        "options": [
+          "An algorithm made from blocks the computer can follow.",
+          "A free app where you join picture blocks to make things move.",
+          "One picture instruction you drag in ScratchJr.",
+          "A mistake in a program."
+        ],
+        "answer": "An algorithm made from blocks the computer can follow.",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Program means an algorithm made from blocks the computer can follow."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “ScratchJr” mean in computing?",
+        "options": [
+          "A free app where you join picture blocks to make things move.",
+          "One picture instruction you drag in ScratchJr.",
+          "A mistake in a program.",
+          "To find and fix the mistake."
+        ],
+        "answer": "A free app where you join picture blocks to make things move.",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "ScratchJr means a free app where you join picture blocks to make things move."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “block” mean in computing?",
+        "options": [
+          "One picture instruction you drag in ScratchJr.",
+          "A mistake in a program.",
+          "To find and fix the mistake.",
+          "A set of instructions in the right order."
+        ],
+        "answer": "One picture instruction you drag in ScratchJr.",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Block means one picture instruction you drag in ScratchJr."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “bug” mean in computing?",
+        "options": [
+          "A mistake in a program.",
+          "To find and fix the mistake.",
+          "A set of instructions in the right order.",
+          "Which step comes first, next and last."
+        ],
+        "answer": "A mistake in a program.",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Bug means a mistake in a program."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: To find and fix the mistake.?",
+        "options": [
+          "debug",
+          "algorithm",
+          "order",
+          "program"
+        ],
+        "answer": "debug",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Debug means to find and fix the mistake."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A set of instructions in the right order.?",
+        "options": [
+          "algorithm",
+          "order",
+          "program",
+          "ScratchJr"
+        ],
+        "answer": "algorithm",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Algorithm means a set of instructions in the right order."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Which step comes first, next and last.?",
+        "options": [
+          "order",
+          "program",
+          "ScratchJr",
+          "block"
+        ],
+        "answer": "order",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Order means which step comes first, next and last."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: An algorithm made from blocks the computer can follow.?",
+        "options": [
+          "program",
+          "ScratchJr",
+          "block",
+          "bug"
+        ],
+        "answer": "program",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Program means an algorithm made from blocks the computer can follow."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A free app where you join picture blocks to make things move.?",
+        "options": [
+          "ScratchJr",
+          "block",
+          "bug",
+          "debug"
+        ],
+        "answer": "ScratchJr",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "ScratchJr means a free app where you join picture blocks to make things move."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: One picture instruction you drag in ScratchJr.?",
+        "options": [
+          "block",
+          "bug",
+          "debug",
+          "algorithm"
+        ],
+        "answer": "block",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Block means one picture instruction you drag in ScratchJr."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u6-game-1",
+        "icon": "?",
+        "skill": "algorithm",
+        "title": "Quick Match: algorithm",
+        "description": "Practise algorithm through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of instructions in the right order.",
+              "Which step comes first, next and last.",
+              "An algorithm made from blocks the computer can follow.",
+              "A free app where you join picture blocks to make things move."
+            ],
+            "answer": "A set of instructions in the right order.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Algorithm means a set of instructions in the right order."
+          },
+          {
+            "prompt": "What does “ScratchJr” mean in computing?",
+            "choices": [
+              "A free app where you join picture blocks to make things move.",
+              "One picture instruction you drag in ScratchJr.",
+              "A mistake in a program.",
+              "To find and fix the mistake."
+            ],
+            "answer": "A free app where you join picture blocks to make things move.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "ScratchJr means a free app where you join picture blocks to make things move."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To find and fix the mistake.?",
+            "choices": [
+              "debug",
+              "algorithm",
+              "order",
+              "program"
+            ],
+            "answer": "debug",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Debug means to find and fix the mistake."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An algorithm made from blocks the computer can follow.?",
+            "choices": [
+              "program",
+              "ScratchJr",
+              "block",
+              "bug"
+            ],
+            "answer": "program",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Program means an algorithm made from blocks the computer can follow."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-2",
+        "icon": "★",
+        "skill": "order",
+        "title": "Concept Quest: order",
+        "description": "Practise order through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “order” mean in computing?",
+            "choices": [
+              "Which step comes first, next and last.",
+              "An algorithm made from blocks the computer can follow.",
+              "A free app where you join picture blocks to make things move.",
+              "One picture instruction you drag in ScratchJr."
+            ],
+            "answer": "Which step comes first, next and last.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Order means which step comes first, next and last."
+          },
+          {
+            "prompt": "What does “block” mean in computing?",
+            "choices": [
+              "One picture instruction you drag in ScratchJr.",
+              "A mistake in a program.",
+              "To find and fix the mistake.",
+              "A set of instructions in the right order."
+            ],
+            "answer": "One picture instruction you drag in ScratchJr.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Block means one picture instruction you drag in ScratchJr."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A set of instructions in the right order.?",
+            "choices": [
+              "algorithm",
+              "order",
+              "program",
+              "ScratchJr"
+            ],
+            "answer": "algorithm",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Algorithm means a set of instructions in the right order."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A free app where you join picture blocks to make things move.?",
+            "choices": [
+              "ScratchJr",
+              "block",
+              "bug",
+              "debug"
+            ],
+            "answer": "ScratchJr",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "ScratchJr means a free app where you join picture blocks to make things move."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-3",
+        "icon": "◫",
+        "skill": "program",
+        "title": "Debug Detective: program",
+        "description": "Practise program through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “program” mean in computing?",
+            "choices": [
+              "An algorithm made from blocks the computer can follow.",
+              "A free app where you join picture blocks to make things move.",
+              "One picture instruction you drag in ScratchJr.",
+              "A mistake in a program."
+            ],
+            "answer": "An algorithm made from blocks the computer can follow.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Program means an algorithm made from blocks the computer can follow."
+          },
+          {
+            "prompt": "What does “bug” mean in computing?",
+            "choices": [
+              "A mistake in a program.",
+              "To find and fix the mistake.",
+              "A set of instructions in the right order.",
+              "Which step comes first, next and last."
+            ],
+            "answer": "A mistake in a program.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Bug means a mistake in a program."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Which step comes first, next and last.?",
+            "choices": [
+              "order",
+              "program",
+              "ScratchJr",
+              "block"
+            ],
+            "answer": "order",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Order means which step comes first, next and last."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: One picture instruction you drag in ScratchJr.?",
+            "choices": [
+              "block",
+              "bug",
+              "debug",
+              "algorithm"
+            ],
+            "answer": "block",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Block means one picture instruction you drag in ScratchJr."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-4",
+        "icon": "→",
+        "skill": "ScratchJr",
+        "title": "Algorithm Runner: ScratchJr",
+        "description": "Practise scratchjr through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “ScratchJr” mean in computing?",
+            "choices": [
+              "A free app where you join picture blocks to make things move.",
+              "One picture instruction you drag in ScratchJr.",
+              "A mistake in a program.",
+              "To find and fix the mistake."
+            ],
+            "answer": "A free app where you join picture blocks to make things move.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "ScratchJr means a free app where you join picture blocks to make things move."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To find and fix the mistake.?",
+            "choices": [
+              "debug",
+              "algorithm",
+              "order",
+              "program"
+            ],
+            "answer": "debug",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Debug means to find and fix the mistake."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An algorithm made from blocks the computer can follow.?",
+            "choices": [
+              "program",
+              "ScratchJr",
+              "block",
+              "bug"
+            ],
+            "answer": "program",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Program means an algorithm made from blocks the computer can follow."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of instructions in the right order.",
+              "Which step comes first, next and last.",
+              "An algorithm made from blocks the computer can follow.",
+              "A free app where you join picture blocks to make things move."
+            ],
+            "answer": "A set of instructions in the right order.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Algorithm means a set of instructions in the right order."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-5",
+        "icon": "Σ",
+        "skill": "block",
+        "title": "Vocabulary Vault: block",
+        "description": "Practise block through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “block” mean in computing?",
+            "choices": [
+              "One picture instruction you drag in ScratchJr.",
+              "A mistake in a program.",
+              "To find and fix the mistake.",
+              "A set of instructions in the right order."
+            ],
+            "answer": "One picture instruction you drag in ScratchJr.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Block means one picture instruction you drag in ScratchJr."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A set of instructions in the right order.?",
+            "choices": [
+              "algorithm",
+              "order",
+              "program",
+              "ScratchJr"
+            ],
+            "answer": "algorithm",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Algorithm means a set of instructions in the right order."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A free app where you join picture blocks to make things move.?",
+            "choices": [
+              "ScratchJr",
+              "block",
+              "bug",
+              "debug"
+            ],
+            "answer": "ScratchJr",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "ScratchJr means a free app where you join picture blocks to make things move."
+          },
+          {
+            "prompt": "What does “order” mean in computing?",
+            "choices": [
+              "Which step comes first, next and last.",
+              "An algorithm made from blocks the computer can follow.",
+              "A free app where you join picture blocks to make things move.",
+              "One picture instruction you drag in ScratchJr."
+            ],
+            "answer": "Which step comes first, next and last.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Order means which step comes first, next and last."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-6",
+        "icon": "◇",
+        "skill": "bug",
+        "title": "Challenge Cards: bug",
+        "description": "Practise bug through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “bug” mean in computing?",
+            "choices": [
+              "A mistake in a program.",
+              "To find and fix the mistake.",
+              "A set of instructions in the right order.",
+              "Which step comes first, next and last."
+            ],
+            "answer": "A mistake in a program.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Bug means a mistake in a program."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Which step comes first, next and last.?",
+            "choices": [
+              "order",
+              "program",
+              "ScratchJr",
+              "block"
+            ],
+            "answer": "order",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Order means which step comes first, next and last."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: One picture instruction you drag in ScratchJr.?",
+            "choices": [
+              "block",
+              "bug",
+              "debug",
+              "algorithm"
+            ],
+            "answer": "block",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Block means one picture instruction you drag in ScratchJr."
+          },
+          {
+            "prompt": "What does “program” mean in computing?",
+            "choices": [
+              "An algorithm made from blocks the computer can follow.",
+              "A free app where you join picture blocks to make things move.",
+              "One picture instruction you drag in ScratchJr.",
+              "A mistake in a program."
+            ],
+            "answer": "An algorithm made from blocks the computer can follow.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Program means an algorithm made from blocks the computer can follow."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-7",
+        "icon": "⚡",
+        "skill": "debug",
+        "title": "Think Fast: debug",
+        "description": "Practise debug through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To find and fix the mistake.?",
+            "choices": [
+              "debug",
+              "algorithm",
+              "order",
+              "program"
+            ],
+            "answer": "debug",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Debug means to find and fix the mistake."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An algorithm made from blocks the computer can follow.?",
+            "choices": [
+              "program",
+              "ScratchJr",
+              "block",
+              "bug"
+            ],
+            "answer": "program",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Program means an algorithm made from blocks the computer can follow."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of instructions in the right order.",
+              "Which step comes first, next and last.",
+              "An algorithm made from blocks the computer can follow.",
+              "A free app where you join picture blocks to make things move."
+            ],
+            "answer": "A set of instructions in the right order.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Algorithm means a set of instructions in the right order."
+          },
+          {
+            "prompt": "What does “ScratchJr” mean in computing?",
+            "choices": [
+              "A free app where you join picture blocks to make things move.",
+              "One picture instruction you drag in ScratchJr.",
+              "A mistake in a program.",
+              "To find and fix the mistake."
+            ],
+            "answer": "A free app where you join picture blocks to make things move.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "ScratchJr means a free app where you join picture blocks to make things move."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-8",
+        "icon": "☁",
+        "skill": "algorithm",
+        "title": "Explain It: algorithm",
+        "description": "Practise algorithm through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A set of instructions in the right order.?",
+            "choices": [
+              "algorithm",
+              "order",
+              "program",
+              "ScratchJr"
+            ],
+            "answer": "algorithm",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Algorithm means a set of instructions in the right order."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A free app where you join picture blocks to make things move.?",
+            "choices": [
+              "ScratchJr",
+              "block",
+              "bug",
+              "debug"
+            ],
+            "answer": "ScratchJr",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "ScratchJr means a free app where you join picture blocks to make things move."
+          },
+          {
+            "prompt": "What does “order” mean in computing?",
+            "choices": [
+              "Which step comes first, next and last.",
+              "An algorithm made from blocks the computer can follow.",
+              "A free app where you join picture blocks to make things move.",
+              "One picture instruction you drag in ScratchJr."
+            ],
+            "answer": "Which step comes first, next and last.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Order means which step comes first, next and last."
+          },
+          {
+            "prompt": "What does “block” mean in computing?",
+            "choices": [
+              "One picture instruction you drag in ScratchJr.",
+              "A mistake in a program.",
+              "To find and fix the mistake.",
+              "A set of instructions in the right order."
+            ],
+            "answer": "One picture instruction you drag in ScratchJr.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Block means one picture instruction you drag in ScratchJr."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-9",
+        "icon": "⌂",
+        "skill": "order",
+        "title": "Real-Life Round: order",
+        "description": "Practise order through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Which step comes first, next and last.?",
+            "choices": [
+              "order",
+              "program",
+              "ScratchJr",
+              "block"
+            ],
+            "answer": "order",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Order means which step comes first, next and last."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: One picture instruction you drag in ScratchJr.?",
+            "choices": [
+              "block",
+              "bug",
+              "debug",
+              "algorithm"
+            ],
+            "answer": "block",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Block means one picture instruction you drag in ScratchJr."
+          },
+          {
+            "prompt": "What does “program” mean in computing?",
+            "choices": [
+              "An algorithm made from blocks the computer can follow.",
+              "A free app where you join picture blocks to make things move.",
+              "One picture instruction you drag in ScratchJr.",
+              "A mistake in a program."
+            ],
+            "answer": "An algorithm made from blocks the computer can follow.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Program means an algorithm made from blocks the computer can follow."
+          },
+          {
+            "prompt": "What does “bug” mean in computing?",
+            "choices": [
+              "A mistake in a program.",
+              "To find and fix the mistake.",
+              "A set of instructions in the right order.",
+              "Which step comes first, next and last."
+            ],
+            "answer": "A mistake in a program.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Bug means a mistake in a program."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-10",
+        "icon": "!",
+        "skill": "program",
+        "title": "Spot the Bug: program",
+        "description": "Practise program through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: An algorithm made from blocks the computer can follow.?",
+            "choices": [
+              "program",
+              "ScratchJr",
+              "block",
+              "bug"
+            ],
+            "answer": "program",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Program means an algorithm made from blocks the computer can follow."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of instructions in the right order.",
+              "Which step comes first, next and last.",
+              "An algorithm made from blocks the computer can follow.",
+              "A free app where you join picture blocks to make things move."
+            ],
+            "answer": "A set of instructions in the right order.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Algorithm means a set of instructions in the right order."
+          },
+          {
+            "prompt": "What does “ScratchJr” mean in computing?",
+            "choices": [
+              "A free app where you join picture blocks to make things move.",
+              "One picture instruction you drag in ScratchJr.",
+              "A mistake in a program.",
+              "To find and fix the mistake."
+            ],
+            "answer": "A free app where you join picture blocks to make things move.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "ScratchJr means a free app where you join picture blocks to make things move."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To find and fix the mistake.?",
+            "choices": [
+              "debug",
+              "algorithm",
+              "order",
+              "program"
+            ],
+            "answer": "debug",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Debug means to find and fix the mistake."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-11",
+        "icon": "≡",
+        "skill": "ScratchJr",
+        "title": "Mastery Mix: ScratchJr",
+        "description": "Practise scratchjr through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A free app where you join picture blocks to make things move.?",
+            "choices": [
+              "ScratchJr",
+              "block",
+              "bug",
+              "debug"
+            ],
+            "answer": "ScratchJr",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "ScratchJr means a free app where you join picture blocks to make things move."
+          },
+          {
+            "prompt": "What does “order” mean in computing?",
+            "choices": [
+              "Which step comes first, next and last.",
+              "An algorithm made from blocks the computer can follow.",
+              "A free app where you join picture blocks to make things move.",
+              "One picture instruction you drag in ScratchJr."
+            ],
+            "answer": "Which step comes first, next and last.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Order means which step comes first, next and last."
+          },
+          {
+            "prompt": "What does “block” mean in computing?",
+            "choices": [
+              "One picture instruction you drag in ScratchJr.",
+              "A mistake in a program.",
+              "To find and fix the mistake.",
+              "A set of instructions in the right order."
+            ],
+            "answer": "One picture instruction you drag in ScratchJr.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Block means one picture instruction you drag in ScratchJr."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A set of instructions in the right order.?",
+            "choices": [
+              "algorithm",
+              "order",
+              "program",
+              "ScratchJr"
+            ],
+            "answer": "algorithm",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Algorithm means a set of instructions in the right order."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-12",
+        "icon": "T",
+        "skill": "block",
+        "title": "Unit Champion: block",
+        "description": "Practise block through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: One picture instruction you drag in ScratchJr.?",
+            "choices": [
+              "block",
+              "bug",
+              "debug",
+              "algorithm"
+            ],
+            "answer": "block",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Block means one picture instruction you drag in ScratchJr."
+          },
+          {
+            "prompt": "What does “program” mean in computing?",
+            "choices": [
+              "An algorithm made from blocks the computer can follow.",
+              "A free app where you join picture blocks to make things move.",
+              "One picture instruction you drag in ScratchJr.",
+              "A mistake in a program."
+            ],
+            "answer": "An algorithm made from blocks the computer can follow.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Program means an algorithm made from blocks the computer can follow."
+          },
+          {
+            "prompt": "What does “bug” mean in computing?",
+            "choices": [
+              "A mistake in a program.",
+              "To find and fix the mistake.",
+              "A set of instructions in the right order.",
+              "Which step comes first, next and last."
+            ],
+            "answer": "A mistake in a program.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Bug means a mistake in a program."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Which step comes first, next and last.?",
+            "choices": [
+              "order",
+              "program",
+              "ScratchJr",
+              "block"
+            ],
+            "answer": "order",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Order means which step comes first, next and last."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can follow and understand an algorithm — a set of instructions in the correct order.",
+    "I can explain, in their own words, why the order of the steps matters.",
+    "I can plan instructions for a character by writing a simple dance algorithm.",
+    "I can turn an algorithm into a program in ScratchJr using blocks such as Start on Green Flag, Hop, Turn Right and Move Right.",
+    "I can add a second character that starts to dance using the Start on Bump block.",
+    "I can say what a bug is, and debug a short program by finding and fixing one mistake.",
+    "I can explain why it is helpful to work with others when debugging.",
+    "I can run a program with the green flag and check whether it did what they wanted."
+  ]
+}

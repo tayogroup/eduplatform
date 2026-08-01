@@ -1,0 +1,1840 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.551Z",
+  "stage": {
+    "id": "s03",
+    "label": "Stage 3"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t02",
+    "label": "Term 2"
+  },
+  "unit": {
+    "unitId": "comp-g03-u08",
+    "unitNo": 8,
+    "unitTitle": "Be a Musician",
+    "unitOverview": "Welcome to Unit 8 of Year 3 Computing at Ehel Academy. You learn to make a computer play sounds and short tunes, and the big idea that sits under it: a program makes an output (like a sound) when it is given an input (like pressing a key). In this unit you become musicians — not with a real drum or flute, but with code. You already know this pattern from real life — press a doorbell and it rings; flick a switch and the light comes on.\n\nThere are four skills, taken straight from the textbook. Second, the headline skill, they predict the outcome of a change to an algorithm — if one step is different, what happens now? Third, they create a program that makes an output from an input — press a key or click a sprite, and a sound and a picture happen. Fourth, you learn the benefits of working with others when coding — sharing ideas, spotting mistakes, and being kind teammates.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 3
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-3-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 3",
+    "sourceArchive": "Year 3-20260801T055744Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 3/Unit 8/Year 3 - Unit 8 Teacher Guide.docx",
+      "Year 3/Unit 8/Year 3 - Unit 8 Activity Sheet.docx",
+      "Year 3/Unit 8/Year 3 - Unit 8 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 355,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 3 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Predict the outcome of a simple sound algorithm by reading its steps in order.",
+    "Predict the outcome of a change to an algorithm — say what will be different when one step is changed.",
+    "Explain that a program makes an output (a sound, a picture) when it is given an input (a key press, a mouse click).",
+    "In Scratch, create a program that plays a sound and shows a picture when an input happens.",
+    "Understand that a tune is a sequence of notes in order, and that volume is how loud or quiet a sound is.",
+    "Change a program on purpose (a note, the volume, or a repeat) and check the outcome against a prediction.",
+    "Outline the benefits of working with others when creating programs."
+  ],
+  "toolkit": [
+    {
+      "name": "Scratch",
+      "url": "scratch.mit.edu",
+      "steps": [
+        "Go to scratch.mit.edu and click Create.",
+        "Drag blocks from the palette on the left into the code area.",
+        "Make variables in the orange Variables section.",
+        "Click the green flag to run and the red circle to stop."
+      ],
+      "note": "Runs in a web browser. Free, with nothing to download."
+    },
+    {
+      "name": "micro:bit simulator",
+      "url": "makecode.microbit.org (blocks) or python.microbit.org (Python)",
+      "steps": [
+        "Open makecode.microbit.org for blocks, or python.microbit.org for Python.",
+        "Write your code in the editor.",
+        "The micro:bit simulator on the left runs your code straight away.",
+        "Click the on-screen A and B buttons, and use the shake control, to test your inputs."
+      ],
+      "note": "You do not need to own a real micro:bit — the simulator does everything."
+    }
+  ],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-making-sounds-input-and-output",
+      "title": "Making sounds: input and output",
+      "explanation": "We can make lots of sounds with our bodies. Every sound has a start and then the sound itself. On a computer it is the same: something starts the program — the input — and then a sound comes out — the output. This input-then-output pattern is the heart of the whole unit.\n — warm up with body sounds. Teach the four body sounds and try them together: clap your hands, stomp your feet, snap your fingers, and slap your thigh. Then, in pairs, take turns to follow a short pattern, like: clap, clap, stomp, snap.",
+      "example": "Find one real example of making sounds: input and output around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you follow a sound pattern in the right order?"
+    },
+    {
+      "id": "concept-2-reading-and-predicting-a-sound-algorithm",
+      "title": "Reading and predicting a sound algorithm",
+      "explanation": "An algorithm is a set of steps in the right order. If we read the steps carefully, we can predict the outcome — say what will happen before we run it. And if we change one step, we can predict what will be different. Predicting is the main skill of this unit.\n\nHere is one for when Leila claps her hands Write a small sound algorithm on cards or the board and read it together, doing the actions as you go.",
+      "example": "Find one real example of reading and predicting a sound algorithm around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": ""
+    },
+    {
+      "id": "concept-3-make-a-sound-from-an-input-scratch",
+      "title": "Make a sound from an input (Scratch)",
+      "explanation": "Now we build it for real. In Scratch we make a program that plays a sound and shows a picture (the output) when we press a key (the input) on the keyboard, our input device.\n\nwhere we join them up. where it happens. The cat sprite is already there, and it comes with a sound called Meow.",
+      "example": "Open Scratch at scratch.mit.edu and click Create on the projector. Make sure the speakers are on.",
+      "checkYourself": "Can you point to the input (the key press) and the output (the meow and the picture)? Can you join a block under the hat block and press the space key to run it?"
+    },
+    {
+      "id": "concept-4-play-a-tune-notes-sequence-and-volume-scratch",
+      "title": "Play a tune: notes, sequence and volume (Scratch)",
+      "explanation": "A tune (a melody) is a sequence of notes played in order. In Scratch we play notes with the Music blocks. We can also set the volume to make it loud or quiet, and we can predict what a change will do before we try it.\n\nIn Scratch, click the Add Extension button (bottom-left) and choose Music. This adds green Music blocks, including play note () for () beats. Each note has a number — the block starts on note 60, a nice middle note.",
+      "example": "A bigger number is a higher note; a smaller number is a lower note. Build this well-known tune together (it is Twinkle Twinkle Little Star) and run it with the green flag",
+      "checkYourself": "Can you know set volume to () % changes only how loud, not the tune? Can you predict a change before running it? Can you place the notes in order (a sequence)?"
+    },
+    {
+      "id": "concept-5-coding-together-build-a-music-playlist",
+      "title": "Coding together: build a music playlist",
+      "explanation": "Programs are often written by people working together as a team. Before they start, talk through the four benefits of teamwork from the textbook, in child words\n\nTry it: The pair builds the playlist ( ), makes one change and checks it ( ), and writes the algorithm for one of their tunes ( ).\n\nCheck yourself: Can you help each other find blocks and spot bugs kindly? Do you take turns and swap roles fairly?",
+      "example": "Find one real example of coding together: build a music playlist around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you help each other find blocks and spot bugs kindly? Do you take turns and swap roles fairly?"
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "Session 3 — Make a sound from an input (Scratch) — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 3 — Make a sound from an input (Scratch).",
+      "lines": [
+        "when space key pressed",
+        "set volume to (100) %",
+        "switch costume to costume2",
+        "play sound Meow until done",
+        "say Meow! for (1) seconds",
+        "switch costume to costume1"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-2",
+      "title": "Session 4 — Play a tune: notes, sequence and volume (Scratch) — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 4 — Play a tune: notes, sequence and volume (Scratch).",
+      "lines": [
+        "when green flag clicked",
+        "set volume to (100) %",
+        "play note (60) for (0.5) beats",
+        "play note (60) for (0.5) beats",
+        "play note (67) for (0.5) beats",
+        "play note (67) for (0.5) beats",
+        "play note (69) for (0.5) beats",
+        "play note (69) for (0.5) beats",
+        "play note (67) for (1) beats"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-3",
+      "title": "Session 4 — Play a tune: notes, sequence and volume (Scratch) — listing 2",
+      "language": "Scratch blocks",
+      "intro": "From Session 4 — Play a tune: notes, sequence and volume (Scratch).",
+      "lines": [
+        "when green flag clicked",
+        "set volume to (100) %",
+        "repeat (2)",
+        "play note (60) for (0.5) beats",
+        "play note (62) for (0.5) beats",
+        "play note (64) for (0.5) beats"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Match the Input to the Output",
+      "context": "work through the steps below and see what happens. This is making sounds: input and output in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "The input is what starts the program. The output is what happens. Draw a line to match each input to its output.",
+      "answer": "Which one always happens first — the input or the output? ______________ Match: Input (what you do) → Output (what happens) Match: You press the space key → The cat meows Match: You click the cat with the mouse → A tune plays Match: You click the green flag → The program starts",
+      "modelType": "model-1",
+      "hint": "Start here: Which one always happens first — the input or the output? ______________",
+      "explanation": "Making sounds: input and output: We can make lots of sounds with our bodies. Every sound has a start and then the sound itself. On a computer it is the same: something starts the program — the input — and then a sound comes out — the output. This input-then-output pattern is the heart of the whole unit."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Finish the Sound Pattern",
+      "context": "work through the steps below and see what happens. This is reading and predicting a sound algorithm in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Leila made a body-sound pattern. Then write the last two sounds to finish the pattern. Say it out loud and clap it!",
+      "answer": "stomp ______ The missing sound is: ______________ A pattern of sounds in order is called a sequence.",
+      "modelType": "model-2",
+      "hint": "Start here: stomp",
+      "explanation": "Reading and predicting a sound algorithm: An algorithm is a set of steps in the right order. If we read the steps carefully, we can predict the outcome — say what will happen before we run it. And if we change one step, we can predict what will be different. Predicting is the main skill of this unit."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Predict the Sound",
+      "context": "work through the steps below and see what happens. This is make a sound from an input (scratch) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Predict what will happen when you press the space key. (Predict means: say it before you try it!)",
+      "answer": "when space key pressed set volume to (100) % Play note (60) for (0.5) beats. Play note (62) for (0.5) beats. Play note (64) for (0.5) beats.",
+      "modelType": "model-3",
+      "hint": "Start here: when space key pressed",
+      "explanation": "Make a sound from an input (Scratch): Now we build it for real. In Scratch we make a program that plays a sound and shows a picture (the output) when we press a key (the input) on the keyboard, our input device."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Predict the Change",
+      "context": "work through the steps below and see what happens. This is play a tune: notes, sequence and volume (scratch) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Now one step is changed. The set volume to (100) % block is changed to set volume to (20) %. Everything else stays the same.",
+      "answer": "What will be different now? ______________________________________________ What will stay the same? ______________________________________________",
+      "modelType": "model-4",
+      "hint": "Start here: What will be different now? ______________________________________________",
+      "explanation": "Play a tune: notes, sequence and volume (Scratch): A tune (a melody) is a sequence of notes played in order. In Scratch we play notes with the Music blocks. We can also set the volume to make it loud or quiet, and we can predict what a change will do before we try it."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Loud or Quiet?",
+      "context": "work through the steps below and see what happens. This is coding together: build a music playlist in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "In Scratch, volume goes from 0 (no sound) to 100 (very loud). Fill in the blanks with 0, 20 or 100.",
+      "answer": "For a very loud sound, set the volume to about ______. For a quiet sound, set the volume to about ______. For no sound at all, set the volume to ______.",
+      "modelType": "model-5",
+      "hint": "Start here: For a very loud sound, set the volume to about ______.",
+      "explanation": "Coding together: build a music playlist: Programs are often written by people working together as a team. Before they start, talk through the four benefits of teamwork from the textbook, in child words"
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Try it in Scratch!",
+      "context": "work through the steps below and see what happens. This is making sounds: input and output in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Make the cat meow when you press a key.",
+      "answer": "Go to scratch.mit.edu and click Create. The cat is already there. Turn on the speakers or put on headphones so you can hear. Drag these blocks and join them together when space key pressed set volume to (100) %",
+      "modelType": "model-6",
+      "hint": "Start here: Go to scratch.mit.edu and click Create. The cat is already there.",
+      "explanation": "Making sounds: input and output: We can make lots of sounds with our bodies. Every sound has a start and then the sound itself. On a computer it is the same: something starts the program — the input — and then a sound comes out — the output. This input-then-output pattern is the heart of the whole unit."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Making sounds: input and output",
+      "modelType": "concept-model-1",
+      "purpose": "We can make lots of sounds with our bodies. Every sound has a start and then the sound itself. On a computer it is the same: something starts the program — the input — and then a sound comes out — the output. This…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Reading and predicting a sound algorithm",
+      "modelType": "concept-model-2",
+      "purpose": "An algorithm is a set of steps in the right order. If we read the steps carefully, we can predict the outcome — say what will happen before we run it. And if we change one step, we can predict what will be different.…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Make a sound from an input (Scratch)",
+      "modelType": "concept-model-3",
+      "purpose": "Now we build it for real. In Scratch we make a program that plays a sound and shows a picture (the output) when we press a key (the input) on the keyboard, our input device.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Play a tune: notes, sequence and volume (Scratch)",
+      "modelType": "concept-model-4",
+      "purpose": "A tune (a melody) is a sequence of notes played in order. In Scratch we play notes with the Music blocks. We can also set the volume to make it loud or quiet, and we can predict what a change will do before we try it.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Coding together: build a music playlist",
+      "modelType": "concept-model-5",
+      "purpose": "Programs are often written by people working together as a team. Before they start, talk through the four benefits of teamwork from the textbook, in child words",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with making sounds: input and output",
+      "example": "Find one real example of making sounds: input and output around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for making sounds: input and output and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with reading and predicting a sound algorithm",
+      "example": "Find one real example of reading and predicting a sound algorithm around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for reading and predicting a sound algorithm and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with make a sound from an input (scratch)",
+      "example": "Open Scratch at scratch.mit.edu and click Create on the projector. Make sure the speakers are on.",
+      "steps": [
+        "Read the concept card for make a sound from an input (scratch) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with play a tune: notes, sequence and volume (scratch)",
+      "example": "A bigger number is a higher note; a smaller number is a lower note. Build this well-known tune together (it is Twinkle Twinkle Little Star) and run it with the green flag",
+      "steps": [
+        "Read the concept card for play a tune: notes, sequence and volume (scratch) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with coding together: build a music playlist",
+      "example": "Find one real example of coding together: build a music playlist around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for coding together: build a music playlist and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Making sounds: input and output",
+      "prompt": "Read the steps. Predict: what happens when you press the space key?",
+      "solution": "The volume is set, then one note (note"
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Reading and predicting a sound algorithm",
+      "prompt": "What does the volume do? Fill in the blanks. Use: no sound, very loud.",
+      "solution": "Set volume to 0 = no sound (silence). Set volume to 100 = very loud."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Make a sound from an input (Scratch)",
+      "prompt": "A tune is a sequence of notes. If you swap two notes around, is it the same tune? Yes / No",
+      "solution": "No — swapping notes changes the order, so it is a different tune (a tune is a sequence)."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Play a tune: notes, sequence and volume (Scratch)",
+      "prompt": "Which block plays a whole sound before moving on? ([ ] set volume to ( ) %)",
+      "solution": "play sound ( ) until done."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Coding together: build a music playlist",
+      "prompt": "Write one good thing about making a program with a partner.",
+      "solution": "Any one of: we learn from each other; fewer mistakes because two people check; we solve problems together; we build kind skills like taking turns and listening."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Making sounds: input and output",
+      "prompt": "Explain in your own words: Making sounds: input and output.",
+      "solution": "We can make lots of sounds with our bodies. Every sound has a start and then the sound itself. On a computer it is the same: something starts the program — the input — and then a sound comes out — the output. This input-then-output pattern is the heart of the whole unit.\n — warm up with body sounds. Teach the four body sounds and try them together: clap your hands, stomp your feet, snap your fingers, and slap your thigh. Then, in pairs, take turns to follow a short pattern, like: clap, clap, stomp, snap.\n\nFor example: Find one real example of making sounds: input and output around you, or on a device you use. Say out loud what it is and why it fits."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Read the steps. Predict: what happens when you press the space key?",
+      "answer": "The volume is set, then one note (note",
+      "hint": "Look back at what algorithm and predict mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Fill in the blanks. Use: input, output.",
+      "answer": "input; output.",
+      "hint": "Look back at what algorithm and predict mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "What does the volume do? Fill in the blanks. Use: no sound, very loud.",
+      "answer": "Set volume to 0 = no sound (silence). Set volume to 100 = very loud.",
+      "hint": "Look back at what algorithm and predict mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "A tune is a sequence of notes. If you swap two notes around, is it the same tune? Yes / No",
+      "answer": "No — swapping notes changes the order, so it is a different tune (a tune is a sequence).",
+      "hint": "Look back at what algorithm and predict mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "Which block plays a whole sound before moving on? ([ ] set volume to ( ) %)",
+      "answer": "play sound ( ) until done.",
+      "hint": "Look back at what algorithm and predict mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "Write one good thing about making a program with a partner.",
+      "answer": "Any one of: we learn from each other; fewer mistakes because two people check; we solve problems together; we build kind skills like taking turns and listening.",
+      "hint": "Look back at what algorithm and predict mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Match the Input to the Output",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "The input is what starts the program. The output is what happens. Draw a line to match each input to its output.",
+        "Which one always happens first — the input or the output? ______________",
+        "Match: Input (what you do) → Output (what happens)",
+        "Match: You press the space key → The cat meows",
+        "Match: You click the cat with the mouse → A tune plays",
+        "Match: You click the green flag → The program starts"
+      ]
+    },
+    {
+      "title": "Finish the Sound Pattern",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Leila made a body-sound pattern. Then write the last two sounds to finish the pattern. Say it out loud and clap it!",
+        "stomp",
+        "______",
+        "The missing sound is: ______________",
+        "A pattern of sounds in order is called a sequence."
+      ]
+    },
+    {
+      "title": "Predict the Sound",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Predict what will happen when you press the space key. (Predict means: say it before you try it!)",
+        "when space key pressed",
+        "set volume to (100) %",
+        "Play note (60) for (0.5) beats.",
+        "Play note (62) for (0.5) beats.",
+        "Play note (64) for (0.5) beats."
+      ]
+    },
+    {
+      "title": "Predict the Change",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Now one step is changed. The set volume to (100) % block is changed to set volume to (20) %. Everything else stays the same.",
+        "What will be different now? ______________________________________________",
+        "What will stay the same? ______________________________________________"
+      ]
+    },
+    {
+      "title": "Loud or Quiet?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "In Scratch, volume goes from 0 (no sound) to 100 (very loud). Fill in the blanks with 0, 20 or 100.",
+        "For a very loud sound, set the volume to about ______.",
+        "For a quiet sound, set the volume to about ______.",
+        "For no sound at all, set the volume to ______."
+      ]
+    },
+    {
+      "title": "Try it in Scratch!",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Make the cat meow when you press a key.",
+        "Go to scratch.mit.edu and click Create. The cat is already there.",
+        "Turn on the speakers or put on headphones so you can hear.",
+        "Drag these blocks and join them together",
+        "when space key pressed",
+        "set volume to (100) %"
+      ]
+    },
+    {
+      "title": "Play a Tune in Scratch!",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Now play a real tune with music blocks.",
+        "This gives you the play note block. Click the Add Extension button (bottom-left) and choose Music.",
+        "Build this tune (it is Twinkle Twinkle Little Star!)",
+        "when green flag clicked",
+        "set volume to (100) %",
+        "Play note (60) for (0.5) beats."
+      ]
+    },
+    {
+      "title": "Build Your Playlist",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Press the space key for Tune 1. Click the cat for Tune 2.",
+        "Get ready",
+        "Go to scratch.mit.edu and click Create. The cat is already there.",
+        "Click the Add Extension button (bottom-left) and choose Music.",
+        "Turn on the speakers or put on headphones.",
+        "Tune 1 — the space key"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "The sound plays as soon as I open the program.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — the output waits for the input. The meow only plays when we press the key or click the sprite. Prove it by opening the program and waiting: nothing happens until the input."
+    },
+    {
+      "symptom": "Louder volume makes the tune faster or higher.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No. Volume only changes how loud or quiet the sound is; the notes and speed stay the same. Play the tune at 100 percent, then 20 percent, to prove the tune is identical."
+    },
+    {
+      "symptom": "Volume 0 is a nice quiet sound.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — volume 0 means no sound at all, total silence. A quiet sound is a small number like 10 or 20."
+    },
+    {
+      "symptom": "The order of the notes does not matter.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "It does. A tune is a sequence, so the same notes in a different order make a different tune. Swap two notes to show it."
+    },
+    {
+      "symptom": "Changing one step changes the whole program.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Usually only the changed step is different; the rest stays the same. When you edit a step, ask what stays the same as well as what changes."
+    },
+    {
+      "symptom": "play sound until done and start sound are the same.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Play sound () until done waits for the whole sound to finish; start sound () moves on straight away, so sounds can overlap."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Making sounds: input and output",
+        "text": "We can make lots of sounds with our bodies."
+      },
+      {
+        "title": "Reading and predicting a sound algorithm",
+        "text": "An algorithm is a set of steps in the right order."
+      },
+      {
+        "title": "Make a sound from an input (Scratch)",
+        "text": "Now we build it for real."
+      },
+      {
+        "title": "Play a tune: notes, sequence and volume (Scratch)",
+        "text": "A tune (a melody) is a sequence of notes played in order."
+      },
+      {
+        "title": "Coding together: build a music playlist",
+        "text": "Programs are often written by people working together as a team."
+      }
+    ],
+    "terms": [
+      [
+        "algorithm",
+        "A set of steps for doing a job, in the right order."
+      ],
+      [
+        "predict",
+        "To say what will happen before it happens."
+      ],
+      [
+        "input",
+        "What we put in to start the program."
+      ],
+      [
+        "output",
+        "What the program makes happen."
+      ],
+      [
+        "input device",
+        "The part we use to put the input in."
+      ],
+      [
+        "volume",
+        "How loudly or quietly a sound is played."
+      ],
+      [
+        "sequence",
+        "Steps or notes in the right order."
+      ],
+      [
+        "melody",
+        "A tune — musical notes played in an order."
+      ],
+      [
+        "note",
+        "One musical sound."
+      ],
+      [
+        "event",
+        "The thing that starts a program."
+      ],
+      [
+        "Scratch",
+        "A free website where you join coloured blocks to make a program."
+      ],
+      [
+        "sprite",
+        "A character or object in Scratch."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "algorithm",
+        "meaning": "A set of steps for doing a job, in the right order.",
+        "example": "The steps that play a tune.",
+        "letter": "A"
+      },
+      {
+        "term": "predict",
+        "meaning": "To say what will happen before it happens.",
+        "example": "Guess the sound before you run it.",
+        "letter": "P"
+      },
+      {
+        "term": "input",
+        "meaning": "What we put in to start the program.",
+        "example": "Pressing the space key.",
+        "letter": "I"
+      },
+      {
+        "term": "output",
+        "meaning": "What the program makes happen.",
+        "example": "A sound plays; the cat moves.",
+        "letter": "O"
+      },
+      {
+        "term": "input device",
+        "meaning": "The part we use to put the input in.",
+        "example": "The keyboard or the mouse.",
+        "letter": "I"
+      },
+      {
+        "term": "volume",
+        "meaning": "How loudly or quietly a sound is played.",
+        "example": "Turn it up loud, or down quiet.",
+        "letter": "V"
+      },
+      {
+        "term": "sequence",
+        "meaning": "Steps or notes in the right order.",
+        "example": "Note 1, then note 2, then note 3.",
+        "letter": "S"
+      },
+      {
+        "term": "melody",
+        "meaning": "A tune — musical notes played in an order.",
+        "example": "The Twinkle Twinkle tune.",
+        "letter": "M"
+      },
+      {
+        "term": "note",
+        "meaning": "One musical sound.",
+        "example": "A single beep from the piano.",
+        "letter": "N"
+      },
+      {
+        "term": "event",
+        "meaning": "The thing that starts a program.",
+        "example": "Clicking the green flag.",
+        "letter": "E"
+      },
+      {
+        "term": "Scratch",
+        "meaning": "A free website where you join coloured blocks to make a program.",
+        "example": "scratch.mit.edu",
+        "letter": "S"
+      },
+      {
+        "term": "sprite",
+        "meaning": "A character or object in Scratch.",
+        "example": "The cat.",
+        "letter": "S"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "The sound plays as soon as I open the program.",
+        "No — the output waits for the input. The meow only plays when we press the key or click the sprite. Prove it by opening the program and waiting: nothing happens until the input."
+      ],
+      [
+        "Louder volume makes the tune faster or higher.",
+        "No. Volume only changes how loud or quiet the sound is; the notes and speed stay the same. Play the tune at 100 percent, then 20 percent, to prove the tune is identical."
+      ],
+      [
+        "Volume 0 is a nice quiet sound.",
+        "No — volume 0 means no sound at all, total silence. A quiet sound is a small number like 10 or 20."
+      ],
+      [
+        "The order of the notes does not matter.",
+        "It does. A tune is a sequence, so the same notes in a different order make a different tune. Swap two notes to show it."
+      ],
+      [
+        "Changing one step changes the whole program.",
+        "Usually only the changed step is different; the rest stays the same. When you edit a step, ask what stays the same as well as what changes."
+      ],
+      [
+        "play sound until done and start sound are the same.",
+        "Play sound () until done waits for the whole sound to finish; start sound () moves on straight away, so sounds can overlap."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Read the steps. Predict: what happens when you press the space key?",
+      "answer": "The volume is set, then one note (note",
+      "hint": "Look back at what algorithm and predict mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "The volume is set, then one note (note"
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Fill in the blanks. Use: input, output.",
+      "answer": "input; output.",
+      "hint": "Look back at what algorithm and predict mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "input; output."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "What does the volume do? Fill in the blanks. Use: no sound, very loud.",
+      "answer": "Set volume to 0 = no sound (silence). Set volume to 100 = very loud.",
+      "hint": "Look back at what algorithm and predict mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Set volume to 0 = no sound (silence). Set volume to 100 = very loud."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "A tune is a sequence of notes. If you swap two notes around, is it the same tune? Yes / No",
+      "answer": "No — swapping notes changes the order, so it is a different tune (a tune is a sequence).",
+      "hint": "Look back at what algorithm and predict mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "No — swapping notes changes the order, so it is a different tune (a tune is a sequence)."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Which block plays a whole sound before moving on? ([ ] set volume to ( ) %)",
+      "answer": "play sound ( ) until done.",
+      "hint": "Look back at what algorithm and predict mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "play sound ( ) until done."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Write one good thing about making a program with a partner.",
+      "answer": "Any one of: we learn from each other; fewer mistakes because two people check; we solve problems together; we build kind skills like taking turns and listening.",
+      "hint": "Look back at what algorithm and predict mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Any one of: we learn from each other; fewer mistakes because two people check; we solve problems together; we build kind skills like taking turns and listening."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Write one good thing about making a program with a partner.",
+      "answer": "Any one of: we learn from each other; fewer mistakes because two people check; we solve problems together; we build kind skills like taking turns and listening.",
+      "hint": "Look back at what algorithm and predict mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Any one of: we learn from each other; fewer mistakes because two people check; we solve problems together; we build kind skills like taking turns and listening."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "Which block plays a whole sound before moving on? ([ ] set volume to ( ) %)",
+      "answer": "play sound ( ) until done.",
+      "hint": "Look back at what algorithm and predict mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: play sound ( ) until done."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Write one good thing about making a program with a partner.",
+      "answer": "Any one of: we learn from each other; fewer mistakes because two people check; we solve problems together; we build kind skills like taking turns and listening.",
+      "hint": "Look back at what algorithm and predict mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Any one of: we learn from each other; fewer mistakes because two people check; we solve problems together; we build kind skills like taking turns and listening."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "Read the steps. Predict: what happens when you press the space key?",
+      "answer": "The volume is set, then one note (note",
+      "hint": "Look back at what algorithm and predict mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: The volume is set, then one note (note"
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "What does the volume do? Fill in the blanks. Use: no sound, very loud.",
+      "keyIdeas": [
+        "algorithm",
+        "predict",
+        "input"
+      ],
+      "modelAnswer": "Set volume to 0 = no sound (silence). Set volume to 100 = very loud."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "A tune is a sequence of notes. If you swap two notes around, is it the same tune? Yes / No",
+      "keyIdeas": [
+        "predict",
+        "input",
+        "output"
+      ],
+      "modelAnswer": "No — swapping notes changes the order, so it is a different tune (a tune is a sequence)."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Which block plays a whole sound before moving on? ([ ] set volume to ( ) %)",
+      "keyIdeas": [
+        "input",
+        "output",
+        "input device"
+      ],
+      "modelAnswer": "play sound ( ) until done."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in play a tune: notes, sequence and volume (scratch), and give one example of your own.",
+      "keyIdeas": [
+        "algorithm",
+        "predict",
+        "input"
+      ],
+      "modelAnswer": "A tune (a melody) is a sequence of notes played in order. In Scratch we play notes with the Music blocks. We can also set the volume to make it loud or quiet, and we can predict what a change will do before we try it.\n\nIn Scratch, click the Add Extension button (bottom-left) and choose Music. This adds green Music blocks, including play note () for () beats. Each note has a number — the block starts on note 60, a nice middle note."
+    }
+  ],
+  "project": {
+    "title": "Unit 8 Project: Be a Musician",
+    "brief": "Bring together everything from Be a Musician into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your be a musician project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "Pressing the space key plays Tune 1.",
+      "Clicking the cat plays Tune 2.",
+      "My two inputs give two different outputs.",
+      "I predicted my volume change, then checked it.",
+      "I wrote the algorithm for Tune 1 in the right order.",
+      "I took turns and helped my partner."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “algorithm” mean in computing?",
+        "options": [
+          "A set of steps for doing a job, in the right order.",
+          "To say what will happen before it happens.",
+          "What we put in to start the program.",
+          "What the program makes happen."
+        ],
+        "answer": "A set of steps for doing a job, in the right order.",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “predict” mean in computing?",
+        "options": [
+          "To say what will happen before it happens.",
+          "What we put in to start the program.",
+          "What the program makes happen.",
+          "The part we use to put the input in."
+        ],
+        "answer": "To say what will happen before it happens.",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Predict means to say what will happen before it happens."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “input” mean in computing?",
+        "options": [
+          "What we put in to start the program.",
+          "What the program makes happen.",
+          "The part we use to put the input in.",
+          "How loudly or quietly a sound is played."
+        ],
+        "answer": "What we put in to start the program.",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Input means what we put in to start the program."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “output” mean in computing?",
+        "options": [
+          "What the program makes happen.",
+          "The part we use to put the input in.",
+          "How loudly or quietly a sound is played.",
+          "Steps or notes in the right order."
+        ],
+        "answer": "What the program makes happen.",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Output means what the program makes happen."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “input device” mean in computing?",
+        "options": [
+          "The part we use to put the input in.",
+          "How loudly or quietly a sound is played.",
+          "Steps or notes in the right order.",
+          "A tune — musical notes played in an order."
+        ],
+        "answer": "The part we use to put the input in.",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Input device means the part we use to put the input in."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “volume” mean in computing?",
+        "options": [
+          "How loudly or quietly a sound is played.",
+          "Steps or notes in the right order.",
+          "A tune — musical notes played in an order.",
+          "One musical sound."
+        ],
+        "answer": "How loudly or quietly a sound is played.",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Volume means how loudly or quietly a sound is played."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Steps or notes in the right order.?",
+        "options": [
+          "sequence",
+          "melody",
+          "note",
+          "event"
+        ],
+        "answer": "sequence",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Sequence means steps or notes in the right order."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A tune — musical notes played in an order.?",
+        "options": [
+          "melody",
+          "note",
+          "event",
+          "Scratch"
+        ],
+        "answer": "melody",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Melody means a tune — musical notes played in an order."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: One musical sound.?",
+        "options": [
+          "note",
+          "event",
+          "Scratch",
+          "sprite"
+        ],
+        "answer": "note",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Note means one musical sound."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The thing that starts a program.?",
+        "options": [
+          "event",
+          "Scratch",
+          "sprite",
+          "algorithm"
+        ],
+        "answer": "event",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Event means the thing that starts a program."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A free website where you join coloured blocks to make a program.?",
+        "options": [
+          "Scratch",
+          "sprite",
+          "algorithm",
+          "predict"
+        ],
+        "answer": "Scratch",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Scratch means a free website where you join coloured blocks to make a program."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A character or object in Scratch.?",
+        "options": [
+          "sprite",
+          "algorithm",
+          "predict",
+          "input"
+        ],
+        "answer": "sprite",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Sprite means a character or object in Scratch."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u8-game-1",
+        "icon": "?",
+        "skill": "algorithm",
+        "title": "Quick Match: algorithm",
+        "description": "Practise algorithm through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps for doing a job, in the right order.",
+              "To say what will happen before it happens.",
+              "What we put in to start the program.",
+              "What the program makes happen."
+            ],
+            "answer": "A set of steps for doing a job, in the right order.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          },
+          {
+            "prompt": "What does “output” mean in computing?",
+            "choices": [
+              "What the program makes happen.",
+              "The part we use to put the input in.",
+              "How loudly or quietly a sound is played.",
+              "Steps or notes in the right order."
+            ],
+            "answer": "What the program makes happen.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Output means what the program makes happen."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Steps or notes in the right order.?",
+            "choices": [
+              "sequence",
+              "melody",
+              "note",
+              "event"
+            ],
+            "answer": "sequence",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Sequence means steps or notes in the right order."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The thing that starts a program.?",
+            "choices": [
+              "event",
+              "Scratch",
+              "sprite",
+              "algorithm"
+            ],
+            "answer": "event",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Event means the thing that starts a program."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-2",
+        "icon": "★",
+        "skill": "predict",
+        "title": "Concept Quest: predict",
+        "description": "Practise predict through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “predict” mean in computing?",
+            "choices": [
+              "To say what will happen before it happens.",
+              "What we put in to start the program.",
+              "What the program makes happen.",
+              "The part we use to put the input in."
+            ],
+            "answer": "To say what will happen before it happens.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Predict means to say what will happen before it happens."
+          },
+          {
+            "prompt": "What does “input device” mean in computing?",
+            "choices": [
+              "The part we use to put the input in.",
+              "How loudly or quietly a sound is played.",
+              "Steps or notes in the right order.",
+              "A tune — musical notes played in an order."
+            ],
+            "answer": "The part we use to put the input in.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Input device means the part we use to put the input in."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A tune — musical notes played in an order.?",
+            "choices": [
+              "melody",
+              "note",
+              "event",
+              "Scratch"
+            ],
+            "answer": "melody",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Melody means a tune — musical notes played in an order."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A free website where you join coloured blocks to make a program.?",
+            "choices": [
+              "Scratch",
+              "sprite",
+              "algorithm",
+              "predict"
+            ],
+            "answer": "Scratch",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Scratch means a free website where you join coloured blocks to make a program."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-3",
+        "icon": "◫",
+        "skill": "input",
+        "title": "Debug Detective: input",
+        "description": "Practise input through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “input” mean in computing?",
+            "choices": [
+              "What we put in to start the program.",
+              "What the program makes happen.",
+              "The part we use to put the input in.",
+              "How loudly or quietly a sound is played."
+            ],
+            "answer": "What we put in to start the program.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Input means what we put in to start the program."
+          },
+          {
+            "prompt": "What does “volume” mean in computing?",
+            "choices": [
+              "How loudly or quietly a sound is played.",
+              "Steps or notes in the right order.",
+              "A tune — musical notes played in an order.",
+              "One musical sound."
+            ],
+            "answer": "How loudly or quietly a sound is played.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Volume means how loudly or quietly a sound is played."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: One musical sound.?",
+            "choices": [
+              "note",
+              "event",
+              "Scratch",
+              "sprite"
+            ],
+            "answer": "note",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Note means one musical sound."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A character or object in Scratch.?",
+            "choices": [
+              "sprite",
+              "algorithm",
+              "predict",
+              "input"
+            ],
+            "answer": "sprite",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-4",
+        "icon": "→",
+        "skill": "output",
+        "title": "Algorithm Runner: output",
+        "description": "Practise output through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “output” mean in computing?",
+            "choices": [
+              "What the program makes happen.",
+              "The part we use to put the input in.",
+              "How loudly or quietly a sound is played.",
+              "Steps or notes in the right order."
+            ],
+            "answer": "What the program makes happen.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Output means what the program makes happen."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Steps or notes in the right order.?",
+            "choices": [
+              "sequence",
+              "melody",
+              "note",
+              "event"
+            ],
+            "answer": "sequence",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Sequence means steps or notes in the right order."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The thing that starts a program.?",
+            "choices": [
+              "event",
+              "Scratch",
+              "sprite",
+              "algorithm"
+            ],
+            "answer": "event",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Event means the thing that starts a program."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps for doing a job, in the right order.",
+              "To say what will happen before it happens.",
+              "What we put in to start the program.",
+              "What the program makes happen."
+            ],
+            "answer": "A set of steps for doing a job, in the right order.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-5",
+        "icon": "Σ",
+        "skill": "input device",
+        "title": "Vocabulary Vault: input device",
+        "description": "Practise input device through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “input device” mean in computing?",
+            "choices": [
+              "The part we use to put the input in.",
+              "How loudly or quietly a sound is played.",
+              "Steps or notes in the right order.",
+              "A tune — musical notes played in an order."
+            ],
+            "answer": "The part we use to put the input in.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Input device means the part we use to put the input in."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A tune — musical notes played in an order.?",
+            "choices": [
+              "melody",
+              "note",
+              "event",
+              "Scratch"
+            ],
+            "answer": "melody",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Melody means a tune — musical notes played in an order."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A free website where you join coloured blocks to make a program.?",
+            "choices": [
+              "Scratch",
+              "sprite",
+              "algorithm",
+              "predict"
+            ],
+            "answer": "Scratch",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Scratch means a free website where you join coloured blocks to make a program."
+          },
+          {
+            "prompt": "What does “predict” mean in computing?",
+            "choices": [
+              "To say what will happen before it happens.",
+              "What we put in to start the program.",
+              "What the program makes happen.",
+              "The part we use to put the input in."
+            ],
+            "answer": "To say what will happen before it happens.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Predict means to say what will happen before it happens."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-6",
+        "icon": "◇",
+        "skill": "volume",
+        "title": "Challenge Cards: volume",
+        "description": "Practise volume through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “volume” mean in computing?",
+            "choices": [
+              "How loudly or quietly a sound is played.",
+              "Steps or notes in the right order.",
+              "A tune — musical notes played in an order.",
+              "One musical sound."
+            ],
+            "answer": "How loudly or quietly a sound is played.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Volume means how loudly or quietly a sound is played."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: One musical sound.?",
+            "choices": [
+              "note",
+              "event",
+              "Scratch",
+              "sprite"
+            ],
+            "answer": "note",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Note means one musical sound."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A character or object in Scratch.?",
+            "choices": [
+              "sprite",
+              "algorithm",
+              "predict",
+              "input"
+            ],
+            "answer": "sprite",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          },
+          {
+            "prompt": "What does “input” mean in computing?",
+            "choices": [
+              "What we put in to start the program.",
+              "What the program makes happen.",
+              "The part we use to put the input in.",
+              "How loudly or quietly a sound is played."
+            ],
+            "answer": "What we put in to start the program.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Input means what we put in to start the program."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-7",
+        "icon": "⚡",
+        "skill": "sequence",
+        "title": "Think Fast: sequence",
+        "description": "Practise sequence through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Steps or notes in the right order.?",
+            "choices": [
+              "sequence",
+              "melody",
+              "note",
+              "event"
+            ],
+            "answer": "sequence",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Sequence means steps or notes in the right order."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The thing that starts a program.?",
+            "choices": [
+              "event",
+              "Scratch",
+              "sprite",
+              "algorithm"
+            ],
+            "answer": "event",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Event means the thing that starts a program."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps for doing a job, in the right order.",
+              "To say what will happen before it happens.",
+              "What we put in to start the program.",
+              "What the program makes happen."
+            ],
+            "answer": "A set of steps for doing a job, in the right order.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          },
+          {
+            "prompt": "What does “output” mean in computing?",
+            "choices": [
+              "What the program makes happen.",
+              "The part we use to put the input in.",
+              "How loudly or quietly a sound is played.",
+              "Steps or notes in the right order."
+            ],
+            "answer": "What the program makes happen.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Output means what the program makes happen."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-8",
+        "icon": "☁",
+        "skill": "melody",
+        "title": "Explain It: melody",
+        "description": "Practise melody through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A tune — musical notes played in an order.?",
+            "choices": [
+              "melody",
+              "note",
+              "event",
+              "Scratch"
+            ],
+            "answer": "melody",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Melody means a tune — musical notes played in an order."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A free website where you join coloured blocks to make a program.?",
+            "choices": [
+              "Scratch",
+              "sprite",
+              "algorithm",
+              "predict"
+            ],
+            "answer": "Scratch",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Scratch means a free website where you join coloured blocks to make a program."
+          },
+          {
+            "prompt": "What does “predict” mean in computing?",
+            "choices": [
+              "To say what will happen before it happens.",
+              "What we put in to start the program.",
+              "What the program makes happen.",
+              "The part we use to put the input in."
+            ],
+            "answer": "To say what will happen before it happens.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Predict means to say what will happen before it happens."
+          },
+          {
+            "prompt": "What does “input device” mean in computing?",
+            "choices": [
+              "The part we use to put the input in.",
+              "How loudly or quietly a sound is played.",
+              "Steps or notes in the right order.",
+              "A tune — musical notes played in an order."
+            ],
+            "answer": "The part we use to put the input in.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Input device means the part we use to put the input in."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-9",
+        "icon": "⌂",
+        "skill": "note",
+        "title": "Real-Life Round: note",
+        "description": "Practise note through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: One musical sound.?",
+            "choices": [
+              "note",
+              "event",
+              "Scratch",
+              "sprite"
+            ],
+            "answer": "note",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Note means one musical sound."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A character or object in Scratch.?",
+            "choices": [
+              "sprite",
+              "algorithm",
+              "predict",
+              "input"
+            ],
+            "answer": "sprite",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          },
+          {
+            "prompt": "What does “input” mean in computing?",
+            "choices": [
+              "What we put in to start the program.",
+              "What the program makes happen.",
+              "The part we use to put the input in.",
+              "How loudly or quietly a sound is played."
+            ],
+            "answer": "What we put in to start the program.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Input means what we put in to start the program."
+          },
+          {
+            "prompt": "What does “volume” mean in computing?",
+            "choices": [
+              "How loudly or quietly a sound is played.",
+              "Steps or notes in the right order.",
+              "A tune — musical notes played in an order.",
+              "One musical sound."
+            ],
+            "answer": "How loudly or quietly a sound is played.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Volume means how loudly or quietly a sound is played."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-10",
+        "icon": "!",
+        "skill": "event",
+        "title": "Spot the Bug: event",
+        "description": "Practise event through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The thing that starts a program.?",
+            "choices": [
+              "event",
+              "Scratch",
+              "sprite",
+              "algorithm"
+            ],
+            "answer": "event",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Event means the thing that starts a program."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps for doing a job, in the right order.",
+              "To say what will happen before it happens.",
+              "What we put in to start the program.",
+              "What the program makes happen."
+            ],
+            "answer": "A set of steps for doing a job, in the right order.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          },
+          {
+            "prompt": "What does “output” mean in computing?",
+            "choices": [
+              "What the program makes happen.",
+              "The part we use to put the input in.",
+              "How loudly or quietly a sound is played.",
+              "Steps or notes in the right order."
+            ],
+            "answer": "What the program makes happen.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Output means what the program makes happen."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Steps or notes in the right order.?",
+            "choices": [
+              "sequence",
+              "melody",
+              "note",
+              "event"
+            ],
+            "answer": "sequence",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Sequence means steps or notes in the right order."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-11",
+        "icon": "≡",
+        "skill": "Scratch",
+        "title": "Mastery Mix: Scratch",
+        "description": "Practise scratch through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A free website where you join coloured blocks to make a program.?",
+            "choices": [
+              "Scratch",
+              "sprite",
+              "algorithm",
+              "predict"
+            ],
+            "answer": "Scratch",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Scratch means a free website where you join coloured blocks to make a program."
+          },
+          {
+            "prompt": "What does “predict” mean in computing?",
+            "choices": [
+              "To say what will happen before it happens.",
+              "What we put in to start the program.",
+              "What the program makes happen.",
+              "The part we use to put the input in."
+            ],
+            "answer": "To say what will happen before it happens.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Predict means to say what will happen before it happens."
+          },
+          {
+            "prompt": "What does “input device” mean in computing?",
+            "choices": [
+              "The part we use to put the input in.",
+              "How loudly or quietly a sound is played.",
+              "Steps or notes in the right order.",
+              "A tune — musical notes played in an order."
+            ],
+            "answer": "The part we use to put the input in.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Input device means the part we use to put the input in."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A tune — musical notes played in an order.?",
+            "choices": [
+              "melody",
+              "note",
+              "event",
+              "Scratch"
+            ],
+            "answer": "melody",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Melody means a tune — musical notes played in an order."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-12",
+        "icon": "T",
+        "skill": "sprite",
+        "title": "Unit Champion: sprite",
+        "description": "Practise sprite through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A character or object in Scratch.?",
+            "choices": [
+              "sprite",
+              "algorithm",
+              "predict",
+              "input"
+            ],
+            "answer": "sprite",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          },
+          {
+            "prompt": "What does “input” mean in computing?",
+            "choices": [
+              "What we put in to start the program.",
+              "What the program makes happen.",
+              "The part we use to put the input in.",
+              "How loudly or quietly a sound is played."
+            ],
+            "answer": "What we put in to start the program.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Input means what we put in to start the program."
+          },
+          {
+            "prompt": "What does “volume” mean in computing?",
+            "choices": [
+              "How loudly or quietly a sound is played.",
+              "Steps or notes in the right order.",
+              "A tune — musical notes played in an order.",
+              "One musical sound."
+            ],
+            "answer": "How loudly or quietly a sound is played.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Volume means how loudly or quietly a sound is played."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: One musical sound.?",
+            "choices": [
+              "note",
+              "event",
+              "Scratch",
+              "sprite"
+            ],
+            "answer": "note",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Note means one musical sound."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can predict the outcome of a simple sound algorithm by reading its steps in order.",
+    "I can predict the outcome of a change to an algorithm — say what will be different when one step is changed.",
+    "I can explain that a program makes an output (a sound, a picture) when it is given an input (a key press, a mouse click).",
+    "I can in Scratch, create a program that plays a sound and shows a picture when an input happens.",
+    "I can understand that a tune is a sequence of notes in order, and that volume is how loud or quiet a sound is.",
+    "I can change a program on purpose (a note, the volume, or a repeat) and check the outcome against a prediction.",
+    "I can outline the benefits of working with others when creating programs."
+  ]
+}

@@ -11,7 +11,7 @@
 // Re-deploy safe: a content-hash manifest means only changed files are sent.
 // Access key from env (BUNNY_KEY), never hard-coded.
 //
-// Usage: BUNNY_KEY=… node tools/upload-content-to-bunny.js [english|mathematics|science]…
+// Usage: BUNNY_KEY=… node tools/upload-content-to-bunny.js [english|mathematics|science|computing]…
 //   (no args = all three)
 
 const fs = require("fs"), path = require("path"), crypto = require("crypto");
@@ -25,8 +25,8 @@ const MANIFEST = path.join(ROOT, ".bunny-content-manifest.json");
 const CONCURRENCY = 12;
 
 if (!KEY) { console.error("BUNNY_KEY not set"); process.exit(1); }
-const subjects = process.argv.slice(2).filter((s) => ["english", "mathematics", "science"].includes(s));
-const subjectList = subjects.length ? subjects : ["english", "mathematics", "science"];
+const subjects = process.argv.slice(2).filter((s) => ["english", "mathematics", "science", "computing"].includes(s));
+const subjectList = subjects.length ? subjects : ["english", "mathematics", "science", "computing"];
 
 const sha1 = (buf) => crypto.createHash("sha1").update(buf).digest("hex");
 

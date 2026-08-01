@@ -6,7 +6,7 @@
 // locally under grade-N/data/ (no blind directory deletes). Idempotent: a 404 on
 // an already-removed file is treated as success.
 //
-// Usage: BUNNY_KEY=… node tools/prune-app-data-on-bunny.js [--dry] [english|mathematics|science]…
+// Usage: BUNNY_KEY=… node tools/prune-app-data-on-bunny.js [--dry] [english|mathematics|science|computing]…
 
 const fs = require("fs"), path = require("path");
 const ROOT = path.resolve(__dirname, "..");
@@ -20,8 +20,8 @@ const CONCURRENCY = 12;
 if (!KEY) { console.error("BUNNY_KEY not set"); process.exit(1); }
 const args = process.argv.slice(2);
 const dry = args.includes("--dry");
-const pick = args.filter((s) => ["english", "mathematics", "science"].includes(s));
-const subjectList = pick.length ? pick : ["english", "mathematics", "science"];
+const pick = args.filter((s) => ["english", "mathematics", "science", "computing"].includes(s));
+const subjectList = pick.length ? pick : ["english", "mathematics", "science", "computing"];
 
 function walk(dir, rel = "") {
   const out = [];

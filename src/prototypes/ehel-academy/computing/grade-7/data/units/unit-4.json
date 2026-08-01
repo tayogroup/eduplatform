@@ -1,0 +1,2217 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:01.207Z",
+  "stage": {
+    "id": "s07",
+    "label": "Stage 7"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t02",
+    "label": "Term 2"
+  },
+  "unit": {
+    "unitId": "comp-g07-u04",
+    "unitNo": 4,
+    "unitTitle": "The Power of Data: Using Data Modelling",
+    "unitOverview": "Welcome to Unit 4. In this unit you will discover one of the most useful ideas in all of computing: using a computer to build a data model of a real-life situation. A data model is a way of representing something from the real world using data (words, numbers and dates) and the rules that link that data together. Once you have a good model, you can use it to answer questions, spot patterns and make sensible decisions.\n\nYou will do this with two kinds of free, open-source applications. The first is a spreadsheet called LibreOffice Calc, which organises data in rows and columns and carries out calculations using formulas. The second is a database application called LibreOffice Base, which organises data into tables of records and fields and lets you search it with queries. Both are part of LibreOffice, which you can download for free from libreoffice.org. Everything you learn here also works in similar tools, but the exact clicks and menu names in this unit are written for LibreOffice.\n\nBecause this course is self-paced, you are in control. You will read a little, then open the software and try it yourself, then check your work. By the end of the unit you will be able to model a real situation, calculate results automatically, store records safely, search them, and highlight the information that matters most.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Lower Secondary Computing",
+    "code": "0868",
+    "stage": 7
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-7-Content-Package",
+    "framework": "Cambridge Lower Secondary Computing 0868 — Stage 7",
+    "sourceArchive": "Year 7-20260801T055809Z-1-001.zip",
+    "sourceAudience": "student",
+    "sourceDocuments": [
+      "Year 7/Unit 4/Year 7 - Unit 4 Lesson.docx",
+      "Year 7/Unit 4/Year 7 - Unit 4 Activities & Projects.docx",
+      "Year 7/Unit 4/Year 7 - Unit 4 Practice & Quiz.docx",
+      "Year 7/Unit 4/Year 7 - Unit 4 Reference.docx"
+    ],
+    "sourceBlockCount": 950,
+    "transformation": "Structured from the Cambridge Lower Secondary Computing 0868 — Stage 7 Lesson, Activities & Projects, Practice & Quiz and Reference booklets for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Explain what is meant by a data model and give examples of where models and simulations are used in real life.",
+    "Describe how spreadsheet and database applications can be used to model real-life scenarios.",
+    "Evaluate the layout of a data-capture form to decide if it is effective and easy to use.",
+    "Write rules for applying conditional formatting in a spreadsheet (and describe how it is used in a database) to highlight important data.",
+    "Explain why a primary key is needed in a database table, and identify a suitable field to use as the primary key.",
+    "Amend the structure of a database table to include a primary key and correct data types.",
+    "Use criteria such as >, < and = to search a database with a query.",
+    "Describe how data is used to model scenarios in a range of industries such as medicine, aviation, science, weather forecasting and business."
+  ],
+  "toolkit": [
+    {
+      "name": "A free spreadsheet",
+      "url": "Google Sheets, or LibreOffice Calc",
+      "steps": [
+        "Open a new blank spreadsheet.",
+        "Put your field names in row 1, one per column.",
+        "Type one record per row underneath.",
+        "Use Insert → Chart to turn your data into a graph."
+      ],
+      "note": "Any free spreadsheet works — the ideas are the same in all of them."
+    },
+    {
+      "name": "A simple database",
+      "url": "A spreadsheet in database layout, or LibreOffice Base",
+      "steps": [
+        "Give every field a clear name and one kind of data.",
+        "Enter one record per row.",
+        "Sort on a field to put records in order.",
+        "Filter or search to find the records that match a condition."
+      ],
+      "note": "A spreadsheet laid out with fields and records works as a database for this unit."
+    }
+  ],
+  "tutorPrompts": [
+    "Paste this to your AI tutor: 'Give me one more real-life example of a data model used in East Africa, and explain what data it stores and what decision it helps people make.'",
+    "Then ask: 'What is the difference between a data model and a simulation? Check my answer: ...' and type your own answer for feedback.",
+    "Spreadsheets: Modelling with LibreOffice Calc",
+    "Cells and cell references"
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-models-and-simulations",
+      "title": "Models and simulations",
+      "explanation": "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and interact with the situation. Training a pilot in a flight simulator is a good example: the trainee sits in a cockpit that looks and feels real and practises take-off and landing in different weather, with no danger to people or to an expensive aeroplane. Databases and spreadsheets build simpler models using words, numbers and formulae; simulations go further with complex graphics. Importantly, all the data behind a model or a simulation has to be stored somewhere — usually in a database.\n\nSimulations have advantages and disadvantages. They can prevent loss of life during training, allow many different situations to be tried, and are usually cheaper and safer than using real equipment. On the other hand, they can be expensive to produce, and no simulation can include every possible factor, so the results are never a perfect match for reality.",
+      "example": "Simulations have advantages and disadvantages. They can prevent loss of life during training, allow many different situations to be tried, and are usually cheaper and safer than using real equipment. On the other hand, they can be expensive to produce, and no simulation can include every possible factor, so the results are never a perfect match for reality."
+    },
+    {
+      "id": "concept-2-where-data-models-are-used-across-industries",
+      "title": "Where data models are used across industries",
+      "explanation": "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:\n\nMedicine and healthcare: doctors collect data such as a patient's age, symptoms and medication, then use specialised databases to help diagnose illness and choose treatment quickly.\n\nTraining: pilots, drivers and surgeons practise in simulators that behave like the real thing, so mistakes cost nothing and no one is harmed.\n\nScientific experiments: scientists model dangerous or slow processes — such as how temperature changes affect a reaction — to make predictions without real risk.\n\nWeather and climate: forecasting models use data gathered from all over the world and from space, combined with complex formulae, to predict how weather patterns will change. This matters greatly for farmers in East Africa who plan around the Gu and Deyr rains.\n\nBusiness: shops study sales data collected over years to spot patterns and predict demand, so they order the right amount of stock. A shop knows to store more bottled water before the hot season.",
+      "example": "Databases are more common than you might realise. Every time you use a streaming service to watch a video, or the app that shows you which dukaan has an item in stock, you are quietly using a huge database that generates lists just for you."
+    },
+    {
+      "id": "concept-3-spreadsheets-modelling-with-libreoffice-calc",
+      "title": "Spreadsheets: Modelling with LibreOffice Calc",
+      "explanation": "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You will see a grid. This grid is a worksheet, and it is divided into rows (numbered 1, 2, 3 …) and columns (lettered A, B, C …).",
+      "example": ""
+    },
+    {
+      "id": "concept-4-cells-and-cell-references",
+      "title": "Cells and cell references",
+      "explanation": "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number, called a cell reference. The cell where column B meets row 2 is cell B2. The cell where column D meets row 3 is cell D3. Click any cell and look at the Name Box on the left of the Formula Bar — it always shows the reference of the cell you have selected.\n\nYou can also select a group of cells called a cell range. A range is written as the first cell, a colon, then the last cell. So B2:B8 means every cell from B2 down to B8, and C2:E2 means C2, D2 and E2. The colon means 'through'. Ranges are how you tell a formula to work on many cells at once.",
+      "example": "You can also select a group of cells called a cell range. A range is written as the first cell, a colon, then the last cell. So B2:B8 means every cell from B2 down to B8, and C2:E2 means C2, D2 and E2. The colon means 'through'. Ranges are how you tell a formula to work on many cells at once."
+    },
+    {
+      "id": "concept-5-the-input-line-and-formulas",
+      "title": "The Input Line and formulas",
+      "explanation": "Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a formula, click the cell where you want the answer to appear, type the formula, and press Enter.\n\nEvery formula must begin with an = sign. After the =, you can combine numbers, cell references and the arithmetic operators: + (add), — (subtract), * (multiply) and / (divide). For example, if B2 holds 10 and C2 holds 5, then typing =B2+C2 returns 15, and =B2*C2 returns 50. Using cell references instead of the raw numbers is powerful: if you later change B2, the answer updates by itself. That automatic updating is what turns a plain table into a living data model.",
+      "example": "Every formula must begin with an = sign. After the =, you can combine numbers, cell references and the arithmetic operators: + (add), — (subtract), * (multiply) and / (divide). For example, if B2 holds 10 and C2 holds 5, then typing =B2+C2 returns 15, and =B2*C2 returns 50. Using cell references instead of the raw numbers is powerful: if you later change B2, the answer updates by itself. That automatic updating is what turns a plain table into a living data model."
+    },
+    {
+      "id": "concept-6-worked-example-1-sum-and-average-test-scores",
+      "title": "Worked Example 1 — SUM and AVERAGE (test scores)",
+      "explanation": "A function is a ready-made shortcut for a common calculation. The two you will use most are SUM (adds numbers) and AVERAGE (finds the mean). Type this small table into a new sheet, starting in cell A1:\n\nNow click cell E2 and type =AVERAGE(B2:D2) then press Enter. Calc adds Nadia's three scores (8 + 7 + 9 = 24), divides by 3, and returns 8. Click E2 again, hover over the small square at the bottom-right corner (the fill handle), and drag down to E5 to copy the formula for every student. Sami's average becomes 7, Maya's becomes 9, and Leo's becomes 6.\n\nThere is more than one way to reach the same answer. Instead of the AVERAGE function you could type =(B2+C2+D2)/3, which also returns 8 for Nadia. The brackets matter: they make Calc add the three scores first and only then divide by 3. If you wanted the total instead of the average, you would use =SUM(B2:D2), which returns 24 for Nadia. Change the heading in E1 to 'Total' if you do this, so your labels always match your data.\n\nRow — A · B · C · D · E\n\n1 — Name · Test 1 · Test 2 · Test 3 · Average\n\n2 — Nadia · 8 · 7 · 9\n\n3 — Sami · 6 · 9 · 6\n\n4 — Maya · 10 · 8 · 9",
+      "example": "5 — Leo · 5 · 7 · 6"
+    },
+    {
+      "id": "concept-7-worked-example-2",
+      "title": "Worked Example 2",
+      "explanation": "Data models are perfect for money. Imagine a small shop in Hargeisa records how much it sells each day for one week, in shillings. Enter this table starting at A1:\n\nIn cell B9 type =SUM(B2:B8) and press Enter. Calc adds all seven days and returns 700000 — the total sales for the week. In cell B10 type =AVERAGE(B2:B8); this returns 100000, the average daily sales. Notice how SUM and AVERAGE both work on the same range B2:B8 but answer different questions. If the shopkeeper had a great day and changed Friday's figure, both answers would recalculate instantly. This is the heart of a spreadsheet model: change one number and every linked result updates.\n\nRow — A · B\n\n1 — Day · Sales (shillings)\n\n2 — Saturday · 120000\n\n3 — Sunday · 95000\n\n4 — Monday · 85000\n\n5 — Tuesday · 110000\n\n6 — Wednesday · 90000\n\n7 — Thursday · 140000",
+      "example": "8 — Friday · 60000"
+    },
+    {
+      "id": "concept-8-formatting",
+      "title": "Formatting",
+      "explanation": "A clear model separates the labels (headings) from the data. To make your headings stand out, select cells A1:C1, then press Ctrl+B or click the Bold button (the letter B) on the toolbar. To show money properly, select the sales figures, press Ctrl+1 to open Format Cells, choose the Numbers tab, then the Currency category, and pick a format. If Somali shillings is not in the list, choose the Number category with a thousands separator and keep the word 'shillings' in your column heading — the calculations work exactly the same either way.",
+      "example": ""
+    },
+    {
+      "id": "concept-9-worked-example-3",
+      "title": "Worked Example 3",
+      "explanation": "This is the most important idea in the whole spreadsheet section, so read it slowly. Your class is saving up for a trip to the ancient rock-art caves at Laas Geel. The trip costs a fixed 90,000 shillings per student. Each student pays over three months. Enter this table starting at A1, and type 90000 into cell H1 on its own:\n\nFirst work out Total Paid. In cell E2 type =SUM(B2:D2) and press Enter; it returns 90000 for Nadia. Drag the fill handle from E2 down to E4. Because these are ordinary references, Calc helpfully changes them as it copies: E3 becomes =SUM(B3:D3) (returns 70000) and E4 becomes =SUM(B4:D4) (returns 70000). A reference that changes when copied is called a relative reference, and here it is exactly what we want.\n\nNow the Balance, which is Trip Cost minus Total Paid. It is tempting to click cell F2 and type =H1-E2. For Nadia this returns 0 (90000 — 90000), which looks correct. But watch what happens when you drag the fill handle down: cell F3 becomes =H2-E3. There is nothing in H2, so Calc treats it as 0 and returns -70000 — a wrong, negative balance! The relative reference moved H1 down to H2, away from our trip cost.\n\nThe fix is an absolute reference. Change F2 to read =$H$1-E2. The dollar signs lock the reference to cell H1 so it can never move. Now drag the fill handle down again: F3 becomes =$H$1-E3 (returns 20000) and F4 becomes =$H$1-E4 (returns 20000). The H1 part stayed fixed while the E part moved, and every balance is correct. Remember the rule: use a relative reference when you want it to move, and an absolute reference (with $ signs) when it must always point to the same cell.\n\nRow — A · B · C · D · E · F\n\n1 — Name · May · June · July · Total Paid · Balance\n\n2 — Nadia · 30000 · 30000 · 30000\n\n3 — Sami · 30000 · 20000 · 20000",
+      "example": "4 — Maya · 40000 · 30000 · 0"
+    },
+    {
+      "id": "concept-10-the-fill-handle",
+      "title": "The fill handle",
+      "explanation": "The fill handle is the small square at the bottom-right corner of a selected cell. When you hover over it the pointer becomes a thin cross; hold the mouse button and drag to copy a formula into neighbouring cells. A quicker way to copy a formula downward is to select the cell and the cells below it, then press Ctrl+D (Fill Down). This saves you from typing the same formula many times and is safe to use because relative references adjust automatically.",
+      "example": ""
+    },
+    {
+      "id": "concept-11-conditional-formatting",
+      "title": "Conditional formatting",
+      "explanation": "Conditional formatting automatically changes how a cell looks when it meets a rule you set. Teacher Elena wants to see instantly which students have finished paying — that is, whose Balance equals 0. Select cells F2:F4, then choose Format > Conditional > Condition. Set the rule to Cell value is equal to 0, and under Apply Style choose Good (a green style) or click New Style to design your own. Click OK. Every zero balance now turns green, so a single glance tells the whole story.\n\nYou can add more than one rule. For the fair's money model you might want funds shown green when they reach the target and red when they fall short. If the funds total is in cell D6 and the target is in cell D8, you would set one condition 'Cell value is greater than or equal to $D$8 — Apply Style Good' and a second condition 'Cell value is less than $D$8 — Apply Style Bad'. Note that LibreOffice applies a cell style, not just a colour, which is slightly different from some other spreadsheets; the built-in Good and Bad styles are the quickest way to get green and red.",
+      "example": "You can add more than one rule. For the fair's money model you might want funds shown green when they reach the target and red when they fall short. If the funds total is in cell D6 and the target is in cell D8, you would set one condition 'Cell value is greater than or equal to $D$8 — Apply Style Good' and a second condition 'Cell value is less than $D$8 — Apply Style Bad'. Note that LibreOffice applies a cell style, not just a colour, which is slightly different from some other spreadsheets; the built-in Good and Bad styles are the quickest way to get green and red."
+    },
+    {
+      "id": "concept-12-charts",
+      "title": "Charts",
+      "explanation": "A chart turns numbers into a picture so patterns jump out. Suppose you have the approximate monthly rainfall for Mogadishu in one column of months and one column of millimetres. Select both columns including the headings, then choose Insert > Chart. The Chart Wizard opens. Choose Column as the chart type, click Next through the steps to add a title such as 'Mogadishu Rainfall (mm)', then click Finish and click outside the chart. You will clearly see the two rainy seasons — the Gu rains around April to June and the Deyr rains around October to December — far faster than by reading the raw numbers.",
+      "example": ""
+    },
+    {
+      "id": "concept-13-what-if-and-goal-seek-analysis",
+      "title": "What-If and Goal Seek analysis",
+      "explanation": "Because a model recalculates automatically, you can ask What-If questions simply by changing an input and watching the results. Change the trip cost in H1 and every balance updates at once. LibreOffice can also save different sets of inputs using Tools > Scenarios. A related tool works backwards: Goal Seek (under Tools > Goal Seek). You tell it the formula cell, the target value you want, and which input cell it may change, and Calc finds the input that reaches your goal. For the fair, Teacher Elena could use Goal Seek to answer 'what price must a T-shirt be so that total funds reach exactly 500,000 shillings?'",
+      "example": ""
+    },
+    {
+      "id": "concept-14-databases-modelling-with-libreoffice-base",
+      "title": "Databases: Modelling with LibreOffice Base",
+      "explanation": "A database is best when your model is mostly about storing, organising and searching lists of things — like the competitors at the fair. Open LibreOffice Base. The Database Wizard appears. Choose Create a new database, keep the default embedded database, click Next, then Finish, and save the file with a name such as Fair.odb. You now have an empty database ready for tables.",
+      "example": ""
+    }
+  ],
+  "codeExamples": [],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Explain the ideas",
+      "context": "work through the steps below and see what happens. This is models and simulations in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Write a short paragraph explaining what a data model is, including its key features and one advantage and one disadvantage.",
+      "answer": "Use one real-life example from this unit (medicine, aviation, weather or business) to show how a data model helps people make decisions. Describe one situation where a simulation would be used instead, and give one advantage of the simulation.",
+      "modelType": "model-1",
+      "hint": "Start here: Use one real-life example from this unit (medicine, aviation, weather or business) to show how a data model helps people make decisions.",
+      "explanation": "Models and simulations: A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and interact with the situation. Training a pilot in a flight simulator is a good example: the trainee sits in a cockpit that looks and feels real and…"
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Database task (LibreOffice Base)",
+      "context": "work through the steps below and see what happens. This is where data models are used across industries in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Make sure the Competitors table has correct data types, a primary key on CompetitorID, and sensible field lengths.",
+      "answer": "Design a data-capture form that a new competitor could use to register. Include a title, clear instructions, and multiple-choice options for Level. Create at least three queries using different comparison operators (=, > and <). For example: all Advanced competitors; everyone older than 11; anyone whose permission is still missing. Write, in words, one conditional-formatting rule that would highlight a group the organiser cares about (for example, 'IF Level = Beginner THEN highlight').",
+      "modelType": "model-2",
+      "hint": "Start here: Design a data-capture form that a new competitor could use to register. Include a title, clear instructions, and multiple-choice options for Level.",
+      "explanation": "Where data models are used across industries: Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:"
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Spreadsheet task (LibreOffice Calc)",
+      "context": "work through the steps below and see what happens. This is spreadsheets: modelling with libreoffice calc in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Explain in one sentence why a spreadsheet is the right tool for tracking money at the fair.",
+      "answer": "Build a funds model with the stalls, using =B2*C2 for revenue and =SUM(.) for totals. Add a Target cell of 500000 and a Funds Raised cell, then use conditional formatting to colour Funds Raised green when it is at least the target and red when it is below. Add a second celebrity reader whose appearance fee is 30000 shillings and who brings in 25 ticket sales at 3000 shillings each; update your totals so the model stays correct. Expected Result (Final Project) A saved Base file with a keyed table, a form and three working queries; a saved Calc file whose funds cell reaches at least 500000 and shows green; and a short written explanation of models and simulations with a real-life example.",
+      "modelType": "model-3",
+      "hint": "Start here: Build a funds model with the stalls, using =B2*C2 for revenue and =SUM(.) for totals.",
+      "explanation": "Spreadsheets: Modelling with LibreOffice Calc: Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You will see a grid. This grid is a worksheet, and it is divided into rows (numbered 1, 2, 3 …) and columns (lettered A, B, C …)."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Getting Started with LibreOffice Calc and Base",
+      "context": "work through the steps below and see what happens. This is cells and cell references in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "In a web browser, go to libreoffice.org and open the Download page. Download LibreOffice for your operating system (Windows, macOS or Linux). It is completely free and open-source.",
+      "answer": "Run the installer and accept the standard options. When it finishes, open the LibreOffice Start Centre. For spreadsheets, click Calc Spreadsheet. Spreadsheet files are saved with the .ods ending. For databases, click Base Database. In the wizard, choose Create a new database, keep the default embedded database, click Next then Finish, and save the file with a .odb ending. Find your way around Calc: the Name Box and Input Line are at the top, rows are numbered down the side, columns are lettered across the top. Find your way around Base: the left panel lists Tables, Queries, Forms and Reports — the four things you can build.",
+      "modelType": "model-4",
+      "hint": "Start here: Run the installer and accept the standard options. When it finishes, open the LibreOffice Start Centre.",
+      "explanation": "Cells and cell references: Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number, called a cell reference. The cell where column B meets row 2 is cell B2. The cell where column D meets row 3 is cell D3. Click any cell and look at the…"
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "If You Cannot Install Software",
+      "context": "work through the steps below and see what happens. This is the input line and formulas in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "If you cannot install LibreOffice on your device yet, you can still learn by planning everything on paper: draw the grids, write the formulas, and design the tables and forms. When you do get access, type them in. Ask your teacher whether a school device is available during the twice-weekly sessions.",
+      "answer": "Activity 1 (Practise) — SUM and AVERAGE with test scores Goal: use two functions to build your first calculating model in LibreOffice Calc. Open Calc. In A1 to E1 type the headings: Name, Test 1, Test 2, Test 3, Average. Type these four students and scores in rows 2 to 5: Nadia 8, 7, 9; Sami 6, 9, 6; Maya 10, 8, 9; Leo 5, 7, 6. Click E2 and type =AVERAGE(B2:D2) then press Enter.",
+      "modelType": "model-5",
+      "hint": "Start here: Activity 1 (Practise) — SUM and AVERAGE with test scores",
+      "explanation": "The Input Line and formulas: Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a formula, click the cell where you want the answer to appear, type the formula, and press Enter."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Expected Result",
+      "context": "work through the steps below and see what happens. This is worked example 1 — sum and average (test scores) in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "With AVERAGE, column E shows 8, 7, 9, 6. With SUM, column E shows 24, 21, 27, 18. Nadia's total of 24 divided by 3 equals her average of 8, which is a good check that both formulas agree.",
+      "answer": "Ask Your AI Tutor 'I typed =AVERAGE(B2:D2) in Calc but I got an error message. Here is exactly what is in cells B2, C2 and D2: ... What did I do wrong?' Activity 2 (Practise) — a Hargeisa shop's weekly sales Goal: total and average a column of money, and format it clearly. Open a new Calc sheet. In A1 type Day and in B1 type Sales (shillings).",
+      "modelType": "model-6",
+      "hint": "Start here: Ask Your AI Tutor",
+      "explanation": "Worked Example 1 — SUM and AVERAGE (test scores): A function is a ready-made shortcut for a common calculation. The two you will use most are SUM (adds numbers) and AVERAGE (finds the mean). Type this small table into a new sheet, starting in cell A1:"
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Models and simulations",
+      "modelType": "concept-model-1",
+      "purpose": "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and interact with the situation. Training a pilot in a flight simulator is…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Where data models are used across industries",
+      "modelType": "concept-model-2",
+      "purpose": "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Spreadsheets: Modelling with LibreOffice Calc",
+      "modelType": "concept-model-3",
+      "purpose": "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You will see a grid. This grid is a worksheet, and it is divided into rows…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Cells and cell references",
+      "modelType": "concept-model-4",
+      "purpose": "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number, called a cell reference. The cell where column B meets row 2 is cell B2.…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "The Input Line and formulas",
+      "modelType": "concept-model-5",
+      "purpose": "Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a formula, click the cell where you want the answer to appear, type the…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Worked Example 1 — SUM and AVERAGE (test scores)",
+      "modelType": "concept-model-6",
+      "purpose": "A function is a ready-made shortcut for a common calculation. The two you will use most are SUM (adds numbers) and AVERAGE (finds the mean). Type this small table into a new sheet, starting in cell A1:",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-7",
+      "outcomeId": "lo07",
+      "title": "Worked Example 2",
+      "modelType": "concept-model-7",
+      "purpose": "Data models are perfect for money. Imagine a small shop in Hargeisa records how much it sells each day for one week, in shillings. Enter this table starting at A1:",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-8",
+      "outcomeId": "lo08",
+      "title": "Formatting",
+      "modelType": "concept-model-8",
+      "purpose": "A clear model separates the labels (headings) from the data. To make your headings stand out, select cells A1:C1, then press Ctrl+B or click the Bold button (the letter B) on the toolbar. To show money properly, select…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-9",
+      "outcomeId": "lo01",
+      "title": "Worked Example 3",
+      "modelType": "concept-model-9",
+      "purpose": "This is the most important idea in the whole spreadsheet section, so read it slowly. Your class is saving up for a trip to the ancient rock-art caves at Laas Geel. The trip costs a fixed 90,000 shillings per student.…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-10",
+      "outcomeId": "lo02",
+      "title": "The fill handle",
+      "modelType": "concept-model-10",
+      "purpose": "The fill handle is the small square at the bottom-right corner of a selected cell. When you hover over it the pointer becomes a thin cross; hold the mouse button and drag to copy a formula into neighbouring cells. A…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-11",
+      "outcomeId": "lo03",
+      "title": "Conditional formatting",
+      "modelType": "concept-model-11",
+      "purpose": "Conditional formatting automatically changes how a cell looks when it meets a rule you set. Teacher Elena wants to see instantly which students have finished paying — that is, whose Balance equals 0. Select cells F2:F4,…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-12",
+      "outcomeId": "lo04",
+      "title": "Charts",
+      "modelType": "concept-model-12",
+      "purpose": "A chart turns numbers into a picture so patterns jump out. Suppose you have the approximate monthly rainfall for Mogadishu in one column of months and one column of millimetres. Select both columns including the…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-13",
+      "outcomeId": "lo05",
+      "title": "What-If and Goal Seek analysis",
+      "modelType": "concept-model-13",
+      "purpose": "Because a model recalculates automatically, you can ask What-If questions simply by changing an input and watching the results. Change the trip cost in H1 and every balance updates at once. LibreOffice can also save…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-14",
+      "outcomeId": "lo06",
+      "title": "Databases: Modelling with LibreOffice Base",
+      "modelType": "concept-model-14",
+      "purpose": "A database is best when your model is mostly about storing, organising and searching lists of things — like the competitors at the fair. Open LibreOffice Base. The Database Wizard appears. Choose Create a new database,…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with models and simulations",
+      "example": "Simulations have advantages and disadvantages. They can prevent loss of life during training, allow many different situations to be tried, and are usually cheaper and safer than using real equipment. On the other hand, they can be expensive to produce, and no…",
+      "steps": [
+        "Read the concept card for models and simulations and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with where data models are used across industries",
+      "example": "Databases are more common than you might realise. Every time you use a streaming service to watch a video, or the app that shows you which dukaan has an item in stock, you are quietly using a huge database that generates lists just for you.",
+      "steps": [
+        "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:",
+        "Medicine and healthcare: doctors collect data such as a patient's age, symptoms and medication, then use specialised databases to help diagnose illness and choose treatment quickly.",
+        "Training: pilots, drivers and surgeons practise in simulators that behave like the real thing, so mistakes cost nothing and no one is harmed.",
+        "Scientific experiments: scientists model dangerous or slow processes — such as how temperature changes affect a reaction — to make predictions without real risk."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with spreadsheets: modelling with libreoffice calc",
+      "example": "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You will see a grid. This grid is a worksheet, and it is divided into rows (numbered 1, 2, 3 …) and columns…",
+      "steps": [
+        "Read the concept card for spreadsheets: modelling with libreoffice calc and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with cells and cell references",
+      "example": "You can also select a group of cells called a cell range. A range is written as the first cell, a colon, then the last cell. So B2:B8 means every cell from B2 down to B8, and C2:E2 means C2, D2 and E2. The colon means 'through'. Ranges are how you tell a…",
+      "steps": [
+        "Read the concept card for cells and cell references and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with the input line and formulas",
+      "example": "Every formula must begin with an = sign. After the =, you can combine numbers, cell references and the arithmetic operators: + (add), — (subtract), * (multiply) and / (divide). For example, if B2 holds 10 and C2 holds 5, then typing =B2+C2 returns 15, and…",
+      "steps": [
+        "Read the concept card for the input line and formulas and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "How to work with worked example 1 — sum and average (test scores)",
+      "example": "5 — Leo · 5 · 7 · 6",
+      "steps": [
+        "A function is a ready-made shortcut for a common calculation. The two you will use most are SUM (adds numbers) and AVERAGE (finds the mean). Type this small table into a new sheet, starting in cell A1:",
+        "Now click cell E2 and type =AVERAGE(B2:D2) then press Enter. Calc adds Nadia's three scores (8 + 7 + 9 = 24), divides by 3, and returns 8. Click E2 again, hover over the small square at the bottom-right corner (the fill…",
+        "There is more than one way to reach the same answer. Instead of the AVERAGE function you could type =(B2+C2+D2)/3, which also returns 8 for Nadia. The brackets matter: they make Calc add the three scores first and only…",
+        "1 — Name · Test 1 · Test 2 · Test 3 · Average"
+      ]
+    },
+    {
+      "id": "method-7",
+      "outcomeId": "lo07",
+      "difficulty": "Challenge",
+      "title": "How to work with worked example 2",
+      "example": "8 — Friday · 60000",
+      "steps": [
+        "Read the concept card for worked example 2 and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-8",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "How to work with formatting",
+      "example": "A clear model separates the labels (headings) from the data. To make your headings stand out, select cells A1:C1, then press Ctrl+B or click the Bold button (the letter B) on the toolbar. To show money properly, select the sales figures, press Ctrl+1 to open…",
+      "steps": [
+        "Read the concept card for formatting and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Models and simulations",
+      "prompt": "Explain in your own words: Models and simulations.",
+      "solution": "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and interact with the situation. Training a pilot in a flight simulator is a good example: the trainee sits in a cockpit that looks and feels real and practises take-off and landing in different weather, with no danger to people or to an expensive aeroplane. Databases and spreadsheets build simpler models using words, numbers and formulae; simulations go further with complex graphics. Importantly, all the data behind a model or a simulation has to be stored somewhere — usually in a database.\n\nSimulations have advantages and disadvantages. They can prevent loss of life during training, allow many different situations to be tried, and are usually cheaper and safer than using real equipment. On the other hand, they can be expensive to produce, and no simulation can include every possible factor, so the results are never a perfect match for reality.\n\nFor example: Simulations have advantages and disadvantages. They can prevent loss of life during training, allow many different situations to be tried, and are usually cheaper and safer than using real equipment. On the other hand, they can be expensive to produce, and no simulation can include every possible factor, so the results are never a perfect match for reality."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Where data models are used across industries",
+      "prompt": "Explain in your own words: Where data models are used across industries.",
+      "solution": "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:\n\nMedicine and healthcare: doctors collect data such as a patient's age, symptoms and medication, then use specialised databases to help diagnose illness and choose treatment quickly.\n\nTraining: pilots, drivers and surgeons practise in simulators that behave like the real thing, so mistakes cost nothing and no one is harmed.\n\nScientific experiments: scientists model dangerous or slow processes — such as how temperature changes affect a reaction — to make predictions without real risk.\n\nWeather and climate: forecasting models use data gathered from all over the world and from space, combined with complex formulae, to predict how weather patterns will change. This matters greatly for farmers in East Africa who plan around the Gu and Deyr rains.\n\nBusiness: shops study sales data collected over years to spot patterns and predict demand, so they order the right amount of stock. A shop knows to store more bottled water before the hot season.\n\nFor example: Databases are more common than you might realise. Every time you use a streaming service to watch a video, or the app that shows you which dukaan has an item in stock, you are quietly using a huge database that generates lists just for you."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Spreadsheets: Modelling with LibreOffice Calc",
+      "prompt": "Explain in your own words: Spreadsheets: Modelling with LibreOffice Calc.",
+      "solution": "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You will see a grid. This grid is a worksheet, and it is divided into rows (numbered 1, 2, 3 …) and columns (lettered A, B, C …)."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Cells and cell references",
+      "prompt": "Explain in your own words: Cells and cell references.",
+      "solution": "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number, called a cell reference. The cell where column B meets row 2 is cell B2. The cell where column D meets row 3 is cell D3. Click any cell and look at the Name Box on the left of the Formula Bar — it always shows the reference of the cell you have selected.\n\nYou can also select a group of cells called a cell range. A range is written as the first cell, a colon, then the last cell. So B2:B8 means every cell from B2 down to B8, and C2:E2 means C2, D2 and E2. The colon means 'through'. Ranges are how you tell a formula to work on many cells at once.\n\nFor example: You can also select a group of cells called a cell range. A range is written as the first cell, a colon, then the last cell. So B2:B8 means every cell from B2 down to B8, and C2:E2 means C2, D2 and E2. The colon means 'through'. Ranges are how you tell a formula to work on many cells at once."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: The Input Line and formulas",
+      "prompt": "Explain in your own words: The Input Line and formulas.",
+      "solution": "Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a formula, click the cell where you want the answer to appear, type the formula, and press Enter.\n\nEvery formula must begin with an = sign. After the =, you can combine numbers, cell references and the arithmetic operators: + (add), — (subtract), * (multiply) and / (divide). For example, if B2 holds 10 and C2 holds 5, then typing =B2+C2 returns 15, and =B2*C2 returns 50. Using cell references instead of the raw numbers is powerful: if you later change B2, the answer updates by itself. That automatic updating is what turns a plain table into a living data model.\n\nFor example: Every formula must begin with an = sign. After the =, you can combine numbers, cell references and the arithmetic operators: + (add), — (subtract), * (multiply) and / (divide). For example, if B2 holds 10 and C2 holds 5, then typing =B2+C2 returns 15, and =B2*C2 returns 50. Using cell references instead of the raw numbers is powerful: if you later change B2, the answer updates by itself. That automatic updating is what turns a plain table into a living data model."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Worked Example 1 — SUM and AVERAGE (test scores)",
+      "prompt": "Explain in your own words: Worked Example 1 — SUM and AVERAGE (test scores).",
+      "solution": "A function is a ready-made shortcut for a common calculation. The two you will use most are SUM (adds numbers) and AVERAGE (finds the mean). Type this small table into a new sheet, starting in cell A1:\n\nNow click cell E2 and type =AVERAGE(B2:D2) then press Enter. Calc adds Nadia's three scores (8 + 7 + 9 = 24), divides by 3, and returns 8. Click E2 again, hover over the small square at the bottom-right corner (the fill handle), and drag down to E5 to copy the formula for every student. Sami's average becomes 7, Maya's becomes 9, and Leo's becomes 6.\n\nThere is more than one way to reach the same answer. Instead of the AVERAGE function you could type =(B2+C2+D2)/3, which also returns 8 for Nadia. The brackets matter: they make Calc add the three scores first and only then divide by 3. If you wanted the total instead of the average, you would use =SUM(B2:D2), which returns 24 for Nadia. Change the heading in E1 to 'Total' if you do this, so your labels always match your data.\n\nRow — A · B · C · D · E\n\n1 — Name · Test 1 · Test 2 · Test 3 · Average\n\n2 — Nadia · 8 · 7 · 9\n\n3 — Sami · 6 · 9 · 6\n\n4 — Maya · 10 · 8 · 9\n\nFor example: 5 — Leo · 5 · 7 · 6"
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "A data model is best described as: (a) a photograph of a computer; (b) a computer representation of a real-life situation; (c) a type of keyboard; (d) a printed book.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Which application is a spreadsheet? (a) LibreOffice Base; (b) LibreOffice Writer; (c) LibreOffice Calc; (d) LibreOffice Impress.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Every formula in LibreOffice Calc must start with: (a) a + sign; (b) an = sign; (c) a letter; (d) a full stop.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "The cell where column C meets row 4 is called: (a) 4C; (b) C4; (c) CR4; (d) R4C3.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "Which is a cell range? (a) B2+B8; (b) B2:B8; (c) B2;B8; (d) B2-B8.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p06",
+      "level": "Warm-up",
+      "prompt": "Which function finds the mean of a set of numbers? (a) SUM; (b) COUNT; (c) AVERAGE; (d) MAX.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p07",
+      "level": "Warm-up",
+      "prompt": "An absolute cell reference looks like: (a) H1; (b) $H$1; (c) H:1; (d) (H1).",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p08",
+      "level": "Warm-up",
+      "prompt": "In a database, a single row of data about one item is a: (a) field; (b) record; (c) query; (d) form.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p09",
+      "level": "Warm-up",
+      "prompt": "In a database, a single column is a: (a) field; (b) record; (c) key; (d) cell.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p10",
+      "level": "Warm-up",
+      "prompt": "A primary key must be: (a) a number only; (b) the first column; (c) unique for every record; (d) always text.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p11",
+      "level": "Warm-up",
+      "prompt": "Which data type stores only Yes/No or True/False values? (a) Text; (b) Integer; (c) Date; (d) Yes/No [BOOLEAN].",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p12",
+      "level": "Warm-up",
+      "prompt": "A query searches a database using: (a) charts; (b) criteria; (c) fonts; (d) fill handles.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p13",
+      "level": "Warm-up",
+      "prompt": "Which is a comparison operator? (a) &; (b) >; (c) #; (d) @.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p14",
+      "level": "Warm-up",
+      "prompt": "Conditional formatting is used to: (a) delete data; (b) highlight data that meets a rule; (c) print a page; (d) rename a file.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p15",
+      "level": "Warm-up",
+      "prompt": "For calculations with lots of money and numbers, the best tool is usually a: (a) database; (b) word processor; (c) spreadsheet; (d) web browser.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p16",
+      "level": "Core",
+      "prompt": "Answer in one or two sentences.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Explain the ideas",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Write a short paragraph explaining what a data model is, including its key features and one advantage and one disadvantage.",
+        "Use one real-life example from this unit (medicine, aviation, weather or business) to show how a data model helps people make decisions.",
+        "Describe one situation where a simulation would be used instead, and give one advantage of the simulation."
+      ]
+    },
+    {
+      "title": "Database task (LibreOffice Base)",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Make sure the Competitors table has correct data types, a primary key on CompetitorID, and sensible field lengths.",
+        "Design a data-capture form that a new competitor could use to register. Include a title, clear instructions, and multiple-choice options for Level.",
+        "Create at least three queries using different comparison operators (=, > and <). For example: all Advanced competitors; everyone older than 11; anyone whose permission is still missing.",
+        "Write, in words, one conditional-formatting rule that would highlight a group the organiser cares about (for example, 'IF Level = Beginner THEN highlight')."
+      ]
+    },
+    {
+      "title": "Spreadsheet task (LibreOffice Calc)",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Explain in one sentence why a spreadsheet is the right tool for tracking money at the fair.",
+        "Build a funds model with the stalls, using =B2*C2 for revenue and =SUM(.) for totals.",
+        "Add a Target cell of 500000 and a Funds Raised cell, then use conditional formatting to colour Funds Raised green when it is at least the target and red when it is below.",
+        "Add a second celebrity reader whose appearance fee is 30000 shillings and who brings in 25 ticket sales at 3000 shillings each; update your totals so the model stays correct.",
+        "Expected Result (Final Project)",
+        "A saved Base file with a keyed table, a form and three working queries; a saved Calc file whose funds cell reaches at least 500000 and shows green; and a short written explanation of models and simulations with a real-life example."
+      ]
+    },
+    {
+      "title": "Getting Started with LibreOffice Calc and Base",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "In a web browser, go to libreoffice.org and open the Download page. Download LibreOffice for your operating system (Windows, macOS or Linux). It is completely free and open-source.",
+        "Run the installer and accept the standard options. When it finishes, open the LibreOffice Start Centre.",
+        "For spreadsheets, click Calc Spreadsheet. Spreadsheet files are saved with the .ods ending.",
+        "For databases, click Base Database. In the wizard, choose Create a new database, keep the default embedded database, click Next then Finish, and save the file with a .odb ending.",
+        "Find your way around Calc: the Name Box and Input Line are at the top, rows are numbered down the side, columns are lettered across the top.",
+        "Find your way around Base: the left panel lists Tables, Queries, Forms and Reports — the four things you can build."
+      ]
+    },
+    {
+      "title": "If You Cannot Install Software",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "If you cannot install LibreOffice on your device yet, you can still learn by planning everything on paper: draw the grids, write the formulas, and design the tables and forms. When you do get access, type them in. Ask your teacher whether a school device is available during the twice-weekly sessions.",
+        "Activity 1 (Practise) — SUM and AVERAGE with test scores",
+        "Goal: use two functions to build your first calculating model in LibreOffice Calc.",
+        "Open Calc. In A1 to E1 type the headings: Name, Test 1, Test 2, Test 3, Average.",
+        "Type these four students and scores in rows 2 to 5: Nadia 8, 7, 9; Sami 6, 9, 6; Maya 10, 8, 9; Leo 5, 7, 6.",
+        "Click E2 and type =AVERAGE(B2:D2) then press Enter."
+      ]
+    },
+    {
+      "title": "Expected Result",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "With AVERAGE, column E shows 8, 7, 9, 6. With SUM, column E shows 24, 21, 27, 18. Nadia's total of 24 divided by 3 equals her average of 8, which is a good check that both formulas agree.",
+        "Ask Your AI Tutor",
+        "'I typed =AVERAGE(B2:D2) in Calc but I got an error message. Here is exactly what is in cells B2, C2 and D2: ... What did I do wrong?'",
+        "Activity 2 (Practise) — a Hargeisa shop's weekly sales",
+        "Goal: total and average a column of money, and format it clearly.",
+        "Open a new Calc sheet. In A1 type Day and in B1 type Sales (shillings)."
+      ]
+    },
+    {
+      "title": "Ask Your AI Tutor",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "'I typed =AVERAGE(B2:D2) in Calc but I got an error message. Here is exactly what is in cells B2, C2 and D2: ... What did I do wrong?'",
+        "Activity 2 (Practise) — a Hargeisa shop's weekly sales",
+        "Goal: total and average a column of money, and format it clearly.",
+        "Open a new Calc sheet. In A1 type Day and in B1 type Sales (shillings).",
+        "In A2:A8 type Saturday to Friday. In B2:B8 type: 120000, 95000, 85000, 110000, 90000, 140000, 60000.",
+        "In A9 type Total and in B9 type =SUM(B2:B8)."
+      ]
+    },
+    {
+      "title": "Go Further",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "These tasks stretch your skills. Try them once the eight activities feel comfortable.",
+        "Profit model: In Calc, build a stall table with columns Item, Selling Price (sh), Quantity Sold, and Revenue. Use dates 3000, water 1000, books 2500, T-shirts 5000, with quantities 50, 100, 20, 40. In the Revenue column type =B2*C2 and fill down. In a Total cell use =SUM(D2:D5). Check the total comes to 500000.",
+        "Count report: In Base, build a report grouped by Level and add a count so Teacher Elena can see how many competitors are in each level.",
+        "Goal Seek: In your profit model, use Tools > Goal Seek to find what T-shirt price would make total revenue reach exactly 550000 shillings, keeping the quantities the same.",
+        "Revenue values: dates 150000, water 100000, books 50000, T-shirts 200000. Total revenue = 500000 shillings, which exactly meets the fair's target.",
+        "Challenge Yourself"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "######",
+      "cause": "The column is too narrow to show the number or date.",
+      "fix": "Widen the column by dragging its border."
+    },
+    {
+      "symptom": "#NAME?",
+      "cause": "A function name is misspelled or a name is not recognised.",
+      "fix": "Check the spelling, e.g. AVERAGE not AVARAGE."
+    },
+    {
+      "symptom": "#DIV/0!",
+      "cause": "The formula is dividing by zero (or an empty cell).",
+      "fix": "Make sure the divider cell has a non-zero number."
+    },
+    {
+      "symptom": "#REF!",
+      "cause": "A cell the formula pointed to has been deleted.",
+      "fix": "Re-enter the formula with a valid reference."
+    },
+    {
+      "symptom": "#VALUE!",
+      "cause": "Text is being used where a number is expected.",
+      "fix": "Check the cells hold numbers, not words."
+    },
+    {
+      "symptom": "Wrong copied results",
+      "cause": "A reference should have been absolute but was relative.",
+      "fix": "Add $ signs, e.g. change H1 to $H$1."
+    },
+    {
+      "symptom": "Formula shows as text",
+      "cause": "The = sign at the start is missing.",
+      "fix": "Type = first, then the formula."
+    },
+    {
+      "symptom": "Cannot save table",
+      "cause": "The table has no primary key.",
+      "fix": "Add a primary key (or let Base create one when it offers)."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "!",
+        "text": "A missing = sign is the number-one reason a formula does not work — Calc just shows your typing as text. If a whole column of copied results looks wrong, a reference probably needed $ signs to stay fixed. Database Terms Quick-Reference (LibreOffice Base)"
+      },
+      {
+        "title": "!",
+        "text": "Match the data type to the job: text for names, numbers for maths, dates for dates, Yes/No for two-value answers. Plan before you build: a data dictionary for a database, and a clear idea of your labels and formulas for a spreadsheet, save a lot of fixing later. Save early and often. Use clear file names like Fair.odb and ShopSales.ods so you can find your work again."
+      }
+    ],
+    "terms": [
+      [
+        "data",
+        "Raw facts and figures, for example a list of names or prices."
+      ],
+      [
+        "analyse",
+        "Examine something in detail so that you fully understand it."
+      ],
+      [
+        "data model",
+        "A computer representation of a real-life situation, where data is changed to see what happens."
+      ],
+      [
+        "simulation",
+        "A more complex model that can predict the outcome of a real-world system, often using graphics."
+      ],
+      [
+        "factors",
+        "The key data items represented in a data model."
+      ],
+      [
+        "spreadsheet",
+        "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc)."
+      ],
+      [
+        "database",
+        "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base)."
+      ],
+      [
+        "cell",
+        "The box where a row and a column meet; it can hold text, a number or a formula."
+      ],
+      [
+        "cell reference",
+        "The letter-and-number address of a cell, for example B2."
+      ],
+      [
+        "cell range",
+        "A group of cells named by the first and last cell, for example B2:B8."
+      ],
+      [
+        "formula",
+        "A calculation you type into a cell; every formula begins with an = sign."
+      ],
+      [
+        "function",
+        "A built-in shortcut for a common calculation, for example SUM or AVERAGE."
+      ],
+      [
+        "relative reference",
+        "A reference that changes when a formula is copied, e.g. B2."
+      ],
+      [
+        "absolute reference",
+        "A reference that stays fixed when copied, written with $ signs, e.g. $H$1."
+      ],
+      [
+        "conditional formatting",
+        "Automatically formatting a cell that meets a specific rule."
+      ],
+      [
+        "field",
+        "A single piece of information in a database, shown as a column."
+      ],
+      [
+        "record",
+        "All the information about one item, shown as a row."
+      ],
+      [
+        "data type",
+        "The kind of data a field can store, for example text, number or date."
+      ],
+      [
+        "primary key",
+        "A field whose value is unique for every record, used to identify records."
+      ],
+      [
+        "query",
+        "A tool that searches a database and returns only the data you asked for."
+      ],
+      [
+        "criteria",
+        "The conditions a query uses to choose data, for example Age > 11."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "data",
+        "meaning": "Raw facts and figures, for example a list of names or prices.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "analyse",
+        "meaning": "Examine something in detail so that you fully understand it.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "data model",
+        "meaning": "A computer representation of a real-life situation, where data is changed to see what happens.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "simulation",
+        "meaning": "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "factors",
+        "meaning": "The key data items represented in a data model.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "spreadsheet",
+        "meaning": "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "database",
+        "meaning": "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "cell",
+        "meaning": "The box where a row and a column meet; it can hold text, a number or a formula.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "cell reference",
+        "meaning": "The letter-and-number address of a cell, for example B2.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "cell range",
+        "meaning": "A group of cells named by the first and last cell, for example B2:B8.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "formula",
+        "meaning": "A calculation you type into a cell; every formula begins with an = sign.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "function",
+        "meaning": "A built-in shortcut for a common calculation, for example SUM or AVERAGE.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "relative reference",
+        "meaning": "A reference that changes when a formula is copied, e.g. B2.",
+        "example": "",
+        "letter": "R"
+      },
+      {
+        "term": "absolute reference",
+        "meaning": "A reference that stays fixed when copied, written with $ signs, e.g. $H$1.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "conditional formatting",
+        "meaning": "Automatically formatting a cell that meets a specific rule.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "field",
+        "meaning": "A single piece of information in a database, shown as a column.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "record",
+        "meaning": "All the information about one item, shown as a row.",
+        "example": "",
+        "letter": "R"
+      },
+      {
+        "term": "data type",
+        "meaning": "The kind of data a field can store, for example text, number or date.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "primary key",
+        "meaning": "A field whose value is unique for every record, used to identify records.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "query",
+        "meaning": "A tool that searches a database and returns only the data you asked for.",
+        "example": "",
+        "letter": "Q"
+      },
+      {
+        "term": "criteria",
+        "meaning": "The conditions a query uses to choose data, for example Age > 11.",
+        "example": "",
+        "letter": "C"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "######",
+        "The column is too narrow to show the number or date. Widen the column by dragging its border."
+      ],
+      [
+        "#NAME?",
+        "A function name is misspelled or a name is not recognised. Check the spelling, e.g. AVERAGE not AVARAGE."
+      ],
+      [
+        "#DIV/0!",
+        "The formula is dividing by zero (or an empty cell). Make sure the divider cell has a non-zero number."
+      ],
+      [
+        "#REF!",
+        "A cell the formula pointed to has been deleted. Re-enter the formula with a valid reference."
+      ],
+      [
+        "#VALUE!",
+        "Text is being used where a number is expected. Check the cells hold numbers, not words."
+      ],
+      [
+        "Wrong copied results",
+        "A reference should have been absolute but was relative. Add $ signs, e.g. change H1 to $H$1."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "A data model is best described as: (a) a photograph of a computer; (b) a computer representation of a real-life situation; (c) a type of keyboard; (d) a printed book.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Which application is a spreadsheet? (a) LibreOffice Base; (b) LibreOffice Writer; (c) LibreOffice Calc; (d) LibreOffice Impress.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Every formula in LibreOffice Calc must start with: (a) a + sign; (b) an = sign; (c) a letter; (d) a full stop.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "The cell where column C meets row 4 is called: (a) 4C; (b) C4; (c) CR4; (d) R4C3.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Which is a cell range? (a) B2+B8; (b) B2:B8; (c) B2;B8; (d) B2-B8.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Which function finds the mean of a set of numbers? (a) SUM; (b) COUNT; (c) AVERAGE; (d) MAX.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "An absolute cell reference looks like: (a) H1; (b) $H$1; (c) H:1; (d) (H1).",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "In a database, a single row of data about one item is a: (a) field; (b) record; (c) query; (d) form.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "In a database, a single column is a: (a) field; (b) record; (c) key; (d) cell.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "A primary key must be: (a) a number only; (b) the first column; (c) unique for every record; (d) always text.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo03",
+      "difficulty": "Round 3",
+      "prompt": "Which data type stores only Yes/No or True/False values? (a) Text; (b) Integer; (c) Date; (d) Yes/No [BOOLEAN].",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo04",
+      "difficulty": "Round 3",
+      "prompt": "A query searches a database using: (a) charts; (b) criteria; (c) fonts; (d) fill handles.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "These questions ask you to design, not just recall. Sketch your answers on paper.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — data, analyse, data model — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "Design a table. A school library wants a database of its books. List at least five sensible fields, choose a LibreOffice Base data type for each, and mark which field should be the primary key.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — data, analyse, data model — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Write a query. Using your library table, write the field and criterion you would use to find every book published after the year 2017.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — data, analyse, data model — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "Write a query. Write the field and criterion to find every book with fewer than 3 copies available.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — data, analyse, data model — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Travel",
+      "prompt": "Design a form. Sketch a user-friendly data-capture form to register a new library member. Label at least four good design features on your sketch.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — data, analyse, data model — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "context": "Health",
+      "prompt": "Write a conditional-formatting rule. In a spreadsheet of stall takings, describe the rule that would turn a cell green when takings reach a target of 500000 shillings.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — data, analyse, data model — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Answer in one or two sentences.",
+      "keyIdeas": [
+        "data",
+        "analyse",
+        "data model"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "In your own words, what is a data model?",
+      "keyIdeas": [
+        "analyse",
+        "data model",
+        "simulation"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Give two real-life industries that use data models or simulations, and say what each one models.",
+      "keyIdeas": [
+        "data model",
+        "simulation",
+        "factors"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "What is the difference between a field and a record in a database?",
+      "keyIdeas": [
+        "simulation",
+        "factors",
+        "spreadsheet"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Why does a database table need a primary key?",
+      "keyIdeas": [
+        "factors",
+        "spreadsheet",
+        "database"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Explain the difference between a relative reference and an absolute reference.",
+      "keyIdeas": [
+        "spreadsheet",
+        "database",
+        "cell"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "project": {
+    "title": "Unit 4 Project: The Power of Data: Using Data Modelling",
+    "brief": "Bring together everything from The Power of Data: Using Data Modelling into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your the power of data: using data modelling project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "My project shows that I understand models and simulations.",
+      "My project shows that I understand where data models are used across industries.",
+      "My project shows that I understand spreadsheets: modelling with libreoffice calc.",
+      "My project shows that I understand cells and cell references.",
+      "My project shows that I understand the input line and formulas."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “data” mean in computing?",
+        "options": [
+          "Raw facts and figures, for example a list of names or prices.",
+          "Examine something in detail so that you fully understand it.",
+          "A computer representation of a real-life situation, where data is changed to see what happens.",
+          "A more complex model that can predict the outcome of a real-world system, often using graphics."
+        ],
+        "answer": "Raw facts and figures, for example a list of names or prices.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Data means raw facts and figures, for example a list of names or prices."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “analyse” mean in computing?",
+        "options": [
+          "Examine something in detail so that you fully understand it.",
+          "A computer representation of a real-life situation, where data is changed to see what happens.",
+          "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+          "The key data items represented in a data model."
+        ],
+        "answer": "Examine something in detail so that you fully understand it.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Analyse means examine something in detail so that you fully understand it."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “data model” mean in computing?",
+        "options": [
+          "A computer representation of a real-life situation, where data is changed to see what happens.",
+          "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+          "The key data items represented in a data model.",
+          "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc)."
+        ],
+        "answer": "A computer representation of a real-life situation, where data is changed to see what happens.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Data model means a computer representation of a real-life situation, where data is changed to see what happens."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “simulation” mean in computing?",
+        "options": [
+          "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+          "The key data items represented in a data model.",
+          "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+          "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base)."
+        ],
+        "answer": "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Simulation means a more complex model that can predict the outcome of a real-world system, often using graphics."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “factors” mean in computing?",
+        "options": [
+          "The key data items represented in a data model.",
+          "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+          "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
+          "The box where a row and a column meet; it can hold text, a number or a formula."
+        ],
+        "answer": "The key data items represented in a data model.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Factors means the key data items represented in a data model."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “spreadsheet” mean in computing?",
+        "options": [
+          "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+          "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
+          "The box where a row and a column meet; it can hold text, a number or a formula.",
+          "The letter-and-number address of a cell, for example B2."
+        ],
+        "answer": "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Spreadsheet means an application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc)."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).?",
+        "options": [
+          "database",
+          "cell",
+          "cell reference",
+          "cell range"
+        ],
+        "answer": "database",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Database means an application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base)."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: The box where a row and a column meet; it can hold text, a number or a formula.?",
+        "options": [
+          "cell",
+          "cell reference",
+          "cell range",
+          "formula"
+        ],
+        "answer": "cell",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Cell means the box where a row and a column meet; it can hold text, a number or a formula."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: The letter-and-number address of a cell, for example B2.?",
+        "options": [
+          "cell reference",
+          "cell range",
+          "formula",
+          "function"
+        ],
+        "answer": "cell reference",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Cell reference means the letter-and-number address of a cell, for example B2."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A group of cells named by the first and last cell, for example B2:B8.?",
+        "options": [
+          "cell range",
+          "formula",
+          "function",
+          "relative reference"
+        ],
+        "answer": "cell range",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Cell range means a group of cells named by the first and last cell, for example B2:B8."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A calculation you type into a cell; every formula begins with an = sign.?",
+        "options": [
+          "formula",
+          "function",
+          "relative reference",
+          "absolute reference"
+        ],
+        "answer": "formula",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Formula means a calculation you type into a cell; every formula begins with an = sign."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A built-in shortcut for a common calculation, for example SUM or AVERAGE.?",
+        "options": [
+          "function",
+          "relative reference",
+          "absolute reference",
+          "conditional formatting"
+        ],
+        "answer": "function",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Function means a built-in shortcut for a common calculation, for example SUM or AVERAGE."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u4-game-1",
+        "icon": "?",
+        "skill": "data",
+        "title": "Quick Match: data",
+        "description": "Practise data through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Raw facts and figures, for example a list of names or prices.",
+              "Examine something in detail so that you fully understand it.",
+              "A computer representation of a real-life situation, where data is changed to see what happens.",
+              "A more complex model that can predict the outcome of a real-world system, often using graphics."
+            ],
+            "answer": "Raw facts and figures, for example a list of names or prices.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Data means raw facts and figures, for example a list of names or prices."
+          },
+          {
+            "prompt": "What does “simulation” mean in computing?",
+            "choices": [
+              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+              "The key data items represented in a data model.",
+              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base)."
+            ],
+            "answer": "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Simulation means a more complex model that can predict the outcome of a real-world system, often using graphics."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).?",
+            "choices": [
+              "database",
+              "cell",
+              "cell reference",
+              "cell range"
+            ],
+            "answer": "database",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Database means an application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base)."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A group of cells named by the first and last cell, for example B2:B8.?",
+            "choices": [
+              "cell range",
+              "formula",
+              "function",
+              "relative reference"
+            ],
+            "answer": "cell range",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Cell range means a group of cells named by the first and last cell, for example B2:B8."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-2",
+        "icon": "★",
+        "skill": "analyse",
+        "title": "Concept Quest: analyse",
+        "description": "Practise analyse through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “analyse” mean in computing?",
+            "choices": [
+              "Examine something in detail so that you fully understand it.",
+              "A computer representation of a real-life situation, where data is changed to see what happens.",
+              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+              "The key data items represented in a data model."
+            ],
+            "answer": "Examine something in detail so that you fully understand it.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Analyse means examine something in detail so that you fully understand it."
+          },
+          {
+            "prompt": "What does “factors” mean in computing?",
+            "choices": [
+              "The key data items represented in a data model.",
+              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
+              "The box where a row and a column meet; it can hold text, a number or a formula."
+            ],
+            "answer": "The key data items represented in a data model.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Factors means the key data items represented in a data model."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The box where a row and a column meet; it can hold text, a number or a formula.?",
+            "choices": [
+              "cell",
+              "cell reference",
+              "cell range",
+              "formula"
+            ],
+            "answer": "cell",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Cell means the box where a row and a column meet; it can hold text, a number or a formula."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A calculation you type into a cell; every formula begins with an = sign.?",
+            "choices": [
+              "formula",
+              "function",
+              "relative reference",
+              "absolute reference"
+            ],
+            "answer": "formula",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Formula means a calculation you type into a cell; every formula begins with an = sign."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-3",
+        "icon": "◫",
+        "skill": "data model",
+        "title": "Debug Detective: data model",
+        "description": "Practise data model through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “data model” mean in computing?",
+            "choices": [
+              "A computer representation of a real-life situation, where data is changed to see what happens.",
+              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+              "The key data items represented in a data model.",
+              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc)."
+            ],
+            "answer": "A computer representation of a real-life situation, where data is changed to see what happens.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Data model means a computer representation of a real-life situation, where data is changed to see what happens."
+          },
+          {
+            "prompt": "What does “spreadsheet” mean in computing?",
+            "choices": [
+              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
+              "The box where a row and a column meet; it can hold text, a number or a formula.",
+              "The letter-and-number address of a cell, for example B2."
+            ],
+            "answer": "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Spreadsheet means an application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc)."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The letter-and-number address of a cell, for example B2.?",
+            "choices": [
+              "cell reference",
+              "cell range",
+              "formula",
+              "function"
+            ],
+            "answer": "cell reference",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Cell reference means the letter-and-number address of a cell, for example B2."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A built-in shortcut for a common calculation, for example SUM or AVERAGE.?",
+            "choices": [
+              "function",
+              "relative reference",
+              "absolute reference",
+              "conditional formatting"
+            ],
+            "answer": "function",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Function means a built-in shortcut for a common calculation, for example SUM or AVERAGE."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-4",
+        "icon": "→",
+        "skill": "simulation",
+        "title": "Algorithm Runner: simulation",
+        "description": "Practise simulation through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “simulation” mean in computing?",
+            "choices": [
+              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+              "The key data items represented in a data model.",
+              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base)."
+            ],
+            "answer": "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Simulation means a more complex model that can predict the outcome of a real-world system, often using graphics."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).?",
+            "choices": [
+              "database",
+              "cell",
+              "cell reference",
+              "cell range"
+            ],
+            "answer": "database",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Database means an application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base)."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A group of cells named by the first and last cell, for example B2:B8.?",
+            "choices": [
+              "cell range",
+              "formula",
+              "function",
+              "relative reference"
+            ],
+            "answer": "cell range",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Cell range means a group of cells named by the first and last cell, for example B2:B8."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Raw facts and figures, for example a list of names or prices.",
+              "Examine something in detail so that you fully understand it.",
+              "A computer representation of a real-life situation, where data is changed to see what happens.",
+              "A more complex model that can predict the outcome of a real-world system, often using graphics."
+            ],
+            "answer": "Raw facts and figures, for example a list of names or prices.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Data means raw facts and figures, for example a list of names or prices."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-5",
+        "icon": "Σ",
+        "skill": "factors",
+        "title": "Vocabulary Vault: factors",
+        "description": "Practise factors through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “factors” mean in computing?",
+            "choices": [
+              "The key data items represented in a data model.",
+              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
+              "The box where a row and a column meet; it can hold text, a number or a formula."
+            ],
+            "answer": "The key data items represented in a data model.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Factors means the key data items represented in a data model."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The box where a row and a column meet; it can hold text, a number or a formula.?",
+            "choices": [
+              "cell",
+              "cell reference",
+              "cell range",
+              "formula"
+            ],
+            "answer": "cell",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Cell means the box where a row and a column meet; it can hold text, a number or a formula."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A calculation you type into a cell; every formula begins with an = sign.?",
+            "choices": [
+              "formula",
+              "function",
+              "relative reference",
+              "absolute reference"
+            ],
+            "answer": "formula",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Formula means a calculation you type into a cell; every formula begins with an = sign."
+          },
+          {
+            "prompt": "What does “analyse” mean in computing?",
+            "choices": [
+              "Examine something in detail so that you fully understand it.",
+              "A computer representation of a real-life situation, where data is changed to see what happens.",
+              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+              "The key data items represented in a data model."
+            ],
+            "answer": "Examine something in detail so that you fully understand it.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Analyse means examine something in detail so that you fully understand it."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-6",
+        "icon": "◇",
+        "skill": "spreadsheet",
+        "title": "Challenge Cards: spreadsheet",
+        "description": "Practise spreadsheet through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “spreadsheet” mean in computing?",
+            "choices": [
+              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
+              "The box where a row and a column meet; it can hold text, a number or a formula.",
+              "The letter-and-number address of a cell, for example B2."
+            ],
+            "answer": "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Spreadsheet means an application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc)."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The letter-and-number address of a cell, for example B2.?",
+            "choices": [
+              "cell reference",
+              "cell range",
+              "formula",
+              "function"
+            ],
+            "answer": "cell reference",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Cell reference means the letter-and-number address of a cell, for example B2."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A built-in shortcut for a common calculation, for example SUM or AVERAGE.?",
+            "choices": [
+              "function",
+              "relative reference",
+              "absolute reference",
+              "conditional formatting"
+            ],
+            "answer": "function",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Function means a built-in shortcut for a common calculation, for example SUM or AVERAGE."
+          },
+          {
+            "prompt": "What does “data model” mean in computing?",
+            "choices": [
+              "A computer representation of a real-life situation, where data is changed to see what happens.",
+              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+              "The key data items represented in a data model.",
+              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc)."
+            ],
+            "answer": "A computer representation of a real-life situation, where data is changed to see what happens.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Data model means a computer representation of a real-life situation, where data is changed to see what happens."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-7",
+        "icon": "⚡",
+        "skill": "database",
+        "title": "Think Fast: database",
+        "description": "Practise database through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).?",
+            "choices": [
+              "database",
+              "cell",
+              "cell reference",
+              "cell range"
+            ],
+            "answer": "database",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Database means an application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base)."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A group of cells named by the first and last cell, for example B2:B8.?",
+            "choices": [
+              "cell range",
+              "formula",
+              "function",
+              "relative reference"
+            ],
+            "answer": "cell range",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Cell range means a group of cells named by the first and last cell, for example B2:B8."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Raw facts and figures, for example a list of names or prices.",
+              "Examine something in detail so that you fully understand it.",
+              "A computer representation of a real-life situation, where data is changed to see what happens.",
+              "A more complex model that can predict the outcome of a real-world system, often using graphics."
+            ],
+            "answer": "Raw facts and figures, for example a list of names or prices.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Data means raw facts and figures, for example a list of names or prices."
+          },
+          {
+            "prompt": "What does “simulation” mean in computing?",
+            "choices": [
+              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+              "The key data items represented in a data model.",
+              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base)."
+            ],
+            "answer": "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Simulation means a more complex model that can predict the outcome of a real-world system, often using graphics."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-8",
+        "icon": "☁",
+        "skill": "cell",
+        "title": "Explain It: cell",
+        "description": "Practise cell through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The box where a row and a column meet; it can hold text, a number or a formula.?",
+            "choices": [
+              "cell",
+              "cell reference",
+              "cell range",
+              "formula"
+            ],
+            "answer": "cell",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Cell means the box where a row and a column meet; it can hold text, a number or a formula."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A calculation you type into a cell; every formula begins with an = sign.?",
+            "choices": [
+              "formula",
+              "function",
+              "relative reference",
+              "absolute reference"
+            ],
+            "answer": "formula",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Formula means a calculation you type into a cell; every formula begins with an = sign."
+          },
+          {
+            "prompt": "What does “analyse” mean in computing?",
+            "choices": [
+              "Examine something in detail so that you fully understand it.",
+              "A computer representation of a real-life situation, where data is changed to see what happens.",
+              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+              "The key data items represented in a data model."
+            ],
+            "answer": "Examine something in detail so that you fully understand it.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Analyse means examine something in detail so that you fully understand it."
+          },
+          {
+            "prompt": "What does “factors” mean in computing?",
+            "choices": [
+              "The key data items represented in a data model.",
+              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
+              "The box where a row and a column meet; it can hold text, a number or a formula."
+            ],
+            "answer": "The key data items represented in a data model.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Factors means the key data items represented in a data model."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-9",
+        "icon": "⌂",
+        "skill": "cell reference",
+        "title": "Real-Life Round: cell reference",
+        "description": "Practise cell reference through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The letter-and-number address of a cell, for example B2.?",
+            "choices": [
+              "cell reference",
+              "cell range",
+              "formula",
+              "function"
+            ],
+            "answer": "cell reference",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Cell reference means the letter-and-number address of a cell, for example B2."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A built-in shortcut for a common calculation, for example SUM or AVERAGE.?",
+            "choices": [
+              "function",
+              "relative reference",
+              "absolute reference",
+              "conditional formatting"
+            ],
+            "answer": "function",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Function means a built-in shortcut for a common calculation, for example SUM or AVERAGE."
+          },
+          {
+            "prompt": "What does “data model” mean in computing?",
+            "choices": [
+              "A computer representation of a real-life situation, where data is changed to see what happens.",
+              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+              "The key data items represented in a data model.",
+              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc)."
+            ],
+            "answer": "A computer representation of a real-life situation, where data is changed to see what happens.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Data model means a computer representation of a real-life situation, where data is changed to see what happens."
+          },
+          {
+            "prompt": "What does “spreadsheet” mean in computing?",
+            "choices": [
+              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
+              "The box where a row and a column meet; it can hold text, a number or a formula.",
+              "The letter-and-number address of a cell, for example B2."
+            ],
+            "answer": "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Spreadsheet means an application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc)."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-10",
+        "icon": "!",
+        "skill": "cell range",
+        "title": "Spot the Bug: cell range",
+        "description": "Practise cell range through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A group of cells named by the first and last cell, for example B2:B8.?",
+            "choices": [
+              "cell range",
+              "formula",
+              "function",
+              "relative reference"
+            ],
+            "answer": "cell range",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Cell range means a group of cells named by the first and last cell, for example B2:B8."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Raw facts and figures, for example a list of names or prices.",
+              "Examine something in detail so that you fully understand it.",
+              "A computer representation of a real-life situation, where data is changed to see what happens.",
+              "A more complex model that can predict the outcome of a real-world system, often using graphics."
+            ],
+            "answer": "Raw facts and figures, for example a list of names or prices.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Data means raw facts and figures, for example a list of names or prices."
+          },
+          {
+            "prompt": "What does “simulation” mean in computing?",
+            "choices": [
+              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+              "The key data items represented in a data model.",
+              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base)."
+            ],
+            "answer": "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Simulation means a more complex model that can predict the outcome of a real-world system, often using graphics."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).?",
+            "choices": [
+              "database",
+              "cell",
+              "cell reference",
+              "cell range"
+            ],
+            "answer": "database",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Database means an application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base)."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-11",
+        "icon": "≡",
+        "skill": "formula",
+        "title": "Mastery Mix: formula",
+        "description": "Practise formula through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A calculation you type into a cell; every formula begins with an = sign.?",
+            "choices": [
+              "formula",
+              "function",
+              "relative reference",
+              "absolute reference"
+            ],
+            "answer": "formula",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Formula means a calculation you type into a cell; every formula begins with an = sign."
+          },
+          {
+            "prompt": "What does “analyse” mean in computing?",
+            "choices": [
+              "Examine something in detail so that you fully understand it.",
+              "A computer representation of a real-life situation, where data is changed to see what happens.",
+              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+              "The key data items represented in a data model."
+            ],
+            "answer": "Examine something in detail so that you fully understand it.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Analyse means examine something in detail so that you fully understand it."
+          },
+          {
+            "prompt": "What does “factors” mean in computing?",
+            "choices": [
+              "The key data items represented in a data model.",
+              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
+              "The box where a row and a column meet; it can hold text, a number or a formula."
+            ],
+            "answer": "The key data items represented in a data model.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Factors means the key data items represented in a data model."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The box where a row and a column meet; it can hold text, a number or a formula.?",
+            "choices": [
+              "cell",
+              "cell reference",
+              "cell range",
+              "formula"
+            ],
+            "answer": "cell",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Cell means the box where a row and a column meet; it can hold text, a number or a formula."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-12",
+        "icon": "T",
+        "skill": "function",
+        "title": "Unit Champion: function",
+        "description": "Practise function through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A built-in shortcut for a common calculation, for example SUM or AVERAGE.?",
+            "choices": [
+              "function",
+              "relative reference",
+              "absolute reference",
+              "conditional formatting"
+            ],
+            "answer": "function",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Function means a built-in shortcut for a common calculation, for example SUM or AVERAGE."
+          },
+          {
+            "prompt": "What does “data model” mean in computing?",
+            "choices": [
+              "A computer representation of a real-life situation, where data is changed to see what happens.",
+              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
+              "The key data items represented in a data model.",
+              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc)."
+            ],
+            "answer": "A computer representation of a real-life situation, where data is changed to see what happens.",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Data model means a computer representation of a real-life situation, where data is changed to see what happens."
+          },
+          {
+            "prompt": "What does “spreadsheet” mean in computing?",
+            "choices": [
+              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+              "An application used to organise data so it can be stored, processed and accessed electronically (LibreOffice Base).",
+              "The box where a row and a column meet; it can hold text, a number or a formula.",
+              "The letter-and-number address of a cell, for example B2."
+            ],
+            "answer": "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc).",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Spreadsheet means an application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc)."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The letter-and-number address of a cell, for example B2.?",
+            "choices": [
+              "cell reference",
+              "cell range",
+              "formula",
+              "function"
+            ],
+            "answer": "cell reference",
+            "clue": "Use the Unit 4 Computing Words reference.",
+            "explanation": "Cell reference means the letter-and-number address of a cell, for example B2."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can explain what is meant by a data model and give examples of where models and simulations are used in real life.",
+    "I can describe how spreadsheet and database applications can be used to model real-life scenarios.",
+    "I can evaluate the layout of a data-capture form to decide if it is effective and easy to use.",
+    "I can write rules for applying conditional formatting in a spreadsheet (and describe how it is used in a database) to highlight important data.",
+    "I can explain why a primary key is needed in a database table, and identify a suitable field to use as the primary key.",
+    "I can amend the structure of a database table to include a primary key and correct data types.",
+    "I can use criteria such as >, < and = to search a database with a query.",
+    "I can describe how data is used to model scenarios in a range of industries such as medicine, aviation, science, weather forecasting and business."
+  ]
+}

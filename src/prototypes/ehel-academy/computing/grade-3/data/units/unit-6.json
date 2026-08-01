@@ -1,0 +1,1838 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.523Z",
+  "stage": {
+    "id": "s03",
+    "label": "Stage 3"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t02",
+    "label": "Term 2"
+  },
+  "unit": {
+    "unitId": "comp-g03-u06",
+    "unitNo": 6,
+    "unitTitle": "Be a Storyteller",
+    "unitOverview": "The unit builds three big skills. Second, you learn to build programs that have more than one character, where some sprites have code and some are static objects (sprites that just sit there with no code, like a tree in the background). Third, you learn to make changes to your code to get the result they want — making a character talk for longer, changing the scene, or fixing a story whose steps are out of order.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 3
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-3-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 3",
+    "sourceArchive": "Year 3-20260801T055744Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 3/Unit 6/Year 3 - Unit 6 Teacher Guide.docx",
+      "Year 3/Unit 6/Year 3 - Unit 6 Activity Sheet.docx",
+      "Year 3/Unit 6/Year 3 - Unit 6 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 348,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 3 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Use logical thinking to put the parts of a story in an order that makes sense.",
+    "Plan a simple story on a storyboard — a beginning, a middle and an end.",
+    "Choose sprites (characters) and a backdrop (the setting) in Scratch.",
+    "Build a program using when green flag clicked, say ( ) for ( ) seconds and switch backdrop to ( ).",
+    "Make two characters take turns to talk by using wait ( ) seconds.",
+    "Include a static object — a sprite that has no code — in a program.",
+    "Make changes to code to get the right result (talk for longer, change the scene, change the timing).",
+    "Find and fix a story whose steps are out of order."
+  ],
+  "toolkit": [
+    {
+      "name": "Scratch",
+      "url": "scratch.mit.edu",
+      "steps": [
+        "Go to scratch.mit.edu and click Create.",
+        "Drag blocks from the palette on the left into the code area.",
+        "Make variables in the orange Variables section.",
+        "Click the green flag to run and the red circle to stop."
+      ],
+      "note": "Runs in a web browser. Free, with nothing to download."
+    }
+  ],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-logical-thinking-putting-a-story-in-order",
+      "title": "Logical thinking: putting a story in order",
+      "explanation": "Every good story has an order. It has a beginning, a middle and an end, and the parts must go in an order that makes sense. Working out that order is called logical thinking. If the parts are jumbled, the story does not make sense.\n\nListen to this story. 'They became good friends. A new girl came to Ehel Academy. Sami said hello to her.' That is all muddled up!",
+      "example": "It does not make sense. Let us use our clever thinking — logical thinking — to put it in the right order.",
+      "checkYourself": "you cannot be friends before you have met. Can you arrange the parts so the story makes sense?"
+    },
+    {
+      "id": "concept-2-plan-your-story-the-storyboard",
+      "title": "Plan your story: the storyboard",
+      "explanation": "Before we build a story on the computer, we plan it. A storyboard is a plan drawn in boxes, one box for each scene. It shows what we want to make before we make it.\n\nThe people who make cartoons and films do not just start drawing. First you draw a storyboard — little boxes that show each part of the story. Today we are going to plan our story the same way.",
+      "example": "Do it yourself: plan your story: the storyboard. Work through it slowly, then check what you did against the explanation above.",
+      "checkYourself": "Does the storyboard have three scenes with a clear beginning, middle and end? The drawings do not need to be neat — quick stick figures are perfect. For each scene, can you name a character and a setting?"
+    },
+    {
+      "id": "concept-3-meet-scratch-sprites-backdrops-and-the-say-block",
+      "title": "Meet Scratch: sprites, backdrops and the say block",
+      "explanation": "Now we open Scratch and meet the tools. A sprite is a character. A backdrop is the picture behind the sprites. The when green flag clicked block starts our story. The say ( ) for ( ) seconds block makes a sprite show a speech bubble. And a static object is simply a sprite that has no code — it just stands there.\n\nour instructions. where we join them up. where our story happens. Open Scratch at scratch.mit.edu and click Create on the projector. Show the sprite list at the bottom right and the Choose a Backdrop button next to it.",
+      "example": "Do it yourself: meet Scratch: sprites, backdrops and the say block. Work through it slowly, then check what you did against the explanation above.",
+      "checkYourself": "Can you drag and join blocks and run the program with the green flag? Can you point to the tree and say it is a static object because it has no code? Can you add a sprite and choose a backdrop?"
+    },
+    {
+      "id": "concept-4-two-characters-talking-taking-turns-and-fixing-the-order",
+      "title": "Two characters talking: taking turns and fixing the order",
+      "explanation": "A conversation is two characters taking turns to talk. In Scratch, each sprite has its own stack of blocks, and clicking the green flag starts them all at the same time. So if we are not careful, both characters talk at once. To make them take turns, we add a wait ( ) seconds block so one character waits quietly while the other one speaks.\n\nAct it out first with no computer. See how they took turns?",
+      "example": "They did not talk over each other. Our sprites need to take turns too, so one of them has to wait.",
+      "checkYourself": "Can you keep the when green flag clicked block at the top? Can you reorder a jumbled conversation so it makes sense? Does you use a wait block so the characters do not talk over each other?"
+    },
+    {
+      "id": "concept-5-making-changes-and-switching-scenes",
+      "title": "Making changes and switching scenes",
+      "explanation": "We can change our code to get the result we want. If we change the number in say ( ) for (2) seconds to (4), the character talks for twice as long. If we change the wait times, the conversation goes faster or slower. And if we add a switch backdrop to ( ) block, our story moves to a new scene. Small changes make a big difference.\n\nLet us make Maya talk for longer. Then add a second scene. First add a second backdrop (for example Room 1) using Choose a Backdrop, then add a switch backdrop to ( ) block so the story moves indoors Take yesterday's greeting.",
+      "example": "Find one real example of making changes and switching scenes around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you add a second backdrop and a switch backdrop to ( ) block? Can you include a static object (a sprite with no code)? Does you change a number and then run the program to check the result?"
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "Session 3 — Meet Scratch: sprites, backdrops and the say block — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 3 — Meet Scratch: sprites, backdrops and the say block.",
+      "lines": [
+        "when green flag clicked",
+        "say (Hello!) for (2) seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-2",
+      "title": "Session 4 — Two characters talking: taking turns and fixing the order — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 4 — Two characters talking: taking turns and fixing the order.",
+      "lines": [
+        "Maya (the Abby sprite):",
+        "when green flag clicked",
+        "say (Hello!) for (2) seconds",
+        "Sami (the Devin sprite):",
+        "when green flag clicked",
+        "wait (2) seconds",
+        "say (Hi!) for (2) seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-3",
+      "title": "Session 5 — Making changes and switching scenes — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 5 — Making changes and switching scenes.",
+      "lines": [
+        "when green flag clicked",
+        "switch backdrop to (Playground)",
+        "say (Hello!) for (4) seconds",
+        "wait (2) seconds",
+        "switch backdrop to (Room 1)",
+        "say (Come, let us share some dates!) for (2) seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-4",
+      "title": "Answer Key — Mini-Project & Practice — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Answer Key — Mini-Project & Practice.",
+      "lines": [
+        "Maya (the Abby sprite):",
+        "when green flag clicked",
+        "switch backdrop to (Playground)",
+        "say (Hello!) for (2) seconds",
+        "wait (2) seconds",
+        "switch backdrop to (Room 1)",
+        "say (Come, let us share some dates!) for (2) seconds",
+        "Sami (the Devin sprite):",
+        "when green flag clicked",
+        "wait (2) seconds",
+        "say (Hi!) for (2) seconds",
+        "wait (2) seconds",
+        "say (Thank you!) for (2) seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Put the Story in Order",
+      "context": "work through the steps below and see what happens. This is logical thinking: putting a story in order in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "This is a story called The New Friend. The parts are all mixed up! Use your clever logical thinking. Write 1, 2, 3, 4, 5 in the boxes to put the story in the right order.",
+      "answer": "[ ] They played a game together. [ ] A new girl, Maya, started at Ehel Academy. [ ] Now Maya and Sami are good friends. [ ] She stood alone in the playground. [ ] Sami saw her and said, “Hello!”",
+      "modelType": "model-1",
+      "hint": "Start here: [ ] They played a game together.",
+      "explanation": "Logical thinking: putting a story in order: Every good story has an order. It has a beginning, a middle and an end, and the parts must go in an order that makes sense. Working out that order is called logical thinking. If the parts are jumbled, the story does not make sense."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Match the Words",
+      "context": "work through the steps below and see what happens. This is plan your story: the storyboard in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Draw a line from each word to what it means.",
+      "answer": "Match: sprite → a sprite that has no code — it just stays still Match: backdrop → a character or object in Scratch Match: static object → thinking carefully to put things in a good order Match: logical thinking → the picture behind the sprites — the setting",
+      "modelType": "model-2",
+      "hint": "Start here: Match: sprite → a sprite that has no code — it just stays still",
+      "explanation": "Plan your story: the storyboard: Before we build a story on the computer, we plan it. A storyboard is a plan drawn in boxes, one box for each scene. It shows what we want to make before we make it."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Plan Your Story: Storyboard",
+      "context": "work through the steps below and see what happens. This is meet scratch: sprites, backdrops and the say block in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "A storyboard is a plan of your story, drawn in boxes. Under each box, write who is in it and where it happens. Draw your story in the three boxes below: the beginning, the middle and the end.",
+      "answer": "Scene 1 — The Beginning Who: ________________________ Where: ________________________ Scene 2 — The Middle Who: ________________________ Where: ________________________ Scene 3 — The End",
+      "modelType": "model-3",
+      "hint": "Start here: Scene 1 — The Beginning",
+      "explanation": "Meet Scratch: sprites, backdrops and the say block: Now we open Scratch and meet the tools. A sprite is a character. A backdrop is the picture behind the sprites. The when green flag clicked block starts our story. The say ( ) for ( ) seconds block makes a sprite show a speech bubble. And a static object is simply a sprite that has no code — it just…"
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Choose Your Characters and Background",
+      "context": "work through the steps below and see what happens. This is two characters talking: taking turns and fixing the order in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Now choose what you will use in Scratch. Write your choices in the blanks. (Some good examples are written to help you.).",
+      "answer": "My first character (sprite): ____________________ (for example, Abby) My second character (sprite): ____________________ (for example, Devin) A static object (a sprite with no code): ____________________ (for example, Tree1) My first backdrop (scene 1): ____________________ (for example, Playground) My second backdrop (scene 2): ____________________ (for example, Room 1)",
+      "modelType": "model-4",
+      "hint": "Start here: My first character (sprite): ____________________ (for example, Abby)",
+      "explanation": "Two characters talking: taking turns and fixing the order: A conversation is two characters taking turns to talk. In Scratch, each sprite has its own stack of blocks, and clicking the green flag starts them all at the same time. So if we are not careful, both characters talk at once. To make them take turns, we add a wait ( ) seconds block so one character…"
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Fix the Story That Is Out of Order",
+      "context": "work through the steps below and see what happens. This is making changes and switching scenes in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Maya and Sami are talking, but the lines are mixed up! Maya should greet first. Write 1, 2, 3, 4 in the boxes to put the conversation in the right order.",
+      "answer": "Yes please. Thank you! Would you like a date?",
+      "modelType": "model-5",
+      "hint": "Start here: Yes please. Thank you!",
+      "explanation": "Making changes and switching scenes: We can change our code to get the result we want. If we change the number in say ( ) for (2) seconds to (4), the character talks for twice as long. If we change the wait times, the conversation goes faster or slower. And if we add a switch backdrop to ( ) block, our story moves to a new scene.…"
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Try it in Scratch!",
+      "context": "work through the steps below and see what happens. This is logical thinking: putting a story in order in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Now make a character tell a little story.",
+      "answer": "Go to scratch.mit.edu and click Create. pick a second backdrop, Room 1. Click Choose a Backdrop (bottom right) and pick Playground. Click the Add Sprite button and choose a person, like Abby. Drag these blocks and join them together when green flag clicked",
+      "modelType": "model-6",
+      "hint": "Start here: Go to scratch.mit.edu and click Create.",
+      "explanation": "Logical thinking: putting a story in order: Every good story has an order. It has a beginning, a middle and an end, and the parts must go in an order that makes sense. Working out that order is called logical thinking. If the parts are jumbled, the story does not make sense."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Logical thinking: putting a story in order",
+      "modelType": "concept-model-1",
+      "purpose": "Every good story has an order. It has a beginning, a middle and an end, and the parts must go in an order that makes sense. Working out that order is called logical thinking. If the parts are jumbled, the story does not…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Plan your story: the storyboard",
+      "modelType": "concept-model-2",
+      "purpose": "Before we build a story on the computer, we plan it. A storyboard is a plan drawn in boxes, one box for each scene. It shows what we want to make before we make it.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Meet Scratch: sprites, backdrops and the say block",
+      "modelType": "concept-model-3",
+      "purpose": "Now we open Scratch and meet the tools. A sprite is a character. A backdrop is the picture behind the sprites. The when green flag clicked block starts our story. The say ( ) for ( ) seconds block makes a sprite show a…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Two characters talking: taking turns and fixing the order",
+      "modelType": "concept-model-4",
+      "purpose": "A conversation is two characters taking turns to talk. In Scratch, each sprite has its own stack of blocks, and clicking the green flag starts them all at the same time. So if we are not careful, both characters talk at…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Making changes and switching scenes",
+      "modelType": "concept-model-5",
+      "purpose": "We can change our code to get the result we want. If we change the number in say ( ) for (2) seconds to (4), the character talks for twice as long. If we change the wait times, the conversation goes faster or slower.…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with logical thinking: putting a story in order",
+      "example": "It does not make sense. Let us use our clever thinking — logical thinking — to put it in the right order.",
+      "steps": [
+        "Read the concept card for logical thinking: putting a story in order and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with plan your story: the storyboard",
+      "example": "Do it yourself: plan your story: the storyboard. Work through it slowly, then check what you did against the explanation above.",
+      "steps": [
+        "Read the concept card for plan your story: the storyboard and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with meet scratch: sprites, backdrops and the say block",
+      "example": "Do it yourself: meet Scratch: sprites, backdrops and the say block. Work through it slowly, then check what you did against the explanation above.",
+      "steps": [
+        "Read the concept card for meet scratch: sprites, backdrops and the say block and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with two characters talking: taking turns and fixing the order",
+      "example": "They did not talk over each other. Our sprites need to take turns too, so one of them has to wait.",
+      "steps": [
+        "Read the concept card for two characters talking: taking turns and fixing the order and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with making changes and switching scenes",
+      "example": "Find one real example of making changes and switching scenes around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for making changes and switching scenes and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Logical thinking: putting a story in order",
+      "prompt": "What is a static object in Scratch?",
+      "solution": "See the code in Steps 2 and 3."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Plan your story: the storyboard",
+      "prompt": "This conversation is out of order. Write 1, 2, 3 to fix it. (Maya greets first!)",
+      "solution": "Order is: (1) Maya — \"Hello!\"; (2) Sami — \"Hi!\"; (3) Maya — \"Let us go to class.\". So the boxes read: 2, 3, 1."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Meet Scratch: sprites, backdrops and the say block",
+      "prompt": "Which block must always go at the top of a stack?",
+      "solution": "The when green flag clicked block."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Two characters talking: taking turns and fixing the order",
+      "prompt": "You want your character to talk for longer. What do you change in the say ( ) for ( ) seconds block?",
+      "solution": "Change the number of seconds (for example, from 2 to 4). A bigger number keeps the speech bubble up for longer."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Logical thinking: putting a story in order",
+      "prompt": "Explain in your own words: Logical thinking: putting a story in order.",
+      "solution": "Every good story has an order. It has a beginning, a middle and an end, and the parts must go in an order that makes sense. Working out that order is called logical thinking. If the parts are jumbled, the story does not make sense.\n\nListen to this story. 'They became good friends. A new girl came to Ehel Academy. Sami said hello to her.' That is all muddled up!\n\nFor example: It does not make sense. Let us use our clever thinking — logical thinking — to put it in the right order."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Plan your story: the storyboard",
+      "prompt": "Explain in your own words: Plan your story: the storyboard.",
+      "solution": "Before we build a story on the computer, we plan it. A storyboard is a plan drawn in boxes, one box for each scene. It shows what we want to make before we make it.\n\nThe people who make cartoons and films do not just start drawing. First you draw a storyboard — little boxes that show each part of the story. Today we are going to plan our story the same way.\n\nFor example: Do it yourself: plan your story: the storyboard. Work through it slowly, then check what you did against the explanation above."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "What is a static object in Scratch?",
+      "answer": "See the code in Steps 2 and 3.",
+      "hint": "Look back at what logical thinking and algorithm mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Which block makes a character talk in a speech bubble? ([ ] move (10) steps)",
+      "answer": "say ( ) for ( ) seconds.",
+      "hint": "Look back at what logical thinking and algorithm mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "This conversation is out of order. Write 1, 2, 3 to fix it. (Maya greets first!)",
+      "answer": "Order is: (1) Maya — \"Hello!\"; (2) Sami — \"Hi!\"; (3) Maya — \"Let us go to class.\". So the boxes read: 2, 3, 1.",
+      "hint": "Look back at what logical thinking and algorithm mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Which block must always go at the top of a stack?",
+      "answer": "The when green flag clicked block.",
+      "hint": "Look back at what logical thinking and algorithm mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "You want your character to talk for longer. What do you change in the say ( ) for ( ) seconds block?",
+      "answer": "Change the number of seconds (for example, from 2 to 4). A bigger number keeps the speech bubble up for longer.",
+      "hint": "Look back at what logical thinking and algorithm mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "Which block changes the scene (the background)? ([ ] switch backdrop to ( ))",
+      "answer": "switch backdrop to ( ).",
+      "hint": "Look back at what logical thinking and algorithm mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Put the Story in Order",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "This is a story called The New Friend. The parts are all mixed up! Use your clever logical thinking. Write 1, 2, 3, 4, 5 in the boxes to put the story in the right order.",
+        "[ ] They played a game together.",
+        "[ ] A new girl, Maya, started at Ehel Academy.",
+        "[ ] Now Maya and Sami are good friends.",
+        "[ ] She stood alone in the playground.",
+        "[ ] Sami saw her and said, “Hello!”"
+      ]
+    },
+    {
+      "title": "Match the Words",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Draw a line from each word to what it means.",
+        "Match: sprite → a sprite that has no code — it just stays still",
+        "Match: backdrop → a character or object in Scratch",
+        "Match: static object → thinking carefully to put things in a good order",
+        "Match: logical thinking → the picture behind the sprites — the setting"
+      ]
+    },
+    {
+      "title": "Plan Your Story: Storyboard",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A storyboard is a plan of your story, drawn in boxes. Under each box, write who is in it and where it happens. Draw your story in the three boxes below: the beginning, the middle and the end.",
+        "Scene 1 — The Beginning",
+        "Who: ________________________ Where: ________________________",
+        "Scene 2 — The Middle",
+        "Who: ________________________ Where: ________________________",
+        "Scene 3 — The End"
+      ]
+    },
+    {
+      "title": "Choose Your Characters and Background",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Now choose what you will use in Scratch. Write your choices in the blanks. (Some good examples are written to help you.).",
+        "My first character (sprite): ____________________ (for example, Abby)",
+        "My second character (sprite): ____________________ (for example, Devin)",
+        "A static object (a sprite with no code): ____________________ (for example, Tree1)",
+        "My first backdrop (scene 1): ____________________ (for example, Playground)",
+        "My second backdrop (scene 2): ____________________ (for example, Room 1)"
+      ]
+    },
+    {
+      "title": "Fix the Story That Is Out of Order",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Maya and Sami are talking, but the lines are mixed up! Maya should greet first. Write 1, 2, 3, 4 in the boxes to put the conversation in the right order.",
+        "Yes please. Thank you!",
+        "Would you like a date?"
+      ]
+    },
+    {
+      "title": "Try it in Scratch!",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Now make a character tell a little story.",
+        "Go to scratch.mit.edu and click Create.",
+        "pick a second backdrop, Room 1. Click Choose a Backdrop (bottom right) and pick Playground.",
+        "Click the Add Sprite button and choose a person, like Abby.",
+        "Drag these blocks and join them together",
+        "when green flag clicked"
+      ]
+    },
+    {
+      "title": "Change the Code",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Find your first say block. Change the number from 2 to 4, like this Let us make a change to get a better result.",
+        "Say (Hello!) for (4) seconds.",
+        "Now the words stay on the screen for longer! Click the green flag again.",
+        "How many seconds does your character talk for now? __________",
+        "Did You Know?",
+        "People who make cartoons and films draw a storyboard first — little boxes showing every scene — before you make the film. You are working just like them!"
+      ]
+    },
+    {
+      "title": "Plan It (Storyboard)",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "First, plan your story in two scenes. Draw a quick picture in each box, and write who is in it and where it happens.",
+        "Scene 1 — you meet and say hello",
+        "Who: ________________________ Where: ________________________",
+        "Scene 2 — They share dates",
+        "Who: ________________________ Where: ________________________"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "Every sprite must have code.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Not true. A static object, like a tree in the background, has no code at all. It just sets the scene."
+    },
+    {
+      "symptom": "The order of the say blocks does not matter.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "It matters a lot. A conversation where the reply comes before the question does not make sense."
+    },
+    {
+      "symptom": "Both characters can talk at the same time and it will look fine.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Without a wait block, the sprites talk over each other. We add waits so they take turns."
+    },
+    {
+      "symptom": "The green flag only starts one sprite.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Clicking the green flag starts every when green flag clicked stack in the whole project at once — that is why we need waits."
+    },
+    {
+      "symptom": "The backdrop changes by itself.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "It does not. You must add a switch backdrop to ( ) or next backdrop block to change the scene."
+    },
+    {
+      "symptom": "If I change a number, I will break it.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Changing numbers is how we improve a program — talk for longer, move further, wait less. Encourage safe experimenting."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Logical thinking: putting a story in order",
+        "text": "Every good story has an order."
+      },
+      {
+        "title": "Plan your story: the storyboard",
+        "text": "Before we build a story on the computer, we plan it."
+      },
+      {
+        "title": "Meet Scratch: sprites, backdrops and the say block",
+        "text": "Now we open Scratch and meet the tools."
+      },
+      {
+        "title": "Two characters talking: taking turns and fixing the order",
+        "text": "A conversation is two characters taking turns to talk."
+      },
+      {
+        "title": "Making changes and switching scenes",
+        "text": "We can change our code to get the result we want."
+      }
+    ],
+    "terms": [
+      [
+        "logical thinking",
+        "Thinking carefully to solve a problem in a way that makes sense."
+      ],
+      [
+        "algorithm",
+        "A set of steps for doing a job, in the right order."
+      ],
+      [
+        "sprite",
+        "A character or object in Scratch."
+      ],
+      [
+        "backdrop",
+        "The picture behind the sprites — the setting."
+      ],
+      [
+        "costume",
+        "A different look for the same sprite."
+      ],
+      [
+        "say block",
+        "A block that makes a sprite show words in a speech bubble."
+      ],
+      [
+        "static object",
+        "A sprite that has no code. It just stays still."
+      ],
+      [
+        "storyboard",
+        "A plan of your story, drawn in boxes, scene by scene."
+      ],
+      [
+        "sequence",
+        "The order that things happen in."
+      ],
+      [
+        "program",
+        "Blocks joined together to tell the computer what to do."
+      ],
+      [
+        "edit",
+        "To change something."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "logical thinking",
+        "meaning": "Thinking carefully to solve a problem in a way that makes sense.",
+        "example": "Putting story steps in the right order.",
+        "letter": "L"
+      },
+      {
+        "term": "algorithm",
+        "meaning": "A set of steps for doing a job, in the right order.",
+        "example": "The steps to tell a story.",
+        "letter": "A"
+      },
+      {
+        "term": "sprite",
+        "meaning": "A character or object in Scratch.",
+        "example": "A person, a cat, a tree.",
+        "letter": "S"
+      },
+      {
+        "term": "backdrop",
+        "meaning": "The picture behind the sprites — the setting.",
+        "example": "A playground, a room.",
+        "letter": "B"
+      },
+      {
+        "term": "costume",
+        "meaning": "A different look for the same sprite.",
+        "example": "A person waving, then smiling.",
+        "letter": "C"
+      },
+      {
+        "term": "say block",
+        "meaning": "A block that makes a sprite show words in a speech bubble.",
+        "example": "say (Hello!) for (2) seconds",
+        "letter": "S"
+      },
+      {
+        "term": "static object",
+        "meaning": "A sprite that has no code. It just stays still.",
+        "example": "A tree in the playground.",
+        "letter": "S"
+      },
+      {
+        "term": "storyboard",
+        "meaning": "A plan of your story, drawn in boxes, scene by scene.",
+        "example": "Boxes for the beginning, middle and end.",
+        "letter": "S"
+      },
+      {
+        "term": "sequence",
+        "meaning": "The order that things happen in.",
+        "example": "First greet, then talk, then wave goodbye.",
+        "letter": "S"
+      },
+      {
+        "term": "program",
+        "meaning": "Blocks joined together to tell the computer what to do.",
+        "example": "The blocks that make your story play.",
+        "letter": "P"
+      },
+      {
+        "term": "edit",
+        "meaning": "To change something.",
+        "example": "Change 2 seconds to 4 seconds.",
+        "letter": "E"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "Every sprite must have code.",
+        "Not true. A static object, like a tree in the background, has no code at all. It just sets the scene."
+      ],
+      [
+        "The order of the say blocks does not matter.",
+        "It matters a lot. A conversation where the reply comes before the question does not make sense."
+      ],
+      [
+        "Both characters can talk at the same time and it will look fine.",
+        "Without a wait block, the sprites talk over each other. We add waits so they take turns."
+      ],
+      [
+        "The green flag only starts one sprite.",
+        "Clicking the green flag starts every when green flag clicked stack in the whole project at once — that is why we need waits."
+      ],
+      [
+        "The backdrop changes by itself.",
+        "It does not. You must add a switch backdrop to ( ) or next backdrop block to change the scene."
+      ],
+      [
+        "If I change a number, I will break it.",
+        "Changing numbers is how we improve a program — talk for longer, move further, wait less. Encourage safe experimenting."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "What is a static object in Scratch?",
+      "answer": "See the code in Steps 2 and 3.",
+      "hint": "Look back at what logical thinking and algorithm mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "See the code in Steps 2 and 3."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Which block makes a character talk in a speech bubble? ([ ] move (10) steps)",
+      "answer": "say ( ) for ( ) seconds.",
+      "hint": "Look back at what logical thinking and algorithm mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "say ( ) for ( ) seconds."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "This conversation is out of order. Write 1, 2, 3 to fix it. (Maya greets first!)",
+      "answer": "Order is: (1) Maya — \"Hello!\"; (2) Sami — \"Hi!\"; (3) Maya — \"Let us go to class.\". So the boxes read: 2, 3, 1.",
+      "hint": "Look back at what logical thinking and algorithm mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Order is: (1) Maya — \"Hello!\"; (2) Sami — \"Hi!\"; (3) Maya — \"Let us go to class.\". So the boxes read: 2, 3, 1."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Which block must always go at the top of a stack?",
+      "answer": "The when green flag clicked block.",
+      "hint": "Look back at what logical thinking and algorithm mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "The when green flag clicked block."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "You want your character to talk for longer. What do you change in the say ( ) for ( ) seconds block?",
+      "answer": "Change the number of seconds (for example, from 2 to 4). A bigger number keeps the speech bubble up for longer.",
+      "hint": "Look back at what logical thinking and algorithm mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Change the number of seconds (for example, from 2 to 4). A bigger number keeps the speech bubble up for longer."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Which block changes the scene (the background)? ([ ] switch backdrop to ( ))",
+      "answer": "switch backdrop to ( ).",
+      "hint": "Look back at what logical thinking and algorithm mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "switch backdrop to ( )."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Which block changes the scene (the background)? ([ ] switch backdrop to ( ))",
+      "answer": "switch backdrop to ( ).",
+      "hint": "Look back at what logical thinking and algorithm mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: switch backdrop to ( )."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "You want your character to talk for longer. What do you change in the say ( ) for ( ) seconds block?",
+      "answer": "Change the number of seconds (for example, from 2 to 4). A bigger number keeps the speech bubble up for longer.",
+      "hint": "Look back at what logical thinking and algorithm mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Change the number of seconds (for example, from 2 to 4). A bigger number keeps the speech bubble up for longer."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Which block changes the scene (the background)? ([ ] switch backdrop to ( ))",
+      "answer": "switch backdrop to ( ).",
+      "hint": "Look back at what logical thinking and algorithm mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: switch backdrop to ( )."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "What is a static object in Scratch?",
+      "answer": "See the code in Steps 2 and 3.",
+      "hint": "Look back at what logical thinking and algorithm mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: See the code in Steps 2 and 3."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "This conversation is out of order. Write 1, 2, 3 to fix it. (Maya greets first!)",
+      "keyIdeas": [
+        "logical thinking",
+        "algorithm",
+        "sprite"
+      ],
+      "modelAnswer": "Order is: (1) Maya — \"Hello!\"; (2) Sami — \"Hi!\"; (3) Maya — \"Let us go to class.\". So the boxes read: 2, 3, 1."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Which block must always go at the top of a stack?",
+      "keyIdeas": [
+        "algorithm",
+        "sprite",
+        "backdrop"
+      ],
+      "modelAnswer": "The when green flag clicked block."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "You want your character to talk for longer. What do you change in the say ( ) for ( ) seconds block?",
+      "keyIdeas": [
+        "sprite",
+        "backdrop",
+        "costume"
+      ],
+      "modelAnswer": "Change the number of seconds (for example, from 2 to 4). A bigger number keeps the speech bubble up for longer."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in two characters talking: taking turns and fixing the order, and give one example of your own.",
+      "keyIdeas": [
+        "logical thinking",
+        "algorithm",
+        "sprite"
+      ],
+      "modelAnswer": "A conversation is two characters taking turns to talk. In Scratch, each sprite has its own stack of blocks, and clicking the green flag starts them all at the same time. So if we are not careful, both characters talk at once. To make them take turns, we add a wait ( ) seconds block so one character waits quietly while the other one speaks.\n\nAct it out first with no computer. See how they took turns?"
+    }
+  ],
+  "project": {
+    "title": "Unit 6 Project: Be a Storyteller",
+    "brief": "Bring together everything from Be a Storyteller into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your be a storyteller project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I planned my story on the storyboard.",
+      "I added two sprites and two backdrops.",
+      "My two friends take turns to talk (they do not talk at the same time).",
+      "I added a static object (the tree) with no code.",
+      "My scene changes from the playground to the room.",
+      "I made one change to my code and tested it with the green flag."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “logical thinking” mean in computing?",
+        "options": [
+          "Thinking carefully to solve a problem in a way that makes sense.",
+          "A set of steps for doing a job, in the right order.",
+          "A character or object in Scratch.",
+          "The picture behind the sprites — the setting."
+        ],
+        "answer": "Thinking carefully to solve a problem in a way that makes sense.",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Logical thinking means thinking carefully to solve a problem in a way that makes sense."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “algorithm” mean in computing?",
+        "options": [
+          "A set of steps for doing a job, in the right order.",
+          "A character or object in Scratch.",
+          "The picture behind the sprites — the setting.",
+          "A different look for the same sprite."
+        ],
+        "answer": "A set of steps for doing a job, in the right order.",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “sprite” mean in computing?",
+        "options": [
+          "A character or object in Scratch.",
+          "The picture behind the sprites — the setting.",
+          "A different look for the same sprite.",
+          "A block that makes a sprite show words in a speech bubble."
+        ],
+        "answer": "A character or object in Scratch.",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Sprite means a character or object in Scratch."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “backdrop” mean in computing?",
+        "options": [
+          "The picture behind the sprites — the setting.",
+          "A different look for the same sprite.",
+          "A block that makes a sprite show words in a speech bubble.",
+          "A sprite that has no code. It just stays still."
+        ],
+        "answer": "The picture behind the sprites — the setting.",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Backdrop means the picture behind the sprites — the setting."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “costume” mean in computing?",
+        "options": [
+          "A different look for the same sprite.",
+          "A block that makes a sprite show words in a speech bubble.",
+          "A sprite that has no code. It just stays still.",
+          "A plan of your story, drawn in boxes, scene by scene."
+        ],
+        "answer": "A different look for the same sprite.",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Costume means a different look for the same sprite."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “say block” mean in computing?",
+        "options": [
+          "A block that makes a sprite show words in a speech bubble.",
+          "A sprite that has no code. It just stays still.",
+          "A plan of your story, drawn in boxes, scene by scene.",
+          "The order that things happen in."
+        ],
+        "answer": "A block that makes a sprite show words in a speech bubble.",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Say block means a block that makes a sprite show words in a speech bubble."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A sprite that has no code. It just stays still.?",
+        "options": [
+          "static object",
+          "storyboard",
+          "sequence",
+          "program"
+        ],
+        "answer": "static object",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Static object means a sprite that has no code. It just stays still."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A plan of your story, drawn in boxes, scene by scene.?",
+        "options": [
+          "storyboard",
+          "sequence",
+          "program",
+          "edit"
+        ],
+        "answer": "storyboard",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Storyboard means a plan of your story, drawn in boxes, scene by scene."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: The order that things happen in.?",
+        "options": [
+          "sequence",
+          "program",
+          "edit",
+          "logical thinking"
+        ],
+        "answer": "sequence",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Sequence means the order that things happen in."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Blocks joined together to tell the computer what to do.?",
+        "options": [
+          "program",
+          "edit",
+          "logical thinking",
+          "algorithm"
+        ],
+        "answer": "program",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Program means blocks joined together to tell the computer what to do."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: To change something.?",
+        "options": [
+          "edit",
+          "logical thinking",
+          "algorithm",
+          "sprite"
+        ],
+        "answer": "edit",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Edit means to change something."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Thinking carefully to solve a problem in a way that makes sense.?",
+        "options": [
+          "logical thinking",
+          "algorithm",
+          "sprite",
+          "backdrop"
+        ],
+        "answer": "logical thinking",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Logical thinking means thinking carefully to solve a problem in a way that makes sense."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u6-game-1",
+        "icon": "?",
+        "skill": "logical thinking",
+        "title": "Quick Match: logical thinking",
+        "description": "Practise logical thinking through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “logical thinking” mean in computing?",
+            "choices": [
+              "Thinking carefully to solve a problem in a way that makes sense.",
+              "A set of steps for doing a job, in the right order.",
+              "A character or object in Scratch.",
+              "The picture behind the sprites — the setting."
+            ],
+            "answer": "Thinking carefully to solve a problem in a way that makes sense.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Logical thinking means thinking carefully to solve a problem in a way that makes sense."
+          },
+          {
+            "prompt": "What does “backdrop” mean in computing?",
+            "choices": [
+              "The picture behind the sprites — the setting.",
+              "A different look for the same sprite.",
+              "A block that makes a sprite show words in a speech bubble.",
+              "A sprite that has no code. It just stays still."
+            ],
+            "answer": "The picture behind the sprites — the setting.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprites — the setting."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A sprite that has no code. It just stays still.?",
+            "choices": [
+              "static object",
+              "storyboard",
+              "sequence",
+              "program"
+            ],
+            "answer": "static object",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Static object means a sprite that has no code. It just stays still."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Blocks joined together to tell the computer what to do.?",
+            "choices": [
+              "program",
+              "edit",
+              "logical thinking",
+              "algorithm"
+            ],
+            "answer": "program",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Program means blocks joined together to tell the computer what to do."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-2",
+        "icon": "★",
+        "skill": "algorithm",
+        "title": "Concept Quest: algorithm",
+        "description": "Practise algorithm through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps for doing a job, in the right order.",
+              "A character or object in Scratch.",
+              "The picture behind the sprites — the setting.",
+              "A different look for the same sprite."
+            ],
+            "answer": "A set of steps for doing a job, in the right order.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          },
+          {
+            "prompt": "What does “costume” mean in computing?",
+            "choices": [
+              "A different look for the same sprite.",
+              "A block that makes a sprite show words in a speech bubble.",
+              "A sprite that has no code. It just stays still.",
+              "A plan of your story, drawn in boxes, scene by scene."
+            ],
+            "answer": "A different look for the same sprite.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Costume means a different look for the same sprite."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A plan of your story, drawn in boxes, scene by scene.?",
+            "choices": [
+              "storyboard",
+              "sequence",
+              "program",
+              "edit"
+            ],
+            "answer": "storyboard",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Storyboard means a plan of your story, drawn in boxes, scene by scene."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To change something.?",
+            "choices": [
+              "edit",
+              "logical thinking",
+              "algorithm",
+              "sprite"
+            ],
+            "answer": "edit",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Edit means to change something."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-3",
+        "icon": "◫",
+        "skill": "sprite",
+        "title": "Debug Detective: sprite",
+        "description": "Practise sprite through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “sprite” mean in computing?",
+            "choices": [
+              "A character or object in Scratch.",
+              "The picture behind the sprites — the setting.",
+              "A different look for the same sprite.",
+              "A block that makes a sprite show words in a speech bubble."
+            ],
+            "answer": "A character or object in Scratch.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          },
+          {
+            "prompt": "What does “say block” mean in computing?",
+            "choices": [
+              "A block that makes a sprite show words in a speech bubble.",
+              "A sprite that has no code. It just stays still.",
+              "A plan of your story, drawn in boxes, scene by scene.",
+              "The order that things happen in."
+            ],
+            "answer": "A block that makes a sprite show words in a speech bubble.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Say block means a block that makes a sprite show words in a speech bubble."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The order that things happen in.?",
+            "choices": [
+              "sequence",
+              "program",
+              "edit",
+              "logical thinking"
+            ],
+            "answer": "sequence",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Sequence means the order that things happen in."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Thinking carefully to solve a problem in a way that makes sense.?",
+            "choices": [
+              "logical thinking",
+              "algorithm",
+              "sprite",
+              "backdrop"
+            ],
+            "answer": "logical thinking",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Logical thinking means thinking carefully to solve a problem in a way that makes sense."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-4",
+        "icon": "→",
+        "skill": "backdrop",
+        "title": "Algorithm Runner: backdrop",
+        "description": "Practise backdrop through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “backdrop” mean in computing?",
+            "choices": [
+              "The picture behind the sprites — the setting.",
+              "A different look for the same sprite.",
+              "A block that makes a sprite show words in a speech bubble.",
+              "A sprite that has no code. It just stays still."
+            ],
+            "answer": "The picture behind the sprites — the setting.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprites — the setting."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A sprite that has no code. It just stays still.?",
+            "choices": [
+              "static object",
+              "storyboard",
+              "sequence",
+              "program"
+            ],
+            "answer": "static object",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Static object means a sprite that has no code. It just stays still."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Blocks joined together to tell the computer what to do.?",
+            "choices": [
+              "program",
+              "edit",
+              "logical thinking",
+              "algorithm"
+            ],
+            "answer": "program",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Program means blocks joined together to tell the computer what to do."
+          },
+          {
+            "prompt": "What does “logical thinking” mean in computing?",
+            "choices": [
+              "Thinking carefully to solve a problem in a way that makes sense.",
+              "A set of steps for doing a job, in the right order.",
+              "A character or object in Scratch.",
+              "The picture behind the sprites — the setting."
+            ],
+            "answer": "Thinking carefully to solve a problem in a way that makes sense.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Logical thinking means thinking carefully to solve a problem in a way that makes sense."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-5",
+        "icon": "Σ",
+        "skill": "costume",
+        "title": "Vocabulary Vault: costume",
+        "description": "Practise costume through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “costume” mean in computing?",
+            "choices": [
+              "A different look for the same sprite.",
+              "A block that makes a sprite show words in a speech bubble.",
+              "A sprite that has no code. It just stays still.",
+              "A plan of your story, drawn in boxes, scene by scene."
+            ],
+            "answer": "A different look for the same sprite.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Costume means a different look for the same sprite."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A plan of your story, drawn in boxes, scene by scene.?",
+            "choices": [
+              "storyboard",
+              "sequence",
+              "program",
+              "edit"
+            ],
+            "answer": "storyboard",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Storyboard means a plan of your story, drawn in boxes, scene by scene."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To change something.?",
+            "choices": [
+              "edit",
+              "logical thinking",
+              "algorithm",
+              "sprite"
+            ],
+            "answer": "edit",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Edit means to change something."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps for doing a job, in the right order.",
+              "A character or object in Scratch.",
+              "The picture behind the sprites — the setting.",
+              "A different look for the same sprite."
+            ],
+            "answer": "A set of steps for doing a job, in the right order.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-6",
+        "icon": "◇",
+        "skill": "say block",
+        "title": "Challenge Cards: say block",
+        "description": "Practise say block through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “say block” mean in computing?",
+            "choices": [
+              "A block that makes a sprite show words in a speech bubble.",
+              "A sprite that has no code. It just stays still.",
+              "A plan of your story, drawn in boxes, scene by scene.",
+              "The order that things happen in."
+            ],
+            "answer": "A block that makes a sprite show words in a speech bubble.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Say block means a block that makes a sprite show words in a speech bubble."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The order that things happen in.?",
+            "choices": [
+              "sequence",
+              "program",
+              "edit",
+              "logical thinking"
+            ],
+            "answer": "sequence",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Sequence means the order that things happen in."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Thinking carefully to solve a problem in a way that makes sense.?",
+            "choices": [
+              "logical thinking",
+              "algorithm",
+              "sprite",
+              "backdrop"
+            ],
+            "answer": "logical thinking",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Logical thinking means thinking carefully to solve a problem in a way that makes sense."
+          },
+          {
+            "prompt": "What does “sprite” mean in computing?",
+            "choices": [
+              "A character or object in Scratch.",
+              "The picture behind the sprites — the setting.",
+              "A different look for the same sprite.",
+              "A block that makes a sprite show words in a speech bubble."
+            ],
+            "answer": "A character or object in Scratch.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-7",
+        "icon": "⚡",
+        "skill": "static object",
+        "title": "Think Fast: static object",
+        "description": "Practise static object through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A sprite that has no code. It just stays still.?",
+            "choices": [
+              "static object",
+              "storyboard",
+              "sequence",
+              "program"
+            ],
+            "answer": "static object",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Static object means a sprite that has no code. It just stays still."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Blocks joined together to tell the computer what to do.?",
+            "choices": [
+              "program",
+              "edit",
+              "logical thinking",
+              "algorithm"
+            ],
+            "answer": "program",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Program means blocks joined together to tell the computer what to do."
+          },
+          {
+            "prompt": "What does “logical thinking” mean in computing?",
+            "choices": [
+              "Thinking carefully to solve a problem in a way that makes sense.",
+              "A set of steps for doing a job, in the right order.",
+              "A character or object in Scratch.",
+              "The picture behind the sprites — the setting."
+            ],
+            "answer": "Thinking carefully to solve a problem in a way that makes sense.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Logical thinking means thinking carefully to solve a problem in a way that makes sense."
+          },
+          {
+            "prompt": "What does “backdrop” mean in computing?",
+            "choices": [
+              "The picture behind the sprites — the setting.",
+              "A different look for the same sprite.",
+              "A block that makes a sprite show words in a speech bubble.",
+              "A sprite that has no code. It just stays still."
+            ],
+            "answer": "The picture behind the sprites — the setting.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprites — the setting."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-8",
+        "icon": "☁",
+        "skill": "storyboard",
+        "title": "Explain It: storyboard",
+        "description": "Practise storyboard through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A plan of your story, drawn in boxes, scene by scene.?",
+            "choices": [
+              "storyboard",
+              "sequence",
+              "program",
+              "edit"
+            ],
+            "answer": "storyboard",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Storyboard means a plan of your story, drawn in boxes, scene by scene."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To change something.?",
+            "choices": [
+              "edit",
+              "logical thinking",
+              "algorithm",
+              "sprite"
+            ],
+            "answer": "edit",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Edit means to change something."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps for doing a job, in the right order.",
+              "A character or object in Scratch.",
+              "The picture behind the sprites — the setting.",
+              "A different look for the same sprite."
+            ],
+            "answer": "A set of steps for doing a job, in the right order.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          },
+          {
+            "prompt": "What does “costume” mean in computing?",
+            "choices": [
+              "A different look for the same sprite.",
+              "A block that makes a sprite show words in a speech bubble.",
+              "A sprite that has no code. It just stays still.",
+              "A plan of your story, drawn in boxes, scene by scene."
+            ],
+            "answer": "A different look for the same sprite.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Costume means a different look for the same sprite."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-9",
+        "icon": "⌂",
+        "skill": "sequence",
+        "title": "Real-Life Round: sequence",
+        "description": "Practise sequence through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The order that things happen in.?",
+            "choices": [
+              "sequence",
+              "program",
+              "edit",
+              "logical thinking"
+            ],
+            "answer": "sequence",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Sequence means the order that things happen in."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Thinking carefully to solve a problem in a way that makes sense.?",
+            "choices": [
+              "logical thinking",
+              "algorithm",
+              "sprite",
+              "backdrop"
+            ],
+            "answer": "logical thinking",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Logical thinking means thinking carefully to solve a problem in a way that makes sense."
+          },
+          {
+            "prompt": "What does “sprite” mean in computing?",
+            "choices": [
+              "A character or object in Scratch.",
+              "The picture behind the sprites — the setting.",
+              "A different look for the same sprite.",
+              "A block that makes a sprite show words in a speech bubble."
+            ],
+            "answer": "A character or object in Scratch.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          },
+          {
+            "prompt": "What does “say block” mean in computing?",
+            "choices": [
+              "A block that makes a sprite show words in a speech bubble.",
+              "A sprite that has no code. It just stays still.",
+              "A plan of your story, drawn in boxes, scene by scene.",
+              "The order that things happen in."
+            ],
+            "answer": "A block that makes a sprite show words in a speech bubble.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Say block means a block that makes a sprite show words in a speech bubble."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-10",
+        "icon": "!",
+        "skill": "program",
+        "title": "Spot the Bug: program",
+        "description": "Practise program through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Blocks joined together to tell the computer what to do.?",
+            "choices": [
+              "program",
+              "edit",
+              "logical thinking",
+              "algorithm"
+            ],
+            "answer": "program",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Program means blocks joined together to tell the computer what to do."
+          },
+          {
+            "prompt": "What does “logical thinking” mean in computing?",
+            "choices": [
+              "Thinking carefully to solve a problem in a way that makes sense.",
+              "A set of steps for doing a job, in the right order.",
+              "A character or object in Scratch.",
+              "The picture behind the sprites — the setting."
+            ],
+            "answer": "Thinking carefully to solve a problem in a way that makes sense.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Logical thinking means thinking carefully to solve a problem in a way that makes sense."
+          },
+          {
+            "prompt": "What does “backdrop” mean in computing?",
+            "choices": [
+              "The picture behind the sprites — the setting.",
+              "A different look for the same sprite.",
+              "A block that makes a sprite show words in a speech bubble.",
+              "A sprite that has no code. It just stays still."
+            ],
+            "answer": "The picture behind the sprites — the setting.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprites — the setting."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A sprite that has no code. It just stays still.?",
+            "choices": [
+              "static object",
+              "storyboard",
+              "sequence",
+              "program"
+            ],
+            "answer": "static object",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Static object means a sprite that has no code. It just stays still."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-11",
+        "icon": "≡",
+        "skill": "edit",
+        "title": "Mastery Mix: edit",
+        "description": "Practise edit through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To change something.?",
+            "choices": [
+              "edit",
+              "logical thinking",
+              "algorithm",
+              "sprite"
+            ],
+            "answer": "edit",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Edit means to change something."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps for doing a job, in the right order.",
+              "A character or object in Scratch.",
+              "The picture behind the sprites — the setting.",
+              "A different look for the same sprite."
+            ],
+            "answer": "A set of steps for doing a job, in the right order.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          },
+          {
+            "prompt": "What does “costume” mean in computing?",
+            "choices": [
+              "A different look for the same sprite.",
+              "A block that makes a sprite show words in a speech bubble.",
+              "A sprite that has no code. It just stays still.",
+              "A plan of your story, drawn in boxes, scene by scene."
+            ],
+            "answer": "A different look for the same sprite.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Costume means a different look for the same sprite."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A plan of your story, drawn in boxes, scene by scene.?",
+            "choices": [
+              "storyboard",
+              "sequence",
+              "program",
+              "edit"
+            ],
+            "answer": "storyboard",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Storyboard means a plan of your story, drawn in boxes, scene by scene."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-12",
+        "icon": "T",
+        "skill": "logical thinking",
+        "title": "Unit Champion: logical thinking",
+        "description": "Practise logical thinking through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Thinking carefully to solve a problem in a way that makes sense.?",
+            "choices": [
+              "logical thinking",
+              "algorithm",
+              "sprite",
+              "backdrop"
+            ],
+            "answer": "logical thinking",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Logical thinking means thinking carefully to solve a problem in a way that makes sense."
+          },
+          {
+            "prompt": "What does “sprite” mean in computing?",
+            "choices": [
+              "A character or object in Scratch.",
+              "The picture behind the sprites — the setting.",
+              "A different look for the same sprite.",
+              "A block that makes a sprite show words in a speech bubble."
+            ],
+            "answer": "A character or object in Scratch.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          },
+          {
+            "prompt": "What does “say block” mean in computing?",
+            "choices": [
+              "A block that makes a sprite show words in a speech bubble.",
+              "A sprite that has no code. It just stays still.",
+              "A plan of your story, drawn in boxes, scene by scene.",
+              "The order that things happen in."
+            ],
+            "answer": "A block that makes a sprite show words in a speech bubble.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Say block means a block that makes a sprite show words in a speech bubble."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The order that things happen in.?",
+            "choices": [
+              "sequence",
+              "program",
+              "edit",
+              "logical thinking"
+            ],
+            "answer": "sequence",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Sequence means the order that things happen in."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can use logical thinking to put the parts of a story in an order that makes sense.",
+    "I can plan a simple story on a storyboard — a beginning, a middle and an end.",
+    "I can choose sprites (characters) and a backdrop (the setting) in Scratch.",
+    "I can build a program using when green flag clicked, say ( ) for ( ) seconds and switch backdrop to ( ).",
+    "I can make two characters take turns to talk by using wait ( ) seconds.",
+    "I can include a static object — a sprite that has no code — in a program.",
+    "I can make changes to code to get the right result (talk for longer, change the scene, change the timing).",
+    "I can find and fix a story whose steps are out of order."
+  ]
+}

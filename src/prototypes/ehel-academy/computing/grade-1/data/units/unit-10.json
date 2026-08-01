@@ -1,0 +1,1742 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.216Z",
+  "stage": {
+    "id": "s01",
+    "label": "Stage 1"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t03",
+    "label": "Term 3"
+  },
+  "unit": {
+    "unitId": "comp-g01-u10",
+    "unitNo": 10,
+    "unitTitle": "We Are Connected",
+    "unitOverview": "In this unit — We Are Connected — you will work through what is a network?, connect with a wire, connect without a wire, the internet: computers all around the world and online and offline (and the mini-project). Everything you need is here: explainers to read, examples to copy, things to build, practice with answers, and a project at the end. Every tool used is free and runs in a web browser.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 1
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-1-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 1",
+    "sourceArchive": "Year 1-20260801T055729Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 1/Unit 10/Year 1 - Unit 10 Teacher Guide.docx",
+      "Year 1/Unit 10/Year 1 - Unit 10 Activity Sheet.docx",
+      "Year 1/Unit 10/Year 1 - Unit 10 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 292,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 1 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Say that two or more computers joined together is called a network.",
+    "Know that other devices, not only computers, can join a network too (like a printer or a tablet).",
+    "Say that connected computers can share — they can talk to each other and share pictures and words.",
+    "Name devices that connect with wires — for example a printer, a desktop computer or a games console.",
+    "Name devices that connect without wires — for example a smartphone, a tablet, a laptop or a camera.",
+    "Know that the internet is lots and lots of computers joined together all around the world.",
+    "Know that when a device is joined to the internet we are online, and we can share pictures, video-call and watch videos.",
+    "Know that sometimes there is no internet (we are offline), and then some things — like an online video — will not work."
+  ],
+  "toolkit": [],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-what-is-a-network",
+      "title": "What is a network?",
+      "explanation": "One computer on its own is just one computer. When two or more computers are joined together, we call it a network. When they are joined, they can share — they can talk to each other and share pictures and words. Other devices, like a printer, can join too.\n\nHere is one computer. and here is another computer. On their own, they cannot share. Now they are joined. They are connected. Two or more computers joined together is a network! Look — they can share!",
+      "example": "Act it out with your own bodies. Ask two you to stand apart.",
+      "checkYourself": "Can you understand that joining lets you share?"
+    },
+    {
+      "id": "concept-2-connect-with-a-wire",
+      "title": "Connect with a wire",
+      "explanation": "Some computers and devices join a network with a wire. A wire is a cord that carries the sharing from one device to another. Things that often use a wire are a desktop computer, a printer and a games console.\n\nThis is a wire. A wire joins two devices so they can share. Can the computer send its picture to the printer to print? Not yet — they are not joined.",
+      "example": "Now there is a wire. Now the computer can send the picture to the printer, and out it comes!",
+      "checkYourself": "Can you understand that the wire is what lets you share? Can you name one or two devices that connect with a wire?"
+    },
+    {
+      "id": "concept-3-connect-without-a-wire",
+      "title": "Connect without a wire",
+      "explanation": "Some devices join a network with no wire at all. They join through the air. This is why you can use them in a park, on a bus, or anywhere. Devices that often need no wire are a smartphone, a tablet, a laptop and a camera.\n\nThis tablet has no wire. So how does it join? It joins through the air!",
+      "example": "A phone can join with no wire — that is why you can watch it in the park or on a bus, far from any cord. Mention gently that some clever devices, like a laptop or a tablet, can join either way — with a wire or without — but they do not need to remember that.",
+      "checkYourself": "Can you sort a few devices into “uses a wire” and “no wire needed”? Can you name one or two devices that connect without a wire?"
+    },
+    {
+      "id": "concept-4-the-internet-computers-all-around-the-world",
+      "title": "The internet: computers all around the world",
+      "explanation": "The internet is the biggest network of all. It is lots and lots of computers joined together all around the world. When your device joins the internet, you can reach people and things very, very far away — you can video-call family, share photos, and watch videos.\n\nDot lots of little computers all around it and join them with lines. All these computers, all around the world, are joined together. That giant network is the internet. Imani lives here.",
+      "example": "Her grandma lives far away in Mogadishu. Because of the internet, Imani can pick up a tablet and see Grandma's face and talk to her — even though she is so far away!",
+      "checkYourself": "Can you give one thing we can do on the internet (video-call, share a photo, watch a video)?"
+    },
+    {
+      "id": "concept-5-online-and-offline-and-the-mini-project",
+      "title": "Online and offline (and the Mini-Project)",
+      "explanation": "When our device is joined to the internet, we are online — and online videos play, messages send, and we can share. But sometimes there is no internet. Then we are offline — the video will not play (we see a spinning circle, an animation, that means “wait” ), and a message like “No internet” may pop up. Some things still work offline, like drawing a picture or looking at photos already saved on the device.\n\nWhen we are joined to the internet, we are online. Watch — the video plays! But sometimes there is no internet.",
+      "example": "Then we are offline. The video cannot come, so we just see a spinning circle going round and round — that is the computer saying 'please wait, I cannot find the internet.'.",
+      "checkYourself": "no internet."
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "Lesson Flow — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Lesson Flow.",
+      "lines": [
+        "One computer: [Computer]",
+        "A network: [Computer]---[Computer]"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Join Them Up",
+      "context": "work through the steps below and see what happens. This is what is a network? in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "When two or more computers join together, we call it a network. Draw a line to join the two computers so you make a network.",
+      "answer": "[ Computer ] [ Computer ] (draw a line to join them) Now they are joined! They can share pictures and words.",
+      "modelType": "model-1",
+      "hint": "Start here: [ Computer ] [ Computer ]",
+      "explanation": "What is a network?: One computer on its own is just one computer. When two or more computers are joined together, we call it a network. When they are joined, they can share — they can talk to each other and share pictures and words. Other devices, like a printer, can join too."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Uses a Wire",
+      "context": "work through the steps below and see what happens. This is connect with a wire in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Some things join with a wire. Circle the ones that use a wire.",
+      "answer": "desktop computer printer games console smartphone tablet camera Tip: a wire is a cord that joins two things so they can share.",
+      "modelType": "model-2",
+      "hint": "Start here: desktop computer printer games console",
+      "explanation": "Connect with a wire: Some computers and devices join a network with a wire. A wire is a cord that carries the sharing from one device to another. Things that often use a wire are a desktop computer, a printer and a games console."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "No Wire Needed",
+      "context": "work through the steps below and see what happens. This is connect without a wire in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Some devices join with no wire — they join through the air! Look at the same pictures. Circle the ones that need no wire.",
+      "answer": "desktop computer printer games console smartphone tablet camera Tip: a phone works in the park with no wire at all!",
+      "modelType": "model-3",
+      "hint": "Start here: desktop computer printer games console",
+      "explanation": "Connect without a wire: Some devices join a network with no wire at all. They join through the air. This is why you can use them in a park, on a bus, or anywhere. Devices that often need no wire are a smartphone, a tablet, a laptop and a camera."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "The Internet Joins Us",
+      "context": "work through the steps below and see what happens. This is the internet: computers all around the world in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "The internet is lots of computers joined all around the world. On the internet, Imani can video-call her grandma far away in Mogadishu! Draw a line to join them.",
+      "answer": "[ Imani + tablet ]......... [ Grandma ] (here) (far away) Who would you like to video-call?",
+      "modelType": "model-4",
+      "hint": "Start here: [ Imani + tablet ]......... [ Grandma ]",
+      "explanation": "The internet: computers all around the world: The internet is the biggest network of all. It is lots and lots of computers joined together all around the world. When your device joins the internet, you can reach people and things very, very far away — you can video-call family, share photos, and watch videos."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Which One Has No Internet?",
+      "context": "work through the steps below and see what happens. This is online and offline (and the mini-project) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "When we are joined to the internet, we are online and a video plays. When there is no internet, we are offline and we just see a spinning circle. Circle the screen with no internet.",
+      "answer": "Screen 1 Screen 2 +------------------+ +------------------+ | a video playing | | a spinning | | :) | | circle (o) | No internet.",
+      "modelType": "model-5",
+      "hint": "Start here: Screen 1 Screen 2",
+      "explanation": "Online and offline (and the Mini-Project): When our device is joined to the internet, we are online — and online videos play, messages send, and we can share. But sometimes there is no internet. Then we are offline — the video will not play (we see a spinning circle, an animation, that means “wait” ), and a message like “No internet” may…"
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Draw",
+      "context": "work through the steps below and see what happens. This is what is a network? in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Are you online? Draw your family using a tablet or phone to video-call someone far away.",
+      "answer": "+--------------------------------------+ +--------------------------------------+ Did You Know? The internet joins millions and millions of computers all around the world — even ones very, very far away in other countries! Some devices need no wire at all. They send pictures and words through the air, a bit like how your voice flies across the room to a friend!",
+      "modelType": "model-6",
+      "hint": "Start here: +--------------------------------------+",
+      "explanation": "What is a network?: One computer on its own is just one computer. When two or more computers are joined together, we call it a network. When they are joined, they can share — they can talk to each other and share pictures and words. Other devices, like a printer, can join too."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "What is a network?",
+      "modelType": "concept-model-1",
+      "purpose": "One computer on its own is just one computer. When two or more computers are joined together, we call it a network. When they are joined, they can share — they can talk to each other and share pictures and words. Other…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Connect with a wire",
+      "modelType": "concept-model-2",
+      "purpose": "Some computers and devices join a network with a wire. A wire is a cord that carries the sharing from one device to another. Things that often use a wire are a desktop computer, a printer and a games console.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Connect without a wire",
+      "modelType": "concept-model-3",
+      "purpose": "Some devices join a network with no wire at all. They join through the air. This is why you can use them in a park, on a bus, or anywhere. Devices that often need no wire are a smartphone, a tablet, a laptop and a…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "The internet: computers all around the world",
+      "modelType": "concept-model-4",
+      "purpose": "The internet is the biggest network of all. It is lots and lots of computers joined together all around the world. When your device joins the internet, you can reach people and things very, very far away — you can…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Online and offline (and the Mini-Project)",
+      "modelType": "concept-model-5",
+      "purpose": "When our device is joined to the internet, we are online — and online videos play, messages send, and we can share. But sometimes there is no internet. Then we are offline — the video will not play (we see a spinning…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with what is a network?",
+      "example": "Act it out with your own bodies. Ask two you to stand apart.",
+      "steps": [
+        "Read the concept card for what is a network? and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with connect with a wire",
+      "example": "Now there is a wire. Now the computer can send the picture to the printer, and out it comes!",
+      "steps": [
+        "Read the concept card for connect with a wire and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with connect without a wire",
+      "example": "A phone can join with no wire — that is why you can watch it in the park or on a bus, far from any cord. Mention gently that some clever devices, like a laptop or a tablet, can join either way — with a wire or without — but they do not need to remember that.",
+      "steps": [
+        "Read the concept card for connect without a wire and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with the internet: computers all around the world",
+      "example": "Her grandma lives far away in Mogadishu. Because of the internet, Imani can pick up a tablet and see Grandma's face and talk to her — even though she is so far away!",
+      "steps": [
+        "Read the concept card for the internet: computers all around the world and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with online and offline (and the mini-project)",
+      "example": "Then we are offline. The video cannot come, so we just see a spinning circle going round and round — that is the computer saying 'please wait, I cannot find the internet.'.",
+      "steps": [
+        "Read the concept card for online and offline (and the mini-project) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: What is a network?",
+      "prompt": "Which one can connect with no wire? ([ ] smartphone)",
+      "solution": "smartphone (a brick is not a device that connects)."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: What is a network?",
+      "prompt": "Explain in your own words: What is a network.",
+      "solution": "One computer on its own is just one computer. When two or more computers are joined together, we call it a network. When they are joined, they can share — they can talk to each other and share pictures and words. Other devices, like a printer, can join too.\n\nHere is one computer. and here is another computer. On their own, they cannot share. Now they are joined. They are connected. Two or more computers joined together is a network! Look — they can share!\n\nFor example: Act it out with your own bodies. Ask two you to stand apart."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Connect with a wire",
+      "prompt": "Explain in your own words: Connect with a wire.",
+      "solution": "Some computers and devices join a network with a wire. A wire is a cord that carries the sharing from one device to another. Things that often use a wire are a desktop computer, a printer and a games console.\n\nThis is a wire. A wire joins two devices so they can share. Can the computer send its picture to the printer to print? Not yet — they are not joined.\n\nFor example: Now there is a wire. Now the computer can send the picture to the printer, and out it comes!"
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Connect without a wire",
+      "prompt": "Explain in your own words: Connect without a wire.",
+      "solution": "Some devices join a network with no wire at all. They join through the air. This is why you can use them in a park, on a bus, or anywhere. Devices that often need no wire are a smartphone, a tablet, a laptop and a camera.\n\nThis tablet has no wire. So how does it join? It joins through the air!\n\nFor example: A phone can join with no wire — that is why you can watch it in the park or on a bus, far from any cord. Mention gently that some clever devices, like a laptop or a tablet, can join either way — with a wire or without — but they do not need to remember that."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: The internet: computers all around the world",
+      "prompt": "Explain in your own words: The internet: computers all around the world.",
+      "solution": "The internet is the biggest network of all. It is lots and lots of computers joined together all around the world. When your device joins the internet, you can reach people and things very, very far away — you can video-call family, share photos, and watch videos.\n\nDot lots of little computers all around it and join them with lines. All these computers, all around the world, are joined together. That giant network is the internet. Imani lives here.\n\nFor example: Her grandma lives far away in Mogadishu. Because of the internet, Imani can pick up a tablet and see Grandma's face and talk to her — even though she is so far away!"
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Online and offline (and the Mini-Project)",
+      "prompt": "Explain in your own words: Online and offline (and the Mini-Project).",
+      "solution": "When our device is joined to the internet, we are online — and online videos play, messages send, and we can share. But sometimes there is no internet. Then we are offline — the video will not play (we see a spinning circle, an animation, that means “wait” ), and a message like “No internet” may pop up. Some things still work offline, like drawing a picture or looking at photos already saved on the device.\n\nWhen we are joined to the internet, we are online. Watch — the video plays! But sometimes there is no internet.\n\nFor example: Then we are offline. The video cannot come, so we just see a spinning circle going round and round — that is the computer saying 'please wait, I cannot find the internet.'."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Two or more computers joined together is a... ([ ] network)",
+      "answer": "network.",
+      "hint": "Look back at what connect and network mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "A printer often connects with a... ([ ] wire)",
+      "answer": "wire.",
+      "hint": "Look back at what connect and network mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "Which one can connect with no wire? ([ ] smartphone)",
+      "answer": "smartphone (a brick is not a device that connects).",
+      "hint": "Look back at what connect and network mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "The internet is lots of computers joined all around the... ([ ] world)",
+      "answer": "world.",
+      "hint": "Look back at what connect and network mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "There is no internet. An online video will... ([ ] not play)",
+      "answer": "not play.",
+      "hint": "Look back at what connect and network mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "When our device is joined to the internet, we are... ([ ] online)",
+      "answer": "online.",
+      "hint": "Look back at what connect and network mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Join Them Up",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "When two or more computers join together, we call it a network. Draw a line to join the two computers so you make a network.",
+        "[ Computer ] [ Computer ]",
+        "(draw a line to join them)",
+        "Now they are joined! They can share pictures and words."
+      ]
+    },
+    {
+      "title": "Uses a Wire",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Some things join with a wire. Circle the ones that use a wire.",
+        "desktop computer printer games console",
+        "smartphone tablet camera",
+        "Tip: a wire is a cord that joins two things so they can share."
+      ]
+    },
+    {
+      "title": "No Wire Needed",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Some devices join with no wire — they join through the air! Look at the same pictures. Circle the ones that need no wire.",
+        "desktop computer printer games console",
+        "smartphone tablet camera",
+        "Tip: a phone works in the park with no wire at all!"
+      ]
+    },
+    {
+      "title": "The Internet Joins Us",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "The internet is lots of computers joined all around the world. On the internet, Imani can video-call her grandma far away in Mogadishu! Draw a line to join them.",
+        "[ Imani + tablet ]......... [ Grandma ]",
+        "(here) (far away)",
+        "Who would you like to video-call?"
+      ]
+    },
+    {
+      "title": "Which One Has No Internet?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "When we are joined to the internet, we are online and a video plays. When there is no internet, we are offline and we just see a spinning circle. Circle the screen with no internet.",
+        "Screen 1 Screen 2",
+        "+------------------+ +------------------+",
+        "| a video playing | | a spinning |",
+        "| :) | | circle (o) |",
+        "No internet."
+      ]
+    },
+    {
+      "title": "Draw",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Are you online? Draw your family using a tablet or phone to video-call someone far away.",
+        "+--------------------------------------+",
+        "+--------------------------------------+",
+        "Did You Know?",
+        "The internet joins millions and millions of computers all around the world — even ones very, very far away in other countries!",
+        "Some devices need no wire at all. They send pictures and words through the air, a bit like how your voice flies across the room to a friend!"
+      ]
+    },
+    {
+      "title": "A Network with Wires",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "join them together with wires (draw lines for the wires). Now they can share pictures! Draw two computers and a printer.",
+        "+--------------------------------------+",
+        "+--------------------------------------+",
+        "This is your network. The wires join it together."
+      ]
+    },
+    {
+      "title": "Devices with No Wires",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Draw any three devices that connect with no wire (for example a tablet, a smartphone, a camera). Then tell your partner why you chose them.",
+        "+--------------------------------------+",
+        "+--------------------------------------+",
+        "These devices join through the air — no wire needed!"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "A network is a kind of computer.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — a network is computers joined together so they can share. It is the joining that makes the network."
+    },
+    {
+      "symptom": "Only computers can join a network.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Many devices can join too — a printer, a tablet, a phone, a games console."
+    },
+    {
+      "symptom": "Everything joins with a wire.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — many devices join with no wire at all, through the air. That is how a phone works in the park."
+    },
+    {
+      "symptom": "A phone must be plugged in with a wire to use the internet.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — phones and tablets usually join without a wire."
+    },
+    {
+      "symptom": "The internet lives inside my tablet.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — the internet is lots of computers all around the world. Your tablet joins it; it does not hold it."
+    },
+    {
+      "symptom": "The internet is always there.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Sometimes there is no internet, and then online videos will not play. You see the spinning circle."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Keep personal information private",
+      "text": "Your full name, address, school, phone number, birthday and passwords are personal information. Never type them into a game, an app or a website, and never send them to someone you only know online."
+    },
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "What is a network?",
+        "text": "One computer on its own is just one computer."
+      },
+      {
+        "title": "Connect with a wire",
+        "text": "Some computers and devices join a network with a wire."
+      },
+      {
+        "title": "Connect without a wire",
+        "text": "Some devices join a network with no wire at all."
+      },
+      {
+        "title": "The internet: computers all around the world",
+        "text": "The internet is the biggest network of all."
+      },
+      {
+        "title": "Online and offline (and the Mini-Project)",
+        "text": "When our device is joined to the internet, we are online — and online videos play, messages send, and we can share."
+      }
+    ],
+    "terms": [
+      [
+        "connect",
+        "To join together."
+      ],
+      [
+        "network",
+        "Two or more computers joined together."
+      ],
+      [
+        "device",
+        "A machine we use, like a tablet or a printer."
+      ],
+      [
+        "wire",
+        "A cord that joins things so they can share."
+      ],
+      [
+        "internet",
+        "Lots of computers joined together all around the world."
+      ],
+      [
+        "online",
+        "Joined to the internet."
+      ],
+      [
+        "offline",
+        "Not joined to the internet."
+      ],
+      [
+        "animation",
+        "A moving picture, like the spinning circle that means wait."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "connect",
+        "meaning": "To join together.",
+        "example": "Two computers join up — they connect.",
+        "letter": "C"
+      },
+      {
+        "term": "network",
+        "meaning": "Two or more computers joined together.",
+        "example": "The computers at Ehel Academy are a network.",
+        "letter": "N"
+      },
+      {
+        "term": "device",
+        "meaning": "A machine we use, like a tablet or a printer.",
+        "example": "A tablet is a device; so is a phone.",
+        "letter": "D"
+      },
+      {
+        "term": "wire",
+        "meaning": "A cord that joins things so they can share.",
+        "example": "A wire joins the printer to the computer.",
+        "letter": "W"
+      },
+      {
+        "term": "internet",
+        "meaning": "Lots of computers joined together all around the world.",
+        "example": "We use the internet to video-call Grandma.",
+        "letter": "I"
+      },
+      {
+        "term": "online",
+        "meaning": "Joined to the internet.",
+        "example": "We are online, so the video plays.",
+        "letter": "O"
+      },
+      {
+        "term": "offline",
+        "meaning": "Not joined to the internet.",
+        "example": "We are offline, so the video will not play.",
+        "letter": "O"
+      },
+      {
+        "term": "animation",
+        "meaning": "A moving picture, like the spinning circle that means wait.",
+        "example": "The circle spins when there is no internet.",
+        "letter": "A"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "A network is a kind of computer.",
+        "No — a network is computers joined together so they can share. It is the joining that makes the network."
+      ],
+      [
+        "Only computers can join a network.",
+        "Many devices can join too — a printer, a tablet, a phone, a games console."
+      ],
+      [
+        "Everything joins with a wire.",
+        "No — many devices join with no wire at all, through the air. That is how a phone works in the park."
+      ],
+      [
+        "A phone must be plugged in with a wire to use the internet.",
+        "No — phones and tablets usually join without a wire."
+      ],
+      [
+        "The internet lives inside my tablet.",
+        "No — the internet is lots of computers all around the world. Your tablet joins it; it does not hold it."
+      ],
+      [
+        "The internet is always there.",
+        "Sometimes there is no internet, and then online videos will not play. You see the spinning circle."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Two or more computers joined together is a... ([ ] network)",
+      "answer": "network.",
+      "hint": "Look back at what connect and network mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "network."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "A printer often connects with a... ([ ] wire)",
+      "answer": "wire.",
+      "hint": "Look back at what connect and network mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "wire."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Which one can connect with no wire? ([ ] smartphone)",
+      "answer": "smartphone (a brick is not a device that connects).",
+      "hint": "Look back at what connect and network mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "smartphone (a brick is not a device that connects)."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "The internet is lots of computers joined all around the... ([ ] world)",
+      "answer": "world.",
+      "hint": "Look back at what connect and network mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "world."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "There is no internet. An online video will... ([ ] not play)",
+      "answer": "not play.",
+      "hint": "Look back at what connect and network mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "not play."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "When our device is joined to the internet, we are... ([ ] online)",
+      "answer": "online.",
+      "hint": "Look back at what connect and network mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "online."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "When our device is joined to the internet, we are... ([ ] online)",
+      "answer": "online.",
+      "hint": "Look back at what connect and network mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: online."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "There is no internet. An online video will... ([ ] not play)",
+      "answer": "not play.",
+      "hint": "Look back at what connect and network mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: not play."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "When our device is joined to the internet, we are... ([ ] online)",
+      "answer": "online.",
+      "hint": "Look back at what connect and network mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: online."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "Two or more computers joined together is a... ([ ] network)",
+      "answer": "network.",
+      "hint": "Look back at what connect and network mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: network."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Which one can connect with no wire? ([ ] smartphone)",
+      "keyIdeas": [
+        "connect",
+        "network",
+        "device"
+      ],
+      "modelAnswer": "smartphone (a brick is not a device that connects)."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "The internet is lots of computers joined all around the... ([ ] world)",
+      "keyIdeas": [
+        "network",
+        "device",
+        "wire"
+      ],
+      "modelAnswer": "world."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "There is no internet. An online video will... ([ ] not play)",
+      "keyIdeas": [
+        "device",
+        "wire",
+        "internet"
+      ],
+      "modelAnswer": "not play."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in the internet: computers all around the world, and give one example of your own.",
+      "keyIdeas": [
+        "connect",
+        "network",
+        "device"
+      ],
+      "modelAnswer": "The internet is the biggest network of all. It is lots and lots of computers joined together all around the world. When your device joins the internet, you can reach people and things very, very far away — you can video-call family, share photos, and watch videos.\n\nDot lots of little computers all around it and join them with lines. All these computers, all around the world, are joined together. That giant network is the internet. Imani lives here."
+    }
+  ],
+  "project": {
+    "title": "Unit 10 Project: We Are Connected",
+    "brief": "Bring together everything from We Are Connected into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your we are connected project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I drew two computers and a printer joined with wires.",
+      "I drew three devices that need no wire.",
+      "I told my partner why I chose them.",
+      "I answered the online or offline question.",
+      "I added one thing to make it better.",
+      "1. Two or more computers joined together is a... Tick one.",
+      "2. A printer often connects with a... Tick one.",
+      "3. Which one can connect with no wire? Tick one."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “connect” mean in computing?",
+        "options": [
+          "To join together.",
+          "Two or more computers joined together.",
+          "A machine we use, like a tablet or a printer.",
+          "A cord that joins things so they can share."
+        ],
+        "answer": "To join together.",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Connect means to join together."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “network” mean in computing?",
+        "options": [
+          "Two or more computers joined together.",
+          "A machine we use, like a tablet or a printer.",
+          "A cord that joins things so they can share.",
+          "Lots of computers joined together all around the world."
+        ],
+        "answer": "Two or more computers joined together.",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Network means two or more computers joined together."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “device” mean in computing?",
+        "options": [
+          "A machine we use, like a tablet or a printer.",
+          "A cord that joins things so they can share.",
+          "Lots of computers joined together all around the world.",
+          "Joined to the internet."
+        ],
+        "answer": "A machine we use, like a tablet or a printer.",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Device means a machine we use, like a tablet or a printer."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “wire” mean in computing?",
+        "options": [
+          "A cord that joins things so they can share.",
+          "Lots of computers joined together all around the world.",
+          "Joined to the internet.",
+          "Not joined to the internet."
+        ],
+        "answer": "A cord that joins things so they can share.",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Wire means a cord that joins things so they can share."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “internet” mean in computing?",
+        "options": [
+          "Lots of computers joined together all around the world.",
+          "Joined to the internet.",
+          "Not joined to the internet.",
+          "A moving picture, like the spinning circle that means wait."
+        ],
+        "answer": "Lots of computers joined together all around the world.",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Internet means lots of computers joined together all around the world."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “online” mean in computing?",
+        "options": [
+          "Joined to the internet.",
+          "Not joined to the internet.",
+          "A moving picture, like the spinning circle that means wait.",
+          "To join together."
+        ],
+        "answer": "Joined to the internet.",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Online means joined to the internet."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Not joined to the internet.?",
+        "options": [
+          "offline",
+          "animation",
+          "connect",
+          "network"
+        ],
+        "answer": "offline",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Offline means not joined to the internet."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A moving picture, like the spinning circle that means wait.?",
+        "options": [
+          "animation",
+          "connect",
+          "network",
+          "device"
+        ],
+        "answer": "animation",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Animation means a moving picture, like the spinning circle that means wait."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: To join together.?",
+        "options": [
+          "connect",
+          "network",
+          "device",
+          "wire"
+        ],
+        "answer": "connect",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Connect means to join together."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Two or more computers joined together.?",
+        "options": [
+          "network",
+          "device",
+          "wire",
+          "internet"
+        ],
+        "answer": "network",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Network means two or more computers joined together."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A machine we use, like a tablet or a printer.?",
+        "options": [
+          "device",
+          "wire",
+          "internet",
+          "online"
+        ],
+        "answer": "device",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Device means a machine we use, like a tablet or a printer."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A cord that joins things so they can share.?",
+        "options": [
+          "wire",
+          "internet",
+          "online",
+          "offline"
+        ],
+        "answer": "wire",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Wire means a cord that joins things so they can share."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u10-game-1",
+        "icon": "?",
+        "skill": "connect",
+        "title": "Quick Match: connect",
+        "description": "Practise connect through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “connect” mean in computing?",
+            "choices": [
+              "To join together.",
+              "Two or more computers joined together.",
+              "A machine we use, like a tablet or a printer.",
+              "A cord that joins things so they can share."
+            ],
+            "answer": "To join together.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Connect means to join together."
+          },
+          {
+            "prompt": "What does “wire” mean in computing?",
+            "choices": [
+              "A cord that joins things so they can share.",
+              "Lots of computers joined together all around the world.",
+              "Joined to the internet.",
+              "Not joined to the internet."
+            ],
+            "answer": "A cord that joins things so they can share.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Wire means a cord that joins things so they can share."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Not joined to the internet.?",
+            "choices": [
+              "offline",
+              "animation",
+              "connect",
+              "network"
+            ],
+            "answer": "offline",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Offline means not joined to the internet."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Two or more computers joined together.?",
+            "choices": [
+              "network",
+              "device",
+              "wire",
+              "internet"
+            ],
+            "answer": "network",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Network means two or more computers joined together."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-2",
+        "icon": "★",
+        "skill": "network",
+        "title": "Concept Quest: network",
+        "description": "Practise network through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “network” mean in computing?",
+            "choices": [
+              "Two or more computers joined together.",
+              "A machine we use, like a tablet or a printer.",
+              "A cord that joins things so they can share.",
+              "Lots of computers joined together all around the world."
+            ],
+            "answer": "Two or more computers joined together.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Network means two or more computers joined together."
+          },
+          {
+            "prompt": "What does “internet” mean in computing?",
+            "choices": [
+              "Lots of computers joined together all around the world.",
+              "Joined to the internet.",
+              "Not joined to the internet.",
+              "A moving picture, like the spinning circle that means wait."
+            ],
+            "answer": "Lots of computers joined together all around the world.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Internet means lots of computers joined together all around the world."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A moving picture, like the spinning circle that means wait.?",
+            "choices": [
+              "animation",
+              "connect",
+              "network",
+              "device"
+            ],
+            "answer": "animation",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Animation means a moving picture, like the spinning circle that means wait."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A machine we use, like a tablet or a printer.?",
+            "choices": [
+              "device",
+              "wire",
+              "internet",
+              "online"
+            ],
+            "answer": "device",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Device means a machine we use, like a tablet or a printer."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-3",
+        "icon": "◫",
+        "skill": "device",
+        "title": "Debug Detective: device",
+        "description": "Practise device through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “device” mean in computing?",
+            "choices": [
+              "A machine we use, like a tablet or a printer.",
+              "A cord that joins things so they can share.",
+              "Lots of computers joined together all around the world.",
+              "Joined to the internet."
+            ],
+            "answer": "A machine we use, like a tablet or a printer.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Device means a machine we use, like a tablet or a printer."
+          },
+          {
+            "prompt": "What does “online” mean in computing?",
+            "choices": [
+              "Joined to the internet.",
+              "Not joined to the internet.",
+              "A moving picture, like the spinning circle that means wait.",
+              "To join together."
+            ],
+            "answer": "Joined to the internet.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Online means joined to the internet."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To join together.?",
+            "choices": [
+              "connect",
+              "network",
+              "device",
+              "wire"
+            ],
+            "answer": "connect",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Connect means to join together."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A cord that joins things so they can share.?",
+            "choices": [
+              "wire",
+              "internet",
+              "online",
+              "offline"
+            ],
+            "answer": "wire",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Wire means a cord that joins things so they can share."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-4",
+        "icon": "→",
+        "skill": "wire",
+        "title": "Algorithm Runner: wire",
+        "description": "Practise wire through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “wire” mean in computing?",
+            "choices": [
+              "A cord that joins things so they can share.",
+              "Lots of computers joined together all around the world.",
+              "Joined to the internet.",
+              "Not joined to the internet."
+            ],
+            "answer": "A cord that joins things so they can share.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Wire means a cord that joins things so they can share."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Not joined to the internet.?",
+            "choices": [
+              "offline",
+              "animation",
+              "connect",
+              "network"
+            ],
+            "answer": "offline",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Offline means not joined to the internet."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Two or more computers joined together.?",
+            "choices": [
+              "network",
+              "device",
+              "wire",
+              "internet"
+            ],
+            "answer": "network",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Network means two or more computers joined together."
+          },
+          {
+            "prompt": "What does “connect” mean in computing?",
+            "choices": [
+              "To join together.",
+              "Two or more computers joined together.",
+              "A machine we use, like a tablet or a printer.",
+              "A cord that joins things so they can share."
+            ],
+            "answer": "To join together.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Connect means to join together."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-5",
+        "icon": "Σ",
+        "skill": "internet",
+        "title": "Vocabulary Vault: internet",
+        "description": "Practise internet through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “internet” mean in computing?",
+            "choices": [
+              "Lots of computers joined together all around the world.",
+              "Joined to the internet.",
+              "Not joined to the internet.",
+              "A moving picture, like the spinning circle that means wait."
+            ],
+            "answer": "Lots of computers joined together all around the world.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Internet means lots of computers joined together all around the world."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A moving picture, like the spinning circle that means wait.?",
+            "choices": [
+              "animation",
+              "connect",
+              "network",
+              "device"
+            ],
+            "answer": "animation",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Animation means a moving picture, like the spinning circle that means wait."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A machine we use, like a tablet or a printer.?",
+            "choices": [
+              "device",
+              "wire",
+              "internet",
+              "online"
+            ],
+            "answer": "device",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Device means a machine we use, like a tablet or a printer."
+          },
+          {
+            "prompt": "What does “network” mean in computing?",
+            "choices": [
+              "Two or more computers joined together.",
+              "A machine we use, like a tablet or a printer.",
+              "A cord that joins things so they can share.",
+              "Lots of computers joined together all around the world."
+            ],
+            "answer": "Two or more computers joined together.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Network means two or more computers joined together."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-6",
+        "icon": "◇",
+        "skill": "online",
+        "title": "Challenge Cards: online",
+        "description": "Practise online through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “online” mean in computing?",
+            "choices": [
+              "Joined to the internet.",
+              "Not joined to the internet.",
+              "A moving picture, like the spinning circle that means wait.",
+              "To join together."
+            ],
+            "answer": "Joined to the internet.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Online means joined to the internet."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To join together.?",
+            "choices": [
+              "connect",
+              "network",
+              "device",
+              "wire"
+            ],
+            "answer": "connect",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Connect means to join together."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A cord that joins things so they can share.?",
+            "choices": [
+              "wire",
+              "internet",
+              "online",
+              "offline"
+            ],
+            "answer": "wire",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Wire means a cord that joins things so they can share."
+          },
+          {
+            "prompt": "What does “device” mean in computing?",
+            "choices": [
+              "A machine we use, like a tablet or a printer.",
+              "A cord that joins things so they can share.",
+              "Lots of computers joined together all around the world.",
+              "Joined to the internet."
+            ],
+            "answer": "A machine we use, like a tablet or a printer.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Device means a machine we use, like a tablet or a printer."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-7",
+        "icon": "⚡",
+        "skill": "offline",
+        "title": "Think Fast: offline",
+        "description": "Practise offline through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Not joined to the internet.?",
+            "choices": [
+              "offline",
+              "animation",
+              "connect",
+              "network"
+            ],
+            "answer": "offline",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Offline means not joined to the internet."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Two or more computers joined together.?",
+            "choices": [
+              "network",
+              "device",
+              "wire",
+              "internet"
+            ],
+            "answer": "network",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Network means two or more computers joined together."
+          },
+          {
+            "prompt": "What does “connect” mean in computing?",
+            "choices": [
+              "To join together.",
+              "Two or more computers joined together.",
+              "A machine we use, like a tablet or a printer.",
+              "A cord that joins things so they can share."
+            ],
+            "answer": "To join together.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Connect means to join together."
+          },
+          {
+            "prompt": "What does “wire” mean in computing?",
+            "choices": [
+              "A cord that joins things so they can share.",
+              "Lots of computers joined together all around the world.",
+              "Joined to the internet.",
+              "Not joined to the internet."
+            ],
+            "answer": "A cord that joins things so they can share.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Wire means a cord that joins things so they can share."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-8",
+        "icon": "☁",
+        "skill": "animation",
+        "title": "Explain It: animation",
+        "description": "Practise animation through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A moving picture, like the spinning circle that means wait.?",
+            "choices": [
+              "animation",
+              "connect",
+              "network",
+              "device"
+            ],
+            "answer": "animation",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Animation means a moving picture, like the spinning circle that means wait."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A machine we use, like a tablet or a printer.?",
+            "choices": [
+              "device",
+              "wire",
+              "internet",
+              "online"
+            ],
+            "answer": "device",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Device means a machine we use, like a tablet or a printer."
+          },
+          {
+            "prompt": "What does “network” mean in computing?",
+            "choices": [
+              "Two or more computers joined together.",
+              "A machine we use, like a tablet or a printer.",
+              "A cord that joins things so they can share.",
+              "Lots of computers joined together all around the world."
+            ],
+            "answer": "Two or more computers joined together.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Network means two or more computers joined together."
+          },
+          {
+            "prompt": "What does “internet” mean in computing?",
+            "choices": [
+              "Lots of computers joined together all around the world.",
+              "Joined to the internet.",
+              "Not joined to the internet.",
+              "A moving picture, like the spinning circle that means wait."
+            ],
+            "answer": "Lots of computers joined together all around the world.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Internet means lots of computers joined together all around the world."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-9",
+        "icon": "⌂",
+        "skill": "connect",
+        "title": "Real-Life Round: connect",
+        "description": "Practise connect through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To join together.?",
+            "choices": [
+              "connect",
+              "network",
+              "device",
+              "wire"
+            ],
+            "answer": "connect",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Connect means to join together."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A cord that joins things so they can share.?",
+            "choices": [
+              "wire",
+              "internet",
+              "online",
+              "offline"
+            ],
+            "answer": "wire",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Wire means a cord that joins things so they can share."
+          },
+          {
+            "prompt": "What does “device” mean in computing?",
+            "choices": [
+              "A machine we use, like a tablet or a printer.",
+              "A cord that joins things so they can share.",
+              "Lots of computers joined together all around the world.",
+              "Joined to the internet."
+            ],
+            "answer": "A machine we use, like a tablet or a printer.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Device means a machine we use, like a tablet or a printer."
+          },
+          {
+            "prompt": "What does “online” mean in computing?",
+            "choices": [
+              "Joined to the internet.",
+              "Not joined to the internet.",
+              "A moving picture, like the spinning circle that means wait.",
+              "To join together."
+            ],
+            "answer": "Joined to the internet.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Online means joined to the internet."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-10",
+        "icon": "!",
+        "skill": "network",
+        "title": "Spot the Bug: network",
+        "description": "Practise network through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Two or more computers joined together.?",
+            "choices": [
+              "network",
+              "device",
+              "wire",
+              "internet"
+            ],
+            "answer": "network",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Network means two or more computers joined together."
+          },
+          {
+            "prompt": "What does “connect” mean in computing?",
+            "choices": [
+              "To join together.",
+              "Two or more computers joined together.",
+              "A machine we use, like a tablet or a printer.",
+              "A cord that joins things so they can share."
+            ],
+            "answer": "To join together.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Connect means to join together."
+          },
+          {
+            "prompt": "What does “wire” mean in computing?",
+            "choices": [
+              "A cord that joins things so they can share.",
+              "Lots of computers joined together all around the world.",
+              "Joined to the internet.",
+              "Not joined to the internet."
+            ],
+            "answer": "A cord that joins things so they can share.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Wire means a cord that joins things so they can share."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Not joined to the internet.?",
+            "choices": [
+              "offline",
+              "animation",
+              "connect",
+              "network"
+            ],
+            "answer": "offline",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Offline means not joined to the internet."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-11",
+        "icon": "≡",
+        "skill": "device",
+        "title": "Mastery Mix: device",
+        "description": "Practise device through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A machine we use, like a tablet or a printer.?",
+            "choices": [
+              "device",
+              "wire",
+              "internet",
+              "online"
+            ],
+            "answer": "device",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Device means a machine we use, like a tablet or a printer."
+          },
+          {
+            "prompt": "What does “network” mean in computing?",
+            "choices": [
+              "Two or more computers joined together.",
+              "A machine we use, like a tablet or a printer.",
+              "A cord that joins things so they can share.",
+              "Lots of computers joined together all around the world."
+            ],
+            "answer": "Two or more computers joined together.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Network means two or more computers joined together."
+          },
+          {
+            "prompt": "What does “internet” mean in computing?",
+            "choices": [
+              "Lots of computers joined together all around the world.",
+              "Joined to the internet.",
+              "Not joined to the internet.",
+              "A moving picture, like the spinning circle that means wait."
+            ],
+            "answer": "Lots of computers joined together all around the world.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Internet means lots of computers joined together all around the world."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A moving picture, like the spinning circle that means wait.?",
+            "choices": [
+              "animation",
+              "connect",
+              "network",
+              "device"
+            ],
+            "answer": "animation",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Animation means a moving picture, like the spinning circle that means wait."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-12",
+        "icon": "T",
+        "skill": "wire",
+        "title": "Unit Champion: wire",
+        "description": "Practise wire through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A cord that joins things so they can share.?",
+            "choices": [
+              "wire",
+              "internet",
+              "online",
+              "offline"
+            ],
+            "answer": "wire",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Wire means a cord that joins things so they can share."
+          },
+          {
+            "prompt": "What does “device” mean in computing?",
+            "choices": [
+              "A machine we use, like a tablet or a printer.",
+              "A cord that joins things so they can share.",
+              "Lots of computers joined together all around the world.",
+              "Joined to the internet."
+            ],
+            "answer": "A machine we use, like a tablet or a printer.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Device means a machine we use, like a tablet or a printer."
+          },
+          {
+            "prompt": "What does “online” mean in computing?",
+            "choices": [
+              "Joined to the internet.",
+              "Not joined to the internet.",
+              "A moving picture, like the spinning circle that means wait.",
+              "To join together."
+            ],
+            "answer": "Joined to the internet.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Online means joined to the internet."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To join together.?",
+            "choices": [
+              "connect",
+              "network",
+              "device",
+              "wire"
+            ],
+            "answer": "connect",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Connect means to join together."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can say that two or more computers joined together is called a network.",
+    "I can know that other devices, not only computers, can join a network too (like a printer or a tablet).",
+    "I can say that connected computers can share — they can talk to each other and share pictures and words.",
+    "I can name devices that connect with wires — for example a printer, a desktop computer or a games console.",
+    "I can name devices that connect without wires — for example a smartphone, a tablet, a laptop or a camera.",
+    "I can know that the internet is lots and lots of computers joined together all around the world.",
+    "I can know that when a device is joined to the internet we are online, and we can share pictures, video-call and watch videos.",
+    "I can know that sometimes there is no internet (we are offline), and then some things — like an online video — will not work."
+  ]
+}

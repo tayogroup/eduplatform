@@ -1,0 +1,690 @@
+{
+  "schemaVersion": "Ehel Computing Stage Capstone v1.0",
+  "stage": {
+    "id": "s02",
+    "label": "Stage 2"
+  },
+  "title": "Build a Stage 2 Computing Showcase",
+  "overview": "Bring together everything from Stage 2 Computing into one showcase: a working program, the data behind it, a clear explanation of how it runs, and the safety rules you followed while making it.",
+  "project": {
+    "drivingQuestion": "How can I use the computing I learned in Stage 2 to build something that solves a real problem for someone in my community — and explain exactly how it works?",
+    "finalProduct": "A working program or digital product, the plan and algorithm behind it, a test-and-debug log, a data display, and a spoken or written explanation of your design decisions.",
+    "stages": [
+      {
+        "id": "plan",
+        "title": "1. Plan and decompose",
+        "units": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "prompt": "Choose a real problem. Using the ideas from Units 1, 2, 3, 4, break it into smaller parts and write the algorithm before you write any code.",
+        "evidence": "A decomposed problem and a written algorithm or flowchart"
+      },
+      {
+        "id": "build",
+        "title": "2. Build it",
+        "units": [
+          5,
+          6,
+          7,
+          8
+        ],
+        "prompt": "Build your program or product using the tools from Units 5, 6, 7, 8. Build the smallest working version first, then add one feature at a time.",
+        "evidence": "A working program or digital product"
+      },
+      {
+        "id": "test",
+        "title": "3. Test, debug and improve",
+        "units": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "prompt": "Test your work against your success criteria. Keep a log of every bug: what you saw, what caused it, and how you fixed it.",
+        "evidence": "A test-and-debug log with at least three entries"
+      },
+      {
+        "id": "share",
+        "title": "4. Share it safely",
+        "units": [
+          9,
+          10,
+          11
+        ],
+        "prompt": "Present your showcase. Explain three design decisions, show your data, and say which online-safety rules from Units 9, 10, 11 you followed and why.",
+        "evidence": "A spoken, written or recorded explanation covering design, data and safety"
+      }
+    ],
+    "evidenceChecklist": [
+      "A decomposed problem with a written algorithm or flowchart",
+      "A working program or digital product",
+      "A test-and-debug log with at least three fixed bugs",
+      "Data collected, organised and displayed",
+      "Success criteria, each one ticked off with evidence",
+      "An explanation of your design decisions and the safety rules you followed"
+    ],
+    "rubric": [
+      {
+        "criterion": "Computational thinking",
+        "secure": "The problem is decomposed, the algorithm is precise, and the pattern behind it is named."
+      },
+      {
+        "criterion": "Programming and debugging",
+        "secure": "The program runs, meets its criteria, and every bug found is logged with its cause and fix."
+      },
+      {
+        "criterion": "Data and information",
+        "secure": "Data is collected accurately, organised sensibly and displayed so it answers a question."
+      },
+      {
+        "criterion": "Safe and responsible use",
+        "secure": "Personal information is protected, sources are credited, and safety choices are explained."
+      }
+    ]
+  },
+  "quiz": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "cap-u01-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "True or False: A computer can think by itself.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "answer": "False",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "False (a computer only follows instructions; it cannot think by itself).",
+        "unitNo": 1,
+        "unitTitle": "Be a Game Developer"
+      },
+      {
+        "id": "cap-u01-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “program” mean in computing?",
+        "options": [
+          "A set of instructions that a computer can follow.",
+          "The instructions inside a program — the blocks.",
+          "A free app where you join picture blocks to make a program.",
+          "A person, animal or thing in ScratchJr that follows your blocks."
+        ],
+        "answer": "A set of instructions that a computer can follow.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Program means a set of instructions that a computer can follow.",
+        "unitNo": 1,
+        "unitTitle": "Be a Game Developer"
+      },
+      {
+        "id": "cap-u01-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: To make the computer follow the program.?",
+        "options": [
+          "run",
+          "algorithm",
+          "instruction",
+          "precise"
+        ],
+        "answer": "run",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Run means to make the computer follow the program.",
+        "unitNo": 1,
+        "unitTitle": "Be a Game Developer"
+      },
+      {
+        "id": "cap-u02-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “data” mean in computing?",
+        "options": [
+          "Facts we collect.",
+          "To put things into groups.",
+          "Things that go together.",
+          "A little mark to help us count."
+        ],
+        "answer": "Facts we collect.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Data means facts we collect..",
+        "unitNo": 2,
+        "unitTitle": "Be a Data Analyst"
+      },
+      {
+        "id": "cap-u02-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “pictogram” mean in computing?",
+        "options": [
+          "A chart that shows data with pictures.",
+          "A chart that shows data with bars or blocks.",
+          "To show.",
+          "To keep data safe."
+        ],
+        "answer": "A chart that shows data with pictures.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Tally means a little mark to help us count.",
+        "unitNo": 2,
+        "unitTitle": "Be a Data Analyst"
+      },
+      {
+        "id": "cap-u02-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Black lines that hold data about a thing.?",
+        "options": [
+          "barcode",
+          "data",
+          "sort",
+          "group (category)"
+        ],
+        "answer": "barcode",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Backup means a spare copy of data, kept safe.",
+        "unitNo": 2,
+        "unitTitle": "Be a Data Analyst"
+      },
+      {
+        "id": "cap-u03-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “computer” mean in computing?",
+        "options": [
+          "A machine that follows instructions to do jobs for us.",
+          "Another name for a computer, big or small.",
+          "The parts of a computer we can touch.",
+          "The instructions inside. We cannot touch it."
+        ],
+        "answer": "A machine that follows instructions to do jobs for us.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Computer means a machine that follows instructions to do jobs for us.",
+        "unitNo": 3,
+        "unitTitle": "Computers All Around Us"
+      },
+      {
+        "id": "cap-u03-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “app” mean in computing?",
+        "options": [
+          "Software that does one job.",
+          "Something we put IN to the computer.",
+          "Something the computer gives OUT to see or hear.",
+          "Small and light, so it is easy to carry."
+        ],
+        "answer": "Software that does one job.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "App means software that does one job.",
+        "unitNo": 3,
+        "unitTitle": "Computers All Around Us"
+      },
+      {
+        "id": "cap-u03-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Another name for a computer, big or small.?",
+        "options": [
+          "digital device",
+          "hardware",
+          "software",
+          "app"
+        ],
+        "answer": "digital device",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Digital device means another name for a computer, big or small.",
+        "unitNo": 3,
+        "unitTitle": "Computers All Around Us"
+      },
+      {
+        "id": "cap-u04-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “algorithm” mean in computing?",
+        "options": [
+          "Steps to do a job, in the right order.",
+          "One small thing you do.",
+          "Which step comes first, next and last.",
+          "A mistake in the steps."
+        ],
+        "answer": "Steps to do a job, in the right order.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Algorithm means steps to do a job, in the right order..",
+        "unitNo": 4,
+        "unitTitle": "Be an Animator"
+      },
+      {
+        "id": "cap-u04-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “program” mean in computing?",
+        "options": [
+          "An algorithm made from ScratchJr blocks.",
+          "A person, animal or thing in ScratchJr.",
+          "Do the same step again and again.",
+          "Steps to do a job, in the right order."
+        ],
+        "answer": "An algorithm made from ScratchJr blocks.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Bug means a mistake in the steps.",
+        "unitNo": 4,
+        "unitTitle": "Be an Animator"
+      },
+      {
+        "id": "cap-u04-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Which step comes first, next and last.?",
+        "options": [
+          "order",
+          "bug",
+          "program",
+          "character"
+        ],
+        "answer": "order",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Algorithm means steps to do a job, in the right order.",
+        "unitNo": 4,
+        "unitTitle": "Be an Animator"
+      },
+      {
+        "id": "cap-u05-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “device” mean in computing?",
+        "options": [
+          "A machine like a tablet, a phone, a printer or a smart TV.",
+          "Devices joined together so they can share and send messages.",
+          "To join one device to another.",
+          "A device on its own. It cannot talk to other devices."
+        ],
+        "answer": "A machine like a tablet, a phone, a printer or a smart TV.",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Device means a machine like a tablet, a phone, a printer or a smart TV.",
+        "unitNo": 5,
+        "unitTitle": "Devices That Talk to Each Other"
+      },
+      {
+        "id": "cap-u05-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “connected device” mean in computing?",
+        "options": [
+          "A device joined to others. It can share and talk to them.",
+          "To let others use the same thing.",
+          "Joined with a cable you can see.",
+          "Joined through the air, with no cable."
+        ],
+        "answer": "A device joined to others. It can share and talk to them.",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Connected device means a device joined to others. It can share and talk to them.",
+        "unitNo": 5,
+        "unitTitle": "Devices That Talk to Each Other"
+      },
+      {
+        "id": "cap-u05-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A machine like a tablet, a phone, a printer or a smart TV.?",
+        "options": [
+          "device",
+          "network",
+          "connect",
+          "standalone device"
+        ],
+        "answer": "device",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Device means a machine like a tablet, a phone, a printer or a smart TV.",
+        "unitNo": 5,
+        "unitTitle": "Devices That Talk to Each Other"
+      },
+      {
+        "id": "cap-u06-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “algorithm” mean in computing?",
+        "options": [
+          "A set of instructions in the right order.",
+          "Which step comes first, next and last.",
+          "An algorithm made from blocks the computer can follow.",
+          "A free app where you join picture blocks to make things move."
+        ],
+        "answer": "A set of instructions in the right order.",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Algorithm means a set of instructions in the right order.",
+        "unitNo": 6,
+        "unitTitle": "Be a Designer"
+      },
+      {
+        "id": "cap-u06-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “block” mean in computing?",
+        "options": [
+          "One picture instruction you drag in ScratchJr.",
+          "A mistake in a program.",
+          "To find and fix the mistake.",
+          "A set of instructions in the right order."
+        ],
+        "answer": "One picture instruction you drag in ScratchJr.",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Block means one picture instruction you drag in ScratchJr.",
+        "unitNo": 6,
+        "unitTitle": "Be a Designer"
+      },
+      {
+        "id": "cap-u06-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: An algorithm made from blocks the computer can follow.?",
+        "options": [
+          "program",
+          "ScratchJr",
+          "block",
+          "bug"
+        ],
+        "answer": "program",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Program means an algorithm made from blocks the computer can follow.",
+        "unitNo": 6,
+        "unitTitle": "Be a Designer"
+      },
+      {
+        "id": "cap-u07-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "Circle the data that is numerical (numbers).",
+        "options": [
+          "Heights: 100cm",
+          "105cm Eye colours: brown",
+          "blue"
+        ],
+        "answer": "Heights: 100cm",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Circle Heights: 100cm, 105cm (numerical). Eye colours is categorical.",
+        "unitNo": 7,
+        "unitTitle": "Be a Data Scientist"
+      },
+      {
+        "id": "cap-u07-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “numerical data” mean in computing?",
+        "options": [
+          "Data that is numbers — we count or measure it.",
+          "Data that is groups — like colours or names.",
+          "A set of questions on paper or on a screen.",
+          "Someone who uses data to solve problems."
+        ],
+        "answer": "Data that is numbers — we count or measure it.",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Numerical data means data that is numbers — we count or measure it.",
+        "unitNo": 7,
+        "unitTitle": "Be a Data Scientist"
+      },
+      {
+        "id": "cap-u07-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Something we ask to get data.?",
+        "options": [
+          "question",
+          "statistical question",
+          "non-statistical question",
+          "numerical data"
+        ],
+        "answer": "question",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Question means something we ask to get data.",
+        "unitNo": 7,
+        "unitTitle": "Be a Data Scientist"
+      },
+      {
+        "id": "cap-u08-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “algorithm” mean in computing?",
+        "options": [
+          "A set of instructions in the right order.",
+          "One thing you tell the device to do.",
+          "An algorithm a device can follow.",
+          "Pen on the paper (draw) / pen lifted (do not draw)."
+        ],
+        "answer": "A set of instructions in the right order.",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Algorithm means a set of instructions in the right order.",
+        "unitNo": 8,
+        "unitTitle": "Be an Artist"
+      },
+      {
+        "id": "cap-u08-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “move forward” mean in computing?",
+        "options": [
+          "Go straight the way you are facing.",
+          "Turn a quarter, to make a corner.",
+          "Do the same step again and again — a shorter way.",
+          "The line the device travels along."
+        ],
+        "answer": "Go straight the way you are facing.",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Move forward means go straight the way you are facing.",
+        "unitNo": 8,
+        "unitTitle": "Be an Artist"
+      },
+      {
+        "id": "cap-u08-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Put the pen on the paper - now the device draws as it moves.?",
+        "options": [
+          "Marker down",
+          "Marker up",
+          "Move forward (number)",
+          "Turn right"
+        ],
+        "answer": "Marker down",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Marker down means put the pen on the paper - now the device draws as it moves..",
+        "unitNo": 8,
+        "unitTitle": "Be an Artist"
+      },
+      {
+        "id": "cap-u09-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "True or false? Something on one computer can be seen by another computer on the network.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "answer": "True",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "True. Something on one computer can be seen by another computer on the network — that is why we think before we share.",
+        "unitNo": 9,
+        "unitTitle": "Connected and Sharing Safely"
+      },
+      {
+        "id": "cap-u09-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “not available” mean in computing?",
+        "options": [
+          "Not here. The internet is not working just now.",
+          "To let someone else see or use something.",
+          "Private information about you.",
+          "Just for you and your family, not for strangers."
+        ],
+        "answer": "Not here. The internet is not working just now.",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Not available means not here. The internet is not working just now.",
+        "unitNo": 9,
+        "unitTitle": "Connected and Sharing Safely"
+      },
+      {
+        "id": "cap-u09-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The device is connected WITHOUT wires (wireless).?",
+        "options": [
+          "Wi-Fi (little curved lines, like a fan)",
+          "A screen with a plug, or small arrows",
+          "A crossed-out icon, or the words Not connected",
+          "A globe (a little picture of the world)"
+        ],
+        "answer": "Wi-Fi (little curved lines, like a fan)",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Wi-Fi (little curved lines, like a fan) means the device is connected WITHOUT wires (wireless).",
+        "unitNo": 9,
+        "unitTitle": "Connected and Sharing Safely"
+      },
+      {
+        "id": "cap-u10-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “input” mean in computing?",
+        "options": [
+          "What we put in to an algorithm.",
+          "What comes back out.",
+          "To say what will happen before it happens.",
+          "A set of instructions in the right order."
+        ],
+        "answer": "What we put in to an algorithm.",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Input means what we put in to an algorithm.",
+        "unitNo": 10,
+        "unitTitle": "Be a Storyteller"
+      },
+      {
+        "id": "cap-u10-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “program” mean in computing?",
+        "options": [
+          "An algorithm made from blocks the computer can follow.",
+          "The block that makes a character speak.",
+          "A signal one character sends so another can start.",
+          "A scene in the story. A new page is a new place."
+        ],
+        "answer": "An algorithm made from blocks the computer can follow.",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Program means an algorithm made from blocks the computer can follow.",
+        "unitNo": 10,
+        "unitTitle": "Be a Storyteller"
+      },
+      {
+        "id": "cap-u10-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A mistake in a program.?",
+        "options": [
+          "bug",
+          "debug",
+          "input",
+          "output"
+        ],
+        "answer": "bug",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Bug means a mistake in a program.",
+        "unitNo": 10,
+        "unitTitle": "Be a Storyteller"
+      },
+      {
+        "id": "cap-u11-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “computer” mean in computing?",
+        "options": [
+          "A machine that follows instructions to do tasks very fast.",
+          "A computer you can use, like a desktop, laptop, tablet or phone.",
+          "To keep things safely so you can use them later.",
+          "A machine that does a task without help from a person."
+        ],
+        "answer": "A machine that follows instructions to do tasks very fast.",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Computer means a machine that follows instructions to do tasks very fast.",
+        "unitNo": 11,
+        "unitTitle": "Computers and Robots"
+      },
+      {
+        "id": "cap-u11-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “real” mean in computing?",
+        "options": [
+          "It truly exists in our world.",
+          "Not real. Make-believe, like in a movie.",
+          "One thing you tell the robot to do.",
+          "Up arrow"
+        ],
+        "answer": "It truly exists in our world.",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Real means it truly exists in our world.",
+        "unitNo": 11,
+        "unitTitle": "Computers and Robots"
+      },
+      {
+        "id": "cap-u11-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Left arrow?",
+        "options": [
+          "Step left",
+          "Step right",
+          "computer",
+          "device"
+        ],
+        "answer": "Step left",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Step left means left arrow.",
+        "unitNo": 11,
+        "unitTitle": "Computers and Robots"
+      }
+    ]
+  },
+  "reviewStatus": "Curriculum review required"
+}

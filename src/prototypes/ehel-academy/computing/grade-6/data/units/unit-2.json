@@ -1,0 +1,2252 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:01.030Z",
+  "stage": {
+    "id": "s06",
+    "label": "Stage 6"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t01",
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "comp-g06-u02",
+    "unitNo": 2,
+    "unitTitle": "Managing Data",
+    "unitOverview": "In this unit — Managing Data — you will work through capturing data, designing a form to collect continuous data, hands, creating a spreadsheet, worked example: aunt amara's shop in hargeisa, total sales in shillings, creating a database, shows as 1/2, creating the database in libreoffice base and how is data used?. Everything you need is here: explainers to read, examples to copy, things to build, practice with answers, and a project at the end. Every tool used is free and runs in a web browser.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 6
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-6-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 6",
+    "sourceArchive": "Year 6-20260801T055758Z-1-001.zip",
+    "sourceAudience": "student",
+    "sourceDocuments": [
+      "Year 6/Unit 2/Year 6 - Unit 2 Lesson.docx",
+      "Year 6/Unit 2/Year 6 - Unit 2 Activities & Projects.docx",
+      "Year 6/Unit 2/Year 6 - Unit 2 Practice & Quiz.docx",
+      "Year 6/Unit 2/Year 6 - Unit 2 Reference.docx"
+    ],
+    "sourceBlockCount": 1261,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 6 Lesson, Activities & Projects, Practice & Quiz and Reference booklets for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Identify the different computing tools you can use in a statistical investigation.",
+    "Explain how to plan a statistical investigation.",
+    "Explain how to collect continuous data.",
+    "Design an appropriate form to collect continuous data.",
+    "Explain the features of a spreadsheet, including cells, rows, columns and cell references.",
+    "Use formulas with arithmetic operators, and the built-in functions SUM and AVERAGE.",
+    "Design a spreadsheet and select data for a given purpose, then present it as a chart.",
+    "Design a single-table database, choosing sensible fields and data types.",
+    "Create a single-table database in LibreOffice Base.",
+    "Explain how data helps solve problems in retail, healthcare and manufacturing."
+  ],
+  "toolkit": [
+    {
+      "name": "A free spreadsheet",
+      "url": "Google Sheets, or LibreOffice Calc",
+      "steps": [
+        "Open a new blank spreadsheet.",
+        "Put your field names in row 1, one per column.",
+        "Type one record per row underneath.",
+        "Use Insert → Chart to turn your data into a graph."
+      ],
+      "note": "Any free spreadsheet works — the ideas are the same in all of them."
+    },
+    {
+      "name": "A simple database",
+      "url": "A spreadsheet in database layout, or LibreOffice Base",
+      "steps": [
+        "Give every field a clear name and one kind of data.",
+        "Enter one record per row.",
+        "Sort on a field to put records in order.",
+        "Filter or search to find the records that match a condition."
+      ],
+      "note": "A spreadsheet laid out with fields and records works as a database for this unit."
+    }
+  ],
+  "tutorPrompts": [
+    "I have installed LibreOffice. Can you tell me the difference between Calc and Base in one simple sentence each?",
+    "What does the .ods file ending mean, and why is an open file format a good thing?",
+    "In LibreOffice Calc, how do I use Data Validity to make a cell accept only a decimal number between 0 and 50?",
+    "Why is a multiple choice question a bad way to collect continuous data like height? Explain it simply.",
+    "I typed SUM(B2:B8) but nothing happened. What did I forget at the start of the formula?",
+    "Explain the difference between the SUM function and the AVERAGE function using my shop data as an example.",
+    "In LibreOffice Base, what is the difference between the Find Record tool and a filter? When would I use each?",
+    "Explain why a phrase search for a full name is better than a keyword search for a first name."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-capturing-data",
+      "title": "Capturing Data",
+      "explanation": "Before you can manage data, you have to capture it — that is, collect it. And before you collect it, you have to plan. Good data managers never just grab numbers randomly; they think carefully about what they want to find out and how they will find it out. This is called a statistical investigation.\n\nWhat is a statistical investigation?\n\nA statistical investigation is the collection of data to help you answer a question. For example, Maya might want to find out the mean (average) number of goals her team scores in a month. She would look at each match, write down the goals, and then work out the mean. Or Sami might want to find out how many different birds visit the school garden in one hour — he would sit and count them. Both of these are statistical investigations, because both collect data to answer a clear question.\n\nNot all data is the same. Knowing which type you are collecting helps you choose the right tool to collect it. There are three types you need to know.\n\nHere is the key difference to remember. Discrete data is counted and is always a whole number — you cannot have half a person in a room. Continuous data is measured and can be any value at all, like a temperature of 24.5 degrees or a height of 1.42 metres. Because continuous data can be so precise, capturing it needs extra care — and that is exactly what Sami's weather investigation needs.\n\nWhen you plan a statistical investigation, you should ask yourself six questions before you collect a single number. Answering them first saves you a lot of trouble later.\n\nWhat do I want to find out? For example, 'How does the temperature in Mogadishu change during the week?'\n\nWhat questions will help me find it out? Your questions must give you exactly the data you need.\n\nWho or what will I ask or measure? Be specific. 'The temperature outside our classroom' is specific; 'the temperature' is not.\n\nHow will I collect the data? A questionnaire for opinions, a thermometer or data logger for temperature, and so on.\n\nHow will I analyse the data? Perhaps with a spreadsheet, and a chart to make patterns easy to see.\n\nWhat tools will I use throughout? A data logger, a spreadsheet, a database, or a form — or a mixture.\n\nThere is a range of computing tools you can use to capture data. Choosing the right one depends on the type of data and how you want to collect it.\n\nData loggers — a device that uses sensors to record data over time, all by itself. A weather station that records the temperature and wind speed every hour is a data logger. Because it works on its own, it can be left in a hard-to-reach place, like a mountain top, for months. Data loggers are excellent for capturing continuous data.\n\nSpreadsheets — such as LibreOffice Calc. A spreadsheet stores data in a neat grid and can do calculations and draw charts. It is perfect for recording readings and then analysing them.\n\nDatabases — such as LibreOffice Base. A database stores, organises and lets you search large amounts of organised data quickly.\n\nForms and questionnaires — a series of questions people fill in. A form can be on paper, in a word processor, or an online form. Forms are great for collecting answers from many people.\n\nEvery year there are between 12,000 and 14,000 earthquakes around the world.",
+      "example": "They are measured by a special kind of data logger called a seismograph, which senses the tiny shaking of the ground and records it automatically, day and night, without anyone standing next to it."
+    },
+    {
+      "id": "concept-2-designing-a-form-to-collect-continuous-data",
+      "title": "Designing a form to collect continuous data",
+      "explanation": "Continuous data can be tricky to capture, because it can be any value and it often changes over time. If you design a form to collect it, you must think carefully about five things, or your data will be messy and hard to use.\n\nPhrase your questions precisely. 'What was the temperature outside your classroom at 12:00 on Monday?' is precise. 'What is the temperature?' is not — it does not say where or when.\n\nHow often should data be entered? If you want a reading three times a day, say so, and leave space for three readings each day.\n\nOver what period should data be entered? For a week? For a month? Make it clear and leave enough space.\n\nWhat measurements will you use? Degrees Celsius? Millimetres of rainfall? Kilograms? State the unit so everyone answers the same way.\n\nHow precise should the data be? For example, you might ask for answers to one decimal place, like 24.5, not 24.5123.\n\nWhen you make a form, you choose a question type for each question — the way the question is asked and answered. Different types suit different data.\n\nOpen text questions let people write their own answer, such as 'Why do you like reading?'. They are good for opinions, but people might answer in the wrong format. You can control this with validation rules, which only accept certain kinds of answer.\n\nMultiple choice questions let people pick from a set of answers, such as 'What is your favourite colour?'. They are quick, but they are not good for continuous data, because you would need a choice for every possible value — which is impossible.\n\nRanking questions let people choose on a scale, such as 'Rate today's lunch from 1 to 5'. They are great for opinions, but they do not collect continuous or discrete data.",
+      "example": "So which question type is best for collecting continuous data like temperature or height? An open text question with validation rules — such as a box that only accepts a number to one decimal place. This gives the precise, numerical answer you need while stopping people from typing nonsense."
+    },
+    {
+      "id": "concept-3-hands",
+      "title": "Hands",
+      "explanation": "You do not need an expensive online form to capture continuous data carefully. You can build a smart data-capture sheet in LibreOffice Calc, and use its validation rules to make sure only sensible answers are accepted. This is exactly what Sami needs for his Mogadishu weather investigation. Here is how the sheet is set out:\n\nTo stop anyone typing a word or a silly number into the rainfall column, Sami adds a validation rule. He selects the cells B2:B8, then opens the menu Data > Validity. On the Criteria tab he sets Allow to Decimal, the condition to between, a Minimum of 0 and a Maximum of 500. Now the cells will only accept a decimal number from 0 to 500 — a real rainfall reading. On the Error Alert tab he chooses the Stop action, so a wrong entry is refused with a friendly message.\n\nFor categorical data, like the type of weather, validation can give a drop-down list instead. Sami selects a column, opens Data > Validity, sets Allow to List, and types the choices Sunny, Cloudy, Rainy and Windy, one per line. Now that column shows a neat drop-down arrow, and no one can misspell 'Sunny' or invent a new category by accident. That is a validation rule doing its job.\n\nType of data — What it is · Examples · A · B\n\nCategorical — Data that can be grouped into categories. It is usually an opinion, a description, or a range. · Favourite colour, type of pet, favourite lesson, age group 7-11. · Day · Rainfall (mm)\n\nDiscrete — Numerical data that can only be whole numbers. You often count it, and you cannot have half. · Number of learners in a class, number of customers, number of goals. · Saturday · 1.2",
+      "example": "Continuous — Numerical data that can take ANY value, including decimals. You usually measure it, not count it. · Temperature, height, weight, rainfall, the time taken to run a race. · Sunday · 3.4"
+    },
+    {
+      "id": "concept-4-creating-a-spreadsheet",
+      "title": "Creating a Spreadsheet",
+      "explanation": "Now that you can capture data, it is time to organise and analyse it. The best tool for numerical data is a spreadsheet, and you will use LibreOffice Calc. A spreadsheet is far more than a place to store numbers — it is a powerful calculator that can work on thousands of numbers at once and never makes an arithmetic mistake.\n\nA spreadsheet is a document split into a large grid. Each little box in the grid is called a cell. The cells are organised into rows, which go across, and columns, which go down. Each row has a unique number (1, 2, 3, ...) and each column has a unique letter (A, B, C, ...). 'Unique' means one of a kind — there is only one row 3 and only one column B, just as there is only one of you.\n\nWhen you open LibreOffice Calc, look for these parts of the screen:\n\nThe Name Box at the top-left corner, which shows the reference of the cell you have selected.\n\nThe Input Line (the formula bar) next to it, where you can see and type what is inside a cell.\n\nThe sheet tabs at the bottom (Sheet1, Sheet2, ...). One file can hold many sheets.\n\nThe AutoSum button, marked with the Greek letter sigma, which quickly adds up a column or row for you.\n\nEvery cell has an address made of its column letter and its row number. This is called a cell reference. The letter tells you the column (how far across), and the number tells you the row (how far down). So the cell where column B meets row 3 has the cell reference B3.\n\nCell references are the secret to a spreadsheet's power. Instead of typing a number into a calculation, you type the cell reference where that number lives. Then, if you ever change the number in that cell, every calculation that uses it updates automatically. It is like magic, but it is really just clever organisation.\n\nTo make a calculation in a spreadsheet, you write a formula. A formula is an instruction to do a calculation, and it always begins with an equals sign =. The = tells LibreOffice Calc, 'Do not treat this as ordinary text — work this out for me.' Formulas combine cell references with arithmetic operators, the symbols we use for maths:\n\nFor example, =C3*D4 multiplies the value in cell C3 by the value in cell D4. If C3 holds 2 and D4 holds 4, the formula returns 8. One golden rule: always put a formula in a separate cell — not in either of the cells you are using in the calculation. You can type a formula straight into an empty cell, or click the cell and type into the Input Line at the top.\n\nA function is a ready-made calculation that is already built into LibreOffice Calc. Each function has a name, and you 'call' it by that name. Functions save you from writing very long formulas. There are more than 500 functions in Calc, but in this unit you will focus on two: SUM and AVERAGE.",
+      "example": "To use a function you follow three steps: start with =, then the function name, then the cell references inside brackets. Inside the brackets you use a colon : to mean 'to'. So A1:A10 means 'from cell A1 to cell A10, and everything in between'."
+    },
+    {
+      "id": "concept-5-worked-example-aunt-amara-s-shop-in-hargeisa",
+      "title": "Worked example: Aunt Amara's shop in Hargeisa",
+      "explanation": "Let us help Aunt Amara. She sells school items in her Hargeisa shop, and she has told you the price of each item and how many she sold this week, all in Somali shillings. You type her data into LibreOffice Calc like this:\n\nColumn D works out the total money from each item by multiplying its price by the number sold. In cell D2 you type =B2*C2 and press Enter. The result is 30000, because 2000 multiplied by 15 is 30000. You do not have to type the formula seven times, though. You can click D2, then use the Fill Down shortcut Ctrl+D (or the menu Sheet > Fill Cells > Down) to copy the formula down to D8. LibreOffice cleverly changes the cell references for each row, so D3 becomes =B3*C3, and so on. Here are all the results:\n\nColumn D: total money from each item\n\nNow Amara wants three big answers: her total sales, the total number of items she sold, and the average price of an item. You put each in a separate cell using SUM and AVERAGE:",
+      "example": "Total number of items sold: in C9 type =SUM(C2:C8) -> 61"
+    },
+    {
+      "id": "concept-6-total-sales-in-shillings",
+      "title": "Total sales in shillings",
+      "explanation": "Average price per item: in B11 type =AVERAGE(B2:B8) -> 8000\n\nLet us check those by hand so you can see the software is right. The numbers sold are 15, 20, 8, 5, 6, 4 and 3, which add up to 61. The item totals in column D are 30000, 60000, 40000, 40000, 60000, 48000 and 48000, which add up to 326000 shillings. And the seven prices are 2000, 3000, 5000, 8000, 10000, 12000 and 16000, which add up to 56000; divide by 7 and you get an average price of 8000 shillings. Amara is delighted — what would have taken her an hour with a paper and pencil took LibreOffice Calc less than a second.\n\nA modern LibreOffice Calc sheet has 1,048,576 rows and up to 16,384 columns.\n\nThat is more than 17 billion cells in a single sheet — far more than anyone could ever fill by hand.\n\nCalc also has more than 500 built-in functions, each one a ready-made calculation waiting for you to use it.\n\nReal spreadsheets often hold huge amounts of data. The skill of a good data manager is selecting just the pieces you need to answer a question. To select data for a calculation in LibreOffice Calc you can either type the cell references into your formula, or click and drag across the cells you want. When you drag, Calc fills the range into your formula for you.\n\nImagine Sami's weather sheet holds a whole month of readings: maximum temperature, minimum temperature, humidity and rainfall. To find the mean maximum temperature for the month, he selects only the maximum-temperature column and uses AVERAGE on it. He would not try to average the wind direction, because 'north' and 'east' are categorical words, not numbers — you cannot calculate a mean of them. Choosing the right data is just as important as choosing the right formula.\n\nNumbers in a grid are useful, but a chart makes patterns jump out at you. To turn Amara's data into a chart in LibreOffice Calc:\n\nSelect the data you want to show. For a chart of each item's total, select the Item column and the Total column together (A1:A8 and D1:D8).\n\nOpen the menu Insert > Chart. The Chart Wizard appears.\n\nStep 1 — Choose a Chart Type. Pick Column for tall bars, or Bar for sideways bars. Click Next.\n\nStep 2 and 3 — Data Range and Data Series. Check that 'First row as label' and 'First column as label' are ticked, then click Next.\n\nStep 4 — Chart Elements. Type a Title such as 'Shop sales this week', label the axes, and tick Display legend. Click Finish.\n\nClick anywhere outside the chart to leave edit mode. Your chart is done!\n\nNow anyone can see at a glance that the water bottle and the exercise book brought in the most money, while the pen brought in the least. That is the power of turning data into a picture.\n\nJust as you planned your form in 2.1, you should plan a spreadsheet before you build it. Ask yourself: What data will I use? What headings will the columns have? How will I organise it so it is easy to understand? What format will the data be in? What calculations do I want to do, and which formulas or functions will do them? A few minutes of planning saves a lot of tidying up later.\n\nOperator — Meaning · Example formula · Row · A · B · C · D\n\n+ — add · =B2+C2 · 1 · Item · Price each (sh) · Number sold · Total (sh)\n — — subtract · =B2-C2 · 2 · Pen · 2000 · 15 · =B2*C2\n\n* — multiply · =B2*C2 · 3 · Exercise book · 3000 · 20 · =B3*C3",
+      "example": "/ — divide · =B2/C2 · 4 · Ruler · 5000 · 8 · =B4*C4"
+    },
+    {
+      "id": "concept-7-creating-a-database",
+      "title": "Creating a Database",
+      "explanation": "A spreadsheet is wonderful for calculations. But when you want to store, organise and search a lot of information — like every book in the school library — a database is even better. In this subunit you will design a database, build it in LibreOffice Base, and learn to search it in seconds. This is exactly what the librarian, Nadia, needs.\n\nA database is an organised set of data. It is useful because organised data is so much easier to use than a messy pile. A database is made up of records and fields.\n\nA record is all the data about one thing. In a library database, one book is one record.\n\nA field is a category of data within a record. For a book, the fields might be Title, Author, Category and Year.\n\nAn attribute is the actual piece of data in one field of one record — for example, the Title attribute of one particular book might be 'Somali Folk Tales'.\n\nIn a database, records are usually shown as rows and fields as columns — just like a spreadsheet grid. A record is complete when every field is filled in. Here is Nadia's library database, with six book records:\n\nLook at record number 4. Its fields are BookID, Title, Author, Category, Year and 'On loan?'. Its attributes are 4, 'Somali Folk Tales', 'Dina Ali', 'Story', 2018 and 'No'. If Nadia wanted to know who wrote 'Somali Folk Tales', she would look at the Author field of that record and find the attribute 'Dina Ali'.\n\nEvery field stores a particular kind, or type, of data. Choosing the right data type keeps your database tidy and correct. Here are the main types you need to know.\n\nFor example, think of a record about a country: Country: Oman (a string of text), Size: 309500 km2 (an integer), Population: 4576298 (an integer), Language: Arabic (text), Currency: Omani rial (a string). In Nadia's library database, the BookID and Year fields are integers, the Title, Author and Category fields are text, and the 'On loan?' field is a special Yes/No type.\n\nSometimes we want data to *look* a certain way. Formatting controls how the data is displayed — without changing the real value underneath. In LibreOffice you format cells by selecting them and opening Format > Cells (the shortcut is Ctrl+1). Then you pick a category:\n\nBookID — Title · Author · Category · Year · On loan? · Data type · Description · Example · Format · What it does · Example\n\n1 — The Clever Fox · Yasmin Silva · Story · 2019 · No · Integer · Whole numbers only. · 500 · Number · Shows a plain number; you can choose how many decimal places. · 8000 or 8000.00\n\n2 — Poems for Children · Karim Adams · Poetry · 2021 · No · Text · Words only. · mustard · Currency · Shows the value as money with a symbol. · $21 or 8,000 sh\n\n3 — Maths Made Easy · Talia Chen · Textbook · 2020 · Yes · Character · A single letter, number or symbol. · R · Date · Shows the value as a date. · 12/03/26\n\n4 — Somali Folk Tales · Dina Ali · Story · 2018 · No · String · More than one character joined together (can include any character, even spaces). · Omani rial · Time · Shows the value as a time. · 07:36:00\n\n5 — Science All Around · Rami Bello · Textbook · 2022 · No · Text · Shows exactly what is typed; good for headings and labels. · Title",
+      "example": "6 — Rhymes and Riddles · Malik Jama · Poetry · 2021 · Yes · Percentage · Shows the value out of 100."
+    },
+    {
+      "id": "concept-8-shows-as-1-2",
+      "title": "Shows as 1/2",
+      "explanation": "When you first type into a cell, LibreOffice treats it as 'General' and guesses the format for you — type $5 and it becomes currency. But it is safer to set the format yourself with Format > Cells, especially for integers (whole numbers) that should not show a decimal point.\n\nBefore you build a database, you design it on paper. Good designers ask these questions first:\n\nWhat records will there be, and how many? (Each book is a record.)\n\nWhat fields does each record need? (Title, Author, Category, and so on.)\n\nWhat data type suits each field? (Text for the title, integer for the year.)\n\nWhat will the column titles be?\n\nWill the database be on paper or digital?",
+      "example": "A little sketch on paper — the field names across the top, and a couple of example records underneath — is the perfect plan before you touch the computer."
+    },
+    {
+      "id": "concept-9-creating-the-database-in-libreoffice-base",
+      "title": "Creating the database in LibreOffice Base",
+      "explanation": "You can build a simple database inside a spreadsheet (headings as fields, rows as records), and that is fine for very small jobs. But the proper tool is LibreOffice Base, which is built only for databases. Here is how Nadia creates her library database.\n\nOpen LibreOffice and choose Base Database, or use the menu File > New > Database. The Database Wizard opens.\n\nChoose Create a new database and click Next.\n\nLeave the registration choice as it is, keep Open the database for editing ticked, and click Finish.\n\nLibreOffice asks where to save the file. Give it a name like library and save it (it becomes library.odb).\n\nIn the left-hand panel, click Tables, then click Create Table in Design View.\n\nFor each field, type a Field Name (such as BookID, Title, Author, Category, Year, OnLoan) and choose a Field Type from the drop-down.\n\nSet the data types: BookID as Integer [INTEGER], Title, Author and Category as Text [VARCHAR], Year as Integer [INTEGER], and OnLoan as Yes/No [BOOLEAN].\n\nMake BookID the primary key (the field that gives every record a unique number): right-click the small grey box to the left of the BookID row and choose Primary Key.\n\nSave the table with Ctrl+S and name it Books.\n\nDouble-click the Books table to open it, then type in your six records, one row at a time.\n\nA primary key is important: it is a field, like BookID, that is unique for every record. It means the database can always tell two records apart, even if two different books had the same title. Once your records are typed in, you have a real, working, digital database. Well done!\n\nPhrase searching — searching for data that matches a whole series of words, such as a full title or a full name. This finds exactly the record you want. A first name alone might match several people, but a full name is far more precise.\n\nFiltering — using a filter to hide every record that does not meet your criteria, so only the records you want are shown.\n\nTo do a phrase search in LibreOffice Base, open the Books table and click the Find Record tool (the binoculars icon). Type the phrase Somali Folk Tales, and Base jumps straight to that record. To search inside a LibreOffice Calc database instead, you would use Edit > Find & Replace (the shortcut is Ctrl+H), or the Find toolbar with Ctrl+F, and type your phrase.\n\nTo filter in LibreOffice Base, use the filter tools on the toolbar or the Data menu. For example, filtering the Category field for Poetry would show only records 2 and 6. Filtering the 'OnLoan' field for Yes would show only the books currently borrowed — records 3 and 6 — which is exactly how Nadia checks which books are out. A single search that once took Nadia half an hour now takes half a second.",
+      "example": "AllMusic.com is an online database with information about more than 30 million music tracks and 3 million albums."
+    },
+    {
+      "id": "concept-10-how-is-data-used",
+      "title": "How Is Data Used?",
+      "explanation": "You now know how to capture data, calculate with it, and store it in a database. But why do people go to all this trouble? Because organised data helps us solve real problems. By looking closely at data we can spot trends — patterns that show how often something happens or how things change over time. Once you can see a trend, you can make a smart decision.\n\nUsing data to solve problems in retail\n\nRetail means selling things to people — clothes, food, cars, games. A shop can use its sales data to solve problems like not selling enough or not having enough customers. Let us look at Leila's Cafe, which recorded its customers and takings (in shillings) for one week:\n\nPutting this in LibreOffice Calc, the owner can find the total customers with =SUM(B2:B8), which is 260, and the total takings with =SUM(C2:C8), which is 1300000 shillings. To find the average spend per customer she divides the total takings by the total customers: =C9/B9 gives 5000 shillings per customer. But the most useful thing the data shows is a trend: Friday is the busiest day (55 customers) and Tuesday is the quietest (25). Now the owner knows to prepare extra food for Friday, and perhaps offer a special deal on Tuesday to attract more people. That is data solving a real problem.\n\nA shop manager can also look at which products sell well and which do not. They might stop stocking the least popular items, order more of the popular ones, or lower the price of items that have not sold for a long time. Every one of those decisions is made better by looking at the data first.\n\nUsing data to solve problems in healthcare\n\nHealthcare means looking after people's medical needs. Data helps doctors find the best treatments, spot new illnesses, reduce waiting times, and ultimately save more lives. Imagine doctors testing two medicines for a new illness. Each patient is given a wellness score out of 10 before treatment, and again two months later. The improvement is the 'after' score minus the 'before' score.\n\nThe average improvement for Treatment A is 4 points, while for Treatment B it is only 1.5 points. The data tells a clear story: Treatment A works far better, so the hospital should choose it. Notice that the doctors could not have known this without carefully recording and comparing the data. This is how medical trials really work, and it is how new cures are discovered.\n\nUsing data to solve problems in manufacturing\n\nManufacturing means making large numbers of goods in a factory. Data can help a factory make better products, sell more, and — very importantly — keep its workers safe. Suppose a workshop in Mogadishu recorded where accidents happened over one month:\n\nThe data reveals a clear trend: the welding area has by far the most accidents (8), followed by the cutting area (5). The factory owner can now use this data in at least three ways: to focus safety training and new equipment on the welding area first; to check whether the welding machines need repair; and to set a goal of reducing welding accidents next month and measure whether it worked. Fewer accidents keep workers safe and also save the business money, because injured staff and stopped machines are expensive.\n\nIn every example — the shop, the hospital, the factory — the pattern is the same. Someone had a problem, they collected organised data, they looked for trends, and the trends pointed to a solution. That is the whole reason we manage data. Numbers are not the goal; better decisions are the goal.\n\nLarge supermarkets record every single item sold, every hour of every day.\n\nBy studying trends in this data, they can predict how much bread or how many mangoes they will sell next week, so the shelves are never empty and very little food is wasted. That is millions of decisions guided by data.\n\nDay — Customers · Takings (sh) · Treatment · Patient · Before · After · Improvement · Area of workshop · Number of accidents\n\nSaturday — 40 · 200000 · Treatment A · Patient 1 · 3 · 7 · +4 · Cutting area · 5\n\nSunday — 35 · 175000 · Treatment A · Patient 2 · 4 · 8 · +4 · Welding area · 8\n\nMonday — 30 · 150000 · Treatment A · Patient 3 · 2 · 6 · +4 · Packing area · 2\n\nTuesday — 25 · 125000 · Treatment A · Patient 4 · 5 · 9 · +4 · Storeroom · 1\n\nWednesday — 30 · 150000 · Treatment B · Patient 5 · 4 · 5 · +1\n\nThursday — 45 · 225000 · Treatment B · Patient 6 · 3 · 5 · +2\n\nFriday — 55 · 275000 · Treatment B · Patient 7 · 5 · 6 · +1",
+      "example": "Treatment B — Patient 8 · 2 · 4 · +2"
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "Column D: total money from each item",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "D2 =B2*C2 -> 2000 * 15 = 30000",
+        "D3 =B3*C3 -> 3000 * 20 = 60000",
+        "D4 =B4*C4 -> 5000 * 8 = 40000",
+        "D5 =B5*C5 -> 8000 * 5 = 40000",
+        "D6 =B6*C6 -> 10000 * 6 = 60000",
+        "D7 =B7*C7 -> 12000 * 4 = 48000",
+        "D8 =B8*C8 -> 16000 * 3 = 48000"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-2",
+      "title": "Common formulas and functions",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "=B2+C2 add the values in B2 and C2",
+        "=B2-C2 subtract C2 from B2",
+        "=B2*C2 multiply B2 by C2 (* means multiply)",
+        "=B2/C2 divide B2 by C2 (/ means divide)",
+        "=SUM(B2:B8) add up everything from B2 to B8",
+        "=AVERAGE(B2:B8) find the mean of B2 to B8",
+        "=MAX(B2:B8) the largest value from B2 to B8",
+        "=MIN(B2:B8) the smallest value from B2 to B8"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Activities & Projects",
+      "context": "work through the steps below and see what happens. This is capturing data in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Year 6 — Unit 2 — Managing Data",
+      "answer": "How to Use This Document This is your hands-on workbook. Each activity gives you a task, the exact steps to follow in LibreOffice, the expected result, and an AI-tutor prompt in case you get stuck. Do every task yourself on the computer — reading is not enough; you learn data skills by doing them. Work in order, because each activity builds on the one before, just like the ideas in your Lesson. Getting Started with LibreOffice Calc & Base Open the LibreOffice Start Centre (or find LibreOffice in your programs list). Click Calc Spreadsheet. A blank grid of cells appears.",
+      "modelType": "model-1",
+      "hint": "Start here: How to Use This Document",
+      "explanation": "Capturing Data: Before you can manage data, you have to capture it — that is, collect it. And before you collect it, you have to plan. Good data managers never just grab numbers randomly; they think carefully about what they want to find out and how they will find it out. This is called a statistical investigation."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Year 6 - Unit 2 - Managing Data",
+      "context": "work through the steps below and see what happens. This is designing a form to collect continuous data in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "How to Use This Document",
+      "answer": "This is your hands-on workbook. Each activity gives you a task, the exact steps to follow in LibreOffice, the expected result, and an AI-tutor prompt in case you get stuck. Do every task yourself on the computer — reading is not enough; you learn data skills by doing them. Work in order, because each activity builds on the one before, just like the ideas in your Lesson. Getting Started with LibreOffice Calc & Base Open the LibreOffice Start Centre (or find LibreOffice in your programs list). Click Calc Spreadsheet. A blank grid of cells appears. Notice the Name Box at the top-left (it shows your selected cell's reference) and the Input Line next to it (where you type formulas).",
+      "modelType": "model-2",
+      "hint": "Start here: This is your hands-on workbook. Each activity gives you a task, the exact steps to follow in LibreOffice, the expected result, and an AI-tutor prompt…",
+      "explanation": "Designing a form to collect continuous data: Continuous data can be tricky to capture, because it can be any value and it often changes over time. If you design a form to collect it, you must think carefully about five things, or your data will be messy and hard to use."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Getting Started with LibreOffice Calc & Base",
+      "context": "work through the steps below and see what happens. This is hands in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Open the LibreOffice Start Centre (or find LibreOffice in your programs list).",
+      "answer": "Click Calc Spreadsheet. A blank grid of cells appears. Notice the Name Box at the top-left (it shows your selected cell's reference) and the Input Line next to it (where you type formulas). Click any cell and start typing to enter data. Press Enter to move down, or Tab to move right. Save your work with Ctrl+S. Give it a clear name; it will be saved as a .ods file. In the LibreOffice Start Centre, click Base Database (or use File > New > Database).",
+      "modelType": "model-3",
+      "hint": "Start here: Click Calc Spreadsheet. A blank grid of cells appears.",
+      "explanation": "Hands: You do not need an expensive online form to capture continuous data carefully. You can build a smart data-capture sheet in LibreOffice Calc, and use its validation rules to make sure only sensible answers are accepted. This is exactly what Sami needs for his Mogadishu weather investigation. Here is…"
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Opening LibreOffice Calc (for spreadsheets)",
+      "context": "work through the steps below and see what happens. This is creating a spreadsheet in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Open the LibreOffice Start Centre (or find LibreOffice in your programs list).",
+      "answer": "Click Calc Spreadsheet. A blank grid of cells appears. Notice the Name Box at the top-left (it shows your selected cell's reference) and the Input Line next to it (where you type formulas). Click any cell and start typing to enter data. Press Enter to move down, or Tab to move right. Save your work with Ctrl+S. Give it a clear name; it will be saved as a .ods file. In the LibreOffice Start Centre, click Base Database (or use File > New > Database).",
+      "modelType": "model-4",
+      "hint": "Start here: Click Calc Spreadsheet. A blank grid of cells appears.",
+      "explanation": "Creating a Spreadsheet: Now that you can capture data, it is time to organise and analyse it. The best tool for numerical data is a spreadsheet, and you will use LibreOffice Calc. A spreadsheet is far more than a place to store numbers — it is a powerful calculator that can work on thousands of numbers at once and never…"
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Opening LibreOffice Base (for databases)",
+      "context": "work through the steps below and see what happens. This is worked example: aunt amara's shop in hargeisa in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "In the LibreOffice Start Centre, click Base Database (or use File > New > Database).",
+      "answer": "In the Database Wizard, choose Create a new database and click Next. Keep Open the database for editing ticked and click Finish. Save the database file with a clear name; it will be saved as a .odb file. Use the Tables section to create tables, and double-click a table to type in records. Save early, save often",
+      "modelType": "model-5",
+      "hint": "Start here: In the Database Wizard, choose Create a new database and click Next.",
+      "explanation": "Worked example: Aunt Amara's shop in Hargeisa: Let us help Aunt Amara. She sells school items in her Hargeisa shop, and she has told you the price of each item and how many she sold this week, all in Somali shillings. You type her data into LibreOffice Calc like this:"
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Save early, save often",
+      "context": "work through the steps below and see what happens. This is total sales in shillings in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Press Ctrl+S after every few changes. Computers sometimes freeze, and unsaved work is lost work.",
+      "answer": "Use clear file names like amara_shop.ods and library.odb so you can find them again easily. Before you touch the computer, think like a data manager. On paper, write down three statistical investigations that would collect continuous data (things you measure, like temperature or height). Then, for each one, write which tool you would use to capture the data and why. Bring your list to your next teacher session. Part 2.1 — Capturing Data Activity 1 — Sort the data types Task: decide whether each investigation collects categorical, discrete or continuous data. Write your answer next to each one.",
+      "modelType": "model-6",
+      "hint": "Start here: Use clear file names like amara_shop.ods and library.odb so you can find them again easily.",
+      "explanation": "Total sales in shillings: Average price per item: in B11 type =AVERAGE(B2:B8) -> 8000"
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Capturing Data",
+      "modelType": "concept-model-1",
+      "purpose": "Before you can manage data, you have to capture it — that is, collect it. And before you collect it, you have to plan. Good data managers never just grab numbers randomly; they think carefully about what they want to…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Designing a form to collect continuous data",
+      "modelType": "concept-model-2",
+      "purpose": "Continuous data can be tricky to capture, because it can be any value and it often changes over time. If you design a form to collect it, you must think carefully about five things, or your data will be messy and hard…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Hands",
+      "modelType": "concept-model-3",
+      "purpose": "You do not need an expensive online form to capture continuous data carefully. You can build a smart data-capture sheet in LibreOffice Calc, and use its validation rules to make sure only sensible answers are accepted.…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Creating a Spreadsheet",
+      "modelType": "concept-model-4",
+      "purpose": "Now that you can capture data, it is time to organise and analyse it. The best tool for numerical data is a spreadsheet, and you will use LibreOffice Calc. A spreadsheet is far more than a place to store numbers — it is…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Worked example: Aunt Amara's shop in Hargeisa",
+      "modelType": "concept-model-5",
+      "purpose": "Let us help Aunt Amara. She sells school items in her Hargeisa shop, and she has told you the price of each item and how many she sold this week, all in Somali shillings. You type her data into LibreOffice Calc like…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Total sales in shillings",
+      "modelType": "concept-model-6",
+      "purpose": "Average price per item: in B11 type =AVERAGE(B2:B8) -> 8000",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-7",
+      "outcomeId": "lo07",
+      "title": "Creating a Database",
+      "modelType": "concept-model-7",
+      "purpose": "A spreadsheet is wonderful for calculations. But when you want to store, organise and search a lot of information — like every book in the school library — a database is even better. In this subunit you will design a…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-8",
+      "outcomeId": "lo08",
+      "title": "Shows as 1/2",
+      "modelType": "concept-model-8",
+      "purpose": "When you first type into a cell, LibreOffice treats it as 'General' and guesses the format for you — type $5 and it becomes currency. But it is safer to set the format yourself with Format > Cells, especially for…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-9",
+      "outcomeId": "lo09",
+      "title": "Creating the database in LibreOffice Base",
+      "modelType": "concept-model-9",
+      "purpose": "You can build a simple database inside a spreadsheet (headings as fields, rows as records), and that is fine for very small jobs. But the proper tool is LibreOffice Base, which is built only for databases. Here is how…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-10",
+      "outcomeId": "lo10",
+      "title": "How Is Data Used?",
+      "modelType": "concept-model-10",
+      "purpose": "You now know how to capture data, calculate with it, and store it in a database. But why do people go to all this trouble? Because organised data helps us solve real problems. By looking closely at data we can spot…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with capturing data",
+      "example": "They are measured by a special kind of data logger called a seismograph, which senses the tiny shaking of the ground and records it automatically, day and night, without anyone standing next to it.",
+      "steps": [
+        "Before you can manage data, you have to capture it — that is, collect it. And before you collect it, you have to plan. Good data managers never just grab numbers randomly; they think carefully about what they want to…",
+        "A statistical investigation is the collection of data to help you answer a question. For example, Maya might want to find out the mean (average) number of goals her team scores in a month. She would look at each match,…",
+        "Not all data is the same. Knowing which type you are collecting helps you choose the right tool to collect it. There are three types you need to know.",
+        "Here is the key difference to remember. Discrete data is counted and is always a whole number — you cannot have half a person in a room. Continuous data is measured and can be any value at all, like a temperature of…"
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with designing a form to collect continuous data",
+      "example": "So which question type is best for collecting continuous data like temperature or height? An open text question with validation rules — such as a box that only accepts a number to one decimal place. This gives the precise, numerical answer you need while…",
+      "steps": [
+        "Continuous data can be tricky to capture, because it can be any value and it often changes over time. If you design a form to collect it, you must think carefully about five things, or your data will be messy and hard…",
+        "Phrase your questions precisely. 'What was the temperature outside your classroom at 12:00 on Monday?' is precise. 'What is the temperature?' is not — it does not say where or when.",
+        "How often should data be entered? If you want a reading three times a day, say so, and leave space for three readings each day.",
+        "Over what period should data be entered? For a week? For a month? Make it clear and leave enough space."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with hands",
+      "example": "Continuous — Numerical data that can take ANY value, including decimals. You usually measure it, not count it. · Temperature, height, weight, rainfall, the time taken to run a race. · Sunday · 3.4",
+      "steps": [
+        "You do not need an expensive online form to capture continuous data carefully. You can build a smart data-capture sheet in LibreOffice Calc, and use its validation rules to make sure only sensible answers are accepted.…",
+        "To stop anyone typing a word or a silly number into the rainfall column, Sami adds a validation rule. He selects the cells B2:B8, then opens the menu Data > Validity. On the Criteria tab he sets Allow to Decimal, the…",
+        "For categorical data, like the type of weather, validation can give a drop-down list instead. Sami selects a column, opens Data > Validity, sets Allow to List, and types the choices Sunny, Cloudy, Rainy and Windy, one…",
+        "Type of data — What it is · Examples · A · B"
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with creating a spreadsheet",
+      "example": "To use a function you follow three steps: start with =, then the function name, then the cell references inside brackets. Inside the brackets you use a colon : to mean 'to'. So A1:A10 means 'from cell A1 to cell A10, and everything in between'.",
+      "steps": [
+        "Now that you can capture data, it is time to organise and analyse it. The best tool for numerical data is a spreadsheet, and you will use LibreOffice Calc. A spreadsheet is far more than a place to store numbers — it is…",
+        "A spreadsheet is a document split into a large grid. Each little box in the grid is called a cell. The cells are organised into rows, which go across, and columns, which go down. Each row has a unique number (1, 2, 3,…",
+        "When you open LibreOffice Calc, look for these parts of the screen:",
+        "The Name Box at the top-left corner, which shows the reference of the cell you have selected."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with worked example: aunt amara's shop in hargeisa",
+      "example": "Total number of items sold: in C9 type =SUM(C2:C8) -> 61",
+      "steps": [
+        "Let us help Aunt Amara. She sells school items in her Hargeisa shop, and she has told you the price of each item and how many she sold this week, all in Somali shillings. You type her data into LibreOffice Calc like…",
+        "Column D works out the total money from each item by multiplying its price by the number sold. In cell D2 you type =B2*C2 and press Enter. The result is 30000, because 2000 multiplied by 15 is 30000. You do not have to…",
+        "Now Amara wants three big answers: her total sales, the total number of items she sold, and the average price of an item. You put each in a separate cell using SUM and AVERAGE:"
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "How to work with total sales in shillings",
+      "example": "/ — divide · =B2/C2 · 4 · Ruler · 5000 · 8 · =B4*C4",
+      "steps": [
+        "Average price per item: in B11 type =AVERAGE(B2:B8) -> 8000",
+        "Let us check those by hand so you can see the software is right. The numbers sold are 15, 20, 8, 5, 6, 4 and 3, which add up to 61. The item totals in column D are 30000, 60000, 40000, 40000, 60000, 48000 and 48000,…",
+        "A modern LibreOffice Calc sheet has 1,048,576 rows and up to 16,384 columns.",
+        "That is more than 17 billion cells in a single sheet — far more than anyone could ever fill by hand."
+      ]
+    },
+    {
+      "id": "method-7",
+      "outcomeId": "lo07",
+      "difficulty": "Challenge",
+      "title": "How to work with creating a database",
+      "example": "6 — Rhymes and Riddles · Malik Jama · Poetry · 2021 · Yes · Percentage · Shows the value out of 100.",
+      "steps": [
+        "A spreadsheet is wonderful for calculations. But when you want to store, organise and search a lot of information — like every book in the school library — a database is even better. In this subunit you will design a…",
+        "A database is an organised set of data. It is useful because organised data is so much easier to use than a messy pile. A database is made up of records and fields.",
+        "A record is all the data about one thing. In a library database, one book is one record.",
+        "A field is a category of data within a record. For a book, the fields might be Title, Author, Category and Year."
+      ]
+    },
+    {
+      "id": "method-8",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "How to work with shows as 1/2",
+      "example": "A little sketch on paper — the field names across the top, and a couple of example records underneath — is the perfect plan before you touch the computer.",
+      "steps": [
+        "When you first type into a cell, LibreOffice treats it as 'General' and guesses the format for you — type $5 and it becomes currency. But it is safer to set the format yourself with Format > Cells, especially for…",
+        "Before you build a database, you design it on paper. Good designers ask these questions first:",
+        "What records will there be, and how many? (Each book is a record.)",
+        "What fields does each record need? (Title, Author, Category, and so on.)"
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Capturing Data",
+      "prompt": "Explain in your own words: Capturing Data.",
+      "solution": "Before you can manage data, you have to capture it — that is, collect it. And before you collect it, you have to plan. Good data managers never just grab numbers randomly; they think carefully about what they want to find out and how they will find it out. This is called a statistical investigation.\n\nWhat is a statistical investigation?\n\nA statistical investigation is the collection of data to help you answer a question. For example, Maya might want to find out the mean (average) number of goals her team scores in a month. She would look at each match, write down the goals, and then work out the mean. Or Sami might want to find out how many different birds visit the school garden in one hour — he would sit and count them. Both of these are statistical investigations, because both collect data to answer a clear question.\n\nNot all data is the same. Knowing which type you are collecting helps you choose the right tool to collect it. There are three types you need to know.\n\nHere is the key difference to remember. Discrete data is counted and is always a whole number — you cannot have half a person in a room. Continuous data is measured and can be any value at all, like a temperature of 24.5 degrees or a height of 1.42 metres. Because continuous data can be so precise, capturing it needs extra care — and that is exactly what Sami's weather investigation needs.\n\nWhen you plan a statistical investigation, you should ask yourself six questions before you collect a single number. Answering them first saves you a lot of trouble later.\n\nWhat do I want to find out? For example, 'How does the temperature in Mogadishu change during the week?'\n\nWhat questions will help me find it out? Your questions must give you exactly the data you need.\n\nWho or what will I ask or measure? Be specific. 'The temperature outside our classroom' is specific; 'the temperature' is not.\n\nHow will I collect the data? A questionnaire for opinions, a thermometer or data logger for temperature, and so on.\n\nHow will I analyse the data? Perhaps with a spreadsheet, and a chart to make patterns easy to see.\n\nWhat tools will I use throughout? A data logger, a spreadsheet, a database, or a form — or a mixture.\n\nThere is a range of computing tools you can use to capture data. Choosing the right one depends on the type of data and how you want to collect it.\n\nData loggers — a device that uses sensors to record data over time, all by itself. A weather station that records the temperature and wind speed every hour is a data logger. Because it works on its own, it can be left in a hard-to-reach place, like a mountain top, for months. Data loggers are excellent for capturing continuous data.\n\nSpreadsheets — such as LibreOffice Calc. A spreadsheet stores data in a neat grid and can do calculations and draw charts. It is perfect for recording readings and then analysing them.\n\nDatabases — such as LibreOffice Base. A database stores, organises and lets you search large amounts of organised data quickly.\n\nForms and questionnaires — a series of questions people fill in. A form can be on paper, in a word processor, or an online form. Forms are great for collecting answers from many people.\n\nEvery year there are between 12,000 and 14,000 earthquakes around the world.\n\nFor example: They are measured by a special kind of data logger called a seismograph, which senses the tiny shaking of the ground and records it automatically, day and night, without anyone standing next to it."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Designing a form to collect continuous data",
+      "prompt": "Explain in your own words: Designing a form to collect continuous data.",
+      "solution": "Continuous data can be tricky to capture, because it can be any value and it often changes over time. If you design a form to collect it, you must think carefully about five things, or your data will be messy and hard to use.\n\nPhrase your questions precisely. 'What was the temperature outside your classroom at 12:00 on Monday?' is precise. 'What is the temperature?' is not — it does not say where or when.\n\nHow often should data be entered? If you want a reading three times a day, say so, and leave space for three readings each day.\n\nOver what period should data be entered? For a week? For a month? Make it clear and leave enough space.\n\nWhat measurements will you use? Degrees Celsius? Millimetres of rainfall? Kilograms? State the unit so everyone answers the same way.\n\nHow precise should the data be? For example, you might ask for answers to one decimal place, like 24.5, not 24.5123.\n\nWhen you make a form, you choose a question type for each question — the way the question is asked and answered. Different types suit different data.\n\nOpen text questions let people write their own answer, such as 'Why do you like reading?'. They are good for opinions, but people might answer in the wrong format. You can control this with validation rules, which only accept certain kinds of answer.\n\nMultiple choice questions let people pick from a set of answers, such as 'What is your favourite colour?'. They are quick, but they are not good for continuous data, because you would need a choice for every possible value — which is impossible.\n\nRanking questions let people choose on a scale, such as 'Rate today's lunch from 1 to 5'. They are great for opinions, but they do not collect continuous or discrete data.\n\nFor example: So which question type is best for collecting continuous data like temperature or height? An open text question with validation rules — such as a box that only accepts a number to one decimal place. This gives the precise, numerical answer you need while stopping people from typing nonsense."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Hands",
+      "prompt": "Explain in your own words: Hands.",
+      "solution": "You do not need an expensive online form to capture continuous data carefully. You can build a smart data-capture sheet in LibreOffice Calc, and use its validation rules to make sure only sensible answers are accepted. This is exactly what Sami needs for his Mogadishu weather investigation. Here is how the sheet is set out:\n\nTo stop anyone typing a word or a silly number into the rainfall column, Sami adds a validation rule. He selects the cells B2:B8, then opens the menu Data > Validity. On the Criteria tab he sets Allow to Decimal, the condition to between, a Minimum of 0 and a Maximum of 500. Now the cells will only accept a decimal number from 0 to 500 — a real rainfall reading. On the Error Alert tab he chooses the Stop action, so a wrong entry is refused with a friendly message.\n\nFor categorical data, like the type of weather, validation can give a drop-down list instead. Sami selects a column, opens Data > Validity, sets Allow to List, and types the choices Sunny, Cloudy, Rainy and Windy, one per line. Now that column shows a neat drop-down arrow, and no one can misspell 'Sunny' or invent a new category by accident. That is a validation rule doing its job.\n\nType of data — What it is · Examples · A · B\n\nCategorical — Data that can be grouped into categories. It is usually an opinion, a description, or a range. · Favourite colour, type of pet, favourite lesson, age group 7-11. · Day · Rainfall (mm)\n\nDiscrete — Numerical data that can only be whole numbers. You often count it, and you cannot have half. · Number of learners in a class, number of customers, number of goals. · Saturday · 1.2\n\nFor example: Continuous — Numerical data that can take ANY value, including decimals. You usually measure it, not count it. · Temperature, height, weight, rainfall, the time taken to run a race. · Sunday · 3.4"
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Creating a Spreadsheet",
+      "prompt": "Explain in your own words: Creating a Spreadsheet.",
+      "solution": "Now that you can capture data, it is time to organise and analyse it. The best tool for numerical data is a spreadsheet, and you will use LibreOffice Calc. A spreadsheet is far more than a place to store numbers — it is a powerful calculator that can work on thousands of numbers at once and never makes an arithmetic mistake.\n\nA spreadsheet is a document split into a large grid. Each little box in the grid is called a cell. The cells are organised into rows, which go across, and columns, which go down. Each row has a unique number (1, 2, 3, ...) and each column has a unique letter (A, B, C, ...). 'Unique' means one of a kind — there is only one row 3 and only one column B, just as there is only one of you.\n\nWhen you open LibreOffice Calc, look for these parts of the screen:\n\nThe Name Box at the top-left corner, which shows the reference of the cell you have selected.\n\nThe Input Line (the formula bar) next to it, where you can see and type what is inside a cell.\n\nThe sheet tabs at the bottom (Sheet1, Sheet2, ...). One file can hold many sheets.\n\nThe AutoSum button, marked with the Greek letter sigma, which quickly adds up a column or row for you.\n\nEvery cell has an address made of its column letter and its row number. This is called a cell reference. The letter tells you the column (how far across), and the number tells you the row (how far down). So the cell where column B meets row 3 has the cell reference B3.\n\nCell references are the secret to a spreadsheet's power. Instead of typing a number into a calculation, you type the cell reference where that number lives. Then, if you ever change the number in that cell, every calculation that uses it updates automatically. It is like magic, but it is really just clever organisation.\n\nTo make a calculation in a spreadsheet, you write a formula. A formula is an instruction to do a calculation, and it always begins with an equals sign =. The = tells LibreOffice Calc, 'Do not treat this as ordinary text — work this out for me.' Formulas combine cell references with arithmetic operators, the symbols we use for maths:\n\nFor example, =C3*D4 multiplies the value in cell C3 by the value in cell D4. If C3 holds 2 and D4 holds 4, the formula returns 8. One golden rule: always put a formula in a separate cell — not in either of the cells you are using in the calculation. You can type a formula straight into an empty cell, or click the cell and type into the Input Line at the top.\n\nA function is a ready-made calculation that is already built into LibreOffice Calc. Each function has a name, and you 'call' it by that name. Functions save you from writing very long formulas. There are more than 500 functions in Calc, but in this unit you will focus on two: SUM and AVERAGE.\n\nFor example: To use a function you follow three steps: start with =, then the function name, then the cell references inside brackets. Inside the brackets you use a colon : to mean 'to'. So A1:A10 means 'from cell A1 to cell A10, and everything in between'."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Worked example: Aunt Amara's shop in Hargeisa",
+      "prompt": "Explain in your own words: Worked example: Aunt Amara's shop in Hargeisa.",
+      "solution": "Let us help Aunt Amara. She sells school items in her Hargeisa shop, and she has told you the price of each item and how many she sold this week, all in Somali shillings. You type her data into LibreOffice Calc like this:\n\nColumn D works out the total money from each item by multiplying its price by the number sold. In cell D2 you type =B2*C2 and press Enter. The result is 30000, because 2000 multiplied by 15 is 30000. You do not have to type the formula seven times, though. You can click D2, then use the Fill Down shortcut Ctrl+D (or the menu Sheet > Fill Cells > Down) to copy the formula down to D8. LibreOffice cleverly changes the cell references for each row, so D3 becomes =B3*C3, and so on. Here are all the results:\n\nColumn D: total money from each item\n\nNow Amara wants three big answers: her total sales, the total number of items she sold, and the average price of an item. You put each in a separate cell using SUM and AVERAGE:\n\nFor example: Total number of items sold: in C9 type =SUM(C2:C8) -> 61"
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Total sales in shillings",
+      "prompt": "Explain in your own words: Total sales in shillings.",
+      "solution": "Average price per item: in B11 type =AVERAGE(B2:B8) -> 8000\n\nLet us check those by hand so you can see the software is right. The numbers sold are 15, 20, 8, 5, 6, 4 and 3, which add up to 61. The item totals in column D are 30000, 60000, 40000, 40000, 60000, 48000 and 48000, which add up to 326000 shillings. And the seven prices are 2000, 3000, 5000, 8000, 10000, 12000 and 16000, which add up to 56000; divide by 7 and you get an average price of 8000 shillings. Amara is delighted — what would have taken her an hour with a paper and pencil took LibreOffice Calc less than a second.\n\nA modern LibreOffice Calc sheet has 1,048,576 rows and up to 16,384 columns.\n\nThat is more than 17 billion cells in a single sheet — far more than anyone could ever fill by hand.\n\nCalc also has more than 500 built-in functions, each one a ready-made calculation waiting for you to use it.\n\nReal spreadsheets often hold huge amounts of data. The skill of a good data manager is selecting just the pieces you need to answer a question. To select data for a calculation in LibreOffice Calc you can either type the cell references into your formula, or click and drag across the cells you want. When you drag, Calc fills the range into your formula for you.\n\nImagine Sami's weather sheet holds a whole month of readings: maximum temperature, minimum temperature, humidity and rainfall. To find the mean maximum temperature for the month, he selects only the maximum-temperature column and uses AVERAGE on it. He would not try to average the wind direction, because 'north' and 'east' are categorical words, not numbers — you cannot calculate a mean of them. Choosing the right data is just as important as choosing the right formula.\n\nNumbers in a grid are useful, but a chart makes patterns jump out at you. To turn Amara's data into a chart in LibreOffice Calc:\n\nSelect the data you want to show. For a chart of each item's total, select the Item column and the Total column together (A1:A8 and D1:D8).\n\nOpen the menu Insert > Chart. The Chart Wizard appears.\n\nStep 1 — Choose a Chart Type. Pick Column for tall bars, or Bar for sideways bars. Click Next.\n\nStep 2 and 3 — Data Range and Data Series. Check that 'First row as label' and 'First column as label' are ticked, then click Next.\n\nStep 4 — Chart Elements. Type a Title such as 'Shop sales this week', label the axes, and tick Display legend. Click Finish.\n\nClick anywhere outside the chart to leave edit mode. Your chart is done!\n\nNow anyone can see at a glance that the water bottle and the exercise book brought in the most money, while the pen brought in the least. That is the power of turning data into a picture.\n\nJust as you planned your form in 2.1, you should plan a spreadsheet before you build it. Ask yourself: What data will I use? What headings will the columns have? How will I organise it so it is easy to understand? What format will the data be in? What calculations do I want to do, and which formulas or functions will do them? A few minutes of planning saves a lot of tidying up later.\n\nOperator — Meaning · Example formula · Row · A · B · C · D\n\n+ — add · =B2+C2 · 1 · Item · Price each (sh) · Number sold · Total (sh)\n — — subtract · =B2-C2 · 2 · Pen · 2000 · 15 · =B2*C2\n\n* — multiply · =B2*C2 · 3 · Exercise book · 3000 · 20 · =B3*C3\n\nFor example: / — divide · =B2/C2 · 4 · Ruler · 5000 · 8 · =B4*C4"
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Which of these is continuous data? (a) Number of pets (b) Favourite colour (c) Temperature (d) Number of goals",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "A statistical investigation is: (a) A type of chart (b) Collecting data to answer a question (c) A spreadsheet formula (d) A kind of database",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "A data logger is best for collecting: (a) Opinions (b) Categories (c) Continuous data over time (d) Names",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "Every spreadsheet formula must begin with: (a) A colon (b) An equals sign (c) A bracket (d) A letter",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "In a spreadsheet, the symbol for multiply is: (a) x (b) * (c) / (d) +",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p06",
+      "level": "Warm-up",
+      "prompt": "Which formula correctly adds the values from B2 to B8? (a) =SUMB2:B8 (b) SUM(B2:B8) (c) =SUM(B2:B8) (d) =SUM(B2-B8)",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p07",
+      "level": "Warm-up",
+      "prompt": "The AVERAGE function calculates the: (a) Total (b) Largest value (c) Mean (d) Smallest value",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p08",
+      "level": "Warm-up",
+      "prompt": "In a database, a record is: (a) A single column (b) All the data about one thing (c) A type of chart (d) A formula",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p09",
+      "level": "Warm-up",
+      "prompt": "In a database, a field is usually shown as a: (a) Row (b) Column (c) Chart (d) Formula",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p10",
+      "level": "Warm-up",
+      "prompt": "An attribute is: (a) A whole database (b) A category of data (c) The data in one field of one record (d) A chart title",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p11",
+      "level": "Warm-up",
+      "prompt": "Which data type suits a whole number like 2019? (a) Text (b) Integer (c) Character (d) Currency",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p12",
+      "level": "Warm-up",
+      "prompt": "Phrase searching means searching for: (a) A single letter (b) A whole series of words (c) Only numbers (d) A chart",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p13",
+      "level": "Warm-up",
+      "prompt": "A filter in a database: (a) Deletes records (b) Adds records (c) Shows only records that match your criteria (d) Draws a chart",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p14",
+      "level": "Warm-up",
+      "prompt": "Retail means: (a) Making goods in a factory (b) Selling items to people (c) Looking after health (d) Storing data",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p15",
+      "level": "Warm-up",
+      "prompt": "A pattern in data is called a: (a) Cell (b) Field (c) Trend (d) Record",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p16",
+      "level": "Core",
+      "prompt": "In your own words, what is the difference between discrete and continuous data? Give an example of each.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Activities & Projects",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Year 6 — Unit 2 — Managing Data",
+        "How to Use This Document",
+        "This is your hands-on workbook. Each activity gives you a task, the exact steps to follow in LibreOffice, the expected result, and an AI-tutor prompt in case you get stuck. Do every task yourself on the computer — reading is not enough; you learn data skills by doing them. Work in order, because each activity builds on the one before, just like the ideas in your Lesson.",
+        "Getting Started with LibreOffice Calc & Base",
+        "Open the LibreOffice Start Centre (or find LibreOffice in your programs list).",
+        "Click Calc Spreadsheet. A blank grid of cells appears."
+      ]
+    },
+    {
+      "title": "Year 6 - Unit 2 - Managing Data",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "How to Use This Document",
+        "This is your hands-on workbook. Each activity gives you a task, the exact steps to follow in LibreOffice, the expected result, and an AI-tutor prompt in case you get stuck. Do every task yourself on the computer — reading is not enough; you learn data skills by doing them. Work in order, because each activity builds on the one before, just like the ideas in your Lesson.",
+        "Getting Started with LibreOffice Calc & Base",
+        "Open the LibreOffice Start Centre (or find LibreOffice in your programs list).",
+        "Click Calc Spreadsheet. A blank grid of cells appears.",
+        "Notice the Name Box at the top-left (it shows your selected cell's reference) and the Input Line next to it (where you type formulas)."
+      ]
+    },
+    {
+      "title": "Getting Started with LibreOffice Calc & Base",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Open the LibreOffice Start Centre (or find LibreOffice in your programs list).",
+        "Click Calc Spreadsheet. A blank grid of cells appears.",
+        "Notice the Name Box at the top-left (it shows your selected cell's reference) and the Input Line next to it (where you type formulas).",
+        "Click any cell and start typing to enter data. Press Enter to move down, or Tab to move right.",
+        "Save your work with Ctrl+S. Give it a clear name; it will be saved as a .ods file.",
+        "In the LibreOffice Start Centre, click Base Database (or use File > New > Database)."
+      ]
+    },
+    {
+      "title": "Opening LibreOffice Calc (for spreadsheets)",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Open the LibreOffice Start Centre (or find LibreOffice in your programs list).",
+        "Click Calc Spreadsheet. A blank grid of cells appears.",
+        "Notice the Name Box at the top-left (it shows your selected cell's reference) and the Input Line next to it (where you type formulas).",
+        "Click any cell and start typing to enter data. Press Enter to move down, or Tab to move right.",
+        "Save your work with Ctrl+S. Give it a clear name; it will be saved as a .ods file.",
+        "In the LibreOffice Start Centre, click Base Database (or use File > New > Database)."
+      ]
+    },
+    {
+      "title": "Opening LibreOffice Base (for databases)",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "In the LibreOffice Start Centre, click Base Database (or use File > New > Database).",
+        "In the Database Wizard, choose Create a new database and click Next.",
+        "Keep Open the database for editing ticked and click Finish.",
+        "Save the database file with a clear name; it will be saved as a .odb file.",
+        "Use the Tables section to create tables, and double-click a table to type in records.",
+        "Save early, save often"
+      ]
+    },
+    {
+      "title": "Save early, save often",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Press Ctrl+S after every few changes. Computers sometimes freeze, and unsaved work is lost work.",
+        "Use clear file names like amara_shop.ods and library.odb so you can find them again easily.",
+        "Before you touch the computer, think like a data manager. On paper, write down three statistical investigations that would collect continuous data (things you measure, like temperature or height). Then, for each one, write which tool you would use to capture the data and why. Bring your list to your next teacher session.",
+        "Part 2.1 — Capturing Data",
+        "Activity 1 — Sort the data types",
+        "Task: decide whether each investigation collects categorical, discrete or continuous data. Write your answer next to each one."
+      ]
+    },
+    {
+      "title": "Warm Up (Unplugged)",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Before you touch the computer, think like a data manager. On paper, write down three statistical investigations that would collect continuous data (things you measure, like temperature or height). Then, for each one, write which tool you would use to capture the data and why. Bring your list to your next teacher session.",
+        "Part 2.1 — Capturing Data",
+        "Activity 1 — Sort the data types",
+        "Task: decide whether each investigation collects categorical, discrete or continuous data. Write your answer next to each one.",
+        "The daily temperature outside your classroom in Hargeisa.",
+        "The number of learners who come to school each day."
+      ]
+    },
+    {
+      "title": "Ask Your AI Tutor",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Give me three more examples of continuous data and explain why each one is continuous, not discrete.",
+        "Activity 2 — Build a validated data-capture sheet in Calc",
+        "Task: help Sami build a sheet that captures the daily rainfall in Mogadishu for one week, and only accepts sensible readings.",
+        "Open LibreOffice Calc. In cell A1 type Day and in cell B1 type Rainfall (mm).",
+        "In cells A2 to A8 type the days Saturday to Friday.",
+        "Select the cells B2:B8. Open the menu Data > Validity."
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "What you might see",
+      "cause": "What it usually means",
+      "fix": "How to fix it"
+    },
+    {
+      "symptom": "The cell shows =SUM(B2:B8) as text, not a number",
+      "cause": "The cell is formatted as Text.",
+      "fix": "Set the cell format to Number (Format > Cells) and retype the formula."
+    },
+    {
+      "symptom": "#NAME? appears in the cell",
+      "cause": "The function name is misspelled or brackets are missing.",
+      "fix": "Check the spelling and that the range is inside brackets, e.g. =SUM(B2:B8)."
+    },
+    {
+      "symptom": "#DIV/0! appears in the cell",
+      "cause": "You divided by zero or by an empty cell.",
+      "fix": "Make sure the cell you divide by holds a number that is not zero."
+    },
+    {
+      "symptom": "The formula shows as words, not an answer",
+      "cause": "You forgot the equals sign.",
+      "fix": "Start the formula with =, for example =B2*C2."
+    },
+    {
+      "symptom": "A year shows as 2019.00",
+      "cause": "The cell is formatted with decimal places.",
+      "fix": "Format the cell as an integer/number with 0 decimal places."
+    },
+    {
+      "symptom": "The database will not let me save the table",
+      "cause": "There is no primary key.",
+      "fix": "Set one field (such as an ID) as the Primary Key, then save."
+    },
+    {
+      "symptom": "My validation rule accepts wrong answers",
+      "cause": "The Error Alert action is not set to Stop.",
+      "fix": "In Data > Validity, on the Error Alert tab, set the Action to Stop."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Stay safe online",
+      "text": "As you get older you may use online forms and social media. Always think carefully before you share personal information such as your full name, home address or a photo. You never know who might see it or what it could be used for. When in doubt, ask a trusted adult first."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "!",
+        "text": "Every formula starts with an equals sign: =SUM(B2:B8). In a spreadsheet, * means multiply and / means divide. The colon : means 'to', so B2:B8 means every cell from B2 to B8."
+      },
+      {
+        "title": "!",
+        "text": "SUM adds up the selected cells. AVERAGE finds the mean of the selected cells. Only use AVERAGE on numbers, never on words like 'north' or 'Sunny'. Put your formula in an empty cell, not in a cell you are calculating with."
+      },
+      {
+        "title": "!",
+        "text": "In a database, records are rows (one thing) and fields are columns (categories). An attribute is one value, in one field, of one record. A primary key is a field that is unique for every record."
+      },
+      {
+        "title": "!",
+        "text": "Continuous data is measured and can be any value; discrete data is counted and is always whole. A validation rule keeps bad data out and lets good data in. A trend is a pattern in data, and patterns help us solve problems."
+      },
+      {
+        "title": "!",
+        "text": "Validation rules are like a helpful gatekeeper: they let good data in and keep bad data out. Data > Validity in LibreOffice Calc can force a cell to accept only whole numbers, only decimals, only dates, only times, or only items from a list. The Stop action refuses a wrong entry completely; a Warning or Information action lets it in but warns the user first."
+      },
+      {
+        "title": "!",
+        "text": "Every formula must start with an equals sign. No equals sign, no calculation! In a spreadsheet, * means multiply and / means divide. Put your formula in a cell of its own, not in a cell that holds one of the numbers you are calculating with. Functions: SUM and AVERAGE A function is a ready-made calculation that is already built into LibreOffice Calc. Each function has a name, and you 'call' it by that name. Functions save you from writing very long formulas. There are more than 500 functions in Calc, but in this unit you will focus on two: SUM and AVERAGE. To use a function you follow three steps: start with =, then the function name, then the cell references inside brackets. Inside the brackets you use a colon : to mean 'to'. So A1:A10 means 'from cell A1 to cell A10, and everything in between'."
+      },
+      {
+        "title": "!",
+        "text": "Fields are the columns (the categories, like Title or Author). Records are the rows (all the data about one thing, like one book). An attribute is one piece of data — the value in one field of one record. A primary key is a field that is unique for every record, so no two records can be confused. Searching a database The best thing about a database is how quickly it finds information. Searching organised data is far faster than reading through a pile of paper cards. There are three main ways to search."
+      }
+    ],
+    "terms": [
+      [
+        "attribute",
+        "The data found in one field of one record in a database."
+      ],
+      [
+        "AVERAGE",
+        "A function, written =AVERAGE(), that finds the mean of the selected cells."
+      ],
+      [
+        "categorical data",
+        "Data that can be grouped into categories, such as favourite colour."
+      ],
+      [
+        "cell",
+        "One box in a spreadsheet grid, where a row and a column meet."
+      ],
+      [
+        "cell reference",
+        "A cell's address, made of its column letter and row number, such as B3."
+      ],
+      [
+        "chart",
+        "A picture of data, such as a column chart or pie chart, that makes patterns easy to see."
+      ],
+      [
+        "collaborate",
+        "To work together with others on the same task."
+      ],
+      [
+        "continuous data",
+        "Numerical data that can take any value, including decimals, such as temperature."
+      ],
+      [
+        "criteria",
+        "The requirements or conditions you search for to find matching data."
+      ],
+      [
+        "database",
+        "An organised set of data, made up of records and fields."
+      ],
+      [
+        "data logger",
+        "A device that uses sensors to record data over time, often by itself."
+      ],
+      [
+        "data type",
+        "The form of the data, such as text, integer, date or currency."
+      ],
+      [
+        "discrete data",
+        "Numerical data that can only be whole numbers, such as the number of pets."
+      ],
+      [
+        "field",
+        "A category of data within a record; usually a column."
+      ],
+      [
+        "filter",
+        "A tool that shows only the records matching your criteria and hides the rest."
+      ],
+      [
+        "formula",
+        "An instruction to do a calculation; it always begins with =."
+      ],
+      [
+        "function",
+        "A ready-made calculation in the software, called by its name, such as SUM."
+      ],
+      [
+        "healthcare",
+        "Looking after the medical needs of individuals or a community."
+      ],
+      [
+        "integer",
+        "A whole number, such as 500."
+      ],
+      [
+        "LibreOffice Base",
+        "Free, open-source software for creating and searching databases."
+      ],
+      [
+        "LibreOffice Calc",
+        "Free, open-source spreadsheet software."
+      ],
+      [
+        "manufacturing",
+        "Making large numbers of goods in factories using machines."
+      ],
+      [
+        "primary key",
+        "A field that is unique for every record, so records can always be told apart."
+      ],
+      [
+        "phrase searching",
+        "Searching for data that matches a whole series of words."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "attribute",
+        "meaning": "The data found in one field of one record in a database.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "AVERAGE",
+        "meaning": "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "categorical data",
+        "meaning": "Data that can be grouped into categories, such as favourite colour.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "cell",
+        "meaning": "One box in a spreadsheet grid, where a row and a column meet.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "cell reference",
+        "meaning": "A cell's address, made of its column letter and row number, such as B3.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "chart",
+        "meaning": "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "collaborate",
+        "meaning": "To work together with others on the same task.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "continuous data",
+        "meaning": "Numerical data that can take any value, including decimals, such as temperature.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "criteria",
+        "meaning": "The requirements or conditions you search for to find matching data.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "database",
+        "meaning": "An organised set of data, made up of records and fields.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "data logger",
+        "meaning": "A device that uses sensors to record data over time, often by itself.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "data type",
+        "meaning": "The form of the data, such as text, integer, date or currency.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "discrete data",
+        "meaning": "Numerical data that can only be whole numbers, such as the number of pets.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "field",
+        "meaning": "A category of data within a record; usually a column.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "filter",
+        "meaning": "A tool that shows only the records matching your criteria and hides the rest.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "formula",
+        "meaning": "An instruction to do a calculation; it always begins with =.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "function",
+        "meaning": "A ready-made calculation in the software, called by its name, such as SUM.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "healthcare",
+        "meaning": "Looking after the medical needs of individuals or a community.",
+        "example": "",
+        "letter": "H"
+      },
+      {
+        "term": "integer",
+        "meaning": "A whole number, such as 500.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "LibreOffice Base",
+        "meaning": "Free, open-source software for creating and searching databases.",
+        "example": "",
+        "letter": "L"
+      },
+      {
+        "term": "LibreOffice Calc",
+        "meaning": "Free, open-source spreadsheet software.",
+        "example": "",
+        "letter": "L"
+      },
+      {
+        "term": "manufacturing",
+        "meaning": "Making large numbers of goods in factories using machines.",
+        "example": "",
+        "letter": "M"
+      },
+      {
+        "term": "primary key",
+        "meaning": "A field that is unique for every record, so records can always be told apart.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "phrase searching",
+        "meaning": "Searching for data that matches a whole series of words.",
+        "example": "",
+        "letter": "P"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "What you might see",
+        "What it usually means How to fix it"
+      ],
+      [
+        "The cell shows =SUM(B2:B8) as text, not a number",
+        "The cell is formatted as Text. Set the cell format to Number (Format > Cells) and retype the formula."
+      ],
+      [
+        "#NAME? appears in the cell",
+        "The function name is misspelled or brackets are missing. Check the spelling and that the range is inside brackets, e.g. =SUM(B2:B8)."
+      ],
+      [
+        "#DIV/0! appears in the cell",
+        "You divided by zero or by an empty cell. Make sure the cell you divide by holds a number that is not zero."
+      ],
+      [
+        "The formula shows as words, not an answer",
+        "You forgot the equals sign. Start the formula with =, for example =B2*C2."
+      ],
+      [
+        "A year shows as 2019.00",
+        "The cell is formatted with decimal places. Format the cell as an integer/number with 0 decimal places."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Which of these is continuous data? (a) Number of pets (b) Favourite colour (c) Temperature (d) Number of goals",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "A statistical investigation is: (a) A type of chart (b) Collecting data to answer a question (c) A spreadsheet formula (d) A kind of database",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "A data logger is best for collecting: (a) Opinions (b) Categories (c) Continuous data over time (d) Names",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Every spreadsheet formula must begin with: (a) A colon (b) An equals sign (c) A bracket (d) A letter",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "In a spreadsheet, the symbol for multiply is: (a) x (b) * (c) / (d) +",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Which formula correctly adds the values from B2 to B8? (a) =SUMB2:B8 (b) SUM(B2:B8) (c) =SUM(B2:B8) (d) =SUM(B2-B8)",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "The AVERAGE function calculates the: (a) Total (b) Largest value (c) Mean (d) Smallest value",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "In a database, a record is: (a) A single column (b) All the data about one thing (c) A type of chart (d) A formula",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "In a database, a field is usually shown as a: (a) Row (b) Column (c) Chart (d) Formula",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "An attribute is: (a) A whole database (b) A category of data (c) The data in one field of one record (d) A chart title",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "Which data type suits a whole number like 2019? (a) Text (b) Integer (c) Character (d) Currency",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "Phrase searching means searching for: (a) A single letter (b) A whole series of words (c) Only numbers (d) A chart",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Some of these formulas are written incorrectly. For each one, say whether it is correct or incorrect. If it is incorrect, write it out correctly.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "AVERAGE(B5:B10)",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "=AVERAGE(B5-B10)",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "=AVERAGE(B5B10)",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Travel",
+      "prompt": "=AVERAGE(B5:B10)",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "context": "Health",
+      "prompt": "These tasks ask you to design, not just remember. Write or sketch your answers.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "In your own words, what is the difference between discrete and continuous data? Give an example of each.",
+      "keyIdeas": [
+        "attribute",
+        "AVERAGE",
+        "categorical data"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Name three tools you can use to capture data in a statistical investigation.",
+      "keyIdeas": [
+        "AVERAGE",
+        "categorical data",
+        "cell"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Why is a multiple choice question a poor way to collect continuous data such as height?",
+      "keyIdeas": [
+        "categorical data",
+        "cell",
+        "cell reference"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "What is a cell reference? Give an example.",
+      "keyIdeas": [
+        "cell",
+        "cell reference",
+        "chart"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Why must a formula always begin with =?",
+      "keyIdeas": [
+        "cell reference",
+        "chart",
+        "collaborate"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "What is the difference between the SUM function and the AVERAGE function?",
+      "keyIdeas": [
+        "chart",
+        "collaborate",
+        "continuous data"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "project": {
+    "title": "The Class Clothes Shop",
+    "brief": "A new children's clothes shop has opened near the school, and the owner, Amara, does not know what to sell. She wants to know what clothes children your age prefer, and whether children of a certain height or age like different things. She has asked the Data Helpers to collect and analyse data about your class and make recommendations. This project brings together everything in the unit.",
+    "steps": [
+      "Stage 1 — Plan and capture (2.1)",
+      "Decide what data to collect: perhaps each child's age, height, favourite colour, and favourite type of clothing.",
+      "Decide the question types: a validated number for height (continuous), a whole number for age (discrete), and a drop-down list for favourite colour (categorical).",
+      "Build a validated data-capture sheet in LibreOffice Calc using Data > Validity, so only sensible answers are accepted.",
+      "Collect the data from your group (or use made-up data for practice).",
+      "Stage 2 — Analyse in a spreadsheet (2.2)",
+      "Use =AVERAGE(...) to find the mean height and the mean age of the children.",
+      "Use =SUM(...) or the COUNT idea to find how many children chose each favourite colour."
+    ],
+    "successCriteria": [
+      "My project shows that I understand capturing data.",
+      "My project shows that I understand designing a form to collect continuous data.",
+      "My project shows that I understand hands.",
+      "My project shows that I understand creating a spreadsheet.",
+      "My project shows that I understand worked example: aunt amara's shop in hargeisa."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “attribute” mean in computing?",
+        "options": [
+          "The data found in one field of one record in a database.",
+          "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+          "Data that can be grouped into categories, such as favourite colour.",
+          "One box in a spreadsheet grid, where a row and a column meet."
+        ],
+        "answer": "The data found in one field of one record in a database.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Attribute means the data found in one field of one record in a database.."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “AVERAGE” mean in computing?",
+        "options": [
+          "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+          "Data that can be grouped into categories, such as favourite colour.",
+          "One box in a spreadsheet grid, where a row and a column meet.",
+          "A cell's address, made of its column letter and row number, such as B3."
+        ],
+        "answer": "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Attribute means the data found in one field of one record in a database."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “categorical data” mean in computing?",
+        "options": [
+          "Data that can be grouped into categories, such as favourite colour.",
+          "One box in a spreadsheet grid, where a row and a column meet.",
+          "A cell's address, made of its column letter and row number, such as B3.",
+          "A picture of data, such as a column chart or pie chart, that makes patterns easy to see."
+        ],
+        "answer": "Data that can be grouped into categories, such as favourite colour.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "AVERAGE means a function, written =AVERAGE(), that finds the mean of the selected cells."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “cell” mean in computing?",
+        "options": [
+          "One box in a spreadsheet grid, where a row and a column meet.",
+          "A cell's address, made of its column letter and row number, such as B3.",
+          "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+          "To work together with others on the same task."
+        ],
+        "answer": "One box in a spreadsheet grid, where a row and a column meet.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Categorical data means data that can be grouped into categories, such as favourite colour."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “cell reference” mean in computing?",
+        "options": [
+          "A cell's address, made of its column letter and row number, such as B3.",
+          "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+          "To work together with others on the same task.",
+          "Numerical data that can take any value, including decimals, such as temperature."
+        ],
+        "answer": "A cell's address, made of its column letter and row number, such as B3.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Cell means one box in a spreadsheet grid, where a row and a column meet."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “chart” mean in computing?",
+        "options": [
+          "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+          "To work together with others on the same task.",
+          "Numerical data that can take any value, including decimals, such as temperature.",
+          "The requirements or conditions you search for to find matching data."
+        ],
+        "answer": "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Cell reference means a cell's address, made of its column letter and row number, such as B3."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: To work together with others on the same task.?",
+        "options": [
+          "collaborate",
+          "continuous data",
+          "criteria",
+          "database"
+        ],
+        "answer": "collaborate",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Chart means a picture of data, such as a column chart or pie chart, that makes patterns easy to see."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Numerical data that can take any value, including decimals, such as temperature.?",
+        "options": [
+          "continuous data",
+          "criteria",
+          "database",
+          "data logger"
+        ],
+        "answer": "continuous data",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Collaborate means to work together with others on the same task."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo09",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: The requirements or conditions you search for to find matching data.?",
+        "options": [
+          "criteria",
+          "database",
+          "data logger",
+          "data type"
+        ],
+        "answer": "criteria",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Continuous data means numerical data that can take any value, including decimals, such as temperature."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: An organised set of data, made up of records and fields.?",
+        "options": [
+          "database",
+          "data logger",
+          "data type",
+          "discrete data"
+        ],
+        "answer": "database",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Criteria means the requirements or conditions you search for to find matching data."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A device that uses sensors to record data over time, often by itself.?",
+        "options": [
+          "data logger",
+          "data type",
+          "discrete data",
+          "field"
+        ],
+        "answer": "data logger",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Database means an organised set of data, made up of records and fields."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The form of the data, such as text, integer, date or currency.?",
+        "options": [
+          "data type",
+          "discrete data",
+          "field",
+          "filter"
+        ],
+        "answer": "data type",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Data logger means a device that uses sensors to record data over time, often by itself."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u2-game-1",
+        "icon": "?",
+        "skill": "attribute",
+        "title": "Quick Match: attribute",
+        "description": "Practise attribute through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “attribute” mean in computing?",
+            "choices": [
+              "The data found in one field of one record in a database.",
+              "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+              "Data that can be grouped into categories, such as favourite colour.",
+              "One box in a spreadsheet grid, where a row and a column meet."
+            ],
+            "answer": "The data found in one field of one record in a database.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Attribute means the data found in one field of one record in a database.."
+          },
+          {
+            "prompt": "What does “cell” mean in computing?",
+            "choices": [
+              "One box in a spreadsheet grid, where a row and a column meet.",
+              "A cell's address, made of its column letter and row number, such as B3.",
+              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+              "To work together with others on the same task."
+            ],
+            "answer": "One box in a spreadsheet grid, where a row and a column meet.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Categorical data means data that can be grouped into categories, such as favourite colour."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To work together with others on the same task.?",
+            "choices": [
+              "collaborate",
+              "continuous data",
+              "criteria",
+              "database"
+            ],
+            "answer": "collaborate",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Chart means a picture of data, such as a column chart or pie chart, that makes patterns easy to see."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An organised set of data, made up of records and fields.?",
+            "choices": [
+              "database",
+              "data logger",
+              "data type",
+              "discrete data"
+            ],
+            "answer": "database",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Criteria means the requirements or conditions you search for to find matching data."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-2",
+        "icon": "★",
+        "skill": "AVERAGE",
+        "title": "Concept Quest: AVERAGE",
+        "description": "Practise average through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “AVERAGE” mean in computing?",
+            "choices": [
+              "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+              "Data that can be grouped into categories, such as favourite colour.",
+              "One box in a spreadsheet grid, where a row and a column meet.",
+              "A cell's address, made of its column letter and row number, such as B3."
+            ],
+            "answer": "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Attribute means the data found in one field of one record in a database."
+          },
+          {
+            "prompt": "What does “cell reference” mean in computing?",
+            "choices": [
+              "A cell's address, made of its column letter and row number, such as B3.",
+              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+              "To work together with others on the same task.",
+              "Numerical data that can take any value, including decimals, such as temperature."
+            ],
+            "answer": "A cell's address, made of its column letter and row number, such as B3.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell means one box in a spreadsheet grid, where a row and a column meet."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Numerical data that can take any value, including decimals, such as temperature.?",
+            "choices": [
+              "continuous data",
+              "criteria",
+              "database",
+              "data logger"
+            ],
+            "answer": "continuous data",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Collaborate means to work together with others on the same task."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A device that uses sensors to record data over time, often by itself.?",
+            "choices": [
+              "data logger",
+              "data type",
+              "discrete data",
+              "field"
+            ],
+            "answer": "data logger",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Database means an organised set of data, made up of records and fields."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-3",
+        "icon": "◫",
+        "skill": "categorical data",
+        "title": "Debug Detective: categorical data",
+        "description": "Practise categorical data through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “categorical data” mean in computing?",
+            "choices": [
+              "Data that can be grouped into categories, such as favourite colour.",
+              "One box in a spreadsheet grid, where a row and a column meet.",
+              "A cell's address, made of its column letter and row number, such as B3.",
+              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see."
+            ],
+            "answer": "Data that can be grouped into categories, such as favourite colour.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "AVERAGE means a function, written =AVERAGE(), that finds the mean of the selected cells."
+          },
+          {
+            "prompt": "What does “chart” mean in computing?",
+            "choices": [
+              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+              "To work together with others on the same task.",
+              "Numerical data that can take any value, including decimals, such as temperature.",
+              "The requirements or conditions you search for to find matching data."
+            ],
+            "answer": "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell reference means a cell's address, made of its column letter and row number, such as B3."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The requirements or conditions you search for to find matching data.?",
+            "choices": [
+              "criteria",
+              "database",
+              "data logger",
+              "data type"
+            ],
+            "answer": "criteria",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Continuous data means numerical data that can take any value, including decimals, such as temperature."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The form of the data, such as text, integer, date or currency.?",
+            "choices": [
+              "data type",
+              "discrete data",
+              "field",
+              "filter"
+            ],
+            "answer": "data type",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data logger means a device that uses sensors to record data over time, often by itself."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-4",
+        "icon": "→",
+        "skill": "cell",
+        "title": "Algorithm Runner: cell",
+        "description": "Practise cell through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “cell” mean in computing?",
+            "choices": [
+              "One box in a spreadsheet grid, where a row and a column meet.",
+              "A cell's address, made of its column letter and row number, such as B3.",
+              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+              "To work together with others on the same task."
+            ],
+            "answer": "One box in a spreadsheet grid, where a row and a column meet.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Categorical data means data that can be grouped into categories, such as favourite colour."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To work together with others on the same task.?",
+            "choices": [
+              "collaborate",
+              "continuous data",
+              "criteria",
+              "database"
+            ],
+            "answer": "collaborate",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Chart means a picture of data, such as a column chart or pie chart, that makes patterns easy to see."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An organised set of data, made up of records and fields.?",
+            "choices": [
+              "database",
+              "data logger",
+              "data type",
+              "discrete data"
+            ],
+            "answer": "database",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Criteria means the requirements or conditions you search for to find matching data."
+          },
+          {
+            "prompt": "What does “attribute” mean in computing?",
+            "choices": [
+              "The data found in one field of one record in a database.",
+              "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+              "Data that can be grouped into categories, such as favourite colour.",
+              "One box in a spreadsheet grid, where a row and a column meet."
+            ],
+            "answer": "The data found in one field of one record in a database.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Attribute means the data found in one field of one record in a database.."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-5",
+        "icon": "Σ",
+        "skill": "cell reference",
+        "title": "Vocabulary Vault: cell reference",
+        "description": "Practise cell reference through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “cell reference” mean in computing?",
+            "choices": [
+              "A cell's address, made of its column letter and row number, such as B3.",
+              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+              "To work together with others on the same task.",
+              "Numerical data that can take any value, including decimals, such as temperature."
+            ],
+            "answer": "A cell's address, made of its column letter and row number, such as B3.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell means one box in a spreadsheet grid, where a row and a column meet."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Numerical data that can take any value, including decimals, such as temperature.?",
+            "choices": [
+              "continuous data",
+              "criteria",
+              "database",
+              "data logger"
+            ],
+            "answer": "continuous data",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Collaborate means to work together with others on the same task."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A device that uses sensors to record data over time, often by itself.?",
+            "choices": [
+              "data logger",
+              "data type",
+              "discrete data",
+              "field"
+            ],
+            "answer": "data logger",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Database means an organised set of data, made up of records and fields."
+          },
+          {
+            "prompt": "What does “AVERAGE” mean in computing?",
+            "choices": [
+              "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+              "Data that can be grouped into categories, such as favourite colour.",
+              "One box in a spreadsheet grid, where a row and a column meet.",
+              "A cell's address, made of its column letter and row number, such as B3."
+            ],
+            "answer": "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Attribute means the data found in one field of one record in a database."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-6",
+        "icon": "◇",
+        "skill": "chart",
+        "title": "Challenge Cards: chart",
+        "description": "Practise chart through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “chart” mean in computing?",
+            "choices": [
+              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+              "To work together with others on the same task.",
+              "Numerical data that can take any value, including decimals, such as temperature.",
+              "The requirements or conditions you search for to find matching data."
+            ],
+            "answer": "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell reference means a cell's address, made of its column letter and row number, such as B3."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The requirements or conditions you search for to find matching data.?",
+            "choices": [
+              "criteria",
+              "database",
+              "data logger",
+              "data type"
+            ],
+            "answer": "criteria",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Continuous data means numerical data that can take any value, including decimals, such as temperature."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The form of the data, such as text, integer, date or currency.?",
+            "choices": [
+              "data type",
+              "discrete data",
+              "field",
+              "filter"
+            ],
+            "answer": "data type",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data logger means a device that uses sensors to record data over time, often by itself."
+          },
+          {
+            "prompt": "What does “categorical data” mean in computing?",
+            "choices": [
+              "Data that can be grouped into categories, such as favourite colour.",
+              "One box in a spreadsheet grid, where a row and a column meet.",
+              "A cell's address, made of its column letter and row number, such as B3.",
+              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see."
+            ],
+            "answer": "Data that can be grouped into categories, such as favourite colour.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "AVERAGE means a function, written =AVERAGE(), that finds the mean of the selected cells."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-7",
+        "icon": "⚡",
+        "skill": "collaborate",
+        "title": "Think Fast: collaborate",
+        "description": "Practise collaborate through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To work together with others on the same task.?",
+            "choices": [
+              "collaborate",
+              "continuous data",
+              "criteria",
+              "database"
+            ],
+            "answer": "collaborate",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Chart means a picture of data, such as a column chart or pie chart, that makes patterns easy to see."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An organised set of data, made up of records and fields.?",
+            "choices": [
+              "database",
+              "data logger",
+              "data type",
+              "discrete data"
+            ],
+            "answer": "database",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Criteria means the requirements or conditions you search for to find matching data."
+          },
+          {
+            "prompt": "What does “attribute” mean in computing?",
+            "choices": [
+              "The data found in one field of one record in a database.",
+              "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+              "Data that can be grouped into categories, such as favourite colour.",
+              "One box in a spreadsheet grid, where a row and a column meet."
+            ],
+            "answer": "The data found in one field of one record in a database.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Attribute means the data found in one field of one record in a database.."
+          },
+          {
+            "prompt": "What does “cell” mean in computing?",
+            "choices": [
+              "One box in a spreadsheet grid, where a row and a column meet.",
+              "A cell's address, made of its column letter and row number, such as B3.",
+              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+              "To work together with others on the same task."
+            ],
+            "answer": "One box in a spreadsheet grid, where a row and a column meet.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Categorical data means data that can be grouped into categories, such as favourite colour."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-8",
+        "icon": "☁",
+        "skill": "continuous data",
+        "title": "Explain It: continuous data",
+        "description": "Practise continuous data through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Numerical data that can take any value, including decimals, such as temperature.?",
+            "choices": [
+              "continuous data",
+              "criteria",
+              "database",
+              "data logger"
+            ],
+            "answer": "continuous data",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Collaborate means to work together with others on the same task."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A device that uses sensors to record data over time, often by itself.?",
+            "choices": [
+              "data logger",
+              "data type",
+              "discrete data",
+              "field"
+            ],
+            "answer": "data logger",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Database means an organised set of data, made up of records and fields."
+          },
+          {
+            "prompt": "What does “AVERAGE” mean in computing?",
+            "choices": [
+              "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+              "Data that can be grouped into categories, such as favourite colour.",
+              "One box in a spreadsheet grid, where a row and a column meet.",
+              "A cell's address, made of its column letter and row number, such as B3."
+            ],
+            "answer": "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Attribute means the data found in one field of one record in a database."
+          },
+          {
+            "prompt": "What does “cell reference” mean in computing?",
+            "choices": [
+              "A cell's address, made of its column letter and row number, such as B3.",
+              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+              "To work together with others on the same task.",
+              "Numerical data that can take any value, including decimals, such as temperature."
+            ],
+            "answer": "A cell's address, made of its column letter and row number, such as B3.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell means one box in a spreadsheet grid, where a row and a column meet."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-9",
+        "icon": "⌂",
+        "skill": "criteria",
+        "title": "Real-Life Round: criteria",
+        "description": "Practise criteria through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The requirements or conditions you search for to find matching data.?",
+            "choices": [
+              "criteria",
+              "database",
+              "data logger",
+              "data type"
+            ],
+            "answer": "criteria",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Continuous data means numerical data that can take any value, including decimals, such as temperature."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The form of the data, such as text, integer, date or currency.?",
+            "choices": [
+              "data type",
+              "discrete data",
+              "field",
+              "filter"
+            ],
+            "answer": "data type",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data logger means a device that uses sensors to record data over time, often by itself."
+          },
+          {
+            "prompt": "What does “categorical data” mean in computing?",
+            "choices": [
+              "Data that can be grouped into categories, such as favourite colour.",
+              "One box in a spreadsheet grid, where a row and a column meet.",
+              "A cell's address, made of its column letter and row number, such as B3.",
+              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see."
+            ],
+            "answer": "Data that can be grouped into categories, such as favourite colour.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "AVERAGE means a function, written =AVERAGE(), that finds the mean of the selected cells."
+          },
+          {
+            "prompt": "What does “chart” mean in computing?",
+            "choices": [
+              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+              "To work together with others on the same task.",
+              "Numerical data that can take any value, including decimals, such as temperature.",
+              "The requirements or conditions you search for to find matching data."
+            ],
+            "answer": "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell reference means a cell's address, made of its column letter and row number, such as B3."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-10",
+        "icon": "!",
+        "skill": "database",
+        "title": "Spot the Bug: database",
+        "description": "Practise database through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: An organised set of data, made up of records and fields.?",
+            "choices": [
+              "database",
+              "data logger",
+              "data type",
+              "discrete data"
+            ],
+            "answer": "database",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Criteria means the requirements or conditions you search for to find matching data."
+          },
+          {
+            "prompt": "What does “attribute” mean in computing?",
+            "choices": [
+              "The data found in one field of one record in a database.",
+              "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+              "Data that can be grouped into categories, such as favourite colour.",
+              "One box in a spreadsheet grid, where a row and a column meet."
+            ],
+            "answer": "The data found in one field of one record in a database.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Attribute means the data found in one field of one record in a database.."
+          },
+          {
+            "prompt": "What does “cell” mean in computing?",
+            "choices": [
+              "One box in a spreadsheet grid, where a row and a column meet.",
+              "A cell's address, made of its column letter and row number, such as B3.",
+              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+              "To work together with others on the same task."
+            ],
+            "answer": "One box in a spreadsheet grid, where a row and a column meet.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Categorical data means data that can be grouped into categories, such as favourite colour."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To work together with others on the same task.?",
+            "choices": [
+              "collaborate",
+              "continuous data",
+              "criteria",
+              "database"
+            ],
+            "answer": "collaborate",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Chart means a picture of data, such as a column chart or pie chart, that makes patterns easy to see."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-11",
+        "icon": "≡",
+        "skill": "data logger",
+        "title": "Mastery Mix: data logger",
+        "description": "Practise data logger through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A device that uses sensors to record data over time, often by itself.?",
+            "choices": [
+              "data logger",
+              "data type",
+              "discrete data",
+              "field"
+            ],
+            "answer": "data logger",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Database means an organised set of data, made up of records and fields."
+          },
+          {
+            "prompt": "What does “AVERAGE” mean in computing?",
+            "choices": [
+              "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+              "Data that can be grouped into categories, such as favourite colour.",
+              "One box in a spreadsheet grid, where a row and a column meet.",
+              "A cell's address, made of its column letter and row number, such as B3."
+            ],
+            "answer": "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Attribute means the data found in one field of one record in a database."
+          },
+          {
+            "prompt": "What does “cell reference” mean in computing?",
+            "choices": [
+              "A cell's address, made of its column letter and row number, such as B3.",
+              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+              "To work together with others on the same task.",
+              "Numerical data that can take any value, including decimals, such as temperature."
+            ],
+            "answer": "A cell's address, made of its column letter and row number, such as B3.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell means one box in a spreadsheet grid, where a row and a column meet."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Numerical data that can take any value, including decimals, such as temperature.?",
+            "choices": [
+              "continuous data",
+              "criteria",
+              "database",
+              "data logger"
+            ],
+            "answer": "continuous data",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Collaborate means to work together with others on the same task."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-12",
+        "icon": "T",
+        "skill": "data type",
+        "title": "Unit Champion: data type",
+        "description": "Practise data type through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The form of the data, such as text, integer, date or currency.?",
+            "choices": [
+              "data type",
+              "discrete data",
+              "field",
+              "filter"
+            ],
+            "answer": "data type",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data logger means a device that uses sensors to record data over time, often by itself."
+          },
+          {
+            "prompt": "What does “categorical data” mean in computing?",
+            "choices": [
+              "Data that can be grouped into categories, such as favourite colour.",
+              "One box in a spreadsheet grid, where a row and a column meet.",
+              "A cell's address, made of its column letter and row number, such as B3.",
+              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see."
+            ],
+            "answer": "Data that can be grouped into categories, such as favourite colour.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "AVERAGE means a function, written =AVERAGE(), that finds the mean of the selected cells."
+          },
+          {
+            "prompt": "What does “chart” mean in computing?",
+            "choices": [
+              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+              "To work together with others on the same task.",
+              "Numerical data that can take any value, including decimals, such as temperature.",
+              "The requirements or conditions you search for to find matching data."
+            ],
+            "answer": "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Cell reference means a cell's address, made of its column letter and row number, such as B3."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The requirements or conditions you search for to find matching data.?",
+            "choices": [
+              "criteria",
+              "database",
+              "data logger",
+              "data type"
+            ],
+            "answer": "criteria",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Continuous data means numerical data that can take any value, including decimals, such as temperature."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can identify the different computing tools you can use in a statistical investigation.",
+    "I can explain how to plan a statistical investigation.",
+    "I can explain how to collect continuous data.",
+    "I can design an appropriate form to collect continuous data.",
+    "I can explain the features of a spreadsheet, including cells, rows, columns and cell references.",
+    "I can use formulas with arithmetic operators, and the built-in functions SUM and AVERAGE.",
+    "I can design a spreadsheet and select data for a given purpose, then present it as a chart.",
+    "I can design a single-table database, choosing sensible fields and data types.",
+    "I can create a single-table database in LibreOffice Base.",
+    "I can explain how data helps solve problems in retail, healthcare and manufacturing."
+  ]
+}

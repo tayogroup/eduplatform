@@ -1,0 +1,1706 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.378Z",
+  "stage": {
+    "id": "s02",
+    "label": "Stage 2"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t02",
+    "label": "Term 2"
+  },
+  "unit": {
+    "unitId": "comp-g02-u07",
+    "unitNo": 7,
+    "unitTitle": "Be a Data Scientist",
+    "unitOverview": "Welcome to Unit 7 of Year 2 Computing at Ehel Academy. That sounds like a very big job, but it just means they ask good questions, collect the answers (which we call data), sort the data into the right kind, and use it to help solve a problem. This unit gives simple names to clever thinking they already do.\n\nThere are three big ideas, and you build on each other. The first idea is that questions come in two kinds. A statistical question has more than one answer — like “What are the favourite snacks of the children in our class?” A non-statistical question has only one answer — like “What colour is Leo's bag?” The second idea is that the data we collect also comes in two kinds. Numerical data is numbers — things we count or measure, like height or test scores. Categorical data is groups — words like eye colour or favourite fruit. The third idea is the best part: data helps us solve problems.\n\nAlmost all of this unit is unplugged — it is done on paper, with sorting cards, and with a tape measure. There is no app to download and no account to make. The one place a computer appears is the idea of an electronic form (a set of questions on a screen); you can show what a form looks like on a printed sheet, or on any tablet or phone you already have, but no child ever needs to sign in anywhere.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 2
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-2-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 2",
+    "sourceArchive": "Year 2-20260801T055735Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 2/Unit 7/Year 2 - Unit 7 Teacher Guide.docx",
+      "Year 2/Unit 7/Year 2 - Unit 7 Activity Sheet.docx",
+      "Year 2/Unit 7/Year 2 - Unit 7 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 305,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 2 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Tell a statistical question (more than one answer) from a non-statistical question (only one answer).",
+    "Explain, in their own words, that a statistical question is one where the answers can be different for different people.",
+    "Name the two kinds of statistical data: numerical (numbers we count or measure) and categorical (groups, like colours or names).",
+    "Sort simple data into numerical or categorical.",
+    "Understand that we must never add up categorical data — the numbers on a category are just name tags.",
+    "Say that computing devices collect data on electronic forms, and that a number is typed or picked, while a category is chosen from a list.",
+    "Give at least one way that data helps to solve a problem (test scores, shop stock, weather, or car maps).",
+    "Choose the right thing to do with data to answer a question (for example, sort the marks to find the highest)."
+  ],
+  "toolkit": [],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-questions-one-answer-or-many-answers",
+      "title": "Questions: one answer or many answers?",
+      "explanation": "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical question has only one answer. Being a data scientist starts with knowing which kind of question we are asking.\n\nWhat colour is my bag? Now say: “What is your favourite fruit?” Lots of different answers come back. Some questions have just one answer. Some have many answers.",
+      "example": "A many-answer question has a special name — a statistical question. A one-answer question is a non-statistical question.",
+      "checkYourself": "Can you tell a one-answer question from a many-answer question?"
+    },
+    {
+      "id": "concept-2-two-kinds-of-data-numbers-and-groups",
+      "title": "Two kinds of data: numbers and groups",
+      "explanation": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or measure, like height, test scores or how many pets. Categorical data is groups — words that sort things into kinds, like eye colour, favourite fruit or how we travel to school.\n\nSome data is numbers we count or measure — that is numerical data. Some data is groups, like colours or names — that is categorical data.",
+      "example": "Find one real example of two kinds of data: numbers and groups around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you understand that categorical data is not for adding up, even when it has been given numbers? Can you sort data into numbers (numerical) and groups (categorical)?"
+    },
+    {
+      "id": "concept-3-data-on-a-form-computing-devices",
+      "title": "Data on a form (computing devices)",
+      "explanation": "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you type or pick a number; for categorical data you pick a category from a list (you tap your choice). This is how a phone, tablet or computer gathers data from lots of people quickly.\n\nYou can hold up a printed sheet or show one on a tablet you already have.",
+      "example": "Find one real example of data on a form (computing devices) around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you tell which questions on the form want a number (numerical) and which want a chosen category (categorical)?"
+    },
+    {
+      "id": "concept-4-how-data-helps-us-solve-problems",
+      "title": "How data helps us solve problems",
+      "explanation": "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores to see who needs help. Shops keep count of what they sell so you know what to buy more of. Weather computers use rain and wind data to guess tomorrow's weather. Map apps in cars use traffic data to find the quickest way.\n\nA shop at the market writes down what it started with, what it sold, and what is left. Tell the shop story with a simple table.",
+      "example": "Answer this in your own words, out loud or on paper: How data helps us solve problems? Then check your answer against the explanation above.",
+      "checkYourself": "Can you choose a sensible thing to do with data — sort it, compare it, or add it — to answer a question? Can you give one real way data helps solve a problem?"
+    },
+    {
+      "id": "concept-5-be-a-data-scientist-the-mini-project",
+      "title": "Be a data scientist: the Mini-Project",
+      "explanation": "Working in small groups, they collect real data (each person's height and eye colour), sort each piece of data into numerical or categorical, decide which questions are statistical or non-statistical, and then use the data to answer a question. This session and the Mini-Project go hand in hand.\n\nNow you are the data scientist. In your group you will collect two pieces of data about each person — how tall they are, and their eye colour.",
+      "example": "Help you measure heights with the tape measure (this is numerical data) and look carefully at eye colour (this is categorical data). Keep groups small — three or four you are plenty.",
+      "checkYourself": "Can you use the data to answer a real question, such as who is tallest? Does you collect the data carefully into the table?"
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "1. How many brothers and sisters",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "do you have? [ ]",
+        "2. How tall are you? [ ] cm"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "One Answer or Many Answers?",
+      "context": "work through the steps below and see what happens. This is questions: one answer or many answers? in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Some questions have only one answer. Some have many answers. A many-answer question is called a statistical question. A one-answer question is called a non-statistical question. Tick the right box for each question.",
+      "answer": "Match: Question → One answer / Many answers",
+      "modelType": "model-1",
+      "hint": "Start here: Match: Question → One answer / Many answers",
+      "explanation": "Questions: one answer or many answers?: Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical question has only one answer. Being a data scientist starts with knowing which kind of question we are asking."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Numbers or Groups?",
+      "context": "work through the steps below and see what happens. This is two kinds of data: numbers and groups in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Numerical data is numbers — we count or measure them. Categorical data is groups — like colours or names. Tick the right box for each one.",
+      "answer": "Match: Data → Numerical (numbers) / Categorical (groups)",
+      "modelType": "model-2",
+      "hint": "Start here: Match: Data → Numerical (numbers) / Categorical (groups)",
+      "explanation": "Two kinds of data: numbers and groups: When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or measure, like height, test scores or how many pets. Categorical data is groups — words that sort things into kinds, like eye colour, favourite fruit or…"
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Circle the Numbers",
+      "context": "work through the steps below and see what happens. This is data on a form (computing devices) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Circle the data that is numerical (numbers we count or measure). Leave the groups alone.",
+      "answer": "Rainfall: 2mm, 1mm, 3mm Feelings: happy, sad Number of you: 25, 30, 15. Favourite colour: red, blue",
+      "modelType": "model-3",
+      "hint": "Start here: Rainfall: 2mm, 1mm, 3mm",
+      "explanation": "Data on a form (computing devices): Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you type or pick a number; for categorical data you pick a category from a list (you tap your choice). This is how a phone, tablet or computer gathers…"
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Look at the Form",
+      "context": "work through the steps below and see what happens. This is how data helps us solve problems in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "A form is a set of questions on a screen or on paper. Look at the form. Does each question want a number or a group? Tick the right box.",
+      "answer": "Ehel Academy — Class Form 1. How many brothers and sisters 2. How do you get to school? ( ) walk ( ) car ( ) bus Match: Form question → Numerical (number) / Categorical (group)",
+      "modelType": "model-4",
+      "hint": "Start here: Ehel Academy — Class Form",
+      "explanation": "How data helps us solve problems: This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores to see who needs help. Shops keep count of what they sell so you know what to buy more of. Weather computers use rain and wind data to guess…"
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Data Helps Us!",
+      "context": "work through the steps below and see what happens. This is be a data scientist: the mini-project in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Data helps us solve problems. Draw a line from each problem to the data that helps.",
+      "answer": "Match: Problem → Data that helps Match: How many beans are left in the shop? → the rain and wind data Match: Will it rain tomorrow? → the children's test scores Match: Which child needs help in maths? → the shop's sales data",
+      "modelType": "model-5",
+      "hint": "Start here: Match: Problem → Data that helps",
+      "explanation": "Be a data scientist: the Mini-Project: Working in small groups, they collect real data (each person's height and eye colour), sort each piece of data into numerical or categorical, decide which questions are statistical or non-statistical, and then use the data to answer a question. This session and the Mini-Project go hand in hand."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "True or False?",
+      "context": "work through the steps below and see what happens. This is questions: one answer or many answers? in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Circle True or False for each one.",
+      "answer": "a. A question with many answers is a statistical question. True / False b. Numerical data is words, like eye colour. True / False c. Data can help us solve problems. True / False Did You Know? Data scientists use data to solve very big, tricky problems — like keeping people healthy!",
+      "modelType": "model-6",
+      "hint": "Start here: a. A question with many answers is a statistical question. True / False",
+      "explanation": "Questions: one answer or many answers?: Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical question has only one answer. Being a data scientist starts with knowing which kind of question we are asking."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Questions: one answer or many answers?",
+      "modelType": "concept-model-1",
+      "purpose": "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical question has only one answer. Being a data scientist starts with…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Two kinds of data: numbers and groups",
+      "modelType": "concept-model-2",
+      "purpose": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or measure, like height, test scores or how many pets. Categorical data is…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Data on a form (computing devices)",
+      "modelType": "concept-model-3",
+      "purpose": "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you type or pick a number; for categorical data you pick a category from a…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "How data helps us solve problems",
+      "modelType": "concept-model-4",
+      "purpose": "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores to see who needs help. Shops keep count of what they sell so you know…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Be a data scientist: the Mini-Project",
+      "modelType": "concept-model-5",
+      "purpose": "Working in small groups, they collect real data (each person's height and eye colour), sort each piece of data into numerical or categorical, decide which questions are statistical or non-statistical, and then use the…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with questions: one answer or many answers?",
+      "example": "A many-answer question has a special name — a statistical question. A one-answer question is a non-statistical question.",
+      "steps": [
+        "Read the concept card for questions: one answer or many answers? and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with two kinds of data: numbers and groups",
+      "example": "Find one real example of two kinds of data: numbers and groups around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for two kinds of data: numbers and groups and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with data on a form (computing devices)",
+      "example": "Find one real example of data on a form (computing devices) around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for data on a form (computing devices) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with how data helps us solve problems",
+      "example": "Answer this in your own words, out loud or on paper: How data helps us solve problems? Then check your answer against the explanation above.",
+      "steps": [
+        "Read the concept card for how data helps us solve problems and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with be a data scientist: the mini-project",
+      "example": "Help you measure heights with the tape measure (this is numerical data) and look carefully at eye colour (this is categorical data). Keep groups small — three or four you are plenty.",
+      "steps": [
+        "Read the concept card for be a data scientist: the mini-project and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Questions: one answer or many answers?",
+      "prompt": "Circle the data that is numerical (numbers). (Heights: 100cm, 105cm Eye colours: brown, blue)",
+      "solution": "Circle Heights: 100cm, 105cm (numerical). Eye colours is categorical."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Two kinds of data: numbers and groups",
+      "prompt": "Is \"Favourite fruit: mango, banana, dates\" numerical or categorical?",
+      "solution": "categorical (it is groups, not numbers)."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Data on a form (computing devices)",
+      "prompt": "Write one way data helps us solve a problem.",
+      "solution": "Accept any one: a teacher uses test scores to help students; a shop uses sales data to know what to buy; weather computers use rain and wind data to guess the weather; a car map uses traffic data to find the quickest way."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: How data helps us solve problems",
+      "prompt": "True or false: You can add up categorical data like eye colours.",
+      "solution": "False. We never add up categorical data."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Questions: one answer or many answers?",
+      "prompt": "Explain in your own words: Questions: one answer or many answers.",
+      "solution": "Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical question has only one answer. Being a data scientist starts with knowing which kind of question we are asking.\n\nWhat colour is my bag? Now say: “What is your favourite fruit?” Lots of different answers come back. Some questions have just one answer. Some have many answers.\n\nFor example: A many-answer question has a special name — a statistical question. A one-answer question is a non-statistical question."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Two kinds of data: numbers and groups",
+      "prompt": "Explain in your own words: Two kinds of data: numbers and groups.",
+      "solution": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or measure, like height, test scores or how many pets. Categorical data is groups — words that sort things into kinds, like eye colour, favourite fruit or how we travel to school.\n\nSome data is numbers we count or measure — that is numerical data. Some data is groups, like colours or names — that is categorical data.\n\nFor example: Find one real example of two kinds of data: numbers and groups around you, or on a device you use. Say out loud what it is and why it fits."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "A question with many answers is called a",
+      "answer": "statistical.",
+      "hint": "Look back at what data and question mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "A question with only one answer is called a",
+      "answer": "non-statistical.",
+      "hint": "Look back at what data and question mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "Circle the data that is numerical (numbers). (Heights: 100cm, 105cm Eye colours: brown, blue)",
+      "answer": "Circle Heights: 100cm, 105cm (numerical). Eye colours is categorical.",
+      "hint": "Look back at what data and question mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Is \"Favourite fruit: mango, banana, dates\" numerical or categorical?",
+      "answer": "categorical (it is groups, not numbers).",
+      "hint": "Look back at what data and question mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "Write one way data helps us solve a problem.",
+      "answer": "Accept any one: a teacher uses test scores to help students; a shop uses sales data to know what to buy; weather computers use rain and wind data to guess the weather; a car map uses traffic data to find the quickest way.",
+      "hint": "Look back at what data and question mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "True or false: You can add up categorical data like eye colours.",
+      "answer": "False. We never add up categorical data.",
+      "hint": "Look back at what data and question mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "One Answer or Many Answers?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Some questions have only one answer. Some have many answers. A many-answer question is called a statistical question. A one-answer question is called a non-statistical question. Tick the right box for each question.",
+        "Match: Question → One answer / Many answers"
+      ]
+    },
+    {
+      "title": "Numbers or Groups?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Numerical data is numbers — we count or measure them. Categorical data is groups — like colours or names. Tick the right box for each one.",
+        "Match: Data → Numerical (numbers) / Categorical (groups)"
+      ]
+    },
+    {
+      "title": "Circle the Numbers",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Circle the data that is numerical (numbers we count or measure). Leave the groups alone.",
+        "Rainfall: 2mm, 1mm, 3mm",
+        "Feelings: happy, sad",
+        "Number of you: 25, 30, 15.",
+        "Favourite colour: red, blue"
+      ]
+    },
+    {
+      "title": "Look at the Form",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A form is a set of questions on a screen or on paper. Look at the form. Does each question want a number or a group? Tick the right box.",
+        "Ehel Academy — Class Form",
+        "1. How many brothers and sisters",
+        "2. How do you get to school?",
+        "( ) walk ( ) car ( ) bus",
+        "Match: Form question → Numerical (number) / Categorical (group)"
+      ]
+    },
+    {
+      "title": "Data Helps Us!",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Data helps us solve problems. Draw a line from each problem to the data that helps.",
+        "Match: Problem → Data that helps",
+        "Match: How many beans are left in the shop? → the rain and wind data",
+        "Match: Will it rain tomorrow? → the children's test scores",
+        "Match: Which child needs help in maths? → the shop's sales data"
+      ]
+    },
+    {
+      "title": "True or False?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Circle True or False for each one.",
+        "a. A question with many answers is a statistical question. True / False",
+        "b. Numerical data is words, like eye colour. True / False",
+        "c. Data can help us solve problems. True / False",
+        "Did You Know?",
+        "Data scientists use data to solve very big, tricky problems — like keeping people healthy!"
+      ]
+    },
+    {
+      "title": "Collect the Data",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "In your group, find each person's height and eye colour. Write one person on each row.",
+        "Tip: use a tape measure for the heights. Look closely for the eye colours!",
+        "Match: Name → Height (cm) / Eye colour"
+      ]
+    },
+    {
+      "title": "What Kind of Data?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Is each one numerical (numbers) or categorical (groups)?",
+        "a. Height is __________________ data.",
+        "b. Eye colour is __________________ data."
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "A statistical question is one about numbers.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — it is about the number of answers, not the kind of data."
+    },
+    {
+      "symptom": "All data is numbers.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data)."
+    },
+    {
+      "symptom": "You can add up any numbers.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing - the numbers are just name tags, like shirt numbers."
+    },
+    {
+      "symptom": "Numerical and categorical are the same thing.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Questions: one answer or many answers?",
+        "text": "Questions come in two kinds."
+      },
+      {
+        "title": "Two kinds of data: numbers and groups",
+        "text": "When we ask a many-answer (statistical) question, we collect data."
+      },
+      {
+        "title": "Data on a form (computing devices)",
+        "text": "Computing devices collect data on electronic forms."
+      },
+      {
+        "title": "How data helps us solve problems",
+        "text": "This is the heart of the unit: data helps us solve problems and decide what to do."
+      },
+      {
+        "title": "Be a data scientist: the Mini-Project",
+        "text": "Working in small groups, they collect real data (each person's height and eye colour), sort each piece of data into numerical or categorical, decide which questions are statistical or non-statistical, and then use the data to answer a question."
+      }
+    ],
+    "terms": [
+      [
+        "data",
+        "The facts we collect."
+      ],
+      [
+        "question",
+        "Something we ask to get data."
+      ],
+      [
+        "statistical question",
+        "A question with many answers."
+      ],
+      [
+        "non-statistical question",
+        "A question with only one answer."
+      ],
+      [
+        "numerical data",
+        "Data that is numbers — we count or measure it."
+      ],
+      [
+        "categorical data",
+        "Data that is groups — like colours or names."
+      ],
+      [
+        "form",
+        "A set of questions on paper or on a screen."
+      ],
+      [
+        "data scientist",
+        "Someone who uses data to solve problems."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "data",
+        "meaning": "The facts we collect.",
+        "example": "Everyone's height and eye colour.",
+        "letter": "D"
+      },
+      {
+        "term": "question",
+        "meaning": "Something we ask to get data.",
+        "example": "What fruit do you like?",
+        "letter": "Q"
+      },
+      {
+        "term": "statistical question",
+        "meaning": "A question with many answers.",
+        "example": "What are the favourite snacks in our class?",
+        "letter": "S"
+      },
+      {
+        "term": "non-statistical question",
+        "meaning": "A question with only one answer.",
+        "example": "What colour is Leo's bag?",
+        "letter": "N"
+      },
+      {
+        "term": "numerical data",
+        "meaning": "Data that is numbers — we count or measure it.",
+        "example": "Heights: 100cm, 105cm, 98cm.",
+        "letter": "N"
+      },
+      {
+        "term": "categorical data",
+        "meaning": "Data that is groups — like colours or names.",
+        "example": "Eye colours: brown, black, blue.",
+        "letter": "C"
+      },
+      {
+        "term": "form",
+        "meaning": "A set of questions on paper or on a screen.",
+        "example": "A form asks your name and age.",
+        "letter": "F"
+      },
+      {
+        "term": "data scientist",
+        "meaning": "Someone who uses data to solve problems.",
+        "example": "They use data to answer big questions.",
+        "letter": "D"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "A statistical question is one about numbers.",
+        "No — it is about the number of answers, not the kind of data."
+      ],
+      [
+        "What is your favourite colour?",
+        "asked to the class is statistical (many answers) even though the answers are words."
+      ],
+      [
+        "How many children are in our class? has many answers.",
+        "It has only one answer — a single number. It is about how many answers the question has. It is non-statistical, even though we count many you to find it."
+      ],
+      [
+        "All data is numbers.",
+        "Data can be groups too. Eye colour, favourite fruit and how we travel to school are all data (categorical data)."
+      ],
+      [
+        "You can add up any numbers.",
+        "Not categorical ones. If brown eyes are 1 and blue eyes are 2, then 1 plus 2 means nothing — the numbers are just name tags, like shirt numbers."
+      ],
+      [
+        "Numerical and categorical are the same thing.",
+        "Numerical data is numbers we count or measure; categorical data is groups. Height is numerical; eye colour is categorical."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "A question with many answers is called a",
+      "answer": "statistical.",
+      "hint": "Look back at what data and question mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "statistical."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "A question with only one answer is called a",
+      "answer": "non-statistical.",
+      "hint": "Look back at what data and question mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "non-statistical."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Circle the data that is numerical (numbers). (Heights: 100cm, 105cm Eye colours: brown, blue)",
+      "answer": "Circle Heights: 100cm, 105cm (numerical). Eye colours is categorical.",
+      "hint": "Look back at what data and question mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Circle Heights: 100cm, 105cm (numerical). Eye colours is categorical."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Is \"Favourite fruit: mango, banana, dates\" numerical or categorical?",
+      "answer": "categorical (it is groups, not numbers).",
+      "hint": "Look back at what data and question mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "categorical (it is groups, not numbers)."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Write one way data helps us solve a problem.",
+      "answer": "Accept any one: a teacher uses test scores to help students; a shop uses sales data to know what to buy; weather computers use rain and wind data to guess the weather; a car map uses traffic data to find the quickest way.",
+      "hint": "Look back at what data and question mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Accept any one: a teacher uses test scores to help students; a shop uses sales data to know what to buy; weather computers use rain and wind data to guess the weather; a car map uses traffic data to find the quickest way."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "True or false: You can add up categorical data like eye colours.",
+      "answer": "False. We never add up categorical data.",
+      "hint": "Look back at what data and question mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "False. We never add up categorical data."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "True or false: You can add up categorical data like eye colours.",
+      "answer": "False. We never add up categorical data.",
+      "hint": "Look back at what data and question mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: False. We never add up categorical data."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "Write one way data helps us solve a problem.",
+      "answer": "Accept any one: a teacher uses test scores to help students; a shop uses sales data to know what to buy; weather computers use rain and wind data to guess the weather; a car map uses traffic data to find the quickest way.",
+      "hint": "Look back at what data and question mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Accept any one: a teacher uses test scores to help students; a shop uses sales data to know what to buy; weather computers use rain and wind data to guess the weather; a car map uses traffic data to find the quickest way."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "True or false: You can add up categorical data like eye colours.",
+      "answer": "False. We never add up categorical data.",
+      "hint": "Look back at what data and question mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: False. We never add up categorical data."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "A question with many answers is called a",
+      "answer": "statistical.",
+      "hint": "Look back at what data and question mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: statistical."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Circle the data that is numerical (numbers). (Heights: 100cm, 105cm Eye colours: brown, blue)",
+      "keyIdeas": [
+        "data",
+        "question",
+        "statistical question"
+      ],
+      "modelAnswer": "Circle Heights: 100cm, 105cm (numerical). Eye colours is categorical."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Is \"Favourite fruit: mango, banana, dates\" numerical or categorical?",
+      "keyIdeas": [
+        "question",
+        "statistical question",
+        "non-statistical question"
+      ],
+      "modelAnswer": "categorical (it is groups, not numbers)."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Write one way data helps us solve a problem.",
+      "keyIdeas": [
+        "statistical question",
+        "non-statistical question",
+        "numerical data"
+      ],
+      "modelAnswer": "Accept any one: a teacher uses test scores to help students; a shop uses sales data to know what to buy; weather computers use rain and wind data to guess the weather; a car map uses traffic data to find the quickest way."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in how data helps us solve problems, and give one example of your own.",
+      "keyIdeas": [
+        "data",
+        "question",
+        "statistical question"
+      ],
+      "modelAnswer": "This is the heart of the unit: data helps us solve problems and decide what to do. Four everyday examples make it real. Teachers look at test scores to see who needs help. Shops keep count of what they sell so you know what to buy more of. Weather computers use rain and wind data to guess tomorrow's weather. Map apps in cars use traffic data to find the quickest way.\n\nA shop at the market writes down what it started with, what it sold, and what is left. Tell the shop story with a simple table."
+    }
+  ],
+  "project": {
+    "title": "Unit 7 Project: Be a Data Scientist",
+    "brief": "Bring together everything from Be a Data Scientist into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your be a data scientist project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I collected my group's height and eye colour in the table.",
+      "I said if height is numerical or categorical.",
+      "I said if eye colour is numerical or categorical.",
+      "I ticked one answer or many answers for each question.",
+      "I found the tallest child in my group."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "Circle the data that is numerical (numbers).",
+        "options": [
+          "Heights: 100cm",
+          "105cm Eye colours: brown",
+          "blue"
+        ],
+        "answer": "Heights: 100cm",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Circle Heights: 100cm, 105cm (numerical). Eye colours is categorical."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "True or false: You can add up categorical data like eye colours.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "answer": "False",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "False. We never add up categorical data."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “statistical question” mean in computing?",
+        "options": [
+          "A question with many answers.",
+          "A question with only one answer.",
+          "Data that is numbers — we count or measure it.",
+          "Data that is groups — like colours or names."
+        ],
+        "answer": "A question with many answers.",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Statistical question means a question with many answers."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “non-statistical question” mean in computing?",
+        "options": [
+          "A question with only one answer.",
+          "Data that is numbers — we count or measure it.",
+          "Data that is groups — like colours or names.",
+          "A set of questions on paper or on a screen."
+        ],
+        "answer": "A question with only one answer.",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Non-statistical question means a question with only one answer."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “numerical data” mean in computing?",
+        "options": [
+          "Data that is numbers — we count or measure it.",
+          "Data that is groups — like colours or names.",
+          "A set of questions on paper or on a screen.",
+          "Someone who uses data to solve problems."
+        ],
+        "answer": "Data that is numbers — we count or measure it.",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Numerical data means data that is numbers — we count or measure it."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “categorical data” mean in computing?",
+        "options": [
+          "Data that is groups — like colours or names.",
+          "A set of questions on paper or on a screen.",
+          "Someone who uses data to solve problems.",
+          "The facts we collect."
+        ],
+        "answer": "Data that is groups — like colours or names.",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Categorical data means data that is groups — like colours or names."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A set of questions on paper or on a screen.?",
+        "options": [
+          "form",
+          "data scientist",
+          "data",
+          "question"
+        ],
+        "answer": "form",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Form means a set of questions on paper or on a screen."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Someone who uses data to solve problems.?",
+        "options": [
+          "data scientist",
+          "data",
+          "question",
+          "statistical question"
+        ],
+        "answer": "data scientist",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Data scientist means someone who uses data to solve problems."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: The facts we collect.?",
+        "options": [
+          "data",
+          "question",
+          "statistical question",
+          "non-statistical question"
+        ],
+        "answer": "data",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Data means the facts we collect."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Something we ask to get data.?",
+        "options": [
+          "question",
+          "statistical question",
+          "non-statistical question",
+          "numerical data"
+        ],
+        "answer": "question",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Question means something we ask to get data."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A question with many answers.?",
+        "options": [
+          "statistical question",
+          "non-statistical question",
+          "numerical data",
+          "categorical data"
+        ],
+        "answer": "statistical question",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Statistical question means a question with many answers."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A question with only one answer.?",
+        "options": [
+          "non-statistical question",
+          "numerical data",
+          "categorical data",
+          "form"
+        ],
+        "answer": "non-statistical question",
+        "hint": "Use the Unit 7 Computing Words reference.",
+        "explanation": "Non-statistical question means a question with only one answer."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u7-game-1",
+        "icon": "?",
+        "skill": "data",
+        "title": "Quick Match: data",
+        "description": "Practise data through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Circle the data that is numerical (numbers).",
+            "choices": [
+              "Heights: 100cm",
+              "105cm Eye colours: brown",
+              "blue"
+            ],
+            "answer": "Heights: 100cm",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Circle Heights: 100cm, 105cm (numerical). Eye colours is categorical."
+          },
+          {
+            "prompt": "What does “non-statistical question” mean in computing?",
+            "choices": [
+              "A question with only one answer.",
+              "Data that is numbers — we count or measure it.",
+              "Data that is groups — like colours or names.",
+              "A set of questions on paper or on a screen."
+            ],
+            "answer": "A question with only one answer.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Non-statistical question means a question with only one answer."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A set of questions on paper or on a screen.?",
+            "choices": [
+              "form",
+              "data scientist",
+              "data",
+              "question"
+            ],
+            "answer": "form",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Form means a set of questions on paper or on a screen."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Something we ask to get data.?",
+            "choices": [
+              "question",
+              "statistical question",
+              "non-statistical question",
+              "numerical data"
+            ],
+            "answer": "question",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Question means something we ask to get data."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-2",
+        "icon": "★",
+        "skill": "question",
+        "title": "Concept Quest: question",
+        "description": "Practise question through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "True or false: You can add up categorical data like eye colours.",
+            "choices": [
+              "True",
+              "False"
+            ],
+            "answer": "False",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "False. We never add up categorical data."
+          },
+          {
+            "prompt": "What does “numerical data” mean in computing?",
+            "choices": [
+              "Data that is numbers — we count or measure it.",
+              "Data that is groups — like colours or names.",
+              "A set of questions on paper or on a screen.",
+              "Someone who uses data to solve problems."
+            ],
+            "answer": "Data that is numbers — we count or measure it.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Numerical data means data that is numbers — we count or measure it."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Someone who uses data to solve problems.?",
+            "choices": [
+              "data scientist",
+              "data",
+              "question",
+              "statistical question"
+            ],
+            "answer": "data scientist",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data scientist means someone who uses data to solve problems."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A question with many answers.?",
+            "choices": [
+              "statistical question",
+              "non-statistical question",
+              "numerical data",
+              "categorical data"
+            ],
+            "answer": "statistical question",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Statistical question means a question with many answers."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-3",
+        "icon": "◫",
+        "skill": "statistical question",
+        "title": "Debug Detective: statistical question",
+        "description": "Practise statistical question through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “statistical question” mean in computing?",
+            "choices": [
+              "A question with many answers.",
+              "A question with only one answer.",
+              "Data that is numbers — we count or measure it.",
+              "Data that is groups — like colours or names."
+            ],
+            "answer": "A question with many answers.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Statistical question means a question with many answers."
+          },
+          {
+            "prompt": "What does “categorical data” mean in computing?",
+            "choices": [
+              "Data that is groups — like colours or names.",
+              "A set of questions on paper or on a screen.",
+              "Someone who uses data to solve problems.",
+              "The facts we collect."
+            ],
+            "answer": "Data that is groups — like colours or names.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Categorical data means data that is groups — like colours or names."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The facts we collect.?",
+            "choices": [
+              "data",
+              "question",
+              "statistical question",
+              "non-statistical question"
+            ],
+            "answer": "data",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data means the facts we collect."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A question with only one answer.?",
+            "choices": [
+              "non-statistical question",
+              "numerical data",
+              "categorical data",
+              "form"
+            ],
+            "answer": "non-statistical question",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Non-statistical question means a question with only one answer."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-4",
+        "icon": "→",
+        "skill": "non-statistical question",
+        "title": "Algorithm Runner: non-statistical question",
+        "description": "Practise non-statistical question through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “non-statistical question” mean in computing?",
+            "choices": [
+              "A question with only one answer.",
+              "Data that is numbers — we count or measure it.",
+              "Data that is groups — like colours or names.",
+              "A set of questions on paper or on a screen."
+            ],
+            "answer": "A question with only one answer.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Non-statistical question means a question with only one answer."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A set of questions on paper or on a screen.?",
+            "choices": [
+              "form",
+              "data scientist",
+              "data",
+              "question"
+            ],
+            "answer": "form",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Form means a set of questions on paper or on a screen."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Something we ask to get data.?",
+            "choices": [
+              "question",
+              "statistical question",
+              "non-statistical question",
+              "numerical data"
+            ],
+            "answer": "question",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Question means something we ask to get data."
+          },
+          {
+            "prompt": "Circle the data that is numerical (numbers).",
+            "choices": [
+              "Heights: 100cm",
+              "105cm Eye colours: brown",
+              "blue"
+            ],
+            "answer": "Heights: 100cm",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Circle Heights: 100cm, 105cm (numerical). Eye colours is categorical."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-5",
+        "icon": "Σ",
+        "skill": "numerical data",
+        "title": "Vocabulary Vault: numerical data",
+        "description": "Practise numerical data through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “numerical data” mean in computing?",
+            "choices": [
+              "Data that is numbers — we count or measure it.",
+              "Data that is groups — like colours or names.",
+              "A set of questions on paper or on a screen.",
+              "Someone who uses data to solve problems."
+            ],
+            "answer": "Data that is numbers — we count or measure it.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Numerical data means data that is numbers — we count or measure it."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Someone who uses data to solve problems.?",
+            "choices": [
+              "data scientist",
+              "data",
+              "question",
+              "statistical question"
+            ],
+            "answer": "data scientist",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data scientist means someone who uses data to solve problems."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A question with many answers.?",
+            "choices": [
+              "statistical question",
+              "non-statistical question",
+              "numerical data",
+              "categorical data"
+            ],
+            "answer": "statistical question",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Statistical question means a question with many answers."
+          },
+          {
+            "prompt": "True or false: You can add up categorical data like eye colours.",
+            "choices": [
+              "True",
+              "False"
+            ],
+            "answer": "False",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "False. We never add up categorical data."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-6",
+        "icon": "◇",
+        "skill": "categorical data",
+        "title": "Challenge Cards: categorical data",
+        "description": "Practise categorical data through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “categorical data” mean in computing?",
+            "choices": [
+              "Data that is groups — like colours or names.",
+              "A set of questions on paper or on a screen.",
+              "Someone who uses data to solve problems.",
+              "The facts we collect."
+            ],
+            "answer": "Data that is groups — like colours or names.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Categorical data means data that is groups — like colours or names."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The facts we collect.?",
+            "choices": [
+              "data",
+              "question",
+              "statistical question",
+              "non-statistical question"
+            ],
+            "answer": "data",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data means the facts we collect."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A question with only one answer.?",
+            "choices": [
+              "non-statistical question",
+              "numerical data",
+              "categorical data",
+              "form"
+            ],
+            "answer": "non-statistical question",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Non-statistical question means a question with only one answer."
+          },
+          {
+            "prompt": "What does “statistical question” mean in computing?",
+            "choices": [
+              "A question with many answers.",
+              "A question with only one answer.",
+              "Data that is numbers — we count or measure it.",
+              "Data that is groups — like colours or names."
+            ],
+            "answer": "A question with many answers.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Statistical question means a question with many answers."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-7",
+        "icon": "⚡",
+        "skill": "form",
+        "title": "Think Fast: form",
+        "description": "Practise form through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A set of questions on paper or on a screen.?",
+            "choices": [
+              "form",
+              "data scientist",
+              "data",
+              "question"
+            ],
+            "answer": "form",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Form means a set of questions on paper or on a screen."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Something we ask to get data.?",
+            "choices": [
+              "question",
+              "statistical question",
+              "non-statistical question",
+              "numerical data"
+            ],
+            "answer": "question",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Question means something we ask to get data."
+          },
+          {
+            "prompt": "Circle the data that is numerical (numbers).",
+            "choices": [
+              "Heights: 100cm",
+              "105cm Eye colours: brown",
+              "blue"
+            ],
+            "answer": "Heights: 100cm",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Circle Heights: 100cm, 105cm (numerical). Eye colours is categorical."
+          },
+          {
+            "prompt": "What does “non-statistical question” mean in computing?",
+            "choices": [
+              "A question with only one answer.",
+              "Data that is numbers — we count or measure it.",
+              "Data that is groups — like colours or names.",
+              "A set of questions on paper or on a screen."
+            ],
+            "answer": "A question with only one answer.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Non-statistical question means a question with only one answer."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-8",
+        "icon": "☁",
+        "skill": "data scientist",
+        "title": "Explain It: data scientist",
+        "description": "Practise data scientist through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Someone who uses data to solve problems.?",
+            "choices": [
+              "data scientist",
+              "data",
+              "question",
+              "statistical question"
+            ],
+            "answer": "data scientist",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data scientist means someone who uses data to solve problems."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A question with many answers.?",
+            "choices": [
+              "statistical question",
+              "non-statistical question",
+              "numerical data",
+              "categorical data"
+            ],
+            "answer": "statistical question",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Statistical question means a question with many answers."
+          },
+          {
+            "prompt": "True or false: You can add up categorical data like eye colours.",
+            "choices": [
+              "True",
+              "False"
+            ],
+            "answer": "False",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "False. We never add up categorical data."
+          },
+          {
+            "prompt": "What does “numerical data” mean in computing?",
+            "choices": [
+              "Data that is numbers — we count or measure it.",
+              "Data that is groups — like colours or names.",
+              "A set of questions on paper or on a screen.",
+              "Someone who uses data to solve problems."
+            ],
+            "answer": "Data that is numbers — we count or measure it.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Numerical data means data that is numbers — we count or measure it."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-9",
+        "icon": "⌂",
+        "skill": "data",
+        "title": "Real-Life Round: data",
+        "description": "Practise data through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The facts we collect.?",
+            "choices": [
+              "data",
+              "question",
+              "statistical question",
+              "non-statistical question"
+            ],
+            "answer": "data",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data means the facts we collect."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A question with only one answer.?",
+            "choices": [
+              "non-statistical question",
+              "numerical data",
+              "categorical data",
+              "form"
+            ],
+            "answer": "non-statistical question",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Non-statistical question means a question with only one answer."
+          },
+          {
+            "prompt": "What does “statistical question” mean in computing?",
+            "choices": [
+              "A question with many answers.",
+              "A question with only one answer.",
+              "Data that is numbers — we count or measure it.",
+              "Data that is groups — like colours or names."
+            ],
+            "answer": "A question with many answers.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Statistical question means a question with many answers."
+          },
+          {
+            "prompt": "What does “categorical data” mean in computing?",
+            "choices": [
+              "Data that is groups — like colours or names.",
+              "A set of questions on paper or on a screen.",
+              "Someone who uses data to solve problems.",
+              "The facts we collect."
+            ],
+            "answer": "Data that is groups — like colours or names.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Categorical data means data that is groups — like colours or names."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-10",
+        "icon": "!",
+        "skill": "question",
+        "title": "Spot the Bug: question",
+        "description": "Practise question through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Something we ask to get data.?",
+            "choices": [
+              "question",
+              "statistical question",
+              "non-statistical question",
+              "numerical data"
+            ],
+            "answer": "question",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Question means something we ask to get data."
+          },
+          {
+            "prompt": "Circle the data that is numerical (numbers).",
+            "choices": [
+              "Heights: 100cm",
+              "105cm Eye colours: brown",
+              "blue"
+            ],
+            "answer": "Heights: 100cm",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Circle Heights: 100cm, 105cm (numerical). Eye colours is categorical."
+          },
+          {
+            "prompt": "What does “non-statistical question” mean in computing?",
+            "choices": [
+              "A question with only one answer.",
+              "Data that is numbers — we count or measure it.",
+              "Data that is groups — like colours or names.",
+              "A set of questions on paper or on a screen."
+            ],
+            "answer": "A question with only one answer.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Non-statistical question means a question with only one answer."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A set of questions on paper or on a screen.?",
+            "choices": [
+              "form",
+              "data scientist",
+              "data",
+              "question"
+            ],
+            "answer": "form",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Form means a set of questions on paper or on a screen."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-11",
+        "icon": "≡",
+        "skill": "statistical question",
+        "title": "Mastery Mix: statistical question",
+        "description": "Practise statistical question through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A question with many answers.?",
+            "choices": [
+              "statistical question",
+              "non-statistical question",
+              "numerical data",
+              "categorical data"
+            ],
+            "answer": "statistical question",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Statistical question means a question with many answers."
+          },
+          {
+            "prompt": "True or false: You can add up categorical data like eye colours.",
+            "choices": [
+              "True",
+              "False"
+            ],
+            "answer": "False",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "False. We never add up categorical data."
+          },
+          {
+            "prompt": "What does “numerical data” mean in computing?",
+            "choices": [
+              "Data that is numbers — we count or measure it.",
+              "Data that is groups — like colours or names.",
+              "A set of questions on paper or on a screen.",
+              "Someone who uses data to solve problems."
+            ],
+            "answer": "Data that is numbers — we count or measure it.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Numerical data means data that is numbers — we count or measure it."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Someone who uses data to solve problems.?",
+            "choices": [
+              "data scientist",
+              "data",
+              "question",
+              "statistical question"
+            ],
+            "answer": "data scientist",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data scientist means someone who uses data to solve problems."
+          }
+        ]
+      },
+      {
+        "id": "u7-game-12",
+        "icon": "T",
+        "skill": "non-statistical question",
+        "title": "Unit Champion: non-statistical question",
+        "description": "Practise non-statistical question through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A question with only one answer.?",
+            "choices": [
+              "non-statistical question",
+              "numerical data",
+              "categorical data",
+              "form"
+            ],
+            "answer": "non-statistical question",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Non-statistical question means a question with only one answer."
+          },
+          {
+            "prompt": "What does “statistical question” mean in computing?",
+            "choices": [
+              "A question with many answers.",
+              "A question with only one answer.",
+              "Data that is numbers — we count or measure it.",
+              "Data that is groups — like colours or names."
+            ],
+            "answer": "A question with many answers.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Statistical question means a question with many answers."
+          },
+          {
+            "prompt": "What does “categorical data” mean in computing?",
+            "choices": [
+              "Data that is groups — like colours or names.",
+              "A set of questions on paper or on a screen.",
+              "Someone who uses data to solve problems.",
+              "The facts we collect."
+            ],
+            "answer": "Data that is groups — like colours or names.",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Categorical data means data that is groups — like colours or names."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The facts we collect.?",
+            "choices": [
+              "data",
+              "question",
+              "statistical question",
+              "non-statistical question"
+            ],
+            "answer": "data",
+            "clue": "Use the Unit 7 Computing Words reference.",
+            "explanation": "Data means the facts we collect."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can tell a statistical question (more than one answer) from a non-statistical question (only one answer).",
+    "I can explain, in their own words, that a statistical question is one where the answers can be different for different people.",
+    "I can name the two kinds of statistical data: numerical (numbers we count or measure) and categorical (groups, like colours or names).",
+    "I can sort simple data into numerical or categorical.",
+    "I can understand that we must never add up categorical data — the numbers on a category are just name tags.",
+    "I can say that computing devices collect data on electronic forms, and that a number is typed or picked, while a category is chosen from a list.",
+    "I can give at least one way that data helps to solve a problem (test scores, shop stock, weather, or car maps).",
+    "I can choose the right thing to do with data to answer a question (for example, sort the marks to find the highest)."
+  ]
+}

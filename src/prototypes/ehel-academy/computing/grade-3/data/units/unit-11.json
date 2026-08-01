@@ -1,0 +1,1827 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.602Z",
+  "stage": {
+    "id": "s03",
+    "label": "Stage 3"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t03",
+    "label": "Term 3"
+  },
+  "unit": {
+    "unitId": "comp-g03-u11",
+    "unitNo": 11,
+    "unitTitle": "Be a Data Designer",
+    "unitOverview": "Welcome to Unit 11 of Year 3 Computing at Ehel Academy. Even though the unit is called Be a data designer, it is really all about spreadsheets. A spreadsheet is a computer program that shows data neatly in a table of little boxes. Each box is called a cell. You already meet tables every day: a class register, a football league table, or a bus timetable at the station are all data laid out in rows and columns.\n\nFirst, what a spreadsheet is made of: rows that go across, columns that go up and down, and cells where a row and a column cross. Every cell has an address, like B5, from its column letter and row number. Second, that data can be formatted as Text, Number, Date or Currency, and that the format tells us what we can do with the data. Third, to choose the right data to answer a question by selecting the correct cells, and that we can only do sums on numbers and money, not on words or dates.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 3
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-3-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 3",
+    "sourceArchive": "Year 3-20260801T055744Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 3/Unit 11/Year 3 - Unit 11 Teacher Guide.docx",
+      "Year 3/Unit 11/Year 3 - Unit 11 Activity Sheet.docx",
+      "Year 3/Unit 11/Year 3 - Unit 11 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 396,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 3 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Say that a spreadsheet shows data in a table of rows, columns and cells.",
+    "Give the cell address of a cell using its column letter and row number (for example B5).",
+    "Point to the active cell and the Name Box in a spreadsheet.",
+    "Enter data into a spreadsheet, with headings in the first row.",
+    "Choose the right format for data: Text, Number, Date or Currency.",
+    "Explain that we can do sums on Number and Currency data, but not on Text or Date data.",
+    "Choose and select the right cells (a range, like B2:B4) to answer a question."
+  ],
+  "toolkit": [
+    {
+      "name": "A free spreadsheet",
+      "url": "Google Sheets, or LibreOffice Calc",
+      "steps": [
+        "Open a new blank spreadsheet.",
+        "Put your field names in row 1, one per column.",
+        "Type one record per row underneath.",
+        "Use Insert → Chart to turn your data into a graph."
+      ],
+      "note": "Any free spreadsheet works — the ideas are the same in all of them."
+    }
+  ],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-what-is-a-spreadsheet-rows-columns-and-cells",
+      "title": "What is a spreadsheet? Rows, columns and cells",
+      "explanation": "A spreadsheet shows data in a table. The table is made of rows (they go across, left to right, and each one has a number) and columns (they go up and down, and each one has a letter). Where a row and a column cross, you make a cell, and data goes inside the cell. The top row usually holds the headings that tell us what each column is about.\n\nWhat does this data mean? Is it easy to read?",
+      "example": "That is why we use a spreadsheet — it keeps our data neat and tidy. You see at once that the table is much easier to understand.",
+      "checkYourself": "Can you find a single cell where a named row and column cross? Can you point to a row and a column correctly (across versus up-and-down)? Do not worry about addresses yet — that is next."
+    },
+    {
+      "id": "concept-2-cell-addresses-and-the-active-cell",
+      "title": "Cell addresses and the active cell",
+      "explanation": "Every cell has an address, so we can say exactly which box we mean. The address is the column letter first, then the row number — for example B5 means column B, row 5. When we click a cell it becomes the active cell and gets a dark border. The Name Box (a little box just above the top-left of the sheet) shows the address of the active cell.\n\nImagine our class is a grid. If I say 'third row, second seat', everyone knows exactly which chair I mean. A spreadsheet does the same thing with a letter and a number. Put your finger on A3.",
+      "example": "What is in B4? Where is Leila's age?",
+      "checkYourself": "Can you find a cell from its address, and give the address of a cell you point to? A common slip is writing the number first (like 3A) — gently point at the Name Box rule. Does you always write the letter before the number?"
+    },
+    {
+      "id": "concept-3-entering-data-in-a-real-spreadsheet",
+      "title": "Entering data in a real spreadsheet",
+      "explanation": "Now we put our data into a real spreadsheet using LibreOffice Calc. We click a cell, type, and press Enter to move down. We always put the headings in the first row, then the data underneath.\n\nWhen they can predict it before you click, they have understood addresses. Open LibreOffice Calc on the projector.",
+      "example": "Point to the parts using child words: the columns are labelled with letters along the top (A, B, C), the rows are numbered down the side (1, 2, 3), and the Name Box in the top-left corner shows the address of the active cell. Click a few cells and you can read the address in the Name Box each time.",
+      "checkYourself": "Does each name line up with the correct age on the same row? Do the headings go in row 1?"
+    },
+    {
+      "id": "concept-4-formatting-cells-text-number-date-currency",
+      "title": "Formatting cells: Text, Number, Date, Currency",
+      "explanation": "A spreadsheet lets us choose how our data looks. This is called the format. The format is like the clothes the data wears. Money wears a dollar sign.\n\nTry it: Fast finishers can format the fruit stall on screen.\n\nCheck yourself: Can you know that a code with letters and numbers is Text, not Number? Can you select a group of cells before choosing a format? Can you match data to the right format?",
+      "example": "A date wears slashes between the day, month and year. A number is bare, ready for sums.",
+      "checkYourself": "Can you know that a code with letters and numbers is Text, not Number? Can you select a group of cells before choosing a format? Can you match data to the right format?"
+    },
+    {
+      "id": "concept-5-choosing-the-right-data-to-solve-a-problem",
+      "title": "Choosing the right data to solve a problem",
+      "explanation": "We keep data so we can answer questions with it. Different questions need different data.\n\nTry it: If time allows, you type the bakery table into LibreOffice Calc and practise selecting each range.\n\nCheck yourself: Can you know we can only add Number or Currency data? Can you pick the correct column for a question?",
+      "example": "To answer a question we select just the cells we need — a group of selected cells is called a range, written like B2:B4 (which means from B2 down to B4). The format is a clue: we can only do sums on Number and Currency data, never on Text or Date.",
+      "checkYourself": "Can you know we can only add Number or Currency data? Can you pick the correct column for a question?"
+    }
+  ],
+  "codeExamples": [],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Label the Spreadsheet",
+      "context": "work through the steps below and see what happens. This is what is a spreadsheet? rows, columns and cells in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Look at this spreadsheet of your ages at Ehel Academy.",
+      "answer": "1 Name Age 2 Leila 8 3 Sami 9 4 Nora 7 5 Theo 8",
+      "modelType": "model-1",
+      "hint": "Start here: 1 Name Age",
+      "explanation": "What is a spreadsheet? Rows, columns and cells: A spreadsheet shows data in a table. The table is made of rows (they go across, left to right, and each one has a number) and columns (they go up and down, and each one has a letter). Where a row and a column cross, you make a cell, and data goes inside the cell. The top row usually holds the…"
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Colour the Secret Picture",
+      "context": "work through the steps below and see what happens. This is cell addresses and the active cell in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Colour in ONLY these cells. What secret picture appears?",
+      "answer": "Colour: B2, D2, A4, E4, B5, C5, D5 A B C D E 1 [ ] [ ] [ ] [ ] [ ] 2 [ ] [ ] [ ] [ ] [ ] 3 [ ] [ ] [ ] [ ] [ ]",
+      "modelType": "model-2",
+      "hint": "Start here: Colour: B2, D2, A4, E4, B5, C5, D5",
+      "explanation": "Cell addresses and the active cell: Every cell has an address, so we can say exactly which box we mean. The address is the column letter first, then the row number — for example B5 means column B, row 5. When we click a cell it becomes the active cell and gets a dark border. The Name Box (a little box just above the top-left of the…"
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Write the Addresses",
+      "context": "work through the steps below and see what happens. This is entering data in a real spreadsheet in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Theo's goat is looking for grass. Each is a clump of grass. Remember: letter first, then number. Write the cell address of every clump.",
+      "answer": "A B C D E 1 [ ] [ ] [ ] [ ] 2 [ ] [ ] [ ] [ ] 3 [ ] [ ] [ ] [ ] 4 [ ] [ ] [ ] [ ] [ ]",
+      "modelType": "model-3",
+      "hint": "Start here: A B C D E",
+      "explanation": "Entering data in a real spreadsheet: Now we put our data into a real spreadsheet using LibreOffice Calc. We click a cell, type, and press Enter to move down. We always put the headings in the first row, then the data underneath."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Text, Number, Date or Currency?",
+      "context": "work through the steps below and see what happens. This is formatting cells: text, number, date, currency in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Draw a line from each piece of data to its best format.",
+      "answer": "Match: Data → Format Match: 8 → Text Match: 24/07/2026 → Number Match: Leila → Date Match: $10.00 → Currency",
+      "modelType": "model-4",
+      "hint": "Start here: Match: Data → Format",
+      "explanation": "Formatting cells: Text, Number, Date, Currency: A spreadsheet lets us choose how our data looks. This is called the format. The format is like the clothes the data wears. Money wears a dollar sign."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Build it in LibreOffice Calc",
+      "context": "work through the steps below and see what happens. This is choosing the right data to solve a problem in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Now make a real spreadsheet!",
+      "answer": "You will see a blank sheet. Open LibreOffice Calc. Type Name. Press Enter to go down. Type the names down column A: Leila, Sami, Nora, Theo. Type Age. Type the ages down column B: 8, 9, 7, 8.",
+      "modelType": "model-5",
+      "hint": "Start here: You will see a blank sheet. Open LibreOffice Calc.",
+      "explanation": "Choosing the right data to solve a problem: We keep data so we can answer questions with it. Different questions need different data."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Format the Fruit Stall",
+      "context": "work through the steps below and see what happens. This is what is a spreadsheet? rows, columns and cells in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Leila has a fruit stall at the market. Write the best format for each heading. Choose from: Text, Number, Date, Currency.",
+      "answer": "A B C D E 1 Code Fruit Sold Date Price 2 FRU001 Bananas 12 24/07/2026 $6.00 3 FRU002 Mangoes 8 24/07/2026 $8.00 4 FRU003 Dates 20 25/07/2026 $10.00",
+      "modelType": "model-6",
+      "hint": "Start here: A B C D E",
+      "explanation": "What is a spreadsheet? Rows, columns and cells: A spreadsheet shows data in a table. The table is made of rows (they go across, left to right, and each one has a number) and columns (they go up and down, and each one has a letter). Where a row and a column cross, you make a cell, and data goes inside the cell. The top row usually holds the…"
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "What is a spreadsheet? Rows, columns and cells",
+      "modelType": "concept-model-1",
+      "purpose": "A spreadsheet shows data in a table. The table is made of rows (they go across, left to right, and each one has a number) and columns (they go up and down, and each one has a letter). Where a row and a column cross, you…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Cell addresses and the active cell",
+      "modelType": "concept-model-2",
+      "purpose": "Every cell has an address, so we can say exactly which box we mean. The address is the column letter first, then the row number — for example B5 means column B, row 5. When we click a cell it becomes the active cell and…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Entering data in a real spreadsheet",
+      "modelType": "concept-model-3",
+      "purpose": "Now we put our data into a real spreadsheet using LibreOffice Calc. We click a cell, type, and press Enter to move down. We always put the headings in the first row, then the data underneath.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Formatting cells: Text, Number, Date, Currency",
+      "modelType": "concept-model-4",
+      "purpose": "A spreadsheet lets us choose how our data looks. This is called the format. The format is like the clothes the data wears. Money wears a dollar sign.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Choosing the right data to solve a problem",
+      "modelType": "concept-model-5",
+      "purpose": "We keep data so we can answer questions with it. Different questions need different data.",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with what is a spreadsheet? rows, columns and cells",
+      "example": "That is why we use a spreadsheet — it keeps our data neat and tidy. You see at once that the table is much easier to understand.",
+      "steps": [
+        "Read the concept card for what is a spreadsheet? rows, columns and cells and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with cell addresses and the active cell",
+      "example": "What is in B4? Where is Leila's age?",
+      "steps": [
+        "Read the concept card for cell addresses and the active cell and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with entering data in a real spreadsheet",
+      "example": "Point to the parts using child words: the columns are labelled with letters along the top (A, B, C), the rows are numbered down the side (1, 2, 3), and the Name Box in the top-left corner shows the address of the active cell. Click a few cells and you can…",
+      "steps": [
+        "Read the concept card for entering data in a real spreadsheet and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with formatting cells: text, number, date, currency",
+      "example": "A date wears slashes between the day, month and year. A number is bare, ready for sums.",
+      "steps": [
+        "Read the concept card for formatting cells: text, number, date, currency and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with choosing the right data to solve a problem",
+      "example": "To answer a question we select just the cells we need — a group of selected cells is called a range, written like B2:B4 (which means from B2 down to B4). The format is a clue: we can only do sums on Number and Currency data, never on Text or Date.",
+      "steps": [
+        "Read the concept card for choosing the right data to solve a problem and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: What is a spreadsheet? Rows, columns and cells",
+      "prompt": "Which one goes across — a row or a column? And which one uses a letter?",
+      "solution": "A row goes across; a column uses a letter."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Cell addresses and the active cell",
+      "prompt": "Look at this spreadsheet. What is the cell address of the box with Theo in it?",
+      "solution": "A5 (Theo is in column A, row 5)."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Entering data in a real spreadsheet",
+      "prompt": "Which of these is a correct cell address? (3B B3 B 3)",
+      "solution": "B3 (the column letter comes first, then the row number)."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Formatting cells: Text, Number, Date, Currency",
+      "prompt": "Match each piece of data to its format: Number, Date, Text, Currency.",
+      "solution": "18 = Number; 24/07/2026 = Date; Leila = Text; $5.00 = Currency."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Choosing the right data to solve a problem",
+      "prompt": "Can we add up data that is Text, like names? Which two formats CAN we add up?",
+      "solution": "No, we cannot add up Text. We can only add up Number and Currency data."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: What is a spreadsheet? Rows, columns and cells",
+      "prompt": "Explain in your own words: What is a spreadsheet? Rows, columns and cells.",
+      "solution": "A spreadsheet shows data in a table. The table is made of rows (they go across, left to right, and each one has a number) and columns (they go up and down, and each one has a letter). Where a row and a column cross, you make a cell, and data goes inside the cell. The top row usually holds the headings that tell us what each column is about.\n\nWhat does this data mean? Is it easy to read?\n\nFor example: That is why we use a spreadsheet — it keeps our data neat and tidy. You see at once that the table is much easier to understand."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Which one goes across — a row or a column? And which one uses a letter?",
+      "answer": "A row goes across; a column uses a letter.",
+      "hint": "Look back at what spreadsheet and data mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Look at this spreadsheet. What is the cell address of the box with Theo in it?",
+      "answer": "A5 (Theo is in column A, row 5).",
+      "hint": "Look back at what spreadsheet and data mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "Which of these is a correct cell address? (3B B3 B 3)",
+      "answer": "B3 (the column letter comes first, then the row number).",
+      "hint": "Look back at what spreadsheet and data mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Match each piece of data to its format: Number, Date, Text, Currency.",
+      "answer": "18 = Number; 24/07/2026 = Date; Leila = Text; $5.00 = Currency.",
+      "hint": "Look back at what spreadsheet and data mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "Can we add up data that is Text, like names? Which two formats CAN we add up?",
+      "answer": "No, we cannot add up Text. We can only add up Number and Currency data.",
+      "hint": "Look back at what spreadsheet and data mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "In Nora's bakery sheet, which range shows the days the treats were sold?",
+      "answer": "C2:C4 (the Date column).",
+      "hint": "Look back at what spreadsheet and data mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p07",
+      "level": "Challenge",
+      "prompt": "Fill in the word. A group of cells you select together is called a",
+      "answer": "range.",
+      "hint": "Look back at what spreadsheet and data mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Label the Spreadsheet",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Look at this spreadsheet of your ages at Ehel Academy.",
+        "1 Name Age",
+        "2 Leila 8",
+        "3 Sami 9",
+        "4 Nora 7",
+        "5 Theo 8"
+      ]
+    },
+    {
+      "title": "Colour the Secret Picture",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Colour in ONLY these cells. What secret picture appears?",
+        "Colour: B2, D2, A4, E4, B5, C5, D5",
+        "A B C D E",
+        "1 [ ] [ ] [ ] [ ] [ ]",
+        "2 [ ] [ ] [ ] [ ] [ ]",
+        "3 [ ] [ ] [ ] [ ] [ ]"
+      ]
+    },
+    {
+      "title": "Write the Addresses",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Theo's goat is looking for grass. Each is a clump of grass. Remember: letter first, then number. Write the cell address of every clump.",
+        "A B C D E",
+        "1 [ ] [ ] [ ] [ ]",
+        "2 [ ] [ ] [ ] [ ]",
+        "3 [ ] [ ] [ ] [ ]",
+        "4 [ ] [ ] [ ] [ ] [ ]"
+      ]
+    },
+    {
+      "title": "Text, Number, Date or Currency?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Draw a line from each piece of data to its best format.",
+        "Match: Data → Format",
+        "Match: 8 → Text",
+        "Match: 24/07/2026 → Number",
+        "Match: Leila → Date",
+        "Match: $10.00 → Currency"
+      ]
+    },
+    {
+      "title": "Build it in LibreOffice Calc",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Now make a real spreadsheet!",
+        "You will see a blank sheet. Open LibreOffice Calc.",
+        "Type Name. Press Enter to go down.",
+        "Type the names down column A: Leila, Sami, Nora, Theo.",
+        "Type Age.",
+        "Type the ages down column B: 8, 9, 7, 8."
+      ]
+    },
+    {
+      "title": "Format the Fruit Stall",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Leila has a fruit stall at the market. Write the best format for each heading. Choose from: Text, Number, Date, Currency.",
+        "A B C D E",
+        "1 Code Fruit Sold Date Price",
+        "2 FRU001 Bananas 12 24/07/2026 $6.00",
+        "3 FRU002 Mangoes 8 24/07/2026 $8.00",
+        "4 FRU003 Dates 20 25/07/2026 $10.00"
+      ]
+    },
+    {
+      "title": "Choose the Right Data",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Look at Nora's bakery sheet. For each question, circle the range of cells you would select.",
+        "A B C D",
+        "1 Treat Sold Date Money",
+        "2 Sambusa 10 20/07/2026 $20.00",
+        "3 Buns 6 20/07/2026 $12.00",
+        "4 Cookies 8 21/07/2026 $16.00"
+      ]
+    },
+    {
+      "title": "Fill in the Words",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Use these words: spreadsheet, row, column, cell, range.",
+        "a) A ______________ shows data in a table.",
+        "b) A ______________ goes across.",
+        "c) A ______________ goes up and down.",
+        "d) A box where a row and a column cross is a ______________.",
+        "e) A group of selected cells is a ______________."
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "Rows go up and down.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Rows and columns get swapped all the time. Keep using the arm sweep and the rhyme: rows go across, columns go down."
+    },
+    {
+      "symptom": "The number comes first in an address, like 3A.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "The column letter always comes first, then the row number, so it is A3. Point to the letters along the top and the numbers down the side."
+    },
+    {
+      "symptom": "A code like FRU001 or a phone number is a Number.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "It has digits, but we never add it up, so it is Text. Use the test: would you ever add these together?"
+    },
+    {
+      "symptom": "Any data can be added up.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "We can only do sums on Number and Currency data. We cannot add words (Text) or days (Date). Try adding two names out loud to show it makes no sense."
+    },
+    {
+      "symptom": "The heading is part of the data.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "The headings (row 1) are labels that name each column; they are not one of the ages or prices. When we add a column, we do not include the heading cell."
+    },
+    {
+      "symptom": "Formatting changes the number.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Choosing Currency does not make the price bigger or smaller; it only changes how it looks (it adds a $). The value is the same."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "What is a spreadsheet? Rows, columns and cells",
+        "text": "A spreadsheet shows data in a table."
+      },
+      {
+        "title": "Cell addresses and the active cell",
+        "text": "Every cell has an address, so we can say exactly which box we mean."
+      },
+      {
+        "title": "Entering data in a real spreadsheet",
+        "text": "Now we put our data into a real spreadsheet using LibreOffice Calc."
+      },
+      {
+        "title": "Formatting cells: Text, Number, Date, Currency",
+        "text": "A spreadsheet lets us choose how our data looks."
+      },
+      {
+        "title": "Choosing the right data to solve a problem",
+        "text": "We keep data so we can answer questions with it."
+      }
+    ],
+    "terms": [
+      [
+        "spreadsheet",
+        "A program that shows data in a table of boxes."
+      ],
+      [
+        "data",
+        "Facts we keep, like names, ages or prices."
+      ],
+      [
+        "row",
+        "A line of cells that goes across. A number names it."
+      ],
+      [
+        "column",
+        "A line of cells that goes up and down. A letter names it."
+      ],
+      [
+        "cell",
+        "One box where a row and a column cross."
+      ],
+      [
+        "cell address",
+        "The column letter and row number of a cell."
+      ],
+      [
+        "active cell",
+        "The cell you have clicked on. It has a border."
+      ],
+      [
+        "Name Box",
+        "The little box that shows the active cell's address."
+      ],
+      [
+        "heading",
+        "A label at the top of a column that names the data."
+      ],
+      [
+        "format",
+        "The way something looks."
+      ],
+      [
+        "Text",
+        "A format for words and letters (and codes)."
+      ],
+      [
+        "Number",
+        "A format for numbers you can add up."
+      ],
+      [
+        "Date",
+        "A format that shows a day, month and year."
+      ],
+      [
+        "Currency",
+        "A format for money. It adds a symbol like $."
+      ],
+      [
+        "range",
+        "A group of cells you select together."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "spreadsheet",
+        "meaning": "A program that shows data in a table of boxes.",
+        "example": "LibreOffice Calc",
+        "letter": "S"
+      },
+      {
+        "term": "data",
+        "meaning": "Facts we keep, like names, ages or prices.",
+        "example": "Leila, 8",
+        "letter": "D"
+      },
+      {
+        "term": "row",
+        "meaning": "A line of cells that goes across. A number names it.",
+        "example": "Row 2",
+        "letter": "R"
+      },
+      {
+        "term": "column",
+        "meaning": "A line of cells that goes up and down. A letter names it.",
+        "example": "Column B",
+        "letter": "C"
+      },
+      {
+        "term": "cell",
+        "meaning": "One box where a row and a column cross.",
+        "example": "The box with 8 in it",
+        "letter": "C"
+      },
+      {
+        "term": "cell address",
+        "meaning": "The column letter and row number of a cell.",
+        "example": "B5",
+        "letter": "C"
+      },
+      {
+        "term": "active cell",
+        "meaning": "The cell you have clicked on. It has a border.",
+        "example": "A1 when you start",
+        "letter": "A"
+      },
+      {
+        "term": "Name Box",
+        "meaning": "The little box that shows the active cell's address.",
+        "example": "It shows A1",
+        "letter": "N"
+      },
+      {
+        "term": "heading",
+        "meaning": "A label at the top of a column that names the data.",
+        "example": "Name, Age",
+        "letter": "H"
+      },
+      {
+        "term": "format",
+        "meaning": "The way something looks.",
+        "example": "Money looks like $6.00",
+        "letter": "F"
+      },
+      {
+        "term": "Text",
+        "meaning": "A format for words and letters (and codes).",
+        "example": "Leila, FRU001",
+        "letter": "T"
+      },
+      {
+        "term": "Number",
+        "meaning": "A format for numbers you can add up.",
+        "example": "8, 12, 20",
+        "letter": "N"
+      },
+      {
+        "term": "Date",
+        "meaning": "A format that shows a day, month and year.",
+        "example": "24/07/2026",
+        "letter": "D"
+      },
+      {
+        "term": "Currency",
+        "meaning": "A format for money. It adds a symbol like $.",
+        "example": "$10.00",
+        "letter": "C"
+      },
+      {
+        "term": "range",
+        "meaning": "A group of cells you select together.",
+        "example": "B2:B4",
+        "letter": "R"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "Rows go up and down.",
+        "Rows and columns get swapped all the time. Keep using the arm sweep and the rhyme: rows go across, columns go down."
+      ],
+      [
+        "The number comes first in an address, like 3A.",
+        "The column letter always comes first, then the row number, so it is A3. Point to the letters along the top and the numbers down the side."
+      ],
+      [
+        "A code like FRU001 or a phone number is a Number.",
+        "It has digits, but we never add it up, so it is Text. Use the test: would you ever add these together?"
+      ],
+      [
+        "Any data can be added up.",
+        "We can only do sums on Number and Currency data. We cannot add words (Text) or days (Date). Try adding two names out loud to show it makes no sense."
+      ],
+      [
+        "The heading is part of the data.",
+        "The headings (row 1) are labels that name each column; they are not one of the ages or prices. When we add a column, we do not include the heading cell."
+      ],
+      [
+        "Formatting changes the number.",
+        "Choosing Currency does not make the price bigger or smaller; it only changes how it looks (it adds a $). The value is the same."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Which one goes across — a row or a column? And which one uses a letter?",
+      "answer": "A row goes across; a column uses a letter.",
+      "hint": "Look back at what spreadsheet and data mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "A row goes across; a column uses a letter."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Look at this spreadsheet. What is the cell address of the box with Theo in it?",
+      "answer": "A5 (Theo is in column A, row 5).",
+      "hint": "Look back at what spreadsheet and data mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "A5 (Theo is in column A, row 5)."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Which of these is a correct cell address? (3B B3 B 3)",
+      "answer": "B3 (the column letter comes first, then the row number).",
+      "hint": "Look back at what spreadsheet and data mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "B3 (the column letter comes first, then the row number)."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Match each piece of data to its format: Number, Date, Text, Currency.",
+      "answer": "18 = Number; 24/07/2026 = Date; Leila = Text; $5.00 = Currency.",
+      "hint": "Look back at what spreadsheet and data mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "18 = Number; 24/07/2026 = Date; Leila = Text; $5.00 = Currency."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Can we add up data that is Text, like names? Which two formats CAN we add up?",
+      "answer": "No, we cannot add up Text. We can only add up Number and Currency data.",
+      "hint": "Look back at what spreadsheet and data mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "No, we cannot add up Text. We can only add up Number and Currency data."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "In Nora's bakery sheet, which range shows the days the treats were sold?",
+      "answer": "C2:C4 (the Date column).",
+      "hint": "Look back at what spreadsheet and data mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "C2:C4 (the Date column)."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "Fill in the word. A group of cells you select together is called a",
+      "answer": "range.",
+      "hint": "Look back at what spreadsheet and data mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "range."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "In Nora's bakery sheet, which range shows the days the treats were sold?",
+      "answer": "C2:C4 (the Date column).",
+      "hint": "Look back at what spreadsheet and data mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: C2:C4 (the Date column)."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "Fill in the word. A group of cells you select together is called a",
+      "answer": "range.",
+      "hint": "Look back at what spreadsheet and data mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: range."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "In Nora's bakery sheet, which range shows the days the treats were sold?",
+      "answer": "C2:C4 (the Date column).",
+      "hint": "Look back at what spreadsheet and data mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: C2:C4 (the Date column)."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "Fill in the word. A group of cells you select together is called a",
+      "answer": "range.",
+      "hint": "Look back at what spreadsheet and data mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: range."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Which of these is a correct cell address? (3B B3 B 3)",
+      "keyIdeas": [
+        "spreadsheet",
+        "data",
+        "row"
+      ],
+      "modelAnswer": "B3 (the column letter comes first, then the row number)."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Match each piece of data to its format: Number, Date, Text, Currency.",
+      "keyIdeas": [
+        "data",
+        "row",
+        "column"
+      ],
+      "modelAnswer": "18 = Number; 24/07/2026 = Date; Leila = Text; $5.00 = Currency."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Can we add up data that is Text, like names? Which two formats CAN we add up?",
+      "keyIdeas": [
+        "row",
+        "column",
+        "cell"
+      ],
+      "modelAnswer": "No, we cannot add up Text. We can only add up Number and Currency data."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in formatting cells: text, number, date, currency, and give one example of your own.",
+      "keyIdeas": [
+        "spreadsheet",
+        "data",
+        "row"
+      ],
+      "modelAnswer": "A spreadsheet lets us choose how our data looks. This is called the format. The format is like the clothes the data wears. Money wears a dollar sign.\n\nTry it: Fast finishers can format the fruit stall on screen.\n\nCheck yourself: Can you know that a code with letters and numbers is Text, not Number? Can you select a group of cells before choosing a format? Can you match data to the right format?"
+    }
+  ],
+  "project": {
+    "title": "Unit 11 Project: Be a Data Designer",
+    "brief": "Bring together everything from Be a Data Designer into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your be a data designer project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "My headings are in row 1.",
+      "I have five friends, one on each row.",
+      "I chose the right format for each column.",
+      "My dates look like dates, and my money has a $.",
+      "I can give the cell address of any box, letter first."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “spreadsheet” mean in computing?",
+        "options": [
+          "A program that shows data in a table of boxes.",
+          "Facts we keep, like names, ages or prices.",
+          "A line of cells that goes across. A number names it.",
+          "A line of cells that goes up and down. A letter names it."
+        ],
+        "answer": "A program that shows data in a table of boxes.",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Spreadsheet means a program that shows data in a table of boxes."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “data” mean in computing?",
+        "options": [
+          "Facts we keep, like names, ages or prices.",
+          "A line of cells that goes across. A number names it.",
+          "A line of cells that goes up and down. A letter names it.",
+          "One box where a row and a column cross."
+        ],
+        "answer": "Facts we keep, like names, ages or prices.",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Data means facts we keep, like names, ages or prices."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “row” mean in computing?",
+        "options": [
+          "A line of cells that goes across. A number names it.",
+          "A line of cells that goes up and down. A letter names it.",
+          "One box where a row and a column cross.",
+          "The column letter and row number of a cell."
+        ],
+        "answer": "A line of cells that goes across. A number names it.",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Row means a line of cells that goes across. A number names it."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “column” mean in computing?",
+        "options": [
+          "A line of cells that goes up and down. A letter names it.",
+          "One box where a row and a column cross.",
+          "The column letter and row number of a cell.",
+          "The cell you have clicked on. It has a border."
+        ],
+        "answer": "A line of cells that goes up and down. A letter names it.",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Column means a line of cells that goes up and down. A letter names it."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “cell” mean in computing?",
+        "options": [
+          "One box where a row and a column cross.",
+          "The column letter and row number of a cell.",
+          "The cell you have clicked on. It has a border.",
+          "The little box that shows the active cell's address."
+        ],
+        "answer": "One box where a row and a column cross.",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Cell means one box where a row and a column cross."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “cell address” mean in computing?",
+        "options": [
+          "The column letter and row number of a cell.",
+          "The cell you have clicked on. It has a border.",
+          "The little box that shows the active cell's address.",
+          "A label at the top of a column that names the data."
+        ],
+        "answer": "The column letter and row number of a cell.",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Cell address means the column letter and row number of a cell."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: The cell you have clicked on. It has a border.?",
+        "options": [
+          "active cell",
+          "Name Box",
+          "heading",
+          "format"
+        ],
+        "answer": "active cell",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Active cell means the cell you have clicked on. It has a border."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: The little box that shows the active cell's address.?",
+        "options": [
+          "Name Box",
+          "heading",
+          "format",
+          "Text"
+        ],
+        "answer": "Name Box",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Name Box means the little box that shows the active cell's address."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A label at the top of a column that names the data.?",
+        "options": [
+          "heading",
+          "format",
+          "Text",
+          "Number"
+        ],
+        "answer": "heading",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Heading means a label at the top of a column that names the data."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The way something looks.?",
+        "options": [
+          "format",
+          "Text",
+          "Number",
+          "Date"
+        ],
+        "answer": "format",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Format means the way something looks."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A format for words and letters (and codes).?",
+        "options": [
+          "Text",
+          "Number",
+          "Date",
+          "Currency"
+        ],
+        "answer": "Text",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Text means a format for words and letters (and codes)."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A format for numbers you can add up.?",
+        "options": [
+          "Number",
+          "Date",
+          "Currency",
+          "range"
+        ],
+        "answer": "Number",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Number means a format for numbers you can add up."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u11-game-1",
+        "icon": "?",
+        "skill": "spreadsheet",
+        "title": "Quick Match: spreadsheet",
+        "description": "Practise spreadsheet through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “spreadsheet” mean in computing?",
+            "choices": [
+              "A program that shows data in a table of boxes.",
+              "Facts we keep, like names, ages or prices.",
+              "A line of cells that goes across. A number names it.",
+              "A line of cells that goes up and down. A letter names it."
+            ],
+            "answer": "A program that shows data in a table of boxes.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Spreadsheet means a program that shows data in a table of boxes."
+          },
+          {
+            "prompt": "What does “column” mean in computing?",
+            "choices": [
+              "A line of cells that goes up and down. A letter names it.",
+              "One box where a row and a column cross.",
+              "The column letter and row number of a cell.",
+              "The cell you have clicked on. It has a border."
+            ],
+            "answer": "A line of cells that goes up and down. A letter names it.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Column means a line of cells that goes up and down. A letter names it."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The cell you have clicked on. It has a border.?",
+            "choices": [
+              "active cell",
+              "Name Box",
+              "heading",
+              "format"
+            ],
+            "answer": "active cell",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Active cell means the cell you have clicked on. It has a border."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The way something looks.?",
+            "choices": [
+              "format",
+              "Text",
+              "Number",
+              "Date"
+            ],
+            "answer": "format",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Format means the way something looks."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-2",
+        "icon": "★",
+        "skill": "data",
+        "title": "Concept Quest: data",
+        "description": "Practise data through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Facts we keep, like names, ages or prices.",
+              "A line of cells that goes across. A number names it.",
+              "A line of cells that goes up and down. A letter names it.",
+              "One box where a row and a column cross."
+            ],
+            "answer": "Facts we keep, like names, ages or prices.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Data means facts we keep, like names, ages or prices."
+          },
+          {
+            "prompt": "What does “cell” mean in computing?",
+            "choices": [
+              "One box where a row and a column cross.",
+              "The column letter and row number of a cell.",
+              "The cell you have clicked on. It has a border.",
+              "The little box that shows the active cell's address."
+            ],
+            "answer": "One box where a row and a column cross.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Cell means one box where a row and a column cross."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The little box that shows the active cell's address.?",
+            "choices": [
+              "Name Box",
+              "heading",
+              "format",
+              "Text"
+            ],
+            "answer": "Name Box",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Name Box means the little box that shows the active cell's address."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A format for words and letters (and codes).?",
+            "choices": [
+              "Text",
+              "Number",
+              "Date",
+              "Currency"
+            ],
+            "answer": "Text",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Text means a format for words and letters (and codes)."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-3",
+        "icon": "◫",
+        "skill": "row",
+        "title": "Debug Detective: row",
+        "description": "Practise row through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “row” mean in computing?",
+            "choices": [
+              "A line of cells that goes across. A number names it.",
+              "A line of cells that goes up and down. A letter names it.",
+              "One box where a row and a column cross.",
+              "The column letter and row number of a cell."
+            ],
+            "answer": "A line of cells that goes across. A number names it.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Row means a line of cells that goes across. A number names it."
+          },
+          {
+            "prompt": "What does “cell address” mean in computing?",
+            "choices": [
+              "The column letter and row number of a cell.",
+              "The cell you have clicked on. It has a border.",
+              "The little box that shows the active cell's address.",
+              "A label at the top of a column that names the data."
+            ],
+            "answer": "The column letter and row number of a cell.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Cell address means the column letter and row number of a cell."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A label at the top of a column that names the data.?",
+            "choices": [
+              "heading",
+              "format",
+              "Text",
+              "Number"
+            ],
+            "answer": "heading",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Heading means a label at the top of a column that names the data."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A format for numbers you can add up.?",
+            "choices": [
+              "Number",
+              "Date",
+              "Currency",
+              "range"
+            ],
+            "answer": "Number",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Number means a format for numbers you can add up."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-4",
+        "icon": "→",
+        "skill": "column",
+        "title": "Algorithm Runner: column",
+        "description": "Practise column through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “column” mean in computing?",
+            "choices": [
+              "A line of cells that goes up and down. A letter names it.",
+              "One box where a row and a column cross.",
+              "The column letter and row number of a cell.",
+              "The cell you have clicked on. It has a border."
+            ],
+            "answer": "A line of cells that goes up and down. A letter names it.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Column means a line of cells that goes up and down. A letter names it."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The cell you have clicked on. It has a border.?",
+            "choices": [
+              "active cell",
+              "Name Box",
+              "heading",
+              "format"
+            ],
+            "answer": "active cell",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Active cell means the cell you have clicked on. It has a border."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The way something looks.?",
+            "choices": [
+              "format",
+              "Text",
+              "Number",
+              "Date"
+            ],
+            "answer": "format",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Format means the way something looks."
+          },
+          {
+            "prompt": "What does “spreadsheet” mean in computing?",
+            "choices": [
+              "A program that shows data in a table of boxes.",
+              "Facts we keep, like names, ages or prices.",
+              "A line of cells that goes across. A number names it.",
+              "A line of cells that goes up and down. A letter names it."
+            ],
+            "answer": "A program that shows data in a table of boxes.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Spreadsheet means a program that shows data in a table of boxes."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-5",
+        "icon": "Σ",
+        "skill": "cell",
+        "title": "Vocabulary Vault: cell",
+        "description": "Practise cell through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “cell” mean in computing?",
+            "choices": [
+              "One box where a row and a column cross.",
+              "The column letter and row number of a cell.",
+              "The cell you have clicked on. It has a border.",
+              "The little box that shows the active cell's address."
+            ],
+            "answer": "One box where a row and a column cross.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Cell means one box where a row and a column cross."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The little box that shows the active cell's address.?",
+            "choices": [
+              "Name Box",
+              "heading",
+              "format",
+              "Text"
+            ],
+            "answer": "Name Box",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Name Box means the little box that shows the active cell's address."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A format for words and letters (and codes).?",
+            "choices": [
+              "Text",
+              "Number",
+              "Date",
+              "Currency"
+            ],
+            "answer": "Text",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Text means a format for words and letters (and codes)."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Facts we keep, like names, ages or prices.",
+              "A line of cells that goes across. A number names it.",
+              "A line of cells that goes up and down. A letter names it.",
+              "One box where a row and a column cross."
+            ],
+            "answer": "Facts we keep, like names, ages or prices.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Data means facts we keep, like names, ages or prices."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-6",
+        "icon": "◇",
+        "skill": "cell address",
+        "title": "Challenge Cards: cell address",
+        "description": "Practise cell address through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “cell address” mean in computing?",
+            "choices": [
+              "The column letter and row number of a cell.",
+              "The cell you have clicked on. It has a border.",
+              "The little box that shows the active cell's address.",
+              "A label at the top of a column that names the data."
+            ],
+            "answer": "The column letter and row number of a cell.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Cell address means the column letter and row number of a cell."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A label at the top of a column that names the data.?",
+            "choices": [
+              "heading",
+              "format",
+              "Text",
+              "Number"
+            ],
+            "answer": "heading",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Heading means a label at the top of a column that names the data."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A format for numbers you can add up.?",
+            "choices": [
+              "Number",
+              "Date",
+              "Currency",
+              "range"
+            ],
+            "answer": "Number",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Number means a format for numbers you can add up."
+          },
+          {
+            "prompt": "What does “row” mean in computing?",
+            "choices": [
+              "A line of cells that goes across. A number names it.",
+              "A line of cells that goes up and down. A letter names it.",
+              "One box where a row and a column cross.",
+              "The column letter and row number of a cell."
+            ],
+            "answer": "A line of cells that goes across. A number names it.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Row means a line of cells that goes across. A number names it."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-7",
+        "icon": "⚡",
+        "skill": "active cell",
+        "title": "Think Fast: active cell",
+        "description": "Practise active cell through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The cell you have clicked on. It has a border.?",
+            "choices": [
+              "active cell",
+              "Name Box",
+              "heading",
+              "format"
+            ],
+            "answer": "active cell",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Active cell means the cell you have clicked on. It has a border."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The way something looks.?",
+            "choices": [
+              "format",
+              "Text",
+              "Number",
+              "Date"
+            ],
+            "answer": "format",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Format means the way something looks."
+          },
+          {
+            "prompt": "What does “spreadsheet” mean in computing?",
+            "choices": [
+              "A program that shows data in a table of boxes.",
+              "Facts we keep, like names, ages or prices.",
+              "A line of cells that goes across. A number names it.",
+              "A line of cells that goes up and down. A letter names it."
+            ],
+            "answer": "A program that shows data in a table of boxes.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Spreadsheet means a program that shows data in a table of boxes."
+          },
+          {
+            "prompt": "What does “column” mean in computing?",
+            "choices": [
+              "A line of cells that goes up and down. A letter names it.",
+              "One box where a row and a column cross.",
+              "The column letter and row number of a cell.",
+              "The cell you have clicked on. It has a border."
+            ],
+            "answer": "A line of cells that goes up and down. A letter names it.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Column means a line of cells that goes up and down. A letter names it."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-8",
+        "icon": "☁",
+        "skill": "Name Box",
+        "title": "Explain It: Name Box",
+        "description": "Practise name box through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The little box that shows the active cell's address.?",
+            "choices": [
+              "Name Box",
+              "heading",
+              "format",
+              "Text"
+            ],
+            "answer": "Name Box",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Name Box means the little box that shows the active cell's address."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A format for words and letters (and codes).?",
+            "choices": [
+              "Text",
+              "Number",
+              "Date",
+              "Currency"
+            ],
+            "answer": "Text",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Text means a format for words and letters (and codes)."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Facts we keep, like names, ages or prices.",
+              "A line of cells that goes across. A number names it.",
+              "A line of cells that goes up and down. A letter names it.",
+              "One box where a row and a column cross."
+            ],
+            "answer": "Facts we keep, like names, ages or prices.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Data means facts we keep, like names, ages or prices."
+          },
+          {
+            "prompt": "What does “cell” mean in computing?",
+            "choices": [
+              "One box where a row and a column cross.",
+              "The column letter and row number of a cell.",
+              "The cell you have clicked on. It has a border.",
+              "The little box that shows the active cell's address."
+            ],
+            "answer": "One box where a row and a column cross.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Cell means one box where a row and a column cross."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-9",
+        "icon": "⌂",
+        "skill": "heading",
+        "title": "Real-Life Round: heading",
+        "description": "Practise heading through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A label at the top of a column that names the data.?",
+            "choices": [
+              "heading",
+              "format",
+              "Text",
+              "Number"
+            ],
+            "answer": "heading",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Heading means a label at the top of a column that names the data."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A format for numbers you can add up.?",
+            "choices": [
+              "Number",
+              "Date",
+              "Currency",
+              "range"
+            ],
+            "answer": "Number",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Number means a format for numbers you can add up."
+          },
+          {
+            "prompt": "What does “row” mean in computing?",
+            "choices": [
+              "A line of cells that goes across. A number names it.",
+              "A line of cells that goes up and down. A letter names it.",
+              "One box where a row and a column cross.",
+              "The column letter and row number of a cell."
+            ],
+            "answer": "A line of cells that goes across. A number names it.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Row means a line of cells that goes across. A number names it."
+          },
+          {
+            "prompt": "What does “cell address” mean in computing?",
+            "choices": [
+              "The column letter and row number of a cell.",
+              "The cell you have clicked on. It has a border.",
+              "The little box that shows the active cell's address.",
+              "A label at the top of a column that names the data."
+            ],
+            "answer": "The column letter and row number of a cell.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Cell address means the column letter and row number of a cell."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-10",
+        "icon": "!",
+        "skill": "format",
+        "title": "Spot the Bug: format",
+        "description": "Practise format through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The way something looks.?",
+            "choices": [
+              "format",
+              "Text",
+              "Number",
+              "Date"
+            ],
+            "answer": "format",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Format means the way something looks."
+          },
+          {
+            "prompt": "What does “spreadsheet” mean in computing?",
+            "choices": [
+              "A program that shows data in a table of boxes.",
+              "Facts we keep, like names, ages or prices.",
+              "A line of cells that goes across. A number names it.",
+              "A line of cells that goes up and down. A letter names it."
+            ],
+            "answer": "A program that shows data in a table of boxes.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Spreadsheet means a program that shows data in a table of boxes."
+          },
+          {
+            "prompt": "What does “column” mean in computing?",
+            "choices": [
+              "A line of cells that goes up and down. A letter names it.",
+              "One box where a row and a column cross.",
+              "The column letter and row number of a cell.",
+              "The cell you have clicked on. It has a border."
+            ],
+            "answer": "A line of cells that goes up and down. A letter names it.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Column means a line of cells that goes up and down. A letter names it."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The cell you have clicked on. It has a border.?",
+            "choices": [
+              "active cell",
+              "Name Box",
+              "heading",
+              "format"
+            ],
+            "answer": "active cell",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Active cell means the cell you have clicked on. It has a border."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-11",
+        "icon": "≡",
+        "skill": "Text",
+        "title": "Mastery Mix: Text",
+        "description": "Practise text through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A format for words and letters (and codes).?",
+            "choices": [
+              "Text",
+              "Number",
+              "Date",
+              "Currency"
+            ],
+            "answer": "Text",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Text means a format for words and letters (and codes)."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Facts we keep, like names, ages or prices.",
+              "A line of cells that goes across. A number names it.",
+              "A line of cells that goes up and down. A letter names it.",
+              "One box where a row and a column cross."
+            ],
+            "answer": "Facts we keep, like names, ages or prices.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Data means facts we keep, like names, ages or prices."
+          },
+          {
+            "prompt": "What does “cell” mean in computing?",
+            "choices": [
+              "One box where a row and a column cross.",
+              "The column letter and row number of a cell.",
+              "The cell you have clicked on. It has a border.",
+              "The little box that shows the active cell's address."
+            ],
+            "answer": "One box where a row and a column cross.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Cell means one box where a row and a column cross."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The little box that shows the active cell's address.?",
+            "choices": [
+              "Name Box",
+              "heading",
+              "format",
+              "Text"
+            ],
+            "answer": "Name Box",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Name Box means the little box that shows the active cell's address."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-12",
+        "icon": "T",
+        "skill": "Number",
+        "title": "Unit Champion: Number",
+        "description": "Practise number through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A format for numbers you can add up.?",
+            "choices": [
+              "Number",
+              "Date",
+              "Currency",
+              "range"
+            ],
+            "answer": "Number",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Number means a format for numbers you can add up."
+          },
+          {
+            "prompt": "What does “row” mean in computing?",
+            "choices": [
+              "A line of cells that goes across. A number names it.",
+              "A line of cells that goes up and down. A letter names it.",
+              "One box where a row and a column cross.",
+              "The column letter and row number of a cell."
+            ],
+            "answer": "A line of cells that goes across. A number names it.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Row means a line of cells that goes across. A number names it."
+          },
+          {
+            "prompt": "What does “cell address” mean in computing?",
+            "choices": [
+              "The column letter and row number of a cell.",
+              "The cell you have clicked on. It has a border.",
+              "The little box that shows the active cell's address.",
+              "A label at the top of a column that names the data."
+            ],
+            "answer": "The column letter and row number of a cell.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Cell address means the column letter and row number of a cell."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A label at the top of a column that names the data.?",
+            "choices": [
+              "heading",
+              "format",
+              "Text",
+              "Number"
+            ],
+            "answer": "heading",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Heading means a label at the top of a column that names the data."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can say that a spreadsheet shows data in a table of rows, columns and cells.",
+    "I can give the cell address of a cell using its column letter and row number (for example B5).",
+    "I can point to the active cell and the Name Box in a spreadsheet.",
+    "I can enter data into a spreadsheet, with headings in the first row.",
+    "I can choose the right format for data: Text, Number, Date or Currency.",
+    "I can explain that we can do sums on Number and Currency data, but not on Text or Date data.",
+    "I can choose and select the right cells (a range, like B2:B4) to answer a question."
+  ]
+}

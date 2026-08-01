@@ -1,0 +1,2157 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:01.057Z",
+  "stage": {
+    "id": "s06",
+    "label": "Stage 6"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t02",
+    "label": "Term 2"
+  },
+  "unit": {
+    "unitId": "comp-g06-u03",
+    "unitNo": 3,
+    "unitTitle": "Networks and Digital Communication",
+    "unitOverview": "In this unit — Networks and Digital Communication — you will work through streaming, messaging and the school intranet, wi, packets: how a file makes the journey, bandwidth: why some networks feel fast and others feel slow, network overload, encryption: scrambling a message and user authentication: proving it is really you. Everything you need is here: explainers to read, examples to copy, things to build, practice with answers, and a project at the end. Every tool used is free and runs in a web browser.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 6
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-6-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 6",
+    "sourceArchive": "Year 6-20260801T055758Z-1-001.zip",
+    "sourceAudience": "student",
+    "sourceDocuments": [
+      "Year 6/Unit 3/Year 6 - Unit 3 Lesson.docx",
+      "Year 6/Unit 3/Year 6 - Unit 3 Activities & Projects.docx",
+      "Year 6/Unit 3/Year 6 - Unit 3 Practice & Quiz.docx",
+      "Year 6/Unit 3/Year 6 - Unit 3 Reference.docx"
+    ],
+    "sourceBlockCount": 664,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 6 Lesson, Activities & Projects, Practice & Quiz and Reference booklets for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Describe the range of digital content that can be stored on a server (emails, web pages, documents, messages, and video and audio for streaming).",
+    "Explain how data can be transferred wirelessly using wi-fi and cellular networks, and how it can also travel through wired connections.",
+    "Explain what a packet is and describe how a file is split into packets to travel across a network.",
+    "Explain what bandwidth is and discuss how it affects the performance of a network.",
+    "Explain what network overload is and what causes it.",
+    "Explain why it is important to keep data secure when it is sent to another device or person.",
+    "Describe what stolen data can be used for, such as fraud, identity theft, phishing and account takeover.",
+    "Explain what encryption is, and encode and decode a message using a Caesar cipher.",
+    "Explain what user authentication is and describe different methods: usernames and passwords, fingerprints and facial recognition.",
+    "Explain what makes a strong password, and follow good online-safety habits."
+  ],
+  "toolkit": [
+    {
+      "name": "A free spreadsheet",
+      "url": "Google Sheets, or LibreOffice Calc",
+      "steps": [
+        "Open a new blank spreadsheet.",
+        "Put your field names in row 1, one per column.",
+        "Type one record per row underneath.",
+        "Use Insert → Chart to turn your data into a graph."
+      ],
+      "note": "Any free spreadsheet works — the ideas are the same in all of them."
+    }
+  ],
+  "tutorPrompts": [
+    "Try these prompts to go deeper on servers and storage:",
+    "Explain the difference between streaming a film and downloading a film, like I am 11.",
+    "What is the difference between a megabyte and a gigabyte? Give me an everyday example of each.",
+    "Why does a school use an intranet instead of just the open internet for its notices?",
+    "3. How data travels: wired and wireless",
+    "Prompts to test your understanding of 3.1:",
+    "Give me a home network example and ask me whether it will overload. Then check my answer.",
+    "Explain bandwidth to me using an example from my daily life."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-streaming-messaging-and-the-school-intranet",
+      "title": "Streaming, messaging and the school intranet",
+      "explanation": "Streaming is when a video or sound file is played over an internet connection *without* being fully downloaded and stored on your device. Think of watching a lesson video: the film is not saved onto your tablet, it is played straight from a server as it arrives. Because high-quality video and audio take up a lot of space, streaming servers need a very large storage capacity. A single high-definition film might use two to four gigabytes, while a short slideshow might use only ten megabytes. That is a big difference in size.\n\nMessaging services let people send messages directly to one another, which we call direct messaging. A business might run its own server just for messages between staff, so nobody has to keep refreshing their email. A private network that belongs to a single organisation and is only open to its members is called an intranet. Ehel Academy has an intranet so that teachers can share notices, timetables and messages safely inside the school, without the whole world being able to see them.\n\nAround the world, people watch roughly 164 million hours of video on one single streaming service every day. That is about 1 hour and 11 minutes for every registered user — and that is just one service! All of that video is served from enormous server farms, day and night.\n\nOnce data is stored on a server, it has to travel to reach you. There are two big families of connection: wired and wireless. A wired connection sends data through cables — the most common is an Ethernet cable, which you might see plugged into a router at home or school. Wires are fast and steady, but they tie a device to one spot. A wireless connection sends data through the air with no cables at all, which is why a phone works while you walk around. Wireless is more convenient, and it is how most of us connect today.",
+      "example": "How can data travel through the air with nothing connecting the devices? The answer is radio waves. A radio wave is a form of energy that can carry data — text, pictures, sound — from one place to another. Your device turns your data into a pattern of radio waves and sends it out through a small antenna. Another device, or a tower, catches those waves and turns the pattern back into data. You cannot see or hear these waves, but they are passing through the air around you all the time."
+    },
+    {
+      "id": "concept-2-wi",
+      "title": "Wi",
+      "explanation": "In most homes, we reach the internet using wi-fi, the technology that lets devices communicate without wires. Wi-fi works through a router — a networking device that connects your home to an internet service provider (ISP), the company that supplies your internet. Any device in the home can send and receive data to the router, either through an Ethernet cable or wirelessly using radio waves. The router is like the front door of your home network: everything going in or out passes through it.\n\nWhen you leave the house, your phone usually switches to a cellular network. This is a gigantic web of communication towers, called cell towers, that covers almost the whole world. When there is no wi-fi, your phone connects to the nearest cell tower using radio waves, and it stays in constant touch as you move. That constant connection is what lets you send messages, browse, stream music and make calls while walking through Mogadishu or riding a bus to Nairobi. Phones can also combine cellular data with GPS (Global Positioning System) — a network of satellites in space — to work out exactly where you are. That is how a map app gives you directions, which we call satellite navigation, or satnav.",
+      "example": "Over 85% of the world's people now own a mobile phone — that is more than 7 billion phones connecting to cellular networks. When you make a call from a moving car, your phone quietly hands you over from one cell tower to the next, so smoothly that you never notice the switch."
+    },
+    {
+      "id": "concept-3-packets-how-a-file-makes-the-journey",
+      "title": "Packets: how a file makes the journey",
+      "explanation": "Here is one of the most important ideas in the whole unit. When a file is sent across a network, it does not travel as one whole piece. Instead, the file is chopped into many small parcels called packets, and each packet travels separately. Every packet carries a little bit of the file, plus address labels that say where it came from and where it is going, and a number showing its place in the order — like page numbers in a book.\n\nPicture a diagram of the journey. On the left is Layla's tablet in Mogadishu. On the right is Karim's phone in Nairobi. In the middle is the network. Follow the arrows:\n\nLayla writes a message and presses send. Her tablet breaks the message into packets, each with address labels and an order number.\n\nThe packets travel to her router, then out to her internet service provider, and into the wider internet.\n\nThe packets may each take a different route across the world, hopping between many computers — whichever path is quickest at that moment.\n\nThe packets arrive at Karim's side, possibly out of order and at slightly different times.\n\nKarim's phone reads the order numbers and puts the packets back together in the right order, rebuilding the whole message.\n\nWhy bother splitting a file at all? Because small parcels are flexible: if one route is busy, a packet can take another. If one packet gets lost, only that small piece has to be sent again, not the whole file. But splitting data into packets also creates a danger. If someone manages to steal enough packets, they might try to fit the pieces back together and read something private. If the packets have no encryption on them, this is possible. If the packets *are* encrypted, putting them together just gives scrambled nonsense — which is exactly why encryption matters, as you will see in Subunit 3.2.",
+      "example": "Truth: The message is split into many packets. They can each take a different path across the world and arrive out of order. The receiving device sorts them back into the correct order using the numbers on each packet."
+    },
+    {
+      "id": "concept-4-bandwidth-why-some-networks-feel-fast-and-others-feel-slow",
+      "title": "Bandwidth: why some networks feel fast and others feel slow",
+      "explanation": "Bandwidth is the maximum amount of data that can travel between two points in a network in a certain amount of time. It is usually measured in bits per second. The bigger your bandwidth, the more data can flow at once, and the quicker everything feels. The smaller your bandwidth, the longer it takes for a file to download or a video to load. Bandwidth does not change how far the data goes — it changes how *much* can go at a time.\n\nA good way to picture bandwidth is a drinking straw. Imagine drinking mango juice through a very thin straw — you can only sip a little at a time, so it takes ages to finish the glass. Now swap it for a wide, fat straw: the same juice rushes up and you finish in seconds. The juice is your data, and the width of the straw is your bandwidth. A wide 'straw' lets a lot of data through quickly; a narrow one makes you wait.\n\nBut bandwidth is not the only thing that matters. The number of devices using the network at the same time also changes the speed. Your home has a limited amount of bandwidth that must be shared among every active device. So even if your bandwidth is large, everything can still slow down when lots of people are streaming or downloading at once. That is often why your video pauses to load in the evening, when the whole family is online together.",
+      "example": "Think of bandwidth like a plate of injera shared at dinner. If two people share the plate, everyone gets a good amount. If ten hungry cousins arrive, each person's share gets much smaller — and if too many people crowd in, some might get almost nothing at all! The food (the network) is fine; there are just too many people sharing it at once."
+    },
+    {
+      "id": "concept-5-network-overload",
+      "title": "Network overload",
+      "explanation": "Network overload happens when too many devices try to use the network at the same time and it can no longer cope. When a network is overloaded, data moves extremely slowly, pictures freeze halfway through loading, videos keep pausing, and error messages start to pop up. It is not that anything is broken — there is simply more demand than the network can carry, just like a road with too many cars moving slowly in a traffic jam. The road is fine; there are just too many cars.\n\nRemember that it is not only phones and laptops that use bandwidth. Modern homes are full of smart devices — a smart TV, smart lights, smart plugs, even a smart fridge — and every one of them uses a slice of the bandwidth. Devices that stream or download take the biggest slices, so an overload can happen with only a few busy devices. Imagine a family in Hargeisa one evening. Their home bandwidth adds up like this:\n\nA home network asking for more than 100% of its bandwidth\n\nKarim streaming a football match ............. 35%\n\nYasmin on a video call to Nairobi ............. 25%\n\nDad downloading a large work file ............. 30%\n\nThe smart TV updating itself .................. 15%\n\nTwo phones browsing the web ................... 10%\n\n--------------------------------------------------\n\nTOTAL DEMAND .................................. 115% -> OVERLOAD!\n\nThe total demand is 115%, but a network can only ever give 100%. Because the family is asking for more than exists, the network overloads and everything crawls. What could they do? If Karim pauses his football match, the demand drops to 25 + 30 + 15 + 10 = 80%, which fits inside 100%, so the network can cope again. They could also turn off the smart TV update until later. Turning off the smart fridge would free up bandwidth too — but then their food might spoil, so that is not a sensible choice! Solving overload is about deciding which devices matter most right now.\n\nSometimes a device is infected by malware — software designed to disrupt or harm a computer. Hidden malware can quietly use up a lot of your bandwidth without you realising, making everything slow. It is a good habit to run antivirus software regularly to find and remove malware, and to keep that antivirus software up to date. If your network suddenly becomes very slow for no clear reason, malware is one thing worth checking for.\n\nEvery single day, trillions of packets travel across the internet. The act of sending them is called the transmission, and it needs to be secure — safe and reachable only by people who are allowed to see it. So much of what we send is private, and it would cause real harm if the wrong person got hold of it. Data that especially needs protecting includes:\n\nPersonal information — your name, home address, or date of birth.\n\nFinancial information — bank details, or a parent's card number.\n\nHealth information — things like medical test results.\n\nRemember that data travels as packets. If enough packets are lost or stolen along the way, someone who should never have been allowed to read the data might be able to piece it together and see it. People who steal data can use it in harmful, illegal ways. Here are the main ones:\n\nFraud — tricking people, usually to steal money from them.\n\nIdentity theft — using your personal information to pretend to be you.\n\nPhishing — tricking you into handing over private details, often through a fake message or a fake website that looks real.\n\nAccount takeover — breaking into an account such as your email, then locking you out of it.\n\nThis is why the transmission of data must be protected. Keeping data secure is not about being fearful — it is about being sensible and respectful, guarding your own information and other people's too. Looking after information you have been trusted with is a mark of honesty and respect, and the private data of your family and friends is exactly that kind of trust.",
+      "example": "About 333 billion emails are sent every day — roughly 47 for every person on Earth. But be careful: more than 85% of all emails sent are spam (junk mail) or phishing attempts trying to trick people. The more active you are online, the more junk and tricks may arrive in your inbox, so a careful eye is a valuable skill."
+    },
+    {
+      "id": "concept-6-encryption-scrambling-a-message",
+      "title": "Encryption: scrambling a message",
+      "explanation": "The strongest way to protect data while it travels is encryption. Encryption means scrambling a message so that only the people who are meant to read it can understand it. To everyone else, it looks like meaningless nonsense. The original, readable message is called the plaintext. The scrambled version is called the ciphertext. A secret rule called a key turns one into the other. If you have the key, you can unscramble the message; if you do not, you are stuck.\n\nOne of the oldest and simplest ways to encrypt is a Caesar cipher, named after the Roman leader Julius Caesar, who used a similar trick so that enemies could not read his military plans. The idea is to shift every letter along the alphabet by the same number of places. That number is the key. Let us use a shift of 3. This means A becomes D, B becomes E, C becomes F, and so on. When you reach the end of the alphabet you wrap around: X becomes A, Y becomes B, Z becomes C. Here is the full key written out:\n\nCaesar cipher key — a shift of 3\n\nPLAIN : A B C D E F G H I J K L M N O P Q R S T U V W X Y Z\n\nCIPHER: D E F G H I J K L M N O P Q R S T U V W X Y Z A B C\n\n(shift of 3: each letter moves 3 places forward)\n\nTo encode (scramble) a message, you find each plaintext letter in the top row and write down the letter beneath it. Let us encode the word HELLO. H becomes K, E becomes H, L becomes O, L becomes O, and O becomes R. So HELLO turns into KHOOR. Let us try a friendly greeting between our two helpers. Layla wants to send HELLO KARIM in secret. Working letter by letter with the key above:\n\nEncoding HELLO KARIM with a shift of 3\n\nPlaintext : H E L L O K A R I M\n\nCiphertext: K H O O R N D U L P\n\nSo Layla sends KHOOR NDULP. If a stranger steals those packets, they just see nonsense. To decode (unscramble) the message, Karim does the opposite: he shifts each letter back by 3. K goes back to H, H back to E, O back to L, and so on, rebuilding HELLO KARIM. Because Karim knows the key (a shift of 3) and the stranger does not, only Karim can read it. That is the whole magic of encryption: the message can travel in the open, but stays secret without the key.\n\nYour Cambridge textbook has a secret message: \"Mywzedsxq sc wi pkfyebsdo celtomd.\" It uses a bigger shift than ours. If you carefully shift every letter back, it decodes to: \"Computing is my favourite subject.\" Try it with your AI tutor and check that you get the same answer!",
+      "example": "Real websites do not use a simple Caesar cipher, because a shift is far too easy to crack — there are only 25 shifts to try. Instead, modern computers use very powerful encryption with enormous keys that would take even the fastest computer millions of years to guess. But the *idea* is exactly the same as Caesar's: scramble with a key, and only someone with the key can unscramble. Picture the secure journey as a diagram: your plaintext goes into an encryption 'box' with a key and comes out as ciphertext; the ciphertext is split into packets and travels across the world; at the other end it goes into a decryption 'box' with the matching key and comes back out as readable plaintext. Scramble, send, unscramble."
+    },
+    {
+      "id": "concept-7-user-authentication-proving-it-is-really-you",
+      "title": "User authentication: proving it is really you",
+      "explanation": "Encryption protects data while it travels. But we also need to protect data where it is stored, by making sure only the right person can open an account. The way we do this is called user authentication, which simply means checking that a user really is who they say they are. There are several ways to authenticate a user, and good systems often use more than one.\n\nThe most common method is a username and a password. A username is the unique name that identifies you on a system. A password is a secret string of letters, numbers and characters that you set — like a private code that proves the username really belongs to you. Because someone needs *both* to get in, the two together are much stronger than either alone. If someone can guess your password, they can hack your account, which means getting into something they are not allowed to use.\n\nSo what makes a password weak or strong? Passwords are weak and easy to guess when they use: the word password; numbers in an obvious order like 123456; or personal information such as your own name, a pet's name, your favourite team or your birthday. Anyone who knows you — or who reads your social media — could guess these. A strong password is the opposite. The best modern advice is to use three random words joined together, with no personal meaning, for example camel basket lantern. Three random words are long, hard to guess, but still easy for you to remember. Many organisations also ask you to add a mix of upper and lowercase letters, numbers and symbols, such as Camel-Basket-Lantern7.\n\nMany devices can be unlocked with a fingerprint using a fingerprint scanner. When you place your finger on the scanner, the software looks at the unique pattern of ridges on your fingertip and compares it with the fingerprint already stored in the device. If the scanned pattern matches the stored one, the device unlocks. If it does not match, the device stays locked. Fingerprints are an excellent method because every person's fingerprint is unique — no two people share the same one, not even identical twins. That makes this kind of authentication very hard to hack, because a thief cannot easily copy your finger.\n\nYour fingerprints are built from three basic pattern types: loops, whorls and arches. The exact mix is different for every single person on Earth, which is why fingerprints have been used to identify people for over a hundred years. A very small number of people have a rare condition that means they have no fingerprints at all.\n\nFacial recognition works in a similar way to fingerprints, but with your face. A camera or scanner takes a 2D or 3D image of your face, and the system compares it against a stored image. Only if the new image matches the stored one does the device unlock. You or your parents might already use facial recognition to unlock a phone just by looking at it. Like fingerprints, it is convenient because you always carry your face with you and there is nothing to remember or type. Each method has trade-offs, though — a password can be changed if it is stolen, but you cannot change your face or fingerprint, so systems must store those images extremely carefully.\n\nPutting it together for the school shop: the shop manager's laptop should use a strong password (and ideally a fingerprint too) so that sales data stays safe even when the manager steps away. Parents creating accounts on the shop tablets should choose strong passwords, and the connection should be encrypted so their personal and payment details cannot be read if packets are stolen. Every idea in this unit points back to keeping Ehel Academy's families safe.\n\nEverything in this unit connects to one goal: being a safe, kind and sensible person online. Networks let us share and learn across the whole world, which is a wonderful thing. But the same connections that carry your homework can also carry tricks and dangers. Here are the habits that keep you safe:\n\nGuard private data. Do not share your address, birthday, school name or passwords with people you do not know. Treat other people's private data as carefully as your own.\n\nLook before you trust. Phishing messages try to rush you with scary or exciting news (\"Your account will be deleted!\" or \"You won a prize!\"). Slow down. Real organisations do not ask for your password by message.\n\nCheck the link. A fake website can look almost real. Never log in through a link in a surprising message — go to the website yourself instead.\n\nUse strong, separate passwords and never reuse them across accounts.\n\nKeep antivirus software updated to catch malware early.",
+      "example": "Tell a trusted adult if anything online worries you, scares you, or does not feel right. Asking for help is a sign of wisdom, not weakness."
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "CIPHER: D E F G H I J K L M N O P Q R S T U V W X Y Z A B C",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "Example: HELLO -> KHOOR (encode: shift forward 3)",
+        "KHOOR -> HELLO (decode: shift back 3)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "How to use this booklet",
+      "context": "work through the steps below and see what happens. This is streaming, messaging and the school intranet in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "These activities go with your Unit 3 Lesson booklet. You can do many of them on your own, at your own pace. Some are 'unplugged' (no computer needed) and only need a pen and paper. Others use free, open-source tools. For every activity there are AI-tutor prompts to help you if you get stuck, and answers or worked examples where they make sense. Do your best before checking!",
+      "answer": "Activities for Subunit 3.1 — Storing and Transferring Data You will need: a large piece of paper and some pens. A network map is a drawing that shows every device on a network and how they connect. In this activity you will map a network you know well. Choose a network: your home, or Ehel Academy if you know it well. In the middle of your paper, draw the server or the router — the device everything connects through. Around it, draw every device you can think of: laptops, tablets, phones, a printer, a smart TV, smart lights, and so on.",
+      "modelType": "model-1",
+      "hint": "Start here: Activities for Subunit 3.1 — Storing and Transferring Data",
+      "explanation": "Streaming, messaging and the school intranet: Streaming is when a video or sound file is played over an internet connection *without* being fully downloaded and stored on your device. Think of watching a lesson video: the film is not saved onto your tablet, it is played straight from a server as it arrives. Because high-quality video and audio…"
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Activities for Subunit 3.1 - Storing and Transferring Data",
+      "context": "work through the steps below and see what happens. This is wi in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "You will need: a large piece of paper and some pens. A network map is a drawing that shows every device on a network and how they connect. In this activity you will map a network you know well.",
+      "answer": "Choose a network: your home, or Ehel Academy if you know it well. In the middle of your paper, draw the server or the router — the device everything connects through. Around it, draw every device you can think of: laptops, tablets, phones, a printer, a smart TV, smart lights, and so on. Draw a line from each device to the router. Label each line wired (a cable) or wireless (wi-fi). For two of the devices, write one sentence explaining why it connects to the network and what service it uses (for example: \"The tablet connects to stream lesson videos from a server\").",
+      "modelType": "model-2",
+      "hint": "Start here: Choose a network: your home, or Ehel Academy if you know it well.",
+      "explanation": "Wi: In most homes, we reach the internet using wi-fi, the technology that lets devices communicate without wires. Wi-fi works through a router — a networking device that connects your home to an internet service provider (ISP), the company that supplies your internet. Any device in the home can send…"
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Ask Your AI Tutor",
+      "context": "work through the steps below and see what happens. This is packets: how a file makes the journey in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "— \"Here is a list of devices in my home. Help me sort them into wired and wireless.\"",
+      "answer": "— \"What is the difference between a router and a server? Which one should be in the middle of my map?\" You will need: a pen and paper. With a family member, list as many digital devices in your home as you can. For each device, answer three questions and record your answers in a simple table. Can it transfer data using a network cable (wired)? Can it transfer data using wi-fi? Can it transfer data using a cellular network (mobile data)?",
+      "modelType": "model-3",
+      "hint": "Start here: — \"What is the difference between a router and a server? Which one should be in the middle of my map?\"",
+      "explanation": "Packets: how a file makes the journey: Here is one of the most important ideas in the whole unit. When a file is sent across a network, it does not travel as one whole piece. Instead, the file is chopped into many small parcels called packets, and each packet travels separately. Every packet carries a little bit of the file, plus…"
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Here is a worked example to show the idea:",
+      "context": "work through the steps below and see what happens. This is bandwidth: why some networks feel fast and others feel slow in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Example device audit — yours will be different",
+      "answer": "Device | Cable? | Wi-fi? | Cellular? ----------------+--------+--------+---------- Smartphone | No | Yes | Yes Laptop | Yes | Yes | No Smart TV | Yes | Yes | No",
+      "modelType": "model-4",
+      "hint": "Start here: Device | Cable? | Wi-fi? | Cellular?",
+      "explanation": "Bandwidth: why some networks feel fast and others feel slow: Bandwidth is the maximum amount of data that can travel between two points in a network in a certain amount of time. It is usually measured in bits per second. The bigger your bandwidth, the more data can flow at once, and the quicker everything feels. The smaller your bandwidth, the longer it…"
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Example device audit - yours will be different",
+      "context": "work through the steps below and see what happens. This is network overload in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Device | Cable? | Wi-fi? | Cellular?",
+      "answer": "----------------+--------+--------+---------- Smartphone | No | Yes | Yes Laptop | Yes | Yes | No Smart TV | Yes | Yes | No Games console | Yes | Yes | No",
+      "modelType": "model-5",
+      "hint": "Start here: ----------------+--------+--------+----------",
+      "explanation": "Network overload: Network overload happens when too many devices try to use the network at the same time and it can no longer cope. When a network is overloaded, data moves extremely slowly, pictures freeze halfway through loading, videos keep pausing, and error messages start to pop up. It is not that anything is…"
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Smartphone | No | Yes | Yes",
+      "context": "work through the steps below and see what happens. This is encryption: scrambling a message in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Laptop | Yes | Yes | No",
+      "answer": "Smart TV | Yes | Yes | No Games console | Yes | Yes | No Smart lightbulb | No | Yes | No Then discuss: which of your devices could connect in the most different ways? Which could only connect one way? A phone is special because it can use both wi-fi at home and a cellular network when you are out. Activity 3.1c — Speed test investigation",
+      "modelType": "model-6",
+      "hint": "Start here: Smart TV | Yes | Yes | No",
+      "explanation": "Encryption: scrambling a message: The strongest way to protect data while it travels is encryption. Encryption means scrambling a message so that only the people who are meant to read it can understand it. To everyone else, it looks like meaningless nonsense. The original, readable message is called the plaintext. The scrambled…"
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Streaming, messaging and the school intranet",
+      "modelType": "concept-model-1",
+      "purpose": "Streaming is when a video or sound file is played over an internet connection *without* being fully downloaded and stored on your device. Think of watching a lesson video: the film is not saved onto your tablet, it is…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Wi",
+      "modelType": "concept-model-2",
+      "purpose": "In most homes, we reach the internet using wi-fi, the technology that lets devices communicate without wires. Wi-fi works through a router — a networking device that connects your home to an internet service provider…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Packets: how a file makes the journey",
+      "modelType": "concept-model-3",
+      "purpose": "Here is one of the most important ideas in the whole unit. When a file is sent across a network, it does not travel as one whole piece. Instead, the file is chopped into many small parcels called packets, and each…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Bandwidth: why some networks feel fast and others feel slow",
+      "modelType": "concept-model-4",
+      "purpose": "Bandwidth is the maximum amount of data that can travel between two points in a network in a certain amount of time. It is usually measured in bits per second. The bigger your bandwidth, the more data can flow at once,…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Network overload",
+      "modelType": "concept-model-5",
+      "purpose": "Network overload happens when too many devices try to use the network at the same time and it can no longer cope. When a network is overloaded, data moves extremely slowly, pictures freeze halfway through loading,…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Encryption: scrambling a message",
+      "modelType": "concept-model-6",
+      "purpose": "The strongest way to protect data while it travels is encryption. Encryption means scrambling a message so that only the people who are meant to read it can understand it. To everyone else, it looks like meaningless…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-7",
+      "outcomeId": "lo07",
+      "title": "User authentication: proving it is really you",
+      "modelType": "concept-model-7",
+      "purpose": "Encryption protects data while it travels. But we also need to protect data where it is stored, by making sure only the right person can open an account. The way we do this is called user authentication, which simply…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with streaming, messaging and the school intranet",
+      "example": "How can data travel through the air with nothing connecting the devices? The answer is radio waves. A radio wave is a form of energy that can carry data — text, pictures, sound — from one place to another. Your device turns your data into a pattern of radio…",
+      "steps": [
+        "Streaming is when a video or sound file is played over an internet connection *without* being fully downloaded and stored on your device. Think of watching a lesson video: the film is not saved onto your tablet, it is…",
+        "Messaging services let people send messages directly to one another, which we call direct messaging. A business might run its own server just for messages between staff, so nobody has to keep refreshing their email. A…",
+        "Around the world, people watch roughly 164 million hours of video on one single streaming service every day. That is about 1 hour and 11 minutes for every registered user — and that is just one service! All of that…",
+        "Once data is stored on a server, it has to travel to reach you. There are two big families of connection: wired and wireless. A wired connection sends data through cables — the most common is an Ethernet cable, which…"
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with wi",
+      "example": "Over 85% of the world's people now own a mobile phone — that is more than 7 billion phones connecting to cellular networks. When you make a call from a moving car, your phone quietly hands you over from one cell tower to the next, so smoothly that you never…",
+      "steps": [
+        "Read the concept card for wi and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with packets: how a file makes the journey",
+      "example": "Truth: The message is split into many packets. They can each take a different path across the world and arrive out of order. The receiving device sorts them back into the correct order using the numbers on each packet.",
+      "steps": [
+        "Here is one of the most important ideas in the whole unit. When a file is sent across a network, it does not travel as one whole piece. Instead, the file is chopped into many small parcels called packets, and each…",
+        "Picture a diagram of the journey. On the left is Layla's tablet in Mogadishu. On the right is Karim's phone in Nairobi. In the middle is the network. Follow the arrows:",
+        "Layla writes a message and presses send. Her tablet breaks the message into packets, each with address labels and an order number.",
+        "The packets travel to her router, then out to her internet service provider, and into the wider internet."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with bandwidth: why some networks feel fast and others feel slow",
+      "example": "Think of bandwidth like a plate of injera shared at dinner. If two people share the plate, everyone gets a good amount. If ten hungry cousins arrive, each person's share gets much smaller — and if too many people crowd in, some might get almost nothing at…",
+      "steps": [
+        "Bandwidth is the maximum amount of data that can travel between two points in a network in a certain amount of time. It is usually measured in bits per second. The bigger your bandwidth, the more data can flow at once,…",
+        "A good way to picture bandwidth is a drinking straw. Imagine drinking mango juice through a very thin straw — you can only sip a little at a time, so it takes ages to finish the glass. Now swap it for a wide, fat straw:…",
+        "But bandwidth is not the only thing that matters. The number of devices using the network at the same time also changes the speed. Your home has a limited amount of bandwidth that must be shared among every active…"
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with network overload",
+      "example": "About 333 billion emails are sent every day — roughly 47 for every person on Earth. But be careful: more than 85% of all emails sent are spam (junk mail) or phishing attempts trying to trick people. The more active you are online, the more junk and tricks may…",
+      "steps": [
+        "Network overload happens when too many devices try to use the network at the same time and it can no longer cope. When a network is overloaded, data moves extremely slowly, pictures freeze halfway through loading,…",
+        "Remember that it is not only phones and laptops that use bandwidth. Modern homes are full of smart devices — a smart TV, smart lights, smart plugs, even a smart fridge — and every one of them uses a slice of the…",
+        "A home network asking for more than 100% of its bandwidth",
+        "Karim streaming a football match ............. 35%"
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "How to work with encryption: scrambling a message",
+      "example": "Real websites do not use a simple Caesar cipher, because a shift is far too easy to crack — there are only 25 shifts to try. Instead, modern computers use very powerful encryption with enormous keys that would take even the fastest computer millions of years…",
+      "steps": [
+        "The strongest way to protect data while it travels is encryption. Encryption means scrambling a message so that only the people who are meant to read it can understand it. To everyone else, it looks like meaningless…",
+        "One of the oldest and simplest ways to encrypt is a Caesar cipher, named after the Roman leader Julius Caesar, who used a similar trick so that enemies could not read his military plans. The idea is to shift every…",
+        "PLAIN : A B C D E F G H I J K L M N O P Q R S T U V W X Y Z",
+        "CIPHER: D E F G H I J K L M N O P Q R S T U V W X Y Z A B C"
+      ]
+    },
+    {
+      "id": "method-7",
+      "outcomeId": "lo07",
+      "difficulty": "Challenge",
+      "title": "How to work with user authentication: proving it is really you",
+      "example": "Tell a trusted adult if anything online worries you, scares you, or does not feel right. Asking for help is a sign of wisdom, not weakness.",
+      "steps": [
+        "Encryption protects data while it travels. But we also need to protect data where it is stored, by making sure only the right person can open an account. The way we do this is called user authentication, which simply…",
+        "The most common method is a username and a password. A username is the unique name that identifies you on a system. A password is a secret string of letters, numbers and characters that you set — like a private code…",
+        "So what makes a password weak or strong? Passwords are weak and easy to guess when they use: the word password; numbers in an obvious order like 123456; or personal information such as your own name, a pet's name, your…",
+        "Many devices can be unlocked with a fingerprint using a fingerprint scanner. When you place your finger on the scanner, the software looks at the unique pattern of ridges on your fingertip and compares it with the…"
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Streaming, messaging and the school intranet",
+      "prompt": "Explain in your own words: Streaming, messaging and the school intranet.",
+      "solution": "Streaming is when a video or sound file is played over an internet connection *without* being fully downloaded and stored on your device. Think of watching a lesson video: the film is not saved onto your tablet, it is played straight from a server as it arrives. Because high-quality video and audio take up a lot of space, streaming servers need a very large storage capacity. A single high-definition film might use two to four gigabytes, while a short slideshow might use only ten megabytes. That is a big difference in size.\n\nMessaging services let people send messages directly to one another, which we call direct messaging. A business might run its own server just for messages between staff, so nobody has to keep refreshing their email. A private network that belongs to a single organisation and is only open to its members is called an intranet. Ehel Academy has an intranet so that teachers can share notices, timetables and messages safely inside the school, without the whole world being able to see them.\n\nAround the world, people watch roughly 164 million hours of video on one single streaming service every day. That is about 1 hour and 11 minutes for every registered user — and that is just one service! All of that video is served from enormous server farms, day and night.\n\nOnce data is stored on a server, it has to travel to reach you. There are two big families of connection: wired and wireless. A wired connection sends data through cables — the most common is an Ethernet cable, which you might see plugged into a router at home or school. Wires are fast and steady, but they tie a device to one spot. A wireless connection sends data through the air with no cables at all, which is why a phone works while you walk around. Wireless is more convenient, and it is how most of us connect today.\n\nFor example: How can data travel through the air with nothing connecting the devices? The answer is radio waves. A radio wave is a form of energy that can carry data — text, pictures, sound — from one place to another. Your device turns your data into a pattern of radio waves and sends it out through a small antenna. Another device, or a tower, catches those waves and turns the pattern back into data. You cannot see or hear these waves, but they are passing through the air around you all the time."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Wi",
+      "prompt": "Explain in your own words: Wi.",
+      "solution": "In most homes, we reach the internet using wi-fi, the technology that lets devices communicate without wires. Wi-fi works through a router — a networking device that connects your home to an internet service provider (ISP), the company that supplies your internet. Any device in the home can send and receive data to the router, either through an Ethernet cable or wirelessly using radio waves. The router is like the front door of your home network: everything going in or out passes through it.\n\nWhen you leave the house, your phone usually switches to a cellular network. This is a gigantic web of communication towers, called cell towers, that covers almost the whole world. When there is no wi-fi, your phone connects to the nearest cell tower using radio waves, and it stays in constant touch as you move. That constant connection is what lets you send messages, browse, stream music and make calls while walking through Mogadishu or riding a bus to Nairobi. Phones can also combine cellular data with GPS (Global Positioning System) — a network of satellites in space — to work out exactly where you are. That is how a map app gives you directions, which we call satellite navigation, or satnav.\n\nFor example: Over 85% of the world's people now own a mobile phone — that is more than 7 billion phones connecting to cellular networks. When you make a call from a moving car, your phone quietly hands you over from one cell tower to the next, so smoothly that you never notice the switch."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Packets: how a file makes the journey",
+      "prompt": "Explain in your own words: Packets: how a file makes the journey.",
+      "solution": "Here is one of the most important ideas in the whole unit. When a file is sent across a network, it does not travel as one whole piece. Instead, the file is chopped into many small parcels called packets, and each packet travels separately. Every packet carries a little bit of the file, plus address labels that say where it came from and where it is going, and a number showing its place in the order — like page numbers in a book.\n\nPicture a diagram of the journey. On the left is Layla's tablet in Mogadishu. On the right is Karim's phone in Nairobi. In the middle is the network. Follow the arrows:\n\nLayla writes a message and presses send. Her tablet breaks the message into packets, each with address labels and an order number.\n\nThe packets travel to her router, then out to her internet service provider, and into the wider internet.\n\nThe packets may each take a different route across the world, hopping between many computers — whichever path is quickest at that moment.\n\nThe packets arrive at Karim's side, possibly out of order and at slightly different times.\n\nKarim's phone reads the order numbers and puts the packets back together in the right order, rebuilding the whole message.\n\nWhy bother splitting a file at all? Because small parcels are flexible: if one route is busy, a packet can take another. If one packet gets lost, only that small piece has to be sent again, not the whole file. But splitting data into packets also creates a danger. If someone manages to steal enough packets, they might try to fit the pieces back together and read something private. If the packets have no encryption on them, this is possible. If the packets *are* encrypted, putting them together just gives scrambled nonsense — which is exactly why encryption matters, as you will see in Subunit 3.2.\n\nFor example: Truth: The message is split into many packets. They can each take a different path across the world and arrive out of order. The receiving device sorts them back into the correct order using the numbers on each packet."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Bandwidth: why some networks feel fast and others feel slow",
+      "prompt": "Explain in your own words: Bandwidth: why some networks feel fast and others feel slow.",
+      "solution": "Bandwidth is the maximum amount of data that can travel between two points in a network in a certain amount of time. It is usually measured in bits per second. The bigger your bandwidth, the more data can flow at once, and the quicker everything feels. The smaller your bandwidth, the longer it takes for a file to download or a video to load. Bandwidth does not change how far the data goes — it changes how *much* can go at a time.\n\nA good way to picture bandwidth is a drinking straw. Imagine drinking mango juice through a very thin straw — you can only sip a little at a time, so it takes ages to finish the glass. Now swap it for a wide, fat straw: the same juice rushes up and you finish in seconds. The juice is your data, and the width of the straw is your bandwidth. A wide 'straw' lets a lot of data through quickly; a narrow one makes you wait.\n\nBut bandwidth is not the only thing that matters. The number of devices using the network at the same time also changes the speed. Your home has a limited amount of bandwidth that must be shared among every active device. So even if your bandwidth is large, everything can still slow down when lots of people are streaming or downloading at once. That is often why your video pauses to load in the evening, when the whole family is online together.\n\nFor example: Think of bandwidth like a plate of injera shared at dinner. If two people share the plate, everyone gets a good amount. If ten hungry cousins arrive, each person's share gets much smaller — and if too many people crowd in, some might get almost nothing at all! The food (the network) is fine; there are just too many people sharing it at once."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Network overload",
+      "prompt": "Explain in your own words: Network overload.",
+      "solution": "Network overload happens when too many devices try to use the network at the same time and it can no longer cope. When a network is overloaded, data moves extremely slowly, pictures freeze halfway through loading, videos keep pausing, and error messages start to pop up. It is not that anything is broken — there is simply more demand than the network can carry, just like a road with too many cars moving slowly in a traffic jam. The road is fine; there are just too many cars.\n\nRemember that it is not only phones and laptops that use bandwidth. Modern homes are full of smart devices — a smart TV, smart lights, smart plugs, even a smart fridge — and every one of them uses a slice of the bandwidth. Devices that stream or download take the biggest slices, so an overload can happen with only a few busy devices. Imagine a family in Hargeisa one evening. Their home bandwidth adds up like this:\n\nA home network asking for more than 100% of its bandwidth\n\nKarim streaming a football match ............. 35%\n\nYasmin on a video call to Nairobi ............. 25%\n\nDad downloading a large work file ............. 30%\n\nThe smart TV updating itself .................. 15%\n\nTwo phones browsing the web ................... 10%\n\n--------------------------------------------------\n\nTOTAL DEMAND .................................. 115% -> OVERLOAD!\n\nThe total demand is 115%, but a network can only ever give 100%. Because the family is asking for more than exists, the network overloads and everything crawls. What could they do? If Karim pauses his football match, the demand drops to 25 + 30 + 15 + 10 = 80%, which fits inside 100%, so the network can cope again. They could also turn off the smart TV update until later. Turning off the smart fridge would free up bandwidth too — but then their food might spoil, so that is not a sensible choice! Solving overload is about deciding which devices matter most right now.\n\nSometimes a device is infected by malware — software designed to disrupt or harm a computer. Hidden malware can quietly use up a lot of your bandwidth without you realising, making everything slow. It is a good habit to run antivirus software regularly to find and remove malware, and to keep that antivirus software up to date. If your network suddenly becomes very slow for no clear reason, malware is one thing worth checking for.\n\nEvery single day, trillions of packets travel across the internet. The act of sending them is called the transmission, and it needs to be secure — safe and reachable only by people who are allowed to see it. So much of what we send is private, and it would cause real harm if the wrong person got hold of it. Data that especially needs protecting includes:\n\nPersonal information — your name, home address, or date of birth.\n\nFinancial information — bank details, or a parent's card number.\n\nHealth information — things like medical test results.\n\nRemember that data travels as packets. If enough packets are lost or stolen along the way, someone who should never have been allowed to read the data might be able to piece it together and see it. People who steal data can use it in harmful, illegal ways. Here are the main ones:\n\nFraud — tricking people, usually to steal money from them.\n\nIdentity theft — using your personal information to pretend to be you.\n\nPhishing — tricking you into handing over private details, often through a fake message or a fake website that looks real.\n\nAccount takeover — breaking into an account such as your email, then locking you out of it.\n\nThis is why the transmission of data must be protected. Keeping data secure is not about being fearful — it is about being sensible and respectful, guarding your own information and other people's too. Looking after information you have been trusted with is a mark of honesty and respect, and the private data of your family and friends is exactly that kind of trust.\n\nFor example: About 333 billion emails are sent every day — roughly 47 for every person on Earth. But be careful: more than 85% of all emails sent are spam (junk mail) or phishing attempts trying to trick people. The more active you are online, the more junk and tricks may arrive in your inbox, so a careful eye is a valuable skill."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Encryption: scrambling a message",
+      "prompt": "Explain in your own words: Encryption: scrambling a message.",
+      "solution": "The strongest way to protect data while it travels is encryption. Encryption means scrambling a message so that only the people who are meant to read it can understand it. To everyone else, it looks like meaningless nonsense. The original, readable message is called the plaintext. The scrambled version is called the ciphertext. A secret rule called a key turns one into the other. If you have the key, you can unscramble the message; if you do not, you are stuck.\n\nOne of the oldest and simplest ways to encrypt is a Caesar cipher, named after the Roman leader Julius Caesar, who used a similar trick so that enemies could not read his military plans. The idea is to shift every letter along the alphabet by the same number of places. That number is the key. Let us use a shift of 3. This means A becomes D, B becomes E, C becomes F, and so on. When you reach the end of the alphabet you wrap around: X becomes A, Y becomes B, Z becomes C. Here is the full key written out:\n\nCaesar cipher key — a shift of 3\n\nPLAIN : A B C D E F G H I J K L M N O P Q R S T U V W X Y Z\n\nCIPHER: D E F G H I J K L M N O P Q R S T U V W X Y Z A B C\n\n(shift of 3: each letter moves 3 places forward)\n\nTo encode (scramble) a message, you find each plaintext letter in the top row and write down the letter beneath it. Let us encode the word HELLO. H becomes K, E becomes H, L becomes O, L becomes O, and O becomes R. So HELLO turns into KHOOR. Let us try a friendly greeting between our two helpers. Layla wants to send HELLO KARIM in secret. Working letter by letter with the key above:\n\nEncoding HELLO KARIM with a shift of 3\n\nPlaintext : H E L L O K A R I M\n\nCiphertext: K H O O R N D U L P\n\nSo Layla sends KHOOR NDULP. If a stranger steals those packets, they just see nonsense. To decode (unscramble) the message, Karim does the opposite: he shifts each letter back by 3. K goes back to H, H back to E, O back to L, and so on, rebuilding HELLO KARIM. Because Karim knows the key (a shift of 3) and the stranger does not, only Karim can read it. That is the whole magic of encryption: the message can travel in the open, but stays secret without the key.\n\nYour Cambridge textbook has a secret message: \"Mywzedsxq sc wi pkfyebsdo celtomd.\" It uses a bigger shift than ours. If you carefully shift every letter back, it decodes to: \"Computing is my favourite subject.\" Try it with your AI tutor and check that you get the same answer!\n\nFor example: Real websites do not use a simple Caesar cipher, because a shift is far too easy to crack — there are only 25 shifts to try. Instead, modern computers use very powerful encryption with enormous keys that would take even the fastest computer millions of years to guess. But the *idea* is exactly the same as Caesar's: scramble with a key, and only someone with the key can unscramble. Picture the secure journey as a diagram: your plaintext goes into an encryption 'box' with a key and comes out as ciphertext; the ciphertext is split into packets and travels across the world; at the other end it goes into a decryption 'box' with the matching key and comes back out as readable plaintext. Scramble, send, unscramble."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "What is a server? (a) A cable that carries data (b) A computer that provides data and services to other devices (c) A type of password (d) A radio wave",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Which of these is stored on a server? (a) Web pages (b) Emails (c) Streaming videos (d) All of these",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "What is streaming? (a) Downloading a file to keep forever (b) Playing a video or sound over the internet without storing it (c) Deleting a file (d) Printing a document",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "A private network used only inside one organisation is called: (a) the internet (b) a cellular network (c) an intranet (d) a server farm",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "Data sent wirelessly usually travels using: (a) Ethernet cables (b) radio waves (c) electricity in wires (d) paper",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p06",
+      "level": "Warm-up",
+      "prompt": "When a file is sent across a network, it is: (a) sent as one whole piece (b) split into small packets (c) printed first (d) turned into a password",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p07",
+      "level": "Warm-up",
+      "prompt": "Bandwidth is: (a) the number of servers in a farm (b) the maximum amount of data that can travel in a certain time (c) a type of malware (d) a kind of cable",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p08",
+      "level": "Warm-up",
+      "prompt": "Network overload happens when: (a) a cable is too long (b) too many devices use the network at once (c) a password is too weak (d) the wi-fi is turned off",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p09",
+      "level": "Warm-up",
+      "prompt": "Which device uses BOTH wi-fi and a cellular network? (a) A desktop PC (b) A smart lightbulb (c) A smartphone (d) A printer",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p10",
+      "level": "Warm-up",
+      "prompt": "Encryption means: (a) deleting a message (b) scrambling a message so only the right people can read it (c) sending a message faster (d) making a password",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p11",
+      "level": "Warm-up",
+      "prompt": "The readable message before encryption is called: (a) ciphertext (b) plaintext (c) a packet (d) a server",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p12",
+      "level": "Warm-up",
+      "prompt": "Which is the STRONGEST password? (a) password123 (b) Layla2015 (c) lantern-camel-river (d) 123456",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p13",
+      "level": "Warm-up",
+      "prompt": "Phishing is: (a) a way to speed up a network (b) tricking someone into giving away private data (c) a type of server (d) a strong password",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p14",
+      "level": "Warm-up",
+      "prompt": "Fingerprint recognition is secure mainly because: (a) fingerprints are easy to copy (b) everyone has the same fingerprint (c) every person's fingerprint is unique (d) it needs no scanner",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p15",
+      "level": "Warm-up",
+      "prompt": "Which of these should be kept most secure? (a) A public school website (b) Your bank details (c) A weather forecast (d) A list of football scores",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p16",
+      "level": "Core",
+      "prompt": "Name three different kinds of digital content that a server can store.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words."
+    }
+  ],
+  "activities": [
+    {
+      "title": "How to use this booklet",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "These activities go with your Unit 3 Lesson booklet. You can do many of them on your own, at your own pace. Some are 'unplugged' (no computer needed) and only need a pen and paper. Others use free, open-source tools. For every activity there are AI-tutor prompts to help you if you get stuck, and answers or worked examples where they make sense. Do your best before checking!",
+        "Activities for Subunit 3.1 — Storing and Transferring Data",
+        "You will need: a large piece of paper and some pens. A network map is a drawing that shows every device on a network and how they connect. In this activity you will map a network you know well.",
+        "Choose a network: your home, or Ehel Academy if you know it well.",
+        "In the middle of your paper, draw the server or the router — the device everything connects through.",
+        "Around it, draw every device you can think of: laptops, tablets, phones, a printer, a smart TV, smart lights, and so on."
+      ]
+    },
+    {
+      "title": "Activities for Subunit 3.1 - Storing and Transferring Data",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "You will need: a large piece of paper and some pens. A network map is a drawing that shows every device on a network and how they connect. In this activity you will map a network you know well.",
+        "Choose a network: your home, or Ehel Academy if you know it well.",
+        "In the middle of your paper, draw the server or the router — the device everything connects through.",
+        "Around it, draw every device you can think of: laptops, tablets, phones, a printer, a smart TV, smart lights, and so on.",
+        "Draw a line from each device to the router. Label each line wired (a cable) or wireless (wi-fi).",
+        "For two of the devices, write one sentence explaining why it connects to the network and what service it uses (for example: \"The tablet connects to stream lesson videos from a server\")."
+      ]
+    },
+    {
+      "title": "Ask Your AI Tutor",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "— \"Here is a list of devices in my home. Help me sort them into wired and wireless.\"",
+        "— \"What is the difference between a router and a server? Which one should be in the middle of my map?\"",
+        "You will need: a pen and paper. With a family member, list as many digital devices in your home as you can. For each device, answer three questions and record your answers in a simple table.",
+        "Can it transfer data using a network cable (wired)?",
+        "Can it transfer data using wi-fi?",
+        "Can it transfer data using a cellular network (mobile data)?"
+      ]
+    },
+    {
+      "title": "Here is a worked example to show the idea:",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Example device audit — yours will be different",
+        "Device",
+        "Cable?",
+        "Wi-fi?",
+        "Cellular?",
+        "----------------+--------+--------+----------",
+        "Smartphone",
+        "No",
+        "Yes",
+        "Yes",
+        "Laptop",
+        "Yes",
+        "Yes",
+        "No",
+        "Smart TV",
+        "Yes",
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "title": "Example device audit - yours will be different",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Device | Cable? | Wi-fi? | Cellular?",
+        "----------------+--------+--------+----------",
+        "Smartphone | No | Yes | Yes",
+        "Laptop | Yes | Yes | No",
+        "Smart TV | Yes | Yes | No",
+        "Games console | Yes | Yes | No"
+      ]
+    },
+    {
+      "title": "Smartphone | No | Yes | Yes",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Laptop",
+        "Yes",
+        "Yes",
+        "No",
+        "Smart TV",
+        "Yes",
+        "Yes",
+        "No",
+        "Games console",
+        "Yes",
+        "Yes",
+        "No",
+        "Smart lightbulb",
+        "No",
+        "Yes",
+        "No",
+        "Then discuss: which of your devices could connect in the most different ways? Which could only connect one way? A phone is special because it can use both wi-fi at home and a cellular network when you are out.",
+        "Activity 3.1c — Speed test investigation"
+      ]
+    },
+    {
+      "title": "Laptop | Yes | Yes | No",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Smart TV",
+        "Yes",
+        "Yes",
+        "No",
+        "Games console",
+        "Yes",
+        "Yes",
+        "No",
+        "Smart lightbulb",
+        "No",
+        "Yes",
+        "No",
+        "Then discuss: which of your devices could connect in the most different ways? Which could only connect one way? A phone is special because it can use both wi-fi at home and a cellular network when you are out.",
+        "Activity 3.1c — Speed test investigation",
+        "You will need: a device with internet access and a free speed-test website (good open options include fast.com or LibreSpeed, a free and open-source speed test). A speed test measures your current bandwidth. Ask your teacher or a trusted adult to help you open the website."
+      ]
+    },
+    {
+      "title": "Smart TV | Yes | Yes | No",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Games console",
+        "Yes",
+        "Yes",
+        "No",
+        "Smart lightbulb",
+        "No",
+        "Yes",
+        "No",
+        "Then discuss: which of your devices could connect in the most different ways? Which could only connect one way? A phone is special because it can use both wi-fi at home and a cellular network when you are out.",
+        "Activity 3.1c — Speed test investigation",
+        "You will need: a device with internet access and a free speed-test website (good open options include fast.com or LibreSpeed, a free and open-source speed test). A speed test measures your current bandwidth. Ask your teacher or a trusted adult to help you open the website.",
+        "Run the speed test once and write down the result (it will usually be shown in Mbps — megabits per second)."
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "Misconception: \"My message travels to my friend in one straight line, all in one piece.\"",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Misconception: “My message travels to my friend in one straight line, all in one piece.” Truth: The message is split into many packets. They can each take a different path across the world and arrive out of order. The receiving device sorts them back into the correct order using the numbers on each packet. 6. Bandwidth: why some networks feel fast and others feel slow Bandwidth is the maximum amount of data that can travel between two points in a network in a certain amount of time. It is usually measured in bits per second. The bigger your bandwidth, the more data can flow at once, and the quicker everything feels. The smaller your bandwidth, the longer it takes for a file to download or a video to load. Bandwidth does not change how far the data goes — it changes how *much* can go at a time. A good way to picture bandwidth is a drinking straw. Imagine drinking mango juice through a very thin straw — you can only sip a little at a time, so it takes ages to finish the glass. Now swap it for a wide, fat straw: the same juice rushes up and you finish in seconds. The juice is your data, and the width of the straw is your bandwidth. A wide 'straw' lets a lot of data through quickly; a narrow one makes you wait. But bandwidth is not the only thing that matters. The number of devices using the network at the same time also changes the speed. Your home has a limited amount of bandwidth that must be shared among every active device. So even if your bandwidth is large, everything can still slow down when lots of people are streaming or downloading at once. That is often why your video pauses to load in the evening, when the whole family is online together."
+    },
+    {
+      "symptom": "Misconception: \"Encryption hides the message so nobody can see it is being sent.\"",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Misconception: “Encryption hides the message so nobody can see it is being sent.” Truth: Encryption does not hide that a message exists — a thief can still grab the packets. What encryption does is scramble the contents so the packets are useless nonsense without the secret key. 10. User authentication: proving it is really you Encryption protects data while it travels. But we also need to protect data where it is stored, by making sure only the right person can open an account. The way we do this is called user authentication, which simply means checking that a user really is who they say they are. There are several ways to authenticate a user, and good systems often use more than one. 10a. Usernames and passwords The most common method is a username and a password. A username is the unique name that identifies you on a system. A password is a secret string of letters, numbers and characters that you set — like a private code that proves the username really belongs to you. Because someone needs *both* to get in, the two together are much stronger than either alone. If someone can guess your password, they can hack your account, which means getting into something they are not allowed to use."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Malware can steal your bandwidth",
+      "text": "Sometimes a device is infected by malware — software designed to disrupt or harm a computer. Hidden malware can quietly use up a lot of your bandwidth without you realising, making everything slow. It is a good habit to run antivirus software regularly to find and remove malware, and to keep that antivirus software up to date. If your network suddenly becomes very slow for no clear reason, malware is one thing worth checking for."
+    },
+    {
+      "title": "Password golden rules — Never share your password with anyone — not even your best friend, and not even if they promise to keep it secret. — Never use the same password for lots of different accounts. If one is guessed, all of them are open. — Never type a real password into a website just to 'test how strong it is'. — When you talk about passwords in class, never say your real ones out loud. 10b. Fingerprints Many devices can be unlocked with a fingerprint using a fingerprint scanner. When you place your finger on the scanner, the software looks at the unique pattern of ridges on your fingertip and compares it with the fingerprint already stored in the device. If the scanned pattern matches the stored one, the device unlocks. If it does not match, the device stays locked. Fingerprints are an excellent method because every person's fingerprint is unique — no two people share the same one, not even identical twins. That makes this kind of authentication very hard to hack, because a thief cannot easily copy your finger.",
+      "text": "- Never share your password with anyone - not even your best friend, and not even if they promise to keep it secret. - Never use the same password for lots of different accounts. If one is guessed, all of them are open. - Never type a real password into a website just to 'test how strong it is'. - When you talk about passwords in class, never say your real ones out loud. 10b. Fingerprints Many devices can be unlocked with a fingerprint using a fingerprint scanner. When you place your finger on the scanner, the software looks at the unique pattern of ridges on your fingertip and compares it with the fingerprint already stored in the device. If the scanned pattern matches the stored one, the device unlocks. If it does not match, the device stays locked. Fingerprints are an excellent method because every person's fingerprint is unique - no two people share the same one, not even identical twins. That makes this kind of authentication very hard to hack, because a thief cannot easily copy your finger."
+    },
+    {
+      "title": "Spot a phishing trick",
+      "text": "Warning signs that a message might be phishing: — It creates panic or urgency, pushing you to act fast. — It asks for your password, PIN, or bank details. — The sender's address looks odd or slightly misspelled. — There is a link that does not match the real company's website. — It promises something too good to be true, like a free phone."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "! — Packets",
+        "text": "A file does not travel whole. It is split into packets, each with address labels and an order number. They may take different routes and are reassembled in order at the destination."
+      },
+      {
+        "title": "! — Bandwidth and overload",
+        "text": "Bandwidth is the most data that can travel in a set time, and it is shared between all active devices. Too many busy devices at once cause network overload, and everything slows down."
+      },
+      {
+        "title": "! — Encryption",
+        "text": "Plaintext plus a key becomes ciphertext. Without the key, stolen packets are just nonsense. Scramble, send, unscramble."
+      },
+      {
+        "title": "! — Strong passwords",
+        "text": "The best passwords use three random words and no personal information. Never reuse a password, and never share it with anyone."
+      },
+      {
+        "title": "! — Authentication",
+        "text": "Authentication proves you are really you. The main methods are usernames and passwords, fingerprints, and facial recognition. Good systems often use more than one."
+      }
+    ],
+    "terms": [
+      [
+        "server",
+        "A computer that provides services such as storage and programs to other computers in a network."
+      ],
+      [
+        "server farm",
+        "A large group of connected servers working together in one place."
+      ],
+      [
+        "intranet",
+        "A private network inside one organisation, only for its members — like a school's own network."
+      ],
+      [
+        "streaming",
+        "Playing a video or sound file over an internet connection instead of downloading it first."
+      ],
+      [
+        "wireless",
+        "Sending data without wires or cables, using radio waves instead."
+      ],
+      [
+        "radio waves",
+        "A type of energy used to carry data through the air over long distances."
+      ],
+      [
+        "wi-fi",
+        "A way to connect devices to the internet using radio waves instead of wires, through a router."
+      ],
+      [
+        "cellular network",
+        "A huge network of communication towers that mobile phones connect to."
+      ],
+      [
+        "GPS",
+        "Global Positioning System — satellites that help a device work out where it is on Earth."
+      ],
+      [
+        "packet",
+        "A small parcel of data — part of a file that travels through a network."
+      ],
+      [
+        "bandwidth",
+        "The maximum amount of data that can travel across a network in a certain time."
+      ],
+      [
+        "network overload",
+        "When too many devices try to use a network at once and everything slows down."
+      ],
+      [
+        "malware",
+        "Software designed to disrupt or harm a computer system."
+      ],
+      [
+        "antivirus software",
+        "Software that finds, removes and prevents malware."
+      ],
+      [
+        "secure",
+        "Safe and protected, so only people with permission can access the data."
+      ],
+      [
+        "transmission",
+        "The process of sending files or data between devices."
+      ],
+      [
+        "encryption",
+        "Scrambling a message so that only the people meant to read it can understand it."
+      ],
+      [
+        "authentication",
+        "Checking that a user really is who they say they are."
+      ],
+      [
+        "username",
+        "A unique name that identifies who a user is when they log in."
+      ],
+      [
+        "password",
+        "A secret combination of letters, numbers and symbols used to prove an account is yours."
+      ],
+      [
+        "hack",
+        "To gain access to a digital system that you are not allowed to use."
+      ],
+      [
+        "phishing",
+        "Tricking someone into giving away private data, often through a fake message or website."
+      ],
+      [
+        "spam",
+        "Junk messages or emails that the account holder never asked for."
+      ],
+      [
+        "facial recognition",
+        "A system that checks a person's face against a stored image to identify them."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "server",
+        "meaning": "A computer that provides services such as storage and programs to other computers in a network.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "server farm",
+        "meaning": "A large group of connected servers working together in one place.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "intranet",
+        "meaning": "A private network inside one organisation, only for its members — like a school's own network.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "streaming",
+        "meaning": "Playing a video or sound file over an internet connection instead of downloading it first.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "wireless",
+        "meaning": "Sending data without wires or cables, using radio waves instead.",
+        "example": "",
+        "letter": "W"
+      },
+      {
+        "term": "radio waves",
+        "meaning": "A type of energy used to carry data through the air over long distances.",
+        "example": "",
+        "letter": "R"
+      },
+      {
+        "term": "wi-fi",
+        "meaning": "A way to connect devices to the internet using radio waves instead of wires, through a router.",
+        "example": "",
+        "letter": "W"
+      },
+      {
+        "term": "cellular network",
+        "meaning": "A huge network of communication towers that mobile phones connect to.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "GPS",
+        "meaning": "Global Positioning System — satellites that help a device work out where it is on Earth.",
+        "example": "",
+        "letter": "G"
+      },
+      {
+        "term": "packet",
+        "meaning": "A small parcel of data — part of a file that travels through a network.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "bandwidth",
+        "meaning": "The maximum amount of data that can travel across a network in a certain time.",
+        "example": "",
+        "letter": "B"
+      },
+      {
+        "term": "network overload",
+        "meaning": "When too many devices try to use a network at once and everything slows down.",
+        "example": "",
+        "letter": "N"
+      },
+      {
+        "term": "malware",
+        "meaning": "Software designed to disrupt or harm a computer system.",
+        "example": "",
+        "letter": "M"
+      },
+      {
+        "term": "antivirus software",
+        "meaning": "Software that finds, removes and prevents malware.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "secure",
+        "meaning": "Safe and protected, so only people with permission can access the data.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "transmission",
+        "meaning": "The process of sending files or data between devices.",
+        "example": "",
+        "letter": "T"
+      },
+      {
+        "term": "encryption",
+        "meaning": "Scrambling a message so that only the people meant to read it can understand it.",
+        "example": "",
+        "letter": "E"
+      },
+      {
+        "term": "authentication",
+        "meaning": "Checking that a user really is who they say they are.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "username",
+        "meaning": "A unique name that identifies who a user is when they log in.",
+        "example": "",
+        "letter": "U"
+      },
+      {
+        "term": "password",
+        "meaning": "A secret combination of letters, numbers and symbols used to prove an account is yours.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "hack",
+        "meaning": "To gain access to a digital system that you are not allowed to use.",
+        "example": "",
+        "letter": "H"
+      },
+      {
+        "term": "phishing",
+        "meaning": "Tricking someone into giving away private data, often through a fake message or website.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "spam",
+        "meaning": "Junk messages or emails that the account holder never asked for.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "facial recognition",
+        "meaning": "A system that checks a person's face against a stored image to identify them.",
+        "example": "",
+        "letter": "F"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "Misconception: \"My message travels to my friend in one straight line, all in one piece.\"",
+        "Misconception: “My message travels to my friend in one straight line, all in one piece.” Truth: The message is split into many packets. They can each take a different path across the world and arrive out of order. The receiving device sorts them back into the correct order using the numbers on each packet. 6. Bandwidth: why some networks feel fast and others feel slow Bandwidth is the maximum amount of data that can travel between two points in a network in a certain amount of time. It is usually measured in bits per second. The bigger your bandwidth, the more data can flow at once, and the quicker everything feels. The smaller your bandwidth, the longer it takes for a file to download or a video to load. Bandwidth does not change how far the data goes — it changes how *much* can go at a time. A good way to picture bandwidth is a drinking straw. Imagine drinking mango juice through a very thin straw — you can only sip a little at a time, so it takes ages to finish the glass. Now swap it for a wide, fat straw: the same juice rushes up and you finish in seconds. The juice is your data, and the width of the straw is your bandwidth. A wide 'straw' lets a lot of data through quickly; a narrow one makes you wait. But bandwidth is not the only thing that matters. The number of devices using the network at the same time also changes the speed. Your home has a limited amount of bandwidth that must be shared among every active device. So even if your bandwidth is large, everything can still slow down when lots of people are streaming or downloading at once. That is often why your video pauses to load in the evening, when the whole family is online together."
+      ],
+      [
+        "Misconception: \"Encryption hides the message so nobody can see it is being sent.\"",
+        "Misconception: “Encryption hides the message so nobody can see it is being sent.” Truth: Encryption does not hide that a message exists — a thief can still grab the packets. What encryption does is scramble the contents so the packets are useless nonsense without the secret key. 10. User authentication: proving it is really you Encryption protects data while it travels. But we also need to protect data where it is stored, by making sure only the right person can open an account. The way we do this is called user authentication, which simply means checking that a user really is who they say they are. There are several ways to authenticate a user, and good systems often use more than one. 10a. Usernames and passwords The most common method is a username and a password. A username is the unique name that identifies you on a system. A password is a secret string of letters, numbers and characters that you set — like a private code that proves the username really belongs to you. Because someone needs *both* to get in, the two together are much stronger than either alone. If someone can guess your password, they can hack your account, which means getting into something they are not allowed to use."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "What is a server? (a) A cable that carries data (b) A computer that provides data and services to other devices (c) A type of password (d) A radio wave",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Which of these is stored on a server? (a) Web pages (b) Emails (c) Streaming videos (d) All of these",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "What is streaming? (a) Downloading a file to keep forever (b) Playing a video or sound over the internet without storing it (c) Deleting a file (d) Printing a document",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "A private network used only inside one organisation is called: (a) the internet (b) a cellular network (c) an intranet (d) a server farm",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Data sent wirelessly usually travels using: (a) Ethernet cables (b) radio waves (c) electricity in wires (d) paper",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "When a file is sent across a network, it is: (a) sent as one whole piece (b) split into small packets (c) printed first (d) turned into a password",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "Bandwidth is: (a) the number of servers in a farm (b) the maximum amount of data that can travel in a certain time (c) a type of malware (d) a kind of cable",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "Network overload happens when: (a) a cable is too long (b) too many devices use the network at once (c) a password is too weak (d) the wi-fi is turned off",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "Which device uses BOTH wi-fi and a cellular network? (a) A desktop PC (b) A smart lightbulb (c) A smartphone (d) A printer",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "Encryption means: (a) deleting a message (b) scrambling a message so only the right people can read it (c) sending a message faster (d) making a password",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "The readable message before encryption is called: (a) ciphertext (b) plaintext (c) a packet (d) a server",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "Which is the STRONGEST password? (a) password123 (b) Layla2015 (c) lantern-camel-river (d) 123456",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what server and server farm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Overload: One evening, the internet at Layla's house is very slow. Her brother is streaming football, her sister is on a video call, and their dad is downloading a big file, all at once. Explain what is happening and suggest one fix.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — server, server farm, intranet — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "Phishing: Karim gets a message saying: \"Your account will be closed today! Click here and type your password to keep it.\" What should Karim do, and why?",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — server, server farm, intranet — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Weak password: Yasmin wants to use Yasmin2016 as her password (she was born in 2016). Explain why this is weak and suggest a stronger password.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — server, server farm, intranet — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "Securing a message: Sami wants to send a private message so that, even if the packets are stolen, no thief can read it. What should he use, and how does it keep the message safe?",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — server, server farm, intranet — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Travel",
+      "prompt": "Use a Caesar cipher with a shift of 3. Keep this key beside you:",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — server, server farm, intranet — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "context": "Health",
+      "prompt": "PLAIN : A B C D E F G H I J K L M N O P Q R S T U V W X Y Z",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — server, server farm, intranet — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Name three different kinds of digital content that a server can store.",
+      "keyIdeas": [
+        "server",
+        "server farm",
+        "intranet"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the difference between a wired and a wireless connection.",
+      "keyIdeas": [
+        "server farm",
+        "intranet",
+        "streaming"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "What is a packet, and why is a file split into packets before it is sent?",
+      "keyIdeas": [
+        "intranet",
+        "streaming",
+        "wireless"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Explain what bandwidth is, using an everyday comparison.",
+      "keyIdeas": [
+        "streaming",
+        "wireless",
+        "radio waves"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Describe one thing you could do to prevent network overload at home.",
+      "keyIdeas": [
+        "wireless",
+        "radio waves",
+        "wi-fi"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Why does data need to be kept secure when it is sent to another person?",
+      "keyIdeas": [
+        "radio waves",
+        "wi-fi",
+        "cellular network"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "project": {
+    "title": "Plan a Secure Network for the School Shop",
+    "brief": "This project brings together everything from Unit 3. Ehel Academy is opening a school shop in town so parents and carers can buy uniforms and equipment. Ms Amal has given you the requirements:",
+    "steps": [
+      "The shop manager needs a laptop that connects to the internet wirelessly. It will hold sales information that must be kept secure, because the manager will sometimes step away from it. It must also let the manager message the school quickly with any questions.",
+      "The shop needs tablets so parents can create online accounts and buy items. Parents will enter personal details and may want to carry the tablets around the shop.",
+      "Parents can also log in to existing accounts using their own devices.",
+      "Your task is to write a report explaining how to set up the shop's network. Work through these steps:",
+      "Devices and connections. List the devices the shop needs. For each, say whether it will connect wired or wirelessly, and why. (Hint: tablets carried around the shop must be wireless.)",
+      "Bandwidth. Explain what bandwidth is. Decide whether the shop will need more bandwidth when it is busy with parents, and explain what could happen if there is not enough (network overload).",
+      "Keeping data secure. Explain how the families' personal and payment data can be protected. Describe encryption for data as it travels, and choose suitable user authentication (strong passwords, fingerprint, facial recognition) for the manager's laptop and the parents' accounts.",
+      "Online safety. Add one short paragraph of advice about phishing and strong passwords for the shop staff."
+    ],
+    "successCriteria": [
+      "My project shows that I understand streaming, messaging and the school intranet.",
+      "My project shows that I understand wi.",
+      "My project shows that I understand packets: how a file makes the journey.",
+      "My project shows that I understand bandwidth: why some networks feel fast and others feel slow.",
+      "My project shows that I understand network overload."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “server” mean in computing?",
+        "options": [
+          "A computer that provides services such as storage and programs to other computers in a network.",
+          "A large group of connected servers working together in one place.",
+          "A private network inside one organisation, only for its members — like a school's own network.",
+          "Playing a video or sound file over an internet connection instead of downloading it first."
+        ],
+        "answer": "A computer that provides services such as storage and programs to other computers in a network.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Server means a computer that provides services such as storage and programs to other computers in a network."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “server farm” mean in computing?",
+        "options": [
+          "A large group of connected servers working together in one place.",
+          "A private network inside one organisation, only for its members — like a school's own network.",
+          "Playing a video or sound file over an internet connection instead of downloading it first.",
+          "Sending data without wires or cables, using radio waves instead."
+        ],
+        "answer": "A large group of connected servers working together in one place.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Server farm means a large group of connected servers working together in one place."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “intranet” mean in computing?",
+        "options": [
+          "A private network inside one organisation, only for its members — like a school's own network.",
+          "Playing a video or sound file over an internet connection instead of downloading it first.",
+          "Sending data without wires or cables, using radio waves instead.",
+          "A type of energy used to carry data through the air over long distances."
+        ],
+        "answer": "A private network inside one organisation, only for its members — like a school's own network.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Intranet means a private network inside one organisation, only for its members — like a school's own network."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “streaming” mean in computing?",
+        "options": [
+          "Playing a video or sound file over an internet connection instead of downloading it first.",
+          "Sending data without wires or cables, using radio waves instead.",
+          "A type of energy used to carry data through the air over long distances.",
+          "A way to connect devices to the internet using radio waves instead of wires, through a router."
+        ],
+        "answer": "Playing a video or sound file over an internet connection instead of downloading it first.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Streaming means playing a video or sound file over an internet connection instead of downloading it first."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “wireless” mean in computing?",
+        "options": [
+          "Sending data without wires or cables, using radio waves instead.",
+          "A type of energy used to carry data through the air over long distances.",
+          "A way to connect devices to the internet using radio waves instead of wires, through a router.",
+          "A huge network of communication towers that mobile phones connect to."
+        ],
+        "answer": "Sending data without wires or cables, using radio waves instead.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Wireless means sending data without wires or cables, using radio waves instead."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “radio waves” mean in computing?",
+        "options": [
+          "A type of energy used to carry data through the air over long distances.",
+          "A way to connect devices to the internet using radio waves instead of wires, through a router.",
+          "A huge network of communication towers that mobile phones connect to.",
+          "Global Positioning System — satellites that help a device work out where it is on Earth."
+        ],
+        "answer": "A type of energy used to carry data through the air over long distances.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Radio waves means a type of energy used to carry data through the air over long distances."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A way to connect devices to the internet using radio waves instead of wires, through a router.?",
+        "options": [
+          "wi-fi",
+          "cellular network",
+          "GPS",
+          "packet"
+        ],
+        "answer": "wi-fi",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Wi-fi means a way to connect devices to the internet using radio waves instead of wires, through a router."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A huge network of communication towers that mobile phones connect to.?",
+        "options": [
+          "cellular network",
+          "GPS",
+          "packet",
+          "bandwidth"
+        ],
+        "answer": "cellular network",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Cellular network means a huge network of communication towers that mobile phones connect to."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo09",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Global Positioning System — satellites that help a device work out where it is on Earth.?",
+        "options": [
+          "GPS",
+          "packet",
+          "bandwidth",
+          "network overload"
+        ],
+        "answer": "GPS",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "GPS means global Positioning System — satellites that help a device work out where it is on Earth."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A small parcel of data — part of a file that travels through a network.?",
+        "options": [
+          "packet",
+          "bandwidth",
+          "network overload",
+          "malware"
+        ],
+        "answer": "packet",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Packet means a small parcel of data — part of a file that travels through a network."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The maximum amount of data that can travel across a network in a certain time.?",
+        "options": [
+          "bandwidth",
+          "network overload",
+          "malware",
+          "antivirus software"
+        ],
+        "answer": "bandwidth",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Bandwidth means the maximum amount of data that can travel across a network in a certain time."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: When too many devices try to use a network at once and everything slows down.?",
+        "options": [
+          "network overload",
+          "malware",
+          "antivirus software",
+          "secure"
+        ],
+        "answer": "network overload",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Network overload means when too many devices try to use a network at once and everything slows down."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u3-game-1",
+        "icon": "?",
+        "skill": "server",
+        "title": "Quick Match: server",
+        "description": "Practise server through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “server” mean in computing?",
+            "choices": [
+              "A computer that provides services such as storage and programs to other computers in a network.",
+              "A large group of connected servers working together in one place.",
+              "A private network inside one organisation, only for its members — like a school's own network.",
+              "Playing a video or sound file over an internet connection instead of downloading it first."
+            ],
+            "answer": "A computer that provides services such as storage and programs to other computers in a network.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Server means a computer that provides services such as storage and programs to other computers in a network."
+          },
+          {
+            "prompt": "What does “streaming” mean in computing?",
+            "choices": [
+              "Playing a video or sound file over an internet connection instead of downloading it first.",
+              "Sending data without wires or cables, using radio waves instead.",
+              "A type of energy used to carry data through the air over long distances.",
+              "A way to connect devices to the internet using radio waves instead of wires, through a router."
+            ],
+            "answer": "Playing a video or sound file over an internet connection instead of downloading it first.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Streaming means playing a video or sound file over an internet connection instead of downloading it first."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A way to connect devices to the internet using radio waves instead of wires, through a router.?",
+            "choices": [
+              "wi-fi",
+              "cellular network",
+              "GPS",
+              "packet"
+            ],
+            "answer": "wi-fi",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Wi-fi means a way to connect devices to the internet using radio waves instead of wires, through a router."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A small parcel of data — part of a file that travels through a network.?",
+            "choices": [
+              "packet",
+              "bandwidth",
+              "network overload",
+              "malware"
+            ],
+            "answer": "packet",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Packet means a small parcel of data — part of a file that travels through a network."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-2",
+        "icon": "★",
+        "skill": "server farm",
+        "title": "Concept Quest: server farm",
+        "description": "Practise server farm through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “server farm” mean in computing?",
+            "choices": [
+              "A large group of connected servers working together in one place.",
+              "A private network inside one organisation, only for its members — like a school's own network.",
+              "Playing a video or sound file over an internet connection instead of downloading it first.",
+              "Sending data without wires or cables, using radio waves instead."
+            ],
+            "answer": "A large group of connected servers working together in one place.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Server farm means a large group of connected servers working together in one place."
+          },
+          {
+            "prompt": "What does “wireless” mean in computing?",
+            "choices": [
+              "Sending data without wires or cables, using radio waves instead.",
+              "A type of energy used to carry data through the air over long distances.",
+              "A way to connect devices to the internet using radio waves instead of wires, through a router.",
+              "A huge network of communication towers that mobile phones connect to."
+            ],
+            "answer": "Sending data without wires or cables, using radio waves instead.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Wireless means sending data without wires or cables, using radio waves instead."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A huge network of communication towers that mobile phones connect to.?",
+            "choices": [
+              "cellular network",
+              "GPS",
+              "packet",
+              "bandwidth"
+            ],
+            "answer": "cellular network",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Cellular network means a huge network of communication towers that mobile phones connect to."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The maximum amount of data that can travel across a network in a certain time.?",
+            "choices": [
+              "bandwidth",
+              "network overload",
+              "malware",
+              "antivirus software"
+            ],
+            "answer": "bandwidth",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Bandwidth means the maximum amount of data that can travel across a network in a certain time."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-3",
+        "icon": "◫",
+        "skill": "intranet",
+        "title": "Debug Detective: intranet",
+        "description": "Practise intranet through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “intranet” mean in computing?",
+            "choices": [
+              "A private network inside one organisation, only for its members — like a school's own network.",
+              "Playing a video or sound file over an internet connection instead of downloading it first.",
+              "Sending data without wires or cables, using radio waves instead.",
+              "A type of energy used to carry data through the air over long distances."
+            ],
+            "answer": "A private network inside one organisation, only for its members — like a school's own network.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Intranet means a private network inside one organisation, only for its members — like a school's own network."
+          },
+          {
+            "prompt": "What does “radio waves” mean in computing?",
+            "choices": [
+              "A type of energy used to carry data through the air over long distances.",
+              "A way to connect devices to the internet using radio waves instead of wires, through a router.",
+              "A huge network of communication towers that mobile phones connect to.",
+              "Global Positioning System — satellites that help a device work out where it is on Earth."
+            ],
+            "answer": "A type of energy used to carry data through the air over long distances.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Radio waves means a type of energy used to carry data through the air over long distances."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Global Positioning System — satellites that help a device work out where it is on Earth.?",
+            "choices": [
+              "GPS",
+              "packet",
+              "bandwidth",
+              "network overload"
+            ],
+            "answer": "GPS",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "GPS means global Positioning System — satellites that help a device work out where it is on Earth."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: When too many devices try to use a network at once and everything slows down.?",
+            "choices": [
+              "network overload",
+              "malware",
+              "antivirus software",
+              "secure"
+            ],
+            "answer": "network overload",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Network overload means when too many devices try to use a network at once and everything slows down."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-4",
+        "icon": "→",
+        "skill": "streaming",
+        "title": "Algorithm Runner: streaming",
+        "description": "Practise streaming through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “streaming” mean in computing?",
+            "choices": [
+              "Playing a video or sound file over an internet connection instead of downloading it first.",
+              "Sending data without wires or cables, using radio waves instead.",
+              "A type of energy used to carry data through the air over long distances.",
+              "A way to connect devices to the internet using radio waves instead of wires, through a router."
+            ],
+            "answer": "Playing a video or sound file over an internet connection instead of downloading it first.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Streaming means playing a video or sound file over an internet connection instead of downloading it first."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A way to connect devices to the internet using radio waves instead of wires, through a router.?",
+            "choices": [
+              "wi-fi",
+              "cellular network",
+              "GPS",
+              "packet"
+            ],
+            "answer": "wi-fi",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Wi-fi means a way to connect devices to the internet using radio waves instead of wires, through a router."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A small parcel of data — part of a file that travels through a network.?",
+            "choices": [
+              "packet",
+              "bandwidth",
+              "network overload",
+              "malware"
+            ],
+            "answer": "packet",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Packet means a small parcel of data — part of a file that travels through a network."
+          },
+          {
+            "prompt": "What does “server” mean in computing?",
+            "choices": [
+              "A computer that provides services such as storage and programs to other computers in a network.",
+              "A large group of connected servers working together in one place.",
+              "A private network inside one organisation, only for its members — like a school's own network.",
+              "Playing a video or sound file over an internet connection instead of downloading it first."
+            ],
+            "answer": "A computer that provides services such as storage and programs to other computers in a network.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Server means a computer that provides services such as storage and programs to other computers in a network."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-5",
+        "icon": "Σ",
+        "skill": "wireless",
+        "title": "Vocabulary Vault: wireless",
+        "description": "Practise wireless through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “wireless” mean in computing?",
+            "choices": [
+              "Sending data without wires or cables, using radio waves instead.",
+              "A type of energy used to carry data through the air over long distances.",
+              "A way to connect devices to the internet using radio waves instead of wires, through a router.",
+              "A huge network of communication towers that mobile phones connect to."
+            ],
+            "answer": "Sending data without wires or cables, using radio waves instead.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Wireless means sending data without wires or cables, using radio waves instead."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A huge network of communication towers that mobile phones connect to.?",
+            "choices": [
+              "cellular network",
+              "GPS",
+              "packet",
+              "bandwidth"
+            ],
+            "answer": "cellular network",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Cellular network means a huge network of communication towers that mobile phones connect to."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The maximum amount of data that can travel across a network in a certain time.?",
+            "choices": [
+              "bandwidth",
+              "network overload",
+              "malware",
+              "antivirus software"
+            ],
+            "answer": "bandwidth",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Bandwidth means the maximum amount of data that can travel across a network in a certain time."
+          },
+          {
+            "prompt": "What does “server farm” mean in computing?",
+            "choices": [
+              "A large group of connected servers working together in one place.",
+              "A private network inside one organisation, only for its members — like a school's own network.",
+              "Playing a video or sound file over an internet connection instead of downloading it first.",
+              "Sending data without wires or cables, using radio waves instead."
+            ],
+            "answer": "A large group of connected servers working together in one place.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Server farm means a large group of connected servers working together in one place."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-6",
+        "icon": "◇",
+        "skill": "radio waves",
+        "title": "Challenge Cards: radio waves",
+        "description": "Practise radio waves through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “radio waves” mean in computing?",
+            "choices": [
+              "A type of energy used to carry data through the air over long distances.",
+              "A way to connect devices to the internet using radio waves instead of wires, through a router.",
+              "A huge network of communication towers that mobile phones connect to.",
+              "Global Positioning System — satellites that help a device work out where it is on Earth."
+            ],
+            "answer": "A type of energy used to carry data through the air over long distances.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Radio waves means a type of energy used to carry data through the air over long distances."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Global Positioning System — satellites that help a device work out where it is on Earth.?",
+            "choices": [
+              "GPS",
+              "packet",
+              "bandwidth",
+              "network overload"
+            ],
+            "answer": "GPS",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "GPS means global Positioning System — satellites that help a device work out where it is on Earth."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: When too many devices try to use a network at once and everything slows down.?",
+            "choices": [
+              "network overload",
+              "malware",
+              "antivirus software",
+              "secure"
+            ],
+            "answer": "network overload",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Network overload means when too many devices try to use a network at once and everything slows down."
+          },
+          {
+            "prompt": "What does “intranet” mean in computing?",
+            "choices": [
+              "A private network inside one organisation, only for its members — like a school's own network.",
+              "Playing a video or sound file over an internet connection instead of downloading it first.",
+              "Sending data without wires or cables, using radio waves instead.",
+              "A type of energy used to carry data through the air over long distances."
+            ],
+            "answer": "A private network inside one organisation, only for its members — like a school's own network.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Intranet means a private network inside one organisation, only for its members — like a school's own network."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-7",
+        "icon": "⚡",
+        "skill": "wi-fi",
+        "title": "Think Fast: wi-fi",
+        "description": "Practise wi-fi through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A way to connect devices to the internet using radio waves instead of wires, through a router.?",
+            "choices": [
+              "wi-fi",
+              "cellular network",
+              "GPS",
+              "packet"
+            ],
+            "answer": "wi-fi",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Wi-fi means a way to connect devices to the internet using radio waves instead of wires, through a router."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A small parcel of data — part of a file that travels through a network.?",
+            "choices": [
+              "packet",
+              "bandwidth",
+              "network overload",
+              "malware"
+            ],
+            "answer": "packet",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Packet means a small parcel of data — part of a file that travels through a network."
+          },
+          {
+            "prompt": "What does “server” mean in computing?",
+            "choices": [
+              "A computer that provides services such as storage and programs to other computers in a network.",
+              "A large group of connected servers working together in one place.",
+              "A private network inside one organisation, only for its members — like a school's own network.",
+              "Playing a video or sound file over an internet connection instead of downloading it first."
+            ],
+            "answer": "A computer that provides services such as storage and programs to other computers in a network.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Server means a computer that provides services such as storage and programs to other computers in a network."
+          },
+          {
+            "prompt": "What does “streaming” mean in computing?",
+            "choices": [
+              "Playing a video or sound file over an internet connection instead of downloading it first.",
+              "Sending data without wires or cables, using radio waves instead.",
+              "A type of energy used to carry data through the air over long distances.",
+              "A way to connect devices to the internet using radio waves instead of wires, through a router."
+            ],
+            "answer": "Playing a video or sound file over an internet connection instead of downloading it first.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Streaming means playing a video or sound file over an internet connection instead of downloading it first."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-8",
+        "icon": "☁",
+        "skill": "cellular network",
+        "title": "Explain It: cellular network",
+        "description": "Practise cellular network through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A huge network of communication towers that mobile phones connect to.?",
+            "choices": [
+              "cellular network",
+              "GPS",
+              "packet",
+              "bandwidth"
+            ],
+            "answer": "cellular network",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Cellular network means a huge network of communication towers that mobile phones connect to."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The maximum amount of data that can travel across a network in a certain time.?",
+            "choices": [
+              "bandwidth",
+              "network overload",
+              "malware",
+              "antivirus software"
+            ],
+            "answer": "bandwidth",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Bandwidth means the maximum amount of data that can travel across a network in a certain time."
+          },
+          {
+            "prompt": "What does “server farm” mean in computing?",
+            "choices": [
+              "A large group of connected servers working together in one place.",
+              "A private network inside one organisation, only for its members — like a school's own network.",
+              "Playing a video or sound file over an internet connection instead of downloading it first.",
+              "Sending data without wires or cables, using radio waves instead."
+            ],
+            "answer": "A large group of connected servers working together in one place.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Server farm means a large group of connected servers working together in one place."
+          },
+          {
+            "prompt": "What does “wireless” mean in computing?",
+            "choices": [
+              "Sending data without wires or cables, using radio waves instead.",
+              "A type of energy used to carry data through the air over long distances.",
+              "A way to connect devices to the internet using radio waves instead of wires, through a router.",
+              "A huge network of communication towers that mobile phones connect to."
+            ],
+            "answer": "Sending data without wires or cables, using radio waves instead.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Wireless means sending data without wires or cables, using radio waves instead."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-9",
+        "icon": "⌂",
+        "skill": "GPS",
+        "title": "Real-Life Round: GPS",
+        "description": "Practise gps through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Global Positioning System — satellites that help a device work out where it is on Earth.?",
+            "choices": [
+              "GPS",
+              "packet",
+              "bandwidth",
+              "network overload"
+            ],
+            "answer": "GPS",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "GPS means global Positioning System — satellites that help a device work out where it is on Earth."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: When too many devices try to use a network at once and everything slows down.?",
+            "choices": [
+              "network overload",
+              "malware",
+              "antivirus software",
+              "secure"
+            ],
+            "answer": "network overload",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Network overload means when too many devices try to use a network at once and everything slows down."
+          },
+          {
+            "prompt": "What does “intranet” mean in computing?",
+            "choices": [
+              "A private network inside one organisation, only for its members — like a school's own network.",
+              "Playing a video or sound file over an internet connection instead of downloading it first.",
+              "Sending data without wires or cables, using radio waves instead.",
+              "A type of energy used to carry data through the air over long distances."
+            ],
+            "answer": "A private network inside one organisation, only for its members — like a school's own network.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Intranet means a private network inside one organisation, only for its members — like a school's own network."
+          },
+          {
+            "prompt": "What does “radio waves” mean in computing?",
+            "choices": [
+              "A type of energy used to carry data through the air over long distances.",
+              "A way to connect devices to the internet using radio waves instead of wires, through a router.",
+              "A huge network of communication towers that mobile phones connect to.",
+              "Global Positioning System — satellites that help a device work out where it is on Earth."
+            ],
+            "answer": "A type of energy used to carry data through the air over long distances.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Radio waves means a type of energy used to carry data through the air over long distances."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-10",
+        "icon": "!",
+        "skill": "packet",
+        "title": "Spot the Bug: packet",
+        "description": "Practise packet through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A small parcel of data — part of a file that travels through a network.?",
+            "choices": [
+              "packet",
+              "bandwidth",
+              "network overload",
+              "malware"
+            ],
+            "answer": "packet",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Packet means a small parcel of data — part of a file that travels through a network."
+          },
+          {
+            "prompt": "What does “server” mean in computing?",
+            "choices": [
+              "A computer that provides services such as storage and programs to other computers in a network.",
+              "A large group of connected servers working together in one place.",
+              "A private network inside one organisation, only for its members — like a school's own network.",
+              "Playing a video or sound file over an internet connection instead of downloading it first."
+            ],
+            "answer": "A computer that provides services such as storage and programs to other computers in a network.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Server means a computer that provides services such as storage and programs to other computers in a network."
+          },
+          {
+            "prompt": "What does “streaming” mean in computing?",
+            "choices": [
+              "Playing a video or sound file over an internet connection instead of downloading it first.",
+              "Sending data without wires or cables, using radio waves instead.",
+              "A type of energy used to carry data through the air over long distances.",
+              "A way to connect devices to the internet using radio waves instead of wires, through a router."
+            ],
+            "answer": "Playing a video or sound file over an internet connection instead of downloading it first.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Streaming means playing a video or sound file over an internet connection instead of downloading it first."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A way to connect devices to the internet using radio waves instead of wires, through a router.?",
+            "choices": [
+              "wi-fi",
+              "cellular network",
+              "GPS",
+              "packet"
+            ],
+            "answer": "wi-fi",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Wi-fi means a way to connect devices to the internet using radio waves instead of wires, through a router."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-11",
+        "icon": "≡",
+        "skill": "bandwidth",
+        "title": "Mastery Mix: bandwidth",
+        "description": "Practise bandwidth through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The maximum amount of data that can travel across a network in a certain time.?",
+            "choices": [
+              "bandwidth",
+              "network overload",
+              "malware",
+              "antivirus software"
+            ],
+            "answer": "bandwidth",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Bandwidth means the maximum amount of data that can travel across a network in a certain time."
+          },
+          {
+            "prompt": "What does “server farm” mean in computing?",
+            "choices": [
+              "A large group of connected servers working together in one place.",
+              "A private network inside one organisation, only for its members — like a school's own network.",
+              "Playing a video or sound file over an internet connection instead of downloading it first.",
+              "Sending data without wires or cables, using radio waves instead."
+            ],
+            "answer": "A large group of connected servers working together in one place.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Server farm means a large group of connected servers working together in one place."
+          },
+          {
+            "prompt": "What does “wireless” mean in computing?",
+            "choices": [
+              "Sending data without wires or cables, using radio waves instead.",
+              "A type of energy used to carry data through the air over long distances.",
+              "A way to connect devices to the internet using radio waves instead of wires, through a router.",
+              "A huge network of communication towers that mobile phones connect to."
+            ],
+            "answer": "Sending data without wires or cables, using radio waves instead.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Wireless means sending data without wires or cables, using radio waves instead."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A huge network of communication towers that mobile phones connect to.?",
+            "choices": [
+              "cellular network",
+              "GPS",
+              "packet",
+              "bandwidth"
+            ],
+            "answer": "cellular network",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Cellular network means a huge network of communication towers that mobile phones connect to."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-12",
+        "icon": "T",
+        "skill": "network overload",
+        "title": "Unit Champion: network overload",
+        "description": "Practise network overload through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: When too many devices try to use a network at once and everything slows down.?",
+            "choices": [
+              "network overload",
+              "malware",
+              "antivirus software",
+              "secure"
+            ],
+            "answer": "network overload",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Network overload means when too many devices try to use a network at once and everything slows down."
+          },
+          {
+            "prompt": "What does “intranet” mean in computing?",
+            "choices": [
+              "A private network inside one organisation, only for its members — like a school's own network.",
+              "Playing a video or sound file over an internet connection instead of downloading it first.",
+              "Sending data without wires or cables, using radio waves instead.",
+              "A type of energy used to carry data through the air over long distances."
+            ],
+            "answer": "A private network inside one organisation, only for its members — like a school's own network.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Intranet means a private network inside one organisation, only for its members — like a school's own network."
+          },
+          {
+            "prompt": "What does “radio waves” mean in computing?",
+            "choices": [
+              "A type of energy used to carry data through the air over long distances.",
+              "A way to connect devices to the internet using radio waves instead of wires, through a router.",
+              "A huge network of communication towers that mobile phones connect to.",
+              "Global Positioning System — satellites that help a device work out where it is on Earth."
+            ],
+            "answer": "A type of energy used to carry data through the air over long distances.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Radio waves means a type of energy used to carry data through the air over long distances."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Global Positioning System — satellites that help a device work out where it is on Earth.?",
+            "choices": [
+              "GPS",
+              "packet",
+              "bandwidth",
+              "network overload"
+            ],
+            "answer": "GPS",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "GPS means global Positioning System — satellites that help a device work out where it is on Earth."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can describe the range of digital content that can be stored on a server (emails, web pages, documents, messages, and video and audio for streaming).",
+    "I can explain how data can be transferred wirelessly using wi-fi and cellular networks, and how it can also travel through wired connections.",
+    "I can explain what a packet is and describe how a file is split into packets to travel across a network.",
+    "I can explain what bandwidth is and discuss how it affects the performance of a network.",
+    "I can explain what network overload is and what causes it.",
+    "I can explain why it is important to keep data secure when it is sent to another device or person.",
+    "I can describe what stolen data can be used for, such as fraud, identity theft, phishing and account takeover.",
+    "I can explain what encryption is, and encode and decode a message using a Caesar cipher.",
+    "I can explain what user authentication is and describe different methods: usernames and passwords, fingerprints and facial recognition.",
+    "I can explain what makes a strong password, and follow good online-safety habits."
+  ]
+}

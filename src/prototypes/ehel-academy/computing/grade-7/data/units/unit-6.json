@@ -1,0 +1,2309 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:01.261Z",
+  "stage": {
+    "id": "s07",
+    "label": "Stage 7"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t03",
+    "label": "Term 3"
+  },
+  "unit": {
+    "unitId": "comp-g07-u06",
+    "unitNo": 6,
+    "unitTitle": "Sequencing and Pattern Recognition",
+    "unitOverview": "This is the sixth and final unit of Year 7, and it brings together many of the ideas you have met all year: breaking a problem into steps, writing text-based code, using inputs and outputs, and testing your work. Here you focus on two powerful computational-thinking tools that professional programmers use every single day: sequencing and pattern recognition.\n\nSequencing means putting instructions in the correct order. A computer does exactly what you tell it, in the exact order you tell it. If you swap two steps around, the result changes — sometimes in a small way, sometimes completely. When you program a light sequence, the order of your instructions is the difference between a smooth, clear animation and a confusing flicker.\n\nPattern recognition means looking for things that repeat or that are similar, and then using what you notice to solve a problem faster. When you see the same block of code appearing again and again, that is a pattern — and it tells you that a loop could do the same job in far fewer lines. When you see that MakeCode blocks and MicroPython text use similar words, that pattern helps you translate between them. Spotting patterns is what turns a slow, copy-and-paste programmer into a fast, confident one.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Lower Secondary Computing",
+    "code": "0868",
+    "stage": 7
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-7-Content-Package",
+    "framework": "Cambridge Lower Secondary Computing 0868 — Stage 7",
+    "sourceArchive": "Year 7-20260801T055809Z-1-001.zip",
+    "sourceAudience": "student",
+    "sourceDocuments": [
+      "Year 7/Unit 6/Year 7 - Unit 6 Lesson.docx",
+      "Year 7/Unit 6/Year 7 - Unit 6 Activities & Projects.docx",
+      "Year 7/Unit 6/Year 7 - Unit 6 Practice & Quiz.docx",
+      "Year 7/Unit 6/Year 7 - Unit 6 Reference.docx"
+    ],
+    "sourceBlockCount": 764,
+    "transformation": "Structured from the Cambridge Lower Secondary Computing 0868 — Stage 7 Lesson, Activities & Projects, Practice & Quiz and Reference booklets for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "In this unit you will learn to:",
+    "follow, edit and explain an algorithm using a flowchart",
+    "follow and explain the logic of AND, OR and NOT in a flowchart and in a MicroPython program",
+    "explain and use the selection statements IF, THEN and ELSE",
+    "predict the outcome of a flowchart that uses selection",
+    "create an algorithm as a flowchart using sequence and selection",
+    "explain, edit and correct an algorithm that uses sub-routines",
+    "evaluate a software prototype to help debug and improve it",
+    "explain the purpose of a project plan",
+    "evaluate the design of a micro:bit solution"
+  ],
+  "toolkit": [
+    {
+      "name": "micro:bit simulator",
+      "url": "makecode.microbit.org (blocks) or python.microbit.org (Python)",
+      "steps": [
+        "Open makecode.microbit.org for blocks, or python.microbit.org for Python.",
+        "Write your code in the editor.",
+        "The micro:bit simulator on the left runs your code straight away.",
+        "Click the on-screen A and B buttons, and use the shake control, to test your inputs."
+      ],
+      "note": "You do not need to own a real micro:bit — the simulator does everything."
+    },
+    {
+      "name": "Python",
+      "url": "python.microbit.org or any Python editor",
+      "steps": [
+        "Open the editor and start a new file.",
+        "Type your program one line at a time.",
+        "Run it and read any error message from the bottom up.",
+        "Fix one error at a time, then run it again."
+      ],
+      "note": "Python is a text language: spelling and indentation both matter."
+    },
+    {
+      "name": "A free spreadsheet",
+      "url": "Google Sheets, or LibreOffice Calc",
+      "steps": [
+        "Open a new blank spreadsheet.",
+        "Put your field names in row 1, one per column.",
+        "Type one record per row underneath.",
+        "Use Insert → Chart to turn your data into a graph."
+      ],
+      "note": "Any free spreadsheet works — the ideas are the same in all of them."
+    }
+  ],
+  "tutorPrompts": [
+    "Ask: 'Describe the traffic-light sequence used in Somalia (or my country) and what each colour means.'",
+    "Ask: 'Give me three other examples of safety light sequences and explain why the order must stay the same.'",
+    "Then explain back to your tutor, in your own words, why a wrong sequence in a program causes a wrong output.",
+    "Getting Set Up: python.microbit.org and the Simulator",
+    "You will write every program in this unit in one free website. You do not need to download or install anything, and you do not need to own a physical micro:bit. Follow these steps to get ready.",
+    "Open your web browser (Chrome, Edge, Firefox or Safari all work).",
+    "Ask: 'Explain the difference between display.clear() and showing an all-zero Image, are they the same?'",
+    "Ask: 'How could a fading light make my visual alarm easier to notice than a light that just switches on?'"
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-sequencing-order-is-everything",
+      "title": "Sequencing — Order Is Everything",
+      "explanation": "A sequence is a set of instructions carried out in a fixed order, one after another, from top to bottom. When your program runs, the micro:bit reads the first line, does it, then reads the second line, does it, and so on. It never skips ahead and never guesses what you meant. This makes the order of your lines the single most important thing about a simple program.\n\nHere is a tiny program that outputs the numbers 1, 2 and 3, with a one-second pause between each. The display.scroll() command scrolls text or numbers across the LED display, and sleep() pauses the program. Remember that time on the micro:bit is measured in milliseconds: there are 1000 milliseconds in one second, so sleep(1000) waits for one second and sleep(500) waits for half a second.\n\nfrom microbit import * display.scroll(1) sleep(1000) display.scroll(2) sleep(1000) display.scroll(3)",
+      "example": "What the simulator does: the digit 1 scrolls across the LEDs from right to left, then the device waits one second, then 2 scrolls, waits one second, then 3 scrolls. Now imagine you accidentally put the scroll(3) line first. The output would be 3, 2, 1 — the same instructions, but a completely different message, all because the sequence changed. This is a pattern you will see everywhere: same instructions, wrong order, wrong result."
+    },
+    {
+      "id": "concept-2-the-led-display-and-single-lights",
+      "title": "The LED Display and Single Lights",
+      "explanation": "The front of the micro:bit is a 5 by 5 grid of 25 red LEDs. You can think of it like a tiny piece of squared paper where each square is a light. To talk about one particular light, you give its column number (x) and its row number (y). Both start counting from 0, not 1, and the top-left light is at position (0, 0).\n\nx is the column: 0 is the far left, 4 is the far right.\n\ny is the row: 0 is the top, 4 is the bottom.\n\nSo the very centre light is at x = 2, y = 2. The bottom-right light is at x = 4, y = 4.\n\nThe command display.set_pixel(x, y, brightness) turns one light on or off. Brightness is a number from 0 (off) to 9 (fully on). This program lights up only the centre LED at full brightness:\n\nWhat the simulator does: a single light glows brightly in the exact middle of the grid; the other 24 stay dark. To light the top-left LED instead, you would change the coordinates to (0, 0): the line becomes display.set_pixel(0, 0, 9). To light the bottom-right LED, you would use display.set_pixel(4, 4, 9). Try predicting where the light will appear before you run it — that habit of predicting first is how good programmers check their own thinking.\n\nIn MicroPython each individual LED can be switched fully on with the number 9 or fully off with 0.",
+      "example": "The numbers 1 to 8 in between give dimmer levels of red light, so 4 is roughly half brightness."
+    },
+    {
+      "id": "concept-3-showing-built",
+      "title": "Showing Built",
+      "explanation": "Turning on lights one at a time works, but the micro:bit also comes with many ready-made pictures called images. You show one with display.show(). This program displays a heart:\n\nWhat the simulator does: the LEDs light up in the shape of a heart and stay on. Notice the capital letters: Image and HEART must both be capitalised exactly, or the program will not run. There are many built-in images you can use in the same way, for example:\n\nImage.HAPPY and Image.SAD — a smiling face and a frowning face\n\nImage.HEART and Image.HEART_SMALL — a big and a small heart\n\nImage.SQUARE and Image.SQUARE_SMALL — a large and a small square\n\nImage.DIAMOND, Image.DIAMOND_SMALL, Image.TRIANGLE and Image.CHESSBOARD\n\nImage.ARROW_N, Image.ARROW_E, and the other compass-direction arrows",
+      "example": "This is a good moment to notice a pattern. When you moved from block-based MakeCode to text-based MicroPython, the block that shows a heart and the line display.show(Image.HEART) both contain the same key words: show and heart. Spotting that similarity helps you translate what you already know into new code. Pattern recognition is not only about pictures — it is also about noticing that two different tools use the same ideas."
+    },
+    {
+      "id": "concept-4-building-your-own-light-patterns",
+      "title": "Building Your Own Light Patterns",
+      "explanation": "The real power comes when you design your own patterns. You do this by describing all 25 lights at once using the Image() command with a text string. Inside the quotation marks you write five groups of five digits, one group for each row, separated by colons. Each digit sets the brightness of one LED, from 0 (off) to 9 (full).\n\nThe trick — and the pattern to recognise — is that the digits are laid out in the same 5 by 5 shape as the real display. If you write the digits neatly, the string is a picture of the lights. Here is a program that lights up only the left-hand column:\n\nReading the string: each row is 90000 — the first light (far left) is 9 (on) and the other four are 0 (off). Stacked over five rows, that draws a vertical line of five lights down the left edge. What the simulator does: a bright vertical line glows down the far-left column; the rest of the grid is dark. To move that line to the middle, you shift the 9 into the middle position of each row: Image(\"00900:00900:00900:00900:00900\"). To move it to the right-hand column, put the 9 last in each row: Image(\"00009:00009:00009:00009:00009\").\n\nYou can draw anything this way. Here is a full border square, exactly the same as the built-in Image.SQUARE, so you can see how the digits map to the picture:",
+      "example": "What the simulator does: the outer edge of the grid lights up as a hollow square, with the centre nine lights left dark. (In the code above the string is split over several lines only to make the square easy to see; MicroPython joins the pieces back into one string.)"
+    },
+    {
+      "id": "concept-5-controlling-brightness",
+      "title": "Controlling Brightness",
+      "explanation": "So far you have used only 0 and 9 — fully off or fully on. But the numbers 1 to 8 give you every level in between, from very dim to nearly full. This lets you make an image fade in or fade out, which is a lovely effect for an alarm because a pulsing light naturally draws the eye.\n\nThis program shows a plus sign (+) three times: first dim, then bright, then off. It uses the same shape each time and only changes the brightness digits, which is itself a clear pattern.\n\nfrom microbit import * display.show(Image(\"00400:00400:44444:00400:00400\")) # dim plus sleep(500) display.show(Image(\"00900:00900:99999:00900:00900\")) # bright plus sleep(500) display.show(Image(\"00000:00000:00000:00000:00000\")) # all off",
+      "example": "What the simulator does: a faint plus sign appears (brightness 4), holds for half a second, then jumps to a strong bright plus (brightness 9) for half a second, then the screen clears. The last all-zero image is important: it is how you deliberately clear the display at the end of a sequence, so no lights are left glowing."
+    },
+    {
+      "id": "concept-6-making-the-lights-move-a-light-sequence",
+      "title": "Making the Lights Move — A Light Sequence",
+      "explanation": "A single picture is a still image. If you show one picture, wait, then show a different picture, your eyes see movement. That is exactly how every animation and every cartoon works, and it is how you create a light sequence on the micro:bit. The recipe is always the same: show an image, sleep, show the next image, sleep, and so on.\n\nThis program lights the left column, waits half a second, then lights the right column. The light appears to jump from one side to the other:\n\nfrom microbit import * display.show(Image(\"90000:90000:90000:90000:90000\")) # left column sleep(500) display.show(Image(\"00009:00009:00009:00009:00009\")) # right column sleep(500) display.clear()",
+      "example": "What the simulator does: a vertical line glows on the far left for half a second, switches off, and a vertical line glows on the far right for half a second, then the screen clears. Because the two images appear quickly one after another, your brain reads it as a line moving across the display. The sleep(500) between them is essential — without a pause the images would swap far too fast to see."
+    },
+    {
+      "id": "concept-7-extending-the-sequence",
+      "title": "Extending the Sequence",
+      "explanation": "Once you can show two images, adding a third, fourth or fifth is easy — you simply keep following the same pattern. To make the line sweep smoothly from left to right, you add a middle image between the left and right ones:\n\nfrom microbit import * display.show(Image(\"90000:90000:90000:90000:90000\")) # left sleep(500) display.show(Image(\"00900:00900:00900:00900:00900\")) # middle sleep(500) display.show(Image(\"00009:00009:00009:00009:00009\")) # right sleep(500) display.clear()",
+      "example": "What the simulator does: the glowing line now appears on the left, then the middle, then the right, each for half a second, before clearing — a smooth sweep across the whole display. Look carefully at the code and you will see the pattern: every step is exactly 'display.show(...)' followed by 'sleep(500)'. Only the picture inside the brackets changes. Recognising this repeated shape is the key that unlocks the next, more powerful idea: loops."
+    },
+    {
+      "id": "concept-8-iteration-using-loops-to-capture-a-pattern",
+      "title": "Iteration — Using Loops to Capture a Pattern",
+      "explanation": "Look again at the last program. The line 'display.show(...)' followed by 'sleep(500)' appears three times. Copying and pasting works, but imagine a sequence with fifty images — you would be copying for a long time, and one small typo would be hard to find. This is where pattern recognition and iteration (looping) work together. When you notice that something repeats, you can put it inside a loop and let the micro:bit do the repeating for you.\n\nA for loop repeats its indented lines once for each item in a list. Here we store the three images in a list called frames, then loop through them. The indented lines run once per frame:\n\nfrom microbit import * frames = [ Image(\"90000:90000:90000:90000:90000\"), # left Image(\"00900:00900:00900:00900:00900\"), # middle Image(\"00009:00009:00009:00009:00009\"), # right ] for frame in frames: display.show(frame) sleep(500) display.clear()\n\nWhat the simulator does: exactly the same sweep as before — left, middle, right, then clear — but written in far fewer lines. The word frame is a temporary name that stands for each image in turn: the first time round the loop it is the left image, the second time the middle, the third time the right. The indentation (the spaces at the start of the two loop lines) tells MicroPython which lines belong inside the loop. This is the same indentation rule you use with IF statements.\n\nA real alarm should keep flashing until someone notices it, not stop after one sweep. For that you use a while loop. The line while True: means 'keep repeating the indented lines forever'. Combining the two kinds of loop, this program sweeps the light across the display again and again, without stopping:\n\nfrom microbit import * frames = [ Image(\"90000:90000:90000:90000:90000\"), Image(\"00900:00900:00900:00900:00900\"), Image(\"00009:00009:00009:00009:00009\"), ] while True: for frame in frames: display.show(frame) sleep(500)\n\nWhat the simulator does: the line sweeps left-to-right, then instantly starts again from the left, over and over, for as long as the program runs. There is one more shortcut worth knowing: display.show() can animate a whole list for you if you give it a delay. The single line display.show(frames, delay=500, loop=True) does the same endless sweep. Fewer lines, same result — that is the reward for spotting the pattern.\n\nA loop that repeats a fixed number of times (like once per image in a list) is called a 'for' loop.\n\nA loop that repeats while a condition stays true is called a 'while' loop.",
+      "example": "'while True:' never becomes false on its own, so it runs forever — perfect for an alarm that must keep flashing."
+    },
+    {
+      "id": "concept-9-selection-and-the-logic-of-and-or-not",
+      "title": "Selection and the Logic of AND, OR, NOT",
+      "explanation": "An alarm should only go off when it is supposed to. That means your program must make a decision — it must check a condition and choose what to do. Choosing between paths is called selection, and you write it with IF and ELSE. An input such as a button has just two states: pressed (True) or not pressed (False).\n\nThis program keeps checking button A. The while True: loop is what makes it keep checking; without it, the program would look at the button just once, at the very start, and then end. Notice the colon at the end of the if and else lines, and the indentation of the lines beneath them:\n\nfrom microbit import * while True: if button_a.is_pressed(): display.show(Image.HAPPY) else: display.show(Image.SAD)\n\nWhat the simulator does: while you hold button A down with the mouse, a happy face shows; when you release it, a sad face shows. Now, sometimes you need to combine more than one input. The Boolean operators AND, OR and NOT let you do this. They behave just like the logic gates you met earlier in the year.\n\nfrom microbit import * while True: if button_a.is_pressed() and button_b.is_pressed(): display.show(Image.HAPPY) else: display.show(Image.SAD)\n\nWhat the simulator does: a happy face appears only when you hold both A and B at the same time. Pressing just one shows the sad face. The word and sits between the two checks.\n\nfrom microbit import * while True: if button_a.is_pressed() or button_b.is_pressed(): display.show(Image.HAPPY) else: display.show(Image.SAD)\n\nWhat the simulator does: a happy face appears when you press A, or B, or both. Only when neither is pressed does the sad face show. This is exactly the kind of logic your alarm might use: trigger if the sound sensor hears something OR if someone presses a button.\n\nNOT — the opposite of the input\n\nfrom microbit import * while True: if not button_a.is_pressed(): display.show(Image.HAPPY) else: display.show(Image.SAD)",
+      "example": "What the simulator does: the happy face shows while button A is not pressed, and the sad face shows while it is pressed — the reverse of what you might first expect. The word not flips True into False and False into True."
+    },
+    {
+      "id": "concept-10-sub",
+      "title": "Sub",
+      "explanation": "A sub-routine is a mini-program inside your program. You write it once, give it a name, and then run it whenever you like just by using its name. In MicroPython you create a sub-routine with the word def (short for 'define'). Sub-routines make your code shorter, easier to read, and easier to test, because each one does a single, clearly named job.\n\nHere we put the whole flashing light sequence into a sub-routine called light_sequence. Nothing inside it runs until we 'call' it by writing its name followed by brackets:\n\nfrom microbit import * def light_sequence(): display.show(Image(\"90000:90000:90000:90000:90000\")) sleep(300) display.show(Image(\"00900:00900:00900:00900:00900\")) sleep(300) display.show(Image(\"00009:00009:00009:00009:00009\")) sleep(300) display.clear() light_sequence() # run the sub-routine once",
+      "example": "What the simulator does: the sweep left, middle, right plays once and clears — the same as before. The difference is in how the code is organised. The recipe now has a name, so the main part of your program can stay clean and simple: 'when the alarm should go off, run light_sequence()'. This matches how the textbook draws a flowchart with a sub-routine box: the box just says 'Light sequence', and the details live in their own separate flowchart."
+    },
+    {
+      "id": "concept-11-choosing-the-input-button-shake-or-sound",
+      "title": "Choosing the Input — Button, Shake or Sound",
+      "explanation": "For the visual alarm, the buzzer needs to start the light sequence. The micro:bit gives you three sensible inputs to represent that buzzer, and you can test all three in the simulator.\n\nA button: button_a.is_pressed() — simple and reliable, but someone has to press it by hand.\n\nA shake: accelerometer.was_gesture(\"shake\") — becomes True when the device is shaken.\n\nThe sound sensor (microphone): microphone.sound_level() — returns a loudness value from 0 to 255, so a loud buzzer or clap can trigger the alarm on its own.\n\nThe sound sensor is the best match for our scenario, because it can react to the buzzer automatically without anyone touching the device. This program checks the microphone forever, and runs the light sequence whenever the sound is loud (above the halfway value of 128):\n\nfrom microbit import * def light_sequence(): for i in range(3): display.show(Image(\"99999:99999:99999:99999:99999\")) sleep(300) display.clear() sleep(300) while True: if microphone.sound_level() > 128: light_sequence() else: display.clear()",
+      "example": "What the simulator does: the display stays dark while it is quiet. In the simulator, drag the sound-level slider up past the middle (or use your microphone if the site asks permission), and the whole grid flashes on and off three times — a clear, hard-to-miss alarm — before going quiet again. The sound sensor and microphone are features of the micro:bit version 2, and the online simulator fully supports them."
+    },
+    {
+      "id": "concept-12-prototyping-building-to-learn",
+      "title": "Prototyping — Building to Learn",
+      "explanation": "A prototype is a first working model of a product, built to test an idea before the final version is made. Software developers almost never write the finished program in one go. Instead they build a rough version, try it out, gather user feedback, fix the problems, and improve it. Releasing software that is full of bugs gives a bad impression and people stop using it, so prototyping and testing come first.\n\nThere are two common styles of prototyping, and you should know the difference:\n\nEvolutionary prototyping: you build a full version, get feedback, improve it, and repeat. The prototype gradually 'evolves' into the finished product. Example: a complete game that is tested and refined again and again.\n\nThrowaway prototyping: you build one small part, test just that part, learn from it, and then throw it away before building the real thing. Example: testing a single level of a game to check an idea, then discarding it.",
+      "example": "For your visual alarm you will use a bit of both: you might build a quick throwaway test of just the flashing pattern to see if it catches the eye, then switch to evolutionary prototyping to add the sound sensor and keep improving the whole thing. A project plan guides all of this. It breaks the big problem into smaller questions — which input will start the alarm? what will the sequence look like? what happens when the alarm is off? — and answers each one before any final code is written."
+    },
+    {
+      "id": "concept-13-test-plans-proving-it-works",
+      "title": "Test Plans — Proving It Works",
+      "explanation": "How do you know your program really works, and not just that it worked the one time you tried it? You use a test plan: a table that lists each thing to test, the data you will enter, the result you expect, and a column to record whether the test passed or failed. Writing the test plan before you test forces you to be clear about what 'working correctly' actually means.\n\nHere is an example test plan for a sound-activated alarm. You would run each test in the simulator and fill in the final column:\n\nNotice test 3: it checks that the alarm does not go off when it should not. Good testing checks both that the right thing happens and that the wrong thing does not. If a test fails, you have found a bug — and finding it in testing, before anyone relies on your alarm, is exactly the point.\n\nTest — Data entered · Expected outcome · Pass / Fail\n\n1 — Loud sound (slider high) · Light sequence flashes 3 times · ...\n\n2 — Sequence order · All-on, off, on, off, on, off in order · ...\n\n3 — Quiet (slider low) · Display stays clear, no flashing · ...",
+      "example": "4 — After alarm finishes · Display returns to clear, ready for next sound · ..."
+    },
+    {
+      "id": "concept-14-debugging-with-pattern-recognition",
+      "title": "Debugging with Pattern Recognition",
+      "explanation": "Debugging is the process of finding and fixing errors. Pattern recognition is your best debugging tool. When a program does not behave as expected, compare it — line by line — against your flowchart or your grid drawings, and look for the place where the pattern breaks. If your sequence should be square, small square, chessboard, but the small square never appears, the broken line is easy to spot once you line the code up against the plan.\n\nWhen there is a typing error in the code itself, the micro:bit shows a sad face and then scrolls a message telling you the line where the problem is. When that happens, work through this checklist — these are the most common MicroPython mistakes:\n\nDoes the program start with from microbit import * ?\n\nAre all brackets ( ) and quotation marks \" \" opened and closed?\n\nIs there a colon at the end of every if, else, for, while and def line?\n\nAre the capital letters correct, for example Image.HEART and Image.HAPPY?\n\nIs the indentation correct — are the lines inside a loop or if statement pushed in by spaces?\n\nIn an Image string, does each row have exactly five digits and a colon between rows?\n\nAre all the command words spelled correctly, for example display and sleep?",
+      "example": "One famous trap from this unit is the image name Image.SQUARE_SMALL. It is very easy to type SQUAR_SMALL by mistake, missing the E. That single missing letter makes the whole program crash, because MicroPython does not recognise the misspelled name. Careful spelling is not fussiness — to a computer, SQUARE_SMALL and SQUAR_SMALL are two completely different words."
+    }
+  ],
+  "codeExamples": [],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Explain the idea",
+      "context": "work through the steps below and see what happens. This is sequencing — order is everything in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Write a short paragraph explaining, in your own words, the meaning and purpose of a prototype and why building one before the final product is a good idea.",
+      "answer": "Compare what you built with the worked example, and note any difference.",
+      "modelType": "model-1",
+      "hint": "Do one step at a time, and check the result before you move on.",
+      "explanation": "Sequencing — Order Is Everything: A sequence is a set of instructions carried out in a fixed order, one after another, from top to bottom. When your program runs, the micro:bit reads the first line, does it, then reads the second line, does it, and so on. It never skips ahead and never guesses what you meant. This makes the order…"
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Plan it",
+      "context": "work through the steps below and see what happens. This is the led display and single lights in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Draw a flowchart showing the input (the sound sensor) and the light sequence as a sub-routine.",
+      "answer": "For each image in your sequence, draw a 5x5 grid and mark the brightness numbers (0 for off, up to 9 for full). Complete a test plan that matches your flowchart, then check your flowchart against it before coding.",
+      "modelType": "model-2",
+      "hint": "Start here: For each image in your sequence, draw a 5x5 grid and mark the brightness numbers (0 for off, up to 9 for full).",
+      "explanation": "The LED Display and Single Lights: The front of the micro:bit is a 5 by 5 grid of 25 red LEDs. You can think of it like a tiny piece of squared paper where each square is a light. To talk about one particular light, you give its column number (x) and its row number (y). Both start counting from 0, not 1, and the top-left light is at…"
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Build it",
+      "context": "work through the steps below and see what happens. This is showing built in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Type your program in python.microbit.org. Here is a solid starting point you can edit and improve. It uses a sub-routine, a while loop, selection and the sound sensor — everything from the unit.",
+      "answer": "from microbit import * def visual_alarm(): for i in range(3): display.show(Image( “99999:99999:99999:99999:99999” )) sleep(300) display.clear() sleep(300) display.scroll( “BREAK” ) while True: if microphone.sound_level() > 128: visual_alarm() else: display.clear(). Expected behaviour: while quiet, the display is clear. When the sound slider is raised past the middle (representing the buzzer), the whole grid flashes three times and then the word BREAK scrolls across — a clear signal that it is time for the break. Then it returns to quiet, ready for next time.",
+      "modelType": "model-3",
+      "hint": "Start here: from microbit import * def visual_alarm(): for i in range(3): display.show(Image( “99999:99999:99999:99999:99999” )) sleep(300) display.clear()…",
+      "explanation": "Showing Built: Turning on lights one at a time works, but the micro:bit also comes with many ready-made pictures called images. You show one with display.show(). This program displays a heart:"
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Consider your design choices",
+      "context": "work through the steps below and see what happens. This is building your own light patterns in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "How will the program be activated (how does it represent the school's buzzer)?",
+      "answer": "What light sequence and brightness will the alarm display — a word, an image, or both? How is the sound sensor used to activate the alarm, and what threshold value did you choose and why? Evaluation Comment honestly on each point, then use the feedback to improve your own. Swap programs with a partner (or ask your AI tutor to role-play a tester) and test each other's visual alarms. Does the flowchart match the sequence that runs on the micro:bit?",
+      "modelType": "model-4",
+      "hint": "Start here: What light sequence and brightness will the alarm display — a word, an image, or both?",
+      "explanation": "Building Your Own Light Patterns: The real power comes when you design your own patterns. You do this by describing all 25 lights at once using the Image() command with a text string. Inside the quotation marks you write five groups of five digits, one group for each row, separated by colons. Each digit sets the brightness of one…"
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Hands-on Coding, a Final Visual-Alarm Prototype, and Evaluation",
+      "context": "Hands-on Coding, a Final Visual-Alarm Prototype, and Evaluation: work through the steps below and see what happens. This is controlling brightness in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Getting Started with python.microbit.org and the Simulator",
+      "answer": "You will do all of these activities in the free online editor. No micro:bit and no installation are needed — the built-in simulator runs everything on your screen. Open your browser and go to python.microbit.org. Type your code in the editor on the left. Press the play / triangle button to run it on the simulator on the right. Use the mouse to press button A and button B, and drag the sound, temperature and movement sliders to test your inputs.",
+      "modelType": "model-5",
+      "hint": "Start here: You will do all of these activities in the free online editor. No micro:bit and no installation are needed — the built-in simulator runs everything…",
+      "explanation": "Controlling Brightness: So far you have used only 0 and 9 — fully off or fully on. But the numbers 1 to 8 give you every level in between, from very dim to nearly full. This lets you make an image fade in or fade out, which is a lovely effect for an alarm because a pulsing light naturally draws the eye."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Getting Started with python.microbit.org and the Simulator",
+      "context": "work through the steps below and see what happens. This is making the lights move — a light sequence in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "You will do all of these activities in the free online editor. No micro:bit and no installation are needed — the built-in simulator runs everything on your screen.",
+      "answer": "Open your browser and go to python.microbit.org. Type your code in the editor on the left. Press the play / triangle button to run it on the simulator on the right. Use the mouse to press button A and button B, and drag the sound, temperature and movement sliders to test your inputs. If a program misbehaves, read the error, then use the debugging checklist in your Reference document.",
+      "modelType": "model-6",
+      "hint": "Start here: Open your browser and go to python.microbit.org.",
+      "explanation": "Making the Lights Move — A Light Sequence: A single picture is a still image. If you show one picture, wait, then show a different picture, your eyes see movement. That is exactly how every animation and every cartoon works, and it is how you create a light sequence on the micro:bit. The recipe is always the same: show an image, sleep, show…"
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Sequencing — Order Is Everything",
+      "modelType": "concept-model-1",
+      "purpose": "A sequence is a set of instructions carried out in a fixed order, one after another, from top to bottom. When your program runs, the micro:bit reads the first line, does it, then reads the second line, does it, and so…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "The LED Display and Single Lights",
+      "modelType": "concept-model-2",
+      "purpose": "The front of the micro:bit is a 5 by 5 grid of 25 red LEDs. You can think of it like a tiny piece of squared paper where each square is a light. To talk about one particular light, you give its column number (x) and its…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Showing Built",
+      "modelType": "concept-model-3",
+      "purpose": "Turning on lights one at a time works, but the micro:bit also comes with many ready-made pictures called images. You show one with display.show(). This program displays a heart:",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Building Your Own Light Patterns",
+      "modelType": "concept-model-4",
+      "purpose": "The real power comes when you design your own patterns. You do this by describing all 25 lights at once using the Image() command with a text string. Inside the quotation marks you write five groups of five digits, one…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Controlling Brightness",
+      "modelType": "concept-model-5",
+      "purpose": "So far you have used only 0 and 9 — fully off or fully on. But the numbers 1 to 8 give you every level in between, from very dim to nearly full. This lets you make an image fade in or fade out, which is a lovely effect…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Making the Lights Move — A Light Sequence",
+      "modelType": "concept-model-6",
+      "purpose": "A single picture is a still image. If you show one picture, wait, then show a different picture, your eyes see movement. That is exactly how every animation and every cartoon works, and it is how you create a light…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-7",
+      "outcomeId": "lo07",
+      "title": "Extending the Sequence",
+      "modelType": "concept-model-7",
+      "purpose": "Once you can show two images, adding a third, fourth or fifth is easy — you simply keep following the same pattern. To make the line sweep smoothly from left to right, you add a middle image between the left and right…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-8",
+      "outcomeId": "lo08",
+      "title": "Iteration — Using Loops to Capture a Pattern",
+      "modelType": "concept-model-8",
+      "purpose": "Look again at the last program. The line 'display.show(...)' followed by 'sleep(500)' appears three times. Copying and pasting works, but imagine a sequence with fifty images — you would be copying for a long time, and…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-9",
+      "outcomeId": "lo09",
+      "title": "Selection and the Logic of AND, OR, NOT",
+      "modelType": "concept-model-9",
+      "purpose": "An alarm should only go off when it is supposed to. That means your program must make a decision — it must check a condition and choose what to do. Choosing between paths is called selection, and you write it with IF…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-10",
+      "outcomeId": "lo10",
+      "title": "Sub",
+      "modelType": "concept-model-10",
+      "purpose": "A sub-routine is a mini-program inside your program. You write it once, give it a name, and then run it whenever you like just by using its name. In MicroPython you create a sub-routine with the word def (short for…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-11",
+      "outcomeId": "lo01",
+      "title": "Choosing the Input — Button, Shake or Sound",
+      "modelType": "concept-model-11",
+      "purpose": "For the visual alarm, the buzzer needs to start the light sequence. The micro:bit gives you three sensible inputs to represent that buzzer, and you can test all three in the simulator.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-12",
+      "outcomeId": "lo02",
+      "title": "Prototyping — Building to Learn",
+      "modelType": "concept-model-12",
+      "purpose": "A prototype is a first working model of a product, built to test an idea before the final version is made. Software developers almost never write the finished program in one go. Instead they build a rough version, try…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-13",
+      "outcomeId": "lo03",
+      "title": "Test Plans — Proving It Works",
+      "modelType": "concept-model-13",
+      "purpose": "How do you know your program really works, and not just that it worked the one time you tried it? You use a test plan: a table that lists each thing to test, the data you will enter, the result you expect, and a column…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-14",
+      "outcomeId": "lo04",
+      "title": "Debugging with Pattern Recognition",
+      "modelType": "concept-model-14",
+      "purpose": "Debugging is the process of finding and fixing errors. Pattern recognition is your best debugging tool. When a program does not behave as expected, compare it — line by line — against your flowchart or your grid…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with sequencing — order is everything",
+      "example": "What the simulator does: the digit 1 scrolls across the LEDs from right to left, then the device waits one second, then 2 scrolls, waits one second, then 3 scrolls. Now imagine you accidentally put the scroll(3) line first. The output would be 3, 2, 1 — the…",
+      "steps": [
+        "A sequence is a set of instructions carried out in a fixed order, one after another, from top to bottom. When your program runs, the micro:bit reads the first line, does it, then reads the second line, does it, and so…",
+        "Here is a tiny program that outputs the numbers 1, 2 and 3, with a one-second pause between each. The display.scroll() command scrolls text or numbers across the LED display, and sleep() pauses the program. Remember…",
+        "from microbit import * display.scroll(1) sleep(1000) display.scroll(2) sleep(1000) display.scroll(3)"
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with the led display and single lights",
+      "example": "The numbers 1 to 8 in between give dimmer levels of red light, so 4 is roughly half brightness.",
+      "steps": [
+        "The front of the micro:bit is a 5 by 5 grid of 25 red LEDs. You can think of it like a tiny piece of squared paper where each square is a light. To talk about one particular light, you give its column number (x) and its…",
+        "x is the column: 0 is the far left, 4 is the far right.",
+        "y is the row: 0 is the top, 4 is the bottom.",
+        "So the very centre light is at x = 2, y = 2. The bottom-right light is at x = 4, y = 4."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with showing built",
+      "example": "This is a good moment to notice a pattern. When you moved from block-based MakeCode to text-based MicroPython, the block that shows a heart and the line display.show(Image.HEART) both contain the same key words: show and heart. Spotting that similarity helps…",
+      "steps": [
+        "Turning on lights one at a time works, but the micro:bit also comes with many ready-made pictures called images. You show one with display.show(). This program displays a heart:",
+        "What the simulator does: the LEDs light up in the shape of a heart and stay on. Notice the capital letters: Image and HEART must both be capitalised exactly, or the program will not run. There are many built-in images…",
+        "Image.HAPPY and Image.SAD — a smiling face and a frowning face",
+        "Image.HEART and Image.HEART_SMALL — a big and a small heart"
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with building your own light patterns",
+      "example": "What the simulator does: the outer edge of the grid lights up as a hollow square, with the centre nine lights left dark. (In the code above the string is split over several lines only to make the square easy to see; MicroPython joins the pieces back into one…",
+      "steps": [
+        "The real power comes when you design your own patterns. You do this by describing all 25 lights at once using the Image() command with a text string. Inside the quotation marks you write five groups of five digits, one…",
+        "The trick — and the pattern to recognise — is that the digits are laid out in the same 5 by 5 shape as the real display. If you write the digits neatly, the string is a picture of the lights. Here is a program that…",
+        "Reading the string: each row is 90000 — the first light (far left) is 9 (on) and the other four are 0 (off). Stacked over five rows, that draws a vertical line of five lights down the left edge. What the simulator does:…",
+        "You can draw anything this way. Here is a full border square, exactly the same as the built-in Image.SQUARE, so you can see how the digits map to the picture:"
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with controlling brightness",
+      "example": "What the simulator does: a faint plus sign appears (brightness 4), holds for half a second, then jumps to a strong bright plus (brightness 9) for half a second, then the screen clears. The last all-zero image is important: it is how you deliberately clear the…",
+      "steps": [
+        "So far you have used only 0 and 9 — fully off or fully on. But the numbers 1 to 8 give you every level in between, from very dim to nearly full. This lets you make an image fade in or fade out, which is a lovely effect…",
+        "This program shows a plus sign (+) three times: first dim, then bright, then off. It uses the same shape each time and only changes the brightness digits, which is itself a clear pattern.",
+        "from microbit import * display.show(Image(\"00400:00400:44444:00400:00400\")) # dim plus sleep(500) display.show(Image(\"00900:00900:99999:00900:00900\")) # bright plus sleep(500)…"
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "How to work with making the lights move — a light sequence",
+      "example": "What the simulator does: a vertical line glows on the far left for half a second, switches off, and a vertical line glows on the far right for half a second, then the screen clears. Because the two images appear quickly one after another, your brain reads it…",
+      "steps": [
+        "A single picture is a still image. If you show one picture, wait, then show a different picture, your eyes see movement. That is exactly how every animation and every cartoon works, and it is how you create a light…",
+        "This program lights the left column, waits half a second, then lights the right column. The light appears to jump from one side to the other:",
+        "from microbit import * display.show(Image(\"90000:90000:90000:90000:90000\")) # left column sleep(500) display.show(Image(\"00009:00009:00009:00009:00009\")) # right column sleep(500) display.clear()"
+      ]
+    },
+    {
+      "id": "method-7",
+      "outcomeId": "lo07",
+      "difficulty": "Challenge",
+      "title": "How to work with extending the sequence",
+      "example": "What the simulator does: the glowing line now appears on the left, then the middle, then the right, each for half a second, before clearing — a smooth sweep across the whole display. Look carefully at the code and you will see the pattern: every step is…",
+      "steps": [
+        "Read the concept card for extending the sequence and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-8",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "How to work with iteration — using loops to capture a pattern",
+      "example": "'while True:' never becomes false on its own, so it runs forever — perfect for an alarm that must keep flashing.",
+      "steps": [
+        "Look again at the last program. The line 'display.show(...)' followed by 'sleep(500)' appears three times. Copying and pasting works, but imagine a sequence with fifty images — you would be copying for a long time, and…",
+        "A for loop repeats its indented lines once for each item in a list. Here we store the three images in a list called frames, then loop through them. The indented lines run once per frame:",
+        "from microbit import * frames = [ Image(\"90000:90000:90000:90000:90000\"), # left Image(\"00900:00900:00900:00900:00900\"), # middle Image(\"00009:00009:00009:00009:00009\"), # right ] for frame in frames:…",
+        "What the simulator does: exactly the same sweep as before — left, middle, right, then clear — but written in far fewer lines. The word frame is a temporary name that stands for each image in turn: the first time round…"
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Sequencing — Order Is Everything",
+      "prompt": "What does a sequence mean in programming? (a) a random set of steps (b) the specific order of instructions (c) a type of loop (d) a picture on the display",
+      "solution": "(b) the specific order of instructions. A computer follows steps strictly in order."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: The LED Display and Single Lights",
+      "prompt": "How many individual LEDs are on the micro:bit display? (a) 5 (b) 16 (c) 25 (d) 100",
+      "solution": "(c) 25. The display is a 5 by 5 grid, and 5 times 5 is 25."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Showing Built",
+      "prompt": "In display.set_pixel(x, y, b), what does b control? (a) the column (b) the row (c) the brightness (d) the button",
+      "solution": "(c) the brightness (0 to 9). The first two numbers are the column (x) and row (y)."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Building Your Own Light Patterns",
+      "prompt": "Which line must appear at the start of every micro:bit program? (a) import microbit (b) from microbit import * (c) display.show() (d) while True:",
+      "solution": "(b) from microbit import *. This imports everything needed to control the micro:bit."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Controlling Brightness",
+      "prompt": "What is the value range for LED brightness? (a) 0 to 1 (b) 0 to 9 (c) 1 to 100 (d) 0 to 255",
+      "solution": "(b) 0 to 9. 0 is off, 9 is full brightness, and 1 to 8 are dimmer levels."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Making the Lights Move — A Light Sequence",
+      "prompt": "How many milliseconds are in one second? (a) 10 (b) 60 (c) 100 (d) 1000",
+      "solution": "(d) 1000. So sleep(1000) waits one second and sleep(500) waits half a second."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Worked example 7: Extending the Sequence",
+      "prompt": "Which Boolean operator needs both inputs to be true? (a) AND (b) OR (c) NOT (d) IF",
+      "solution": "(a) AND. AND is true only when both inputs are true."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "Worked example 8: Iteration — Using Loops to Capture a Pattern",
+      "prompt": "A sub-routine in MicroPython is created with which word? (a) sub (b) def (c) loop (d) show",
+      "solution": "(b) def. For example, def light_sequence(): creates a sub-routine."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo09",
+      "difficulty": "Challenge",
+      "title": "Worked example 9: Selection and the Logic of AND, OR, NOT",
+      "prompt": "What is a prototype? (a) the final finished product (b) a first working model built to test an idea (c) a type of error (d) a kind of sensor",
+      "solution": "(b) a first working model built to test an idea before the final product."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo10",
+      "difficulty": "Challenge",
+      "title": "Worked example 10: Sub",
+      "prompt": "Pattern recognition is best described as: (a) memorising code (b) looking for a pattern and using it to solve a problem (c) drawing pictures (d) deleting bugs",
+      "solution": "(b) looking for a pattern and using it to solve a problem."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "What does a sequence mean in programming? (a) a random set of steps (b) the specific order of instructions (c) a type of loop (d) a picture on the display",
+      "answer": "(b) the specific order of instructions. A computer follows steps strictly in order.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "How many individual LEDs are on the micro:bit display? (a) 5 (b) 16 (c) 25 (d) 100",
+      "answer": "(c) 25. The display is a 5 by 5 grid, and 5 times 5 is 25.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "In display.set_pixel(x, y, b), what does b control? (a) the column (b) the row (c) the brightness (d) the button",
+      "answer": "(c) the brightness (0 to 9). The first two numbers are the column (x) and row (y).",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "Which line must appear at the start of every micro:bit program? (a) import microbit (b) from microbit import * (c) display.show() (d) while True:",
+      "answer": "(b) from microbit import *. This imports everything needed to control the micro:bit.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "What is the value range for LED brightness? (a) 0 to 1 (b) 0 to 9 (c) 1 to 100 (d) 0 to 255",
+      "answer": "(b) 0 to 9. 0 is off, 9 is full brightness, and 1 to 8 are dimmer levels.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p06",
+      "level": "Warm-up",
+      "prompt": "How many milliseconds are in one second? (a) 10 (b) 60 (c) 100 (d) 1000",
+      "answer": "(d) 1000. So sleep(1000) waits one second and sleep(500) waits half a second.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p07",
+      "level": "Warm-up",
+      "prompt": "Which Boolean operator needs both inputs to be true? (a) AND (b) OR (c) NOT (d) IF",
+      "answer": "(a) AND. AND is true only when both inputs are true.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p08",
+      "level": "Warm-up",
+      "prompt": "A sub-routine in MicroPython is created with which word? (a) sub (b) def (c) loop (d) show",
+      "answer": "(b) def. For example, def light_sequence(): creates a sub-routine.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p09",
+      "level": "Warm-up",
+      "prompt": "What is a prototype? (a) the final finished product (b) a first working model built to test an idea (c) a type of error (d) a kind of sensor",
+      "answer": "(b) a first working model built to test an idea before the final product.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p10",
+      "level": "Warm-up",
+      "prompt": "Pattern recognition is best described as: (a) memorising code (b) looking for a pattern and using it to solve a problem (c) drawing pictures (d) deleting bugs",
+      "answer": "(b) looking for a pattern and using it to solve a problem.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p11",
+      "level": "Warm-up",
+      "prompt": "Which loop repeats forever? (a) for i in range(3): (b) while True: (c) if True: (d) def loop():",
+      "answer": "(b) while True:. It repeats its indented lines forever.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p12",
+      "level": "Warm-up",
+      "prompt": "In an Image string, what separates each row of five digits? (a) a comma (b) a colon (c) a full stop (d) a space",
+      "answer": "(b) a colon. For example \"90000:90000:90000:90000:90000\".",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p13",
+      "level": "Core",
+      "prompt": "Answer in one or two full sentences.",
+      "answer": "The computer runs instructions strictly top to bottom, so the order decides the output. Example: if you show the 'right column' image before the 'left column' image, the light appears to move right-to-left instead of left-to-right — a different message.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p14",
+      "level": "Core",
+      "prompt": "Explain why the order of instructions matters in a light sequence. Give an example of what could go wrong.",
+      "answer": "display.show() shows an image (or holds a single character) on the LEDs; display.scroll() slides text or numbers across the display from right to left.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p15",
+      "level": "Core",
+      "prompt": "What is the difference between display.show() and display.scroll()?",
+      "answer": "A for loop repeats a fixed number of times (for example once per item in a list). A while loop repeats as long as its condition stays true; while True: repeats forever.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p16",
+      "level": "Core",
+      "prompt": "Explain the difference between a for loop and a while loop.",
+      "answer": "sleep() pauses the program so each image is visible long enough for the eye to see before the next one replaces it. Without it, images swap too fast to notice.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Explain the idea",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Write a short paragraph explaining, in your own words, the meaning and purpose of a prototype and why building one before the final product is a good idea."
+      ]
+    },
+    {
+      "title": "Plan it",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Draw a flowchart showing the input (the sound sensor) and the light sequence as a sub-routine.",
+        "For each image in your sequence, draw a 5x5 grid and mark the brightness numbers (0 for off, up to 9 for full).",
+        "Complete a test plan that matches your flowchart, then check your flowchart against it before coding."
+      ]
+    },
+    {
+      "title": "Build it",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Type your program in python.microbit.org. Here is a solid starting point you can edit and improve. It uses a sub-routine, a while loop, selection and the sound sensor — everything from the unit.",
+        "from microbit import * def visual_alarm(): for i in range(3): display.show(Image( “99999:99999:99999:99999:99999” )) sleep(300) display.clear() sleep(300) display.scroll( “BREAK” ) while True: if microphone.sound_level() > 128: visual_alarm() else: display.clear().",
+        "Expected behaviour: while quiet, the display is clear. When the sound slider is raised past the middle (representing the buzzer), the whole grid flashes three times and then the word BREAK scrolls across — a clear signal that it is time for the break. Then it returns to quiet, ready for next time."
+      ]
+    },
+    {
+      "title": "Consider your design choices",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "How will the program be activated (how does it represent the school's buzzer)?",
+        "What light sequence and brightness will the alarm display — a word, an image, or both?",
+        "How is the sound sensor used to activate the alarm, and what threshold value did you choose and why?",
+        "Evaluation",
+        "Comment honestly on each point, then use the feedback to improve your own. Swap programs with a partner (or ask your AI tutor to role-play a tester) and test each other's visual alarms.",
+        "Does the flowchart match the sequence that runs on the micro:bit?"
+      ]
+    },
+    {
+      "title": "Hands-on Coding, a Final Visual-Alarm Prototype, and Evaluation",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Getting Started with python.microbit.org and the Simulator",
+        "You will do all of these activities in the free online editor. No micro:bit and no installation are needed — the built-in simulator runs everything on your screen.",
+        "Open your browser and go to python.microbit.org.",
+        "Type your code in the editor on the left.",
+        "Press the play / triangle button to run it on the simulator on the right.",
+        "Use the mouse to press button A and button B, and drag the sound, temperature and movement sliders to test your inputs."
+      ]
+    },
+    {
+      "title": "Getting Started with python.microbit.org and the Simulator",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "You will do all of these activities in the free online editor. No micro:bit and no installation are needed — the built-in simulator runs everything on your screen.",
+        "Open your browser and go to python.microbit.org.",
+        "Type your code in the editor on the left.",
+        "Press the play / triangle button to run it on the simulator on the right.",
+        "Use the mouse to press button A and button B, and drag the sound, temperature and movement sliders to test your inputs.",
+        "If a program misbehaves, read the error, then use the debugging checklist in your Reference document."
+      ]
+    },
+    {
+      "title": "Practise",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Activity 1: Light a Single LED",
+        "Turn on the centre LED only.",
+        "Then change the code to turn on the top-left LED, then the bottom-right LED.",
+        "Type and run this code:",
+        "Expected behaviour in the simulator: One bright light glows in the exact centre of the 5x5 grid. Changing the numbers to (0, 0) moves it to the top-left; (4, 4) moves it to the bottom-right.",
+        "Ask Your AI Tutor"
+      ]
+    },
+    {
+      "title": "Your task:",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Turn on the centre LED only.",
+        "Then change the code to turn on the top-left LED, then the bottom-right LED.",
+        "Type and run this code:",
+        "Expected behaviour in the simulator: One bright light glows in the exact centre of the 5x5 grid. Changing the numbers to (0, 0) moves it to the top-left; (4, 4) moves it to the bottom-right.",
+        "Ask Your AI Tutor",
+        "Ask: 'Explain what each of the three numbers in display.set_pixel means.'"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "Missing from microbit import *",
+      "cause": "NameError / crash on the first command",
+      "fix": "Make it the very first line of the program."
+    },
+    {
+      "symptom": "Missing colon (:)",
+      "cause": "SyntaxError on the if / for / while / def line",
+      "fix": "Add : at the end of the line, then indent below it."
+    },
+    {
+      "symptom": "Wrong indentation",
+      "cause": "IndentationError or code runs at the wrong time",
+      "fix": "Indent lines inside a block with 4 spaces, consistently."
+    },
+    {
+      "symptom": "Misspelled name (SQUAR_SMALL)",
+      "cause": "Sad face + scrolling error; AttributeError",
+      "fix": "Check spelling and capitals: Image.SQUARE_SMALL."
+    },
+    {
+      "symptom": "Unclosed bracket or quote",
+      "cause": "SyntaxError",
+      "fix": "Every ( needs a ), every \" needs a closing \"."
+    },
+    {
+      "symptom": "Image row not 5 digits",
+      "cause": "Error or a shifted / wrong picture",
+      "fix": "Each of the 5 rows must have exactly 5 digits, colon-separated."
+    },
+    {
+      "symptom": "No sleep() between images",
+      "cause": "Sequence flickers or only last image shows",
+      "fix": "Add sleep(300) to sleep(1000) between frames."
+    },
+    {
+      "symptom": "Input checked without a loop",
+      "cause": "Program ends after one check",
+      "fix": "Wrap the check in while True:."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Remember",
+        "text": "Flashing a real micro:bit is optional. Everything in this unit can be completed in the simulator. The microphone and sound sensor are micro:bit version 2 features, and the online simulator supports them. If the site asks to use your computer's microphone, you can allow it, or simply use the sound slider instead."
+      },
+      {
+        "title": "the 5 by 5 grid",
+        "text": "The display is 25 LEDs in 5 columns (x = 0 to 4) and 5 rows (y = 0 to 4). The top-left LED is (0, 0). The centre is (2, 2). The bottom-right is (4, 4)."
+      },
+      {
+        "title": "brightness",
+        "text": "0 means off and 9 means fully on. The numbers 1 to 8 are dimmer levels in between. Changing only the brightness digits lets an image fade in or out."
+      },
+      {
+        "title": "time is in milliseconds",
+        "text": "There are 1000 milliseconds in one second, so sleep(1000) waits one second. Half a second is sleep(500). A pause is essential so each image can be seen."
+      },
+      {
+        "title": "sequence and patterns",
+        "text": "The order of your lines is the order the lights display in. Wrong order means wrong message. If you see the same lines repeating, a loop can replace them. That is pattern recognition at work."
+      },
+      {
+        "title": "debugging checklist",
+        "text": "First line present? Colons on if/for/while/def? Capitals and spelling correct? Brackets and quotes closed? Indentation consistent? Each Image row exactly 5 digits?"
+      },
+      {
+        "title": "Remember",
+        "text": "Every MicroPython program in this unit begins with the same first line: from microbit import * This line imports everything you need to control the micro:bit's lights, buttons and sensors. The star symbol * here means 'everything'. Without this line, none of the micro:bit commands will work. Concept 1: Sequencing — Order Is Everything A sequence is a set of instructions carried out in a fixed order, one after another, from top to bottom. When your program runs, the micro:bit reads the first line, does it, then reads the second line, does it, and so on. It never skips ahead and never guesses what you meant. This makes the order of your lines the single most important thing about a simple program. Here is a tiny program that outputs the numbers 1, 2 and 3, with a one-second pause between each. The display.scroll() command scrolls text or numbers across the LED display, and sleep() pauses the program. Remember that time on the micro:bit is measured in milliseconds: there are 1000 milliseconds in one second, so sleep(1000) waits for one second and sleep(500) waits for half a second."
+      }
+    ],
+    "terms": [
+      [
+        "algorithm",
+        "A sequence of steps or instructions to solve a problem."
+      ],
+      [
+        "arithmetic operator",
+        "A symbol used for calculations: + , — , * , / and others."
+      ],
+      [
+        "Boolean logic operations",
+        "Operations based on the terms AND, OR and NOT."
+      ],
+      [
+        "bug",
+        "An error in a program that stops it working correctly."
+      ],
+      [
+        "debug / debugging",
+        "The process of finding and removing errors from a program."
+      ],
+      [
+        "flowchart",
+        "A diagram that shows the sequence of actions in a program using standard shapes."
+      ],
+      [
+        "full release",
+        "In game development, the final full product released to users."
+      ],
+      [
+        "horizontal",
+        "A line from side to side."
+      ],
+      [
+        "indentation",
+        "Moving a line of code inwards (with spaces) to show it belongs inside a loop or if statement."
+      ],
+      [
+        "integer",
+        "A whole number, with no decimal point."
+      ],
+      [
+        "iteration / loop",
+        "Repeating instructions. 'for' repeats a set number of times; 'while' repeats while a condition is true."
+      ],
+      [
+        "LED display",
+        "The 5 by 5 grid of 25 individual red lights on the micro:bit."
+      ],
+      [
+        "light display",
+        "A visual show made using lights."
+      ],
+      [
+        "light sequence",
+        "The order in which lights are displayed."
+      ],
+      [
+        "output",
+        "A visible or audible result from a device, such as the LED display."
+      ],
+      [
+        "pattern recognition",
+        "Looking for a pattern and then using it to solve a problem."
+      ],
+      [
+        "process",
+        "A step where an instruction is carried out, such as a calculation or a display."
+      ],
+      [
+        "prototype",
+        "A first working model of a product, built to test an idea before the final version."
+      ],
+      [
+        "selection",
+        "Choosing between paths by testing a condition (IF / ELSE)."
+      ],
+      [
+        "sequence",
+        "The specific order of instructions."
+      ],
+      [
+        "sleep (not Sleep)",
+        "MicroPython is case-sensitive: use lowercase sleep(ms) to pause the program. Writing Sleep with a capital S is a common typo and will cause a NameError."
+      ],
+      [
+        "string",
+        "Data made of letters, numbers or any keyboard characters, written in quotation marks."
+      ],
+      [
+        "sub-routine",
+        "A mini-program (function) inside a program, run by its name; created with def."
+      ],
+      [
+        "test plan",
+        "A structured document describing what to test, the data used, and the expected results."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "algorithm",
+        "meaning": "A sequence of steps or instructions to solve a problem.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "arithmetic operator",
+        "meaning": "A symbol used for calculations: + , — , * , / and others.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "Boolean logic operations",
+        "meaning": "Operations based on the terms AND, OR and NOT.",
+        "example": "",
+        "letter": "B"
+      },
+      {
+        "term": "bug",
+        "meaning": "An error in a program that stops it working correctly.",
+        "example": "",
+        "letter": "B"
+      },
+      {
+        "term": "debug / debugging",
+        "meaning": "The process of finding and removing errors from a program.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "flowchart",
+        "meaning": "A diagram that shows the sequence of actions in a program using standard shapes.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "full release",
+        "meaning": "In game development, the final full product released to users.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "horizontal",
+        "meaning": "A line from side to side.",
+        "example": "",
+        "letter": "H"
+      },
+      {
+        "term": "indentation",
+        "meaning": "Moving a line of code inwards (with spaces) to show it belongs inside a loop or if statement.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "integer",
+        "meaning": "A whole number, with no decimal point.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "iteration / loop",
+        "meaning": "Repeating instructions. 'for' repeats a set number of times; 'while' repeats while a condition is true.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "LED display",
+        "meaning": "The 5 by 5 grid of 25 individual red lights on the micro:bit.",
+        "example": "",
+        "letter": "L"
+      },
+      {
+        "term": "light display",
+        "meaning": "A visual show made using lights.",
+        "example": "",
+        "letter": "L"
+      },
+      {
+        "term": "light sequence",
+        "meaning": "The order in which lights are displayed.",
+        "example": "",
+        "letter": "L"
+      },
+      {
+        "term": "output",
+        "meaning": "A visible or audible result from a device, such as the LED display.",
+        "example": "",
+        "letter": "O"
+      },
+      {
+        "term": "pattern recognition",
+        "meaning": "Looking for a pattern and then using it to solve a problem.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "process",
+        "meaning": "A step where an instruction is carried out, such as a calculation or a display.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "prototype",
+        "meaning": "A first working model of a product, built to test an idea before the final version.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "selection",
+        "meaning": "Choosing between paths by testing a condition (IF / ELSE).",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "sequence",
+        "meaning": "The specific order of instructions.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "sleep (not Sleep)",
+        "meaning": "MicroPython is case-sensitive: use lowercase sleep(ms) to pause the program. Writing Sleep with a capital S is a common typo and will cause a NameError.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "string",
+        "meaning": "Data made of letters, numbers or any keyboard characters, written in quotation marks.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "sub-routine",
+        "meaning": "A mini-program (function) inside a program, run by its name; created with def.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "test plan",
+        "meaning": "A structured document describing what to test, the data used, and the expected results.",
+        "example": "",
+        "letter": "T"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "Missing from microbit import *",
+        "NameError / crash on the first command Make it the very first line of the program."
+      ],
+      [
+        "Missing colon (:)",
+        "SyntaxError on the if / for / while / def line Add : at the end of the line, then indent below it."
+      ],
+      [
+        "Wrong indentation",
+        "IndentationError or code runs at the wrong time Indent lines inside a block with 4 spaces, consistently."
+      ],
+      [
+        "Misspelled name (SQUAR_SMALL)",
+        "Sad face + scrolling error; AttributeError Check spelling and capitals: Image.SQUARE_SMALL."
+      ],
+      [
+        "Unclosed bracket or quote",
+        "SyntaxError Every ( needs a ), every \" needs a closing \"."
+      ],
+      [
+        "Image row not 5 digits",
+        "Error or a shifted / wrong picture Each of the 5 rows must have exactly 5 digits, colon-separated."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "What does a sequence mean in programming? (a) a random set of steps (b) the specific order of instructions (c) a type of loop (d) a picture on the display",
+      "answer": "(b) the specific order of instructions. A computer follows steps strictly in order.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words.",
+      "errorFeedback": "(b) the specific order of instructions. A computer follows steps strictly in order."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "How many individual LEDs are on the micro:bit display? (a) 5 (b) 16 (c) 25 (d) 100",
+      "answer": "(c) 25. The display is a 5 by 5 grid, and 5 times 5 is 25.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words.",
+      "errorFeedback": "(c) 25. The display is a 5 by 5 grid, and 5 times 5 is 25."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "In display.set_pixel(x, y, b), what does b control? (a) the column (b) the row (c) the brightness (d) the button",
+      "answer": "(c) the brightness (0 to 9). The first two numbers are the column (x) and row (y).",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words.",
+      "errorFeedback": "(c) the brightness (0 to 9). The first two numbers are the column (x) and row (y)."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Which line must appear at the start of every micro:bit program? (a) import microbit (b) from microbit import * (c) display.show() (d) while True:",
+      "answer": "(b) from microbit import *. This imports everything needed to control the micro:bit.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words.",
+      "errorFeedback": "(b) from microbit import *. This imports everything needed to control the micro:bit."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "What is the value range for LED brightness? (a) 0 to 1 (b) 0 to 9 (c) 1 to 100 (d) 0 to 255",
+      "answer": "(b) 0 to 9. 0 is off, 9 is full brightness, and 1 to 8 are dimmer levels.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words.",
+      "errorFeedback": "(b) 0 to 9. 0 is off, 9 is full brightness, and 1 to 8 are dimmer levels."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "How many milliseconds are in one second? (a) 10 (b) 60 (c) 100 (d) 1000",
+      "answer": "(d) 1000. So sleep(1000) waits one second and sleep(500) waits half a second.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words.",
+      "errorFeedback": "(d) 1000. So sleep(1000) waits one second and sleep(500) waits half a second."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "Which Boolean operator needs both inputs to be true? (a) AND (b) OR (c) NOT (d) IF",
+      "answer": "(a) AND. AND is true only when both inputs are true.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words.",
+      "errorFeedback": "(a) AND. AND is true only when both inputs are true."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "A sub-routine in MicroPython is created with which word? (a) sub (b) def (c) loop (d) show",
+      "answer": "(b) def. For example, def light_sequence(): creates a sub-routine.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words.",
+      "errorFeedback": "(b) def. For example, def light_sequence(): creates a sub-routine."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "What is a prototype? (a) the final finished product (b) a first working model built to test an idea (c) a type of error (d) a kind of sensor",
+      "answer": "(b) a first working model built to test an idea before the final product.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words.",
+      "errorFeedback": "(b) a first working model built to test an idea before the final product."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "Pattern recognition is best described as: (a) memorising code (b) looking for a pattern and using it to solve a problem (c) drawing pictures (d) deleting bugs",
+      "answer": "(b) looking for a pattern and using it to solve a problem.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words.",
+      "errorFeedback": "(b) looking for a pattern and using it to solve a problem."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "Which loop repeats forever? (a) for i in range(3): (b) while True: (c) if True: (d) def loop():",
+      "answer": "(b) while True:. It repeats its indented lines forever.",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words.",
+      "errorFeedback": "(b) while True:. It repeats its indented lines forever."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "In an Image string, what separates each row of five digits? (a) a comma (b) a colon (c) a full stop (d) a space",
+      "answer": "(b) a colon. For example \"90000:90000:90000:90000:90000\".",
+      "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words.",
+      "errorFeedback": "(b) a colon. For example \"90000:90000:90000:90000:90000\"."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Copy each program and write the missing part (shown as ___).",
+      "answer": "D1: from microbit import *",
+      "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: D1: from microbit import *"
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "D1 — complete the first line every program needs",
+      "answer": "D2: sleep(500)",
+      "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: D2: sleep(500)"
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "___________________ display.show(Image.HAPPY)",
+      "answer": "D3: for frame in frames:",
+      "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: D3: for frame in frames:"
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "D2 — wait half a second between the images",
+      "answer": "D4: microphone.sound_level() — giving if microphone.sound_level() > 128:",
+      "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: D4: microphone.sound_level() — giving if microphone.sound_level() > 128:"
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Travel",
+      "prompt": "from microbit import * display.show(Image.SQUARE) ___________ display.show(Image.SQUARE_SMALL)",
+      "answer": "D5: \"00900:00900:00900:00900:00900\" — a 9 in the centre position of every row lights the middle column.",
+      "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: D5: \"00900:00900:00900:00900:00900\" — a 9 in the centre position of every row lights the middle column."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "context": "Health",
+      "prompt": "D3 — loop through the list of frames",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Answer in one or two full sentences.",
+      "keyIdeas": [
+        "algorithm",
+        "arithmetic operator",
+        "Boolean logic operations"
+      ],
+      "modelAnswer": "The computer runs instructions strictly top to bottom, so the order decides the output. Example: if you show the 'right column' image before the 'left column' image, the light appears to move right-to-left instead of left-to-right — a different message."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain why the order of instructions matters in a light sequence. Give an example of what could go wrong.",
+      "keyIdeas": [
+        "arithmetic operator",
+        "Boolean logic operations",
+        "bug"
+      ],
+      "modelAnswer": "display.show() shows an image (or holds a single character) on the LEDs; display.scroll() slides text or numbers across the display from right to left."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "What is the difference between display.show() and display.scroll()?",
+      "keyIdeas": [
+        "Boolean logic operations",
+        "bug",
+        "debug / debugging"
+      ],
+      "modelAnswer": "A for loop repeats a fixed number of times (for example once per item in a list). A while loop repeats as long as its condition stays true; while True: repeats forever."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Explain the difference between a for loop and a while loop.",
+      "keyIdeas": [
+        "bug",
+        "debug / debugging",
+        "flowchart"
+      ],
+      "modelAnswer": "sleep() pauses the program so each image is visible long enough for the eye to see before the next one replaces it. Without it, images swap too fast to notice."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "What is the purpose of a sleep() command between two images in a sequence?",
+      "keyIdeas": [
+        "debug / debugging",
+        "flowchart",
+        "full release"
+      ],
+      "modelAnswer": "Evolutionary prototyping builds a full version, gathers feedback and improves it repeatedly until it becomes the final product. Throwaway prototyping builds a small part to test one idea, then discards it before building the real thing."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Describe the difference between evolutionary and throwaway prototyping.",
+      "keyIdeas": [
+        "flowchart",
+        "full release",
+        "horizontal"
+      ],
+      "modelAnswer": "A test plan proves a program works as expected and helps find bugs before release. Its main columns are the test description, the data entered, the expected outcome, and the pass/fail result."
+    }
+  ],
+  "project": {
+    "title": "Unit 6 Project: Sequencing and Pattern Recognition",
+    "brief": "Bring together everything from Sequencing and Pattern Recognition into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your sequencing and pattern recognition project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "My project shows that I understand sequencing — order is everything.",
+      "My project shows that I understand the led display and single lights.",
+      "My project shows that I understand showing built.",
+      "My project shows that I understand building your own light patterns.",
+      "My project shows that I understand controlling brightness."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does a sequence mean in programming?",
+        "options": [
+          "a random set of steps",
+          "the specific order of instructions",
+          "a type of loop",
+          "a picture on the display"
+        ],
+        "answer": "the specific order of instructions",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "the specific order of instructions. A computer follows steps strictly in order."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "How many individual LEDs are on the micro:bit display?",
+        "options": [
+          "5",
+          "16",
+          "25",
+          "100"
+        ],
+        "answer": "25",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "25. The display is a 5 by 5 grid, and 5 times 5 is 25."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "In display.set_pixel(x, y, b), what does b control?",
+        "options": [
+          "the column",
+          "the row",
+          "the brightness",
+          "the button"
+        ],
+        "answer": "the brightness",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "the brightness (0 to 9). The first two numbers are the column (x) and row (y)."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "Which line must appear at the start of every micro:bit program?",
+        "options": [
+          "import microbit",
+          "from microbit import *",
+          "display.show()",
+          "while True:"
+        ],
+        "answer": "from microbit import *",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "from microbit import *. This imports everything needed to control the micro:bit."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What is the value range for LED brightness?",
+        "options": [
+          "0 to 1",
+          "0 to 9",
+          "1 to 100",
+          "0 to 255"
+        ],
+        "answer": "0 to 9",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "0 to 9. 0 is off, 9 is full brightness, and 1 to 8 are dimmer levels."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "How many milliseconds are in one second?",
+        "options": [
+          "10",
+          "60",
+          "100",
+          "1000"
+        ],
+        "answer": "1000",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "1000. So sleep(1000) waits one second and sleep(500) waits half a second."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which Boolean operator needs both inputs to be true?",
+        "options": [
+          "AND",
+          "OR",
+          "NOT",
+          "IF"
+        ],
+        "answer": "AND",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "AND. AND is true only when both inputs are true."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "A sub-routine in MicroPython is created with which word?",
+        "options": [
+          "sub",
+          "def",
+          "loop",
+          "show"
+        ],
+        "answer": "def",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "def. For example, def light_sequence(): creates a sub-routine."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo09",
+        "difficulty": "Core",
+        "question": "What is a prototype?",
+        "options": [
+          "the final finished product",
+          "a first working model built to test an idea",
+          "a type of error",
+          "a kind of sensor"
+        ],
+        "answer": "a first working model built to test an idea",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "a first working model built to test an idea before the final product."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Pattern recognition is best described as:",
+        "options": [
+          "memorising code",
+          "looking for a pattern and using it to solve a problem",
+          "drawing pictures",
+          "deleting bugs"
+        ],
+        "answer": "looking for a pattern and using it to solve a problem",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "looking for a pattern and using it to solve a problem."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Which loop repeats forever?",
+        "options": [
+          "for i in range(3):",
+          "while True:",
+          "if True:",
+          "def loop():"
+        ],
+        "answer": "while True:",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "while True:. It repeats its indented lines forever."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "In an Image string, what separates each row of five digits?",
+        "options": [
+          "a comma",
+          "a colon",
+          "a full stop",
+          "a space"
+        ],
+        "answer": "a colon",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "a colon. For example \"90000:90000:90000:90000:90000\"."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u6-game-1",
+        "icon": "?",
+        "skill": "algorithm",
+        "title": "Quick Match: algorithm",
+        "description": "Practise algorithm through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does a sequence mean in programming?",
+            "choices": [
+              "a random set of steps",
+              "the specific order of instructions",
+              "a type of loop",
+              "a picture on the display"
+            ],
+            "answer": "the specific order of instructions",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "the specific order of instructions. A computer follows steps strictly in order."
+          },
+          {
+            "prompt": "Which line must appear at the start of every micro:bit program?",
+            "choices": [
+              "import microbit",
+              "from microbit import *",
+              "display.show()",
+              "while True:"
+            ],
+            "answer": "from microbit import *",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "from microbit import *. This imports everything needed to control the micro:bit."
+          },
+          {
+            "prompt": "Which Boolean operator needs both inputs to be true?",
+            "choices": [
+              "AND",
+              "OR",
+              "NOT",
+              "IF"
+            ],
+            "answer": "AND",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "AND. AND is true only when both inputs are true."
+          },
+          {
+            "prompt": "Pattern recognition is best described as:",
+            "choices": [
+              "memorising code",
+              "looking for a pattern and using it to solve a problem",
+              "drawing pictures",
+              "deleting bugs"
+            ],
+            "answer": "looking for a pattern and using it to solve a problem",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "looking for a pattern and using it to solve a problem."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-2",
+        "icon": "★",
+        "skill": "arithmetic operator",
+        "title": "Concept Quest: arithmetic operator",
+        "description": "Practise arithmetic operator through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "How many individual LEDs are on the micro:bit display?",
+            "choices": [
+              "5",
+              "16",
+              "25",
+              "100"
+            ],
+            "answer": "25",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "25. The display is a 5 by 5 grid, and 5 times 5 is 25."
+          },
+          {
+            "prompt": "What is the value range for LED brightness?",
+            "choices": [
+              "0 to 1",
+              "0 to 9",
+              "1 to 100",
+              "0 to 255"
+            ],
+            "answer": "0 to 9",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "0 to 9. 0 is off, 9 is full brightness, and 1 to 8 are dimmer levels."
+          },
+          {
+            "prompt": "A sub-routine in MicroPython is created with which word?",
+            "choices": [
+              "sub",
+              "def",
+              "loop",
+              "show"
+            ],
+            "answer": "def",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "def. For example, def light_sequence(): creates a sub-routine."
+          },
+          {
+            "prompt": "Which loop repeats forever?",
+            "choices": [
+              "for i in range(3):",
+              "while True:",
+              "if True:",
+              "def loop():"
+            ],
+            "answer": "while True:",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "while True:. It repeats its indented lines forever."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-3",
+        "icon": "◫",
+        "skill": "Boolean logic operations",
+        "title": "Debug Detective: Boolean logic operations",
+        "description": "Practise boolean logic operations through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "In display.set_pixel(x, y, b), what does b control?",
+            "choices": [
+              "the column",
+              "the row",
+              "the brightness",
+              "the button"
+            ],
+            "answer": "the brightness",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "the brightness (0 to 9). The first two numbers are the column (x) and row (y)."
+          },
+          {
+            "prompt": "How many milliseconds are in one second?",
+            "choices": [
+              "10",
+              "60",
+              "100",
+              "1000"
+            ],
+            "answer": "1000",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "1000. So sleep(1000) waits one second and sleep(500) waits half a second."
+          },
+          {
+            "prompt": "What is a prototype?",
+            "choices": [
+              "the final finished product",
+              "a first working model built to test an idea",
+              "a type of error",
+              "a kind of sensor"
+            ],
+            "answer": "a first working model built to test an idea",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "a first working model built to test an idea before the final product."
+          },
+          {
+            "prompt": "In an Image string, what separates each row of five digits?",
+            "choices": [
+              "a comma",
+              "a colon",
+              "a full stop",
+              "a space"
+            ],
+            "answer": "a colon",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "a colon. For example \"90000:90000:90000:90000:90000\"."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-4",
+        "icon": "→",
+        "skill": "bug",
+        "title": "Algorithm Runner: bug",
+        "description": "Practise bug through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which line must appear at the start of every micro:bit program?",
+            "choices": [
+              "import microbit",
+              "from microbit import *",
+              "display.show()",
+              "while True:"
+            ],
+            "answer": "from microbit import *",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "from microbit import *. This imports everything needed to control the micro:bit."
+          },
+          {
+            "prompt": "Which Boolean operator needs both inputs to be true?",
+            "choices": [
+              "AND",
+              "OR",
+              "NOT",
+              "IF"
+            ],
+            "answer": "AND",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "AND. AND is true only when both inputs are true."
+          },
+          {
+            "prompt": "Pattern recognition is best described as:",
+            "choices": [
+              "memorising code",
+              "looking for a pattern and using it to solve a problem",
+              "drawing pictures",
+              "deleting bugs"
+            ],
+            "answer": "looking for a pattern and using it to solve a problem",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "looking for a pattern and using it to solve a problem."
+          },
+          {
+            "prompt": "What does a sequence mean in programming?",
+            "choices": [
+              "a random set of steps",
+              "the specific order of instructions",
+              "a type of loop",
+              "a picture on the display"
+            ],
+            "answer": "the specific order of instructions",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "the specific order of instructions. A computer follows steps strictly in order."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-5",
+        "icon": "Σ",
+        "skill": "debug / debugging",
+        "title": "Vocabulary Vault: debug / debugging",
+        "description": "Practise debug / debugging through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What is the value range for LED brightness?",
+            "choices": [
+              "0 to 1",
+              "0 to 9",
+              "1 to 100",
+              "0 to 255"
+            ],
+            "answer": "0 to 9",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "0 to 9. 0 is off, 9 is full brightness, and 1 to 8 are dimmer levels."
+          },
+          {
+            "prompt": "A sub-routine in MicroPython is created with which word?",
+            "choices": [
+              "sub",
+              "def",
+              "loop",
+              "show"
+            ],
+            "answer": "def",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "def. For example, def light_sequence(): creates a sub-routine."
+          },
+          {
+            "prompt": "Which loop repeats forever?",
+            "choices": [
+              "for i in range(3):",
+              "while True:",
+              "if True:",
+              "def loop():"
+            ],
+            "answer": "while True:",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "while True:. It repeats its indented lines forever."
+          },
+          {
+            "prompt": "How many individual LEDs are on the micro:bit display?",
+            "choices": [
+              "5",
+              "16",
+              "25",
+              "100"
+            ],
+            "answer": "25",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "25. The display is a 5 by 5 grid, and 5 times 5 is 25."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-6",
+        "icon": "◇",
+        "skill": "flowchart",
+        "title": "Challenge Cards: flowchart",
+        "description": "Practise flowchart through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "How many milliseconds are in one second?",
+            "choices": [
+              "10",
+              "60",
+              "100",
+              "1000"
+            ],
+            "answer": "1000",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "1000. So sleep(1000) waits one second and sleep(500) waits half a second."
+          },
+          {
+            "prompt": "What is a prototype?",
+            "choices": [
+              "the final finished product",
+              "a first working model built to test an idea",
+              "a type of error",
+              "a kind of sensor"
+            ],
+            "answer": "a first working model built to test an idea",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "a first working model built to test an idea before the final product."
+          },
+          {
+            "prompt": "In an Image string, what separates each row of five digits?",
+            "choices": [
+              "a comma",
+              "a colon",
+              "a full stop",
+              "a space"
+            ],
+            "answer": "a colon",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "a colon. For example \"90000:90000:90000:90000:90000\"."
+          },
+          {
+            "prompt": "In display.set_pixel(x, y, b), what does b control?",
+            "choices": [
+              "the column",
+              "the row",
+              "the brightness",
+              "the button"
+            ],
+            "answer": "the brightness",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "the brightness (0 to 9). The first two numbers are the column (x) and row (y)."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-7",
+        "icon": "⚡",
+        "skill": "full release",
+        "title": "Think Fast: full release",
+        "description": "Practise full release through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which Boolean operator needs both inputs to be true?",
+            "choices": [
+              "AND",
+              "OR",
+              "NOT",
+              "IF"
+            ],
+            "answer": "AND",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "AND. AND is true only when both inputs are true."
+          },
+          {
+            "prompt": "Pattern recognition is best described as:",
+            "choices": [
+              "memorising code",
+              "looking for a pattern and using it to solve a problem",
+              "drawing pictures",
+              "deleting bugs"
+            ],
+            "answer": "looking for a pattern and using it to solve a problem",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "looking for a pattern and using it to solve a problem."
+          },
+          {
+            "prompt": "What does a sequence mean in programming?",
+            "choices": [
+              "a random set of steps",
+              "the specific order of instructions",
+              "a type of loop",
+              "a picture on the display"
+            ],
+            "answer": "the specific order of instructions",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "the specific order of instructions. A computer follows steps strictly in order."
+          },
+          {
+            "prompt": "Which line must appear at the start of every micro:bit program?",
+            "choices": [
+              "import microbit",
+              "from microbit import *",
+              "display.show()",
+              "while True:"
+            ],
+            "answer": "from microbit import *",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "from microbit import *. This imports everything needed to control the micro:bit."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-8",
+        "icon": "☁",
+        "skill": "horizontal",
+        "title": "Explain It: horizontal",
+        "description": "Practise horizontal through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "A sub-routine in MicroPython is created with which word?",
+            "choices": [
+              "sub",
+              "def",
+              "loop",
+              "show"
+            ],
+            "answer": "def",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "def. For example, def light_sequence(): creates a sub-routine."
+          },
+          {
+            "prompt": "Which loop repeats forever?",
+            "choices": [
+              "for i in range(3):",
+              "while True:",
+              "if True:",
+              "def loop():"
+            ],
+            "answer": "while True:",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "while True:. It repeats its indented lines forever."
+          },
+          {
+            "prompt": "How many individual LEDs are on the micro:bit display?",
+            "choices": [
+              "5",
+              "16",
+              "25",
+              "100"
+            ],
+            "answer": "25",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "25. The display is a 5 by 5 grid, and 5 times 5 is 25."
+          },
+          {
+            "prompt": "What is the value range for LED brightness?",
+            "choices": [
+              "0 to 1",
+              "0 to 9",
+              "1 to 100",
+              "0 to 255"
+            ],
+            "answer": "0 to 9",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "0 to 9. 0 is off, 9 is full brightness, and 1 to 8 are dimmer levels."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-9",
+        "icon": "⌂",
+        "skill": "indentation",
+        "title": "Real-Life Round: indentation",
+        "description": "Practise indentation through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What is a prototype?",
+            "choices": [
+              "the final finished product",
+              "a first working model built to test an idea",
+              "a type of error",
+              "a kind of sensor"
+            ],
+            "answer": "a first working model built to test an idea",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "a first working model built to test an idea before the final product."
+          },
+          {
+            "prompt": "In an Image string, what separates each row of five digits?",
+            "choices": [
+              "a comma",
+              "a colon",
+              "a full stop",
+              "a space"
+            ],
+            "answer": "a colon",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "a colon. For example \"90000:90000:90000:90000:90000\"."
+          },
+          {
+            "prompt": "In display.set_pixel(x, y, b), what does b control?",
+            "choices": [
+              "the column",
+              "the row",
+              "the brightness",
+              "the button"
+            ],
+            "answer": "the brightness",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "the brightness (0 to 9). The first two numbers are the column (x) and row (y)."
+          },
+          {
+            "prompt": "How many milliseconds are in one second?",
+            "choices": [
+              "10",
+              "60",
+              "100",
+              "1000"
+            ],
+            "answer": "1000",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "1000. So sleep(1000) waits one second and sleep(500) waits half a second."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-10",
+        "icon": "!",
+        "skill": "integer",
+        "title": "Spot the Bug: integer",
+        "description": "Practise integer through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Pattern recognition is best described as:",
+            "choices": [
+              "memorising code",
+              "looking for a pattern and using it to solve a problem",
+              "drawing pictures",
+              "deleting bugs"
+            ],
+            "answer": "looking for a pattern and using it to solve a problem",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "looking for a pattern and using it to solve a problem."
+          },
+          {
+            "prompt": "What does a sequence mean in programming?",
+            "choices": [
+              "a random set of steps",
+              "the specific order of instructions",
+              "a type of loop",
+              "a picture on the display"
+            ],
+            "answer": "the specific order of instructions",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "the specific order of instructions. A computer follows steps strictly in order."
+          },
+          {
+            "prompt": "Which line must appear at the start of every micro:bit program?",
+            "choices": [
+              "import microbit",
+              "from microbit import *",
+              "display.show()",
+              "while True:"
+            ],
+            "answer": "from microbit import *",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "from microbit import *. This imports everything needed to control the micro:bit."
+          },
+          {
+            "prompt": "Which Boolean operator needs both inputs to be true?",
+            "choices": [
+              "AND",
+              "OR",
+              "NOT",
+              "IF"
+            ],
+            "answer": "AND",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "AND. AND is true only when both inputs are true."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-11",
+        "icon": "≡",
+        "skill": "iteration / loop",
+        "title": "Mastery Mix: iteration / loop",
+        "description": "Practise iteration / loop through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which loop repeats forever?",
+            "choices": [
+              "for i in range(3):",
+              "while True:",
+              "if True:",
+              "def loop():"
+            ],
+            "answer": "while True:",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "while True:. It repeats its indented lines forever."
+          },
+          {
+            "prompt": "How many individual LEDs are on the micro:bit display?",
+            "choices": [
+              "5",
+              "16",
+              "25",
+              "100"
+            ],
+            "answer": "25",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "25. The display is a 5 by 5 grid, and 5 times 5 is 25."
+          },
+          {
+            "prompt": "What is the value range for LED brightness?",
+            "choices": [
+              "0 to 1",
+              "0 to 9",
+              "1 to 100",
+              "0 to 255"
+            ],
+            "answer": "0 to 9",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "0 to 9. 0 is off, 9 is full brightness, and 1 to 8 are dimmer levels."
+          },
+          {
+            "prompt": "A sub-routine in MicroPython is created with which word?",
+            "choices": [
+              "sub",
+              "def",
+              "loop",
+              "show"
+            ],
+            "answer": "def",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "def. For example, def light_sequence(): creates a sub-routine."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-12",
+        "icon": "T",
+        "skill": "LED display",
+        "title": "Unit Champion: LED display",
+        "description": "Practise led display through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "In an Image string, what separates each row of five digits?",
+            "choices": [
+              "a comma",
+              "a colon",
+              "a full stop",
+              "a space"
+            ],
+            "answer": "a colon",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "a colon. For example \"90000:90000:90000:90000:90000\"."
+          },
+          {
+            "prompt": "In display.set_pixel(x, y, b), what does b control?",
+            "choices": [
+              "the column",
+              "the row",
+              "the brightness",
+              "the button"
+            ],
+            "answer": "the brightness",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "the brightness (0 to 9). The first two numbers are the column (x) and row (y)."
+          },
+          {
+            "prompt": "How many milliseconds are in one second?",
+            "choices": [
+              "10",
+              "60",
+              "100",
+              "1000"
+            ],
+            "answer": "1000",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "1000. So sleep(1000) waits one second and sleep(500) waits half a second."
+          },
+          {
+            "prompt": "What is a prototype?",
+            "choices": [
+              "the final finished product",
+              "a first working model built to test an idea",
+              "a type of error",
+              "a kind of sensor"
+            ],
+            "answer": "a first working model built to test an idea",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "a first working model built to test an idea before the final product."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can in this unit you will learn to:",
+    "I can follow, edit and explain an algorithm using a flowchart",
+    "I can follow and explain the logic of AND, OR and NOT in a flowchart and in a MicroPython program",
+    "I can explain and use the selection statements IF, THEN and ELSE",
+    "I can predict the outcome of a flowchart that uses selection",
+    "I can create an algorithm as a flowchart using sequence and selection",
+    "I can explain, edit and correct an algorithm that uses sub-routines",
+    "I can evaluate a software prototype to help debug and improve it",
+    "I can explain the purpose of a project plan",
+    "I can evaluate the design of a micro:bit solution"
+  ]
+}

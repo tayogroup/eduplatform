@@ -1,0 +1,1793 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.690Z",
+  "stage": {
+    "id": "s04",
+    "label": "Stage 4"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t02",
+    "label": "Term 2"
+  },
+  "unit": {
+    "unitId": "comp-g04-u05",
+    "unitNo": 5,
+    "unitTitle": "Be a Computer Scientist",
+    "unitOverview": "Welcome to Unit 5 of Year 4 Computing at Ehel Academy. This unit answers two big questions: What does a computer scientist actually do? and How do robots help people at work? Now you meet the real people who do this for a living, and discover that the clever machines around us — from a delivery drone to a robot that helps a doctor — were built by computer scientists.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 4
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-4-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 4",
+    "sourceArchive": "Year 4-20260801T055750Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 4/Unit 5/Year 4 - Unit 5 Teacher Guide.docx",
+      "Year 4/Unit 5/Year 4 - Unit 5 Activity Sheet.docx",
+      "Year 4/Unit 5/Year 4 - Unit 5 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 347,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 4 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Say what a computer scientist is — a person who uses computational thinking to work with computer hardware and software.",
+    "Name some roles a computer scientist can have (hardware engineer, games developer/programmer, software developer, data analyst, robotics engineer).",
+    "Describe what almost all computer scientists do: look at a problem and decide how to solve it, break a big problem into smaller ones, and work in a team.",
+    "Give examples of robots in delivery, transport, food and healthcare, and say what each does.",
+    "Explain what a sensor is and what a drone is.",
+    "Think like a computer scientist by writing a simple algorithm (steps in the right order) for a robot to follow."
+  ],
+  "toolkit": [
+    {
+      "name": "Scratch",
+      "url": "scratch.mit.edu",
+      "steps": [
+        "Go to scratch.mit.edu and click Create.",
+        "Drag blocks from the palette on the left into the code area.",
+        "Make variables in the orange Variables section.",
+        "Click the green flag to run and the red circle to stop."
+      ],
+      "note": "Runs in a web browser. Free, with nothing to download."
+    }
+  ],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-what-is-a-computer-scientist",
+      "title": "What is a computer scientist?",
+      "explanation": "A computer scientist is a person who uses computational thinking — solving a problem by breaking it into clear steps — to work with computer hardware and software. They create, design and build things to solve problems: writing the software for an app, helping design a robot to pack boxes in a factory, or building a new computer part.\n\nOn your way here you passed traffic lights, a car, a phone, the fridge at home. Every one has a computer inside, and a computer scientist helped make it work. A computer scientist is someone who is very good at solving problems with computers — by thinking in steps.",
+      "example": "Answer this in your own words, out loud or on paper: What is a computer scientist? Then check your answer against the explanation above.",
+      "checkYourself": "Can you understand that computational thinking means breaking a big problem into smaller ones?"
+    },
+    {
+      "id": "concept-2-so-many-roles-meet-five-computer-scientists",
+      "title": "So many roles! Meet five computer scientists",
+      "explanation": "A computer scientist can have many different roles — you will meet five. Yet in almost every role they do the same three things: look at a problem and decide how to solve it, break a big problem into smaller ones, and work as part of a team — often with people who know little about computing, like artists and shopkeepers.\n\nIntroduce the five computer scientists one at a time, like a little parade",
+      "example": "Find one real example of so many roles! Meet five computer scientists around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you know that computer scientists work in teams, not alone? Can you name at least one of the three things almost all computer scientists do? Can you name two or three different roles a computer scientist can have?"
+    },
+    {
+      "id": "concept-3-robots-at-work-delivery-and-transport",
+      "title": "Robots at work: delivery and transport",
+      "explanation": "Robots are machines that can be programmed to do tasks, and they help people in many industries. Today, two: delivery and transport. For delivery, some companies use flying robots called drones to carry packages, and some restaurants use small ground robots to bring food. For transport, a driverless vehicle (also called an AV) drives itself using sensors — devices that detect things around it, like other cars and the road edge. There are driverless cars, buses and even trains.\n\nWhen a package arrives, a person usually brings it. But some companies now use a drone — a little flying machine with no pilot on board, controlled from far away — to fly it to you. Others use a small robot on wheels on the pavement. A driverless car has no human driver.",
+      "example": "So how does it not crash? It is covered in sensors — devices that sense what is around the car, like eyes and ears made of electronics — and its computer uses them to steer safely.",
+      "checkYourself": "Can you understand that a driverless car uses sensors to “see” and does not need a human driver?"
+    },
+    {
+      "id": "concept-4-robots-at-work-food-and-healthcare",
+      "title": "Robots at work: food and healthcare",
+      "explanation": "Two more industries. In the food service industry, robot waiters can greet customers, take an order, serve food and clear dishes, and some robots even prepare food. In healthcare, robots can help surgeons during operations, robotic limbs (a robotic arm or hand) help injured or disabled people pick up and hold objects, and care robots can check a patient's temperature, bring medicine, and help keep hospitals clean.\n\nImagine a cafe where a friendly robot rolls up, greets you and brings your food — that is a robot in the food service industry. In a hospital, a robot can help a doctor operate very steadily.",
+      "example": "A robotic hand can help someone hold a cup again. A care robot can check how a patient is feeling and bring their medicine.",
+      "checkYourself": "Can you understand that healthcare robots assist people rather than replace you? Can you name one way a robot helps in food service and one way it helps in healthcare?"
+    },
+    {
+      "id": "concept-5-think-like-a-computer-scientist-write-an-algorithm",
+      "title": "Think like a computer scientist: write an algorithm",
+      "explanation": "A robot only knows what to do because someone wrote it an algorithm — a set of steps in the right order. Choose a job everyone can picture: a delivery robot taking a package from the shop to a house.\n\nTry it: This is the core of the session and is enough on its own.\n\nCheck yourself: Can you understand that a robot follows its steps exactly, so the order really matters? Can you put the steps of an algorithm in a sensible order?",
+      "example": "Find one real example of think like a computer scientist: write an algorithm around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you understand that a robot follows its steps exactly, so the order really matters? Can you put the steps of an algorithm in a sensible order?"
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "Step 5 Say: \"Your package is here!\" — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Step 5 Say: \"Your package is here!\".",
+      "lines": [
+        "when green flag clicked",
+        "go to x: (-180) y: (0)",
+        "point in direction (90)",
+        "say (Delivering your package...) for (2) seconds",
+        "repeat (10)",
+        "move (20) steps",
+        "wait (0.2) seconds",
+        "say (Your package is here! Have a nice day!) for (2) seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "What is a Computer Scientist?",
+      "context": "work through the steps below and see what happens. This is what is a computer scientist? in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Fill in the missing words. Use the word bank to help you.",
+      "answer": "Word bank: steps software hardware A computer scientist solves problems by thinking in _______________. They work with computer _______________, which are the parts you can touch. They also work with _______________, which are the programs that tell a computer what to do.",
+      "modelType": "model-1",
+      "hint": "Start here: Word bank: steps software hardware",
+      "explanation": "What is a computer scientist?: A computer scientist is a person who uses computational thinking — solving a problem by breaking it into clear steps — to work with computer hardware and software. They create, design and build things to solve problems: writing the software for an app, helping design a robot to pack boxes in a…"
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Match the Computer Scientist to Their Job",
+      "context": "work through the steps below and see what happens. This is so many roles! meet five computer scientists in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "There are many kinds of computer scientist! Draw a line from each person to their job.",
+      "answer": "(Careful — they are mixed up! One is a hardware engineer, one a games programmer, one a software developer, one a data analyst, and one a robotics engineer.) Match: Computer scientist → Their job Match: Karim → designs and builds robots Match: Maya → designs and tests hardware, like the CPU Match: Theo → collects and organises data, like what people buy",
+      "modelType": "model-2",
+      "hint": "Start here: (Careful — they are mixed up! One is a hardware engineer, one a games programmer, one a software developer, one a data analyst, and one a robotics…",
+      "explanation": "So many roles! Meet five computer scientists: A computer scientist can have many different roles — you will meet five. Yet in almost every role they do the same three things: look at a problem and decide how to solve it, break a big problem into smaller ones, and work as part of a team — often with people who know little about computing, like…"
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "True or False? (Computer Scientists)",
+      "context": "work through the steps below and see what happens. This is robots at work: delivery and transport in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Write True or False next to each sentence.",
+      "answer": "a) A computer scientist always works alone. _______________ b) A person who makes games is a computer scientist. _______________ c) Someone who designs computer chips is a computer scientist. _______________ d) A data analyst collects and organises data. _______________ e) A computer scientist can help design new hardware. _______________",
+      "modelType": "model-3",
+      "hint": "Start here: a) A computer scientist always works alone. _______________",
+      "explanation": "Robots at work: delivery and transport: Robots are machines that can be programmed to do tasks, and they help people in many industries. Today, two: delivery and transport. For delivery, some companies use flying robots called drones to carry packages, and some restaurants use small ground robots to bring food. For transport, a…"
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "What Do Almost All Computer Scientists Do?",
+      "context": "work through the steps below and see what happens. This is robots at work: food and healthcare in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Put a tick next to the three things almost every computer scientist does.",
+      "answer": "[ ] Look at a problem and decide how to solve it. [ ] Break a big problem into smaller ones. [ ] Work as part of a team. [ ] Work all alone and never talk to anyone. [ ] Only ever type code, and nothing else.",
+      "modelType": "model-4",
+      "hint": "Start here: [ ] Look at a problem and decide how to solve it.",
+      "explanation": "Robots at work: food and healthcare: Two more industries. In the food service industry, robot waiters can greet customers, take an order, serve food and clear dishes, and some robots even prepare food. In healthcare, robots can help surgeons during operations, robotic limbs (a robotic arm or hand) help injured or disabled people pick…"
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Sort the Robots",
+      "context": "work through the steps below and see what happens. This is think like a computer scientist: write an algorithm in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Robots help people in many industries. Write each robot in the right row. (Some rows can have more than one!).",
+      "answer": "Robots to sort: a drone that flies packages — a self-driving car — a robot waiter — a robot that helps a surgeon — a robot that prepares food — a care robot that checks your temperature Match: Industry → Which robot(s) belong here?",
+      "modelType": "model-5",
+      "hint": "Start here: Robots to sort: a drone that flies packages — a self-driving car — a robot waiter — a robot that helps a surgeon — a robot that prepares food — a…",
+      "explanation": "Think like a computer scientist: write an algorithm: A robot only knows what to do because someone wrote it an algorithm — a set of steps in the right order. Choose a job everyone can picture: a delivery robot taking a package from the shop to a house."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "True or False? (Robots)",
+      "context": "work through the steps below and see what happens. This is what is a computer scientist? in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Write True or False next to each sentence.",
+      "answer": "a) A self-driving car is also called an AV. _______________ b) A bus always needs a human driver. _______________ c) Packages can only be delivered by drones. _______________ d) Robots can help surgeons during operations. _______________ e) A robot that prepares food must look like a human. _______________",
+      "modelType": "model-6",
+      "hint": "Start here: a) A self-driving car is also called an AV. _______________",
+      "explanation": "What is a computer scientist?: A computer scientist is a person who uses computational thinking — solving a problem by breaking it into clear steps — to work with computer hardware and software. They create, design and build things to solve problems: writing the software for an app, helping design a robot to pack boxes in a…"
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "What is a computer scientist?",
+      "modelType": "concept-model-1",
+      "purpose": "A computer scientist is a person who uses computational thinking — solving a problem by breaking it into clear steps — to work with computer hardware and software. They create, design and build things to solve problems:…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "So many roles! Meet five computer scientists",
+      "modelType": "concept-model-2",
+      "purpose": "A computer scientist can have many different roles — you will meet five. Yet in almost every role they do the same three things: look at a problem and decide how to solve it, break a big problem into smaller ones, and…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Robots at work: delivery and transport",
+      "modelType": "concept-model-3",
+      "purpose": "Robots are machines that can be programmed to do tasks, and they help people in many industries. Today, two: delivery and transport. For delivery, some companies use flying robots called drones to carry packages, and…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Robots at work: food and healthcare",
+      "modelType": "concept-model-4",
+      "purpose": "Two more industries. In the food service industry, robot waiters can greet customers, take an order, serve food and clear dishes, and some robots even prepare food. In healthcare, robots can help surgeons during…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Think like a computer scientist: write an algorithm",
+      "modelType": "concept-model-5",
+      "purpose": "A robot only knows what to do because someone wrote it an algorithm — a set of steps in the right order. Choose a job everyone can picture: a delivery robot taking a package from the shop to a house.",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with what is a computer scientist?",
+      "example": "Answer this in your own words, out loud or on paper: What is a computer scientist? Then check your answer against the explanation above.",
+      "steps": [
+        "Read the concept card for what is a computer scientist? and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with so many roles! meet five computer scientists",
+      "example": "Find one real example of so many roles! Meet five computer scientists around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for so many roles! meet five computer scientists and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with robots at work: delivery and transport",
+      "example": "So how does it not crash? It is covered in sensors — devices that sense what is around the car, like eyes and ears made of electronics — and its computer uses them to steer safely.",
+      "steps": [
+        "Read the concept card for robots at work: delivery and transport and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with robots at work: food and healthcare",
+      "example": "A robotic hand can help someone hold a cup again. A care robot can check how a patient is feeling and bring their medicine.",
+      "steps": [
+        "Read the concept card for robots at work: food and healthcare and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with think like a computer scientist: write an algorithm",
+      "example": "Find one real example of think like a computer scientist: write an algorithm around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for think like a computer scientist: write an algorithm and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: What is a computer scientist?",
+      "prompt": "What is a computer scientist? Finish the sentence.",
+      "solution": "steps (a computer scientist solves problems by thinking in steps — computational thinking)."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: So many roles! Meet five computer scientists",
+      "prompt": "Name two different roles a computer scientist can have.",
+      "solution": "Any two of: hardware engineer, games developer/programmer, software developer, data analyst, robotics engineer."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Robots at work: delivery and transport",
+      "prompt": "Name one thing that almost every computer scientist does.",
+      "solution": "Any one of: look at a problem and decide how to solve it; break a big problem into smaller ones; work as part of a team."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Robots at work: food and healthcare",
+      "prompt": "What is a sensor? What is a drone?",
+      "solution": "A sensor is a device that detects something around it (heat, light, sound or movement). A drone is a flying machine with no pilot on board, controlled from far away."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Think like a computer scientist: write an algorithm",
+      "prompt": "Name one way a robot helps people in food service or in healthcare.",
+      "solution": "Any one example. Food service: a robot waiter serves food, or a robot prepares food. Healthcare: a robot helps a surgeon; a robotic arm/hand helps someone hold objects; a care robot checks temperature or brings medicine."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: What is a computer scientist?",
+      "prompt": "A robot waiter must bring food to a table. Put the steps in order by writing 1, 2, 3, 4.",
+      "solution": "Correct order: (1) Face the table, (2) Move to the table, (3) Put down the food, (4) Say \"Enjoy your meal!\". The order matters because a robot follows its steps exactly."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "What is a computer scientist? Finish the sentence.",
+      "answer": "steps (a computer scientist solves problems by thinking in steps — computational thinking).",
+      "hint": "Look back at what computer scientist and hardware mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Name two different roles a computer scientist can have.",
+      "answer": "Any two of: hardware engineer, games developer/programmer, software developer, data analyst, robotics engineer.",
+      "hint": "Look back at what computer scientist and hardware mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "Name one thing that almost every computer scientist does.",
+      "answer": "Any one of: look at a problem and decide how to solve it; break a big problem into smaller ones; work as part of a team.",
+      "hint": "Look back at what computer scientist and hardware mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "What is a sensor? What is a drone?",
+      "answer": "A sensor is a device that detects something around it (heat, light, sound or movement). A drone is a flying machine with no pilot on board, controlled from far away.",
+      "hint": "Look back at what computer scientist and hardware mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "Name one way a robot helps people in food service or in healthcare.",
+      "answer": "Any one example. Food service: a robot waiter serves food, or a robot prepares food. Healthcare: a robot helps a surgeon; a robotic arm/hand helps someone hold objects; a care robot checks temperature or brings medicine.",
+      "hint": "Look back at what computer scientist and hardware mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "A robot waiter must bring food to a table. Put the steps in order by writing 1, 2, 3, 4.",
+      "answer": "Correct order: (1) Face the table, (2) Move to the table, (3) Put down the food, (4) Say \"Enjoy your meal!\". The order matters because a robot follows its steps exactly.",
+      "hint": "Look back at what computer scientist and hardware mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "What is a Computer Scientist?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Fill in the missing words. Use the word bank to help you.",
+        "Word bank: steps software hardware",
+        "A computer scientist solves problems by thinking in _______________.",
+        "They work with computer _______________, which are the parts you can touch.",
+        "They also work with _______________, which are the programs that tell a computer what to do."
+      ]
+    },
+    {
+      "title": "Match the Computer Scientist to Their Job",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "There are many kinds of computer scientist! Draw a line from each person to their job.",
+        "(Careful — they are mixed up! One is a hardware engineer, one a games programmer, one a software developer, one a data analyst, and one a robotics engineer.)",
+        "Match: Computer scientist → Their job",
+        "Match: Karim → designs and builds robots",
+        "Match: Maya → designs and tests hardware, like the CPU",
+        "Match: Theo → collects and organises data, like what people buy"
+      ]
+    },
+    {
+      "title": "True or False? (Computer Scientists)",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Write True or False next to each sentence.",
+        "a) A computer scientist always works alone. _______________",
+        "b) A person who makes games is a computer scientist. _______________",
+        "c) Someone who designs computer chips is a computer scientist. _______________",
+        "d) A data analyst collects and organises data. _______________",
+        "e) A computer scientist can help design new hardware. _______________"
+      ]
+    },
+    {
+      "title": "What Do Almost All Computer Scientists Do?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Put a tick next to the three things almost every computer scientist does.",
+        "[ ] Look at a problem and decide how to solve it.",
+        "[ ] Break a big problem into smaller ones.",
+        "[ ] Work as part of a team.",
+        "[ ] Work all alone and never talk to anyone.",
+        "[ ] Only ever type code, and nothing else."
+      ]
+    },
+    {
+      "title": "Sort the Robots",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Robots help people in many industries. Write each robot in the right row. (Some rows can have more than one!).",
+        "Robots to sort: a drone that flies packages — a self-driving car — a robot waiter — a robot that helps a surgeon — a robot that prepares food — a care robot that checks your temperature",
+        "Match: Industry → Which robot(s) belong here?"
+      ]
+    },
+    {
+      "title": "True or False? (Robots)",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Write True or False next to each sentence.",
+        "a) A self-driving car is also called an AV. _______________",
+        "b) A bus always needs a human driver. _______________",
+        "c) Packages can only be delivered by drones. _______________",
+        "d) Robots can help surgeons during operations. _______________",
+        "e) A robot that prepares food must look like a human. _______________"
+      ]
+    },
+    {
+      "title": "Match the Keyword",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Draw a line to match each keyword to its meaning.",
+        "Match: Keyword → Meaning",
+        "Match: algorithm → a device that detects things around it, like heat or movement",
+        "Match: sensor → a flying machine with no pilot on board",
+        "Match: drone → solving a problem by breaking it into steps",
+        "Match: computational thinking → a set of steps in the right order to do a job"
+      ]
+    },
+    {
+      "title": "Think Like a Computer Scientist: Order the Algorithm",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A delivery robot must take a package to a house. The steps are mixed up! Write 1, 2, 3, 4, 5 in the boxes to put them in order.",
+        "[ ] Move forward until you reach the house.",
+        "[ ] Pick up the package at the shop.",
+        "[ ] Say “Your package is here!” and give the package.",
+        "[ ] Face the house.",
+        "[ ] Ring the doorbell."
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "A computer scientist just types code all day.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Some write code, but others design hardware, study data or build robots — there are many roles."
+    },
+    {
+      "symptom": "Computer scientists work alone.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Almost never. They work in a team, often with people who know little about computing, like artists and shopkeepers."
+    },
+    {
+      "symptom": "A robot must look like a person.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Most do not. A drone, a delivery box on wheels, and a robotic arm are all robots, and none of them look human."
+    },
+    {
+      "symptom": "Robots have replaced doctors (or drivers, or waiters).",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Robots usually help people do their jobs. A surgery robot assists a surgeon; a care robot assists nurses."
+    },
+    {
+      "symptom": "A driverless car has a hidden driver or is just remote-controlled.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — it uses sensors and its own computer to decide how to move."
+    },
+    {
+      "symptom": "A drone and an aeroplane are the same.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "A drone has no pilot on board and is usually small; it is controlled from far away or flies itself."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "What is a computer scientist?",
+        "text": "A computer scientist is a person who uses computational thinking — solving a problem by breaking it into clear steps — to work with computer hardware and software."
+      },
+      {
+        "title": "So many roles! Meet five computer scientists",
+        "text": "A computer scientist can have many different roles — you will meet five."
+      },
+      {
+        "title": "Robots at work: delivery and transport",
+        "text": "Robots are machines that can be programmed to do tasks, and they help people in many industries."
+      },
+      {
+        "title": "Think like a computer scientist: write an algorithm",
+        "text": "A robot only knows what to do because someone wrote it an algorithm — a set of steps in the right order."
+      }
+    ],
+    "terms": [
+      [
+        "computer scientist",
+        "A person who uses step-by-step thinking to work with computer hardware and software."
+      ],
+      [
+        "hardware",
+        "The parts of a computer you can touch."
+      ],
+      [
+        "software",
+        "The programs that tell a computer what to do."
+      ],
+      [
+        "computational thinking",
+        "Solving a problem by breaking it into clear steps."
+      ],
+      [
+        "algorithm",
+        "A set of steps, in the right order, to do a job."
+      ],
+      [
+        "robot",
+        "A machine that can be programmed to do tasks."
+      ],
+      [
+        "sensor",
+        "A device that detects something around it, like heat, light, sound or movement."
+      ],
+      [
+        "drone",
+        "A flying machine with no pilot on board, controlled from far away."
+      ],
+      [
+        "driverless vehicle",
+        "A vehicle that drives itself using sensors, with no human driver. Also called an AV."
+      ],
+      [
+        "programmer",
+        "A computer scientist who writes programs (code)."
+      ],
+      [
+        "data analyst",
+        "A computer scientist who collects and organises data to answer questions."
+      ],
+      [
+        "robotics engineer",
+        "A computer scientist who designs and builds robots."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "computer scientist",
+        "meaning": "A person who uses step-by-step thinking to work with computer hardware and software.",
+        "example": "Maya, who makes games.",
+        "letter": "C"
+      },
+      {
+        "term": "hardware",
+        "meaning": "The parts of a computer you can touch.",
+        "example": "The CPU, a keyboard, a screen.",
+        "letter": "H"
+      },
+      {
+        "term": "software",
+        "meaning": "The programs that tell a computer what to do.",
+        "example": "A game or an app.",
+        "letter": "S"
+      },
+      {
+        "term": "computational thinking",
+        "meaning": "Solving a problem by breaking it into clear steps.",
+        "example": "Planning the steps a robot follows.",
+        "letter": "C"
+      },
+      {
+        "term": "algorithm",
+        "meaning": "A set of steps, in the right order, to do a job.",
+        "example": "The steps to deliver a package.",
+        "letter": "A"
+      },
+      {
+        "term": "robot",
+        "meaning": "A machine that can be programmed to do tasks.",
+        "example": "A robot waiter in a cafe.",
+        "letter": "R"
+      },
+      {
+        "term": "sensor",
+        "meaning": "A device that detects something around it, like heat, light, sound or movement.",
+        "example": "A driverless car's sensor.",
+        "letter": "S"
+      },
+      {
+        "term": "drone",
+        "meaning": "A flying machine with no pilot on board, controlled from far away.",
+        "example": "A package-delivery drone.",
+        "letter": "D"
+      },
+      {
+        "term": "driverless vehicle",
+        "meaning": "A vehicle that drives itself using sensors, with no human driver. Also called an AV.",
+        "example": "A self-driving car.",
+        "letter": "D"
+      },
+      {
+        "term": "programmer",
+        "meaning": "A computer scientist who writes programs (code).",
+        "example": "Someone who codes a game.",
+        "letter": "P"
+      },
+      {
+        "term": "data analyst",
+        "meaning": "A computer scientist who collects and organises data to answer questions.",
+        "example": "Studying what people buy.",
+        "letter": "D"
+      },
+      {
+        "term": "robotics engineer",
+        "meaning": "A computer scientist who designs and builds robots.",
+        "example": "Building a robot for space.",
+        "letter": "R"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "A computer scientist just types code all day.",
+        "Some write code, but others design hardware, study data or build robots — there are many roles."
+      ],
+      [
+        "Computer scientists work alone.",
+        "Almost never. They work in a team, often with people who know little about computing, like artists and shopkeepers."
+      ],
+      [
+        "A robot must look like a person.",
+        "Most do not. A drone, a delivery box on wheels, and a robotic arm are all robots, and none of them look human."
+      ],
+      [
+        "Robots have replaced doctors (or drivers, or waiters).",
+        "Robots usually help people do their jobs. A surgery robot assists a surgeon; a care robot assists nurses."
+      ],
+      [
+        "A driverless car has a hidden driver or is just remote-controlled.",
+        "No — it uses sensors and its own computer to decide how to move."
+      ],
+      [
+        "A drone and an aeroplane are the same.",
+        "A drone has no pilot on board and is usually small; it is controlled from far away or flies itself."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "What is a computer scientist? Finish the sentence.",
+      "answer": "steps (a computer scientist solves problems by thinking in steps — computational thinking).",
+      "hint": "Look back at what computer scientist and hardware mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "steps (a computer scientist solves problems by thinking in steps — computational thinking)."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Name two different roles a computer scientist can have.",
+      "answer": "Any two of: hardware engineer, games developer/programmer, software developer, data analyst, robotics engineer.",
+      "hint": "Look back at what computer scientist and hardware mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Any two of: hardware engineer, games developer/programmer, software developer, data analyst, robotics engineer."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Name one thing that almost every computer scientist does.",
+      "answer": "Any one of: look at a problem and decide how to solve it; break a big problem into smaller ones; work as part of a team.",
+      "hint": "Look back at what computer scientist and hardware mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Any one of: look at a problem and decide how to solve it; break a big problem into smaller ones; work as part of a team."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "What is a sensor? What is a drone?",
+      "answer": "A sensor is a device that detects something around it (heat, light, sound or movement). A drone is a flying machine with no pilot on board, controlled from far away.",
+      "hint": "Look back at what computer scientist and hardware mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "A sensor is a device that detects something around it (heat, light, sound or movement). A drone is a flying machine with no pilot on board, controlled from far away."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Name one way a robot helps people in food service or in healthcare.",
+      "answer": "Any one example. Food service: a robot waiter serves food, or a robot prepares food. Healthcare: a robot helps a surgeon; a robotic arm/hand helps someone hold objects; a care robot checks temperature or brings medicine.",
+      "hint": "Look back at what computer scientist and hardware mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Any one example. Food service: a robot waiter serves food, or a robot prepares food. Healthcare: a robot helps a surgeon; a robotic arm/hand helps someone hold objects; a care robot checks temperature or brings medicine."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "A robot waiter must bring food to a table. Put the steps in order by writing 1, 2, 3, 4.",
+      "answer": "Correct order: (1) Face the table, (2) Move to the table, (3) Put down the food, (4) Say \"Enjoy your meal!\". The order matters because a robot follows its steps exactly.",
+      "hint": "Look back at what computer scientist and hardware mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Correct order: (1) Face the table, (2) Move to the table, (3) Put down the food, (4) Say \"Enjoy your meal!\". The order matters because a robot follows its steps exactly."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "A robot waiter must bring food to a table. Put the steps in order by writing 1, 2, 3, 4.",
+      "answer": "Correct order: (1) Face the table, (2) Move to the table, (3) Put down the food, (4) Say \"Enjoy your meal!\". The order matters because a robot follows its steps exactly.",
+      "hint": "Look back at what computer scientist and hardware mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Correct order: (1) Face the table, (2) Move to the table, (3) Put down the food, (4) Say \"Enjoy your meal!\". The order matters because a robot follows its steps exactly."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "Name one way a robot helps people in food service or in healthcare.",
+      "answer": "Any one example. Food service: a robot waiter serves food, or a robot prepares food. Healthcare: a robot helps a surgeon; a robotic arm/hand helps someone hold objects; a care robot checks temperature or brings medicine.",
+      "hint": "Look back at what computer scientist and hardware mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Any one example. Food service: a robot waiter serves food, or a robot prepares food. Healthcare: a robot helps a surgeon; a robotic arm/hand helps someone hold objects; a care robot checks temperature or brings medicine."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "A robot waiter must bring food to a table. Put the steps in order by writing 1, 2, 3, 4.",
+      "answer": "Correct order: (1) Face the table, (2) Move to the table, (3) Put down the food, (4) Say \"Enjoy your meal!\". The order matters because a robot follows its steps exactly.",
+      "hint": "Look back at what computer scientist and hardware mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Correct order: (1) Face the table, (2) Move to the table, (3) Put down the food, (4) Say \"Enjoy your meal!\". The order matters because a robot follows its steps exactly."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "What is a computer scientist? Finish the sentence.",
+      "answer": "steps (a computer scientist solves problems by thinking in steps — computational thinking).",
+      "hint": "Look back at what computer scientist and hardware mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: steps (a computer scientist solves problems by thinking in steps — computational thinking)."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Name one thing that almost every computer scientist does.",
+      "keyIdeas": [
+        "computer scientist",
+        "hardware",
+        "software"
+      ],
+      "modelAnswer": "Any one of: look at a problem and decide how to solve it; break a big problem into smaller ones; work as part of a team."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "What is a sensor? What is a drone?",
+      "keyIdeas": [
+        "hardware",
+        "software",
+        "computational thinking"
+      ],
+      "modelAnswer": "A sensor is a device that detects something around it (heat, light, sound or movement). A drone is a flying machine with no pilot on board, controlled from far away."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Name one way a robot helps people in food service or in healthcare.",
+      "keyIdeas": [
+        "software",
+        "computational thinking",
+        "algorithm"
+      ],
+      "modelAnswer": "Any one example. Food service: a robot waiter serves food, or a robot prepares food. Healthcare: a robot helps a surgeon; a robotic arm/hand helps someone hold objects; a care robot checks temperature or brings medicine."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in robots at work: food and healthcare, and give one example of your own.",
+      "keyIdeas": [
+        "computer scientist",
+        "hardware",
+        "software"
+      ],
+      "modelAnswer": "Two more industries. In the food service industry, robot waiters can greet customers, take an order, serve food and clear dishes, and some robots even prepare food. In healthcare, robots can help surgeons during operations, robotic limbs (a robotic arm or hand) help injured or disabled people pick up and hold objects, and care robots can check a patient's temperature, bring medicine, and help keep hospitals clean.\n\nImagine a cafe where a friendly robot rolls up, greets you and brings your food — that is a robot in the food service industry. In a hospital, a robot can help a doctor operate very steadily."
+    }
+  ],
+  "project": {
+    "title": "My Robot Helper Project",
+    "brief": "Bring together everything from Be a Computer Scientist into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your be a computer scientist project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I drew my robot and labelled its parts.",
+      "I labelled at least one sensor.",
+      "I said which industry it helps and what job it does.",
+      "I wrote an algorithm with steps in the right order.",
+      "I named two kinds of computer scientist who would help build it."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “computer scientist” mean in computing?",
+        "options": [
+          "A person who uses step-by-step thinking to work with computer hardware and software.",
+          "The parts of a computer you can touch.",
+          "The programs that tell a computer what to do.",
+          "Solving a problem by breaking it into clear steps."
+        ],
+        "answer": "A person who uses step-by-step thinking to work with computer hardware and software.",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Computer scientist means a person who uses step-by-step thinking to work with computer hardware and software."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “hardware” mean in computing?",
+        "options": [
+          "The parts of a computer you can touch.",
+          "The programs that tell a computer what to do.",
+          "Solving a problem by breaking it into clear steps.",
+          "A set of steps, in the right order, to do a job."
+        ],
+        "answer": "The parts of a computer you can touch.",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Hardware means the parts of a computer you can touch."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “software” mean in computing?",
+        "options": [
+          "The programs that tell a computer what to do.",
+          "Solving a problem by breaking it into clear steps.",
+          "A set of steps, in the right order, to do a job.",
+          "A machine that can be programmed to do tasks."
+        ],
+        "answer": "The programs that tell a computer what to do.",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Software means the programs that tell a computer what to do."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “computational thinking” mean in computing?",
+        "options": [
+          "Solving a problem by breaking it into clear steps.",
+          "A set of steps, in the right order, to do a job.",
+          "A machine that can be programmed to do tasks.",
+          "A device that detects something around it, like heat, light, sound or movement."
+        ],
+        "answer": "Solving a problem by breaking it into clear steps.",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Computational thinking means solving a problem by breaking it into clear steps."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “algorithm” mean in computing?",
+        "options": [
+          "A set of steps, in the right order, to do a job.",
+          "A machine that can be programmed to do tasks.",
+          "A device that detects something around it, like heat, light, sound or movement.",
+          "A flying machine with no pilot on board, controlled from far away."
+        ],
+        "answer": "A set of steps, in the right order, to do a job.",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “robot” mean in computing?",
+        "options": [
+          "A machine that can be programmed to do tasks.",
+          "A device that detects something around it, like heat, light, sound or movement.",
+          "A flying machine with no pilot on board, controlled from far away.",
+          "A vehicle that drives itself using sensors, with no human driver. Also called an AV."
+        ],
+        "answer": "A machine that can be programmed to do tasks.",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Robot means a machine that can be programmed to do tasks."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A device that detects something around it, like heat, light, sound or movement.?",
+        "options": [
+          "sensor",
+          "drone",
+          "driverless vehicle",
+          "programmer"
+        ],
+        "answer": "sensor",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Sensor means a device that detects something around it, like heat, light, sound or movement."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A flying machine with no pilot on board, controlled from far away.?",
+        "options": [
+          "drone",
+          "driverless vehicle",
+          "programmer",
+          "data analyst"
+        ],
+        "answer": "drone",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Drone means a flying machine with no pilot on board, controlled from far away."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A vehicle that drives itself using sensors, with no human driver. Also called an AV.?",
+        "options": [
+          "driverless vehicle",
+          "programmer",
+          "data analyst",
+          "robotics engineer"
+        ],
+        "answer": "driverless vehicle",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Driverless vehicle means a vehicle that drives itself using sensors, with no human driver. Also called an AV."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A computer scientist who writes programs (code).?",
+        "options": [
+          "programmer",
+          "data analyst",
+          "robotics engineer",
+          "computer scientist"
+        ],
+        "answer": "programmer",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Programmer means a computer scientist who writes programs (code)."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A computer scientist who collects and organises data to answer questions.?",
+        "options": [
+          "data analyst",
+          "robotics engineer",
+          "computer scientist",
+          "hardware"
+        ],
+        "answer": "data analyst",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Data analyst means a computer scientist who collects and organises data to answer questions."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo06",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A computer scientist who designs and builds robots.?",
+        "options": [
+          "robotics engineer",
+          "computer scientist",
+          "hardware",
+          "software"
+        ],
+        "answer": "robotics engineer",
+        "hint": "Use the Unit 5 Computing Words reference.",
+        "explanation": "Robotics engineer means a computer scientist who designs and builds robots."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u5-game-1",
+        "icon": "?",
+        "skill": "computer scientist",
+        "title": "Quick Match: computer scientist",
+        "description": "Practise computer scientist through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “computer scientist” mean in computing?",
+            "choices": [
+              "A person who uses step-by-step thinking to work with computer hardware and software.",
+              "The parts of a computer you can touch.",
+              "The programs that tell a computer what to do.",
+              "Solving a problem by breaking it into clear steps."
+            ],
+            "answer": "A person who uses step-by-step thinking to work with computer hardware and software.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Computer scientist means a person who uses step-by-step thinking to work with computer hardware and software."
+          },
+          {
+            "prompt": "What does “computational thinking” mean in computing?",
+            "choices": [
+              "Solving a problem by breaking it into clear steps.",
+              "A set of steps, in the right order, to do a job.",
+              "A machine that can be programmed to do tasks.",
+              "A device that detects something around it, like heat, light, sound or movement."
+            ],
+            "answer": "Solving a problem by breaking it into clear steps.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Computational thinking means solving a problem by breaking it into clear steps."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A device that detects something around it, like heat, light, sound or movement.?",
+            "choices": [
+              "sensor",
+              "drone",
+              "driverless vehicle",
+              "programmer"
+            ],
+            "answer": "sensor",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Sensor means a device that detects something around it, like heat, light, sound or movement."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A computer scientist who writes programs (code).?",
+            "choices": [
+              "programmer",
+              "data analyst",
+              "robotics engineer",
+              "computer scientist"
+            ],
+            "answer": "programmer",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Programmer means a computer scientist who writes programs (code)."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-2",
+        "icon": "★",
+        "skill": "hardware",
+        "title": "Concept Quest: hardware",
+        "description": "Practise hardware through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “hardware” mean in computing?",
+            "choices": [
+              "The parts of a computer you can touch.",
+              "The programs that tell a computer what to do.",
+              "Solving a problem by breaking it into clear steps.",
+              "A set of steps, in the right order, to do a job."
+            ],
+            "answer": "The parts of a computer you can touch.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Hardware means the parts of a computer you can touch."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps, in the right order, to do a job.",
+              "A machine that can be programmed to do tasks.",
+              "A device that detects something around it, like heat, light, sound or movement.",
+              "A flying machine with no pilot on board, controlled from far away."
+            ],
+            "answer": "A set of steps, in the right order, to do a job.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A flying machine with no pilot on board, controlled from far away.?",
+            "choices": [
+              "drone",
+              "driverless vehicle",
+              "programmer",
+              "data analyst"
+            ],
+            "answer": "drone",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Drone means a flying machine with no pilot on board, controlled from far away."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A computer scientist who collects and organises data to answer questions.?",
+            "choices": [
+              "data analyst",
+              "robotics engineer",
+              "computer scientist",
+              "hardware"
+            ],
+            "answer": "data analyst",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Data analyst means a computer scientist who collects and organises data to answer questions."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-3",
+        "icon": "◫",
+        "skill": "software",
+        "title": "Debug Detective: software",
+        "description": "Practise software through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “software” mean in computing?",
+            "choices": [
+              "The programs that tell a computer what to do.",
+              "Solving a problem by breaking it into clear steps.",
+              "A set of steps, in the right order, to do a job.",
+              "A machine that can be programmed to do tasks."
+            ],
+            "answer": "The programs that tell a computer what to do.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Software means the programs that tell a computer what to do."
+          },
+          {
+            "prompt": "What does “robot” mean in computing?",
+            "choices": [
+              "A machine that can be programmed to do tasks.",
+              "A device that detects something around it, like heat, light, sound or movement.",
+              "A flying machine with no pilot on board, controlled from far away.",
+              "A vehicle that drives itself using sensors, with no human driver. Also called an AV."
+            ],
+            "answer": "A machine that can be programmed to do tasks.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Robot means a machine that can be programmed to do tasks."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A vehicle that drives itself using sensors, with no human driver. Also called an AV.?",
+            "choices": [
+              "driverless vehicle",
+              "programmer",
+              "data analyst",
+              "robotics engineer"
+            ],
+            "answer": "driverless vehicle",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Driverless vehicle means a vehicle that drives itself using sensors, with no human driver. Also called an AV."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A computer scientist who designs and builds robots.?",
+            "choices": [
+              "robotics engineer",
+              "computer scientist",
+              "hardware",
+              "software"
+            ],
+            "answer": "robotics engineer",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Robotics engineer means a computer scientist who designs and builds robots."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-4",
+        "icon": "→",
+        "skill": "computational thinking",
+        "title": "Algorithm Runner: computational thinking",
+        "description": "Practise computational thinking through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “computational thinking” mean in computing?",
+            "choices": [
+              "Solving a problem by breaking it into clear steps.",
+              "A set of steps, in the right order, to do a job.",
+              "A machine that can be programmed to do tasks.",
+              "A device that detects something around it, like heat, light, sound or movement."
+            ],
+            "answer": "Solving a problem by breaking it into clear steps.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Computational thinking means solving a problem by breaking it into clear steps."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A device that detects something around it, like heat, light, sound or movement.?",
+            "choices": [
+              "sensor",
+              "drone",
+              "driverless vehicle",
+              "programmer"
+            ],
+            "answer": "sensor",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Sensor means a device that detects something around it, like heat, light, sound or movement."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A computer scientist who writes programs (code).?",
+            "choices": [
+              "programmer",
+              "data analyst",
+              "robotics engineer",
+              "computer scientist"
+            ],
+            "answer": "programmer",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Programmer means a computer scientist who writes programs (code)."
+          },
+          {
+            "prompt": "What does “computer scientist” mean in computing?",
+            "choices": [
+              "A person who uses step-by-step thinking to work with computer hardware and software.",
+              "The parts of a computer you can touch.",
+              "The programs that tell a computer what to do.",
+              "Solving a problem by breaking it into clear steps."
+            ],
+            "answer": "A person who uses step-by-step thinking to work with computer hardware and software.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Computer scientist means a person who uses step-by-step thinking to work with computer hardware and software."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-5",
+        "icon": "Σ",
+        "skill": "algorithm",
+        "title": "Vocabulary Vault: algorithm",
+        "description": "Practise algorithm through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps, in the right order, to do a job.",
+              "A machine that can be programmed to do tasks.",
+              "A device that detects something around it, like heat, light, sound or movement.",
+              "A flying machine with no pilot on board, controlled from far away."
+            ],
+            "answer": "A set of steps, in the right order, to do a job.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A flying machine with no pilot on board, controlled from far away.?",
+            "choices": [
+              "drone",
+              "driverless vehicle",
+              "programmer",
+              "data analyst"
+            ],
+            "answer": "drone",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Drone means a flying machine with no pilot on board, controlled from far away."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A computer scientist who collects and organises data to answer questions.?",
+            "choices": [
+              "data analyst",
+              "robotics engineer",
+              "computer scientist",
+              "hardware"
+            ],
+            "answer": "data analyst",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Data analyst means a computer scientist who collects and organises data to answer questions."
+          },
+          {
+            "prompt": "What does “hardware” mean in computing?",
+            "choices": [
+              "The parts of a computer you can touch.",
+              "The programs that tell a computer what to do.",
+              "Solving a problem by breaking it into clear steps.",
+              "A set of steps, in the right order, to do a job."
+            ],
+            "answer": "The parts of a computer you can touch.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Hardware means the parts of a computer you can touch."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-6",
+        "icon": "◇",
+        "skill": "robot",
+        "title": "Challenge Cards: robot",
+        "description": "Practise robot through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “robot” mean in computing?",
+            "choices": [
+              "A machine that can be programmed to do tasks.",
+              "A device that detects something around it, like heat, light, sound or movement.",
+              "A flying machine with no pilot on board, controlled from far away.",
+              "A vehicle that drives itself using sensors, with no human driver. Also called an AV."
+            ],
+            "answer": "A machine that can be programmed to do tasks.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Robot means a machine that can be programmed to do tasks."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A vehicle that drives itself using sensors, with no human driver. Also called an AV.?",
+            "choices": [
+              "driverless vehicle",
+              "programmer",
+              "data analyst",
+              "robotics engineer"
+            ],
+            "answer": "driverless vehicle",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Driverless vehicle means a vehicle that drives itself using sensors, with no human driver. Also called an AV."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A computer scientist who designs and builds robots.?",
+            "choices": [
+              "robotics engineer",
+              "computer scientist",
+              "hardware",
+              "software"
+            ],
+            "answer": "robotics engineer",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Robotics engineer means a computer scientist who designs and builds robots."
+          },
+          {
+            "prompt": "What does “software” mean in computing?",
+            "choices": [
+              "The programs that tell a computer what to do.",
+              "Solving a problem by breaking it into clear steps.",
+              "A set of steps, in the right order, to do a job.",
+              "A machine that can be programmed to do tasks."
+            ],
+            "answer": "The programs that tell a computer what to do.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Software means the programs that tell a computer what to do."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-7",
+        "icon": "⚡",
+        "skill": "sensor",
+        "title": "Think Fast: sensor",
+        "description": "Practise sensor through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A device that detects something around it, like heat, light, sound or movement.?",
+            "choices": [
+              "sensor",
+              "drone",
+              "driverless vehicle",
+              "programmer"
+            ],
+            "answer": "sensor",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Sensor means a device that detects something around it, like heat, light, sound or movement."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A computer scientist who writes programs (code).?",
+            "choices": [
+              "programmer",
+              "data analyst",
+              "robotics engineer",
+              "computer scientist"
+            ],
+            "answer": "programmer",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Programmer means a computer scientist who writes programs (code)."
+          },
+          {
+            "prompt": "What does “computer scientist” mean in computing?",
+            "choices": [
+              "A person who uses step-by-step thinking to work with computer hardware and software.",
+              "The parts of a computer you can touch.",
+              "The programs that tell a computer what to do.",
+              "Solving a problem by breaking it into clear steps."
+            ],
+            "answer": "A person who uses step-by-step thinking to work with computer hardware and software.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Computer scientist means a person who uses step-by-step thinking to work with computer hardware and software."
+          },
+          {
+            "prompt": "What does “computational thinking” mean in computing?",
+            "choices": [
+              "Solving a problem by breaking it into clear steps.",
+              "A set of steps, in the right order, to do a job.",
+              "A machine that can be programmed to do tasks.",
+              "A device that detects something around it, like heat, light, sound or movement."
+            ],
+            "answer": "Solving a problem by breaking it into clear steps.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Computational thinking means solving a problem by breaking it into clear steps."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-8",
+        "icon": "☁",
+        "skill": "drone",
+        "title": "Explain It: drone",
+        "description": "Practise drone through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A flying machine with no pilot on board, controlled from far away.?",
+            "choices": [
+              "drone",
+              "driverless vehicle",
+              "programmer",
+              "data analyst"
+            ],
+            "answer": "drone",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Drone means a flying machine with no pilot on board, controlled from far away."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A computer scientist who collects and organises data to answer questions.?",
+            "choices": [
+              "data analyst",
+              "robotics engineer",
+              "computer scientist",
+              "hardware"
+            ],
+            "answer": "data analyst",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Data analyst means a computer scientist who collects and organises data to answer questions."
+          },
+          {
+            "prompt": "What does “hardware” mean in computing?",
+            "choices": [
+              "The parts of a computer you can touch.",
+              "The programs that tell a computer what to do.",
+              "Solving a problem by breaking it into clear steps.",
+              "A set of steps, in the right order, to do a job."
+            ],
+            "answer": "The parts of a computer you can touch.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Hardware means the parts of a computer you can touch."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps, in the right order, to do a job.",
+              "A machine that can be programmed to do tasks.",
+              "A device that detects something around it, like heat, light, sound or movement.",
+              "A flying machine with no pilot on board, controlled from far away."
+            ],
+            "answer": "A set of steps, in the right order, to do a job.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-9",
+        "icon": "⌂",
+        "skill": "driverless vehicle",
+        "title": "Real-Life Round: driverless vehicle",
+        "description": "Practise driverless vehicle through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A vehicle that drives itself using sensors, with no human driver. Also called an AV.?",
+            "choices": [
+              "driverless vehicle",
+              "programmer",
+              "data analyst",
+              "robotics engineer"
+            ],
+            "answer": "driverless vehicle",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Driverless vehicle means a vehicle that drives itself using sensors, with no human driver. Also called an AV."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A computer scientist who designs and builds robots.?",
+            "choices": [
+              "robotics engineer",
+              "computer scientist",
+              "hardware",
+              "software"
+            ],
+            "answer": "robotics engineer",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Robotics engineer means a computer scientist who designs and builds robots."
+          },
+          {
+            "prompt": "What does “software” mean in computing?",
+            "choices": [
+              "The programs that tell a computer what to do.",
+              "Solving a problem by breaking it into clear steps.",
+              "A set of steps, in the right order, to do a job.",
+              "A machine that can be programmed to do tasks."
+            ],
+            "answer": "The programs that tell a computer what to do.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Software means the programs that tell a computer what to do."
+          },
+          {
+            "prompt": "What does “robot” mean in computing?",
+            "choices": [
+              "A machine that can be programmed to do tasks.",
+              "A device that detects something around it, like heat, light, sound or movement.",
+              "A flying machine with no pilot on board, controlled from far away.",
+              "A vehicle that drives itself using sensors, with no human driver. Also called an AV."
+            ],
+            "answer": "A machine that can be programmed to do tasks.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Robot means a machine that can be programmed to do tasks."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-10",
+        "icon": "!",
+        "skill": "programmer",
+        "title": "Spot the Bug: programmer",
+        "description": "Practise programmer through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A computer scientist who writes programs (code).?",
+            "choices": [
+              "programmer",
+              "data analyst",
+              "robotics engineer",
+              "computer scientist"
+            ],
+            "answer": "programmer",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Programmer means a computer scientist who writes programs (code)."
+          },
+          {
+            "prompt": "What does “computer scientist” mean in computing?",
+            "choices": [
+              "A person who uses step-by-step thinking to work with computer hardware and software.",
+              "The parts of a computer you can touch.",
+              "The programs that tell a computer what to do.",
+              "Solving a problem by breaking it into clear steps."
+            ],
+            "answer": "A person who uses step-by-step thinking to work with computer hardware and software.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Computer scientist means a person who uses step-by-step thinking to work with computer hardware and software."
+          },
+          {
+            "prompt": "What does “computational thinking” mean in computing?",
+            "choices": [
+              "Solving a problem by breaking it into clear steps.",
+              "A set of steps, in the right order, to do a job.",
+              "A machine that can be programmed to do tasks.",
+              "A device that detects something around it, like heat, light, sound or movement."
+            ],
+            "answer": "Solving a problem by breaking it into clear steps.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Computational thinking means solving a problem by breaking it into clear steps."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A device that detects something around it, like heat, light, sound or movement.?",
+            "choices": [
+              "sensor",
+              "drone",
+              "driverless vehicle",
+              "programmer"
+            ],
+            "answer": "sensor",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Sensor means a device that detects something around it, like heat, light, sound or movement."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-11",
+        "icon": "≡",
+        "skill": "data analyst",
+        "title": "Mastery Mix: data analyst",
+        "description": "Practise data analyst through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A computer scientist who collects and organises data to answer questions.?",
+            "choices": [
+              "data analyst",
+              "robotics engineer",
+              "computer scientist",
+              "hardware"
+            ],
+            "answer": "data analyst",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Data analyst means a computer scientist who collects and organises data to answer questions."
+          },
+          {
+            "prompt": "What does “hardware” mean in computing?",
+            "choices": [
+              "The parts of a computer you can touch.",
+              "The programs that tell a computer what to do.",
+              "Solving a problem by breaking it into clear steps.",
+              "A set of steps, in the right order, to do a job."
+            ],
+            "answer": "The parts of a computer you can touch.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Hardware means the parts of a computer you can touch."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps, in the right order, to do a job.",
+              "A machine that can be programmed to do tasks.",
+              "A device that detects something around it, like heat, light, sound or movement.",
+              "A flying machine with no pilot on board, controlled from far away."
+            ],
+            "answer": "A set of steps, in the right order, to do a job.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A flying machine with no pilot on board, controlled from far away.?",
+            "choices": [
+              "drone",
+              "driverless vehicle",
+              "programmer",
+              "data analyst"
+            ],
+            "answer": "drone",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Drone means a flying machine with no pilot on board, controlled from far away."
+          }
+        ]
+      },
+      {
+        "id": "u5-game-12",
+        "icon": "T",
+        "skill": "robotics engineer",
+        "title": "Unit Champion: robotics engineer",
+        "description": "Practise robotics engineer through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A computer scientist who designs and builds robots.?",
+            "choices": [
+              "robotics engineer",
+              "computer scientist",
+              "hardware",
+              "software"
+            ],
+            "answer": "robotics engineer",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Robotics engineer means a computer scientist who designs and builds robots."
+          },
+          {
+            "prompt": "What does “software” mean in computing?",
+            "choices": [
+              "The programs that tell a computer what to do.",
+              "Solving a problem by breaking it into clear steps.",
+              "A set of steps, in the right order, to do a job.",
+              "A machine that can be programmed to do tasks."
+            ],
+            "answer": "The programs that tell a computer what to do.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Software means the programs that tell a computer what to do."
+          },
+          {
+            "prompt": "What does “robot” mean in computing?",
+            "choices": [
+              "A machine that can be programmed to do tasks.",
+              "A device that detects something around it, like heat, light, sound or movement.",
+              "A flying machine with no pilot on board, controlled from far away.",
+              "A vehicle that drives itself using sensors, with no human driver. Also called an AV."
+            ],
+            "answer": "A machine that can be programmed to do tasks.",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Robot means a machine that can be programmed to do tasks."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A vehicle that drives itself using sensors, with no human driver. Also called an AV.?",
+            "choices": [
+              "driverless vehicle",
+              "programmer",
+              "data analyst",
+              "robotics engineer"
+            ],
+            "answer": "driverless vehicle",
+            "clue": "Use the Unit 5 Computing Words reference.",
+            "explanation": "Driverless vehicle means a vehicle that drives itself using sensors, with no human driver. Also called an AV."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can say what a computer scientist is — a person who uses computational thinking to work with computer hardware and software.",
+    "I can name some roles a computer scientist can have (hardware engineer, games developer/programmer, software developer, data analyst, robotics engineer).",
+    "I can describe what almost all computer scientists do: look at a problem and decide how to solve it, break a big problem into smaller ones, and work in a team.",
+    "I can give examples of robots in delivery, transport, food and healthcare, and say what each does.",
+    "I can explain what a sensor is and what a drone is.",
+    "I can think like a computer scientist by writing a simple algorithm (steps in the right order) for a robot to follow."
+  ]
+}

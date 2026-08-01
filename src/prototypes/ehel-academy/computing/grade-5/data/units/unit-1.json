@@ -1,0 +1,2342 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.852Z",
+  "stage": {
+    "id": "s05",
+    "label": "Stage 5"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t01",
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "comp-g05-u01",
+    "unitNo": 1,
+    "unitTitle": "Computational Thinking and Programming",
+    "unitOverview": "Hello, and welcome to Unit 1 of Year 5 Computing at Ehel Academy! This is the biggest and most exciting unit of the year. In it, you will learn to think like a real computer programmer and to build working programs that solve real problems. A computer only ever does exactly what you tell it, so the skill you are growing is the skill of giving clear, correct instructions. We call this way of thinking computational thinking.\n\nThis unit has seven parts, which we call subunits. Each one gives you a new tool for your programming toolbox. You will learn to store information in variables, do maths and comparisons with operators, let your program make decisions with selection, plan a solution before you build it, make objects interact in a game, build programs that are user-friendly, and finally put a program onto a tiny hand-held computer called the micro:bit.\n\n1.6 Creating user-friendly programs — learn the roles and stages of making software, and judge a program against clear criteria.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 5
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-5-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 5",
+    "sourceArchive": "Year 5-20260801T055755Z-1-001.zip",
+    "sourceAudience": "student",
+    "sourceDocuments": [
+      "Year 5/Unit 1/Year 5 - Unit 1 Lesson.docx",
+      "Year 5/Unit 1/Year 5 - Unit 1 Activities & Projects.docx",
+      "Year 5/Unit 1/Year 5 - Unit 1 Practice & Quiz.docx",
+      "Year 5/Unit 1/Year 5 - Unit 1 Reference.docx"
+    ],
+    "sourceBlockCount": 1293,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 5 Lesson, Activities & Projects, Practice & Quiz and Reference booklets for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Understand that a variable stores a value that can change, and that it holds only one value at a time.",
+    "Create variables with meaningful names.",
+    "Store values that a user inputs, then use them in a calculation.",
+    "Use the equal to comparison operator to check if two values are the same.",
+    "Predict the outcome of algorithms that use IF, THEN and ELSE.",
+    "Understand that different algorithms can solve the same task.",
+    "Identify the purpose, inputs, processes, conditions and outputs of a problem.",
+    "Identify objects in a program and describe how they behave.",
+    "Identify how different objects can affect each other.",
+    "Plan and develop a game where objects interact."
+  ],
+  "toolkit": [
+    {
+      "name": "Scratch",
+      "url": "scratch.mit.edu",
+      "steps": [
+        "Go to scratch.mit.edu and click Create.",
+        "Drag blocks from the palette on the left into the code area.",
+        "Make variables in the orange Variables section.",
+        "Click the green flag to run and the red circle to stop."
+      ],
+      "note": "Runs in a web browser. Free, with nothing to download."
+    },
+    {
+      "name": "micro:bit simulator",
+      "url": "makecode.microbit.org (blocks) or python.microbit.org (Python)",
+      "steps": [
+        "Open makecode.microbit.org for blocks, or python.microbit.org for Python.",
+        "Write your code in the editor.",
+        "The micro:bit simulator on the left runs your code straight away.",
+        "Click the on-screen A and B buttons, and use the shake control, to test your inputs."
+      ],
+      "note": "You do not need to own a real micro:bit — the simulator does everything."
+    },
+    {
+      "name": "Python",
+      "url": "python.microbit.org or any Python editor",
+      "steps": [
+        "Open the editor and start a new file.",
+        "Type your program one line at a time.",
+        "Run it and read any error message from the bottom up.",
+        "Fix one error at a time, then run it again."
+      ],
+      "note": "Python is a text language: spelling and indentation both matter."
+    }
+  ],
+  "tutorPrompts": [
+    "Ask: 'Explain the difference between the change by block and the set to block in Scratch, using a score variable as the example.'",
+    "Then try: 'Give me a meaningful variable name for something that stores the number of lives left in a game, and tell me why my chosen name is good.'",
+    "Ask: 'Give me three everyday examples where something is checked with an equal to comparison, and tell me whether each one returns True or False.'",
+    "Ask: 'In Scratch, what is the difference between an if then block and an if then else block? Give me a small example of each.'",
+    "Then try: 'How can I add a fifth key so that pressing the space bar makes my rocket say Blast off?'",
+    "Ask: 'In my Asteroid Dodger game, how do the rocket, the asteroid and the stage affect each other? Explain how a broadcast message links two objects.'",
+    "Ask: 'Help me write four clear success criteria for a good quiz program. Make each one specific and measurable so I can tick it off.'",
+    "Ask: 'In the Guess the Press game, why do we compare the two numbers only when the micro:bit is shaken, and not after every button press?'"
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-assigning-variables",
+      "title": "Assigning Variables",
+      "explanation": "A variable is a named box that stores a piece of data. The special thing about a variable is that the value inside it can change while the program runs. You can put a value in, use it later, and change it whenever you need to. A variable can only hold one value at a time: if you put a new value in, the old one is gone, just like a box that can hold only one thing.\n\nThe data we store is called a value. A value can be a number (like 10), some text (like Leila), or a symbol. When we put a value into a variable, we say we assign the value to the variable.\n\nYou have used variables before without knowing it. Think about a count-controlled loop — a loop that repeats an exact number of times. The number of repeats is stored in a variable, often called Count:\n\nA count-controlled loop; the variable Count stores the number of repeats\n\nHere Count is a variable. Its value is 4, so the loop repeats 4 times. If you change the value to set Count to 2, the very same loop now repeats only 2 times. You did not rewrite the loop — you just changed the value inside the variable. That is the power of a variable.\n\nA variable name should be meaningful — it should tell you what is stored inside. The name Count tells you it stores how many times to repeat. A name like x tells you nothing. Good names make your program much easier to read, both for you and for anyone else who uses it.\n\nThe word 'algorithm' comes from the name of a great scholar who lived over 1,000 years ago: Muhammad ibn Musa al-Khwarizmi. The word 'algebra' also comes from the title of one of his books. Every time you say 'algorithm', you are remembering a brilliant mathematician!\n\nImagine a program that makes a birthday card. The card says 'Happy Birthday', then the person's name and age. The name and age change depending on whose birthday it is, so we store them in variables. For Sami's card we assign the values like this:\n\nAssigning a text value and a number value\n\nNow the program can use these variables to build the message. The variable Name holds the text Sami, and the variable Age holds the number 10. If it were Nadia's birthday and she is turning 8, we would simply assign set Name to Nadia and set Age to 8, and the same program would make her card. We change the values, not the program.\n\nDisplaying what is inside a variable\n\nLet us follow another example. Sami stores his favourite fruit in a well-named variable, then displays it:\n\nTrace the result. The variable MyFavouriteFruit is assigned the value banana. The say instruction then outputs what is inside the variable, so the program says banana. If Leila used the same program, she might write set MyFavouriteFruit to mango, and it would say mango. The variable holds a temporary value — temporary means it is not kept forever and can be changed for a different user.\n\nVariables in Scratch: Leila's basketball scoreboard\n\nNow let us build a real program in Scratch. Leila wants a basketball scoreboard. In basketball, a basket scored from inside the three-point line is worth 2 points, and one scored from outside it is worth 3 points. First, in Scratch, click Variables in the blocks palette, then Make a Variable, name it Score, and choose For all sprites. Do the same to make a variable called Shots.\n\nHere is the code. Each basketball is a sprite. When you click a basketball, it means someone scored, so the score and the shot counter both change:\n\nScratch: a basketball scoreboard using two variables",
+      "example": "Trace the result. At the start you would click the Reset button, so Score is 0 and Shots is 0. Now suppose Leila clicks the inside basketball three times: each click adds 2 to Score and 1 to Shots, so Score becomes 6 and Shots becomes 3. If she then clicks the outside basketball once, Score becomes 9 (6 + 3) and Shots becomes 4. Clicking Reset puts both back to 0. Notice how change adds to a variable, while set puts in a brand-new value."
+    },
+    {
+      "id": "concept-2-using-operators",
+      "title": "Using Operators",
+      "explanation": "An operator is a symbol that does an action on values. In this subunit you meet two families of operators: arithmetic operators for doing maths, and comparison operators for comparing values.\n\nArithmetic is the use of numbers in calculations, such as adding or subtracting. The two most important arithmetic operators are + for addition and — for subtraction. (Computers can also multiply with * and divide with /, but in this unit we focus on + and -.) For example, 7 + 6 tells the computer to add 7 and 6, and 10 — 3 tells it to subtract 3 from 10.\n\nWe can use arithmetic operators with variables, not just plain numbers. Here is the classic example:\n\nAdding two variables and storing the answer in a third variable\n\nTrace the result. First, 7 is assigned to FirstNumber and 6 is assigned to SecondNumber. Then the computer adds the values inside those two variables: 7 + 6 = 13. The answer 13 is assigned to the variable Result. So the value of Result is 13. Because we used variables, we can change the two numbers without rewriting the calculation.\n\nRemember two rules that catch people out. First, a variable holds only the last value assigned to it: if you set Balls to 1, then set Balls to 2, then set Balls to 3, the value of Balls is 3. Second, instructions run in sequence, one after another, from top to bottom.\n\nSometimes we do not know a value until the program runs. Think of Sami's little sister Nadia using a calculator: the numbers change every time. This is where user input comes in — the user provides the data. In Scratch, the ask [ ] and wait block (in the Sensing section) lets the user type on the keyboard. Whatever they type is stored in a special variable called answer.\n\nBecause answer changes every time someone types, it is a good idea to copy it into a variable with a meaningful name:\n\nStoring user input in a well-named variable\n\nTrace the result. If the user types Maya, the value Maya is stored in answer, and then copied into the variable Name. Now, even if the user later types something else, the variable Name still remembers Maya.\n\nNow Sami builds a calculator in Scratch. It has an addition button and a subtraction button, each a sprite. Here is the working code:\n\nScratch: a calculator that adds or subtracts two user inputs\n\n--- Subtraction button sprite ---\n\nTrace the result. Suppose the user clicks the addition button and enters 7 then 5. Number1 becomes 7, Number2 becomes 5, Result becomes 7 + 5 = 12, and the sprite says 12. If instead the user clicks the subtraction button and enters 7 then 5, Result becomes 7 — 5 = 2, and the sprite says 2. The calculation blocks use the arithmetic operators + and — from the green Operators section.\n\nComparison operators and conditions\n\nSometimes we want to compare two values rather than do maths with them. A comparison operator compares two values and gives back True or False. In programming we say it returns True or False. The one you need here is equal to, written =. It checks if two values are the same.\n\nImagine a ride at a theme park where you must be exactly 150 cm tall. If your height is 150, then Height = 150 returns True. If your height is 160, then Height = 150 returns False, because 160 is not the same as 150.\n\nA comparison like this is called a condition. A condition is like a question that can only be answered True or False. Height = 150 can be read as the question: 'Is height equal to 150?' Conditions are the foundation of selection, which is the very next subunit.",
+      "example": "Computers often use the equal to operator to check passwords: they compare what you type with the stored password. A strong password is long and easy for you to remember — three random words such as riverlemontiger work well. Never write your password down where others can see it, and never share it with anyone."
+    },
+    {
+      "id": "concept-3-selection",
+      "title": "Selection",
+      "explanation": "So far your programs have run in a straight line — every instruction, every time. Selection changes that. Selection lets your program decide what to do next, based on the answer to a condition. It is the third big way to control a program, alongside sequence (the order of instructions) and iteration (repeating instructions).\n\nA selection statement has a condition and some instructions that run only if the condition is True. We write it with IF, THEN and ELSE. After IF comes the condition. After THEN comes what to do if the condition is True. After ELSE comes what to do if the condition is False.\n\nAn everyday IF THEN ELSE selection statement\n\nContinue with the rest of the day\n\nTrace the result. If it is very cold, the condition is True, so you take a jacket. If it is not very cold, the condition is False, so you take a jumper instead. Either way, you then continue with the rest of your day. If there were no ELSE, then when the condition was False the program would simply skip the jacket step and carry on.\n\nHere is another example. Notice that the last line runs no matter what:\n\nOnly one of the first two lines runs; the last line always runs\n\nTrace the result. If it is the morning, the program says 'Good morning'. If it is not, it says 'Good afternoon'. In both cases it then says 'How are you?', because that instruction is outside the selection statement.\n\nIn Scratch, selection uses the if <> then block and the if <> then ... else block from the orange Control section. The diamond-and-hexagon shape at the top holds the condition. Here is a program that reacts to the colour of your T-shirt:\n\nScratch: selection that checks user input\n\nTrace the result. If the user types blue, the condition TShirtColour = blue is True, so the sprite switches to the blue costume. If the user types anything else, the condition is False, so the ELSE branch runs and the sprite switches to the orange costume.\n\nTheo wants to fly a rocket ship around the screen using the arrow keys. He uses one IF for each arrow key, all inside a forever loop so the keys are checked again and again:\n\nScratch: control a rocket ship with the four arrow keys",
+      "example": "Trace the result. The forever loop keeps checking all four conditions. Press the up arrow and change y by 10 moves the rocket up; press the down arrow and change y by -10 moves it down; the right and left arrows change x to move sideways. The point in direction block turns the rocket to face the way it is travelling: 0 is up, 90 is right, 180 is down, and -90 is left."
+    },
+    {
+      "id": "concept-4-planning-solutions",
+      "title": "Planning Solutions",
+      "explanation": "Good programmers plan before they build. In this subunit you learn that the same task can be solved by different algorithms, that some algorithms are more efficient than others, and how to plan a solution by breaking a problem into parts.\n\nDifferent algorithms, different efficiency\n\nThink about walking from your classroom to the lunch hall. There are several routes, and some are shorter than others. In the same way, one problem can be solved by several algorithms. An algorithm is efficient when it carries out only the instructions that are actually needed, with no wasted steps.\n\nOne great way to make an algorithm more efficient is to use selection to skip steps you do not need. Compare two versions of a morning routine:\n\nA linear routine versus a routine that uses selection\n\n3 IF ShoweredLastNight equal to YES\n\n6 Take a shower, then get dressed\n\n7 Eat breakfast, then brush your teeth\n\nTrace the result. The linear routine always does all 7 steps, even on a day you already showered last night, and even on a weekend. The selection routine checks conditions first: if you showered last night, it skips the shower; if it is not a school day, it does not send you to school. Even though the selection version is longer to write, it is more efficient to run, because it does not do unnecessary work.\n\nDecomposition means breaking a big problem into smaller parts, called sub-problems, that are easier to solve one at a time. When we plan a program, it helps to decompose the problem into four things a computer can work with: inputs, processes, conditions and outputs.\n\nMaya plans a small chatbot that asks about a favourite animal. If you answer 'panda', it agrees with you; otherwise it gently disagrees. First she decomposes the problem into its parts:\n\nInput: ask the user for their favourite animal and store the answer.\n\nProcess: keep the answer in a variable called FavouriteAnimal.\n\nCondition: check IF FavouriteAnimal is equal to panda.\n\nOutput: say one message if True, and a different message if False.\n\nThen she turns her plan into an algorithm, and finally into Scratch code:\n\nScratch: a chatbot planned by decomposition\n\nsay [That is a cool animal, but pandas are the best!] for 2 seconds\n\nTrace the result. If the user types panda, the condition is True and the chatbot says 'Mine too!'. If the user types lion (or anything else), the condition is False and it says 'That is a cool animal, but pandas are the best!'. Because Maya planned the input, process, condition and output first, building the code was quick and clear.\n\nProgrammers use comments to explain their code. In an algorithm we often write a comment after two slashes, like this: // this line checks the answer. Comments do not run — they are just notes for humans to read. They make a program much friendlier to work on.\n\nPart — What it means · Example\n\nInput — Data the user gives to the program. · The user types their answer.\n\nProcess — The work the program does with the data. · The answer is stored in a variable.\n\nCondition — A True/False question the program checks. · Is the answer equal to 'panda'?",
+      "example": "Output — What the program gives back. · The program says a message."
+    },
+    {
+      "id": "concept-5-object-interaction",
+      "title": "Object Interaction",
+      "explanation": "In computing, an object is a thing that has its own shape and its own behaviours. Look around your room: a book is an object (it is made of paper, has text, and can be opened and closed); a learner is an object (they wear a uniform and can read and write). In Scratch, the objects are the sprites and the stage. Sprites can change how they look using costumes, and we program their behaviour using scripts.\n\nA script is a set of joined blocks that makes one complete section of a program. A trigger tells a script when to run — for example, when green flag clicked or when this sprite clicked. A sub-routine is a named set of instructions that does one particular job. You define a sub-routine (write its instructions), and it only runs when you call it. In Scratch, one common way to make a sub-routine is with the broadcast block, which sends a message, and a when I receive block that catches the message and runs the sub-routine.\n\nAn interaction is when two or more objects communicate or work together. Think of a relay race: each runner is an object with their own behaviours, and they are interrelated because the next runner can only take the baton once the previous runner passes it. The action of one object affects another. In a game, if a player object passes a ball, the ball object must move — so the two objects are interrelated, and we write a sub-routine for each.\n\nTheo builds a game with three objects: the rocket ship, an asteroid, and the stage. The player moves the rocket up and down to dodge asteroids that fly in from the right. Let us look at each object's script.\n\nThe rocket ship uses selection to move, and it has two sub-routines (called by broadcasts) for when it is hit and when the game is over:\n\nScratch: the rocket ship object with two sub-routines\n\n--- Rocket ship: main script ---\n\n--- Rocket ship: 'Hit' sub-routine ---\n\n--- Rocket ship: 'GameOver' sub-routine ---\n\nThe asteroid object flies across the screen. It changes the score when the rocket dodges it, and it broadcasts 'Hit' if it touches the rocket:\n\nScratch: the asteroid object that interacts with the rocket ship\n\nThe stage object ends the game when the lives run out:\n\nScratch: the stage object that ends the game\n\nTrace the result. The asteroid starts at the right edge at a random height and moves left. While it moves, it keeps checking touching Rocket ship?. If it touches, Lives goes down by 1 and it broadcasts 'Hit', so the rocket's Hit sub-routine says 'Ouch!' and flashes a colour. Straight after a hit, the asteroid waits half a second and jumps back to the right edge, so a single bump costs exactly one life instead of draining every life while the two objects are still overlapping. If the asteroid crosses the whole screen without touching, Score goes up by 1. When Lives reaches 0, the stage switches to the Game Over backdrop, broadcasts 'GameOver' (so the rocket explodes and says 'Game over!'), and stop all halts every script. The rocket, asteroid and stage all interact through the shared variables Lives and Score and the broadcast messages.",
+      "example": "There is a robot football competition called RoboCup, where teams of computer-controlled robots play football against each other. To make game objects move realistically, programmers need a good understanding of maths and physics — variables, conditions and calculations are part of every great game!"
+    },
+    {
+      "id": "concept-6-creating-user-friendly-programs",
+      "title": "Creating User-Friendly Programs",
+      "explanation": "A program is user-friendly when people can use it easily and enjoy using it. Big programs are made by whole teams, each person with a different job. In this subunit you learn the roles people play, the stages a program goes through, and why you must agree on clear criteria at the start.\n\nTurning a good idea into a finished program takes people with many different skills. Here are the main roles:\n\nMaking a program can be decomposed into five stages, called the project life cycle. It is called a cycle because there is no fixed end: even a finished program can be analysed again and improved.\n\nAnalysis — study the problem, come up with an idea, and decide the criteria and main features.\n\nDesign — plan what the program will look like and how it will work; draw the screens and write the algorithms.\n\nDevelopment — build the program by writing the code, and create the content such as text, images and sounds.\n\nTesting — run the program and check it works against the success criteria; fix anything that does not work.\n\nEvaluation — judge the quality of the program by checking its features against the original criteria.\n\nE-waste is waste from old electronic devices. The World Economic Forum says there could be about 74.7 million tonnes of e-waste each year by 2030 — about the same weight as 10 million elephants! One way to help is to reuse and recycle devices instead of always buying new ones.\n\nCriteria are the standards you use to judge if a program is successful. Success criteria need to be specific and measurable so anyone can check whether they have been met. Imagine being asked to build a quiz with no criteria — how would you know if it was good? It is far better to agree the criteria at the analysis stage, by asking questions such as: How many questions should the quiz have? What happens if the user gets a question right? What happens if they get it wrong?\n\nMaya builds a quiz program and evaluates it against clear criteria. Here is her first question, written correctly in Scratch:\n\nScratch: one user-friendly quiz question with a clear right/wrong response\n\nask [What do you use to store values that can change in a program?] and wait\n\nTrace the result. The quiz greets the user, then asks the question. If the user types variable, the score goes up by 1 and it says 'That is correct!'. If they type anything else, it says 'Oh no. The correct answer is: variable'. At the end it shows the score. This meets several success criteria at once: it asks a programming question, it responds differently to right and wrong answers, and it shows the final score. To add more questions, Maya duplicates the IF ELSE block and edits the question, answer and messages.\n\nRole — What they do\n\nEnd user — The person the program is made for, who will use it when it is finished.\n\nAnalyst — Interviews the end user to understand their needs, and helps create the criteria.\n\nUX designer — Designs the menus, buttons and layout so the program is easy to use.\n\nContent creator — Makes the text, images, sounds and other content in the program.\n\nGraphic designer — Creates the digital images and visual look using design software.\n\nSoftware developer — Plans the solution with algorithms, then writes the code.\n\nProduct tester — Uses the program a lot to find problems so they can be fixed.",
+      "example": "Project manager — Keeps track of the work, sets deadlines, and checks the criteria are met."
+    },
+    {
+      "id": "concept-7-using-selection-with-a-physical-device",
+      "title": "Using Selection with a Physical Device",
+      "explanation": "Now for something different: a physical device — a small computer you could hold in your hand and program yourself. We use the BBC micro:bit. It has inputs (button A, button B, and a sensor that feels movement) and outputs (a grid of 25 red LED lights and a tiny speaker). In this subunit you use conditions and selection to make the micro:bit respond to what the user does.\n\nYou do NOT need to own a micro:bit\n\nGo to makecode.microbit.org for blocks, or python.microbit.org for Python. A picture of a micro:bit (the simulator) appears on the screen. When you run your code, the simulator behaves exactly like a real micro:bit — you can click its A and B buttons with your mouse, and press a shake button to shake it. Everything in this subunit works in the free online simulator alone.\n\nVariables and conditions on the micro:bit\n\nJust like in Scratch, you make a variable in MakeCode by clicking Variables, then Make a Variable. You can set it and change it. The micro:bit also has ready-made conditions for checking inputs — for example, button A is pressed and is [shake] gesture. These conditions return True or False, so you can use them with selection.\n\nA gesture is a movement the micro:bit can feel, such as being shaken. Here is a program that shows a different face depending on whether it is being shaken. In MakeCode blocks it looks like this:\n\nMakeCode: selection using the shake gesture condition\n\nTrace the result. The forever loop keeps checking the condition. While the micro:bit is being shaken, the condition is True, so it shows a sad face. When it is still, the condition is False, so it shows a happy face.\n\nNow build a counter. Each press of button A adds 1; each press of button B subtracts 1; shaking resets it to 0. We use on button A pressed and on button B pressed, which run exactly once each time you press. Here it is in MakeCode blocks:\n\nMakeCode: a counter using inputs, a variable and selection\n\nThe very same program can be written in MicroPython at python.microbit.org. This is real text code that runs on the simulator:\n\nTrace the result. Count starts at 0. Press button A three times and Count becomes 3, shown on the LED screen. Press button B once and it drops to 2. Shake the micro:bit and Count is reset to 0 and the screen is cleared. This program uses an input (the buttons and the shake), a variable (Count), selection (checking which input happened), and produces an output (the number on the screen).\n\nThe two-player 'Guess the Press' game\n\nFor the club's final micro:bit challenge, everyone builds a two-player game. Player one presses button A a secret number of times. Player two then presses button B, trying to guess and match that number. When the micro:bit is shaken, the two numbers are compared: if they are equal, a smiley face shows; if not, a sad face shows. Here it is in MakeCode:\n\nMakeCode: the two-player Guess the Press game\n\nAnd here is the same game in MicroPython:\n\nThe same Guess the Press game in MicroPython",
+      "example": "Trace the result. Suppose player one presses A four times, so PlayerOne is 4. Player two guesses by pressing B four times, so PlayerTwo is 4. When the micro:bit is shaken, the condition PlayerOne = PlayerTwo is True, so a happy face shows. If player two had pressed B only three times, the condition would be False and a sad face would show. After a short pause, both variables reset to 0 and the screen clears, ready for another round. This one small game uses variables, inputs, the equal to operator, and IF THEN ELSE selection — almost everything from the whole unit!"
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "A count-controlled loop; the variable Count stores the number of repeats",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "set Count to 4",
+        "REPEAT Count"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-2",
+      "title": "Assigning a text value and a number value",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "set Name to Sami",
+        "set Age to 10"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-3",
+      "title": "Assign a value, then output it",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "set MyFavouriteFruit to banana",
+        "say MyFavouriteFruit"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-4",
+      "title": "Scratch: a basketball scoreboard using two variables",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "--- Basketball1 sprite (inside the three-point line) ---",
+        "when this sprite clicked",
+        "change [Score v] by 2",
+        "change [Shots v] by 1",
+        "--- Basketball2 sprite (outside the three-point line) ---",
+        "when this sprite clicked",
+        "change [Score v] by 3",
+        "change [Shots v] by 1"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-5",
+      "title": "1.1 Assigning Variables — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From 1.1 Assigning Variables.",
+      "lines": [
+        "when this sprite clicked",
+        "set [Score v] to 0",
+        "set [Shots v] to 0"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-6",
+      "title": "Adding two variables and storing the answer in a third variable",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "set FirstNumber to 7",
+        "set SecondNumber to 6",
+        "set Result to FirstNumber + SecondNumber"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-7",
+      "title": "Storing user input in a well-named variable",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "ask [What is your name?] and wait",
+        "set [Name v] to (answer)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-8",
+      "title": "1.2 Using Operators — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From 1.2 Using Operators.",
+      "lines": [
+        "when this sprite clicked",
+        "ask [Enter the first number] and wait",
+        "set [Number1 v] to (answer)",
+        "ask [Enter the second number] and wait",
+        "set [Number2 v] to (answer)",
+        "set [Result v] to (Number1 + Number2)",
+        "say (Result) for 2 seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-9",
+      "title": "1.2 Using Operators — listing 2",
+      "language": "Scratch blocks",
+      "intro": "From 1.2 Using Operators.",
+      "lines": [
+        "when this sprite clicked",
+        "ask [Enter the first number] and wait",
+        "set [Number1 v] to (answer)",
+        "ask [Enter the second number] and wait",
+        "set [Number2 v] to (answer)",
+        "set [Result v] to (Number1 — Number2)",
+        "say (Result) for 2 seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-10",
+      "title": "An everyday IF THEN ELSE selection statement",
+      "language": "Pseudocode",
+      "intro": "",
+      "lines": [
+        "IF Temperature equal to very cold",
+        "THEN Take a jacket",
+        "ELSE"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Activities and Projects",
+      "context": "work through the steps below and see what happens. This is assigning variables in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Year 5 — Unit 1 — Computational Thinking and Programming",
+      "answer": "How to Use This Booklet Each activity below tells you the task, gives you the exact code to build, tells you the expected result so you can check your work, and gives you an AI-tutor prompt to try. Do them in order and take your time. All the software is free, and you do not need any special hardware. Open a web browser and go to scratch.mit.edu. Click Create at the top. The Scratch editor opens — no download or account needed. On the left are the coloured blocks. In the middle you drag blocks to build code. On the top-right is the stage where your sprite lives.",
+      "modelType": "model-1",
+      "hint": "Start here: How to Use This Booklet",
+      "explanation": "Assigning Variables: A variable is a named box that stores a piece of data. The special thing about a variable is that the value inside it can change while the program runs. You can put a value in, use it later, and change it whenever you need to. A variable can only hold one value at a time: if you put a new value in,…"
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Scratch",
+      "context": "work through the steps below and see what happens. This is using operators in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Open a web browser and go to scratch.mit.edu.",
+      "answer": "Click Create at the top. The Scratch editor opens — no download or account needed. On the left are the coloured blocks. In the middle you drag blocks to build code. On the top-right is the stage where your sprite lives. To make a variable, click the orange Variables section, then Make a Variable. Give it a meaningful name and choose For all sprites. Click the green flag to run your program, and the red stop sign to stop it. For blocks, go to makecode.microbit.org and click New Project. For Python, go to python.microbit.org.",
+      "modelType": "model-2",
+      "hint": "Start here: Click Create at the top. The Scratch editor opens — no download or account needed.",
+      "explanation": "Using Operators: An operator is a symbol that does an action on values. In this subunit you meet two families of operators: arithmetic operators for doing maths, and comparison operators for comparing values."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Birthday card using two variables",
+      "context": "work through the steps below and see what happens. This is selection in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "say (join [Happy Birthday ] (join (Name) (join [! You are ] (join (Age) [ today!])))) for 3 seconds",
+      "answer": "Expected result: The sprite says 'Happy Birthday Nadia! You are 8 today!'. Change the two values to your own name and age and run it again — the same program now makes your card. Ask Your AI Tutor Ask: 'In Scratch, how does the join block let me put a variable inside a sentence? Show me a simple example.' Activity 1.1b — Leila's basketball scoreboard",
+      "modelType": "model-3",
+      "hint": "Start here: Expected result: The sprite says 'Happy Birthday Nadia! You are 8 today!'. Change the two values to your own name and age and run it again — the same…",
+      "explanation": "Selection: So far your programs have run in a straight line — every instruction, every time. Selection changes that. Selection lets your program decide what to do next, based on the answer to a condition. It is the third big way to control a program, alongside sequence (the order of instructions) and…"
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Ask Your AI Tutor",
+      "context": "work through the steps below and see what happens. This is planning solutions in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Ask: 'In Scratch, how does the join block let me put a variable inside a sentence? Show me a simple example.'",
+      "answer": "Activity 1.1b — Leila's basketball scoreboard Task: Build the basketball scoreboard. Make two variables, Score and Shots, both For all sprites. Use two basketball sprites and a reset button. Basketball scoreboard",
+      "modelType": "model-4",
+      "hint": "Start here: Activity 1.1b — Leila's basketball scoreboard",
+      "explanation": "Planning Solutions: Good programmers plan before they build. In this subunit you learn that the same task can be solved by different algorithms, that some algorithms are more efficient than others, and how to plan a solution by breaking a problem into parts."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Adding two variables",
+      "context": "work through the steps below and see what happens. This is object interaction in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Expected result: The sprite says 13, because 7 + 6 = 13. Change the two numbers and run it again to prove the calculation still works.",
+      "answer": "Activity 1.2b — Sami's calculator Task: Build a calculator with an addition button and a subtraction button. Make the variables Number1, Number2 and Result.",
+      "modelType": "model-5",
+      "hint": "Start here: Activity 1.2b — Sami's calculator",
+      "explanation": "Object Interaction: In computing, an object is a thing that has its own shape and its own behaviours. Look around your room: a book is an object (it is made of paper, has text, and can be opened and closed); a learner is an object (they wear a uniform and can read and write). In Scratch, the objects are the sprites…"
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Adding sports balls",
+      "context": "work through the steps below and see what happens. This is creating user-friendly programs in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Expected result: The sprite says 'I have 8', because 5 + 3 = 8.",
+      "answer": "1.3 Selection — Activities Activity 1.3a — The T-shirt colour costume",
+      "modelType": "model-6",
+      "hint": "Start here: 1.3 Selection — Activities",
+      "explanation": "Creating User-Friendly Programs: A program is user-friendly when people can use it easily and enjoy using it. Big programs are made by whole teams, each person with a different job. In this subunit you learn the roles people play, the stages a program goes through, and why you must agree on clear criteria at the start."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Assigning Variables",
+      "modelType": "concept-model-1",
+      "purpose": "A variable is a named box that stores a piece of data. The special thing about a variable is that the value inside it can change while the program runs. You can put a value in, use it later, and change it whenever you…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Using Operators",
+      "modelType": "concept-model-2",
+      "purpose": "An operator is a symbol that does an action on values. In this subunit you meet two families of operators: arithmetic operators for doing maths, and comparison operators for comparing values.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Selection",
+      "modelType": "concept-model-3",
+      "purpose": "So far your programs have run in a straight line — every instruction, every time. Selection changes that. Selection lets your program decide what to do next, based on the answer to a condition. It is the third big way…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Planning Solutions",
+      "modelType": "concept-model-4",
+      "purpose": "Good programmers plan before they build. In this subunit you learn that the same task can be solved by different algorithms, that some algorithms are more efficient than others, and how to plan a solution by breaking a…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Object Interaction",
+      "modelType": "concept-model-5",
+      "purpose": "In computing, an object is a thing that has its own shape and its own behaviours. Look around your room: a book is an object (it is made of paper, has text, and can be opened and closed); a learner is an object (they…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Creating User-Friendly Programs",
+      "modelType": "concept-model-6",
+      "purpose": "A program is user-friendly when people can use it easily and enjoy using it. Big programs are made by whole teams, each person with a different job. In this subunit you learn the roles people play, the stages a program…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-7",
+      "outcomeId": "lo07",
+      "title": "Using Selection with a Physical Device",
+      "modelType": "concept-model-7",
+      "purpose": "Now for something different: a physical device — a small computer you could hold in your hand and program yourself. We use the BBC micro:bit. It has inputs (button A, button B, and a sensor that feels movement) and…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with assigning variables",
+      "example": "Trace the result. At the start you would click the Reset button, so Score is 0 and Shots is 0. Now suppose Leila clicks the inside basketball three times: each click adds 2 to Score and 1 to Shots, so Score becomes 6 and Shots becomes 3. If she then clicks…",
+      "steps": [
+        "A variable is a named box that stores a piece of data. The special thing about a variable is that the value inside it can change while the program runs. You can put a value in, use it later, and change it whenever you…",
+        "The data we store is called a value. A value can be a number (like 10), some text (like Leila), or a symbol. When we put a value into a variable, we say we assign the value to the variable.",
+        "You have used variables before without knowing it. Think about a count-controlled loop — a loop that repeats an exact number of times. The number of repeats is stored in a variable, often called Count:",
+        "A count-controlled loop; the variable Count stores the number of repeats"
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with using operators",
+      "example": "Computers often use the equal to operator to check passwords: they compare what you type with the stored password. A strong password is long and easy for you to remember — three random words such as riverlemontiger work well. Never write your password down…",
+      "steps": [
+        "An operator is a symbol that does an action on values. In this subunit you meet two families of operators: arithmetic operators for doing maths, and comparison operators for comparing values.",
+        "Arithmetic is the use of numbers in calculations, such as adding or subtracting. The two most important arithmetic operators are + for addition and — for subtraction. (Computers can also multiply with * and divide with…",
+        "We can use arithmetic operators with variables, not just plain numbers. Here is the classic example:",
+        "Adding two variables and storing the answer in a third variable"
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with selection",
+      "example": "Trace the result. The forever loop keeps checking all four conditions. Press the up arrow and change y by 10 moves the rocket up; press the down arrow and change y by -10 moves it down; the right and left arrows change x to move sideways. The point in…",
+      "steps": [
+        "So far your programs have run in a straight line — every instruction, every time. Selection changes that. Selection lets your program decide what to do next, based on the answer to a condition. It is the third big way…",
+        "A selection statement has a condition and some instructions that run only if the condition is True. We write it with IF, THEN and ELSE. After IF comes the condition. After THEN comes what to do if the condition is True.…",
+        "An everyday IF THEN ELSE selection statement",
+        "Trace the result. If it is very cold, the condition is True, so you take a jacket. If it is not very cold, the condition is False, so you take a jumper instead. Either way, you then continue with the rest of your day.…"
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with planning solutions",
+      "example": "Output — What the program gives back. · The program says a message.",
+      "steps": [
+        "Good programmers plan before they build. In this subunit you learn that the same task can be solved by different algorithms, that some algorithms are more efficient than others, and how to plan a solution by breaking a…",
+        "Different algorithms, different efficiency",
+        "Think about walking from your classroom to the lunch hall. There are several routes, and some are shorter than others. In the same way, one problem can be solved by several algorithms. An algorithm is efficient when it…",
+        "One great way to make an algorithm more efficient is to use selection to skip steps you do not need. Compare two versions of a morning routine:"
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with object interaction",
+      "example": "There is a robot football competition called RoboCup, where teams of computer-controlled robots play football against each other. To make game objects move realistically, programmers need a good understanding of maths and physics — variables, conditions and…",
+      "steps": [
+        "In computing, an object is a thing that has its own shape and its own behaviours. Look around your room: a book is an object (it is made of paper, has text, and can be opened and closed); a learner is an object (they…",
+        "A script is a set of joined blocks that makes one complete section of a program. A trigger tells a script when to run — for example, when green flag clicked or when this sprite clicked. A sub-routine is a named set of…",
+        "An interaction is when two or more objects communicate or work together. Think of a relay race: each runner is an object with their own behaviours, and they are interrelated because the next runner can only take the…",
+        "Theo builds a game with three objects: the rocket ship, an asteroid, and the stage. The player moves the rocket up and down to dodge asteroids that fly in from the right. Let us look at each object's script."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "How to work with creating user-friendly programs",
+      "example": "Project manager — Keeps track of the work, sets deadlines, and checks the criteria are met.",
+      "steps": [
+        "A program is user-friendly when people can use it easily and enjoy using it. Big programs are made by whole teams, each person with a different job. In this subunit you learn the roles people play, the stages a program…",
+        "Turning a good idea into a finished program takes people with many different skills. Here are the main roles:",
+        "Making a program can be decomposed into five stages, called the project life cycle. It is called a cycle because there is no fixed end: even a finished program can be analysed again and improved.",
+        "Analysis — study the problem, come up with an idea, and decide the criteria and main features."
+      ]
+    },
+    {
+      "id": "method-7",
+      "outcomeId": "lo07",
+      "difficulty": "Challenge",
+      "title": "How to work with using selection with a physical device",
+      "example": "Trace the result. Suppose player one presses A four times, so PlayerOne is 4. Player two guesses by pressing B four times, so PlayerTwo is 4. When the micro:bit is shaken, the condition PlayerOne = PlayerTwo is True, so a happy face shows. If player two had…",
+      "steps": [
+        "Now for something different: a physical device — a small computer you could hold in your hand and program yourself. We use the BBC micro:bit. It has inputs (button A, button B, and a sensor that feels movement) and…",
+        "Go to makecode.microbit.org for blocks, or python.microbit.org for Python. A picture of a micro:bit (the simulator) appears on the screen. When you run your code, the simulator behaves exactly like a real micro:bit -…",
+        "Variables and conditions on the micro:bit",
+        "Just like in Scratch, you make a variable in MakeCode by clicking Variables, then Make a Variable. You can set it and change it. The micro:bit also has ready-made conditions for checking inputs — for example, button A…"
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Assigning Variables",
+      "prompt": "What is a variable? (a) a fixed number (b) a named box that stores a value that can change (c) a type of loop (d) a sound",
+      "solution": "1 (b) a named box that stores a value that can change. That is exactly what a variable is."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Using Operators",
+      "prompt": "How many values can a variable hold at one time? (a) none (b) one (c) two (d) as many as you like",
+      "solution": "2 (b) one. A variable holds only one value at a time; a new value replaces the old one."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Selection",
+      "prompt": "Which is the arithmetic operator for subtraction? (a) + (b) — (c) = (d) *",
+      "solution": "3 (b) -. The minus symbol subtracts; + adds."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Planning Solutions",
+      "prompt": "What does a comparison operator like equal to give back? (a) a number (b) a word (c) True or False (d) a sound",
+      "solution": "4 (c) True or False. A comparison operator returns True or False."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Object Interaction",
+      "prompt": "In Scratch, where is the user's typed input stored? (a) in score (b) in answer (c) in input (d) in key",
+      "solution": "5 (b) in answer. The ask and wait block stores what the user types in the answer variable."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Creating User-Friendly Programs",
+      "prompt": "Which words make a selection statement? (a) REPEAT UNTIL (b) IF THEN ELSE (c) SET TO (d) MOVE TURN",
+      "solution": "6 (b) IF THEN ELSE. These words build a selection statement."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Worked example 7: Using Selection with a Physical Device",
+      "prompt": "What does decomposition mean? (a) deleting code (b) breaking a big problem into smaller parts (c) repeating a loop (d) hiding a variable",
+      "solution": "7 (b) breaking a big problem into smaller parts. That is decomposition."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "Worked example 8: Assigning Variables",
+      "prompt": "In Scratch, the objects you program are called: (a) scripts (b) sprites (c) triggers (d) costumes",
+      "solution": "8 (b) sprites. In Scratch, sprites (and the stage) are the objects."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo09",
+      "difficulty": "Challenge",
+      "title": "Worked example 9: Using Operators",
+      "prompt": "What is an interaction? (a) one object on its own (b) when two or more objects affect each other (c) a kind of variable (d) a comment",
+      "solution": "9 (b) when two or more objects affect each other. That is an interaction."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo10",
+      "difficulty": "Challenge",
+      "title": "Worked example 10: Selection",
+      "prompt": "Who is the person a program is made for? (a) the analyst (b) the end user (c) the tester (d) the project manager",
+      "solution": "10 (b) the end user. The program is made for the end user."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "What is a variable? (a) a fixed number (b) a named box that stores a value that can change (c) a type of loop (d) a sound",
+      "answer": "1 (b) a named box that stores a value that can change. That is exactly what a variable is.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "How many values can a variable hold at one time? (a) none (b) one (c) two (d) as many as you like",
+      "answer": "2 (b) one. A variable holds only one value at a time; a new value replaces the old one.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Which is the arithmetic operator for subtraction? (a) + (b) — (c) = (d) *",
+      "answer": "3 (b) -. The minus symbol subtracts; + adds.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "What does a comparison operator like equal to give back? (a) a number (b) a word (c) True or False (d) a sound",
+      "answer": "4 (c) True or False. A comparison operator returns True or False.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "In Scratch, where is the user's typed input stored? (a) in score (b) in answer (c) in input (d) in key",
+      "answer": "5 (b) in answer. The ask and wait block stores what the user types in the answer variable.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p06",
+      "level": "Warm-up",
+      "prompt": "Which words make a selection statement? (a) REPEAT UNTIL (b) IF THEN ELSE (c) SET TO (d) MOVE TURN",
+      "answer": "6 (b) IF THEN ELSE. These words build a selection statement.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p07",
+      "level": "Warm-up",
+      "prompt": "What does decomposition mean? (a) deleting code (b) breaking a big problem into smaller parts (c) repeating a loop (d) hiding a variable",
+      "answer": "7 (b) breaking a big problem into smaller parts. That is decomposition.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p08",
+      "level": "Warm-up",
+      "prompt": "In Scratch, the objects you program are called: (a) scripts (b) sprites (c) triggers (d) costumes",
+      "answer": "8 (b) sprites. In Scratch, sprites (and the stage) are the objects.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p09",
+      "level": "Warm-up",
+      "prompt": "What is an interaction? (a) one object on its own (b) when two or more objects affect each other (c) a kind of variable (d) a comment",
+      "answer": "9 (b) when two or more objects affect each other. That is an interaction.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p10",
+      "level": "Warm-up",
+      "prompt": "Who is the person a program is made for? (a) the analyst (b) the end user (c) the tester (d) the project manager",
+      "answer": "10 (b) the end user. The program is made for the end user.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p11",
+      "level": "Warm-up",
+      "prompt": "Which of these is an OUTPUT on a micro:bit? (a) button A (b) the shake sensor (c) the LED screen (d) button B",
+      "answer": "11 (c) the LED screen. It is an output. Buttons and the shake sensor are inputs.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p12",
+      "level": "Warm-up",
+      "prompt": "Success criteria are: (a) bugs in the code (b) the list of things a program must do to be a success (c) the user's score (d) a type of loop",
+      "answer": "12 (b) the list of things a program must do to be a success.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p13",
+      "level": "Core",
+      "prompt": "Explain what it means to 'assign' a value to a variable, and give an example.",
+      "answer": "To assign means to put a value into a variable. Example: set Age to 10 assigns the value 10 to the variable Age.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p14",
+      "level": "Core",
+      "prompt": "Why should variable names be meaningful? Give a good name and a bad name for a variable that stores a score.",
+      "answer": "Meaningful names tell you what is stored, so the program is easy to read. Good: Score. Bad: x (it tells you nothing).",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p15",
+      "level": "Core",
+      "prompt": "What is the difference between the set to block and the change by block in Scratch?",
+      "answer": "set to replaces the value with a brand-new one (for example, set Score to 0). change by adds an amount to the current value (for example, change Score by 1).",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p16",
+      "level": "Core",
+      "prompt": "What is a condition? Give one example that returns True and one that returns False.",
+      "answer": "A condition is a question answered True or False. 10 = 10 returns True; 10 = 5 returns False.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Activities and Projects",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Year 5 — Unit 1 — Computational Thinking and Programming",
+        "How to Use This Booklet",
+        "Each activity below tells you the task, gives you the exact code to build, tells you the expected result so you can check your work, and gives you an AI-tutor prompt to try. Do them in order and take your time. All the software is free, and you do not need any special hardware.",
+        "Open a web browser and go to scratch.mit.edu.",
+        "Click Create at the top. The Scratch editor opens — no download or account needed.",
+        "On the left are the coloured blocks. In the middle you drag blocks to build code. On the top-right is the stage where your sprite lives."
+      ]
+    },
+    {
+      "title": "Scratch",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Open a web browser and go to scratch.mit.edu.",
+        "Click Create at the top. The Scratch editor opens — no download or account needed.",
+        "On the left are the coloured blocks. In the middle you drag blocks to build code. On the top-right is the stage where your sprite lives.",
+        "To make a variable, click the orange Variables section, then Make a Variable. Give it a meaningful name and choose For all sprites.",
+        "Click the green flag to run your program, and the red stop sign to stop it.",
+        "For blocks, go to makecode.microbit.org and click New Project. For Python, go to python.microbit.org."
+      ]
+    },
+    {
+      "title": "Birthday card using two variables",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "say (join [Happy Birthday ] (join (Name) (join [! You are ] (join (Age) [ today!])))) for 3 seconds",
+        "Expected result: The sprite says 'Happy Birthday Nadia! You are 8 today!'. Change the two values to your own name and age and run it again — the same program now makes your card.",
+        "Ask Your AI Tutor",
+        "Ask: 'In Scratch, how does the join block let me put a variable inside a sentence? Show me a simple example.'",
+        "Activity 1.1b — Leila's basketball scoreboard"
+      ]
+    },
+    {
+      "title": "Ask Your AI Tutor",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Ask: 'In Scratch, how does the join block let me put a variable inside a sentence? Show me a simple example.'",
+        "Activity 1.1b — Leila's basketball scoreboard",
+        "Task: Build the basketball scoreboard. Make two variables, Score and Shots, both For all sprites. Use two basketball sprites and a reset button.",
+        "Basketball scoreboard"
+      ]
+    },
+    {
+      "title": "Adding two variables",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Expected result: The sprite says 13, because 7 + 6 = 13. Change the two numbers and run it again to prove the calculation still works.",
+        "Activity 1.2b — Sami's calculator",
+        "Task: Build a calculator with an addition button and a subtraction button. Make the variables Number1, Number2 and Result."
+      ]
+    },
+    {
+      "title": "Adding sports balls",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Expected result: The sprite says 'I have 8', because 5 + 3 = 8.",
+        "1.3 Selection — Activities",
+        "Activity 1.3a — The T-shirt colour costume"
+      ]
+    },
+    {
+      "title": "Decomposition table (copy and complete)",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Part",
+        "Your answer for the alarm clock",
+        "Input",
+        "The user enters the wake-up time they want",
+        "Process",
+        "The wake-up time is stored in a variable",
+        "Condition",
+        "Is the current time equal to the wake-up time?",
+        "Output",
+        "If True, the alarm rings",
+        "Expected result: A completed table that shows the input, process, condition and output of the alarm clock. There is no code for this one — it is a planning activity."
+      ]
+    },
+    {
+      "title": "Part | Your answer for the alarm clock",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Input",
+        "The user enters the wake-up time they want",
+        "Process",
+        "The wake-up time is stored in a variable",
+        "Condition",
+        "Is the current time equal to the wake-up time?",
+        "Output",
+        "If True, the alarm rings",
+        "Expected result: A completed table that shows the input, process, condition and output of the alarm clock. There is no code for this one — it is a planning activity.",
+        "Activity 1.4b — Build the panda chatbot"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "The program uses an empty answer",
+      "cause": "The ask block runs after you use answer",
+      "fix": "Put the ask block BEFORE you use answer."
+    },
+    {
+      "symptom": "The score is always the same number",
+      "cause": "You used set to instead of change by",
+      "fix": "Use change Score by 1 to make it grow."
+    },
+    {
+      "symptom": "The score keeps its old value",
+      "cause": "The variable was not initialised",
+      "fix": "Add set Score to 0 at the start."
+    },
+    {
+      "symptom": "A correct answer is marked wrong",
+      "cause": "A spelling or spacing mismatch",
+      "fix": "Check the spelling and remove extra spaces."
+    },
+    {
+      "symptom": "A wrong answer does nothing",
+      "cause": "There is no ELSE branch",
+      "fix": "Add an else to handle the False case."
+    },
+    {
+      "symptom": "The micro:bit counts too fast",
+      "cause": "A held button in a forever loop",
+      "fix": "Use on button A pressed (once per press)."
+    },
+    {
+      "symptom": "The rocket ignores an arrow key",
+      "cause": "The IF for that key is missing or misspelt",
+      "fix": "Add or fix the IF for that arrow key."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Keep personal information private",
+      "text": "Your full name, address, school, phone number, birthday and passwords are personal information. Never type them into a game, an app or a website, and never send them to someone you only know online."
+    },
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "One value at a time",
+        "text": "A variable holds only one value at a time. When you assign a new value, the old one is gone. Give every variable a meaningful name."
+      },
+      {
+        "title": "set to versus change by",
+        "text": "Use set to when you want a brand-new value (like resetting a score to 0). Use change by when you want to add to the value already there."
+      },
+      {
+        "title": "A condition is True or False",
+        "text": "The equal to operator compares two values and returns True or False. Conditions are the questions inside your IF blocks."
+      },
+      {
+        "title": "Plan before you code",
+        "text": "Decompose a problem into input, process, condition and output. A clear plan makes building the program much faster."
+      },
+      {
+        "title": "You do not need a real micro:bit",
+        "text": "The free simulator at makecode.microbit.org or python.microbit.org runs your code and lets you click the buttons and shake it with your mouse."
+      },
+      {
+        "title": "!",
+        "text": "Test one small thing at a time. Read your blocks slowly from the top and say out loud what each one does. If you are stuck, tell your AI tutor what you expected to happen and what actually happened — that is the fastest way to find a bug."
+      }
+    ],
+    "terms": [
+      [
+        "variable",
+        "A named box that stores a value that can change, such as a score."
+      ],
+      [
+        "value",
+        "A piece of data, such as a number, a word or a symbol."
+      ],
+      [
+        "assign",
+        "To put a value into a variable (for example, set Age to 10)."
+      ],
+      [
+        "meaningful name",
+        "A variable name that tells you what it stores, such as Score or Age."
+      ],
+      [
+        "count-controlled loop",
+        "A loop that repeats an exact number of times."
+      ],
+      [
+        "operator",
+        "A symbol that does an action on values."
+      ],
+      [
+        "arithmetic operator",
+        "An operator for maths, such as + (add) and — (subtract)."
+      ],
+      [
+        "comparison operator",
+        "An operator that compares two values, such as equal to."
+      ],
+      [
+        "condition",
+        "A question in a program that is answered True or False."
+      ],
+      [
+        "user input",
+        "Data that a user gives to a computer, such as typing on the keyboard."
+      ],
+      [
+        "selection",
+        "Choosing which instructions to run, using IF, THEN and ELSE."
+      ],
+      [
+        "IF THEN ELSE",
+        "A selection statement: do one thing if a condition is True, another if it is False."
+      ],
+      [
+        "sequence",
+        "The order in which instructions are carried out, top to bottom."
+      ],
+      [
+        "iteration",
+        "Repeating instructions; also called a loop."
+      ],
+      [
+        "comment",
+        "A note in the code that explains what it does; it does not run."
+      ],
+      [
+        "decomposition",
+        "Breaking a big problem into smaller parts that are easier to solve."
+      ],
+      [
+        "efficient",
+        "Doing a task in a careful, complete way with no wasted steps."
+      ],
+      [
+        "input",
+        "Data given to a computer."
+      ],
+      [
+        "process",
+        "The work the computer does with the data."
+      ],
+      [
+        "output",
+        "Information the computer gives back, such as text or a sound."
+      ],
+      [
+        "object",
+        "A thing in a program that has its own shape and behaviours; in Scratch, a sprite."
+      ],
+      [
+        "interaction",
+        "When two or more objects communicate or affect each other."
+      ],
+      [
+        "interrelated",
+        "Connected, so that one object affects another."
+      ],
+      [
+        "script",
+        "A set of joined blocks that makes one complete section of a Scratch program."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "variable",
+        "meaning": "A named box that stores a value that can change, such as a score.",
+        "example": "",
+        "letter": "V"
+      },
+      {
+        "term": "value",
+        "meaning": "A piece of data, such as a number, a word or a symbol.",
+        "example": "",
+        "letter": "V"
+      },
+      {
+        "term": "assign",
+        "meaning": "To put a value into a variable (for example, set Age to 10).",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "meaningful name",
+        "meaning": "A variable name that tells you what it stores, such as Score or Age.",
+        "example": "",
+        "letter": "M"
+      },
+      {
+        "term": "count-controlled loop",
+        "meaning": "A loop that repeats an exact number of times.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "operator",
+        "meaning": "A symbol that does an action on values.",
+        "example": "",
+        "letter": "O"
+      },
+      {
+        "term": "arithmetic operator",
+        "meaning": "An operator for maths, such as + (add) and — (subtract).",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "comparison operator",
+        "meaning": "An operator that compares two values, such as equal to.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "condition",
+        "meaning": "A question in a program that is answered True or False.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "user input",
+        "meaning": "Data that a user gives to a computer, such as typing on the keyboard.",
+        "example": "",
+        "letter": "U"
+      },
+      {
+        "term": "selection",
+        "meaning": "Choosing which instructions to run, using IF, THEN and ELSE.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "IF THEN ELSE",
+        "meaning": "A selection statement: do one thing if a condition is True, another if it is False.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "sequence",
+        "meaning": "The order in which instructions are carried out, top to bottom.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "iteration",
+        "meaning": "Repeating instructions; also called a loop.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "comment",
+        "meaning": "A note in the code that explains what it does; it does not run.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "decomposition",
+        "meaning": "Breaking a big problem into smaller parts that are easier to solve.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "efficient",
+        "meaning": "Doing a task in a careful, complete way with no wasted steps.",
+        "example": "",
+        "letter": "E"
+      },
+      {
+        "term": "input",
+        "meaning": "Data given to a computer.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "process",
+        "meaning": "The work the computer does with the data.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "output",
+        "meaning": "Information the computer gives back, such as text or a sound.",
+        "example": "",
+        "letter": "O"
+      },
+      {
+        "term": "object",
+        "meaning": "A thing in a program that has its own shape and behaviours; in Scratch, a sprite.",
+        "example": "",
+        "letter": "O"
+      },
+      {
+        "term": "interaction",
+        "meaning": "When two or more objects communicate or affect each other.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "interrelated",
+        "meaning": "Connected, so that one object affects another.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "script",
+        "meaning": "A set of joined blocks that makes one complete section of a Scratch program.",
+        "example": "",
+        "letter": "S"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "The program uses an empty answer",
+        "The ask block runs after you use answer Put the ask block BEFORE you use answer."
+      ],
+      [
+        "The score is always the same number",
+        "You used set to instead of change by Use change Score by 1 to make it grow."
+      ],
+      [
+        "The score keeps its old value",
+        "The variable was not initialised Add set Score to 0 at the start."
+      ],
+      [
+        "A correct answer is marked wrong",
+        "A spelling or spacing mismatch Check the spelling and remove extra spaces."
+      ],
+      [
+        "A wrong answer does nothing",
+        "There is no ELSE branch Add an else to handle the False case."
+      ],
+      [
+        "The micro:bit counts too fast",
+        "A held button in a forever loop Use on button A pressed (once per press)."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "What is a variable? (a) a fixed number (b) a named box that stores a value that can change (c) a type of loop (d) a sound",
+      "answer": "1 (b) a named box that stores a value that can change. That is exactly what a variable is.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words.",
+      "errorFeedback": "1 (b) a named box that stores a value that can change. That is exactly what a variable is."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "How many values can a variable hold at one time? (a) none (b) one (c) two (d) as many as you like",
+      "answer": "2 (b) one. A variable holds only one value at a time; a new value replaces the old one.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words.",
+      "errorFeedback": "2 (b) one. A variable holds only one value at a time; a new value replaces the old one."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Which is the arithmetic operator for subtraction? (a) + (b) — (c) = (d) *",
+      "answer": "3 (b) -. The minus symbol subtracts; + adds.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words.",
+      "errorFeedback": "3 (b) -. The minus symbol subtracts; + adds."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "What does a comparison operator like equal to give back? (a) a number (b) a word (c) True or False (d) a sound",
+      "answer": "4 (c) True or False. A comparison operator returns True or False.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words.",
+      "errorFeedback": "4 (c) True or False. A comparison operator returns True or False."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "In Scratch, where is the user's typed input stored? (a) in score (b) in answer (c) in input (d) in key",
+      "answer": "5 (b) in answer. The ask and wait block stores what the user types in the answer variable.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words.",
+      "errorFeedback": "5 (b) in answer. The ask and wait block stores what the user types in the answer variable."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Which words make a selection statement? (a) REPEAT UNTIL (b) IF THEN ELSE (c) SET TO (d) MOVE TURN",
+      "answer": "6 (b) IF THEN ELSE. These words build a selection statement.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words.",
+      "errorFeedback": "6 (b) IF THEN ELSE. These words build a selection statement."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "What does decomposition mean? (a) deleting code (b) breaking a big problem into smaller parts (c) repeating a loop (d) hiding a variable",
+      "answer": "7 (b) breaking a big problem into smaller parts. That is decomposition.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words.",
+      "errorFeedback": "7 (b) breaking a big problem into smaller parts. That is decomposition."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "In Scratch, the objects you program are called: (a) scripts (b) sprites (c) triggers (d) costumes",
+      "answer": "8 (b) sprites. In Scratch, sprites (and the stage) are the objects.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words.",
+      "errorFeedback": "8 (b) sprites. In Scratch, sprites (and the stage) are the objects."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "What is an interaction? (a) one object on its own (b) when two or more objects affect each other (c) a kind of variable (d) a comment",
+      "answer": "9 (b) when two or more objects affect each other. That is an interaction.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words.",
+      "errorFeedback": "9 (b) when two or more objects affect each other. That is an interaction."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "Who is the person a program is made for? (a) the analyst (b) the end user (c) the tester (d) the project manager",
+      "answer": "10 (b) the end user. The program is made for the end user.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words.",
+      "errorFeedback": "10 (b) the end user. The program is made for the end user."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "Which of these is an OUTPUT on a micro:bit? (a) button A (b) the shake sensor (c) the LED screen (d) button B",
+      "answer": "11 (c) the LED screen. It is an output. Buttons and the shake sensor are inputs.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words.",
+      "errorFeedback": "11 (c) the LED screen. It is an output. Buttons and the shake sensor are inputs."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "Success criteria are: (a) bugs in the code (b) the list of things a program must do to be a success (c) the user's score (d) a type of loop",
+      "answer": "12 (b) the list of things a program must do to be a success.",
+      "hint": "Look back at what variable and value mean in this unit, then answer in your own words.",
+      "errorFeedback": "12 (b) the list of things a program must do to be a success."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Copy each snippet and fill the gap marked _____.",
+      "answer": "D1. set — the block is set [Score v] to 0.",
+      "hint": "Work out which idea this is about — variable, value, assign — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: D1. set — the block is set [Score v] to 0."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "D1. Make the score start at zero:",
+      "answer": "D2. change — the block is change [Score v] by 1.",
+      "hint": "Work out which idea this is about — variable, value, assign — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: D2. change — the block is change [Score v] by 1."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "when green flag clicked",
+      "answer": "D3. = (equal to) — the condition is (answer) = [variable].",
+      "hint": "Work out which idea this is about — variable, value, assign — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: D3. = (equal to) — the condition is (answer) = [variable]."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "_____ [Score v] to 0",
+      "answer": "D4. (answer) — the block is set [Name v] to (answer), using Scratch's built-in answer variable.",
+      "hint": "Work out which idea this is about — variable, value, assign — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: D4. (answer) — the block is set [Name v] to (answer), using Scratch's built-in answer variable."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Travel",
+      "prompt": "D2. Add 1 to the score when the ball is clicked:",
+      "answer": "Use a ‘when this sprite clicked’ block, followed by ‘change score by 1’.",
+      "hint": "Work out which idea this is about — variable, value, assign — then explain your reasoning step by step.",
+      "errorFeedback": "Use ‘change score by 1’, not ‘set score to 1’, so the existing score increases by one."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "context": "Health",
+      "prompt": "_____ [Score v] by 1",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — variable, value, assign — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain what it means to 'assign' a value to a variable, and give an example.",
+      "keyIdeas": [
+        "variable",
+        "value",
+        "assign"
+      ],
+      "modelAnswer": "To assign means to put a value into a variable. Example: set Age to 10 assigns the value 10 to the variable Age."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Why should variable names be meaningful? Give a good name and a bad name for a variable that stores a score.",
+      "keyIdeas": [
+        "value",
+        "assign",
+        "meaningful name"
+      ],
+      "modelAnswer": "Meaningful names tell you what is stored, so the program is easy to read. Good: Score. Bad: x (it tells you nothing)."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "What is the difference between the set to block and the change by block in Scratch?",
+      "keyIdeas": [
+        "assign",
+        "meaningful name",
+        "count-controlled loop"
+      ],
+      "modelAnswer": "set to replaces the value with a brand-new one (for example, set Score to 0). change by adds an amount to the current value (for example, change Score by 1)."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "What is a condition? Give one example that returns True and one that returns False.",
+      "keyIdeas": [
+        "meaningful name",
+        "count-controlled loop",
+        "operator"
+      ],
+      "modelAnswer": "A condition is a question answered True or False. 10 = 10 returns True; 10 = 5 returns False."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Explain, in your own words, what IF THEN ELSE does.",
+      "keyIdeas": [
+        "count-controlled loop",
+        "operator",
+        "arithmetic operator"
+      ],
+      "modelAnswer": "IF THEN ELSE checks a condition. If it is True, it runs the THEN instructions. If it is False, it runs the ELSE instructions instead."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "What are the four parts you decompose a problem into when planning a program?",
+      "keyIdeas": [
+        "operator",
+        "arithmetic operator",
+        "comparison operator"
+      ],
+      "modelAnswer": "Input, process, condition and output."
+    }
+  ],
+  "project": {
+    "title": "The Secret Number Game",
+    "brief": "This is your big project — it brings together the whole unit. In Scratch, you will build a game that makes a secret number using variables, arithmetic operators and selection. One player enters two numbers; the program adds them to make a hidden SecretNumber; then a second player tries to guess it. Work alone or with a partner.",
+    "steps": [
+      "Your program should meet these success criteria:",
+      "A sprite welcomes the players to the game.",
+      "The user inputs two numbers, stored in two meaningfully named variables.",
+      "The two numbers are added together and stored in a new variable called SecretNumber.",
+      "The two input numbers can be seen on the screen, but SecretNumber is hidden.",
+      "A second player is asked to input a guess of the secret number.",
+      "The guess is compared to the secret number using the equal to operator.",
+      "If the guess is correct, a happy message is shown."
+    ],
+    "successCriteria": [
+      "Task: Before building a quiz, write a list of success criteria. A criterion is something the quiz MUST do to be a success.",
+      "The quiz welcomes the user with a friendly message.",
+      "The quiz asks four questions about programming.",
+      "Each question has a one-word answer.",
+      "An appropriate message is shown if the answer is right, and a different one if it is wrong.",
+      "At the end, the user's score and a closing message are shown.",
+      "Expected result: A clear, specific list you can tick off when you test any quiz — your own or a friend's."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What is a variable?",
+        "options": [
+          "a fixed number",
+          "a named box that stores a value that can change",
+          "a type of loop",
+          "a sound"
+        ],
+        "answer": "a named box that stores a value that can change",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "1 (b) a named box that stores a value that can change. That is exactly what a variable is."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does a comparison operator like equal to give back?",
+        "options": [
+          "a number",
+          "a word",
+          "True or False",
+          "a sound"
+        ],
+        "answer": "True or False",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "4 (c) True or False. A comparison operator returns True or False."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "In Scratch, where is the user's typed input stored?",
+        "options": [
+          "in score",
+          "in answer",
+          "in input",
+          "in key"
+        ],
+        "answer": "in answer",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "5 (b) in answer. The ask and wait block stores what the user types in the answer variable."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "Which words make a selection statement?",
+        "options": [
+          "REPEAT UNTIL",
+          "IF THEN ELSE",
+          "SET TO",
+          "MOVE TURN"
+        ],
+        "answer": "IF THEN ELSE",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "6 (b) IF THEN ELSE. These words build a selection statement."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does decomposition mean?",
+        "options": [
+          "deleting code",
+          "breaking a big problem into smaller parts",
+          "repeating a loop",
+          "hiding a variable"
+        ],
+        "answer": "breaking a big problem into smaller parts",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "7 (b) breaking a big problem into smaller parts. That is decomposition."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "In Scratch, the objects you program are called:",
+        "options": [
+          "scripts",
+          "sprites",
+          "triggers",
+          "costumes"
+        ],
+        "answer": "sprites",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "8 (b) sprites. In Scratch, sprites (and the stage) are the objects."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "What is an interaction?",
+        "options": [
+          "one object on its own",
+          "when two or more objects affect each other",
+          "a kind of variable",
+          "a comment"
+        ],
+        "answer": "when two or more objects affect each other",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "9 (b) when two or more objects affect each other. That is an interaction."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Who is the person a program is made for?",
+        "options": [
+          "the analyst",
+          "the end user",
+          "the tester",
+          "the project manager"
+        ],
+        "answer": "the end user",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "10 (b) the end user. The program is made for the end user."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo09",
+        "difficulty": "Core",
+        "question": "Which of these is an OUTPUT on a micro:bit?",
+        "options": [
+          "button A",
+          "the shake sensor",
+          "the LED screen",
+          "button B"
+        ],
+        "answer": "the shake sensor",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "11 (c) the LED screen. It is an output. Buttons and the shake sensor are inputs."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Success criteria are:",
+        "options": [
+          "bugs in the code",
+          "the list of things a program must do to be a success",
+          "the user's score",
+          "a type of loop"
+        ],
+        "answer": "the list of things a program must do to be a success",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "12 (b) the list of things a program must do to be a success."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Choosing which instructions to run, using IF, THEN and ELSE.?",
+        "options": [
+          "selection",
+          "IF THEN ELSE",
+          "sequence",
+          "iteration"
+        ],
+        "answer": "selection",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Selection means choosing which instructions to run, using IF, THEN and ELSE."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A selection statement: do one thing if a condition is True, another if it is False.?",
+        "options": [
+          "IF THEN ELSE",
+          "sequence",
+          "iteration",
+          "comment"
+        ],
+        "answer": "IF THEN ELSE",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "IF THEN ELSE means a selection statement: do one thing if a condition is True, another if it is False."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u1-game-1",
+        "icon": "?",
+        "skill": "variable",
+        "title": "Quick Match: variable",
+        "description": "Practise variable through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What is a variable?",
+            "choices": [
+              "a fixed number",
+              "a named box that stores a value that can change",
+              "a type of loop",
+              "a sound"
+            ],
+            "answer": "a named box that stores a value that can change",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "1 (b) a named box that stores a value that can change. That is exactly what a variable is."
+          },
+          {
+            "prompt": "Which words make a selection statement?",
+            "choices": [
+              "REPEAT UNTIL",
+              "IF THEN ELSE",
+              "SET TO",
+              "MOVE TURN"
+            ],
+            "answer": "IF THEN ELSE",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "6 (b) IF THEN ELSE. These words build a selection statement."
+          },
+          {
+            "prompt": "What is an interaction?",
+            "choices": [
+              "one object on its own",
+              "when two or more objects affect each other",
+              "a kind of variable",
+              "a comment"
+            ],
+            "answer": "when two or more objects affect each other",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "9 (b) when two or more objects affect each other. That is an interaction."
+          },
+          {
+            "prompt": "Success criteria are:",
+            "choices": [
+              "bugs in the code",
+              "the list of things a program must do to be a success",
+              "the user's score",
+              "a type of loop"
+            ],
+            "answer": "the list of things a program must do to be a success",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "12 (b) the list of things a program must do to be a success."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-2",
+        "icon": "★",
+        "skill": "value",
+        "title": "Concept Quest: value",
+        "description": "Practise value through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does a comparison operator like equal to give back?",
+            "choices": [
+              "a number",
+              "a word",
+              "True or False",
+              "a sound"
+            ],
+            "answer": "True or False",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "4 (c) True or False. A comparison operator returns True or False."
+          },
+          {
+            "prompt": "What does decomposition mean?",
+            "choices": [
+              "deleting code",
+              "breaking a big problem into smaller parts",
+              "repeating a loop",
+              "hiding a variable"
+            ],
+            "answer": "breaking a big problem into smaller parts",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "7 (b) breaking a big problem into smaller parts. That is decomposition."
+          },
+          {
+            "prompt": "Who is the person a program is made for?",
+            "choices": [
+              "the analyst",
+              "the end user",
+              "the tester",
+              "the project manager"
+            ],
+            "answer": "the end user",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "10 (b) the end user. The program is made for the end user."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Choosing which instructions to run, using IF, THEN and ELSE.?",
+            "choices": [
+              "selection",
+              "IF THEN ELSE",
+              "sequence",
+              "iteration"
+            ],
+            "answer": "selection",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Selection means choosing which instructions to run, using IF, THEN and ELSE."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-3",
+        "icon": "◫",
+        "skill": "assign",
+        "title": "Debug Detective: assign",
+        "description": "Practise assign through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "In Scratch, where is the user's typed input stored?",
+            "choices": [
+              "in score",
+              "in answer",
+              "in input",
+              "in key"
+            ],
+            "answer": "in answer",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "5 (b) in answer. The ask and wait block stores what the user types in the answer variable."
+          },
+          {
+            "prompt": "In Scratch, the objects you program are called:",
+            "choices": [
+              "scripts",
+              "sprites",
+              "triggers",
+              "costumes"
+            ],
+            "answer": "sprites",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "8 (b) sprites. In Scratch, sprites (and the stage) are the objects."
+          },
+          {
+            "prompt": "Which of these is an OUTPUT on a micro:bit?",
+            "choices": [
+              "button A",
+              "the shake sensor",
+              "the LED screen",
+              "button B"
+            ],
+            "answer": "the shake sensor",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "11 (c) the LED screen. It is an output. Buttons and the shake sensor are inputs."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A selection statement: do one thing if a condition is True, another if it is False.?",
+            "choices": [
+              "IF THEN ELSE",
+              "sequence",
+              "iteration",
+              "comment"
+            ],
+            "answer": "IF THEN ELSE",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "IF THEN ELSE means a selection statement: do one thing if a condition is True, another if it is False."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-4",
+        "icon": "→",
+        "skill": "meaningful name",
+        "title": "Algorithm Runner: meaningful name",
+        "description": "Practise meaningful name through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which words make a selection statement?",
+            "choices": [
+              "REPEAT UNTIL",
+              "IF THEN ELSE",
+              "SET TO",
+              "MOVE TURN"
+            ],
+            "answer": "IF THEN ELSE",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "6 (b) IF THEN ELSE. These words build a selection statement."
+          },
+          {
+            "prompt": "What is an interaction?",
+            "choices": [
+              "one object on its own",
+              "when two or more objects affect each other",
+              "a kind of variable",
+              "a comment"
+            ],
+            "answer": "when two or more objects affect each other",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "9 (b) when two or more objects affect each other. That is an interaction."
+          },
+          {
+            "prompt": "Success criteria are:",
+            "choices": [
+              "bugs in the code",
+              "the list of things a program must do to be a success",
+              "the user's score",
+              "a type of loop"
+            ],
+            "answer": "the list of things a program must do to be a success",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "12 (b) the list of things a program must do to be a success."
+          },
+          {
+            "prompt": "What is a variable?",
+            "choices": [
+              "a fixed number",
+              "a named box that stores a value that can change",
+              "a type of loop",
+              "a sound"
+            ],
+            "answer": "a named box that stores a value that can change",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "1 (b) a named box that stores a value that can change. That is exactly what a variable is."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-5",
+        "icon": "Σ",
+        "skill": "count-controlled loop",
+        "title": "Vocabulary Vault: count-controlled loop",
+        "description": "Practise count-controlled loop through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does decomposition mean?",
+            "choices": [
+              "deleting code",
+              "breaking a big problem into smaller parts",
+              "repeating a loop",
+              "hiding a variable"
+            ],
+            "answer": "breaking a big problem into smaller parts",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "7 (b) breaking a big problem into smaller parts. That is decomposition."
+          },
+          {
+            "prompt": "Who is the person a program is made for?",
+            "choices": [
+              "the analyst",
+              "the end user",
+              "the tester",
+              "the project manager"
+            ],
+            "answer": "the end user",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "10 (b) the end user. The program is made for the end user."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Choosing which instructions to run, using IF, THEN and ELSE.?",
+            "choices": [
+              "selection",
+              "IF THEN ELSE",
+              "sequence",
+              "iteration"
+            ],
+            "answer": "selection",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Selection means choosing which instructions to run, using IF, THEN and ELSE."
+          },
+          {
+            "prompt": "What does a comparison operator like equal to give back?",
+            "choices": [
+              "a number",
+              "a word",
+              "True or False",
+              "a sound"
+            ],
+            "answer": "True or False",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "4 (c) True or False. A comparison operator returns True or False."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-6",
+        "icon": "◇",
+        "skill": "operator",
+        "title": "Challenge Cards: operator",
+        "description": "Practise operator through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "In Scratch, the objects you program are called:",
+            "choices": [
+              "scripts",
+              "sprites",
+              "triggers",
+              "costumes"
+            ],
+            "answer": "sprites",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "8 (b) sprites. In Scratch, sprites (and the stage) are the objects."
+          },
+          {
+            "prompt": "Which of these is an OUTPUT on a micro:bit?",
+            "choices": [
+              "button A",
+              "the shake sensor",
+              "the LED screen",
+              "button B"
+            ],
+            "answer": "the shake sensor",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "11 (c) the LED screen. It is an output. Buttons and the shake sensor are inputs."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A selection statement: do one thing if a condition is True, another if it is False.?",
+            "choices": [
+              "IF THEN ELSE",
+              "sequence",
+              "iteration",
+              "comment"
+            ],
+            "answer": "IF THEN ELSE",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "IF THEN ELSE means a selection statement: do one thing if a condition is True, another if it is False."
+          },
+          {
+            "prompt": "In Scratch, where is the user's typed input stored?",
+            "choices": [
+              "in score",
+              "in answer",
+              "in input",
+              "in key"
+            ],
+            "answer": "in answer",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "5 (b) in answer. The ask and wait block stores what the user types in the answer variable."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-7",
+        "icon": "⚡",
+        "skill": "arithmetic operator",
+        "title": "Think Fast: arithmetic operator",
+        "description": "Practise arithmetic operator through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What is an interaction?",
+            "choices": [
+              "one object on its own",
+              "when two or more objects affect each other",
+              "a kind of variable",
+              "a comment"
+            ],
+            "answer": "when two or more objects affect each other",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "9 (b) when two or more objects affect each other. That is an interaction."
+          },
+          {
+            "prompt": "Success criteria are:",
+            "choices": [
+              "bugs in the code",
+              "the list of things a program must do to be a success",
+              "the user's score",
+              "a type of loop"
+            ],
+            "answer": "the list of things a program must do to be a success",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "12 (b) the list of things a program must do to be a success."
+          },
+          {
+            "prompt": "What is a variable?",
+            "choices": [
+              "a fixed number",
+              "a named box that stores a value that can change",
+              "a type of loop",
+              "a sound"
+            ],
+            "answer": "a named box that stores a value that can change",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "1 (b) a named box that stores a value that can change. That is exactly what a variable is."
+          },
+          {
+            "prompt": "Which words make a selection statement?",
+            "choices": [
+              "REPEAT UNTIL",
+              "IF THEN ELSE",
+              "SET TO",
+              "MOVE TURN"
+            ],
+            "answer": "IF THEN ELSE",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "6 (b) IF THEN ELSE. These words build a selection statement."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-8",
+        "icon": "☁",
+        "skill": "comparison operator",
+        "title": "Explain It: comparison operator",
+        "description": "Practise comparison operator through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Who is the person a program is made for?",
+            "choices": [
+              "the analyst",
+              "the end user",
+              "the tester",
+              "the project manager"
+            ],
+            "answer": "the end user",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "10 (b) the end user. The program is made for the end user."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Choosing which instructions to run, using IF, THEN and ELSE.?",
+            "choices": [
+              "selection",
+              "IF THEN ELSE",
+              "sequence",
+              "iteration"
+            ],
+            "answer": "selection",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Selection means choosing which instructions to run, using IF, THEN and ELSE."
+          },
+          {
+            "prompt": "What does a comparison operator like equal to give back?",
+            "choices": [
+              "a number",
+              "a word",
+              "True or False",
+              "a sound"
+            ],
+            "answer": "True or False",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "4 (c) True or False. A comparison operator returns True or False."
+          },
+          {
+            "prompt": "What does decomposition mean?",
+            "choices": [
+              "deleting code",
+              "breaking a big problem into smaller parts",
+              "repeating a loop",
+              "hiding a variable"
+            ],
+            "answer": "breaking a big problem into smaller parts",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "7 (b) breaking a big problem into smaller parts. That is decomposition."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-9",
+        "icon": "⌂",
+        "skill": "condition",
+        "title": "Real-Life Round: condition",
+        "description": "Practise condition through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which of these is an OUTPUT on a micro:bit?",
+            "choices": [
+              "button A",
+              "the shake sensor",
+              "the LED screen",
+              "button B"
+            ],
+            "answer": "the shake sensor",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "11 (c) the LED screen. It is an output. Buttons and the shake sensor are inputs."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A selection statement: do one thing if a condition is True, another if it is False.?",
+            "choices": [
+              "IF THEN ELSE",
+              "sequence",
+              "iteration",
+              "comment"
+            ],
+            "answer": "IF THEN ELSE",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "IF THEN ELSE means a selection statement: do one thing if a condition is True, another if it is False."
+          },
+          {
+            "prompt": "In Scratch, where is the user's typed input stored?",
+            "choices": [
+              "in score",
+              "in answer",
+              "in input",
+              "in key"
+            ],
+            "answer": "in answer",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "5 (b) in answer. The ask and wait block stores what the user types in the answer variable."
+          },
+          {
+            "prompt": "In Scratch, the objects you program are called:",
+            "choices": [
+              "scripts",
+              "sprites",
+              "triggers",
+              "costumes"
+            ],
+            "answer": "sprites",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "8 (b) sprites. In Scratch, sprites (and the stage) are the objects."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-10",
+        "icon": "!",
+        "skill": "user input",
+        "title": "Spot the Bug: user input",
+        "description": "Practise user input through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Success criteria are:",
+            "choices": [
+              "bugs in the code",
+              "the list of things a program must do to be a success",
+              "the user's score",
+              "a type of loop"
+            ],
+            "answer": "the list of things a program must do to be a success",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "12 (b) the list of things a program must do to be a success."
+          },
+          {
+            "prompt": "What is a variable?",
+            "choices": [
+              "a fixed number",
+              "a named box that stores a value that can change",
+              "a type of loop",
+              "a sound"
+            ],
+            "answer": "a named box that stores a value that can change",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "1 (b) a named box that stores a value that can change. That is exactly what a variable is."
+          },
+          {
+            "prompt": "Which words make a selection statement?",
+            "choices": [
+              "REPEAT UNTIL",
+              "IF THEN ELSE",
+              "SET TO",
+              "MOVE TURN"
+            ],
+            "answer": "IF THEN ELSE",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "6 (b) IF THEN ELSE. These words build a selection statement."
+          },
+          {
+            "prompt": "What is an interaction?",
+            "choices": [
+              "one object on its own",
+              "when two or more objects affect each other",
+              "a kind of variable",
+              "a comment"
+            ],
+            "answer": "when two or more objects affect each other",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "9 (b) when two or more objects affect each other. That is an interaction."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-11",
+        "icon": "≡",
+        "skill": "selection",
+        "title": "Mastery Mix: selection",
+        "description": "Practise selection through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Choosing which instructions to run, using IF, THEN and ELSE.?",
+            "choices": [
+              "selection",
+              "IF THEN ELSE",
+              "sequence",
+              "iteration"
+            ],
+            "answer": "selection",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Selection means choosing which instructions to run, using IF, THEN and ELSE."
+          },
+          {
+            "prompt": "What does a comparison operator like equal to give back?",
+            "choices": [
+              "a number",
+              "a word",
+              "True or False",
+              "a sound"
+            ],
+            "answer": "True or False",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "4 (c) True or False. A comparison operator returns True or False."
+          },
+          {
+            "prompt": "What does decomposition mean?",
+            "choices": [
+              "deleting code",
+              "breaking a big problem into smaller parts",
+              "repeating a loop",
+              "hiding a variable"
+            ],
+            "answer": "breaking a big problem into smaller parts",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "7 (b) breaking a big problem into smaller parts. That is decomposition."
+          },
+          {
+            "prompt": "Who is the person a program is made for?",
+            "choices": [
+              "the analyst",
+              "the end user",
+              "the tester",
+              "the project manager"
+            ],
+            "answer": "the end user",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "10 (b) the end user. The program is made for the end user."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-12",
+        "icon": "T",
+        "skill": "IF THEN ELSE",
+        "title": "Unit Champion: IF THEN ELSE",
+        "description": "Practise if then else through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A selection statement: do one thing if a condition is True, another if it is False.?",
+            "choices": [
+              "IF THEN ELSE",
+              "sequence",
+              "iteration",
+              "comment"
+            ],
+            "answer": "IF THEN ELSE",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "IF THEN ELSE means a selection statement: do one thing if a condition is True, another if it is False."
+          },
+          {
+            "prompt": "In Scratch, where is the user's typed input stored?",
+            "choices": [
+              "in score",
+              "in answer",
+              "in input",
+              "in key"
+            ],
+            "answer": "in answer",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "5 (b) in answer. The ask and wait block stores what the user types in the answer variable."
+          },
+          {
+            "prompt": "In Scratch, the objects you program are called:",
+            "choices": [
+              "scripts",
+              "sprites",
+              "triggers",
+              "costumes"
+            ],
+            "answer": "sprites",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "8 (b) sprites. In Scratch, sprites (and the stage) are the objects."
+          },
+          {
+            "prompt": "Which of these is an OUTPUT on a micro:bit?",
+            "choices": [
+              "button A",
+              "the shake sensor",
+              "the LED screen",
+              "button B"
+            ],
+            "answer": "the shake sensor",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "11 (c) the LED screen. It is an output. Buttons and the shake sensor are inputs."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can understand that a variable stores a value that can change, and that it holds only one value at a time.",
+    "I can create variables with meaningful names.",
+    "I can store values that a user inputs, then use them in a calculation.",
+    "I can use the equal to comparison operator to check if two values are the same.",
+    "I can predict the outcome of algorithms that use IF, THEN and ELSE.",
+    "I can understand that different algorithms can solve the same task.",
+    "I can identify the purpose, inputs, processes, conditions and outputs of a problem.",
+    "I can identify objects in a program and describe how they behave.",
+    "I can identify how different objects can affect each other.",
+    "I can plan and develop a game where objects interact."
+  ]
+}

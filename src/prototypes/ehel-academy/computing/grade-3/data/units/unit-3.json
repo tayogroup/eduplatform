@@ -1,0 +1,1767 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.481Z",
+  "stage": {
+    "id": "s03",
+    "label": "Stage 3"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t01",
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "comp-g03-u03",
+    "unitNo": 3,
+    "unitTitle": "Be a Data Expert",
+    "unitOverview": "First, you learn that data helps us solve problems — we collect the data, look at it carefully, understand what it tells us, and then make a good decision. Third, you learn to organise and present data as a tally chart, a pictogram, and a block or column chart, and to read a chart to answer questions. Fourth, you learn how data is recorded on computers using input devices and electronic forms, and you make one simple chart on screen.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 3
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-3-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 3",
+    "sourceArchive": "Year 3-20260801T055744Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 3/Unit 3/Year 3 - Unit 3 Teacher Guide.docx",
+      "Year 3/Unit 3/Year 3 - Unit 3 Activity Sheet.docx",
+      "Year 3/Unit 3/Year 3 - Unit 3 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 387,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 3 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Understand that data helps us solve problems, using the steps collect the data, look at it, understand it, and then decide.",
+    "Tell the difference between categorical data (groups and words) and discrete data (whole numbers).",
+    "Collect and organise data using a tally chart and a table.",
+    "Present data as a pictogram and a block or column chart, and recognise a bar chart and a pie chart.",
+    "Read a chart and answer questions about it (most, least, how many more, how many altogether).",
+    "Choose the right input device (keyboard or a pointing device) to record discrete or categorical data on an electronic form.",
+    "Make a simple column chart on the computer using a free spreadsheet."
+  ],
+  "toolkit": [
+    {
+      "name": "A free spreadsheet",
+      "url": "Google Sheets, or LibreOffice Calc",
+      "steps": [
+        "Open a new blank spreadsheet.",
+        "Put your field names in row 1, one per column.",
+        "Type one record per row underneath.",
+        "Use Insert → Chart to turn your data into a graph."
+      ],
+      "note": "Any free spreadsheet works — the ideas are the same in all of them."
+    }
+  ],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-data-helps-us-solve-problems",
+      "title": "Data helps us solve problems",
+      "explanation": "Data is the facts and numbers we collect. Data helps us solve problems and make good choices. There are three steps: first we collect the data, then we look at it carefully, then we understand what it is telling us. After that, we can make a good decision.\n\nWhen we want to solve a problem, we do not just guess. We collect some facts — that is data. Then we look at the data and think about what it means.",
+      "example": "Then we can decide what to do. Let us try it.",
+      "checkYourself": "Can you see that data helps us decide, instead of guessing? Can you count carefully and make neat tally marks?"
+    },
+    {
+      "id": "concept-2-two-kinds-of-data-categorical-and-discrete",
+      "title": "Two kinds of data: categorical and discrete",
+      "explanation": "There are two kinds of data. Categorical data sorts things into groups, and is usually words — like favourite fruit (mango, banana, dates) or the colour of a car.\n\nSome data is words that put things in groups — we call that categorical. Some data is numbers we count — we call that discrete.",
+      "example": "Discrete numbers are always whole. You cannot have two and a half children in a class, or half a brother!",
+      "checkYourself": "Can you remember that discrete numbers are whole? A common slip is to call a favourite thing a number — gently show you that mango is a group, and the 5 is the count. Can you tell a group (words) from a count (numbers)?"
+    },
+    {
+      "id": "concept-3-showing-data-tallies-pictograms-and-charts",
+      "title": "Showing data: tallies, pictograms and charts",
+      "explanation": "Once we have collected data, we make it easy to read by showing it as a picture. First we count with a tally chart (marks in groups of five). Then we can show the same data as a pictogram (pictures with a key), a block graph or column chart (blocks or columns standing up — taller means more), or a bar chart (bars lying down — longer means more). A pie chart is a circle cut into slices — a bigger slice means more.\n\nWhich is your favourite — milk, juice or water? For example Start with a class vote you can see. Remind you how tally marks work: one line for each, and every fifth mark makes a group of five, so they are easy to count.",
+      "example": "Find one real example of showing data: tallies, pictograms and charts around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "When you colour the block graph, Can you colour the right number of blocks? Can you use the key on a pictogram (not just count dots blindly)?"
+    },
+    {
+      "id": "concept-4-making-a-chart-on-the-computer",
+      "title": "Making a chart on the computer",
+      "explanation": "Computers can make charts for us quickly. We put our data into a spreadsheet as a table, select it, and ask the computer to draw the chart. We will use LibreOffice Calc, which is free.\n\nA box has a name from its letter and number, like A1. We type our data into the boxes, then the computer draws the chart for us.",
+      "example": "Open LibreOffice Calc on the projector. Explain in child words that a spreadsheet is a big grid of boxes (cells), with letters across the top (A, B) and numbers down the side (1, 2, 3).",
+      "checkYourself": "Can you select the data and find Insert then Chart? Can you type each piece of data into the correct box? Do not worry about neat formatting — making the chart at all is the success."
+    },
+    {
+      "id": "concept-5-collecting-data-with-computing-devices",
+      "title": "Collecting data with computing devices",
+      "explanation": "Data can be collected straight into a computer using an electronic form (a form you fill in on a screen). We put data in using input devices. A keyboard is best for typing numbers and words. A pointing device — a mouse, touchpad or touchscreen — is best for clicking or ticking a box. The type of question tells us which device to use.\n\nLook at question one. It asks you to tick a box to choose a fruit. To tick a box, what do you use — a keyboard, or a mouse or touchscreen? Now look at question two.",
+      "example": "It asks how many bananas you want. To type a number, what do you use?",
+      "checkYourself": "This session ties the whole unit together — data, kinds of data, and how we record it. Can you match a tick-box question to a pointing device, and a number question to the keyboard?"
+    }
+  ],
+  "codeExamples": [],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Count and Tally",
+      "context": "work through the steps below and see what happens. This is data helps us solve problems in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Here is what she takes out, in order",
+      "answer": "mango, banana, mango, dates, mango banana, mango, dates, banana, mango Make a tally mark for each fruit (a line for each one, in groups of five). Then write the number. How many pieces of fruit did Maya take out altogether? __________ Match: Fruit → Tally / Number",
+      "modelType": "model-1",
+      "hint": "Start here: mango, banana, mango, dates, mango",
+      "explanation": "Data helps us solve problems: Data is the facts and numbers we collect. Data helps us solve problems and make good choices. There are three steps: first we collect the data, then we look at it carefully, then we understand what it is telling us. After that, we can make a good decision."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Read a Pictogram",
+      "context": "work through the steps below and see what happens. This is two kinds of data: categorical and discrete in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Class 3 voted for their favourite fruit. This is a pictogram. Read the key, then read the pictures.",
+      "answer": "Key: each ● stands for 1 child. A) How many you chose mango? __________. b) Which fruit is the most popular? __________ c) Which fruit is the least popular? __________ D) How many you voted altogether? __________.",
+      "modelType": "model-2",
+      "hint": "Start here: Key: each ● stands for 1 child.",
+      "explanation": "Two kinds of data: categorical and discrete: There are two kinds of data. Categorical data sorts things into groups, and is usually words — like favourite fruit (mango, banana, dates) or the colour of a car."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Sort the Data: Groups or Numbers?",
+      "context": "work through the steps below and see what happens. This is showing data: tallies, pictograms and charts in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Categorical data goes in groups (words). Discrete data is whole numbers you count. Write C for categorical or D for discrete next to each one.",
+      "answer": "a) Your favourite colour __________ b) How many brothers and sisters you have __________ c) The kind of pet you have (cat, dog, bird) __________ d) How many pencils are in your bag __________ e) Your favourite fruit __________",
+      "modelType": "model-3",
+      "hint": "Start here: a) Your favourite colour __________",
+      "explanation": "Showing data: tallies, pictograms and charts: Once we have collected data, we make it easy to read by showing it as a picture. First we count with a tally chart (marks in groups of five). Then we can show the same data as a pictogram (pictures with a key), a block graph or column chart (blocks or columns standing up — taller means more), or a…"
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Colour the Block Graph",
+      "context": "work through the steps below and see what happens. This is making a chart on the computer in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Here is a tally chart of the favourite drink at Ehel Academy. First write the number for each drink.",
+      "answer": "Now colour the block graph to match. Colour one block for you, starting at the bottom. (You can draw a tiny picture in each block if you like.). Match: Drink → Tally / Number / Count / Milk / Juice / Water Match: Milk → |||| / 5 Match: Juice → || / 4 Match: Water → ||||| / 3",
+      "modelType": "model-4",
+      "hint": "Start here: Now colour the block graph to match. Colour one block for you, starting at the bottom. (You can draw a tiny picture in each block if you like.).",
+      "explanation": "Making a chart on the computer: Computers can make charts for us quickly. We put our data into a spreadsheet as a table, select it, and ask the computer to draw the chart. We will use LibreOffice Calc, which is free."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Read the Column Chart",
+      "context": "work through the steps below and see what happens. This is collecting data with computing devices in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "This column chart shows the favourite sport in Class 3. Each ■ is one child. A taller column means more you. Read it and answer the questions.",
+      "answer": "a) Which sport is the most popular? __________ B) How many you chose swimming? __________. C) How many more you chose football than running? __________. Match: Number → Football / Swimming / Running Match: 6 → ■",
+      "modelType": "model-5",
+      "hint": "Start here: a) Which sport is the most popular? __________",
+      "explanation": "Collecting data with computing devices: Data can be collected straight into a computer using an electronic form (a form you fill in on a screen). We put data in using input devices. A keyboard is best for typing numbers and words. A pointing device — a mouse, touchpad or touchscreen — is best for clicking or ticking a box. The type of…"
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Match the Words",
+      "context": "work through the steps below and see what happens. This is data helps us solve problems in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Draw a line from each word to what it means.",
+      "answer": "Match: data → marks we make to count, in groups of five Match: tally → number data that is only whole numbers Match: categorical data → facts and numbers that we collect Match: discrete data → data that goes in groups, like fruit or colour",
+      "modelType": "model-6",
+      "hint": "Start here: Match: data → marks we make to count, in groups of five",
+      "explanation": "Data helps us solve problems: Data is the facts and numbers we collect. Data helps us solve problems and make good choices. There are three steps: first we collect the data, then we look at it carefully, then we understand what it is telling us. After that, we can make a good decision."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Data helps us solve problems",
+      "modelType": "concept-model-1",
+      "purpose": "Data is the facts and numbers we collect. Data helps us solve problems and make good choices. There are three steps: first we collect the data, then we look at it carefully, then we understand what it is telling us.…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Two kinds of data: categorical and discrete",
+      "modelType": "concept-model-2",
+      "purpose": "There are two kinds of data. Categorical data sorts things into groups, and is usually words — like favourite fruit (mango, banana, dates) or the colour of a car.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Showing data: tallies, pictograms and charts",
+      "modelType": "concept-model-3",
+      "purpose": "Once we have collected data, we make it easy to read by showing it as a picture. First we count with a tally chart (marks in groups of five). Then we can show the same data as a pictogram (pictures with a key), a block…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Making a chart on the computer",
+      "modelType": "concept-model-4",
+      "purpose": "Computers can make charts for us quickly. We put our data into a spreadsheet as a table, select it, and ask the computer to draw the chart. We will use LibreOffice Calc, which is free.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Collecting data with computing devices",
+      "modelType": "concept-model-5",
+      "purpose": "Data can be collected straight into a computer using an electronic form (a form you fill in on a screen). We put data in using input devices. A keyboard is best for typing numbers and words. A pointing device — a mouse,…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with data helps us solve problems",
+      "example": "Then we can decide what to do. Let us try it.",
+      "steps": [
+        "Read the concept card for data helps us solve problems and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with two kinds of data: categorical and discrete",
+      "example": "Discrete numbers are always whole. You cannot have two and a half children in a class, or half a brother!",
+      "steps": [
+        "Read the concept card for two kinds of data: categorical and discrete and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with showing data: tallies, pictograms and charts",
+      "example": "Find one real example of showing data: tallies, pictograms and charts around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for showing data: tallies, pictograms and charts and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with making a chart on the computer",
+      "example": "Open LibreOffice Calc on the projector. Explain in child words that a spreadsheet is a big grid of boxes (cells), with letters across the top (A, B) and numbers down the side (1, 2, 3).",
+      "steps": [
+        "Read the concept card for making a chart on the computer and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with collecting data with computing devices",
+      "example": "It asks how many bananas you want. To type a number, what do you use?",
+      "steps": [
+        "Read the concept card for collecting data with computing devices and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Data helps us solve problems",
+      "prompt": "Data helps us solve problems. Put these three steps in order. Write 1, 2, 3 in the boxes.",
+      "solution": "Collect the data = 1, Look at the data = 2, Understand the data = 3."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Two kinds of data: categorical and discrete",
+      "prompt": "Is each one categorical (C) or discrete (D)?",
+      "solution": "(a) number of dates = D (discrete); (b) favourite colour = C (categorical)."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Showing data: tallies, pictograms and charts",
+      "prompt": "Look at this tally chart. Write how many chose each fruit.",
+      "solution": "Mango = 5 (|||||), Banana = 3 (|||)."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Making a chart on the computer",
+      "prompt": "On an electronic form, you tick a box to choose your favourite drink.",
+      "solution": "(a) a pointing device (mouse, touchpad or touchscreen); (b) categorical data."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Data helps us solve problems",
+      "prompt": "Explain in your own words: Data helps us solve problems.",
+      "solution": "Data is the facts and numbers we collect. Data helps us solve problems and make good choices. There are three steps: first we collect the data, then we look at it carefully, then we understand what it is telling us. After that, we can make a good decision.\n\nWhen we want to solve a problem, we do not just guess. We collect some facts — that is data. Then we look at the data and think about what it means.\n\nFor example: Then we can decide what to do. Let us try it."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Two kinds of data: categorical and discrete",
+      "prompt": "Explain in your own words: Two kinds of data: categorical and discrete.",
+      "solution": "There are two kinds of data. Categorical data sorts things into groups, and is usually words — like favourite fruit (mango, banana, dates) or the colour of a car.\n\nSome data is words that put things in groups — we call that categorical. Some data is numbers we count — we call that discrete.\n\nFor example: Discrete numbers are always whole. You cannot have two and a half children in a class, or half a brother!"
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Data helps us solve problems. Put these three steps in order. Write 1, 2, 3 in the boxes.",
+      "answer": "Collect the data = 1, Look at the data = 2, Understand the data = 3.",
+      "hint": "Look back at what data and collect mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Is each one categorical (C) or discrete (D)?",
+      "answer": "(a) number of dates = D (discrete); (b) favourite colour = C (categorical).",
+      "hint": "Look back at what data and collect mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "Look at this tally chart. Write how many chose each fruit.",
+      "answer": "Mango = 5 (|||||), Banana = 3 (|||).",
+      "hint": "Look back at what data and collect mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Which chart uses pictures and a key? Circle one: (bar chart pictogram table)",
+      "answer": "pictogram.",
+      "hint": "Look back at what data and collect mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "On an electronic form, you tick a box to choose your favourite drink.",
+      "answer": "(a) a pointing device (mouse, touchpad or touchscreen); (b) categorical data.",
+      "hint": "Look back at what data and collect mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "Fill in the word. Number data that is only whole numbers (like the number of children) is called",
+      "answer": "discrete.",
+      "hint": "Look back at what data and collect mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Count and Tally",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Here is what she takes out, in order",
+        "mango, banana, mango, dates, mango",
+        "banana, mango, dates, banana, mango",
+        "Make a tally mark for each fruit (a line for each one, in groups of five). Then write the number.",
+        "How many pieces of fruit did Maya take out altogether? __________",
+        "Match: Fruit → Tally / Number"
+      ]
+    },
+    {
+      "title": "Read a Pictogram",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Class 3 voted for their favourite fruit. This is a pictogram. Read the key, then read the pictures.",
+        "Key: each ● stands for 1 child.",
+        "A) How many you chose mango? __________.",
+        "b) Which fruit is the most popular? __________",
+        "c) Which fruit is the least popular? __________",
+        "D) How many you voted altogether? __________."
+      ]
+    },
+    {
+      "title": "Sort the Data: Groups or Numbers?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Categorical data goes in groups (words). Discrete data is whole numbers you count. Write C for categorical or D for discrete next to each one.",
+        "a) Your favourite colour __________",
+        "b) How many brothers and sisters you have __________",
+        "c) The kind of pet you have (cat, dog, bird) __________",
+        "d) How many pencils are in your bag __________",
+        "e) Your favourite fruit __________"
+      ]
+    },
+    {
+      "title": "Colour the Block Graph",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Here is a tally chart of the favourite drink at Ehel Academy. First write the number for each drink.",
+        "Now colour the block graph to match. Colour one block for you, starting at the bottom. (You can draw a tiny picture in each block if you like.).",
+        "Match: Drink → Tally / Number / Count / Milk / Juice / Water",
+        "Match: Milk → |||| / 5",
+        "Match: Juice → || / 4",
+        "Match: Water → ||||| / 3"
+      ]
+    },
+    {
+      "title": "Read the Column Chart",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "This column chart shows the favourite sport in Class 3. Each ■ is one child. A taller column means more you. Read it and answer the questions.",
+        "a) Which sport is the most popular? __________",
+        "B) How many you chose swimming? __________.",
+        "C) How many more you chose football than running? __________.",
+        "Match: Number → Football / Swimming / Running",
+        "Match: 6 → ■"
+      ]
+    },
+    {
+      "title": "Match the Words",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Draw a line from each word to what it means.",
+        "Match: data → marks we make to count, in groups of five",
+        "Match: tally → number data that is only whole numbers",
+        "Match: categorical data → facts and numbers that we collect",
+        "Match: discrete data → data that goes in groups, like fruit or colour"
+      ]
+    },
+    {
+      "title": "Which Device Would You Use?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Here is an electronic form. We fill it in on a computer. A keyboard types words and numbers. A pointing device (mouse, touchpad or touchscreen) clicks and ticks boxes.",
+        "1. Which fruit do you like?",
+        "[ ] Mango [ ] Banana [ ] Dates",
+        "2. How many bananas do you want? ______",
+        "a) Question 1 lets you tick a box. Which is best — the keyboard, or a pointing device? __________",
+        "b) Question 2 asks you to type a number. Which device do you use? __________"
+      ]
+    },
+    {
+      "title": "Make a Chart on the Computer",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Now make a real chart using LibreOffice Calc (it is free).",
+        "Open LibreOffice Calc.",
+        "Type this data into the boxes (cells), just like this",
+        "1 Fruit Number",
+        "2 Mango 5",
+        "3 Banana 3"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "Data is only numbers.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Data can be words too. Favourite fruit (mango, banana, dates) is data — it is categorical data. Point it out a group of words is still data."
+    },
+    {
+      "symptom": "A pie chart tells me the exact number.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "A pie chart shows the share — a bigger slice means more — but it does not always show the exact number unless it is labelled."
+    },
+    {
+      "symptom": "Any device works for any question.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we collect and look at data, we must still understand it and decide. Collecting data is not the answer by itself — it is only the first step."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Data helps us solve problems",
+        "text": "Data is the facts and numbers we collect."
+      },
+      {
+        "title": "Two kinds of data: categorical and discrete",
+        "text": "There are two kinds of data."
+      },
+      {
+        "title": "Showing data: tallies, pictograms and charts",
+        "text": "Once we have collected data, we make it easy to read by showing it as a picture."
+      },
+      {
+        "title": "Making a chart on the computer",
+        "text": "Computers can make charts for us quickly."
+      },
+      {
+        "title": "Collecting data with computing devices",
+        "text": "Data can be collected straight into a computer using an electronic form (a form you fill in on a screen)."
+      }
+    ],
+    "terms": [
+      [
+        "data",
+        "Facts and numbers that we collect."
+      ],
+      [
+        "collect",
+        "To gather data."
+      ],
+      [
+        "tally",
+        "Small marks to count, made in groups of five."
+      ],
+      [
+        "table",
+        "Data set out in rows and columns."
+      ],
+      [
+        "categorical data",
+        "Data that goes in groups or words."
+      ],
+      [
+        "discrete data",
+        "Number data that is only whole numbers."
+      ],
+      [
+        "pictogram",
+        "A chart that uses pictures, with a key."
+      ],
+      [
+        "block graph",
+        "A chart made of blocks; taller means more."
+      ],
+      [
+        "bar chart",
+        "A chart with bars lying down (across)."
+      ],
+      [
+        "column chart",
+        "A chart with columns standing up."
+      ],
+      [
+        "pie chart",
+        "A circle cut into slices; a bigger slice means more."
+      ],
+      [
+        "key",
+        "It tells you what each picture or colour means."
+      ],
+      [
+        "input device",
+        "A tool to put data into a computer."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "data",
+        "meaning": "Facts and numbers that we collect.",
+        "example": "How many children like mango.",
+        "letter": "D"
+      },
+      {
+        "term": "collect",
+        "meaning": "To gather data.",
+        "example": "Ask everyone their favourite fruit.",
+        "letter": "C"
+      },
+      {
+        "term": "tally",
+        "meaning": "Small marks to count, made in groups of five.",
+        "example": "||| means 3.",
+        "letter": "T"
+      },
+      {
+        "term": "table",
+        "meaning": "Data set out in rows and columns.",
+        "example": "Names in one column, scores in the next.",
+        "letter": "T"
+      },
+      {
+        "term": "categorical data",
+        "meaning": "Data that goes in groups or words.",
+        "example": "Fruit: mango, banana, dates.",
+        "letter": "C"
+      },
+      {
+        "term": "discrete data",
+        "meaning": "Number data that is only whole numbers.",
+        "example": "The number of children in the class.",
+        "letter": "D"
+      },
+      {
+        "term": "pictogram",
+        "meaning": "A chart that uses pictures, with a key.",
+        "example": "Each picture stands for 1 child.",
+        "letter": "P"
+      },
+      {
+        "term": "block graph",
+        "meaning": "A chart made of blocks; taller means more.",
+        "example": "Colour one block for each child.",
+        "letter": "B"
+      },
+      {
+        "term": "bar chart",
+        "meaning": "A chart with bars lying down (across).",
+        "example": "A longer bar means more.",
+        "letter": "B"
+      },
+      {
+        "term": "column chart",
+        "meaning": "A chart with columns standing up.",
+        "example": "A taller column means more.",
+        "letter": "C"
+      },
+      {
+        "term": "pie chart",
+        "meaning": "A circle cut into slices; a bigger slice means more.",
+        "example": "Slices for milk, juice, water.",
+        "letter": "P"
+      },
+      {
+        "term": "key",
+        "meaning": "It tells you what each picture or colour means.",
+        "example": "One dot stands for 1 child.",
+        "letter": "K"
+      },
+      {
+        "term": "input device",
+        "meaning": "A tool to put data into a computer.",
+        "example": "Keyboard, mouse, touchpad, touchscreen.",
+        "letter": "I"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "Data is only numbers.",
+        "Data can be words too. Favourite fruit (mango, banana, dates) is data — it is categorical data. Point it out a group of words is still data."
+      ],
+      [
+        "A pie chart tells me the exact number.",
+        "A pie chart shows the share — a bigger slice means more — but it does not always show the exact number unless it is labelled."
+      ],
+      [
+        "Any device works for any question.",
+        "Match the device to the data: a keyboard for typing numbers and words, a pointing device for ticking a box. Forgetting the last step. After we collect and look at data, we must still understand it and decide. Collecting data is not the answer by itself — it is only the first step."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Data helps us solve problems. Put these three steps in order. Write 1, 2, 3 in the boxes.",
+      "answer": "Collect the data = 1, Look at the data = 2, Understand the data = 3.",
+      "hint": "Look back at what data and collect mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Collect the data = 1, Look at the data = 2, Understand the data = 3."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Is each one categorical (C) or discrete (D)?",
+      "answer": "(a) number of dates = D (discrete); (b) favourite colour = C (categorical).",
+      "hint": "Look back at what data and collect mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "(a) number of dates = D (discrete); (b) favourite colour = C (categorical)."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Look at this tally chart. Write how many chose each fruit.",
+      "answer": "Mango = 5 (|||||), Banana = 3 (|||).",
+      "hint": "Look back at what data and collect mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Mango = 5 (|||||), Banana = 3 (|||)."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Which chart uses pictures and a key? Circle one: (bar chart pictogram table)",
+      "answer": "pictogram.",
+      "hint": "Look back at what data and collect mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "pictogram."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "On an electronic form, you tick a box to choose your favourite drink.",
+      "answer": "(a) a pointing device (mouse, touchpad or touchscreen); (b) categorical data.",
+      "hint": "Look back at what data and collect mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "(a) a pointing device (mouse, touchpad or touchscreen); (b) categorical data."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Fill in the word. Number data that is only whole numbers (like the number of children) is called",
+      "answer": "discrete.",
+      "hint": "Look back at what data and collect mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "discrete."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Fill in the word. Number data that is only whole numbers (like the number of children) is called",
+      "answer": "discrete.",
+      "hint": "Look back at what data and collect mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: discrete."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "On an electronic form, you tick a box to choose your favourite drink.",
+      "answer": "(a) a pointing device (mouse, touchpad or touchscreen); (b) categorical data.",
+      "hint": "Look back at what data and collect mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: (a) a pointing device (mouse, touchpad or touchscreen); (b) categorical data."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Fill in the word. Number data that is only whole numbers (like the number of children) is called",
+      "answer": "discrete.",
+      "hint": "Look back at what data and collect mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: discrete."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "Data helps us solve problems. Put these three steps in order. Write 1, 2, 3 in the boxes.",
+      "answer": "Collect the data = 1, Look at the data = 2, Understand the data = 3.",
+      "hint": "Look back at what data and collect mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Collect the data = 1, Look at the data = 2, Understand the data = 3."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Look at this tally chart. Write how many chose each fruit.",
+      "keyIdeas": [
+        "data",
+        "collect",
+        "tally"
+      ],
+      "modelAnswer": "Mango = 5 (|||||), Banana = 3 (|||)."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Which chart uses pictures and a key? Circle one: (bar chart pictogram table)",
+      "keyIdeas": [
+        "collect",
+        "tally",
+        "table"
+      ],
+      "modelAnswer": "pictogram."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "On an electronic form, you tick a box to choose your favourite drink.",
+      "keyIdeas": [
+        "tally",
+        "table",
+        "categorical data"
+      ],
+      "modelAnswer": "(a) a pointing device (mouse, touchpad or touchscreen); (b) categorical data."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in making a chart on the computer, and give one example of your own.",
+      "keyIdeas": [
+        "data",
+        "collect",
+        "tally"
+      ],
+      "modelAnswer": "Computers can make charts for us quickly. We put our data into a spreadsheet as a table, select it, and ask the computer to draw the chart. We will use LibreOffice Calc, which is free.\n\nA box has a name from its letter and number, like A1. We type our data into the boxes, then the computer draws the chart for us."
+    }
+  ],
+  "project": {
+    "title": "Unit 3 Project: Be a Data Expert",
+    "brief": "Bring together everything from Be a Data Expert into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your be a data expert project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I asked 10 children and made a tally mark for each answer.",
+      "I counted the tally marks and wrote the numbers.",
+      "My numbers add up to 10.",
+      "I showed my data as a pictogram (one picture for each child).",
+      "I said which fruit is the most popular and which is the least."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “data” mean in computing?",
+        "options": [
+          "Facts and numbers that we collect.",
+          "To gather data.",
+          "Small marks to count, made in groups of five.",
+          "Data set out in rows and columns."
+        ],
+        "answer": "Facts and numbers that we collect.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Data means facts and numbers that we collect."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “collect” mean in computing?",
+        "options": [
+          "To gather data.",
+          "Small marks to count, made in groups of five.",
+          "Data set out in rows and columns.",
+          "Data that goes in groups or words."
+        ],
+        "answer": "To gather data.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Collect means to gather data."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “tally” mean in computing?",
+        "options": [
+          "Small marks to count, made in groups of five.",
+          "Data set out in rows and columns.",
+          "Data that goes in groups or words.",
+          "Number data that is only whole numbers."
+        ],
+        "answer": "Small marks to count, made in groups of five.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Tally means small marks to count, made in groups of five."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “table” mean in computing?",
+        "options": [
+          "Data set out in rows and columns.",
+          "Data that goes in groups or words.",
+          "Number data that is only whole numbers.",
+          "A chart that uses pictures, with a key."
+        ],
+        "answer": "Data set out in rows and columns.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Table means data set out in rows and columns."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “categorical data” mean in computing?",
+        "options": [
+          "Data that goes in groups or words.",
+          "Number data that is only whole numbers.",
+          "A chart that uses pictures, with a key.",
+          "A chart made of blocks; taller means more."
+        ],
+        "answer": "Data that goes in groups or words.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Categorical data means data that goes in groups or words."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “discrete data” mean in computing?",
+        "options": [
+          "Number data that is only whole numbers.",
+          "A chart that uses pictures, with a key.",
+          "A chart made of blocks; taller means more.",
+          "A chart with bars lying down (across)."
+        ],
+        "answer": "Number data that is only whole numbers.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Discrete data means number data that is only whole numbers."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A chart that uses pictures, with a key.?",
+        "options": [
+          "pictogram",
+          "block graph",
+          "bar chart",
+          "column chart"
+        ],
+        "answer": "pictogram",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Pictogram means a chart that uses pictures, with a key."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A chart made of blocks; taller means more.?",
+        "options": [
+          "block graph",
+          "bar chart",
+          "column chart",
+          "pie chart"
+        ],
+        "answer": "block graph",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Block graph means a chart made of blocks; taller means more."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A chart with bars lying down (across).?",
+        "options": [
+          "bar chart",
+          "column chart",
+          "pie chart",
+          "key"
+        ],
+        "answer": "bar chart",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Bar chart means a chart with bars lying down (across)."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A chart with columns standing up.?",
+        "options": [
+          "column chart",
+          "pie chart",
+          "key",
+          "input device"
+        ],
+        "answer": "column chart",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Column chart means a chart with columns standing up."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A circle cut into slices; a bigger slice means more.?",
+        "options": [
+          "pie chart",
+          "key",
+          "input device",
+          "data"
+        ],
+        "answer": "pie chart",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Pie chart means a circle cut into slices; a bigger slice means more."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: It tells you what each picture or colour means.?",
+        "options": [
+          "key",
+          "input device",
+          "data",
+          "collect"
+        ],
+        "answer": "key",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Key means it tells you what each picture or colour means."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u3-game-1",
+        "icon": "?",
+        "skill": "data",
+        "title": "Quick Match: data",
+        "description": "Practise data through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Facts and numbers that we collect.",
+              "To gather data.",
+              "Small marks to count, made in groups of five.",
+              "Data set out in rows and columns."
+            ],
+            "answer": "Facts and numbers that we collect.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Data means facts and numbers that we collect."
+          },
+          {
+            "prompt": "What does “table” mean in computing?",
+            "choices": [
+              "Data set out in rows and columns.",
+              "Data that goes in groups or words.",
+              "Number data that is only whole numbers.",
+              "A chart that uses pictures, with a key."
+            ],
+            "answer": "Data set out in rows and columns.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Table means data set out in rows and columns."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A chart that uses pictures, with a key.?",
+            "choices": [
+              "pictogram",
+              "block graph",
+              "bar chart",
+              "column chart"
+            ],
+            "answer": "pictogram",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Pictogram means a chart that uses pictures, with a key."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A chart with columns standing up.?",
+            "choices": [
+              "column chart",
+              "pie chart",
+              "key",
+              "input device"
+            ],
+            "answer": "column chart",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Column chart means a chart with columns standing up."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-2",
+        "icon": "★",
+        "skill": "collect",
+        "title": "Concept Quest: collect",
+        "description": "Practise collect through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “collect” mean in computing?",
+            "choices": [
+              "To gather data.",
+              "Small marks to count, made in groups of five.",
+              "Data set out in rows and columns.",
+              "Data that goes in groups or words."
+            ],
+            "answer": "To gather data.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Collect means to gather data."
+          },
+          {
+            "prompt": "What does “categorical data” mean in computing?",
+            "choices": [
+              "Data that goes in groups or words.",
+              "Number data that is only whole numbers.",
+              "A chart that uses pictures, with a key.",
+              "A chart made of blocks; taller means more."
+            ],
+            "answer": "Data that goes in groups or words.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Categorical data means data that goes in groups or words."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A chart made of blocks; taller means more.?",
+            "choices": [
+              "block graph",
+              "bar chart",
+              "column chart",
+              "pie chart"
+            ],
+            "answer": "block graph",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Block graph means a chart made of blocks; taller means more."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A circle cut into slices; a bigger slice means more.?",
+            "choices": [
+              "pie chart",
+              "key",
+              "input device",
+              "data"
+            ],
+            "answer": "pie chart",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Pie chart means a circle cut into slices; a bigger slice means more."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-3",
+        "icon": "◫",
+        "skill": "tally",
+        "title": "Debug Detective: tally",
+        "description": "Practise tally through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “tally” mean in computing?",
+            "choices": [
+              "Small marks to count, made in groups of five.",
+              "Data set out in rows and columns.",
+              "Data that goes in groups or words.",
+              "Number data that is only whole numbers."
+            ],
+            "answer": "Small marks to count, made in groups of five.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Tally means small marks to count, made in groups of five."
+          },
+          {
+            "prompt": "What does “discrete data” mean in computing?",
+            "choices": [
+              "Number data that is only whole numbers.",
+              "A chart that uses pictures, with a key.",
+              "A chart made of blocks; taller means more.",
+              "A chart with bars lying down (across)."
+            ],
+            "answer": "Number data that is only whole numbers.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Discrete data means number data that is only whole numbers."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A chart with bars lying down (across).?",
+            "choices": [
+              "bar chart",
+              "column chart",
+              "pie chart",
+              "key"
+            ],
+            "answer": "bar chart",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Bar chart means a chart with bars lying down (across)."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: It tells you what each picture or colour means.?",
+            "choices": [
+              "key",
+              "input device",
+              "data",
+              "collect"
+            ],
+            "answer": "key",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Key means it tells you what each picture or colour means."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-4",
+        "icon": "→",
+        "skill": "table",
+        "title": "Algorithm Runner: table",
+        "description": "Practise table through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “table” mean in computing?",
+            "choices": [
+              "Data set out in rows and columns.",
+              "Data that goes in groups or words.",
+              "Number data that is only whole numbers.",
+              "A chart that uses pictures, with a key."
+            ],
+            "answer": "Data set out in rows and columns.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Table means data set out in rows and columns."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A chart that uses pictures, with a key.?",
+            "choices": [
+              "pictogram",
+              "block graph",
+              "bar chart",
+              "column chart"
+            ],
+            "answer": "pictogram",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Pictogram means a chart that uses pictures, with a key."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A chart with columns standing up.?",
+            "choices": [
+              "column chart",
+              "pie chart",
+              "key",
+              "input device"
+            ],
+            "answer": "column chart",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Column chart means a chart with columns standing up."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Facts and numbers that we collect.",
+              "To gather data.",
+              "Small marks to count, made in groups of five.",
+              "Data set out in rows and columns."
+            ],
+            "answer": "Facts and numbers that we collect.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Data means facts and numbers that we collect."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-5",
+        "icon": "Σ",
+        "skill": "categorical data",
+        "title": "Vocabulary Vault: categorical data",
+        "description": "Practise categorical data through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “categorical data” mean in computing?",
+            "choices": [
+              "Data that goes in groups or words.",
+              "Number data that is only whole numbers.",
+              "A chart that uses pictures, with a key.",
+              "A chart made of blocks; taller means more."
+            ],
+            "answer": "Data that goes in groups or words.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Categorical data means data that goes in groups or words."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A chart made of blocks; taller means more.?",
+            "choices": [
+              "block graph",
+              "bar chart",
+              "column chart",
+              "pie chart"
+            ],
+            "answer": "block graph",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Block graph means a chart made of blocks; taller means more."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A circle cut into slices; a bigger slice means more.?",
+            "choices": [
+              "pie chart",
+              "key",
+              "input device",
+              "data"
+            ],
+            "answer": "pie chart",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Pie chart means a circle cut into slices; a bigger slice means more."
+          },
+          {
+            "prompt": "What does “collect” mean in computing?",
+            "choices": [
+              "To gather data.",
+              "Small marks to count, made in groups of five.",
+              "Data set out in rows and columns.",
+              "Data that goes in groups or words."
+            ],
+            "answer": "To gather data.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Collect means to gather data."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-6",
+        "icon": "◇",
+        "skill": "discrete data",
+        "title": "Challenge Cards: discrete data",
+        "description": "Practise discrete data through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “discrete data” mean in computing?",
+            "choices": [
+              "Number data that is only whole numbers.",
+              "A chart that uses pictures, with a key.",
+              "A chart made of blocks; taller means more.",
+              "A chart with bars lying down (across)."
+            ],
+            "answer": "Number data that is only whole numbers.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Discrete data means number data that is only whole numbers."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A chart with bars lying down (across).?",
+            "choices": [
+              "bar chart",
+              "column chart",
+              "pie chart",
+              "key"
+            ],
+            "answer": "bar chart",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Bar chart means a chart with bars lying down (across)."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: It tells you what each picture or colour means.?",
+            "choices": [
+              "key",
+              "input device",
+              "data",
+              "collect"
+            ],
+            "answer": "key",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Key means it tells you what each picture or colour means."
+          },
+          {
+            "prompt": "What does “tally” mean in computing?",
+            "choices": [
+              "Small marks to count, made in groups of five.",
+              "Data set out in rows and columns.",
+              "Data that goes in groups or words.",
+              "Number data that is only whole numbers."
+            ],
+            "answer": "Small marks to count, made in groups of five.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Tally means small marks to count, made in groups of five."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-7",
+        "icon": "⚡",
+        "skill": "pictogram",
+        "title": "Think Fast: pictogram",
+        "description": "Practise pictogram through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A chart that uses pictures, with a key.?",
+            "choices": [
+              "pictogram",
+              "block graph",
+              "bar chart",
+              "column chart"
+            ],
+            "answer": "pictogram",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Pictogram means a chart that uses pictures, with a key."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A chart with columns standing up.?",
+            "choices": [
+              "column chart",
+              "pie chart",
+              "key",
+              "input device"
+            ],
+            "answer": "column chart",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Column chart means a chart with columns standing up."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Facts and numbers that we collect.",
+              "To gather data.",
+              "Small marks to count, made in groups of five.",
+              "Data set out in rows and columns."
+            ],
+            "answer": "Facts and numbers that we collect.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Data means facts and numbers that we collect."
+          },
+          {
+            "prompt": "What does “table” mean in computing?",
+            "choices": [
+              "Data set out in rows and columns.",
+              "Data that goes in groups or words.",
+              "Number data that is only whole numbers.",
+              "A chart that uses pictures, with a key."
+            ],
+            "answer": "Data set out in rows and columns.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Table means data set out in rows and columns."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-8",
+        "icon": "☁",
+        "skill": "block graph",
+        "title": "Explain It: block graph",
+        "description": "Practise block graph through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A chart made of blocks; taller means more.?",
+            "choices": [
+              "block graph",
+              "bar chart",
+              "column chart",
+              "pie chart"
+            ],
+            "answer": "block graph",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Block graph means a chart made of blocks; taller means more."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A circle cut into slices; a bigger slice means more.?",
+            "choices": [
+              "pie chart",
+              "key",
+              "input device",
+              "data"
+            ],
+            "answer": "pie chart",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Pie chart means a circle cut into slices; a bigger slice means more."
+          },
+          {
+            "prompt": "What does “collect” mean in computing?",
+            "choices": [
+              "To gather data.",
+              "Small marks to count, made in groups of five.",
+              "Data set out in rows and columns.",
+              "Data that goes in groups or words."
+            ],
+            "answer": "To gather data.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Collect means to gather data."
+          },
+          {
+            "prompt": "What does “categorical data” mean in computing?",
+            "choices": [
+              "Data that goes in groups or words.",
+              "Number data that is only whole numbers.",
+              "A chart that uses pictures, with a key.",
+              "A chart made of blocks; taller means more."
+            ],
+            "answer": "Data that goes in groups or words.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Categorical data means data that goes in groups or words."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-9",
+        "icon": "⌂",
+        "skill": "bar chart",
+        "title": "Real-Life Round: bar chart",
+        "description": "Practise bar chart through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A chart with bars lying down (across).?",
+            "choices": [
+              "bar chart",
+              "column chart",
+              "pie chart",
+              "key"
+            ],
+            "answer": "bar chart",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Bar chart means a chart with bars lying down (across)."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: It tells you what each picture or colour means.?",
+            "choices": [
+              "key",
+              "input device",
+              "data",
+              "collect"
+            ],
+            "answer": "key",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Key means it tells you what each picture or colour means."
+          },
+          {
+            "prompt": "What does “tally” mean in computing?",
+            "choices": [
+              "Small marks to count, made in groups of five.",
+              "Data set out in rows and columns.",
+              "Data that goes in groups or words.",
+              "Number data that is only whole numbers."
+            ],
+            "answer": "Small marks to count, made in groups of five.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Tally means small marks to count, made in groups of five."
+          },
+          {
+            "prompt": "What does “discrete data” mean in computing?",
+            "choices": [
+              "Number data that is only whole numbers.",
+              "A chart that uses pictures, with a key.",
+              "A chart made of blocks; taller means more.",
+              "A chart with bars lying down (across)."
+            ],
+            "answer": "Number data that is only whole numbers.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Discrete data means number data that is only whole numbers."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-10",
+        "icon": "!",
+        "skill": "column chart",
+        "title": "Spot the Bug: column chart",
+        "description": "Practise column chart through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A chart with columns standing up.?",
+            "choices": [
+              "column chart",
+              "pie chart",
+              "key",
+              "input device"
+            ],
+            "answer": "column chart",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Column chart means a chart with columns standing up."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Facts and numbers that we collect.",
+              "To gather data.",
+              "Small marks to count, made in groups of five.",
+              "Data set out in rows and columns."
+            ],
+            "answer": "Facts and numbers that we collect.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Data means facts and numbers that we collect."
+          },
+          {
+            "prompt": "What does “table” mean in computing?",
+            "choices": [
+              "Data set out in rows and columns.",
+              "Data that goes in groups or words.",
+              "Number data that is only whole numbers.",
+              "A chart that uses pictures, with a key."
+            ],
+            "answer": "Data set out in rows and columns.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Table means data set out in rows and columns."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A chart that uses pictures, with a key.?",
+            "choices": [
+              "pictogram",
+              "block graph",
+              "bar chart",
+              "column chart"
+            ],
+            "answer": "pictogram",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Pictogram means a chart that uses pictures, with a key."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-11",
+        "icon": "≡",
+        "skill": "pie chart",
+        "title": "Mastery Mix: pie chart",
+        "description": "Practise pie chart through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A circle cut into slices; a bigger slice means more.?",
+            "choices": [
+              "pie chart",
+              "key",
+              "input device",
+              "data"
+            ],
+            "answer": "pie chart",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Pie chart means a circle cut into slices; a bigger slice means more."
+          },
+          {
+            "prompt": "What does “collect” mean in computing?",
+            "choices": [
+              "To gather data.",
+              "Small marks to count, made in groups of five.",
+              "Data set out in rows and columns.",
+              "Data that goes in groups or words."
+            ],
+            "answer": "To gather data.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Collect means to gather data."
+          },
+          {
+            "prompt": "What does “categorical data” mean in computing?",
+            "choices": [
+              "Data that goes in groups or words.",
+              "Number data that is only whole numbers.",
+              "A chart that uses pictures, with a key.",
+              "A chart made of blocks; taller means more."
+            ],
+            "answer": "Data that goes in groups or words.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Categorical data means data that goes in groups or words."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A chart made of blocks; taller means more.?",
+            "choices": [
+              "block graph",
+              "bar chart",
+              "column chart",
+              "pie chart"
+            ],
+            "answer": "block graph",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Block graph means a chart made of blocks; taller means more."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-12",
+        "icon": "T",
+        "skill": "key",
+        "title": "Unit Champion: key",
+        "description": "Practise key through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: It tells you what each picture or colour means.?",
+            "choices": [
+              "key",
+              "input device",
+              "data",
+              "collect"
+            ],
+            "answer": "key",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Key means it tells you what each picture or colour means."
+          },
+          {
+            "prompt": "What does “tally” mean in computing?",
+            "choices": [
+              "Small marks to count, made in groups of five.",
+              "Data set out in rows and columns.",
+              "Data that goes in groups or words.",
+              "Number data that is only whole numbers."
+            ],
+            "answer": "Small marks to count, made in groups of five.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Tally means small marks to count, made in groups of five."
+          },
+          {
+            "prompt": "What does “discrete data” mean in computing?",
+            "choices": [
+              "Number data that is only whole numbers.",
+              "A chart that uses pictures, with a key.",
+              "A chart made of blocks; taller means more.",
+              "A chart with bars lying down (across)."
+            ],
+            "answer": "Number data that is only whole numbers.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Discrete data means number data that is only whole numbers."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A chart with bars lying down (across).?",
+            "choices": [
+              "bar chart",
+              "column chart",
+              "pie chart",
+              "key"
+            ],
+            "answer": "bar chart",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Bar chart means a chart with bars lying down (across)."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can understand that data helps us solve problems, using the steps collect the data, look at it, understand it, and then decide.",
+    "I can tell the difference between categorical data (groups and words) and discrete data (whole numbers).",
+    "I can collect and organise data using a tally chart and a table.",
+    "I can present data as a pictogram and a block or column chart, and recognise a bar chart and a pie chart.",
+    "I can read a chart and answer questions about it (most, least, how many more, how many altogether).",
+    "I can choose the right input device (keyboard or a pointing device) to record discrete or categorical data on an electronic form.",
+    "I can make a simple column chart on the computer using a free spreadsheet."
+  ]
+}

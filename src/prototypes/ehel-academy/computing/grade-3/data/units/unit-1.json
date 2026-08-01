@@ -1,0 +1,1801 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.455Z",
+  "stage": {
+    "id": "s03",
+    "label": "Stage 3"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t01",
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "comp-g03-u01",
+    "unitNo": 1,
+    "unitTitle": "Making Programs Clear",
+    "unitOverview": "First, you learn to follow an algorithm (do the steps one by one) and understand it (say what job it does). Second, you learn to edit and correct an algorithm when a step is wrong or out of order. Third, you learn that the best algorithms are efficient and concise — they do the job in the fewest steps — and you learn to make instructions shorter by combining steps that repeat. Fourth, they move onto the computer and learn to make a simple Scratch program more concise, and to reset a character back to where it started.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 3
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-3-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 3",
+    "sourceArchive": "Year 3-20260801T055744Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 3/Unit 1/Year 3 - Unit 1 Teacher Guide.docx",
+      "Year 3/Unit 1/Year 3 - Unit 1 Activity Sheet.docx",
+      "Year 3/Unit 1/Year 3 - Unit 1 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 396,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 3 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Follow and understand an algorithm, and say what job it does.",
+    "Edit and correct an algorithm that has a wrong step or steps in the wrong order.",
+    "Understand that an efficient algorithm is concise — it uses the fewest steps.",
+    "Make instructions shorter by combining repeated steps and removing steps that are not needed.",
+    "In Scratch, build a short program and make it more concise.",
+    "In Scratch, add blocks to reset a sprite's position and size so a program can be run again and again."
+  ],
+  "toolkit": [
+    {
+      "name": "Scratch",
+      "url": "scratch.mit.edu",
+      "steps": [
+        "Go to scratch.mit.edu and click Create.",
+        "Drag blocks from the palette on the left into the code area.",
+        "Make variables in the orange Variables section.",
+        "Click the green flag to run and the red circle to stop."
+      ],
+      "note": "Runs in a web browser. Free, with nothing to download."
+    }
+  ],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-what-is-an-algorithm-following-and-understanding",
+      "title": "What is an algorithm? Following and understanding",
+      "explanation": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. If you follow the steps one by one, you can understand what job the algorithm does, and check that it works.\n\nWhen we make anjero, we do not just throw everything together. We do the steps in order. First we mix the batter. Then we let it rest. Then we heat the pan. Then we pour and cook.",
+      "example": "Those steps in the right order are called an algorithm. Start with something you know.",
+      "checkYourself": "Can you do the steps in order without skipping or adding steps? Do not worry yet about fixing mistakes — that is the next session."
+    },
+    {
+      "id": "concept-2-editing-and-correcting-algorithms",
+      "title": "Editing and correcting algorithms",
+      "explanation": "Sometimes an algorithm does not work. A step might be wrong, or two steps might be in the wrong order. We call a mistake like this a bug. When we find the bug we edit the algorithm (change it) to correct it.\n\nA computer follows your steps exactly. If one step is wrong, the computer still does it, and you get the wrong answer.",
+      "example": "It is not the computer's fault — it is a bug in our steps. Our job is to be a detective, find the wrong step, and fix it.",
+      "checkYourself": "Can you point to the exact step that is wrong and say what it should be? Does you follow the steps first to test the algorithm, rather than guessing? Praise careful checking, not speed."
+    },
+    {
+      "id": "concept-3-making-it-concise-combining-repeated-steps",
+      "title": "Making it concise: combining repeated steps",
+      "explanation": "The best algorithms are efficient — they do the job in the fewest steps. A short algorithm is concise. One easy way to make an algorithm concise is to look for steps that repeat, and combine them into one step.\n\nDo what I say: clap, clap, clap. That was three steps. Is there a shorter way to say it?",
+      "example": "Clap 3 times. That is what concise means — we said the same thing in a shorter way.",
+      "checkYourself": "When you combine, Can you keep the same result (the right number of each thing)? A common slip is to write “pick 2 dates” when there were three — watch the counting. Can you spot which steps repeat?"
+    },
+    {
+      "id": "concept-4-concise-programs-in-scratch",
+      "title": "Concise programs in Scratch",
+      "explanation": "The same idea works on the computer. In Scratch we join coloured blocks to make a program. If the same block repeats, we can often combine them into one block. This makes the program more concise.\n\nour instructions. where we join them up. where it happens. Add the Balloon1 sprite using the Add Sprite button, and pick a simple backdrop like Blue Sky. Open Scratch at scratch.mit.edu and click Create on the projector.",
+      "example": "Find one real example of concise programs in Scratch around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you click the green flag to run it? Can you find a block by its colour group and drag it to join the stack?"
+    },
+    {
+      "id": "concept-5-resetting-objects-in-scratch",
+      "title": "Resetting objects in Scratch",
+      "explanation": "In many games, a character goes back to the start after each go. We call this a reset. In Scratch, a program does not reset by itself. If we make a sprite move up or grow bigger, and then run the program again, it carries on from where it stopped — it floats off the top or grows too big. To fix this, we add blocks that put the sprite back to its starting position and size.\n\nThink of a board game. After each go, you put the counter back on Start so you can play again.",
+      "example": "Our sprite needs the same thing, or the second go begins in the wrong place. The problem makes the fix make sense.",
+      "checkYourself": "Can you include the minus signs? Can you point to which block resets the position (go to x: y:) and which resets the size (set size to)? Does you run the program more than once to test the reset?"
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "Session 4 — Concise programs in Scratch — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 4 — Concise programs in Scratch.",
+      "lines": [
+        "when green flag clicked",
+        "change y by (30)",
+        "change y by (30)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-2",
+      "title": "Session 4 — Concise programs in Scratch — listing 2",
+      "language": "Scratch blocks",
+      "intro": "From Session 4 — Concise programs in Scratch.",
+      "lines": [
+        "when green flag clicked",
+        "change y by (60)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-3",
+      "title": "Session 5 — Resetting objects in Scratch — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 5 — Resetting objects in Scratch.",
+      "lines": [
+        "when green flag clicked",
+        "go to x: (0) y: (-120)",
+        "set size to (100) %",
+        "wait (1) seconds",
+        "change y by (60)",
+        "change size by (-20)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Follow the Steps",
+      "context": "work through the steps below and see what happens. This is what is an algorithm? following and understanding in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "This is a number machine. Follow the steps one by one. Write the answer in the box.",
+      "answer": "Step 1 Write 4 Step 2 Write 6 Step 3 Add the two numbers Step 4 Write the answer The answer is: __________",
+      "modelType": "model-1",
+      "hint": "Start here: Step 1 Write 4",
+      "explanation": "What is an algorithm? Following and understanding: An algorithm is a set of steps for doing a job, and the steps must be in the right order. If you follow the steps one by one, you can understand what job the algorithm does, and check that it works."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Put the Steps in Order",
+      "context": "work through the steps below and see what happens. This is editing and correcting algorithms in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Alina is making anjero. The steps are all mixed up! Write 1, 2, 3, 4, 5 in the little boxes to put them in the right order.",
+      "answer": "[ ] Pour some batter onto the pan. [ ] Mix the flour, water and yeast into a batter. [ ] Cook until you see little holes, then take it off. [ ] Heat the pan. [ ] Let the batter rest.",
+      "modelType": "model-2",
+      "hint": "Start here: [ ] Pour some batter onto the pan.",
+      "explanation": "Editing and correcting algorithms: Sometimes an algorithm does not work. A step might be wrong, or two steps might be in the wrong order. We call a mistake like this a bug. When we find the bug we edit the algorithm (change it) to correct it."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Match the Words",
+      "context": "work through the steps below and see what happens. This is making it concise: combining repeated steps in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Draw a line from each word to what it means.",
+      "answer": "Match: algorithm → to put something back to how it started Match: edit → a set of steps in the right order Match: concise → to change something Match: reset → short, with no extra steps",
+      "modelType": "model-3",
+      "hint": "Start here: Match: algorithm → to put something back to how it started",
+      "explanation": "Making it concise: combining repeated steps: The best algorithms are efficient — they do the job in the fewest steps. A short algorithm is concise. One easy way to make an algorithm concise is to look for steps that repeat, and combine them into one step."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Make it Shorter",
+      "context": "work through the steps below and see what happens. This is concise programs in scratch in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Nadia is picking fruit. First, circle the steps that are the same.",
+      "answer": "Step 1 Start Step 2 Pick a date Step 3 Pick a date Step 4 Pick a date Step 5 Pick a mango",
+      "modelType": "model-4",
+      "hint": "Start here: Step 1 Start",
+      "explanation": "Concise programs in Scratch: The same idea works on the computer. In Scratch we join coloured blocks to make a program. If the same block repeats, we can often combine them into one block. This makes the program more concise."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Spot the Bug and Fix It",
+      "context": "work through the steps below and see what happens. This is resetting objects in scratch in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "A bug is a mistake in the steps. This algorithm should spell the name ALINA. Follow it: A — L -? — N — A. One step is wrong!",
+      "answer": "Step 1 Write A Step 2 Write L Step 3 Write 1 Step 4 Write N Step 5 Write A",
+      "modelType": "model-5",
+      "hint": "Start here: Step 1 Write A",
+      "explanation": "Resetting objects in Scratch: In many games, a character goes back to the start after each go. We call this a reset. In Scratch, a program does not reset by itself. If we make a sprite move up or grow bigger, and then run the program again, it carries on from where it stopped — it floats off the top or grows too big. To fix…"
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Draw the Algorithm",
+      "context": "work through the steps below and see what happens. This is what is an algorithm? following and understanding in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Follow the steps. Draw the shapes in a row, from left to right, in the big box.",
+      "answer": "Step 1 Draw a red circle Step 2 Draw a blue square Step 3 Draw a yellow triangle",
+      "modelType": "model-6",
+      "hint": "Start here: Step 1 Draw a red circle",
+      "explanation": "What is an algorithm? Following and understanding: An algorithm is a set of steps for doing a job, and the steps must be in the right order. If you follow the steps one by one, you can understand what job the algorithm does, and check that it works."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "What is an algorithm? Following and understanding",
+      "modelType": "concept-model-1",
+      "purpose": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. If you follow the steps one by one, you can understand what job the algorithm does, and check that it works.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Editing and correcting algorithms",
+      "modelType": "concept-model-2",
+      "purpose": "Sometimes an algorithm does not work. A step might be wrong, or two steps might be in the wrong order. We call a mistake like this a bug. When we find the bug we edit the algorithm (change it) to correct it.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Making it concise: combining repeated steps",
+      "modelType": "concept-model-3",
+      "purpose": "The best algorithms are efficient — they do the job in the fewest steps. A short algorithm is concise. One easy way to make an algorithm concise is to look for steps that repeat, and combine them into one step.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Concise programs in Scratch",
+      "modelType": "concept-model-4",
+      "purpose": "The same idea works on the computer. In Scratch we join coloured blocks to make a program. If the same block repeats, we can often combine them into one block. This makes the program more concise.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Resetting objects in Scratch",
+      "modelType": "concept-model-5",
+      "purpose": "In many games, a character goes back to the start after each go. We call this a reset. In Scratch, a program does not reset by itself. If we make a sprite move up or grow bigger, and then run the program again, it…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with what is an algorithm? following and understanding",
+      "example": "Those steps in the right order are called an algorithm. Start with something you know.",
+      "steps": [
+        "Read the concept card for what is an algorithm? following and understanding and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with editing and correcting algorithms",
+      "example": "It is not the computer's fault — it is a bug in our steps. Our job is to be a detective, find the wrong step, and fix it.",
+      "steps": [
+        "Read the concept card for editing and correcting algorithms and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with making it concise: combining repeated steps",
+      "example": "Clap 3 times. That is what concise means — we said the same thing in a shorter way.",
+      "steps": [
+        "Read the concept card for making it concise: combining repeated steps and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with concise programs in scratch",
+      "example": "Find one real example of concise programs in Scratch around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for concise programs in scratch and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with resetting objects in scratch",
+      "example": "Our sprite needs the same thing, or the second go begins in the wrong place. The problem makes the fix make sense.",
+      "steps": [
+        "Read the concept card for resetting objects in scratch and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: What is an algorithm? Following and understanding",
+      "prompt": "Follow this number machine. What is the answer?",
+      "solution": "10 (it adds two numbers)."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Editing and correcting algorithms",
+      "prompt": "Is this jam-sandwich algorithm correct? One step is in the wrong place. Circle it, and say where it should go.",
+      "solution": "Not correct. \"Eat it\" is in the wrong place (step 3); it should be the last step (step 5). Correct order: get a piece of bread; spread jam on it; get another piece of bread; put the two pieces together; eat it."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Making it concise: combining repeated steps",
+      "prompt": "Make this shorter. Karim jumps! Combine the repeated steps.",
+      "solution": "Start; Jump 3 times; Stop."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Concise programs in Scratch",
+      "prompt": "Program A has 5 blocks. Program B does the same job with 3 blocks. Which one is more concise?",
+      "solution": "Program B (fewer blocks, same job)."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Resetting objects in Scratch",
+      "prompt": "Fill in the word. An algorithm that does a job in the fewest steps is",
+      "solution": "efficient (accept \"concise\")."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: What is an algorithm? Following and understanding",
+      "prompt": "Explain in your own words: What is an algorithm? Following and understanding.",
+      "solution": "An algorithm is a set of steps for doing a job, and the steps must be in the right order. If you follow the steps one by one, you can understand what job the algorithm does, and check that it works.\n\nWhen we make anjero, we do not just throw everything together. We do the steps in order. First we mix the batter. Then we let it rest. Then we heat the pan. Then we pour and cook.\n\nFor example: Those steps in the right order are called an algorithm. Start with something you know."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Follow this number machine. What is the answer?",
+      "answer": "10 (it adds two numbers).",
+      "hint": "Look back at what algorithm and instruction mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Is this jam-sandwich algorithm correct? One step is in the wrong place. Circle it, and say where it should go.",
+      "answer": "Not correct. \"Eat it\" is in the wrong place (step 3); it should be the last step (step 5). Correct order: get a piece of bread; spread jam on it; get another piece of bread; put the two pieces together; eat it.",
+      "hint": "Look back at what algorithm and instruction mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "Make this shorter. Karim jumps! Combine the repeated steps.",
+      "answer": "Start; Jump 3 times; Stop.",
+      "hint": "Look back at what algorithm and instruction mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Program A has 5 blocks. Program B does the same job with 3 blocks. Which one is more concise?",
+      "answer": "Program B (fewer blocks, same job).",
+      "hint": "Look back at what algorithm and instruction mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "In Scratch, which block sends a sprite back to its starting spot? ([ ] change y by ( ))",
+      "answer": "go to x: ( ) y: ( ).",
+      "hint": "Look back at what algorithm and instruction mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "Fill in the word. An algorithm that does a job in the fewest steps is",
+      "answer": "efficient (accept \"concise\").",
+      "hint": "Look back at what algorithm and instruction mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Follow the Steps",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "This is a number machine. Follow the steps one by one. Write the answer in the box.",
+        "Step 1 Write 4",
+        "Step 2 Write 6",
+        "Step 3 Add the two numbers",
+        "Step 4 Write the answer",
+        "The answer is: __________"
+      ]
+    },
+    {
+      "title": "Put the Steps in Order",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Alina is making anjero. The steps are all mixed up! Write 1, 2, 3, 4, 5 in the little boxes to put them in the right order.",
+        "[ ] Pour some batter onto the pan.",
+        "[ ] Mix the flour, water and yeast into a batter.",
+        "[ ] Cook until you see little holes, then take it off.",
+        "[ ] Heat the pan.",
+        "[ ] Let the batter rest."
+      ]
+    },
+    {
+      "title": "Match the Words",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Draw a line from each word to what it means.",
+        "Match: algorithm → to put something back to how it started",
+        "Match: edit → a set of steps in the right order",
+        "Match: concise → to change something",
+        "Match: reset → short, with no extra steps"
+      ]
+    },
+    {
+      "title": "Make it Shorter",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Nadia is picking fruit. First, circle the steps that are the same.",
+        "Step 1 Start",
+        "Step 2 Pick a date",
+        "Step 3 Pick a date",
+        "Step 4 Pick a date",
+        "Step 5 Pick a mango"
+      ]
+    },
+    {
+      "title": "Spot the Bug and Fix It",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A bug is a mistake in the steps. This algorithm should spell the name ALINA. Follow it: A — L -? — N — A. One step is wrong!",
+        "Step 1 Write A",
+        "Step 2 Write L",
+        "Step 3 Write 1",
+        "Step 4 Write N",
+        "Step 5 Write A"
+      ]
+    },
+    {
+      "title": "Draw the Algorithm",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Follow the steps. Draw the shapes in a row, from left to right, in the big box.",
+        "Step 1 Draw a red circle",
+        "Step 2 Draw a blue square",
+        "Step 3 Draw a yellow triangle"
+      ]
+    },
+    {
+      "title": "Try it in Scratch!",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Now make a balloon float up.",
+        "Go to scratch.mit.edu and click Create.",
+        "Click the Add Sprite button (bottom right) and choose Balloon1.",
+        "Click Choose a Backdrop and pick Blue Sky.",
+        "Drag these blocks and join them together",
+        "when green flag clicked"
+      ]
+    },
+    {
+      "title": "Fix the Planting Algorithm",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Sami wants to plant a seed. Here are his steps. But something is not right! Read them and follow them in your head.",
+        "Step 1 Start",
+        "Step 2 Place the pot in the sunlight",
+        "Step 3 Fill the pot with soil",
+        "Step 4 Throw the seeds in the soil",
+        "Step 5 Stop"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "The order does not matter as long as all the steps are there.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks."
+    },
+    {
+      "symptom": "A longer program is a better program.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "You often think more blocks means more work done, so it must be better. Show that the short version does the very same job — shorter is smarter here."
+    },
+    {
+      "symptom": "Combining steps means deleting steps.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Some you make it shorter by throwing a step away and changing the result. Remind you: the short version must do the SAME job."
+    },
+    {
+      "symptom": "Reset means stop.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Reset does not stop the program; it puts the sprite back to the start so it can run again. Use the board-game counter picture."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "What is an algorithm? Following and understanding",
+        "text": "An algorithm is a set of steps for doing a job, and the steps must be in the right order."
+      },
+      {
+        "title": "Editing and correcting algorithms",
+        "text": "Sometimes an algorithm does not work."
+      },
+      {
+        "title": "Making it concise: combining repeated steps",
+        "text": "The best algorithms are efficient — they do the job in the fewest steps."
+      },
+      {
+        "title": "Concise programs in Scratch",
+        "text": "The same idea works on the computer."
+      },
+      {
+        "title": "Resetting objects in Scratch",
+        "text": "In many games, a character goes back to the start after each go."
+      }
+    ],
+    "terms": [
+      [
+        "algorithm",
+        "A set of steps for doing a job, in the right order."
+      ],
+      [
+        "instruction",
+        "One step that tells you what to do."
+      ],
+      [
+        "order",
+        "The right sequence the steps must go in."
+      ],
+      [
+        "edit",
+        "To change something."
+      ],
+      [
+        "correct",
+        "To fix a mistake."
+      ],
+      [
+        "efficient",
+        "Getting the job done in the fewest steps or least time."
+      ],
+      [
+        "concise",
+        "Short — no extra steps."
+      ],
+      [
+        "reset",
+        "To put something back to how it started."
+      ],
+      [
+        "bug",
+        "A mistake in the steps that stops it working."
+      ],
+      [
+        "Scratch",
+        "A free website where you join coloured blocks to make a program."
+      ],
+      [
+        "sprite",
+        "A character or object in Scratch."
+      ],
+      [
+        "backdrop",
+        "The picture behind the sprite in Scratch."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "algorithm",
+        "meaning": "A set of steps for doing a job, in the right order.",
+        "example": "The steps for making anjero.",
+        "letter": "A"
+      },
+      {
+        "term": "instruction",
+        "meaning": "One step that tells you what to do.",
+        "example": "Pour the batter on the pan.",
+        "letter": "I"
+      },
+      {
+        "term": "order",
+        "meaning": "The right sequence the steps must go in.",
+        "example": "Wash your hands before you eat, not after.",
+        "letter": "O"
+      },
+      {
+        "term": "edit",
+        "meaning": "To change something.",
+        "example": "Change a wrong step to the right one.",
+        "letter": "E"
+      },
+      {
+        "term": "correct",
+        "meaning": "To fix a mistake.",
+        "example": "Put a step back in the right place.",
+        "letter": "C"
+      },
+      {
+        "term": "efficient",
+        "meaning": "Getting the job done in the fewest steps or least time.",
+        "example": "Taking the short path to school.",
+        "letter": "E"
+      },
+      {
+        "term": "concise",
+        "meaning": "Short — no extra steps.",
+        "example": "Say jump 3 times instead of jump, jump, jump.",
+        "letter": "C"
+      },
+      {
+        "term": "reset",
+        "meaning": "To put something back to how it started.",
+        "example": "A game character goes back to the start.",
+        "letter": "R"
+      },
+      {
+        "term": "bug",
+        "meaning": "A mistake in the steps that stops it working.",
+        "example": "A step in the wrong place.",
+        "letter": "B"
+      },
+      {
+        "term": "Scratch",
+        "meaning": "A free website where you join coloured blocks to make a program.",
+        "example": "scratch.mit.edu",
+        "letter": "S"
+      },
+      {
+        "term": "sprite",
+        "meaning": "A character or object in Scratch.",
+        "example": "The cat, a balloon, a bus.",
+        "letter": "S"
+      },
+      {
+        "term": "backdrop",
+        "meaning": "The picture behind the sprite in Scratch.",
+        "example": "A blue sky.",
+        "letter": "B"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "The order does not matter as long as all the steps are there.",
+        "All the steps are there, but the order is silly. Order is part of the algorithm. Point it out: put your shoes on, then your socks."
+      ],
+      [
+        "A longer program is a better program.",
+        "You often think more blocks means more work done, so it must be better. Show that the short version does the very same job — shorter is smarter here."
+      ],
+      [
+        "Combining steps means deleting steps.",
+        "Sometimes you make it shorter by removing a step, but that can change the result. Remind you: the short version must do the SAME job."
+      ],
+      [
+        "Reset means stop.",
+        "Reset does not stop the program; it puts the sprite back to the start so it can run again. Use the board-game counter picture."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Follow this number machine. What is the answer?",
+      "answer": "10 (it adds two numbers).",
+      "hint": "Look back at what algorithm and instruction mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "10 (it adds two numbers)."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Is this jam-sandwich algorithm correct? One step is in the wrong place. Circle it, and say where it should go.",
+      "answer": "Not correct. \"Eat it\" is in the wrong place (step 3); it should be the last step (step 5). Correct order: get a piece of bread; spread jam on it; get another piece of bread; put the two pieces together; eat it.",
+      "hint": "Look back at what algorithm and instruction mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Not correct. \"Eat it\" is in the wrong place (step 3); it should be the last step (step 5). Correct order: get a piece of bread; spread jam on it; get another piece of bread; put the two pieces together; eat it."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Make this shorter. Karim jumps! Combine the repeated steps.",
+      "answer": "Start; Jump 3 times; Stop.",
+      "hint": "Look back at what algorithm and instruction mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Start; Jump 3 times; Stop."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Program A has 5 blocks. Program B does the same job with 3 blocks. Which one is more concise?",
+      "answer": "Program B (fewer blocks, same job).",
+      "hint": "Look back at what algorithm and instruction mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Program B (fewer blocks, same job)."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "In Scratch, which block sends a sprite back to its starting spot? ([ ] change y by ( ))",
+      "answer": "go to x: ( ) y: ( ).",
+      "hint": "Look back at what algorithm and instruction mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "go to x: ( ) y: ( )."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Fill in the word. An algorithm that does a job in the fewest steps is",
+      "answer": "efficient (accept \"concise\").",
+      "hint": "Look back at what algorithm and instruction mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "efficient (accept \"concise\")."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Fill in the word. An algorithm that does a job in the fewest steps is",
+      "answer": "efficient (accept \"concise\").",
+      "hint": "Look back at what algorithm and instruction mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: efficient (accept \"concise\")."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "In Scratch, which block sends a sprite back to its starting spot? ([ ] change y by ( ))",
+      "answer": "go to x: ( ) y: ( ).",
+      "hint": "Look back at what algorithm and instruction mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: go to x: ( ) y: ( )."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Fill in the word. An algorithm that does a job in the fewest steps is",
+      "answer": "efficient (accept \"concise\").",
+      "hint": "Look back at what algorithm and instruction mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: efficient (accept \"concise\")."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "Follow this number machine. What is the answer?",
+      "answer": "10 (it adds two numbers).",
+      "hint": "Look back at what algorithm and instruction mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: 10 (it adds two numbers)."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Make this shorter. Karim jumps! Combine the repeated steps.",
+      "keyIdeas": [
+        "algorithm",
+        "instruction",
+        "order"
+      ],
+      "modelAnswer": "Start; Jump 3 times; Stop."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Program A has 5 blocks. Program B does the same job with 3 blocks. Which one is more concise?",
+      "keyIdeas": [
+        "instruction",
+        "order",
+        "edit"
+      ],
+      "modelAnswer": "Program B (fewer blocks, same job)."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "In Scratch, which block sends a sprite back to its starting spot? ([ ] change y by ( ))",
+      "keyIdeas": [
+        "order",
+        "edit",
+        "correct"
+      ],
+      "modelAnswer": "go to x: ( ) y: ( )."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in concise programs in scratch, and give one example of your own.",
+      "keyIdeas": [
+        "algorithm",
+        "instruction",
+        "order"
+      ],
+      "modelAnswer": "The same idea works on the computer. In Scratch we join coloured blocks to make a program. If the same block repeats, we can often combine them into one block. This makes the program more concise.\n\nour instructions. where we join them up. where it happens. Add the Balloon1 sprite using the Add Sprite button, and pick a simple backdrop like Blue Sky. Open Scratch at scratch.mit.edu and click Create on the projector."
+    }
+  ],
+  "project": {
+    "title": "Unit 1 Project: Making Programs Clear",
+    "brief": "Bring together everything from Making Programs Clear into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your making programs clear project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I fixed Sami's planting algorithm — right order, and I added the water step.",
+      "I made Leila's flower algorithm shorter, and it picks the same flowers.",
+      "My balloon floats up and gets smaller.",
+      "My program is short (concise).",
+      "My balloon goes back to the start each time I click the green flag."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “algorithm” mean in computing?",
+        "options": [
+          "A set of steps for doing a job, in the right order.",
+          "One step that tells you what to do.",
+          "The right sequence the steps must go in.",
+          "To change something."
+        ],
+        "answer": "A set of steps for doing a job, in the right order.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “instruction” mean in computing?",
+        "options": [
+          "One step that tells you what to do.",
+          "The right sequence the steps must go in.",
+          "To change something.",
+          "To fix a mistake."
+        ],
+        "answer": "One step that tells you what to do.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Instruction means one step that tells you what to do."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “order” mean in computing?",
+        "options": [
+          "The right sequence the steps must go in.",
+          "To change something.",
+          "To fix a mistake.",
+          "Getting the job done in the fewest steps or least time."
+        ],
+        "answer": "The right sequence the steps must go in.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Order means the right sequence the steps must go in."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “edit” mean in computing?",
+        "options": [
+          "To change something.",
+          "To fix a mistake.",
+          "Getting the job done in the fewest steps or least time.",
+          "Short — no extra steps."
+        ],
+        "answer": "To change something.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Edit means to change something."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “correct” mean in computing?",
+        "options": [
+          "To fix a mistake.",
+          "Getting the job done in the fewest steps or least time.",
+          "Short — no extra steps.",
+          "To put something back to how it started."
+        ],
+        "answer": "To fix a mistake.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Correct means to fix a mistake."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “efficient” mean in computing?",
+        "options": [
+          "Getting the job done in the fewest steps or least time.",
+          "Short — no extra steps.",
+          "To put something back to how it started.",
+          "A mistake in the steps that stops it working."
+        ],
+        "answer": "Getting the job done in the fewest steps or least time.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Efficient means getting the job done in the fewest steps or least time."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Short — no extra steps.?",
+        "options": [
+          "concise",
+          "reset",
+          "bug",
+          "Scratch"
+        ],
+        "answer": "concise",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Concise means short — no extra steps."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: To put something back to how it started.?",
+        "options": [
+          "reset",
+          "bug",
+          "Scratch",
+          "sprite"
+        ],
+        "answer": "reset",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Reset means to put something back to how it started."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A mistake in the steps that stops it working.?",
+        "options": [
+          "bug",
+          "Scratch",
+          "sprite",
+          "backdrop"
+        ],
+        "answer": "bug",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Bug means a mistake in the steps that stops it working."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A free website where you join coloured blocks to make a program.?",
+        "options": [
+          "Scratch",
+          "sprite",
+          "backdrop",
+          "algorithm"
+        ],
+        "answer": "Scratch",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Scratch means a free website where you join coloured blocks to make a program."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A character or object in Scratch.?",
+        "options": [
+          "sprite",
+          "backdrop",
+          "algorithm",
+          "instruction"
+        ],
+        "answer": "sprite",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Sprite means a character or object in Scratch."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo06",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The picture behind the sprite in Scratch.?",
+        "options": [
+          "backdrop",
+          "algorithm",
+          "instruction",
+          "order"
+        ],
+        "answer": "backdrop",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Backdrop means the picture behind the sprite in Scratch."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u1-game-1",
+        "icon": "?",
+        "skill": "algorithm",
+        "title": "Quick Match: algorithm",
+        "description": "Practise algorithm through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps for doing a job, in the right order.",
+              "One step that tells you what to do.",
+              "The right sequence the steps must go in.",
+              "To change something."
+            ],
+            "answer": "A set of steps for doing a job, in the right order.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          },
+          {
+            "prompt": "What does “edit” mean in computing?",
+            "choices": [
+              "To change something.",
+              "To fix a mistake.",
+              "Getting the job done in the fewest steps or least time.",
+              "Short — no extra steps."
+            ],
+            "answer": "To change something.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Edit means to change something."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Short — no extra steps.?",
+            "choices": [
+              "concise",
+              "reset",
+              "bug",
+              "Scratch"
+            ],
+            "answer": "concise",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Concise means short — no extra steps."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A free website where you join coloured blocks to make a program.?",
+            "choices": [
+              "Scratch",
+              "sprite",
+              "backdrop",
+              "algorithm"
+            ],
+            "answer": "Scratch",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Scratch means a free website where you join coloured blocks to make a program."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-2",
+        "icon": "★",
+        "skill": "instruction",
+        "title": "Concept Quest: instruction",
+        "description": "Practise instruction through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “instruction” mean in computing?",
+            "choices": [
+              "One step that tells you what to do.",
+              "The right sequence the steps must go in.",
+              "To change something.",
+              "To fix a mistake."
+            ],
+            "answer": "One step that tells you what to do.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Instruction means one step that tells you what to do."
+          },
+          {
+            "prompt": "What does “correct” mean in computing?",
+            "choices": [
+              "To fix a mistake.",
+              "Getting the job done in the fewest steps or least time.",
+              "Short — no extra steps.",
+              "To put something back to how it started."
+            ],
+            "answer": "To fix a mistake.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Correct means to fix a mistake."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To put something back to how it started.?",
+            "choices": [
+              "reset",
+              "bug",
+              "Scratch",
+              "sprite"
+            ],
+            "answer": "reset",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Reset means to put something back to how it started."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A character or object in Scratch.?",
+            "choices": [
+              "sprite",
+              "backdrop",
+              "algorithm",
+              "instruction"
+            ],
+            "answer": "sprite",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-3",
+        "icon": "◫",
+        "skill": "order",
+        "title": "Debug Detective: order",
+        "description": "Practise order through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “order” mean in computing?",
+            "choices": [
+              "The right sequence the steps must go in.",
+              "To change something.",
+              "To fix a mistake.",
+              "Getting the job done in the fewest steps or least time."
+            ],
+            "answer": "The right sequence the steps must go in.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Order means the right sequence the steps must go in."
+          },
+          {
+            "prompt": "What does “efficient” mean in computing?",
+            "choices": [
+              "Getting the job done in the fewest steps or least time.",
+              "Short — no extra steps.",
+              "To put something back to how it started.",
+              "A mistake in the steps that stops it working."
+            ],
+            "answer": "Getting the job done in the fewest steps or least time.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Efficient means getting the job done in the fewest steps or least time."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A mistake in the steps that stops it working.?",
+            "choices": [
+              "bug",
+              "Scratch",
+              "sprite",
+              "backdrop"
+            ],
+            "answer": "bug",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Bug means a mistake in the steps that stops it working."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The picture behind the sprite in Scratch.?",
+            "choices": [
+              "backdrop",
+              "algorithm",
+              "instruction",
+              "order"
+            ],
+            "answer": "backdrop",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprite in Scratch."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-4",
+        "icon": "→",
+        "skill": "edit",
+        "title": "Algorithm Runner: edit",
+        "description": "Practise edit through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “edit” mean in computing?",
+            "choices": [
+              "To change something.",
+              "To fix a mistake.",
+              "Getting the job done in the fewest steps or least time.",
+              "Short — no extra steps."
+            ],
+            "answer": "To change something.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Edit means to change something."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Short — no extra steps.?",
+            "choices": [
+              "concise",
+              "reset",
+              "bug",
+              "Scratch"
+            ],
+            "answer": "concise",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Concise means short — no extra steps."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A free website where you join coloured blocks to make a program.?",
+            "choices": [
+              "Scratch",
+              "sprite",
+              "backdrop",
+              "algorithm"
+            ],
+            "answer": "Scratch",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Scratch means a free website where you join coloured blocks to make a program."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps for doing a job, in the right order.",
+              "One step that tells you what to do.",
+              "The right sequence the steps must go in.",
+              "To change something."
+            ],
+            "answer": "A set of steps for doing a job, in the right order.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-5",
+        "icon": "Σ",
+        "skill": "correct",
+        "title": "Vocabulary Vault: correct",
+        "description": "Practise correct through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “correct” mean in computing?",
+            "choices": [
+              "To fix a mistake.",
+              "Getting the job done in the fewest steps or least time.",
+              "Short — no extra steps.",
+              "To put something back to how it started."
+            ],
+            "answer": "To fix a mistake.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Correct means to fix a mistake."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To put something back to how it started.?",
+            "choices": [
+              "reset",
+              "bug",
+              "Scratch",
+              "sprite"
+            ],
+            "answer": "reset",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Reset means to put something back to how it started."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A character or object in Scratch.?",
+            "choices": [
+              "sprite",
+              "backdrop",
+              "algorithm",
+              "instruction"
+            ],
+            "answer": "sprite",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          },
+          {
+            "prompt": "What does “instruction” mean in computing?",
+            "choices": [
+              "One step that tells you what to do.",
+              "The right sequence the steps must go in.",
+              "To change something.",
+              "To fix a mistake."
+            ],
+            "answer": "One step that tells you what to do.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Instruction means one step that tells you what to do."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-6",
+        "icon": "◇",
+        "skill": "efficient",
+        "title": "Challenge Cards: efficient",
+        "description": "Practise efficient through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “efficient” mean in computing?",
+            "choices": [
+              "Getting the job done in the fewest steps or least time.",
+              "Short — no extra steps.",
+              "To put something back to how it started.",
+              "A mistake in the steps that stops it working."
+            ],
+            "answer": "Getting the job done in the fewest steps or least time.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Efficient means getting the job done in the fewest steps or least time."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A mistake in the steps that stops it working.?",
+            "choices": [
+              "bug",
+              "Scratch",
+              "sprite",
+              "backdrop"
+            ],
+            "answer": "bug",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Bug means a mistake in the steps that stops it working."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The picture behind the sprite in Scratch.?",
+            "choices": [
+              "backdrop",
+              "algorithm",
+              "instruction",
+              "order"
+            ],
+            "answer": "backdrop",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprite in Scratch."
+          },
+          {
+            "prompt": "What does “order” mean in computing?",
+            "choices": [
+              "The right sequence the steps must go in.",
+              "To change something.",
+              "To fix a mistake.",
+              "Getting the job done in the fewest steps or least time."
+            ],
+            "answer": "The right sequence the steps must go in.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Order means the right sequence the steps must go in."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-7",
+        "icon": "⚡",
+        "skill": "concise",
+        "title": "Think Fast: concise",
+        "description": "Practise concise through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Short — no extra steps.?",
+            "choices": [
+              "concise",
+              "reset",
+              "bug",
+              "Scratch"
+            ],
+            "answer": "concise",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Concise means short — no extra steps."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A free website where you join coloured blocks to make a program.?",
+            "choices": [
+              "Scratch",
+              "sprite",
+              "backdrop",
+              "algorithm"
+            ],
+            "answer": "Scratch",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Scratch means a free website where you join coloured blocks to make a program."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps for doing a job, in the right order.",
+              "One step that tells you what to do.",
+              "The right sequence the steps must go in.",
+              "To change something."
+            ],
+            "answer": "A set of steps for doing a job, in the right order.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          },
+          {
+            "prompt": "What does “edit” mean in computing?",
+            "choices": [
+              "To change something.",
+              "To fix a mistake.",
+              "Getting the job done in the fewest steps or least time.",
+              "Short — no extra steps."
+            ],
+            "answer": "To change something.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Edit means to change something."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-8",
+        "icon": "☁",
+        "skill": "reset",
+        "title": "Explain It: reset",
+        "description": "Practise reset through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To put something back to how it started.?",
+            "choices": [
+              "reset",
+              "bug",
+              "Scratch",
+              "sprite"
+            ],
+            "answer": "reset",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Reset means to put something back to how it started."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A character or object in Scratch.?",
+            "choices": [
+              "sprite",
+              "backdrop",
+              "algorithm",
+              "instruction"
+            ],
+            "answer": "sprite",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          },
+          {
+            "prompt": "What does “instruction” mean in computing?",
+            "choices": [
+              "One step that tells you what to do.",
+              "The right sequence the steps must go in.",
+              "To change something.",
+              "To fix a mistake."
+            ],
+            "answer": "One step that tells you what to do.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Instruction means one step that tells you what to do."
+          },
+          {
+            "prompt": "What does “correct” mean in computing?",
+            "choices": [
+              "To fix a mistake.",
+              "Getting the job done in the fewest steps or least time.",
+              "Short — no extra steps.",
+              "To put something back to how it started."
+            ],
+            "answer": "To fix a mistake.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Correct means to fix a mistake."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-9",
+        "icon": "⌂",
+        "skill": "bug",
+        "title": "Real-Life Round: bug",
+        "description": "Practise bug through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A mistake in the steps that stops it working.?",
+            "choices": [
+              "bug",
+              "Scratch",
+              "sprite",
+              "backdrop"
+            ],
+            "answer": "bug",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Bug means a mistake in the steps that stops it working."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The picture behind the sprite in Scratch.?",
+            "choices": [
+              "backdrop",
+              "algorithm",
+              "instruction",
+              "order"
+            ],
+            "answer": "backdrop",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprite in Scratch."
+          },
+          {
+            "prompt": "What does “order” mean in computing?",
+            "choices": [
+              "The right sequence the steps must go in.",
+              "To change something.",
+              "To fix a mistake.",
+              "Getting the job done in the fewest steps or least time."
+            ],
+            "answer": "The right sequence the steps must go in.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Order means the right sequence the steps must go in."
+          },
+          {
+            "prompt": "What does “efficient” mean in computing?",
+            "choices": [
+              "Getting the job done in the fewest steps or least time.",
+              "Short — no extra steps.",
+              "To put something back to how it started.",
+              "A mistake in the steps that stops it working."
+            ],
+            "answer": "Getting the job done in the fewest steps or least time.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Efficient means getting the job done in the fewest steps or least time."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-10",
+        "icon": "!",
+        "skill": "Scratch",
+        "title": "Spot the Bug: Scratch",
+        "description": "Practise scratch through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A free website where you join coloured blocks to make a program.?",
+            "choices": [
+              "Scratch",
+              "sprite",
+              "backdrop",
+              "algorithm"
+            ],
+            "answer": "Scratch",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Scratch means a free website where you join coloured blocks to make a program."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps for doing a job, in the right order.",
+              "One step that tells you what to do.",
+              "The right sequence the steps must go in.",
+              "To change something."
+            ],
+            "answer": "A set of steps for doing a job, in the right order.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for doing a job, in the right order."
+          },
+          {
+            "prompt": "What does “edit” mean in computing?",
+            "choices": [
+              "To change something.",
+              "To fix a mistake.",
+              "Getting the job done in the fewest steps or least time.",
+              "Short — no extra steps."
+            ],
+            "answer": "To change something.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Edit means to change something."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Short — no extra steps.?",
+            "choices": [
+              "concise",
+              "reset",
+              "bug",
+              "Scratch"
+            ],
+            "answer": "concise",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Concise means short — no extra steps."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-11",
+        "icon": "≡",
+        "skill": "sprite",
+        "title": "Mastery Mix: sprite",
+        "description": "Practise sprite through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A character or object in Scratch.?",
+            "choices": [
+              "sprite",
+              "backdrop",
+              "algorithm",
+              "instruction"
+            ],
+            "answer": "sprite",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          },
+          {
+            "prompt": "What does “instruction” mean in computing?",
+            "choices": [
+              "One step that tells you what to do.",
+              "The right sequence the steps must go in.",
+              "To change something.",
+              "To fix a mistake."
+            ],
+            "answer": "One step that tells you what to do.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Instruction means one step that tells you what to do."
+          },
+          {
+            "prompt": "What does “correct” mean in computing?",
+            "choices": [
+              "To fix a mistake.",
+              "Getting the job done in the fewest steps or least time.",
+              "Short — no extra steps.",
+              "To put something back to how it started."
+            ],
+            "answer": "To fix a mistake.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Correct means to fix a mistake."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To put something back to how it started.?",
+            "choices": [
+              "reset",
+              "bug",
+              "Scratch",
+              "sprite"
+            ],
+            "answer": "reset",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Reset means to put something back to how it started."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-12",
+        "icon": "T",
+        "skill": "backdrop",
+        "title": "Unit Champion: backdrop",
+        "description": "Practise backdrop through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The picture behind the sprite in Scratch.?",
+            "choices": [
+              "backdrop",
+              "algorithm",
+              "instruction",
+              "order"
+            ],
+            "answer": "backdrop",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprite in Scratch."
+          },
+          {
+            "prompt": "What does “order” mean in computing?",
+            "choices": [
+              "The right sequence the steps must go in.",
+              "To change something.",
+              "To fix a mistake.",
+              "Getting the job done in the fewest steps or least time."
+            ],
+            "answer": "The right sequence the steps must go in.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Order means the right sequence the steps must go in."
+          },
+          {
+            "prompt": "What does “efficient” mean in computing?",
+            "choices": [
+              "Getting the job done in the fewest steps or least time.",
+              "Short — no extra steps.",
+              "To put something back to how it started.",
+              "A mistake in the steps that stops it working."
+            ],
+            "answer": "Getting the job done in the fewest steps or least time.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Efficient means getting the job done in the fewest steps or least time."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A mistake in the steps that stops it working.?",
+            "choices": [
+              "bug",
+              "Scratch",
+              "sprite",
+              "backdrop"
+            ],
+            "answer": "bug",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Bug means a mistake in the steps that stops it working."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can follow and understand an algorithm, and say what job it does.",
+    "I can edit and correct an algorithm that has a wrong step or steps in the wrong order.",
+    "I can understand that an efficient algorithm is concise — it uses the fewest steps.",
+    "I can make instructions shorter by combining repeated steps and removing steps that are not needed.",
+    "I can in Scratch, build a short program and make it more concise.",
+    "I can in Scratch, add blocks to reset a sprite's position and size so a program can be run again and again."
+  ]
+}

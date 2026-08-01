@@ -1,0 +1,307 @@
+{
+  "schemaVersion": "Ehel Computing Stage Capstone v1.0",
+  "stage": {
+    "id": "s05",
+    "label": "Stage 5"
+  },
+  "title": "Build a Stage 5 Computing Showcase",
+  "overview": "Bring together everything from Stage 5 Computing into one showcase: a working program, the data behind it, a clear explanation of how it runs, and the safety rules you followed while making it.",
+  "project": {
+    "drivingQuestion": "How can I use the computing I learned in Stage 5 to build something that solves a real problem for someone in my community — and explain exactly how it works?",
+    "finalProduct": "A working program or digital product, the plan and algorithm behind it, a test-and-debug log, a data display, and a spoken or written explanation of your design decisions.",
+    "stages": [
+      {
+        "id": "plan",
+        "title": "1. Plan and decompose",
+        "units": [
+          1,
+          2
+        ],
+        "prompt": "Choose a real problem. Using the ideas from Units 1, 2, break it into smaller parts and write the algorithm before you write any code.",
+        "evidence": "A decomposed problem and a written algorithm or flowchart"
+      },
+      {
+        "id": "build",
+        "title": "2. Build it",
+        "units": [
+          3,
+          4
+        ],
+        "prompt": "Build your program or product using the tools from Units 3, 4. Build the smallest working version first, then add one feature at a time.",
+        "evidence": "A working program or digital product"
+      },
+      {
+        "id": "test",
+        "title": "3. Test, debug and improve",
+        "units": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "prompt": "Test your work against your success criteria. Keep a log of every bug: what you saw, what caused it, and how you fixed it.",
+        "evidence": "A test-and-debug log with at least three entries"
+      },
+      {
+        "id": "share",
+        "title": "4. Share it safely",
+        "units": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "prompt": "Present your showcase. Explain three design decisions, show your data, and say which online-safety rules from Units 1, 2, 3, 4 you followed and why.",
+        "evidence": "A spoken, written or recorded explanation covering design, data and safety"
+      }
+    ],
+    "evidenceChecklist": [
+      "A decomposed problem with a written algorithm or flowchart",
+      "A working program or digital product",
+      "A test-and-debug log with at least three fixed bugs",
+      "Data collected, organised and displayed",
+      "Success criteria, each one ticked off with evidence",
+      "An explanation of your design decisions and the safety rules you followed"
+    ],
+    "rubric": [
+      {
+        "criterion": "Computational thinking",
+        "secure": "The problem is decomposed, the algorithm is precise, and the pattern behind it is named."
+      },
+      {
+        "criterion": "Programming and debugging",
+        "secure": "The program runs, meets its criteria, and every bug found is logged with its cause and fix."
+      },
+      {
+        "criterion": "Data and information",
+        "secure": "Data is collected accurately, organised sensibly and displayed so it answers a question."
+      },
+      {
+        "criterion": "Safe and responsible use",
+        "secure": "Personal information is protected, sources are credited, and safety choices are explained."
+      }
+    ]
+  },
+  "quiz": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "cap-u01-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What is a variable?",
+        "options": [
+          "a fixed number",
+          "a named box that stores a value that can change",
+          "a type of loop",
+          "a sound"
+        ],
+        "answer": "a named box that stores a value that can change",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "1 (b) a named box that stores a value that can change. That is exactly what a variable is.",
+        "unitNo": 1,
+        "unitTitle": "Computational Thinking and Programming"
+      },
+      {
+        "id": "cap-u01-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does decomposition mean?",
+        "options": [
+          "deleting code",
+          "breaking a big problem into smaller parts",
+          "repeating a loop",
+          "hiding a variable"
+        ],
+        "answer": "breaking a big problem into smaller parts",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "7 (b) breaking a big problem into smaller parts. That is decomposition.",
+        "unitNo": 1,
+        "unitTitle": "Computational Thinking and Programming"
+      },
+      {
+        "id": "cap-u01-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Success criteria are:",
+        "options": [
+          "bugs in the code",
+          "the list of things a program must do to be a success",
+          "the user's score",
+          "a type of loop"
+        ],
+        "answer": "the list of things a program must do to be a success",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "12 (b) the list of things a program must do to be a success.",
+        "unitNo": 1,
+        "unitTitle": "Computational Thinking and Programming"
+      },
+      {
+        "id": "cap-u02-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “analyse” mean in computing?",
+        "options": [
+          "To look closely at data, find patterns, and think about what it means.",
+          "Done by itself, with no human help (as a data logger records readings).",
+          "A middle value; add all the values and divide by how many there are. Also called the mean.",
+          "A line on a chart. The x axis is horizontal; the y axis is vertical."
+        ],
+        "answer": "To look closely at data, find patterns, and think about what it means.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Analyse means to look closely at data, find patterns, and think about what it means..",
+        "unitNo": 2,
+        "unitTitle": "Managing Data"
+      },
+      {
+        "id": "cap-u02-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “bar chart” mean in computing?",
+        "options": [
+          "A chart with a bar for each category; the longer the bar, the greater the value.",
+          "Data grouped into categories, often words, such as favourite fruit.",
+          "One box in a spreadsheet grid, where a row and a column meet.",
+          "A cell's address, made of its column letter and row number, such as B3."
+        ],
+        "answer": "A chart with a bar for each category; the longer the bar, the greater the value.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Axis means a line on a chart. The x axis is horizontal; the y axis is vertical.",
+        "unitNo": 2,
+        "unitTitle": "Managing Data"
+      },
+      {
+        "id": "cap-u02-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Numerical data that can take any value in a range, such as temperature.?",
+        "options": [
+          "continuous data",
+          "continuously",
+          "data",
+          "data logger"
+        ],
+        "answer": "continuous data",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Chart means a picture of data that makes patterns easy to see.",
+        "unitNo": 2,
+        "unitTitle": "Managing Data"
+      },
+      {
+        "id": "cap-u03-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “network” mean in computing?",
+        "options": [
+          "A group of computers and devices connected together so they can share data, files and devices.",
+          "The physical machines and parts of a computer system that you can touch.",
+          "A wire used to connect a device to a network.",
+          "A device that connects wired devices together on one network."
+        ],
+        "answer": "A group of computers and devices connected together so they can share data, files and devices.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Network means a group of computers and devices connected together so they can share data, files and devices.",
+        "unitNo": 3,
+        "unitTitle": "Networks and Digital Communication"
+      },
+      {
+        "id": "cap-u03-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “router” mean in computing?",
+        "options": [
+          "A device that connects one network to another network — most often to the internet.",
+          "A device that lets computers join a network without wires, using Wi-Fi.",
+          "A part that sends and receives wireless signals.",
+          "A way of connecting devices to a network without wires, over a short distance."
+        ],
+        "answer": "A device that connects one network to another network — most often to the internet.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Router means a device that connects one network to another network — most often to the internet.",
+        "unitNo": 3,
+        "unitTitle": "Networks and Digital Communication"
+      },
+      {
+        "id": "cap-u03-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A wireless network that uses tall towers to cover very large areas (4G and 5G).?",
+        "options": [
+          "cellular network",
+          "range",
+          "interference",
+          "server"
+        ],
+        "answer": "cellular network",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Cellular network means a wireless network that uses tall towers to cover very large areas (4G and 5G).",
+        "unitNo": 3,
+        "unitTitle": "Networks and Digital Communication"
+      },
+      {
+        "id": "cap-u04-q1",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “input” mean in computing?",
+        "options": [
+          "Data that goes into a computer to tell it what is happening.",
+          "Hardware that provides input to a computer, for example a keyboard.",
+          "Information or an action that comes out of a computer after processing.",
+          "Hardware that produces output, for example a screen or a printer."
+        ],
+        "answer": "Data that goes into a computer to tell it what is happening.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Input means data that goes into a computer to tell it what is happening.",
+        "unitNo": 4,
+        "unitTitle": "Computer Systems"
+      },
+      {
+        "id": "cap-u04-q2",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “sensor” mean in computing?",
+        "options": [
+          "An input device that senses and measures changes around it, such as heat, light or movement.",
+          "An output device that moves, opens, closes or controls a physical object.",
+          "Far away; a remote device connects to a computer over the internet.",
+          "Working without a human doing it each time."
+        ],
+        "answer": "An input device that senses and measures changes around it, such as heat, light or movement.",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Sensor means an input device that senses and measures changes around it, such as heat, light or movement.",
+        "unitNo": 4,
+        "unitTitle": "Computer Systems"
+      },
+      {
+        "id": "cap-u04-q3",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A device that lets a computer save data, even when the power is off.?",
+        "options": [
+          "storage device",
+          "internal storage device",
+          "external storage device",
+          "magnetic storage device"
+        ],
+        "answer": "storage device",
+        "hint": "Use the Unit 4 Computing Words reference.",
+        "explanation": "Storage device means a device that lets a computer save data, even when the power is off.",
+        "unitNo": 4,
+        "unitTitle": "Computer Systems"
+      }
+    ]
+  },
+  "reviewStatus": "Curriculum review required"
+}

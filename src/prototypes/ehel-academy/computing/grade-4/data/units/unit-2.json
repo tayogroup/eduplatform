@@ -1,0 +1,1810 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.646Z",
+  "stage": {
+    "id": "s04",
+    "label": "Stage 4"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t01",
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "comp-g04-u02",
+    "unitNo": 2,
+    "unitTitle": "Be a Data Controller",
+    "unitOverview": "The unit teaches four connected ideas. First, what a database is, and the difference between a physical and a digital database. Second, that every database is built from records and fields — each record is all the data about one thing (one row), and each field is one piece of data (one column, with a heading). Fourth, how to collect data with a form, how to search a database to find records, and how to sort data into ascending and descending order.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 4
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-4-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 4",
+    "sourceArchive": "Year 4-20260801T055750Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 4/Unit 2/Year 4 - Unit 2 Teacher Guide.docx",
+      "Year 4/Unit 2/Year 4 - Unit 2 Activity Sheet.docx",
+      "Year 4/Unit 2/Year 4 - Unit 2 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 367,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 4 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Say what a database is (an organised collection of related data) and give examples.",
+    "Tell the difference between a physical (paper) and a digital (computer) database, and give one advantage of each.",
+    "Name the parts of a database: a record (one row — all the data about one thing) and a field (one column, with a heading).",
+    "Explain the difference between data (raw facts) and information (processed data that has meaning).",
+    "Give some advantages and disadvantages of using a form to collect data.",
+    "Search a small database to find the records that match.",
+    "Sort data into ascending (A-Z, small to large) and descending (Z-A, large to small) order, by hand and in a spreadsheet."
+  ],
+  "toolkit": [
+    {
+      "name": "A free spreadsheet",
+      "url": "Google Sheets, or LibreOffice Calc",
+      "steps": [
+        "Open a new blank spreadsheet.",
+        "Put your field names in row 1, one per column.",
+        "Type one record per row underneath.",
+        "Use Insert → Chart to turn your data into a graph."
+      ],
+      "note": "Any free spreadsheet works — the ideas are the same in all of them."
+    },
+    {
+      "name": "A simple database",
+      "url": "A spreadsheet in database layout, or LibreOffice Base",
+      "steps": [
+        "Give every field a clear name and one kind of data.",
+        "Enter one record per row.",
+        "Sort on a field to put records in order.",
+        "Filter or search to find the records that match a condition."
+      ],
+      "note": "A spreadsheet laid out with fields and records works as a database for this unit."
+    }
+  ],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-what-is-a-database-physical-and-digital",
+      "title": "What is a database? Physical and digital",
+      "explanation": "A database is an organised collection of related data. A phone's contact list is a database. A database can be physical (kept on paper) or digital (kept on a computer). Every database is made of records and fields: each record is all the data about one thing (one row), and each field is one piece of data (one column, with a heading).\n\nImagine the teacher at Ehel Academy writes each pupil's details on a sheet of paper and keeps every sheet in a filing cabinet. That is a physical database — it is on paper. It works, but searching for one pupil takes time, changing a sheet is messy, and it needs a lot of space. Now imagine the same details are typed into the computer.",
+      "example": "That is a digital database. It fits on a tiny storage device, it is quick to search, and it is easy to change and to sort.",
+      "checkYourself": "Can you sort examples into physical and digital, and point to one record and one field on a card?"
+    },
+    {
+      "id": "concept-2-data-and-information",
+      "title": "Data and information",
+      "explanation": "Information is what we get after the data has been processed, sorted and given meaning. Data answers “what are the facts?” ; information answers “so what do the facts tell us?”\n\nWhat do these numbers mean? Now add the missing meaning: “These are the numbers of books six pupils in the reading club read this term.” Suddenly we can work things out: Maya read the most (20 books), Sana read the fewest (7), and the club read 74 books in total. Those useful facts are information — the data has been processed.",
+      "example": "Find one real example of data and information around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you tell that a plain list of facts is data, while a sentence that tells us something useful (the most, the fewest, the total) is information? Watch for you who thinks any number is automatically information."
+    },
+    {
+      "id": "concept-3-using-forms-to-collect-data",
+      "title": "Using forms to collect data",
+      "explanation": "Before we can store data in a database, we have to collect it. A form is a document with headings and spaces used to collect data. A form can be paper-based or electronic (on a computer or phone). Forms are useful, but they also have some drawbacks.\n\nDo you have a library card? Yes / No.",
+      "example": "Because everyone fills in the same headings, all the answers come back in the same shape. That makes it easy to type them into our database and easy to compare.",
+      "checkYourself": "Can you understand that a form is for collecting data, while a database is for storing it — you are not the same thing. Can you give at least one advantage and one disadvantage of using a form?"
+    },
+    {
+      "id": "concept-4-searching-and-sorting-unplugged",
+      "title": "Searching and sorting (unplugged)",
+      "explanation": "Two of the most useful things a data controller does are search and sort. To sort is to put the records in order. Ascending order goes from smallest to largest, or A to Z. Descending order goes from largest to smallest, or Z to A.\n\nFirst search: say “Show me every pupil whose favourite subject is Science,” and you can pull out the matching cards. When they reach Sami and Sana, stop and teach the letter-by-letter rule. Use the six index cards from Session 1.",
+      "example": "Find one real example of searching and sorting around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you sort words A-Z using the letter-by-letter rule, and sort numbers both ways? Can you search by hand to find matching records? Watch for you who sorts words by length instead of by letters."
+    },
+    {
+      "id": "concept-5-sort-a-database-on-the-computer",
+      "title": "Sort a database on the computer",
+      "explanation": "In this session you type the reading-club database into a free spreadsheet and use the Sort button. This shows why a digital database is so much faster to sort than a paper one.\n\nType the headings in the first row and the six records underneath. Watch — by hand this took us a few minutes. The computer will do it in one second.",
+      "example": "Open LibreOffice Calc (or any spreadsheet). Explain that a spreadsheet is a grid of rows and columns, and each little box is a cell.",
+      "checkYourself": "Can you choose the field to sort by and pick ascending or descending? Can you notice that each record stays together as a whole row? Can you type the data into the right cells, highlight the whole table, and use Data then Sort?"
+    }
+  ],
+  "codeExamples": [],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Physical or Digital?",
+      "context": "work through the steps below and see what happens. This is what is a database? physical and digital in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "A physical database is kept on paper. A digital database is kept on a computer.",
+      "answer": "a printed telephone directory ______ a pupil database on the school computer ______ a diary in a paper notebook ______ a supermarket till that stores prices ______ a paper address book ______",
+      "modelType": "model-1",
+      "hint": "Start here: a printed telephone directory ______",
+      "explanation": "What is a database? Physical and digital: A database is an organised collection of related data. A phone's contact list is a database. A database can be physical (kept on paper) or digital (kept on a computer). Every database is made of records and fields: each record is all the data about one thing (one row), and each field is one piece…"
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Data or Information?",
+      "context": "work through the steps below and see what happens. This is data and information in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Information tells us something useful. Write D for data or I for information.",
+      "answer": "the prices of all the fruit at the market ______ cooking oil is the most expensive item ______ the marks everyone got in the test ______ Leo got the highest mark ______",
+      "modelType": "model-2",
+      "hint": "Start here: the prices of all the fruit at the market ______",
+      "explanation": "Data and information: Information is what we get after the data has been processed, sorted and given meaning. Data answers “what are the facts?” ; information answers “so what do the facts tell us?”"
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Read the Library Database",
+      "context": "work through the steps below and see what happens. This is using forms to collect data in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Here is a small database of books in the Ehel Academy library. Read it, then answer the questions.",
+      "answer": "a) How many records (books) are in the database? ______ b) How many fields (headings) does each record have? ______ c) What is the title of the third book? ____________________________ d) Search: write the titles of all the books with the type Facts. ____________________________________________________________",
+      "modelType": "model-3",
+      "hint": "Start here: a) How many records (books) are in the database? ______",
+      "explanation": "Using forms to collect data: Before we can store data in a database, we have to collect it. A form is a document with headings and spaces used to collect data. A form can be paper-based or electronic (on a computer or phone). Forms are useful, but they also have some drawbacks."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Forms: Circle the Advantages",
+      "context": "work through the steps below and see what happens. This is searching and sorting (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "A form is used to collect data. Circle the three statements that are advantages of using a form.",
+      "answer": "A. Everyone fills it in the same way, so it is easy to compare. B. It can take a long time to design a good form. C. You can send a form to lots of people quickly. D. You must have a device to fill in an electronic form. E. A form helps you collect the correct type of data.",
+      "modelType": "model-4",
+      "hint": "Start here: A. Everyone fills it in the same way, so it is easy to compare.",
+      "explanation": "Searching and sorting (unplugged): Two of the most useful things a data controller does are search and sort. To sort is to put the records in order. Ascending order goes from smallest to largest, or A to Z. Descending order goes from largest to smallest, or Z to A."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Sort the Names",
+      "context": "work through the steps below and see what happens. This is sort a database on the computer in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Here are six pupils in the reading club. Sort your names into order.",
+      "answer": "Maya Grace Sami Sana Karim Leo Ascending order (A to Z) ____________________________________________________________ Descending order (Z to A)",
+      "modelType": "model-5",
+      "hint": "Start here: Maya Grace Sami",
+      "explanation": "Sort a database on the computer: In this session you type the reading-club database into a free spreadsheet and use the Sort button. This shows why a digital database is so much faster to sort than a paper one."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Sort the Numbers",
+      "context": "work through the steps below and see what happens. This is what is a database? physical and digital in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "These are the numbers of books each pupil read this term.",
+      "answer": "12 9 15 7 11 20 Ascending order (smallest to largest) ____________________________________________________________ Descending order (largest to smallest) ____________________________________________________________",
+      "modelType": "model-6",
+      "hint": "Start here: 12 9 15 7 11 20",
+      "explanation": "What is a database? Physical and digital: A database is an organised collection of related data. A phone's contact list is a database. A database can be physical (kept on paper) or digital (kept on a computer). Every database is made of records and fields: each record is all the data about one thing (one row), and each field is one piece…"
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "What is a database? Physical and digital",
+      "modelType": "concept-model-1",
+      "purpose": "A database is an organised collection of related data. A phone's contact list is a database. A database can be physical (kept on paper) or digital (kept on a computer). Every database is made of records and fields: each…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Data and information",
+      "modelType": "concept-model-2",
+      "purpose": "Information is what we get after the data has been processed, sorted and given meaning. Data answers “what are the facts?” ; information answers “so what do the facts tell us?”",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Using forms to collect data",
+      "modelType": "concept-model-3",
+      "purpose": "Before we can store data in a database, we have to collect it. A form is a document with headings and spaces used to collect data. A form can be paper-based or electronic (on a computer or phone). Forms are useful, but…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Searching and sorting (unplugged)",
+      "modelType": "concept-model-4",
+      "purpose": "Two of the most useful things a data controller does are search and sort. To sort is to put the records in order. Ascending order goes from smallest to largest, or A to Z. Descending order goes from largest to smallest,…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Sort a database on the computer",
+      "modelType": "concept-model-5",
+      "purpose": "In this session you type the reading-club database into a free spreadsheet and use the Sort button. This shows why a digital database is so much faster to sort than a paper one.",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with what is a database? physical and digital",
+      "example": "That is a digital database. It fits on a tiny storage device, it is quick to search, and it is easy to change and to sort.",
+      "steps": [
+        "Read the concept card for what is a database? physical and digital and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with data and information",
+      "example": "Find one real example of data and information around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for data and information and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with using forms to collect data",
+      "example": "Because everyone fills in the same headings, all the answers come back in the same shape. That makes it easy to type them into our database and easy to compare.",
+      "steps": [
+        "Read the concept card for using forms to collect data and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with searching and sorting (unplugged)",
+      "example": "Find one real example of searching and sorting around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for searching and sorting (unplugged) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with sort a database on the computer",
+      "example": "Open LibreOffice Calc (or any spreadsheet). Explain that a spreadsheet is a grid of rows and columns, and each little box is a cell.",
+      "steps": [
+        "Read the concept card for sort a database on the computer and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: What is a database? Physical and digital",
+      "prompt": "Physical or digital? A filing cabinet full of paper files =",
+      "solution": "The spreadsheet was faster (one click)."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Data and information",
+      "prompt": "Data or information? \"The coldest day in January was the 7th\" =",
+      "solution": "The spreadsheet is easier to add to and re-sort."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Using forms to collect data",
+      "prompt": "Write one advantage and one disadvantage of using a form.",
+      "solution": "A disadvantage of an electronic form: you need a device to fill it in (accept: private data must be kept safe, or it can cost to set up)."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Searching and sorting (unplugged)",
+      "prompt": "Put these names in ascending order: Karim, Grace, Maya, Sami.",
+      "solution": "Grace, Karim, Maya, Sami."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Sort a database on the computer",
+      "prompt": "In a database, what is a record and what is a field?",
+      "solution": "A record is all the data about one thing (one row). A field is one piece of data, one column with a heading."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: What is a database? Physical and digital",
+      "prompt": "Explain in your own words: What is a database? Physical and digital.",
+      "solution": "A database is an organised collection of related data. A phone's contact list is a database. A database can be physical (kept on paper) or digital (kept on a computer). Every database is made of records and fields: each record is all the data about one thing (one row), and each field is one piece of data (one column, with a heading).\n\nImagine the teacher at Ehel Academy writes each pupil's details on a sheet of paper and keeps every sheet in a filing cabinet. That is a physical database — it is on paper. It works, but searching for one pupil takes time, changing a sheet is messy, and it needs a lot of space. Now imagine the same details are typed into the computer.\n\nFor example: That is a digital database. It fits on a tiny storage device, it is quick to search, and it is easy to change and to sort."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Physical or digital? A filing cabinet full of paper files =",
+      "answer": "The spreadsheet was faster (one click).",
+      "hint": "Look back at what database and physical database mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Data or information? \"The coldest day in January was the 7th\" =",
+      "answer": "The spreadsheet is easier to add to and re-sort.",
+      "hint": "Look back at what database and physical database mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "Write one advantage and one disadvantage of using a form.",
+      "answer": "A disadvantage of an electronic form: you need a device to fill it in (accept: private data must be kept safe, or it can cost to set up).",
+      "hint": "Look back at what database and physical database mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Put these names in ascending order: Karim, Grace, Maya, Sami.",
+      "answer": "Grace, Karim, Maya, Sami.",
+      "hint": "Look back at what database and physical database mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "Put these numbers in descending order: 15, 7, 20, 11.",
+      "answer": "20, 15, 11, 7.",
+      "hint": "Look back at what database and physical database mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "In a database, what is a record and what is a field?",
+      "answer": "A record is all the data about one thing (one row). A field is one piece of data, one column with a heading.",
+      "hint": "Look back at what database and physical database mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Physical or Digital?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A physical database is kept on paper. A digital database is kept on a computer.",
+        "a printed telephone directory ______",
+        "a pupil database on the school computer ______",
+        "a diary in a paper notebook ______",
+        "a supermarket till that stores prices ______",
+        "a paper address book ______"
+      ]
+    },
+    {
+      "title": "Data or Information?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Information tells us something useful. Write D for data or I for information.",
+        "the prices of all the fruit at the market ______",
+        "cooking oil is the most expensive item ______",
+        "the marks everyone got in the test ______",
+        "Leo got the highest mark ______"
+      ]
+    },
+    {
+      "title": "Read the Library Database",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Here is a small database of books in the Ehel Academy library. Read it, then answer the questions.",
+        "a) How many records (books) are in the database? ______",
+        "b) How many fields (headings) does each record have? ______",
+        "c) What is the title of the third book? ____________________________",
+        "d) Search: write the titles of all the books with the type Facts.",
+        "____________________________________________________________"
+      ]
+    },
+    {
+      "title": "Forms: Circle the Advantages",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A form is used to collect data. Circle the three statements that are advantages of using a form.",
+        "A. Everyone fills it in the same way, so it is easy to compare.",
+        "B. It can take a long time to design a good form.",
+        "C. You can send a form to lots of people quickly.",
+        "D. You must have a device to fill in an electronic form.",
+        "E. A form helps you collect the correct type of data."
+      ]
+    },
+    {
+      "title": "Sort the Names",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Here are six pupils in the reading club. Sort your names into order.",
+        "Maya Grace Sami",
+        "Sana Karim Leo",
+        "Ascending order (A to Z)",
+        "____________________________________________________________",
+        "Descending order (Z to A)"
+      ]
+    },
+    {
+      "title": "Sort the Numbers",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "These are the numbers of books each pupil read this term.",
+        "12 9 15 7 11 20",
+        "Ascending order (smallest to largest)",
+        "____________________________________________________________",
+        "Descending order (largest to smallest)",
+        "____________________________________________________________"
+      ]
+    },
+    {
+      "title": "Sort on the Computer",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Now let the computer sort for you! Use LibreOffice Calc (it is free), or any spreadsheet.",
+        "Type this reading-club database. Put the headings in the top row.",
+        "follow these steps",
+        "Click cell A1 and drag to the last cell with data, so the whole table is highlighted (including the headings).",
+        "Click the Data menu, then click Sort.",
+        "Under Sort Key 1, choose First name, then choose Ascending."
+      ]
+    },
+    {
+      "title": "Design the Fields",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "You want to make a database of your favourite books. One is done for you. Write four good fields (headings) you could use.",
+        "1) Title 2) ________________",
+        "3) ________________ 4) ________________",
+        "Did You Know?",
+        "The word data comes from an old Latin word that means “something given”.",
+        "A digital database can hold millions of records — far more than any filing cabinet could ever hold!"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "A database must be on a computer.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "A paper address book or a filing cabinet is a physical database. Any organised collection of related data counts."
+    },
+    {
+      "symptom": "Data and information are the same thing.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "12, 9, 15 is data"
+    },
+    {
+      "symptom": "Maya read the most",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "is information."
+    },
+    {
+      "symptom": "A record and a field are the same.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "A record is one whole row (everything about one thing); a field is one column, with a heading. One card is a record; each heading on it is a field."
+    },
+    {
+      "symptom": "Ascending always means big to small.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "It is the other way round. Ascending goes up from small to large (or A to Z). Descending goes down from large to small (or Z to A)."
+    },
+    {
+      "symptom": "To sort words, short words go first.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Length does not decide. We compare letter by letter from the start. Sami before Sana because 'm' comes before 'n'."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Keep personal information private",
+      "text": "Your full name, address, school, phone number, birthday and passwords are personal information. Never type them into a game, an app or a website, and never send them to someone you only know online."
+    },
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "What is a database? Physical and digital",
+        "text": "A database is an organised collection of related data."
+      },
+      {
+        "title": "Data and information",
+        "text": "Information is what we get after the data has been processed, sorted and given meaning."
+      },
+      {
+        "title": "Using forms to collect data",
+        "text": "Before we can store data in a database, we have to collect it."
+      },
+      {
+        "title": "Searching and sorting (unplugged)",
+        "text": "Two of the most useful things a data controller does are search and sort."
+      },
+      {
+        "title": "Sort a database on the computer",
+        "text": "In this session you type the reading-club database into a free spreadsheet and use the Sort button."
+      }
+    ],
+    "terms": [
+      [
+        "database",
+        "An organised collection of related data."
+      ],
+      [
+        "physical database",
+        "A database kept on paper."
+      ],
+      [
+        "digital database",
+        "A database kept on a computer."
+      ],
+      [
+        "record",
+        "All the data about one thing. It is one row."
+      ],
+      [
+        "field",
+        "One piece of data in a record. It is one column, with a heading."
+      ],
+      [
+        "data",
+        "Raw facts on their own, with no meaning yet."
+      ],
+      [
+        "information",
+        "Data that has been processed so it has meaning."
+      ],
+      [
+        "form",
+        "A document with headings and spaces, used to collect data."
+      ],
+      [
+        "search",
+        "To look through a database to find records that match."
+      ],
+      [
+        "sort",
+        "To put data in order."
+      ],
+      [
+        "ascending order",
+        "Smallest to largest, or A to Z."
+      ],
+      [
+        "descending order",
+        "Largest to smallest, or Z to A."
+      ],
+      [
+        "spreadsheet",
+        "A computer program with rows, columns and cells for data."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "database",
+        "meaning": "An organised collection of related data.",
+        "example": "A list of all the pupils in a class.",
+        "letter": "D"
+      },
+      {
+        "term": "physical database",
+        "meaning": "A database kept on paper.",
+        "example": "Files in a filing cabinet; an address book.",
+        "letter": "P"
+      },
+      {
+        "term": "digital database",
+        "meaning": "A database kept on a computer.",
+        "example": "Pupil records on the school computer.",
+        "letter": "D"
+      },
+      {
+        "term": "record",
+        "meaning": "All the data about one thing. It is one row.",
+        "example": "Everything about one pupil: Grace, 12 books, Science.",
+        "letter": "R"
+      },
+      {
+        "term": "field",
+        "meaning": "One piece of data in a record. It is one column, with a heading.",
+        "example": "The 'Age' column; the 'Books read' column.",
+        "letter": "F"
+      },
+      {
+        "term": "data",
+        "meaning": "Raw facts on their own, with no meaning yet.",
+        "example": "The numbers 12, 9, 15, 7.",
+        "letter": "D"
+      },
+      {
+        "term": "information",
+        "meaning": "Data that has been processed so it has meaning.",
+        "example": "'Maya read the most books.'",
+        "letter": "I"
+      },
+      {
+        "term": "form",
+        "meaning": "A document with headings and spaces, used to collect data.",
+        "example": "A sign-up sheet for the reading club.",
+        "letter": "F"
+      },
+      {
+        "term": "search",
+        "meaning": "To look through a database to find records that match.",
+        "example": "Find all books of the type 'Facts'.",
+        "letter": "S"
+      },
+      {
+        "term": "sort",
+        "meaning": "To put data in order.",
+        "example": "Put names in A to Z order.",
+        "letter": "S"
+      },
+      {
+        "term": "ascending order",
+        "meaning": "Smallest to largest, or A to Z.",
+        "example": "7, 9, 11 ... or Grace, Karim, Leo.",
+        "letter": "A"
+      },
+      {
+        "term": "descending order",
+        "meaning": "Largest to smallest, or Z to A.",
+        "example": "20, 15, 12 ... or Sana, Sami, Maya.",
+        "letter": "D"
+      },
+      {
+        "term": "spreadsheet",
+        "meaning": "A computer program with rows, columns and cells for data.",
+        "example": "LibreOffice Calc.",
+        "letter": "S"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "A database must be on a computer.",
+        "A paper address book or a filing cabinet is a physical database. Any organised collection of related data counts."
+      ],
+      [
+        "Data and information are the same thing.",
+        "12, 9, 15 is data"
+      ],
+      [
+        "Maya read the most",
+        "is information."
+      ],
+      [
+        "A record and a field are the same.",
+        "A record is one whole row (everything about one thing); a field is one column, with a heading. One card is a record; each heading on it is a field."
+      ],
+      [
+        "Ascending always means big to small.",
+        "It is the other way round. Ascending goes up from small to large (or A to Z). Descending goes down from large to small (or Z to A)."
+      ],
+      [
+        "To sort words, short words go first.",
+        "Length does not decide. We compare letter by letter from the start. Sami before Sana because 'm' comes before 'n'."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Physical or digital? A filing cabinet full of paper files =",
+      "answer": "The spreadsheet was faster (one click).",
+      "hint": "Look back at what database and physical database mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "The spreadsheet was faster (one click)."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Data or information? \"The coldest day in January was the 7th\" =",
+      "answer": "The spreadsheet is easier to add to and re-sort.",
+      "hint": "Look back at what database and physical database mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "The spreadsheet is easier to add to and re-sort."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Write one advantage and one disadvantage of using a form.",
+      "answer": "A disadvantage of an electronic form: you need a device to fill it in (accept: private data must be kept safe, or it can cost to set up).",
+      "hint": "Look back at what database and physical database mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "A disadvantage of an electronic form: you need a device to fill it in (accept: private data must be kept safe, or it can cost to set up)."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Put these names in ascending order: Karim, Grace, Maya, Sami.",
+      "answer": "Grace, Karim, Maya, Sami.",
+      "hint": "Look back at what database and physical database mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Grace, Karim, Maya, Sami."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Put these numbers in descending order: 15, 7, 20, 11.",
+      "answer": "20, 15, 11, 7.",
+      "hint": "Look back at what database and physical database mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "20, 15, 11, 7."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "In a database, what is a record and what is a field?",
+      "answer": "A record is all the data about one thing (one row). A field is one piece of data, one column with a heading.",
+      "hint": "Look back at what database and physical database mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "A record is all the data about one thing (one row). A field is one piece of data, one column with a heading."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "In a database, what is a record and what is a field?",
+      "answer": "A record is all the data about one thing (one row). A field is one piece of data, one column with a heading.",
+      "hint": "Look back at what database and physical database mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: A record is all the data about one thing (one row). A field is one piece of data, one column with a heading."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "Put these numbers in descending order: 15, 7, 20, 11.",
+      "answer": "20, 15, 11, 7.",
+      "hint": "Look back at what database and physical database mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: 20, 15, 11, 7."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "In a database, what is a record and what is a field?",
+      "answer": "A record is all the data about one thing (one row). A field is one piece of data, one column with a heading.",
+      "hint": "Look back at what database and physical database mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: A record is all the data about one thing (one row). A field is one piece of data, one column with a heading."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "Physical or digital? A filing cabinet full of paper files =",
+      "answer": "The spreadsheet was faster (one click).",
+      "hint": "Look back at what database and physical database mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: The spreadsheet was faster (one click)."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Write one advantage and one disadvantage of using a form.",
+      "keyIdeas": [
+        "database",
+        "physical database",
+        "digital database"
+      ],
+      "modelAnswer": "A disadvantage of an electronic form: you need a device to fill it in (accept: private data must be kept safe, or it can cost to set up)."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Put these names in ascending order: Karim, Grace, Maya, Sami.",
+      "keyIdeas": [
+        "physical database",
+        "digital database",
+        "record"
+      ],
+      "modelAnswer": "Grace, Karim, Maya, Sami."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Put these numbers in descending order: 15, 7, 20, 11.",
+      "keyIdeas": [
+        "digital database",
+        "record",
+        "field"
+      ],
+      "modelAnswer": "20, 15, 11, 7."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in searching and sorting (unplugged), and give one example of your own.",
+      "keyIdeas": [
+        "database",
+        "physical database",
+        "digital database"
+      ],
+      "modelAnswer": "Two of the most useful things a data controller does are search and sort. To sort is to put the records in order. Ascending order goes from smallest to largest, or A to Z. Descending order goes from largest to smallest, or Z to A.\n\nFirst search: say “Show me every pupil whose favourite subject is Science,” and you can pull out the matching cards. When they reach Sami and Sana, stop and teach the letter-by-letter rule. Use the six index cards from Session 1."
+    }
+  ],
+  "project": {
+    "title": "Unit 2 Project: Be a Data Controller",
+    "brief": "Bring together everything from Be a Data Controller into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your be a data controller project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I made five cards with the same three fields.",
+      "I wrote one record on each card.",
+      "I sorted the cards by Name (A to Z) and by Age (oldest first).",
+      "I typed the same database into a spreadsheet.",
+      "I sorted it with Data then Sort.",
+      "I wrote one piece of information from my data."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “database” mean in computing?",
+        "options": [
+          "An organised collection of related data.",
+          "A database kept on paper.",
+          "A database kept on a computer.",
+          "All the data about one thing. It is one row."
+        ],
+        "answer": "An organised collection of related data.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Database means an organised collection of related data."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “physical database” mean in computing?",
+        "options": [
+          "A database kept on paper.",
+          "A database kept on a computer.",
+          "All the data about one thing. It is one row.",
+          "One piece of data in a record. It is one column, with a heading."
+        ],
+        "answer": "A database kept on paper.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Physical database means a database kept on paper."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “digital database” mean in computing?",
+        "options": [
+          "A database kept on a computer.",
+          "All the data about one thing. It is one row.",
+          "One piece of data in a record. It is one column, with a heading.",
+          "Raw facts on their own, with no meaning yet."
+        ],
+        "answer": "A database kept on a computer.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Digital database means a database kept on a computer."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “record” mean in computing?",
+        "options": [
+          "All the data about one thing. It is one row.",
+          "One piece of data in a record. It is one column, with a heading.",
+          "Raw facts on their own, with no meaning yet.",
+          "Data that has been processed so it has meaning."
+        ],
+        "answer": "All the data about one thing. It is one row.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Record means all the data about one thing. It is one row."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “field” mean in computing?",
+        "options": [
+          "One piece of data in a record. It is one column, with a heading.",
+          "Raw facts on their own, with no meaning yet.",
+          "Data that has been processed so it has meaning.",
+          "A document with headings and spaces, used to collect data."
+        ],
+        "answer": "One piece of data in a record. It is one column, with a heading.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Field means one piece of data in a record. It is one column, with a heading."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “data” mean in computing?",
+        "options": [
+          "Raw facts on their own, with no meaning yet.",
+          "Data that has been processed so it has meaning.",
+          "A document with headings and spaces, used to collect data.",
+          "To look through a database to find records that match."
+        ],
+        "answer": "Raw facts on their own, with no meaning yet.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Data means raw facts on their own, with no meaning yet."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Data that has been processed so it has meaning.?",
+        "options": [
+          "information",
+          "form",
+          "search",
+          "sort"
+        ],
+        "answer": "information",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Information means data that has been processed so it has meaning."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A document with headings and spaces, used to collect data.?",
+        "options": [
+          "form",
+          "search",
+          "sort",
+          "ascending order"
+        ],
+        "answer": "form",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Form means a document with headings and spaces, used to collect data."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: To look through a database to find records that match.?",
+        "options": [
+          "search",
+          "sort",
+          "ascending order",
+          "descending order"
+        ],
+        "answer": "search",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Search means to look through a database to find records that match."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: To put data in order.?",
+        "options": [
+          "sort",
+          "ascending order",
+          "descending order",
+          "spreadsheet"
+        ],
+        "answer": "sort",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Sort means to put data in order."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Smallest to largest, or A to Z.?",
+        "options": [
+          "ascending order",
+          "descending order",
+          "spreadsheet",
+          "database"
+        ],
+        "answer": "ascending order",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Ascending order means smallest to largest, or A to Z."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Largest to smallest, or Z to A.?",
+        "options": [
+          "descending order",
+          "spreadsheet",
+          "database",
+          "physical database"
+        ],
+        "answer": "descending order",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Descending order means largest to smallest, or Z to A."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u2-game-1",
+        "icon": "?",
+        "skill": "database",
+        "title": "Quick Match: database",
+        "description": "Practise database through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “database” mean in computing?",
+            "choices": [
+              "An organised collection of related data.",
+              "A database kept on paper.",
+              "A database kept on a computer.",
+              "All the data about one thing. It is one row."
+            ],
+            "answer": "An organised collection of related data.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Database means an organised collection of related data."
+          },
+          {
+            "prompt": "What does “record” mean in computing?",
+            "choices": [
+              "All the data about one thing. It is one row.",
+              "One piece of data in a record. It is one column, with a heading.",
+              "Raw facts on their own, with no meaning yet.",
+              "Data that has been processed so it has meaning."
+            ],
+            "answer": "All the data about one thing. It is one row.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Record means all the data about one thing. It is one row."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Data that has been processed so it has meaning.?",
+            "choices": [
+              "information",
+              "form",
+              "search",
+              "sort"
+            ],
+            "answer": "information",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Information means data that has been processed so it has meaning."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To put data in order.?",
+            "choices": [
+              "sort",
+              "ascending order",
+              "descending order",
+              "spreadsheet"
+            ],
+            "answer": "sort",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Sort means to put data in order."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-2",
+        "icon": "★",
+        "skill": "physical database",
+        "title": "Concept Quest: physical database",
+        "description": "Practise physical database through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “physical database” mean in computing?",
+            "choices": [
+              "A database kept on paper.",
+              "A database kept on a computer.",
+              "All the data about one thing. It is one row.",
+              "One piece of data in a record. It is one column, with a heading."
+            ],
+            "answer": "A database kept on paper.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Physical database means a database kept on paper."
+          },
+          {
+            "prompt": "What does “field” mean in computing?",
+            "choices": [
+              "One piece of data in a record. It is one column, with a heading.",
+              "Raw facts on their own, with no meaning yet.",
+              "Data that has been processed so it has meaning.",
+              "A document with headings and spaces, used to collect data."
+            ],
+            "answer": "One piece of data in a record. It is one column, with a heading.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Field means one piece of data in a record. It is one column, with a heading."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A document with headings and spaces, used to collect data.?",
+            "choices": [
+              "form",
+              "search",
+              "sort",
+              "ascending order"
+            ],
+            "answer": "form",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Form means a document with headings and spaces, used to collect data."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Smallest to largest, or A to Z.?",
+            "choices": [
+              "ascending order",
+              "descending order",
+              "spreadsheet",
+              "database"
+            ],
+            "answer": "ascending order",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Ascending order means smallest to largest, or A to Z."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-3",
+        "icon": "◫",
+        "skill": "digital database",
+        "title": "Debug Detective: digital database",
+        "description": "Practise digital database through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “digital database” mean in computing?",
+            "choices": [
+              "A database kept on a computer.",
+              "All the data about one thing. It is one row.",
+              "One piece of data in a record. It is one column, with a heading.",
+              "Raw facts on their own, with no meaning yet."
+            ],
+            "answer": "A database kept on a computer.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Digital database means a database kept on a computer."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Raw facts on their own, with no meaning yet.",
+              "Data that has been processed so it has meaning.",
+              "A document with headings and spaces, used to collect data.",
+              "To look through a database to find records that match."
+            ],
+            "answer": "Raw facts on their own, with no meaning yet.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data means raw facts on their own, with no meaning yet."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To look through a database to find records that match.?",
+            "choices": [
+              "search",
+              "sort",
+              "ascending order",
+              "descending order"
+            ],
+            "answer": "search",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Search means to look through a database to find records that match."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Largest to smallest, or Z to A.?",
+            "choices": [
+              "descending order",
+              "spreadsheet",
+              "database",
+              "physical database"
+            ],
+            "answer": "descending order",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Descending order means largest to smallest, or Z to A."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-4",
+        "icon": "→",
+        "skill": "record",
+        "title": "Algorithm Runner: record",
+        "description": "Practise record through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “record” mean in computing?",
+            "choices": [
+              "All the data about one thing. It is one row.",
+              "One piece of data in a record. It is one column, with a heading.",
+              "Raw facts on their own, with no meaning yet.",
+              "Data that has been processed so it has meaning."
+            ],
+            "answer": "All the data about one thing. It is one row.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Record means all the data about one thing. It is one row."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Data that has been processed so it has meaning.?",
+            "choices": [
+              "information",
+              "form",
+              "search",
+              "sort"
+            ],
+            "answer": "information",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Information means data that has been processed so it has meaning."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To put data in order.?",
+            "choices": [
+              "sort",
+              "ascending order",
+              "descending order",
+              "spreadsheet"
+            ],
+            "answer": "sort",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Sort means to put data in order."
+          },
+          {
+            "prompt": "What does “database” mean in computing?",
+            "choices": [
+              "An organised collection of related data.",
+              "A database kept on paper.",
+              "A database kept on a computer.",
+              "All the data about one thing. It is one row."
+            ],
+            "answer": "An organised collection of related data.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Database means an organised collection of related data."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-5",
+        "icon": "Σ",
+        "skill": "field",
+        "title": "Vocabulary Vault: field",
+        "description": "Practise field through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “field” mean in computing?",
+            "choices": [
+              "One piece of data in a record. It is one column, with a heading.",
+              "Raw facts on their own, with no meaning yet.",
+              "Data that has been processed so it has meaning.",
+              "A document with headings and spaces, used to collect data."
+            ],
+            "answer": "One piece of data in a record. It is one column, with a heading.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Field means one piece of data in a record. It is one column, with a heading."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A document with headings and spaces, used to collect data.?",
+            "choices": [
+              "form",
+              "search",
+              "sort",
+              "ascending order"
+            ],
+            "answer": "form",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Form means a document with headings and spaces, used to collect data."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Smallest to largest, or A to Z.?",
+            "choices": [
+              "ascending order",
+              "descending order",
+              "spreadsheet",
+              "database"
+            ],
+            "answer": "ascending order",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Ascending order means smallest to largest, or A to Z."
+          },
+          {
+            "prompt": "What does “physical database” mean in computing?",
+            "choices": [
+              "A database kept on paper.",
+              "A database kept on a computer.",
+              "All the data about one thing. It is one row.",
+              "One piece of data in a record. It is one column, with a heading."
+            ],
+            "answer": "A database kept on paper.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Physical database means a database kept on paper."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-6",
+        "icon": "◇",
+        "skill": "data",
+        "title": "Challenge Cards: data",
+        "description": "Practise data through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Raw facts on their own, with no meaning yet.",
+              "Data that has been processed so it has meaning.",
+              "A document with headings and spaces, used to collect data.",
+              "To look through a database to find records that match."
+            ],
+            "answer": "Raw facts on their own, with no meaning yet.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data means raw facts on their own, with no meaning yet."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To look through a database to find records that match.?",
+            "choices": [
+              "search",
+              "sort",
+              "ascending order",
+              "descending order"
+            ],
+            "answer": "search",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Search means to look through a database to find records that match."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Largest to smallest, or Z to A.?",
+            "choices": [
+              "descending order",
+              "spreadsheet",
+              "database",
+              "physical database"
+            ],
+            "answer": "descending order",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Descending order means largest to smallest, or Z to A."
+          },
+          {
+            "prompt": "What does “digital database” mean in computing?",
+            "choices": [
+              "A database kept on a computer.",
+              "All the data about one thing. It is one row.",
+              "One piece of data in a record. It is one column, with a heading.",
+              "Raw facts on their own, with no meaning yet."
+            ],
+            "answer": "A database kept on a computer.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Digital database means a database kept on a computer."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-7",
+        "icon": "⚡",
+        "skill": "information",
+        "title": "Think Fast: information",
+        "description": "Practise information through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Data that has been processed so it has meaning.?",
+            "choices": [
+              "information",
+              "form",
+              "search",
+              "sort"
+            ],
+            "answer": "information",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Information means data that has been processed so it has meaning."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To put data in order.?",
+            "choices": [
+              "sort",
+              "ascending order",
+              "descending order",
+              "spreadsheet"
+            ],
+            "answer": "sort",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Sort means to put data in order."
+          },
+          {
+            "prompt": "What does “database” mean in computing?",
+            "choices": [
+              "An organised collection of related data.",
+              "A database kept on paper.",
+              "A database kept on a computer.",
+              "All the data about one thing. It is one row."
+            ],
+            "answer": "An organised collection of related data.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Database means an organised collection of related data."
+          },
+          {
+            "prompt": "What does “record” mean in computing?",
+            "choices": [
+              "All the data about one thing. It is one row.",
+              "One piece of data in a record. It is one column, with a heading.",
+              "Raw facts on their own, with no meaning yet.",
+              "Data that has been processed so it has meaning."
+            ],
+            "answer": "All the data about one thing. It is one row.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Record means all the data about one thing. It is one row."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-8",
+        "icon": "☁",
+        "skill": "form",
+        "title": "Explain It: form",
+        "description": "Practise form through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A document with headings and spaces, used to collect data.?",
+            "choices": [
+              "form",
+              "search",
+              "sort",
+              "ascending order"
+            ],
+            "answer": "form",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Form means a document with headings and spaces, used to collect data."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Smallest to largest, or A to Z.?",
+            "choices": [
+              "ascending order",
+              "descending order",
+              "spreadsheet",
+              "database"
+            ],
+            "answer": "ascending order",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Ascending order means smallest to largest, or A to Z."
+          },
+          {
+            "prompt": "What does “physical database” mean in computing?",
+            "choices": [
+              "A database kept on paper.",
+              "A database kept on a computer.",
+              "All the data about one thing. It is one row.",
+              "One piece of data in a record. It is one column, with a heading."
+            ],
+            "answer": "A database kept on paper.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Physical database means a database kept on paper."
+          },
+          {
+            "prompt": "What does “field” mean in computing?",
+            "choices": [
+              "One piece of data in a record. It is one column, with a heading.",
+              "Raw facts on their own, with no meaning yet.",
+              "Data that has been processed so it has meaning.",
+              "A document with headings and spaces, used to collect data."
+            ],
+            "answer": "One piece of data in a record. It is one column, with a heading.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Field means one piece of data in a record. It is one column, with a heading."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-9",
+        "icon": "⌂",
+        "skill": "search",
+        "title": "Real-Life Round: search",
+        "description": "Practise search through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To look through a database to find records that match.?",
+            "choices": [
+              "search",
+              "sort",
+              "ascending order",
+              "descending order"
+            ],
+            "answer": "search",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Search means to look through a database to find records that match."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Largest to smallest, or Z to A.?",
+            "choices": [
+              "descending order",
+              "spreadsheet",
+              "database",
+              "physical database"
+            ],
+            "answer": "descending order",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Descending order means largest to smallest, or Z to A."
+          },
+          {
+            "prompt": "What does “digital database” mean in computing?",
+            "choices": [
+              "A database kept on a computer.",
+              "All the data about one thing. It is one row.",
+              "One piece of data in a record. It is one column, with a heading.",
+              "Raw facts on their own, with no meaning yet."
+            ],
+            "answer": "A database kept on a computer.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Digital database means a database kept on a computer."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Raw facts on their own, with no meaning yet.",
+              "Data that has been processed so it has meaning.",
+              "A document with headings and spaces, used to collect data.",
+              "To look through a database to find records that match."
+            ],
+            "answer": "Raw facts on their own, with no meaning yet.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data means raw facts on their own, with no meaning yet."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-10",
+        "icon": "!",
+        "skill": "sort",
+        "title": "Spot the Bug: sort",
+        "description": "Practise sort through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To put data in order.?",
+            "choices": [
+              "sort",
+              "ascending order",
+              "descending order",
+              "spreadsheet"
+            ],
+            "answer": "sort",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Sort means to put data in order."
+          },
+          {
+            "prompt": "What does “database” mean in computing?",
+            "choices": [
+              "An organised collection of related data.",
+              "A database kept on paper.",
+              "A database kept on a computer.",
+              "All the data about one thing. It is one row."
+            ],
+            "answer": "An organised collection of related data.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Database means an organised collection of related data."
+          },
+          {
+            "prompt": "What does “record” mean in computing?",
+            "choices": [
+              "All the data about one thing. It is one row.",
+              "One piece of data in a record. It is one column, with a heading.",
+              "Raw facts on their own, with no meaning yet.",
+              "Data that has been processed so it has meaning."
+            ],
+            "answer": "All the data about one thing. It is one row.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Record means all the data about one thing. It is one row."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Data that has been processed so it has meaning.?",
+            "choices": [
+              "information",
+              "form",
+              "search",
+              "sort"
+            ],
+            "answer": "information",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Information means data that has been processed so it has meaning."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-11",
+        "icon": "≡",
+        "skill": "ascending order",
+        "title": "Mastery Mix: ascending order",
+        "description": "Practise ascending order through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Smallest to largest, or A to Z.?",
+            "choices": [
+              "ascending order",
+              "descending order",
+              "spreadsheet",
+              "database"
+            ],
+            "answer": "ascending order",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Ascending order means smallest to largest, or A to Z."
+          },
+          {
+            "prompt": "What does “physical database” mean in computing?",
+            "choices": [
+              "A database kept on paper.",
+              "A database kept on a computer.",
+              "All the data about one thing. It is one row.",
+              "One piece of data in a record. It is one column, with a heading."
+            ],
+            "answer": "A database kept on paper.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Physical database means a database kept on paper."
+          },
+          {
+            "prompt": "What does “field” mean in computing?",
+            "choices": [
+              "One piece of data in a record. It is one column, with a heading.",
+              "Raw facts on their own, with no meaning yet.",
+              "Data that has been processed so it has meaning.",
+              "A document with headings and spaces, used to collect data."
+            ],
+            "answer": "One piece of data in a record. It is one column, with a heading.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Field means one piece of data in a record. It is one column, with a heading."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A document with headings and spaces, used to collect data.?",
+            "choices": [
+              "form",
+              "search",
+              "sort",
+              "ascending order"
+            ],
+            "answer": "form",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Form means a document with headings and spaces, used to collect data."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-12",
+        "icon": "T",
+        "skill": "descending order",
+        "title": "Unit Champion: descending order",
+        "description": "Practise descending order through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Largest to smallest, or Z to A.?",
+            "choices": [
+              "descending order",
+              "spreadsheet",
+              "database",
+              "physical database"
+            ],
+            "answer": "descending order",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Descending order means largest to smallest, or Z to A."
+          },
+          {
+            "prompt": "What does “digital database” mean in computing?",
+            "choices": [
+              "A database kept on a computer.",
+              "All the data about one thing. It is one row.",
+              "One piece of data in a record. It is one column, with a heading.",
+              "Raw facts on their own, with no meaning yet."
+            ],
+            "answer": "A database kept on a computer.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Digital database means a database kept on a computer."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Raw facts on their own, with no meaning yet.",
+              "Data that has been processed so it has meaning.",
+              "A document with headings and spaces, used to collect data.",
+              "To look through a database to find records that match."
+            ],
+            "answer": "Raw facts on their own, with no meaning yet.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data means raw facts on their own, with no meaning yet."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To look through a database to find records that match.?",
+            "choices": [
+              "search",
+              "sort",
+              "ascending order",
+              "descending order"
+            ],
+            "answer": "search",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Search means to look through a database to find records that match."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can say what a database is (an organised collection of related data) and give examples.",
+    "I can tell the difference between a physical (paper) and a digital (computer) database, and give one advantage of each.",
+    "I can name the parts of a database: a record (one row — all the data about one thing) and a field (one column, with a heading).",
+    "I can explain the difference between data (raw facts) and information (processed data that has meaning).",
+    "I can give some advantages and disadvantages of using a form to collect data.",
+    "I can search a small database to find the records that match.",
+    "I can sort data into ascending (A-Z, small to large) and descending (Z-A, large to small) order, by hand and in a spreadsheet."
+  ]
+}

@@ -1,0 +1,1881 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.704Z",
+  "stage": {
+    "id": "s04",
+    "label": "Stage 4"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t02",
+    "label": "Term 2"
+  },
+  "unit": {
+    "unitId": "comp-g04-u06",
+    "unitNo": 6,
+    "unitTitle": "Be a Musician",
+    "unitOverview": "Welcome to Unit 6 of Year 4 Computing at Ehel Academy. Be a Musician. But do not be fooled by the musical title: the real computing idea in this unit is repetition — teaching the computer to do something again and again. Music is simply the fun, natural way to meet that idea, because music is full of repeating beats and repeating choruses.\n\nThe computing word for repetition is iteration — repeating the same block of code over and over. Learning when to use each loop is the heart of the unit. You meet three ways to repeat in Scratch: the forever loop, which never stops; the repeat ( ) loop, which repeats a set number of times and then stops; and the repeat until ( ) loop, which keeps going until something becomes true, such as a key being pressed.\n\nThey predict the outcome of an algorithm before running it — reading the steps to work out what they will hear. And they compare and contrast two algorithms written for the same task, deciding which is better suited (if you want a beat exactly three times and then stop, is forever or repeat (3) the right tool?).",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 4
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-4-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 4",
+    "sourceArchive": "Year 4-20260801T055750Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 4/Unit 6/Year 4 - Unit 6 Teacher Guide.docx",
+      "Year 4/Unit 6/Year 4 - Unit 6 Activity Sheet.docx",
+      "Year 4/Unit 6/Year 4 - Unit 6 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 356,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 4 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Explain that repetition (the computing word is iteration) means doing something again and again.",
+    "Tell the difference between the three loops: forever, repeat ( ) and repeat until ( ).",
+    "Explain count-controlled repetition (a set number of times) and condition-controlled repetition (until something becomes true).",
+    "Predict the outcome of an algorithm that contains repetition, then check it by running the program.",
+    "Compare and contrast two algorithms written for the same task and say which one is best suited.",
+    "Develop a program with iteration in Scratch, using a loop to make sound.",
+    "Use the volume blocks set volume to ( ) % and change volume by ( ), including a negative change to get quieter.",
+    "Add the free Music extension and compose a short rhythm or tune with play drum and play note, and add a comment to explain the code.",
+    "Before this unit (from the syllabus), children should already follow and correct an algorithm that uses iteration, build a program with the repeat command (met in Unit 4), and add comments to code. A quick recap of repeat at the start of Session 2 is usually enough."
+  ],
+  "toolkit": [
+    {
+      "name": "Scratch",
+      "url": "scratch.mit.edu",
+      "steps": [
+        "Go to scratch.mit.edu and click Create.",
+        "Drag blocks from the palette on the left into the code area.",
+        "Make variables in the orange Variables section.",
+        "Click the green flag to run and the red circle to stop."
+      ],
+      "note": "Runs in a web browser. Free, with nothing to download."
+    }
+  ],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-repetition-all-around-us-unplugged",
+      "title": "Repetition all around us (unplugged)",
+      "explanation": "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is iteration. When we tell a computer to repeat a block of instructions, we use a loop.\n\ndum, tak, tak. We just repeated the same beat. Repeating like that is called repetition.",
+      "example": "Repetition is what makes music feel like music. Start with music, because they can hear it.",
+      "checkYourself": "Can you continue a simple pattern? Can you give one everyday example of repeating until a job is done? Can you point to the part of a song or chant that repeats, and count how many times?"
+    },
+    {
+      "id": "concept-2-meet-the-loops-forever-and-repeat",
+      "title": "Meet the loops: forever and repeat",
+      "explanation": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and round until you press the red Stop.\n\nAdd a drum-style sprite with the Add Sprite button, then find forever and repeat ( ) in the orange Control blocks. Build this tiny program together and run it with the green flag Open Scratch and click Create on the projector.",
+      "example": "Do it yourself: meet the loops: forever and repeat. Work through it slowly, then check what you did against the explanation above.",
+      "checkYourself": "Can you run and stop a forever loop? Can you drag a loop block and put a sound block inside it?"
+    },
+    {
+      "id": "concept-3-read-it-predict-it-algorithms-and-volume",
+      "title": "Read it, predict it: algorithms and volume",
+      "explanation": "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and works out what they will hear.\n\nTry it: build it in Scratch to check the prediction.\n\nCheck yourself: Can you work out how many times a loop runs? Can you understand that a negative change makes the volume smaller, and that set and change are different? Does you predict before running, rather than running first and guessing after?",
+      "example": "Today we also meet the volume blocks: set volume to ( ) % fixes the loudness, and change volume by ( ) adds to it. A negative number, like -10, makes it quieter.",
+      "checkYourself": "Can you work out how many times a loop runs? Can you understand that a negative change makes the volume smaller, and that set and change are different? Does you predict before running, rather than running first and guessing after?"
+    },
+    {
+      "id": "concept-4-repeat-until-a-rhythm-that-stops-on-a-key",
+      "title": "Repeat until: a rhythm that stops on a key",
+      "explanation": "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the condition becomes true. We give it a condition to watch using a Sensing block, key ( ) pressed?. This is the classic drum program from the textbook.\n\nFirst act it out: “Tap the desk. keep tapping. STOP when I raise my hand.” The raised hand is the condition. You repeated the tap until my hand went up — Scratch can do that too.",
+      "example": "Find one real example of repeat until: a rhythm that stops on a key around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you drop a key ( ) pressed? condition into a repeat until loop?"
+    },
+    {
+      "id": "concept-5-be-a-musician-compose-and-compare",
+      "title": "Be a musician: compose and compare",
+      "explanation": "We switch on the free Music extension and use loops to build an original rhythm and a short tune. We also practise the syllabus skill of comparing two algorithms written for the same task, and we add a comment to explain our code.\n\nIn Scratch, click the Add Extension button (bottom-left) and choose Music. New green blocks appear, including set tempo to ( ), play drum ( ) for ( ) beats and play note ( ) for ( ) beats. In play drum, 1 is the Snare Drum (a sharp “tak” ) and 2 is the Bass Drum (a deep “dum” ). In play note, 60 is a nice middle note; bigger is higher, smaller is lower.",
+      "example": "The beats number is how long the sound lasts — the very idea from Session 1: 0.5 is a short note, 1 a one-beat note, 2 a long note. Build a simple hand-drum rhythm together, wrapped in a repeat loop so it plays four times",
+      "checkYourself": "Can you build a rhythm inside a loop and change the tempo? Can you compare two algorithms and say which suits the task? Can you add a sensible comment? Can you add the Music extension?"
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "Session 2 — Meet the loops: forever and repeat — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 2 — Meet the loops: forever and repeat.",
+      "lines": [
+        "when green flag clicked",
+        "forever",
+        "play sound (Tap Snare) until done"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-2",
+      "title": "Session 2 — Meet the loops: forever and repeat — listing 2",
+      "language": "Scratch blocks",
+      "intro": "From Session 2 — Meet the loops: forever and repeat.",
+      "lines": [
+        "when green flag clicked",
+        "repeat (4)",
+        "play sound (Tap Snare) until done"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-3",
+      "title": "Session 3 — Read it, predict it: algorithms and volume — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 3 — Read it, predict it: algorithms and volume.",
+      "lines": [
+        "when green flag clicked",
+        "set volume to (100) %",
+        "repeat (3)",
+        "play sound (Tap Snare) until done",
+        "change volume by (-20)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-4",
+      "title": "Session 4 — Repeat until: a rhythm that stops on a key — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 4 — Repeat until: a rhythm that stops on a key.",
+      "lines": [
+        "when this sprite clicked",
+        "repeat until <key (space) pressed?>",
+        "start sound (Tap Snare)",
+        "wait (1) seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-5",
+      "title": "Session 5 — Be a musician: compose and compare — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 5 — Be a musician: compose and compare.",
+      "lines": [
+        "when green flag clicked",
+        "set tempo to (80)",
+        "repeat (4)",
+        "play drum (2) Bass Drum for (1) beats",
+        "play drum (1) Snare Drum for (0.5) beats",
+        "play drum (1) Snare Drum for (0.5) beats"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Spot the Repetition",
+      "context": "work through the steps below and see what happens. This is repetition all around us (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Maya's class at Ehel Academy made up a drum chant. Read it out loud and tap the beat on your desk!",
+      "answer": "1. Dum, tak, tak — here we go! 2. Clap your hands and tap your toe. 3. Dum, tak, tak — here we go! 4. Beat the drum, now soft, now slow. 5. Dum, tak, tak — here we go!",
+      "modelType": "model-1",
+      "hint": "Start here: 1. Dum, tak, tak — here we go!",
+      "explanation": "Repetition all around us (unplugged): Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is iteration. When we tell a computer to repeat a block of instructions, we use a loop."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Continue the Beat Pattern",
+      "context": "work through the steps below and see what happens. This is meet the loops: forever and repeat in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "A pattern repeats a group over and over. Fill in the two blanks to finish each pattern.",
+      "answer": "a) dum, tak, tak, dum, tak, tak, dum, ______, ______ b) These are note lengths in beats 1, 0.5, 0.5, 1, 0.5, 0.5, 1, ______, ______",
+      "modelType": "model-2",
+      "hint": "Start here: a) dum, tak, tak, dum, tak, tak, dum, ______, ______",
+      "explanation": "Meet the loops: forever and repeat: In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and round until you press the red Stop."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Name the Loop",
+      "context": "work through the steps below and see what happens. This is read it, predict it: algorithms and volume in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Draw a line from each loop to what it does.",
+      "answer": "Match: Loop → What it does Match: forever → repeats a set number of times, then stops Match: repeat (4) → repeats until something becomes true (like a key pressed) Match: repeat until → repeats and never stops, until you press the red Stop",
+      "modelType": "model-3",
+      "hint": "Start here: Match: Loop → What it does",
+      "explanation": "Read it, predict it: algorithms and volume: An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and works out what they will hear."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Which Loop for the Job?",
+      "context": "work through the steps below and see what happens. This is repeat until: a rhythm that stops on a key in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Write the best loop for each job: choose from forever, repeat ( ), or repeat until.",
+      "answer": "a) You want a drum beat that never stops. Loop: ______________________ b) You want to play a beat exactly 8 times. Loop: ______________________ c) You want a beat to play until the space key is pressed. Loop: ______________________",
+      "modelType": "model-4",
+      "hint": "Start here: a) You want a drum beat that never stops. Loop: ______________________",
+      "explanation": "Repeat until: a rhythm that stops on a key: The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the condition becomes true. We give it a condition to watch using a Sensing block, key ( ) pressed?. This is the classic drum program from the textbook."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Predict the Outcome",
+      "context": "work through the steps below and see what happens. This is be a musician: compose and compare in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Be a code detective! Read this program carefully. Do not run it yet — predict what will happen.",
+      "answer": "when green flag clicked set volume to (100) % Play sound (Tap Snare) until done. change volume by (-20) a) How many times does the snare play? __________",
+      "modelType": "model-5",
+      "hint": "Start here: when green flag clicked",
+      "explanation": "Be a musician: compose and compare: We switch on the free Music extension and use loops to build an original rhythm and a short tune. We also practise the syllabus skill of comparing two algorithms written for the same task, and we add a comment to explain our code."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Try it in Scratch! Make a Drum Rhythm",
+      "context": "work through the steps below and see what happens. This is repetition all around us (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Now make your own drum rhythm — the kind of beat you can tap out on a hand drum.",
+      "answer": "Go to scratch.mit.edu and click Create. New green music blocks appear! Click the Add Extension button (bottom-left corner) and choose Music. Drag these blocks and join them together. set tempo, play drum are green Music blocks; repeat is an orange Control block when green flag clicked set tempo to (80)",
+      "modelType": "model-6",
+      "hint": "Start here: Go to scratch.mit.edu and click Create.",
+      "explanation": "Repetition all around us (unplugged): Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is iteration. When we tell a computer to repeat a block of instructions, we use a loop."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Repetition all around us (unplugged)",
+      "modelType": "concept-model-1",
+      "purpose": "Repetition means doing something again and again. It is everywhere — in songs, in games, and in everyday jobs. The computing word for repetition is iteration. When we tell a computer to repeat a block of instructions,…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Meet the loops: forever and repeat",
+      "modelType": "concept-model-2",
+      "purpose": "In Scratch, a loop repeats the blocks placed inside it. Today we meet two. The forever loop repeats and never stops — the code inside runs round and round until you press the red Stop.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Read it, predict it: algorithms and volume",
+      "modelType": "concept-model-3",
+      "purpose": "An algorithm is a set of steps in the right order. Before we run a program, a good musician-programmer predicts what it will do — reads the steps and works out what they will hear.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Repeat until: a rhythm that stops on a key",
+      "modelType": "concept-model-4",
+      "purpose": "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the condition becomes true. We give it a condition to watch using a Sensing block,…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Be a musician: compose and compare",
+      "modelType": "concept-model-5",
+      "purpose": "We switch on the free Music extension and use loops to build an original rhythm and a short tune. We also practise the syllabus skill of comparing two algorithms written for the same task, and we add a comment to…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with repetition all around us (unplugged)",
+      "example": "Repetition is what makes music feel like music. Start with music, because they can hear it.",
+      "steps": [
+        "Read the concept card for repetition all around us (unplugged) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with meet the loops: forever and repeat",
+      "example": "Do it yourself: meet the loops: forever and repeat. Work through it slowly, then check what you did against the explanation above.",
+      "steps": [
+        "Read the concept card for meet the loops: forever and repeat and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with read it, predict it: algorithms and volume",
+      "example": "Today we also meet the volume blocks: set volume to ( ) % fixes the loudness, and change volume by ( ) adds to it. A negative number, like -10, makes it quieter.",
+      "steps": [
+        "Read the concept card for read it, predict it: algorithms and volume and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with repeat until: a rhythm that stops on a key",
+      "example": "Find one real example of repeat until: a rhythm that stops on a key around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for repeat until: a rhythm that stops on a key and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with be a musician: compose and compare",
+      "example": "The beats number is how long the sound lasts — the very idea from Session 1: 0.5 is a short note, 1 a one-beat note, 2 a long note. Build a simple hand-drum rhythm together, wrapped in a repeat loop so it plays four times",
+      "steps": [
+        "Read the concept card for be a musician: compose and compare and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Repetition all around us (unplugged)",
+      "prompt": "What does the word iteration mean?",
+      "solution": "Iteration means repeating the same block of code many times."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Meet the loops: forever and repeat",
+      "prompt": "Name the loop for each job:",
+      "solution": "(a) repeat ( ) (count-controlled); (b) forever; (c) repeat until ( ) (condition-controlled)."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Read it, predict it: algorithms and volume",
+      "prompt": "Look at this block: play note (60) for (2) beats",
+      "solution": "(a) The 2 (the beats number) says how long the note lasts. (b) The 60 says how high the note is."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Repeat until: a rhythm that stops on a key",
+      "prompt": "Predict the outcome of this program:",
+      "solution": "(a) 4 beats. (b) Quieter. (c) 100 — 10 — 10 — 10 — 10 = 60%."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Be a musician: compose and compare",
+      "prompt": "Two algorithms both play a beat. One uses forever, one uses repeat (5). You want the beat to play exactly 5 times and then stop. Which is best suited, and why?",
+      "solution": "The repeat (5) algorithm is best suited, because it plays the beat exactly 5 times and then stops; the forever algorithm would never stop."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Repetition all around us (unplugged)",
+      "prompt": "What is a comment, and does the computer run it?",
+      "solution": "A comment is a note that explains the code for people to read. No, the computer does not run it — comments are ignored when the program runs."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "What does the word iteration mean?",
+      "answer": "Iteration means repeating the same block of code many times.",
+      "hint": "Look back at what repetition and iteration mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Name the loop for each job:",
+      "answer": "(a) repeat ( ) (count-controlled); (b) forever; (c) repeat until ( ) (condition-controlled).",
+      "hint": "Look back at what repetition and iteration mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "Look at this block: play note (60) for (2) beats",
+      "answer": "(a) The 2 (the beats number) says how long the note lasts. (b) The 60 says how high the note is.",
+      "hint": "Look back at what repetition and iteration mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Predict the outcome of this program:",
+      "answer": "(a) 4 beats. (b) Quieter. (c) 100 — 10 — 10 — 10 — 10 = 60%.",
+      "hint": "Look back at what repetition and iteration mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "Two algorithms both play a beat. One uses forever, one uses repeat (5). You want the beat to play exactly 5 times and then stop. Which is best suited, and why?",
+      "answer": "The repeat (5) algorithm is best suited, because it plays the beat exactly 5 times and then stops; the forever algorithm would never stop.",
+      "hint": "Look back at what repetition and iteration mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "What is a comment, and does the computer run it?",
+      "answer": "A comment is a note that explains the code for people to read. No, the computer does not run it — comments are ignored when the program runs.",
+      "hint": "Look back at what repetition and iteration mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Spot the Repetition",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Maya's class at Ehel Academy made up a drum chant. Read it out loud and tap the beat on your desk!",
+        "1. Dum, tak, tak — here we go!",
+        "2. Clap your hands and tap your toe.",
+        "3. Dum, tak, tak — here we go!",
+        "4. Beat the drum, now soft, now slow.",
+        "5. Dum, tak, tak — here we go!"
+      ]
+    },
+    {
+      "title": "Continue the Beat Pattern",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A pattern repeats a group over and over. Fill in the two blanks to finish each pattern.",
+        "a) dum, tak, tak, dum, tak, tak, dum, ______, ______",
+        "b) These are note lengths in beats",
+        "1, 0.5, 0.5, 1, 0.5, 0.5, 1, ______, ______"
+      ]
+    },
+    {
+      "title": "Name the Loop",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Draw a line from each loop to what it does.",
+        "Match: Loop → What it does",
+        "Match: forever → repeats a set number of times, then stops",
+        "Match: repeat (4) → repeats until something becomes true (like a key pressed)",
+        "Match: repeat until → repeats and never stops, until you press the red Stop"
+      ]
+    },
+    {
+      "title": "Which Loop for the Job?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Write the best loop for each job: choose from forever, repeat ( ), or repeat until.",
+        "a) You want a drum beat that never stops. Loop: ______________________",
+        "b) You want to play a beat exactly 8 times. Loop: ______________________",
+        "c) You want a beat to play until the space key is pressed. Loop: ______________________"
+      ]
+    },
+    {
+      "title": "Predict the Outcome",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Be a code detective! Read this program carefully. Do not run it yet — predict what will happen.",
+        "when green flag clicked",
+        "set volume to (100) %",
+        "Play sound (Tap Snare) until done.",
+        "change volume by (-20)",
+        "a) How many times does the snare play? __________"
+      ]
+    },
+    {
+      "title": "Try it in Scratch! Make a Drum Rhythm",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Now make your own drum rhythm — the kind of beat you can tap out on a hand drum.",
+        "Go to scratch.mit.edu and click Create.",
+        "New green music blocks appear! Click the Add Extension button (bottom-left corner) and choose Music.",
+        "Drag these blocks and join them together. set tempo, play drum are green Music blocks; repeat is an orange Control block",
+        "when green flag clicked",
+        "set tempo to (80)"
+      ]
+    },
+    {
+      "title": "Compare Two Algorithms",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Nora and Leo both want a beat to play exactly 3 times and then stop. Look at their two algorithms.",
+        "Nora — Algorithm A Leo — Algorithm B",
+        "when green flag clicked when green flag clicked",
+        "Play drum (1) for (1) beats play drum (1) for (1) beats.",
+        "a) Which algorithm plays the beat exactly 3 times and then stops? ____________",
+        "b) What does the other algorithm do? ________________________________________"
+      ]
+    },
+    {
+      "title": "Plan It",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "First, plan your music. Fill in the blanks with your ideas.",
+        "My tempo (how fast, from about 50 slow to 150 fast): __________",
+        "My drum pattern (write it as dum and tak): ______________________________________",
+        "How many times will my rhythm repeat? __________",
+        "Three notes for my tune (a middle note is 60; bigger is higher): ______, ______, ______"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "forever and repeat are the same.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No. A forever loop never stops on its own; a repeat ( ) loop counts to a number and stops. Show both back to back."
+    },
+    {
+      "symptom": "repeat until means repeat while it is true.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "It is the opposite. repeat until keeps going while the condition is false and stops the moment it becomes true."
+    },
+    {
+      "symptom": "A bigger beats number makes a higher note.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No. In play note (60) for (2) beats, the 60 is how high the note is; the 2 is how long it lasts."
+    },
+    {
+      "symptom": "change volume by (10) sets the volume to 10.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No. change adds to the current volume; set volume to (10) % jumps straight to 10."
+    },
+    {
+      "symptom": "A minus number is a mistake.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No. change volume by (-10) is on purpose — a minus sign means"
+    },
+    {
+      "symptom": ", so it gets quieter.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "You must write the same block many times to repeat it."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Repetition all around us (unplugged)",
+        "text": "Repetition means doing something again and again."
+      },
+      {
+        "title": "Meet the loops: forever and repeat",
+        "text": "In Scratch, a loop repeats the blocks placed inside it."
+      },
+      {
+        "title": "Read it, predict it: algorithms and volume",
+        "text": "An algorithm is a set of steps in the right order."
+      },
+      {
+        "title": "Repeat until: a rhythm that stops on a key",
+        "text": "The third loop is repeat until ( ) — the condition-controlled loop."
+      },
+      {
+        "title": "Be a musician: compose and compare",
+        "text": "We switch on the free Music extension and use loops to build an original rhythm and a short tune."
+      }
+    ],
+    "terms": [
+      [
+        "repetition",
+        "Doing something again and again."
+      ],
+      [
+        "iteration",
+        "The computing word for repeating a block of code many times."
+      ],
+      [
+        "loop",
+        "A block that repeats the code inside it."
+      ],
+      [
+        "forever loop",
+        "A loop that repeats and never stops, until you press the red Stop."
+      ],
+      [
+        "repeat loop",
+        "A loop that repeats a set number of times, then stops (count-controlled)."
+      ],
+      [
+        "repeat until loop",
+        "A loop that repeats until something becomes true (condition-controlled)."
+      ],
+      [
+        "condition",
+        "Something that is either true or false right now."
+      ],
+      [
+        "algorithm",
+        "A set of steps, in the right order, to do a job."
+      ],
+      [
+        "predict",
+        "To say what will happen before you run the program."
+      ],
+      [
+        "sequence",
+        "The order in which steps happen."
+      ],
+      [
+        "tempo",
+        "How fast or slow the beat goes."
+      ],
+      [
+        "beat",
+        "The steady pulse of music, and how we measure how long a note lasts."
+      ],
+      [
+        "Music extension",
+        "Extra Scratch blocks for making music (play note, play drum)."
+      ],
+      [
+        "sprite",
+        "A character or object in Scratch."
+      ],
+      [
+        "comment",
+        "A note in the code that explains what it does, for people to read."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "repetition",
+        "meaning": "Doing something again and again.",
+        "example": "Singing a chorus over and over.",
+        "letter": "R"
+      },
+      {
+        "term": "iteration",
+        "meaning": "The computing word for repeating a block of code many times.",
+        "example": "A loop that taps a drum again and again.",
+        "letter": "I"
+      },
+      {
+        "term": "loop",
+        "meaning": "A block that repeats the code inside it.",
+        "example": "The forever block and the repeat block.",
+        "letter": "L"
+      },
+      {
+        "term": "forever loop",
+        "meaning": "A loop that repeats and never stops, until you press the red Stop.",
+        "example": "A beat that keeps going.",
+        "letter": "F"
+      },
+      {
+        "term": "repeat loop",
+        "meaning": "A loop that repeats a set number of times, then stops (count-controlled).",
+        "example": "Play a beat 4 times, then stop.",
+        "letter": "R"
+      },
+      {
+        "term": "repeat until loop",
+        "meaning": "A loop that repeats until something becomes true (condition-controlled).",
+        "example": "Drum until the space key is pressed.",
+        "letter": "R"
+      },
+      {
+        "term": "condition",
+        "meaning": "Something that is either true or false right now.",
+        "example": "Is the space key pressed?",
+        "letter": "C"
+      },
+      {
+        "term": "algorithm",
+        "meaning": "A set of steps, in the right order, to do a job.",
+        "example": "The steps to play a rhythm.",
+        "letter": "A"
+      },
+      {
+        "term": "predict",
+        "meaning": "To say what will happen before you run the program.",
+        "example": "I think it will play 4 beats.",
+        "letter": "P"
+      },
+      {
+        "term": "sequence",
+        "meaning": "The order in which steps happen.",
+        "example": "Note 1, then note 2, then note 3.",
+        "letter": "S"
+      },
+      {
+        "term": "tempo",
+        "meaning": "How fast or slow the beat goes.",
+        "example": "A high tempo is fast; a low tempo is slow.",
+        "letter": "T"
+      },
+      {
+        "term": "beat",
+        "meaning": "The steady pulse of music, and how we measure how long a note lasts.",
+        "example": "A note can last 1 beat or 2 beats.",
+        "letter": "B"
+      },
+      {
+        "term": "Music extension",
+        "meaning": "Extra Scratch blocks for making music (play note, play drum).",
+        "example": "Added with the Add Extension button.",
+        "letter": "M"
+      },
+      {
+        "term": "sprite",
+        "meaning": "A character or object in Scratch.",
+        "example": "A drum, a guitar, a singer.",
+        "letter": "S"
+      },
+      {
+        "term": "comment",
+        "meaning": "A note in the code that explains what it does, for people to read.",
+        "example": "This loop plays my rhythm.",
+        "letter": "C"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "forever and repeat are the same.",
+        "No. A forever loop never stops on its own; a repeat ( ) loop counts to a number and stops. Show both back to back."
+      ],
+      [
+        "repeat until means repeat while it is true.",
+        "It is the opposite. repeat until keeps going while the condition is false and stops the moment it becomes true."
+      ],
+      [
+        "A bigger beats number makes a higher note.",
+        "No. In play note (60) for (2) beats, the 60 is how high the note is; the 2 is how long it lasts."
+      ],
+      [
+        "change volume by (10) sets the volume to 10.",
+        "No. change adds to the current volume; set volume to (10) % jumps straight to 10."
+      ],
+      [
+        "A minus number is a mistake.",
+        "No. change volume by (-10) is on purpose — a minus sign means"
+      ],
+      [
+        ", so it gets quieter.",
+        "You must write the same block many times to repeat it."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "What does the word iteration mean?",
+      "answer": "Iteration means repeating the same block of code many times.",
+      "hint": "Look back at what repetition and iteration mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Iteration means repeating the same block of code many times."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Name the loop for each job:",
+      "answer": "(a) repeat ( ) (count-controlled); (b) forever; (c) repeat until ( ) (condition-controlled).",
+      "hint": "Look back at what repetition and iteration mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "(a) repeat ( ) (count-controlled); (b) forever; (c) repeat until ( ) (condition-controlled)."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Look at this block: play note (60) for (2) beats",
+      "answer": "(a) The 2 (the beats number) says how long the note lasts. (b) The 60 says how high the note is.",
+      "hint": "Look back at what repetition and iteration mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "(a) The 2 (the beats number) says how long the note lasts. (b) The 60 says how high the note is."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Predict the outcome of this program:",
+      "answer": "(a) 4 beats. (b) Quieter. (c) 100 — 10 — 10 — 10 — 10 = 60%.",
+      "hint": "Look back at what repetition and iteration mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "(a) 4 beats. (b) Quieter. (c) 100 — 10 — 10 — 10 — 10 = 60%."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Two algorithms both play a beat. One uses forever, one uses repeat (5). You want the beat to play exactly 5 times and then stop. Which is best suited, and why?",
+      "answer": "The repeat (5) algorithm is best suited, because it plays the beat exactly 5 times and then stops; the forever algorithm would never stop.",
+      "hint": "Look back at what repetition and iteration mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "The repeat (5) algorithm is best suited, because it plays the beat exactly 5 times and then stops; the forever algorithm would never stop."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "What is a comment, and does the computer run it?",
+      "answer": "A comment is a note that explains the code for people to read. No, the computer does not run it — comments are ignored when the program runs.",
+      "hint": "Look back at what repetition and iteration mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "A comment is a note that explains the code for people to read. No, the computer does not run it — comments are ignored when the program runs."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "What is a comment, and does the computer run it?",
+      "answer": "A comment is a note that explains the code for people to read. No, the computer does not run it — comments are ignored when the program runs.",
+      "hint": "Look back at what repetition and iteration mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: A comment is a note that explains the code for people to read. No, the computer does not run it — comments are ignored when the program runs."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "Two algorithms both play a beat. One uses forever, one uses repeat (5). You want the beat to play exactly 5 times and then stop. Which is best suited, and why?",
+      "answer": "The repeat (5) algorithm is best suited, because it plays the beat exactly 5 times and then stops; the forever algorithm would never stop.",
+      "hint": "Look back at what repetition and iteration mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: The repeat (5) algorithm is best suited, because it plays the beat exactly 5 times and then stops; the forever algorithm would never stop."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "What is a comment, and does the computer run it?",
+      "answer": "A comment is a note that explains the code for people to read. No, the computer does not run it — comments are ignored when the program runs.",
+      "hint": "Look back at what repetition and iteration mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: A comment is a note that explains the code for people to read. No, the computer does not run it — comments are ignored when the program runs."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "What does the word iteration mean?",
+      "answer": "Iteration means repeating the same block of code many times.",
+      "hint": "Look back at what repetition and iteration mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Iteration means repeating the same block of code many times."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Look at this block: play note (60) for (2) beats",
+      "keyIdeas": [
+        "repetition",
+        "iteration",
+        "loop"
+      ],
+      "modelAnswer": "(a) The 2 (the beats number) says how long the note lasts. (b) The 60 says how high the note is."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Predict the outcome of this program:",
+      "keyIdeas": [
+        "iteration",
+        "loop",
+        "forever loop"
+      ],
+      "modelAnswer": "(a) 4 beats. (b) Quieter. (c) 100 — 10 — 10 — 10 — 10 = 60%."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Two algorithms both play a beat. One uses forever, one uses repeat (5). You want the beat to play exactly 5 times and then stop. Which is best suited, and why?",
+      "keyIdeas": [
+        "loop",
+        "forever loop",
+        "repeat loop"
+      ],
+      "modelAnswer": "The repeat (5) algorithm is best suited, because it plays the beat exactly 5 times and then stops; the forever algorithm would never stop."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in repeat until: a rhythm that stops on a key, and give one example of your own.",
+      "keyIdeas": [
+        "repetition",
+        "iteration",
+        "loop"
+      ],
+      "modelAnswer": "The third loop is repeat until ( ) — the condition-controlled loop. It keeps repeating while the condition is false and stops the moment the condition becomes true. We give it a condition to watch using a Sensing block, key ( ) pressed?. This is the classic drum program from the textbook.\n\nFirst act it out: “Tap the desk. keep tapping. STOP when I raise my hand.” The raised hand is the condition. You repeated the tap until my hand went up — Scratch can do that too."
+    }
+  ],
+  "project": {
+    "title": "Unit 6 Project: Be a Musician",
+    "brief": "Bring together everything from Be a Musician into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your be a musician project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I planned my rhythm and tune on paper.",
+      "I added the Music extension.",
+      "I used a repeat loop to play my rhythm more than once.",
+      "I added a short tune with play note.",
+      "I added a comment to explain my code.",
+      "I made one change and tested it with the green flag."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “repetition” mean in computing?",
+        "options": [
+          "Doing something again and again.",
+          "The computing word for repeating a block of code many times.",
+          "A block that repeats the code inside it.",
+          "A loop that repeats and never stops, until you press the red Stop."
+        ],
+        "answer": "Doing something again and again.",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Repetition means doing something again and again."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “iteration” mean in computing?",
+        "options": [
+          "The computing word for repeating a block of code many times.",
+          "A block that repeats the code inside it.",
+          "A loop that repeats and never stops, until you press the red Stop.",
+          "A loop that repeats a set number of times, then stops (count-controlled)."
+        ],
+        "answer": "The computing word for repeating a block of code many times.",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Iteration means the computing word for repeating a block of code many times."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “loop” mean in computing?",
+        "options": [
+          "A block that repeats the code inside it.",
+          "A loop that repeats and never stops, until you press the red Stop.",
+          "A loop that repeats a set number of times, then stops (count-controlled).",
+          "A loop that repeats until something becomes true (condition-controlled)."
+        ],
+        "answer": "A block that repeats the code inside it.",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Loop means a block that repeats the code inside it."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “forever loop” mean in computing?",
+        "options": [
+          "A loop that repeats and never stops, until you press the red Stop.",
+          "A loop that repeats a set number of times, then stops (count-controlled).",
+          "A loop that repeats until something becomes true (condition-controlled).",
+          "Something that is either true or false right now."
+        ],
+        "answer": "A loop that repeats and never stops, until you press the red Stop.",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Forever loop means a loop that repeats and never stops, until you press the red Stop."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “repeat loop” mean in computing?",
+        "options": [
+          "A loop that repeats a set number of times, then stops (count-controlled).",
+          "A loop that repeats until something becomes true (condition-controlled).",
+          "Something that is either true or false right now.",
+          "A set of steps, in the right order, to do a job."
+        ],
+        "answer": "A loop that repeats a set number of times, then stops (count-controlled).",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Repeat loop means a loop that repeats a set number of times, then stops (count-controlled)."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “repeat until loop” mean in computing?",
+        "options": [
+          "A loop that repeats until something becomes true (condition-controlled).",
+          "Something that is either true or false right now.",
+          "A set of steps, in the right order, to do a job.",
+          "To say what will happen before you run the program."
+        ],
+        "answer": "A loop that repeats until something becomes true (condition-controlled).",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Repeat until loop means a loop that repeats until something becomes true (condition-controlled)."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Something that is either true or false right now.?",
+        "options": [
+          "condition",
+          "algorithm",
+          "predict",
+          "sequence"
+        ],
+        "answer": "condition",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Condition means something that is either true or false right now."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A set of steps, in the right order, to do a job.?",
+        "options": [
+          "algorithm",
+          "predict",
+          "sequence",
+          "tempo"
+        ],
+        "answer": "algorithm",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo09",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: To say what will happen before you run the program.?",
+        "options": [
+          "predict",
+          "sequence",
+          "tempo",
+          "beat"
+        ],
+        "answer": "predict",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Predict means to say what will happen before you run the program."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The order in which steps happen.?",
+        "options": [
+          "sequence",
+          "tempo",
+          "beat",
+          "Music extension"
+        ],
+        "answer": "sequence",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Sequence means the order in which steps happen."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: How fast or slow the beat goes.?",
+        "options": [
+          "tempo",
+          "beat",
+          "Music extension",
+          "sprite"
+        ],
+        "answer": "tempo",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Tempo means how fast or slow the beat goes."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The steady pulse of music, and how we measure how long a note lasts.?",
+        "options": [
+          "beat",
+          "Music extension",
+          "sprite",
+          "comment"
+        ],
+        "answer": "beat",
+        "hint": "Use the Unit 6 Computing Words reference.",
+        "explanation": "Beat means the steady pulse of music, and how we measure how long a note lasts."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u6-game-1",
+        "icon": "?",
+        "skill": "repetition",
+        "title": "Quick Match: repetition",
+        "description": "Practise repetition through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “repetition” mean in computing?",
+            "choices": [
+              "Doing something again and again.",
+              "The computing word for repeating a block of code many times.",
+              "A block that repeats the code inside it.",
+              "A loop that repeats and never stops, until you press the red Stop."
+            ],
+            "answer": "Doing something again and again.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Repetition means doing something again and again."
+          },
+          {
+            "prompt": "What does “forever loop” mean in computing?",
+            "choices": [
+              "A loop that repeats and never stops, until you press the red Stop.",
+              "A loop that repeats a set number of times, then stops (count-controlled).",
+              "A loop that repeats until something becomes true (condition-controlled).",
+              "Something that is either true or false right now."
+            ],
+            "answer": "A loop that repeats and never stops, until you press the red Stop.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Forever loop means a loop that repeats and never stops, until you press the red Stop."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Something that is either true or false right now.?",
+            "choices": [
+              "condition",
+              "algorithm",
+              "predict",
+              "sequence"
+            ],
+            "answer": "condition",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Condition means something that is either true or false right now."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The order in which steps happen.?",
+            "choices": [
+              "sequence",
+              "tempo",
+              "beat",
+              "Music extension"
+            ],
+            "answer": "sequence",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Sequence means the order in which steps happen."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-2",
+        "icon": "★",
+        "skill": "iteration",
+        "title": "Concept Quest: iteration",
+        "description": "Practise iteration through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “iteration” mean in computing?",
+            "choices": [
+              "The computing word for repeating a block of code many times.",
+              "A block that repeats the code inside it.",
+              "A loop that repeats and never stops, until you press the red Stop.",
+              "A loop that repeats a set number of times, then stops (count-controlled)."
+            ],
+            "answer": "The computing word for repeating a block of code many times.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Iteration means the computing word for repeating a block of code many times."
+          },
+          {
+            "prompt": "What does “repeat loop” mean in computing?",
+            "choices": [
+              "A loop that repeats a set number of times, then stops (count-controlled).",
+              "A loop that repeats until something becomes true (condition-controlled).",
+              "Something that is either true or false right now.",
+              "A set of steps, in the right order, to do a job."
+            ],
+            "answer": "A loop that repeats a set number of times, then stops (count-controlled).",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Repeat loop means a loop that repeats a set number of times, then stops (count-controlled)."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A set of steps, in the right order, to do a job.?",
+            "choices": [
+              "algorithm",
+              "predict",
+              "sequence",
+              "tempo"
+            ],
+            "answer": "algorithm",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: How fast or slow the beat goes.?",
+            "choices": [
+              "tempo",
+              "beat",
+              "Music extension",
+              "sprite"
+            ],
+            "answer": "tempo",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Tempo means how fast or slow the beat goes."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-3",
+        "icon": "◫",
+        "skill": "loop",
+        "title": "Debug Detective: loop",
+        "description": "Practise loop through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “loop” mean in computing?",
+            "choices": [
+              "A block that repeats the code inside it.",
+              "A loop that repeats and never stops, until you press the red Stop.",
+              "A loop that repeats a set number of times, then stops (count-controlled).",
+              "A loop that repeats until something becomes true (condition-controlled)."
+            ],
+            "answer": "A block that repeats the code inside it.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Loop means a block that repeats the code inside it."
+          },
+          {
+            "prompt": "What does “repeat until loop” mean in computing?",
+            "choices": [
+              "A loop that repeats until something becomes true (condition-controlled).",
+              "Something that is either true or false right now.",
+              "A set of steps, in the right order, to do a job.",
+              "To say what will happen before you run the program."
+            ],
+            "answer": "A loop that repeats until something becomes true (condition-controlled).",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Repeat until loop means a loop that repeats until something becomes true (condition-controlled)."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To say what will happen before you run the program.?",
+            "choices": [
+              "predict",
+              "sequence",
+              "tempo",
+              "beat"
+            ],
+            "answer": "predict",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Predict means to say what will happen before you run the program."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The steady pulse of music, and how we measure how long a note lasts.?",
+            "choices": [
+              "beat",
+              "Music extension",
+              "sprite",
+              "comment"
+            ],
+            "answer": "beat",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Beat means the steady pulse of music, and how we measure how long a note lasts."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-4",
+        "icon": "→",
+        "skill": "forever loop",
+        "title": "Algorithm Runner: forever loop",
+        "description": "Practise forever loop through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “forever loop” mean in computing?",
+            "choices": [
+              "A loop that repeats and never stops, until you press the red Stop.",
+              "A loop that repeats a set number of times, then stops (count-controlled).",
+              "A loop that repeats until something becomes true (condition-controlled).",
+              "Something that is either true or false right now."
+            ],
+            "answer": "A loop that repeats and never stops, until you press the red Stop.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Forever loop means a loop that repeats and never stops, until you press the red Stop."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Something that is either true or false right now.?",
+            "choices": [
+              "condition",
+              "algorithm",
+              "predict",
+              "sequence"
+            ],
+            "answer": "condition",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Condition means something that is either true or false right now."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The order in which steps happen.?",
+            "choices": [
+              "sequence",
+              "tempo",
+              "beat",
+              "Music extension"
+            ],
+            "answer": "sequence",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Sequence means the order in which steps happen."
+          },
+          {
+            "prompt": "What does “repetition” mean in computing?",
+            "choices": [
+              "Doing something again and again.",
+              "The computing word for repeating a block of code many times.",
+              "A block that repeats the code inside it.",
+              "A loop that repeats and never stops, until you press the red Stop."
+            ],
+            "answer": "Doing something again and again.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Repetition means doing something again and again."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-5",
+        "icon": "Σ",
+        "skill": "repeat loop",
+        "title": "Vocabulary Vault: repeat loop",
+        "description": "Practise repeat loop through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “repeat loop” mean in computing?",
+            "choices": [
+              "A loop that repeats a set number of times, then stops (count-controlled).",
+              "A loop that repeats until something becomes true (condition-controlled).",
+              "Something that is either true or false right now.",
+              "A set of steps, in the right order, to do a job."
+            ],
+            "answer": "A loop that repeats a set number of times, then stops (count-controlled).",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Repeat loop means a loop that repeats a set number of times, then stops (count-controlled)."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A set of steps, in the right order, to do a job.?",
+            "choices": [
+              "algorithm",
+              "predict",
+              "sequence",
+              "tempo"
+            ],
+            "answer": "algorithm",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: How fast or slow the beat goes.?",
+            "choices": [
+              "tempo",
+              "beat",
+              "Music extension",
+              "sprite"
+            ],
+            "answer": "tempo",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Tempo means how fast or slow the beat goes."
+          },
+          {
+            "prompt": "What does “iteration” mean in computing?",
+            "choices": [
+              "The computing word for repeating a block of code many times.",
+              "A block that repeats the code inside it.",
+              "A loop that repeats and never stops, until you press the red Stop.",
+              "A loop that repeats a set number of times, then stops (count-controlled)."
+            ],
+            "answer": "The computing word for repeating a block of code many times.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Iteration means the computing word for repeating a block of code many times."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-6",
+        "icon": "◇",
+        "skill": "repeat until loop",
+        "title": "Challenge Cards: repeat until loop",
+        "description": "Practise repeat until loop through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “repeat until loop” mean in computing?",
+            "choices": [
+              "A loop that repeats until something becomes true (condition-controlled).",
+              "Something that is either true or false right now.",
+              "A set of steps, in the right order, to do a job.",
+              "To say what will happen before you run the program."
+            ],
+            "answer": "A loop that repeats until something becomes true (condition-controlled).",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Repeat until loop means a loop that repeats until something becomes true (condition-controlled)."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To say what will happen before you run the program.?",
+            "choices": [
+              "predict",
+              "sequence",
+              "tempo",
+              "beat"
+            ],
+            "answer": "predict",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Predict means to say what will happen before you run the program."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The steady pulse of music, and how we measure how long a note lasts.?",
+            "choices": [
+              "beat",
+              "Music extension",
+              "sprite",
+              "comment"
+            ],
+            "answer": "beat",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Beat means the steady pulse of music, and how we measure how long a note lasts."
+          },
+          {
+            "prompt": "What does “loop” mean in computing?",
+            "choices": [
+              "A block that repeats the code inside it.",
+              "A loop that repeats and never stops, until you press the red Stop.",
+              "A loop that repeats a set number of times, then stops (count-controlled).",
+              "A loop that repeats until something becomes true (condition-controlled)."
+            ],
+            "answer": "A block that repeats the code inside it.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Loop means a block that repeats the code inside it."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-7",
+        "icon": "⚡",
+        "skill": "condition",
+        "title": "Think Fast: condition",
+        "description": "Practise condition through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Something that is either true or false right now.?",
+            "choices": [
+              "condition",
+              "algorithm",
+              "predict",
+              "sequence"
+            ],
+            "answer": "condition",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Condition means something that is either true or false right now."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The order in which steps happen.?",
+            "choices": [
+              "sequence",
+              "tempo",
+              "beat",
+              "Music extension"
+            ],
+            "answer": "sequence",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Sequence means the order in which steps happen."
+          },
+          {
+            "prompt": "What does “repetition” mean in computing?",
+            "choices": [
+              "Doing something again and again.",
+              "The computing word for repeating a block of code many times.",
+              "A block that repeats the code inside it.",
+              "A loop that repeats and never stops, until you press the red Stop."
+            ],
+            "answer": "Doing something again and again.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Repetition means doing something again and again."
+          },
+          {
+            "prompt": "What does “forever loop” mean in computing?",
+            "choices": [
+              "A loop that repeats and never stops, until you press the red Stop.",
+              "A loop that repeats a set number of times, then stops (count-controlled).",
+              "A loop that repeats until something becomes true (condition-controlled).",
+              "Something that is either true or false right now."
+            ],
+            "answer": "A loop that repeats and never stops, until you press the red Stop.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Forever loop means a loop that repeats and never stops, until you press the red Stop."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-8",
+        "icon": "☁",
+        "skill": "algorithm",
+        "title": "Explain It: algorithm",
+        "description": "Practise algorithm through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A set of steps, in the right order, to do a job.?",
+            "choices": [
+              "algorithm",
+              "predict",
+              "sequence",
+              "tempo"
+            ],
+            "answer": "algorithm",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: How fast or slow the beat goes.?",
+            "choices": [
+              "tempo",
+              "beat",
+              "Music extension",
+              "sprite"
+            ],
+            "answer": "tempo",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Tempo means how fast or slow the beat goes."
+          },
+          {
+            "prompt": "What does “iteration” mean in computing?",
+            "choices": [
+              "The computing word for repeating a block of code many times.",
+              "A block that repeats the code inside it.",
+              "A loop that repeats and never stops, until you press the red Stop.",
+              "A loop that repeats a set number of times, then stops (count-controlled)."
+            ],
+            "answer": "The computing word for repeating a block of code many times.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Iteration means the computing word for repeating a block of code many times."
+          },
+          {
+            "prompt": "What does “repeat loop” mean in computing?",
+            "choices": [
+              "A loop that repeats a set number of times, then stops (count-controlled).",
+              "A loop that repeats until something becomes true (condition-controlled).",
+              "Something that is either true or false right now.",
+              "A set of steps, in the right order, to do a job."
+            ],
+            "answer": "A loop that repeats a set number of times, then stops (count-controlled).",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Repeat loop means a loop that repeats a set number of times, then stops (count-controlled)."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-9",
+        "icon": "⌂",
+        "skill": "predict",
+        "title": "Real-Life Round: predict",
+        "description": "Practise predict through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To say what will happen before you run the program.?",
+            "choices": [
+              "predict",
+              "sequence",
+              "tempo",
+              "beat"
+            ],
+            "answer": "predict",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Predict means to say what will happen before you run the program."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The steady pulse of music, and how we measure how long a note lasts.?",
+            "choices": [
+              "beat",
+              "Music extension",
+              "sprite",
+              "comment"
+            ],
+            "answer": "beat",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Beat means the steady pulse of music, and how we measure how long a note lasts."
+          },
+          {
+            "prompt": "What does “loop” mean in computing?",
+            "choices": [
+              "A block that repeats the code inside it.",
+              "A loop that repeats and never stops, until you press the red Stop.",
+              "A loop that repeats a set number of times, then stops (count-controlled).",
+              "A loop that repeats until something becomes true (condition-controlled)."
+            ],
+            "answer": "A block that repeats the code inside it.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Loop means a block that repeats the code inside it."
+          },
+          {
+            "prompt": "What does “repeat until loop” mean in computing?",
+            "choices": [
+              "A loop that repeats until something becomes true (condition-controlled).",
+              "Something that is either true or false right now.",
+              "A set of steps, in the right order, to do a job.",
+              "To say what will happen before you run the program."
+            ],
+            "answer": "A loop that repeats until something becomes true (condition-controlled).",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Repeat until loop means a loop that repeats until something becomes true (condition-controlled)."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-10",
+        "icon": "!",
+        "skill": "sequence",
+        "title": "Spot the Bug: sequence",
+        "description": "Practise sequence through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The order in which steps happen.?",
+            "choices": [
+              "sequence",
+              "tempo",
+              "beat",
+              "Music extension"
+            ],
+            "answer": "sequence",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Sequence means the order in which steps happen."
+          },
+          {
+            "prompt": "What does “repetition” mean in computing?",
+            "choices": [
+              "Doing something again and again.",
+              "The computing word for repeating a block of code many times.",
+              "A block that repeats the code inside it.",
+              "A loop that repeats and never stops, until you press the red Stop."
+            ],
+            "answer": "Doing something again and again.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Repetition means doing something again and again."
+          },
+          {
+            "prompt": "What does “forever loop” mean in computing?",
+            "choices": [
+              "A loop that repeats and never stops, until you press the red Stop.",
+              "A loop that repeats a set number of times, then stops (count-controlled).",
+              "A loop that repeats until something becomes true (condition-controlled).",
+              "Something that is either true or false right now."
+            ],
+            "answer": "A loop that repeats and never stops, until you press the red Stop.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Forever loop means a loop that repeats and never stops, until you press the red Stop."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Something that is either true or false right now.?",
+            "choices": [
+              "condition",
+              "algorithm",
+              "predict",
+              "sequence"
+            ],
+            "answer": "condition",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Condition means something that is either true or false right now."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-11",
+        "icon": "≡",
+        "skill": "tempo",
+        "title": "Mastery Mix: tempo",
+        "description": "Practise tempo through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: How fast or slow the beat goes.?",
+            "choices": [
+              "tempo",
+              "beat",
+              "Music extension",
+              "sprite"
+            ],
+            "answer": "tempo",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Tempo means how fast or slow the beat goes."
+          },
+          {
+            "prompt": "What does “iteration” mean in computing?",
+            "choices": [
+              "The computing word for repeating a block of code many times.",
+              "A block that repeats the code inside it.",
+              "A loop that repeats and never stops, until you press the red Stop.",
+              "A loop that repeats a set number of times, then stops (count-controlled)."
+            ],
+            "answer": "The computing word for repeating a block of code many times.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Iteration means the computing word for repeating a block of code many times."
+          },
+          {
+            "prompt": "What does “repeat loop” mean in computing?",
+            "choices": [
+              "A loop that repeats a set number of times, then stops (count-controlled).",
+              "A loop that repeats until something becomes true (condition-controlled).",
+              "Something that is either true or false right now.",
+              "A set of steps, in the right order, to do a job."
+            ],
+            "answer": "A loop that repeats a set number of times, then stops (count-controlled).",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Repeat loop means a loop that repeats a set number of times, then stops (count-controlled)."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A set of steps, in the right order, to do a job.?",
+            "choices": [
+              "algorithm",
+              "predict",
+              "sequence",
+              "tempo"
+            ],
+            "answer": "algorithm",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+          }
+        ]
+      },
+      {
+        "id": "u6-game-12",
+        "icon": "T",
+        "skill": "beat",
+        "title": "Unit Champion: beat",
+        "description": "Practise beat through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The steady pulse of music, and how we measure how long a note lasts.?",
+            "choices": [
+              "beat",
+              "Music extension",
+              "sprite",
+              "comment"
+            ],
+            "answer": "beat",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Beat means the steady pulse of music, and how we measure how long a note lasts."
+          },
+          {
+            "prompt": "What does “loop” mean in computing?",
+            "choices": [
+              "A block that repeats the code inside it.",
+              "A loop that repeats and never stops, until you press the red Stop.",
+              "A loop that repeats a set number of times, then stops (count-controlled).",
+              "A loop that repeats until something becomes true (condition-controlled)."
+            ],
+            "answer": "A block that repeats the code inside it.",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Loop means a block that repeats the code inside it."
+          },
+          {
+            "prompt": "What does “repeat until loop” mean in computing?",
+            "choices": [
+              "A loop that repeats until something becomes true (condition-controlled).",
+              "Something that is either true or false right now.",
+              "A set of steps, in the right order, to do a job.",
+              "To say what will happen before you run the program."
+            ],
+            "answer": "A loop that repeats until something becomes true (condition-controlled).",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Repeat until loop means a loop that repeats until something becomes true (condition-controlled)."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To say what will happen before you run the program.?",
+            "choices": [
+              "predict",
+              "sequence",
+              "tempo",
+              "beat"
+            ],
+            "answer": "predict",
+            "clue": "Use the Unit 6 Computing Words reference.",
+            "explanation": "Predict means to say what will happen before you run the program."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can explain that repetition (the computing word is iteration) means doing something again and again.",
+    "I can tell the difference between the three loops: forever, repeat ( ) and repeat until ( ).",
+    "I can explain count-controlled repetition (a set number of times) and condition-controlled repetition (until something becomes true).",
+    "I can predict the outcome of an algorithm that contains repetition, then check it by running the program.",
+    "I can compare and contrast two algorithms written for the same task and say which one is best suited.",
+    "I can develop a program with iteration in Scratch, using a loop to make sound.",
+    "I can use the volume blocks set volume to ( ) % and change volume by ( ), including a negative change to get quieter.",
+    "I can add the free Music extension and compose a short rhythm or tune with play drum and play note, and add a comment to explain the code.",
+    "I can before this unit (from the syllabus), children should already follow and correct an algorithm that uses iteration, build a program with the repeat command (met in Unit 4), and add comments to code. A quick recap of repeat at the start of Session 2 is usually enough."
+  ]
+}

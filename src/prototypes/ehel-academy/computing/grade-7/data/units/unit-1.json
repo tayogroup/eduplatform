@@ -1,0 +1,2404 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:01.122Z",
+  "stage": {
+    "id": "s07",
+    "label": "Stage 7"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t01",
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "comp-g07-u01",
+    "unitNo": 1,
+    "unitTitle": "Block It Out: Moving from Blocks to Text",
+    "unitOverview": "Hello, and welcome to your very first unit of Year 7 Computing! In this unit you will make an exciting jump. Up to now, you have probably built programs by dragging and dropping coloured blocks in Scratch. That is called block-based programming. In this unit you will move on to text-based programming, where you write real code by typing it, letter by letter, using a language called Python.\n\nPython is one of the most widely used programming languages in the whole world. It runs websites, games, robots, phone apps, and even the computers that scientists use to study space and weather. The best part is that Python is completely free, and you can install it on almost any computer. By the end of this unit, you will be writing your own Python programs that talk to the user, do calculations, and give back answers, just like a calculator does.\n\nThe big idea of this unit is simple: the ideas you already know from Scratch still work in Python. A program still runs step by step (this is called sequencing). It still uses variables to remember things. It still asks the user questions and shows answers. It still makes choices using IF and ELSE. What changes is only the way you write it: instead of clicking blocks together, you now type the instructions as text. Once you see how the blocks match the text, the change feels much smaller than you expect.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Lower Secondary Computing",
+    "code": "0868",
+    "stage": 7
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-7-Content-Package",
+    "framework": "Cambridge Lower Secondary Computing 0868 — Stage 7",
+    "sourceArchive": "Year 7-20260801T055809Z-1-001.zip",
+    "sourceAudience": "student",
+    "sourceDocuments": [
+      "Year 7/Unit 1/Year 7 - Unit 1 Lesson.docx",
+      "Year 7/Unit 1/Year 7 - Unit 1 Activities & Projects.docx",
+      "Year 7/Unit 1/Year 7 - Unit 1 Practice & Quiz.docx",
+      "Year 7/Unit 1/Year 7 - Unit 1 Reference.docx"
+    ],
+    "sourceBlockCount": 1329,
+    "transformation": "Structured from the Cambridge Lower Secondary Computing 0868 — Stage 7 Lesson, Activities & Projects, Practice & Quiz and Reference booklets for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Explain the difference between block-based and text-based programming.",
+    "Use the Python shell (interactive mode) to run single commands.",
+    "Write, save and run full programs in script mode using Thonny.",
+    "Use the print() statement to display text and numbers.",
+    "Identify and use the data types string, integer and real (float).",
+    "Store data in variables and use them in your programs.",
+    "Use input() to let the user type information into your program.",
+    "Use casting (int() and float()) so that inputs work correctly in calculations.",
+    "Use arithmetic operators (+, -, *, /) to perform calculations.",
+    "Apply BIDMAS (order of operations) so calculations give the correct answer."
+  ],
+  "toolkit": [
+    {
+      "name": "Scratch",
+      "url": "scratch.mit.edu",
+      "steps": [
+        "Go to scratch.mit.edu and click Create.",
+        "Drag blocks from the palette on the left into the code area.",
+        "Make variables in the orange Variables section.",
+        "Click the green flag to run and the red circle to stop."
+      ],
+      "note": "Runs in a web browser. Free, with nothing to download."
+    },
+    {
+      "name": "micro:bit simulator",
+      "url": "makecode.microbit.org (blocks) or python.microbit.org (Python)",
+      "steps": [
+        "Open makecode.microbit.org for blocks, or python.microbit.org for Python.",
+        "Write your code in the editor.",
+        "The micro:bit simulator on the left runs your code straight away.",
+        "Click the on-screen A and B buttons, and use the shake control, to test your inputs."
+      ],
+      "note": "You do not need to own a real micro:bit — the simulator does everything."
+    },
+    {
+      "name": "Python",
+      "url": "python.microbit.org or any Python editor",
+      "steps": [
+        "Open the editor and start a new file.",
+        "Type your program one line at a time.",
+        "Run it and read any error message from the bottom up.",
+        "Fix one error at a time, then run it again."
+      ],
+      "note": "Python is a text language: spelling and indentation both matter."
+    },
+    {
+      "name": "A free spreadsheet",
+      "url": "Google Sheets, or LibreOffice Calc",
+      "steps": [
+        "Open a new blank spreadsheet.",
+        "Put your field names in row 1, one per column.",
+        "Type one record per row underneath.",
+        "Use Insert → Chart to turn your data into a graph."
+      ],
+      "note": "Any free spreadsheet works — the ideas are the same in all of them."
+    }
+  ],
+  "tutorPrompts": [
+    "Open Thonny, then ask your AI tutor:",
+    "I am learning Python in Thonny. Give me five short print() statements to type into the Shell so I can practise. After I try them, ask me what output I expected before you tell me the answer.",
+    "Learning by predicting first, then checking, makes the ideas stick.",
+    "If you get a strange answer like 55 instead of 10, ask your tutor:",
+    "My Python program joined two numbers instead of adding them. I think it is a casting problem. Can you explain casting with int() using my code, but let me try the fix myself first?",
+    "The single most useful habit: when you see a red error, copy the WHOLE message and ask:",
+    "I got this error in Thonny. Here is my code and here is the full error message. Please explain what the error means in simple words, and give me a hint, not the full answer.",
+    "Reading error messages is a superpower. The last line of the error usually tells you the type of problem and the line number."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-block-based-vs-text-based-programming",
+      "title": "Block-Based vs Text-Based Programming",
+      "explanation": "There are hundreds of programming languages in the world, but most fall into two families. Block-based languages, like Scratch, let you build programs by snapping blocks together, like building bricks. You do not have to remember any code, you just pick the block you want. This makes them wonderful for getting started.\n\nText-based languages, like Python, are different. There are no blocks to drag. Instead, you type the instructions yourself. This means you have to remember the syntax (the exact way the code must be written), and you have to spell everything correctly. It feels harder at first, but it is far more powerful, and it is how professional software is really made.\n\nHere is the encouraging truth: the ideas are the same in both. Look at how a Scratch block matches a line of Python:\n\nBecause the ideas match, everything you learned in Scratch gives you a head start in Python. You are not starting from zero, you are translating skills you already have.\n\nScratch block — Python code · What it does\n\nsay [Hello world] — print(\"Hello world\") · Show a message on screen\n\nset [score] to (0) — score = 0 · Put a value into a variable\n\nask [What is your name?] — name = input(\"What is your name? \") · Get input from the user",
+      "example": "if <score > 100> then — if score > 100: · Make a choice (selection)"
+    },
+    {
+      "id": "concept-2-meet-thonny-your-python-workshop",
+      "title": "Meet Thonny, Your Python Workshop",
+      "explanation": "To write Python, you need a program that lets you type code, run it, and see the results. A program like this is called an IDE (Integrated Development Environment). The one we use at Ehel Academy is Thonny. It is free, open-source, and was designed especially for beginners by a university in Estonia. Best of all, Thonny comes with Python already inside it, so you only install one thing.\n\nGo to thonny.org, download Thonny for your computer (Windows, Mac or Linux), and install it. There are full step-by-step instructions in your Reference document, so follow those the first time. Once it is installed, open Thonny. You will see a window split into two main parts:\n\nThe Editor (the large area at the top). This is where you type and save full programs. This is called script mode.\n\nThe Shell (the smaller area at the bottom). This is where Python talks back to you, shows output, and where you can type quick single commands. This is interactive mode.\n\nYou will use both parts. Think of the Editor as your notebook where you write a whole recipe, and the Shell as the kitchen counter where you can quickly taste one ingredient. Let us start in the Shell.",
+      "example": "Thonny was created at the University of Tartu in Estonia to help students learn Python. It has a special 'Variables' window that lets you watch your variables change as your program runs, which is a fantastic way to understand what your code is really doing."
+    },
+    {
+      "id": "concept-3-the-shell-and-the-print-statement",
+      "title": "The Shell and the print() Statement",
+      "explanation": "Click into the Shell at the bottom of Thonny. You will see the prompt >>>. This prompt means Python is waiting for you to type a command. When you press ENTER, Python runs your command straight away. This is interactive mode, perfect for quick experiments.\n\nThe most important command to learn first is print(). The print statement displays whatever you put inside its brackets on the screen. Text (a string) must go inside quotation marks. Type this next to the >>> prompt and press ENTER:\n\nThe words appear, but the quotation marks do not. That is because the quotation marks are only there to tell Python where your text starts and ends. Now try a calculation. In the Shell, you do not even need print() for sums, just type the calculation:",
+      "example": "Notice the * symbol means multiply in Python (not the letter x). Python worked out 7 + 6 = 13 first because it was in brackets, then multiplied by 2 to get 26. You have just used the shell as a calculator!"
+    },
+    {
+      "id": "concept-4-python-is-fussy-case-and-syntax",
+      "title": "Python Is Fussy - Case and Syntax",
+      "explanation": "Python is case sensitive. This means it treats capital letters and small letters as completely different. The command is print with a small p. If you type Print with a capital P, Python will not understand it and will show an error. Try it in the Shell:\n\nType this (it will cause an error on purpose):\n\nNameError: name 'Print' is not defined\n\nDo not panic when you see an error, this is a normal part of programming! The message is Python's way of saying 'I do not know a command called Print'. The fix is simple: use a small p. Always type Python commands in lower case.\n\nAnother very common error is forgetting a quotation mark or a bracket. The exact rules of how code must be written are called the syntax. If your syntax is wrong, Python shows a syntax error. For example, this line is missing the closing quotation mark:\n\nSyntaxError: unterminated string literal",
+      "example": "The fix is to add the missing quotation mark so the text has one at the start and one at the end: print(\"Hello world\"). Two useful shell commands to remember: type help(print) to read how print works, and type exit() to close the shell."
+    },
+    {
+      "id": "concept-5-writing-and-saving-a-program-script-mode",
+      "title": "Writing and Saving a Program (Script Mode)",
+      "explanation": "The shell is great for quick tests, but there is one big problem: you cannot save what you type there. Real programs have many lines and need to be saved and run again later. For that, you use the Editor (script mode).\n\nFollow these steps in Thonny to make your first saved program:\n\nClick File, then New (or press Ctrl+N). A blank editor opens at the top.\n\nType your program into the editor (see the code below).\n\nClick File, then Save (or press Ctrl+S). Give it the name HelloWorld — Thonny adds .py automatically, because .py is the ending for every Python file.\n\nClick the green Run button (or press F5). Your program runs, and the output appears in the Shell below.\n\nType this into Thonny's editor:\n\nI am learning Python at Ehel Academy",
+      "example": "See how the three lines run in order, from top to bottom? This is sequencing, and it is one of the most important ideas in programming. The computer does exactly what you tell it, in exactly the order you write it. If you ever need to change a saved program, use File > Open, edit it, and save again."
+    },
+    {
+      "id": "concept-6-comments-notes-for-humans",
+      "title": "Comments - Notes for Humans",
+      "explanation": "As your programs get longer, it helps to leave little notes explaining what the code does. These notes are called comments. In Python, a comment starts with a # (hash) symbol. Python ignores everything after the # on that line, comments are for humans, not the computer.\n\nType this into Thonny's editor:",
+      "example": "Notice the comment did not appear in the output, because Python skipped it. Good comments make your code easier to understand, both for your teacher and for yourself when you come back to it later. Get into the habit early."
+    },
+    {
+      "id": "concept-7-variables-the-computer-s-memory-boxes",
+      "title": "Variables - The Computer's Memory Boxes",
+      "explanation": "A variable is a named box in the computer's memory that stores a value. You put a value into a variable using the = sign. The name goes on the left, the value goes on the right. Here are four variables that store details about a student:\n\nType this into Thonny's editor:\n\nNotice that text values (strings) go inside quotation marks, but numbers do not. Once a value is stored, you can display it. To show the name variable, you put its name inside print(). Do not put quotation marks around a variable name, or Python will print the word instead of the stored value.\n\nType this into Thonny's editor:\n\nLook carefully: we put a comma between the text \"Your name is\" and the variable name. The comma joins them together in the output, and Python automatically adds one space where the comma is. Let us display the age too:\n\nType this into Thonny's editor:\n\nThe word variable means 'able to vary', in other words, its value can change while the program runs. That is what makes variables so powerful: the same program can work with different values each time it runs.\n\nVariables are not only used in programming. Spreadsheets use them too, but they are called cell references there. Scientists use variables to model the weather, predict floods, and study money markets. A variable is simply a name for a value that might change.\n\nWatch out: the comma adds a space\n\nIf you write: print(\"Your name is\", name, \". Nice to meet you.\")\n\nyou will see: Your name is Nora . Nice to meet you.",
+      "example": "Notice the space before the full stop! That space comes from the comma. It is not a mistake in your typing, it is just how commas work in print()."
+    },
+    {
+      "id": "concept-8-input-letting-the-user-talk-to-your-program",
+      "title": "Input() - Letting the User Talk to Your Program",
+      "explanation": "So far your programs decide everything. But real programs ask the user for information. The input() function shows a message and waits for the user to type something and press ENTER. Whatever they type is then stored in a variable. Here is the pattern:\n\nType this into Thonny's editor:\n\nWhen you run this, the Shell shows the question What is your name? and waits. If the user types Nadia and presses ENTER, the program continues:\n\nLet us make a small greeting program for Ehel Academy that uses two inputs. Type this into the editor, save it as Greeting.py, and run it:\n\nType this into Thonny's editor:\n\nEnter a number between 1 and 10: 7",
+      "example": "Here we used a small trick: name + \"!\" joins the name directly to the exclamation mark with no space, because we used + instead of a comma. Joining strings together like this is called concatenation. Use a comma when you want a space, and + when you do not."
+    },
+    {
+      "id": "concept-9-data-types-string-integer-and-real-float",
+      "title": "Data Types - String, Integer and Real (Float)",
+      "explanation": "Every piece of data in Python has a data type. The three you need for this unit are:\n\nIn Python, the 'real' data type is called float, which is short for 'floating point number'. You will use integers for things you count in whole numbers (like a person's age or a number of trees), and floats for things that can have decimals (like money, or a length in metres).\n\nThere is one very important rule to remember about input(): the input() function always gives back a string, even if the user types a number. If the user types 5, Python stores it as the text \"5\", not the number 5. This causes a famous beginner bug, which we fix in the next step.\n\nData type — What it stores · Examples\n\nString — Text: letters, numbers or symbols in quotes · \"Hello\", \"WE5694\", \"Leila\"\n\nInteger (int) — A whole number, with no decimal point · 24, 0, -10",
+      "example": "Real / Float — A number with a decimal point · 6.98, 3.5, -0.04"
+    },
+    {
+      "id": "concept-10-casting-turning-text-into-numbers",
+      "title": "Casting - Turning Text into Numbers",
+      "explanation": "Because input() always gives a string, you cannot do maths with it directly. Watch what goes wrong. This program is meant to double a number:\n\nType this into Thonny's editor:\n\nIf the user types 5, you might expect the answer 10. But look what actually happens:\n\nInstead of 10, we got 55! Why? Because num1 is the string \"5\", and multiplying a string by 2 just repeats the text: \"5\" + \"5\" = \"55\". Python did not add, it copied the text twice. To fix this, we must tell Python 'treat this input as a whole number'. Changing data to the correct type is called casting.\n\nTo cast to an integer, wrap the input in int(). To cast to a float (decimal), wrap it in float():\n\nType this into Thonny's editor:\n\nNow it works! Remember this rule for the rest of the unit: if you want to do maths with an input, you must cast it with int() or float(). Forgetting to cast is the number one cause of wrong answers for beginners.\n\nCode — What it does\n\nnum1 = int(input(\"Enter a number: \")) — Stores the input as a whole number (integer)",
+      "example": "num1 = float(input(\"Enter a number: \")) — Stores the input as a decimal number (float)"
+    },
+    {
+      "id": "concept-11-arithmetic-operators",
+      "title": "Arithmetic Operators",
+      "explanation": "Python uses arithmetic operators for calculations. They are a little different from the symbols you write by hand:\n\nOne thing surprises many students: division with / always gives a float (a decimal), even when the answer is a whole number. So 10 / 2 gives 5.0, not 5. This is normal and correct in Python. You will see these .0 endings often when you divide, and now you know why.\n\nLet us build a real calculation program for Mr Karim: the area of a square. The area is the length of one side multiplied by itself. Type this, save it as SquareArea.py, and run it:\n\nType this into Thonny's editor:\n\nEnter the length of one side of a square: 5\n\nOperator — Meaning · Example\n\n+ — Add · 7 + 3 gives 10\n — — Subtract · 7 — 3 gives 4\n\n* — Multiply (a star, not the letter x) · 7 * 3 gives 21",
+      "example": "/ — Divide · 10 / 2 gives 5.0"
+    },
+    {
+      "id": "concept-12-planning-with-algorithms-and-flowcharts",
+      "title": "Planning with Algorithms and Flowcharts",
+      "explanation": "Before writing code, good programmers plan. A plan written as a set of ordered steps is an algorithm. A popular way to draw an algorithm is a flowchart, which uses standard symbols:\n\nHere is the flowchart for the addition program from our scenario. Read it from top to bottom:\n\n[ OUTPUT ] \"The total of the two numbers is\", total\n\nOnce the flowchart is planned, turning it into Python is straightforward, you just get the syntax right:\n\nType this into Thonny's editor:\n\nThe total of the two numbers is 35\n\nSymbol — What it is used for\n\nStart / Stop — An oval. Marks the beginning and the end.\n\nInput / Output — A parallelogram. Getting data in, or showing data out.\n\nProcess — A rectangle. A step where something is worked out.",
+      "example": "Decision — A diamond. A question with two answers (Yes / No)."
+    },
+    {
+      "id": "concept-13-selection-making-choices-with-if-else",
+      "title": "Selection - Making Choices with IF ... ELSE",
+      "explanation": "Sometimes a program must choose what to do. This is called selection, and it happens when the program checks a condition (something that is true or false). In a flowchart, selection uses the decision diamond. To compare values, you use comparison operators:\n\nBe careful: to compare two values you use == (two equals signs). A single = is only for storing a value in a variable. Mixing these up is a very common mistake.\n\nHere is a scenario: a user enters two test scores. If the total is over 100, show 'Well done', otherwise show 'Better luck next time'. First, the flowchart:\n\n+--- NO ---> [ OUTPUT ] \"Better luck next time\"\n\nNow the same idea in Python. Notice the colon (:) at the end of the if and else lines, and notice that the lines underneath are indented (pushed in). Thonny adds this indent for you automatically after a colon. The indent tells Python which lines belong to the choice.\n\nType this into Thonny's editor:\n\nOperator — Meaning\n\n== — equal to\n\n!= — not equal to\n\n< — less than\n\n> — greater than\n\n<= — less than or equal to",
+      "example": ">= — greater than or equal to"
+    },
+    {
+      "id": "concept-14-sub-routines-mini-programs-inside-programs",
+      "title": "Sub-Routines - Mini-Programs Inside Programs",
+      "explanation": "As programs grow, they can become confusing. A sub-routine is a small, named mini-program inside your program that does one job. You can 'call' it whenever you need it, and you can reuse it as many times as you like. This keeps your main program tidy and easy to follow.\n\nIn Python, you create a sub-routine with the word def (short for 'define'), followed by a name and brackets. Here is a calculator that uses two sub-routines, one for adding and one for subtracting, and uses selection to choose which to run:\n\nType this into Thonny's editor:\n\nEnter 1 to add or 2 to subtract: 1",
+      "example": "The (a, b) after each sub-routine name are the two numbers we hand over for it to work with. When we call addition(number1, number2), the sub-routine receives our two numbers and does its job. If the user had entered 2, the subtract sub-routine would run instead and give 4. If they entered anything else, the program politely asks for a valid number. This is exactly how Mr Karim's calculator can offer many operations in one neat program."
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "Step 3: The Shell and the print() Statement — listing 1",
+      "language": "Python (micro:bit)",
+      "intro": "From Step 3: The Shell and the print() Statement.",
+      "lines": [
+        "Type this at the >>> prompt:",
+        "print(\"Welcome to the Python Shell\")"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-2",
+      "title": "Step 3: The Shell and the print() Statement — listing 2",
+      "language": "Scratch blocks",
+      "intro": "From Step 3: The Shell and the print() Statement.",
+      "lines": [
+        "Type this at the >>> prompt:",
+        "(7 + 6) * 2"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-3",
+      "title": "Step 4: Python Is Fussy — Case and Syntax — listing 1",
+      "language": "Python (micro:bit)",
+      "intro": "From Step 4: Python Is Fussy — Case and Syntax.",
+      "lines": [
+        "Broken code (missing a closing quote):",
+        "print(\"Hello world)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-4",
+      "title": "Type this into Thonny's editor:",
+      "language": "Python (micro:bit)",
+      "intro": "",
+      "lines": [
+        "print(\"Hello world\")",
+        "print(\"My name is Leila\")",
+        "print(\"I am learning Python at Ehel Academy\")"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-5",
+      "title": "Type this into Thonny's editor: (2)",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "name = \"Nora\"",
+        "age = 12",
+        "address = \"Station Road\"",
+        "colour = \"Red\""
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-6",
+      "title": "Type this into Thonny's editor: (3)",
+      "language": "Python (micro:bit)",
+      "intro": "",
+      "lines": [
+        "name = input(\"What is your name? \")",
+        "print(\"Hello\", name)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-7",
+      "title": "Type this into Thonny's editor: (4)",
+      "language": "Python (micro:bit)",
+      "intro": "",
+      "lines": [
+        "name = input(\"Enter your name: \")",
+        "number = input(\"Enter a number between 1 and 10: \")",
+        "print(\"Hello\", name + \"! Your number is\", number)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-8",
+      "title": "Type this into Thonny's editor: (5)",
+      "language": "Python (micro:bit)",
+      "intro": "",
+      "lines": [
+        "num1 = input(\"Enter a number: \")",
+        "double = num1 * 2",
+        "print(double)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-9",
+      "title": "Type this into Thonny's editor: (6)",
+      "language": "Python (micro:bit)",
+      "intro": "",
+      "lines": [
+        "num1 = int(input(\"Enter a number: \"))",
+        "double = num1 * 2",
+        "print(double)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-10",
+      "title": "Type this into Thonny's editor: (7)",
+      "language": "Python (micro:bit)",
+      "intro": "",
+      "lines": [
+        "length = int(input(\"Enter the length of one side of a square: \"))",
+        "area = length * length",
+        "print(\"The area of the square is\", area)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Block It Out: Activities & Projects",
+      "context": "work through the steps below and see what happens. This is block-based vs text-based programming in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Year 7 — Unit 1 — Hands-On Coding — Ehel Academy Computing",
+      "answer": "This document is where you build things. Every activity tells you exactly what to type, what output to expect, and gives you an AI-tutor prompt if you get stuck. Do them in order. Type all code yourself into Thonny, run it, and check your output matches. Save each program with the file name given, you will use some of them again in the Final Project. In your web browser, go to thonny.org. Click the download link for your computer (Windows, Mac, or Linux) in the top corner. Open the downloaded file and follow the installer. Keep clicking Next / Install and accept the defaults. Open Thonny. You will see the Editor on top and the Shell at the bottom.",
+      "modelType": "model-1",
+      "hint": "Start here: This document is where you build things. Every activity tells you exactly what to type, what output to expect, and gives you an AI-tutor prompt if…",
+      "explanation": "Block-Based vs Text-Based Programming: There are hundreds of programming languages in the world, but most fall into two families. Block-based languages, like Scratch, let you build programs by snapping blocks together, like building bricks. You do not have to remember any code, you just pick the block you want. This makes them wonderful…"
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Setting Up Thonny (Do This First)",
+      "context": "work through the steps below and see what happens. This is meet thonny, your python workshop in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "In your web browser, go to thonny.org.",
+      "answer": "Click the download link for your computer (Windows, Mac, or Linux) in the top corner. Open the downloaded file and follow the installer. Keep clicking Next / Install and accept the defaults. Open Thonny. You will see the Editor on top and the Shell at the bottom. Test it: click into the Shell (next to >>>), type print(\"Thonny works!\") and press ENTER. If you see that message, you are ready. Thonny includes Python inside it, so there is nothing else to install. There is a full illustrated setup guide in your Reference document if you need more detail.",
+      "modelType": "model-2",
+      "hint": "Start here: Click the download link for your computer (Windows, Mac, or Linux) in the top corner.",
+      "explanation": "Meet Thonny, Your Python Workshop: To write Python, you need a program that lets you type code, run it, and see the results. A program like this is called an IDE (Integrated Development Environment). The one we use at Ehel Academy is Thonny. It is free, open-source, and was designed especially for beginners by a university in…"
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "You should see:",
+      "context": "work through the steps below and see what happens. This is the shell and the print() statement in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "If you see that message, you are ready. Thonny includes Python inside it, so there is nothing else to install. There is a full illustrated setup guide in your Reference document if you need more detail.",
+      "answer": "How to save and run in Thonny New file: File > New (Ctrl+N). Save: File > Save (Ctrl+S). Type the file name; Thonny adds .py for you. Run: click the green Run button, or press F5. Output appears in the Shell. Practise Activities",
+      "modelType": "model-3",
+      "hint": "Start here: How to save and run in Thonny",
+      "explanation": "The Shell and the print() Statement: Click into the Shell at the bottom of Thonny. You will see the prompt >>>. This prompt means Python is waiting for you to type a command. When you press ENTER, Python runs your command straight away. This is interactive mode, perfect for quick experiments."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "How to save and run in Thonny",
+      "context": "work through the steps below and see what happens. This is python is fussy — case and syntax in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "New file: File > New (Ctrl+N).",
+      "answer": "Save: File > Save (Ctrl+S). Type the file name; Thonny adds .py for you. Run: click the green Run button, or press F5. Output appears in the Shell. Practise Activities These activities practise one skill at a time. Work through them steadily. Task: In the Shell, type each line below, pressing ENTER after each. Predict the answer before you press ENTER, then check.",
+      "modelType": "model-4",
+      "hint": "Start here: Save: File > Save (Ctrl+S). Type the file name; Thonny adds .py for you.",
+      "explanation": "Python Is Fussy — Case and Syntax: Python is case sensitive. This means it treats capital letters and small letters as completely different. The command is print with a small p. If you type Print with a capital P, Python will not understand it and will show an error. Try it in the Shell:"
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Practise Activities",
+      "context": "work through the steps below and see what happens. This is writing and saving a program (script mode) in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "These activities practise one skill at a time. Work through them steadily.",
+      "answer": "Task: In the Shell, type each line below, pressing ENTER after each. Predict the answer before you press ENTER, then check. Type these one at a time at the >>> prompt:",
+      "modelType": "model-5",
+      "hint": "Start here: Task: In the Shell, type each line below, pressing ENTER after each. Predict the answer before you press ENTER, then check.",
+      "explanation": "Writing and Saving a Program (Script Mode): The shell is great for quick tests, but there is one big problem: you cannot save what you type there. Real programs have many lines and need to be saved and run again later. For that, you use the Editor (script mode)."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "What appears in the Shell:",
+      "context": "work through the steps below and see what happens. This is comments — notes for humans in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Welcome to the Python Shell",
+      "answer": "Check: (150 + 23) is 173, then times 3 gives 519. If your last answer was different, check your brackets. Ask Your AI Tutor \"Give me five more short calculations to type into the Python Shell to practise brackets and multiplication. Do not show the answers until I have guessed.\" Activity 2: My First Saved Program",
+      "modelType": "model-6",
+      "hint": "Start here: Check: (150 + 23) is 173, then times 3 gives 519. If your last answer was different, check your brackets.",
+      "explanation": "Comments — Notes for Humans: As your programs get longer, it helps to leave little notes explaining what the code does. These notes are called comments. In Python, a comment starts with a # (hash) symbol. Python ignores everything after the # on that line, comments are for humans, not the computer."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Block-Based vs Text-Based Programming",
+      "modelType": "concept-model-1",
+      "purpose": "There are hundreds of programming languages in the world, but most fall into two families. Block-based languages, like Scratch, let you build programs by snapping blocks together, like building bricks. You do not have…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Meet Thonny, Your Python Workshop",
+      "modelType": "concept-model-2",
+      "purpose": "To write Python, you need a program that lets you type code, run it, and see the results. A program like this is called an IDE (Integrated Development Environment). The one we use at Ehel Academy is Thonny. It is free,…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "The Shell and the print() Statement",
+      "modelType": "concept-model-3",
+      "purpose": "Click into the Shell at the bottom of Thonny. You will see the prompt >>>. This prompt means Python is waiting for you to type a command. When you press ENTER, Python runs your command straight away. This is interactive…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Python Is Fussy - Case and Syntax",
+      "modelType": "concept-model-4",
+      "purpose": "Python is case sensitive. This means it treats capital letters and small letters as completely different. The command is print with a small p. If you type Print with a capital P, Python will not understand it and will…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Writing and Saving a Program (Script Mode)",
+      "modelType": "concept-model-5",
+      "purpose": "The shell is great for quick tests, but there is one big problem: you cannot save what you type there. Real programs have many lines and need to be saved and run again later. For that, you use the Editor (script mode).",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Comments - Notes for Humans",
+      "modelType": "concept-model-6",
+      "purpose": "As your programs get longer, it helps to leave little notes explaining what the code does. These notes are called comments. In Python, a comment starts with a # (hash) symbol. Python ignores everything after the # on…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-7",
+      "outcomeId": "lo07",
+      "title": "Variables - The Computer's Memory Boxes",
+      "modelType": "concept-model-7",
+      "purpose": "A variable is a named box in the computer's memory that stores a value. You put a value into a variable using the = sign. The name goes on the left, the value goes on the right. Here are four variables that store…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-8",
+      "outcomeId": "lo08",
+      "title": "Input() - Letting the User Talk to Your Program",
+      "modelType": "concept-model-8",
+      "purpose": "So far your programs decide everything. But real programs ask the user for information. The input() function shows a message and waits for the user to type something and press ENTER. Whatever they type is then stored in…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-9",
+      "outcomeId": "lo09",
+      "title": "Data Types - String, Integer and Real (Float)",
+      "modelType": "concept-model-9",
+      "purpose": "Every piece of data in Python has a data type. The three you need for this unit are:",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-10",
+      "outcomeId": "lo10",
+      "title": "Casting - Turning Text into Numbers",
+      "modelType": "concept-model-10",
+      "purpose": "Because input() always gives a string, you cannot do maths with it directly. Watch what goes wrong. This program is meant to double a number:",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-11",
+      "outcomeId": "lo01",
+      "title": "Arithmetic Operators",
+      "modelType": "concept-model-11",
+      "purpose": "Python uses arithmetic operators for calculations. They are a little different from the symbols you write by hand:",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-12",
+      "outcomeId": "lo02",
+      "title": "Planning with Algorithms and Flowcharts",
+      "modelType": "concept-model-12",
+      "purpose": "Before writing code, good programmers plan. A plan written as a set of ordered steps is an algorithm. A popular way to draw an algorithm is a flowchart, which uses standard symbols:",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-13",
+      "outcomeId": "lo03",
+      "title": "Selection - Making Choices with IF ... ELSE",
+      "modelType": "concept-model-13",
+      "purpose": "Sometimes a program must choose what to do. This is called selection, and it happens when the program checks a condition (something that is true or false). In a flowchart, selection uses the decision diamond. To compare…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-14",
+      "outcomeId": "lo04",
+      "title": "Sub-Routines - Mini-Programs Inside Programs",
+      "modelType": "concept-model-14",
+      "purpose": "As programs grow, they can become confusing. A sub-routine is a small, named mini-program inside your program that does one job. You can 'call' it whenever you need it, and you can reuse it as many times as you like.…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with block-based vs text-based programming",
+      "example": "if <score > 100> then — if score > 100: · Make a choice (selection)",
+      "steps": [
+        "There are hundreds of programming languages in the world, but most fall into two families. Block-based languages, like Scratch, let you build programs by snapping blocks together, like building bricks. You do not have…",
+        "Text-based languages, like Python, are different. There are no blocks to drag. Instead, you type the instructions yourself. This means you have to remember the syntax (the exact way the code must be written), and you…",
+        "Here is the encouraging truth: the ideas are the same in both. Look at how a Scratch block matches a line of Python:",
+        "Because the ideas match, everything you learned in Scratch gives you a head start in Python. You are not starting from zero, you are translating skills you already have."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with meet thonny, your python workshop",
+      "example": "Thonny was created at the University of Tartu in Estonia to help students learn Python. It has a special 'Variables' window that lets you watch your variables change as your program runs, which is a fantastic way to understand what your code is really doing.",
+      "steps": [
+        "To write Python, you need a program that lets you type code, run it, and see the results. A program like this is called an IDE (Integrated Development Environment). The one we use at Ehel Academy is Thonny. It is free,…",
+        "Go to thonny.org, download Thonny for your computer (Windows, Mac or Linux), and install it. There are full step-by-step instructions in your Reference document, so follow those the first time. Once it is installed,…",
+        "The Editor (the large area at the top). This is where you type and save full programs. This is called script mode.",
+        "The Shell (the smaller area at the bottom). This is where Python talks back to you, shows output, and where you can type quick single commands. This is interactive mode."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with the shell and the print() statement",
+      "example": "Notice the * symbol means multiply in Python (not the letter x). Python worked out 7 + 6 = 13 first because it was in brackets, then multiplied by 2 to get 26. You have just used the shell as a calculator!",
+      "steps": [
+        "Click into the Shell at the bottom of Thonny. You will see the prompt >>>. This prompt means Python is waiting for you to type a command. When you press ENTER, Python runs your command straight away. This is interactive…",
+        "The most important command to learn first is print(). The print statement displays whatever you put inside its brackets on the screen. Text (a string) must go inside quotation marks. Type this next to the >>> prompt and…",
+        "The words appear, but the quotation marks do not. That is because the quotation marks are only there to tell Python where your text starts and ends. Now try a calculation. In the Shell, you do not even need print() for…"
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with python is fussy - case and syntax",
+      "example": "The fix is to add the missing quotation mark so the text has one at the start and one at the end: print(\"Hello world\"). Two useful shell commands to remember: type help(print) to read how print works, and type exit() to close the shell.",
+      "steps": [
+        "Python is case sensitive. This means it treats capital letters and small letters as completely different. The command is print with a small p. If you type Print with a capital P, Python will not understand it and will…",
+        "Type this (it will cause an error on purpose):",
+        "Do not panic when you see an error, this is a normal part of programming! The message is Python's way of saying 'I do not know a command called Print'. The fix is simple: use a small p. Always type Python commands in…",
+        "Another very common error is forgetting a quotation mark or a bracket. The exact rules of how code must be written are called the syntax. If your syntax is wrong, Python shows a syntax error. For example, this line is…"
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with writing and saving a program (script mode)",
+      "example": "See how the three lines run in order, from top to bottom? This is sequencing, and it is one of the most important ideas in programming. The computer does exactly what you tell it, in exactly the order you write it. If you ever need to change a saved program,…",
+      "steps": [
+        "The shell is great for quick tests, but there is one big problem: you cannot save what you type there. Real programs have many lines and need to be saved and run again later. For that, you use the Editor (script mode).",
+        "Follow these steps in Thonny to make your first saved program:",
+        "Click File, then New (or press Ctrl+N). A blank editor opens at the top.",
+        "Type your program into the editor (see the code below)."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "How to work with comments - notes for humans",
+      "example": "Notice the comment did not appear in the output, because Python skipped it. Good comments make your code easier to understand, both for your teacher and for yourself when you come back to it later. Get into the habit early.",
+      "steps": [
+        "Read the concept card for comments — notes for humans and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-7",
+      "outcomeId": "lo07",
+      "difficulty": "Challenge",
+      "title": "How to work with variables - the computer's memory boxes",
+      "example": "Notice the space before the full stop! That space comes from the comma. It is not a mistake in your typing, it is just how commas work in print().",
+      "steps": [
+        "A variable is a named box in the computer's memory that stores a value. You put a value into a variable using the = sign. The name goes on the left, the value goes on the right. Here are four variables that store…",
+        "Notice that text values (strings) go inside quotation marks, but numbers do not. Once a value is stored, you can display it. To show the name variable, you put its name inside print(). Do not put quotation marks around…",
+        "Look carefully: we put a comma between the text \"Your name is\" and the variable name. The comma joins them together in the output, and Python automatically adds one space where the comma is. Let us display the age too:",
+        "The word variable means 'able to vary', in other words, its value can change while the program runs. That is what makes variables so powerful: the same program can work with different values each time it runs."
+      ]
+    },
+    {
+      "id": "method-8",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "How to work with input() - letting the user talk to your program",
+      "example": "Here we used a small trick: name + \"!\" joins the name directly to the exclamation mark with no space, because we used + instead of a comma. Joining strings together like this is called concatenation. Use a comma when you want a space, and + when you do not.",
+      "steps": [
+        "So far your programs decide everything. But real programs ask the user for information. The input() function shows a message and waits for the user to type something and press ENTER. Whatever they type is then stored in…",
+        "When you run this, the Shell shows the question What is your name? and waits. If the user types Nadia and presses ENTER, the program continues:",
+        "Let us make a small greeting program for Ehel Academy that uses two inputs. Type this into the editor, save it as Greeting.py, and run it:"
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Block-Based vs Text-Based Programming",
+      "prompt": "Explain in your own words: Block-Based vs Text-Based Programming.",
+      "solution": "There are hundreds of programming languages in the world, but most fall into two families. Block-based languages, like Scratch, let you build programs by snapping blocks together, like building bricks. You do not have to remember any code, you just pick the block you want. This makes them wonderful for getting started.\n\nText-based languages, like Python, are different. There are no blocks to drag. Instead, you type the instructions yourself. This means you have to remember the syntax (the exact way the code must be written), and you have to spell everything correctly. It feels harder at first, but it is far more powerful, and it is how professional software is really made.\n\nHere is the encouraging truth: the ideas are the same in both. Look at how a Scratch block matches a line of Python:\n\nBecause the ideas match, everything you learned in Scratch gives you a head start in Python. You are not starting from zero, you are translating skills you already have.\n\nScratch block — Python code · What it does\n\nsay [Hello world] — print(\"Hello world\") · Show a message on screen\n\nset [score] to (0) — score = 0 · Put a value into a variable\n\nask [What is your name?] — name = input(\"What is your name? \") · Get input from the user\n\nFor example: if <score > 100> then — if score > 100: · Make a choice (selection)"
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Meet Thonny, Your Python Workshop",
+      "prompt": "Explain in your own words: Meet Thonny, Your Python Workshop.",
+      "solution": "To write Python, you need a program that lets you type code, run it, and see the results. A program like this is called an IDE (Integrated Development Environment). The one we use at Ehel Academy is Thonny. It is free, open-source, and was designed especially for beginners by a university in Estonia. Best of all, Thonny comes with Python already inside it, so you only install one thing.\n\nGo to thonny.org, download Thonny for your computer (Windows, Mac or Linux), and install it. There are full step-by-step instructions in your Reference document, so follow those the first time. Once it is installed, open Thonny. You will see a window split into two main parts:\n\nThe Editor (the large area at the top). This is where you type and save full programs. This is called script mode.\n\nThe Shell (the smaller area at the bottom). This is where Python talks back to you, shows output, and where you can type quick single commands. This is interactive mode.\n\nYou will use both parts. Think of the Editor as your notebook where you write a whole recipe, and the Shell as the kitchen counter where you can quickly taste one ingredient. Let us start in the Shell.\n\nFor example: Thonny was created at the University of Tartu in Estonia to help students learn Python. It has a special 'Variables' window that lets you watch your variables change as your program runs, which is a fantastic way to understand what your code is really doing."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: The Shell and the print() Statement",
+      "prompt": "Explain in your own words: The Shell and the print() Statement.",
+      "solution": "Click into the Shell at the bottom of Thonny. You will see the prompt >>>. This prompt means Python is waiting for you to type a command. When you press ENTER, Python runs your command straight away. This is interactive mode, perfect for quick experiments.\n\nThe most important command to learn first is print(). The print statement displays whatever you put inside its brackets on the screen. Text (a string) must go inside quotation marks. Type this next to the >>> prompt and press ENTER:\n\nThe words appear, but the quotation marks do not. That is because the quotation marks are only there to tell Python where your text starts and ends. Now try a calculation. In the Shell, you do not even need print() for sums, just type the calculation:\n\nFor example: Notice the * symbol means multiply in Python (not the letter x). Python worked out 7 + 6 = 13 first because it was in brackets, then multiplied by 2 to get 26. You have just used the shell as a calculator!"
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Python Is Fussy - Case and Syntax",
+      "prompt": "Explain in your own words: Python Is Fussy — Case and Syntax.",
+      "solution": "Python is case sensitive. This means it treats capital letters and small letters as completely different. The command is print with a small p. If you type Print with a capital P, Python will not understand it and will show an error. Try it in the Shell:\n\nType this (it will cause an error on purpose):\n\nNameError: name 'Print' is not defined\n\nDo not panic when you see an error, this is a normal part of programming! The message is Python's way of saying 'I do not know a command called Print'. The fix is simple: use a small p. Always type Python commands in lower case.\n\nAnother very common error is forgetting a quotation mark or a bracket. The exact rules of how code must be written are called the syntax. If your syntax is wrong, Python shows a syntax error. For example, this line is missing the closing quotation mark:\n\nSyntaxError: unterminated string literal\n\nFor example: The fix is to add the missing quotation mark so the text has one at the start and one at the end: print(\"Hello world\"). Two useful shell commands to remember: type help(print) to read how print works, and type exit() to close the shell."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Writing and Saving a Program (Script Mode)",
+      "prompt": "Explain in your own words: Writing and Saving a Program (Script Mode).",
+      "solution": "The shell is great for quick tests, but there is one big problem: you cannot save what you type there. Real programs have many lines and need to be saved and run again later. For that, you use the Editor (script mode).\n\nFollow these steps in Thonny to make your first saved program:\n\nClick File, then New (or press Ctrl+N). A blank editor opens at the top.\n\nType your program into the editor (see the code below).\n\nClick File, then Save (or press Ctrl+S). Give it the name HelloWorld — Thonny adds .py automatically, because .py is the ending for every Python file.\n\nClick the green Run button (or press F5). Your program runs, and the output appears in the Shell below.\n\nType this into Thonny's editor:\n\nI am learning Python at Ehel Academy\n\nFor example: See how the three lines run in order, from top to bottom? This is sequencing, and it is one of the most important ideas in programming. The computer does exactly what you tell it, in exactly the order you write it. If you ever need to change a saved program, use File > Open, edit it, and save again."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Comments - Notes for Humans",
+      "prompt": "Explain in your own words: Comments — Notes for Humans.",
+      "solution": "As your programs get longer, it helps to leave little notes explaining what the code does. These notes are called comments. In Python, a comment starts with a # (hash) symbol. Python ignores everything after the # on that line, comments are for humans, not the computer.\n\nType this into Thonny's editor:\n\nFor example: Notice the comment did not appear in the output, because Python skipped it. Good comments make your code easier to understand, both for your teacher and for yourself when you come back to it later. Get into the habit early."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Which of these is a text-based programming language? a) Scratch b) Python c) A calculator d) A flowchart",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "What does the print() statement do? a) Prints on paper b) Saves a file c) Displays text or values on screen d) Deletes text",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Python is case sensitive. Which line will cause an error? a) print(\"Hi\") b) Print(\"Hi\") c) print(\"HI\") d) print(\"hi\")",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "What data type does input() always give back? a) integer b) float c) string d) Boolean",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "Which operator means 'multiply' in Python? a) x b) * c) X d) times",
+      "answer": "b) The asterisk, *, is the multiplication operator in Python.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p06",
+      "level": "Warm-up",
+      "prompt": "What is the result of 10 / 2 in Python? a) 5 b) 5.0 c) \"5\" d) 20",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p07",
+      "level": "Warm-up",
+      "prompt": "Which symbol starts a comment in Python? a) // b) # c) — d) /*",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p08",
+      "level": "Warm-up",
+      "prompt": "What does casting with int() do? a) Prints an integer b) Changes data into a whole number c) Deletes decimals forever d) Makes text bigger",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p09",
+      "level": "Warm-up",
+      "prompt": "In BIDMAS, which is done first? a) Addition b) Subtraction c) Brackets d) Multiplication",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p10",
+      "level": "Warm-up",
+      "prompt": "Which operator checks if two values are equal, inside an IF statement? a) = b) == c) => d) !=",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p11",
+      "level": "Warm-up",
+      "prompt": "What is a variable? a) A fixed number b) A named place in memory that stores a value c) A type of error d) A comment",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p12",
+      "level": "Warm-up",
+      "prompt": "What is debugging? a) Adding new features b) Finding and fixing errors c) Saving a file d) Running a program",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p13",
+      "level": "Core",
+      "prompt": "In your own words, what is the difference between block-based and text-based programming?",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p14",
+      "level": "Core",
+      "prompt": "What is the difference between the Python shell (interactive mode) and the editor (script mode)?",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p15",
+      "level": "Core",
+      "prompt": "Why must you use int() or float() on an input before doing a calculation with it?",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p16",
+      "level": "Core",
+      "prompt": "Give one example each of a string, an integer and a float.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Block It Out: Activities & Projects",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Year 7 — Unit 1 — Hands-On Coding — Ehel Academy Computing",
+        "This document is where you build things. Every activity tells you exactly what to type, what output to expect, and gives you an AI-tutor prompt if you get stuck. Do them in order. Type all code yourself into Thonny, run it, and check your output matches. Save each program with the file name given, you will use some of them again in the Final Project.",
+        "In your web browser, go to thonny.org.",
+        "Click the download link for your computer (Windows, Mac, or Linux) in the top corner.",
+        "Open the downloaded file and follow the installer. Keep clicking Next / Install and accept the defaults.",
+        "Open Thonny. You will see the Editor on top and the Shell at the bottom."
+      ]
+    },
+    {
+      "title": "Setting Up Thonny (Do This First)",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "In your web browser, go to thonny.org.",
+        "Click the download link for your computer (Windows, Mac, or Linux) in the top corner.",
+        "Open the downloaded file and follow the installer. Keep clicking Next / Install and accept the defaults.",
+        "Open Thonny. You will see the Editor on top and the Shell at the bottom.",
+        "Test it: click into the Shell (next to >>>), type print(\"Thonny works!\") and press ENTER.",
+        "If you see that message, you are ready. Thonny includes Python inside it, so there is nothing else to install. There is a full illustrated setup guide in your Reference document if you need more detail."
+      ]
+    },
+    {
+      "title": "You should see:",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "If you see that message, you are ready. Thonny includes Python inside it, so there is nothing else to install. There is a full illustrated setup guide in your Reference document if you need more detail.",
+        "How to save and run in Thonny",
+        "New file: File > New (Ctrl+N).",
+        "Save: File > Save (Ctrl+S). Type the file name; Thonny adds .py for you.",
+        "Run: click the green Run button, or press F5. Output appears in the Shell.",
+        "Practise Activities"
+      ]
+    },
+    {
+      "title": "How to save and run in Thonny",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "New file: File > New (Ctrl+N).",
+        "Save: File > Save (Ctrl+S). Type the file name; Thonny adds .py for you.",
+        "Run: click the green Run button, or press F5. Output appears in the Shell.",
+        "Practise Activities",
+        "These activities practise one skill at a time. Work through them steadily.",
+        "Task: In the Shell, type each line below, pressing ENTER after each. Predict the answer before you press ENTER, then check."
+      ]
+    },
+    {
+      "title": "Practise Activities",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "These activities practise one skill at a time. Work through them steadily.",
+        "Task: In the Shell, type each line below, pressing ENTER after each. Predict the answer before you press ENTER, then check.",
+        "Type these one at a time at the >>> prompt:"
+      ]
+    },
+    {
+      "title": "What appears in the Shell:",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Welcome to the Python Shell",
+        "Check: (150 + 23) is 173, then times 3 gives 519. If your last answer was different, check your brackets.",
+        "Ask Your AI Tutor",
+        "\"Give me five more short calculations to type into the Python Shell to practise brackets and multiplication. Do not show the answers until I have guessed.\"",
+        "Activity 2: My First Saved Program"
+      ]
+    },
+    {
+      "title": "Welcome to the Python Shell",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Check: (150 + 23) is 173, then times 3 gives 519. If your last answer was different, check your brackets.",
+        "Ask Your AI Tutor",
+        "\"Give me five more short calculations to type into the Python Shell to practise brackets and multiplication. Do not show the answers until I have guessed.\"",
+        "Activity 2: My First Saved Program",
+        "Task: Create a new file, type the code, save it as MyFirstProgram.py, and run it."
+      ]
+    },
+    {
+      "title": "Ask Your AI Tutor",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "\"Give me five more short calculations to type into the Python Shell to practise brackets and multiplication. Do not show the answers until I have guessed.\"",
+        "Activity 2: My First Saved Program",
+        "Task: Create a new file, type the code, save it as MyFirstProgram.py, and run it.",
+        "Type this into Thonny's editor:",
+        "What appears in the Shell:",
+        "Welcome to my first program in Python"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "NameError: name 'Print' is not defined",
+      "cause": "You used a capital letter (Python is case sensitive)",
+      "fix": "Use lower case: print(...)"
+    },
+    {
+      "symptom": "SyntaxError: unterminated string literal",
+      "cause": "A quotation mark is missing",
+      "fix": "Add the missing \" so text has one at each end"
+    },
+    {
+      "symptom": "SyntaxError (missing bracket)",
+      "cause": "An opening ( has no closing )",
+      "fix": "Add the missing ). Brackets come in pairs"
+    },
+    {
+      "symptom": "Answer is joined, not added (e.g. 50100)",
+      "cause": "An input was not cast; it is still a string",
+      "fix": "Wrap the input in int() or float()"
+    },
+    {
+      "symptom": "NameError: name 'number' is not defined",
+      "cause": "A variable name is spelled differently from where it was created",
+      "fix": "Use the exact same spelling everywhere"
+    },
+    {
+      "symptom": "TypeError (mixing text and numbers)",
+      "cause": "Trying to join a string and a number with +",
+      "fix": "Use a comma in print(), or cast with str()"
+    },
+    {
+      "symptom": "IndentationError",
+      "cause": "The spacing under an if/else line is wrong",
+      "fix": "Make sure lines under a colon are indented (Thonny helps)"
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "input() always gives a string, so cast it with int() or float() if you need a number.",
+        "text": "Casting: changing the data type"
+      },
+      {
+        "title": "input() always gives a string",
+        "text": "Even when the user types 5, Python stores the text \"5\". If you want to do maths, cast it: int(input(...)) or float(input(...))."
+      },
+      {
+        "title": "division always gives a float",
+        "text": "10 / 2 gives 5.0, not 5. A .0 ending is normal after division."
+      },
+      {
+        "title": "= stores, == compares",
+        "text": "age = 12 puts 12 into age. if age == 12: checks whether age equals 12."
+      },
+      {
+        "title": "Python is case sensitive",
+        "text": "print is a command. Print and PRINT are not. Always type Python commands in lower case."
+      },
+      {
+        "title": "brackets and quotes come in pairs",
+        "text": "Every ( needs a ). Every \" needs a closing \". Count them when you get a SyntaxError."
+      }
+    ],
+    "terms": [
+      [
+        "text-based programming",
+        "Programming where you type the code as text, using a language such as Python."
+      ],
+      [
+        "block-based programming",
+        "Programming by dragging and dropping blocks that snap together, as in Scratch."
+      ],
+      [
+        "Python",
+        "A popular, free, text-based programming language. You will use it all through this unit."
+      ],
+      [
+        "IDE (Integrated Development Environment)",
+        "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs."
+      ],
+      [
+        "Python shell",
+        "Python's interactive mode, where you type one command and see the result straight away."
+      ],
+      [
+        "interactive mode",
+        "A way of using Python where each command is run immediately in the shell."
+      ],
+      [
+        "script mode",
+        "Python's editor, where you type a list of commands, save them as a file, and run them together."
+      ],
+      [
+        "print statement",
+        "A Python command that outputs text or values onto the screen."
+      ],
+      [
+        "string",
+        "Data made of letters, numbers or symbols, written inside quotation marks, e.g. \"Hello\"."
+      ],
+      [
+        "integer",
+        "A whole number, such as 24 or -10."
+      ],
+      [
+        "real / float",
+        "A number with a decimal point, such as 6.98. Python calls this data type float."
+      ],
+      [
+        "variable",
+        "A named place in the computer's memory that stores a value; the value can change as the program runs."
+      ],
+      [
+        "input function",
+        "A Python function that captures what the user types. It always gives back a string."
+      ],
+      [
+        "casting",
+        "Changing data to the correct data type, for example with int() or float()."
+      ],
+      [
+        "data type",
+        "The kind of data being stored, such as string, integer or float."
+      ],
+      [
+        "arithmetic operator",
+        "A symbol used for calculations: + - * / and others."
+      ],
+      [
+        "BIDMAS",
+        "The order maths is done: Brackets, Indices, Division, Multiplication, Addition, Subtraction."
+      ],
+      [
+        "syntax",
+        "The exact structure and spelling rules of a programming language."
+      ],
+      [
+        "comment",
+        "A note in the code that starts with # and is ignored by Python; it explains the code."
+      ],
+      [
+        "interpreter",
+        "The part of Python that translates your code into machine code, line by line."
+      ],
+      [
+        "machine code",
+        "The language of 0s and 1s that the computer actually carries out."
+      ],
+      [
+        "case sensitive",
+        "Treating capital and small letters as different, so Print is not the same as print."
+      ],
+      [
+        "execute / run",
+        "To make the computer carry out your program."
+      ],
+      [
+        "algorithm",
+        "A sequence of steps or instructions to solve a problem."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "text-based programming",
+        "meaning": "Programming where you type the code as text, using a language such as Python.",
+        "example": "",
+        "letter": "T"
+      },
+      {
+        "term": "block-based programming",
+        "meaning": "Programming by dragging and dropping blocks that snap together, as in Scratch.",
+        "example": "",
+        "letter": "B"
+      },
+      {
+        "term": "Python",
+        "meaning": "A popular, free, text-based programming language. You will use it all through this unit.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "IDE (Integrated Development Environment)",
+        "meaning": "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "Python shell",
+        "meaning": "Python's interactive mode, where you type one command and see the result straight away.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "interactive mode",
+        "meaning": "A way of using Python where each command is run immediately in the shell.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "script mode",
+        "meaning": "Python's editor, where you type a list of commands, save them as a file, and run them together.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "print statement",
+        "meaning": "A Python command that outputs text or values onto the screen.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "string",
+        "meaning": "Data made of letters, numbers or symbols, written inside quotation marks, e.g. \"Hello\".",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "integer",
+        "meaning": "A whole number, such as 24 or -10.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "real / float",
+        "meaning": "A number with a decimal point, such as 6.98. Python calls this data type float.",
+        "example": "",
+        "letter": "R"
+      },
+      {
+        "term": "variable",
+        "meaning": "A named place in the computer's memory that stores a value; the value can change as the program runs.",
+        "example": "",
+        "letter": "V"
+      },
+      {
+        "term": "input function",
+        "meaning": "A Python function that captures what the user types. It always gives back a string.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "casting",
+        "meaning": "Changing data to the correct data type, for example with int() or float().",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "data type",
+        "meaning": "The kind of data being stored, such as string, integer or float.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "arithmetic operator",
+        "meaning": "A symbol used for calculations: + - * / and others.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "BIDMAS",
+        "meaning": "The order maths is done: Brackets, Indices, Division, Multiplication, Addition, Subtraction.",
+        "example": "",
+        "letter": "B"
+      },
+      {
+        "term": "syntax",
+        "meaning": "The exact structure and spelling rules of a programming language.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "comment",
+        "meaning": "A note in the code that starts with # and is ignored by Python; it explains the code.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "interpreter",
+        "meaning": "The part of Python that translates your code into machine code, line by line.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "machine code",
+        "meaning": "The language of 0s and 1s that the computer actually carries out.",
+        "example": "",
+        "letter": "M"
+      },
+      {
+        "term": "case sensitive",
+        "meaning": "Treating capital and small letters as different, so Print is not the same as print.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "execute / run",
+        "meaning": "To make the computer carry out your program.",
+        "example": "",
+        "letter": "E"
+      },
+      {
+        "term": "algorithm",
+        "meaning": "A sequence of steps or instructions to solve a problem.",
+        "example": "",
+        "letter": "A"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "NameError: name 'Print' is not defined",
+        "You used a capital letter (Python is case sensitive) Use lower case: print(...)"
+      ],
+      [
+        "SyntaxError: unterminated string literal",
+        "A quotation mark is missing Add the missing \" so text has one at each end"
+      ],
+      [
+        "SyntaxError (missing bracket)",
+        "An opening ( has no closing ) Add the missing ). Brackets come in pairs"
+      ],
+      [
+        "Answer is joined, not added (e.g. 50100)",
+        "An input was not cast; it is still a string Wrap the input in int() or float()"
+      ],
+      [
+        "NameError: name 'number' is not defined",
+        "The variable name is spelt differently from where it was created. Use exactly the same spelling everywhere."
+      ],
+      [
+        "TypeError (mixing text and numbers)",
+        "Trying to join a string and a number with + Use a comma in print(), or cast with str()"
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Which of these is a text-based programming language? a) Scratch b) Python c) A calculator d) A flowchart",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "What does the print() statement do? a) Prints on paper b) Saves a file c) Displays text or values on screen d) Deletes text",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Python is case sensitive. Which line will cause an error? a) print(\"Hi\") b) Print(\"Hi\") c) print(\"HI\") d) print(\"hi\")",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "What data type does input() always give back? a) integer b) float c) string d) Boolean",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Which operator means 'multiply' in Python? a) x b) * c) X d) times",
+      "answer": "b) The asterisk, *, is the multiplication operator in Python.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words.",
+      "errorFeedback": "Python uses an asterisk, *, for multiplication, not the letter x or the word times."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "What is the result of 10 / 2 in Python? a) 5 b) 5.0 c) \"5\" d) 20",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "Which symbol starts a comment in Python? a) // b) # c) — d) /*",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "What does casting with int() do? a) Prints an integer b) Changes data into a whole number c) Deletes decimals forever d) Makes text bigger",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "In BIDMAS, which is done first? a) Addition b) Subtraction c) Brackets d) Multiplication",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "Which operator checks if two values are equal, inside an IF statement? a) = b) == c) => d) !=",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "What is a variable? a) A fixed number b) A named place in memory that stores a value c) A type of error d) A comment",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "What is debugging? a) Adding new features b) Finding and fixing errors c) Saving a file d) Running a program",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what text-based programming and block-based programming mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Each program has a blank shown as ______. Write the code that belongs in the blank.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "D1: Display a message",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Fill the blank so it prints the message:",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "______(\"I love learning Python\")",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Travel",
+      "prompt": "D2: Store then show a name",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "context": "Health",
+      "prompt": "Fill the blank so it shows the stored name:",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — text-based programming, block-based programming, Python — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "In your own words, what is the difference between block-based and text-based programming?",
+      "keyIdeas": [
+        "text-based programming",
+        "block-based programming",
+        "Python"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "What is the difference between the Python shell (interactive mode) and the editor (script mode)?",
+      "keyIdeas": [
+        "block-based programming",
+        "Python",
+        "IDE (Integrated Development Environment)"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Why must you use int() or float() on an input before doing a calculation with it?",
+      "keyIdeas": [
+        "Python",
+        "IDE (Integrated Development Environment)",
+        "Python shell"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Give one example each of a string, an integer and a float.",
+      "keyIdeas": [
+        "IDE (Integrated Development Environment)",
+        "Python shell",
+        "interactive mode"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "What is the difference between = and == in Python?",
+      "keyIdeas": [
+        "Python shell",
+        "interactive mode",
+        "script mode"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "What does a comment (#) do, and why is it useful?",
+      "keyIdeas": [
+        "interactive mode",
+        "script mode",
+        "print statement"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "project": {
+    "title": "Unit 1 Project: Block It Out: Moving from Blocks to Text",
+    "brief": "Bring together everything from Block It Out: Moving from Blocks to Text into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your block it out: moving from blocks to text project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "My project shows that I understand block-based vs text-based programming.",
+      "My project shows that I understand meet thonny, your python workshop.",
+      "My project shows that I understand the shell and the print() statement.",
+      "My project shows that I understand python is fussy — case and syntax.",
+      "My project shows that I understand writing and saving a program (script mode)."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “text-based programming” mean in computing?",
+        "options": [
+          "Programming where you type the code as text, using a language such as Python.",
+          "Programming by dragging and dropping blocks that snap together, as in Scratch.",
+          "A popular, free, text-based programming language. You will use it all through this unit.",
+          "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs."
+        ],
+        "answer": "Programming where you type the code as text, using a language such as Python.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Text-based programming means programming where you type the code as text, using a language such as Python.."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “block-based programming” mean in computing?",
+        "options": [
+          "Programming by dragging and dropping blocks that snap together, as in Scratch.",
+          "A popular, free, text-based programming language. You will use it all through this unit.",
+          "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+          "Python's interactive mode, where you type one command and see the result straight away."
+        ],
+        "answer": "Programming by dragging and dropping blocks that snap together, as in Scratch.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Text-based programming means programming where you type the code as text, using a language such as Python."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “Python” mean in computing?",
+        "options": [
+          "A popular, free, text-based programming language. You will use it all through this unit.",
+          "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+          "Python's interactive mode, where you type one command and see the result straight away.",
+          "A way of using Python where each command is run immediately in the shell."
+        ],
+        "answer": "A popular, free, text-based programming language. You will use it all through this unit.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Block-based programming means programming by dragging and dropping blocks that snap together, as in Scratch."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “IDE (Integrated Development Environment)” mean in computing?",
+        "options": [
+          "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+          "Python's interactive mode, where you type one command and see the result straight away.",
+          "A way of using Python where each command is run immediately in the shell.",
+          "Python's editor, where you type a list of commands, save them as a file, and run them together."
+        ],
+        "answer": "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Python means a popular, free, text-based programming language. You will use it all through this unit."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “Python shell” mean in computing?",
+        "options": [
+          "Python's interactive mode, where you type one command and see the result straight away.",
+          "A way of using Python where each command is run immediately in the shell.",
+          "Python's editor, where you type a list of commands, save them as a file, and run them together.",
+          "A Python command that outputs text or values onto the screen."
+        ],
+        "answer": "Python's interactive mode, where you type one command and see the result straight away.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "IDE (Integrated Development Environment) means a program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “interactive mode” mean in computing?",
+        "options": [
+          "A way of using Python where each command is run immediately in the shell.",
+          "Python's editor, where you type a list of commands, save them as a file, and run them together.",
+          "A Python command that outputs text or values onto the screen.",
+          "Data made of letters, numbers or symbols, written inside quotation marks, e.g. \"Hello\"."
+        ],
+        "answer": "A way of using Python where each command is run immediately in the shell.",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Python shell means python's interactive mode, where you type one command and see the result straight away."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Python's editor, where you type a list of commands, save them as a file, and run them together.?",
+        "options": [
+          "script mode",
+          "print statement",
+          "string",
+          "integer"
+        ],
+        "answer": "script mode",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Interactive mode means a way of using Python where each command is run immediately in the shell."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A Python command that outputs text or values onto the screen.?",
+        "options": [
+          "print statement",
+          "string",
+          "integer",
+          "real / float"
+        ],
+        "answer": "print statement",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Script mode means python's editor, where you type a list of commands, save them as a file, and run them together."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo09",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Data made of letters, numbers or symbols, written inside quotation marks, e.g. \"Hello\".?",
+        "options": [
+          "string",
+          "integer",
+          "real / float",
+          "variable"
+        ],
+        "answer": "string",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Print statement means a Python command that outputs text or values onto the screen."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A whole number, such as 24 or -10.?",
+        "options": [
+          "integer",
+          "real / float",
+          "variable",
+          "input function"
+        ],
+        "answer": "integer",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "String means data made of letters, numbers or symbols, written inside quotation marks, e.g. \"Hello\"."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A number with a decimal point, such as 6.98. Python calls this data type float.?",
+        "options": [
+          "real / float",
+          "variable",
+          "input function",
+          "casting"
+        ],
+        "answer": "real / float",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Integer means a whole number, such as 24 or -10."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A named place in the computer's memory that stores a value; the value can change as the program runs.?",
+        "options": [
+          "variable",
+          "input function",
+          "casting",
+          "data type"
+        ],
+        "answer": "variable",
+        "hint": "Use the Unit 1 Computing Words reference.",
+        "explanation": "Real / float means a number with a decimal point, such as 6.98. Python calls this data type float."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u1-game-1",
+        "icon": "?",
+        "skill": "text-based programming",
+        "title": "Quick Match: text-based programming",
+        "description": "Practise text-based programming through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “text-based programming” mean in computing?",
+            "choices": [
+              "Programming where you type the code as text, using a language such as Python.",
+              "Programming by dragging and dropping blocks that snap together, as in Scratch.",
+              "A popular, free, text-based programming language. You will use it all through this unit.",
+              "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs."
+            ],
+            "answer": "Programming where you type the code as text, using a language such as Python.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Text-based programming means programming where you type the code as text, using a language such as Python.."
+          },
+          {
+            "prompt": "What does “IDE (Integrated Development Environment)” mean in computing?",
+            "choices": [
+              "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+              "Python's interactive mode, where you type one command and see the result straight away.",
+              "A way of using Python where each command is run immediately in the shell.",
+              "Python's editor, where you type a list of commands, save them as a file, and run them together."
+            ],
+            "answer": "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Python means a popular, free, text-based programming language. You will use it all through this unit."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Python's editor, where you type a list of commands, save them as a file, and run them together.?",
+            "choices": [
+              "script mode",
+              "print statement",
+              "string",
+              "integer"
+            ],
+            "answer": "script mode",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Interactive mode means a way of using Python where each command is run immediately in the shell."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A whole number, such as 24 or -10.?",
+            "choices": [
+              "integer",
+              "real / float",
+              "variable",
+              "input function"
+            ],
+            "answer": "integer",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "String means data made of letters, numbers or symbols, written inside quotation marks, e.g. \"Hello\"."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-2",
+        "icon": "★",
+        "skill": "block-based programming",
+        "title": "Concept Quest: block-based programming",
+        "description": "Practise block-based programming through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “block-based programming” mean in computing?",
+            "choices": [
+              "Programming by dragging and dropping blocks that snap together, as in Scratch.",
+              "A popular, free, text-based programming language. You will use it all through this unit.",
+              "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+              "Python's interactive mode, where you type one command and see the result straight away."
+            ],
+            "answer": "Programming by dragging and dropping blocks that snap together, as in Scratch.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Text-based programming means programming where you type the code as text, using a language such as Python."
+          },
+          {
+            "prompt": "What does “Python shell” mean in computing?",
+            "choices": [
+              "Python's interactive mode, where you type one command and see the result straight away.",
+              "A way of using Python where each command is run immediately in the shell.",
+              "Python's editor, where you type a list of commands, save them as a file, and run them together.",
+              "A Python command that outputs text or values onto the screen."
+            ],
+            "answer": "Python's interactive mode, where you type one command and see the result straight away.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "IDE (Integrated Development Environment) means a program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A Python command that outputs text or values onto the screen.?",
+            "choices": [
+              "print statement",
+              "string",
+              "integer",
+              "real / float"
+            ],
+            "answer": "print statement",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Script mode means python's editor, where you type a list of commands, save them as a file, and run them together."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A number with a decimal point, such as 6.98. Python calls this data type float.?",
+            "choices": [
+              "real / float",
+              "variable",
+              "input function",
+              "casting"
+            ],
+            "answer": "real / float",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Integer means a whole number, such as 24 or -10."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-3",
+        "icon": "◫",
+        "skill": "Python",
+        "title": "Debug Detective: Python",
+        "description": "Practise python through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Python” mean in computing?",
+            "choices": [
+              "A popular, free, text-based programming language. You will use it all through this unit.",
+              "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+              "Python's interactive mode, where you type one command and see the result straight away.",
+              "A way of using Python where each command is run immediately in the shell."
+            ],
+            "answer": "A popular, free, text-based programming language. You will use it all through this unit.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Block-based programming means programming by dragging and dropping blocks that snap together, as in Scratch."
+          },
+          {
+            "prompt": "What does “interactive mode” mean in computing?",
+            "choices": [
+              "A way of using Python where each command is run immediately in the shell.",
+              "Python's editor, where you type a list of commands, save them as a file, and run them together.",
+              "A Python command that outputs text or values onto the screen.",
+              "Data made of letters, numbers or symbols, written inside quotation marks, e.g. \"Hello\"."
+            ],
+            "answer": "A way of using Python where each command is run immediately in the shell.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Python shell means python's interactive mode, where you type one command and see the result straight away."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Data made of letters, numbers or symbols, written inside quotation marks, e.g. \"Hello\".?",
+            "choices": [
+              "string",
+              "integer",
+              "real / float",
+              "variable"
+            ],
+            "answer": "string",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Print statement means a Python command that outputs text or values onto the screen."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A named place in the computer's memory that stores a value; the value can change as the program runs.?",
+            "choices": [
+              "variable",
+              "input function",
+              "casting",
+              "data type"
+            ],
+            "answer": "variable",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Real / float means a number with a decimal point, such as 6.98. Python calls this data type float."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-4",
+        "icon": "→",
+        "skill": "IDE (Integrated Development Environment)",
+        "title": "Algorithm Runner: IDE (Integrated Development Environment)",
+        "description": "Practise ide (integrated development environment) through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “IDE (Integrated Development Environment)” mean in computing?",
+            "choices": [
+              "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+              "Python's interactive mode, where you type one command and see the result straight away.",
+              "A way of using Python where each command is run immediately in the shell.",
+              "Python's editor, where you type a list of commands, save them as a file, and run them together."
+            ],
+            "answer": "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Python means a popular, free, text-based programming language. You will use it all through this unit."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Python's editor, where you type a list of commands, save them as a file, and run them together.?",
+            "choices": [
+              "script mode",
+              "print statement",
+              "string",
+              "integer"
+            ],
+            "answer": "script mode",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Interactive mode means a way of using Python where each command is run immediately in the shell."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A whole number, such as 24 or -10.?",
+            "choices": [
+              "integer",
+              "real / float",
+              "variable",
+              "input function"
+            ],
+            "answer": "integer",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "String means data made of letters, numbers or symbols, written inside quotation marks, e.g. \"Hello\"."
+          },
+          {
+            "prompt": "What does “text-based programming” mean in computing?",
+            "choices": [
+              "Programming where you type the code as text, using a language such as Python.",
+              "Programming by dragging and dropping blocks that snap together, as in Scratch.",
+              "A popular, free, text-based programming language. You will use it all through this unit.",
+              "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs."
+            ],
+            "answer": "Programming where you type the code as text, using a language such as Python.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Text-based programming means programming where you type the code as text, using a language such as Python.."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-5",
+        "icon": "Σ",
+        "skill": "Python shell",
+        "title": "Vocabulary Vault: Python shell",
+        "description": "Practise python shell through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Python shell” mean in computing?",
+            "choices": [
+              "Python's interactive mode, where you type one command and see the result straight away.",
+              "A way of using Python where each command is run immediately in the shell.",
+              "Python's editor, where you type a list of commands, save them as a file, and run them together.",
+              "A Python command that outputs text or values onto the screen."
+            ],
+            "answer": "Python's interactive mode, where you type one command and see the result straight away.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "IDE (Integrated Development Environment) means a program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A Python command that outputs text or values onto the screen.?",
+            "choices": [
+              "print statement",
+              "string",
+              "integer",
+              "real / float"
+            ],
+            "answer": "print statement",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Script mode means python's editor, where you type a list of commands, save them as a file, and run them together."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A number with a decimal point, such as 6.98. Python calls this data type float.?",
+            "choices": [
+              "real / float",
+              "variable",
+              "input function",
+              "casting"
+            ],
+            "answer": "real / float",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Integer means a whole number, such as 24 or -10."
+          },
+          {
+            "prompt": "What does “block-based programming” mean in computing?",
+            "choices": [
+              "Programming by dragging and dropping blocks that snap together, as in Scratch.",
+              "A popular, free, text-based programming language. You will use it all through this unit.",
+              "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+              "Python's interactive mode, where you type one command and see the result straight away."
+            ],
+            "answer": "Programming by dragging and dropping blocks that snap together, as in Scratch.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Text-based programming means programming where you type the code as text, using a language such as Python."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-6",
+        "icon": "◇",
+        "skill": "interactive mode",
+        "title": "Challenge Cards: interactive mode",
+        "description": "Practise interactive mode through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “interactive mode” mean in computing?",
+            "choices": [
+              "A way of using Python where each command is run immediately in the shell.",
+              "Python's editor, where you type a list of commands, save them as a file, and run them together.",
+              "A Python command that outputs text or values onto the screen.",
+              "Data made of letters, numbers or symbols, written inside quotation marks, e.g. \"Hello\"."
+            ],
+            "answer": "A way of using Python where each command is run immediately in the shell.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Python shell means python's interactive mode, where you type one command and see the result straight away."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Data made of letters, numbers or symbols, written inside quotation marks, e.g. \"Hello\".?",
+            "choices": [
+              "string",
+              "integer",
+              "real / float",
+              "variable"
+            ],
+            "answer": "string",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Print statement means a Python command that outputs text or values onto the screen."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A named place in the computer's memory that stores a value; the value can change as the program runs.?",
+            "choices": [
+              "variable",
+              "input function",
+              "casting",
+              "data type"
+            ],
+            "answer": "variable",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Real / float means a number with a decimal point, such as 6.98. Python calls this data type float."
+          },
+          {
+            "prompt": "What does “Python” mean in computing?",
+            "choices": [
+              "A popular, free, text-based programming language. You will use it all through this unit.",
+              "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+              "Python's interactive mode, where you type one command and see the result straight away.",
+              "A way of using Python where each command is run immediately in the shell."
+            ],
+            "answer": "A popular, free, text-based programming language. You will use it all through this unit.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Block-based programming means programming by dragging and dropping blocks that snap together, as in Scratch."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-7",
+        "icon": "⚡",
+        "skill": "script mode",
+        "title": "Think Fast: script mode",
+        "description": "Practise script mode through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Python's editor, where you type a list of commands, save them as a file, and run them together.?",
+            "choices": [
+              "script mode",
+              "print statement",
+              "string",
+              "integer"
+            ],
+            "answer": "script mode",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Interactive mode means a way of using Python where each command is run immediately in the shell."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A whole number, such as 24 or -10.?",
+            "choices": [
+              "integer",
+              "real / float",
+              "variable",
+              "input function"
+            ],
+            "answer": "integer",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "String means data made of letters, numbers or symbols, written inside quotation marks, e.g. \"Hello\"."
+          },
+          {
+            "prompt": "What does “text-based programming” mean in computing?",
+            "choices": [
+              "Programming where you type the code as text, using a language such as Python.",
+              "Programming by dragging and dropping blocks that snap together, as in Scratch.",
+              "A popular, free, text-based programming language. You will use it all through this unit.",
+              "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs."
+            ],
+            "answer": "Programming where you type the code as text, using a language such as Python.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Text-based programming means programming where you type the code as text, using a language such as Python.."
+          },
+          {
+            "prompt": "What does “IDE (Integrated Development Environment)” mean in computing?",
+            "choices": [
+              "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+              "Python's interactive mode, where you type one command and see the result straight away.",
+              "A way of using Python where each command is run immediately in the shell.",
+              "Python's editor, where you type a list of commands, save them as a file, and run them together."
+            ],
+            "answer": "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Python means a popular, free, text-based programming language. You will use it all through this unit."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-8",
+        "icon": "☁",
+        "skill": "print statement",
+        "title": "Explain It: print statement",
+        "description": "Practise print statement through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A Python command that outputs text or values onto the screen.?",
+            "choices": [
+              "print statement",
+              "string",
+              "integer",
+              "real / float"
+            ],
+            "answer": "print statement",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Script mode means python's editor, where you type a list of commands, save them as a file, and run them together."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A number with a decimal point, such as 6.98. Python calls this data type float.?",
+            "choices": [
+              "real / float",
+              "variable",
+              "input function",
+              "casting"
+            ],
+            "answer": "real / float",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Integer means a whole number, such as 24 or -10."
+          },
+          {
+            "prompt": "What does “block-based programming” mean in computing?",
+            "choices": [
+              "Programming by dragging and dropping blocks that snap together, as in Scratch.",
+              "A popular, free, text-based programming language. You will use it all through this unit.",
+              "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+              "Python's interactive mode, where you type one command and see the result straight away."
+            ],
+            "answer": "Programming by dragging and dropping blocks that snap together, as in Scratch.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Text-based programming means programming where you type the code as text, using a language such as Python."
+          },
+          {
+            "prompt": "What does “Python shell” mean in computing?",
+            "choices": [
+              "Python's interactive mode, where you type one command and see the result straight away.",
+              "A way of using Python where each command is run immediately in the shell.",
+              "Python's editor, where you type a list of commands, save them as a file, and run them together.",
+              "A Python command that outputs text or values onto the screen."
+            ],
+            "answer": "Python's interactive mode, where you type one command and see the result straight away.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "IDE (Integrated Development Environment) means a program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-9",
+        "icon": "⌂",
+        "skill": "string",
+        "title": "Real-Life Round: string",
+        "description": "Practise string through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Data made of letters, numbers or symbols, written inside quotation marks, e.g. \"Hello\".?",
+            "choices": [
+              "string",
+              "integer",
+              "real / float",
+              "variable"
+            ],
+            "answer": "string",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Print statement means a Python command that outputs text or values onto the screen."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A named place in the computer's memory that stores a value; the value can change as the program runs.?",
+            "choices": [
+              "variable",
+              "input function",
+              "casting",
+              "data type"
+            ],
+            "answer": "variable",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Real / float means a number with a decimal point, such as 6.98. Python calls this data type float."
+          },
+          {
+            "prompt": "What does “Python” mean in computing?",
+            "choices": [
+              "A popular, free, text-based programming language. You will use it all through this unit.",
+              "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+              "Python's interactive mode, where you type one command and see the result straight away.",
+              "A way of using Python where each command is run immediately in the shell."
+            ],
+            "answer": "A popular, free, text-based programming language. You will use it all through this unit.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Block-based programming means programming by dragging and dropping blocks that snap together, as in Scratch."
+          },
+          {
+            "prompt": "What does “interactive mode” mean in computing?",
+            "choices": [
+              "A way of using Python where each command is run immediately in the shell.",
+              "Python's editor, where you type a list of commands, save them as a file, and run them together.",
+              "A Python command that outputs text or values onto the screen.",
+              "Data made of letters, numbers or symbols, written inside quotation marks, e.g. \"Hello\"."
+            ],
+            "answer": "A way of using Python where each command is run immediately in the shell.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Python shell means python's interactive mode, where you type one command and see the result straight away."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-10",
+        "icon": "!",
+        "skill": "integer",
+        "title": "Spot the Bug: integer",
+        "description": "Practise integer through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A whole number, such as 24 or -10.?",
+            "choices": [
+              "integer",
+              "real / float",
+              "variable",
+              "input function"
+            ],
+            "answer": "integer",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "String means data made of letters, numbers or symbols, written inside quotation marks, e.g. \"Hello\"."
+          },
+          {
+            "prompt": "What does “text-based programming” mean in computing?",
+            "choices": [
+              "Programming where you type the code as text, using a language such as Python.",
+              "Programming by dragging and dropping blocks that snap together, as in Scratch.",
+              "A popular, free, text-based programming language. You will use it all through this unit.",
+              "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs."
+            ],
+            "answer": "Programming where you type the code as text, using a language such as Python.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Text-based programming means programming where you type the code as text, using a language such as Python.."
+          },
+          {
+            "prompt": "What does “IDE (Integrated Development Environment)” mean in computing?",
+            "choices": [
+              "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+              "Python's interactive mode, where you type one command and see the result straight away.",
+              "A way of using Python where each command is run immediately in the shell.",
+              "Python's editor, where you type a list of commands, save them as a file, and run them together."
+            ],
+            "answer": "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Python means a popular, free, text-based programming language. You will use it all through this unit."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Python's editor, where you type a list of commands, save them as a file, and run them together.?",
+            "choices": [
+              "script mode",
+              "print statement",
+              "string",
+              "integer"
+            ],
+            "answer": "script mode",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Interactive mode means a way of using Python where each command is run immediately in the shell."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-11",
+        "icon": "≡",
+        "skill": "real / float",
+        "title": "Mastery Mix: real / float",
+        "description": "Practise real / float through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A number with a decimal point, such as 6.98. Python calls this data type float.?",
+            "choices": [
+              "real / float",
+              "variable",
+              "input function",
+              "casting"
+            ],
+            "answer": "real / float",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Integer means a whole number, such as 24 or -10."
+          },
+          {
+            "prompt": "What does “block-based programming” mean in computing?",
+            "choices": [
+              "Programming by dragging and dropping blocks that snap together, as in Scratch.",
+              "A popular, free, text-based programming language. You will use it all through this unit.",
+              "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+              "Python's interactive mode, where you type one command and see the result straight away."
+            ],
+            "answer": "Programming by dragging and dropping blocks that snap together, as in Scratch.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Text-based programming means programming where you type the code as text, using a language such as Python."
+          },
+          {
+            "prompt": "What does “Python shell” mean in computing?",
+            "choices": [
+              "Python's interactive mode, where you type one command and see the result straight away.",
+              "A way of using Python where each command is run immediately in the shell.",
+              "Python's editor, where you type a list of commands, save them as a file, and run them together.",
+              "A Python command that outputs text or values onto the screen."
+            ],
+            "answer": "Python's interactive mode, where you type one command and see the result straight away.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "IDE (Integrated Development Environment) means a program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A Python command that outputs text or values onto the screen.?",
+            "choices": [
+              "print statement",
+              "string",
+              "integer",
+              "real / float"
+            ],
+            "answer": "print statement",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Script mode means python's editor, where you type a list of commands, save them as a file, and run them together."
+          }
+        ]
+      },
+      {
+        "id": "u1-game-12",
+        "icon": "T",
+        "skill": "variable",
+        "title": "Unit Champion: variable",
+        "description": "Practise variable through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A named place in the computer's memory that stores a value; the value can change as the program runs.?",
+            "choices": [
+              "variable",
+              "input function",
+              "casting",
+              "data type"
+            ],
+            "answer": "variable",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Real / float means a number with a decimal point, such as 6.98. Python calls this data type float."
+          },
+          {
+            "prompt": "What does “Python” mean in computing?",
+            "choices": [
+              "A popular, free, text-based programming language. You will use it all through this unit.",
+              "A program that helps you write, save, test and run code. Thonny and IDLE are both Python IDEs.",
+              "Python's interactive mode, where you type one command and see the result straight away.",
+              "A way of using Python where each command is run immediately in the shell."
+            ],
+            "answer": "A popular, free, text-based programming language. You will use it all through this unit.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Block-based programming means programming by dragging and dropping blocks that snap together, as in Scratch."
+          },
+          {
+            "prompt": "What does “interactive mode” mean in computing?",
+            "choices": [
+              "A way of using Python where each command is run immediately in the shell.",
+              "Python's editor, where you type a list of commands, save them as a file, and run them together.",
+              "A Python command that outputs text or values onto the screen.",
+              "Data made of letters, numbers or symbols, written inside quotation marks, e.g. \"Hello\"."
+            ],
+            "answer": "A way of using Python where each command is run immediately in the shell.",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Python shell means python's interactive mode, where you type one command and see the result straight away."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Data made of letters, numbers or symbols, written inside quotation marks, e.g. \"Hello\".?",
+            "choices": [
+              "string",
+              "integer",
+              "real / float",
+              "variable"
+            ],
+            "answer": "string",
+            "clue": "Use the Unit 1 Computing Words reference.",
+            "explanation": "Print statement means a Python command that outputs text or values onto the screen."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can explain the difference between block-based and text-based programming.",
+    "I can use the Python shell (interactive mode) to run single commands.",
+    "I can write, save and run full programs in script mode using Thonny.",
+    "I can use the print() statement to display text and numbers.",
+    "I can identify and use the data types string, integer and real (float).",
+    "I can store data in variables and use them in your programs.",
+    "I can use input() to let the user type information into your program.",
+    "I can use casting (int() and float()) so that inputs work correctly in calculations.",
+    "I can use arithmetic operators (+, -, *, /) to perform calculations.",
+    "I can apply BIDMAS (order of operations) so calculations give the correct answer."
+  ]
+}

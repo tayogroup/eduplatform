@@ -1,0 +1,1891 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.763Z",
+  "stage": {
+    "id": "s04",
+    "label": "Stage 4"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t03",
+    "label": "Term 3"
+  },
+  "unit": {
+    "unitId": "comp-g04-u10",
+    "unitNo": 10,
+    "unitTitle": "Be a Game Developer",
+    "unitOverview": "Welcome to Unit 10 of Year 4 Computing at Ehel Academy. But here is the important part for you. This is not a unit about high scores or timers; it is about two big ideas that make games work: sub-routines and repetition. The game is the joyful reason to learn them.\n\nThe first big idea is the sub-routine: a set of instructions for a job you do again and again, written once and then run whenever you need it. Getting ready for school is a sub-routine — pack your bag, put on your shoes, check you have your lunch — and you do not re-learn those steps every morning; you just do the routine again. In our game, every time the player moves the cat the same little job happens (change costume, a small meow), so instead of writing it four times, once per arrow key, we write it once as Move Around.\n\nThe second big idea is repetition. A forever loop repeats without ever stopping (this is repetition), while a repeat (6) loop repeats a set number of times and then stops (this is iteration, the count-controlled loop from Unit 4). In our game, a repeat loop makes the treat spin before the chase begins.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 4
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-4-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 4",
+    "sourceArchive": "Year 4-20260801T055750Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 4/Unit 10/Year 4 - Unit 10 Teacher Guide.docx",
+      "Year 4/Unit 10/Year 4 - Unit 10 Activity Sheet.docx",
+      "Year 4/Unit 10/Year 4 - Unit 10 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 420,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 4 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Explain that a sub-routine is a set of instructions for a frequently-used job, made once and run many times.",
+    "In Scratch, make a sub-routine with My Blocks (Make a Block) and run it from other scripts.",
+    "Explain the difference between a forever loop (repetition — never stops) and a repeat (n) loop (iteration — a set number of times).",
+    "Recognise the event blocks that start a script: when green flag clicked, when key pressed, and when this sprite clicked.",
+    "Use coordinates to move a sprite: change x by, change y by, and glide or go to a random position.",
+    "Build a small, working game in Scratch that uses a sub-routine and a loop.",
+    "Test a program systematically — checking each part in turn — to find an error, and debug (fix) it."
+  ],
+  "toolkit": [
+    {
+      "name": "Scratch",
+      "url": "scratch.mit.edu",
+      "steps": [
+        "Go to scratch.mit.edu and click Create.",
+        "Drag blocks from the palette on the left into the code area.",
+        "Make variables in the orange Variables section.",
+        "Click the green flag to run and the red circle to stop."
+      ],
+      "note": "Runs in a web browser. Free, with nothing to download."
+    }
+  ],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-games-repeat-things-repetition-and-iteration",
+      "title": "Games repeat things: repetition and iteration",
+      "explanation": "Games are full of repeats. Some things repeat forever while you play (this is repetition); some things repeat a set number of times and then stop (this is iteration, the count-controlled loop from Unit 4).\n\nTry it: Do the first together, then you can try the rest in pairs.\n\nCheck yourself: Can you tell a repeat that never stops (repetition, forever) from one that happens a set number of times (iteration, repeat)? Can you point to a repeat in a game?",
+      "example": "Find one real example of games repeat things: repetition and iteration around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you tell a repeat that never stops (repetition, forever) from one that happens a set number of times (iteration, repeat)? Can you point to a repeat in a game?"
+    },
+    {
+      "id": "concept-2-sub-routines-a-job-you-make-once-and-use-again",
+      "title": "Sub-routines: a job you make once and use again",
+      "explanation": "A sub-routine is a set of instructions for a job used again and again. You write the steps once, give the job a name, and then run that name whenever you need it — keeping a program short and tidy.\n\nCheck yourself: a job you make once and use again. Can you see why writing Move Around once is better than writing the same steps four times?",
+      "example": "Find one real example of sub-routines: a job you make once and use again around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "a job you make once and use again. Can you see why writing Move Around once is better than writing the same steps four times?"
+    },
+    {
+      "id": "concept-3-into-scratch-the-move-around-sub-routine-and-the-controls",
+      "title": "Into Scratch: the Move Around sub-routine and the controls",
+      "explanation": "How to make a sub-routine in Scratch using My Blocks, and how to move a sprite with the arrow keys using coordinates (change x by, change y by).\n\nTry it: You (or pair sharing a computer) makes the Move Around block, builds the four controls, and plays. Support you — it is normal to need help finding My Blocks.\n\nCheck yourself: Does the cat move the correct way for each key? Can you make a block in My Blocks? Do all four arrow scripts end with Move Around?",
+      "example": "Find one real example of into Scratch: the Move Around sub-routine and the controls around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Does the cat move the correct way for each key? Can you make a block in My Blocks? Do all four arrow scripts end with Move Around?"
+    },
+    {
+      "id": "concept-4-add-the-treat-a-repeat-loop-and-click-to-catch",
+      "title": "Add the treat: a repeat loop and click-to-catch",
+      "explanation": "Add a second sprite (the treat), use a repeat loop (iteration) for a spin animation, move it to random positions with coordinates, and make it catchable with the when this sprite clicked event and a second sub-routine.\n\nTry it: they may change numbers and watch what happens. You add the Apple and Pop sound, build the spin (repeat loop) and the Catch Treat sub-routine, and play.\n\nCheck yourself: Are the two repeated blocks INSIDE the repeat loop (hugged by its C-shape)? Can you name the two events that start the treat's two scripts? Did you make Catch Treat in My Blocks and run it from when this sprite clicked?",
+      "example": "Do it yourself: add the treat: a repeat loop and click-to-catch. Work through it slowly, then check what you did against the explanation above.",
+      "checkYourself": "Are the two repeated blocks INSIDE the repeat loop (hugged by its C-shape)? Can you name the two events that start the treat's two scripts? Did you make Catch Treat in My Blocks and run it from when this sprite clicked?"
+    },
+    {
+      "id": "concept-5-be-a-tester-find-the-bug-and-debug-it",
+      "title": "Be a tester: find the bug and debug it",
+      "explanation": "Real game developers test systematically — they check each part of the program in turn, one at a time, until you find the bug (error). Then you debug it (fix it).\n\nTry it: the (build and test the whole game).\n\nCheck yourself: Can you make the fix to -10 and re-test to confirm it works? Does you test one control at a time rather than guessing?",
+      "example": "Do it yourself: be a tester: find the bug and debug it. Work through it slowly, then check what you did against the explanation above.",
+      "checkYourself": "Can you make the fix to -10 and re-test to confirm it works? Does you test one control at a time rather than guessing?"
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "When UP / DOWN / LEFT / RIGHT key:",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "move that way, then Run Move Around",
+        "Move Around (the sub-routine): next costume, then meow"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-2",
+      "title": "Session 3 — Into Scratch: the Move Around sub-routine and the controls — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 3 — Into Scratch: the Move Around sub-routine and the controls.",
+      "lines": [
+        "when green flag clicked",
+        "go to x: (0) y: (-120)",
+        "point in direction (90)",
+        "set size to (75) %",
+        "when up arrow key pressed",
+        "change y by (10)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-3",
+      "title": "Move Around",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "when down arrow key pressed",
+        "change y by (-10)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-4",
+      "title": "Move Around (2)",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "when left arrow key pressed",
+        "change x by (-10)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-5",
+      "title": "Move Around (3)",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "when right arrow key pressed",
+        "change x by (10)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-6",
+      "title": "Session 4 — Add the treat: a repeat loop and click-to-catch — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 4 — Add the treat: a repeat loop and click-to-catch.",
+      "lines": [
+        "when green flag clicked",
+        "set size to (75) %",
+        "go to x: (0) y: (0)",
+        "show",
+        "repeat (6)",
+        "turn (60) degrees clockwise",
+        "wait (0.2) seconds",
+        "go to (random position)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-7",
+      "title": "Session 4 — Add the treat: a repeat loop and click-to-catch — listing 2",
+      "language": "Scratch blocks",
+      "intro": "From Session 4 — Add the treat: a repeat loop and click-to-catch.",
+      "lines": [
+        "define Catch Treat",
+        "start sound (Pop)",
+        "change size by (-5)",
+        "turn (30) degrees clockwise",
+        "glide (0.4) secs to (random position)",
+        "when this sprite clicked"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-8",
+      "title": "Session 5 — Be a tester: find the bug and debug it — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 5 — Be a tester: find the bug and debug it.",
+      "lines": [
+        "BEFORE (the bug):",
+        "when down arrow key pressed",
+        "change y by (10)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-9",
+      "title": "Move Around (4)",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "AFTER (debugged):",
+        "when down arrow key pressed",
+        "change y by (-10)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Spot the Repeats in a Game",
+      "context": "work through the steps below and see what happens. This is games repeat things: repetition and iteration in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Layla is looking at her favourite game. Games are full of repeats: some repeat forever while you play, and some repeat a set number of times and then stop.",
+      "answer": "a) The background music plays on and on. Forever [ ] A set number of times [ ] b) A firework bursts into exactly 10 sparks. Forever [ ] A set number of times [ ] c) The clouds keep drifting across the sky. Forever [ ] A set number of times [ ] d) A door opens after 3 knocks, then stops. Forever [ ] A set number of times [ ] A repeat that never stops is called repetition (a forever loop). A repeat that happens a set number of times is called iteration (a repeat loop).",
+      "modelType": "model-1",
+      "hint": "Start here: a) The background music plays on and on. Forever [ ] A set number of times [ ]",
+      "explanation": "Games repeat things: repetition and iteration: Games are full of repeats. Some things repeat forever while you play (this is repetition); some things repeat a set number of times and then stop (this is iteration, the count-controlled loop from Unit 4)."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "What is a Sub-routine?",
+      "context": "work through the steps below and see what happens. This is sub-routines: a job you make once and use again in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "A sub-routine is a job you build once and then use again and again. You do this every day! Draw a line to match each named job to its steps.",
+      "answer": "Get Ready For School * * Put out the plates, the cups and the dates Set The Table * * Change costume, then meow Move Around (game) * * Pack your bag, put on your shoes, check your lunch. Fill in the blank A sub-routine is a set of steps you make _______ time and use _______ and _______ again.",
+      "modelType": "model-2",
+      "hint": "Start here: Get Ready For School * * Put out the plates, the cups and the dates",
+      "explanation": "Sub-routines: a job you make once and use again: A sub-routine is a set of instructions for a job used again and again. You write the steps once, give the job a name, and then run that name whenever you need it — keeping a program short and tidy."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Plan Your Catch Game",
+      "context": "work through the steps below and see what happens. This is into scratch: the move around sub-routine and the controls in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Before you build, make a plan — that is what game developers do! Fill this in.",
+      "answer": "My player sprite (the one I move) will be: ____________________ (in our game it is the Cat). My treat sprite (the one I catch) will be: ____________________ (in our game it is the Apple). My backdrop (the picture behind) will be: ____________________ One thing that will repeat in my game is: ______________________________________________",
+      "modelType": "model-3",
+      "hint": "Start here: My player sprite (the one I move) will be: ____________________ (in our game it is the Cat).",
+      "explanation": "Into Scratch: the Move Around sub-routine and the controls: How to make a sub-routine in Scratch using My Blocks, and how to move a sprite with the arrow keys using coordinates (change x by, change y by)."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Write the Control Rules",
+      "context": "work through the steps below and see what happens. This is add the treat: a repeat loop and click-to-catch in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "The player moves with the arrow keys. Remember: adding to y moves up, taking away from y moves down. Adding to x moves right, taking away from x moves left. Two rules are done for you. Fill in the other two.",
+      "answer": "UP arrow -> change y by (10) (move up) DOWN arrow -> change y by (______) (move down) LEFT arrow -> change x by (______) (move left) RIGHT arrow -> change x by (10) (move right) Every arrow rule ends by running the same sub-routine. Its name is: ____________________",
+      "modelType": "model-4",
+      "hint": "Start here: UP arrow -> change y by (10) (move up)",
+      "explanation": "Add the treat: a repeat loop and click-to-catch: Add a second sprite (the treat), use a repeat loop (iteration) for a spin animation, move it to random positions with coordinates, and make it catchable with the when this sprite clicked event and a second sub-routine."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Try it in Scratch: The Player and the Sub-routine",
+      "context": "work through the steps below and see what happens. This is be a tester: find the bug and debug it in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Now build the player!",
+      "answer": "Go to scratch.mit.edu and click Create. Keep the Cat sprite (it already has a Meow sound). Type Move Around and click OK. Click the pink My Blocks group, then Make a Block. Under the define Move Around hat, build the job define Move Around next costume",
+      "modelType": "model-5",
+      "hint": "Start here: Go to scratch.mit.edu and click Create. Keep the Cat sprite (it already has a Meow sound).",
+      "explanation": "Be a tester: find the bug and debug it: Real game developers test systematically — they check each part of the program in turn, one at a time, until you find the bug (error). Then you debug it (fix it)."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Try it in Scratch: Add the Treat",
+      "context": "work through the steps below and see what happens. This is games repeat things: repetition and iteration in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Every game needs something to catch. Let's add the treat and a loop.",
+      "answer": "This is our treat. Click Choose a Sprite (bottom right) and add the Apple. Click the Sounds tab (top left), click Choose a Sound, and add Pop. Click the Apple, then build its start script. Put the two blocks INSIDE the repeat loop (it hugs them). when green flag clicked set size to (75) %",
+      "modelType": "model-6",
+      "hint": "Start here: This is our treat. Click Choose a Sprite (bottom right) and add the Apple.",
+      "explanation": "Games repeat things: repetition and iteration: Games are full of repeats. Some things repeat forever while you play (this is repetition); some things repeat a set number of times and then stop (this is iteration, the count-controlled loop from Unit 4)."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Games repeat things: repetition and iteration",
+      "modelType": "concept-model-1",
+      "purpose": "Games are full of repeats. Some things repeat forever while you play (this is repetition); some things repeat a set number of times and then stop (this is iteration, the count-controlled loop from Unit 4).",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Sub-routines: a job you make once and use again",
+      "modelType": "concept-model-2",
+      "purpose": "A sub-routine is a set of instructions for a job used again and again. You write the steps once, give the job a name, and then run that name whenever you need it — keeping a program short and tidy.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Into Scratch: the Move Around sub-routine and the controls",
+      "modelType": "concept-model-3",
+      "purpose": "How to make a sub-routine in Scratch using My Blocks, and how to move a sprite with the arrow keys using coordinates (change x by, change y by).",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Add the treat: a repeat loop and click-to-catch",
+      "modelType": "concept-model-4",
+      "purpose": "Add a second sprite (the treat), use a repeat loop (iteration) for a spin animation, move it to random positions with coordinates, and make it catchable with the when this sprite clicked event and a second sub-routine.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Be a tester: find the bug and debug it",
+      "modelType": "concept-model-5",
+      "purpose": "Real game developers test systematically — they check each part of the program in turn, one at a time, until you find the bug (error). Then you debug it (fix it).",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with games repeat things: repetition and iteration",
+      "example": "Find one real example of games repeat things: repetition and iteration around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for games repeat things: repetition and iteration and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with sub-routines: a job you make once and use again",
+      "example": "Find one real example of sub-routines: a job you make once and use again around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for sub-routines: a job you make once and use again and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with into scratch: the move around sub-routine and the controls",
+      "example": "Find one real example of into Scratch: the Move Around sub-routine and the controls around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for into scratch: the move around sub-routine and the controls and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with add the treat: a repeat loop and click-to-catch",
+      "example": "Do it yourself: add the treat: a repeat loop and click-to-catch. Work through it slowly, then check what you did against the explanation above.",
+      "steps": [
+        "Read the concept card for add the treat: a repeat loop and click-to-catch and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with be a tester: find the bug and debug it",
+      "example": "Do it yourself: be a tester: find the bug and debug it. Work through it slowly, then check what you did against the explanation above.",
+      "steps": [
+        "Read the concept card for be a tester: find the bug and debug it and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Games repeat things: repetition and iteration",
+      "prompt": "Which Scratch group do you use to make your own block (a sub-routine)? ([ ] Motion [ ] My Blocks [ ] Sound)",
+      "solution": "My Blocks (using Make a Block)."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Sub-routines: a job you make once and use again",
+      "prompt": "Fill in the words. A repeat (6) loop repeats a",
+      "solution": "a set (known) number of times; without stopping."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Into Scratch: the Move Around sub-routine and the controls",
+      "prompt": "Match each event to what starts it. Draw a line.",
+      "solution": "when green flag clicked = the game starts; when right arrow key pressed = the right arrow is pressed; when this sprite clicked = you click on the sprite."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Add the treat: a repeat loop and click-to-catch",
+      "prompt": "When Sami presses the DOWN arrow, his cat moves UP. His block says change y by (10). What should the block say instead?",
+      "solution": "change y by (-10). (Adding to y moves up, so to move down we take away from y.)"
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Be a tester: find the bug and debug it",
+      "prompt": "What does it mean to test a program systematically? Tick the best answer.",
+      "solution": "Check each part in turn until you find the error. (Not guessing, and not starting again.)"
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Games repeat things: repetition and iteration",
+      "prompt": "Explain in your own words: Games repeat things: repetition and iteration.",
+      "solution": "Games are full of repeats. Some things repeat forever while you play (this is repetition); some things repeat a set number of times and then stop (this is iteration, the count-controlled loop from Unit 4).\n\nTry it: Do the first together, then you can try the rest in pairs.\n\nCheck yourself: Can you tell a repeat that never stops (repetition, forever) from one that happens a set number of times (iteration, repeat)? Can you point to a repeat in a game?\n\nFor example: Find one real example of games repeat things: repetition and iteration around you, or on a device you use. Say out loud what it is and why it fits."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "True or false? A sub-routine is a set of instructions for a job you use again and again, made once. True / False",
+      "answer": "True.",
+      "hint": "Look back at what game developer and sub-routine mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Which Scratch group do you use to make your own block (a sub-routine)? ([ ] Motion [ ] My Blocks [ ] Sound)",
+      "answer": "My Blocks (using Make a Block).",
+      "hint": "Look back at what game developer and sub-routine mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "Fill in the words. A repeat (6) loop repeats a",
+      "answer": "a set (known) number of times; without stopping.",
+      "hint": "Look back at what game developer and sub-routine mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Match each event to what starts it. Draw a line.",
+      "answer": "when green flag clicked = the game starts; when right arrow key pressed = the right arrow is pressed; when this sprite clicked = you click on the sprite.",
+      "hint": "Look back at what game developer and sub-routine mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "When Sami presses the DOWN arrow, his cat moves UP. His block says change y by (10). What should the block say instead?",
+      "answer": "change y by (-10). (Adding to y moves up, so to move down we take away from y.)",
+      "hint": "Look back at what game developer and sub-routine mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "What does it mean to test a program systematically? Tick the best answer.",
+      "answer": "Check each part in turn until you find the error. (Not guessing, and not starting again.)",
+      "hint": "Look back at what game developer and sub-routine mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Spot the Repeats in a Game",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Layla is looking at her favourite game. Games are full of repeats: some repeat forever while you play, and some repeat a set number of times and then stop.",
+        "a) The background music plays on and on. Forever [ ] A set number of times [ ]",
+        "b) A firework bursts into exactly 10 sparks. Forever [ ] A set number of times [ ]",
+        "c) The clouds keep drifting across the sky. Forever [ ] A set number of times [ ]",
+        "d) A door opens after 3 knocks, then stops. Forever [ ] A set number of times [ ]",
+        "A repeat that never stops is called repetition (a forever loop). A repeat that happens a set number of times is called iteration (a repeat loop)."
+      ]
+    },
+    {
+      "title": "What is a Sub-routine?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A sub-routine is a job you build once and then use again and again. You do this every day! Draw a line to match each named job to its steps.",
+        "Get Ready For School * * Put out the plates, the cups and the dates",
+        "Set The Table * * Change costume, then meow",
+        "Move Around (game) * * Pack your bag, put on your shoes, check your lunch.",
+        "Fill in the blank",
+        "A sub-routine is a set of steps you make _______ time and use _______ and _______ again."
+      ]
+    },
+    {
+      "title": "Plan Your Catch Game",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Before you build, make a plan — that is what game developers do! Fill this in.",
+        "My player sprite (the one I move) will be: ____________________ (in our game it is the Cat).",
+        "My treat sprite (the one I catch) will be: ____________________ (in our game it is the Apple).",
+        "My backdrop (the picture behind) will be: ____________________",
+        "One thing that will repeat in my game is: ______________________________________________"
+      ]
+    },
+    {
+      "title": "Write the Control Rules",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "The player moves with the arrow keys. Remember: adding to y moves up, taking away from y moves down. Adding to x moves right, taking away from x moves left. Two rules are done for you. Fill in the other two.",
+        "UP arrow -> change y by (10) (move up)",
+        "DOWN arrow -> change y by (______) (move down)",
+        "LEFT arrow -> change x by (______) (move left)",
+        "RIGHT arrow -> change x by (10) (move right)",
+        "Every arrow rule ends by running the same sub-routine. Its name is: ____________________"
+      ]
+    },
+    {
+      "title": "Try it in Scratch: The Player and the Sub-routine",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Now build the player!",
+        "Go to scratch.mit.edu and click Create. Keep the Cat sprite (it already has a Meow sound).",
+        "Type Move Around and click OK. Click the pink My Blocks group, then Make a Block.",
+        "Under the define Move Around hat, build the job",
+        "define Move Around",
+        "next costume"
+      ]
+    },
+    {
+      "title": "Try it in Scratch: Add the Treat",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Every game needs something to catch. Let's add the treat and a loop.",
+        "This is our treat. Click Choose a Sprite (bottom right) and add the Apple.",
+        "Click the Sounds tab (top left), click Choose a Sound, and add Pop.",
+        "Click the Apple, then build its start script. Put the two blocks INSIDE the repeat loop (it hugs them).",
+        "when green flag clicked",
+        "set size to (75) %"
+      ]
+    },
+    {
+      "title": "Fix the Broken Rule (Debug It!)",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Sami built the game, but there is a bug. When he presses the DOWN arrow, the cat moves UP! Here is his down-arrow script",
+        "when down arrow key pressed",
+        "change y by (10)",
+        "Remember: adding to y moves UP. To move DOWN, you must take away from y.",
+        "a) Which block has the bug? ______________________________________________",
+        "b) What should the number be changed to? _______"
+      ]
+    },
+    {
+      "title": "Be a Game Developer: Design Your Own Game",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "You are the game developer! Design your own catch game. You do not have to build it — just plan it.",
+        "My game is called: ______________________________________________",
+        "The player moves the: ____________________ and catches the: ____________________",
+        "One job I will make once (a sub-routine): ______________________________________________",
+        "One thing that will repeat (a loop): ______________________________________________",
+        "Draw a picture of your game here."
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "A sub-routine is a brand-new kind of instruction.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — it is just a bundle of ordinary blocks you gave a name to. Nothing magic; it saves you writing the same blocks again."
+    },
+    {
+      "symptom": "Making the Move Around block runs it.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — making a block (the define hat) only creates the job. It does nothing until you drag the Move Around block into a script and run it."
+    },
+    {
+      "symptom": "repeat and forever are the same.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "A repeat (6) loop runs a set number of times and then stops (iteration); a forever loop never stops on its own (repetition). Count the runs together to feel the difference."
+    },
+    {
+      "symptom": "Bigger y means down, like reading down a page.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "On the Scratch stage, bigger y means UP and smaller y means DOWN. This is the cause of the classic down-arrow bug — worth showing slowly."
+    },
+    {
+      "symptom": "When the game misbehaves, I should delete it and start again.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — test each part in turn to find the one bug, then fix just that. Starting again usually brings the bug back."
+    },
+    {
+      "symptom": "The blocks go next to the repeat loop.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "The blocks you want repeated must sit INSIDE the C-shaped repeat block, hugged by its arms, not stacked underneath it."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Games repeat things: repetition and iteration",
+        "text": "Games are full of repeats."
+      },
+      {
+        "title": "Sub-routines: a job you make once and use again",
+        "text": "A sub-routine is a set of instructions for a job used again and again."
+      },
+      {
+        "title": "Into Scratch: the Move Around sub-routine and the controls",
+        "text": "How to make a sub-routine in Scratch using My Blocks, and how to move a sprite with the arrow keys using coordinates (change x by, change y by)."
+      },
+      {
+        "title": "Add the treat: a repeat loop and click-to-catch",
+        "text": "Add a second sprite (the treat), use a repeat loop (iteration) for a spin animation, move it to random positions with coordinates, and make it catchable with the when this sprite clicked event and a second sub-routine."
+      },
+      {
+        "title": "Be a tester: find the bug and debug it",
+        "text": "Real game developers test systematically — they check each part of the program in turn, one at a time, until you find the bug (error)."
+      }
+    ],
+    "terms": [
+      [
+        "game developer",
+        "A person who designs and makes computer games."
+      ],
+      [
+        "sub-routine",
+        "A set of steps for a job you use again and again, made once."
+      ],
+      [
+        "My Blocks",
+        "The Scratch group where you make your own block (a sub-routine)."
+      ],
+      [
+        "define block",
+        "The hat block that holds a sub-routine's instructions."
+      ],
+      [
+        "repetition",
+        "Doing the same thing over and over without stopping."
+      ],
+      [
+        "iteration",
+        "Repeating steps a set, known number of times, then stopping."
+      ],
+      [
+        "loop",
+        "Instructions that repeat."
+      ],
+      [
+        "event",
+        "Something that starts a script running."
+      ],
+      [
+        "coordinates",
+        "The x and y numbers that give a sprite's spot on the stage."
+      ],
+      [
+        "test systematically",
+        "Checking each part in turn, one at a time, to find an error."
+      ],
+      [
+        "bug",
+        "An error in a program."
+      ],
+      [
+        "debug",
+        "To find and fix a bug."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "game developer",
+        "meaning": "A person who designs and makes computer games.",
+        "example": "You, this unit, making a game in Scratch.",
+        "letter": "G"
+      },
+      {
+        "term": "sub-routine",
+        "meaning": "A set of steps for a job you use again and again, made once.",
+        "example": "Getting ready for school: the same steps each morning.",
+        "letter": "S"
+      },
+      {
+        "term": "My Blocks",
+        "meaning": "The Scratch group where you make your own block (a sub-routine).",
+        "example": "Making a block called Move Around.",
+        "letter": "M"
+      },
+      {
+        "term": "define block",
+        "meaning": "The hat block that holds a sub-routine's instructions.",
+        "example": "define Move Around, with steps under it.",
+        "letter": "D"
+      },
+      {
+        "term": "repetition",
+        "meaning": "Doing the same thing over and over without stopping.",
+        "example": "A forever loop that never ends.",
+        "letter": "R"
+      },
+      {
+        "term": "iteration",
+        "meaning": "Repeating steps a set, known number of times, then stopping.",
+        "example": "repeat (6) spins the treat six times.",
+        "letter": "I"
+      },
+      {
+        "term": "loop",
+        "meaning": "Instructions that repeat.",
+        "example": "repeat ( ) and forever are loops.",
+        "letter": "L"
+      },
+      {
+        "term": "event",
+        "meaning": "Something that starts a script running.",
+        "example": "The green flag, a key press, a click.",
+        "letter": "E"
+      },
+      {
+        "term": "coordinates",
+        "meaning": "The x and y numbers that give a sprite's spot on the stage.",
+        "example": "go to x: (0) y: (-120).",
+        "letter": "C"
+      },
+      {
+        "term": "test systematically",
+        "meaning": "Checking each part in turn, one at a time, to find an error.",
+        "example": "Try each arrow key on its own.",
+        "letter": "T"
+      },
+      {
+        "term": "bug",
+        "meaning": "An error in a program.",
+        "example": "The down arrow moves the cat up.",
+        "letter": "B"
+      },
+      {
+        "term": "debug",
+        "meaning": "To find and fix a bug.",
+        "example": "Change 10 to -10 so down means down.",
+        "letter": "D"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "A sub-routine is a brand-new kind of instruction.",
+        "No — it is just a bundle of ordinary blocks you gave a name to. Nothing magic; it saves you writing the same blocks again."
+      ],
+      [
+        "Making the Move Around block runs it.",
+        "No — making a block (the define hat) only creates the job. It does nothing until you drag the Move Around block into a script and run it."
+      ],
+      [
+        "repeat and forever are the same.",
+        "A repeat (6) loop runs a set number of times and then stops (iteration); a forever loop never stops on its own (repetition). Count the runs together to feel the difference."
+      ],
+      [
+        "Bigger y means down, like reading down a page.",
+        "On the Scratch stage, bigger y means UP and smaller y means DOWN. This is the cause of the classic down-arrow bug — worth showing slowly."
+      ],
+      [
+        "When the game misbehaves, I should delete it and start again.",
+        "No — test each part in turn to find the one bug, then fix just that. Starting again usually brings the bug back."
+      ],
+      [
+        "The blocks go next to the repeat loop.",
+        "The blocks you want repeated must sit INSIDE the C-shaped repeat block, hugged by its arms, not stacked underneath it."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "True or false? A sub-routine is a set of instructions for a job you use again and again, made once. True / False",
+      "answer": "True.",
+      "hint": "Look back at what game developer and sub-routine mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "True."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Which Scratch group do you use to make your own block (a sub-routine)? ([ ] Motion [ ] My Blocks [ ] Sound)",
+      "answer": "My Blocks (using Make a Block).",
+      "hint": "Look back at what game developer and sub-routine mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "My Blocks (using Make a Block)."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Fill in the words. A repeat (6) loop repeats a",
+      "answer": "a set (known) number of times; without stopping.",
+      "hint": "Look back at what game developer and sub-routine mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "a set (known) number of times; without stopping."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Match each event to what starts it. Draw a line.",
+      "answer": "when green flag clicked = the game starts; when right arrow key pressed = the right arrow is pressed; when this sprite clicked = you click on the sprite.",
+      "hint": "Look back at what game developer and sub-routine mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "when green flag clicked = the game starts; when right arrow key pressed = the right arrow is pressed; when this sprite clicked = you click on the sprite."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "When Sami presses the DOWN arrow, his cat moves UP. His block says change y by (10). What should the block say instead?",
+      "answer": "change y by (-10). (Adding to y moves up, so to move down we take away from y.)",
+      "hint": "Look back at what game developer and sub-routine mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "change y by (-10). (Adding to y moves up, so to move down we take away from y.)"
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "What does it mean to test a program systematically? Tick the best answer.",
+      "answer": "Check each part in turn until you find the error. (Not guessing, and not starting again.)",
+      "hint": "Look back at what game developer and sub-routine mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check each part in turn until you find the error. (Not guessing, and not starting again.)"
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "What does it mean to test a program systematically? Tick the best answer.",
+      "answer": "Check each part in turn until you find the error. (Not guessing, and not starting again.)",
+      "hint": "Look back at what game developer and sub-routine mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Check each part in turn until you find the error. (Not guessing, and not starting again.)"
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "When Sami presses the DOWN arrow, his cat moves UP. His block says change y by (10). What should the block say instead?",
+      "answer": "change y by (-10). (Adding to y moves up, so to move down we take away from y.)",
+      "hint": "Look back at what game developer and sub-routine mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: change y by (-10). (Adding to y moves up, so to move down we take away from y.)"
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "What does it mean to test a program systematically? Tick the best answer.",
+      "answer": "Check each part in turn until you find the error. (Not guessing, and not starting again.)",
+      "hint": "Look back at what game developer and sub-routine mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Check each part in turn until you find the error. (Not guessing, and not starting again.)"
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "True or false? A sub-routine is a set of instructions for a job you use again and again, made once. True / False",
+      "answer": "True.",
+      "hint": "Look back at what game developer and sub-routine mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: True."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Fill in the words. A repeat (6) loop repeats a",
+      "keyIdeas": [
+        "game developer",
+        "sub-routine",
+        "My Blocks"
+      ],
+      "modelAnswer": "a set (known) number of times; without stopping."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Match each event to what starts it. Draw a line.",
+      "keyIdeas": [
+        "sub-routine",
+        "My Blocks",
+        "define block"
+      ],
+      "modelAnswer": "when green flag clicked = the game starts; when right arrow key pressed = the right arrow is pressed; when this sprite clicked = you click on the sprite."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "When Sami presses the DOWN arrow, his cat moves UP. His block says change y by (10). What should the block say instead?",
+      "keyIdeas": [
+        "My Blocks",
+        "define block",
+        "repetition"
+      ],
+      "modelAnswer": "change y by (-10). (Adding to y moves up, so to move down we take away from y.)"
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in add the treat: a repeat loop and click-to-catch, and give one example of your own.",
+      "keyIdeas": [
+        "game developer",
+        "sub-routine",
+        "My Blocks"
+      ],
+      "modelAnswer": "Add a second sprite (the treat), use a repeat loop (iteration) for a spin animation, move it to random positions with coordinates, and make it catchable with the when this sprite clicked event and a second sub-routine.\n\nTry it: they may change numbers and watch what happens. You add the Apple and Pop sound, build the spin (repeat loop) and the Catch Treat sub-routine, and play.\n\nCheck yourself: Are the two repeated blocks INSIDE the repeat loop (hugged by its C-shape)? Can you name the two events that start the treat's two scripts? Did you make Catch Treat in My Blocks and run it from when this sprite clicked?"
+    }
+  ],
+  "project": {
+    "title": "Unit 10 Project: Be a Game Developer",
+    "brief": "Bring together everything from Be a Game Developer into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your be a game developer project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I made a Move Around sub-routine in My Blocks.",
+      "All four arrow keys move the cat, and each runs Move Around.",
+      "My treat uses a repeat loop to spin at the start.",
+      "I can catch the treat by clicking it, and it hops away.",
+      "I tested each arrow key one at a time.",
+      "I changed at least one thing to make the game my own."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "True or false? A sub-routine is a set of instructions for a job you use again and again, made once.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "answer": "True",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "True."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “sub-routine” mean in computing?",
+        "options": [
+          "A set of steps for a job you use again and again, made once.",
+          "The Scratch group where you make your own block (a sub-routine).",
+          "The hat block that holds a sub-routine's instructions.",
+          "Doing the same thing over and over without stopping."
+        ],
+        "answer": "A set of steps for a job you use again and again, made once.",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Sub-routine means a set of steps for a job you use again and again, made once."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “My Blocks” mean in computing?",
+        "options": [
+          "The Scratch group where you make your own block (a sub-routine).",
+          "The hat block that holds a sub-routine's instructions.",
+          "Doing the same thing over and over without stopping.",
+          "Repeating steps a set, known number of times, then stopping."
+        ],
+        "answer": "The Scratch group where you make your own block (a sub-routine).",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "My Blocks means the Scratch group where you make your own block (a sub-routine)."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “define block” mean in computing?",
+        "options": [
+          "The hat block that holds a sub-routine's instructions.",
+          "Doing the same thing over and over without stopping.",
+          "Repeating steps a set, known number of times, then stopping.",
+          "Instructions that repeat."
+        ],
+        "answer": "The hat block that holds a sub-routine's instructions.",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Define block means the hat block that holds a sub-routine's instructions."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “repetition” mean in computing?",
+        "options": [
+          "Doing the same thing over and over without stopping.",
+          "Repeating steps a set, known number of times, then stopping.",
+          "Instructions that repeat.",
+          "Something that starts a script running."
+        ],
+        "answer": "Doing the same thing over and over without stopping.",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Repetition means doing the same thing over and over without stopping."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “iteration” mean in computing?",
+        "options": [
+          "Repeating steps a set, known number of times, then stopping.",
+          "Instructions that repeat.",
+          "Something that starts a script running.",
+          "The x and y numbers that give a sprite's spot on the stage."
+        ],
+        "answer": "Repeating steps a set, known number of times, then stopping.",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Iteration means repeating steps a set, known number of times, then stopping."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Instructions that repeat.?",
+        "options": [
+          "loop",
+          "event",
+          "coordinates",
+          "test systematically"
+        ],
+        "answer": "loop",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Loop means instructions that repeat."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Something that starts a script running.?",
+        "options": [
+          "event",
+          "coordinates",
+          "test systematically",
+          "bug"
+        ],
+        "answer": "event",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Event means something that starts a script running."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: The x and y numbers that give a sprite's spot on the stage.?",
+        "options": [
+          "coordinates",
+          "test systematically",
+          "bug",
+          "debug"
+        ],
+        "answer": "coordinates",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Coordinates means the x and y numbers that give a sprite's spot on the stage."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Checking each part in turn, one at a time, to find an error.?",
+        "options": [
+          "test systematically",
+          "bug",
+          "debug",
+          "game developer"
+        ],
+        "answer": "test systematically",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Test systematically means checking each part in turn, one at a time, to find an error."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: An error in a program.?",
+        "options": [
+          "bug",
+          "debug",
+          "game developer",
+          "sub-routine"
+        ],
+        "answer": "bug",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Bug means an error in a program."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: To find and fix a bug.?",
+        "options": [
+          "debug",
+          "game developer",
+          "sub-routine",
+          "My Blocks"
+        ],
+        "answer": "debug",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Debug means to find and fix a bug."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u10-game-1",
+        "icon": "?",
+        "skill": "game developer",
+        "title": "Quick Match: game developer",
+        "description": "Practise game developer through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "True or false? A sub-routine is a set of instructions for a job you use again and again, made once.",
+            "choices": [
+              "True",
+              "False"
+            ],
+            "answer": "True",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "True."
+          },
+          {
+            "prompt": "What does “define block” mean in computing?",
+            "choices": [
+              "The hat block that holds a sub-routine's instructions.",
+              "Doing the same thing over and over without stopping.",
+              "Repeating steps a set, known number of times, then stopping.",
+              "Instructions that repeat."
+            ],
+            "answer": "The hat block that holds a sub-routine's instructions.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Define block means the hat block that holds a sub-routine's instructions."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Instructions that repeat.?",
+            "choices": [
+              "loop",
+              "event",
+              "coordinates",
+              "test systematically"
+            ],
+            "answer": "loop",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Loop means instructions that repeat."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Checking each part in turn, one at a time, to find an error.?",
+            "choices": [
+              "test systematically",
+              "bug",
+              "debug",
+              "game developer"
+            ],
+            "answer": "test systematically",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Test systematically means checking each part in turn, one at a time, to find an error."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-2",
+        "icon": "★",
+        "skill": "sub-routine",
+        "title": "Concept Quest: sub-routine",
+        "description": "Practise sub-routine through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “sub-routine” mean in computing?",
+            "choices": [
+              "A set of steps for a job you use again and again, made once.",
+              "The Scratch group where you make your own block (a sub-routine).",
+              "The hat block that holds a sub-routine's instructions.",
+              "Doing the same thing over and over without stopping."
+            ],
+            "answer": "A set of steps for a job you use again and again, made once.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Sub-routine means a set of steps for a job you use again and again, made once."
+          },
+          {
+            "prompt": "What does “repetition” mean in computing?",
+            "choices": [
+              "Doing the same thing over and over without stopping.",
+              "Repeating steps a set, known number of times, then stopping.",
+              "Instructions that repeat.",
+              "Something that starts a script running."
+            ],
+            "answer": "Doing the same thing over and over without stopping.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Repetition means doing the same thing over and over without stopping."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Something that starts a script running.?",
+            "choices": [
+              "event",
+              "coordinates",
+              "test systematically",
+              "bug"
+            ],
+            "answer": "event",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Event means something that starts a script running."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An error in a program.?",
+            "choices": [
+              "bug",
+              "debug",
+              "game developer",
+              "sub-routine"
+            ],
+            "answer": "bug",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Bug means an error in a program."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-3",
+        "icon": "◫",
+        "skill": "My Blocks",
+        "title": "Debug Detective: My Blocks",
+        "description": "Practise my blocks through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “My Blocks” mean in computing?",
+            "choices": [
+              "The Scratch group where you make your own block (a sub-routine).",
+              "The hat block that holds a sub-routine's instructions.",
+              "Doing the same thing over and over without stopping.",
+              "Repeating steps a set, known number of times, then stopping."
+            ],
+            "answer": "The Scratch group where you make your own block (a sub-routine).",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "My Blocks means the Scratch group where you make your own block (a sub-routine)."
+          },
+          {
+            "prompt": "What does “iteration” mean in computing?",
+            "choices": [
+              "Repeating steps a set, known number of times, then stopping.",
+              "Instructions that repeat.",
+              "Something that starts a script running.",
+              "The x and y numbers that give a sprite's spot on the stage."
+            ],
+            "answer": "Repeating steps a set, known number of times, then stopping.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Iteration means repeating steps a set, known number of times, then stopping."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The x and y numbers that give a sprite's spot on the stage.?",
+            "choices": [
+              "coordinates",
+              "test systematically",
+              "bug",
+              "debug"
+            ],
+            "answer": "coordinates",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Coordinates means the x and y numbers that give a sprite's spot on the stage."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To find and fix a bug.?",
+            "choices": [
+              "debug",
+              "game developer",
+              "sub-routine",
+              "My Blocks"
+            ],
+            "answer": "debug",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Debug means to find and fix a bug."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-4",
+        "icon": "→",
+        "skill": "define block",
+        "title": "Algorithm Runner: define block",
+        "description": "Practise define block through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “define block” mean in computing?",
+            "choices": [
+              "The hat block that holds a sub-routine's instructions.",
+              "Doing the same thing over and over without stopping.",
+              "Repeating steps a set, known number of times, then stopping.",
+              "Instructions that repeat."
+            ],
+            "answer": "The hat block that holds a sub-routine's instructions.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Define block means the hat block that holds a sub-routine's instructions."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Instructions that repeat.?",
+            "choices": [
+              "loop",
+              "event",
+              "coordinates",
+              "test systematically"
+            ],
+            "answer": "loop",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Loop means instructions that repeat."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Checking each part in turn, one at a time, to find an error.?",
+            "choices": [
+              "test systematically",
+              "bug",
+              "debug",
+              "game developer"
+            ],
+            "answer": "test systematically",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Test systematically means checking each part in turn, one at a time, to find an error."
+          },
+          {
+            "prompt": "True or false? A sub-routine is a set of instructions for a job you use again and again, made once.",
+            "choices": [
+              "True",
+              "False"
+            ],
+            "answer": "True",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "True."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-5",
+        "icon": "Σ",
+        "skill": "repetition",
+        "title": "Vocabulary Vault: repetition",
+        "description": "Practise repetition through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “repetition” mean in computing?",
+            "choices": [
+              "Doing the same thing over and over without stopping.",
+              "Repeating steps a set, known number of times, then stopping.",
+              "Instructions that repeat.",
+              "Something that starts a script running."
+            ],
+            "answer": "Doing the same thing over and over without stopping.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Repetition means doing the same thing over and over without stopping."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Something that starts a script running.?",
+            "choices": [
+              "event",
+              "coordinates",
+              "test systematically",
+              "bug"
+            ],
+            "answer": "event",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Event means something that starts a script running."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An error in a program.?",
+            "choices": [
+              "bug",
+              "debug",
+              "game developer",
+              "sub-routine"
+            ],
+            "answer": "bug",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Bug means an error in a program."
+          },
+          {
+            "prompt": "What does “sub-routine” mean in computing?",
+            "choices": [
+              "A set of steps for a job you use again and again, made once.",
+              "The Scratch group where you make your own block (a sub-routine).",
+              "The hat block that holds a sub-routine's instructions.",
+              "Doing the same thing over and over without stopping."
+            ],
+            "answer": "A set of steps for a job you use again and again, made once.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Sub-routine means a set of steps for a job you use again and again, made once."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-6",
+        "icon": "◇",
+        "skill": "iteration",
+        "title": "Challenge Cards: iteration",
+        "description": "Practise iteration through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “iteration” mean in computing?",
+            "choices": [
+              "Repeating steps a set, known number of times, then stopping.",
+              "Instructions that repeat.",
+              "Something that starts a script running.",
+              "The x and y numbers that give a sprite's spot on the stage."
+            ],
+            "answer": "Repeating steps a set, known number of times, then stopping.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Iteration means repeating steps a set, known number of times, then stopping."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The x and y numbers that give a sprite's spot on the stage.?",
+            "choices": [
+              "coordinates",
+              "test systematically",
+              "bug",
+              "debug"
+            ],
+            "answer": "coordinates",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Coordinates means the x and y numbers that give a sprite's spot on the stage."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To find and fix a bug.?",
+            "choices": [
+              "debug",
+              "game developer",
+              "sub-routine",
+              "My Blocks"
+            ],
+            "answer": "debug",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Debug means to find and fix a bug."
+          },
+          {
+            "prompt": "What does “My Blocks” mean in computing?",
+            "choices": [
+              "The Scratch group where you make your own block (a sub-routine).",
+              "The hat block that holds a sub-routine's instructions.",
+              "Doing the same thing over and over without stopping.",
+              "Repeating steps a set, known number of times, then stopping."
+            ],
+            "answer": "The Scratch group where you make your own block (a sub-routine).",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "My Blocks means the Scratch group where you make your own block (a sub-routine)."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-7",
+        "icon": "⚡",
+        "skill": "loop",
+        "title": "Think Fast: loop",
+        "description": "Practise loop through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Instructions that repeat.?",
+            "choices": [
+              "loop",
+              "event",
+              "coordinates",
+              "test systematically"
+            ],
+            "answer": "loop",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Loop means instructions that repeat."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Checking each part in turn, one at a time, to find an error.?",
+            "choices": [
+              "test systematically",
+              "bug",
+              "debug",
+              "game developer"
+            ],
+            "answer": "test systematically",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Test systematically means checking each part in turn, one at a time, to find an error."
+          },
+          {
+            "prompt": "True or false? A sub-routine is a set of instructions for a job you use again and again, made once.",
+            "choices": [
+              "True",
+              "False"
+            ],
+            "answer": "True",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "True."
+          },
+          {
+            "prompt": "What does “define block” mean in computing?",
+            "choices": [
+              "The hat block that holds a sub-routine's instructions.",
+              "Doing the same thing over and over without stopping.",
+              "Repeating steps a set, known number of times, then stopping.",
+              "Instructions that repeat."
+            ],
+            "answer": "The hat block that holds a sub-routine's instructions.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Define block means the hat block that holds a sub-routine's instructions."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-8",
+        "icon": "☁",
+        "skill": "event",
+        "title": "Explain It: event",
+        "description": "Practise event through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Something that starts a script running.?",
+            "choices": [
+              "event",
+              "coordinates",
+              "test systematically",
+              "bug"
+            ],
+            "answer": "event",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Event means something that starts a script running."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An error in a program.?",
+            "choices": [
+              "bug",
+              "debug",
+              "game developer",
+              "sub-routine"
+            ],
+            "answer": "bug",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Bug means an error in a program."
+          },
+          {
+            "prompt": "What does “sub-routine” mean in computing?",
+            "choices": [
+              "A set of steps for a job you use again and again, made once.",
+              "The Scratch group where you make your own block (a sub-routine).",
+              "The hat block that holds a sub-routine's instructions.",
+              "Doing the same thing over and over without stopping."
+            ],
+            "answer": "A set of steps for a job you use again and again, made once.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Sub-routine means a set of steps for a job you use again and again, made once."
+          },
+          {
+            "prompt": "What does “repetition” mean in computing?",
+            "choices": [
+              "Doing the same thing over and over without stopping.",
+              "Repeating steps a set, known number of times, then stopping.",
+              "Instructions that repeat.",
+              "Something that starts a script running."
+            ],
+            "answer": "Doing the same thing over and over without stopping.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Repetition means doing the same thing over and over without stopping."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-9",
+        "icon": "⌂",
+        "skill": "coordinates",
+        "title": "Real-Life Round: coordinates",
+        "description": "Practise coordinates through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The x and y numbers that give a sprite's spot on the stage.?",
+            "choices": [
+              "coordinates",
+              "test systematically",
+              "bug",
+              "debug"
+            ],
+            "answer": "coordinates",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Coordinates means the x and y numbers that give a sprite's spot on the stage."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To find and fix a bug.?",
+            "choices": [
+              "debug",
+              "game developer",
+              "sub-routine",
+              "My Blocks"
+            ],
+            "answer": "debug",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Debug means to find and fix a bug."
+          },
+          {
+            "prompt": "What does “My Blocks” mean in computing?",
+            "choices": [
+              "The Scratch group where you make your own block (a sub-routine).",
+              "The hat block that holds a sub-routine's instructions.",
+              "Doing the same thing over and over without stopping.",
+              "Repeating steps a set, known number of times, then stopping."
+            ],
+            "answer": "The Scratch group where you make your own block (a sub-routine).",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "My Blocks means the Scratch group where you make your own block (a sub-routine)."
+          },
+          {
+            "prompt": "What does “iteration” mean in computing?",
+            "choices": [
+              "Repeating steps a set, known number of times, then stopping.",
+              "Instructions that repeat.",
+              "Something that starts a script running.",
+              "The x and y numbers that give a sprite's spot on the stage."
+            ],
+            "answer": "Repeating steps a set, known number of times, then stopping.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Iteration means repeating steps a set, known number of times, then stopping."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-10",
+        "icon": "!",
+        "skill": "test systematically",
+        "title": "Spot the Bug: test systematically",
+        "description": "Practise test systematically through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Checking each part in turn, one at a time, to find an error.?",
+            "choices": [
+              "test systematically",
+              "bug",
+              "debug",
+              "game developer"
+            ],
+            "answer": "test systematically",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Test systematically means checking each part in turn, one at a time, to find an error."
+          },
+          {
+            "prompt": "True or false? A sub-routine is a set of instructions for a job you use again and again, made once.",
+            "choices": [
+              "True",
+              "False"
+            ],
+            "answer": "True",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "True."
+          },
+          {
+            "prompt": "What does “define block” mean in computing?",
+            "choices": [
+              "The hat block that holds a sub-routine's instructions.",
+              "Doing the same thing over and over without stopping.",
+              "Repeating steps a set, known number of times, then stopping.",
+              "Instructions that repeat."
+            ],
+            "answer": "The hat block that holds a sub-routine's instructions.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Define block means the hat block that holds a sub-routine's instructions."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Instructions that repeat.?",
+            "choices": [
+              "loop",
+              "event",
+              "coordinates",
+              "test systematically"
+            ],
+            "answer": "loop",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Loop means instructions that repeat."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-11",
+        "icon": "≡",
+        "skill": "bug",
+        "title": "Mastery Mix: bug",
+        "description": "Practise bug through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: An error in a program.?",
+            "choices": [
+              "bug",
+              "debug",
+              "game developer",
+              "sub-routine"
+            ],
+            "answer": "bug",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Bug means an error in a program."
+          },
+          {
+            "prompt": "What does “sub-routine” mean in computing?",
+            "choices": [
+              "A set of steps for a job you use again and again, made once.",
+              "The Scratch group where you make your own block (a sub-routine).",
+              "The hat block that holds a sub-routine's instructions.",
+              "Doing the same thing over and over without stopping."
+            ],
+            "answer": "A set of steps for a job you use again and again, made once.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Sub-routine means a set of steps for a job you use again and again, made once."
+          },
+          {
+            "prompt": "What does “repetition” mean in computing?",
+            "choices": [
+              "Doing the same thing over and over without stopping.",
+              "Repeating steps a set, known number of times, then stopping.",
+              "Instructions that repeat.",
+              "Something that starts a script running."
+            ],
+            "answer": "Doing the same thing over and over without stopping.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Repetition means doing the same thing over and over without stopping."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Something that starts a script running.?",
+            "choices": [
+              "event",
+              "coordinates",
+              "test systematically",
+              "bug"
+            ],
+            "answer": "event",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Event means something that starts a script running."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-12",
+        "icon": "T",
+        "skill": "debug",
+        "title": "Unit Champion: debug",
+        "description": "Practise debug through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To find and fix a bug.?",
+            "choices": [
+              "debug",
+              "game developer",
+              "sub-routine",
+              "My Blocks"
+            ],
+            "answer": "debug",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Debug means to find and fix a bug."
+          },
+          {
+            "prompt": "What does “My Blocks” mean in computing?",
+            "choices": [
+              "The Scratch group where you make your own block (a sub-routine).",
+              "The hat block that holds a sub-routine's instructions.",
+              "Doing the same thing over and over without stopping.",
+              "Repeating steps a set, known number of times, then stopping."
+            ],
+            "answer": "The Scratch group where you make your own block (a sub-routine).",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "My Blocks means the Scratch group where you make your own block (a sub-routine)."
+          },
+          {
+            "prompt": "What does “iteration” mean in computing?",
+            "choices": [
+              "Repeating steps a set, known number of times, then stopping.",
+              "Instructions that repeat.",
+              "Something that starts a script running.",
+              "The x and y numbers that give a sprite's spot on the stage."
+            ],
+            "answer": "Repeating steps a set, known number of times, then stopping.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Iteration means repeating steps a set, known number of times, then stopping."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The x and y numbers that give a sprite's spot on the stage.?",
+            "choices": [
+              "coordinates",
+              "test systematically",
+              "bug",
+              "debug"
+            ],
+            "answer": "coordinates",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Coordinates means the x and y numbers that give a sprite's spot on the stage."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can explain that a sub-routine is a set of instructions for a frequently-used job, made once and run many times.",
+    "I can in Scratch, make a sub-routine with My Blocks (Make a Block) and run it from other scripts.",
+    "I can explain the difference between a forever loop (repetition — never stops) and a repeat (n) loop (iteration — a set number of times).",
+    "I can recognise the event blocks that start a script: when green flag clicked, when key pressed, and when this sprite clicked.",
+    "I can use coordinates to move a sprite: change x by, change y by, and glide or go to a random position.",
+    "I can build a small, working game in Scratch that uses a sub-routine and a loop.",
+    "I can test a program systematically — checking each part in turn — to find an error, and debug (fix) it."
+  ]
+}

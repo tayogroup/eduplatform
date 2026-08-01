@@ -1,0 +1,1736 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.298Z",
+  "stage": {
+    "id": "s02",
+    "label": "Stage 2"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t01",
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "comp-g02-u02",
+    "unitNo": 2,
+    "unitTitle": "Be a Data Analyst",
+    "unitOverview": "There are four big ideas in the unit. First, data means the facts we collect — and data can be words (like favourite fruit) as well as numbers. We can sort data into groups, also called categories. Second, we count our data, and a tally (a little mark for each thing) helps us count without losing our place. Third, we can present our data — show it — as a pictogram (a chart made of pictures) or a bar graph, sometimes called a block graph (a chart made of bars or blocks).",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 2
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-2-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 2",
+    "sourceArchive": "Year 2-20260801T055735Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 2/Unit 2/Year 2 - Unit 2 Teacher Guide.docx",
+      "Year 2/Unit 2/Year 2 - Unit 2 Activity Sheet.docx",
+      "Year 2/Unit 2/Year 2 - Unit 2 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 325,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 2 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Understand that data means facts we collect, and that data can be words or numbers.",
+    "Sort data into groups (categories), and say more than one way to group the same things.",
+    "Count a small set of data using a tally, and write the totals in a table.",
+    "Read a simple pictogram, using the key, to say which is most and which is least.",
+    "Make a simple bar graph (block graph) with the right number of blocks and no gaps.",
+    "Say why a computer is a good place to store data, and that a backup is a safe spare copy.",
+    "Give one way that data is collected for a reason (a form, a till barcode, or counting traffic)."
+  ],
+  "toolkit": [],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-what-is-data-sorting-into-groups",
+      "title": "What is data? Sorting into groups",
+      "explanation": "Data is just the facts we collect. Data can be numbers, but it can also be words — like the colour of our eyes or our favourite fruit. When we are data analysts, the first thing we do is sort the data into groups. Things that belong together make a group, which we can also call a category.\n\nLook at all these things mixed up. Let us be tidy and put them into groups. All the fruit can go here.",
+      "example": "All the animals can go there. As they do, keep naming it: “Nadia is sorting the data into two groups — fruit and animals.”",
+      "checkYourself": "Can you suggest a second, different way to group the same things? Can you place each item in the correct group? Do not worry about counting yet — that is the next session."
+    },
+    {
+      "id": "concept-2-counting-data-with-a-tally",
+      "title": "Counting data with a tally",
+      "explanation": "Once our data is in groups, we want to know how many are in each group. We count. A tally is a little mark we make — one mark for each thing — so we do not lose our place while counting. At the end we count the marks and write the total in a table.\n\nLet us find out our favourite fruit. When I point to you, tell me: mango, banana or dates. Now we count the marks.",
+      "example": "Do a real class tally. Show the marks growing.",
+      "checkYourself": "Can you count the marks carefully, pointing as you go? Does the total match the number of things? Careful, unhurried counting is the goal. Does you make exactly one mark per item?"
+    },
+    {
+      "id": "concept-3-showing-data-with-pictures-pictograms",
+      "title": "Showing data with pictures: pictograms",
+      "explanation": "After we count, we present the data — we show it so it is easy to read. One way is a pictogram. A pictogram uses pictures, and each picture stands for one thing. A little note called a key tells us what one picture means. The longest row has the most; the shortest row has the least.\n\nMake a real pictogram on the wall. Have them stick their card in the right row, all lined up neatly starting from the same edge.",
+      "example": "Then count together to check. Give you a sticky note or card and ask how they came to Ehel Academy today — walk, car or bus.",
+      "checkYourself": "Can you count a single row to answer 'how many'? Can you use the key (one picture = one child)?"
+    },
+    {
+      "id": "concept-4-showing-data-with-blocks-bar-graphs-and-a-computer",
+      "title": "Showing data with blocks: bar graphs (and a computer)",
+      "explanation": "Another way to present data is a bar graph, also called a block graph. Instead of pictures, we colour blocks — one block for each thing, with no gaps between them. The tallest or longest bar shows the most. A bar graph shows the SAME data as a pictogram, just in a different way. We can make a bar graph by hand, or a computer can make one for us in seconds.\n\nGo back to the fruit tally from Session 2 (mango 4, banana 2, dates 1). One block for each child. No gaps — the blocks touch.",
+      "example": "Which bar is longest? So which fruit is the most popular?",
+      "checkYourself": "Can you colour from the same edge with no gaps? Does you colour exactly the right number of blocks?"
+    },
+    {
+      "id": "concept-5-why-computers-store-data-and-collecting-data-for-a-reason",
+      "title": "Why computers store data, and collecting data for a reason",
+      "explanation": "Computers are very good at keeping — storing — lots of data. There are two ideas here. First, storing data on a computer is helpful because a computer can keep a huge amount, find it fast, show it as charts, share it with other computers, change it easily, and make a copy. A copy kept safe, in case the first one is lost, is called a backup. Second, data is collected all around us for a reason — a school form asks which club you like, a shop till reads a barcode to know what was sold, and machines by the road count how much traffic goes past.\n\nImagine writing every child's favourite fruit in the whole school on paper — that is a huge pile, and hard to search. A computer keeps it all neatly and finds any answer in a blink.",
+      "example": "And it keeps a spare copy, a backup, so the data is safe. When Mum buys rice, the till beeps — it is reading the barcode, those little black lines, to know what it is and how much it costs.",
+      "checkYourself": "Can you know a backup is an extra, safe copy — not the same as deleting the first one? Can you name one place data is collected? Can you give one reason computers are good at storing data?"
+    }
+  ],
+  "codeExamples": [],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Sort into Groups",
+      "context": "work through the steps below and see what happens. This is what is data? sorting into groups in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Put each thing into the right group. Write it under Fruit or under Animals.",
+      "answer": "The things are: mango, cat, banana, camel, dates, goat Can you think of another way to group these things? Match: Fruit → Animals",
+      "modelType": "model-1",
+      "hint": "Start here: The things are: mango, cat, banana, camel, dates, goat",
+      "explanation": "What is data? Sorting into groups: Data is just the facts we collect. Data can be numbers, but it can also be words — like the colour of our eyes or our favourite fruit. When we are data analysts, the first thing we do is sort the data into groups. Things that belong together make a group, which we can also call a category."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Count with a Tally",
+      "context": "work through the steps below and see what happens. This is counting data with a tally in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Leila wrote down the fruit her friends like. Make one tally mark for each fruit, then write how many.",
+      "answer": "mango, banana, mango, dates, mango, banana, mango Match: Fruit → Your tally / How many",
+      "modelType": "model-2",
+      "hint": "Start here: mango, banana, mango, dates, mango, banana, mango",
+      "explanation": "Counting data with a tally: Once our data is in groups, we want to know how many are in each group. We count. A tally is a little mark we make — one mark for each thing — so we do not lose our place while counting. At the end we count the marks and write the total in a table."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Read the Pictogram",
+      "context": "work through the steps below and see what happens. This is showing data with pictures: pictograms in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Each circle is one child. This pictogram shows how you came to Ehel Academy.",
+      "answer": "1. Most you came by: __________________. 2. The fewest you came by: __________________. 3. How many you came by car? __________. Match: How we came → Each circle = 1 child Match: Walk → ● ● ● ● ●",
+      "modelType": "model-3",
+      "hint": "Start here: 1. Most you came by: __________________.",
+      "explanation": "Showing data with pictures: pictograms: After we count, we present the data — we show it so it is easy to read. One way is a pictogram. A pictogram uses pictures, and each picture stands for one thing. A little note called a key tells us what one picture means. The longest row has the most; the shortest row has the least."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Colour a Block Graph",
+      "context": "work through the steps below and see what happens. This is showing data with blocks: bar graphs (and a computer) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Now show the fruit data from Task 2 as a block graph. Colour one box for each fruit. No gaps — the boxes must touch! (mango = 4, banana = 2, dates = 1)",
+      "answer": "Match: Fruit → 1 / 2 / 3 / 4",
+      "modelType": "model-4",
+      "hint": "Start here: Match: Fruit → 1 / 2 / 3 / 4",
+      "explanation": "Showing data with blocks: bar graphs (and a computer): Another way to present data is a bar graph, also called a block graph. Instead of pictures, we colour blocks — one block for each thing, with no gaps between them. The tallest or longest bar shows the most. A bar graph shows the SAME data as a pictogram, just in a different way. We can make a bar…"
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Match the Words",
+      "context": "work through the steps below and see what happens. This is why computers store data, and collecting data for a reason in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Draw a line from each word to what it means.",
+      "answer": "Match: data → a spare copy of data, kept safe Match: tally → facts we collect Match: pictogram → little marks to help us count Match: backup → a chart that shows data with pictures",
+      "modelType": "model-5",
+      "hint": "Start here: Match: data → a spare copy of data, kept safe",
+      "explanation": "Why computers store data, and collecting data for a reason: Computers are very good at keeping — storing — lots of data. There are two ideas here. First, storing data on a computer is helpful because a computer can keep a huge amount, find it fast, show it as charts, share it with other computers, change it easily, and make a copy. A copy kept safe, in case…"
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "True or False?",
+      "context": "work through the steps below and see what happens. This is what is data? sorting into groups in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Circle True or False for each one.",
+      "answer": "a. Computers can store lots of data. True / False b. It is hard to copy data on a computer. True / False c. A backup is a spare copy kept safe. True / False",
+      "modelType": "model-6",
+      "hint": "Start here: a. Computers can store lots of data. True / False",
+      "explanation": "What is data? Sorting into groups: Data is just the facts we collect. Data can be numbers, but it can also be words — like the colour of our eyes or our favourite fruit. When we are data analysts, the first thing we do is sort the data into groups. Things that belong together make a group, which we can also call a category."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "What is data? Sorting into groups",
+      "modelType": "concept-model-1",
+      "purpose": "Data is just the facts we collect. Data can be numbers, but it can also be words — like the colour of our eyes or our favourite fruit. When we are data analysts, the first thing we do is sort the data into groups.…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Counting data with a tally",
+      "modelType": "concept-model-2",
+      "purpose": "Once our data is in groups, we want to know how many are in each group. We count. A tally is a little mark we make — one mark for each thing — so we do not lose our place while counting. At the end we count the marks…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Showing data with pictures: pictograms",
+      "modelType": "concept-model-3",
+      "purpose": "After we count, we present the data — we show it so it is easy to read. One way is a pictogram. A pictogram uses pictures, and each picture stands for one thing. A little note called a key tells us what one picture…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Showing data with blocks: bar graphs (and a computer)",
+      "modelType": "concept-model-4",
+      "purpose": "Another way to present data is a bar graph, also called a block graph. Instead of pictures, we colour blocks — one block for each thing, with no gaps between them. The tallest or longest bar shows the most. A bar graph…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Why computers store data, and collecting data for a reason",
+      "modelType": "concept-model-5",
+      "purpose": "Computers are very good at keeping — storing — lots of data. There are two ideas here. First, storing data on a computer is helpful because a computer can keep a huge amount, find it fast, show it as charts, share it…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with what is data? sorting into groups",
+      "example": "All the animals can go there. As they do, keep naming it: “Nadia is sorting the data into two groups — fruit and animals.”",
+      "steps": [
+        "Read the concept card for what is data? sorting into groups and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with counting data with a tally",
+      "example": "Do a real class tally. Show the marks growing.",
+      "steps": [
+        "Read the concept card for counting data with a tally and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with showing data with pictures: pictograms",
+      "example": "Then count together to check. Give you a sticky note or card and ask how they came to Ehel Academy today — walk, car or bus.",
+      "steps": [
+        "Read the concept card for showing data with pictures: pictograms and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with showing data with blocks: bar graphs (and a computer)",
+      "example": "Which bar is longest? So which fruit is the most popular?",
+      "steps": [
+        "Read the concept card for showing data with blocks: bar graphs (and a computer) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with why computers store data, and collecting data for a reason",
+      "example": "And it keeps a spare copy, a backup, so the data is safe. When Mum buys rice, the till beeps — it is reading the barcode, those little black lines, to know what it is and how much it costs.",
+      "steps": [
+        "Read the concept card for why computers store data, and collecting data for a reason and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: What is data? Sorting into groups",
+      "prompt": "Look at the pets pictogram. Each circle is one pet.",
+      "solution": "Most = fish (4). Least = bird (1)."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Counting data with a tally",
+      "prompt": "Circle the fruits. (mango goat dates camel banana)",
+      "solution": "Circle mango, dates and banana. (Goat and camel are animals.)"
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Showing data with pictures: pictograms",
+      "prompt": "Fill in the missing word. Choose from: pictogram, bar graph, backup.",
+      "solution": "(a) backup; (b) pictogram; (c) bar graph."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Showing data with blocks: bar graphs (and a computer)",
+      "prompt": "Write two good things about storing data on a computer.",
+      "solution": "Accept any two: stores lots of data; finds data quickly; shows data as charts; shares data with other computers; changes data easily; copies data / keeps a backup."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: What is data? Sorting into groups",
+      "prompt": "Explain in your own words: What is data? Sorting into groups.",
+      "solution": "Data is just the facts we collect. Data can be numbers, but it can also be words — like the colour of our eyes or our favourite fruit. When we are data analysts, the first thing we do is sort the data into groups. Things that belong together make a group, which we can also call a category.\n\nLook at all these things mixed up. Let us be tidy and put them into groups. All the fruit can go here.\n\nFor example: All the animals can go there. As they do, keep naming it: “Nadia is sorting the data into two groups — fruit and animals.”"
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Counting data with a tally",
+      "prompt": "Explain in your own words: Counting data with a tally.",
+      "solution": "Once our data is in groups, we want to know how many are in each group. We count. A tally is a little mark we make — one mark for each thing — so we do not lose our place while counting. At the end we count the marks and write the total in a table.\n\nLet us find out our favourite fruit. When I point to you, tell me: mango, banana or dates. Now we count the marks.\n\nFor example: Do a real class tally. Show the marks growing."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Count the tally. How many?",
+      "answer": "4.",
+      "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "mango: ||||",
+      "answer": "4.",
+      "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "Look at the pets pictogram. Each circle is one pet.",
+      "answer": "Most = fish (4). Least = bird (1).",
+      "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Circle the fruits. (mango goat dates camel banana)",
+      "answer": "Circle mango, dates and banana. (Goat and camel are animals.)",
+      "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "Fill in the missing word. Choose from: pictogram, bar graph, backup.",
+      "answer": "(a) backup; (b) pictogram; (c) bar graph.",
+      "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "Write two good things about storing data on a computer.",
+      "answer": "Accept any two: stores lots of data; finds data quickly; shows data as charts; shares data with other computers; changes data easily; copies data / keeps a backup.",
+      "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p07",
+      "level": "Challenge",
+      "prompt": "Which chart shows data with pictures — a pictogram or a bar graph?",
+      "answer": "A pictogram.",
+      "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Sort into Groups",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Put each thing into the right group. Write it under Fruit or under Animals.",
+        "The things are: mango, cat, banana, camel, dates, goat",
+        "Can you think of another way to group these things?",
+        "Match: Fruit → Animals"
+      ]
+    },
+    {
+      "title": "Count with a Tally",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Leila wrote down the fruit her friends like. Make one tally mark for each fruit, then write how many.",
+        "mango, banana, mango, dates, mango, banana, mango",
+        "Match: Fruit → Your tally / How many"
+      ]
+    },
+    {
+      "title": "Read the Pictogram",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Each circle is one child. This pictogram shows how you came to Ehel Academy.",
+        "1. Most you came by: __________________.",
+        "2. The fewest you came by: __________________.",
+        "3. How many you came by car? __________.",
+        "Match: How we came → Each circle = 1 child",
+        "Match: Walk → ● ● ● ● ●"
+      ]
+    },
+    {
+      "title": "Colour a Block Graph",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Now show the fruit data from Task 2 as a block graph. Colour one box for each fruit. No gaps — the boxes must touch! (mango = 4, banana = 2, dates = 1)",
+        "Match: Fruit → 1 / 2 / 3 / 4"
+      ]
+    },
+    {
+      "title": "Match the Words",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Draw a line from each word to what it means.",
+        "Match: data → a spare copy of data, kept safe",
+        "Match: tally → facts we collect",
+        "Match: pictogram → little marks to help us count",
+        "Match: backup → a chart that shows data with pictures"
+      ]
+    },
+    {
+      "title": "True or False?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Circle True or False for each one.",
+        "a. Computers can store lots of data. True / False",
+        "b. It is hard to copy data on a computer. True / False",
+        "c. A backup is a spare copy kept safe. True / False"
+      ]
+    },
+    {
+      "title": "Make it on the Computer! (if you can)",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Go to www.mathsisfun.com/data/data-graph.php.",
+        "Click Bar at the top.",
+        "Type in the fruit data, like this",
+        "Values: 4, 2, 1",
+        "Labels: mango, banana, dates",
+        "Which bar is the tallest? Watch the computer draw your bar graph."
+      ]
+    },
+    {
+      "title": "Collect the Data",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "They must choose one: mango, banana, dates, or orange. Ask 7 friends this question: What is your favourite fruit?",
+        "Make one tally mark for each friend's answer. Then count and write how many.",
+        "Check: your tally marks should add up to 7.",
+        "Match: Fruit → Tally / How many"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "Data is only numbers.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Data can be words too. Favourite fruit, eye colour and how we travel to school are all data."
+    },
+    {
+      "symptom": "A pictogram and a bar graph are different data.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "They can show the very same data — one with pictures, one with blocks. Show the fruit data both ways to prove it."
+    },
+    {
+      "symptom": "A backup means throwing the old one away.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "A backup is an EXTRA copy. We keep both, so the data is safe if one is lost."
+    },
+    {
+      "symptom": "You can only group things one way.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "The same data can often be grouped in more than one sensible way — by type, by colour, by size."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "What is data? Sorting into groups",
+        "text": "Data is just the facts we collect."
+      },
+      {
+        "title": "Counting data with a tally",
+        "text": "Once our data is in groups, we want to know how many are in each group."
+      },
+      {
+        "title": "Showing data with pictures: pictograms",
+        "text": "After we count, we present the data — we show it so it is easy to read."
+      },
+      {
+        "title": "Showing data with blocks: bar graphs (and a computer)",
+        "text": "Another way to present data is a bar graph, also called a block graph."
+      },
+      {
+        "title": "Why computers store data, and collecting data for a reason",
+        "text": "Computers are very good at keeping — storing — lots of data."
+      }
+    ],
+    "terms": [
+      [
+        "data",
+        "Facts we collect."
+      ],
+      [
+        "sort",
+        "To put things into groups."
+      ],
+      [
+        "group (category)",
+        "Things that go together."
+      ],
+      [
+        "tally",
+        "A little mark to help us count."
+      ],
+      [
+        "pictogram",
+        "A chart that shows data with pictures."
+      ],
+      [
+        "bar graph",
+        "A chart that shows data with bars or blocks."
+      ],
+      [
+        "present",
+        "To show."
+      ],
+      [
+        "store",
+        "To keep data safe."
+      ],
+      [
+        "backup",
+        "A spare copy of data, kept safe."
+      ],
+      [
+        "barcode",
+        "Black lines that hold data about a thing."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "data",
+        "meaning": "Facts we collect.",
+        "example": "Everyone's favourite fruit.",
+        "letter": "D"
+      },
+      {
+        "term": "sort",
+        "meaning": "To put things into groups.",
+        "example": "Fruit here, animals there.",
+        "letter": "S"
+      },
+      {
+        "term": "group (category)",
+        "meaning": "Things that go together.",
+        "example": "Mango, banana and dates are all fruit.",
+        "letter": "G"
+      },
+      {
+        "term": "tally",
+        "meaning": "A little mark to help us count.",
+        "example": "One mark for each child.",
+        "letter": "T"
+      },
+      {
+        "term": "pictogram",
+        "meaning": "A chart that shows data with pictures.",
+        "example": "One picture for each child.",
+        "letter": "P"
+      },
+      {
+        "term": "bar graph",
+        "meaning": "A chart that shows data with bars or blocks.",
+        "example": "A tall bar means more.",
+        "letter": "B"
+      },
+      {
+        "term": "present",
+        "meaning": "To show.",
+        "example": "We present our data as a chart.",
+        "letter": "P"
+      },
+      {
+        "term": "store",
+        "meaning": "To keep data safe.",
+        "example": "A computer stores lots of data.",
+        "letter": "S"
+      },
+      {
+        "term": "backup",
+        "meaning": "A spare copy of data, kept safe.",
+        "example": "A copy kept in case the first is lost.",
+        "letter": "B"
+      },
+      {
+        "term": "barcode",
+        "meaning": "Black lines that hold data about a thing.",
+        "example": "The lines a shop till reads.",
+        "letter": "B"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "Data is only numbers.",
+        "Data can be words too. Favourite fruit, eye colour and how we travel to school are all data."
+      ],
+      [
+        "A pictogram and a bar graph are different data.",
+        "They can show the very same data — one with pictures, one with blocks. Show the fruit data both ways to prove it."
+      ],
+      [
+        "A backup means throwing the old one away.",
+        "A backup is an EXTRA copy. We keep both, so the data is safe if one is lost."
+      ],
+      [
+        "You can only group things one way.",
+        "The same data can often be grouped in more than one sensible way — by type, by colour, by size."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Count the tally. How many?",
+      "answer": "4.",
+      "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "4."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "mango: ||||",
+      "answer": "4.",
+      "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "4."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Look at the pets pictogram. Each circle is one pet.",
+      "answer": "Most = fish (4). Least = bird (1).",
+      "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Most = fish (4). Least = bird (1)."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Circle the fruits. (mango goat dates camel banana)",
+      "answer": "Circle mango, dates and banana. (Goat and camel are animals.)",
+      "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Circle mango, dates and banana. (Goat and camel are animals.)"
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Fill in the missing word. Choose from: pictogram, bar graph, backup.",
+      "answer": "(a) backup; (b) pictogram; (c) bar graph.",
+      "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "(a) backup; (b) pictogram; (c) bar graph."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Write two good things about storing data on a computer.",
+      "answer": "Accept any two: stores lots of data; finds data quickly; shows data as charts; shares data with other computers; changes data easily; copies data / keeps a backup.",
+      "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Accept any two: stores lots of data; finds data quickly; shows data as charts; shares data with other computers; changes data easily; copies data / keeps a backup."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "Which chart shows data with pictures — a pictogram or a bar graph?",
+      "answer": "A pictogram.",
+      "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "A pictogram."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Write two good things about storing data on a computer.",
+      "answer": "Accept any two: stores lots of data; finds data quickly; shows data as charts; shares data with other computers; changes data easily; copies data / keeps a backup.",
+      "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Accept any two: stores lots of data; finds data quickly; shows data as charts; shares data with other computers; changes data easily; copies data / keeps a backup."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "Which chart shows data with pictures — a pictogram or a bar graph?",
+      "answer": "A pictogram.",
+      "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: A pictogram."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Write two good things about storing data on a computer.",
+      "answer": "Accept any two: stores lots of data; finds data quickly; shows data as charts; shares data with other computers; changes data easily; copies data / keeps a backup.",
+      "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Accept any two: stores lots of data; finds data quickly; shows data as charts; shares data with other computers; changes data easily; copies data / keeps a backup."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "Which chart shows data with pictures — a pictogram or a bar graph?",
+      "answer": "A pictogram.",
+      "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: A pictogram."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Look at the pets pictogram. Each circle is one pet.",
+      "keyIdeas": [
+        "data",
+        "sort",
+        "group (category)"
+      ],
+      "modelAnswer": "Most = fish (4). Least = bird (1)."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Circle the fruits. (mango goat dates camel banana)",
+      "keyIdeas": [
+        "sort",
+        "group (category)",
+        "tally"
+      ],
+      "modelAnswer": "Circle mango, dates and banana. (Goat and camel are animals.)"
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Fill in the missing word. Choose from: pictogram, bar graph, backup.",
+      "keyIdeas": [
+        "group (category)",
+        "tally",
+        "pictogram"
+      ],
+      "modelAnswer": "(a) backup; (b) pictogram; (c) bar graph."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in showing data with blocks: bar graphs (and a computer), and give one example of your own.",
+      "keyIdeas": [
+        "data",
+        "sort",
+        "group (category)"
+      ],
+      "modelAnswer": "Another way to present data is a bar graph, also called a block graph. Instead of pictures, we colour blocks — one block for each thing, with no gaps between them. The tallest or longest bar shows the most. A bar graph shows the SAME data as a pictogram, just in a different way. We can make a bar graph by hand, or a computer can make one for us in seconds.\n\nGo back to the fruit tally from Session 2 (mango 4, banana 2, dates 1). One block for each child. No gaps — the blocks touch."
+    }
+  ],
+  "project": {
+    "title": "Unit 2 Project: Be a Data Analyst",
+    "brief": "Bring together everything from Be a Data Analyst into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your be a data analyst project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I asked 7 friends and made a tally.",
+      "My tally marks add up to 7.",
+      "I coloured the right number of boxes, with no gaps.",
+      "I can point to the fruit that is most popular."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “data” mean in computing?",
+        "options": [
+          "Facts we collect.",
+          "To put things into groups.",
+          "Things that go together.",
+          "A little mark to help us count."
+        ],
+        "answer": "Facts we collect.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Data means facts we collect.."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “sort” mean in computing?",
+        "options": [
+          "To put things into groups.",
+          "Things that go together.",
+          "A little mark to help us count.",
+          "A chart that shows data with pictures."
+        ],
+        "answer": "To put things into groups.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Data means facts we collect."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “group (category)” mean in computing?",
+        "options": [
+          "Things that go together.",
+          "A little mark to help us count.",
+          "A chart that shows data with pictures.",
+          "A chart that shows data with bars or blocks."
+        ],
+        "answer": "Things that go together.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Sort means to put things into groups."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “tally” mean in computing?",
+        "options": [
+          "A little mark to help us count.",
+          "A chart that shows data with pictures.",
+          "A chart that shows data with bars or blocks.",
+          "To show."
+        ],
+        "answer": "A little mark to help us count.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Group (category) means things that go together."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “pictogram” mean in computing?",
+        "options": [
+          "A chart that shows data with pictures.",
+          "A chart that shows data with bars or blocks.",
+          "To show.",
+          "To keep data safe."
+        ],
+        "answer": "A chart that shows data with pictures.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Tally means a little mark to help us count."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “bar graph” mean in computing?",
+        "options": [
+          "A chart that shows data with bars or blocks.",
+          "To show.",
+          "To keep data safe.",
+          "A spare copy of data, kept safe."
+        ],
+        "answer": "A chart that shows data with bars or blocks.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Pictogram means a chart that shows data with pictures."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: To show.?",
+        "options": [
+          "present",
+          "store",
+          "backup",
+          "barcode"
+        ],
+        "answer": "present",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Bar graph means a chart that shows data with bars or blocks."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: To keep data safe.?",
+        "options": [
+          "store",
+          "backup",
+          "barcode",
+          "data"
+        ],
+        "answer": "store",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Present means to show."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A spare copy of data, kept safe.?",
+        "options": [
+          "backup",
+          "barcode",
+          "data",
+          "sort"
+        ],
+        "answer": "backup",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Store means to keep data safe."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Black lines that hold data about a thing.?",
+        "options": [
+          "barcode",
+          "data",
+          "sort",
+          "group (category)"
+        ],
+        "answer": "barcode",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Backup means a spare copy of data, kept safe."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Facts we collect.?",
+        "options": [
+          "data",
+          "sort",
+          "group (category)",
+          "tally"
+        ],
+        "answer": "data",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Barcode means black lines that hold data about a thing."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: To put things into groups.?",
+        "options": [
+          "sort",
+          "group (category)",
+          "tally",
+          "pictogram"
+        ],
+        "answer": "sort",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Sort means to put things into groups.."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u2-game-1",
+        "icon": "?",
+        "skill": "data",
+        "title": "Quick Match: data",
+        "description": "Practise data through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Facts we collect.",
+              "To put things into groups.",
+              "Things that go together.",
+              "A little mark to help us count."
+            ],
+            "answer": "Facts we collect.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data means facts we collect.."
+          },
+          {
+            "prompt": "What does “tally” mean in computing?",
+            "choices": [
+              "A little mark to help us count.",
+              "A chart that shows data with pictures.",
+              "A chart that shows data with bars or blocks.",
+              "To show."
+            ],
+            "answer": "A little mark to help us count.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Group (category) means things that go together."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To show.?",
+            "choices": [
+              "present",
+              "store",
+              "backup",
+              "barcode"
+            ],
+            "answer": "present",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Bar graph means a chart that shows data with bars or blocks."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Black lines that hold data about a thing.?",
+            "choices": [
+              "barcode",
+              "data",
+              "sort",
+              "group (category)"
+            ],
+            "answer": "barcode",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Backup means a spare copy of data, kept safe."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-2",
+        "icon": "★",
+        "skill": "sort",
+        "title": "Concept Quest: sort",
+        "description": "Practise sort through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “sort” mean in computing?",
+            "choices": [
+              "To put things into groups.",
+              "Things that go together.",
+              "A little mark to help us count.",
+              "A chart that shows data with pictures."
+            ],
+            "answer": "To put things into groups.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data means facts we collect."
+          },
+          {
+            "prompt": "What does “pictogram” mean in computing?",
+            "choices": [
+              "A chart that shows data with pictures.",
+              "A chart that shows data with bars or blocks.",
+              "To show.",
+              "To keep data safe."
+            ],
+            "answer": "A chart that shows data with pictures.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Tally means a little mark to help us count."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To keep data safe.?",
+            "choices": [
+              "store",
+              "backup",
+              "barcode",
+              "data"
+            ],
+            "answer": "store",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Present means to show."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Facts we collect.?",
+            "choices": [
+              "data",
+              "sort",
+              "group (category)",
+              "tally"
+            ],
+            "answer": "data",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Barcode means black lines that hold data about a thing."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-3",
+        "icon": "◫",
+        "skill": "group (category)",
+        "title": "Debug Detective: group (category)",
+        "description": "Practise group (category) through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “group (category)” mean in computing?",
+            "choices": [
+              "Things that go together.",
+              "A little mark to help us count.",
+              "A chart that shows data with pictures.",
+              "A chart that shows data with bars or blocks."
+            ],
+            "answer": "Things that go together.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Sort means to put things into groups."
+          },
+          {
+            "prompt": "What does “bar graph” mean in computing?",
+            "choices": [
+              "A chart that shows data with bars or blocks.",
+              "To show.",
+              "To keep data safe.",
+              "A spare copy of data, kept safe."
+            ],
+            "answer": "A chart that shows data with bars or blocks.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Pictogram means a chart that shows data with pictures."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A spare copy of data, kept safe.?",
+            "choices": [
+              "backup",
+              "barcode",
+              "data",
+              "sort"
+            ],
+            "answer": "backup",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Store means to keep data safe."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To put things into groups.?",
+            "choices": [
+              "sort",
+              "group (category)",
+              "tally",
+              "pictogram"
+            ],
+            "answer": "sort",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Sort means to put things into groups.."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-4",
+        "icon": "→",
+        "skill": "tally",
+        "title": "Algorithm Runner: tally",
+        "description": "Practise tally through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “tally” mean in computing?",
+            "choices": [
+              "A little mark to help us count.",
+              "A chart that shows data with pictures.",
+              "A chart that shows data with bars or blocks.",
+              "To show."
+            ],
+            "answer": "A little mark to help us count.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Group (category) means things that go together."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To show.?",
+            "choices": [
+              "present",
+              "store",
+              "backup",
+              "barcode"
+            ],
+            "answer": "present",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Bar graph means a chart that shows data with bars or blocks."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Black lines that hold data about a thing.?",
+            "choices": [
+              "barcode",
+              "data",
+              "sort",
+              "group (category)"
+            ],
+            "answer": "barcode",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Backup means a spare copy of data, kept safe."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Facts we collect.",
+              "To put things into groups.",
+              "Things that go together.",
+              "A little mark to help us count."
+            ],
+            "answer": "Facts we collect.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data means facts we collect.."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-5",
+        "icon": "Σ",
+        "skill": "pictogram",
+        "title": "Vocabulary Vault: pictogram",
+        "description": "Practise pictogram through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “pictogram” mean in computing?",
+            "choices": [
+              "A chart that shows data with pictures.",
+              "A chart that shows data with bars or blocks.",
+              "To show.",
+              "To keep data safe."
+            ],
+            "answer": "A chart that shows data with pictures.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Tally means a little mark to help us count."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To keep data safe.?",
+            "choices": [
+              "store",
+              "backup",
+              "barcode",
+              "data"
+            ],
+            "answer": "store",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Present means to show."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Facts we collect.?",
+            "choices": [
+              "data",
+              "sort",
+              "group (category)",
+              "tally"
+            ],
+            "answer": "data",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Barcode means black lines that hold data about a thing."
+          },
+          {
+            "prompt": "What does “sort” mean in computing?",
+            "choices": [
+              "To put things into groups.",
+              "Things that go together.",
+              "A little mark to help us count.",
+              "A chart that shows data with pictures."
+            ],
+            "answer": "To put things into groups.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data means facts we collect."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-6",
+        "icon": "◇",
+        "skill": "bar graph",
+        "title": "Challenge Cards: bar graph",
+        "description": "Practise bar graph through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “bar graph” mean in computing?",
+            "choices": [
+              "A chart that shows data with bars or blocks.",
+              "To show.",
+              "To keep data safe.",
+              "A spare copy of data, kept safe."
+            ],
+            "answer": "A chart that shows data with bars or blocks.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Pictogram means a chart that shows data with pictures."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A spare copy of data, kept safe.?",
+            "choices": [
+              "backup",
+              "barcode",
+              "data",
+              "sort"
+            ],
+            "answer": "backup",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Store means to keep data safe."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To put things into groups.?",
+            "choices": [
+              "sort",
+              "group (category)",
+              "tally",
+              "pictogram"
+            ],
+            "answer": "sort",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Sort means to put things into groups.."
+          },
+          {
+            "prompt": "What does “group (category)” mean in computing?",
+            "choices": [
+              "Things that go together.",
+              "A little mark to help us count.",
+              "A chart that shows data with pictures.",
+              "A chart that shows data with bars or blocks."
+            ],
+            "answer": "Things that go together.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Sort means to put things into groups."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-7",
+        "icon": "⚡",
+        "skill": "present",
+        "title": "Think Fast: present",
+        "description": "Practise present through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To show.?",
+            "choices": [
+              "present",
+              "store",
+              "backup",
+              "barcode"
+            ],
+            "answer": "present",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Bar graph means a chart that shows data with bars or blocks."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Black lines that hold data about a thing.?",
+            "choices": [
+              "barcode",
+              "data",
+              "sort",
+              "group (category)"
+            ],
+            "answer": "barcode",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Backup means a spare copy of data, kept safe."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Facts we collect.",
+              "To put things into groups.",
+              "Things that go together.",
+              "A little mark to help us count."
+            ],
+            "answer": "Facts we collect.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data means facts we collect.."
+          },
+          {
+            "prompt": "What does “tally” mean in computing?",
+            "choices": [
+              "A little mark to help us count.",
+              "A chart that shows data with pictures.",
+              "A chart that shows data with bars or blocks.",
+              "To show."
+            ],
+            "answer": "A little mark to help us count.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Group (category) means things that go together."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-8",
+        "icon": "☁",
+        "skill": "store",
+        "title": "Explain It: store",
+        "description": "Practise store through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To keep data safe.?",
+            "choices": [
+              "store",
+              "backup",
+              "barcode",
+              "data"
+            ],
+            "answer": "store",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Present means to show."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Facts we collect.?",
+            "choices": [
+              "data",
+              "sort",
+              "group (category)",
+              "tally"
+            ],
+            "answer": "data",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Barcode means black lines that hold data about a thing."
+          },
+          {
+            "prompt": "What does “sort” mean in computing?",
+            "choices": [
+              "To put things into groups.",
+              "Things that go together.",
+              "A little mark to help us count.",
+              "A chart that shows data with pictures."
+            ],
+            "answer": "To put things into groups.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data means facts we collect."
+          },
+          {
+            "prompt": "What does “pictogram” mean in computing?",
+            "choices": [
+              "A chart that shows data with pictures.",
+              "A chart that shows data with bars or blocks.",
+              "To show.",
+              "To keep data safe."
+            ],
+            "answer": "A chart that shows data with pictures.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Tally means a little mark to help us count."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-9",
+        "icon": "⌂",
+        "skill": "backup",
+        "title": "Real-Life Round: backup",
+        "description": "Practise backup through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A spare copy of data, kept safe.?",
+            "choices": [
+              "backup",
+              "barcode",
+              "data",
+              "sort"
+            ],
+            "answer": "backup",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Store means to keep data safe."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To put things into groups.?",
+            "choices": [
+              "sort",
+              "group (category)",
+              "tally",
+              "pictogram"
+            ],
+            "answer": "sort",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Sort means to put things into groups.."
+          },
+          {
+            "prompt": "What does “group (category)” mean in computing?",
+            "choices": [
+              "Things that go together.",
+              "A little mark to help us count.",
+              "A chart that shows data with pictures.",
+              "A chart that shows data with bars or blocks."
+            ],
+            "answer": "Things that go together.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Sort means to put things into groups."
+          },
+          {
+            "prompt": "What does “bar graph” mean in computing?",
+            "choices": [
+              "A chart that shows data with bars or blocks.",
+              "To show.",
+              "To keep data safe.",
+              "A spare copy of data, kept safe."
+            ],
+            "answer": "A chart that shows data with bars or blocks.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Pictogram means a chart that shows data with pictures."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-10",
+        "icon": "!",
+        "skill": "barcode",
+        "title": "Spot the Bug: barcode",
+        "description": "Practise barcode through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Black lines that hold data about a thing.?",
+            "choices": [
+              "barcode",
+              "data",
+              "sort",
+              "group (category)"
+            ],
+            "answer": "barcode",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Backup means a spare copy of data, kept safe."
+          },
+          {
+            "prompt": "What does “data” mean in computing?",
+            "choices": [
+              "Facts we collect.",
+              "To put things into groups.",
+              "Things that go together.",
+              "A little mark to help us count."
+            ],
+            "answer": "Facts we collect.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data means facts we collect.."
+          },
+          {
+            "prompt": "What does “tally” mean in computing?",
+            "choices": [
+              "A little mark to help us count.",
+              "A chart that shows data with pictures.",
+              "A chart that shows data with bars or blocks.",
+              "To show."
+            ],
+            "answer": "A little mark to help us count.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Group (category) means things that go together."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To show.?",
+            "choices": [
+              "present",
+              "store",
+              "backup",
+              "barcode"
+            ],
+            "answer": "present",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Bar graph means a chart that shows data with bars or blocks."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-11",
+        "icon": "≡",
+        "skill": "data",
+        "title": "Mastery Mix: data",
+        "description": "Practise data through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Facts we collect.?",
+            "choices": [
+              "data",
+              "sort",
+              "group (category)",
+              "tally"
+            ],
+            "answer": "data",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Barcode means black lines that hold data about a thing."
+          },
+          {
+            "prompt": "What does “sort” mean in computing?",
+            "choices": [
+              "To put things into groups.",
+              "Things that go together.",
+              "A little mark to help us count.",
+              "A chart that shows data with pictures."
+            ],
+            "answer": "To put things into groups.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Data means facts we collect."
+          },
+          {
+            "prompt": "What does “pictogram” mean in computing?",
+            "choices": [
+              "A chart that shows data with pictures.",
+              "A chart that shows data with bars or blocks.",
+              "To show.",
+              "To keep data safe."
+            ],
+            "answer": "A chart that shows data with pictures.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Tally means a little mark to help us count."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To keep data safe.?",
+            "choices": [
+              "store",
+              "backup",
+              "barcode",
+              "data"
+            ],
+            "answer": "store",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Present means to show."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-12",
+        "icon": "T",
+        "skill": "sort",
+        "title": "Unit Champion: sort",
+        "description": "Practise sort through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To put things into groups.?",
+            "choices": [
+              "sort",
+              "group (category)",
+              "tally",
+              "pictogram"
+            ],
+            "answer": "sort",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Sort means to put things into groups.."
+          },
+          {
+            "prompt": "What does “group (category)” mean in computing?",
+            "choices": [
+              "Things that go together.",
+              "A little mark to help us count.",
+              "A chart that shows data with pictures.",
+              "A chart that shows data with bars or blocks."
+            ],
+            "answer": "Things that go together.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Sort means to put things into groups."
+          },
+          {
+            "prompt": "What does “bar graph” mean in computing?",
+            "choices": [
+              "A chart that shows data with bars or blocks.",
+              "To show.",
+              "To keep data safe.",
+              "A spare copy of data, kept safe."
+            ],
+            "answer": "A chart that shows data with bars or blocks.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Pictogram means a chart that shows data with pictures."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A spare copy of data, kept safe.?",
+            "choices": [
+              "backup",
+              "barcode",
+              "data",
+              "sort"
+            ],
+            "answer": "backup",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Store means to keep data safe."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can understand that data means facts we collect, and that data can be words or numbers.",
+    "I can sort data into groups (categories), and say more than one way to group the same things.",
+    "I can count a small set of data using a tally, and write the totals in a table.",
+    "I can read a simple pictogram, using the key, to say which is most and which is least.",
+    "I can make a simple bar graph (block graph) with the right number of blocks and no gaps.",
+    "I can say why a computer is a good place to store data, and that a backup is a safe spare copy.",
+    "I can give one way that data is collected for a reason (a form, a till barcode, or counting traffic)."
+  ]
+}

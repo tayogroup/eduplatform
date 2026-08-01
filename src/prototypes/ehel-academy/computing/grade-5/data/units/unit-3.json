@@ -1,0 +1,2185 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.919Z",
+  "stage": {
+    "id": "s05",
+    "label": "Stage 5"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t02",
+    "label": "Term 2"
+  },
+  "unit": {
+    "unitId": "comp-g05-u03",
+    "unitNo": 3,
+    "unitTitle": "Networks and Digital Communication",
+    "unitOverview": "In this unit — Networks and Digital Communication — you will work through network hardware: the machines that connect us, how data travels through networks, comparing the three ways to connect, how packets travel and are put back together, split the send the packets cross put the packets, advantages and disadvantages of packets, how websites are stored and accessed, network failure: when connections break, small failures you barely notice, the blue route is broken, but the data still reaches, the effects of network failures, how companies protect against failure and staying safe and responsible online. Everything you need is here: explainers to read, examples to copy, things to build, practice with answers, and a project at the end. Every tool used is free and runs in a web browser.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 5
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-5-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 5",
+    "sourceArchive": "Year 5-20260801T055755Z-1-001.zip",
+    "sourceAudience": "student",
+    "sourceDocuments": [
+      "Year 5/Unit 3/Year 5 - Unit 3 Lesson.docx",
+      "Year 5/Unit 3/Year 5 - Unit 3 Activities & Projects.docx",
+      "Year 5/Unit 3/Year 5 - Unit 3 Practice & Quiz.docx",
+      "Year 5/Unit 3/Year 5 - Unit 3 Reference.docx"
+    ],
+    "sourceBlockCount": 823,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 5 Lesson, Activities & Projects, Practice & Quiz and Reference booklets for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Identify the main hardware devices in a network: the switch, the router and the wireless access point.",
+    "Explain the job each of these devices does.",
+    "Explain the difference between a wired connection and a wireless connection.",
+    "Describe what a cellular network is and how mobile phones use it.",
+    "Explain what an IP address is and why every device needs one.",
+    "Explain how data is split into small chunks called packets.",
+    "Describe how packets travel through networks and are put back together.",
+    "Explain how a website is stored on a web server and how you access it with a URL.",
+    "Explain what the internet is and what cloud storage means.",
+    "Describe why connections break and what causes network failure."
+  ],
+  "toolkit": [
+    {
+      "name": "A free spreadsheet",
+      "url": "Google Sheets, or LibreOffice Calc",
+      "steps": [
+        "Open a new blank spreadsheet.",
+        "Put your field names in row 1, one per column.",
+        "Type one record per row underneath.",
+        "Use Insert → Chart to turn your data into a graph."
+      ],
+      "note": "Any free spreadsheet works — the ideas are the same in all of them."
+    }
+  ],
+  "tutorPrompts": [
+    "Give me a device — like a printer, a phone or a smart TV — and ask me whether it would connect to the network through the switch, the wireless access point, or the router. Then tell me if I was right and explain why.",
+    "This turns your tutor into a quiz partner and helps the three devices stick in your memory.",
+    "Try this prompt:",
+    "Pretend a message is being sent from Hargeisa to Mogadishu. Walk me through every step — splitting into packets, travelling by different routes, and being put back in order. Then let me try to explain the steps back to you in my own words.",
+    "Explaining an idea back in your own words is one of the best ways to prove you truly understand it.",
+    "Try this challenge:",
+    "Thinking about causes and cures is exactly how real network engineers work."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-network-hardware-the-machines-that-connect-us",
+      "title": "Network Hardware: The Machines That Connect Us",
+      "explanation": "Computers can only share files, printers and software if they are joined together into a network. Think of a network like a group of friends who can all talk to each other. On its own, one computer is like a person standing alone in a room. Connect it to a network and suddenly it can talk to every other device — sharing photos, sending messages, and reaching the whole internet.\n\nThere are two ways a device can join a network: with wires, or without wires (wirelessly). Both work well, but each needs different hardware. Hardware means the real, physical machines you could hold in your hand — as opposed to software, which is the programs that run on them. In this part you will meet three key pieces of network hardware.\n\nConnecting with wires: the Ethernet cable\n\nMany devices connect to a network using an Ethernet cable. It looks a little like a thick telephone wire with a clip on the end that clicks into a socket. Wired connections are fast and reliable, but the device cannot move far because it is tied to the cable. Two important devices use these cables to build a network: the switch and the router. They have lots of sockets, so many cables (and therefore many devices) can plug into them at once.\n\nThe switch — a meeting point for wired devices\n\nA switch lets you connect wired devices together on one network, such as your school network or an office network. You can plug in many devices, for example:\n\nThe switch joins all these devices together so they can communicate — that is, send data to and receive data from each other. Here is the clever part: if you connect a single printer to the switch, then every computer on that network can use that one printer. The switch is like a busy meeting point where all the wired devices come together to talk. On its own, though, a switch cannot reach the internet — it only connects devices that are on the same network.\n\nThe router — the doorway to the internet\n\nA router does something different. It lets different networks talk to each other. Its most common job is to connect a small network — like your home or school — to the huge network we call the internet.\n\nFor example, a router connects Ehel Academy's network to the internet. Because of the router, any device on the school network can reach the internet — so a student can open a website, watch a lesson video, or send a message to a cousin far away. If you remember only one thing, remember this: it is the router — and only the router — that lets devices on your network reach other networks and the internet.\n\nConnecting without wires: the wireless access point\n\nA wired switch and a wireless access point do a similar job — they both let computers join a network. The big difference is that the wireless access point needs no cables. Devices connect to it through the air. This is perfect for devices that move around, such as:\n\nThe most common wireless access point is a Wi-Fi access point. It sends and receives signals — special invisible waves that carry data through the air to and from nearby devices. A huge advantage is that hundreds of devices can connect to a single Wi-Fi access point without any wires at all. Compare that to a wired switch, which needs one separate cable for every single device!\n\nWi-Fi signals only travel a short distance, though. The further you walk away from the access point, the weaker the signal becomes — until, eventually, your device drops off the network. That is why Wi-Fi access points are often fixed high up on walls or ceilings, sometimes with an aerial sticking out. An aerial is the part that helps send and receive the signals.\n\nHow is a wireless access point different from a switch?\n\nIf you put a switch and a Wi-Fi access point side by side, the biggest difference is simple: the switch uses cables, while the wireless access point uses signals through the air. A switch is best for devices that stay still, like a desktop computer or a printer. A wireless access point is best for devices you carry around, like a phone or a tablet. Both connect devices to the same network — they just do it in different ways.\n\nHere is how the three devices fit together in a typical network. Read the diagram below from top to bottom — the internet is at the top, and the devices are at the bottom:\n\nA simple network: the router reaches the internet; the switch connects wired devices; the wireless access point connects devices with no wires.\n\n+-----------+ +--------------------+\n\n+-----------+ +--------------------+\n\nIn many homes there is just ONE box that plugs into the wall — people call it 'the Wi-Fi' or 'the router'. But that single box is actually doing three jobs at once! Inside it there is a router, a switch, AND a wireless access point, all built together. In a big school or office, these three are often separate machines so they can handle many more devices.\n\n\"Give me a device — like a printer, a phone or a smart TV — and ask me whether it would connect to the network through the switch, the wireless access point, or the router. Then tell me if I was right and explain why.\"\n\nThis turns your tutor into a quiz partner and helps the three devices stick in your memory.",
+      "example": "\"A switch connects my computer to the internet.\" Not quite! A switch only connects devices to each other on the SAME network. To reach the internet, the data must go through the ROUTER. The switch is the meeting point inside your network; the router is the doorway out to the wider world."
+    },
+    {
+      "id": "concept-2-how-data-travels-through-networks",
+      "title": "How Data Travels Through Networks",
+      "explanation": "You now know the hardware that joins devices together. But how does a message actually travel from your device, across the world, and arrive at exactly the right computer? That is the amazing journey you will follow in this part.\n\nCellular networks: the internet almost anywhere\n\nA cellular network is another kind of wireless network, but it works over very large areas. Instead of a small Wi-Fi box on a wall, cellular networks use tall towers (you may have seen them standing high above towns and along roads). These towers send out strong signals that a smartphone can pick up from many kilometres away.\n\nA single cell tower can reach a phone up to about 50 kilometres away, although most of the time the useful range is around 5 kilometres. Making the towers tall is important, because it means the signal is less likely to be blocked by hills or buildings. This is why a mobile phone can connect almost anywhere — from the top of a mountain to the middle of a busy city. Some cars even use cellular networks, so they can download new software or let people make calls from inside the car.\n\nCellular networks have one big advantage: they cover enormous areas. But they share the same weakness as Wi-Fi — they can suffer from interference. Interference is anything that gets in the way of the signal, such as thick walls or bad weather. When there is interference, the signal may not reach your device properly. This can stop your phone from connecting, or make everything very slow.",
+      "example": "Fifty kilometres is a very long way. If you ran around a 400-metre running track, you would have to go around it about 125 times to run 50 km! That is roughly the furthest a single cell tower can send its signal."
+    },
+    {
+      "id": "concept-3-comparing-the-three-ways-to-connect",
+      "title": "Comparing the three ways to connect",
+      "explanation": "You have now met three ways for a device to connect: Wi-Fi, a wired Ethernet cable, and a cellular network (mobile data). Each one suits a different job. You would not want your phone tied to a wire while you walked around a city — and you would not use a slow, faraway cell tower to connect a printer that sits right next to your computer.\n\nOne way we compare connections is by their range — how far they reach. Another is their speed. Connection speed is measured in megabits per second, written Mbps. This is the fastest rate at which data can be sent. A higher number means data arrives more quickly, which matters a lot when you are streaming a video or downloading a big file.\n\nIP addresses: every device has its own address\n\nThink of the millions and millions of devices connected to the internet. When your device sends data, how does the internet know which of all those devices to deliver it to? The answer is that every device has its own unique address, called an IP address. IP stands for Internet Protocol.\n\nAn IP address is a set of numbers. A common type is made of four numbers separated by full stops, and each number is between 0 and 255. For example, a device might have the address 43.66.141.66. These numbers tell a computer exactly where to send data to, or where to fetch data from. IP addresses are usually created automatically by a small program, so you never have to type them yourself.\n\nThe best way to picture an IP address is to think of the address on a letter, or a post code. Every home has its own address so the postal worker knows exactly where to deliver each letter. In the same way, every device has its own IP address so the internet knows exactly where to deliver each piece of data. And just as no two homes on a street can share the same house number, no two devices on a network can share the same IP address — the automatic program makes sure each one is unique, so there is never any confusion.\n\nThere are two types of IP address. The older type is called IPv4 — and the world is starting to run OUT of IPv4 addresses, because there are so many devices! So a newer type was invented, called IPv6, which has an almost unlimited number of addresses — enough for every device for a very, very long time.\n\nHere is one of the most surprising ideas about the internet. When you send a message or a photo, it does not travel as one big lump. Instead, before it is sent, the data is chopped up into many small chunks called packets. Packets are usually all about the same size.\n\nImagine Nadia in Hargeisa wants to send a message to Sami in Mogadishu. Her computer splits the message into, say, three packets. But each packet is not just a piece of the message — it also carries some extra labels. Every packet includes:\n\nthe IP address it was sent from (Nadia's device),\n\nthe IP address it is going to (Sami's device),\n\na packet number, so the pieces can be put back in the right order,\n\nand, of course, a small piece of the actual message (the packet data).\n\nHere is what one packet looks like inside. Notice the address labels at the top and the piece of data at the bottom:\n\nOne data packet. The 'sent from' and 'sent to' IP addresses are like the return address and destination address on an envelope.\n\n+------------------------------------------+\n\n+------------------------------------------+",
+      "example": "Why bother with the return address? Because if a packet gets lost on the way, the computer that was waiting for it knows exactly which device to ask to send it again. The labels make the whole system reliable."
+    },
+    {
+      "id": "concept-4-how-packets-travel-and-are-put-back-together",
+      "title": "How packets travel and are put back together",
+      "explanation": "When Nadia's packets set off across the internet, something interesting happens: they may take different routes to reach Sami. Just like cars driving from one city to another can take different roads, packets can travel by different paths. Some routes are quicker than others, so the packets often arrive in the wrong order!\n\nThis is not a problem, thanks to the packet number. When the packets arrive at their destination, Sami's computer reads the numbers and uses them to put the packets back into the correct order — like sorting shuffled pages of a story back to 1, 2, 3. Only once all the packets have arrived and are in order can the computer read the full message. Here is the whole journey in four steps:",
+      "example": "The four steps of sending data: split, send, travel, reassemble."
+    },
+    {
+      "id": "concept-5-split-the-send-the-packets-cross-put-the-packets",
+      "title": "Split the Send the Packets cross Put the packets",
+      "explanation": "message ---> packets to --> the internet --> back in order to\n\ninto packets the internet by different rebuild the whole\n\nWhat happens if a packet gets lost?\n\nSometimes a packet does not arrive at all — it gets lost along the way. When that happens, the internet has a neat way of fixing it:\n\nThe receiver computer notices a packet is missing, and sends a message back to the sender asking: \"Please send packet 2 again, it got lost.\"\n\nThe sender computer sends another copy of just that one lost packet.\n\nWhen the copy arrives, the receiver now has all the packets, so it puts them in order.",
+      "example": "The full message is complete, and the computer can finally use the data."
+    },
+    {
+      "id": "concept-6-advantages-and-disadvantages-of-packets",
+      "title": "Advantages and disadvantages of packets",
+      "explanation": "Splitting data into packets is a clever idea, and it brings real benefits — but it also has a few costs. It is important to understand both sides.\n\nIf a packet is lost, only a small piece of data has to be sent again — not the whole message.\n\nPackets do not take up much bandwidth each, so they can travel along a greater variety of connections.",
+      "example": "Smaller packets are less likely to get stuck or delayed on a busy network."
+    },
+    {
+      "id": "concept-7-how-websites-are-stored-and-accessed",
+      "title": "How websites are stored and accessed",
+      "explanation": "You use websites every day — but where do they actually live? Every website is stored on a web server. A web server is a powerful computer that keeps all the pages of a website, along with the website's IP address, and it is always connected to the internet so people can reach it at any time.\n\nSo what happens when you visit a website? Imagine Sami types the address of Ehel Academy's website into his browser. Here is the journey of his request, step by step:\n\nSami types a web address into his web browser (a browser is a program such as Firefox). Another name for a web address is a URL — a Uniform Resource Locator. A URL is written as text, for example www.cambridge.org.\n\nHis web browser uses the internet to connect to the web server.\n\nBecause computers only really understand numbers, the URL is converted into an IP address behind the scenes.\n\nThe browser gives the web server that IP address, which tells it exactly where on the server the website is stored.\n\nThe web server checks the page is there, then sends the data back to the browser that asked for it — and the page appears on Sami's screen.\n\nThis explains a question you might have wondered about: why do we use words in web addresses when computers prefer numbers? The answer is that computers use IP addresses because they only understand numbers, but humans use URLs because words are far easier to remember than a long string of digits. Could you remember the number 93.184.216.34? Probably not — but you could easily remember a name like www.cambridge.org.\n\n\"All the packets of my message travel together in a neat line and arrive in order.\" Actually, no! Packets often split up, take different routes, and arrive jumbled and out of order. That is completely fine — each packet has a number, so the receiving computer sorts them back into the right order before reading the message.\n\nWhen you visit websites, only use ones that you trust and know are safe. If you are not sure about a website, always check with your teacher, your parents, or a trusted adult BEFORE you visit it. Never type your name, address, school or password into a website you do not know.",
+      "example": "\"Pretend a message is being sent from Hargeisa to Mogadishu. Walk me through every step — splitting into packets, travelling by different routes, and being put back in order. Then let me try to explain the steps back to you in my own words.\""
+    },
+    {
+      "id": "concept-8-network-failure-when-connections-break",
+      "title": "Network Failure: When Connections Break",
+      "explanation": "So far, everything has worked perfectly. But networks do not always behave. Cables get unplugged, power goes off, and sometimes whole services stop for hours. In this part you will find out what really happens when a network fails — and why, most of the time, you barely notice.\n\nLet us be very clear about one word. A network is a collection of connections between devices. The internet is simply the biggest network of all — a massive, worldwide web of connections joining computers and devices everywhere. Every day, people all over the world use it for both work and fun. When you connect, you can reach all sorts of services stored on servers, such as:\n\ncloud storage and online banking\n\nholiday bookings and online shopping\n\nmessaging services, email and video calls",
+      "example": "One of those services is cloud storage. Cloud storage lets you save your files and data on someone else's computer — usually a giant server owned by a big company. These companies have huge servers with enormous amounts of storage space, and they let you use some of it for your own files. The best part is that, because your files are stored on the internet, you can reach them from anywhere in the world — as long as you can connect to the internet. The word 'cloud' does not mean the sky; it just means 'stored on servers somewhere else, reached over the internet'."
+    },
+    {
+      "id": "concept-9-small-failures-you-barely-notice",
+      "title": "Small failures you barely notice",
+      "explanation": "Sometimes the internet seems to fail. What this really means is that one or more of the connections inside it has broken. When a connection breaks, it stops working, and data cannot travel along that route any more.\n\nBut here is the wonderful thing. Because the internet is made of so many connections all linked together, the data can simply take a different route to reach its destination. This is why you usually do not even notice when a single connection fails. If one path breaks, the data quietly travels along another one instead:\n\nIf one route breaks, data reroutes along the paths that still work.",
+      "example": "[ YOU ] ------ RED route ---------- [ SERVER ]"
+    },
+    {
+      "id": "concept-10-the-blue-route-is-broken-but-the-data-still-reaches",
+      "title": "The BLUE route is broken, but the data still reaches",
+      "explanation": "the server along the RED and YELLOW routes.\n\nSometimes, though, a large server or a very important connection breaks. Then you might notice that a service you use suddenly stops working, or becomes very slow. Usually there are other servers offering the same service, so your computer can quietly switch to one of those — and things only 'stop working' for a short time.\n\nBut if lots of connections fail all at once, it can take many hours, or even days, to fix. Big failures are sometimes caused by a single connection breaking — if that connection is the only path to a server, then the data has no other route to take, and the service goes down completely.\n\nThere are many reasons a connection might break, and most of them happen close to home — in the connection between your own device and the internet. For example:\n\nsomeone accidentally turns off the power;\n\nsomeone unplugs a cable by mistake;\n\na fire damages the cables, or stops a server from working.\n\nA helpful way to picture this is to imagine the internet as a set of roads connecting towns and cities. If there are roadworks or an accident on one road, drivers simply choose a different road. That other road might be narrower, so they cannot drive as fast — but they still get where they are going. The internet works in exactly the same way. When a connection breaks, data travels down other routes instead. Those routes get busier, so the data may travel more slowly. That is why, during a failure, you might notice pages take longer to load, or a video keeps stopping and starting.",
+      "example": "When something goes wrong, people often shout: \"The internet is broken!\" But remember: the internet itself does NOT break. It is far too big for that. What actually breaks is just the CONNECTIONS between some of the computers. There are almost always other connections the data can use instead."
+    },
+    {
+      "id": "concept-11-the-effects-of-network-failures",
+      "title": "The effects of network failures",
+      "explanation": "Network failures can have very small effects, or very big effects. Small failures happen quite often, and they are usually just annoying rather than serious. For example, if a network fails while you are working online, any work you have not saved recently might disappear. Or if you are playing an online game, the game might suddenly stop. Frustrating — but not the end of the world.\n\nLarge failures with big effects do not happen as often, but they matter far more. Imagine a bank's network failing. Effects of a large failure could include:\n\nnot being able to stream films, radio or TV shows;\n\nnot being able to reach money in an online bank account to pay bills or buy food;\n\nnot being able to play online games with people around the world;\n\nnot being able to make video calls to family.",
+      "example": "There is one more danger. Sometimes, during a network failure, data can become corrupted. This means the data is damaged so badly that it cannot be used — and it may be lost forever. That is why saving your work often, and keeping copies, is such a wise habit."
+    },
+    {
+      "id": "concept-12-how-companies-protect-against-failure",
+      "title": "How companies protect against failure",
+      "explanation": "Because large networks — like those of banks, hospitals and big websites — are so important, companies spend a lot of money trying to stop them from failing. Their main trick is to avoid having only one of anything. A large failure is far more likely when there is only a single server, because if it breaks, there is nothing to take over.\n\nSo companies make copies of their servers, called backups. If one server breaks, a second, spare server takes over straight away, and users often do not notice anything at all. They also keep backup or 'spare' connections ready, so data always has another route. This idea — having spares ready so the system keeps working even when one part fails — is a hugely important idea in computing. You will use it yourself in your Final Project when you write a plan to keep Ehel Academy's network running.\n\nSome of the biggest network failures in history hit gaming services like the PlayStation Network and Steam. Millions of gamers all around the world suddenly could not play the games they wanted to play — all at the same time! Even the largest companies are not completely safe from network failure.\n\n\"Give me a real-life situation where a network fails — like a video stopping, or a shop not being able to take payments. Ask me whether it is a small failure or a large failure, and ask me what could be done to prevent it. Then check my answer.\"",
+      "example": "Thinking about causes and cures is exactly how real network engineers work."
+    },
+    {
+      "id": "concept-13-staying-safe-and-responsible-online",
+      "title": "Staying Safe and Responsible Online",
+      "explanation": "Understanding how networks work also means understanding how to use them safely and kindly. You already value trust, honesty and respect, and you know that other people's privacy matters — and these same values make you a safe and responsible person online. Here is how to put them into practice:\n\nGuard your private information. Never share your full name, home address, school, phone number or passwords with people you do not know online.\n\nOnly visit websites you trust. If you are not sure about a site, ask a teacher or a trusted adult before you visit it.\n\nUse a strong password for your accounts, and never share it — not even with a friend. A network with no password lets strangers join, which is why Wi-Fi should always be protected.\n\nBe trustworthy with other people's data. If a friend shares something private with you, keep it private. Do not spread other people's photos or messages without permission.",
+      "example": "Think before you type. Be kind and honest in messages. Words sent online can be saved and shared, so write only what you would be happy for anyone to read."
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "| | | : : :",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "[PC][Printer][Server] (phone)(tablet)(laptop)",
+        "wired cables (---) wireless signals ( : )"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Design and label the network (Part 3.1)",
+      "context": "work through the steps below and see what happens. This is network hardware: the machines that connect us in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Draw Ehel Academy's network. Put the router where it connects to the internet.",
+      "answer": "Label every device, and use solid lines for wired connections and dotted lines for wireless connections. Write one sentence next to each of the switch, router and wireless access point explaining its job.",
+      "modelType": "model-1",
+      "hint": "Start here: Label every device, and use solid lines for wired connections and dotted lines for wireless connections.",
+      "explanation": "Network Hardware: The Machines That Connect Us: Computers can only share files, printers and software if they are joined together into a network. Think of a network like a group of friends who can all talk to each other. On its own, one computer is like a person standing alone in a room. Connect it to a network and suddenly it can talk to every…"
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Trace a message's journey (Part 3.2)",
+      "context": "work through the steps below and see what happens. This is how data travels through networks in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "A student at Ehel Academy sends the message HELLO FROM HARGEISA to a cousin in Mogadishu. Show how the message is split into packets.",
+      "answer": "Draw one packet in detail, showing its packet number, 'sent from' and 'sent to' IP addresses (make up valid ones), and its piece of data. Explain in a few sentences how the packets travel by different routes and are put back in the correct order when they arrive. Add a note explaining what happens if one packet gets lost on the way.",
+      "modelType": "model-2",
+      "hint": "Start here: Draw one packet in detail, showing its packet number, 'sent from' and 'sent to' IP addresses (make up valid ones), and its piece of data.",
+      "explanation": "How Data Travels Through Networks: You now know the hardware that joins devices together. But how does a message actually travel from your device, across the world, and arrive at exactly the right computer? That is the amazing journey you will follow in this part."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "A network-failure resilience plan (Part 3.3)",
+      "context": "work through the steps below and see what happens. This is comparing the three ways to connect in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "'Resilience' means being able to keep going even when something goes wrong. Write a short plan to help Ehel Academy's network stay reliable.",
+      "answer": "List three things that could cause the school's connection to break. For each one, suggest what could be done to reduce the problem or recover from it (think about backups, spare connections, and saving work often). Explain why having a backup server or a second connection helps — use the idea of data taking a 'different route'. Finish with one sentence of advice for students about saving their work, so nothing important is lost or corrupted during a failure. Here is my plan for Ehel Academy's network. Can you check that Task 1 has a router, switch and wireless access point in the right places, that Task 2 correctly describes packets and reassembly, and that Task 3 uses the idea of backups and different routes? Suggest one improvement.",
+      "modelType": "model-3",
+      "hint": "Start here: List three things that could cause the school's connection to break.",
+      "explanation": "Comparing the three ways to connect: You have now met three ways for a device to connect: Wi-Fi, a wired Ethernet cable, and a cellular network (mobile data). Each one suits a different job. You would not want your phone tied to a wire while you walked around a city — and you would not use a slow, faraway cell tower to connect a…"
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Warm Up - Your Connection Diary",
+      "context": "work through the steps below and see what happens. This is how packets travel and are put back together in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Over one day, keep a simple diary of everything you do online.",
+      "answer": "List each device you use to go online (phone, tablet, laptop, PC, smart TV...). For each device, write how it connected: Wi-Fi, cellular data (mobile signal), or an Ethernet cable. For one activity, write what you were doing and whether it needed high bandwidth (like streaming a video) or low bandwidth (like sending a short message). Part 3.1 Activities — Network Hardware Activity 1 — Which device does which job?",
+      "modelType": "model-4",
+      "hint": "Start here: List each device you use to go online (phone, tablet, laptop, PC, smart TV...).",
+      "explanation": "How packets travel and are put back together: When Nadia's packets set off across the internet, something interesting happens: they may take different routes to reach Sami. Just like cars driving from one city to another can take different roads, packets can travel by different paths. Some routes are quicker than others, so the packets often…"
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Ask Your AI Tutor",
+      "context": "work through the steps below and see what happens. This is split the send the packets cross put the packets in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "\"I have drawn a network with a switch, a router and a wireless access point. I will describe where I placed each one. Can you check that the router is the part reaching the internet, and that my wired and wireless devices are on the right connections?\"",
+      "answer": "Part 3.2 Activities — How Data Travels Activity 3 — Valid or invalid IP address? Remember the rule: a common IP address has exactly four numbers, separated by full stops, and each number is between 0 and 255. For each address below, write valid or invalid. If it is invalid, explain why. IP address to check",
+      "modelType": "model-5",
+      "hint": "Start here: Part 3.2 Activities — How Data Travels",
+      "explanation": "Split the Send the Packets cross Put the packets: message ---> packets to --> the internet --> back in order to"
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "URL",
+      "context": "work through the steps below and see what happens. This is advantages and disadvantages of packets in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Investigate 1 — Explore a real website safely (browser task)",
+      "answer": "This is a hands-on task. With a trusted adult's permission, open a free web browser such as Firefox. You are only looking — do NOT type any personal information into any website. Type a safe, well-known web address into the address bar (your teacher can suggest one, for example a national broadcaster or an encyclopaedia for children). Look at the address bar. Write down the full URL you can see.",
+      "modelType": "model-6",
+      "hint": "Start here: This is a hands-on task. With a trusted adult's permission, open a free web browser such as Firefox. You are only looking — do NOT type any personal…",
+      "explanation": "Advantages and disadvantages of packets: Splitting data into packets is a clever idea, and it brings real benefits — but it also has a few costs. It is important to understand both sides."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Network Hardware: The Machines That Connect Us",
+      "modelType": "concept-model-1",
+      "purpose": "Computers can only share files, printers and software if they are joined together into a network. Think of a network like a group of friends who can all talk to each other. On its own, one computer is like a person…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "How Data Travels Through Networks",
+      "modelType": "concept-model-2",
+      "purpose": "You now know the hardware that joins devices together. But how does a message actually travel from your device, across the world, and arrive at exactly the right computer? That is the amazing journey you will follow in…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Comparing the three ways to connect",
+      "modelType": "concept-model-3",
+      "purpose": "You have now met three ways for a device to connect: Wi-Fi, a wired Ethernet cable, and a cellular network (mobile data). Each one suits a different job. You would not want your phone tied to a wire while you walked…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "How packets travel and are put back together",
+      "modelType": "concept-model-4",
+      "purpose": "When Nadia's packets set off across the internet, something interesting happens: they may take different routes to reach Sami. Just like cars driving from one city to another can take different roads, packets can travel…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Split the Send the Packets cross Put the packets",
+      "modelType": "concept-model-5",
+      "purpose": "message ---> packets to --> the internet --> back in order to",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Advantages and disadvantages of packets",
+      "modelType": "concept-model-6",
+      "purpose": "Splitting data into packets is a clever idea, and it brings real benefits — but it also has a few costs. It is important to understand both sides.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-7",
+      "outcomeId": "lo07",
+      "title": "How websites are stored and accessed",
+      "modelType": "concept-model-7",
+      "purpose": "You use websites every day — but where do they actually live? Every website is stored on a web server. A web server is a powerful computer that keeps all the pages of a website, along with the website's IP address, and…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-8",
+      "outcomeId": "lo08",
+      "title": "Network Failure: When Connections Break",
+      "modelType": "concept-model-8",
+      "purpose": "So far, everything has worked perfectly. But networks do not always behave. Cables get unplugged, power goes off, and sometimes whole services stop for hours. In this part you will find out what really happens when a…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-9",
+      "outcomeId": "lo09",
+      "title": "Small failures you barely notice",
+      "modelType": "concept-model-9",
+      "purpose": "Sometimes the internet seems to fail. What this really means is that one or more of the connections inside it has broken. When a connection breaks, it stops working, and data cannot travel along that route any more.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-10",
+      "outcomeId": "lo10",
+      "title": "The BLUE route is broken, but the data still reaches",
+      "modelType": "concept-model-10",
+      "purpose": "the server along the RED and YELLOW routes.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-11",
+      "outcomeId": "lo01",
+      "title": "The effects of network failures",
+      "modelType": "concept-model-11",
+      "purpose": "Network failures can have very small effects, or very big effects. Small failures happen quite often, and they are usually just annoying rather than serious. For example, if a network fails while you are working online,…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-12",
+      "outcomeId": "lo02",
+      "title": "How companies protect against failure",
+      "modelType": "concept-model-12",
+      "purpose": "Because large networks — like those of banks, hospitals and big websites — are so important, companies spend a lot of money trying to stop them from failing. Their main trick is to avoid having only one of anything. A…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-13",
+      "outcomeId": "lo03",
+      "title": "Staying Safe and Responsible Online",
+      "modelType": "concept-model-13",
+      "purpose": "Understanding how networks work also means understanding how to use them safely and kindly. You already value trust, honesty and respect, and you know that other people's privacy matters — and these same values make you…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with network hardware: the machines that connect us",
+      "example": "\"A switch connects my computer to the internet.\" Not quite! A switch only connects devices to each other on the SAME network. To reach the internet, the data must go through the ROUTER. The switch is the meeting point inside your network; the router is the…",
+      "steps": [
+        "Computers can only share files, printers and software if they are joined together into a network. Think of a network like a group of friends who can all talk to each other. On its own, one computer is like a person…",
+        "There are two ways a device can join a network: with wires, or without wires (wirelessly). Both work well, but each needs different hardware. Hardware means the real, physical machines you could hold in your hand — as…",
+        "Connecting with wires: the Ethernet cable",
+        "Many devices connect to a network using an Ethernet cable. It looks a little like a thick telephone wire with a clip on the end that clicks into a socket. Wired connections are fast and reliable, but the device cannot…"
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with how data travels through networks",
+      "example": "Fifty kilometres is a very long way. If you ran around a 400-metre running track, you would have to go around it about 125 times to run 50 km! That is roughly the furthest a single cell tower can send its signal.",
+      "steps": [
+        "You now know the hardware that joins devices together. But how does a message actually travel from your device, across the world, and arrive at exactly the right computer? That is the amazing journey you will follow in…",
+        "Cellular networks: the internet almost anywhere",
+        "A cellular network is another kind of wireless network, but it works over very large areas. Instead of a small Wi-Fi box on a wall, cellular networks use tall towers (you may have seen them standing high above towns and…",
+        "A single cell tower can reach a phone up to about 50 kilometres away, although most of the time the useful range is around 5 kilometres. Making the towers tall is important, because it means the signal is less likely to…"
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with comparing the three ways to connect",
+      "example": "Why bother with the return address? Because if a packet gets lost on the way, the computer that was waiting for it knows exactly which device to ask to send it again. The labels make the whole system reliable.",
+      "steps": [
+        "You have now met three ways for a device to connect: Wi-Fi, a wired Ethernet cable, and a cellular network (mobile data). Each one suits a different job. You would not want your phone tied to a wire while you walked…",
+        "One way we compare connections is by their range — how far they reach. Another is their speed. Connection speed is measured in megabits per second, written Mbps. This is the fastest rate at which data can be sent. A…",
+        "IP addresses: every device has its own address",
+        "Think of the millions and millions of devices connected to the internet. When your device sends data, how does the internet know which of all those devices to deliver it to? The answer is that every device has its own…"
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with how packets travel and are put back together",
+      "example": "The four steps of sending data: split, send, travel, reassemble.",
+      "steps": [
+        "Read the concept card for how packets travel and are put back together and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with split the send the packets cross put the packets",
+      "example": "The full message is complete, and the computer can finally use the data.",
+      "steps": [
+        "message ---> packets to --> the internet --> back in order to",
+        "into packets the internet by different rebuild the whole",
+        "Sometimes a packet does not arrive at all — it gets lost along the way. When that happens, the internet has a neat way of fixing it:",
+        "The receiver computer notices a packet is missing, and sends a message back to the sender asking: \"Please send packet 2 again, it got lost.\""
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "How to work with advantages and disadvantages of packets",
+      "example": "Smaller packets are less likely to get stuck or delayed on a busy network.",
+      "steps": [
+        "Splitting data into packets is a clever idea, and it brings real benefits — but it also has a few costs. It is important to understand both sides.",
+        "If a packet is lost, only a small piece of data has to be sent again — not the whole message.",
+        "Packets do not take up much bandwidth each, so they can travel along a greater variety of connections."
+      ]
+    },
+    {
+      "id": "method-7",
+      "outcomeId": "lo07",
+      "difficulty": "Challenge",
+      "title": "How to work with how websites are stored and accessed",
+      "example": "\"Pretend a message is being sent from Hargeisa to Mogadishu. Walk me through every step — splitting into packets, travelling by different routes, and being put back in order. Then let me try to explain the steps back to you in my own words.\"",
+      "steps": [
+        "You use websites every day — but where do they actually live? Every website is stored on a web server. A web server is a powerful computer that keeps all the pages of a website, along with the website's IP address, and…",
+        "So what happens when you visit a website? Imagine Sami types the address of Ehel Academy's website into his browser. Here is the journey of his request, step by step:",
+        "Sami types a web address into his web browser (a browser is a program such as Firefox). Another name for a web address is a URL — a Uniform Resource Locator. A URL is written as text, for example www.cambridge.org.",
+        "His web browser uses the internet to connect to the web server."
+      ]
+    },
+    {
+      "id": "method-8",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "How to work with network failure: when connections break",
+      "example": "One of those services is cloud storage. Cloud storage lets you save your files and data on someone else's computer — usually a giant server owned by a big company. These companies have huge servers with enormous amounts of storage space, and they let you use…",
+      "steps": [
+        "So far, everything has worked perfectly. But networks do not always behave. Cables get unplugged, power goes off, and sometimes whole services stop for hours. In this part you will find out what really happens when a…",
+        "Let us be very clear about one word. A network is a collection of connections between devices. The internet is simply the biggest network of all — a massive, worldwide web of connections joining computers and devices…",
+        "messaging services, email and video calls"
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Network Hardware: The Machines That Connect Us",
+      "prompt": "Explain in your own words: Network Hardware: The Machines That Connect Us.",
+      "solution": "Computers can only share files, printers and software if they are joined together into a network. Think of a network like a group of friends who can all talk to each other. On its own, one computer is like a person standing alone in a room. Connect it to a network and suddenly it can talk to every other device — sharing photos, sending messages, and reaching the whole internet.\n\nThere are two ways a device can join a network: with wires, or without wires (wirelessly). Both work well, but each needs different hardware. Hardware means the real, physical machines you could hold in your hand — as opposed to software, which is the programs that run on them. In this part you will meet three key pieces of network hardware.\n\nConnecting with wires: the Ethernet cable\n\nMany devices connect to a network using an Ethernet cable. It looks a little like a thick telephone wire with a clip on the end that clicks into a socket. Wired connections are fast and reliable, but the device cannot move far because it is tied to the cable. Two important devices use these cables to build a network: the switch and the router. They have lots of sockets, so many cables (and therefore many devices) can plug into them at once.\n\nThe switch — a meeting point for wired devices\n\nA switch lets you connect wired devices together on one network, such as your school network or an office network. You can plug in many devices, for example:\n\nThe switch joins all these devices together so they can communicate — that is, send data to and receive data from each other. Here is the clever part: if you connect a single printer to the switch, then every computer on that network can use that one printer. The switch is like a busy meeting point where all the wired devices come together to talk. On its own, though, a switch cannot reach the internet — it only connects devices that are on the same network.\n\nThe router — the doorway to the internet\n\nA router does something different. It lets different networks talk to each other. Its most common job is to connect a small network — like your home or school — to the huge network we call the internet.\n\nFor example, a router connects Ehel Academy's network to the internet. Because of the router, any device on the school network can reach the internet — so a student can open a website, watch a lesson video, or send a message to a cousin far away. If you remember only one thing, remember this: it is the router — and only the router — that lets devices on your network reach other networks and the internet.\n\nConnecting without wires: the wireless access point\n\nA wired switch and a wireless access point do a similar job — they both let computers join a network. The big difference is that the wireless access point needs no cables. Devices connect to it through the air. This is perfect for devices that move around, such as:\n\nThe most common wireless access point is a Wi-Fi access point. It sends and receives signals — special invisible waves that carry data through the air to and from nearby devices. A huge advantage is that hundreds of devices can connect to a single Wi-Fi access point without any wires at all. Compare that to a wired switch, which needs one separate cable for every single device!\n\nWi-Fi signals only travel a short distance, though. The further you walk away from the access point, the weaker the signal becomes — until, eventually, your device drops off the network. That is why Wi-Fi access points are often fixed high up on walls or ceilings, sometimes with an aerial sticking out. An aerial is the part that helps send and receive the signals.\n\nHow is a wireless access point different from a switch?\n\nIf you put a switch and a Wi-Fi access point side by side, the biggest difference is simple: the switch uses cables, while the wireless access point uses signals through the air. A switch is best for devices that stay still, like a desktop computer or a printer. A wireless access point is best for devices you carry around, like a phone or a tablet. Both connect devices to the same network — they just do it in different ways.\n\nHere is how the three devices fit together in a typical network. Read the diagram below from top to bottom — the internet is at the top, and the devices are at the bottom:\n\nA simple network: the router reaches the internet; the switch connects wired devices; the wireless access point connects devices with no wires.\n\n+-----------+ +--------------------+\n\n+-----------+ +--------------------+\n\nIn many homes there is just ONE box that plugs into the wall — people call it 'the Wi-Fi' or 'the router'. But that single box is actually doing three jobs at once! Inside it there is a router, a switch, AND a wireless access point, all built together. In a big school or office, these three are often separate machines so they can handle many more devices.\n\n\"Give me a device — like a printer, a phone or a smart TV — and ask me whether it would connect to the network through the switch, the wireless access point, or the router. Then tell me if I was right and explain why.\"\n\nThis turns your tutor into a quiz partner and helps the three devices stick in your memory.\n\nFor example: \"A switch connects my computer to the internet.\" Not quite! A switch only connects devices to each other on the SAME network. To reach the internet, the data must go through the ROUTER. The switch is the meeting point inside your network; the router is the doorway out to the wider world."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: How Data Travels Through Networks",
+      "prompt": "Explain in your own words: How Data Travels Through Networks.",
+      "solution": "You now know the hardware that joins devices together. But how does a message actually travel from your device, across the world, and arrive at exactly the right computer? That is the amazing journey you will follow in this part.\n\nCellular networks: the internet almost anywhere\n\nA cellular network is another kind of wireless network, but it works over very large areas. Instead of a small Wi-Fi box on a wall, cellular networks use tall towers (you may have seen them standing high above towns and along roads). These towers send out strong signals that a smartphone can pick up from many kilometres away.\n\nA single cell tower can reach a phone up to about 50 kilometres away, although most of the time the useful range is around 5 kilometres. Making the towers tall is important, because it means the signal is less likely to be blocked by hills or buildings. This is why a mobile phone can connect almost anywhere — from the top of a mountain to the middle of a busy city. Some cars even use cellular networks, so they can download new software or let people make calls from inside the car.\n\nCellular networks have one big advantage: they cover enormous areas. But they share the same weakness as Wi-Fi — they can suffer from interference. Interference is anything that gets in the way of the signal, such as thick walls or bad weather. When there is interference, the signal may not reach your device properly. This can stop your phone from connecting, or make everything very slow.\n\nFor example: Fifty kilometres is a very long way. If you ran around a 400-metre running track, you would have to go around it about 125 times to run 50 km! That is roughly the furthest a single cell tower can send its signal."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Comparing the three ways to connect",
+      "prompt": "Explain in your own words: Comparing the three ways to connect.",
+      "solution": "You have now met three ways for a device to connect: Wi-Fi, a wired Ethernet cable, and a cellular network (mobile data). Each one suits a different job. You would not want your phone tied to a wire while you walked around a city — and you would not use a slow, faraway cell tower to connect a printer that sits right next to your computer.\n\nOne way we compare connections is by their range — how far they reach. Another is their speed. Connection speed is measured in megabits per second, written Mbps. This is the fastest rate at which data can be sent. A higher number means data arrives more quickly, which matters a lot when you are streaming a video or downloading a big file.\n\nIP addresses: every device has its own address\n\nThink of the millions and millions of devices connected to the internet. When your device sends data, how does the internet know which of all those devices to deliver it to? The answer is that every device has its own unique address, called an IP address. IP stands for Internet Protocol.\n\nAn IP address is a set of numbers. A common type is made of four numbers separated by full stops, and each number is between 0 and 255. For example, a device might have the address 43.66.141.66. These numbers tell a computer exactly where to send data to, or where to fetch data from. IP addresses are usually created automatically by a small program, so you never have to type them yourself.\n\nThe best way to picture an IP address is to think of the address on a letter, or a post code. Every home has its own address so the postal worker knows exactly where to deliver each letter. In the same way, every device has its own IP address so the internet knows exactly where to deliver each piece of data. And just as no two homes on a street can share the same house number, no two devices on a network can share the same IP address — the automatic program makes sure each one is unique, so there is never any confusion.\n\nThere are two types of IP address. The older type is called IPv4 — and the world is starting to run OUT of IPv4 addresses, because there are so many devices! So a newer type was invented, called IPv6, which has an almost unlimited number of addresses — enough for every device for a very, very long time.\n\nHere is one of the most surprising ideas about the internet. When you send a message or a photo, it does not travel as one big lump. Instead, before it is sent, the data is chopped up into many small chunks called packets. Packets are usually all about the same size.\n\nImagine Nadia in Hargeisa wants to send a message to Sami in Mogadishu. Her computer splits the message into, say, three packets. But each packet is not just a piece of the message — it also carries some extra labels. Every packet includes:\n\nthe IP address it was sent from (Nadia's device),\n\nthe IP address it is going to (Sami's device),\n\na packet number, so the pieces can be put back in the right order,\n\nand, of course, a small piece of the actual message (the packet data).\n\nHere is what one packet looks like inside. Notice the address labels at the top and the piece of data at the bottom:\n\nOne data packet. The 'sent from' and 'sent to' IP addresses are like the return address and destination address on an envelope.\n\n+------------------------------------------+\n\n+------------------------------------------+\n\nFor example: Why bother with the return address? Because if a packet gets lost on the way, the computer that was waiting for it knows exactly which device to ask to send it again. The labels make the whole system reliable."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: How packets travel and are put back together",
+      "prompt": "Explain in your own words: How packets travel and are put back together.",
+      "solution": "When Nadia's packets set off across the internet, something interesting happens: they may take different routes to reach Sami. Just like cars driving from one city to another can take different roads, packets can travel by different paths. Some routes are quicker than others, so the packets often arrive in the wrong order!\n\nThis is not a problem, thanks to the packet number. When the packets arrive at their destination, Sami's computer reads the numbers and uses them to put the packets back into the correct order — like sorting shuffled pages of a story back to 1, 2, 3. Only once all the packets have arrived and are in order can the computer read the full message. Here is the whole journey in four steps:\n\nFor example: The four steps of sending data: split, send, travel, reassemble."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Split the Send the Packets cross Put the packets",
+      "prompt": "Explain in your own words: Split the Send the Packets cross Put the packets.",
+      "solution": "message ---> packets to --> the internet --> back in order to\n\ninto packets the internet by different rebuild the whole\n\nWhat happens if a packet gets lost?\n\nSometimes a packet does not arrive at all — it gets lost along the way. When that happens, the internet has a neat way of fixing it:\n\nThe receiver computer notices a packet is missing, and sends a message back to the sender asking: \"Please send packet 2 again, it got lost.\"\n\nThe sender computer sends another copy of just that one lost packet.\n\nWhen the copy arrives, the receiver now has all the packets, so it puts them in order.\n\nFor example: The full message is complete, and the computer can finally use the data."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Advantages and disadvantages of packets",
+      "prompt": "Explain in your own words: Advantages and disadvantages of packets.",
+      "solution": "Splitting data into packets is a clever idea, and it brings real benefits — but it also has a few costs. It is important to understand both sides.\n\nIf a packet is lost, only a small piece of data has to be sent again — not the whole message.\n\nPackets do not take up much bandwidth each, so they can travel along a greater variety of connections.\n\nFor example: Smaller packets are less likely to get stuck or delayed on a busy network."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Write the letter of the best answer for each question.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Which device connects a network to the internet? A) A switch B) A router C) A printer D) An aerial",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Which device lets phones and tablets join a network with no wires? A) An Ethernet cable B) A switch C) A wireless access point D) A web server",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "What is the main job of a switch? A) To reach the internet B) To join wired devices on one network C) To store websites D) To send mobile signals",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "A cellular network sends its signals using: A) Ethernet cables B) Tall towers C) Printers D) Web servers",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p06",
+      "level": "Warm-up",
+      "prompt": "An IP address is made of four numbers. Each number must be between: A) 0 and 9 B) 1 and 100 C) 0 and 255 D) 0 and 1000",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p07",
+      "level": "Warm-up",
+      "prompt": "Why do we split data into packets before sending it? A) To make it bigger B) So a lost piece is small and easy to re-send C) To hide it forever D) To slow it down",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p08",
+      "level": "Warm-up",
+      "prompt": "What extra information does a packet carry, as well as the data? A) The sender and destination IP addresses and a packet number B) A photo C) The Wi-Fi password D) Nothing",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p09",
+      "level": "Warm-up",
+      "prompt": "When packets arrive out of order, the computer uses the ... to sort them. A) colour B) packet number C) password D) aerial",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p10",
+      "level": "Warm-up",
+      "prompt": "A website is stored on a: A) switch B) web server C) router D) cell tower",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p11",
+      "level": "Warm-up",
+      "prompt": "Why do humans use a URL instead of an IP address? A) Words are easier to remember than numbers B) URLs are faster C) Computers cannot read numbers D) IP addresses are secret",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p12",
+      "level": "Warm-up",
+      "prompt": "What does cloud storage let you do? A) Control the weather B) Save files on servers and reach them anywhere online C) Make Wi-Fi faster D) Delete the internet",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p13",
+      "level": "Warm-up",
+      "prompt": "When a single connection on the internet breaks, usually: A) the whole internet stops B) data takes a different route C) all data is lost D) your device explodes",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p14",
+      "level": "Warm-up",
+      "prompt": "Which of these could cause a connection to break? A) The power being turned off B) A cable being unplugged C) A fire damaging cables D) All of these",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p15",
+      "level": "Warm-up",
+      "prompt": "'Corrupted' data means data that: A) is extra fast B) is damaged and cannot be used C) is encrypted D) has no IP address",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p16",
+      "level": "Warm-up",
+      "prompt": "How do companies protect an important network from failing? A) By using only one server B) By keeping backups and spare connections C) By turning it off D) By hiding it",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Design and label the network (Part 3.1)",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Draw Ehel Academy's network. Put the router where it connects to the internet.",
+        "Label every device, and use solid lines for wired connections and dotted lines for wireless connections.",
+        "Write one sentence next to each of the switch, router and wireless access point explaining its job."
+      ]
+    },
+    {
+      "title": "Trace a message's journey (Part 3.2)",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "A student at Ehel Academy sends the message HELLO FROM HARGEISA to a cousin in Mogadishu. Show how the message is split into packets.",
+        "Draw one packet in detail, showing its packet number, 'sent from' and 'sent to' IP addresses (make up valid ones), and its piece of data.",
+        "Explain in a few sentences how the packets travel by different routes and are put back in the correct order when they arrive.",
+        "Add a note explaining what happens if one packet gets lost on the way."
+      ]
+    },
+    {
+      "title": "A network-failure resilience plan (Part 3.3)",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "'Resilience' means being able to keep going even when something goes wrong. Write a short plan to help Ehel Academy's network stay reliable.",
+        "List three things that could cause the school's connection to break.",
+        "For each one, suggest what could be done to reduce the problem or recover from it (think about backups, spare connections, and saving work often).",
+        "Explain why having a backup server or a second connection helps — use the idea of data taking a 'different route'.",
+        "Finish with one sentence of advice for students about saving their work, so nothing important is lost or corrupted during a failure.",
+        "Here is my plan for Ehel Academy's network. Can you check that Task 1 has a router, switch and wireless access point in the right places, that Task 2 correctly describes packets and reassembly, and that Task 3 uses the idea of backups and different routes? Suggest one improvement."
+      ]
+    },
+    {
+      "title": "Warm Up - Your Connection Diary",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Over one day, keep a simple diary of everything you do online.",
+        "List each device you use to go online (phone, tablet, laptop, PC, smart TV...).",
+        "For each device, write how it connected: Wi-Fi, cellular data (mobile signal), or an Ethernet cable.",
+        "For one activity, write what you were doing and whether it needed high bandwidth (like streaming a video) or low bandwidth (like sending a short message).",
+        "Part 3.1 Activities — Network Hardware",
+        "Activity 1 — Which device does which job?"
+      ]
+    },
+    {
+      "title": "Ask Your AI Tutor",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "\"I have drawn a network with a switch, a router and a wireless access point. I will describe where I placed each one. Can you check that the router is the part reaching the internet, and that my wired and wireless devices are on the right connections?\"",
+        "Part 3.2 Activities — How Data Travels",
+        "Activity 3 — Valid or invalid IP address?",
+        "Remember the rule: a common IP address has exactly four numbers, separated by full stops, and each number is between 0 and 255. For each address below, write valid or invalid. If it is invalid, explain why.",
+        "IP address to check"
+      ]
+    },
+    {
+      "title": "URL",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Investigate 1 — Explore a real website safely (browser task)",
+        "This is a hands-on task. With a trusted adult's permission, open a free web browser such as Firefox. You are only looking — do NOT type any personal information into any website.",
+        "Type a safe, well-known web address into the address bar (your teacher can suggest one, for example a national broadcaster or an encyclopaedia for children).",
+        "Look at the address bar. Write down the full URL you can see."
+      ]
+    },
+    {
+      "title": "IP address",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Investigate 1 — Explore a real website safely (browser task)",
+        "This is a hands-on task. With a trusted adult's permission, open a free web browser such as Firefox. You are only looking — do NOT type any personal information into any website.",
+        "Type a safe, well-known web address into the address bar (your teacher can suggest one, for example a national broadcaster or an encyclopaedia for children).",
+        "Look at the address bar. Write down the full URL you can see.",
+        "Find the domain name part (the main name of the site) and the ending (such as .com, .org or a country ending like .so).",
+        "Click one link on the page. Notice how the URL in the address bar changes as you move to a new page. Write down what happened."
+      ]
+    },
+    {
+      "title": "Online-safety note",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Only visit websites that your teacher or a trusted adult has approved. If a website ever asks for your name, address, school or password, stop and ask an adult first. You never need to share real personal details for these tasks.",
+        "Part 3.3 Activities — Network Failure",
+        "Activity 7 — What happened to the video? (unplugged)",
+        "Read this short conversation between two students:",
+        "Maya: \"I was watching a video on my phone and it suddenly stopped working!\"",
+        "Leo: \"Oh no! What do you think happened?\""
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "When something goes wrong, people often shout: \"The internet is broken!\" But remember: the internet itself does NOT break. It is far too big for that. What actually breaks is just the CONNECTIONS between some of the computers. There are almost always other connections the data can use instead.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "When something goes wrong, people often shout: “The internet is broken!” But remember: the internet itself does NOT break. It is far too big for that. What actually breaks is just the CONNECTIONS between some of the computers. There are almost always other connections the data can use instead. The effects of network failures Network failures can have very small effects, or very big effects. Small failures happen quite often, and they are usually just annoying rather than serious. For example, if a network fails while you are working online, any work you have not saved recently might disappear. Or if you are playing an online game, the game might suddenly stop. Frustrating — but not the end of the world. Large failures with big effects do not happen as often, but they matter far more. Imagine a bank's network failing. Effects of a large failure could include: not being able to stream films, radio or TV shows; not being able to reach money in an online bank account to pay bills or buy food"
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Stay safe online",
+      "text": "When you visit websites, only use ones that you trust and know are safe. If you are not sure about a website, always check with your teacher, your parents, or a trusted adult BEFORE you visit it. Never type your name, address, school or password into a website you do not know."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "! — Switch, router, access point",
+        "text": "Switch = joins WIRED devices on one network. Router = the DOORWAY to the internet. Wireless access point = joins devices with NO wires. If you remember these three, you understand network hardware."
+      },
+      {
+        "title": "! — Only the router reaches the internet",
+        "text": "A switch and a wireless access point connect devices on your own network. To reach other networks and the internet, the data must go through the router."
+      },
+      {
+        "title": "! — Packets in one line",
+        "text": "Big data is split into small packets. Each packet has a sender IP, a destination IP, and a packet number. Packets take different routes, then are put back in order at the other end. A lost packet is simply re-sent."
+      },
+      {
+        "title": "! — Numbers for computers, names for people",
+        "text": "Computers find each other using IP addresses (numbers) because they only understand numbers. Humans use URLs (names) because names are far easier to remember."
+      },
+      {
+        "title": "! — The internet does not break",
+        "text": "When something goes wrong, it is the CONNECTIONS between computers that break, not the whole internet. Data takes another route. Companies keep backups so important services keep working."
+      }
+    ],
+    "terms": [
+      [
+        "network",
+        "A group of computers and devices connected together so they can share data, files and devices."
+      ],
+      [
+        "hardware",
+        "The physical machines and parts of a computer system that you can touch."
+      ],
+      [
+        "Ethernet cable",
+        "A wire used to connect a device to a network."
+      ],
+      [
+        "switch",
+        "A device that connects wired devices together on one network."
+      ],
+      [
+        "router",
+        "A device that connects one network to another network — most often to the internet."
+      ],
+      [
+        "wireless access point",
+        "A device that lets computers join a network without wires, using Wi-Fi."
+      ],
+      [
+        "aerial",
+        "A part that sends and receives wireless signals."
+      ],
+      [
+        "Wi-Fi",
+        "A way of connecting devices to a network without wires, over a short distance."
+      ],
+      [
+        "signal",
+        "Special waves that carry data through the air between devices."
+      ],
+      [
+        "cellular network",
+        "A wireless network that uses tall towers to cover very large areas (4G and 5G)."
+      ],
+      [
+        "range",
+        "How far a signal can travel and still be used."
+      ],
+      [
+        "interference",
+        "Anything that gets in the way of a signal, making it weak or stopping it."
+      ],
+      [
+        "server",
+        "A powerful computer that stores files and shares them with other devices."
+      ],
+      [
+        "web server",
+        "A server that stores the pages of a website."
+      ],
+      [
+        "website",
+        "A set of linked web pages stored on a web server."
+      ],
+      [
+        "web browser",
+        "A program used to find and view websites, for example Firefox."
+      ],
+      [
+        "URL",
+        "The web address you type into a browser, e.g. www.cambridge.org."
+      ],
+      [
+        "IP address",
+        "A set of numbers that gives every device on a network its own unique address."
+      ],
+      [
+        "destination",
+        "The place that data is being sent to."
+      ],
+      [
+        "packet",
+        "A small chunk of data; a message is split into many packets to be sent."
+      ],
+      [
+        "bandwidth",
+        "The amount of data that can be sent in a certain amount of time."
+      ],
+      [
+        "cloud storage",
+        "Saving your files on a company's servers over the internet, so you can reach them anywhere."
+      ],
+      [
+        "network failure",
+        "When one or more connections in a network break and stop working."
+      ],
+      [
+        "corrupted",
+        "When data is damaged so that it cannot be used, and may be lost forever."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "network",
+        "meaning": "A group of computers and devices connected together so they can share data, files and devices.",
+        "example": "",
+        "letter": "N"
+      },
+      {
+        "term": "hardware",
+        "meaning": "The physical machines and parts of a computer system that you can touch.",
+        "example": "",
+        "letter": "H"
+      },
+      {
+        "term": "Ethernet cable",
+        "meaning": "A wire used to connect a device to a network.",
+        "example": "",
+        "letter": "E"
+      },
+      {
+        "term": "switch",
+        "meaning": "A device that connects wired devices together on one network.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "router",
+        "meaning": "A device that connects one network to another network — most often to the internet.",
+        "example": "",
+        "letter": "R"
+      },
+      {
+        "term": "wireless access point",
+        "meaning": "A device that lets computers join a network without wires, using Wi-Fi.",
+        "example": "",
+        "letter": "W"
+      },
+      {
+        "term": "aerial",
+        "meaning": "A part that sends and receives wireless signals.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "Wi-Fi",
+        "meaning": "A way of connecting devices to a network without wires, over a short distance.",
+        "example": "",
+        "letter": "W"
+      },
+      {
+        "term": "signal",
+        "meaning": "Special waves that carry data through the air between devices.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "cellular network",
+        "meaning": "A wireless network that uses tall towers to cover very large areas (4G and 5G).",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "range",
+        "meaning": "How far a signal can travel and still be used.",
+        "example": "",
+        "letter": "R"
+      },
+      {
+        "term": "interference",
+        "meaning": "Anything that gets in the way of a signal, making it weak or stopping it.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "server",
+        "meaning": "A powerful computer that stores files and shares them with other devices.",
+        "example": "",
+        "letter": "S"
+      },
+      {
+        "term": "web server",
+        "meaning": "A server that stores the pages of a website.",
+        "example": "",
+        "letter": "W"
+      },
+      {
+        "term": "website",
+        "meaning": "A set of linked web pages stored on a web server.",
+        "example": "",
+        "letter": "W"
+      },
+      {
+        "term": "web browser",
+        "meaning": "A program used to find and view websites, for example Firefox.",
+        "example": "",
+        "letter": "W"
+      },
+      {
+        "term": "URL",
+        "meaning": "The web address you type into a browser, e.g. www.cambridge.org.",
+        "example": "",
+        "letter": "U"
+      },
+      {
+        "term": "IP address",
+        "meaning": "A set of numbers that gives every device on a network its own unique address.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "destination",
+        "meaning": "The place that data is being sent to.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "packet",
+        "meaning": "A small chunk of data; a message is split into many packets to be sent.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "bandwidth",
+        "meaning": "The amount of data that can be sent in a certain amount of time.",
+        "example": "",
+        "letter": "B"
+      },
+      {
+        "term": "cloud storage",
+        "meaning": "Saving your files on a company's servers over the internet, so you can reach them anywhere.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "network failure",
+        "meaning": "When one or more connections in a network break and stop working.",
+        "example": "",
+        "letter": "N"
+      },
+      {
+        "term": "corrupted",
+        "meaning": "When data is damaged so that it cannot be used, and may be lost forever.",
+        "example": "",
+        "letter": "C"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "When something goes wrong, people often shout: \"The internet is broken!\" But remember: the internet itself does NOT break. It is far too big for that. What actually breaks is just the CONNECTIONS between some of the computers. There are almost always other connections the data can use instead.",
+        "When something goes wrong, people often shout: “The internet is broken!” But remember: the internet itself does NOT break. It is far too big for that. What actually breaks is just the CONNECTIONS between some of the computers. There are almost always other connections the data can use instead. The effects of network failures Network failures can have very small effects, or very big effects. Small failures happen quite often, and they are usually just annoying rather than serious. For example, if a network fails while you are working online, any work you have not saved recently might disappear. Or if you are playing an online game, the game might suddenly stop. Frustrating — but not the end of the world. Large failures with big effects do not happen as often, but they matter far more. Imagine a bank's network failing. Effects of a large failure could include: not being able to stream films, radio or TV shows; not being able to reach money in an online bank account to pay bills or buy food"
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Write the letter of the best answer for each question.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Which device connects a network to the internet? A) A switch B) A router C) A printer D) An aerial",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Which device lets phones and tablets join a network with no wires? A) An Ethernet cable B) A switch C) A wireless access point D) A web server",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "What is the main job of a switch? A) To reach the internet B) To join wired devices on one network C) To store websites D) To send mobile signals",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "A cellular network sends its signals using: A) Ethernet cables B) Tall towers C) Printers D) Web servers",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "An IP address is made of four numbers. Each number must be between: A) 0 and 9 B) 1 and 100 C) 0 and 255 D) 0 and 1000",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "Why do we split data into packets before sending it? A) To make it bigger B) So a lost piece is small and easy to re-send C) To hide it forever D) To slow it down",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "What extra information does a packet carry, as well as the data? A) The sender and destination IP addresses and a packet number B) A photo C) The Wi-Fi password D) Nothing",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "When packets arrive out of order, the computer uses the ... to sort them. A) colour B) packet number C) password D) aerial",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "A website is stored on a: A) switch B) web server C) router D) cell tower",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "Why do humans use a URL instead of an IP address? A) Words are easier to remember than numbers B) URLs are faster C) Computers cannot read numbers D) IP addresses are secret",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "What does cloud storage let you do? A) Control the weather B) Save files on servers and reach them anywhere online C) Make Wi-Fi faster D) Delete the internet",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what network and hardware mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Ms Amal is setting up Ehel Academy's network. She wants desktop computers and a printer to be joined by cables, and she also wants tablets to connect with no wires. She wants the whole network to reach the internet. Which three pieces of hardware does she need, and what is each one for?",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — network, hardware, Ethernet cable — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "Tariq is walking through Hargeisa using mobile data on his phone. He steps inside a building with thick concrete walls and his internet slows right down. Explain what is happening, using the word interference.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — network, hardware, Ethernet cable — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Nadia in Hargeisa sends a long message to Sami in Mogadishu. One packet gets lost on the way. Explain what happens next, and why the message can still arrive correctly in the end.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — network, hardware, Ethernet cable — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "Rohan is doing his homework online and does not save it. The Wi-Fi drops for a moment and his work disappears. Is this a small or a large network failure? What could Rohan do differently next time?",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — network, hardware, Ethernet cable — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Travel",
+      "prompt": "A bank's network fails for a whole day. Describe two effects this could have on ordinary people, and explain one thing the bank could do to stop this happening again.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — network, hardware, Ethernet cable — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "context": "Health",
+      "prompt": "Section E — Wired or Wireless?",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — network, hardware, Ethernet cable — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Answer in one or two full sentences.",
+      "keyIdeas": [
+        "network",
+        "hardware",
+        "Ethernet cable"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "What device allows a network to access the internet?",
+      "keyIdeas": [
+        "hardware",
+        "Ethernet cable",
+        "switch"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "What allows devices to connect wirelessly to a network?",
+      "keyIdeas": [
+        "Ethernet cable",
+        "switch",
+        "router"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Explain, in your own words, why we need IP addresses.",
+      "keyIdeas": [
+        "switch",
+        "router",
+        "wireless access point"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Give two advantages of a cellular network.",
+      "keyIdeas": [
+        "router",
+        "wireless access point",
+        "aerial"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "When data is split into smaller pieces, what do we call these pieces?",
+      "keyIdeas": [
+        "wireless access point",
+        "aerial",
+        "Wi-Fi"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "project": {
+    "title": "Unit 3 Project: Networks and Digital Communication",
+    "brief": "Bring together everything from Networks and Digital Communication into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your networks and digital communication project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "My project shows that I understand network hardware: the machines that connect us.",
+      "My project shows that I understand how data travels through networks.",
+      "My project shows that I understand comparing the three ways to connect.",
+      "My project shows that I understand how packets travel and are put back together.",
+      "My project shows that I understand split the send the packets cross put the packets."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “network” mean in computing?",
+        "options": [
+          "A group of computers and devices connected together so they can share data, files and devices.",
+          "The physical machines and parts of a computer system that you can touch.",
+          "A wire used to connect a device to a network.",
+          "A device that connects wired devices together on one network."
+        ],
+        "answer": "A group of computers and devices connected together so they can share data, files and devices.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Network means a group of computers and devices connected together so they can share data, files and devices."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “hardware” mean in computing?",
+        "options": [
+          "The physical machines and parts of a computer system that you can touch.",
+          "A wire used to connect a device to a network.",
+          "A device that connects wired devices together on one network.",
+          "A device that connects one network to another network — most often to the internet."
+        ],
+        "answer": "The physical machines and parts of a computer system that you can touch.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Hardware means the physical machines and parts of a computer system that you can touch."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “Ethernet cable” mean in computing?",
+        "options": [
+          "A wire used to connect a device to a network.",
+          "A device that connects wired devices together on one network.",
+          "A device that connects one network to another network — most often to the internet.",
+          "A device that lets computers join a network without wires, using Wi-Fi."
+        ],
+        "answer": "A wire used to connect a device to a network.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Ethernet cable means a wire used to connect a device to a network."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “switch” mean in computing?",
+        "options": [
+          "A device that connects wired devices together on one network.",
+          "A device that connects one network to another network — most often to the internet.",
+          "A device that lets computers join a network without wires, using Wi-Fi.",
+          "A part that sends and receives wireless signals."
+        ],
+        "answer": "A device that connects wired devices together on one network.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Switch means a device that connects wired devices together on one network."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “router” mean in computing?",
+        "options": [
+          "A device that connects one network to another network — most often to the internet.",
+          "A device that lets computers join a network without wires, using Wi-Fi.",
+          "A part that sends and receives wireless signals.",
+          "A way of connecting devices to a network without wires, over a short distance."
+        ],
+        "answer": "A device that connects one network to another network — most often to the internet.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Router means a device that connects one network to another network — most often to the internet."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “wireless access point” mean in computing?",
+        "options": [
+          "A device that lets computers join a network without wires, using Wi-Fi.",
+          "A part that sends and receives wireless signals.",
+          "A way of connecting devices to a network without wires, over a short distance.",
+          "Special waves that carry data through the air between devices."
+        ],
+        "answer": "A device that lets computers join a network without wires, using Wi-Fi.",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Wireless access point means a device that lets computers join a network without wires, using Wi-Fi."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A part that sends and receives wireless signals.?",
+        "options": [
+          "aerial",
+          "Wi-Fi",
+          "signal",
+          "cellular network"
+        ],
+        "answer": "aerial",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Aerial means a part that sends and receives wireless signals."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A way of connecting devices to a network without wires, over a short distance.?",
+        "options": [
+          "Wi-Fi",
+          "signal",
+          "cellular network",
+          "range"
+        ],
+        "answer": "Wi-Fi",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Wi-Fi means a way of connecting devices to a network without wires, over a short distance."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo09",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Special waves that carry data through the air between devices.?",
+        "options": [
+          "signal",
+          "cellular network",
+          "range",
+          "interference"
+        ],
+        "answer": "signal",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Signal means special waves that carry data through the air between devices."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A wireless network that uses tall towers to cover very large areas (4G and 5G).?",
+        "options": [
+          "cellular network",
+          "range",
+          "interference",
+          "server"
+        ],
+        "answer": "cellular network",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Cellular network means a wireless network that uses tall towers to cover very large areas (4G and 5G)."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: How far a signal can travel and still be used.?",
+        "options": [
+          "range",
+          "interference",
+          "server",
+          "web server"
+        ],
+        "answer": "range",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Range means how far a signal can travel and still be used."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Anything that gets in the way of a signal, making it weak or stopping it.?",
+        "options": [
+          "interference",
+          "server",
+          "web server",
+          "website"
+        ],
+        "answer": "interference",
+        "hint": "Use the Unit 3 Computing Words reference.",
+        "explanation": "Interference means anything that gets in the way of a signal, making it weak or stopping it."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u3-game-1",
+        "icon": "?",
+        "skill": "network",
+        "title": "Quick Match: network",
+        "description": "Practise network through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “network” mean in computing?",
+            "choices": [
+              "A group of computers and devices connected together so they can share data, files and devices.",
+              "The physical machines and parts of a computer system that you can touch.",
+              "A wire used to connect a device to a network.",
+              "A device that connects wired devices together on one network."
+            ],
+            "answer": "A group of computers and devices connected together so they can share data, files and devices.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Network means a group of computers and devices connected together so they can share data, files and devices."
+          },
+          {
+            "prompt": "What does “switch” mean in computing?",
+            "choices": [
+              "A device that connects wired devices together on one network.",
+              "A device that connects one network to another network — most often to the internet.",
+              "A device that lets computers join a network without wires, using Wi-Fi.",
+              "A part that sends and receives wireless signals."
+            ],
+            "answer": "A device that connects wired devices together on one network.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Switch means a device that connects wired devices together on one network."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A part that sends and receives wireless signals.?",
+            "choices": [
+              "aerial",
+              "Wi-Fi",
+              "signal",
+              "cellular network"
+            ],
+            "answer": "aerial",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Aerial means a part that sends and receives wireless signals."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A wireless network that uses tall towers to cover very large areas (4G and 5G).?",
+            "choices": [
+              "cellular network",
+              "range",
+              "interference",
+              "server"
+            ],
+            "answer": "cellular network",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Cellular network means a wireless network that uses tall towers to cover very large areas (4G and 5G)."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-2",
+        "icon": "★",
+        "skill": "hardware",
+        "title": "Concept Quest: hardware",
+        "description": "Practise hardware through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “hardware” mean in computing?",
+            "choices": [
+              "The physical machines and parts of a computer system that you can touch.",
+              "A wire used to connect a device to a network.",
+              "A device that connects wired devices together on one network.",
+              "A device that connects one network to another network — most often to the internet."
+            ],
+            "answer": "The physical machines and parts of a computer system that you can touch.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Hardware means the physical machines and parts of a computer system that you can touch."
+          },
+          {
+            "prompt": "What does “router” mean in computing?",
+            "choices": [
+              "A device that connects one network to another network — most often to the internet.",
+              "A device that lets computers join a network without wires, using Wi-Fi.",
+              "A part that sends and receives wireless signals.",
+              "A way of connecting devices to a network without wires, over a short distance."
+            ],
+            "answer": "A device that connects one network to another network — most often to the internet.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Router means a device that connects one network to another network — most often to the internet."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A way of connecting devices to a network without wires, over a short distance.?",
+            "choices": [
+              "Wi-Fi",
+              "signal",
+              "cellular network",
+              "range"
+            ],
+            "answer": "Wi-Fi",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Wi-Fi means a way of connecting devices to a network without wires, over a short distance."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: How far a signal can travel and still be used.?",
+            "choices": [
+              "range",
+              "interference",
+              "server",
+              "web server"
+            ],
+            "answer": "range",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Range means how far a signal can travel and still be used."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-3",
+        "icon": "◫",
+        "skill": "Ethernet cable",
+        "title": "Debug Detective: Ethernet cable",
+        "description": "Practise ethernet cable through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “Ethernet cable” mean in computing?",
+            "choices": [
+              "A wire used to connect a device to a network.",
+              "A device that connects wired devices together on one network.",
+              "A device that connects one network to another network — most often to the internet.",
+              "A device that lets computers join a network without wires, using Wi-Fi."
+            ],
+            "answer": "A wire used to connect a device to a network.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Ethernet cable means a wire used to connect a device to a network."
+          },
+          {
+            "prompt": "What does “wireless access point” mean in computing?",
+            "choices": [
+              "A device that lets computers join a network without wires, using Wi-Fi.",
+              "A part that sends and receives wireless signals.",
+              "A way of connecting devices to a network without wires, over a short distance.",
+              "Special waves that carry data through the air between devices."
+            ],
+            "answer": "A device that lets computers join a network without wires, using Wi-Fi.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Wireless access point means a device that lets computers join a network without wires, using Wi-Fi."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Special waves that carry data through the air between devices.?",
+            "choices": [
+              "signal",
+              "cellular network",
+              "range",
+              "interference"
+            ],
+            "answer": "signal",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Signal means special waves that carry data through the air between devices."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Anything that gets in the way of a signal, making it weak or stopping it.?",
+            "choices": [
+              "interference",
+              "server",
+              "web server",
+              "website"
+            ],
+            "answer": "interference",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Interference means anything that gets in the way of a signal, making it weak or stopping it."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-4",
+        "icon": "→",
+        "skill": "switch",
+        "title": "Algorithm Runner: switch",
+        "description": "Practise switch through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “switch” mean in computing?",
+            "choices": [
+              "A device that connects wired devices together on one network.",
+              "A device that connects one network to another network — most often to the internet.",
+              "A device that lets computers join a network without wires, using Wi-Fi.",
+              "A part that sends and receives wireless signals."
+            ],
+            "answer": "A device that connects wired devices together on one network.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Switch means a device that connects wired devices together on one network."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A part that sends and receives wireless signals.?",
+            "choices": [
+              "aerial",
+              "Wi-Fi",
+              "signal",
+              "cellular network"
+            ],
+            "answer": "aerial",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Aerial means a part that sends and receives wireless signals."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A wireless network that uses tall towers to cover very large areas (4G and 5G).?",
+            "choices": [
+              "cellular network",
+              "range",
+              "interference",
+              "server"
+            ],
+            "answer": "cellular network",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Cellular network means a wireless network that uses tall towers to cover very large areas (4G and 5G)."
+          },
+          {
+            "prompt": "What does “network” mean in computing?",
+            "choices": [
+              "A group of computers and devices connected together so they can share data, files and devices.",
+              "The physical machines and parts of a computer system that you can touch.",
+              "A wire used to connect a device to a network.",
+              "A device that connects wired devices together on one network."
+            ],
+            "answer": "A group of computers and devices connected together so they can share data, files and devices.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Network means a group of computers and devices connected together so they can share data, files and devices."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-5",
+        "icon": "Σ",
+        "skill": "router",
+        "title": "Vocabulary Vault: router",
+        "description": "Practise router through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “router” mean in computing?",
+            "choices": [
+              "A device that connects one network to another network — most often to the internet.",
+              "A device that lets computers join a network without wires, using Wi-Fi.",
+              "A part that sends and receives wireless signals.",
+              "A way of connecting devices to a network without wires, over a short distance."
+            ],
+            "answer": "A device that connects one network to another network — most often to the internet.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Router means a device that connects one network to another network — most often to the internet."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A way of connecting devices to a network without wires, over a short distance.?",
+            "choices": [
+              "Wi-Fi",
+              "signal",
+              "cellular network",
+              "range"
+            ],
+            "answer": "Wi-Fi",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Wi-Fi means a way of connecting devices to a network without wires, over a short distance."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: How far a signal can travel and still be used.?",
+            "choices": [
+              "range",
+              "interference",
+              "server",
+              "web server"
+            ],
+            "answer": "range",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Range means how far a signal can travel and still be used."
+          },
+          {
+            "prompt": "What does “hardware” mean in computing?",
+            "choices": [
+              "The physical machines and parts of a computer system that you can touch.",
+              "A wire used to connect a device to a network.",
+              "A device that connects wired devices together on one network.",
+              "A device that connects one network to another network — most often to the internet."
+            ],
+            "answer": "The physical machines and parts of a computer system that you can touch.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Hardware means the physical machines and parts of a computer system that you can touch."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-6",
+        "icon": "◇",
+        "skill": "wireless access point",
+        "title": "Challenge Cards: wireless access point",
+        "description": "Practise wireless access point through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “wireless access point” mean in computing?",
+            "choices": [
+              "A device that lets computers join a network without wires, using Wi-Fi.",
+              "A part that sends and receives wireless signals.",
+              "A way of connecting devices to a network without wires, over a short distance.",
+              "Special waves that carry data through the air between devices."
+            ],
+            "answer": "A device that lets computers join a network without wires, using Wi-Fi.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Wireless access point means a device that lets computers join a network without wires, using Wi-Fi."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Special waves that carry data through the air between devices.?",
+            "choices": [
+              "signal",
+              "cellular network",
+              "range",
+              "interference"
+            ],
+            "answer": "signal",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Signal means special waves that carry data through the air between devices."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Anything that gets in the way of a signal, making it weak or stopping it.?",
+            "choices": [
+              "interference",
+              "server",
+              "web server",
+              "website"
+            ],
+            "answer": "interference",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Interference means anything that gets in the way of a signal, making it weak or stopping it."
+          },
+          {
+            "prompt": "What does “Ethernet cable” mean in computing?",
+            "choices": [
+              "A wire used to connect a device to a network.",
+              "A device that connects wired devices together on one network.",
+              "A device that connects one network to another network — most often to the internet.",
+              "A device that lets computers join a network without wires, using Wi-Fi."
+            ],
+            "answer": "A wire used to connect a device to a network.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Ethernet cable means a wire used to connect a device to a network."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-7",
+        "icon": "⚡",
+        "skill": "aerial",
+        "title": "Think Fast: aerial",
+        "description": "Practise aerial through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A part that sends and receives wireless signals.?",
+            "choices": [
+              "aerial",
+              "Wi-Fi",
+              "signal",
+              "cellular network"
+            ],
+            "answer": "aerial",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Aerial means a part that sends and receives wireless signals."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A wireless network that uses tall towers to cover very large areas (4G and 5G).?",
+            "choices": [
+              "cellular network",
+              "range",
+              "interference",
+              "server"
+            ],
+            "answer": "cellular network",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Cellular network means a wireless network that uses tall towers to cover very large areas (4G and 5G)."
+          },
+          {
+            "prompt": "What does “network” mean in computing?",
+            "choices": [
+              "A group of computers and devices connected together so they can share data, files and devices.",
+              "The physical machines and parts of a computer system that you can touch.",
+              "A wire used to connect a device to a network.",
+              "A device that connects wired devices together on one network."
+            ],
+            "answer": "A group of computers and devices connected together so they can share data, files and devices.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Network means a group of computers and devices connected together so they can share data, files and devices."
+          },
+          {
+            "prompt": "What does “switch” mean in computing?",
+            "choices": [
+              "A device that connects wired devices together on one network.",
+              "A device that connects one network to another network — most often to the internet.",
+              "A device that lets computers join a network without wires, using Wi-Fi.",
+              "A part that sends and receives wireless signals."
+            ],
+            "answer": "A device that connects wired devices together on one network.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Switch means a device that connects wired devices together on one network."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-8",
+        "icon": "☁",
+        "skill": "Wi-Fi",
+        "title": "Explain It: Wi-Fi",
+        "description": "Practise wi-fi through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A way of connecting devices to a network without wires, over a short distance.?",
+            "choices": [
+              "Wi-Fi",
+              "signal",
+              "cellular network",
+              "range"
+            ],
+            "answer": "Wi-Fi",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Wi-Fi means a way of connecting devices to a network without wires, over a short distance."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: How far a signal can travel and still be used.?",
+            "choices": [
+              "range",
+              "interference",
+              "server",
+              "web server"
+            ],
+            "answer": "range",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Range means how far a signal can travel and still be used."
+          },
+          {
+            "prompt": "What does “hardware” mean in computing?",
+            "choices": [
+              "The physical machines and parts of a computer system that you can touch.",
+              "A wire used to connect a device to a network.",
+              "A device that connects wired devices together on one network.",
+              "A device that connects one network to another network — most often to the internet."
+            ],
+            "answer": "The physical machines and parts of a computer system that you can touch.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Hardware means the physical machines and parts of a computer system that you can touch."
+          },
+          {
+            "prompt": "What does “router” mean in computing?",
+            "choices": [
+              "A device that connects one network to another network — most often to the internet.",
+              "A device that lets computers join a network without wires, using Wi-Fi.",
+              "A part that sends and receives wireless signals.",
+              "A way of connecting devices to a network without wires, over a short distance."
+            ],
+            "answer": "A device that connects one network to another network — most often to the internet.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Router means a device that connects one network to another network — most often to the internet."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-9",
+        "icon": "⌂",
+        "skill": "signal",
+        "title": "Real-Life Round: signal",
+        "description": "Practise signal through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Special waves that carry data through the air between devices.?",
+            "choices": [
+              "signal",
+              "cellular network",
+              "range",
+              "interference"
+            ],
+            "answer": "signal",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Signal means special waves that carry data through the air between devices."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Anything that gets in the way of a signal, making it weak or stopping it.?",
+            "choices": [
+              "interference",
+              "server",
+              "web server",
+              "website"
+            ],
+            "answer": "interference",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Interference means anything that gets in the way of a signal, making it weak or stopping it."
+          },
+          {
+            "prompt": "What does “Ethernet cable” mean in computing?",
+            "choices": [
+              "A wire used to connect a device to a network.",
+              "A device that connects wired devices together on one network.",
+              "A device that connects one network to another network — most often to the internet.",
+              "A device that lets computers join a network without wires, using Wi-Fi."
+            ],
+            "answer": "A wire used to connect a device to a network.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Ethernet cable means a wire used to connect a device to a network."
+          },
+          {
+            "prompt": "What does “wireless access point” mean in computing?",
+            "choices": [
+              "A device that lets computers join a network without wires, using Wi-Fi.",
+              "A part that sends and receives wireless signals.",
+              "A way of connecting devices to a network without wires, over a short distance.",
+              "Special waves that carry data through the air between devices."
+            ],
+            "answer": "A device that lets computers join a network without wires, using Wi-Fi.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Wireless access point means a device that lets computers join a network without wires, using Wi-Fi."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-10",
+        "icon": "!",
+        "skill": "cellular network",
+        "title": "Spot the Bug: cellular network",
+        "description": "Practise cellular network through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A wireless network that uses tall towers to cover very large areas (4G and 5G).?",
+            "choices": [
+              "cellular network",
+              "range",
+              "interference",
+              "server"
+            ],
+            "answer": "cellular network",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Cellular network means a wireless network that uses tall towers to cover very large areas (4G and 5G)."
+          },
+          {
+            "prompt": "What does “network” mean in computing?",
+            "choices": [
+              "A group of computers and devices connected together so they can share data, files and devices.",
+              "The physical machines and parts of a computer system that you can touch.",
+              "A wire used to connect a device to a network.",
+              "A device that connects wired devices together on one network."
+            ],
+            "answer": "A group of computers and devices connected together so they can share data, files and devices.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Network means a group of computers and devices connected together so they can share data, files and devices."
+          },
+          {
+            "prompt": "What does “switch” mean in computing?",
+            "choices": [
+              "A device that connects wired devices together on one network.",
+              "A device that connects one network to another network — most often to the internet.",
+              "A device that lets computers join a network without wires, using Wi-Fi.",
+              "A part that sends and receives wireless signals."
+            ],
+            "answer": "A device that connects wired devices together on one network.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Switch means a device that connects wired devices together on one network."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A part that sends and receives wireless signals.?",
+            "choices": [
+              "aerial",
+              "Wi-Fi",
+              "signal",
+              "cellular network"
+            ],
+            "answer": "aerial",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Aerial means a part that sends and receives wireless signals."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-11",
+        "icon": "≡",
+        "skill": "range",
+        "title": "Mastery Mix: range",
+        "description": "Practise range through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: How far a signal can travel and still be used.?",
+            "choices": [
+              "range",
+              "interference",
+              "server",
+              "web server"
+            ],
+            "answer": "range",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Range means how far a signal can travel and still be used."
+          },
+          {
+            "prompt": "What does “hardware” mean in computing?",
+            "choices": [
+              "The physical machines and parts of a computer system that you can touch.",
+              "A wire used to connect a device to a network.",
+              "A device that connects wired devices together on one network.",
+              "A device that connects one network to another network — most often to the internet."
+            ],
+            "answer": "The physical machines and parts of a computer system that you can touch.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Hardware means the physical machines and parts of a computer system that you can touch."
+          },
+          {
+            "prompt": "What does “router” mean in computing?",
+            "choices": [
+              "A device that connects one network to another network — most often to the internet.",
+              "A device that lets computers join a network without wires, using Wi-Fi.",
+              "A part that sends and receives wireless signals.",
+              "A way of connecting devices to a network without wires, over a short distance."
+            ],
+            "answer": "A device that connects one network to another network — most often to the internet.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Router means a device that connects one network to another network — most often to the internet."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A way of connecting devices to a network without wires, over a short distance.?",
+            "choices": [
+              "Wi-Fi",
+              "signal",
+              "cellular network",
+              "range"
+            ],
+            "answer": "Wi-Fi",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Wi-Fi means a way of connecting devices to a network without wires, over a short distance."
+          }
+        ]
+      },
+      {
+        "id": "u3-game-12",
+        "icon": "T",
+        "skill": "interference",
+        "title": "Unit Champion: interference",
+        "description": "Practise interference through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Anything that gets in the way of a signal, making it weak or stopping it.?",
+            "choices": [
+              "interference",
+              "server",
+              "web server",
+              "website"
+            ],
+            "answer": "interference",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Interference means anything that gets in the way of a signal, making it weak or stopping it."
+          },
+          {
+            "prompt": "What does “Ethernet cable” mean in computing?",
+            "choices": [
+              "A wire used to connect a device to a network.",
+              "A device that connects wired devices together on one network.",
+              "A device that connects one network to another network — most often to the internet.",
+              "A device that lets computers join a network without wires, using Wi-Fi."
+            ],
+            "answer": "A wire used to connect a device to a network.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Ethernet cable means a wire used to connect a device to a network."
+          },
+          {
+            "prompt": "What does “wireless access point” mean in computing?",
+            "choices": [
+              "A device that lets computers join a network without wires, using Wi-Fi.",
+              "A part that sends and receives wireless signals.",
+              "A way of connecting devices to a network without wires, over a short distance.",
+              "Special waves that carry data through the air between devices."
+            ],
+            "answer": "A device that lets computers join a network without wires, using Wi-Fi.",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Wireless access point means a device that lets computers join a network without wires, using Wi-Fi."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Special waves that carry data through the air between devices.?",
+            "choices": [
+              "signal",
+              "cellular network",
+              "range",
+              "interference"
+            ],
+            "answer": "signal",
+            "clue": "Use the Unit 3 Computing Words reference.",
+            "explanation": "Signal means special waves that carry data through the air between devices."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can identify the main hardware devices in a network: the switch, the router and the wireless access point.",
+    "I can explain the job each of these devices does.",
+    "I can explain the difference between a wired connection and a wireless connection.",
+    "I can describe what a cellular network is and how mobile phones use it.",
+    "I can explain what an IP address is and why every device needs one.",
+    "I can explain how data is split into small chunks called packets.",
+    "I can describe how packets travel through networks and are put back together.",
+    "I can explain how a website is stored on a web server and how you access it with a URL.",
+    "I can explain what the internet is and what cloud storage means.",
+    "I can describe why connections break and what causes network failure."
+  ]
+}

@@ -1,0 +1,1785 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.405Z",
+  "stage": {
+    "id": "s02",
+    "label": "Stage 2"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t03",
+    "label": "Term 3"
+  },
+  "unit": {
+    "unitId": "comp-g02-u09",
+    "unitNo": 9,
+    "unitTitle": "Connected and Sharing Safely",
+    "unitOverview": "There are two big ideas, and both are simple. The first is knowing when the internet is here or not. Our devices show us little pictures called icons that tell us whether we are connected. When the internet is here to use, we say it is available; when it is not here, it is not available.\n\nThe second big idea is sharing safely. When devices are connected, information can travel between them — something on one device can be seen on another. That is wonderful: we can send a photo or a warm hello to family far away, from Hargeisa to Mogadishu in a moment. But because other people can see what we send, we learn to think first. They finish with five simple stay-safe rules.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 2
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-2-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 2",
+    "sourceArchive": "Year 2-20260801T055735Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 2/Unit 9/Year 2 - Unit 9 Teacher Guide.docx",
+      "Year 2/Unit 9/Year 2 - Unit 9 Activity Sheet.docx",
+      "Year 2/Unit 9/Year 2 - Unit 9 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 315,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 2 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Know when a network and the internet are available (here to use) and when they are not available.",
+    "Read simple icons that show a device is connected without wires, connected with a wire, or not connected at all.",
+    "Say what you cannot do with no internet — send emails, look at websites, or watch online videos.",
+    "Understand that connected devices share information, so something on one device can be seen by another.",
+    "Understand, in a gentle way, that malware is a program that is bad for a computer, and that we do not open files from people we do not know."
+  ],
+  "toolkit": [],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-is-the-internet-here-network-availability",
+      "title": "Is the internet here? (network availability)",
+      "explanation": "Sometimes the internet is here for us to use, and sometimes it is not. Our devices tell us with little pictures called icons. When the internet is here, we say it is available. When it is not here, it is not available. With no internet, we cannot send emails, look at websites, or watch online videos.\n\nOur devices can join a network with a wire, or through the air with no wire. But how do we KNOW if we are joined and the internet is working?",
+      "example": "Full lines mean we are joined through the air. Now the internet is not available.",
+      "checkYourself": "Can you name one thing you cannot do with no internet?"
+    },
+    {
+      "id": "concept-2-sharing-across-a-network-think-before-you-share",
+      "title": "Sharing across a network (think before you share)",
+      "explanation": "When devices are connected, they can share information. That means something on one device can be seen by another device. Sharing is wonderful — but because other people can see what we send, we learn to think first.\n\nPass the slips around the circle, hand to hand. Could the person next to you see your paper? Could lots of people see it as it went around?",
+      "example": "Do the passing game from the textbook. Give you a slip of paper to write or draw something small and happy on (a star, a fruit).",
+      "checkYourself": "Can you name one lovely thing about sharing?"
+    },
+    {
+      "id": "concept-3-keep-your-private-things-private-personal-information",
+      "title": "Keep your private things private (personal information)",
+      "explanation": "Personal information is private information about YOU. It includes your home address, your phone number, your family's names, your birthday, and your school's name. The biggest risk on a network is sharing personal information, because people we do not know might see it.\n\nOn one: “My favourite colour is green.” On the other: “My home is at.” Ask: “Which one is fine to tell everyone? Which one is private, just for our family?” Explain warmly: “Personal information is like the key to your house.",
+      "example": "You would not hand your house key to someone you do not know. We keep personal information private in the same way.”",
+      "checkYourself": "Can you name two things that are personal and private?"
+    },
+    {
+      "id": "concept-4-careful-what-we-open-malware",
+      "title": "Careful what we open (malware)",
+      "explanation": "Malware is a program that is bad for a computer. Some people try to trick us by sending malware across a network. We receive information when we open a website or download a file — so we do not open files, messages or links from people we do not know. A computer with malware acts strangely: it slows down, strange adverts pop up, files will not open, or it stops working.\n\nThe word malware means bad software — a naughty program. It can make a computer poorly, a bit like a germ makes us poorly. How do we stay well?",
+      "example": "We are careful. A computer stays well when we are careful too — we only open files and messages from people we know and trust, and we check with a grown-up.",
+      "checkYourself": "Can you know not to open files from people you do not know?"
+    },
+    {
+      "id": "concept-5-our-safety-rules-staying-safe-and-being-kind",
+      "title": "Our safety rules (staying safe and being kind)",
+      "explanation": "We finish by gathering everything into five simple stay-safe rules. Teachers may know these as the SMART rules. Introduce each rule with a simple phrase and, if you like, an action. Say them warmly, not as warnings.\n\nTry it: This session leads straight into the.",
+      "example": "Find one real example of our safety rules (staying safe and being kind) around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": ""
+    }
+  ],
+  "codeExamples": [],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Is the Internet On or Off?",
+      "context": "work through the steps below and see what happens. This is is the internet here? (network availability) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "A device shows little pictures called icons. You tell us if the internet is here. Circle ON if the internet is here to use. Circle OFF if it is not.",
+      "answer": "1. A globe (a little picture of the world). ON / OFF 2. A globe with a line through it. ON / OFF 3. Full Wi-Fi lines, like a little fan. ON / OFF 4. A crossed-out Wi-Fi. ON / OFF",
+      "modelType": "model-1",
+      "hint": "Start here: 1. A globe (a little picture of the world). ON / OFF",
+      "explanation": "Is the internet here? (network availability): Sometimes the internet is here for us to use, and sometimes it is not. Our devices tell us with little pictures called icons. When the internet is here, we say it is available. When it is not here, it is not available. With no internet, we cannot send emails, look at websites, or watch online…"
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "What Needs the Internet?",
+      "context": "work through the steps below and see what happens. This is sharing across a network (think before you share) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "With no internet, some things stop working. Tick the things that need the internet.",
+      "answer": "[ ] Send an email [ ] Watch an online video [ ] Draw on paper [ ] Look at a website [ ] Eat a banana",
+      "modelType": "model-2",
+      "hint": "Start here: [ ] Send an email",
+      "explanation": "Sharing across a network (think before you share): When devices are connected, they can share information. That means something on one device can be seen by another device. Sharing is wonderful — but because other people can see what we send, we learn to think first."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Keep It Private!",
+      "context": "work through the steps below and see what happens. This is keep your private things private (personal information) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Some things are private — just for you and your family. Some things are fine to share. Write P for private or S for share.",
+      "answer": "[ ] My home address [ ] My favourite colour [ ] My phone number [ ] A drawing I made [ ] My birthday",
+      "modelType": "model-3",
+      "hint": "Start here: [ ] My home address",
+      "explanation": "Keep your private things private (personal information): Personal information is private information about YOU. It includes your home address, your phone number, your family's names, your birthday, and your school's name. The biggest risk on a network is sharing personal information, because people we do not know might see it."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Spot the Malware!",
+      "context": "work through the steps below and see what happens. This is careful what we open (malware) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Malware is a bad program. It can make a computer poorly. Tick the signs that a computer has malware.",
+      "answer": "[ ] The computer slows down [ ] Strange adverts pop up [ ] Files will not open [ ] It stops working [ ] It works perfectly and is fast",
+      "modelType": "model-4",
+      "hint": "Start here: [ ] The computer slows down",
+      "explanation": "Careful what we open (malware): Malware is a program that is bad for a computer. Some people try to trick us by sending malware across a network. We receive information when we open a website or download a file — so we do not open files, messages or links from people we do not know. A computer with malware acts strangely: it…"
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Safe or Not Safe?",
+      "context": "work through the steps below and see what happens. This is our safety rules (staying safe and being kind) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Circle SAFE or NOT SAFE for each one.",
+      "answer": "a) A person you do not know asks where you live. SAFE / NOT SAFE SAFE / NOT SAFE c) You open a file from someone you do not know. SAFE / NOT SAFE SAFE / NOT SAFE",
+      "modelType": "model-5",
+      "hint": "Start here: a) A person you do not know asks where you live. SAFE / NOT SAFE",
+      "explanation": "Our safety rules (staying safe and being kind): We finish by gathering everything into five simple stay-safe rules. Teachers may know these as the SMART rules. Introduce each rule with a simple phrase and, if you like, an action. Say them warmly, not as warnings."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo01",
+      "difficulty": "Explore",
+      "title": "Finish the Rule",
+      "context": "work through the steps below and see what happens. This is is the internet here? (network availability) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Use the word box to finish each safety rule.",
+      "answer": "Word box: private — Tell — know 1. Keep your personal things ______________. 3. Do not open files from people you do not ______________.",
+      "modelType": "model-6",
+      "hint": "Start here: Word box: private — Tell — know",
+      "explanation": "Is the internet here? (network availability): Sometimes the internet is here for us to use, and sometimes it is not. Our devices tell us with little pictures called icons. When the internet is here, we say it is available. When it is not here, it is not available. With no internet, we cannot send emails, look at websites, or watch online…"
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Is the internet here? (network availability)",
+      "modelType": "concept-model-1",
+      "purpose": "Sometimes the internet is here for us to use, and sometimes it is not. Our devices tell us with little pictures called icons. When the internet is here, we say it is available. When it is not here, it is not available.…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Sharing across a network (think before you share)",
+      "modelType": "concept-model-2",
+      "purpose": "When devices are connected, they can share information. That means something on one device can be seen by another device. Sharing is wonderful — but because other people can see what we send, we learn to think first.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Keep your private things private (personal information)",
+      "modelType": "concept-model-3",
+      "purpose": "Personal information is private information about YOU. It includes your home address, your phone number, your family's names, your birthday, and your school's name. The biggest risk on a network is sharing personal…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Careful what we open (malware)",
+      "modelType": "concept-model-4",
+      "purpose": "Malware is a program that is bad for a computer. Some people try to trick us by sending malware across a network. We receive information when we open a website or download a file — so we do not open files, messages or…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Our safety rules (staying safe and being kind)",
+      "modelType": "concept-model-5",
+      "purpose": "We finish by gathering everything into five simple stay-safe rules. Teachers may know these as the SMART rules. Introduce each rule with a simple phrase and, if you like, an action. Say them warmly, not as warnings.",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with is the internet here? (network availability)",
+      "example": "Full lines mean we are joined through the air. Now the internet is not available.",
+      "steps": [
+        "Read the concept card for is the internet here? (network availability) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with sharing across a network (think before you share)",
+      "example": "Do the passing game from the textbook. Give you a slip of paper to write or draw something small and happy on (a star, a fruit).",
+      "steps": [
+        "Read the concept card for sharing across a network (think before you share) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with keep your private things private (personal information)",
+      "example": "You would not hand your house key to someone you do not know. We keep personal information private in the same way.”",
+      "steps": [
+        "Read the concept card for keep your private things private (personal information) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with careful what we open (malware)",
+      "example": "We are careful. A computer stays well when we are careful too — we only open files and messages from people we know and trust, and we check with a grown-up.",
+      "steps": [
+        "Read the concept card for careful what we open (malware) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with our safety rules (staying safe and being kind)",
+      "example": "Find one real example of our safety rules (staying safe and being kind) around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for our safety rules (staying safe and being kind) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Is the internet here? (network availability)",
+      "prompt": "True or false? Something on one computer can be seen by another computer on the network.",
+      "solution": "True. Something on one computer can be seen by another computer on the network — that is why we think before we share."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Sharing across a network (think before you share)",
+      "prompt": "Which one is personal information? ([ ] My toy robot)",
+      "solution": "My phone number (a toy robot is not private information about you)."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Keep your private things private (personal information)",
+      "prompt": "Something online makes you feel worried. What should you do?",
+      "solution": "Tell a trusted grown-up (a parent or teacher) straight away."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Careful what we open (malware)",
+      "prompt": "Name one thing you should keep private.",
+      "solution": "Any one of: home address, phone number, birthday, family's names, or school name."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Our safety rules (staying safe and being kind)",
+      "prompt": "Is it safe to open a file from someone you do not know?",
+      "solution": "No — a file from someone you do not know might have malware. Check with a trusted grown-up first."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo01",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Is the internet here? (network availability)",
+      "prompt": "Explain in your own words: Is the internet here? (network availability).",
+      "solution": "Sometimes the internet is here for us to use, and sometimes it is not. Our devices tell us with little pictures called icons. When the internet is here, we say it is available. When it is not here, it is not available. With no internet, we cannot send emails, look at websites, or watch online videos.\n\nOur devices can join a network with a wire, or through the air with no wire. But how do we KNOW if we are joined and the internet is working?\n\nFor example: Full lines mean we are joined through the air. Now the internet is not available."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "True or false? Something on one computer can be seen by another computer on the network.",
+      "answer": "True. Something on one computer can be seen by another computer on the network — that is why we think before we share.",
+      "hint": "Look back at what network and internet mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Finish the sentences. Use the word box: address — malware",
+      "answer": "a) address; b) malware.",
+      "hint": "Look back at what network and internet mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "Which one is personal information? ([ ] My toy robot)",
+      "answer": "My phone number (a toy robot is not private information about you).",
+      "hint": "Look back at what network and internet mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Something online makes you feel worried. What should you do?",
+      "answer": "Tell a trusted grown-up (a parent or teacher) straight away.",
+      "hint": "Look back at what network and internet mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "Name one thing you should keep private.",
+      "answer": "Any one of: home address, phone number, birthday, family's names, or school name.",
+      "hint": "Look back at what network and internet mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "Is it safe to open a file from someone you do not know?",
+      "answer": "No — a file from someone you do not know might have malware. Check with a trusted grown-up first.",
+      "hint": "Look back at what network and internet mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Is the Internet On or Off?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A device shows little pictures called icons. You tell us if the internet is here. Circle ON if the internet is here to use. Circle OFF if it is not.",
+        "1. A globe (a little picture of the world). ON / OFF",
+        "2. A globe with a line through it. ON / OFF",
+        "3. Full Wi-Fi lines, like a little fan. ON / OFF",
+        "4. A crossed-out Wi-Fi. ON / OFF"
+      ]
+    },
+    {
+      "title": "What Needs the Internet?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "With no internet, some things stop working. Tick the things that need the internet.",
+        "[ ] Send an email",
+        "[ ] Watch an online video",
+        "[ ] Draw on paper",
+        "[ ] Look at a website",
+        "[ ] Eat a banana"
+      ]
+    },
+    {
+      "title": "Keep It Private!",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Some things are private — just for you and your family. Some things are fine to share. Write P for private or S for share.",
+        "[ ] My home address",
+        "[ ] My favourite colour",
+        "[ ] My phone number",
+        "[ ] A drawing I made",
+        "[ ] My birthday"
+      ]
+    },
+    {
+      "title": "Spot the Malware!",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Malware is a bad program. It can make a computer poorly. Tick the signs that a computer has malware.",
+        "[ ] The computer slows down",
+        "[ ] Strange adverts pop up",
+        "[ ] Files will not open",
+        "[ ] It stops working",
+        "[ ] It works perfectly and is fast"
+      ]
+    },
+    {
+      "title": "Safe or Not Safe?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Circle SAFE or NOT SAFE for each one.",
+        "a) A person you do not know asks where you live. SAFE / NOT SAFE",
+        "SAFE / NOT SAFE",
+        "c) You open a file from someone you do not know. SAFE / NOT SAFE",
+        "SAFE / NOT SAFE"
+      ]
+    },
+    {
+      "title": "Finish the Rule",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Use the word box to finish each safety rule.",
+        "Word box: private — Tell — know",
+        "1. Keep your personal things ______________.",
+        "3. Do not open files from people you do not ______________."
+      ]
+    },
+    {
+      "title": "My Trusted Grown-Ups",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Draw or write the grown-ups YOU can tell.",
+        "Did You Know?",
+        "The little Wi-Fi picture looks like curved lines — like waves going through the air to join your device!",
+        "The word malware comes from two words: bad and software. The bit mal means bad!",
+        "Telling you are always the brave and clever thing to do."
+      ]
+    },
+    {
+      "title": "My \"Sharing Safely\" Flyer",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A flyer teaches people something important. Make a flyer about sharing safely. In the big box",
+        "Draw or write two things that are fine to share (like a drawing, your favourite colour, or a friendly hello).",
+        "Draw or write two private things we keep safe (like your home address, your phone number, or your birthday)."
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "If my device is on, the internet must be working.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Not always. A device can be on, and even joined to Wi-Fi, but the internet still be down. We look at the icons — a globe with a line means the internet is not available."
+    },
+    {
+      "symptom": "With no internet, my device does nothing.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "It can still do plenty — draw, play an offline game, read a book already on it. No internet only stops things like emails, websites and online videos."
+    },
+    {
+      "symptom": "If I send something to my friend, only my friend can see it.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "When information travels across a network, other people may be able to see it too — like the paper passed around the circle. That is why we keep private things private."
+    },
+    {
+      "symptom": "My birthday (or school's name) is not private.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "These are personal information. Together with other details they can tell a stranger too much about you, so we keep them private."
+    },
+    {
+      "symptom": "Malware means I did something wrong / broke the computer.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No. Malware is a naughty program some people send on purpose."
+    },
+    {
+      "symptom": "A file from a stranger is fine if it looks fun.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Fun-looking files can still carry malware. We only open files and messages from people we know and trust."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Keep personal information private",
+      "text": "Your full name, address, school, phone number, birthday and passwords are personal information. Never type them into a game, an app or a website, and never send them to someone you only know online."
+    },
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Is the internet here? (network availability)",
+        "text": "Sometimes the internet is here for us to use, and sometimes it is not."
+      },
+      {
+        "title": "Sharing across a network (think before you share)",
+        "text": "When devices are connected, they can share information."
+      },
+      {
+        "title": "Keep your private things private (personal information)",
+        "text": "Personal information is private information about YOU."
+      },
+      {
+        "title": "Careful what we open (malware)",
+        "text": "Malware is a program that is bad for a computer."
+      },
+      {
+        "title": "Our safety rules (staying safe and being kind)",
+        "text": "We finish by gathering everything into five simple stay-safe rules."
+      }
+    ],
+    "terms": [
+      [
+        "network",
+        "Devices joined together so they can share and send messages."
+      ],
+      [
+        "internet",
+        "Lots and lots of networks joined together, all over the world."
+      ],
+      [
+        "icon",
+        "A little picture that means something on a device."
+      ],
+      [
+        "available",
+        "Here to use. The internet is working."
+      ],
+      [
+        "not available",
+        "Not here. The internet is not working just now."
+      ],
+      [
+        "share",
+        "To let someone else see or use something."
+      ],
+      [
+        "personal information",
+        "Private information about you."
+      ],
+      [
+        "private",
+        "Just for you and your family, not for strangers."
+      ],
+      [
+        "malware",
+        "A program that is bad for a computer."
+      ],
+      [
+        "Wi-Fi (little curved lines, like a fan)",
+        "The device is connected WITHOUT wires (wireless)."
+      ],
+      [
+        "A screen with a plug, or small arrows",
+        "The device is connected WITH a wire (wired)."
+      ],
+      [
+        "A crossed-out icon, or the words Not connected",
+        "The device is not joined to any network."
+      ],
+      [
+        "A globe (a little picture of the world)",
+        "The internet is available — here to use."
+      ],
+      [
+        "A globe with a line through it",
+        "The internet is not available — not here just now."
+      ],
+      [
+        "A message like You're offline",
+        "The device is telling you there is no internet."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "network",
+        "meaning": "Devices joined together so they can share and send messages.",
+        "example": "The tablets at Ehel Academy.",
+        "letter": "N"
+      },
+      {
+        "term": "internet",
+        "meaning": "Lots and lots of networks joined together, all over the world.",
+        "example": "How we message family far away.",
+        "letter": "I"
+      },
+      {
+        "term": "icon",
+        "meaning": "A little picture that means something on a device.",
+        "example": "The Wi-Fi picture at the top of a tablet.",
+        "letter": "I"
+      },
+      {
+        "term": "available",
+        "meaning": "Here to use. The internet is working.",
+        "example": "The globe icon shows internet is available.",
+        "letter": "A"
+      },
+      {
+        "term": "not available",
+        "meaning": "Not here. The internet is not working just now.",
+        "example": "A globe with a line through it.",
+        "letter": "N"
+      },
+      {
+        "term": "share",
+        "meaning": "To let someone else see or use something.",
+        "example": "Sending a photo to Grandma.",
+        "letter": "S"
+      },
+      {
+        "term": "personal information",
+        "meaning": "Private information about you.",
+        "example": "Your home address or phone number.",
+        "letter": "P"
+      },
+      {
+        "term": "private",
+        "meaning": "Just for you and your family, not for strangers.",
+        "example": "We keep our address private.",
+        "letter": "P"
+      },
+      {
+        "term": "malware",
+        "meaning": "A program that is bad for a computer.",
+        "example": "It can make a computer poorly.",
+        "letter": "M"
+      },
+      {
+        "term": "Wi-Fi (little curved lines, like a fan)",
+        "meaning": "The device is connected WITHOUT wires (wireless).",
+        "example": "",
+        "letter": "W"
+      },
+      {
+        "term": "A screen with a plug, or small arrows",
+        "meaning": "The device is connected WITH a wire (wired).",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "A crossed-out icon, or the words Not connected",
+        "meaning": "The device is not joined to any network.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "A globe (a little picture of the world)",
+        "meaning": "The internet is available — here to use.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "A globe with a line through it",
+        "meaning": "The internet is not available — not here just now.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "A message like You're offline",
+        "meaning": "The device is telling you there is no internet.",
+        "example": "",
+        "letter": "A"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "If my device is on, the internet must be working.",
+        "Not always. A device can be on, and even joined to Wi-Fi, but the internet still be down. We look at the icons — a globe with a line means the internet is not available."
+      ],
+      [
+        "With no internet, my device does nothing.",
+        "It can still do plenty — draw, play an offline game, read a book already on it. No internet only stops things like emails, websites and online videos."
+      ],
+      [
+        "If I send something to my friend, only my friend can see it.",
+        "When information travels across a network, other people may be able to see it too — like the paper passed around the circle. That is why we keep private things private."
+      ],
+      [
+        "My birthday (or school's name) is not private.",
+        "These are personal information. Together with other details they can tell a stranger too much about you, so we keep them private."
+      ],
+      [
+        "Malware means I did something wrong / broke the computer.",
+        "No. Malware is a naughty program some people send on purpose."
+      ],
+      [
+        "A file from a stranger is fine if it looks fun.",
+        "Fun-looking files can still carry malware. We only open files and messages from people we know and trust."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "True or false? Something on one computer can be seen by another computer on the network.",
+      "answer": "True. Something on one computer can be seen by another computer on the network — that is why we think before we share.",
+      "hint": "Look back at what network and internet mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "True. Something on one computer can be seen by another computer on the network — that is why we think before we share."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Finish the sentences. Use the word box: address — malware",
+      "answer": "a) address; b) malware.",
+      "hint": "Look back at what network and internet mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "a) address; b) malware."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Which one is personal information? ([ ] My toy robot)",
+      "answer": "My phone number (a toy robot is not private information about you).",
+      "hint": "Look back at what network and internet mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "My phone number (a toy robot is not private information about you)."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Something online makes you feel worried. What should you do?",
+      "answer": "Tell a trusted grown-up (a parent or teacher) straight away.",
+      "hint": "Look back at what network and internet mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Tell a trusted grown-up (a parent or teacher) straight away."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Name one thing you should keep private.",
+      "answer": "Any one of: home address, phone number, birthday, family's names, or school name.",
+      "hint": "Look back at what network and internet mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Any one of: home address, phone number, birthday, family's names, or school name."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo01",
+      "difficulty": "Round 2",
+      "prompt": "Is it safe to open a file from someone you do not know?",
+      "answer": "No — a file from someone you do not know might have malware. Check with a trusted grown-up first.",
+      "hint": "Look back at what network and internet mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "No — a file from someone you do not know might have malware. Check with a trusted grown-up first."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Is it safe to open a file from someone you do not know?",
+      "answer": "No — a file from someone you do not know might have malware. Check with a trusted grown-up first.",
+      "hint": "Look back at what network and internet mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: No — a file from someone you do not know might have malware. Check with a trusted grown-up first."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "Name one thing you should keep private.",
+      "answer": "Any one of: home address, phone number, birthday, family's names, or school name.",
+      "hint": "Look back at what network and internet mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Any one of: home address, phone number, birthday, family's names, or school name."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Is it safe to open a file from someone you do not know?",
+      "answer": "No — a file from someone you do not know might have malware. Check with a trusted grown-up first.",
+      "hint": "Look back at what network and internet mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: No — a file from someone you do not know might have malware. Check with a trusted grown-up first."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "True or false? Something on one computer can be seen by another computer on the network.",
+      "answer": "True. Something on one computer can be seen by another computer on the network — that is why we think before we share.",
+      "hint": "Look back at what network and internet mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: True. Something on one computer can be seen by another computer on the network — that is why we think before we share."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Which one is personal information? ([ ] My toy robot)",
+      "keyIdeas": [
+        "network",
+        "internet",
+        "icon"
+      ],
+      "modelAnswer": "My phone number (a toy robot is not private information about you)."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Something online makes you feel worried. What should you do?",
+      "keyIdeas": [
+        "internet",
+        "icon",
+        "available"
+      ],
+      "modelAnswer": "Tell a trusted grown-up (a parent or teacher) straight away."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Name one thing you should keep private.",
+      "keyIdeas": [
+        "icon",
+        "available",
+        "not available"
+      ],
+      "modelAnswer": "Any one of: home address, phone number, birthday, family's names, or school name."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in careful what we open (malware), and give one example of your own.",
+      "keyIdeas": [
+        "network",
+        "internet",
+        "icon"
+      ],
+      "modelAnswer": "Malware is a program that is bad for a computer. Some people try to trick us by sending malware across a network. We receive information when we open a website or download a file — so we do not open files, messages or links from people we do not know. A computer with malware acts strangely: it slows down, strange adverts pop up, files will not open, or it stops working.\n\nThe word malware means bad software — a naughty program. It can make a computer poorly, a bit like a germ makes us poorly. How do we stay well?"
+    }
+  ],
+  "project": {
+    "title": "Unit 9 Project: Connected and Sharing Safely",
+    "brief": "Bring together everything from Connected and Sharing Safely into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your connected and sharing safely project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "My flyer shows two things that are fine to share.",
+      "My flyer shows two private things we keep safe.",
+      "I ticked the ways we share on the internet.",
+      "My poster shows a computer with malware and two signs.",
+      "I told a partner what malware is."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "True or false? Something on one computer can be seen by another computer on the network.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "answer": "True",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "True. Something on one computer can be seen by another computer on the network — that is why we think before we share."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “internet” mean in computing?",
+        "options": [
+          "Lots and lots of networks joined together, all over the world.",
+          "A little picture that means something on a device.",
+          "Here to use. The internet is working.",
+          "Not here. The internet is not working just now."
+        ],
+        "answer": "Lots and lots of networks joined together, all over the world.",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Internet means lots and lots of networks joined together, all over the world."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “icon” mean in computing?",
+        "options": [
+          "A little picture that means something on a device.",
+          "Here to use. The internet is working.",
+          "Not here. The internet is not working just now.",
+          "To let someone else see or use something."
+        ],
+        "answer": "A little picture that means something on a device.",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Icon means a little picture that means something on a device."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “available” mean in computing?",
+        "options": [
+          "Here to use. The internet is working.",
+          "Not here. The internet is not working just now.",
+          "To let someone else see or use something.",
+          "Private information about you."
+        ],
+        "answer": "Here to use. The internet is working.",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Available means here to use. The internet is working."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “not available” mean in computing?",
+        "options": [
+          "Not here. The internet is not working just now.",
+          "To let someone else see or use something.",
+          "Private information about you.",
+          "Just for you and your family, not for strangers."
+        ],
+        "answer": "Not here. The internet is not working just now.",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Not available means not here. The internet is not working just now."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "What does “share” mean in computing?",
+        "options": [
+          "To let someone else see or use something.",
+          "Private information about you.",
+          "Just for you and your family, not for strangers.",
+          "A program that is bad for a computer."
+        ],
+        "answer": "To let someone else see or use something.",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Share means to let someone else see or use something."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Private information about you.?",
+        "options": [
+          "personal information",
+          "private",
+          "malware",
+          "Wi-Fi (little curved lines, like a fan)"
+        ],
+        "answer": "personal information",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Personal information means private information about you."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo03",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Just for you and your family, not for strangers.?",
+        "options": [
+          "private",
+          "malware",
+          "Wi-Fi (little curved lines, like a fan)",
+          "A screen with a plug, or small arrows"
+        ],
+        "answer": "private",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Private means just for you and your family, not for strangers."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A program that is bad for a computer.?",
+        "options": [
+          "malware",
+          "Wi-Fi (little curved lines, like a fan)",
+          "A screen with a plug, or small arrows",
+          "A crossed-out icon, or the words Not connected"
+        ],
+        "answer": "malware",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Malware means a program that is bad for a computer."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The device is connected WITHOUT wires (wireless).?",
+        "options": [
+          "Wi-Fi (little curved lines, like a fan)",
+          "A screen with a plug, or small arrows",
+          "A crossed-out icon, or the words Not connected",
+          "A globe (a little picture of the world)"
+        ],
+        "answer": "Wi-Fi (little curved lines, like a fan)",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "Wi-Fi (little curved lines, like a fan) means the device is connected WITHOUT wires (wireless)."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The device is connected WITH a wire (wired).?",
+        "options": [
+          "A screen with a plug, or small arrows",
+          "A crossed-out icon, or the words Not connected",
+          "A globe (a little picture of the world)",
+          "A globe with a line through it"
+        ],
+        "answer": "A screen with a plug, or small arrows",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "A screen with a plug, or small arrows means the device is connected WITH a wire (wired)."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The device is not joined to any network.?",
+        "options": [
+          "A crossed-out icon, or the words Not connected",
+          "A globe (a little picture of the world)",
+          "A globe with a line through it",
+          "A message like You're offline"
+        ],
+        "answer": "A crossed-out icon, or the words Not connected",
+        "hint": "Use the Unit 9 Computing Words reference.",
+        "explanation": "A crossed-out icon, or the words Not connected means the device is not joined to any network."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u9-game-1",
+        "icon": "?",
+        "skill": "network",
+        "title": "Quick Match: network",
+        "description": "Practise network through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "True or false? Something on one computer can be seen by another computer on the network.",
+            "choices": [
+              "True",
+              "False"
+            ],
+            "answer": "True",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "True. Something on one computer can be seen by another computer on the network — that is why we think before we share."
+          },
+          {
+            "prompt": "What does “available” mean in computing?",
+            "choices": [
+              "Here to use. The internet is working.",
+              "Not here. The internet is not working just now.",
+              "To let someone else see or use something.",
+              "Private information about you."
+            ],
+            "answer": "Here to use. The internet is working.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Available means here to use. The internet is working."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Private information about you.?",
+            "choices": [
+              "personal information",
+              "private",
+              "malware",
+              "Wi-Fi (little curved lines, like a fan)"
+            ],
+            "answer": "personal information",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Personal information means private information about you."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The device is connected WITHOUT wires (wireless).?",
+            "choices": [
+              "Wi-Fi (little curved lines, like a fan)",
+              "A screen with a plug, or small arrows",
+              "A crossed-out icon, or the words Not connected",
+              "A globe (a little picture of the world)"
+            ],
+            "answer": "Wi-Fi (little curved lines, like a fan)",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Wi-Fi (little curved lines, like a fan) means the device is connected WITHOUT wires (wireless)."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-2",
+        "icon": "★",
+        "skill": "internet",
+        "title": "Concept Quest: internet",
+        "description": "Practise internet through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “internet” mean in computing?",
+            "choices": [
+              "Lots and lots of networks joined together, all over the world.",
+              "A little picture that means something on a device.",
+              "Here to use. The internet is working.",
+              "Not here. The internet is not working just now."
+            ],
+            "answer": "Lots and lots of networks joined together, all over the world.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Internet means lots and lots of networks joined together, all over the world."
+          },
+          {
+            "prompt": "What does “not available” mean in computing?",
+            "choices": [
+              "Not here. The internet is not working just now.",
+              "To let someone else see or use something.",
+              "Private information about you.",
+              "Just for you and your family, not for strangers."
+            ],
+            "answer": "Not here. The internet is not working just now.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Not available means not here. The internet is not working just now."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Just for you and your family, not for strangers.?",
+            "choices": [
+              "private",
+              "malware",
+              "Wi-Fi (little curved lines, like a fan)",
+              "A screen with a plug, or small arrows"
+            ],
+            "answer": "private",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Private means just for you and your family, not for strangers."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The device is connected WITH a wire (wired).?",
+            "choices": [
+              "A screen with a plug, or small arrows",
+              "A crossed-out icon, or the words Not connected",
+              "A globe (a little picture of the world)",
+              "A globe with a line through it"
+            ],
+            "answer": "A screen with a plug, or small arrows",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "A screen with a plug, or small arrows means the device is connected WITH a wire (wired)."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-3",
+        "icon": "◫",
+        "skill": "icon",
+        "title": "Debug Detective: icon",
+        "description": "Practise icon through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “icon” mean in computing?",
+            "choices": [
+              "A little picture that means something on a device.",
+              "Here to use. The internet is working.",
+              "Not here. The internet is not working just now.",
+              "To let someone else see or use something."
+            ],
+            "answer": "A little picture that means something on a device.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Icon means a little picture that means something on a device."
+          },
+          {
+            "prompt": "What does “share” mean in computing?",
+            "choices": [
+              "To let someone else see or use something.",
+              "Private information about you.",
+              "Just for you and your family, not for strangers.",
+              "A program that is bad for a computer."
+            ],
+            "answer": "To let someone else see or use something.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Share means to let someone else see or use something."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A program that is bad for a computer.?",
+            "choices": [
+              "malware",
+              "Wi-Fi (little curved lines, like a fan)",
+              "A screen with a plug, or small arrows",
+              "A crossed-out icon, or the words Not connected"
+            ],
+            "answer": "malware",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Malware means a program that is bad for a computer."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The device is not joined to any network.?",
+            "choices": [
+              "A crossed-out icon, or the words Not connected",
+              "A globe (a little picture of the world)",
+              "A globe with a line through it",
+              "A message like You're offline"
+            ],
+            "answer": "A crossed-out icon, or the words Not connected",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "A crossed-out icon, or the words Not connected means the device is not joined to any network."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-4",
+        "icon": "→",
+        "skill": "available",
+        "title": "Algorithm Runner: available",
+        "description": "Practise available through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “available” mean in computing?",
+            "choices": [
+              "Here to use. The internet is working.",
+              "Not here. The internet is not working just now.",
+              "To let someone else see or use something.",
+              "Private information about you."
+            ],
+            "answer": "Here to use. The internet is working.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Available means here to use. The internet is working."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Private information about you.?",
+            "choices": [
+              "personal information",
+              "private",
+              "malware",
+              "Wi-Fi (little curved lines, like a fan)"
+            ],
+            "answer": "personal information",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Personal information means private information about you."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The device is connected WITHOUT wires (wireless).?",
+            "choices": [
+              "Wi-Fi (little curved lines, like a fan)",
+              "A screen with a plug, or small arrows",
+              "A crossed-out icon, or the words Not connected",
+              "A globe (a little picture of the world)"
+            ],
+            "answer": "Wi-Fi (little curved lines, like a fan)",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Wi-Fi (little curved lines, like a fan) means the device is connected WITHOUT wires (wireless)."
+          },
+          {
+            "prompt": "True or false? Something on one computer can be seen by another computer on the network.",
+            "choices": [
+              "True",
+              "False"
+            ],
+            "answer": "True",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "True. Something on one computer can be seen by another computer on the network — that is why we think before we share."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-5",
+        "icon": "Σ",
+        "skill": "not available",
+        "title": "Vocabulary Vault: not available",
+        "description": "Practise not available through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “not available” mean in computing?",
+            "choices": [
+              "Not here. The internet is not working just now.",
+              "To let someone else see or use something.",
+              "Private information about you.",
+              "Just for you and your family, not for strangers."
+            ],
+            "answer": "Not here. The internet is not working just now.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Not available means not here. The internet is not working just now."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Just for you and your family, not for strangers.?",
+            "choices": [
+              "private",
+              "malware",
+              "Wi-Fi (little curved lines, like a fan)",
+              "A screen with a plug, or small arrows"
+            ],
+            "answer": "private",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Private means just for you and your family, not for strangers."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The device is connected WITH a wire (wired).?",
+            "choices": [
+              "A screen with a plug, or small arrows",
+              "A crossed-out icon, or the words Not connected",
+              "A globe (a little picture of the world)",
+              "A globe with a line through it"
+            ],
+            "answer": "A screen with a plug, or small arrows",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "A screen with a plug, or small arrows means the device is connected WITH a wire (wired)."
+          },
+          {
+            "prompt": "What does “internet” mean in computing?",
+            "choices": [
+              "Lots and lots of networks joined together, all over the world.",
+              "A little picture that means something on a device.",
+              "Here to use. The internet is working.",
+              "Not here. The internet is not working just now."
+            ],
+            "answer": "Lots and lots of networks joined together, all over the world.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Internet means lots and lots of networks joined together, all over the world."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-6",
+        "icon": "◇",
+        "skill": "share",
+        "title": "Challenge Cards: share",
+        "description": "Practise share through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “share” mean in computing?",
+            "choices": [
+              "To let someone else see or use something.",
+              "Private information about you.",
+              "Just for you and your family, not for strangers.",
+              "A program that is bad for a computer."
+            ],
+            "answer": "To let someone else see or use something.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Share means to let someone else see or use something."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A program that is bad for a computer.?",
+            "choices": [
+              "malware",
+              "Wi-Fi (little curved lines, like a fan)",
+              "A screen with a plug, or small arrows",
+              "A crossed-out icon, or the words Not connected"
+            ],
+            "answer": "malware",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Malware means a program that is bad for a computer."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The device is not joined to any network.?",
+            "choices": [
+              "A crossed-out icon, or the words Not connected",
+              "A globe (a little picture of the world)",
+              "A globe with a line through it",
+              "A message like You're offline"
+            ],
+            "answer": "A crossed-out icon, or the words Not connected",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "A crossed-out icon, or the words Not connected means the device is not joined to any network."
+          },
+          {
+            "prompt": "What does “icon” mean in computing?",
+            "choices": [
+              "A little picture that means something on a device.",
+              "Here to use. The internet is working.",
+              "Not here. The internet is not working just now.",
+              "To let someone else see or use something."
+            ],
+            "answer": "A little picture that means something on a device.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Icon means a little picture that means something on a device."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-7",
+        "icon": "⚡",
+        "skill": "personal information",
+        "title": "Think Fast: personal information",
+        "description": "Practise personal information through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Private information about you.?",
+            "choices": [
+              "personal information",
+              "private",
+              "malware",
+              "Wi-Fi (little curved lines, like a fan)"
+            ],
+            "answer": "personal information",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Personal information means private information about you."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The device is connected WITHOUT wires (wireless).?",
+            "choices": [
+              "Wi-Fi (little curved lines, like a fan)",
+              "A screen with a plug, or small arrows",
+              "A crossed-out icon, or the words Not connected",
+              "A globe (a little picture of the world)"
+            ],
+            "answer": "Wi-Fi (little curved lines, like a fan)",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Wi-Fi (little curved lines, like a fan) means the device is connected WITHOUT wires (wireless)."
+          },
+          {
+            "prompt": "True or false? Something on one computer can be seen by another computer on the network.",
+            "choices": [
+              "True",
+              "False"
+            ],
+            "answer": "True",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "True. Something on one computer can be seen by another computer on the network — that is why we think before we share."
+          },
+          {
+            "prompt": "What does “available” mean in computing?",
+            "choices": [
+              "Here to use. The internet is working.",
+              "Not here. The internet is not working just now.",
+              "To let someone else see or use something.",
+              "Private information about you."
+            ],
+            "answer": "Here to use. The internet is working.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Available means here to use. The internet is working."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-8",
+        "icon": "☁",
+        "skill": "private",
+        "title": "Explain It: private",
+        "description": "Practise private through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Just for you and your family, not for strangers.?",
+            "choices": [
+              "private",
+              "malware",
+              "Wi-Fi (little curved lines, like a fan)",
+              "A screen with a plug, or small arrows"
+            ],
+            "answer": "private",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Private means just for you and your family, not for strangers."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The device is connected WITH a wire (wired).?",
+            "choices": [
+              "A screen with a plug, or small arrows",
+              "A crossed-out icon, or the words Not connected",
+              "A globe (a little picture of the world)",
+              "A globe with a line through it"
+            ],
+            "answer": "A screen with a plug, or small arrows",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "A screen with a plug, or small arrows means the device is connected WITH a wire (wired)."
+          },
+          {
+            "prompt": "What does “internet” mean in computing?",
+            "choices": [
+              "Lots and lots of networks joined together, all over the world.",
+              "A little picture that means something on a device.",
+              "Here to use. The internet is working.",
+              "Not here. The internet is not working just now."
+            ],
+            "answer": "Lots and lots of networks joined together, all over the world.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Internet means lots and lots of networks joined together, all over the world."
+          },
+          {
+            "prompt": "What does “not available” mean in computing?",
+            "choices": [
+              "Not here. The internet is not working just now.",
+              "To let someone else see or use something.",
+              "Private information about you.",
+              "Just for you and your family, not for strangers."
+            ],
+            "answer": "Not here. The internet is not working just now.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Not available means not here. The internet is not working just now."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-9",
+        "icon": "⌂",
+        "skill": "malware",
+        "title": "Real-Life Round: malware",
+        "description": "Practise malware through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A program that is bad for a computer.?",
+            "choices": [
+              "malware",
+              "Wi-Fi (little curved lines, like a fan)",
+              "A screen with a plug, or small arrows",
+              "A crossed-out icon, or the words Not connected"
+            ],
+            "answer": "malware",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Malware means a program that is bad for a computer."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The device is not joined to any network.?",
+            "choices": [
+              "A crossed-out icon, or the words Not connected",
+              "A globe (a little picture of the world)",
+              "A globe with a line through it",
+              "A message like You're offline"
+            ],
+            "answer": "A crossed-out icon, or the words Not connected",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "A crossed-out icon, or the words Not connected means the device is not joined to any network."
+          },
+          {
+            "prompt": "What does “icon” mean in computing?",
+            "choices": [
+              "A little picture that means something on a device.",
+              "Here to use. The internet is working.",
+              "Not here. The internet is not working just now.",
+              "To let someone else see or use something."
+            ],
+            "answer": "A little picture that means something on a device.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Icon means a little picture that means something on a device."
+          },
+          {
+            "prompt": "What does “share” mean in computing?",
+            "choices": [
+              "To let someone else see or use something.",
+              "Private information about you.",
+              "Just for you and your family, not for strangers.",
+              "A program that is bad for a computer."
+            ],
+            "answer": "To let someone else see or use something.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Share means to let someone else see or use something."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-10",
+        "icon": "!",
+        "skill": "Wi-Fi (little curved lines, like a fan)",
+        "title": "Spot the Bug: Wi-Fi (little curved lines, like a fan)",
+        "description": "Practise wi-fi (little curved lines, like a fan) through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The device is connected WITHOUT wires (wireless).?",
+            "choices": [
+              "Wi-Fi (little curved lines, like a fan)",
+              "A screen with a plug, or small arrows",
+              "A crossed-out icon, or the words Not connected",
+              "A globe (a little picture of the world)"
+            ],
+            "answer": "Wi-Fi (little curved lines, like a fan)",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Wi-Fi (little curved lines, like a fan) means the device is connected WITHOUT wires (wireless)."
+          },
+          {
+            "prompt": "True or false? Something on one computer can be seen by another computer on the network.",
+            "choices": [
+              "True",
+              "False"
+            ],
+            "answer": "True",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "True. Something on one computer can be seen by another computer on the network — that is why we think before we share."
+          },
+          {
+            "prompt": "What does “available” mean in computing?",
+            "choices": [
+              "Here to use. The internet is working.",
+              "Not here. The internet is not working just now.",
+              "To let someone else see or use something.",
+              "Private information about you."
+            ],
+            "answer": "Here to use. The internet is working.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Available means here to use. The internet is working."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Private information about you.?",
+            "choices": [
+              "personal information",
+              "private",
+              "malware",
+              "Wi-Fi (little curved lines, like a fan)"
+            ],
+            "answer": "personal information",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Personal information means private information about you."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-11",
+        "icon": "≡",
+        "skill": "A screen with a plug, or small arrows",
+        "title": "Mastery Mix: A screen with a plug, or small arrows",
+        "description": "Practise a screen with a plug, or small arrows through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The device is connected WITH a wire (wired).?",
+            "choices": [
+              "A screen with a plug, or small arrows",
+              "A crossed-out icon, or the words Not connected",
+              "A globe (a little picture of the world)",
+              "A globe with a line through it"
+            ],
+            "answer": "A screen with a plug, or small arrows",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "A screen with a plug, or small arrows means the device is connected WITH a wire (wired)."
+          },
+          {
+            "prompt": "What does “internet” mean in computing?",
+            "choices": [
+              "Lots and lots of networks joined together, all over the world.",
+              "A little picture that means something on a device.",
+              "Here to use. The internet is working.",
+              "Not here. The internet is not working just now."
+            ],
+            "answer": "Lots and lots of networks joined together, all over the world.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Internet means lots and lots of networks joined together, all over the world."
+          },
+          {
+            "prompt": "What does “not available” mean in computing?",
+            "choices": [
+              "Not here. The internet is not working just now.",
+              "To let someone else see or use something.",
+              "Private information about you.",
+              "Just for you and your family, not for strangers."
+            ],
+            "answer": "Not here. The internet is not working just now.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Not available means not here. The internet is not working just now."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Just for you and your family, not for strangers.?",
+            "choices": [
+              "private",
+              "malware",
+              "Wi-Fi (little curved lines, like a fan)",
+              "A screen with a plug, or small arrows"
+            ],
+            "answer": "private",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Private means just for you and your family, not for strangers."
+          }
+        ]
+      },
+      {
+        "id": "u9-game-12",
+        "icon": "T",
+        "skill": "A crossed-out icon, or the words Not connected",
+        "title": "Unit Champion: A crossed-out icon, or the words Not connected",
+        "description": "Practise a crossed-out icon, or the words not connected through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The device is not joined to any network.?",
+            "choices": [
+              "A crossed-out icon, or the words Not connected",
+              "A globe (a little picture of the world)",
+              "A globe with a line through it",
+              "A message like You're offline"
+            ],
+            "answer": "A crossed-out icon, or the words Not connected",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "A crossed-out icon, or the words Not connected means the device is not joined to any network."
+          },
+          {
+            "prompt": "What does “icon” mean in computing?",
+            "choices": [
+              "A little picture that means something on a device.",
+              "Here to use. The internet is working.",
+              "Not here. The internet is not working just now.",
+              "To let someone else see or use something."
+            ],
+            "answer": "A little picture that means something on a device.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Icon means a little picture that means something on a device."
+          },
+          {
+            "prompt": "What does “share” mean in computing?",
+            "choices": [
+              "To let someone else see or use something.",
+              "Private information about you.",
+              "Just for you and your family, not for strangers.",
+              "A program that is bad for a computer."
+            ],
+            "answer": "To let someone else see or use something.",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Share means to let someone else see or use something."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A program that is bad for a computer.?",
+            "choices": [
+              "malware",
+              "Wi-Fi (little curved lines, like a fan)",
+              "A screen with a plug, or small arrows",
+              "A crossed-out icon, or the words Not connected"
+            ],
+            "answer": "malware",
+            "clue": "Use the Unit 9 Computing Words reference.",
+            "explanation": "Malware means a program that is bad for a computer."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can know when a network and the internet are available (here to use) and when they are not available.",
+    "I can read simple icons that show a device is connected without wires, connected with a wire, or not connected at all.",
+    "I can say what you cannot do with no internet — send emails, look at websites, or watch online videos.",
+    "I can understand that connected devices share information, so something on one device can be seen by another.",
+    "I can understand, in a gentle way, that malware is a program that is bad for a computer, and that we do not open files from people we do not know."
+  ]
+}

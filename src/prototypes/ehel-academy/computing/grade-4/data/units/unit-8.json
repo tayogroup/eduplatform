@@ -1,0 +1,1876 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.736Z",
+  "stage": {
+    "id": "s04",
+    "label": "Stage 4"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t02",
+    "label": "Term 2"
+  },
+  "unit": {
+    "unitId": "comp-g04-u08",
+    "unitNo": 8,
+    "unitTitle": "Be an Innovator",
+    "unitOverview": "Behind the fun theme sit three solid computing ideas. The first is inputs and outputs. An input is data that goes into a computer (a key press, a click, a sound at the microphone), and the hardware that sends it in is an input device. An output is information the computer sends back out to us (a picture on the screen, a sound from the speaker), and the hardware that carries it out is an output device. The headline objective of the whole unit is to build a program that produces different outputs from different inputs — press one key and something happy happens, press another and something different happens.\n\nThe second idea is decomposition — breaking a big problem into smaller parts. When our badge has to do two different things, decomposition tells us we actually need two separate algorithms, one for each job. The third idea is writing and reading algorithms: setting out the steps in order (we use a simple table), predicting what an algorithm will do before we run it, and picking out its components (what starts it, what it shows, how long for, and how many times it repeats).",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 4
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-4-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 4",
+    "sourceArchive": "Year 4-20260801T055750Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 4/Unit 8/Year 4 - Unit 8 Teacher Guide.docx",
+      "Year 4/Unit 8/Year 4 - Unit 8 Activity Sheet.docx",
+      "Year 4/Unit 8/Year 4 - Unit 8 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 399,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 4 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Explain what an input is and what an output is, in their own words.",
+    "Identify common input devices (keyboard, mouse, microphone, touchscreen, camera) and output devices (screen, speaker, headphones, printer).",
+    "Explain that our five senses are the body's own input devices.",
+    "Use decomposition to break a problem into smaller parts, and explain why a badge that does two jobs needs two algorithms.",
+    "Write an algorithm as an ordered list of steps, and predict its outcome before running it.",
+    "Identify the components of an algorithm: what starts it, what it shows, how long for, and how many times it repeats.",
+    "Build a program in Scratch that produces different outputs from different inputs, using an event block such as when [a] key pressed.",
+    "Reuse repetition (the repeat ( ) loop) to make an output happen a set number of times, and add a comment to explain the code.",
+    "Before this unit (from the syllabus), children should already use logical thinking to create algorithms, follow and correct algorithms that use repetition, understand that decomposition means breaking a task into parts, and create a simple program that produces an output from an input. A quick recap of the repeat block at the start of Session 3 is usually enough."
+  ],
+  "toolkit": [
+    {
+      "name": "Scratch",
+      "url": "scratch.mit.edu",
+      "steps": [
+        "Go to scratch.mit.edu and click Create.",
+        "Drag blocks from the palette on the left into the code area.",
+        "Make variables in the orange Variables section.",
+        "Click the green flag to run and the red circle to stop."
+      ],
+      "note": "Runs in a web browser. Free, with nothing to download."
+    },
+    {
+      "name": "micro:bit simulator",
+      "url": "makecode.microbit.org (blocks) or python.microbit.org (Python)",
+      "steps": [
+        "Open makecode.microbit.org for blocks, or python.microbit.org for Python.",
+        "Write your code in the editor.",
+        "The micro:bit simulator on the left runs your code straight away.",
+        "Click the on-screen A and B buttons, and use the shake control, to test your inputs."
+      ],
+      "note": "You do not need to own a real micro:bit — the simulator does everything."
+    },
+    {
+      "name": "A free spreadsheet",
+      "url": "Google Sheets, or LibreOffice Calc",
+      "steps": [
+        "Open a new blank spreadsheet.",
+        "Put your field names in row 1, one per column.",
+        "Type one record per row underneath.",
+        "Use Insert → Chart to turn your data into a graph."
+      ],
+      "note": "Any free spreadsheet works — the ideas are the same in all of them."
+    }
+  ],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-inputs-and-outputs-all-around-us-unplugged",
+      "title": "Inputs and outputs all around us (unplugged)",
+      "explanation": "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in is an input device (keyboard, mouse, microphone, touchscreen, camera); the hardware that carries information out is an output device (screen, speaker, headphones, printer).\n\nYou have five amazing input devices of your own — your senses. Your eyes take in sight, your ears take in sound, your nose takes in smell, your tongue takes in taste, your skin takes in touch.",
+      "example": "They send information into your brain, the way a keyboard sends letters into a computer. Input in, output out.",
+      "checkYourself": "Can you name two input devices and two output devices? Can you see that the senses are inputs?"
+    },
+    {
+      "id": "concept-2-decomposition-and-algorithms-unplugged",
+      "title": "Decomposition and algorithms (unplugged)",
+      "explanation": "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do a job. When we plan a gadget, we first decompose it into its separate jobs, then write one algorithm for each job.\n\nEach small part is its own little list of steps. Breaking a big job into smaller parts is called decomposition. Our badge must do two things. When you press the a key it shows a happy face and a happy sound.",
+      "example": "When you press the b key it shows a sad face and a different sound. Is that one job or two?",
+      "checkYourself": "Can you see that two jobs need two algorithms?"
+    },
+    {
+      "id": "concept-3-different-input-different-output-scratch",
+      "title": "Different input, different output (Scratch)",
+      "explanation": "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a key (our input); the blocks under it are the output.\n\nName the three parts of the screen in child words: the coloured blocks on the left, the script area where we join them, and the stage with the cat sprite. The cat already has a sound called Meow. First recap repeat from earlier in the year, then build this together and try it by pressing the a key",
+      "example": "Find one real example of different input, different output (Scratch) around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you drop blocks inside the repeat loop (not underneath it)? Can you start a script with an event block?"
+    },
+    {
+      "id": "concept-4-two-algorithms-in-one-program-scratch",
+      "title": "Two algorithms in one program (Scratch)",
+      "explanation": "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started by a different input (the b key), giving a different output. Now the same program produces different outputs from different inputs, which is the headline objective of the unit.\n\nAdd a second, separate script in the same script area (scripts can sit side by side and do not touch). Build the sad badge together, and notice on purpose that it repeats a different number of times and shows for a different length Keep the happy badge from Session 3.",
+      "example": "Find one real example of two algorithms in one program (Scratch) around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you connect the two side-by-side scripts back to the word decomposition? Can you build a second, separate script started by a different key?"
+    },
+    {
+      "id": "concept-5-be-an-innovator-invent-your-own-gadget-scratch",
+      "title": "Be an innovator: invent your own gadget (Scratch)",
+      "explanation": "This session flows straight into the Mini-Project.\n\nTalk about inventors for a minute: an innovator sees a problem and builds something useful to solve it. Clicking the sprite is another kind of input — the mouse is an input device too Ask what small gadget could help at Ehel Academy or at home — a badge that reminds you when it is time to tidy up, a helper that greets a visitor, a quiet-please signal for the library. Then show how to add a third input using the mouse.",
+      "example": "Do it yourself: be an innovator: invent your own gadget (Scratch). Work through it slowly, then check what you did against the explanation above.",
+      "checkYourself": "Can you add a third input with its own output? Can you plan with an algorithm before building?"
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "Session 3 — Different input, different output (Scratch) — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 3 — Different input, different output (Scratch).",
+      "lines": [
+        "when [a] key pressed",
+        "repeat (4)",
+        "start sound [Tada]",
+        "say [I feel happy :)] for (1) seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-2",
+      "title": "Session 4 — Two algorithms in one program (Scratch) — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 4 — Two algorithms in one program (Scratch).",
+      "lines": [
+        "when [b] key pressed",
+        "repeat (3)",
+        "start sound [Meow]",
+        "say [I feel sad :(] for (2) seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-3",
+      "title": "Session 5 — Be an innovator: invent your own gadget (Scratch) — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 5 — Be an innovator: invent your own gadget (Scratch).",
+      "lines": [
+        "when this sprite clicked",
+        "say [Hello!] for (2) seconds",
+        "start sound [Tada]"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Input or Output?",
+      "context": "work through the steps below and see what happens. This is inputs and outputs all around us (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "An input goes into the computer. An output comes back out to us. Write IN next to each input device and OUT next to each output device.",
+      "answer": "a) Keyboard ________ b) Speaker ________ c) Mouse ________ d) Screen ________ e) Microphone ________ f) Headphones ________",
+      "modelType": "model-1",
+      "hint": "Start here: a) Keyboard ________ b) Speaker ________",
+      "explanation": "Inputs and outputs all around us (unplugged): A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in is an input device (keyboard, mouse, microphone, touchscreen, camera); the hardware that carries information out is an output device (screen, speaker,…"
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Match the Input to an Output",
+      "context": "work through the steps below and see what happens. This is decomposition and algorithms (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Draw a line from each input to an output it could make.",
+      "answer": "Match: Input (goes in) → Output (comes out) Match: Press a key on the keyboard → A sound plays from the speaker Match: Speak into the microphone → A letter appears on the screen Match: Click the mouse on a sprite → Your voice is recorded and played back",
+      "modelType": "model-2",
+      "hint": "Start here: Match: Input (goes in) → Output (comes out)",
+      "explanation": "Decomposition and algorithms (unplugged): Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do a job. When we plan a gadget, we first decompose it into its separate jobs, then write one algorithm for each job."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Our Senses Are Inputs",
+      "context": "work through the steps below and see what happens. This is different input, different output (scratch) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "You have five amazing input devices of your own — your senses! Write what each one takes in. Choose from: sight, sound, smell, taste, touch.",
+      "answer": "a) Eyes take in ________________ b) Ears take in ________________ c) Nose takes in ________________ d) Tongue takes in ________________ e) Skin takes in ________________",
+      "modelType": "model-3",
+      "hint": "Start here: a) Eyes take in ________________ b) Ears take in ________________",
+      "explanation": "Different input, different output (Scratch): Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a key (our input); the blocks under it are the output."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Finish the Algorithm",
+      "context": "work through the steps below and see what happens. This is two algorithms in one program (scratch) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Nadia is planning the Happy badge. Fill in the blanks in her algorithm.",
+      "answer": "Algorithm 1 — the Happy badge Step 1 Start when the ____ key is pressed Step 2 Show a ____________ face Step 3 Play the happy sound Step 4 Wait ____ second, then clear the face",
+      "modelType": "model-4",
+      "hint": "Start here: Algorithm 1 — the Happy badge",
+      "explanation": "Two algorithms in one program (Scratch): A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started by a different input (the b key), giving a different output. Now the same program produces different outputs from different inputs, which is the…"
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Decompose It",
+      "context": "work through the steps below and see what happens. This is be an innovator: invent your own gadget (scratch) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "The badge does two jobs, so it needs two algorithms. Fill in the missing boxes for each badge.",
+      "answer": "Match: Component → Algorithm 1 (Happy) / Algorithm 2 (Sad) Match: Which input starts it? → The a key / ____________ Match: Which face is shown? → Happy / ____________ Match: How long is it shown? → 1 second / ____________ Match: How many times does it repeat? → ____________ / 3 times",
+      "modelType": "model-5",
+      "hint": "Start here: Match: Component → Algorithm 1 (Happy) / Algorithm 2 (Sad)",
+      "explanation": "Be an innovator: invent your own gadget (Scratch): This session flows straight into the Mini-Project."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Try it in Scratch! Build the Happy Badge",
+      "context": "work through the steps below and see what happens. This is inputs and outputs all around us (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Time to build!",
+      "answer": "Go to scratch.mit.edu and click Create. The cat's Meow is there too. Click the Sounds tab, then Choose a Sound, and pick a happy sound (we used Tada). Drag these blocks and join them together. Make sure the two blocks sit inside the repeat loop. when [a] key pressed Say [I feel happy :)] for (1) seconds.",
+      "modelType": "model-6",
+      "hint": "Start here: Go to scratch.mit.edu and click Create.",
+      "explanation": "Inputs and outputs all around us (unplugged): A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in is an input device (keyboard, mouse, microphone, touchscreen, camera); the hardware that carries information out is an output device (screen, speaker,…"
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Inputs and outputs all around us (unplugged)",
+      "modelType": "concept-model-1",
+      "purpose": "A computer takes in inputs and gives back outputs. An input is data going in; an output is information coming out. The hardware that carries data in is an input device (keyboard, mouse, microphone, touchscreen, camera);…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Decomposition and algorithms (unplugged)",
+      "modelType": "concept-model-2",
+      "purpose": "Decomposition means breaking a big problem into smaller parts so each part is easy to solve. An algorithm is a set of steps in the right order to do a job. When we plan a gadget, we first decompose it into its separate…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Different input, different output (Scratch)",
+      "modelType": "concept-model-3",
+      "purpose": "Now we build for real. In Scratch, a script starts with an event block — a “hat” block that waits for an input. when [a] key pressed waits for the a key (our input); the blocks under it are the output.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Two algorithms in one program (Scratch)",
+      "modelType": "concept-model-4",
+      "purpose": "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started by a different input (the b key), giving a different output. Now the…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Be an innovator: invent your own gadget (Scratch)",
+      "modelType": "concept-model-5",
+      "purpose": "This session flows straight into the Mini-Project.",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with inputs and outputs all around us (unplugged)",
+      "example": "They send information into your brain, the way a keyboard sends letters into a computer. Input in, output out.",
+      "steps": [
+        "Read the concept card for inputs and outputs all around us (unplugged) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with decomposition and algorithms (unplugged)",
+      "example": "When you press the b key it shows a sad face and a different sound. Is that one job or two?",
+      "steps": [
+        "Read the concept card for decomposition and algorithms (unplugged) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with different input, different output (scratch)",
+      "example": "Find one real example of different input, different output (Scratch) around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for different input, different output (scratch) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with two algorithms in one program (scratch)",
+      "example": "Find one real example of two algorithms in one program (Scratch) around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for two algorithms in one program (scratch) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with be an innovator: invent your own gadget (scratch)",
+      "example": "Do it yourself: be an innovator: invent your own gadget (Scratch). Work through it slowly, then check what you did against the explanation above.",
+      "steps": [
+        "Read the concept card for be an innovator: invent your own gadget (scratch) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Inputs and outputs all around us (unplugged)",
+      "prompt": "What is the difference between an input and an output? Give one example of an input device and one output device.",
+      "solution": "An input is data going into the computer (e.g. pressing a key); an output is information the computer sends out (e.g. a sound or picture). Input device example: keyboard/mouse/microphone. Output device example: screen/speaker/headphones."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Decomposition and algorithms (unplugged)",
+      "prompt": "Sort these into input devices and output devices: keyboard, speaker, mouse, screen, microphone, headphones.",
+      "solution": "Input devices: keyboard, mouse, microphone. Output devices: speaker, screen, headphones."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Different input, different output (Scratch)",
+      "prompt": "What does decomposition mean? Why did the feelings badge need two algorithms?",
+      "solution": "Decomposition means breaking a problem into smaller parts. The badge needed two algorithms because it had two separate jobs — one for the a key and one for the b key."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Two algorithms in one program (Scratch)",
+      "prompt": "Predict. Script A does repeat (5) and shows a face for 1 second each time. Script B does repeat (2) and shows a face for 3 seconds each time. Which script runs for longer?",
+      "solution": "Script A = 5 x 1 = 5 seconds; Script B = 2 x 3 = 6 seconds. Script B runs for longer (more repeats does not always mean more time)."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Be an innovator: invent your own gadget (Scratch)",
+      "prompt": "Look at this script:",
+      "solution": "(a) The input is when [a] key pressed (the a key on the keyboard). (b) The output devices are the screen (the say block) and the speaker (the sound)."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Inputs and outputs all around us (unplugged)",
+      "prompt": "What is an innovator? Name one gadget you could invent to help your community, with one input and one output it would use.",
+      "solution": "An innovator is a person who invents something new and useful. Accept any sensible gadget with one input and one output named."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "What is the difference between an input and an output? Give one example of an input device and one output device.",
+      "answer": "An input is data going into the computer (e.g. pressing a key); an output is information the computer sends out (e.g. a sound or picture). Input device example: keyboard/mouse/microphone. Output device example: screen/speaker/headphones.",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Sort these into input devices and output devices: keyboard, speaker, mouse, screen, microphone, headphones.",
+      "answer": "Input devices: keyboard, mouse, microphone. Output devices: speaker, screen, headphones.",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "What does decomposition mean? Why did the feelings badge need two algorithms?",
+      "answer": "Decomposition means breaking a problem into smaller parts. The badge needed two algorithms because it had two separate jobs — one for the a key and one for the b key.",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Predict. Script A does repeat (5) and shows a face for 1 second each time. Script B does repeat (2) and shows a face for 3 seconds each time. Which script runs for longer?",
+      "answer": "Script A = 5 x 1 = 5 seconds; Script B = 2 x 3 = 6 seconds. Script B runs for longer (more repeats does not always mean more time).",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "Look at this script:",
+      "answer": "(a) The input is when [a] key pressed (the a key on the keyboard). (b) The output devices are the screen (the say block) and the speaker (the sound).",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "What is an innovator? Name one gadget you could invent to help your community, with one input and one output it would use.",
+      "answer": "An innovator is a person who invents something new and useful. Accept any sensible gadget with one input and one output named.",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Input or Output?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "An input goes into the computer. An output comes back out to us. Write IN next to each input device and OUT next to each output device.",
+        "a) Keyboard ________ b) Speaker ________",
+        "c) Mouse ________ d) Screen ________",
+        "e) Microphone ________ f) Headphones ________"
+      ]
+    },
+    {
+      "title": "Match the Input to an Output",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Draw a line from each input to an output it could make.",
+        "Match: Input (goes in) → Output (comes out)",
+        "Match: Press a key on the keyboard → A sound plays from the speaker",
+        "Match: Speak into the microphone → A letter appears on the screen",
+        "Match: Click the mouse on a sprite → Your voice is recorded and played back"
+      ]
+    },
+    {
+      "title": "Our Senses Are Inputs",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "You have five amazing input devices of your own — your senses! Write what each one takes in. Choose from: sight, sound, smell, taste, touch.",
+        "a) Eyes take in ________________ b) Ears take in ________________",
+        "c) Nose takes in ________________ d) Tongue takes in ________________",
+        "e) Skin takes in ________________"
+      ]
+    },
+    {
+      "title": "Finish the Algorithm",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Nadia is planning the Happy badge. Fill in the blanks in her algorithm.",
+        "Algorithm 1 — the Happy badge",
+        "Step 1 Start when the ____ key is pressed",
+        "Step 2 Show a ____________ face",
+        "Step 3 Play the happy sound",
+        "Step 4 Wait ____ second, then clear the face"
+      ]
+    },
+    {
+      "title": "Decompose It",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "The badge does two jobs, so it needs two algorithms. Fill in the missing boxes for each badge.",
+        "Match: Component → Algorithm 1 (Happy) / Algorithm 2 (Sad)",
+        "Match: Which input starts it? → The a key / ____________",
+        "Match: Which face is shown? → Happy / ____________",
+        "Match: How long is it shown? → 1 second / ____________",
+        "Match: How many times does it repeat? → ____________ / 3 times"
+      ]
+    },
+    {
+      "title": "Try it in Scratch! Build the Happy Badge",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Time to build!",
+        "Go to scratch.mit.edu and click Create.",
+        "The cat's Meow is there too. Click the Sounds tab, then Choose a Sound, and pick a happy sound (we used Tada).",
+        "Drag these blocks and join them together. Make sure the two blocks sit inside the repeat loop.",
+        "when [a] key pressed",
+        "Say [I feel happy :)] for (1) seconds."
+      ]
+    },
+    {
+      "title": "Add the Sad Badge, Then Predict",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Add a second script next to the first one (they do not join up). This is the b key badge.",
+        "when [b] key pressed",
+        "Say [I feel sad :(] for (2) seconds.",
+        "Now press a for the happy badge and b for the sad badge. Different input, different output!",
+        "Predict before you time it: which badge runs for longer?",
+        "a) Happy badge: 4 times, 1 second each = ______ seconds"
+      ]
+    },
+    {
+      "title": "Be an Innovator!",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Plan your own gadget. What input will start it, and what output will it give?",
+        "My gadget is called: ______________________________________________",
+        "When I give this input: __________________________________________",
+        "it gives this output: ____________________________________________",
+        "Did You Know?",
+        "Your body has five input devices built in — your eyes, ears, nose, tongue and skin. They send data to your brain all day long!"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "Input and output mean the same thing.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No. An input goes into the computer (a key press); an output comes back out to us (a sound or a picture)."
+    },
+    {
+      "symptom": "A screen is an input because I look at it.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — the screen sends a picture out to you, so it is an output device. Your eyes are the input."
+    },
+    {
+      "symptom": "A gadget with two jobs needs one big algorithm.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No. Decomposition breaks it into parts, so two jobs become two algorithms, one for each input."
+    },
+    {
+      "symptom": "More repeats always take more time.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Not so. 4 shows of 1 second (4s) is shorter than 3 shows of 2 seconds (6s). You must look at the time as well as the count."
+    },
+    {
+      "symptom": "Both scripts must join together.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No. Each script has its own hat block and waits for its own input; they sit side by side and stay separate."
+    },
+    {
+      "symptom": "The blocks under the loop still repeat.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Only the blocks INSIDE the loop's mouth repeat. Blocks below the loop run once, after it finishes."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Inputs and outputs all around us (unplugged)",
+        "text": "A computer takes in inputs and gives back outputs."
+      },
+      {
+        "title": "Decomposition and algorithms (unplugged)",
+        "text": "Decomposition means breaking a big problem into smaller parts so each part is easy to solve."
+      },
+      {
+        "title": "Different input, different output (Scratch)",
+        "text": "Now we build for real."
+      },
+      {
+        "title": "Two algorithms in one program (Scratch)",
+        "text": "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action."
+      },
+      {
+        "title": "Be an innovator: invent your own gadget (Scratch)",
+        "text": "This session flows straight into the Mini-Project."
+      }
+    ],
+    "terms": [
+      [
+        "input",
+        "Data that goes into a computer."
+      ],
+      [
+        "output",
+        "Information the computer sends out to us."
+      ],
+      [
+        "input device",
+        "Hardware that sends data into the computer."
+      ],
+      [
+        "output device",
+        "Hardware that sends information out to us."
+      ],
+      [
+        "decomposition",
+        "Breaking a problem into smaller parts."
+      ],
+      [
+        "algorithm",
+        "A set of steps, in the right order, to do a job."
+      ],
+      [
+        "sequence",
+        "The order in which the steps happen."
+      ],
+      [
+        "repetition",
+        "Doing something again and again."
+      ],
+      [
+        "loop",
+        "A block that repeats the code inside it."
+      ],
+      [
+        "predict",
+        "To say what will happen before you run it."
+      ],
+      [
+        "program",
+        "An algorithm written in code the computer runs."
+      ],
+      [
+        "event",
+        "Something that makes a script start."
+      ],
+      [
+        "sprite",
+        "A character or object in Scratch."
+      ],
+      [
+        "comment",
+        "A note in the code that explains it, for people."
+      ],
+      [
+        "innovator",
+        "A person who invents something new and useful."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "input",
+        "meaning": "Data that goes into a computer.",
+        "example": "Pressing a key; a click; a sound.",
+        "letter": "I"
+      },
+      {
+        "term": "output",
+        "meaning": "Information the computer sends out to us.",
+        "example": "A picture on the screen; a sound.",
+        "letter": "O"
+      },
+      {
+        "term": "input device",
+        "meaning": "Hardware that sends data into the computer.",
+        "example": "Keyboard, mouse, microphone.",
+        "letter": "I"
+      },
+      {
+        "term": "output device",
+        "meaning": "Hardware that sends information out to us.",
+        "example": "Screen, speaker, headphones.",
+        "letter": "O"
+      },
+      {
+        "term": "decomposition",
+        "meaning": "Breaking a problem into smaller parts.",
+        "example": "Two jobs become two algorithms.",
+        "letter": "D"
+      },
+      {
+        "term": "algorithm",
+        "meaning": "A set of steps, in the right order, to do a job.",
+        "example": "The steps for the happy badge.",
+        "letter": "A"
+      },
+      {
+        "term": "sequence",
+        "meaning": "The order in which the steps happen.",
+        "example": "Show face, then play sound.",
+        "letter": "S"
+      },
+      {
+        "term": "repetition",
+        "meaning": "Doing something again and again.",
+        "example": "Show the face 4 times.",
+        "letter": "R"
+      },
+      {
+        "term": "loop",
+        "meaning": "A block that repeats the code inside it.",
+        "example": "The repeat ( ) block.",
+        "letter": "L"
+      },
+      {
+        "term": "predict",
+        "meaning": "To say what will happen before you run it.",
+        "example": "I think it will beep 4 times.",
+        "letter": "P"
+      },
+      {
+        "term": "program",
+        "meaning": "An algorithm written in code the computer runs.",
+        "example": "The badge built in Scratch.",
+        "letter": "P"
+      },
+      {
+        "term": "event",
+        "meaning": "Something that makes a script start.",
+        "example": "Pressing the a key.",
+        "letter": "E"
+      },
+      {
+        "term": "sprite",
+        "meaning": "A character or object in Scratch.",
+        "example": "The cat.",
+        "letter": "S"
+      },
+      {
+        "term": "comment",
+        "meaning": "A note in the code that explains it, for people.",
+        "example": "This script is the happy badge.",
+        "letter": "C"
+      },
+      {
+        "term": "innovator",
+        "meaning": "A person who invents something new and useful.",
+        "example": "You, inventing a helper gadget!",
+        "letter": "I"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "Input and output mean the same thing.",
+        "No. An input goes into the computer (a key press); an output comes back out to us (a sound or a picture)."
+      ],
+      [
+        "A screen is an input because I look at it.",
+        "No — the screen sends a picture out to you, so it is an output device. Your eyes are the input."
+      ],
+      [
+        "A gadget with two jobs needs one big algorithm.",
+        "No. Decomposition breaks it into parts, so two jobs become two algorithms, one for each input."
+      ],
+      [
+        "More repeats always take more time.",
+        "Not so. 4 shows of 1 second (4s) is shorter than 3 shows of 2 seconds (6s). You must look at the time as well as the count."
+      ],
+      [
+        "Both scripts must join together.",
+        "No. Each script has its own hat block and waits for its own input; they sit side by side and stay separate."
+      ],
+      [
+        "The blocks under the loop still repeat.",
+        "Only the blocks INSIDE the loop's mouth repeat. Blocks below the loop run once, after it finishes."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "What is the difference between an input and an output? Give one example of an input device and one output device.",
+      "answer": "An input is data going into the computer (e.g. pressing a key); an output is information the computer sends out (e.g. a sound or picture). Input device example: keyboard/mouse/microphone. Output device example: screen/speaker/headphones.",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "An input is data going into the computer (e.g. pressing a key); an output is information the computer sends out (e.g. a sound or picture). Input device example: keyboard/mouse/microphone. Output device example: screen/speaker/headphones."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Sort these into input devices and output devices: keyboard, speaker, mouse, screen, microphone, headphones.",
+      "answer": "Input devices: keyboard, mouse, microphone. Output devices: speaker, screen, headphones.",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Input devices: keyboard, mouse, microphone. Output devices: speaker, screen, headphones."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "What does decomposition mean? Why did the feelings badge need two algorithms?",
+      "answer": "Decomposition means breaking a problem into smaller parts. The badge needed two algorithms because it had two separate jobs — one for the a key and one for the b key.",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Decomposition means breaking a problem into smaller parts. The badge needed two algorithms because it had two separate jobs — one for the a key and one for the b key."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Predict. Script A does repeat (5) and shows a face for 1 second each time. Script B does repeat (2) and shows a face for 3 seconds each time. Which script runs for longer?",
+      "answer": "Script A = 5 x 1 = 5 seconds; Script B = 2 x 3 = 6 seconds. Script B runs for longer (more repeats does not always mean more time).",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Script A = 5 x 1 = 5 seconds; Script B = 2 x 3 = 6 seconds. Script B runs for longer (more repeats does not always mean more time)."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Look at this script:",
+      "answer": "(a) The input is when [a] key pressed (the a key on the keyboard). (b) The output devices are the screen (the say block) and the speaker (the sound).",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "(a) The input is when [a] key pressed (the a key on the keyboard). (b) The output devices are the screen (the say block) and the speaker (the sound)."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "What is an innovator? Name one gadget you could invent to help your community, with one input and one output it would use.",
+      "answer": "An innovator is a person who invents something new and useful. Accept any sensible gadget with one input and one output named.",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "An innovator is a person who invents something new and useful. Accept any sensible gadget with one input and one output named."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "What is an innovator? Name one gadget you could invent to help your community, with one input and one output it would use.",
+      "answer": "An innovator is a person who invents something new and useful. Accept any sensible gadget with one input and one output named.",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: An innovator is a person who invents something new and useful. Accept any sensible gadget with one input and one output named."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "Look at this script:",
+      "answer": "(a) The input is when [a] key pressed (the a key on the keyboard). (b) The output devices are the screen (the say block) and the speaker (the sound).",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: (a) The input is when [a] key pressed (the a key on the keyboard). (b) The output devices are the screen (the say block) and the speaker (the sound)."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "What is an innovator? Name one gadget you could invent to help your community, with one input and one output it would use.",
+      "answer": "An innovator is a person who invents something new and useful. Accept any sensible gadget with one input and one output named.",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: An innovator is a person who invents something new and useful. Accept any sensible gadget with one input and one output named."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "What is the difference between an input and an output? Give one example of an input device and one output device.",
+      "answer": "An input is data going into the computer (e.g. pressing a key); an output is information the computer sends out (e.g. a sound or picture). Input device example: keyboard/mouse/microphone. Output device example: screen/speaker/headphones.",
+      "hint": "Look back at what input and output mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: An input is data going into the computer (e.g. pressing a key); an output is information the computer sends out (e.g. a sound or picture). Input device example: keyboard/mouse/microphone. Output device example: screen/speaker/headphones."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "What does decomposition mean? Why did the feelings badge need two algorithms?",
+      "keyIdeas": [
+        "input",
+        "output",
+        "input device"
+      ],
+      "modelAnswer": "Decomposition means breaking a problem into smaller parts. The badge needed two algorithms because it had two separate jobs — one for the a key and one for the b key."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Predict. Script A does repeat (5) and shows a face for 1 second each time. Script B does repeat (2) and shows a face for 3 seconds each time. Which script runs for longer?",
+      "keyIdeas": [
+        "output",
+        "input device",
+        "output device"
+      ],
+      "modelAnswer": "Script A = 5 x 1 = 5 seconds; Script B = 2 x 3 = 6 seconds. Script B runs for longer (more repeats does not always mean more time)."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Look at this script:",
+      "keyIdeas": [
+        "input device",
+        "output device",
+        "decomposition"
+      ],
+      "modelAnswer": "(a) The input is when [a] key pressed (the a key on the keyboard). (b) The output devices are the screen (the say block) and the speaker (the sound)."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in two algorithms in one program (scratch), and give one example of your own.",
+      "keyIdeas": [
+        "input",
+        "output",
+        "input device"
+      ],
+      "modelAnswer": "A real gadget does more than one thing, so it needs more than one algorithm — this is decomposition in action. Today we add a second script, started by a different input (the b key), giving a different output. Now the same program produces different outputs from different inputs, which is the headline objective of the unit.\n\nAdd a second, separate script in the same script area (scripts can sit side by side and do not touch). Build the sad badge together, and notice on purpose that it repeats a different number of times and shows for a different length Keep the happy badge from Session 3."
+    }
+  ],
+  "project": {
+    "title": "Unit 8 Project: Be an Innovator",
+    "brief": "Bring together everything from Be an Innovator into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your be an innovator project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I planned my gadget on paper and broke it into jobs (decomposition).",
+      "I built a script that starts with an input (a key press or a click).",
+      "I gave different outputs for different inputs (at least two).",
+      "I used a repeat loop to make an output happen more than once.",
+      "I added a comment to explain my gadget.",
+      "I made one change and tested it."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “input” mean in computing?",
+        "options": [
+          "Data that goes into a computer.",
+          "Information the computer sends out to us.",
+          "Hardware that sends data into the computer.",
+          "Hardware that sends information out to us."
+        ],
+        "answer": "Data that goes into a computer.",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Input means data that goes into a computer."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “output” mean in computing?",
+        "options": [
+          "Information the computer sends out to us.",
+          "Hardware that sends data into the computer.",
+          "Hardware that sends information out to us.",
+          "Breaking a problem into smaller parts."
+        ],
+        "answer": "Information the computer sends out to us.",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Output means information the computer sends out to us."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “input device” mean in computing?",
+        "options": [
+          "Hardware that sends data into the computer.",
+          "Hardware that sends information out to us.",
+          "Breaking a problem into smaller parts.",
+          "A set of steps, in the right order, to do a job."
+        ],
+        "answer": "Hardware that sends data into the computer.",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Input device means hardware that sends data into the computer."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “output device” mean in computing?",
+        "options": [
+          "Hardware that sends information out to us.",
+          "Breaking a problem into smaller parts.",
+          "A set of steps, in the right order, to do a job.",
+          "The order in which the steps happen."
+        ],
+        "answer": "Hardware that sends information out to us.",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Output device means hardware that sends information out to us."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “decomposition” mean in computing?",
+        "options": [
+          "Breaking a problem into smaller parts.",
+          "A set of steps, in the right order, to do a job.",
+          "The order in which the steps happen.",
+          "Doing something again and again."
+        ],
+        "answer": "Breaking a problem into smaller parts.",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Decomposition means breaking a problem into smaller parts."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “algorithm” mean in computing?",
+        "options": [
+          "A set of steps, in the right order, to do a job.",
+          "The order in which the steps happen.",
+          "Doing something again and again.",
+          "A block that repeats the code inside it."
+        ],
+        "answer": "A set of steps, in the right order, to do a job.",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: The order in which the steps happen.?",
+        "options": [
+          "sequence",
+          "repetition",
+          "loop",
+          "predict"
+        ],
+        "answer": "sequence",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Sequence means the order in which the steps happen."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Doing something again and again.?",
+        "options": [
+          "repetition",
+          "loop",
+          "predict",
+          "program"
+        ],
+        "answer": "repetition",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Repetition means doing something again and again."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo09",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: A block that repeats the code inside it.?",
+        "options": [
+          "loop",
+          "predict",
+          "program",
+          "event"
+        ],
+        "answer": "loop",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Loop means a block that repeats the code inside it."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: To say what will happen before you run it.?",
+        "options": [
+          "predict",
+          "program",
+          "event",
+          "sprite"
+        ],
+        "answer": "predict",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Predict means to say what will happen before you run it."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: An algorithm written in code the computer runs.?",
+        "options": [
+          "program",
+          "event",
+          "sprite",
+          "comment"
+        ],
+        "answer": "program",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Program means an algorithm written in code the computer runs."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Something that makes a script start.?",
+        "options": [
+          "event",
+          "sprite",
+          "comment",
+          "innovator"
+        ],
+        "answer": "event",
+        "hint": "Use the Unit 8 Computing Words reference.",
+        "explanation": "Event means something that makes a script start."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u8-game-1",
+        "icon": "?",
+        "skill": "input",
+        "title": "Quick Match: input",
+        "description": "Practise input through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “input” mean in computing?",
+            "choices": [
+              "Data that goes into a computer.",
+              "Information the computer sends out to us.",
+              "Hardware that sends data into the computer.",
+              "Hardware that sends information out to us."
+            ],
+            "answer": "Data that goes into a computer.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Input means data that goes into a computer."
+          },
+          {
+            "prompt": "What does “output device” mean in computing?",
+            "choices": [
+              "Hardware that sends information out to us.",
+              "Breaking a problem into smaller parts.",
+              "A set of steps, in the right order, to do a job.",
+              "The order in which the steps happen."
+            ],
+            "answer": "Hardware that sends information out to us.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Output device means hardware that sends information out to us."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The order in which the steps happen.?",
+            "choices": [
+              "sequence",
+              "repetition",
+              "loop",
+              "predict"
+            ],
+            "answer": "sequence",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Sequence means the order in which the steps happen."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To say what will happen before you run it.?",
+            "choices": [
+              "predict",
+              "program",
+              "event",
+              "sprite"
+            ],
+            "answer": "predict",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Predict means to say what will happen before you run it."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-2",
+        "icon": "★",
+        "skill": "output",
+        "title": "Concept Quest: output",
+        "description": "Practise output through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “output” mean in computing?",
+            "choices": [
+              "Information the computer sends out to us.",
+              "Hardware that sends data into the computer.",
+              "Hardware that sends information out to us.",
+              "Breaking a problem into smaller parts."
+            ],
+            "answer": "Information the computer sends out to us.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Output means information the computer sends out to us."
+          },
+          {
+            "prompt": "What does “decomposition” mean in computing?",
+            "choices": [
+              "Breaking a problem into smaller parts.",
+              "A set of steps, in the right order, to do a job.",
+              "The order in which the steps happen.",
+              "Doing something again and again."
+            ],
+            "answer": "Breaking a problem into smaller parts.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Decomposition means breaking a problem into smaller parts."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Doing something again and again.?",
+            "choices": [
+              "repetition",
+              "loop",
+              "predict",
+              "program"
+            ],
+            "answer": "repetition",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Repetition means doing something again and again."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An algorithm written in code the computer runs.?",
+            "choices": [
+              "program",
+              "event",
+              "sprite",
+              "comment"
+            ],
+            "answer": "program",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Program means an algorithm written in code the computer runs."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-3",
+        "icon": "◫",
+        "skill": "input device",
+        "title": "Debug Detective: input device",
+        "description": "Practise input device through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “input device” mean in computing?",
+            "choices": [
+              "Hardware that sends data into the computer.",
+              "Hardware that sends information out to us.",
+              "Breaking a problem into smaller parts.",
+              "A set of steps, in the right order, to do a job."
+            ],
+            "answer": "Hardware that sends data into the computer.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Input device means hardware that sends data into the computer."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps, in the right order, to do a job.",
+              "The order in which the steps happen.",
+              "Doing something again and again.",
+              "A block that repeats the code inside it."
+            ],
+            "answer": "A set of steps, in the right order, to do a job.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A block that repeats the code inside it.?",
+            "choices": [
+              "loop",
+              "predict",
+              "program",
+              "event"
+            ],
+            "answer": "loop",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Loop means a block that repeats the code inside it."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Something that makes a script start.?",
+            "choices": [
+              "event",
+              "sprite",
+              "comment",
+              "innovator"
+            ],
+            "answer": "event",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Event means something that makes a script start."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-4",
+        "icon": "→",
+        "skill": "output device",
+        "title": "Algorithm Runner: output device",
+        "description": "Practise output device through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “output device” mean in computing?",
+            "choices": [
+              "Hardware that sends information out to us.",
+              "Breaking a problem into smaller parts.",
+              "A set of steps, in the right order, to do a job.",
+              "The order in which the steps happen."
+            ],
+            "answer": "Hardware that sends information out to us.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Output device means hardware that sends information out to us."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The order in which the steps happen.?",
+            "choices": [
+              "sequence",
+              "repetition",
+              "loop",
+              "predict"
+            ],
+            "answer": "sequence",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Sequence means the order in which the steps happen."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To say what will happen before you run it.?",
+            "choices": [
+              "predict",
+              "program",
+              "event",
+              "sprite"
+            ],
+            "answer": "predict",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Predict means to say what will happen before you run it."
+          },
+          {
+            "prompt": "What does “input” mean in computing?",
+            "choices": [
+              "Data that goes into a computer.",
+              "Information the computer sends out to us.",
+              "Hardware that sends data into the computer.",
+              "Hardware that sends information out to us."
+            ],
+            "answer": "Data that goes into a computer.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Input means data that goes into a computer."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-5",
+        "icon": "Σ",
+        "skill": "decomposition",
+        "title": "Vocabulary Vault: decomposition",
+        "description": "Practise decomposition through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “decomposition” mean in computing?",
+            "choices": [
+              "Breaking a problem into smaller parts.",
+              "A set of steps, in the right order, to do a job.",
+              "The order in which the steps happen.",
+              "Doing something again and again."
+            ],
+            "answer": "Breaking a problem into smaller parts.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Decomposition means breaking a problem into smaller parts."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Doing something again and again.?",
+            "choices": [
+              "repetition",
+              "loop",
+              "predict",
+              "program"
+            ],
+            "answer": "repetition",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Repetition means doing something again and again."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An algorithm written in code the computer runs.?",
+            "choices": [
+              "program",
+              "event",
+              "sprite",
+              "comment"
+            ],
+            "answer": "program",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Program means an algorithm written in code the computer runs."
+          },
+          {
+            "prompt": "What does “output” mean in computing?",
+            "choices": [
+              "Information the computer sends out to us.",
+              "Hardware that sends data into the computer.",
+              "Hardware that sends information out to us.",
+              "Breaking a problem into smaller parts."
+            ],
+            "answer": "Information the computer sends out to us.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Output means information the computer sends out to us."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-6",
+        "icon": "◇",
+        "skill": "algorithm",
+        "title": "Challenge Cards: algorithm",
+        "description": "Practise algorithm through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps, in the right order, to do a job.",
+              "The order in which the steps happen.",
+              "Doing something again and again.",
+              "A block that repeats the code inside it."
+            ],
+            "answer": "A set of steps, in the right order, to do a job.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A block that repeats the code inside it.?",
+            "choices": [
+              "loop",
+              "predict",
+              "program",
+              "event"
+            ],
+            "answer": "loop",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Loop means a block that repeats the code inside it."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Something that makes a script start.?",
+            "choices": [
+              "event",
+              "sprite",
+              "comment",
+              "innovator"
+            ],
+            "answer": "event",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Event means something that makes a script start."
+          },
+          {
+            "prompt": "What does “input device” mean in computing?",
+            "choices": [
+              "Hardware that sends data into the computer.",
+              "Hardware that sends information out to us.",
+              "Breaking a problem into smaller parts.",
+              "A set of steps, in the right order, to do a job."
+            ],
+            "answer": "Hardware that sends data into the computer.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Input device means hardware that sends data into the computer."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-7",
+        "icon": "⚡",
+        "skill": "sequence",
+        "title": "Think Fast: sequence",
+        "description": "Practise sequence through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The order in which the steps happen.?",
+            "choices": [
+              "sequence",
+              "repetition",
+              "loop",
+              "predict"
+            ],
+            "answer": "sequence",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Sequence means the order in which the steps happen."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To say what will happen before you run it.?",
+            "choices": [
+              "predict",
+              "program",
+              "event",
+              "sprite"
+            ],
+            "answer": "predict",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Predict means to say what will happen before you run it."
+          },
+          {
+            "prompt": "What does “input” mean in computing?",
+            "choices": [
+              "Data that goes into a computer.",
+              "Information the computer sends out to us.",
+              "Hardware that sends data into the computer.",
+              "Hardware that sends information out to us."
+            ],
+            "answer": "Data that goes into a computer.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Input means data that goes into a computer."
+          },
+          {
+            "prompt": "What does “output device” mean in computing?",
+            "choices": [
+              "Hardware that sends information out to us.",
+              "Breaking a problem into smaller parts.",
+              "A set of steps, in the right order, to do a job.",
+              "The order in which the steps happen."
+            ],
+            "answer": "Hardware that sends information out to us.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Output device means hardware that sends information out to us."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-8",
+        "icon": "☁",
+        "skill": "repetition",
+        "title": "Explain It: repetition",
+        "description": "Practise repetition through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Doing something again and again.?",
+            "choices": [
+              "repetition",
+              "loop",
+              "predict",
+              "program"
+            ],
+            "answer": "repetition",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Repetition means doing something again and again."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: An algorithm written in code the computer runs.?",
+            "choices": [
+              "program",
+              "event",
+              "sprite",
+              "comment"
+            ],
+            "answer": "program",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Program means an algorithm written in code the computer runs."
+          },
+          {
+            "prompt": "What does “output” mean in computing?",
+            "choices": [
+              "Information the computer sends out to us.",
+              "Hardware that sends data into the computer.",
+              "Hardware that sends information out to us.",
+              "Breaking a problem into smaller parts."
+            ],
+            "answer": "Information the computer sends out to us.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Output means information the computer sends out to us."
+          },
+          {
+            "prompt": "What does “decomposition” mean in computing?",
+            "choices": [
+              "Breaking a problem into smaller parts.",
+              "A set of steps, in the right order, to do a job.",
+              "The order in which the steps happen.",
+              "Doing something again and again."
+            ],
+            "answer": "Breaking a problem into smaller parts.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Decomposition means breaking a problem into smaller parts."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-9",
+        "icon": "⌂",
+        "skill": "loop",
+        "title": "Real-Life Round: loop",
+        "description": "Practise loop through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A block that repeats the code inside it.?",
+            "choices": [
+              "loop",
+              "predict",
+              "program",
+              "event"
+            ],
+            "answer": "loop",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Loop means a block that repeats the code inside it."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Something that makes a script start.?",
+            "choices": [
+              "event",
+              "sprite",
+              "comment",
+              "innovator"
+            ],
+            "answer": "event",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Event means something that makes a script start."
+          },
+          {
+            "prompt": "What does “input device” mean in computing?",
+            "choices": [
+              "Hardware that sends data into the computer.",
+              "Hardware that sends information out to us.",
+              "Breaking a problem into smaller parts.",
+              "A set of steps, in the right order, to do a job."
+            ],
+            "answer": "Hardware that sends data into the computer.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Input device means hardware that sends data into the computer."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps, in the right order, to do a job.",
+              "The order in which the steps happen.",
+              "Doing something again and again.",
+              "A block that repeats the code inside it."
+            ],
+            "answer": "A set of steps, in the right order, to do a job.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-10",
+        "icon": "!",
+        "skill": "predict",
+        "title": "Spot the Bug: predict",
+        "description": "Practise predict through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To say what will happen before you run it.?",
+            "choices": [
+              "predict",
+              "program",
+              "event",
+              "sprite"
+            ],
+            "answer": "predict",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Predict means to say what will happen before you run it."
+          },
+          {
+            "prompt": "What does “input” mean in computing?",
+            "choices": [
+              "Data that goes into a computer.",
+              "Information the computer sends out to us.",
+              "Hardware that sends data into the computer.",
+              "Hardware that sends information out to us."
+            ],
+            "answer": "Data that goes into a computer.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Input means data that goes into a computer."
+          },
+          {
+            "prompt": "What does “output device” mean in computing?",
+            "choices": [
+              "Hardware that sends information out to us.",
+              "Breaking a problem into smaller parts.",
+              "A set of steps, in the right order, to do a job.",
+              "The order in which the steps happen."
+            ],
+            "answer": "Hardware that sends information out to us.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Output device means hardware that sends information out to us."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The order in which the steps happen.?",
+            "choices": [
+              "sequence",
+              "repetition",
+              "loop",
+              "predict"
+            ],
+            "answer": "sequence",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Sequence means the order in which the steps happen."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-11",
+        "icon": "≡",
+        "skill": "program",
+        "title": "Mastery Mix: program",
+        "description": "Practise program through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: An algorithm written in code the computer runs.?",
+            "choices": [
+              "program",
+              "event",
+              "sprite",
+              "comment"
+            ],
+            "answer": "program",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Program means an algorithm written in code the computer runs."
+          },
+          {
+            "prompt": "What does “output” mean in computing?",
+            "choices": [
+              "Information the computer sends out to us.",
+              "Hardware that sends data into the computer.",
+              "Hardware that sends information out to us.",
+              "Breaking a problem into smaller parts."
+            ],
+            "answer": "Information the computer sends out to us.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Output means information the computer sends out to us."
+          },
+          {
+            "prompt": "What does “decomposition” mean in computing?",
+            "choices": [
+              "Breaking a problem into smaller parts.",
+              "A set of steps, in the right order, to do a job.",
+              "The order in which the steps happen.",
+              "Doing something again and again."
+            ],
+            "answer": "Breaking a problem into smaller parts.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Decomposition means breaking a problem into smaller parts."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Doing something again and again.?",
+            "choices": [
+              "repetition",
+              "loop",
+              "predict",
+              "program"
+            ],
+            "answer": "repetition",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Repetition means doing something again and again."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-12",
+        "icon": "T",
+        "skill": "event",
+        "title": "Unit Champion: event",
+        "description": "Practise event through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Something that makes a script start.?",
+            "choices": [
+              "event",
+              "sprite",
+              "comment",
+              "innovator"
+            ],
+            "answer": "event",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Event means something that makes a script start."
+          },
+          {
+            "prompt": "What does “input device” mean in computing?",
+            "choices": [
+              "Hardware that sends data into the computer.",
+              "Hardware that sends information out to us.",
+              "Breaking a problem into smaller parts.",
+              "A set of steps, in the right order, to do a job."
+            ],
+            "answer": "Hardware that sends data into the computer.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Input device means hardware that sends data into the computer."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps, in the right order, to do a job.",
+              "The order in which the steps happen.",
+              "Doing something again and again.",
+              "A block that repeats the code inside it."
+            ],
+            "answer": "A set of steps, in the right order, to do a job.",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps, in the right order, to do a job."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A block that repeats the code inside it.?",
+            "choices": [
+              "loop",
+              "predict",
+              "program",
+              "event"
+            ],
+            "answer": "loop",
+            "clue": "Use the Unit 8 Computing Words reference.",
+            "explanation": "Loop means a block that repeats the code inside it."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can explain what an input is and what an output is, in their own words.",
+    "I can identify common input devices (keyboard, mouse, microphone, touchscreen, camera) and output devices (screen, speaker, headphones, printer).",
+    "I can explain that our five senses are the body's own input devices.",
+    "I can use decomposition to break a problem into smaller parts, and explain why a badge that does two jobs needs two algorithms.",
+    "I can write an algorithm as an ordered list of steps, and predict its outcome before running it.",
+    "I can identify the components of an algorithm: what starts it, what it shows, how long for, and how many times it repeats.",
+    "I can build a program in Scratch that produces different outputs from different inputs, using an event block such as when [a] key pressed.",
+    "I can reuse repetition (the repeat ( ) loop) to make an output happen a set number of times, and add a comment to explain the code.",
+    "I can before this unit (from the syllabus), children should already use logical thinking to create algorithms, follow and correct algorithms that use repetition, understand that decomposition means breaking a task into parts, and create a simple program that produces an output from an input. A quick recap of the repeat block at the start of Session 3 is usually enough."
+  ]
+}

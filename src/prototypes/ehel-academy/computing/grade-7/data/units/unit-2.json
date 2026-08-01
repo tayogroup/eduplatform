@@ -1,0 +1,2388 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:01.152Z",
+  "stage": {
+    "id": "s07",
+    "label": "Stage 7"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t01",
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "comp-g07-u02",
+    "unitNo": 2,
+    "unitTitle": "Decomposing Problems: Creating a Smart Solution",
+    "unitOverview": "In this unit — Decomposing Problems: Creating a Smart Solution — you will work through smart devices and sensors, hardware, software and simulators, meet the micro:bit, decomposition — breaking the problem down, your first micropython program, inputs and the 'while true' loop, selection — making decisions with if and else, using the sensors in code, data types — strings and integers, more than one input and output, flowcharts and algorithm tracing, testing with a test plan and the project plan and evaluating. Everything you need is here: explainers to read, examples to copy, things to build, practice with answers, and a project at the end. Every tool used is free and runs in a web browser.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Lower Secondary Computing",
+    "code": "0868",
+    "stage": 7
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-7-Content-Package",
+    "framework": "Cambridge Lower Secondary Computing 0868 — Stage 7",
+    "sourceArchive": "Year 7-20260801T055809Z-1-001.zip",
+    "sourceAudience": "student",
+    "sourceDocuments": [
+      "Year 7/Unit 2/Year 7 - Unit 2 Lesson.docx",
+      "Year 7/Unit 2/Year 7 - Unit 2 Activities & Projects.docx",
+      "Year 7/Unit 2/Year 7 - Unit 2 Practice & Quiz.docx",
+      "Year 7/Unit 2/Year 7 - Unit 2 Reference.docx"
+    ],
+    "sourceBlockCount": 1083,
+    "transformation": "Structured from the Cambridge Lower Secondary Computing 0868 — Stage 7 Lesson, Activities & Projects, Practice & Quiz and Reference booklets for screen presentation.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Explain how a simulator models a real-life system, and why simulators are useful.",
+    "Describe the difference between applications software and systems software.",
+    "Identify the difference between a string and an integer.",
+    "Write a MicroPython program for the micro:bit that has an input and an output.",
+    "Create and correct programs that use more than one input and more than one output.",
+    "Use the micro:bit sensors — buttons, light, temperature, touch, accelerometer and sound.",
+    "Use a test plan to check that your solution works as expected.",
+    "Evaluate a flowchart and a program, and explain why planning matters.",
+    "Create a simple algorithm using flowchart symbols (start/stop, input/output, process, decision).",
+    "Recognise the programming ideas of sequence (one step after another) and selection (making a choice)."
+  ],
+  "toolkit": [
+    {
+      "name": "micro:bit simulator",
+      "url": "makecode.microbit.org (blocks) or python.microbit.org (Python)",
+      "steps": [
+        "Open makecode.microbit.org for blocks, or python.microbit.org for Python.",
+        "Write your code in the editor.",
+        "The micro:bit simulator on the left runs your code straight away.",
+        "Click the on-screen A and B buttons, and use the shake control, to test your inputs."
+      ],
+      "note": "You do not need to own a real micro:bit — the simulator does everything."
+    },
+    {
+      "name": "Python",
+      "url": "python.microbit.org or any Python editor",
+      "steps": [
+        "Open the editor and start a new file.",
+        "Type your program one line at a time.",
+        "Run it and read any error message from the bottom up.",
+        "Fix one error at a time, then run it again."
+      ],
+      "note": "Python is a text language: spelling and indentation both matter."
+    },
+    {
+      "name": "A free spreadsheet",
+      "url": "Google Sheets, or LibreOffice Calc",
+      "steps": [
+        "Open a new blank spreadsheet.",
+        "Put your field names in row 1, one per column.",
+        "Type one record per row underneath.",
+        "Use Insert → Chart to turn your data into a graph."
+      ],
+      "note": "Any free spreadsheet works — the ideas are the same in all of them."
+    }
+  ],
+  "tutorPrompts": [
+    "I opened python.microbit.org but I cannot find the play button. Can you describe where it is?",
+    "What is the difference between the .hex file and the .py file when I save my project?",
+    "Big Idea 1: Smart Devices and Sensors",
+    "I typed display.show(Image.happy) in small letters and got an error. Why must it be capitals?",
+    "How can I make the scrolling text move more slowly?",
+    "Big Idea 6: Inputs and the 'while True' Loop",
+    "MicroPython code",
+    "from microbit import *"
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-smart-devices-and-sensors",
+      "title": "Smart Devices and Sensors",
+      "explanation": "A smart device has a program that tells it how to behave, and it uses sensors to gather data about the world. A sensor is simply a part that can detect something — light, heat, movement, sound or touch — and turn it into data (a number) that the program can use.\n\nThink about the automatic lights in a public washroom. When you walk in, the lights come on. When you leave, they switch off after a while. Nobody flicks a switch. Inside the device is a motion sensor that detects movement, and a program that says: IF movement is detected THEN switch the light on.\n\nHere is another example you can picture. A central-heating system uses a thermostat, which is a device with a built-in temperature sensor. The program keeps asking one question over and over: IF the temperature is below the set value THEN turn the heating on; otherwise turn it off. The sensor never stops checking, so the room stays comfortable without anyone touching a dial. When a device runs itself like this, based on sensor data, we say it is automated.\n\nA step-counter (pedometer) in a phone or watch does not really count your legs moving.",
+      "example": "It uses an accelerometer — a movement sensor — to feel the little bounce of each step, and a program counts those bounces. You will build something very similar later in this unit."
+    },
+    {
+      "id": "concept-2-hardware-software-and-simulators",
+      "title": "Hardware, Software and Simulators",
+      "explanation": "The easiest way to remember the difference between hardware and software is this: you can touch hardware, but you cannot touch software. The micro:bit itself, its buttons and its LED lights are hardware. The MicroPython program you write is software. A computing device needs both to do anything useful.\n\nThere are two families of software:\n\nSystems software keeps the device working. The main example is the operating system (such as Windows, Linux, macOS, Android or iOS). It starts the moment you switch a device on and connects the hardware to the programs you run.\n\nApplications software helps you complete a particular task. A web browser, a word processor, and the python.microbit.org editor are all applications. Software that does many jobs, like a word processor, is called a general-purpose application.",
+      "example": "A simulator is a special kind of application that behaves like a real system so you can practise safely. Pilots learn in flight simulators before flying a real plane. Surgeons practise operations on simulators before working with a real patient. In the same way, the micro:bit simulator lets you test your program on screen before you ever touch the physical device — so a mistake costs you nothing but a moment to fix it."
+    },
+    {
+      "id": "concept-3-meet-the-micro-bit",
+      "title": "Meet the micro:bit",
+      "explanation": "The BBC micro:bit is a pocket-sized computer built to teach you how hardware and software work together. Despite its size, it is packed with inputs and outputs. An input is data coming IN to the device; an output is something the device sends OUT to you.\n\nHere are the main inputs and outputs you will use:\n\nNotice how many of these are sensors. That is what makes the micro:bit perfect for building a smart device: it can sense light, heat, movement, sound and touch, and then respond using its display and speaker.\n\nFeature — Input or Output? · What it does\n\nButton A and Button B — Input · Two press-buttons on the front.\n\nTouch logo — Input · The gold logo at the top can sense a finger touch (micro:bit V2).\n\nLight sensor — Input · The LED display can also measure how bright the room is.\n\nTemperature sensor — Input · Built into the processor; reads temperature in degrees Celsius.\n\nAccelerometer — Input · Detects movement, tilt and gestures such as a shake.\n\nMicrophone — Input · Detects sound; can tell loud from quiet (micro:bit V2).\n\nCompass — Input · Detects the direction the micro:bit is pointing.\n\nLED display — Output · A 5x5 grid of 25 red lights that shows images, letters and scrolling text.",
+      "example": "Speaker / buzzer — Output · Plays tunes and sounds (micro:bit V2 has a built-in speaker)."
+    },
+    {
+      "id": "concept-4-decomposition-breaking-the-problem-down",
+      "title": "Decomposition - Breaking the Problem Down",
+      "explanation": "Decomposition means breaking a big problem into smaller parts. It is the skill professional programmers use every single day, because small parts are easy to understand, easy to solve, and easy to test. When you put all the small solutions together, you have solved the big problem.\n\nLet us decompose your Final Project scenario: 'Build a device that warns the class when someone is taking a computer.' On its own, that sounds hard. But watch what happens when we break it down:\n\nChoose the input. Which sensor will notice a thief — touch, light, or movement?\n\nDecide the question. What exactly are we testing? For example: 'Is the logo being touched?'\n\nChoose the outputs. What should happen on a yes? A warning image? A loud sound? Both?\n\nPlan the flow. Draw a flowchart showing the yes path and the no path.\n\nWrite the code. Turn each flowchart step into a line of MicroPython.\n\nTest it. Try many inputs on the simulator and check the outputs are correct.",
+      "example": "Each of those six parts is small enough to finish in a few minutes. That is the magic of decomposition: a project that felt impossible becomes a short to-do list. Keep this habit for the whole unit — whenever something feels too big, break it into smaller pieces."
+    },
+    {
+      "id": "concept-5-your-first-micropython-program",
+      "title": "Your First MicroPython Program",
+      "explanation": "Every micro:bit program must begin by importing the micro:bit library. A library is a ready-made list of all the commands you are allowed to use. The very first line is always the same:\n\nThe star (*) means 'import everything to do with the micro:bit'. Without this line the program would not know what display, button_a or temperature mean. Now let us make the display do something. Type this program, replacing Maya with your own name:\n\nClick the play button and watch the simulator. What happens: the word 'Maya' scrolls across the 25 LEDs one letter at a time, from right to left. As soon as the word finishes, a smiling face appears and stays lit. You have just controlled real hardware with two lines of code!",
+      "example": "Two commands did all the work. display.scroll('...') slides text across the screen, and display.show(Image.HAPPY) shows a single picture that stays on. Notice that the text 'Maya' has quotation marks around it, but Image.HAPPY does not — and HAPPY is in capital letters. Those are rules of the syntax, and MicroPython is very strict about them."
+    },
+    {
+      "id": "concept-6-inputs-and-the-while-true-loop",
+      "title": "Inputs and the 'while True' Loop",
+      "explanation": "So far the program ran once and stopped. A smart device must keep watching for input forever. To do that we wrap our code in a while True loop. Everything indented underneath it repeats again and again, for as long as the device is on. This is how the micro:bit 'constantly checks' its sensors.\n\nWhat happens: the program loops forever. On each loop it asks, 'Is button A being pressed right now?' Nothing shows until you click button A on the simulator. The moment you do, 'Hello' scrolls and then a happy face appears. This is your first program with an input (the button) and an output (the display).",
+      "example": "Look closely at the indentation — the spaces at the start of the lines. The code inside the loop is indented four spaces. The code inside the IF is indented four spaces again. MicroPython uses this indentation to know what belongs inside what. Getting it wrong is one of the most common beginner mistakes, so line your code up carefully."
+    },
+    {
+      "id": "concept-7-selection-making-decisions-with-if-and-else",
+      "title": "Selection - Making Decisions with IF and ELSE",
+      "explanation": "Selection is how a program makes a choice. It asks a question, and depending on the answer it follows one path or another. In MicroPython the question begins with if, and the 'otherwise' path begins with else. To ask the question we compare two values using a comparison operator.\n\nHere are the comparison operators you will use again and again:\n\nNotice that == (two equals signs) means 'is equal to', which is a question. A single = means 'store this value', which is a command. Mixing them up is a classic bug, so read them carefully. Here is selection with a light sensor:\n\nWhat happens: the light sensor reads a number from 0 (very dark) to 255 (very bright). IF the room is dark (below 100), a square lights up — like a lamp switching on. ELSE (when it is bright enough) the display clears. On the simulator, drag the light level slider down and watch the square appear, then drag it up and watch it vanish. Changing the operator would change the whole behaviour — that is why choosing the right one matters so much.\n\nSometimes you want to check a second, different question. For that you can use elif (short for 'else if'). The program checks the first question; if it is false it checks the elif; and if all of them are false it does the else. You will use elif in your Final Project to handle two sensors at once.\n\nOperator — Meaning · Example\n\n< — less than · if temperature() < 20\n\n> — greater than · if temperature() > 35\n\n<= — less than or equal to · if light <= 10\n\n>= — greater than or equal to · if light >= 128\n\n== — equal to (are they the same?) · if answer == 5",
+      "example": "!= — not equal to · if answer != 5"
+    },
+    {
+      "id": "concept-8-using-the-sensors-in-code",
+      "title": "Using the Sensors in Code",
+      "explanation": "Now for the exciting part — reading real sensor data. Each sensor has its own command. Here are the five you will use most, each shown in a short, working program.\n\nTemperature sensor — a hot-afternoon alert\n\nWhat happens: temperature() gives back a whole number of degrees Celsius. IF it is above 35 — a genuinely hot Berbera afternoon — the word 'HOT' scrolls and an angry face shows. Otherwise a happy face shows. sleep(2000) pauses for 2000 milliseconds (2 seconds) before checking again, so the display does not flicker. On the simulator, drag the temperature slider above 35 to trigger the alert.\n\nLight sensor — detecting a shadow\n\nYou saw display.read_light_level() above. It is perfect for detecting when a hand or a person comes close, because they block the light and the reading drops. This is exactly how a simple burglar detector works.\n\nTouch sensor — guarding the logo\n\nWhat happens: IF someone touches the gold logo, a skull appears and the 'Baddy' tune plays like an alarm. Notice the new line import music at the top — sounds live in a separate library, so you must import it before you can play a tune. On the simulator, click the logo to 'touch' it.\n\nAccelerometer — detecting a shake\n\nWhat happens: the accelerometer feels movement. IF it detects a shake gesture, a tick (YES) appears. Other gestures you can name include 'up', 'down', 'left', 'right', 'face up', 'face down' and 'freefall'. On the simulator, choose 'shake' from the gesture menu. This is the same idea a step counter uses on your walk to school: each step is a little movement the accelerometer can feel.\n\nSound sensor — reacting to a loud noise",
+      "example": "What happens: the microphone listens. IF the most recent sound was LOUD (a clap or a shout), a surprised face shows; otherwise the display clears. Notice == is used because we are asking 'is the sound event equal to LOUD?' On the simulator, use the sound-level slider to make a loud sound."
+    },
+    {
+      "id": "concept-9-data-types-strings-and-integers",
+      "title": "Data Types - Strings and Integers",
+      "explanation": "Every piece of data in a program has a type. In this unit you need two of them.\n\nA string is text. You write it inside quotation marks, single or double: 'Hello' or \"Leo\". Any characters can go in a string, even numbers like 'Pass123'.\n\nAn integer is a whole number with no decimal point and no quotation marks, like 27 or 128.",
+      "example": "Why does this matter? Because the data a sensor gathers is a number, and to compare it in an IF question the program must know it is a number. Happily, the micro:bit sensors give you integers automatically — temperature() gives 27, read_light_level() gives 130 — so you can compare them with operators straight away. Text that you want to display, on the other hand, must be a string with quotation marks. A quick check: when you add quotation marks around a word in the editor, the colour of the text changes. That colour change is a handy signal that you have made a string correctly."
+    },
+    {
+      "id": "concept-10-more-than-one-input-and-output",
+      "title": "More Than One Input and Output",
+      "explanation": "A real smart device rarely does just one thing. Your Final Project must use more than one input and more than one output. That is easier than it sounds — you simply stack more IF questions inside your loop, and put more than one action inside a branch.\n\nWhat happens: two inputs, two different outcomes. Press A for 'Hello' and a happy face; press B for 'Goodbye' and a sad face. You can also give a single branch several outputs — an image AND a sound AND scrolling text — which is exactly what makes a good, noticeable alarm.",
+      "example": "What happens: two inputs, two different outcomes. Press A for 'Hello' and a happy face; press B for 'Goodbye' and a sad face. You can also give a single branch several outputs — an image AND a sound AND scrolling text — which is exactly what makes a good, noticeable alarm."
+    },
+    {
+      "id": "concept-11-flowcharts-and-algorithm-tracing",
+      "title": "Flowcharts and Algorithm Tracing",
+      "explanation": "Before you write code, you plan it. An algorithm is your set of steps, and a flowchart is a picture of that algorithm. Planning first means you understand what the program should do before you worry about syntax, which makes finding mistakes far easier.\n\nA flowchart uses a few simple shapes: a rounded box for Start/Stop, a rectangle for a process, a parallelogram for input/output, and a diamond for a decision (a question with a Yes path and a No path). The diamond is where selection lives.",
+      "example": "Algorithm tracing means following your flowchart with a chosen input to predict the output. For example, imagine a flowchart that asks 'Is the light level 10 or below?' If you trace it with a light level of 0, you follow the Yes path to 'alarm sounds'. Trace it with 150, and you follow the No path to 'alarm off'. Tracing lets you find errors on paper, before you have written a single line of code. If your code later behaves differently from your trace, you have found a bug."
+    },
+    {
+      "id": "concept-12-testing-with-a-test-plan",
+      "title": "Testing with a Test Plan",
+      "explanation": "Testing is how you prove your program works — not by hoping, but by checking. A test plan is a table where you choose a range of inputs, write down what you EXPECT to happen, then run the program and write down what ACTUALLY happens. If the two match, the test passes.\n\nHere is part of a test plan for a light-based alarm that should sound when the light level is 10 or below:\n\nGood testers pick clever values, especially ones right at the boundary. Notice tests 3 and 4 use 10 and 9 — the exact edge of the condition. Those boundary tests catch the most common mistakes, like using < when you meant <=.\n\nTest — Data entered · Expected outcome · Actual outcome · Pass/Fail\n\n1 — Light level = 0 · Alarm sounds · Alarm sounds · Pass\n\n2 — Light level = 150 · Alarm off · Alarm off · Pass\n\n3 — Light level = 10 · Alarm sounds · Alarm sounds · Pass\n\n4 — Light level = 9 · Alarm sounds · Alarm sounds · Pass",
+      "example": "5 — Light level = 80 · Alarm off · Alarm off · Pass"
+    },
+    {
+      "id": "concept-13-the-project-plan-and-evaluating",
+      "title": "The Project Plan and Evaluating",
+      "explanation": "Professional software follows a project plan with five stages. You are already using every one of them in this unit:\n\nPlan — decompose the problem and write down your success criteria (what the finished program must do).\n\nDesign — plan the steps and draw the flowchart.\n\nCreate — write or edit the program code.\n\nTest — run a test plan with a range of inputs and check the outputs.\n\nEvaluate — review the tests and the finished program against your success criteria.",
+      "example": "Evaluation is not only for the end. You evaluate when you trace a flowchart and when you run a test. A big part of evaluating is thinking about the user — the person who will use your device. Will they understand the output? A happy face makes a user feel at ease; a sad or angry face signals a warning. The colours, images and sounds you choose all shape how the user feels, so choose them on purpose."
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "MicroPython code",
+      "language": "Python (micro:bit)",
+      "intro": "",
+      "lines": [
+        "from microbit import *",
+        "display.scroll('Maya')",
+        "display.show(Image.HAPPY)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-2",
+      "title": "MicroPython code (2)",
+      "language": "Python (micro:bit)",
+      "intro": "",
+      "lines": [
+        "from microbit import *",
+        "while True:",
+        "if button_a.is_pressed():",
+        "display.scroll('Hello')",
+        "display.show(Image.HAPPY)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-3",
+      "title": "MicroPython code (3)",
+      "language": "Python (micro:bit)",
+      "intro": "",
+      "lines": [
+        "from microbit import *",
+        "while True:",
+        "if display.read_light_level() < 100:",
+        "display.show(Image.SQUARE)",
+        "else:",
+        "display.clear()"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-4",
+      "title": "MicroPython code (4)",
+      "language": "Python (micro:bit)",
+      "intro": "",
+      "lines": [
+        "from microbit import *",
+        "while True:",
+        "if temperature() > 35:",
+        "display.scroll('HOT')",
+        "display.show(Image.ANGRY)",
+        "else:",
+        "display.show(Image.HAPPY)",
+        "sleep(2000)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-5",
+      "title": "MicroPython code (5)",
+      "language": "Python (micro:bit)",
+      "intro": "",
+      "lines": [
+        "from microbit import *",
+        "import music",
+        "while True:",
+        "if pin_logo.is_touched():",
+        "display.show(Image.SKULL)",
+        "music.play(music.BADDY)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-6",
+      "title": "MicroPython code (6)",
+      "language": "Python (micro:bit)",
+      "intro": "",
+      "lines": [
+        "from microbit import *",
+        "while True:",
+        "if accelerometer.was_gesture('shake'):",
+        "display.show(Image.YES)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-7",
+      "title": "MicroPython code (7)",
+      "language": "Python (micro:bit)",
+      "intro": "",
+      "lines": [
+        "from microbit import *",
+        "while True:",
+        "if microphone.current_event() == SoundEvent.LOUD:",
+        "display.show(Image.SURPRISED)",
+        "else:",
+        "display.clear()"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-8",
+      "title": "MicroPython code (8)",
+      "language": "Python (micro:bit)",
+      "intro": "",
+      "lines": [
+        "from microbit import *",
+        "while True:",
+        "if button_a.is_pressed():",
+        "display.scroll('Hello')",
+        "display.show(Image.HAPPY)",
+        "if button_b.is_pressed():",
+        "display.scroll('Goodbye')",
+        "display.show(Image.SAD)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-9",
+      "title": "MicroPython code (9)",
+      "language": "Python (micro:bit)",
+      "intro": "",
+      "lines": [
+        "from microbit import *",
+        "while True:"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Activities & Projects",
+      "context": "work through the steps below and see what happens. This is smart devices and sensors in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Year 7 — Unit 2 — Decomposing Problems: Creating a Smart Solution",
+      "answer": "How to Use This Document This is your hands-on workbook. Each activity gives you a task, the code to type, the expected behaviour on the simulator, and an AI-tutor prompt in case you get stuck. Type every program yourself in python.microbit.org, run it on the simulator, and only move on when it behaves as described. Work in order — each activity builds on the one before, exactly like decomposition. Getting Started with python.microbit.org and the Simulator Open a web browser and go to python.microbit.org. The editor opens with starter code. You will type your own code on the right-hand side.",
+      "modelType": "model-1",
+      "hint": "Start here: How to Use This Document",
+      "explanation": "Smart Devices and Sensors: A smart device has a program that tells it how to behave, and it uses sensors to gather data about the world. A sensor is simply a part that can detect something — light, heat, movement, sound or touch — and turn it into data (a number) that the program can use."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Getting Started with python.microbit.org and the Simulator",
+      "context": "work through the steps below and see what happens. This is hardware, software and simulators in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Open a web browser and go to python.microbit.org.",
+      "answer": "The editor opens with starter code. You will type your own code on the right-hand side. The Simulator (a picture of a micro:bit) is on the left. Click the play button (the triangle icon) under it to run your code. Use the sensor controls under the micro:bit picture: click buttons A and B, drag the temperature, light and sound sliders, choose a gesture from the accelerometer menu, and click the logo to touch it. Click Save to download your work, and Open to load it again later. If you have a real micro:bit",
+      "modelType": "model-2",
+      "hint": "Start here: The editor opens with starter code. You will type your own code on the right-hand side.",
+      "explanation": "Hardware, Software and Simulators: The easiest way to remember the difference between hardware and software is this: you can touch hardware, but you cannot touch software. The micro:bit itself, its buttons and its LED lights are hardware. The MicroPython program you write is software. A computing device needs both to do anything…"
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "If you have a real micro:bit",
+      "context": "work through the steps below and see what happens. This is meet the micro:bit in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "You can also run your programs on a physical micro:bit.",
+      "answer": "Connect it to your computer with a USB cable, click Connect, then click Flash to download (flash) your program onto the device. If you do not have one, the simulator does everything you need for this whole unit. Before you code, think like a detective. In pairs or on your own, list three devices you use that contain sensors (for example a phone, an automatic light, a smart watch). For each one, write down what the sensor detects and what the device does with that data. Bring your list to your next teacher session. Activity 1 — Your name and a picture (sequence output) Task: make the display scroll your name and then show a picture you like. This practises the two output commands and the idea of a sequence — one step after another.",
+      "modelType": "model-3",
+      "hint": "Start here: Connect it to your computer with a USB cable, click Connect, then click Flash to download (flash) your program onto the device.",
+      "explanation": "Meet the micro:bit: The BBC micro:bit is a pocket-sized computer built to teach you how hardware and software work together. Despite its size, it is packed with inputs and outputs. An input is data coming IN to the device; an output is something the device sends OUT to you."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Warm Up",
+      "context": "work through the steps below and see what happens. This is decomposition — breaking the problem down in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Before you code, think like a detective. In pairs or on your own, list three devices you use that contain sensors (for example a phone, an automatic light, a smart watch). For each one, write down what the sensor detects and what the device does with that data. Bring your list to your next teacher session.",
+      "answer": "Activity 1 — Your name and a picture (sequence output) Task: make the display scroll your name and then show a picture you like. This practises the two output commands and the idea of a sequence — one step after another. MicroPython code",
+      "modelType": "model-4",
+      "hint": "Start here: Activity 1 — Your name and a picture (sequence output)",
+      "explanation": "Decomposition — Breaking the Problem Down: Decomposition means breaking a big problem into smaller parts. It is the skill professional programmers use every single day, because small parts are easy to understand, easy to solve, and easy to test. When you put all the small solutions together, you have solved the big problem."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Practise",
+      "context": "work through the steps below and see what happens. This is your first micropython program in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Activity 1 — Your name and a picture (sequence output)",
+      "answer": "Task: make the display scroll your name and then show a picture you like. This practises the two output commands and the idea of a sequence — one step after another. MicroPython code Expected behaviour: 'Leo' scrolls across the LEDs, then a duck picture appears and stays. Try other images such as Image.HEART, Image.HOUSE or Image.GIRAFFE. Ask Your AI Tutor",
+      "modelType": "model-5",
+      "hint": "Start here: Task: make the display scroll your name and then show a picture you like. This practises the two output commands and the idea of a sequence — one…",
+      "explanation": "Your First MicroPython Program: Every micro:bit program must begin by importing the micro:bit library. A library is a ready-made list of all the commands you are allowed to use. The very first line is always the same:"
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "MicroPython code",
+      "context": "work through the steps below and see what happens. This is inputs and the 'while true' loop in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "prompt": "Expected behaviour: 'Leo' scrolls across the LEDs, then a duck picture appears and stays. Try other images such as Image.HEART, Image.HOUSE or Image.GIRAFFE.",
+      "answer": "Ask Your AI Tutor Give me a list of five fun Image names I can try, and tell me what each one looks like. Activity 2 — Button A input (input and output) Task: show a happy face only when button A is pressed. This adds your first input and the while True loop.",
+      "modelType": "model-6",
+      "hint": "Start here: Ask Your AI Tutor",
+      "explanation": "Inputs and the 'while True' Loop: So far the program ran once and stopped. A smart device must keep watching for input forever. To do that we wrap our code in a while True loop. Everything indented underneath it repeats again and again, for as long as the device is on. This is how the micro:bit 'constantly checks' its sensors."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Smart Devices and Sensors",
+      "modelType": "concept-model-1",
+      "purpose": "A smart device has a program that tells it how to behave, and it uses sensors to gather data about the world. A sensor is simply a part that can detect something — light, heat, movement, sound or touch — and turn it…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Hardware, Software and Simulators",
+      "modelType": "concept-model-2",
+      "purpose": "The easiest way to remember the difference between hardware and software is this: you can touch hardware, but you cannot touch software. The micro:bit itself, its buttons and its LED lights are hardware. The MicroPython…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Meet the micro:bit",
+      "modelType": "concept-model-3",
+      "purpose": "The BBC micro:bit is a pocket-sized computer built to teach you how hardware and software work together. Despite its size, it is packed with inputs and outputs. An input is data coming IN to the device; an output is…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Decomposition - Breaking the Problem Down",
+      "modelType": "concept-model-4",
+      "purpose": "Decomposition means breaking a big problem into smaller parts. It is the skill professional programmers use every single day, because small parts are easy to understand, easy to solve, and easy to test. When you put all…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Your First MicroPython Program",
+      "modelType": "concept-model-5",
+      "purpose": "Every micro:bit program must begin by importing the micro:bit library. A library is a ready-made list of all the commands you are allowed to use. The very first line is always the same:",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo06",
+      "title": "Inputs and the 'while True' Loop",
+      "modelType": "concept-model-6",
+      "purpose": "So far the program ran once and stopped. A smart device must keep watching for input forever. To do that we wrap our code in a while True loop. Everything indented underneath it repeats again and again, for as long as…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-7",
+      "outcomeId": "lo07",
+      "title": "Selection - Making Decisions with IF and ELSE",
+      "modelType": "concept-model-7",
+      "purpose": "Selection is how a program makes a choice. It asks a question, and depending on the answer it follows one path or another. In MicroPython the question begins with if, and the 'otherwise' path begins with else. To ask…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-8",
+      "outcomeId": "lo08",
+      "title": "Using the Sensors in Code",
+      "modelType": "concept-model-8",
+      "purpose": "Now for the exciting part — reading real sensor data. Each sensor has its own command. Here are the five you will use most, each shown in a short, working program.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-9",
+      "outcomeId": "lo09",
+      "title": "Data Types - Strings and Integers",
+      "modelType": "concept-model-9",
+      "purpose": "Every piece of data in a program has a type. In this unit you need two of them.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-10",
+      "outcomeId": "lo10",
+      "title": "More Than One Input and Output",
+      "modelType": "concept-model-10",
+      "purpose": "A real smart device rarely does just one thing. Your Final Project must use more than one input and more than one output. That is easier than it sounds — you simply stack more IF questions inside your loop, and put more…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-11",
+      "outcomeId": "lo01",
+      "title": "Flowcharts and Algorithm Tracing",
+      "modelType": "concept-model-11",
+      "purpose": "Before you write code, you plan it. An algorithm is your set of steps, and a flowchart is a picture of that algorithm. Planning first means you understand what the program should do before you worry about syntax, which…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-12",
+      "outcomeId": "lo02",
+      "title": "Testing with a Test Plan",
+      "modelType": "concept-model-12",
+      "purpose": "Testing is how you prove your program works — not by hoping, but by checking. A test plan is a table where you choose a range of inputs, write down what you EXPECT to happen, then run the program and write down what…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-13",
+      "outcomeId": "lo03",
+      "title": "The Project Plan and Evaluating",
+      "modelType": "concept-model-13",
+      "purpose": "Professional software follows a project plan with five stages. You are already using every one of them in this unit:",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with smart devices and sensors",
+      "example": "It uses an accelerometer — a movement sensor — to feel the little bounce of each step, and a program counts those bounces. You will build something very similar later in this unit.",
+      "steps": [
+        "A smart device has a program that tells it how to behave, and it uses sensors to gather data about the world. A sensor is simply a part that can detect something — light, heat, movement, sound or touch — and turn it…",
+        "Think about the automatic lights in a public washroom. When you walk in, the lights come on. When you leave, they switch off after a while. Nobody flicks a switch. Inside the device is a motion sensor that detects…",
+        "Here is another example you can picture. A central-heating system uses a thermostat, which is a device with a built-in temperature sensor. The program keeps asking one question over and over: IF the temperature is below…",
+        "A step-counter (pedometer) in a phone or watch does not really count your legs moving."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with hardware, software and simulators",
+      "example": "A simulator is a special kind of application that behaves like a real system so you can practise safely. Pilots learn in flight simulators before flying a real plane. Surgeons practise operations on simulators before working with a real patient. In the same…",
+      "steps": [
+        "The easiest way to remember the difference between hardware and software is this: you can touch hardware, but you cannot touch software. The micro:bit itself, its buttons and its LED lights are hardware. The MicroPython…",
+        "Systems software keeps the device working. The main example is the operating system (such as Windows, Linux, macOS, Android or iOS). It starts the moment you switch a device on and connects the hardware to the programs…",
+        "Applications software helps you complete a particular task. A web browser, a word processor, and the python.microbit.org editor are all applications. Software that does many jobs, like a word processor, is called a…"
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with meet the micro:bit",
+      "example": "Speaker / buzzer — Output · Plays tunes and sounds (micro:bit V2 has a built-in speaker).",
+      "steps": [
+        "The BBC micro:bit is a pocket-sized computer built to teach you how hardware and software work together. Despite its size, it is packed with inputs and outputs. An input is data coming IN to the device; an output is…",
+        "Here are the main inputs and outputs you will use:",
+        "Notice how many of these are sensors. That is what makes the micro:bit perfect for building a smart device: it can sense light, heat, movement, sound and touch, and then respond using its display and speaker.",
+        "Feature — Input or Output? · What it does"
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with decomposition - breaking the problem down",
+      "example": "Each of those six parts is small enough to finish in a few minutes. That is the magic of decomposition: a project that felt impossible becomes a short to-do list. Keep this habit for the whole unit — whenever something feels too big, break it into smaller…",
+      "steps": [
+        "Decomposition means breaking a big problem into smaller parts. It is the skill professional programmers use every single day, because small parts are easy to understand, easy to solve, and easy to test. When you put all…",
+        "Let us decompose your Final Project scenario: 'Build a device that warns the class when someone is taking a computer.' On its own, that sounds hard. But watch what happens when we break it down:",
+        "Choose the input. Which sensor will notice a thief — touch, light, or movement?",
+        "Decide the question. What exactly are we testing? For example: 'Is the logo being touched?'"
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with your first micropython program",
+      "example": "Two commands did all the work. display.scroll('...') slides text across the screen, and display.show(Image.HAPPY) shows a single picture that stays on. Notice that the text 'Maya' has quotation marks around it, but Image.HAPPY does not — and HAPPY is in…",
+      "steps": [
+        "Every micro:bit program must begin by importing the micro:bit library. A library is a ready-made list of all the commands you are allowed to use. The very first line is always the same:",
+        "The star (*) means 'import everything to do with the micro:bit'. Without this line the program would not know what display, button_a or temperature mean. Now let us make the display do something. Type this program,…",
+        "Click the play button and watch the simulator. What happens: the word 'Maya' scrolls across the 25 LEDs one letter at a time, from right to left. As soon as the word finishes, a smiling face appears and stays lit. You…"
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "title": "How to work with inputs and the 'while true' loop",
+      "example": "Look closely at the indentation — the spaces at the start of the lines. The code inside the loop is indented four spaces. The code inside the IF is indented four spaces again. MicroPython uses this indentation to know what belongs inside what. Getting it…",
+      "steps": [
+        "Read the concept card for inputs and the 'while true' loop and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-7",
+      "outcomeId": "lo07",
+      "difficulty": "Challenge",
+      "title": "How to work with selection - making decisions with if and else",
+      "example": "!= — not equal to · if answer != 5",
+      "steps": [
+        "Selection is how a program makes a choice. It asks a question, and depending on the answer it follows one path or another. In MicroPython the question begins with if, and the 'otherwise' path begins with else. To ask…",
+        "Here are the comparison operators you will use again and again:",
+        "Notice that == (two equals signs) means 'is equal to', which is a question. A single = means 'store this value', which is a command. Mixing them up is a classic bug, so read them carefully. Here is selection with a…",
+        "What happens: the light sensor reads a number from 0 (very dark) to 255 (very bright). IF the room is dark (below 100), a square lights up — like a lamp switching on. ELSE (when it is bright enough) the display clears.…"
+      ]
+    },
+    {
+      "id": "method-8",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "How to work with using the sensors in code",
+      "example": "What happens: the microphone listens. IF the most recent sound was LOUD (a clap or a shout), a surprised face shows; otherwise the display clears. Notice == is used because we are asking 'is the sound event equal to LOUD?' On the simulator, use the…",
+      "steps": [
+        "Now for the exciting part — reading real sensor data. Each sensor has its own command. Here are the five you will use most, each shown in a short, working program.",
+        "Temperature sensor — a hot-afternoon alert",
+        "What happens: temperature() gives back a whole number of degrees Celsius. IF it is above 35 — a genuinely hot Berbera afternoon — the word 'HOT' scrolls and an angry face shows. Otherwise a happy face shows. sleep(2000)…",
+        "You saw display.read_light_level() above. It is perfect for detecting when a hand or a person comes close, because they block the light and the reading drops. This is exactly how a simple burglar detector works."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Smart Devices and Sensors",
+      "prompt": "Explain in your own words: Smart Devices and Sensors.",
+      "solution": "A smart device has a program that tells it how to behave, and it uses sensors to gather data about the world. A sensor is simply a part that can detect something — light, heat, movement, sound or touch — and turn it into data (a number) that the program can use.\n\nThink about the automatic lights in a public washroom. When you walk in, the lights come on. When you leave, they switch off after a while. Nobody flicks a switch. Inside the device is a motion sensor that detects movement, and a program that says: IF movement is detected THEN switch the light on.\n\nHere is another example you can picture. A central-heating system uses a thermostat, which is a device with a built-in temperature sensor. The program keeps asking one question over and over: IF the temperature is below the set value THEN turn the heating on; otherwise turn it off. The sensor never stops checking, so the room stays comfortable without anyone touching a dial. When a device runs itself like this, based on sensor data, we say it is automated.\n\nA step-counter (pedometer) in a phone or watch does not really count your legs moving.\n\nFor example: It uses an accelerometer — a movement sensor — to feel the little bounce of each step, and a program counts those bounces. You will build something very similar later in this unit."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Hardware, Software and Simulators",
+      "prompt": "Explain in your own words: Hardware, Software and Simulators.",
+      "solution": "The easiest way to remember the difference between hardware and software is this: you can touch hardware, but you cannot touch software. The micro:bit itself, its buttons and its LED lights are hardware. The MicroPython program you write is software. A computing device needs both to do anything useful.\n\nThere are two families of software:\n\nSystems software keeps the device working. The main example is the operating system (such as Windows, Linux, macOS, Android or iOS). It starts the moment you switch a device on and connects the hardware to the programs you run.\n\nApplications software helps you complete a particular task. A web browser, a word processor, and the python.microbit.org editor are all applications. Software that does many jobs, like a word processor, is called a general-purpose application.\n\nFor example: A simulator is a special kind of application that behaves like a real system so you can practise safely. Pilots learn in flight simulators before flying a real plane. Surgeons practise operations on simulators before working with a real patient. In the same way, the micro:bit simulator lets you test your program on screen before you ever touch the physical device — so a mistake costs you nothing but a moment to fix it."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Meet the micro:bit",
+      "prompt": "Explain in your own words: Meet the micro:bit.",
+      "solution": "The BBC micro:bit is a pocket-sized computer built to teach you how hardware and software work together. Despite its size, it is packed with inputs and outputs. An input is data coming IN to the device; an output is something the device sends OUT to you.\n\nHere are the main inputs and outputs you will use:\n\nNotice how many of these are sensors. That is what makes the micro:bit perfect for building a smart device: it can sense light, heat, movement, sound and touch, and then respond using its display and speaker.\n\nFeature — Input or Output? · What it does\n\nButton A and Button B — Input · Two press-buttons on the front.\n\nTouch logo — Input · The gold logo at the top can sense a finger touch (micro:bit V2).\n\nLight sensor — Input · The LED display can also measure how bright the room is.\n\nTemperature sensor — Input · Built into the processor; reads temperature in degrees Celsius.\n\nAccelerometer — Input · Detects movement, tilt and gestures such as a shake.\n\nMicrophone — Input · Detects sound; can tell loud from quiet (micro:bit V2).\n\nCompass — Input · Detects the direction the micro:bit is pointing.\n\nLED display — Output · A 5x5 grid of 25 red lights that shows images, letters and scrolling text.\n\nFor example: Speaker / buzzer — Output · Plays tunes and sounds (micro:bit V2 has a built-in speaker)."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Decomposition - Breaking the Problem Down",
+      "prompt": "Explain in your own words: Decomposition — Breaking the Problem Down.",
+      "solution": "Decomposition means breaking a big problem into smaller parts. It is the skill professional programmers use every single day, because small parts are easy to understand, easy to solve, and easy to test. When you put all the small solutions together, you have solved the big problem.\n\nLet us decompose your Final Project scenario: 'Build a device that warns the class when someone is taking a computer.' On its own, that sounds hard. But watch what happens when we break it down:\n\nChoose the input. Which sensor will notice a thief — touch, light, or movement?\n\nDecide the question. What exactly are we testing? For example: 'Is the logo being touched?'\n\nChoose the outputs. What should happen on a yes? A warning image? A loud sound? Both?\n\nPlan the flow. Draw a flowchart showing the yes path and the no path.\n\nWrite the code. Turn each flowchart step into a line of MicroPython.\n\nTest it. Try many inputs on the simulator and check the outputs are correct.\n\nFor example: Each of those six parts is small enough to finish in a few minutes. That is the magic of decomposition: a project that felt impossible becomes a short to-do list. Keep this habit for the whole unit — whenever something feels too big, break it into smaller pieces."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Your First MicroPython Program",
+      "prompt": "Explain in your own words: Your First MicroPython Program.",
+      "solution": "Every micro:bit program must begin by importing the micro:bit library. A library is a ready-made list of all the commands you are allowed to use. The very first line is always the same:\n\nThe star (*) means 'import everything to do with the micro:bit'. Without this line the program would not know what display, button_a or temperature mean. Now let us make the display do something. Type this program, replacing Maya with your own name:\n\nClick the play button and watch the simulator. What happens: the word 'Maya' scrolls across the 25 LEDs one letter at a time, from right to left. As soon as the word finishes, a smiling face appears and stays lit. You have just controlled real hardware with two lines of code!\n\nFor example: Two commands did all the work. display.scroll('...') slides text across the screen, and display.show(Image.HAPPY) shows a single picture that stays on. Notice that the text 'Maya' has quotation marks around it, but Image.HAPPY does not — and HAPPY is in capital letters. Those are rules of the syntax, and MicroPython is very strict about them."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Inputs and the 'while True' Loop",
+      "prompt": "Explain in your own words: Inputs and the 'while True' Loop.",
+      "solution": "So far the program ran once and stopped. A smart device must keep watching for input forever. To do that we wrap our code in a while True loop. Everything indented underneath it repeats again and again, for as long as the device is on. This is how the micro:bit 'constantly checks' its sensors.\n\nWhat happens: the program loops forever. On each loop it asks, 'Is button A being pressed right now?' Nothing shows until you click button A on the simulator. The moment you do, 'Hello' scrolls and then a happy face appears. This is your first program with an input (the button) and an output (the display).\n\nFor example: Look closely at the indentation — the spaces at the start of the lines. The code inside the loop is indented four spaces. The code inside the IF is indented four spaces again. MicroPython uses this indentation to know what belongs inside what. Getting it wrong is one of the most common beginner mistakes, so line your code up carefully."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "What does decomposition mean? (a) Making a program faster (b) Breaking a big problem into smaller parts (c) Deleting a program (d) Adding two numbers",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Which line must appear at the top of every micro:bit program? (a) import microbit (b) from microbit import * (c) start microbit (d) microbit.begin()",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "A sensor is best described as: (a) A part that gathers data from its surroundings (b) A screen that shows pictures (c) A loudspeaker (d) A battery",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p04",
+      "level": "Warm-up",
+      "prompt": "Which command scrolls text across the display? (a) display.show() (b) display.scroll() (c) display.text() (d) scroll.display()",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p05",
+      "level": "Warm-up",
+      "prompt": "What does sleep(1000) do? (a) Turns off the micro:bit (b) Waits 1000 seconds (c) Pauses the program for 1 second (d) Repeats 1000 times",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p06",
+      "level": "Warm-up",
+      "prompt": "Which of these is an input? (a) The LED display (b) The speaker (c) Button A (d) The scroll command",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p07",
+      "level": "Warm-up",
+      "prompt": "What data type is the temperature reading 27? (a) String (b) Integer (c) Image (d) Gesture",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p08",
+      "level": "Warm-up",
+      "prompt": "What data type is 'Maya'? (a) Integer (b) Gesture (c) String (d) Boolean",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p09",
+      "level": "Warm-up",
+      "prompt": "The operator >= means: (a) greater than (b) less than or equal to (c) greater than or equal to (d) not equal to",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p10",
+      "level": "Warm-up",
+      "prompt": "A simulator is: (a) A real micro:bit (b) Software that behaves like the real device so you can test safely (c) A type of sensor (d) A battery pack",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p11",
+      "level": "Warm-up",
+      "prompt": "Flashing a program means: (a) Making the LEDs blink (b) Downloading your program onto the physical micro:bit (c) Deleting the code (d) Causing an error",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p12",
+      "level": "Warm-up",
+      "prompt": "Which of these is systems software? (a) A web browser (b) The operating system (c) A word processor (d) A MicroPython program",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p13",
+      "level": "Warm-up",
+      "prompt": "Why must Image.HEART be typed in capital letters? (a) It looks nicer (b) The MicroPython syntax requires the exact spelling and capitals (c) It makes the heart bigger (d) It does not matter",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p14",
+      "level": "Core",
+      "prompt": "In your own words, what is decomposition and why is it useful when planning a program?",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p15",
+      "level": "Core",
+      "prompt": "Name three sensors on the micro:bit and say what each one detects.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
+    },
+    {
+      "id": "p16",
+      "level": "Core",
+      "prompt": "What is the difference between an input and an output? Give one micro:bit example of each.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Activities & Projects",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Year 7 — Unit 2 — Decomposing Problems: Creating a Smart Solution",
+        "How to Use This Document",
+        "This is your hands-on workbook. Each activity gives you a task, the code to type, the expected behaviour on the simulator, and an AI-tutor prompt in case you get stuck. Type every program yourself in python.microbit.org, run it on the simulator, and only move on when it behaves as described. Work in order — each activity builds on the one before, exactly like decomposition.",
+        "Getting Started with python.microbit.org and the Simulator",
+        "Open a web browser and go to python.microbit.org.",
+        "The editor opens with starter code. You will type your own code on the right-hand side."
+      ]
+    },
+    {
+      "title": "Getting Started with python.microbit.org and the Simulator",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Open a web browser and go to python.microbit.org.",
+        "The editor opens with starter code. You will type your own code on the right-hand side.",
+        "The Simulator (a picture of a micro:bit) is on the left. Click the play button (the triangle icon) under it to run your code.",
+        "Use the sensor controls under the micro:bit picture: click buttons A and B, drag the temperature, light and sound sliders, choose a gesture from the accelerometer menu, and click the logo to touch it.",
+        "Click Save to download your work, and Open to load it again later.",
+        "If you have a real micro:bit"
+      ]
+    },
+    {
+      "title": "If you have a real micro:bit",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "You can also run your programs on a physical micro:bit.",
+        "Connect it to your computer with a USB cable, click Connect, then click Flash to download (flash) your program onto the device.",
+        "If you do not have one, the simulator does everything you need for this whole unit.",
+        "Before you code, think like a detective. In pairs or on your own, list three devices you use that contain sensors (for example a phone, an automatic light, a smart watch). For each one, write down what the sensor detects and what the device does with that data. Bring your list to your next teacher session.",
+        "Activity 1 — Your name and a picture (sequence output)",
+        "Task: make the display scroll your name and then show a picture you like. This practises the two output commands and the idea of a sequence — one step after another."
+      ]
+    },
+    {
+      "title": "Warm Up",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Before you code, think like a detective. In pairs or on your own, list three devices you use that contain sensors (for example a phone, an automatic light, a smart watch). For each one, write down what the sensor detects and what the device does with that data. Bring your list to your next teacher session.",
+        "Activity 1 — Your name and a picture (sequence output)",
+        "Task: make the display scroll your name and then show a picture you like. This practises the two output commands and the idea of a sequence — one step after another.",
+        "MicroPython code"
+      ]
+    },
+    {
+      "title": "Practise",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Activity 1 — Your name and a picture (sequence output)",
+        "Task: make the display scroll your name and then show a picture you like. This practises the two output commands and the idea of a sequence — one step after another.",
+        "MicroPython code",
+        "Expected behaviour: 'Leo' scrolls across the LEDs, then a duck picture appears and stays. Try other images such as Image.HEART, Image.HOUSE or Image.GIRAFFE.",
+        "Ask Your AI Tutor"
+      ]
+    },
+    {
+      "title": "MicroPython code",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Expected behaviour: 'Leo' scrolls across the LEDs, then a duck picture appears and stays. Try other images such as Image.HEART, Image.HOUSE or Image.GIRAFFE.",
+        "Ask Your AI Tutor",
+        "Give me a list of five fun Image names I can try, and tell me what each one looks like.",
+        "Activity 2 — Button A input (input and output)",
+        "Task: show a happy face only when button A is pressed. This adds your first input and the while True loop."
+      ]
+    },
+    {
+      "title": "Ask Your AI Tutor",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Give me a list of five fun Image names I can try, and tell me what each one looks like.",
+        "Activity 2 — Button A input (input and output)",
+        "Task: show a happy face only when button A is pressed. This adds your first input and the while True loop.",
+        "MicroPython code"
+      ]
+    },
+    {
+      "title": "Go Further",
+      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "steps": [
+        "Go Further 1 — Explore all the gestures",
+        "Task: the accelerometer knows many gestures. Change 'shake' in Activity 7 to each of these and test it on the simulator: 'up', 'down', 'left', 'right', 'face up', 'face down', 'freefall'. Copy and complete a table like the one below.",
+        "Shows a tick when the micro:bit is shaken."
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "Error you might see",
+      "cause": "What it usually means",
+      "fix": "How to fix it"
+    },
+    {
+      "symptom": "NameError: name 'display' is not defined",
+      "cause": "You forgot the import line.",
+      "fix": "Add from microbit import * at the top."
+    },
+    {
+      "symptom": "NameError: name 'Hello' is not defined",
+      "cause": "Text has no quotation marks.",
+      "fix": "Write 'Hello' with quotes."
+    },
+    {
+      "symptom": "NameError: name 'Sleep' is not defined",
+      "cause": "Wrong capital letter.",
+      "fix": "Use lower-case sleep(1000)."
+    },
+    {
+      "symptom": "AttributeError: ... 'happy'",
+      "cause": "Image name in small letters.",
+      "fix": "Use capitals, e.g. Image.HAPPY."
+    },
+    {
+      "symptom": "SyntaxError (near if or while)",
+      "cause": "Missing colon at the end.",
+      "fix": "Add : to the end of the line."
+    },
+    {
+      "symptom": "IndentationError",
+      "cause": "Spacing is wrong.",
+      "fix": "Indent four spaces for each step inside a loop or if."
+    },
+    {
+      "symptom": "NameError: name 'music' is not defined",
+      "cause": "The music library is not imported.",
+      "fix": "Add import music near the top."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "!",
+        "text": "Every program starts with: from microbit import * Image names are in CAPITALS with no quotes: Image.HEART. Text to display goes in quotation marks: 'Hello'."
+      },
+      {
+        "title": "!",
+        "text": "Lines that end with a colon (while True: , if ... : , else:) must have indented code underneath. Indent four spaces for each step. Keep your indentation lined up. == asks a question (is it equal?). A single = stores a value."
+      },
+      {
+        "title": "!",
+        "text": "sleep(1000) pauses for 1 second and is spelled with a lower-case s. Sensor readings are integers (whole numbers), so you can compare them straight away. To play sounds you must first write: import music"
+      },
+      {
+        "title": "!",
+        "text": "Image names must be typed in CAPITAL letters and with no quotation marks: Image.HEART, Image.HAPPY, Image.SAD. Text to display must go inside quotation marks: 'Hello' or \"Hello\". Both single and double quotes work. If you get these wrong the program will not run — and that is normal. Every programmer fixes syntax all day."
+      },
+      {
+        "title": "!",
+        "text": "while True: needs the colon at the end, and everything that should repeat must be indented underneath it. if button_a.is_pressed(): also needs a colon, and its actions are indented one more step. Four spaces per step is the normal amount. The editor helps you by adding them automatically. Big Idea 7: Selection — Making Decisions with IF and ELSE Selection is how a program makes a choice. It asks a question, and depending on the answer it follows one path or another. In MicroPython the question begins with if, and the 'otherwise' path begins with else. To ask the question we compare two values using a comparison operator. Here are the comparison operators you will use again and again:"
+      }
+    ],
+    "terms": [
+      [
+        "accelerometer",
+        "A sensor that detects movement, tilt and gestures such as a shake."
+      ],
+      [
+        "algorithm",
+        "A sequence of steps or instructions to solve a problem."
+      ],
+      [
+        "algorithm tracing",
+        "Following the flow of a flowchart with a specific input to predict the output."
+      ],
+      [
+        "applications software",
+        "Software for general or specific tasks, such as a browser or word processor."
+      ],
+      [
+        "automate",
+        "To let sensors and a program run a device with little or no human interaction."
+      ],
+      [
+        "comparison operator",
+        "A symbol used to compare values, such as >, <, >=, <=, ==, !=."
+      ],
+      [
+        "computing device",
+        "Any device that follows the input, process, output model."
+      ],
+      [
+        "debug / debugging",
+        "The process of finding and removing errors from a program."
+      ],
+      [
+        "decompose / decomposition",
+        "Breaking a problem down into smaller parts."
+      ],
+      [
+        "execute",
+        "Another word for running a program."
+      ],
+      [
+        "flashing the program",
+        "Downloading a MicroPython program onto the physical micro:bit to run it."
+      ],
+      [
+        "flowchart",
+        "A diagram showing the sequence of actions and decisions in a program."
+      ],
+      [
+        "gesture",
+        "A specific movement the accelerometer can detect, such as shake or tilt."
+      ],
+      [
+        "hardware",
+        "The parts of a device you can touch."
+      ],
+      [
+        "input",
+        "Data going into a device, such as a button press or a sensor reading."
+      ],
+      [
+        "integer",
+        "A whole number."
+      ],
+      [
+        "interface",
+        "The visual way you interact with software."
+      ],
+      [
+        "library",
+        "A ready-made list of commands you import, such as the microbit library."
+      ],
+      [
+        "MicroPython",
+        "The version of Python made for the micro:bit."
+      ],
+      [
+        "operating system",
+        "The systems software that manages a device's hardware and software."
+      ],
+      [
+        "output",
+        "A visible or audible result, such as the display or the speaker."
+      ],
+      [
+        "physical computing device",
+        "A small microprocessor programmed with block or text-based languages."
+      ],
+      [
+        "prototype",
+        "A first version of a product, built to test an idea."
+      ],
+      [
+        "selection",
+        "A construct with more than one path; a condition is tested to decide which path to follow."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "accelerometer",
+        "meaning": "A sensor that detects movement, tilt and gestures such as a shake.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "algorithm",
+        "meaning": "A sequence of steps or instructions to solve a problem.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "algorithm tracing",
+        "meaning": "Following the flow of a flowchart with a specific input to predict the output.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "applications software",
+        "meaning": "Software for general or specific tasks, such as a browser or word processor.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "automate",
+        "meaning": "To let sensors and a program run a device with little or no human interaction.",
+        "example": "",
+        "letter": "A"
+      },
+      {
+        "term": "comparison operator",
+        "meaning": "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "computing device",
+        "meaning": "Any device that follows the input, process, output model.",
+        "example": "",
+        "letter": "C"
+      },
+      {
+        "term": "debug / debugging",
+        "meaning": "The process of finding and removing errors from a program.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "decompose / decomposition",
+        "meaning": "Breaking a problem down into smaller parts.",
+        "example": "",
+        "letter": "D"
+      },
+      {
+        "term": "execute",
+        "meaning": "Another word for running a program.",
+        "example": "",
+        "letter": "E"
+      },
+      {
+        "term": "flashing the program",
+        "meaning": "Downloading a MicroPython program onto the physical micro:bit to run it.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "flowchart",
+        "meaning": "A diagram showing the sequence of actions and decisions in a program.",
+        "example": "",
+        "letter": "F"
+      },
+      {
+        "term": "gesture",
+        "meaning": "A specific movement the accelerometer can detect, such as shake or tilt.",
+        "example": "",
+        "letter": "G"
+      },
+      {
+        "term": "hardware",
+        "meaning": "The parts of a device you can touch.",
+        "example": "",
+        "letter": "H"
+      },
+      {
+        "term": "input",
+        "meaning": "Data going into a device, such as a button press or a sensor reading.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "integer",
+        "meaning": "A whole number.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "interface",
+        "meaning": "The visual way you interact with software.",
+        "example": "",
+        "letter": "I"
+      },
+      {
+        "term": "library",
+        "meaning": "A ready-made list of commands you import, such as the microbit library.",
+        "example": "",
+        "letter": "L"
+      },
+      {
+        "term": "MicroPython",
+        "meaning": "The version of Python made for the micro:bit.",
+        "example": "",
+        "letter": "M"
+      },
+      {
+        "term": "operating system",
+        "meaning": "The systems software that manages a device's hardware and software.",
+        "example": "",
+        "letter": "O"
+      },
+      {
+        "term": "output",
+        "meaning": "A visible or audible result, such as the display or the speaker.",
+        "example": "",
+        "letter": "O"
+      },
+      {
+        "term": "physical computing device",
+        "meaning": "A small microprocessor programmed with block or text-based languages.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "prototype",
+        "meaning": "A first version of a product, built to test an idea.",
+        "example": "",
+        "letter": "P"
+      },
+      {
+        "term": "selection",
+        "meaning": "A construct with more than one path; a condition is tested to decide which path to follow.",
+        "example": "",
+        "letter": "S"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "Error you might see",
+        "What it usually means How to fix it"
+      ],
+      [
+        "NameError: name 'display' is not defined",
+        "You forgot the import line. Add from microbit import * at the top."
+      ],
+      [
+        "NameError: name 'Hello' is not defined",
+        "Text has no quotation marks. Write 'Hello' with quotes."
+      ],
+      [
+        "NameError: name 'Sleep' is not defined",
+        "Wrong capital letter. Use lower-case sleep(1000)."
+      ],
+      [
+        "AttributeError: ... 'happy'",
+        "Image name in small letters. Use capitals, e.g. Image.HAPPY."
+      ],
+      [
+        "SyntaxError (near if or while)",
+        "Missing colon at the end. Add : to the end of the line."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "What does decomposition mean? (a) Making a program faster (b) Breaking a big problem into smaller parts (c) Deleting a program (d) Adding two numbers",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Which line must appear at the top of every micro:bit program? (a) import microbit (b) from microbit import * (c) start microbit (d) microbit.begin()",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "A sensor is best described as: (a) A part that gathers data from its surroundings (b) A screen that shows pictures (c) A loudspeaker (d) A battery",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Which command scrolls text across the display? (a) display.show() (b) display.scroll() (c) display.text() (d) scroll.display()",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "What does sleep(1000) do? (a) Turns off the micro:bit (b) Waits 1000 seconds (c) Pauses the program for 1 second (d) Repeats 1000 times",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Which of these is an input? (a) The LED display (b) The speaker (c) Button A (d) The scroll command",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "What data type is the temperature reading 27? (a) String (b) Integer (c) Image (d) Gesture",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo08",
+      "difficulty": "Round 2",
+      "prompt": "What data type is 'Maya'? (a) Integer (b) Gesture (c) String (d) Boolean",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo09",
+      "difficulty": "Round 3",
+      "prompt": "The operator >= means: (a) greater than (b) less than or equal to (c) greater than or equal to (d) not equal to",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo10",
+      "difficulty": "Round 3",
+      "prompt": "A simulator is: (a) A real micro:bit (b) Software that behaves like the real device so you can test safely (c) A type of sensor (d) A battery pack",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo01",
+      "difficulty": "Round 3",
+      "prompt": "Flashing a program means: (a) Making the LEDs blink (b) Downloading your program onto the physical micro:bit (c) Deleting the code (d) Causing an error",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "Which of these is systems software? (a) A web browser (b) The operating system (c) A word processor (d) A MicroPython program",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Look back at what accelerometer and algorithm mean in this unit, then answer in your own words.",
+      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Copy each program and fill in the blanks (shown as ____) so it does what the task describes.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "D1 — Show a heart when button A is pressed",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "display.show(____)",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "context": "Community",
+      "prompt": "D2 — Scroll your name, then show a duck",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "context": "Travel",
+      "prompt": "display.____('Nora')",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "context": "Health",
+      "prompt": "display.show(Image.____)",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "hint": "Work out which idea this is about — accelerometer, algorithm, algorithm tracing — then explain your reasoning step by step.",
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "In your own words, what is decomposition and why is it useful when planning a program?",
+      "keyIdeas": [
+        "accelerometer",
+        "algorithm",
+        "algorithm tracing"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Name three sensors on the micro:bit and say what each one detects.",
+      "keyIdeas": [
+        "algorithm",
+        "algorithm tracing",
+        "applications software"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "What is the difference between an input and an output? Give one micro:bit example of each.",
+      "keyIdeas": [
+        "algorithm tracing",
+        "applications software",
+        "automate"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "What does the while True loop do, and why do button programs need it?",
+      "keyIdeas": [
+        "applications software",
+        "automate",
+        "comparison operator"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "Explain the difference between a string and an integer, with one example of each.",
+      "keyIdeas": [
+        "automate",
+        "comparison operator",
+        "computing device"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo06",
+      "difficulty": "Challenge",
+      "responseMode": "text",
+      "prompt": "List the five stages of a project plan in order.",
+      "keyIdeas": [
+        "comparison operator",
+        "computing device",
+        "debug / debugging"
+      ],
+      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+    }
+  ],
+  "project": {
+    "title": "Unit 2 Project: Decomposing Problems: Creating a Smart Solution",
+    "brief": "Bring together everything from Decomposing Problems: Creating a Smart Solution into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your decomposing problems: creating a smart solution project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "My project shows that I understand smart devices and sensors.",
+      "My project shows that I understand hardware, software and simulators.",
+      "My project shows that I understand meet the micro:bit.",
+      "My project shows that I understand decomposition — breaking the problem down.",
+      "My project shows that I understand your first micropython program."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “accelerometer” mean in computing?",
+        "options": [
+          "A sensor that detects movement, tilt and gestures such as a shake.",
+          "A sequence of steps or instructions to solve a problem.",
+          "Following the flow of a flowchart with a specific input to predict the output.",
+          "Software for general or specific tasks, such as a browser or word processor."
+        ],
+        "answer": "A sensor that detects movement, tilt and gestures such as a shake.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Accelerometer means a sensor that detects movement, tilt and gestures such as a shake.."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “algorithm” mean in computing?",
+        "options": [
+          "A sequence of steps or instructions to solve a problem.",
+          "Following the flow of a flowchart with a specific input to predict the output.",
+          "Software for general or specific tasks, such as a browser or word processor.",
+          "To let sensors and a program run a device with little or no human interaction."
+        ],
+        "answer": "A sequence of steps or instructions to solve a problem.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Accelerometer means a sensor that detects movement, tilt and gestures such as a shake."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “algorithm tracing” mean in computing?",
+        "options": [
+          "Following the flow of a flowchart with a specific input to predict the output.",
+          "Software for general or specific tasks, such as a browser or word processor.",
+          "To let sensors and a program run a device with little or no human interaction.",
+          "A symbol used to compare values, such as >, <, >=, <=, ==, !=."
+        ],
+        "answer": "Following the flow of a flowchart with a specific input to predict the output.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Algorithm means a sequence of steps or instructions to solve a problem."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “applications software” mean in computing?",
+        "options": [
+          "Software for general or specific tasks, such as a browser or word processor.",
+          "To let sensors and a program run a device with little or no human interaction.",
+          "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+          "Any device that follows the input, process, output model."
+        ],
+        "answer": "Software for general or specific tasks, such as a browser or word processor.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Algorithm tracing means following the flow of a flowchart with a specific input to predict the output."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “automate” mean in computing?",
+        "options": [
+          "To let sensors and a program run a device with little or no human interaction.",
+          "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+          "Any device that follows the input, process, output model.",
+          "The process of finding and removing errors from a program."
+        ],
+        "answer": "To let sensors and a program run a device with little or no human interaction.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Applications software means software for general or specific tasks, such as a browser or word processor."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “comparison operator” mean in computing?",
+        "options": [
+          "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+          "Any device that follows the input, process, output model.",
+          "The process of finding and removing errors from a program.",
+          "Breaking a problem down into smaller parts."
+        ],
+        "answer": "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Automate means to let sensors and a program run a device with little or no human interaction."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Any device that follows the input, process, output model.?",
+        "options": [
+          "computing device",
+          "debug / debugging",
+          "decompose / decomposition",
+          "execute"
+        ],
+        "answer": "computing device",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Comparison operator means a symbol used to compare values, such as >, <, >=, <=, ==, !=."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: The process of finding and removing errors from a program.?",
+        "options": [
+          "debug / debugging",
+          "decompose / decomposition",
+          "execute",
+          "flashing the program"
+        ],
+        "answer": "debug / debugging",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Computing device means any device that follows the input, process, output model."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo09",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Breaking a problem down into smaller parts.?",
+        "options": [
+          "decompose / decomposition",
+          "execute",
+          "flashing the program",
+          "flowchart"
+        ],
+        "answer": "decompose / decomposition",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Debug / debugging means the process of finding and removing errors from a program."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo10",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Another word for running a program.?",
+        "options": [
+          "execute",
+          "flashing the program",
+          "flowchart",
+          "gesture"
+        ],
+        "answer": "execute",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Decompose / decomposition means breaking a problem down into smaller parts."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Downloading a MicroPython program onto the physical micro:bit to run it.?",
+        "options": [
+          "flashing the program",
+          "flowchart",
+          "gesture",
+          "hardware"
+        ],
+        "answer": "flashing the program",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Execute means another word for running a program."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A diagram showing the sequence of actions and decisions in a program.?",
+        "options": [
+          "flowchart",
+          "gesture",
+          "hardware",
+          "input"
+        ],
+        "answer": "flowchart",
+        "hint": "Use the Unit 2 Computing Words reference.",
+        "explanation": "Flashing the program means downloading a MicroPython program onto the physical micro:bit to run it."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u2-game-1",
+        "icon": "?",
+        "skill": "accelerometer",
+        "title": "Quick Match: accelerometer",
+        "description": "Practise accelerometer through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “accelerometer” mean in computing?",
+            "choices": [
+              "A sensor that detects movement, tilt and gestures such as a shake.",
+              "A sequence of steps or instructions to solve a problem.",
+              "Following the flow of a flowchart with a specific input to predict the output.",
+              "Software for general or specific tasks, such as a browser or word processor."
+            ],
+            "answer": "A sensor that detects movement, tilt and gestures such as a shake.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Accelerometer means a sensor that detects movement, tilt and gestures such as a shake.."
+          },
+          {
+            "prompt": "What does “applications software” mean in computing?",
+            "choices": [
+              "Software for general or specific tasks, such as a browser or word processor.",
+              "To let sensors and a program run a device with little or no human interaction.",
+              "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+              "Any device that follows the input, process, output model."
+            ],
+            "answer": "Software for general or specific tasks, such as a browser or word processor.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Algorithm tracing means following the flow of a flowchart with a specific input to predict the output."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Any device that follows the input, process, output model.?",
+            "choices": [
+              "computing device",
+              "debug / debugging",
+              "decompose / decomposition",
+              "execute"
+            ],
+            "answer": "computing device",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Comparison operator means a symbol used to compare values, such as >, <, >=, <=, ==, !=."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Another word for running a program.?",
+            "choices": [
+              "execute",
+              "flashing the program",
+              "flowchart",
+              "gesture"
+            ],
+            "answer": "execute",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Decompose / decomposition means breaking a problem down into smaller parts."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-2",
+        "icon": "★",
+        "skill": "algorithm",
+        "title": "Concept Quest: algorithm",
+        "description": "Practise algorithm through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A sequence of steps or instructions to solve a problem.",
+              "Following the flow of a flowchart with a specific input to predict the output.",
+              "Software for general or specific tasks, such as a browser or word processor.",
+              "To let sensors and a program run a device with little or no human interaction."
+            ],
+            "answer": "A sequence of steps or instructions to solve a problem.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Accelerometer means a sensor that detects movement, tilt and gestures such as a shake."
+          },
+          {
+            "prompt": "What does “automate” mean in computing?",
+            "choices": [
+              "To let sensors and a program run a device with little or no human interaction.",
+              "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+              "Any device that follows the input, process, output model.",
+              "The process of finding and removing errors from a program."
+            ],
+            "answer": "To let sensors and a program run a device with little or no human interaction.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Applications software means software for general or specific tasks, such as a browser or word processor."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The process of finding and removing errors from a program.?",
+            "choices": [
+              "debug / debugging",
+              "decompose / decomposition",
+              "execute",
+              "flashing the program"
+            ],
+            "answer": "debug / debugging",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Computing device means any device that follows the input, process, output model."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Downloading a MicroPython program onto the physical micro:bit to run it.?",
+            "choices": [
+              "flashing the program",
+              "flowchart",
+              "gesture",
+              "hardware"
+            ],
+            "answer": "flashing the program",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Execute means another word for running a program."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-3",
+        "icon": "◫",
+        "skill": "algorithm tracing",
+        "title": "Debug Detective: algorithm tracing",
+        "description": "Practise algorithm tracing through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “algorithm tracing” mean in computing?",
+            "choices": [
+              "Following the flow of a flowchart with a specific input to predict the output.",
+              "Software for general or specific tasks, such as a browser or word processor.",
+              "To let sensors and a program run a device with little or no human interaction.",
+              "A symbol used to compare values, such as >, <, >=, <=, ==, !=."
+            ],
+            "answer": "Following the flow of a flowchart with a specific input to predict the output.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Algorithm means a sequence of steps or instructions to solve a problem."
+          },
+          {
+            "prompt": "What does “comparison operator” mean in computing?",
+            "choices": [
+              "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+              "Any device that follows the input, process, output model.",
+              "The process of finding and removing errors from a program.",
+              "Breaking a problem down into smaller parts."
+            ],
+            "answer": "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Automate means to let sensors and a program run a device with little or no human interaction."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Breaking a problem down into smaller parts.?",
+            "choices": [
+              "decompose / decomposition",
+              "execute",
+              "flashing the program",
+              "flowchart"
+            ],
+            "answer": "decompose / decomposition",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Debug / debugging means the process of finding and removing errors from a program."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A diagram showing the sequence of actions and decisions in a program.?",
+            "choices": [
+              "flowchart",
+              "gesture",
+              "hardware",
+              "input"
+            ],
+            "answer": "flowchart",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Flashing the program means downloading a MicroPython program onto the physical micro:bit to run it."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-4",
+        "icon": "→",
+        "skill": "applications software",
+        "title": "Algorithm Runner: applications software",
+        "description": "Practise applications software through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “applications software” mean in computing?",
+            "choices": [
+              "Software for general or specific tasks, such as a browser or word processor.",
+              "To let sensors and a program run a device with little or no human interaction.",
+              "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+              "Any device that follows the input, process, output model."
+            ],
+            "answer": "Software for general or specific tasks, such as a browser or word processor.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Algorithm tracing means following the flow of a flowchart with a specific input to predict the output."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Any device that follows the input, process, output model.?",
+            "choices": [
+              "computing device",
+              "debug / debugging",
+              "decompose / decomposition",
+              "execute"
+            ],
+            "answer": "computing device",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Comparison operator means a symbol used to compare values, such as >, <, >=, <=, ==, !=."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Another word for running a program.?",
+            "choices": [
+              "execute",
+              "flashing the program",
+              "flowchart",
+              "gesture"
+            ],
+            "answer": "execute",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Decompose / decomposition means breaking a problem down into smaller parts."
+          },
+          {
+            "prompt": "What does “accelerometer” mean in computing?",
+            "choices": [
+              "A sensor that detects movement, tilt and gestures such as a shake.",
+              "A sequence of steps or instructions to solve a problem.",
+              "Following the flow of a flowchart with a specific input to predict the output.",
+              "Software for general or specific tasks, such as a browser or word processor."
+            ],
+            "answer": "A sensor that detects movement, tilt and gestures such as a shake.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Accelerometer means a sensor that detects movement, tilt and gestures such as a shake.."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-5",
+        "icon": "Σ",
+        "skill": "automate",
+        "title": "Vocabulary Vault: automate",
+        "description": "Practise automate through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “automate” mean in computing?",
+            "choices": [
+              "To let sensors and a program run a device with little or no human interaction.",
+              "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+              "Any device that follows the input, process, output model.",
+              "The process of finding and removing errors from a program."
+            ],
+            "answer": "To let sensors and a program run a device with little or no human interaction.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Applications software means software for general or specific tasks, such as a browser or word processor."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The process of finding and removing errors from a program.?",
+            "choices": [
+              "debug / debugging",
+              "decompose / decomposition",
+              "execute",
+              "flashing the program"
+            ],
+            "answer": "debug / debugging",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Computing device means any device that follows the input, process, output model."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Downloading a MicroPython program onto the physical micro:bit to run it.?",
+            "choices": [
+              "flashing the program",
+              "flowchart",
+              "gesture",
+              "hardware"
+            ],
+            "answer": "flashing the program",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Execute means another word for running a program."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A sequence of steps or instructions to solve a problem.",
+              "Following the flow of a flowchart with a specific input to predict the output.",
+              "Software for general or specific tasks, such as a browser or word processor.",
+              "To let sensors and a program run a device with little or no human interaction."
+            ],
+            "answer": "A sequence of steps or instructions to solve a problem.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Accelerometer means a sensor that detects movement, tilt and gestures such as a shake."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-6",
+        "icon": "◇",
+        "skill": "comparison operator",
+        "title": "Challenge Cards: comparison operator",
+        "description": "Practise comparison operator through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “comparison operator” mean in computing?",
+            "choices": [
+              "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+              "Any device that follows the input, process, output model.",
+              "The process of finding and removing errors from a program.",
+              "Breaking a problem down into smaller parts."
+            ],
+            "answer": "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Automate means to let sensors and a program run a device with little or no human interaction."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Breaking a problem down into smaller parts.?",
+            "choices": [
+              "decompose / decomposition",
+              "execute",
+              "flashing the program",
+              "flowchart"
+            ],
+            "answer": "decompose / decomposition",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Debug / debugging means the process of finding and removing errors from a program."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A diagram showing the sequence of actions and decisions in a program.?",
+            "choices": [
+              "flowchart",
+              "gesture",
+              "hardware",
+              "input"
+            ],
+            "answer": "flowchart",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Flashing the program means downloading a MicroPython program onto the physical micro:bit to run it."
+          },
+          {
+            "prompt": "What does “algorithm tracing” mean in computing?",
+            "choices": [
+              "Following the flow of a flowchart with a specific input to predict the output.",
+              "Software for general or specific tasks, such as a browser or word processor.",
+              "To let sensors and a program run a device with little or no human interaction.",
+              "A symbol used to compare values, such as >, <, >=, <=, ==, !=."
+            ],
+            "answer": "Following the flow of a flowchart with a specific input to predict the output.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Algorithm means a sequence of steps or instructions to solve a problem."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-7",
+        "icon": "⚡",
+        "skill": "computing device",
+        "title": "Think Fast: computing device",
+        "description": "Practise computing device through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Any device that follows the input, process, output model.?",
+            "choices": [
+              "computing device",
+              "debug / debugging",
+              "decompose / decomposition",
+              "execute"
+            ],
+            "answer": "computing device",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Comparison operator means a symbol used to compare values, such as >, <, >=, <=, ==, !=."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Another word for running a program.?",
+            "choices": [
+              "execute",
+              "flashing the program",
+              "flowchart",
+              "gesture"
+            ],
+            "answer": "execute",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Decompose / decomposition means breaking a problem down into smaller parts."
+          },
+          {
+            "prompt": "What does “accelerometer” mean in computing?",
+            "choices": [
+              "A sensor that detects movement, tilt and gestures such as a shake.",
+              "A sequence of steps or instructions to solve a problem.",
+              "Following the flow of a flowchart with a specific input to predict the output.",
+              "Software for general or specific tasks, such as a browser or word processor."
+            ],
+            "answer": "A sensor that detects movement, tilt and gestures such as a shake.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Accelerometer means a sensor that detects movement, tilt and gestures such as a shake.."
+          },
+          {
+            "prompt": "What does “applications software” mean in computing?",
+            "choices": [
+              "Software for general or specific tasks, such as a browser or word processor.",
+              "To let sensors and a program run a device with little or no human interaction.",
+              "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+              "Any device that follows the input, process, output model."
+            ],
+            "answer": "Software for general or specific tasks, such as a browser or word processor.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Algorithm tracing means following the flow of a flowchart with a specific input to predict the output."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-8",
+        "icon": "☁",
+        "skill": "debug / debugging",
+        "title": "Explain It: debug / debugging",
+        "description": "Practise debug / debugging through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The process of finding and removing errors from a program.?",
+            "choices": [
+              "debug / debugging",
+              "decompose / decomposition",
+              "execute",
+              "flashing the program"
+            ],
+            "answer": "debug / debugging",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Computing device means any device that follows the input, process, output model."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Downloading a MicroPython program onto the physical micro:bit to run it.?",
+            "choices": [
+              "flashing the program",
+              "flowchart",
+              "gesture",
+              "hardware"
+            ],
+            "answer": "flashing the program",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Execute means another word for running a program."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A sequence of steps or instructions to solve a problem.",
+              "Following the flow of a flowchart with a specific input to predict the output.",
+              "Software for general or specific tasks, such as a browser or word processor.",
+              "To let sensors and a program run a device with little or no human interaction."
+            ],
+            "answer": "A sequence of steps or instructions to solve a problem.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Accelerometer means a sensor that detects movement, tilt and gestures such as a shake."
+          },
+          {
+            "prompt": "What does “automate” mean in computing?",
+            "choices": [
+              "To let sensors and a program run a device with little or no human interaction.",
+              "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+              "Any device that follows the input, process, output model.",
+              "The process of finding and removing errors from a program."
+            ],
+            "answer": "To let sensors and a program run a device with little or no human interaction.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Applications software means software for general or specific tasks, such as a browser or word processor."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-9",
+        "icon": "⌂",
+        "skill": "decompose / decomposition",
+        "title": "Real-Life Round: decompose / decomposition",
+        "description": "Practise decompose / decomposition through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Breaking a problem down into smaller parts.?",
+            "choices": [
+              "decompose / decomposition",
+              "execute",
+              "flashing the program",
+              "flowchart"
+            ],
+            "answer": "decompose / decomposition",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Debug / debugging means the process of finding and removing errors from a program."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A diagram showing the sequence of actions and decisions in a program.?",
+            "choices": [
+              "flowchart",
+              "gesture",
+              "hardware",
+              "input"
+            ],
+            "answer": "flowchart",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Flashing the program means downloading a MicroPython program onto the physical micro:bit to run it."
+          },
+          {
+            "prompt": "What does “algorithm tracing” mean in computing?",
+            "choices": [
+              "Following the flow of a flowchart with a specific input to predict the output.",
+              "Software for general or specific tasks, such as a browser or word processor.",
+              "To let sensors and a program run a device with little or no human interaction.",
+              "A symbol used to compare values, such as >, <, >=, <=, ==, !=."
+            ],
+            "answer": "Following the flow of a flowchart with a specific input to predict the output.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Algorithm means a sequence of steps or instructions to solve a problem."
+          },
+          {
+            "prompt": "What does “comparison operator” mean in computing?",
+            "choices": [
+              "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+              "Any device that follows the input, process, output model.",
+              "The process of finding and removing errors from a program.",
+              "Breaking a problem down into smaller parts."
+            ],
+            "answer": "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Automate means to let sensors and a program run a device with little or no human interaction."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-10",
+        "icon": "!",
+        "skill": "execute",
+        "title": "Spot the Bug: execute",
+        "description": "Practise execute through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Another word for running a program.?",
+            "choices": [
+              "execute",
+              "flashing the program",
+              "flowchart",
+              "gesture"
+            ],
+            "answer": "execute",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Decompose / decomposition means breaking a problem down into smaller parts."
+          },
+          {
+            "prompt": "What does “accelerometer” mean in computing?",
+            "choices": [
+              "A sensor that detects movement, tilt and gestures such as a shake.",
+              "A sequence of steps or instructions to solve a problem.",
+              "Following the flow of a flowchart with a specific input to predict the output.",
+              "Software for general or specific tasks, such as a browser or word processor."
+            ],
+            "answer": "A sensor that detects movement, tilt and gestures such as a shake.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Accelerometer means a sensor that detects movement, tilt and gestures such as a shake.."
+          },
+          {
+            "prompt": "What does “applications software” mean in computing?",
+            "choices": [
+              "Software for general or specific tasks, such as a browser or word processor.",
+              "To let sensors and a program run a device with little or no human interaction.",
+              "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+              "Any device that follows the input, process, output model."
+            ],
+            "answer": "Software for general or specific tasks, such as a browser or word processor.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Algorithm tracing means following the flow of a flowchart with a specific input to predict the output."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Any device that follows the input, process, output model.?",
+            "choices": [
+              "computing device",
+              "debug / debugging",
+              "decompose / decomposition",
+              "execute"
+            ],
+            "answer": "computing device",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Comparison operator means a symbol used to compare values, such as >, <, >=, <=, ==, !=."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-11",
+        "icon": "≡",
+        "skill": "flashing the program",
+        "title": "Mastery Mix: flashing the program",
+        "description": "Practise flashing the program through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Downloading a MicroPython program onto the physical micro:bit to run it.?",
+            "choices": [
+              "flashing the program",
+              "flowchart",
+              "gesture",
+              "hardware"
+            ],
+            "answer": "flashing the program",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Execute means another word for running a program."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A sequence of steps or instructions to solve a problem.",
+              "Following the flow of a flowchart with a specific input to predict the output.",
+              "Software for general or specific tasks, such as a browser or word processor.",
+              "To let sensors and a program run a device with little or no human interaction."
+            ],
+            "answer": "A sequence of steps or instructions to solve a problem.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Accelerometer means a sensor that detects movement, tilt and gestures such as a shake."
+          },
+          {
+            "prompt": "What does “automate” mean in computing?",
+            "choices": [
+              "To let sensors and a program run a device with little or no human interaction.",
+              "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+              "Any device that follows the input, process, output model.",
+              "The process of finding and removing errors from a program."
+            ],
+            "answer": "To let sensors and a program run a device with little or no human interaction.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Applications software means software for general or specific tasks, such as a browser or word processor."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The process of finding and removing errors from a program.?",
+            "choices": [
+              "debug / debugging",
+              "decompose / decomposition",
+              "execute",
+              "flashing the program"
+            ],
+            "answer": "debug / debugging",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Computing device means any device that follows the input, process, output model."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-12",
+        "icon": "T",
+        "skill": "flowchart",
+        "title": "Unit Champion: flowchart",
+        "description": "Practise flowchart through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A diagram showing the sequence of actions and decisions in a program.?",
+            "choices": [
+              "flowchart",
+              "gesture",
+              "hardware",
+              "input"
+            ],
+            "answer": "flowchart",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Flashing the program means downloading a MicroPython program onto the physical micro:bit to run it."
+          },
+          {
+            "prompt": "What does “algorithm tracing” mean in computing?",
+            "choices": [
+              "Following the flow of a flowchart with a specific input to predict the output.",
+              "Software for general or specific tasks, such as a browser or word processor.",
+              "To let sensors and a program run a device with little or no human interaction.",
+              "A symbol used to compare values, such as >, <, >=, <=, ==, !=."
+            ],
+            "answer": "Following the flow of a flowchart with a specific input to predict the output.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Algorithm means a sequence of steps or instructions to solve a problem."
+          },
+          {
+            "prompt": "What does “comparison operator” mean in computing?",
+            "choices": [
+              "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+              "Any device that follows the input, process, output model.",
+              "The process of finding and removing errors from a program.",
+              "Breaking a problem down into smaller parts."
+            ],
+            "answer": "A symbol used to compare values, such as >, <, >=, <=, ==, !=.",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Automate means to let sensors and a program run a device with little or no human interaction."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Breaking a problem down into smaller parts.?",
+            "choices": [
+              "decompose / decomposition",
+              "execute",
+              "flashing the program",
+              "flowchart"
+            ],
+            "answer": "decompose / decomposition",
+            "clue": "Use the Unit 2 Computing Words reference.",
+            "explanation": "Debug / debugging means the process of finding and removing errors from a program."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can explain how a simulator models a real-life system, and why simulators are useful.",
+    "I can describe the difference between applications software and systems software.",
+    "I can identify the difference between a string and an integer.",
+    "I can write a MicroPython program for the micro:bit that has an input and an output.",
+    "I can create and correct programs that use more than one input and more than one output.",
+    "I can use the micro:bit sensors — buttons, light, temperature, touch, accelerometer and sound.",
+    "I can use a test plan to check that your solution works as expected.",
+    "I can evaluate a flowchart and a program, and explain why planning matters.",
+    "I can create a simple algorithm using flowchart symbols (start/stop, input/output, process, decision).",
+    "I can recognise the programming ideas of sequence (one step after another) and selection (making a choice)."
+  ]
+}

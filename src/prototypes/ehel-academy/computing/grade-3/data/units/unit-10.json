@@ -1,0 +1,1869 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.588Z",
+  "stage": {
+    "id": "s03",
+    "label": "Stage 3"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t03",
+    "label": "Term 3"
+  },
+  "unit": {
+    "unitId": "comp-g03-u10",
+    "unitNo": 10,
+    "unitTitle": "Be a Game Developer",
+    "unitOverview": "The first big idea is decomposition — a long word for a simple habit. When a job is too big to do all at once, we split it into smaller pieces called sub-tasks. Making a whole game is a big job, but “what the cat does when the game starts” is a small job, and “what the mouse does when you click it” is another. Each small job is easy to plan and to fix on its own.\n\nThe second big idea is that programmers learn from their mistakes. A mistake in a program is called an error or a bug, and bugs are completely normal — even the best programmers make them all day long. What matters is that we do not panic; we find the bug, fix it, and remember it. The third big idea, testing and debugging, is how we do that. To test means to run a program and check it does the right thing; to debug means to find the wrong part and fix it.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 3
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-3-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 3",
+    "sourceArchive": "Year 3-20260801T055744Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 3/Unit 10/Year 3 - Unit 10 Teacher Guide.docx",
+      "Year 3/Unit 10/Year 3 - Unit 10 Activity Sheet.docx",
+      "Year 3/Unit 10/Year 3 - Unit 10 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 371,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 3 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Break a big task into smaller sub-tasks (decomposition).",
+    "Understand that each sub-task can have its own algorithm and its own code, and can be planned and fixed on its own.",
+    "Understand that mistakes (errors or bugs) are a normal part of programming, and that we learn from them.",
+    "Test a program by running it and checking it against the plan.",
+    "Debug a program: find the part that is wrong, change it, and test again.",
+    "In Scratch, build event-driven code for more than one sprite (green flag, when clicked, when a key is pressed) using movement, costume and sound blocks.",
+    "Plan, build, test and debug a simple two-sprite chase game."
+  ],
+  "toolkit": [
+    {
+      "name": "Scratch",
+      "url": "scratch.mit.edu",
+      "steps": [
+        "Go to scratch.mit.edu and click Create.",
+        "Drag blocks from the palette on the left into the code area.",
+        "Make variables in the orange Variables section.",
+        "Click the green flag to run and the red circle to stop."
+      ],
+      "note": "Runs in a web browser. Free, with nothing to download."
+    }
+  ],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-breaking-a-big-task-into-sub-tasks",
+      "title": "Breaking a big task into sub-tasks",
+      "explanation": "Some jobs are too big to think about all at once. We can break a big job into smaller jobs called sub-tasks. Each sub-task is easier to plan, easier to do, and easier to fix. Breaking a big job into smaller jobs is called decomposition.\n\nGetting ready for school is a big job, but we do not do it all in one go. We break it into smaller jobs: pack your bag, put on clean clothes, find your shoes, walk to school.",
+      "example": "Each one is a sub-task, and doing them all finishes the big job. Start with something you know.",
+      "checkYourself": "Can you name sensible sub-tasks — smaller than the whole job, but bigger than a single tiny step? Do not worry about perfect wording; the thinking is what matters."
+    },
+    {
+      "id": "concept-2-sub-tasks-in-a-game-events-start-the-code",
+      "title": "Sub-tasks in a game: events start the code",
+      "explanation": "In a Scratch game, each sub-task is started by an event — something that happens. The three events we use are: the green flag is clicked (the game starts), a sprite is clicked on, and a key is pressed. Each event runs its own little algorithm. So one sprite can have more than one sub-task, each with a different starting event.\n\nThink about a light switch. Flicking it up turns the light on; flicking it down turns it off.",
+      "example": "Same light, two events, two different jobs. Our cat is the same: the green flag makes it say hello, but clicking it makes it move.",
+      "checkYourself": "Can you see that one sprite can have more than one sub-task? In your game plan, are the ideas simple enough to actually build (move, say, costume, sound)?"
+    },
+    {
+      "id": "concept-3-mistakes-errors-and-being-a-bug-detective",
+      "title": "Mistakes, errors and being a bug detective",
+      "explanation": "Programs often have mistakes. A mistake in a program is called an error or a bug. Bugs are normal — every programmer makes them. We do not feel bad about a bug; we become a detective, find it, and fix it. Finding a bug even helps us, because we learn something and remember it next time.\n\nA computer does exactly what your blocks say — not what you meant, but what you said. If a block is wrong, the computer still does it and you get a surprise.",
+      "example": "That surprise is a bug. It is not your fault and not the computer being naughty — it just means one block needs fixing.",
+      "checkYourself": "Can you trace the code to test it rather than guessing? Can you point to the exact wrong block and say what it should be? Does you stay calm and curious about a bug?"
+    },
+    {
+      "id": "concept-4-build-and-test-the-cat-in-scratch",
+      "title": "Build and test the cat in Scratch",
+      "explanation": "Now we build the two-sub-task cat from Session 2 on the computer, and we learn to test it — to run it and check it does what we planned. If it does not, we debug it.\n\nA new project already has the cat sprite, so we do not need to add one. Open Scratch at scratch.mit.edu and click Create on the projector.",
+      "example": "Remind you of the screen: the coloured blocks on the left, the script area in the middle where we join them, and the stage on the top right where it happens. Choose a simple backdrop like Blue Sky.",
+      "checkYourself": "Can you start each sub-task with the correct hat block, click to test, and say whether it matched the plan? Can you find a block by its colour group and join it to the right stack?"
+    },
+    {
+      "id": "concept-5-the-chase-game-controls-a-second-sprite-and-debugging",
+      "title": "The chase game: controls, a second sprite, and debugging",
+      "explanation": "We turn our project into a real chase game. We add controls so the player can move the cat with the arrow keys, and we add a second sprite — a mouse — that runs away when you click it. Then we test and debug the whole thing.\n\nSet the scene: “At Ehel Academy, a cheeky mouse has grabbed a date from the snack tray! Help Leila's cat chase the mouse.” Start a new project.",
+      "example": "The cat is already there; add the Mouse1 sprite with the Add Sprite button. Choose the Forest backdrop (or Blue Sky).",
+      "checkYourself": "Can you test by running, notice when something does not match the plan, and try a fix? Can you build several small sub-tasks and keep you separate, each with the correct hat block?"
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "Session 2 — Sub-tasks in a game: events start the code — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 2 — Sub-tasks in a game: events start the code.",
+      "lines": [
+        "when green flag clicked",
+        "say [Hello!] for (2) seconds",
+        "start sound [Meow]"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-2",
+      "title": "Sub-task 2 runs when you click the cat:",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "when this sprite clicked",
+        "move (10) steps"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-3",
+      "title": "next costume",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "glide (1) secs to (random position)",
+        "think [Hmm...] for (2) seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-4",
+      "title": "Session 3 — Mistakes, errors and being a bug detective — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 3 — Mistakes, errors and being a bug detective.",
+      "lines": [
+        "when this sprite clicked",
+        "change size by (10)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-5",
+      "title": "Session 3 — Mistakes, errors and being a bug detective — listing 2",
+      "language": "Scratch blocks",
+      "intro": "From Session 3 — Mistakes, errors and being a bug detective.",
+      "lines": [
+        "when this sprite clicked",
+        "change [color] effect by (0)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-6",
+      "title": "Session 5 — The chase game: controls, a second sprite, and debugging — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 5 — The chase game: controls, a second sprite, and debugging.",
+      "lines": [
+        "when [right arrow] key pressed",
+        "change x by (10)",
+        "when [left arrow] key pressed",
+        "change x by (-10)",
+        "when [up arrow] key pressed",
+        "change y by (10)",
+        "when [down arrow] key pressed",
+        "change y by (-10)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-7",
+      "title": "Next, give both sprites a start sub-task so the game begins tidily each time. On the cat:",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "when green flag clicked",
+        "go to x: (-150) y: (-100)",
+        "say [Ready? Here I come!] for (2) seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-8",
+      "title": "Click the Mouse1 sprite in the sprite list, then add its two sub-tasks. Start:",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "when green flag clicked",
+        "go to x: (150) y: (100)",
+        "say [You can't catch me!] for (2) seconds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Break the Big Task into Sub-tasks",
+      "context": "work through the steps below and see what happens. This is breaking a big task into sub-tasks in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "A big job is easier when we split it into smaller jobs (sub-tasks). Leo is getting ready for school. Write three sub-tasks that are part of this big job.",
+      "answer": "Big task: Get ready for school. Sub-task 1: ______________________________________________ Sub-task 2: ______________________________________________ Sub-task 3: ______________________________________________",
+      "modelType": "model-1",
+      "hint": "Start here: Big task: Get ready for school.",
+      "explanation": "Breaking a big task into sub-tasks: Some jobs are too big to think about all at once. We can break a big job into smaller jobs called sub-tasks. Each sub-task is easier to plan, easier to do, and easier to fix. Breaking a big job into smaller jobs is called decomposition."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Find the Sub-tasks in a Game",
+      "context": "work through the steps below and see what happens. This is sub-tasks in a game: events start the code in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Leila is making a chase game. In her game: the cat greets you when the game starts, the cat moves when you press an arrow key, and the mouse runs away when you click it. Draw a line to match each sub-task to the event that starts it.",
+      "answer": "Match: Sub-task → Event that starts it Match: The cat greets you → when an arrow key is pressed Match: The cat moves → when this sprite is clicked Match: The mouse runs away → when the green flag is clicked",
+      "modelType": "model-2",
+      "hint": "Start here: Match: Sub-task → Event that starts it",
+      "explanation": "Sub-tasks in a game: events start the code: In a Scratch game, each sub-task is started by an event — something that happens. The three events we use are: the green flag is clicked (the game starts), a sprite is clicked on, and a key is pressed. Each event runs its own little algorithm. So one sprite can have more than one sub-task, each…"
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Match the Words",
+      "context": "work through the steps below and see what happens. This is mistakes, errors and being a bug detective in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Draw a line from each word to what it means.",
+      "answer": "Match: sub-task → to find and fix a mistake Match: bug → a small task that is part of a bigger task Match: test → a mistake in a program Match: debug → to run a program and check it",
+      "modelType": "model-3",
+      "hint": "Start here: Match: sub-task → to find and fix a mistake",
+      "explanation": "Mistakes, errors and being a bug detective: Programs often have mistakes. A mistake in a program is called an error or a bug. Bugs are normal — every programmer makes them. We do not feel bad about a bug; we become a detective, find it, and fix it. Finding a bug even helps us, because we learn something and remember it next time."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Plan Your Chase Game",
+      "context": "work through the steps below and see what happens. This is build and test the cat in scratch in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "You are going to plan a chase game at Ehel Academy. Fill in your plan.",
+      "answer": "My backdrop will be: ____________________ (for example: Blue Sky, Forest) My two sprites will be: ____________________ and ____________________ When the game starts, sprite 1 will: ______________________________ When the game starts, sprite 2 will: ______________________________",
+      "modelType": "model-4",
+      "hint": "Start here: My backdrop will be: ____________________ (for example: Blue Sky, Forest)",
+      "explanation": "Build and test the cat in Scratch: Now we build the two-sub-task cat from Session 2 on the computer, and we learn to test it — to run it and check it does what we planned. If it does not, we debug it."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Add the Controls",
+      "context": "work through the steps below and see what happens. This is the chase game: controls, a second sprite, and debugging in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Controls let the player move a sprite with the arrow keys. Two blocks are missing. Fill in the missing block so the cat moves the right way. Remember the minus sign for left and down!",
+      "answer": "when [right arrow] key pressed change x by (10) when [left arrow] key pressed change x by (_____) when [up arrow] key pressed",
+      "modelType": "model-5",
+      "hint": "Start here: when [right arrow] key pressed",
+      "explanation": "The chase game: controls, a second sprite, and debugging: We turn our project into a real chase game. We add controls so the player can move the cat with the arrow keys, and we add a second sprite — a mouse — that runs away when you click it. Then we test and debug the whole thing."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Spot the Bug and Fix It",
+      "context": "work through the steps below and see what happens. This is breaking a big task into sub-tasks in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "A bug is a mistake in the code. This rule should make the cat move right when you press the right arrow. But when you test it, the cat moves the wrong way! Trace it, then fix it.",
+      "answer": "when [right arrow] key pressed change x by (-10) Which way does the cat move now? ______________________ Cross out the bug. Then write what the block should say It should say: change x by ( _____ )",
+      "modelType": "model-6",
+      "hint": "Start here: when [right arrow] key pressed",
+      "explanation": "Breaking a big task into sub-tasks: Some jobs are too big to think about all at once. We can break a big job into smaller jobs called sub-tasks. Each sub-task is easier to plan, easier to do, and easier to fix. Breaking a big job into smaller jobs is called decomposition."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Breaking a big task into sub-tasks",
+      "modelType": "concept-model-1",
+      "purpose": "Some jobs are too big to think about all at once. We can break a big job into smaller jobs called sub-tasks. Each sub-task is easier to plan, easier to do, and easier to fix. Breaking a big job into smaller jobs is…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Sub-tasks in a game: events start the code",
+      "modelType": "concept-model-2",
+      "purpose": "In a Scratch game, each sub-task is started by an event — something that happens. The three events we use are: the green flag is clicked (the game starts), a sprite is clicked on, and a key is pressed. Each event runs…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Mistakes, errors and being a bug detective",
+      "modelType": "concept-model-3",
+      "purpose": "Programs often have mistakes. A mistake in a program is called an error or a bug. Bugs are normal — every programmer makes them. We do not feel bad about a bug; we become a detective, find it, and fix it. Finding a bug…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Build and test the cat in Scratch",
+      "modelType": "concept-model-4",
+      "purpose": "Now we build the two-sub-task cat from Session 2 on the computer, and we learn to test it — to run it and check it does what we planned. If it does not, we debug it.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "The chase game: controls, a second sprite, and debugging",
+      "modelType": "concept-model-5",
+      "purpose": "We turn our project into a real chase game. We add controls so the player can move the cat with the arrow keys, and we add a second sprite — a mouse — that runs away when you click it. Then we test and debug the whole…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with breaking a big task into sub-tasks",
+      "example": "Each one is a sub-task, and doing them all finishes the big job. Start with something you know.",
+      "steps": [
+        "Read the concept card for breaking a big task into sub-tasks and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with sub-tasks in a game: events start the code",
+      "example": "Same light, two events, two different jobs. Our cat is the same: the green flag makes it say hello, but clicking it makes it move.",
+      "steps": [
+        "Read the concept card for sub-tasks in a game: events start the code and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with mistakes, errors and being a bug detective",
+      "example": "That surprise is a bug. It is not your fault and not the computer being naughty — it just means one block needs fixing.",
+      "steps": [
+        "Read the concept card for mistakes, errors and being a bug detective and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with build and test the cat in scratch",
+      "example": "Remind you of the screen: the coloured blocks on the left, the script area in the middle where we join them, and the stage on the top right where it happens. Choose a simple backdrop like Blue Sky.",
+      "steps": [
+        "Read the concept card for build and test the cat in scratch and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with the chase game: controls, a second sprite, and debugging",
+      "example": "The cat is already there; add the Mouse1 sprite with the Add Sprite button. Choose the Forest backdrop (or Blue Sky).",
+      "steps": [
+        "Read the concept card for the chase game: controls, a second sprite, and debugging and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Breaking a big task into sub-tasks",
+      "prompt": "What is a sub-task?",
+      "solution": "A sub-task is a small task that is part of a bigger task. (Accept: a small job that is part of a big job.)"
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Sub-tasks in a game: events start the code",
+      "prompt": "A game has a bird that flaps when you click it, and a cat that moves when you press an arrow key. Write the two sub-tasks for this game.",
+      "solution": "Sub-task 1: when the bird is clicked, it flaps (for example, next costume). Sub-task 2: when an arrow key is pressed, the cat moves. Look for two separate sub-tasks, each named with its event."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Mistakes, errors and being a bug detective",
+      "prompt": "We want the sprite to get smaller when clicked, but this makes it bigger! What is the bug?",
+      "solution": "The bug is the sign of the number. change size by (10) makes the sprite bigger; it should be change size by (-10) (with a minus sign) to make it smaller."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Build and test the cat in Scratch",
+      "prompt": "This mouse should run away when you click it, but it runs away when the game starts. Which block is wrong, and what should it be?",
+      "solution": "The wrong block is the hat block when green flag clicked. It should be when this sprite clicked."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Breaking a big task into sub-tasks",
+      "prompt": "Explain in your own words: Breaking a big task into sub-tasks.",
+      "solution": "Some jobs are too big to think about all at once. We can break a big job into smaller jobs called sub-tasks. Each sub-task is easier to plan, easier to do, and easier to fix. Breaking a big job into smaller jobs is called decomposition.\n\nGetting ready for school is a big job, but we do not do it all in one go. We break it into smaller jobs: pack your bag, put on clean clothes, find your shoes, walk to school.\n\nFor example: Each one is a sub-task, and doing them all finishes the big job. Start with something you know."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Sub-tasks in a game: events start the code",
+      "prompt": "Explain in your own words: Sub-tasks in a game: events start the code.",
+      "solution": "In a Scratch game, each sub-task is started by an event — something that happens. The three events we use are: the green flag is clicked (the game starts), a sprite is clicked on, and a key is pressed. Each event runs its own little algorithm. So one sprite can have more than one sub-task, each with a different starting event.\n\nThink about a light switch. Flicking it up turns the light on; flicking it down turns it off.\n\nFor example: Same light, two events, two different jobs. Our cat is the same: the green flag makes it say hello, but clicking it makes it move."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "What is a sub-task?",
+      "answer": "A sub-task is a small task that is part of a bigger task. (Accept: a small job that is part of a big job.)",
+      "hint": "Look back at what sub-task and decomposition mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "A game has a bird that flaps when you click it, and a cat that moves when you press an arrow key. Write the two sub-tasks for this game.",
+      "answer": "Sub-task 1: when the bird is clicked, it flaps (for example, next costume). Sub-task 2: when an arrow key is pressed, the cat moves. Look for two separate sub-tasks, each named with its event.",
+      "hint": "Look back at what sub-task and decomposition mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "We want the sprite to get smaller when clicked, but this makes it bigger! What is the bug?",
+      "answer": "The bug is the sign of the number. change size by (10) makes the sprite bigger; it should be change size by (-10) (with a minus sign) to make it smaller.",
+      "hint": "Look back at what sub-task and decomposition mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "This mouse should run away when you click it, but it runs away when the game starts. Which block is wrong, and what should it be?",
+      "answer": "The wrong block is the hat block when green flag clicked. It should be when this sprite clicked.",
+      "hint": "Look back at what sub-task and decomposition mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "In Scratch, which block moves a sprite to the right? ([ ] change x by (-10))",
+      "answer": "change x by (10).",
+      "hint": "Look back at what sub-task and decomposition mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "Fill in the word. To find and fix the mistakes in a program is called to",
+      "answer": "debug.",
+      "hint": "Look back at what sub-task and decomposition mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Break the Big Task into Sub-tasks",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A big job is easier when we split it into smaller jobs (sub-tasks). Leo is getting ready for school. Write three sub-tasks that are part of this big job.",
+        "Big task: Get ready for school.",
+        "Sub-task 1: ______________________________________________",
+        "Sub-task 2: ______________________________________________",
+        "Sub-task 3: ______________________________________________"
+      ]
+    },
+    {
+      "title": "Find the Sub-tasks in a Game",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Leila is making a chase game. In her game: the cat greets you when the game starts, the cat moves when you press an arrow key, and the mouse runs away when you click it. Draw a line to match each sub-task to the event that starts it.",
+        "Match: Sub-task → Event that starts it",
+        "Match: The cat greets you → when an arrow key is pressed",
+        "Match: The cat moves → when this sprite is clicked",
+        "Match: The mouse runs away → when the green flag is clicked"
+      ]
+    },
+    {
+      "title": "Match the Words",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Draw a line from each word to what it means.",
+        "Match: sub-task → to find and fix a mistake",
+        "Match: bug → a small task that is part of a bigger task",
+        "Match: test → a mistake in a program",
+        "Match: debug → to run a program and check it"
+      ]
+    },
+    {
+      "title": "Plan Your Chase Game",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "You are going to plan a chase game at Ehel Academy. Fill in your plan.",
+        "My backdrop will be: ____________________ (for example: Blue Sky, Forest)",
+        "My two sprites will be: ____________________ and ____________________",
+        "When the game starts, sprite 1 will: ______________________________",
+        "When the game starts, sprite 2 will: ______________________________"
+      ]
+    },
+    {
+      "title": "Add the Controls",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Controls let the player move a sprite with the arrow keys. Two blocks are missing. Fill in the missing block so the cat moves the right way. Remember the minus sign for left and down!",
+        "when [right arrow] key pressed",
+        "change x by (10)",
+        "when [left arrow] key pressed",
+        "change x by (_____)",
+        "when [up arrow] key pressed"
+      ]
+    },
+    {
+      "title": "Spot the Bug and Fix It",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A bug is a mistake in the code. This rule should make the cat move right when you press the right arrow. But when you test it, the cat moves the wrong way! Trace it, then fix it.",
+        "when [right arrow] key pressed",
+        "change x by (-10)",
+        "Which way does the cat move now? ______________________",
+        "Cross out the bug. Then write what the block should say",
+        "It should say: change x by ( _____ )"
+      ]
+    },
+    {
+      "title": "Try it in Scratch!",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Now build a friendly cat with two sub-tasks.",
+        "Go to scratch.mit.edu and click Create. The cat sprite is already there!",
+        "Click Choose a Backdrop (bottom right) and pick Blue Sky.",
+        "Sub-task 1: build this stack so the cat greets you when the game starts",
+        "when green flag clicked",
+        "Say [Hello!] for (2) seconds."
+      ]
+    },
+    {
+      "title": "Plan the Sub-tasks",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Making a whole game is a big job, so we break it into sub-tasks first. Fill in the plan below. Keep each idea short and simple.",
+        "The Cat (you move it)",
+        "When the game starts, the cat will: ______________________________",
+        "When an arrow key is pressed, the cat will: ______________________________",
+        "The Mouse (it runs away)",
+        "When the game starts, the mouse will: ______________________________"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "First, the controls for the cat. Each arrow key is its own event, its own little sub",
+      "cause": "task. Build these four small stacks - every one is a yellow Events hat block joined to a blue Motion block:",
+      "fix": "Re-read the concept card for this idea, then change one thing at a time until the behaviour matches what you expected."
+    },
+    {
+      "symptom": "Next, give both sprites a start sub",
+      "cause": "task so the game begins tidily each time. On the cat:",
+      "fix": "Re-read the concept card for this idea, then change one thing at a time until the behaviour matches what you expected."
+    },
+    {
+      "symptom": "Click the Mouse1 sprite in the sprite list, then add its two sub",
+      "cause": "tasks. Start:",
+      "fix": "Re-read the concept card for this idea, then change one thing at a time until the behaviour matches what you expected."
+    },
+    {
+      "symptom": "Keep saying the debug routine out loud like a song",
+      "cause": "run it, find it,",
+      "fix": "it, run it again. When a child says my game is broken, do not fix it for them - ask which part does not match your plan? That one question turns a stuck child into a bug detective, which is the whole point of the unit."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Breaking a big task into sub-tasks",
+        "text": "Some jobs are too big to think about all at once."
+      },
+      {
+        "title": "Sub-tasks in a game: events start the code",
+        "text": "In a Scratch game, each sub-task is started by an event — something that happens."
+      },
+      {
+        "title": "Mistakes, errors and being a bug detective",
+        "text": "Programs often have mistakes."
+      },
+      {
+        "title": "Build and test the cat in Scratch",
+        "text": "Now we build the two-sub-task cat from Session 2 on the computer, and we learn to test it — to run it and check it does what we planned."
+      },
+      {
+        "title": "The chase game: controls, a second sprite, and debugging",
+        "text": "We turn our project into a real chase game."
+      }
+    ],
+    "terms": [
+      [
+        "sub-task",
+        "A small task that is part of a bigger task."
+      ],
+      [
+        "decomposition",
+        "Breaking a big job into smaller jobs."
+      ],
+      [
+        "algorithm",
+        "A set of steps for a job, in the right order."
+      ],
+      [
+        "program",
+        "An algorithm made in code, like Scratch blocks."
+      ],
+      [
+        "error",
+        "A mistake."
+      ],
+      [
+        "bug",
+        "A mistake in a program that stops it working right."
+      ],
+      [
+        "test",
+        "To run a program and check it does the right thing."
+      ],
+      [
+        "debug",
+        "To find and fix the mistakes in a program."
+      ],
+      [
+        "event",
+        "Something that makes code start."
+      ],
+      [
+        "sprite",
+        "A character or object in Scratch."
+      ],
+      [
+        "costume",
+        "A different look for a sprite."
+      ],
+      [
+        "backdrop",
+        "The picture behind the sprites."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "sub-task",
+        "meaning": "A small task that is part of a bigger task.",
+        "example": "Packing your bag is a sub-task of getting ready for school.",
+        "letter": "S"
+      },
+      {
+        "term": "decomposition",
+        "meaning": "Breaking a big job into smaller jobs.",
+        "example": "Splitting a whole game into small parts.",
+        "letter": "D"
+      },
+      {
+        "term": "algorithm",
+        "meaning": "A set of steps for a job, in the right order.",
+        "example": "The steps the cat does when clicked.",
+        "letter": "A"
+      },
+      {
+        "term": "program",
+        "meaning": "An algorithm made in code, like Scratch blocks.",
+        "example": "The joined-up blocks that run the game.",
+        "letter": "P"
+      },
+      {
+        "term": "error",
+        "meaning": "A mistake.",
+        "example": "The block has the wrong number in it.",
+        "letter": "E"
+      },
+      {
+        "term": "bug",
+        "meaning": "A mistake in a program that stops it working right.",
+        "example": "The cat moves left instead of right.",
+        "letter": "B"
+      },
+      {
+        "term": "test",
+        "meaning": "To run a program and check it does the right thing.",
+        "example": "Click the green flag and watch.",
+        "letter": "T"
+      },
+      {
+        "term": "debug",
+        "meaning": "To find and fix the mistakes in a program.",
+        "example": "Change the wrong block, then run it again.",
+        "letter": "D"
+      },
+      {
+        "term": "event",
+        "meaning": "Something that makes code start.",
+        "example": "Clicking the green flag or pressing a key.",
+        "letter": "E"
+      },
+      {
+        "term": "sprite",
+        "meaning": "A character or object in Scratch.",
+        "example": "The cat, the mouse.",
+        "letter": "S"
+      },
+      {
+        "term": "costume",
+        "meaning": "A different look for a sprite.",
+        "example": "The cat with legs together, then apart.",
+        "letter": "C"
+      },
+      {
+        "term": "backdrop",
+        "meaning": "The picture behind the sprites.",
+        "example": "Blue Sky, Forest.",
+        "letter": "B"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "A bug means I did something bad, or I am not good at coding.",
+        "The most important one to fix. Bugs are normal and every programmer gets them. Show your own bugs cheerfully so a mistake feels like a puzzle, not a failure."
+      ],
+      [
+        "The computer made a mistake.",
+        "The computer always does exactly what the blocks say. The bug is in our blocks, which puts you in charge of the fix."
+      ],
+      [
+        "All the code for a sprite goes in one big stack.",
+        "Different events need different hat blocks and separate stacks. Clicking a sprite and clicking the green flag are two sub-tasks, not one."
+      ],
+      [
+        "A sub-task is the same as one tiny step.",
+        "A sub-task is a small job (like"
+      ],
+      [
+        "what the cat does when clicked",
+        ") that itself has several steps. It sits between the whole task and a single instruction. Forgetting the minus sign. change x by (10) moves right; change x by (-10) moves left. A dropped minus sign sends a sprite the wrong way — a very common chase-game bug."
+      ],
+      [
+        "If it runs without an error message, it must be right.",
+        "A program can run perfectly and still do the wrong thing (the cat grows when it should shrink). Always test against the plan, not just for crashes."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "What is a sub-task?",
+      "answer": "A sub-task is a small task that is part of a bigger task. (Accept: a small job that is part of a big job.)",
+      "hint": "Look back at what sub-task and decomposition mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "A sub-task is a small task that is part of a bigger task. (Accept: a small job that is part of a big job.)"
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "A game has a bird that flaps when you click it, and a cat that moves when you press an arrow key. Write the two sub-tasks for this game.",
+      "answer": "Sub-task 1: when the bird is clicked, it flaps (for example, next costume). Sub-task 2: when an arrow key is pressed, the cat moves. Look for two separate sub-tasks, each named with its event.",
+      "hint": "Look back at what sub-task and decomposition mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Sub-task 1: when the bird is clicked, it flaps (for example, next costume). Sub-task 2: when an arrow key is pressed, the cat moves. Look for two separate sub-tasks, each named with its event."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "We want the sprite to get smaller when clicked, but this makes it bigger! What is the bug?",
+      "answer": "The bug is the sign of the number. change size by (10) makes the sprite bigger; it should be change size by (-10) (with a minus sign) to make it smaller.",
+      "hint": "Look back at what sub-task and decomposition mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "The bug is the sign of the number. change size by (10) makes the sprite bigger; it should be change size by (-10) (with a minus sign) to make it smaller."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "This mouse should run away when you click it, but it runs away when the game starts. Which block is wrong, and what should it be?",
+      "answer": "The wrong block is the hat block when green flag clicked. It should be when this sprite clicked.",
+      "hint": "Look back at what sub-task and decomposition mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "The wrong block is the hat block when green flag clicked. It should be when this sprite clicked."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "In Scratch, which block moves a sprite to the right? ([ ] change x by (-10))",
+      "answer": "change x by (10).",
+      "hint": "Look back at what sub-task and decomposition mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "change x by (10)."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Fill in the word. To find and fix the mistakes in a program is called to",
+      "answer": "debug.",
+      "hint": "Look back at what sub-task and decomposition mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "debug."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Fill in the word. To find and fix the mistakes in a program is called to",
+      "answer": "debug.",
+      "hint": "Look back at what sub-task and decomposition mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: debug."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "In Scratch, which block moves a sprite to the right? ([ ] change x by (-10))",
+      "answer": "change x by (10).",
+      "hint": "Look back at what sub-task and decomposition mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: change x by (10)."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Fill in the word. To find and fix the mistakes in a program is called to",
+      "answer": "debug.",
+      "hint": "Look back at what sub-task and decomposition mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: debug."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "What is a sub-task?",
+      "answer": "A sub-task is a small task that is part of a bigger task. (Accept: a small job that is part of a big job.)",
+      "hint": "Look back at what sub-task and decomposition mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: A sub-task is a small task that is part of a bigger task. (Accept: a small job that is part of a big job.)"
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "We want the sprite to get smaller when clicked, but this makes it bigger! What is the bug?",
+      "keyIdeas": [
+        "sub-task",
+        "decomposition",
+        "algorithm"
+      ],
+      "modelAnswer": "The bug is the sign of the number. change size by (10) makes the sprite bigger; it should be change size by (-10) (with a minus sign) to make it smaller."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "This mouse should run away when you click it, but it runs away when the game starts. Which block is wrong, and what should it be?",
+      "keyIdeas": [
+        "decomposition",
+        "algorithm",
+        "program"
+      ],
+      "modelAnswer": "The wrong block is the hat block when green flag clicked. It should be when this sprite clicked."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "In Scratch, which block moves a sprite to the right? ([ ] change x by (-10))",
+      "keyIdeas": [
+        "algorithm",
+        "program",
+        "error"
+      ],
+      "modelAnswer": "change x by (10)."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in build and test the cat in scratch, and give one example of your own.",
+      "keyIdeas": [
+        "sub-task",
+        "decomposition",
+        "algorithm"
+      ],
+      "modelAnswer": "Now we build the two-sub-task cat from Session 2 on the computer, and we learn to test it — to run it and check it does what we planned. If it does not, we debug it.\n\nA new project already has the cat sprite, so we do not need to add one. Open Scratch at scratch.mit.edu and click Create on the projector."
+    }
+  ],
+  "project": {
+    "title": "Unit 10 Project: Be a Game Developer",
+    "brief": "Bring together everything from Be a Game Developer into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your be a game developer project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I planned my game as sub-tasks before I built it.",
+      "My cat and mouse go to their corners and speak when the game starts.",
+      "I can move the cat around with the arrow keys.",
+      "The mouse runs away when I click it.",
+      "I tested my game and fixed any bugs I found."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “sub-task” mean in computing?",
+        "options": [
+          "A small task that is part of a bigger task.",
+          "Breaking a big job into smaller jobs.",
+          "A set of steps for a job, in the right order.",
+          "An algorithm made in code, like Scratch blocks."
+        ],
+        "answer": "A small task that is part of a bigger task.",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Sub-task means a small task that is part of a bigger task."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “decomposition” mean in computing?",
+        "options": [
+          "Breaking a big job into smaller jobs.",
+          "A set of steps for a job, in the right order.",
+          "An algorithm made in code, like Scratch blocks.",
+          "A mistake."
+        ],
+        "answer": "Breaking a big job into smaller jobs.",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Decomposition means breaking a big job into smaller jobs."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “algorithm” mean in computing?",
+        "options": [
+          "A set of steps for a job, in the right order.",
+          "An algorithm made in code, like Scratch blocks.",
+          "A mistake.",
+          "A mistake in a program that stops it working right."
+        ],
+        "answer": "A set of steps for a job, in the right order.",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Algorithm means a set of steps for a job, in the right order."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “program” mean in computing?",
+        "options": [
+          "An algorithm made in code, like Scratch blocks.",
+          "A mistake.",
+          "A mistake in a program that stops it working right.",
+          "To run a program and check it does the right thing."
+        ],
+        "answer": "An algorithm made in code, like Scratch blocks.",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Program means an algorithm made in code, like Scratch blocks."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “error” mean in computing?",
+        "options": [
+          "A mistake.",
+          "A mistake in a program that stops it working right.",
+          "To run a program and check it does the right thing.",
+          "To find and fix the mistakes in a program."
+        ],
+        "answer": "A mistake.",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Error means a mistake."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “bug” mean in computing?",
+        "options": [
+          "A mistake in a program that stops it working right.",
+          "To run a program and check it does the right thing.",
+          "To find and fix the mistakes in a program.",
+          "Something that makes code start."
+        ],
+        "answer": "A mistake in a program that stops it working right.",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Bug means a mistake in a program that stops it working right."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: To run a program and check it does the right thing.?",
+        "options": [
+          "test",
+          "debug",
+          "event",
+          "sprite"
+        ],
+        "answer": "test",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Test means to run a program and check it does the right thing."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: To find and fix the mistakes in a program.?",
+        "options": [
+          "debug",
+          "event",
+          "sprite",
+          "costume"
+        ],
+        "answer": "debug",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Debug means to find and fix the mistakes in a program."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Something that makes code start.?",
+        "options": [
+          "event",
+          "sprite",
+          "costume",
+          "backdrop"
+        ],
+        "answer": "event",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Event means something that makes code start."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A character or object in Scratch.?",
+        "options": [
+          "sprite",
+          "costume",
+          "backdrop",
+          "sub-task"
+        ],
+        "answer": "sprite",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Sprite means a character or object in Scratch."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A different look for a sprite.?",
+        "options": [
+          "costume",
+          "backdrop",
+          "sub-task",
+          "decomposition"
+        ],
+        "answer": "costume",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Costume means a different look for a sprite."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The picture behind the sprites.?",
+        "options": [
+          "backdrop",
+          "sub-task",
+          "decomposition",
+          "algorithm"
+        ],
+        "answer": "backdrop",
+        "hint": "Use the Unit 10 Computing Words reference.",
+        "explanation": "Backdrop means the picture behind the sprites."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u10-game-1",
+        "icon": "?",
+        "skill": "sub-task",
+        "title": "Quick Match: sub-task",
+        "description": "Practise sub-task through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “sub-task” mean in computing?",
+            "choices": [
+              "A small task that is part of a bigger task.",
+              "Breaking a big job into smaller jobs.",
+              "A set of steps for a job, in the right order.",
+              "An algorithm made in code, like Scratch blocks."
+            ],
+            "answer": "A small task that is part of a bigger task.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Sub-task means a small task that is part of a bigger task."
+          },
+          {
+            "prompt": "What does “program” mean in computing?",
+            "choices": [
+              "An algorithm made in code, like Scratch blocks.",
+              "A mistake.",
+              "A mistake in a program that stops it working right.",
+              "To run a program and check it does the right thing."
+            ],
+            "answer": "An algorithm made in code, like Scratch blocks.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Program means an algorithm made in code, like Scratch blocks."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To run a program and check it does the right thing.?",
+            "choices": [
+              "test",
+              "debug",
+              "event",
+              "sprite"
+            ],
+            "answer": "test",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Test means to run a program and check it does the right thing."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A character or object in Scratch.?",
+            "choices": [
+              "sprite",
+              "costume",
+              "backdrop",
+              "sub-task"
+            ],
+            "answer": "sprite",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-2",
+        "icon": "★",
+        "skill": "decomposition",
+        "title": "Concept Quest: decomposition",
+        "description": "Practise decomposition through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “decomposition” mean in computing?",
+            "choices": [
+              "Breaking a big job into smaller jobs.",
+              "A set of steps for a job, in the right order.",
+              "An algorithm made in code, like Scratch blocks.",
+              "A mistake."
+            ],
+            "answer": "Breaking a big job into smaller jobs.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Decomposition means breaking a big job into smaller jobs."
+          },
+          {
+            "prompt": "What does “error” mean in computing?",
+            "choices": [
+              "A mistake.",
+              "A mistake in a program that stops it working right.",
+              "To run a program and check it does the right thing.",
+              "To find and fix the mistakes in a program."
+            ],
+            "answer": "A mistake.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Error means a mistake."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To find and fix the mistakes in a program.?",
+            "choices": [
+              "debug",
+              "event",
+              "sprite",
+              "costume"
+            ],
+            "answer": "debug",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Debug means to find and fix the mistakes in a program."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A different look for a sprite.?",
+            "choices": [
+              "costume",
+              "backdrop",
+              "sub-task",
+              "decomposition"
+            ],
+            "answer": "costume",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Costume means a different look for a sprite."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-3",
+        "icon": "◫",
+        "skill": "algorithm",
+        "title": "Debug Detective: algorithm",
+        "description": "Practise algorithm through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps for a job, in the right order.",
+              "An algorithm made in code, like Scratch blocks.",
+              "A mistake.",
+              "A mistake in a program that stops it working right."
+            ],
+            "answer": "A set of steps for a job, in the right order.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for a job, in the right order."
+          },
+          {
+            "prompt": "What does “bug” mean in computing?",
+            "choices": [
+              "A mistake in a program that stops it working right.",
+              "To run a program and check it does the right thing.",
+              "To find and fix the mistakes in a program.",
+              "Something that makes code start."
+            ],
+            "answer": "A mistake in a program that stops it working right.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Bug means a mistake in a program that stops it working right."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Something that makes code start.?",
+            "choices": [
+              "event",
+              "sprite",
+              "costume",
+              "backdrop"
+            ],
+            "answer": "event",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Event means something that makes code start."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The picture behind the sprites.?",
+            "choices": [
+              "backdrop",
+              "sub-task",
+              "decomposition",
+              "algorithm"
+            ],
+            "answer": "backdrop",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprites."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-4",
+        "icon": "→",
+        "skill": "program",
+        "title": "Algorithm Runner: program",
+        "description": "Practise program through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “program” mean in computing?",
+            "choices": [
+              "An algorithm made in code, like Scratch blocks.",
+              "A mistake.",
+              "A mistake in a program that stops it working right.",
+              "To run a program and check it does the right thing."
+            ],
+            "answer": "An algorithm made in code, like Scratch blocks.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Program means an algorithm made in code, like Scratch blocks."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To run a program and check it does the right thing.?",
+            "choices": [
+              "test",
+              "debug",
+              "event",
+              "sprite"
+            ],
+            "answer": "test",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Test means to run a program and check it does the right thing."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A character or object in Scratch.?",
+            "choices": [
+              "sprite",
+              "costume",
+              "backdrop",
+              "sub-task"
+            ],
+            "answer": "sprite",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          },
+          {
+            "prompt": "What does “sub-task” mean in computing?",
+            "choices": [
+              "A small task that is part of a bigger task.",
+              "Breaking a big job into smaller jobs.",
+              "A set of steps for a job, in the right order.",
+              "An algorithm made in code, like Scratch blocks."
+            ],
+            "answer": "A small task that is part of a bigger task.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Sub-task means a small task that is part of a bigger task."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-5",
+        "icon": "Σ",
+        "skill": "error",
+        "title": "Vocabulary Vault: error",
+        "description": "Practise error through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “error” mean in computing?",
+            "choices": [
+              "A mistake.",
+              "A mistake in a program that stops it working right.",
+              "To run a program and check it does the right thing.",
+              "To find and fix the mistakes in a program."
+            ],
+            "answer": "A mistake.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Error means a mistake."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To find and fix the mistakes in a program.?",
+            "choices": [
+              "debug",
+              "event",
+              "sprite",
+              "costume"
+            ],
+            "answer": "debug",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Debug means to find and fix the mistakes in a program."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A different look for a sprite.?",
+            "choices": [
+              "costume",
+              "backdrop",
+              "sub-task",
+              "decomposition"
+            ],
+            "answer": "costume",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Costume means a different look for a sprite."
+          },
+          {
+            "prompt": "What does “decomposition” mean in computing?",
+            "choices": [
+              "Breaking a big job into smaller jobs.",
+              "A set of steps for a job, in the right order.",
+              "An algorithm made in code, like Scratch blocks.",
+              "A mistake."
+            ],
+            "answer": "Breaking a big job into smaller jobs.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Decomposition means breaking a big job into smaller jobs."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-6",
+        "icon": "◇",
+        "skill": "bug",
+        "title": "Challenge Cards: bug",
+        "description": "Practise bug through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “bug” mean in computing?",
+            "choices": [
+              "A mistake in a program that stops it working right.",
+              "To run a program and check it does the right thing.",
+              "To find and fix the mistakes in a program.",
+              "Something that makes code start."
+            ],
+            "answer": "A mistake in a program that stops it working right.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Bug means a mistake in a program that stops it working right."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Something that makes code start.?",
+            "choices": [
+              "event",
+              "sprite",
+              "costume",
+              "backdrop"
+            ],
+            "answer": "event",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Event means something that makes code start."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The picture behind the sprites.?",
+            "choices": [
+              "backdrop",
+              "sub-task",
+              "decomposition",
+              "algorithm"
+            ],
+            "answer": "backdrop",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprites."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps for a job, in the right order.",
+              "An algorithm made in code, like Scratch blocks.",
+              "A mistake.",
+              "A mistake in a program that stops it working right."
+            ],
+            "answer": "A set of steps for a job, in the right order.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for a job, in the right order."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-7",
+        "icon": "⚡",
+        "skill": "test",
+        "title": "Think Fast: test",
+        "description": "Practise test through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To run a program and check it does the right thing.?",
+            "choices": [
+              "test",
+              "debug",
+              "event",
+              "sprite"
+            ],
+            "answer": "test",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Test means to run a program and check it does the right thing."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A character or object in Scratch.?",
+            "choices": [
+              "sprite",
+              "costume",
+              "backdrop",
+              "sub-task"
+            ],
+            "answer": "sprite",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          },
+          {
+            "prompt": "What does “sub-task” mean in computing?",
+            "choices": [
+              "A small task that is part of a bigger task.",
+              "Breaking a big job into smaller jobs.",
+              "A set of steps for a job, in the right order.",
+              "An algorithm made in code, like Scratch blocks."
+            ],
+            "answer": "A small task that is part of a bigger task.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Sub-task means a small task that is part of a bigger task."
+          },
+          {
+            "prompt": "What does “program” mean in computing?",
+            "choices": [
+              "An algorithm made in code, like Scratch blocks.",
+              "A mistake.",
+              "A mistake in a program that stops it working right.",
+              "To run a program and check it does the right thing."
+            ],
+            "answer": "An algorithm made in code, like Scratch blocks.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Program means an algorithm made in code, like Scratch blocks."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-8",
+        "icon": "☁",
+        "skill": "debug",
+        "title": "Explain It: debug",
+        "description": "Practise debug through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: To find and fix the mistakes in a program.?",
+            "choices": [
+              "debug",
+              "event",
+              "sprite",
+              "costume"
+            ],
+            "answer": "debug",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Debug means to find and fix the mistakes in a program."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A different look for a sprite.?",
+            "choices": [
+              "costume",
+              "backdrop",
+              "sub-task",
+              "decomposition"
+            ],
+            "answer": "costume",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Costume means a different look for a sprite."
+          },
+          {
+            "prompt": "What does “decomposition” mean in computing?",
+            "choices": [
+              "Breaking a big job into smaller jobs.",
+              "A set of steps for a job, in the right order.",
+              "An algorithm made in code, like Scratch blocks.",
+              "A mistake."
+            ],
+            "answer": "Breaking a big job into smaller jobs.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Decomposition means breaking a big job into smaller jobs."
+          },
+          {
+            "prompt": "What does “error” mean in computing?",
+            "choices": [
+              "A mistake.",
+              "A mistake in a program that stops it working right.",
+              "To run a program and check it does the right thing.",
+              "To find and fix the mistakes in a program."
+            ],
+            "answer": "A mistake.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Error means a mistake."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-9",
+        "icon": "⌂",
+        "skill": "event",
+        "title": "Real-Life Round: event",
+        "description": "Practise event through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Something that makes code start.?",
+            "choices": [
+              "event",
+              "sprite",
+              "costume",
+              "backdrop"
+            ],
+            "answer": "event",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Event means something that makes code start."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The picture behind the sprites.?",
+            "choices": [
+              "backdrop",
+              "sub-task",
+              "decomposition",
+              "algorithm"
+            ],
+            "answer": "backdrop",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprites."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps for a job, in the right order.",
+              "An algorithm made in code, like Scratch blocks.",
+              "A mistake.",
+              "A mistake in a program that stops it working right."
+            ],
+            "answer": "A set of steps for a job, in the right order.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for a job, in the right order."
+          },
+          {
+            "prompt": "What does “bug” mean in computing?",
+            "choices": [
+              "A mistake in a program that stops it working right.",
+              "To run a program and check it does the right thing.",
+              "To find and fix the mistakes in a program.",
+              "Something that makes code start."
+            ],
+            "answer": "A mistake in a program that stops it working right.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Bug means a mistake in a program that stops it working right."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-10",
+        "icon": "!",
+        "skill": "sprite",
+        "title": "Spot the Bug: sprite",
+        "description": "Practise sprite through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A character or object in Scratch.?",
+            "choices": [
+              "sprite",
+              "costume",
+              "backdrop",
+              "sub-task"
+            ],
+            "answer": "sprite",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Sprite means a character or object in Scratch."
+          },
+          {
+            "prompt": "What does “sub-task” mean in computing?",
+            "choices": [
+              "A small task that is part of a bigger task.",
+              "Breaking a big job into smaller jobs.",
+              "A set of steps for a job, in the right order.",
+              "An algorithm made in code, like Scratch blocks."
+            ],
+            "answer": "A small task that is part of a bigger task.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Sub-task means a small task that is part of a bigger task."
+          },
+          {
+            "prompt": "What does “program” mean in computing?",
+            "choices": [
+              "An algorithm made in code, like Scratch blocks.",
+              "A mistake.",
+              "A mistake in a program that stops it working right.",
+              "To run a program and check it does the right thing."
+            ],
+            "answer": "An algorithm made in code, like Scratch blocks.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Program means an algorithm made in code, like Scratch blocks."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To run a program and check it does the right thing.?",
+            "choices": [
+              "test",
+              "debug",
+              "event",
+              "sprite"
+            ],
+            "answer": "test",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Test means to run a program and check it does the right thing."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-11",
+        "icon": "≡",
+        "skill": "costume",
+        "title": "Mastery Mix: costume",
+        "description": "Practise costume through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A different look for a sprite.?",
+            "choices": [
+              "costume",
+              "backdrop",
+              "sub-task",
+              "decomposition"
+            ],
+            "answer": "costume",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Costume means a different look for a sprite."
+          },
+          {
+            "prompt": "What does “decomposition” mean in computing?",
+            "choices": [
+              "Breaking a big job into smaller jobs.",
+              "A set of steps for a job, in the right order.",
+              "An algorithm made in code, like Scratch blocks.",
+              "A mistake."
+            ],
+            "answer": "Breaking a big job into smaller jobs.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Decomposition means breaking a big job into smaller jobs."
+          },
+          {
+            "prompt": "What does “error” mean in computing?",
+            "choices": [
+              "A mistake.",
+              "A mistake in a program that stops it working right.",
+              "To run a program and check it does the right thing.",
+              "To find and fix the mistakes in a program."
+            ],
+            "answer": "A mistake.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Error means a mistake."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: To find and fix the mistakes in a program.?",
+            "choices": [
+              "debug",
+              "event",
+              "sprite",
+              "costume"
+            ],
+            "answer": "debug",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Debug means to find and fix the mistakes in a program."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-12",
+        "icon": "T",
+        "skill": "backdrop",
+        "title": "Unit Champion: backdrop",
+        "description": "Practise backdrop through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The picture behind the sprites.?",
+            "choices": [
+              "backdrop",
+              "sub-task",
+              "decomposition",
+              "algorithm"
+            ],
+            "answer": "backdrop",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Backdrop means the picture behind the sprites."
+          },
+          {
+            "prompt": "What does “algorithm” mean in computing?",
+            "choices": [
+              "A set of steps for a job, in the right order.",
+              "An algorithm made in code, like Scratch blocks.",
+              "A mistake.",
+              "A mistake in a program that stops it working right."
+            ],
+            "answer": "A set of steps for a job, in the right order.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Algorithm means a set of steps for a job, in the right order."
+          },
+          {
+            "prompt": "What does “bug” mean in computing?",
+            "choices": [
+              "A mistake in a program that stops it working right.",
+              "To run a program and check it does the right thing.",
+              "To find and fix the mistakes in a program.",
+              "Something that makes code start."
+            ],
+            "answer": "A mistake in a program that stops it working right.",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Bug means a mistake in a program that stops it working right."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Something that makes code start.?",
+            "choices": [
+              "event",
+              "sprite",
+              "costume",
+              "backdrop"
+            ],
+            "answer": "event",
+            "clue": "Use the Unit 10 Computing Words reference.",
+            "explanation": "Event means something that makes code start."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can break a big task into smaller sub-tasks (decomposition).",
+    "I can understand that each sub-task can have its own algorithm and its own code, and can be planned and fixed on its own.",
+    "I can understand that mistakes (errors or bugs) are a normal part of programming, and that we learn from them.",
+    "I can test a program by running it and checking it against the plan.",
+    "I can debug a program: find the part that is wrong, change it, and test again.",
+    "I can in Scratch, build event-driven code for more than one sprite (green flag, when clicked, when a key is pressed) using movement, costume and sound blocks.",
+    "I can plan, build, test and debug a simple two-sprite chase game."
+  ]
+}

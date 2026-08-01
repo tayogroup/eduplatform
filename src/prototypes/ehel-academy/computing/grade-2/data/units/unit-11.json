@@ -1,0 +1,1760 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.436Z",
+  "stage": {
+    "id": "s02",
+    "label": "Stage 2"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t03",
+    "label": "Term 3"
+  },
+  "unit": {
+    "unitId": "comp-g02-u11",
+    "unitNo": 11,
+    "unitTitle": "Computers and Robots",
+    "unitOverview": "Welcome to Unit 11 of Year 2 Computing at Ehel Academy — and well done, because this is the last unit of Year 2! There is no new software to learn; instead you talk, sort, and play a game to explore three big ideas: what computers are good at, how people pick the right device, and the difference between real robots and the make-believe robots we see in films.\n\nThe first idea is that computers can do some things better than people. A computer is very fast, it never gets tired or bored, it can store a whole library of books inside one small machine, and it follows instructions exactly.\n\nThe second idea is that people choose different computer devices for different reasons. A desktop is powerful with a large screen, but heavy; a laptop, a tablet and a smartphone are smaller and easy to carry. The best device depends on what you need it for and where you are.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 2
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-2-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 2",
+    "sourceArchive": "Year 2-20260801T055735Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 2/Unit 11/Year 2 - Unit 11 Teacher Guide.docx",
+      "Year 2/Unit 11/Year 2 - Unit 11 Activity Sheet.docx",
+      "Year 2/Unit 11/Year 2 - Unit 11 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 326,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 2 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Name some tasks computers can do better than people — work fast, never get tired or bored, store a lot, and follow instructions exactly.",
+    "Understand that people are still better at some things, like making up something new (a story, a picture, a joke).",
+    "Know that people use different computer devices — desktop, laptop, tablet and smartphone.",
+    "Give a simple reason for choosing a device (for example, \"a tablet is light and easy to carry\").",
+    "Say what a robot is — a machine that does a task without help from a person.",
+    "Tell the difference between a real robot and a fictional (make-believe) robot.",
+    "Give the robot a short, correct sequence of steps to reach a place, and understand a robot does exactly what it is told.",
+    "Find and fix a wrong step in a short set of robot instructions."
+  ],
+  "toolkit": [],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-what-computers-can-do-better-than-us",
+      "title": "What computers can do better than us",
+      "explanation": "Computers can do some things better than people. A computer is very fast, it never gets tired or bored, it can store a huge amount in a small space, and it follows instructions exactly. But people are still better at some things, like making up something brand new.\n\nWho is quicker? Layla adds two numbers in her head. A computer adds the same two numbers. Who finishes first? Now there are ten numbers. now a hundred!",
+      "example": "Who finishes first now? Then share the four ideas, one at a time, in one friendly sentence each: “A computer is very fast.” “A computer never gets tired or bored — it can work all day and night.” “A computer can store a whole library of books inside one small machine.” “A computer follows instructions exactly — it does just what it is told.”",
+      "checkYourself": "Can you name one thing a person does better (make up something new)? Can you name one or two things a computer does better than a person (fast, never tired, stores a lot)?"
+    },
+    {
+      "id": "concept-2-choosing-the-right-device",
+      "title": "Choosing the right device",
+      "explanation": "People use different computer devices, and you choose one for a reason. A desktop is powerful with a big screen, but it is heavy and stays on the desk. A laptop, a tablet and a smartphone are smaller and easy to carry. The best choice depends on what you need it for and where you are.\n\nA desktop is big and strong — good for someone who sits at a desk all day. A laptop folds up and comes with you — good for travelling.",
+      "example": "A tablet is light with a nice big screen — good for a delivery driver. A smartphone fits in your pocket and joins the internet almost anywhere.",
+      "checkYourself": "a tablet is easy to carry. a desktop has a big screen. The reason matters more than the exact device."
+    },
+    {
+      "id": "concept-3-real-robots-and-make-believe-robots",
+      "title": "Real robots and make-believe robots",
+      "explanation": "A robot is a machine that does a task without help from a person. Robots in films are fictional — make-believe. Fictional robots look, speak and act like people. Real robots often do not look like people; many are just an arm or a box. Real robots repeat the same task, work in factories, go into space, and do dangerous jobs to keep people safe.\n\nDo you remember what a robot is? Then split the world into two. Some robots are only in stories and films — they are fictional, or make-believe. They talk and walk like people, but they are not real. Real robots are all around the world doing real jobs. A robot arm builds cars in a factory. A robot vacuum cleans a floor. A space robot explores places too dangerous for people.",
+      "example": "Real robots often look like a machine, not a person. Real, or make-believe?",
+      "checkYourself": "a real one does not talk. a make-believe one looks like a person. Can you know a robot is a machine and cannot feel?"
+    },
+    {
+      "id": "concept-4-the-robot-game-a-robot-follows-exact-steps",
+      "title": "The Robot Game: a robot follows exact steps",
+      "explanation": "A robot does exactly what it is told — no more, no less. It cannot think for itself. So our instructions must be clear and in the right order. If one step is wrong, the robot goes the wrong way — and it is our job to find the wrong step and fix it.\n\nLay a small grid on the floor and put a park picture on the finish square. One child stands on the START square as the robot.",
+      "example": "Then you can guide the robot to the park, one step at a time. On a 3x3 grid with the robot at the bottom-left and the park at the top-right, the steps are",
+      "checkYourself": "Can you find one wrong step and say what it should be? Can you understand the robot only does what it is told? Can you give a short, correct set of steps to reach the park?"
+    },
+    {
+      "id": "concept-5-robots-that-help-us-and-our-year-2-celebration",
+      "title": "Robots that help us, and our Year 2 celebration",
+      "explanation": "Robots help people by doing jobs that are dangerous or very boring for a person — cleaning windows high up on a tall building, working deep underwater, checking bottles in a factory all day, or exploring space.\n\nCheck yourself: Did you guide the robot correctly and fix the bug?",
+      "example": "Find one real example of robots that help us, and our Year 2 celebration around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Did you guide the robot correctly and fix the bug?"
+    }
+  ],
+  "codeExamples": [],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Who Is Faster?",
+      "context": "work through the steps below and see what happens. This is what computers can do better than us in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "For each job, circle who finishes first: the computer or the person.",
+      "answer": "1. Add one hundred numbers together. computer / person 2. Make up a brand-new story. computer / person Think: a computer is very fast, but a person is good at new ideas!",
+      "modelType": "model-1",
+      "hint": "Start here: 1. Add one hundred numbers together. computer / person",
+      "explanation": "What computers can do better than us: Computers can do some things better than people. A computer is very fast, it never gets tired or bored, it can store a huge amount in a small space, and it follows instructions exactly. But people are still better at some things, like making up something brand new."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "What Can Computers Do Well?",
+      "context": "work through the steps below and see what happens. This is choosing the right device in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Tick the things a computer is good at. Be careful — one of them is not true!",
+      "answer": "[ ] Works very fast [ ] Never gets tired or bored [ ] Stores a lot in a small space [ ] Feels happy and sad",
+      "modelType": "model-2",
+      "hint": "Start here: [ ] Works very fast",
+      "explanation": "Choosing the right device: People use different computer devices, and you choose one for a reason. A desktop is powerful with a big screen, but it is heavy and stays on the desk. A laptop, a tablet and a smartphone are smaller and easy to carry. The best choice depends on what you need it for and where you are."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Choose the Device",
+      "context": "work through the steps below and see what happens. This is real robots and make-believe robots in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Everyone needs a computer device. Draw a line from each person to a good device for them.",
+      "answer": "Tip: there can be more than one good answer. Match: This person... → ...could use a Match: Karim drives a van all day and carries it around → desktop Match: Nadia travels for work → laptop Match: Theo wants the internet in his pocket → tablet",
+      "modelType": "model-3",
+      "hint": "Start here: Tip: there can be more than one good answer.",
+      "explanation": "Real robots and make-believe robots: A robot is a machine that does a task without help from a person. Robots in films are fictional — make-believe. Fictional robots look, speak and act like people. Real robots often do not look like people; many are just an arm or a box. Real robots repeat the same task, work in factories, go into…"
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Real or Make-Believe?",
+      "context": "work through the steps below and see what happens. This is the robot game: a robot follows exact steps in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Some robots are real. Some are make-believe (fictional) from films. Write R for real or M for make-believe next to each one.",
+      "answer": "[ ] A robot arm that builds cars in a factory [ ] A talking robot friend in a cartoon [ ] A robot vacuum that cleans the floor [ ] A flying superhero robot in a movie [ ] A robot that goes into space to explore",
+      "modelType": "model-4",
+      "hint": "Start here: [ ] A robot arm that builds cars in a factory",
+      "explanation": "The Robot Game: a robot follows exact steps: A robot does exactly what it is told — no more, no less. It cannot think for itself. So our instructions must be clear and in the right order. If one step is wrong, the robot goes the wrong way — and it is our job to find the wrong step and fix it."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "True or False?",
+      "context": "work through the steps below and see what happens. This is robots that help us, and our year 2 celebration in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "1. A robot can feel sad. ____________",
+      "answer": "2. A robot can go into space. ____________ 3. A real robot can make cars. ____________ 4. All robots look like people. ____________",
+      "modelType": "model-5",
+      "hint": "Start here: 2. A robot can go into space. ____________",
+      "explanation": "Robots that help us, and our Year 2 celebration: Robots help people by doing jobs that are dangerous or very boring for a person — cleaning windows high up on a tall building, working deep underwater, checking bottles in a factory all day, or exploring space."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Guide the Robot to the Park",
+      "context": "work through the steps below and see what happens. This is what computers can do better than us in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "The robot (R) wants to reach the park (P). Each step moves it one square. Use Step up, Step down, Step left, Step right.",
+      "answer": "Write the steps to get the robot to the park. Step ____________ Step ____________ Step ____________ Step ____________",
+      "modelType": "model-6",
+      "hint": "Start here: Write the steps to get the robot to the park.",
+      "explanation": "What computers can do better than us: Computers can do some things better than people. A computer is very fast, it never gets tired or bored, it can store a huge amount in a small space, and it follows instructions exactly. But people are still better at some things, like making up something brand new."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "What computers can do better than us",
+      "modelType": "concept-model-1",
+      "purpose": "Computers can do some things better than people. A computer is very fast, it never gets tired or bored, it can store a huge amount in a small space, and it follows instructions exactly. But people are still better at…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Choosing the right device",
+      "modelType": "concept-model-2",
+      "purpose": "People use different computer devices, and you choose one for a reason. A desktop is powerful with a big screen, but it is heavy and stays on the desk. A laptop, a tablet and a smartphone are smaller and easy to carry.…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Real robots and make-believe robots",
+      "modelType": "concept-model-3",
+      "purpose": "A robot is a machine that does a task without help from a person. Robots in films are fictional — make-believe. Fictional robots look, speak and act like people. Real robots often do not look like people; many are just…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "The Robot Game: a robot follows exact steps",
+      "modelType": "concept-model-4",
+      "purpose": "A robot does exactly what it is told — no more, no less. It cannot think for itself. So our instructions must be clear and in the right order. If one step is wrong, the robot goes the wrong way — and it is our job to…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Robots that help us, and our Year 2 celebration",
+      "modelType": "concept-model-5",
+      "purpose": "Robots help people by doing jobs that are dangerous or very boring for a person — cleaning windows high up on a tall building, working deep underwater, checking bottles in a factory all day, or exploring space.",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with what computers can do better than us",
+      "example": "Who finishes first now? Then share the four ideas, one at a time, in one friendly sentence each: “A computer is very fast.” “A computer never gets tired or bored — it can work all day and night.” “A computer can store a whole library of books inside one small…",
+      "steps": [
+        "Read the concept card for what computers can do better than us and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with choosing the right device",
+      "example": "A tablet is light with a nice big screen — good for a delivery driver. A smartphone fits in your pocket and joins the internet almost anywhere.",
+      "steps": [
+        "Read the concept card for choosing the right device and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with real robots and make-believe robots",
+      "example": "Real robots often look like a machine, not a person. Real, or make-believe?",
+      "steps": [
+        "Read the concept card for real robots and make-believe robots and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with the robot game: a robot follows exact steps",
+      "example": "Then you can guide the robot to the park, one step at a time. On a 3x3 grid with the robot at the bottom-left and the park at the top-right, the steps are",
+      "steps": [
+        "Read the concept card for the robot game: a robot follows exact steps and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with robots that help us, and our year 2 celebration",
+      "example": "Find one real example of robots that help us, and our Year 2 celebration around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for robots that help us, and our year 2 celebration and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: What computers can do better than us",
+      "prompt": "Name one thing a computer can do better than a person.",
+      "solution": "Any one of: works very fast; never gets tired or bored; stores a lot in a small space; follows instructions exactly."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Choosing the right device",
+      "prompt": "What is a robot?",
+      "solution": "A robot is a machine that does a task without help from a person."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Real robots and make-believe robots",
+      "prompt": "True or false: A robot can feel sad.",
+      "solution": "False — a robot is a machine and cannot feel."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: The Robot Game: a robot follows exact steps",
+      "prompt": "Finish the sentence: A robot does exactly what you",
+      "solution": "tell it (or say). A robot cannot think for itself."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Robots that help us, and our Year 2 celebration",
+      "prompt": "Write the steps to move the robot (R) to the star. Each step is one square.",
+      "solution": "On the 2x2 grid (robot bottom-left, star top-right), a correct answer is Step right, Step up. Also accept Step up, Step right. Both reach the star."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: What computers can do better than us",
+      "prompt": "Explain in your own words: What computers can do better than us.",
+      "solution": "Computers can do some things better than people. A computer is very fast, it never gets tired or bored, it can store a huge amount in a small space, and it follows instructions exactly. But people are still better at some things, like making up something brand new.\n\nWho is quicker? Layla adds two numbers in her head. A computer adds the same two numbers. Who finishes first? Now there are ten numbers. now a hundred!\n\nFor example: Who finishes first now? Then share the four ideas, one at a time, in one friendly sentence each: “A computer is very fast.” “A computer never gets tired or bored — it can work all day and night.” “A computer can store a whole library of books inside one small machine.” “A computer follows instructions exactly — it does just what it is told.”"
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Name one thing a computer can do better than a person.",
+      "answer": "Any one of: works very fast; never gets tired or bored; stores a lot in a small space; follows instructions exactly.",
+      "hint": "Look back at what computer and device mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Which is easier to carry? ([ ] a desktop)",
+      "answer": "a tablet.",
+      "hint": "Look back at what computer and device mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "What is a robot?",
+      "answer": "A robot is a machine that does a task without help from a person.",
+      "hint": "Look back at what computer and device mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "True or false: A robot can feel sad.",
+      "answer": "False — a robot is a machine and cannot feel.",
+      "hint": "Look back at what computer and device mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "Finish the sentence: A robot does exactly what you",
+      "answer": "tell it (or say). A robot cannot think for itself.",
+      "hint": "Look back at what computer and device mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "Write the steps to move the robot (R) to the star. Each step is one square.",
+      "answer": "On the 2x2 grid (robot bottom-left, star top-right), a correct answer is Step right, Step up. Also accept Step up, Step right. Both reach the star.",
+      "hint": "Look back at what computer and device mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Who Is Faster?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "For each job, circle who finishes first: the computer or the person.",
+        "1. Add one hundred numbers together. computer / person",
+        "2. Make up a brand-new story. computer / person",
+        "Think: a computer is very fast, but a person is good at new ideas!"
+      ]
+    },
+    {
+      "title": "What Can Computers Do Well?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Tick the things a computer is good at. Be careful — one of them is not true!",
+        "[ ] Works very fast",
+        "[ ] Never gets tired or bored",
+        "[ ] Stores a lot in a small space",
+        "[ ] Feels happy and sad"
+      ]
+    },
+    {
+      "title": "Choose the Device",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Everyone needs a computer device. Draw a line from each person to a good device for them.",
+        "Tip: there can be more than one good answer.",
+        "Match: This person... → ...could use a",
+        "Match: Karim drives a van all day and carries it around → desktop",
+        "Match: Nadia travels for work → laptop",
+        "Match: Theo wants the internet in his pocket → tablet"
+      ]
+    },
+    {
+      "title": "Real or Make-Believe?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Some robots are real. Some are make-believe (fictional) from films. Write R for real or M for make-believe next to each one.",
+        "[ ] A robot arm that builds cars in a factory",
+        "[ ] A talking robot friend in a cartoon",
+        "[ ] A robot vacuum that cleans the floor",
+        "[ ] A flying superhero robot in a movie",
+        "[ ] A robot that goes into space to explore"
+      ]
+    },
+    {
+      "title": "True or False?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "1. A robot can feel sad. ____________",
+        "2. A robot can go into space. ____________",
+        "3. A real robot can make cars. ____________",
+        "4. All robots look like people. ____________"
+      ]
+    },
+    {
+      "title": "Guide the Robot to the Park",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "The robot (R) wants to reach the park (P). Each step moves it one square. Use Step up, Step down, Step left, Step right.",
+        "Write the steps to get the robot to the park.",
+        "Step ____________",
+        "Step ____________",
+        "Step ____________",
+        "Step ____________"
+      ]
+    },
+    {
+      "title": "Fix the Wrong Step",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "This robot should reach the park, but one step is wrong! The robot only does what it is told. Circle the wrong step.",
+        "Step right",
+        "Step right",
+        "Step up",
+        "Step down",
+        "Which step should it be instead? ______________________________"
+      ]
+    },
+    {
+      "title": "Plan the Path",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "The robot (R) is at the start. The park (P) is at the top. Each step moves the robot one square. Use Step up, Step down, Step left, Step right.",
+        "... P",
+        "Write your steps to guide the robot all the way to the park.",
+        "Step ____________",
+        "Step ____________",
+        "Step ____________"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "Robots can think for themselves.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No — a robot only does exactly what it is told. It cannot decide or think. If we give it a wrong step, it goes the wrong way. The Robot Game shows this clearly."
+    },
+    {
+      "symptom": "All robots look like people.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Only make-believe (fictional) robots in films look like people. Many real robots are just an arm or a box that does one job."
+    },
+    {
+      "symptom": "A robot is alive and can feel.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "A robot is a machine. It cannot feel happy or sad, and it does not get tired the way we do."
+    },
+    {
+      "symptom": "Computers are better than people at everything.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Not everything. Computers are great at fast, boring, repeated jobs. People are great at making up something new — a story, a picture, a joke."
+    },
+    {
+      "symptom": "The computer made a mistake by itself.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "Usually the mistake came from the instructions a person gave. The computer just did what it was told."
+    },
+    {
+      "symptom": "A phone can do everything a big computer can.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "A phone is small and easy to carry, but you cannot easily plug in a mouse and keyboard, and a big screen is better for some jobs."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "What computers can do better than us",
+        "text": "Computers can do some things better than people."
+      },
+      {
+        "title": "Choosing the right device",
+        "text": "People use different computer devices, and you choose one for a reason."
+      },
+      {
+        "title": "Real robots and make-believe robots",
+        "text": "A robot is a machine that does a task without help from a person."
+      },
+      {
+        "title": "The Robot Game: a robot follows exact steps",
+        "text": "A robot does exactly what it is told — no more, no less."
+      },
+      {
+        "title": "Robots that help us, and our Year 2 celebration",
+        "text": "Robots help people by doing jobs that are dangerous or very boring for a person — cleaning windows high up on a tall building, working deep underwater, checking bottles in a factory all day, or exploring space."
+      }
+    ],
+    "terms": [
+      [
+        "computer",
+        "A machine that follows instructions to do tasks very fast."
+      ],
+      [
+        "device",
+        "A computer you can use, like a desktop, laptop, tablet or phone."
+      ],
+      [
+        "store",
+        "To keep things safely so you can use them later."
+      ],
+      [
+        "robot",
+        "A machine that does a task without help from a person."
+      ],
+      [
+        "real",
+        "It truly exists in our world."
+      ],
+      [
+        "fictional",
+        "Not real. Make-believe, like in a movie."
+      ],
+      [
+        "instruction",
+        "One thing you tell the robot to do."
+      ],
+      [
+        "Step up",
+        "Up arrow"
+      ],
+      [
+        "Step down",
+        "Down arrow"
+      ],
+      [
+        "Step left",
+        "Left arrow"
+      ],
+      [
+        "Step right",
+        "Right arrow"
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "computer",
+        "meaning": "A machine that follows instructions to do tasks very fast.",
+        "example": "A laptop or a tablet.",
+        "letter": "C"
+      },
+      {
+        "term": "device",
+        "meaning": "A computer you can use, like a desktop, laptop, tablet or phone.",
+        "example": "A tablet.",
+        "letter": "D"
+      },
+      {
+        "term": "store",
+        "meaning": "To keep things safely so you can use them later.",
+        "example": "A computer stores many photos.",
+        "letter": "S"
+      },
+      {
+        "term": "robot",
+        "meaning": "A machine that does a task without help from a person.",
+        "example": "A robot arm that builds cars.",
+        "letter": "R"
+      },
+      {
+        "term": "real",
+        "meaning": "It truly exists in our world.",
+        "example": "A factory robot is real.",
+        "letter": "R"
+      },
+      {
+        "term": "fictional",
+        "meaning": "Not real. Make-believe, like in a movie.",
+        "example": "A talking robot in a film.",
+        "letter": "F"
+      },
+      {
+        "term": "instruction",
+        "meaning": "One thing you tell the robot to do.",
+        "example": "Step up.",
+        "letter": "I"
+      },
+      {
+        "term": "Step up",
+        "meaning": "Up arrow",
+        "example": "Move one square toward the top.",
+        "letter": "S"
+      },
+      {
+        "term": "Step down",
+        "meaning": "Down arrow",
+        "example": "Move one square toward the bottom.",
+        "letter": "S"
+      },
+      {
+        "term": "Step left",
+        "meaning": "Left arrow",
+        "example": "Move one square to the left.",
+        "letter": "S"
+      },
+      {
+        "term": "Step right",
+        "meaning": "Right arrow",
+        "example": "Move one square to the right.",
+        "letter": "S"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "Robots can think for themselves.",
+        "No — a robot only does exactly what it is told. It cannot decide or think. If we give it a wrong step, it goes the wrong way. The Robot Game shows this clearly."
+      ],
+      [
+        "All robots look like people.",
+        "Only make-believe (fictional) robots in films look like people. Many real robots are just an arm or a box that does one job."
+      ],
+      [
+        "A robot is alive and can feel.",
+        "A robot is a machine. It cannot feel happy or sad, and it does not get tired the way we do."
+      ],
+      [
+        "Computers are better than people at everything.",
+        "Not everything. Computers are great at fast, boring, repeated jobs. People are great at making up something new — a story, a picture, a joke."
+      ],
+      [
+        "The computer made a mistake by itself.",
+        "Usually the mistake came from the instructions a person gave. The computer just did what it was told."
+      ],
+      [
+        "A phone can do everything a big computer can.",
+        "A phone is small and easy to carry, but you cannot easily plug in a mouse and keyboard, and a big screen is better for some jobs."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Name one thing a computer can do better than a person.",
+      "answer": "Any one of: works very fast; never gets tired or bored; stores a lot in a small space; follows instructions exactly.",
+      "hint": "Look back at what computer and device mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Any one of: works very fast; never gets tired or bored; stores a lot in a small space; follows instructions exactly."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Which is easier to carry? ([ ] a desktop)",
+      "answer": "a tablet.",
+      "hint": "Look back at what computer and device mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "a tablet."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "What is a robot?",
+      "answer": "A robot is a machine that does a task without help from a person.",
+      "hint": "Look back at what computer and device mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "A robot is a machine that does a task without help from a person."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "True or false: A robot can feel sad.",
+      "answer": "False — a robot is a machine and cannot feel.",
+      "hint": "Look back at what computer and device mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "False — a robot is a machine and cannot feel."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Finish the sentence: A robot does exactly what you",
+      "answer": "tell it (or say). A robot cannot think for itself.",
+      "hint": "Look back at what computer and device mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "tell it (or say). A robot cannot think for itself."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Write the steps to move the robot (R) to the star. Each step is one square.",
+      "answer": "On the 2x2 grid (robot bottom-left, star top-right), a correct answer is Step right, Step up. Also accept Step up, Step right. Both reach the star.",
+      "hint": "Look back at what computer and device mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "On the 2x2 grid (robot bottom-left, star top-right), a correct answer is Step right, Step up. Also accept Step up, Step right. Both reach the star."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Write the steps to move the robot (R) to the star. Each step is one square.",
+      "answer": "On the 2x2 grid (robot bottom-left, star top-right), a correct answer is Step right, Step up. Also accept Step up, Step right. Both reach the star.",
+      "hint": "Look back at what computer and device mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: On the 2x2 grid (robot bottom-left, star top-right), a correct answer is Step right, Step up. Also accept Step up, Step right. Both reach the star."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "Finish the sentence: A robot does exactly what you",
+      "answer": "tell it (or say). A robot cannot think for itself.",
+      "hint": "Look back at what computer and device mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: tell it (or say). A robot cannot think for itself."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Write the steps to move the robot (R) to the star. Each step is one square.",
+      "answer": "On the 2x2 grid (robot bottom-left, star top-right), a correct answer is Step right, Step up. Also accept Step up, Step right. Both reach the star.",
+      "hint": "Look back at what computer and device mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: On the 2x2 grid (robot bottom-left, star top-right), a correct answer is Step right, Step up. Also accept Step up, Step right. Both reach the star."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "Name one thing a computer can do better than a person.",
+      "answer": "Any one of: works very fast; never gets tired or bored; stores a lot in a small space; follows instructions exactly.",
+      "hint": "Look back at what computer and device mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: Any one of: works very fast; never gets tired or bored; stores a lot in a small space; follows instructions exactly."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "What is a robot?",
+      "keyIdeas": [
+        "computer",
+        "device",
+        "store"
+      ],
+      "modelAnswer": "A robot is a machine that does a task without help from a person."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "True or false: A robot can feel sad.",
+      "keyIdeas": [
+        "device",
+        "store",
+        "robot"
+      ],
+      "modelAnswer": "False — a robot is a machine and cannot feel."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Finish the sentence: A robot does exactly what you",
+      "keyIdeas": [
+        "store",
+        "robot",
+        "real"
+      ],
+      "modelAnswer": "tell it (or say). A robot cannot think for itself."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in the robot game: a robot follows exact steps, and give one example of your own.",
+      "keyIdeas": [
+        "computer",
+        "device",
+        "store"
+      ],
+      "modelAnswer": "A robot does exactly what it is told — no more, no less. It cannot think for itself. So our instructions must be clear and in the right order. If one step is wrong, the robot goes the wrong way — and it is our job to find the wrong step and fix it.\n\nLay a small grid on the floor and put a park picture on the finish square. One child stands on the START square as the robot."
+    }
+  ],
+  "project": {
+    "title": "Unit 11 Project: Computers and Robots",
+    "brief": "Bring together everything from Computers and Robots into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your computers and robots project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I planned the robot's steps to the park.",
+      "I tested my steps with my finger.",
+      "I found and fixed the wrong step with my partner.",
+      "I made my own path.",
+      "I know a robot does exactly what I tell it."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “computer” mean in computing?",
+        "options": [
+          "A machine that follows instructions to do tasks very fast.",
+          "A computer you can use, like a desktop, laptop, tablet or phone.",
+          "To keep things safely so you can use them later.",
+          "A machine that does a task without help from a person."
+        ],
+        "answer": "A machine that follows instructions to do tasks very fast.",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Computer means a machine that follows instructions to do tasks very fast."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “device” mean in computing?",
+        "options": [
+          "A computer you can use, like a desktop, laptop, tablet or phone.",
+          "To keep things safely so you can use them later.",
+          "A machine that does a task without help from a person.",
+          "It truly exists in our world."
+        ],
+        "answer": "A computer you can use, like a desktop, laptop, tablet or phone.",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Device means a computer you can use, like a desktop, laptop, tablet or phone."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “store” mean in computing?",
+        "options": [
+          "To keep things safely so you can use them later.",
+          "A machine that does a task without help from a person.",
+          "It truly exists in our world.",
+          "Not real. Make-believe, like in a movie."
+        ],
+        "answer": "To keep things safely so you can use them later.",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Store means to keep things safely so you can use them later."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “robot” mean in computing?",
+        "options": [
+          "A machine that does a task without help from a person.",
+          "It truly exists in our world.",
+          "Not real. Make-believe, like in a movie.",
+          "One thing you tell the robot to do."
+        ],
+        "answer": "A machine that does a task without help from a person.",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Robot means a machine that does a task without help from a person."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “real” mean in computing?",
+        "options": [
+          "It truly exists in our world.",
+          "Not real. Make-believe, like in a movie.",
+          "One thing you tell the robot to do.",
+          "Up arrow"
+        ],
+        "answer": "It truly exists in our world.",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Real means it truly exists in our world."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “fictional” mean in computing?",
+        "options": [
+          "Not real. Make-believe, like in a movie.",
+          "One thing you tell the robot to do.",
+          "Up arrow",
+          "Down arrow"
+        ],
+        "answer": "Not real. Make-believe, like in a movie.",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Fictional means not real. Make-believe, like in a movie."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: One thing you tell the robot to do.?",
+        "options": [
+          "instruction",
+          "Step up",
+          "Step down",
+          "Step left"
+        ],
+        "answer": "instruction",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Instruction means one thing you tell the robot to do."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Up arrow?",
+        "options": [
+          "Step up",
+          "Step down",
+          "Step left",
+          "Step right"
+        ],
+        "answer": "Step up",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Step up means up arrow."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Down arrow?",
+        "options": [
+          "Step down",
+          "Step left",
+          "Step right",
+          "computer"
+        ],
+        "answer": "Step down",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Step down means down arrow."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Left arrow?",
+        "options": [
+          "Step left",
+          "Step right",
+          "computer",
+          "device"
+        ],
+        "answer": "Step left",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Step left means left arrow."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: Right arrow?",
+        "options": [
+          "Step right",
+          "computer",
+          "device",
+          "store"
+        ],
+        "answer": "Step right",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Step right means right arrow."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A machine that follows instructions to do tasks very fast.?",
+        "options": [
+          "computer",
+          "device",
+          "store",
+          "robot"
+        ],
+        "answer": "computer",
+        "hint": "Use the Unit 11 Computing Words reference.",
+        "explanation": "Computer means a machine that follows instructions to do tasks very fast."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u11-game-1",
+        "icon": "?",
+        "skill": "computer",
+        "title": "Quick Match: computer",
+        "description": "Practise computer through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “computer” mean in computing?",
+            "choices": [
+              "A machine that follows instructions to do tasks very fast.",
+              "A computer you can use, like a desktop, laptop, tablet or phone.",
+              "To keep things safely so you can use them later.",
+              "A machine that does a task without help from a person."
+            ],
+            "answer": "A machine that follows instructions to do tasks very fast.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Computer means a machine that follows instructions to do tasks very fast."
+          },
+          {
+            "prompt": "What does “robot” mean in computing?",
+            "choices": [
+              "A machine that does a task without help from a person.",
+              "It truly exists in our world.",
+              "Not real. Make-believe, like in a movie.",
+              "One thing you tell the robot to do."
+            ],
+            "answer": "A machine that does a task without help from a person.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Robot means a machine that does a task without help from a person."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: One thing you tell the robot to do.?",
+            "choices": [
+              "instruction",
+              "Step up",
+              "Step down",
+              "Step left"
+            ],
+            "answer": "instruction",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Instruction means one thing you tell the robot to do."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Left arrow?",
+            "choices": [
+              "Step left",
+              "Step right",
+              "computer",
+              "device"
+            ],
+            "answer": "Step left",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Step left means left arrow."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-2",
+        "icon": "★",
+        "skill": "device",
+        "title": "Concept Quest: device",
+        "description": "Practise device through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “device” mean in computing?",
+            "choices": [
+              "A computer you can use, like a desktop, laptop, tablet or phone.",
+              "To keep things safely so you can use them later.",
+              "A machine that does a task without help from a person.",
+              "It truly exists in our world."
+            ],
+            "answer": "A computer you can use, like a desktop, laptop, tablet or phone.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Device means a computer you can use, like a desktop, laptop, tablet or phone."
+          },
+          {
+            "prompt": "What does “real” mean in computing?",
+            "choices": [
+              "It truly exists in our world.",
+              "Not real. Make-believe, like in a movie.",
+              "One thing you tell the robot to do.",
+              "Up arrow"
+            ],
+            "answer": "It truly exists in our world.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Real means it truly exists in our world."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Up arrow?",
+            "choices": [
+              "Step up",
+              "Step down",
+              "Step left",
+              "Step right"
+            ],
+            "answer": "Step up",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Step up means up arrow."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Right arrow?",
+            "choices": [
+              "Step right",
+              "computer",
+              "device",
+              "store"
+            ],
+            "answer": "Step right",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Step right means right arrow."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-3",
+        "icon": "◫",
+        "skill": "store",
+        "title": "Debug Detective: store",
+        "description": "Practise store through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “store” mean in computing?",
+            "choices": [
+              "To keep things safely so you can use them later.",
+              "A machine that does a task without help from a person.",
+              "It truly exists in our world.",
+              "Not real. Make-believe, like in a movie."
+            ],
+            "answer": "To keep things safely so you can use them later.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Store means to keep things safely so you can use them later."
+          },
+          {
+            "prompt": "What does “fictional” mean in computing?",
+            "choices": [
+              "Not real. Make-believe, like in a movie.",
+              "One thing you tell the robot to do.",
+              "Up arrow",
+              "Down arrow"
+            ],
+            "answer": "Not real. Make-believe, like in a movie.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Fictional means not real. Make-believe, like in a movie."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Down arrow?",
+            "choices": [
+              "Step down",
+              "Step left",
+              "Step right",
+              "computer"
+            ],
+            "answer": "Step down",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Step down means down arrow."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A machine that follows instructions to do tasks very fast.?",
+            "choices": [
+              "computer",
+              "device",
+              "store",
+              "robot"
+            ],
+            "answer": "computer",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Computer means a machine that follows instructions to do tasks very fast."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-4",
+        "icon": "→",
+        "skill": "robot",
+        "title": "Algorithm Runner: robot",
+        "description": "Practise robot through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “robot” mean in computing?",
+            "choices": [
+              "A machine that does a task without help from a person.",
+              "It truly exists in our world.",
+              "Not real. Make-believe, like in a movie.",
+              "One thing you tell the robot to do."
+            ],
+            "answer": "A machine that does a task without help from a person.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Robot means a machine that does a task without help from a person."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: One thing you tell the robot to do.?",
+            "choices": [
+              "instruction",
+              "Step up",
+              "Step down",
+              "Step left"
+            ],
+            "answer": "instruction",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Instruction means one thing you tell the robot to do."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Left arrow?",
+            "choices": [
+              "Step left",
+              "Step right",
+              "computer",
+              "device"
+            ],
+            "answer": "Step left",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Step left means left arrow."
+          },
+          {
+            "prompt": "What does “computer” mean in computing?",
+            "choices": [
+              "A machine that follows instructions to do tasks very fast.",
+              "A computer you can use, like a desktop, laptop, tablet or phone.",
+              "To keep things safely so you can use them later.",
+              "A machine that does a task without help from a person."
+            ],
+            "answer": "A machine that follows instructions to do tasks very fast.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Computer means a machine that follows instructions to do tasks very fast."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-5",
+        "icon": "Σ",
+        "skill": "real",
+        "title": "Vocabulary Vault: real",
+        "description": "Practise real through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “real” mean in computing?",
+            "choices": [
+              "It truly exists in our world.",
+              "Not real. Make-believe, like in a movie.",
+              "One thing you tell the robot to do.",
+              "Up arrow"
+            ],
+            "answer": "It truly exists in our world.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Real means it truly exists in our world."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Up arrow?",
+            "choices": [
+              "Step up",
+              "Step down",
+              "Step left",
+              "Step right"
+            ],
+            "answer": "Step up",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Step up means up arrow."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Right arrow?",
+            "choices": [
+              "Step right",
+              "computer",
+              "device",
+              "store"
+            ],
+            "answer": "Step right",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Step right means right arrow."
+          },
+          {
+            "prompt": "What does “device” mean in computing?",
+            "choices": [
+              "A computer you can use, like a desktop, laptop, tablet or phone.",
+              "To keep things safely so you can use them later.",
+              "A machine that does a task without help from a person.",
+              "It truly exists in our world."
+            ],
+            "answer": "A computer you can use, like a desktop, laptop, tablet or phone.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Device means a computer you can use, like a desktop, laptop, tablet or phone."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-6",
+        "icon": "◇",
+        "skill": "fictional",
+        "title": "Challenge Cards: fictional",
+        "description": "Practise fictional through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “fictional” mean in computing?",
+            "choices": [
+              "Not real. Make-believe, like in a movie.",
+              "One thing you tell the robot to do.",
+              "Up arrow",
+              "Down arrow"
+            ],
+            "answer": "Not real. Make-believe, like in a movie.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Fictional means not real. Make-believe, like in a movie."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Down arrow?",
+            "choices": [
+              "Step down",
+              "Step left",
+              "Step right",
+              "computer"
+            ],
+            "answer": "Step down",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Step down means down arrow."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A machine that follows instructions to do tasks very fast.?",
+            "choices": [
+              "computer",
+              "device",
+              "store",
+              "robot"
+            ],
+            "answer": "computer",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Computer means a machine that follows instructions to do tasks very fast."
+          },
+          {
+            "prompt": "What does “store” mean in computing?",
+            "choices": [
+              "To keep things safely so you can use them later.",
+              "A machine that does a task without help from a person.",
+              "It truly exists in our world.",
+              "Not real. Make-believe, like in a movie."
+            ],
+            "answer": "To keep things safely so you can use them later.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Store means to keep things safely so you can use them later."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-7",
+        "icon": "⚡",
+        "skill": "instruction",
+        "title": "Think Fast: instruction",
+        "description": "Practise instruction through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: One thing you tell the robot to do.?",
+            "choices": [
+              "instruction",
+              "Step up",
+              "Step down",
+              "Step left"
+            ],
+            "answer": "instruction",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Instruction means one thing you tell the robot to do."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Left arrow?",
+            "choices": [
+              "Step left",
+              "Step right",
+              "computer",
+              "device"
+            ],
+            "answer": "Step left",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Step left means left arrow."
+          },
+          {
+            "prompt": "What does “computer” mean in computing?",
+            "choices": [
+              "A machine that follows instructions to do tasks very fast.",
+              "A computer you can use, like a desktop, laptop, tablet or phone.",
+              "To keep things safely so you can use them later.",
+              "A machine that does a task without help from a person."
+            ],
+            "answer": "A machine that follows instructions to do tasks very fast.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Computer means a machine that follows instructions to do tasks very fast."
+          },
+          {
+            "prompt": "What does “robot” mean in computing?",
+            "choices": [
+              "A machine that does a task without help from a person.",
+              "It truly exists in our world.",
+              "Not real. Make-believe, like in a movie.",
+              "One thing you tell the robot to do."
+            ],
+            "answer": "A machine that does a task without help from a person.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Robot means a machine that does a task without help from a person."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-8",
+        "icon": "☁",
+        "skill": "Step up",
+        "title": "Explain It: Step up",
+        "description": "Practise step up through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Up arrow?",
+            "choices": [
+              "Step up",
+              "Step down",
+              "Step left",
+              "Step right"
+            ],
+            "answer": "Step up",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Step up means up arrow."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Right arrow?",
+            "choices": [
+              "Step right",
+              "computer",
+              "device",
+              "store"
+            ],
+            "answer": "Step right",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Step right means right arrow."
+          },
+          {
+            "prompt": "What does “device” mean in computing?",
+            "choices": [
+              "A computer you can use, like a desktop, laptop, tablet or phone.",
+              "To keep things safely so you can use them later.",
+              "A machine that does a task without help from a person.",
+              "It truly exists in our world."
+            ],
+            "answer": "A computer you can use, like a desktop, laptop, tablet or phone.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Device means a computer you can use, like a desktop, laptop, tablet or phone."
+          },
+          {
+            "prompt": "What does “real” mean in computing?",
+            "choices": [
+              "It truly exists in our world.",
+              "Not real. Make-believe, like in a movie.",
+              "One thing you tell the robot to do.",
+              "Up arrow"
+            ],
+            "answer": "It truly exists in our world.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Real means it truly exists in our world."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-9",
+        "icon": "⌂",
+        "skill": "Step down",
+        "title": "Real-Life Round: Step down",
+        "description": "Practise step down through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Down arrow?",
+            "choices": [
+              "Step down",
+              "Step left",
+              "Step right",
+              "computer"
+            ],
+            "answer": "Step down",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Step down means down arrow."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A machine that follows instructions to do tasks very fast.?",
+            "choices": [
+              "computer",
+              "device",
+              "store",
+              "robot"
+            ],
+            "answer": "computer",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Computer means a machine that follows instructions to do tasks very fast."
+          },
+          {
+            "prompt": "What does “store” mean in computing?",
+            "choices": [
+              "To keep things safely so you can use them later.",
+              "A machine that does a task without help from a person.",
+              "It truly exists in our world.",
+              "Not real. Make-believe, like in a movie."
+            ],
+            "answer": "To keep things safely so you can use them later.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Store means to keep things safely so you can use them later."
+          },
+          {
+            "prompt": "What does “fictional” mean in computing?",
+            "choices": [
+              "Not real. Make-believe, like in a movie.",
+              "One thing you tell the robot to do.",
+              "Up arrow",
+              "Down arrow"
+            ],
+            "answer": "Not real. Make-believe, like in a movie.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Fictional means not real. Make-believe, like in a movie."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-10",
+        "icon": "!",
+        "skill": "Step left",
+        "title": "Spot the Bug: Step left",
+        "description": "Practise step left through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Left arrow?",
+            "choices": [
+              "Step left",
+              "Step right",
+              "computer",
+              "device"
+            ],
+            "answer": "Step left",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Step left means left arrow."
+          },
+          {
+            "prompt": "What does “computer” mean in computing?",
+            "choices": [
+              "A machine that follows instructions to do tasks very fast.",
+              "A computer you can use, like a desktop, laptop, tablet or phone.",
+              "To keep things safely so you can use them later.",
+              "A machine that does a task without help from a person."
+            ],
+            "answer": "A machine that follows instructions to do tasks very fast.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Computer means a machine that follows instructions to do tasks very fast."
+          },
+          {
+            "prompt": "What does “robot” mean in computing?",
+            "choices": [
+              "A machine that does a task without help from a person.",
+              "It truly exists in our world.",
+              "Not real. Make-believe, like in a movie.",
+              "One thing you tell the robot to do."
+            ],
+            "answer": "A machine that does a task without help from a person.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Robot means a machine that does a task without help from a person."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: One thing you tell the robot to do.?",
+            "choices": [
+              "instruction",
+              "Step up",
+              "Step down",
+              "Step left"
+            ],
+            "answer": "instruction",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Instruction means one thing you tell the robot to do."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-11",
+        "icon": "≡",
+        "skill": "Step right",
+        "title": "Mastery Mix: Step right",
+        "description": "Practise step right through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Right arrow?",
+            "choices": [
+              "Step right",
+              "computer",
+              "device",
+              "store"
+            ],
+            "answer": "Step right",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Step right means right arrow."
+          },
+          {
+            "prompt": "What does “device” mean in computing?",
+            "choices": [
+              "A computer you can use, like a desktop, laptop, tablet or phone.",
+              "To keep things safely so you can use them later.",
+              "A machine that does a task without help from a person.",
+              "It truly exists in our world."
+            ],
+            "answer": "A computer you can use, like a desktop, laptop, tablet or phone.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Device means a computer you can use, like a desktop, laptop, tablet or phone."
+          },
+          {
+            "prompt": "What does “real” mean in computing?",
+            "choices": [
+              "It truly exists in our world.",
+              "Not real. Make-believe, like in a movie.",
+              "One thing you tell the robot to do.",
+              "Up arrow"
+            ],
+            "answer": "It truly exists in our world.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Real means it truly exists in our world."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Up arrow?",
+            "choices": [
+              "Step up",
+              "Step down",
+              "Step left",
+              "Step right"
+            ],
+            "answer": "Step up",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Step up means up arrow."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-12",
+        "icon": "T",
+        "skill": "computer",
+        "title": "Unit Champion: computer",
+        "description": "Practise computer through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A machine that follows instructions to do tasks very fast.?",
+            "choices": [
+              "computer",
+              "device",
+              "store",
+              "robot"
+            ],
+            "answer": "computer",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Computer means a machine that follows instructions to do tasks very fast."
+          },
+          {
+            "prompt": "What does “store” mean in computing?",
+            "choices": [
+              "To keep things safely so you can use them later.",
+              "A machine that does a task without help from a person.",
+              "It truly exists in our world.",
+              "Not real. Make-believe, like in a movie."
+            ],
+            "answer": "To keep things safely so you can use them later.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Store means to keep things safely so you can use them later."
+          },
+          {
+            "prompt": "What does “fictional” mean in computing?",
+            "choices": [
+              "Not real. Make-believe, like in a movie.",
+              "One thing you tell the robot to do.",
+              "Up arrow",
+              "Down arrow"
+            ],
+            "answer": "Not real. Make-believe, like in a movie.",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Fictional means not real. Make-believe, like in a movie."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Down arrow?",
+            "choices": [
+              "Step down",
+              "Step left",
+              "Step right",
+              "computer"
+            ],
+            "answer": "Step down",
+            "clue": "Use the Unit 11 Computing Words reference.",
+            "explanation": "Step down means down arrow."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can name some tasks computers can do better than people — work fast, never get tired or bored, store a lot, and follow instructions exactly.",
+    "I can understand that people are still better at some things, like making up something new (a story, a picture, a joke).",
+    "I can know that people use different computer devices — desktop, laptop, tablet and smartphone.",
+    "I can give a simple reason for choosing a device (for example, \"a tablet is light and easy to carry\").",
+    "I can say what a robot is — a machine that does a task without help from a person.",
+    "I can tell the difference between a real robot and a fictional (make-believe) robot.",
+    "I can give the robot a short, correct sequence of steps to reach a place, and understand a robot does exactly what it is told.",
+    "I can find and fix a wrong step in a short set of robot instructions."
+  ]
+}

@@ -1,0 +1,1867 @@
+{
+  "schemaVersion": "Ehel Computing Runtime v1.0",
+  "generatedAt": "2026-08-01T14:06:00.793Z",
+  "stage": {
+    "id": "s04",
+    "label": "Stage 4"
+  },
+  "subject": "Computing",
+  "term": {
+    "id": "t03",
+    "label": "Term 3"
+  },
+  "unit": {
+    "unitId": "comp-g04-u12",
+    "unitNo": 12,
+    "unitTitle": "Be an Artist",
+    "unitOverview": "Welcome to Unit 12 of Year 4 Computing at Ehel Academy — the very last unit of the year. Be an Artist. But there is no paper and no paintbrush: the canvas is a tiny computer called the micro:bit, and the paint is light. The micro:bit has 25 little red lights — LEDs — in a 5-by-5 grid. By turning those lights on and off, we can draw a square, a heart, a diamond, an arrow, or our own repeating pattern, like the geometric tile-work in a mosaic.\n\nthe artistic title hides a serious computing idea: physical computing. A micro:bit is a physical computing device — a small computer that senses the world and acts on it. It takes in inputs (a button press, a touch, a shake) and gives out outputs (a shape of light, a sound). The big idea is that we can program different outputs from different inputs: Button A shows a square, Button B shows a heart, touching the gold logo plays a twinkle sound.\n\nThe repeat ( ) loop repeats a set number of times and then stops (a count-controlled loop, met earlier this year); the forever loop repeats over and over and never stops. A flashing dot, a twinkling pattern, a blinking arrow — all are loops at work. You also make their art move, using two kinds of loop — blocks that repeat other blocks. And as always, you write the algorithm first (a simple plan) and only then build the code, because a good artist and a good programmer both plan before they start.",
+    "learningPath": [
+      "Preview the goals, key words and the tools you will use",
+      "Read the concept explainers and study the code examples",
+      "Follow the methods and worked examples",
+      "Build the activities, debug your work and play the games",
+      "Apply, explain and finish the Unit Project and Challenge"
+    ],
+    "reviewStatus": "Curriculum review required"
+  },
+  "cambridge": {
+    "level": "Cambridge Primary Computing",
+    "code": "0672",
+    "stage": 4
+  },
+  "provenance": {
+    "contentPackage": "Ehel-Academy-Computing-Grade-4-Content-Package",
+    "framework": "Cambridge Primary Computing 0672 — Stage 4",
+    "sourceArchive": "Year 4-20260801T055750Z-1-001.zip",
+    "sourceAudience": "teacher-guide",
+    "sourceDocuments": [
+      "Year 4/Unit 12/Year 4 - Unit 12 Teacher Guide.docx",
+      "Year 4/Unit 12/Year 4 - Unit 12 Activity Sheet.docx",
+      "Year 4/Unit 12/Year 4 - Unit 12 Mini-Project & Practice.docx"
+    ],
+    "sourceBlockCount": 382,
+    "transformation": "Structured from the Cambridge Primary Computing 0672 — Stage 4 Teacher & Parent Guide, Activity Sheet and Mini-Project. Teacher-directed prose was rewritten into learner-facing explainers so the unit teaches with no adult present.",
+    "reviewStatus": "Imported - curriculum review required"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Explain that a micro:bit is a physical computing device — a small computer that senses the world and acts on it.",
+    "Tell the difference between an input (information going into the device, like a button press) and an output (information coming out, like a shape of light or a sound).",
+    "Name some inputs on the micro:bit (Button A, Button B, the touch logo, shake) and some outputs (the LED display, the speaker).",
+    "Draw a shape or pattern on the 5-by-5 LED grid using the show leds, show icon and show arrow blocks in MakeCode.",
+    "Develop an algorithm (a plan) so that different inputs produce different outputs, then build it as a program.",
+    "Build a program with a count-controlled loop (the repeat ( ) block) to flash art a set number of times.",
+    "Build a program with a forever loop to make art animate over and over.",
+    "Test a program part by part, and find and fix (debug) simple mistakes.",
+    "Before this unit (from the syllabus), children should already follow, understand and edit algorithms that use repetition, test different parts of a program, and know about count-controlled and forever loops (met earlier in Year 4). They will also have met the micro:bit and its inputs and outputs in Unit 8, \"Be an innovator\". A quick recap of \"input, output, loop\" at the start of Session 1 is usually enough."
+  ],
+  "toolkit": [
+    {
+      "name": "Scratch",
+      "url": "scratch.mit.edu",
+      "steps": [
+        "Go to scratch.mit.edu and click Create.",
+        "Drag blocks from the palette on the left into the code area.",
+        "Make variables in the orange Variables section.",
+        "Click the green flag to run and the red circle to stop."
+      ],
+      "note": "Runs in a web browser. Free, with nothing to download."
+    },
+    {
+      "name": "micro:bit simulator",
+      "url": "makecode.microbit.org (blocks) or python.microbit.org (Python)",
+      "steps": [
+        "Open makecode.microbit.org for blocks, or python.microbit.org for Python.",
+        "Write your code in the editor.",
+        "The micro:bit simulator on the left runs your code straight away.",
+        "Click the on-screen A and B buttons, and use the shake control, to test your inputs."
+      ],
+      "note": "You do not need to own a real micro:bit — the simulator does everything."
+    }
+  ],
+  "tutorPrompts": [],
+  "concepts": [
+    {
+      "id": "concept-1-our-canvas-of-light-unplugged",
+      "title": "Our canvas of light (unplugged)",
+      "explanation": "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and outputs (ways for information to come out). Its main output is the LED display: 25 little red lights, called LEDs, in a 5-by-5 grid. That grid is our canvas, and we paint by choosing which lights are on.\n\nAn input is something going in; an output is something coming out. Point around the room: a switch is an input, the bulb lighting up is the output; you knock (input) and the door opens (output).",
+      "example": "Find one real example of our canvas of light around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you colour a grid to make a recognisable shape? Can you notice symmetry — that a pattern can be balanced left-to-right and top-to-bottom?"
+    },
+    {
+      "id": "concept-2-painting-shapes-with-light-outputs-in-makecode",
+      "title": "Painting shapes with light (outputs) in MakeCode",
+      "explanation": "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds (a grid we colour in ourselves to draw our own art), clear screen (turn all the lights off) and pause (ms) (wait for a moment). We also meet show arrow for pointing arrows.\n\nOn the projector, go to makecode.microbit.org and click New Project. Drag a show icon block into on start and pick the heart from its dropdown — the simulator lights it up at once. Here is a diamond-star pattern to build together (# is a light on. is a light off)",
+      "example": "Find one real example of painting shapes with light (outputs) in MakeCode around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you understand that clear screen only turns the lights off — it does not delete your code? Can you open a new project and find the Basic blocks?"
+    },
+    {
+      "id": "concept-3-different-outputs-from-different-inputs",
+      "title": "Different outputs from different inputs",
+      "explanation": "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed, on button B pressed, on logo pressed (the gold touch logo) and on shake. Whatever blocks we put inside an input block only run when that input happens.\n\nFirst, plan. Only then build it.",
+      "example": "Drag on button A pressed from Input and drop a show icon (small square) inside; do the same for Button B with a heart, and for on logo pressed add play sound twinkle until done from the Music blocks. It looks like this",
+      "checkYourself": "Can you test each input in turn on the simulator, and fix it if an output is on the wrong input? Can you put an output block inside an input block?"
+    },
+    {
+      "id": "concept-4-count-controlled-loops-flash-it-a-set-number-of-times",
+      "title": "Count-controlled loops: flash it a set number of times",
+      "explanation": "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops.\n\nHow could we make one light blink five times? From the Loops group, drag repeat (5) and build a blink inside it: show one light, wait, clear, wait. Because 1000 ms is 1 second, this blinks on for a second and off for a second, five times, and then stops on its own",
+      "example": "Find one real example of count-controlled loops: flash it a set number of times around you, or on a device you use. Say out loud what it is and why it fits.",
+      "checkYourself": "Can you change the number and predict the result? Can you understand that the loop stops on its own after counting? Can you drag a repeat block and put blocks inside its mouth?"
+    },
+    {
+      "id": "concept-5-be-an-artist-forever-loops-and-the-light-art-show",
+      "title": "Be an artist: forever loops and the light-art show",
+      "explanation": "The second loop is forever: it repeats over and over and never stops on its own. It is perfect for art that twinkles or animates. We also compare the two loops — when do we want to stop after a set number (count-controlled), and when do we want it to keep going (forever)?\n\nFrom the Loops group, drag a forever block. Build an animation inside it — an arrow that blinks on and off — and let it run. It never stops until you press the stop button on the simulator",
+      "example": "Do it yourself: be an artist: forever loops and the light-art show. Work through it slowly, then check what you did against the explanation above.",
+      "checkYourself": "Can you combine inputs and a loop into one program and test it in parts? Can you build a forever loop and run and stop it?"
+    }
+  ],
+  "codeExamples": [
+    {
+      "id": "code-1",
+      "title": "on start",
+      "language": "Scratch blocks",
+      "intro": "",
+      "lines": [
+        "repeat (5)",
+        "show leds"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    },
+    {
+      "id": "code-2",
+      "title": "Session 5 — Be an artist: forever loops and the light-art show — listing 1",
+      "language": "Scratch blocks",
+      "intro": "From Session 5 — Be an artist: forever loops and the light-art show.",
+      "lines": [
+        "forever",
+        "show arrow [North]",
+        "pause (1000)"
+      ],
+      "explanation": "Read it one line at a time and say out loud what each line does before you type it in."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Inputs and Outputs",
+      "context": "work through the steps below and see what happens. This is our canvas of light (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "An input is information going IN. An output is information coming OUT. Write each thing below under the right heading.",
+      "answer": "Things: pressing Button A — a heart lighting up — touching the gold logo — a twinkle sound — shaking the micro:bit — a square lighting up Inputs (going in): ________________________________________________________ Outputs (coming out): _____________________________________________________",
+      "modelType": "model-1",
+      "hint": "Start here: Things: pressing Button A — a heart lighting up — touching the gold logo — a twinkle sound — shaking the micro:bit — a square lighting up",
+      "explanation": "Our canvas of light (unplugged): A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and outputs (ways for information to come out). Its main output is the LED display: 25 little red lights, called LEDs, in a 5-by-5 grid. That grid is our…"
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Discover",
+      "title": "Colour the Canvas",
+      "context": "work through the steps below and see what happens. This is painting shapes with light (outputs) in makecode in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "a) Colour some squares in this grid to draw a shape you like — a heart, a star, or the first letter of your name.",
+      "answer": "b) Now make a pattern that is the same on the left and the right, like the beautiful tiles in a mosaic. Colour it carefully so it is balanced.",
+      "modelType": "model-2",
+      "hint": "Start here: b) Now make a pattern that is the same on the left and the right, like the beautiful tiles in a mosaic. Colour it carefully so it is balanced.",
+      "explanation": "Painting shapes with light (outputs) in MakeCode: Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds (a grid we colour in ourselves to draw our own art), clear screen (turn all the lights off) and pause (ms) (wait for a moment). We also meet show…"
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Discover",
+      "title": "Match the Block to the Picture",
+      "context": "work through the steps below and see what happens. This is different outputs from different inputs in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Draw a line from each block to what it shows on the micro:bit.",
+      "answer": "Match: Block → What it shows Match: show icon [heart] → an arrow pointing up Match: show icon [small square] → a heart Match: show arrow [North] → all lights off (blank) Match: clear screen → a small square",
+      "modelType": "model-3",
+      "hint": "Start here: Match: Block → What it shows",
+      "explanation": "Different outputs from different inputs: This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed, on button B pressed, on logo pressed (the gold touch logo) and on shake. Whatever blocks we put inside an input block only run when that input…"
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Explore",
+      "title": "Write the Algorithm",
+      "context": "work through the steps below and see what happens. This is count-controlled loops: flash it a set number of times in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Leila is planning her art. An algorithm is a plan you write BEFORE you code. Fill in the outputs: choose a shape or a sound for each input.",
+      "answer": "Match: Input (what happens) → Output (what it paints) Match: When Button A is pressed → show ____________________ Match: When Button B is pressed → show ____________________ Match: When the logo is touched → play ____________________",
+      "modelType": "model-4",
+      "hint": "Start here: Match: Input (what happens) → Output (what it paints)",
+      "explanation": "Count-controlled loops: flash it a set number of times: Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo05",
+      "difficulty": "Explore",
+      "title": "Predict the Program",
+      "context": "work through the steps below and see what happens. This is be an artist: forever loops and the light-art show in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Be a code detective! Do not build it yet — predict what it does.",
+      "answer": "on button A pressed on button B pressed a) What happens when you press Button A? _______________________________ b) What happens when you press Button B? _______________________________ c) What happens before you press any button? ___________________________",
+      "modelType": "model-5",
+      "hint": "Start here: on button A pressed",
+      "explanation": "Be an artist: forever loops and the light-art show: The second loop is forever: it repeats over and over and never stops on its own. It is perfect for art that twinkles or animates. We also compare the two loops — when do we want to stop after a set number (count-controlled), and when do we want it to keep going (forever)?"
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo06",
+      "difficulty": "Explore",
+      "title": "Try it in MakeCode! Flash a Light",
+      "context": "work through the steps below and see what happens. This is our canvas of light (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
+      "prompt": "Now build a blinking light with a count-controlled loop.",
+      "answer": "Go to makecode.microbit.org and click New Project. You will see an on-screen micro:bit — that is the simulator. You do not need a real one! From Loops, drag a repeat (4) block into on start. Inside the loop, build a blink: show leds (turn on the middle light), then pause (1000), then clear screen, then pause (1000). It should look like this on start .....",
+      "modelType": "model-6",
+      "hint": "Start here: Go to makecode.microbit.org and click New Project. You will see an on-screen micro:bit — that is the simulator. You do not need a real one!",
+      "explanation": "Our canvas of light (unplugged): A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and outputs (ways for information to come out). Its main output is the LED display: 25 little red lights, called LEDs, in a 5-by-5 grid. That grid is our…"
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Our canvas of light (unplugged)",
+      "modelType": "concept-model-1",
+      "purpose": "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and outputs (ways for information to come out). Its main output is the LED…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Painting shapes with light (outputs) in MakeCode",
+      "modelType": "concept-model-2",
+      "purpose": "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds (a grid we colour in ourselves to draw our own art), clear screen…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Different outputs from different inputs",
+      "modelType": "concept-model-3",
+      "purpose": "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed, on button B pressed, on logo pressed (the gold touch logo) and on…",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Count-controlled loops: flash it a set number of times",
+      "modelType": "concept-model-4",
+      "purpose": "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops.",
+      "defaultNumber": null
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo05",
+      "title": "Be an artist: forever loops and the light-art show",
+      "modelType": "concept-model-5",
+      "purpose": "The second loop is forever: it repeats over and over and never stops on its own. It is perfect for art that twinkles or animates. We also compare the two loops — when do we want to stop after a set number…",
+      "defaultNumber": null
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to work with our canvas of light (unplugged)",
+      "example": "Find one real example of our canvas of light around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for our canvas of light (unplugged) and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to work with painting shapes with light (outputs) in makecode",
+      "example": "Find one real example of painting shapes with light (outputs) in MakeCode around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for painting shapes with light (outputs) in makecode and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to work with different outputs from different inputs",
+      "example": "Drag on button A pressed from Input and drop a show icon (small square) inside; do the same for Button B with a heart, and for on logo pressed add play sound twinkle until done from the Music blocks. It looks like this",
+      "steps": [
+        "Read the concept card for different outputs from different inputs and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Challenge",
+      "title": "How to work with count-controlled loops: flash it a set number of times",
+      "example": "Find one real example of count-controlled loops: flash it a set number of times around you, or on a device you use. Say out loud what it is and why it fits.",
+      "steps": [
+        "Read the concept card for count-controlled loops: flash it a set number of times and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Challenge",
+      "title": "How to work with be an artist: forever loops and the light-art show",
+      "example": "Do it yourself: be an artist: forever loops and the light-art show. Work through it slowly, then check what you did against the explanation above.",
+      "steps": [
+        "Read the concept card for be an artist: forever loops and the light-art show and say the main idea in your own words.",
+        "Look at the worked example and copy it exactly, one step at a time.",
+        "Change one thing in your copy and predict what will happen before you run it.",
+        "Run it. If your prediction was wrong, find the step where your idea and the computer's behaviour part company — that is what you have just learned."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Worked example 1: Our canvas of light (unplugged)",
+      "prompt": "What is a physical computing device? Give one example.",
+      "solution": "A physical computing device is a small computer that senses the world and acts on it. Example: the micro:bit."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "title": "Worked example 2: Painting shapes with light (outputs) in MakeCode",
+      "prompt": "Write one input and one output on the micro:bit.",
+      "solution": "Input example: pressing Button A / touching the logo / shaking. Output example: a shape lighting up on the LED display / a twinkle sound."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo03",
+      "difficulty": "Basic",
+      "title": "Worked example 3: Different outputs from different inputs",
+      "prompt": "Name the loop for each job:",
+      "solution": "(a) repeat ( ) (count-controlled). (b) forever."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo04",
+      "difficulty": "Intermediate",
+      "title": "Worked example 4: Count-controlled loops: flash it a set number of times",
+      "prompt": "Predict this program. How many times does the light blink?",
+      "solution": "5 times (the loop repeats 5 times, then stops)."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo05",
+      "difficulty": "Intermediate",
+      "title": "Worked example 5: Be an artist: forever loops and the light-art show",
+      "prompt": "Look at this show leds grid. What shape do the lit lights make, and how many lights are on?",
+      "solution": "The shape is a heart, and 16 lights are on. Count them row by row: 2 + 5 + 5 + 3 + 1 = 16."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Our canvas of light (unplugged)",
+      "prompt": "pause (2000) waits how many seconds?",
+      "solution": "pause (2000) waits 2 seconds (1000 ms = 1 second). We write the algorithm first so we have a clear plan and know what to build before we start — it saves time and mistakes."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "What is a physical computing device? Give one example.",
+      "answer": "A physical computing device is a small computer that senses the world and acts on it. Example: the micro:bit.",
+      "hint": "Look back at what physical computing device and input mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Write one input and one output on the micro:bit.",
+      "answer": "Input example: pressing Button A / touching the logo / shaking. Output example: a shape lighting up on the LED display / a twinkle sound.",
+      "hint": "Look back at what physical computing device and input mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p03",
+      "level": "Core",
+      "prompt": "Name the loop for each job:",
+      "answer": "(a) repeat ( ) (count-controlled). (b) forever.",
+      "hint": "Look back at what physical computing device and input mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Predict this program. How many times does the light blink?",
+      "answer": "5 times (the loop repeats 5 times, then stops).",
+      "hint": "Look back at what physical computing device and input mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "Look at this show leds grid. What shape do the lit lights make, and how many lights are on?",
+      "answer": "The shape is a heart, and 16 lights are on. Count them row by row: 2 + 5 + 5 + 3 + 1 = 16.",
+      "hint": "Look back at what physical computing device and input mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "pause (2000) waits how many seconds?",
+      "answer": "pause (2000) waits 2 seconds (1000 ms = 1 second). We write the algorithm first so we have a clear plan and know what to build before we start — it saves time and mistakes.",
+      "hint": "Look back at what physical computing device and input mean in this unit, then say your answer in a full sentence."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Inputs and Outputs",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "An input is information going IN. An output is information coming OUT. Write each thing below under the right heading.",
+        "Things: pressing Button A — a heart lighting up — touching the gold logo — a twinkle sound — shaking the micro:bit — a square lighting up",
+        "Inputs (going in): ________________________________________________________",
+        "Outputs (coming out): _____________________________________________________"
+      ]
+    },
+    {
+      "title": "Colour the Canvas",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "a) Colour some squares in this grid to draw a shape you like — a heart, a star, or the first letter of your name.",
+        "b) Now make a pattern that is the same on the left and the right, like the beautiful tiles in a mosaic. Colour it carefully so it is balanced."
+      ]
+    },
+    {
+      "title": "Match the Block to the Picture",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Draw a line from each block to what it shows on the micro:bit.",
+        "Match: Block → What it shows",
+        "Match: show icon [heart] → an arrow pointing up",
+        "Match: show icon [small square] → a heart",
+        "Match: show arrow [North] → all lights off (blank)",
+        "Match: clear screen → a small square"
+      ]
+    },
+    {
+      "title": "Write the Algorithm",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Leila is planning her art. An algorithm is a plan you write BEFORE you code. Fill in the outputs: choose a shape or a sound for each input.",
+        "Match: Input (what happens) → Output (what it paints)",
+        "Match: When Button A is pressed → show ____________________",
+        "Match: When Button B is pressed → show ____________________",
+        "Match: When the logo is touched → play ____________________"
+      ]
+    },
+    {
+      "title": "Predict the Program",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Be a code detective! Do not build it yet — predict what it does.",
+        "on button A pressed",
+        "on button B pressed",
+        "a) What happens when you press Button A? _______________________________",
+        "b) What happens when you press Button B? _______________________________",
+        "c) What happens before you press any button? ___________________________"
+      ]
+    },
+    {
+      "title": "Try it in MakeCode! Flash a Light",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Now build a blinking light with a count-controlled loop.",
+        "Go to makecode.microbit.org and click New Project. You will see an on-screen micro:bit — that is the simulator. You do not need a real one!",
+        "From Loops, drag a repeat (4) block into on start.",
+        "Inside the loop, build a blink: show leds (turn on the middle light), then pause (1000), then clear screen, then pause (1000). It should look like this",
+        "on start",
+        "....."
+      ]
+    },
+    {
+      "title": "Which Loop?",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "Write the best loop for each job: choose repeat ( ) (counts, then stops) or forever (never stops).",
+        "a) You want a shape to flash exactly 6 times. Loop: ______________________",
+        "b) You want a pattern that twinkles and never stops. Loop: ______________________",
+        "Did You Know?",
+        "The micro:bit's whole screen is just 25 red lights in a 5-by-5 grid — so every picture you make is drawn out of 25 tiny dots of light!",
+        "The number in pause is in milliseconds. There are 1000 milliseconds in one second, so pause (1000) waits exactly one second."
+      ]
+    },
+    {
+      "title": "Plan It (write your algorithm)",
+      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "steps": [
+        "A good artist plans first. Decide what each input will paint. Fill in your ideas.",
+        "When I press Button A, show: ______________________________________",
+        "When I press Button B, show: ______________________________________",
+        "When I touch the logo, play (a sound) or show: ________________________",
+        "My animation idea (something that blinks or twinkles with a loop): ____________________"
+      ]
+    }
+  ],
+  "debugging": [
+    {
+      "symptom": "The micro:bit has a proper screen like a laptop.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No. Its display is just 25 red lights in a grid. It draws shapes and letters as patterns of dots."
+    },
+    {
+      "symptom": "An input and an output are the same.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No. An input goes IN (pressing a button); an output comes OUT (a shape lights up, a sound plays)."
+    },
+    {
+      "symptom": "Pressing a button always does the same thing.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No. We program each input separately, so Button A can paint a square while Button B paints a heart."
+    },
+    {
+      "symptom": "You need a real micro:bit to code one.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No. The free on-screen simulator lets you click the buttons and logo with a mouse."
+    },
+    {
+      "symptom": "forever and repeat are the same.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No. forever never stops on its own; repeat (5) counts to five and stops."
+    },
+    {
+      "symptom": "The pause number is in seconds.",
+      "cause": "A common misunderstanding about this idea.",
+      "fix": "No, it is in milliseconds. pause (1000) waits one second; pause (500) waits half a second."
+    }
+  ],
+  "esafety": [
+    {
+      "title": "Check before you trust",
+      "text": "Anyone can put anything on the internet, so not everything you read is true. Check an important fact on a second, different website, and ask an adult you trust if you are not sure."
+    },
+    {
+      "title": "Tell someone if something worries you",
+      "text": "If anything online upsets you, or someone asks you for personal information or to keep a secret, stop, leave the page and tell an adult you trust straight away. It is never your fault."
+    },
+    {
+      "title": "Respect other people's work",
+      "text": "Pictures, music and writing belong to whoever made them. Use work that is free to use, and say where you got it. Your own work belongs to you — put your name on it."
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Our canvas of light (unplugged)",
+        "text": "A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it."
+      },
+      {
+        "title": "Painting shapes with light (outputs) in MakeCode",
+        "text": "Today we open MakeCode and make our first outputs."
+      },
+      {
+        "title": "Different outputs from different inputs",
+        "text": "This is the heart of the unit."
+      },
+      {
+        "title": "Count-controlled loops: flash it a set number of times",
+        "text": "Now we make our art repeat."
+      },
+      {
+        "title": "Be an artist: forever loops and the light-art show",
+        "text": "The second loop is forever: it repeats over and over and never stops on its own."
+      }
+    ],
+    "terms": [
+      [
+        "physical computing device",
+        "A small computer that senses the world and acts on it."
+      ],
+      [
+        "input",
+        "Information going into the device."
+      ],
+      [
+        "output",
+        "Information coming out of the device."
+      ],
+      [
+        "input device",
+        "A part that sends information into the micro:bit."
+      ],
+      [
+        "output device",
+        "A part that sends information out to us."
+      ],
+      [
+        "LED",
+        "A tiny light on the micro:bit."
+      ],
+      [
+        "LED display",
+        "The 5-by-5 grid of 25 LEDs we draw on."
+      ],
+      [
+        "touch logo",
+        "The gold logo at the top that senses a touch."
+      ],
+      [
+        "shake",
+        "Moving the micro:bit quickly, sensed as an input."
+      ],
+      [
+        "MakeCode",
+        "The free website where we build micro:bit code with blocks."
+      ],
+      [
+        "simulator",
+        "The on-screen micro:bit we click with the mouse."
+      ],
+      [
+        "algorithm",
+        "A plan: the steps of a job, in the right order."
+      ],
+      [
+        "count-controlled loop",
+        "A loop that repeats a set number of times, then stops."
+      ],
+      [
+        "forever loop",
+        "A loop that repeats over and over and never stops."
+      ],
+      [
+        "iteration",
+        "The computing word for repeating a block of code."
+      ],
+      [
+        "pause",
+        "A wait, measured in milliseconds (1000 ms = 1 second)."
+      ],
+      [
+        "debug",
+        "To find and fix mistakes in a program."
+      ]
+    ],
+    "vocabulary": [
+      {
+        "term": "physical computing device",
+        "meaning": "A small computer that senses the world and acts on it.",
+        "example": "The micro:bit.",
+        "letter": "P"
+      },
+      {
+        "term": "input",
+        "meaning": "Information going into the device.",
+        "example": "Pressing Button A.",
+        "letter": "I"
+      },
+      {
+        "term": "output",
+        "meaning": "Information coming out of the device.",
+        "example": "A shape of light; a sound.",
+        "letter": "O"
+      },
+      {
+        "term": "input device",
+        "meaning": "A part that sends information into the micro:bit.",
+        "example": "A button; the touch logo.",
+        "letter": "I"
+      },
+      {
+        "term": "output device",
+        "meaning": "A part that sends information out to us.",
+        "example": "The LED display; the speaker.",
+        "letter": "O"
+      },
+      {
+        "term": "LED",
+        "meaning": "A tiny light on the micro:bit.",
+        "example": "One of the 25 red lights.",
+        "letter": "L"
+      },
+      {
+        "term": "LED display",
+        "meaning": "The 5-by-5 grid of 25 LEDs we draw on.",
+        "example": "Our canvas of light.",
+        "letter": "L"
+      },
+      {
+        "term": "touch logo",
+        "meaning": "The gold logo at the top that senses a touch.",
+        "example": "Touch it to start something.",
+        "letter": "T"
+      },
+      {
+        "term": "shake",
+        "meaning": "Moving the micro:bit quickly, sensed as an input.",
+        "example": "Shake to change the picture.",
+        "letter": "S"
+      },
+      {
+        "term": "MakeCode",
+        "meaning": "The free website where we build micro:bit code with blocks.",
+        "example": "makecode.microbit.org",
+        "letter": "M"
+      },
+      {
+        "term": "simulator",
+        "meaning": "The on-screen micro:bit we click with the mouse.",
+        "example": "No real device needed.",
+        "letter": "S"
+      },
+      {
+        "term": "algorithm",
+        "meaning": "A plan: the steps of a job, in the right order.",
+        "example": "The steps to draw a shape.",
+        "letter": "A"
+      },
+      {
+        "term": "count-controlled loop",
+        "meaning": "A loop that repeats a set number of times, then stops.",
+        "example": "Flash the shape 5 times.",
+        "letter": "C"
+      },
+      {
+        "term": "forever loop",
+        "meaning": "A loop that repeats over and over and never stops.",
+        "example": "A pattern that twinkles.",
+        "letter": "F"
+      },
+      {
+        "term": "iteration",
+        "meaning": "The computing word for repeating a block of code.",
+        "example": "One turn round a loop.",
+        "letter": "I"
+      },
+      {
+        "term": "pause",
+        "meaning": "A wait, measured in milliseconds (1000 ms = 1 second).",
+        "example": "pause (1000) waits 1 second.",
+        "letter": "P"
+      },
+      {
+        "term": "debug",
+        "meaning": "To find and fix mistakes in a program.",
+        "example": "The heart was upside down — fix it.",
+        "letter": "D"
+      }
+    ],
+    "commonMistakes": [
+      [
+        "The micro:bit has a proper screen like a laptop.",
+        "No. Its display is just 25 red lights in a grid. It draws shapes and letters as patterns of dots."
+      ],
+      [
+        "An input and an output are the same.",
+        "No. An input goes IN (pressing a button); an output comes OUT (a shape lights up, a sound plays)."
+      ],
+      [
+        "Pressing a button always does the same thing.",
+        "No. We program each input separately, so Button A can paint a square while Button B paints a heart."
+      ],
+      [
+        "You need a real micro:bit to code one.",
+        "No. The free on-screen simulator lets you click the buttons and logo with a mouse."
+      ],
+      [
+        "forever and repeat are the same.",
+        "No. forever never stops on its own; repeat (5) counts to five and stops."
+      ],
+      [
+        "The pause number is in seconds.",
+        "No, it is in milliseconds. pause (1000) waits one second; pause (500) waits half a second."
+      ]
+    ],
+    "connections": []
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "What is a physical computing device? Give one example.",
+      "answer": "A physical computing device is a small computer that senses the world and acts on it. Example: the micro:bit.",
+      "hint": "Look back at what physical computing device and input mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "A physical computing device is a small computer that senses the world and acts on it. Example: the micro:bit."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Write one input and one output on the micro:bit.",
+      "answer": "Input example: pressing Button A / touching the logo / shaking. Output example: a shape lighting up on the LED display / a twinkle sound.",
+      "hint": "Look back at what physical computing device and input mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Input example: pressing Button A / touching the logo / shaking. Output example: a shape lighting up on the LED display / a twinkle sound."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo03",
+      "difficulty": "Round 1",
+      "prompt": "Name the loop for each job:",
+      "answer": "(a) repeat ( ) (count-controlled). (b) forever.",
+      "hint": "Look back at what physical computing device and input mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "(a) repeat ( ) (count-controlled). (b) forever."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Predict this program. How many times does the light blink?",
+      "answer": "5 times (the loop repeats 5 times, then stops).",
+      "hint": "Look back at what physical computing device and input mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "5 times (the loop repeats 5 times, then stops)."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Look at this show leds grid. What shape do the lit lights make, and how many lights are on?",
+      "answer": "The shape is a heart, and 16 lights are on. Count them row by row: 2 + 5 + 5 + 3 + 1 = 16.",
+      "hint": "Look back at what physical computing device and input mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "The shape is a heart, and 16 lights are on. Count them row by row: 2 + 5 + 5 + 3 + 1 = 16."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "pause (2000) waits how many seconds?",
+      "answer": "pause (2000) waits 2 seconds (1000 ms = 1 second). We write the algorithm first so we have a clear plan and know what to build before we start — it saves time and mistakes.",
+      "hint": "Look back at what physical computing device and input mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "pause (2000) waits 2 seconds (1000 ms = 1 second). We write the algorithm first so we have a clear plan and know what to build before we start — it saves time and mistakes."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "pause (2000) waits how many seconds?",
+      "answer": "pause (2000) waits 2 seconds (1000 ms = 1 second). We write the algorithm first so we have a clear plan and know what to build before we start — it saves time and mistakes.",
+      "hint": "Look back at what physical computing device and input mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: pause (2000) waits 2 seconds (1000 ms = 1 second). We write the algorithm first so we have a clear plan and know what to build before we start — it saves time and mistakes."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "School",
+      "prompt": "Look at this show leds grid. What shape do the lit lights make, and how many lights are on?",
+      "answer": "The shape is a heart, and 16 lights are on. Count them row by row: 2 + 5 + 5 + 3 + 1 = 16.",
+      "hint": "Look back at what physical computing device and input mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: The shape is a heart, and 16 lights are on. Count them row by row: 2 + 5 + 5 + 3 + 1 = 16."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "pause (2000) waits how many seconds?",
+      "answer": "pause (2000) waits 2 seconds (1000 ms = 1 second). We write the algorithm first so we have a clear plan and know what to build before we start — it saves time and mistakes.",
+      "hint": "Look back at what physical computing device and input mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: pause (2000) waits 2 seconds (1000 ms = 1 second). We write the algorithm first so we have a clear plan and know what to build before we start — it saves time and mistakes."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Community",
+      "prompt": "What is a physical computing device? Give one example.",
+      "answer": "A physical computing device is a small computer that senses the world and acts on it. Example: the micro:bit.",
+      "hint": "Look back at what physical computing device and input mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Check your reasoning against this: A physical computing device is a small computer that senses the world and acts on it. Example: the micro:bit."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Name the loop for each job:",
+      "keyIdeas": [
+        "physical computing device",
+        "input",
+        "output"
+      ],
+      "modelAnswer": "(a) repeat ( ) (count-controlled). (b) forever."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Predict this program. How many times does the light blink?",
+      "keyIdeas": [
+        "input",
+        "output",
+        "input device"
+      ],
+      "modelAnswer": "5 times (the loop repeats 5 times, then stops)."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Look at this show leds grid. What shape do the lit lights make, and how many lights are on?",
+      "keyIdeas": [
+        "output",
+        "input device",
+        "output device"
+      ],
+      "modelAnswer": "The shape is a heart, and 16 lights are on. Count them row by row: 2 + 5 + 5 + 3 + 1 = 16."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain the key idea in count-controlled loops: flash it a set number of times, and give one example of your own.",
+      "keyIdeas": [
+        "physical computing device",
+        "input",
+        "output"
+      ],
+      "modelAnswer": "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops.\n\nHow could we make one light blink five times? From the Loops group, drag repeat (5) and build a blink inside it: show one light, wait, clear, wait. Because 1000 ms is 1 second, this blinks on for a second and off for a second, five times, and then stops on its own"
+    }
+  ],
+  "project": {
+    "title": "Unit 12 Project: Be an Artist",
+    "brief": "Bring together everything from Be an Artist into one finished piece of work you can show and explain.",
+    "steps": [
+      "Plan first: write down what your be an artist project has to do before you build anything.",
+      "Build the smallest version that does one of those things, and run it.",
+      "Add one feature at a time, testing after each one.",
+      "When something breaks, change one thing, run it again, and note what fixed it.",
+      "Check your work against every success criterion below before you call it finished."
+    ],
+    "successCriteria": [
+      "I planned what each input would paint, before I built it.",
+      "Button A paints one picture and Button B paints a different picture.",
+      "I added a sound on the logo (or another input).",
+      "I used a loop (repeat ( ) or forever) to make something animate.",
+      "I tested my show on the simulator, one input at a time.",
+      "I made one change and tested it."
+    ]
+  },
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Concept",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "What does “physical computing device” mean in computing?",
+        "options": [
+          "A small computer that senses the world and acts on it.",
+          "Information going into the device.",
+          "Information coming out of the device.",
+          "A part that sends information into the micro:bit."
+        ],
+        "answer": "A small computer that senses the world and acts on it.",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Physical computing device means a small computer that senses the world and acts on it."
+      },
+      {
+        "id": "q02",
+        "type": "Concept",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "What does “input” mean in computing?",
+        "options": [
+          "Information going into the device.",
+          "Information coming out of the device.",
+          "A part that sends information into the micro:bit.",
+          "A part that sends information out to us."
+        ],
+        "answer": "Information going into the device.",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Input means information going into the device."
+      },
+      {
+        "id": "q03",
+        "type": "Concept",
+        "outcomeId": "lo03",
+        "difficulty": "Basic",
+        "question": "What does “output” mean in computing?",
+        "options": [
+          "Information coming out of the device.",
+          "A part that sends information into the micro:bit.",
+          "A part that sends information out to us.",
+          "A tiny light on the micro:bit."
+        ],
+        "answer": "Information coming out of the device.",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Output means information coming out of the device."
+      },
+      {
+        "id": "q04",
+        "type": "Concept",
+        "outcomeId": "lo04",
+        "difficulty": "Basic",
+        "question": "What does “input device” mean in computing?",
+        "options": [
+          "A part that sends information into the micro:bit.",
+          "A part that sends information out to us.",
+          "A tiny light on the micro:bit.",
+          "The 5-by-5 grid of 25 LEDs we draw on."
+        ],
+        "answer": "A part that sends information into the micro:bit.",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Input device means a part that sends information into the micro:bit."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "What does “output device” mean in computing?",
+        "options": [
+          "A part that sends information out to us.",
+          "A tiny light on the micro:bit.",
+          "The 5-by-5 grid of 25 LEDs we draw on.",
+          "The gold logo at the top that senses a touch."
+        ],
+        "answer": "A part that sends information out to us.",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Output device means a part that sends information out to us."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "What does “LED” mean in computing?",
+        "options": [
+          "A tiny light on the micro:bit.",
+          "The 5-by-5 grid of 25 LEDs we draw on.",
+          "The gold logo at the top that senses a touch.",
+          "Moving the micro:bit quickly, sensed as an input."
+        ],
+        "answer": "A tiny light on the micro:bit.",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "LED means a tiny light on the micro:bit."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: The 5-by-5 grid of 25 LEDs we draw on.?",
+        "options": [
+          "LED display",
+          "touch logo",
+          "shake",
+          "MakeCode"
+        ],
+        "answer": "LED display",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "LED display means the 5-by-5 grid of 25 LEDs we draw on."
+      },
+      {
+        "id": "q08",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: The gold logo at the top that senses a touch.?",
+        "options": [
+          "touch logo",
+          "shake",
+          "MakeCode",
+          "simulator"
+        ],
+        "answer": "touch logo",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Touch logo means the gold logo at the top that senses a touch."
+      },
+      {
+        "id": "q09",
+        "type": "Reasoning",
+        "outcomeId": "lo09",
+        "difficulty": "Core",
+        "question": "Which computing word matches this meaning: Moving the micro:bit quickly, sensed as an input.?",
+        "options": [
+          "shake",
+          "MakeCode",
+          "simulator",
+          "algorithm"
+        ],
+        "answer": "shake",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Shake means moving the micro:bit quickly, sensed as an input."
+      },
+      {
+        "id": "q10",
+        "type": "Reasoning",
+        "outcomeId": "lo01",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The free website where we build micro:bit code with blocks.?",
+        "options": [
+          "MakeCode",
+          "simulator",
+          "algorithm",
+          "count-controlled loop"
+        ],
+        "answer": "MakeCode",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "MakeCode means the free website where we build micro:bit code with blocks."
+      },
+      {
+        "id": "q11",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: The on-screen micro:bit we click with the mouse.?",
+        "options": [
+          "simulator",
+          "algorithm",
+          "count-controlled loop",
+          "forever loop"
+        ],
+        "answer": "simulator",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Simulator means the on-screen micro:bit we click with the mouse."
+      },
+      {
+        "id": "q12",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Challenge",
+        "question": "Which computing word matches this meaning: A plan: the steps of a job, in the right order.?",
+        "options": [
+          "algorithm",
+          "count-controlled loop",
+          "forever loop",
+          "iteration"
+        ],
+        "answer": "algorithm",
+        "hint": "Use the Unit 12 Computing Words reference.",
+        "explanation": "Algorithm means a plan: the steps of a job, in the right order."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u12-game-1",
+        "icon": "?",
+        "skill": "physical computing device",
+        "title": "Quick Match: physical computing device",
+        "description": "Practise physical computing device through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “physical computing device” mean in computing?",
+            "choices": [
+              "A small computer that senses the world and acts on it.",
+              "Information going into the device.",
+              "Information coming out of the device.",
+              "A part that sends information into the micro:bit."
+            ],
+            "answer": "A small computer that senses the world and acts on it.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Physical computing device means a small computer that senses the world and acts on it."
+          },
+          {
+            "prompt": "What does “input device” mean in computing?",
+            "choices": [
+              "A part that sends information into the micro:bit.",
+              "A part that sends information out to us.",
+              "A tiny light on the micro:bit.",
+              "The 5-by-5 grid of 25 LEDs we draw on."
+            ],
+            "answer": "A part that sends information into the micro:bit.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Input device means a part that sends information into the micro:bit."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The 5-by-5 grid of 25 LEDs we draw on.?",
+            "choices": [
+              "LED display",
+              "touch logo",
+              "shake",
+              "MakeCode"
+            ],
+            "answer": "LED display",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "LED display means the 5-by-5 grid of 25 LEDs we draw on."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The free website where we build micro:bit code with blocks.?",
+            "choices": [
+              "MakeCode",
+              "simulator",
+              "algorithm",
+              "count-controlled loop"
+            ],
+            "answer": "MakeCode",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "MakeCode means the free website where we build micro:bit code with blocks."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-2",
+        "icon": "★",
+        "skill": "input",
+        "title": "Concept Quest: input",
+        "description": "Practise input through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “input” mean in computing?",
+            "choices": [
+              "Information going into the device.",
+              "Information coming out of the device.",
+              "A part that sends information into the micro:bit.",
+              "A part that sends information out to us."
+            ],
+            "answer": "Information going into the device.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Input means information going into the device."
+          },
+          {
+            "prompt": "What does “output device” mean in computing?",
+            "choices": [
+              "A part that sends information out to us.",
+              "A tiny light on the micro:bit.",
+              "The 5-by-5 grid of 25 LEDs we draw on.",
+              "The gold logo at the top that senses a touch."
+            ],
+            "answer": "A part that sends information out to us.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Output device means a part that sends information out to us."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The gold logo at the top that senses a touch.?",
+            "choices": [
+              "touch logo",
+              "shake",
+              "MakeCode",
+              "simulator"
+            ],
+            "answer": "touch logo",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Touch logo means the gold logo at the top that senses a touch."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The on-screen micro:bit we click with the mouse.?",
+            "choices": [
+              "simulator",
+              "algorithm",
+              "count-controlled loop",
+              "forever loop"
+            ],
+            "answer": "simulator",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Simulator means the on-screen micro:bit we click with the mouse."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-3",
+        "icon": "◫",
+        "skill": "output",
+        "title": "Debug Detective: output",
+        "description": "Practise output through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “output” mean in computing?",
+            "choices": [
+              "Information coming out of the device.",
+              "A part that sends information into the micro:bit.",
+              "A part that sends information out to us.",
+              "A tiny light on the micro:bit."
+            ],
+            "answer": "Information coming out of the device.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Output means information coming out of the device."
+          },
+          {
+            "prompt": "What does “LED” mean in computing?",
+            "choices": [
+              "A tiny light on the micro:bit.",
+              "The 5-by-5 grid of 25 LEDs we draw on.",
+              "The gold logo at the top that senses a touch.",
+              "Moving the micro:bit quickly, sensed as an input."
+            ],
+            "answer": "A tiny light on the micro:bit.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "LED means a tiny light on the micro:bit."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Moving the micro:bit quickly, sensed as an input.?",
+            "choices": [
+              "shake",
+              "MakeCode",
+              "simulator",
+              "algorithm"
+            ],
+            "answer": "shake",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Shake means moving the micro:bit quickly, sensed as an input."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A plan: the steps of a job, in the right order.?",
+            "choices": [
+              "algorithm",
+              "count-controlled loop",
+              "forever loop",
+              "iteration"
+            ],
+            "answer": "algorithm",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Algorithm means a plan: the steps of a job, in the right order."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-4",
+        "icon": "→",
+        "skill": "input device",
+        "title": "Algorithm Runner: input device",
+        "description": "Practise input device through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “input device” mean in computing?",
+            "choices": [
+              "A part that sends information into the micro:bit.",
+              "A part that sends information out to us.",
+              "A tiny light on the micro:bit.",
+              "The 5-by-5 grid of 25 LEDs we draw on."
+            ],
+            "answer": "A part that sends information into the micro:bit.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Input device means a part that sends information into the micro:bit."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The 5-by-5 grid of 25 LEDs we draw on.?",
+            "choices": [
+              "LED display",
+              "touch logo",
+              "shake",
+              "MakeCode"
+            ],
+            "answer": "LED display",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "LED display means the 5-by-5 grid of 25 LEDs we draw on."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The free website where we build micro:bit code with blocks.?",
+            "choices": [
+              "MakeCode",
+              "simulator",
+              "algorithm",
+              "count-controlled loop"
+            ],
+            "answer": "MakeCode",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "MakeCode means the free website where we build micro:bit code with blocks."
+          },
+          {
+            "prompt": "What does “physical computing device” mean in computing?",
+            "choices": [
+              "A small computer that senses the world and acts on it.",
+              "Information going into the device.",
+              "Information coming out of the device.",
+              "A part that sends information into the micro:bit."
+            ],
+            "answer": "A small computer that senses the world and acts on it.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Physical computing device means a small computer that senses the world and acts on it."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-5",
+        "icon": "Σ",
+        "skill": "output device",
+        "title": "Vocabulary Vault: output device",
+        "description": "Practise output device through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “output device” mean in computing?",
+            "choices": [
+              "A part that sends information out to us.",
+              "A tiny light on the micro:bit.",
+              "The 5-by-5 grid of 25 LEDs we draw on.",
+              "The gold logo at the top that senses a touch."
+            ],
+            "answer": "A part that sends information out to us.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Output device means a part that sends information out to us."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The gold logo at the top that senses a touch.?",
+            "choices": [
+              "touch logo",
+              "shake",
+              "MakeCode",
+              "simulator"
+            ],
+            "answer": "touch logo",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Touch logo means the gold logo at the top that senses a touch."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The on-screen micro:bit we click with the mouse.?",
+            "choices": [
+              "simulator",
+              "algorithm",
+              "count-controlled loop",
+              "forever loop"
+            ],
+            "answer": "simulator",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Simulator means the on-screen micro:bit we click with the mouse."
+          },
+          {
+            "prompt": "What does “input” mean in computing?",
+            "choices": [
+              "Information going into the device.",
+              "Information coming out of the device.",
+              "A part that sends information into the micro:bit.",
+              "A part that sends information out to us."
+            ],
+            "answer": "Information going into the device.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Input means information going into the device."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-6",
+        "icon": "◇",
+        "skill": "LED",
+        "title": "Challenge Cards: LED",
+        "description": "Practise led through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "What does “LED” mean in computing?",
+            "choices": [
+              "A tiny light on the micro:bit.",
+              "The 5-by-5 grid of 25 LEDs we draw on.",
+              "The gold logo at the top that senses a touch.",
+              "Moving the micro:bit quickly, sensed as an input."
+            ],
+            "answer": "A tiny light on the micro:bit.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "LED means a tiny light on the micro:bit."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Moving the micro:bit quickly, sensed as an input.?",
+            "choices": [
+              "shake",
+              "MakeCode",
+              "simulator",
+              "algorithm"
+            ],
+            "answer": "shake",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Shake means moving the micro:bit quickly, sensed as an input."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A plan: the steps of a job, in the right order.?",
+            "choices": [
+              "algorithm",
+              "count-controlled loop",
+              "forever loop",
+              "iteration"
+            ],
+            "answer": "algorithm",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Algorithm means a plan: the steps of a job, in the right order."
+          },
+          {
+            "prompt": "What does “output” mean in computing?",
+            "choices": [
+              "Information coming out of the device.",
+              "A part that sends information into the micro:bit.",
+              "A part that sends information out to us.",
+              "A tiny light on the micro:bit."
+            ],
+            "answer": "Information coming out of the device.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Output means information coming out of the device."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-7",
+        "icon": "⚡",
+        "skill": "LED display",
+        "title": "Think Fast: LED display",
+        "description": "Practise led display through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The 5-by-5 grid of 25 LEDs we draw on.?",
+            "choices": [
+              "LED display",
+              "touch logo",
+              "shake",
+              "MakeCode"
+            ],
+            "answer": "LED display",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "LED display means the 5-by-5 grid of 25 LEDs we draw on."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The free website where we build micro:bit code with blocks.?",
+            "choices": [
+              "MakeCode",
+              "simulator",
+              "algorithm",
+              "count-controlled loop"
+            ],
+            "answer": "MakeCode",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "MakeCode means the free website where we build micro:bit code with blocks."
+          },
+          {
+            "prompt": "What does “physical computing device” mean in computing?",
+            "choices": [
+              "A small computer that senses the world and acts on it.",
+              "Information going into the device.",
+              "Information coming out of the device.",
+              "A part that sends information into the micro:bit."
+            ],
+            "answer": "A small computer that senses the world and acts on it.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Physical computing device means a small computer that senses the world and acts on it."
+          },
+          {
+            "prompt": "What does “input device” mean in computing?",
+            "choices": [
+              "A part that sends information into the micro:bit.",
+              "A part that sends information out to us.",
+              "A tiny light on the micro:bit.",
+              "The 5-by-5 grid of 25 LEDs we draw on."
+            ],
+            "answer": "A part that sends information into the micro:bit.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Input device means a part that sends information into the micro:bit."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-8",
+        "icon": "☁",
+        "skill": "touch logo",
+        "title": "Explain It: touch logo",
+        "description": "Practise touch logo through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The gold logo at the top that senses a touch.?",
+            "choices": [
+              "touch logo",
+              "shake",
+              "MakeCode",
+              "simulator"
+            ],
+            "answer": "touch logo",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Touch logo means the gold logo at the top that senses a touch."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The on-screen micro:bit we click with the mouse.?",
+            "choices": [
+              "simulator",
+              "algorithm",
+              "count-controlled loop",
+              "forever loop"
+            ],
+            "answer": "simulator",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Simulator means the on-screen micro:bit we click with the mouse."
+          },
+          {
+            "prompt": "What does “input” mean in computing?",
+            "choices": [
+              "Information going into the device.",
+              "Information coming out of the device.",
+              "A part that sends information into the micro:bit.",
+              "A part that sends information out to us."
+            ],
+            "answer": "Information going into the device.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Input means information going into the device."
+          },
+          {
+            "prompt": "What does “output device” mean in computing?",
+            "choices": [
+              "A part that sends information out to us.",
+              "A tiny light on the micro:bit.",
+              "The 5-by-5 grid of 25 LEDs we draw on.",
+              "The gold logo at the top that senses a touch."
+            ],
+            "answer": "A part that sends information out to us.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Output device means a part that sends information out to us."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-9",
+        "icon": "⌂",
+        "skill": "shake",
+        "title": "Real-Life Round: shake",
+        "description": "Practise shake through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: Moving the micro:bit quickly, sensed as an input.?",
+            "choices": [
+              "shake",
+              "MakeCode",
+              "simulator",
+              "algorithm"
+            ],
+            "answer": "shake",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Shake means moving the micro:bit quickly, sensed as an input."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: A plan: the steps of a job, in the right order.?",
+            "choices": [
+              "algorithm",
+              "count-controlled loop",
+              "forever loop",
+              "iteration"
+            ],
+            "answer": "algorithm",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Algorithm means a plan: the steps of a job, in the right order."
+          },
+          {
+            "prompt": "What does “output” mean in computing?",
+            "choices": [
+              "Information coming out of the device.",
+              "A part that sends information into the micro:bit.",
+              "A part that sends information out to us.",
+              "A tiny light on the micro:bit."
+            ],
+            "answer": "Information coming out of the device.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Output means information coming out of the device."
+          },
+          {
+            "prompt": "What does “LED” mean in computing?",
+            "choices": [
+              "A tiny light on the micro:bit.",
+              "The 5-by-5 grid of 25 LEDs we draw on.",
+              "The gold logo at the top that senses a touch.",
+              "Moving the micro:bit quickly, sensed as an input."
+            ],
+            "answer": "A tiny light on the micro:bit.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "LED means a tiny light on the micro:bit."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-10",
+        "icon": "!",
+        "skill": "MakeCode",
+        "title": "Spot the Bug: MakeCode",
+        "description": "Practise makecode through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The free website where we build micro:bit code with blocks.?",
+            "choices": [
+              "MakeCode",
+              "simulator",
+              "algorithm",
+              "count-controlled loop"
+            ],
+            "answer": "MakeCode",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "MakeCode means the free website where we build micro:bit code with blocks."
+          },
+          {
+            "prompt": "What does “physical computing device” mean in computing?",
+            "choices": [
+              "A small computer that senses the world and acts on it.",
+              "Information going into the device.",
+              "Information coming out of the device.",
+              "A part that sends information into the micro:bit."
+            ],
+            "answer": "A small computer that senses the world and acts on it.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Physical computing device means a small computer that senses the world and acts on it."
+          },
+          {
+            "prompt": "What does “input device” mean in computing?",
+            "choices": [
+              "A part that sends information into the micro:bit.",
+              "A part that sends information out to us.",
+              "A tiny light on the micro:bit.",
+              "The 5-by-5 grid of 25 LEDs we draw on."
+            ],
+            "answer": "A part that sends information into the micro:bit.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Input device means a part that sends information into the micro:bit."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The 5-by-5 grid of 25 LEDs we draw on.?",
+            "choices": [
+              "LED display",
+              "touch logo",
+              "shake",
+              "MakeCode"
+            ],
+            "answer": "LED display",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "LED display means the 5-by-5 grid of 25 LEDs we draw on."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-11",
+        "icon": "≡",
+        "skill": "simulator",
+        "title": "Mastery Mix: simulator",
+        "description": "Practise simulator through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: The on-screen micro:bit we click with the mouse.?",
+            "choices": [
+              "simulator",
+              "algorithm",
+              "count-controlled loop",
+              "forever loop"
+            ],
+            "answer": "simulator",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Simulator means the on-screen micro:bit we click with the mouse."
+          },
+          {
+            "prompt": "What does “input” mean in computing?",
+            "choices": [
+              "Information going into the device.",
+              "Information coming out of the device.",
+              "A part that sends information into the micro:bit.",
+              "A part that sends information out to us."
+            ],
+            "answer": "Information going into the device.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Input means information going into the device."
+          },
+          {
+            "prompt": "What does “output device” mean in computing?",
+            "choices": [
+              "A part that sends information out to us.",
+              "A tiny light on the micro:bit.",
+              "The 5-by-5 grid of 25 LEDs we draw on.",
+              "The gold logo at the top that senses a touch."
+            ],
+            "answer": "A part that sends information out to us.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Output device means a part that sends information out to us."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: The gold logo at the top that senses a touch.?",
+            "choices": [
+              "touch logo",
+              "shake",
+              "MakeCode",
+              "simulator"
+            ],
+            "answer": "touch logo",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Touch logo means the gold logo at the top that senses a touch."
+          }
+        ]
+      },
+      {
+        "id": "u12-game-12",
+        "icon": "T",
+        "skill": "algorithm",
+        "title": "Unit Champion: algorithm",
+        "description": "Practise algorithm through four short challenges.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Which computing word matches this meaning: A plan: the steps of a job, in the right order.?",
+            "choices": [
+              "algorithm",
+              "count-controlled loop",
+              "forever loop",
+              "iteration"
+            ],
+            "answer": "algorithm",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Algorithm means a plan: the steps of a job, in the right order."
+          },
+          {
+            "prompt": "What does “output” mean in computing?",
+            "choices": [
+              "Information coming out of the device.",
+              "A part that sends information into the micro:bit.",
+              "A part that sends information out to us.",
+              "A tiny light on the micro:bit."
+            ],
+            "answer": "Information coming out of the device.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Output means information coming out of the device."
+          },
+          {
+            "prompt": "What does “LED” mean in computing?",
+            "choices": [
+              "A tiny light on the micro:bit.",
+              "The 5-by-5 grid of 25 LEDs we draw on.",
+              "The gold logo at the top that senses a touch.",
+              "Moving the micro:bit quickly, sensed as an input."
+            ],
+            "answer": "A tiny light on the micro:bit.",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "LED means a tiny light on the micro:bit."
+          },
+          {
+            "prompt": "Which computing word matches this meaning: Moving the micro:bit quickly, sensed as an input.?",
+            "choices": [
+              "shake",
+              "MakeCode",
+              "simulator",
+              "algorithm"
+            ],
+            "answer": "shake",
+            "clue": "Use the Unit 12 Computing Words reference.",
+            "explanation": "Shake means moving the micro:bit quickly, sensed as an input."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can explain that a micro:bit is a physical computing device — a small computer that senses the world and acts on it.",
+    "I can tell the difference between an input (information going into the device, like a button press) and an output (information coming out, like a shape of light or a sound).",
+    "I can name some inputs on the micro:bit (Button A, Button B, the touch logo, shake) and some outputs (the LED display, the speaker).",
+    "I can draw a shape or pattern on the 5-by-5 LED grid using the show leds, show icon and show arrow blocks in MakeCode.",
+    "I can develop an algorithm (a plan) so that different inputs produce different outputs, then build it as a program.",
+    "I can build a program with a count-controlled loop (the repeat ( ) block) to flash art a set number of times.",
+    "I can build a program with a forever loop to make art animate over and over.",
+    "I can test a program part by part, and find and fix (debug) simple mistakes.",
+    "I can before this unit (from the syllabus), children should already follow, understand and edit algorithms that use repetition, test different parts of a program, and know about count-controlled and forever loops (met earlier in Year 4). They will also have met the micro:bit and its inputs and outputs in Unit 8, \"Be an innovator\". A quick recap of \"input, output, loop\" at the start of Session 1 is usually enough."
+  ]
+}

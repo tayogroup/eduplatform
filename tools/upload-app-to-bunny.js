@@ -45,8 +45,27 @@ const TREES = [
   // ../shell/subjects/<subject>.js, which 404s until this ships.
   { name: "shell", src: path.join(EHEL, "shell"), dest: "app/shell", excludeTop: [] },
 ];
-const pick = process.argv.slice(2).filter((a) => TREES.some((t) => t.name === a));
+// Single files that sit at the ROOT of the storage zone rather than inside a
+// tree. catalog.json is the source of truth Moodle's catalog_sync task reads
+// (local_prequran/catalog_source_url →
+// https://ehelacademy.b-cdn.net/Ehel%20Primary/catalog.json), so a course that
+// is not in the deployed copy does not exist as far as Moodle is concerned.
+// docs/catalog-sync-integration.md described it as "generated + deployed" while
+// no tool actually shipped it, so it moved only when somebody remembered to
+// upload it by hand.
+const ROOT_FILES = [
+  { name: "catalog", src: path.join(EHEL, "catalog.json"), dest: "catalog.json" },
+];
+
+const names = [...TREES.map((t) => t.name), ...ROOT_FILES.map((f) => f.name)];
+const unknown = process.argv.slice(2).filter((a) => !a.startsWith("--") && !names.includes(a));
+if (unknown.length) {
+  console.error(`unknown target(s): ${unknown.join(", ")}\nknown: ${names.join(", ")}`);
+  process.exit(1);
+}
+const pick = process.argv.slice(2).filter((a) => names.includes(a));
 const trees = pick.length ? TREES.filter((t) => pick.includes(t.name)) : TREES;
+const rootFiles = pick.length ? ROOT_FILES.filter((f) => pick.includes(f.name)) : ROOT_FILES;
 
 const CT = {
   ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8",
@@ -92,6 +111,10 @@ function buildList() {
       const local = path.join(t.src, rel);
       list.push({ local, remote: `${t.dest}/${rel}`, hash: sha1(fs.readFileSync(local)) });
     }
+  }
+  for (const f of rootFiles) {
+    if (!fs.existsSync(f.src)) { console.log(`  (skip ${f.name}: ${f.src} missing)`); continue; }
+    list.push({ local: f.src, remote: f.dest, hash: sha1(fs.readFileSync(f.src)) });
   }
   return list;
 }

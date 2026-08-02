@@ -305,6 +305,19 @@ for (const gradeDir of grades) {
     if (!(unit.cambridge?.objectives || []).length) {
       note(`${label}: no Cambridge objectives mapped yet (${unit.unit?.unitTitle})`);
     }
+    // Cambridge writes its objectives for adults, so the overview shows a
+    // learner paraphrase where one exists and falls back to the official text
+    // where it does not. Years 5, 7 and 8 get theirs from the packs; Years 4
+    // and 6 from data/objective-learner-text.json. A self-study unit missing
+    // one means a nine-year-old reads curriculum prose, which is the gap that
+    // file was written to close — so it fails rather than drifting back open.
+    if (!guided) {
+      const bare = (unit.cambridge?.objectives || []).filter((o) => !o.learnerText).map((o) => o.code);
+      if (bare.length) {
+        fail(label, `objective(s) with no learner wording — the overview would show Cambridge's `
+          + `adult text: ${bare.join(", ")}`);
+      }
+    }
 
     // ── enough substance to stand alone ─────────────────────────────────────
     const unitChars = JSON.stringify(learnerView).length;

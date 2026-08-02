@@ -878,7 +878,9 @@ function objectivesForUnit(unit, stage, framework) {
       strand: objective.strand,
       subStrand: objective.subStrand,
       text: objective.text,
-      learnerText: "",
+      // The pack's own paraphrase wins; ours fills the gap where there is none.
+      learnerText: OBJECTIVE_LEARNER_TEXT[objective.code] || "",
+      learnerTextSource: OBJECTIVE_LEARNER_TEXT[objective.code] ? "Ehel Academy" : undefined,
       evidence: "resolved from the unit's skill",
     }));
 }
@@ -1140,6 +1142,25 @@ function writeJson(file, value) {
 // ("explainers.4.body", "practice.11.answer"), so this needs no knowledge of
 // the exporter's item-id scheme.
 const REVIEW_PATH = path.join(COURSE_DIR, "data", "script-review.json");
+
+// Learner-facing wording for objectives the packs did not paraphrase
+// themselves. Years 5, 7 and 8 print a "What it means for you" column; Years 4
+// and 6 do not, so their overview showed Cambridge's own text — curriculum
+// prose written for adults, and denser for a nine-year-old than a Stage 7
+// learner gets. Authored by Ehel Academy, shown ALONGSIDE the official text
+// rather than replacing it, and never used where the pack supplied its own.
+const LEARNER_TEXT_PATH = path.join(COURSE_DIR, "data", "objective-learner-text.json");
+
+function loadObjectiveLearnerText() {
+  if (!fs.existsSync(LEARNER_TEXT_PATH)) return {};
+  try {
+    return JSON.parse(fs.readFileSync(LEARNER_TEXT_PATH, "utf8")).learnerText || {};
+  } catch (error) {
+    console.error(`error: ${LEARNER_TEXT_PATH} is not readable JSON — ${error.message}`);
+    process.exit(1);
+  }
+}
+const OBJECTIVE_LEARNER_TEXT = loadObjectiveLearnerText();
 
 function loadReview() {
   if (!fs.existsSync(REVIEW_PATH)) return {};

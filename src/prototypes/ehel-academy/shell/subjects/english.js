@@ -14,7 +14,16 @@ import { askWehel, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const routeParams = new URLSearchParams(location.search);
-const requestedGrade = Number(routeParams.get("grade") || document.documentElement.dataset.grade || 2);
+// Must resolve to the same number as course-app.js's stageNumber, which reads
+// `grade` then `stage` from the query and then from data- attributes. English is
+// the only subject that derives this twice — the others read ctx.stageNumber —
+// and reading one fewer source made the two disagree: with ?stage=1 the shell
+// built dataRootUrl content/english/g01/ while this fell through to its default
+// of 2 and asked for master-dictionary.grade2.json, a 404 that left the course
+// blank. Learners arrive via grade-N/index.html carrying data-grade, so only a
+// ?stage= link hit it. Keep this chain in step with that one.
+const requestedGrade = Number(routeParams.get("grade") || routeParams.get("stage")
+  || document.documentElement.dataset.grade || document.documentElement.dataset.stage || 2);
 const gradeNumber = requestedGrade >= 1 && requestedGrade <= 8 ? requestedGrade : 2;
 const gradeLabel = `Grade ${gradeNumber}`;
 function cambridgeFramework(stage) {

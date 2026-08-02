@@ -77,10 +77,49 @@ TITLE_OUTSIDE_CELL = {
 }
 
 
-def current_rows(grade: int) -> dict[str, tuple[list[str], list, dict]]:
-    """Current rows for a grade, keyed by item id with the legacy id form too."""
+# Two rows the automatic alignment cannot resolve, with the boundary stated
+# outright instead of guessed. Both change structure, not just characters:
+#
+#   gp-g01-u04-guide-12  the reviewer merged the last two lines of the water
+#                        chant into one, so the cell lost a line and no
+#                        line-for-line mapping holds.
+#   gp-g02-u03-step-7    the intro and the table both changed at once, leaving
+#                        no untouched block to anchor on.
+#
+# Each entry slices the REVIEWED cell by line, so the text applied is the
+# reviewer's own — only where one field ends and the next begins is asserted
+# here. The table field of step-7 is deliberately absent: that edit removed
+# trailing spaces from a rendered row whose underlying cells are empty either
+# way, so there is nothing in the data to change.
+MANUAL_SPLITS: dict[str, list[tuple[str, int, int | None]]] = {
+    "gp-g01-u04-guide-12": [
+        ("grownUpGuide.sections.11.body", 0, 7),
+        ("grownUpGuide.sections.11.items", 7, None),
+    ],
+    "gp-g02-u03-step-7": [
+        ("project.steps.6.intro", 0, 5),
+    ],
+}
+
+
+def rows_for(grade: int, root: Path | None = None) -> dict[str, tuple[list[str], list, dict]]:
+    """Rows for a grade, keyed by item id, with the legacy id forms aliased.
+
+    `root` selects which checkout's unit data to read. Decomposing an old cell
+    has to use the data that PRODUCED it: once a first pass has been applied and
+    the course rebuilt, current content no longer matches the workbook's
+    baseline, and every row whose fix already landed stops aligning — reported
+    as a failure when it is in fact a success. Passing the baseline checkout
+    here keeps the two apart. The PATHS are unaffected either way, because they
+    are positional and neither pass changes how many items a unit has.
+    """
     out: dict[str, tuple[list[str], list, dict]] = {}
-    for path in export.unit_files(grade):
+    files = export.unit_files(grade) if root is None else sorted(
+        (root / "src" / "prototypes" / "ehel-academy" / "global-perspectives"
+         / f"grade-{grade}" / "data" / "units").glob("unit-*.json"),
+        key=lambda p: int(p.stem.split("-")[1]),
+    )
+    for path in files:
         unit = json.loads(path.read_text(encoding="utf-8"))
         for row, layout, source in export.unit_rows_with_sources(unit):
             out[row[2]] = (row, layout, source)
@@ -94,6 +133,46 @@ def current_rows(grade: int) -> dict[str, tuple[list[str], list, dict]]:
     return out
 
 
+def parse_v1_labeled(cell: str, layout: list) -> dict[str, str] | None:
+    """Read a cell that the OLD export wrote with "Label: " prefixes.
+
+    Not every category was unlabelled back then. Practice, the unit quiz,
+    Reflection and the Challenge already carried labels ("Question: …",
+    "One way to answer: …"), so treating their cells as a bare concatenation of
+    field values never matched and every one of those rows was reported
+    unalignable. Where the labels ARE present, both the baseline and the
+    reviewed cell parse the same way and the fields can simply be compared —
+    no alignment guesswork at all.
+
+    Returns None when the cell does not carry this shape.
+    """
+    labelled = [(label, path) for label, path, _kind in layout if label]
+    if not labelled:
+        return None
+    lines = cell.split("\n")
+    anchors: list[tuple[int, str]] = []
+    cursor = 0
+    for label, path in labelled:
+        prefix = f"{label}: "
+        found = next((i for i in range(cursor, len(lines)) if lines[i].startswith(prefix)), None)
+        if found is None:
+            continue
+        anchors.append((found, path))
+        cursor = found + 1
+    if not anchors:
+        return None
+    if anchors[0][0] != 0:
+        return None  # text before the first label: not this shape
+    out: dict[str, str] = {}
+    for index, (start, path) in enumerate(anchors):
+        stop = anchors[index + 1][0] if index + 1 < len(anchors) else len(lines)
+        label = next(l for l, p in labelled if p == path)
+        value = "\n".join(lines[start:stop])[len(label) + 2:].strip()
+        if value:
+            out[path] = value
+    return out or None
+
+
 def align(old_cell: str, new_cell: str, source: dict[str, str], layout: list,
           skip_title: bool = False) -> dict[str, str] | None:
     """Work out which field(s) a reviewed cell changed.
@@ -103,13 +182,26 @@ def align(old_cell: str, new_cell: str, source: dict[str, str], layout: list,
     of what remains is unchanged; the first that is not absorbs the difference.
     Returns None when the alignment is not exact.
     """
+    # Categories the old export already labelled parse exactly on both sides,
+    # so compare field by field rather than guessing at block boundaries.
+    old_labelled = parse_v1_labeled(old_cell, layout)
+    if old_labelled is not None and old_labelled == {k: v for k, v in source.items() if k in old_labelled}:
+        new_labelled = parse_v1_labeled(new_cell, layout)
+        if new_labelled is not None:
+            changed = {p: v for p, v in new_labelled.items() if source.get(p, "") != v}
+            if changed:
+                return changed
+
     present = [path for _label, path, _kind in layout if path in source]
     # The old export put a section's title only in the "Title / Word" COLUMN,
     # never in the Script Text cell — the title field came later. Today's layout
     # has it, so leaving it in makes every multi-block row fail to align at its
     # very first field.
     if skip_title:
-        present = [path for path in present if not path.endswith(".title")]
+        # ".label" as well as ".title": an Activity's heading is stored under
+        # `activities.N.label`, so filtering only on ".title" left it in and
+        # every Activity row failed at its very first field.
+        present = [path for path in present if not path.endswith((".title", ".label"))]
     if not present:
         return None
     if len(present) == 1:
@@ -171,6 +263,11 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--workbook", type=Path, required=True)
     parser.add_argument("--baseline", type=Path, required=True)
+    parser.add_argument(
+        "--baseline-root", type=Path, default=None,
+        help="checkout whose unit data produced the baseline workbook (e.g. a "
+             "worktree at c0aed960). Required once a first pass has been applied "
+             "and the course rebuilt, or rows whose fix already landed stop aligning.")
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--dry", action="store_true")
     args = parser.parse_args()
@@ -187,7 +284,7 @@ def main() -> int:
 
     for sheet in baseline.sheetnames:
         grade = int(sheet.split()[-1])
-        rows_now = current_rows(grade)
+        rows_now = rows_for(grade, args.baseline_root)
         base_rows = [r for r in baseline[sheet].iter_rows(values_only=True)][1:]
         rev_rows = [r for r in reviewed[sheet].iter_rows(values_only=True)][1:]
         if len(base_rows) != len(rev_rows):
@@ -252,6 +349,21 @@ def main() -> int:
                              .setdefault(f"unit-{row[0].split('-')[1]}", {})[meaning_path] = value
                     applied += 1
                     continue
+
+            manual = MANUAL_SPLITS.get(item_id)
+            if manual:
+                lines = new_cell.split("\n")
+                edits = {}
+                for path, start, stop in manual:
+                    kind = next(k for _l, p, k in layout if p == path)
+                    value = "\n".join(lines[start:stop]).strip()
+                    if value and value != source.get(path, ""):
+                        edits[path] = export.parse(value, kind)
+                if edits:
+                    unit_key = f"unit-{row[0].split('-')[1]}"
+                    overrides.setdefault(f"grade-{grade}", {}).setdefault(unit_key, {}).update(edits)
+                    applied += 1
+                continue
 
             edits = align(old_cell, new_cell, source, layout,
                           skip_title=category in TITLE_OUTSIDE_CELL)

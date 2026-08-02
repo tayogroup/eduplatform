@@ -235,6 +235,36 @@ for (const gradeDir of gradeDirs) {
       }
     }
 
+    // A quiz whose answers cluster in one position is passable without knowing
+    // anything: always click that option. At the 80% mastery threshold a unit
+    // needs only 10 of 12, so anything much above 40% in one slot makes the
+    // assessment meaningless. Counted over questions with 3+ options, since
+    // True/False carries no positional information.
+    const positions = new Map();
+    let positioned = 0;
+    for (const question of questions) {
+      const options = question.options || [];
+      if (options.length < 3) continue;
+      const at = options.indexOf(question.answer);
+      if (at < 0) continue;
+      positioned += 1;
+      positions.set(at, (positions.get(at) || 0) + 1);
+    }
+    if (positioned >= 6) {
+      const [slot, count] = [...positions.entries()].sort((a, b) => b[1] - a[1])[0];
+      const share = count / positioned;
+      // The threshold is the pass mark itself, because that is the real harm:
+      // if always clicking one slot scores at or above it, the quiz certifies
+      // mastery it never tested. Below that, heavy clustering is a smell rather
+      // than a failure — on twelve questions it can happen by chance.
+      const pass = (unit.assessment?.passPercent ?? 80) / 100;
+      if (share >= pass) {
+        fail(label, `${Math.round(100 * share)}% of quiz answers sit in option ${slot + 1} — always clicking it passes the ${Math.round(100 * pass)}% threshold without reading the questions`);
+      } else if (share > 0.5) {
+        warn(label, `${Math.round(100 * share)}% of quiz answers sit in option ${slot + 1}`);
+      }
+    }
+
     for (const [mod, field] of VARIED_FIELDS) {
       for (const item of unit[mod] || []) {
         const value = item?.[field];

@@ -274,6 +274,61 @@ function rekeyPaddingOverrides(unit, byId) {
   return kept;
 }
 
+// Deterministic shuffle from a string seed. Seeded rather than random because
+// the build must stay byte-stable: an unseeded shuffle would rewrite every unit
+// on every rebuild, and the hash-based deploy would re-upload the lot.
+function seededShuffle(list, seed) {
+  let h = 1779033703 ^ seed.length;
+  for (let i = 0; i < seed.length; i += 1) {
+    h = Math.imul(h ^ seed.charCodeAt(i), 3432918353);
+    h = (h << 13) | (h >>> 19);
+  }
+  let state = h >>> 0;
+  const next = () => {
+    state = (state + 0x6d2b79f5) >>> 0;
+    let t = state;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+  const out = [...list];
+  for (let i = out.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(next() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+
+// The builder assembles a padded question as [answer, ...distractors] and never
+// moved it, so 590 of 768 answers sat in option 1 and 48 of 64 unit quizzes
+// were passable at the 80% mastery threshold by always clicking first. That
+// makes the summative assessment worthless without teaching anything wrong,
+// which is why it reads as a defect only when you count.
+//
+// Two-option questions are left alone: they are True/False and YES/NO, where a
+// reversed pair reads as an error rather than as variety, and where position
+// carries no information anyway.
+// Balanced, not merely shuffled. Shuffling each question independently leaves
+// the count in any one slot to chance, and over a twelve-question quiz chance
+// clusters: three units still landed at 58% in one position. Walking the slots
+// in a rotating order caps the worst slot at a quarter or so by construction.
+// The order within each group of four is seeded so the sequence is not a
+// visible 1-2-3-4 march down the page.
+function balanceOptionPositions(questions = [], scope = "") {
+  const eligible = questions.filter((question) => Array.isArray(question.options)
+    && question.options.length >= 3
+    && question.options.includes(question.answer));
+  let cycle = [];
+  eligible.forEach((question, index) => {
+    if (index % 4 === 0) cycle = seededShuffle([0, 1, 2, 3], `${scope}:cycle:${index}`);
+    const distractors = question.options.filter((option) => option !== question.answer);
+    const target = cycle[index % 4] % question.options.length;
+    const ordered = [...distractors];
+    ordered.splice(target, 0, question.answer);
+    question.options = ordered;
+  });
+}
+
 const PRACTICE_PLACEHOLDER = "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.";
 
 // One key line answers one question. Where two items hold the same answer they
@@ -2022,6 +2077,10 @@ function buildGrade(grade) {
     const runtime = buildUnit(unitMeta, position);
     // Reviewer corrections go on last, over everything the builder derived.
     applyScriptReview(runtime, grade, unitMeta.unit);
+    // After the review, not before: an override replaces a whole option list,
+    // so shuffling first would let a reviewed row put the answer back in
+    // position one.
+    balanceOptionPositions((runtime.assessment || {}).questions, `g${grade}u${unitMeta.unit}`);
     builtUnits.push(runtime);
     for (const key of ["outcomes", "concepts", "practice", "workedExamples", "activities", "methods", "debugging"]) {
       if (!runtime[key] || !runtime[key].length) warnings.push(`grade ${grade} unit ${unitMeta.unit}: empty ${key}`);
@@ -2119,6 +2178,7 @@ function buildGrade(grade) {
     reviewStatus: "Curriculum review required",
   };
   applyCapstoneReview(gradeCapstone, grade);
+  balanceOptionPositions((gradeCapstone.quiz || {}).questions, `g${grade}capstone`);
   fs.writeFileSync(path.join(gradeDir, "data", "grade-capstone.json"), `${JSON.stringify(gradeCapstone, null, 2)}\n`, "utf8");
 
   const indexHtml = `<!doctype html>

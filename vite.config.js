@@ -1,4 +1,5 @@
 import { defineConfig, loadEnv } from "vite";
+import { createWehelChatHandler } from "./tools/lib/wehel-dev-chat.js";
 
 const EHEL_ENGLISH_VOICE_ID = "XfNU2rGpBa01ckF309OY";
 
@@ -61,6 +62,28 @@ function ehelEnglishVoicePlugin(env) {
           sendJson(response, 500, { ok: false, message: error.message || "Voice service is unavailable." });
         }
       });
+      // Source modules here use hand-written cache-busting queries (?v=t2,
+      // ?v=wehel-1, ...) — a convention that collides with vite's OWN reserved
+      // ?v= marker, which vite serves as immutable, max-age one year. The
+      // browser then keeps the first version it ever saw of course-app.js and
+      // friends until the tag changes — edits "don't take effect" on 5173 no
+      // matter how often the page reloads. Downgrade those responses to
+      // no-cache (etag revalidation still gives cheap 304s).
+      server.middlewares.use((request, response, next) => {
+        if (request.url?.includes("/src/") && request.url.includes("?v=")) {
+          const setHeader = response.setHeader.bind(response);
+          response.setHeader = (name, value) =>
+            String(name).toLowerCase() === "cache-control" ? setHeader(name, "no-cache") : setHeader(name, value);
+        }
+        next();
+      });
+      // Wehel Tutor chat — same shared handler serve-src-preview mounts at
+      // /api/wehel-chat, here at the production path (the client uses prod
+      // paths on 5173, matching how quiz_tts/quiz_stt are emulated below).
+      server.middlewares.use(
+        "/local/hubredirect/wehel_chat.php",
+        createWehelChatHandler({ apiKey: () => env.ANTHROPIC_API_KEY, model: () => env.WEHEL_MODEL }),
+      );
       server.middlewares.use("/local/hubredirect/quiz_stt.php", async (request, response) => {
         if (request.method !== "POST") return sendJson(response, 405, { ok: false, message: "Use POST." });
         try {

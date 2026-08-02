@@ -128,122 +128,13 @@ async function handleElevenLabs(req, res) {
 // --- Wehel (AI subject expert) — local twin of local_hubredirect/wehel_chat.php.
 // The prompt is the shared single source in src/moodle/local_hubredirect/
 // wehel_prompt.json; change wording there, never here.
-const wehelPromptFile = path.join(projectRoot, 'src', 'moodle', 'local_hubredirect', 'wehel_prompt.json');
-const { phrasesForSubject, normalisePhrase } = require(path.join(__dirname, 'lib', 'ehel-wehel-phrases.js'));
-
-// Snap reply sentences that nearly match a stock phrase back to its canonical
-// text, so the on-screen sentence and the pre-recorded clip share one hash.
-// Mirrored in wehel_chat.php — keep the two in step.
-function canonicaliseWehelReply(reply, phrases) {
-  const canon = new Map(phrases.map((phrase) => [normalisePhrase(phrase), phrase]));
-  return String(reply).split(/(?<=[.!?…])\s+/).map((sentence) => canon.get(normalisePhrase(sentence)) || sentence).join(' ');
-}
-
-async function handleWehelChat(req, res) {
-  let body = '';
-  for await (const chunk of req) {
-    body += chunk;
-    if (body.length > 600 * 1024) throw new Error('The request is too large.');
-  }
-  const payload = JSON.parse(body || '{}');
-  const promptData = JSON.parse(fs.readFileSync(wehelPromptFile, 'utf8'));
-
-  const subject = String(payload.subject || '');
-  if (!promptData.subjectNotes[subject]) throw new Error('Unknown subject.');
-  const grade = Number(payload.grade);
-  if (!Number.isInteger(grade) || grade < 1 || grade > 9) throw new Error('Unknown grade.');
-  const channel = payload.channel === 'voice' ? 'voice' : 'text';
-  const clean = (value, max) => String(value ?? '').replace(/\s+/g, ' ').trim().slice(0, max);
-  // Any advertised tool with a definition in the prompt source gets defined for
-  // the model; the client resolves the calls, so nothing else is server-side.
-  const toolDefs = (Array.isArray(payload.tools) ? payload.tools : [])
-    .filter((name) => typeof name === 'string' && promptData.tools?.[name])
-    .map((name) => ({ name, ...promptData.tools[name] }));
-  const useUnitTool = toolDefs.length > 0;
-
-  const messages = Array.isArray(payload.messages) ? payload.messages.slice(-30) : [];
-  // Content is either a plain string or an array of API content blocks — the
-  // client's tool loop sends tool_use/tool_result turns as block arrays.
-  const conversation = messages.map((message) => {
-    const role = message.role === 'assistant' ? 'assistant' : 'user';
-    const content = message.content ?? message.text ?? '';
-    if (Array.isArray(content)) {
-      if (JSON.stringify(content).length > 200000) throw new Error('A chat message is too large.');
-      return { role, content };
-    }
-    const text = String(content).trim().slice(0, 4000);
-    return text ? { role, content: text } : null;
-  }).filter(Boolean);
-  if (!conversation.length || conversation[conversation.length - 1].role !== 'user') {
-    throw new Error('The last message must be from the learner.');
-  }
-
-  let unitContent = '';
-  if (payload.unit !== undefined) {
-    unitContent = JSON.stringify(payload.unit);
-    if (unitContent.length > 120000) unitContent = `${unitContent.slice(0, 120000)} …(unit content truncated)`;
-  }
-  if (!unitContent) {
-    unitContent = '(The unit content was not provided. Teach from the unit title and general Cambridge knowledge for this grade, and say when you are unsure what the lesson on screen shows.)';
-  }
-
-  const replacements = {
-    '{{LEARNER_NAME}}': clean(payload.learnerName, 40) || 'the learner',
-    '{{SUBJECT}}': clean(payload.subjectLabel, 60) || subject,
-    '{{GRADE}}': String(grade),
-    '{{STAGE_BAND}}': promptData.stageBands[String(grade)] || 'upper-primary',
-    '{{CAMBRIDGE_CODE}}': clean(payload.cambridgeCode, 60) || 'curriculum',
-    '{{UNIT_NO}}': clean(payload.unitNo, 8) || '?',
-    '{{UNIT_TITLE}}': clean(payload.unitTitle, 160) || 'this unit',
-    '{{CHANNEL}}': channel,
-    '{{SUBJECT_NOTES}}': promptData.subjectNotes[subject].join('\n'),
-    '{{STOCK_PHRASES}}': phrasesForSubject(subject, promptData.phraseBank).map((phrase) => `- ${phrase}`).join('\n'),
-    '{{OTHER_UNITS_NOTE}}': (promptData.otherUnitsNotes || {})[useUnitTool ? 'withTool' : 'withoutTool'] || '',
-    '{{COURSE_OUTLINE}}': String(payload.courseOutline || '').replace(/[^\S\n]+/g, ' ').trim().slice(0, 4000)
-      || '(The course outline was not provided; you know only the current unit.)',
-    '{{UNIT_CONTENT}}': unitContent
-  };
-  let system = promptData.template.join('\n').replace(/\{\{[A-Z_]+\}\}/g, (token) => replacements[token] ?? token);
-  const modeHint = (promptData.modeHints || {})[String(payload.mode || '')];
-  if (modeHint) system += `\n\n${modeHint}`;
-  // Where the learner is standing right now. The dock opens over any lesson
-  // page, so "I don't get this" has a referent.
-  const sectionHint = clean(payload.sectionHint, 80);
-  if (sectionHint) system += `\n\nThe learner is on the "${sectionHint}" page of this unit right now, and is most likely asking about what is on it.`;
-
-  if (!process.env.ANTHROPIC_API_KEY) throw new Error('ANTHROPIC_API_KEY is not configured in the local .env file.');
-  const model = process.env.WEHEL_MODEL || promptData.model || 'claude-sonnet-5';
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': process.env.ANTHROPIC_API_KEY,
-      'anthropic-version': '2023-06-01'
-    },
-    body: JSON.stringify({
-      model,
-      max_tokens: Math.max(200, Math.min(2000, Number(promptData.maxTokens) || 700)),
-      system,
-      ...(toolDefs.length ? { tools: toolDefs } : {}),
-      messages: conversation
-    })
-  });
-  if (!response.ok) throw new Error(`Anthropic ${response.status}: ${(await response.text()).slice(0, 240)}`);
-  const result = await response.json();
-  // A tool call goes back to the client, which holds the course data and will
-  // re-post with the tool_result appended.
-  const toolUse = (result.content || []).find((block) => block.type === 'tool_use');
-  if (toolUse) {
-    res.writeHead(200, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' });
-    res.end(JSON.stringify({ ok: true, toolUse: { id: toolUse.id, name: toolUse.name, input: toolUse.input }, assistantContent: result.content, model }));
-    return;
-  }
-  const reply = (result.content || []).filter((block) => block.type === 'text').map((block) => block.text).join('').trim();
-  if (!reply) throw new Error('Wehel could not answer just now.');
-  const canonical = canonicaliseWehelReply(reply, phrasesForSubject(subject, promptData.phraseBank));
-  res.writeHead(200, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' });
-  res.end(JSON.stringify({ ok: true, reply: canonical, model }));
-}
+// Wehel chat: the shared dev handler (also mounted by vite.config.js at the
+// production path). Assembly logic lives once, in tools/lib/wehel-dev-chat.js.
+const { createWehelChatHandler } = require(path.join(__dirname, 'lib', 'wehel-dev-chat.js'));
+const handleWehelChat = createWehelChatHandler({
+  apiKey: () => process.env.ANTHROPIC_API_KEY,
+  model: () => process.env.WEHEL_MODEL
+});
 
 // Local twin of local_hubredirect/quiz_stt.php so Wehel's mic works in dev.
 async function handleElevenLabsStt(req, res) {

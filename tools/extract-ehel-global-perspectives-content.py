@@ -389,29 +389,75 @@ def extract_objectives(documents: list[dict], stage: int) -> list[dict]:
     return found
 
 
-def extract(downloads: Path) -> dict:
+# The packs were preserved here after they were cleared out of Downloads, which
+# broke this tool completely: the built course and the review overrides live in
+# git, but nothing could be rebuilt from source. This is the durable copy, in
+# the same extracted-.docx shape inputs/ehel-grade*-source already use.
+PRESERVED = Path(__file__).resolve().parent.parent / "inputs" / "ehel-global-perspectives-source"
+
+
+def documents_by_year(downloads: Path) -> tuple[dict[int, list[tuple[str, bytes]]], dict[int, str]]:
+    """Every source document per year, from the Drive exports or the preserved tree.
+
+    Downloads is tried first so a fresh export always wins — re-exporting a year
+    and re-running is the normal way to fix a short pack. The preserved copy is
+    the fallback, so the pipeline still runs once the zips have been tidied away.
+    """
     chosen = archives_by_year(downloads)
-    if not chosen:
+    if chosen:
+        out: dict[int, list[tuple[str, bytes]]] = {}
+        for year, archive_path in sorted(chosen.items()):
+            with zipfile.ZipFile(archive_path) as archive:
+                out[year] = [
+                    (entry.filename, archive.read(entry))
+                    for entry in sorted(archive.infolist(), key=lambda e: e.filename)
+                    if entry.filename.lower().endswith(".docx")
+                ]
+        return out, {year: path.name for year, path in chosen.items()}
+
+    if PRESERVED.is_dir():
+        # The tree records which archive each year came from, so provenance in
+        # the built units stays the export's own filename rather than becoming
+        # the name of this directory.
+        manifest = {}
+        manifest_file = PRESERVED / "source-manifest.json"
+        if manifest_file.exists():
+            manifest = json.loads(manifest_file.read_text(encoding="utf-8")).get("archives", {})
+        out = {}
+        origins: dict[int, str] = {}
+        for year_dir in sorted(PRESERVED.glob("Year *")):
+            match = re.search(r"Year\s+(\d+)", year_dir.name)
+            if not match:
+                continue
+            files = sorted(year_dir.rglob("*.docx"))
+            if files:
+                year = int(match.group(1))
+                out[year] = [(str(f.relative_to(year_dir.parent)), f.read_bytes()) for f in files]
+                origins[year] = manifest.get(str(year), f"{PRESERVED.name}/{year_dir.name}")
+        if out:
+            return out, origins
+    return {}, {}
+
+
+def extract(downloads: Path) -> dict:
+    by_year, origins = documents_by_year(downloads)
+    if not by_year:
         raise SystemExit(
-            f"error: no Global Perspectives archives found in {downloads}\n"
-            f"       (looked at every '{ZIP_PATTERN}' and classified each by its contents)"
+            f"error: no Global Perspectives source found.\n"
+            f"       Looked at every '{ZIP_PATTERN}' in {downloads} and classified each by\n"
+            f"       its contents, then at {PRESERVED}."
         )
 
     grades = []
-    for year, archive_path in sorted(chosen.items()):
+    for year, documents in sorted(by_year.items()):
         units: defaultdict[int, list[dict]] = defaultdict(list)
-        with zipfile.ZipFile(archive_path) as archive:
-            for entry in sorted(archive.infolist(), key=lambda e: e.filename):
-                if not entry.filename.lower().endswith(".docx"):
-                    continue
-                match = re.search(r"Unit\s+(\d+)", entry.filename)
-                if not match:
-                    continue
-                name = Path(entry.filename).name
-                role, voice = document_role(name)
-                units[int(match.group(1))].append(
-                    parse_document(archive.read(entry), name, role, voice)
-                )
+        for filename, data in documents:
+            match = re.search(r"Unit\s+(\d+)", filename)
+            if not match:
+                continue
+            name = Path(filename).name
+            role, voice = document_role(name)
+            units[int(match.group(1))].append(parse_document(data, name, role, voice))
 
         stage = year
         unit_models = []
@@ -438,7 +484,7 @@ def extract(downloads: Path) -> dict:
                 "year": year,
                 "stage": stage,
                 "framework": framework_for(stage),
-                "sourceArchive": archive_path.name,
+                "sourceArchive": origins.get(year, ""),
                 "unitCount": len(unit_models),
                 "units": unit_models,
             }

@@ -85,6 +85,10 @@ Global Perspectives spans Stages 1-8 (Cambridge Primary 0838, Lower Secondary 11
 npm run extract:global-perspectives-content && npm run build:global-perspectives && npm run check:global-perspectives
 ```
 
+**The source packs are preserved in `inputs/ehel-global-perspectives-source/`** (extracted `.docx`, the same shape `inputs/ehel-grade*-source/` uses). The extractor prefers a fresh export in `~/Downloads` and falls back to that tree, so a re-export always wins but the pipeline still runs once the zips have been tidied away — which happened, and left the extractor with nothing to read. `source-manifest.json` records which archive each year came from, so provenance in the built units stays the export's own filename.
+
+**Year 5 holds Units 1-2 only** (Research, Analysis). Evaluation, Reflection, Collaboration and Communication were never in the export; that gap needs a re-export from Google Drive, not a code change.
+
 Two pack shapes, one runtime:
 
 - **Stages 1-3 (guided)** — Teacher & Parent Guide + Activity Sheet + Mini-Project & Reflection.

@@ -35,6 +35,26 @@ function resolveMediaUrl(source) {
   }
   return new URL(s, document.baseURI).href;
 }
+// Bunny serves .vtt as application/octet-stream: it ignores the Content-Type
+// the upload sends and derives one from the extension, and its table has no
+// entry for .vtt (every other extension we ship resolves correctly). The HTML
+// spec requires text/vtt for a text track, so a browser stricter than Chrome
+// is entitled to drop the captions. Re-serve the cues from a blob we type
+// ourselves, which depends on nothing the CDN reports. Failure is silent by
+// design — the track keeps its original src, exactly as before.
+async function attachCaptions(video) {
+  const track = video.querySelector("track");
+  if (!track || !track.src) return;
+  try {
+    const res = await fetch(track.src);
+    if (!res.ok) return;
+    const vtt = await res.text();
+    if (!/^﻿?WEBVTT/.test(vtt)) return;
+    track.src = URL.createObjectURL(new Blob([vtt], { type: "text/vtt" }));
+  } catch {
+    /* keep the original src; captions are an enhancement, not a gate */
+  }
+}
 const defaultUnit = gradeNumber === 1 ? 0 : 1;
 const requestedUnit = Number(routeParams.get("unit") ?? defaultUnit);
 const unitNumber = requestedUnit >= defaultUnit && requestedUnit <= 10 ? requestedUnit : defaultUnit;
@@ -846,6 +866,7 @@ function renderLecture() {
   const lectureDone = $("#lecture-done");
   lectureVideo.defaultPlaybackRate = AI_NARRATION_RATE;
   lectureVideo.playbackRate = AI_NARRATION_RATE;
+  attachCaptions(lectureVideo);
   lectureVideo.addEventListener("loadedmetadata", () => {
     const minutes = Math.max(1, Math.round(lectureVideo.duration / 60));
     $("#video-status").textContent = `Teacher Musa · ${minutes}-minute audiovisual lecture`;

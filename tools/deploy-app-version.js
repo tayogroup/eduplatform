@@ -39,9 +39,12 @@ const CONCURRENCY = 10;
 // `CDN-Cache: HIT` off the same entry as the bare URL. Both now use the version
 // path like every other subject.
 const ALL_SUBJECTS = ["english", "mathematics", "science", "computing", "global-perspectives", "intensive-english"];
-// Subjects whose runtime is a standalone shared/course-ui.js rather than a
-// shell/subjects/ module. A --shell release must not name them.
-const NON_SHELL_SUBJECTS = ["computing", "global-perspectives"];
+// Every subject now runs from shell/subjects/. The standalone shared/course-ui.js
+// files are one-line loaders kept only so index.html can keep referencing the
+// stable name the deploy contract rewrites. Releases are therefore always
+// --shell; this list exists so the guard below still has something to check if a
+// future subject arrives with its own runtime before it is migrated.
+const NON_SHELL_SUBJECTS = [];
 
 const argv = process.argv.slice(2);
 // --dry prints the exact remote paths a release would write and exits without

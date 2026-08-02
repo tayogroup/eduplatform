@@ -652,6 +652,112 @@ function loadFramework(code) {
   return JSON.parse(fs.readFileSync(file, "utf8"));
 }
 
+// ---------------------------------------------------------------------------
+// Stage 1-3 objectives
+// ---------------------------------------------------------------------------
+// The Years 4-8 units are named for their skill, so their objectives follow
+// from the title. The Years 1-3 units are named for a topic ("What can families
+// teach us?") and carry no codes, which is why they shipped unmapped at first.
+//
+// But the packs are not silent: every Stage 1-3 Teacher & Parent Guide opens
+// with a list of the skills that unit grows, and most name the Cambridge strand
+// outright — "Finding out (research)", "Sorting and counting (analysis)",
+// "Working together (collaboration)". That list is the evidence, and this maps
+// it to sub-strands.
+//
+// Each match records the phrase that produced it on the objective, so a
+// curriculum reviewer can check the claim against the source rather than take
+// it on trust. Like the framework's own codes, this is an Ehel-assigned mapping
+// and wants sign-off before it is treated as authoritative.
+const GUIDED_SKILL_HEADING = /skill|grow|will learn|will build|will practise/i;
+
+// Tested against the WHOLE bullet (phrase plus its explanation), because the
+// explanation carries most of the signal: "Finding out - asking, looking,
+// reading, and looking online" earns Information skills where a bare "Finding
+// out" would not. Communication sits above Solving problems so that "Sharing
+// kind ideas" reads as communicating rather than as proposing an action.
+const GUIDED_SKILL_MAP = [
+  [/talking and listening|listening and sharing|listening to others|speaking and listening|communication|showing and telling|sharing a clear message|sharing kind ideas/i,
+    ["Mi", "Ml"], "tells others about the topic and listens to them"],
+  [/working together|collaboration|sharing and caring|sharing the jobs|taking turns/i,
+    ["Cc", "Ct"], "works with others towards a shared outcome"],
+  [/thinking about our learning|reflection|reflecting|thinking back/i,
+    ["Fv", "Fl"], "looks back at what was learned and what helped"],
+  [/finding out|research|asking (?:good )?questions/i,
+    ["Rq", "Rc"], "asks questions and gathers the answers"],
+  [/\breading\b|\blooking online\b|\bbooks?\b|\bnewspapers?\b|\bsources?\b/i,
+    ["Ri"], "finds information in sources provided"],
+  [/\brecord\b|\bpictogram\b|\btally\b|\bchart\b|\btable\b/i,
+    ["Rf"], "records what was found"],
+  // Identifying perspectives is specifically about recognising that OTHER
+  // PEOPLE know or believe different things. An earlier rule also fired on bare
+  // "noticing" / "looking closely", which claimed it for any unit that asked a
+  // child to observe something — "Comparing a need with a want" is not a
+  // perspective, and five units claimed this objective on that basis.
+  [/another person'?s side|\bempathy\b|imagining how others feel|different people|what others think/i,
+    ["Ap"], "notices that other people see things differently"],
+  [/\bcomparing\b|\bsorting\b|\bcounting\b|using numbers|reading a map|\banalysis\b|\binfographic\b/i,
+    ["Ad"], "reads simple data and says what it shows"],
+  // \bcauses?\b, not causes? — the unanchored form matched inside "because",
+  // which gave "using the words 'I think ... because ...'" a Making connections
+  // objective it has no claim to.
+  [/understanding the (?:problem|issue)|caring about our world|\bcauses?\b|\bconsequences?\b/i,
+    ["Ac"], "links what people do to what follows from it"],
+  [/sharing an idea|one way we can|promise to try|\bsolution\b|course of action/i,
+    ["As"], "suggests an action that would make a difference"],
+  // \bfair\b covers "fair rules", "judging what is fair" and "being fair"
+  // alike; the earlier list of set phrases missed Rule Makers, whose whole
+  // second skill is deciding whether a rule is fair.
+  [/saying what i think|\bopinion\b|giving reasons|choosing and saying why|\bfair\b|\bfairness\b/i,
+    ["Ea"], "states an opinion and gives a reason for it"],
+];
+
+/** The skill bullets a Stage 1-3 guide opens with, or [] if it prints none. */
+function guidedSkillBullets(unit) {
+  const guide = unit.documents.find((doc) => doc.voice === "adult");
+  if (!guide) return [];
+  const blocks = guide.blocks;
+  for (let index = 0; index < blocks.length; index += 1) {
+    const block = blocks[index];
+    if (block.type !== "heading" || !GUIDED_SKILL_HEADING.test(block.text)) continue;
+    const list = blocks.slice(index + 1, index + 4).find((b) => b.type === "list");
+    if (list) return list.items.map(tidy).filter(Boolean);
+  }
+  return [];
+}
+
+function objectivesFromGuide(unit, stage, framework) {
+  const bullets = guidedSkillBullets(unit);
+  if (!bullets.length) return [];
+  const stageObjectives = framework.objectivesByStage[String(stage)] || [];
+  const byCode = new Map(stageObjectives.map((o) => [o.code, o]));
+  const found = new Map(); // code → {objective, evidence[]}
+  for (const bullet of bullets) {
+    for (const [pattern, subs, why] of GUIDED_SKILL_MAP) {
+      if (!pattern.test(bullet)) continue;
+      for (const sub of subs) {
+        const objective = byCode.get(`${stage}${sub}.01`);
+        if (!objective) continue;
+        const entry = found.get(objective.code) || { objective, evidence: [], why };
+        const phrase = tidy(bullet.split(/\s[-–—]\s|\.\s/)[0]).slice(0, 70);
+        if (!entry.evidence.includes(phrase)) entry.evidence.push(phrase);
+        found.set(objective.code, entry);
+      }
+    }
+  }
+  const order = ["Rq", "Ri", "Rc", "Rf", "Ap", "Ad", "Ac", "As", "Es", "Ea", "Fc", "Ft", "Fv", "Fl", "Cc", "Ct", "Mi", "Ml"];
+  return [...found.values()]
+    .sort((a, b) => order.indexOf(a.objective.subStrandCode) - order.indexOf(b.objective.subStrandCode))
+    .map(({ objective, evidence, why }) => ({
+      code: objective.code,
+      strand: objective.strand,
+      subStrand: objective.subStrand,
+      text: objective.text,
+      learnerText: "",
+      evidence: `the guide's own skill list: "${evidence.join('"; "')}" — ${why}`,
+    }));
+}
+
 function objectivesForUnit(unit, stage, framework) {
   const stageObjectives = framework.objectivesByStage[String(stage)] || [];
   const byCode = new Map(stageObjectives.map((o) => [o.code, o]));
@@ -675,10 +781,11 @@ function objectivesForUnit(unit, stage, framework) {
   }
 
   // Otherwise: a Years 4-8 unit is one skill end to end, so it covers that
-  // strand's sub-strands at its stage. Units that are not named for a skill
-  // (the Years 1-3 topic units) get nothing — see reviewStatus.
+  // strand's sub-strands at its stage.
   const subs = STRAND_SUB_STRANDS[unit.skill];
-  if (!subs) return [];
+  // A Years 1-3 topic unit is not named for a skill, so its objectives come
+  // from the skills its own guide says it grows.
+  if (!subs) return objectivesFromGuide(unit, stage, framework);
   return subs
     .map((sub) => byCode.get(`${stage}${sub}.01`))
     .filter(Boolean)
@@ -865,9 +972,15 @@ function buildUnit(unit, grade, framework) {
       packShape: unit.packShape,
       unitOverview,
       learningPath: explainers.filter((e) => !e.isFrontMatter).map((e) => e.title).slice(0, 12),
-      reviewStatus: objectives.length
-        ? "Imported - curriculum review required"
-        : "Imported - Cambridge objective mapping still to be assigned",
+      // A Stage 1-3 unit's objectives are INFERRED from the skills its guide
+      // says it grows, not read off a code the pack prints. That is a weaker
+      // claim than the Stages 4-8 mapping, which the packs' own tables prove,
+      // so it says so rather than reading as equally settled.
+      reviewStatus: !objectives.length
+        ? "Imported - Cambridge objective mapping still to be assigned"
+        : (unit.skill
+          ? "Imported - curriculum review required"
+          : "Imported - objectives inferred from the guide's skill list; curriculum sign-off required"),
     },
     cambridge: {
       level: grade.framework.level,

@@ -16,7 +16,11 @@
 // by the other tools and are unaffected. Shared modules (course-shell.js,
 // progress-client.js) go to app/shared/ (short-cached; imported via ../../shared/).
 //
-// Usage: BUNNY_KEY=… node tools/deploy-app-version.js [v2] [--shell] [subject…]
+// Usage: BUNNY_KEY=… node tools/deploy-app-version.js [v2] [--shell] [--verify] [--dry] [subject…]
+//   --verify  after uploading, read the release back through the CDN and fail if
+//             the edge does not serve it (catches a version path poisoned by a
+//             cached 404 — see docs/bunny-cache-config.md). Recommended always.
+//   --dry     print the remote paths a release would write, and exit.
 //   default tag: v1. Name one or more subjects (english mathematics science
 //   computing) to release only those and leave the rest on their current version;
 //   omit for all. A one-subject --shell release also skips app/shared/, since
@@ -51,6 +55,17 @@ const argv = process.argv.slice(2);
 // uploading. Worth having: this tool's whole job is which path a file lands on,
 // and until now the only way to see that was to run a real deploy.
 const DRY = argv.includes("--dry");
+// --verify re-reads the release back THROUGH THE CDN once every file is up, and
+// fails if the edge does not serve what storage now holds. It exists because a
+// successful upload does not mean a served release: Edge Rule #1 puts a 1-year
+// override on */app/*/v and Bunny applies it to a 404 as readily as a 200, so a
+// version path that was requested before it existed keeps answering 404 for a
+// year while this tool reports every file uploaded. See docs/bunny-cache-config.md.
+//
+// It runs AFTER the upload on purpose. Checking the same URLs beforehand is the
+// thing that causes the fault — which is why this is a flag on the deploy rather
+// than a script anyone would be tempted to run first.
+const VERIFY = argv.includes("--verify");
 if (!KEY && !DRY) { console.error("BUNNY_KEY not set (use --dry to preview without uploading)"); process.exit(1); }
 const TAG = (argv.find((a) => /^v\d+$/.test(a))) || "v1";
 // Optional subject filter: name one or more subjects to release only those. The
@@ -233,6 +248,119 @@ async function put(remote, buf) {
   if (!r.ok && r.status !== 201) throw new Error(`${r.status} ${(await r.text()).slice(0, 120)}`);
 }
 
+// Read the release back through the edge. Returns true if anything is wrong.
+async function verifyRelease(items) {
+  const CDN = `https://${ZONE}.b-cdn.net/` + encodeURI(`${ROOT_FOLDER}/`);
+  const versioned = items.map((i) => i.remote).filter((r) => r.includes(`/${TAG}/`));
+
+  // Also verify what the ENTRY asks for, not only what we uploaded. Those two
+  // sets are not the same: versionIndexHtml() rewrites computing's brand-fx.js
+  // reference into v{TAG}/, but shared/brand-fx.js is untracked in git, so a
+  // clean checkout has nothing to upload and the entry ends up pointing at a
+  // file that was never sent. Checking only our own upload list cannot see that.
+  const resolveRef = (subject, ref) => {
+    if (/^(https?:)?\/\/|^#|^data:|^mailto:/.test(ref)) return null;
+    const base = `app/${subject}`.split("/");
+    for (const part of ref.replace(/^\.\//, "").split("/")) {
+      if (part === "..") base.pop();
+      else if (part && part !== ".") base.push(part);
+    }
+    return base.join("/");
+  };
+  for (const item of items.filter((i) => /^app\/[^/]+\/index\.html$/.test(i.remote))) {
+    const subject = item.remote.split("/")[1];
+    for (const m of item.buf.toString("utf8").matchAll(/(?:src|href)="([^"]+)"/g)) {
+      const p = resolveRef(subject, m[1]);
+      if (p && /\.(js|css)$/.test(p) && !versioned.includes(p)) versioned.push(p);
+    }
+  }
+
+  console.log(`\n──────── verify ──────── reading ${versioned.length} file(s) back through ${ZONE}.b-cdn.net`);
+
+  const results = [];
+  let idx = 0;
+  async function worker() {
+    while (idx < versioned.length) {
+      const remote = versioned[idx++];
+      // Retry transient failures. A verifier that reports a network blip as a
+      // broken release trains people to ignore it, which costs more than the
+      // fault it exists to catch.
+      let last;
+      for (let attempt = 1; attempt <= 3; attempt += 1) {
+        try {
+          const r = await fetch(CDN + encodeURI(remote), { method: "HEAD" });
+          last = {
+            remote,
+            status: r.status,
+            // The fingerprint of the poisoned-path fault: a cache HIT whose
+            // cached response was itself a 404 from the origin.
+            poisoned: r.status === 404 && r.headers.get("cdn-cache") === "HIT",
+            cachedAt: r.headers.get("cdn-cachedat") || "",
+          };
+          break;
+        } catch (e) {
+          last = { remote, status: 0, error: e.message };
+          if (attempt < 3) await new Promise((res) => setTimeout(res, 400 * attempt));
+        }
+      }
+      results.push(last);
+    }
+  }
+  await Promise.all(Array.from({ length: CONCURRENCY }, worker));
+
+  const broken = results.filter((r) => r.status !== 200);
+  // A 404 at the edge has two very different causes, and the fix differs: either
+  // the file is in storage and the edge cached a miss (bump the tag), or it was
+  // never uploaded (find out why — brand-fx.js is untracked in git, so a clean
+  // checkout silently has nothing to send). Ask storage rather than guess; a 404
+  // there is against the origin, so it caches nothing.
+  for (const b of broken) {
+    if (b.status !== 404) continue;
+    try {
+      const r = await fetch(`${STORAGE}/${ZONE}/` + encodeURI(`${ROOT_FOLDER}/${b.remote}`), { method: "HEAD", headers: { AccessKey: KEY } });
+      b.inStorage = r.ok;
+    } catch { b.inStorage = null; }
+  }
+  if (!broken.length) {
+    console.log(`  ✓ all ${results.length} files serve 200 from the edge`);
+  } else {
+    for (const b of broken.sort((x, y) => x.remote.localeCompare(y.remote))) {
+      const why = b.status !== 404 ? "" : b.inStorage ? "  [in storage — edge cached a 404]" : "  [NOT in storage — never uploaded]";
+      console.log(`  ✗ ${b.status || b.error} ${b.remote}${why}`);
+    }
+    const missing = broken.filter((b) => b.status === 404 && b.inStorage === false);
+    if (missing.length) {
+      console.log(`\n  ${missing.length} file(s) reached the release only as a REFERENCE — the entry points\n` +
+        `  at them but nothing uploaded them. A file untracked in git is the usual\n` +
+        `  cause: a clean checkout has nothing to send and the deploy cannot tell.\n` +
+        `  Commit the file, or stop the entry referencing it.`);
+    }
+    if (broken.some((b) => b.poisoned && b.inStorage)) {
+      console.log(`\n  These paths are serving a CACHED 404. Something requested them before\n` +
+        `  this deploy uploaded them, and Edge Rule #1 pinned that 404 for a year.\n` +
+        `  The files ARE in storage — only the edge is wrong.\n\n` +
+        `  Fix: re-run with the next tag. A path nothing has requested cannot be\n` +
+        `  poisoned, and that is faster than obtaining an account API key to purge.\n` +
+        `      node tools/deploy-app-version.js v${Number(TAG.slice(1)) + 1} ${SHELL ? "--shell " : ""}--verify${PARTIAL ? " " + SUBJECTS.join(" ") : ""}`);
+    }
+  }
+
+  // The pointer is short-cached, so a lag here is normal rather than a fault.
+  const stale = [];
+  for (const subject of SUBJECTS) {
+    try {
+      const r = await fetch(CDN + encodeURI(`app/${subject}/index.html`), { cache: "no-store" });
+      const html = await r.text();
+      if (!html.includes(`${TAG}/course-ui.`)) stale.push(subject);
+    } catch { /* a pointer we cannot read is not evidence of a bad release */ }
+  }
+  console.log(stale.length
+    ? `  … ${stale.length} pointer(s) still on the previous release (${stale.join(", ")}) — index.html is max-age=300, re-check shortly`
+    : `  ✓ every index.html already points at ${TAG}`);
+
+  return broken.length > 0;
+}
+
 (async () => {
   const manifest = fs.existsSync(MANIFEST) ? JSON.parse(fs.readFileSync(MANIFEST, "utf8")) : {};
   let all;
@@ -278,4 +406,11 @@ async function put(remote, buf) {
   save();
   console.log(`\n──────── done ──────── uploaded: ${done} | failed: ${failed}`);
   console.log(`Release ${TAG} is live once app/{subject}/index.html is served fresh (short-cache or one purge on first cutover).`);
+
+  if (VERIFY && !failed) {
+    const bad = await verifyRelease(all);
+    if (bad) process.exitCode = 1;
+  } else if (VERIFY) {
+    console.log(`\nSkipping --verify: ${failed} upload(s) failed, so a 404 would not tell you anything.`);
+  }
 })();

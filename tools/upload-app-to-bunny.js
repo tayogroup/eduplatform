@@ -128,6 +128,13 @@ const sha1 = (buf) => crypto.createHash("sha1").update(buf).digest("hex");
 // because app/{subject}/shared/ is served max-age=2592000 the course has been
 // serving month-old assets from a bundle the release had already replaced.
 const POINTER_FILES = new Set(["index.html", "current.json"]);
+
+// Harnesses for checking the unified shell renders, not pages a learner reaches:
+// nothing in the app links to them and they are not in any catalog. english,
+// mathematics and science each carry one. app/english/shell-test.html is already
+// on the CDN — excluding it here does not remove it, because deploy only adds and
+// overwrites, so that copy has to be deleted in storage by hand.
+const DEV_ONLY_FILES = new Set(["shell-test.html"]);
 const isSubjectTree = (t) => t.dest.startsWith("app/") && t.name !== "shared" && t.name !== "shell";
 
 function buildList() {
@@ -137,6 +144,10 @@ function buildList() {
     for (const rel of walk(t.src, "", t.excludeTop)) {
       if (isSubjectTree(t) && POINTER_FILES.has(rel)) {
         console.log(`  (skip ${t.name}/${rel}: release pointer, owned by deploy-app-version.js)`);
+        continue;
+      }
+      if (isSubjectTree(t) && DEV_ONLY_FILES.has(rel)) {
+        console.log(`  (skip ${t.name}/${rel}: shell test harness, not learner-facing)`);
         continue;
       }
       const local = path.join(t.src, rel);

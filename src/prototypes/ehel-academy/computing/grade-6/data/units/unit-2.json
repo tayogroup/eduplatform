@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-01T14:06:01.030Z",
+  "generatedAt": "2026-08-02T10:33:39.221Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -459,7 +459,7 @@
       "outcomeId": "lo01",
       "difficulty": "Basic",
       "title": "Worked example 1: Capturing Data",
-      "prompt": "Explain in your own words: Capturing Data.",
+      "prompt": "Which of these is continuous data? (a) Number of pets (b) Favourite colour (c) Temperature (d) Number of goals",
       "solution": "Before you can manage data, you have to capture it — that is, collect it. And before you collect it, you have to plan. Good data managers never just grab numbers randomly; they think carefully about what they want to find out and how they will find it out. This is called a statistical investigation.\n\nWhat is a statistical investigation?\n\nA statistical investigation is the collection of data to help you answer a question. For example, Maya might want to find out the mean (average) number of goals her team scores in a month. She would look at each match, write down the goals, and then work out the mean. Or Sami might want to find out how many different birds visit the school garden in one hour — he would sit and count them. Both of these are statistical investigations, because both collect data to answer a clear question.\n\nNot all data is the same. Knowing which type you are collecting helps you choose the right tool to collect it. There are three types you need to know.\n\nHere is the key difference to remember. Discrete data is counted and is always a whole number — you cannot have half a person in a room. Continuous data is measured and can be any value at all, like a temperature of 24.5 degrees or a height of 1.42 metres. Because continuous data can be so precise, capturing it needs extra care — and that is exactly what Sami's weather investigation needs.\n\nWhen you plan a statistical investigation, you should ask yourself six questions before you collect a single number. Answering them first saves you a lot of trouble later.\n\nWhat do I want to find out? For example, 'How does the temperature in Mogadishu change during the week?'\n\nWhat questions will help me find it out? Your questions must give you exactly the data you need.\n\nWho or what will I ask or measure? Be specific. 'The temperature outside our classroom' is specific; 'the temperature' is not.\n\nHow will I collect the data? A questionnaire for opinions, a thermometer or data logger for temperature, and so on.\n\nHow will I analyse the data? Perhaps with a spreadsheet, and a chart to make patterns easy to see.\n\nWhat tools will I use throughout? A data logger, a spreadsheet, a database, or a form — or a mixture.\n\nThere is a range of computing tools you can use to capture data. Choosing the right one depends on the type of data and how you want to collect it.\n\nData loggers — a device that uses sensors to record data over time, all by itself. A weather station that records the temperature and wind speed every hour is a data logger. Because it works on its own, it can be left in a hard-to-reach place, like a mountain top, for months. Data loggers are excellent for capturing continuous data.\n\nSpreadsheets — such as LibreOffice Calc. A spreadsheet stores data in a neat grid and can do calculations and draw charts. It is perfect for recording readings and then analysing them.\n\nDatabases — such as LibreOffice Base. A database stores, organises and lets you search large amounts of organised data quickly.\n\nForms and questionnaires — a series of questions people fill in. A form can be on paper, in a word processor, or an online form. Forms are great for collecting answers from many people.\n\nEvery year there are between 12,000 and 14,000 earthquakes around the world.\n\nFor example: They are measured by a special kind of data logger called a seismograph, which senses the tiny shaking of the ground and records it automatically, day and night, without anyone standing next to it."
     },
     {
@@ -467,7 +467,7 @@
       "outcomeId": "lo02",
       "difficulty": "Basic",
       "title": "Worked example 2: Designing a form to collect continuous data",
-      "prompt": "Explain in your own words: Designing a form to collect continuous data.",
+      "prompt": "A statistical investigation is: (a) A type of chart (b) Collecting data to answer a question (c) A spreadsheet formula (d) A kind of database",
       "solution": "Continuous data can be tricky to capture, because it can be any value and it often changes over time. If you design a form to collect it, you must think carefully about five things, or your data will be messy and hard to use.\n\nPhrase your questions precisely. 'What was the temperature outside your classroom at 12:00 on Monday?' is precise. 'What is the temperature?' is not — it does not say where or when.\n\nHow often should data be entered? If you want a reading three times a day, say so, and leave space for three readings each day.\n\nOver what period should data be entered? For a week? For a month? Make it clear and leave enough space.\n\nWhat measurements will you use? Degrees Celsius? Millimetres of rainfall? Kilograms? State the unit so everyone answers the same way.\n\nHow precise should the data be? For example, you might ask for answers to one decimal place, like 24.5, not 24.5123.\n\nWhen you make a form, you choose a question type for each question — the way the question is asked and answered. Different types suit different data.\n\nOpen text questions let people write their own answer, such as 'Why do you like reading?'. They are good for opinions, but people might answer in the wrong format. You can control this with validation rules, which only accept certain kinds of answer.\n\nMultiple choice questions let people pick from a set of answers, such as 'What is your favourite colour?'. They are quick, but they are not good for continuous data, because you would need a choice for every possible value — which is impossible.\n\nRanking questions let people choose on a scale, such as 'Rate today's lunch from 1 to 5'. They are great for opinions, but they do not collect continuous or discrete data.\n\nFor example: So which question type is best for collecting continuous data like temperature or height? An open text question with validation rules — such as a box that only accepts a number to one decimal place. This gives the precise, numerical answer you need while stopping people from typing nonsense."
     },
     {
@@ -475,7 +475,7 @@
       "outcomeId": "lo03",
       "difficulty": "Basic",
       "title": "Worked example 3: Hands",
-      "prompt": "Explain in your own words: Hands.",
+      "prompt": "A data logger is best for collecting: (a) Opinions (b) Categories (c) Continuous data over time (d) Names",
       "solution": "You do not need an expensive online form to capture continuous data carefully. You can build a smart data-capture sheet in LibreOffice Calc, and use its validation rules to make sure only sensible answers are accepted. This is exactly what Sami needs for his Mogadishu weather investigation. Here is how the sheet is set out:\n\nTo stop anyone typing a word or a silly number into the rainfall column, Sami adds a validation rule. He selects the cells B2:B8, then opens the menu Data > Validity. On the Criteria tab he sets Allow to Decimal, the condition to between, a Minimum of 0 and a Maximum of 500. Now the cells will only accept a decimal number from 0 to 500 — a real rainfall reading. On the Error Alert tab he chooses the Stop action, so a wrong entry is refused with a friendly message.\n\nFor categorical data, like the type of weather, validation can give a drop-down list instead. Sami selects a column, opens Data > Validity, sets Allow to List, and types the choices Sunny, Cloudy, Rainy and Windy, one per line. Now that column shows a neat drop-down arrow, and no one can misspell 'Sunny' or invent a new category by accident. That is a validation rule doing its job.\n\nType of data — What it is · Examples · A · B\n\nCategorical — Data that can be grouped into categories. It is usually an opinion, a description, or a range. · Favourite colour, type of pet, favourite lesson, age group 7-11. · Day · Rainfall (mm)\n\nDiscrete — Numerical data that can only be whole numbers. You often count it, and you cannot have half. · Number of learners in a class, number of customers, number of goals. · Saturday · 1.2\n\nFor example: Continuous — Numerical data that can take ANY value, including decimals. You usually measure it, not count it. · Temperature, height, weight, rainfall, the time taken to run a race. · Sunday · 3.4"
     },
     {
@@ -483,7 +483,7 @@
       "outcomeId": "lo04",
       "difficulty": "Intermediate",
       "title": "Worked example 4: Creating a Spreadsheet",
-      "prompt": "Explain in your own words: Creating a Spreadsheet.",
+      "prompt": "Every spreadsheet formula must begin with: (a) A colon (b) An equals sign (c) A bracket (d) A letter",
       "solution": "Now that you can capture data, it is time to organise and analyse it. The best tool for numerical data is a spreadsheet, and you will use LibreOffice Calc. A spreadsheet is far more than a place to store numbers — it is a powerful calculator that can work on thousands of numbers at once and never makes an arithmetic mistake.\n\nA spreadsheet is a document split into a large grid. Each little box in the grid is called a cell. The cells are organised into rows, which go across, and columns, which go down. Each row has a unique number (1, 2, 3, ...) and each column has a unique letter (A, B, C, ...). 'Unique' means one of a kind — there is only one row 3 and only one column B, just as there is only one of you.\n\nWhen you open LibreOffice Calc, look for these parts of the screen:\n\nThe Name Box at the top-left corner, which shows the reference of the cell you have selected.\n\nThe Input Line (the formula bar) next to it, where you can see and type what is inside a cell.\n\nThe sheet tabs at the bottom (Sheet1, Sheet2, ...). One file can hold many sheets.\n\nThe AutoSum button, marked with the Greek letter sigma, which quickly adds up a column or row for you.\n\nEvery cell has an address made of its column letter and its row number. This is called a cell reference. The letter tells you the column (how far across), and the number tells you the row (how far down). So the cell where column B meets row 3 has the cell reference B3.\n\nCell references are the secret to a spreadsheet's power. Instead of typing a number into a calculation, you type the cell reference where that number lives. Then, if you ever change the number in that cell, every calculation that uses it updates automatically. It is like magic, but it is really just clever organisation.\n\nTo make a calculation in a spreadsheet, you write a formula. A formula is an instruction to do a calculation, and it always begins with an equals sign =. The = tells LibreOffice Calc, 'Do not treat this as ordinary text — work this out for me.' Formulas combine cell references with arithmetic operators, the symbols we use for maths:\n\nFor example, =C3*D4 multiplies the value in cell C3 by the value in cell D4. If C3 holds 2 and D4 holds 4, the formula returns 8. One golden rule: always put a formula in a separate cell — not in either of the cells you are using in the calculation. You can type a formula straight into an empty cell, or click the cell and type into the Input Line at the top.\n\nA function is a ready-made calculation that is already built into LibreOffice Calc. Each function has a name, and you 'call' it by that name. Functions save you from writing very long formulas. There are more than 500 functions in Calc, but in this unit you will focus on two: SUM and AVERAGE.\n\nFor example: To use a function you follow three steps: start with =, then the function name, then the cell references inside brackets. Inside the brackets you use a colon : to mean 'to'. So A1:A10 means 'from cell A1 to cell A10, and everything in between'."
     },
     {
@@ -491,16 +491,48 @@
       "outcomeId": "lo05",
       "difficulty": "Intermediate",
       "title": "Worked example 5: Worked example: Aunt Amara's shop in Hargeisa",
-      "prompt": "Explain in your own words: Worked example: Aunt Amara's shop in Hargeisa.",
-      "solution": "Let us help Aunt Amara. She sells school items in her Hargeisa shop, and she has told you the price of each item and how many she sold this week, all in Somali shillings. You type her data into LibreOffice Calc like this:\n\nColumn D works out the total money from each item by multiplying its price by the number sold. In cell D2 you type =B2*C2 and press Enter. The result is 30000, because 2000 multiplied by 15 is 30000. You do not have to type the formula seven times, though. You can click D2, then use the Fill Down shortcut Ctrl+D (or the menu Sheet > Fill Cells > Down) to copy the formula down to D8. LibreOffice cleverly changes the cell references for each row, so D3 becomes =B3*C3, and so on. Here are all the results:\n\nColumn D: total money from each item\n\nNow Amara wants three big answers: her total sales, the total number of items she sold, and the average price of an item. You put each in a separate cell using SUM and AVERAGE:\n\nFor example: Total number of items sold: in C9 type =SUM(C2:C8) -> 61"
+      "prompt": "In a spreadsheet, the symbol for multiply is: (a) x (b) * (c) / (d) +",
+      "solution": "(b) The asterisk * means multiply; / means divide."
     },
     {
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
       "title": "Worked example 6: Total sales in shillings",
-      "prompt": "Explain in your own words: Total sales in shillings.",
+      "prompt": "Which formula correctly adds the values from B2 to B8? (a) =SUMB2:B8 (b) SUM(B2:B8) (c) =SUM(B2:B8) (d) =SUM(B2-B8)",
       "solution": "Average price per item: in B11 type =AVERAGE(B2:B8) -> 8000\n\nLet us check those by hand so you can see the software is right. The numbers sold are 15, 20, 8, 5, 6, 4 and 3, which add up to 61. The item totals in column D are 30000, 60000, 40000, 40000, 60000, 48000 and 48000, which add up to 326000 shillings. And the seven prices are 2000, 3000, 5000, 8000, 10000, 12000 and 16000, which add up to 56000; divide by 7 and you get an average price of 8000 shillings. Amara is delighted — what would have taken her an hour with a paper and pencil took LibreOffice Calc less than a second.\n\nA modern LibreOffice Calc sheet has 1,048,576 rows and up to 16,384 columns.\n\nThat is more than 17 billion cells in a single sheet — far more than anyone could ever fill by hand.\n\nCalc also has more than 500 built-in functions, each one a ready-made calculation waiting for you to use it.\n\nReal spreadsheets often hold huge amounts of data. The skill of a good data manager is selecting just the pieces you need to answer a question. To select data for a calculation in LibreOffice Calc you can either type the cell references into your formula, or click and drag across the cells you want. When you drag, Calc fills the range into your formula for you.\n\nImagine Sami's weather sheet holds a whole month of readings: maximum temperature, minimum temperature, humidity and rainfall. To find the mean maximum temperature for the month, he selects only the maximum-temperature column and uses AVERAGE on it. He would not try to average the wind direction, because 'north' and 'east' are categorical words, not numbers — you cannot calculate a mean of them. Choosing the right data is just as important as choosing the right formula.\n\nNumbers in a grid are useful, but a chart makes patterns jump out at you. To turn Amara's data into a chart in LibreOffice Calc:\n\nSelect the data you want to show. For a chart of each item's total, select the Item column and the Total column together (A1:A8 and D1:D8).\n\nOpen the menu Insert > Chart. The Chart Wizard appears.\n\nStep 1 — Choose a Chart Type. Pick Column for tall bars, or Bar for sideways bars. Click Next.\n\nStep 2 and 3 — Data Range and Data Series. Check that 'First row as label' and 'First column as label' are ticked, then click Next.\n\nStep 4 — Chart Elements. Type a Title such as 'Shop sales this week', label the axes, and tick Display legend. Click Finish.\n\nClick anywhere outside the chart to leave edit mode. Your chart is done!\n\nNow anyone can see at a glance that the water bottle and the exercise book brought in the most money, while the pen brought in the least. That is the power of turning data into a picture.\n\nJust as you planned your form in 2.1, you should plan a spreadsheet before you build it. Ask yourself: What data will I use? What headings will the columns have? How will I organise it so it is easy to understand? What format will the data be in? What calculations do I want to do, and which formulas or functions will do them? A few minutes of planning saves a lot of tidying up later.\n\nOperator — Meaning · Example formula · Row · A · B · C · D\n\n+ — add · =B2+C2 · 1 · Item · Price each (sh) · Number sold · Total (sh)\n — — subtract · =B2-C2 · 2 · Pen · 2000 · 15 · =B2*C2\n\n* — multiply · =B2*C2 · 3 · Exercise book · 3000 · 20 · =B3*C3\n\nFor example: / — divide · =B2/C2 · 4 · Ruler · 5000 · 8 · =B4*C4"
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Worked example 7: Creating a Database",
+      "prompt": "The AVERAGE function calculates the: (a) Total (b) Largest value (c) Mean (d) Smallest value",
+      "solution": "(c) AVERAGE finds the mean (add the values, divide by how many there are)."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "Worked example 8: Shows as 1/2",
+      "prompt": "In a database, a record is: (a) A single column (b) All the data about one thing (c) A type of chart (d) A formula",
+      "solution": "(b) A record is all the data about one thing, usually a row."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo09",
+      "difficulty": "Challenge",
+      "title": "Worked example 9: Creating the database in LibreOffice Base",
+      "prompt": "In a database, a field is usually shown as a: (a) Row (b) Column (c) Chart (d) Formula",
+      "solution": "(b) A field is a category of data, usually a column."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo10",
+      "difficulty": "Challenge",
+      "title": "Worked example 10: How Is Data Used?",
+      "prompt": "An attribute is: (a) A whole database (b) A category of data (c) The data in one field of one record (d) A chart title",
+      "solution": "(c) An attribute is the actual value in one field of one record."
     }
   ],
   "practice": [
@@ -508,112 +540,112 @@
       "id": "p01",
       "level": "Warm-up",
       "prompt": "Which of these is continuous data? (a) Number of pets (b) Favourite colour (c) Temperature (d) Number of goals",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) Temperature is measured and can take any value, so it is continuous.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
     },
     {
       "id": "p02",
       "level": "Warm-up",
       "prompt": "A statistical investigation is: (a) A type of chart (b) Collecting data to answer a question (c) A spreadsheet formula (d) A kind of database",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) A statistical investigation collects data to answer a question.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
     },
     {
       "id": "p03",
       "level": "Warm-up",
       "prompt": "A data logger is best for collecting: (a) Opinions (b) Categories (c) Continuous data over time (d) Names",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) A data logger uses sensors to record continuous data over time, by itself.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
     },
     {
       "id": "p04",
       "level": "Warm-up",
       "prompt": "Every spreadsheet formula must begin with: (a) A colon (b) An equals sign (c) A bracket (d) A letter",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) Every formula begins with an equals sign so the software knows to calculate.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
     },
     {
       "id": "p05",
       "level": "Warm-up",
       "prompt": "In a spreadsheet, the symbol for multiply is: (a) x (b) * (c) / (d) +",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) The asterisk * means multiply; / means divide.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
     },
     {
       "id": "p06",
       "level": "Warm-up",
       "prompt": "Which formula correctly adds the values from B2 to B8? (a) =SUMB2:B8 (b) SUM(B2:B8) (c) =SUM(B2:B8) (d) =SUM(B2-B8)",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) =SUM(B2:B8) has the equals sign, the function name, brackets and a colon.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
     },
     {
       "id": "p07",
       "level": "Warm-up",
       "prompt": "The AVERAGE function calculates the: (a) Total (b) Largest value (c) Mean (d) Smallest value",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) AVERAGE finds the mean (add the values, divide by how many there are).",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
     },
     {
       "id": "p08",
       "level": "Warm-up",
       "prompt": "In a database, a record is: (a) A single column (b) All the data about one thing (c) A type of chart (d) A formula",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) A record is all the data about one thing, usually a row.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
     },
     {
       "id": "p09",
       "level": "Warm-up",
       "prompt": "In a database, a field is usually shown as a: (a) Row (b) Column (c) Chart (d) Formula",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) A field is a category of data, usually a column.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
     },
     {
       "id": "p10",
       "level": "Warm-up",
       "prompt": "An attribute is: (a) A whole database (b) A category of data (c) The data in one field of one record (d) A chart title",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) An attribute is the actual value in one field of one record.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
     },
     {
       "id": "p11",
       "level": "Warm-up",
       "prompt": "Which data type suits a whole number like 2019? (a) Text (b) Integer (c) Character (d) Currency",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) A whole number is an integer.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
     },
     {
       "id": "p12",
       "level": "Warm-up",
       "prompt": "Phrase searching means searching for: (a) A single letter (b) A whole series of words (c) Only numbers (d) A chart",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) Phrase searching matches a whole series of words, like a full name.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
     },
     {
       "id": "p13",
       "level": "Warm-up",
       "prompt": "A filter in a database: (a) Deletes records (b) Adds records (c) Shows only records that match your criteria (d) Draws a chart",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) A filter shows only the records that match your criteria and hides the rest.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
     },
     {
       "id": "p14",
       "level": "Warm-up",
       "prompt": "Retail means: (a) Making goods in a factory (b) Selling items to people (c) Looking after health (d) Storing data",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) Retail is the industry of selling items to people.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
     },
     {
       "id": "p15",
       "level": "Warm-up",
       "prompt": "A pattern in data is called a: (a) Cell (b) Field (c) Trend (d) Record",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) A pattern in data is called a trend.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
     },
     {
       "id": "p16",
       "level": "Core",
       "prompt": "In your own words, what is the difference between discrete and continuous data? Give an example of each.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "Discrete data is counted and is always a whole number (for example, the number of learners). Continuous data is measured and can be any value, including decimals (for example, a temperature of 24.5 degrees).",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words."
     }
   ],
@@ -1072,108 +1104,108 @@
       "outcomeId": "lo01",
       "difficulty": "Round 1",
       "prompt": "Which of these is continuous data? (a) Number of pets (b) Favourite colour (c) Temperature (d) Number of goals",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) Temperature is measured and can take any value, so it is continuous.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(c) Temperature is measured and can take any value, so it is continuous."
     },
     {
       "id": "fl02",
       "outcomeId": "lo02",
       "difficulty": "Round 1",
       "prompt": "A statistical investigation is: (a) A type of chart (b) Collecting data to answer a question (c) A spreadsheet formula (d) A kind of database",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) A statistical investigation collects data to answer a question.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) A statistical investigation collects data to answer a question."
     },
     {
       "id": "fl03",
       "outcomeId": "lo03",
       "difficulty": "Round 1",
       "prompt": "A data logger is best for collecting: (a) Opinions (b) Categories (c) Continuous data over time (d) Names",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) A data logger uses sensors to record continuous data over time, by itself.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(c) A data logger uses sensors to record continuous data over time, by itself."
     },
     {
       "id": "fl04",
       "outcomeId": "lo04",
       "difficulty": "Round 1",
       "prompt": "Every spreadsheet formula must begin with: (a) A colon (b) An equals sign (c) A bracket (d) A letter",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) Every formula begins with an equals sign so the software knows to calculate.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) Every formula begins with an equals sign so the software knows to calculate."
     },
     {
       "id": "fl05",
       "outcomeId": "lo05",
       "difficulty": "Round 2",
       "prompt": "In a spreadsheet, the symbol for multiply is: (a) x (b) * (c) / (d) +",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) The asterisk * means multiply; / means divide.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) The asterisk * means multiply; / means divide."
     },
     {
       "id": "fl06",
       "outcomeId": "lo06",
       "difficulty": "Round 2",
       "prompt": "Which formula correctly adds the values from B2 to B8? (a) =SUMB2:B8 (b) SUM(B2:B8) (c) =SUM(B2:B8) (d) =SUM(B2-B8)",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) =SUM(B2:B8) has the equals sign, the function name, brackets and a colon.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(c) =SUM(B2:B8) has the equals sign, the function name, brackets and a colon."
     },
     {
       "id": "fl07",
       "outcomeId": "lo07",
       "difficulty": "Round 2",
       "prompt": "The AVERAGE function calculates the: (a) Total (b) Largest value (c) Mean (d) Smallest value",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) AVERAGE finds the mean (add the values, divide by how many there are).",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(c) AVERAGE finds the mean (add the values, divide by how many there are)."
     },
     {
       "id": "fl08",
       "outcomeId": "lo08",
       "difficulty": "Round 2",
       "prompt": "In a database, a record is: (a) A single column (b) All the data about one thing (c) A type of chart (d) A formula",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) A record is all the data about one thing, usually a row.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) A record is all the data about one thing, usually a row."
     },
     {
       "id": "fl09",
       "outcomeId": "lo09",
       "difficulty": "Round 3",
       "prompt": "In a database, a field is usually shown as a: (a) Row (b) Column (c) Chart (d) Formula",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) A field is a category of data, usually a column.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) A field is a category of data, usually a column."
     },
     {
       "id": "fl10",
       "outcomeId": "lo10",
       "difficulty": "Round 3",
       "prompt": "An attribute is: (a) A whole database (b) A category of data (c) The data in one field of one record (d) A chart title",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) An attribute is the actual value in one field of one record.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(c) An attribute is the actual value in one field of one record."
     },
     {
       "id": "fl11",
       "outcomeId": "lo01",
       "difficulty": "Round 3",
       "prompt": "Which data type suits a whole number like 2019? (a) Text (b) Integer (c) Character (d) Currency",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) A whole number is an integer.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) A whole number is an integer."
     },
     {
       "id": "fl12",
       "outcomeId": "lo02",
       "difficulty": "Round 3",
       "prompt": "Phrase searching means searching for: (a) A single letter (b) A whole series of words (c) Only numbers (d) A chart",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) Phrase searching matches a whole series of words, like a full name.",
       "hint": "Look back at what attribute and AVERAGE mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) Phrase searching matches a whole series of words, like a full name."
     }
   ],
   "realProblems": [
@@ -1182,60 +1214,60 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Home",
-      "prompt": "Some of these formulas are written incorrectly. For each one, say whether it is correct or incorrect. If it is incorrect, write it out correctly.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "AVERAGE(B5:B10)",
+      "answer": "Incorrect - missing brackets. Correct: =SUM(B5:B10).",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: Incorrect - missing brackets. Correct: =SUM(B5:B10)."
     },
     {
       "id": "rp02",
       "outcomeId": "lo02",
       "difficulty": "Core",
       "context": "School",
-      "prompt": "AVERAGE(B5:B10)",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "=AVERAGE(B5-B10)",
+      "answer": "Incorrect - a range on its own is not a calculation; there is no function or operator. Correct (for a total): =SUM(B5:B10).",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: Incorrect - a range on its own is not a calculation; there is no function or operator. Correct (for a total): =SUM(B5:B10)."
     },
     {
       "id": "rp03",
       "outcomeId": "lo03",
       "difficulty": "Core",
       "context": "Market",
-      "prompt": "=AVERAGE(B5-B10)",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "=AVERAGE(B5B10)",
+      "answer": "Correct.",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: Correct."
     },
     {
       "id": "rp04",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "context": "Community",
-      "prompt": "=AVERAGE(B5B10)",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "=AVERAGE(B5:B10)",
+      "answer": "Incorrect - missing the equals sign. Correct: =AVERAGE(B5:B10).",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: Incorrect - missing the equals sign. Correct: =AVERAGE(B5:B10)."
     },
     {
       "id": "rp05",
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "context": "Travel",
-      "prompt": "=AVERAGE(B5:B10)",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "These tasks ask you to design, not just remember. Write or sketch your answers.",
+      "answer": "Sensible fields: CountryName (text/string), Size_km2 (integer), Population (integer), Language (text), Currency (text/string). A primary key such as CountryID (integer) is a bonus.",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: Sensible fields: CountryName (text/string), Size_km2 (integer), Population (integer), Language (text), Currency (text/string). A primary key such as CountryID (integer) is a bonus."
     },
     {
       "id": "rp06",
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "context": "Health",
-      "prompt": "These tasks ask you to design, not just remember. Write or sketch your answers.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Design a database table to store information about five countries. Write down at least four sensible field names and the data type for each field. (Hint: think about the Oman example - country name, size, population, language, currency.)",
+      "answer": "Question: 'What is your height in centimetres, to one decimal place, for example 142.5?' Unit: centimetres. Precision: one decimal place. Validation rule: allow a decimal number between about 100 and 200 only (using Data > Validity in Calc), so words and silly numbers are refused.",
       "hint": "Work out which idea this is about — attribute, AVERAGE, categorical data — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: Question: 'What is your height in centimetres, to one decimal place, for example 142.5?' Unit: centimetres. Precision: one decimal place. Validation rule: allow a decimal number between about 100 and 200 only (using Data > Validity in Calc), so words and silly numbers are refused."
     }
   ],
   "reasoningPrompts": [
@@ -1250,7 +1282,7 @@
         "AVERAGE",
         "categorical data"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "Discrete data is counted and is always a whole number (for example, the number of learners). Continuous data is measured and can be any value, including decimals (for example, a temperature of 24.5 degrees)."
     },
     {
       "id": "reason02",
@@ -1263,7 +1295,7 @@
         "categorical data",
         "cell"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "Any three of: a data logger, a spreadsheet (LibreOffice Calc), a database (LibreOffice Base), a questionnaire or online form."
     },
     {
       "id": "reason03",
@@ -1276,7 +1308,7 @@
         "cell",
         "cell reference"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "Because continuous data can be any value, you would need an answer option for every possible value, which is impossible; some people would not be able to enter their exact data."
     },
     {
       "id": "reason04",
@@ -1289,7 +1321,7 @@
         "cell reference",
         "chart"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "A cell reference is a cell's address, made of its column letter and row number, for example B3."
     },
     {
       "id": "reason05",
@@ -1302,7 +1334,7 @@
         "chart",
         "collaborate"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "The equals sign tells the spreadsheet that this is a calculation, not ordinary text."
     },
     {
       "id": "reason06",
@@ -1315,7 +1347,7 @@
         "collaborate",
         "continuous data"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "SUM adds up all the values in the selected cells. AVERAGE finds the mean by adding the values and dividing by how many there are."
     }
   ],
   "project": {
@@ -1347,192 +1379,192 @@
         "type": "Concept",
         "outcomeId": "lo01",
         "difficulty": "Basic",
-        "question": "What does “attribute” mean in computing?",
+        "question": "Which of these is continuous data?",
         "options": [
-          "The data found in one field of one record in a database.",
-          "A function, written =AVERAGE(), that finds the mean of the selected cells.",
-          "Data that can be grouped into categories, such as favourite colour.",
-          "One box in a spreadsheet grid, where a row and a column meet."
+          "Number of pets",
+          "Favourite colour",
+          "Temperature",
+          "Number of goals"
         ],
-        "answer": "The data found in one field of one record in a database.",
+        "answer": "Temperature",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Attribute means the data found in one field of one record in a database.."
+        "explanation": "Temperature is measured and can take any value, so it is continuous."
       },
       {
         "id": "q02",
         "type": "Concept",
         "outcomeId": "lo02",
         "difficulty": "Basic",
-        "question": "What does “AVERAGE” mean in computing?",
+        "question": "A statistical investigation is:",
         "options": [
-          "A function, written =AVERAGE(), that finds the mean of the selected cells.",
-          "Data that can be grouped into categories, such as favourite colour.",
-          "One box in a spreadsheet grid, where a row and a column meet.",
-          "A cell's address, made of its column letter and row number, such as B3."
+          "A type of chart",
+          "Collecting data to answer a question",
+          "A spreadsheet formula",
+          "A kind of database"
         ],
-        "answer": "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+        "answer": "Collecting data to answer a question",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Attribute means the data found in one field of one record in a database."
+        "explanation": "A statistical investigation collects data to answer a question."
       },
       {
         "id": "q03",
         "type": "Concept",
         "outcomeId": "lo03",
         "difficulty": "Basic",
-        "question": "What does “categorical data” mean in computing?",
+        "question": "A data logger is best for collecting:",
         "options": [
-          "Data that can be grouped into categories, such as favourite colour.",
-          "One box in a spreadsheet grid, where a row and a column meet.",
-          "A cell's address, made of its column letter and row number, such as B3.",
-          "A picture of data, such as a column chart or pie chart, that makes patterns easy to see."
+          "Opinions",
+          "Categories",
+          "Continuous data over time",
+          "Names"
         ],
-        "answer": "Data that can be grouped into categories, such as favourite colour.",
+        "answer": "Continuous data over time",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "AVERAGE means a function, written =AVERAGE(), that finds the mean of the selected cells."
+        "explanation": "A data logger uses sensors to record continuous data over time, by itself."
       },
       {
         "id": "q04",
         "type": "Concept",
         "outcomeId": "lo04",
         "difficulty": "Basic",
-        "question": "What does “cell” mean in computing?",
+        "question": "Every spreadsheet formula must begin with:",
         "options": [
-          "One box in a spreadsheet grid, where a row and a column meet.",
-          "A cell's address, made of its column letter and row number, such as B3.",
-          "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
-          "To work together with others on the same task."
+          "A colon",
+          "An equals sign",
+          "A bracket",
+          "A letter"
         ],
-        "answer": "One box in a spreadsheet grid, where a row and a column meet.",
+        "answer": "An equals sign",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Categorical data means data that can be grouped into categories, such as favourite colour."
+        "explanation": "Every formula begins with an equals sign so the software knows to calculate."
       },
       {
         "id": "q05",
         "type": "Application",
         "outcomeId": "lo05",
         "difficulty": "Core",
-        "question": "What does “cell reference” mean in computing?",
+        "question": "In a spreadsheet, the symbol for multiply is:",
         "options": [
-          "A cell's address, made of its column letter and row number, such as B3.",
-          "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
-          "To work together with others on the same task.",
-          "Numerical data that can take any value, including decimals, such as temperature."
+          "x",
+          "*",
+          "/",
+          "+"
         ],
-        "answer": "A cell's address, made of its column letter and row number, such as B3.",
+        "answer": "*",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Cell means one box in a spreadsheet grid, where a row and a column meet."
+        "explanation": "The asterisk * means multiply; / means divide."
       },
       {
         "id": "q06",
         "type": "Application",
         "outcomeId": "lo06",
         "difficulty": "Core",
-        "question": "What does “chart” mean in computing?",
+        "question": "Which formula correctly adds the values from B2 to B8?",
         "options": [
-          "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
-          "To work together with others on the same task.",
-          "Numerical data that can take any value, including decimals, such as temperature.",
-          "The requirements or conditions you search for to find matching data."
+          "=SUMB2:B8",
+          "SUM(B2:B8)",
+          "=SUM(B2:B8)",
+          "=SUM(B2-B8)"
         ],
-        "answer": "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+        "answer": "=SUM(B2:B8)",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Cell reference means a cell's address, made of its column letter and row number, such as B3."
+        "explanation": "=SUM(B2:B8) has the equals sign, the function name, brackets and a colon."
       },
       {
         "id": "q07",
         "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
-        "question": "Which computing word matches this meaning: To work together with others on the same task.?",
+        "question": "The AVERAGE function calculates the:",
         "options": [
-          "collaborate",
-          "continuous data",
-          "criteria",
-          "database"
+          "Total",
+          "Largest value",
+          "Mean",
+          "Smallest value"
         ],
-        "answer": "collaborate",
+        "answer": "Mean",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Chart means a picture of data, such as a column chart or pie chart, that makes patterns easy to see."
+        "explanation": "AVERAGE finds the mean (add the values, divide by how many there are)."
       },
       {
         "id": "q08",
         "type": "Application",
         "outcomeId": "lo08",
         "difficulty": "Core",
-        "question": "Which computing word matches this meaning: Numerical data that can take any value, including decimals, such as temperature.?",
+        "question": "In a database, a record is:",
         "options": [
-          "continuous data",
-          "criteria",
-          "database",
-          "data logger"
+          "A single column",
+          "All the data about one thing",
+          "A type of chart",
+          "A formula"
         ],
-        "answer": "continuous data",
+        "answer": "All the data about one thing",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Collaborate means to work together with others on the same task."
+        "explanation": "A record is all the data about one thing, usually a row."
       },
       {
         "id": "q09",
         "type": "Reasoning",
         "outcomeId": "lo09",
         "difficulty": "Core",
-        "question": "Which computing word matches this meaning: The requirements or conditions you search for to find matching data.?",
+        "question": "In a database, a field is usually shown as a:",
         "options": [
-          "criteria",
-          "database",
-          "data logger",
-          "data type"
+          "Row",
+          "Column",
+          "Chart",
+          "Formula"
         ],
-        "answer": "criteria",
+        "answer": "Column",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Continuous data means numerical data that can take any value, including decimals, such as temperature."
+        "explanation": "A field is a category of data, usually a column."
       },
       {
         "id": "q10",
         "type": "Reasoning",
         "outcomeId": "lo10",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: An organised set of data, made up of records and fields.?",
+        "question": "An attribute is:",
         "options": [
-          "database",
-          "data logger",
-          "data type",
-          "discrete data"
+          "A whole database",
+          "A category of data",
+          "The data in one field of one record",
+          "A chart title"
         ],
-        "answer": "database",
+        "answer": "The data in one field of one record",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Criteria means the requirements or conditions you search for to find matching data."
+        "explanation": "An attribute is the actual value in one field of one record."
       },
       {
         "id": "q11",
         "type": "Reasoning",
         "outcomeId": "lo01",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: A device that uses sensors to record data over time, often by itself.?",
+        "question": "Which data type suits a whole number like 2019?",
         "options": [
-          "data logger",
-          "data type",
-          "discrete data",
-          "field"
+          "Text",
+          "Integer",
+          "Character",
+          "Currency"
         ],
-        "answer": "data logger",
+        "answer": "Integer",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Database means an organised set of data, made up of records and fields."
+        "explanation": "A whole number is an integer."
       },
       {
         "id": "q12",
         "type": "Reasoning",
         "outcomeId": "lo02",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: The form of the data, such as text, integer, date or currency.?",
+        "question": "Phrase searching means searching for:",
         "options": [
-          "data type",
-          "discrete data",
-          "field",
-          "filter"
+          "A single letter",
+          "A whole series of words",
+          "Only numbers",
+          "A chart"
         ],
-        "answer": "data type",
+        "answer": "A whole series of words",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Data logger means a device that uses sensors to record data over time, often by itself."
+        "explanation": "Phrase searching matches a whole series of words, like a full name."
       }
     ]
   },
@@ -1548,50 +1580,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “attribute” mean in computing?",
+            "prompt": "Which of these is continuous data?",
             "choices": [
-              "The data found in one field of one record in a database.",
-              "A function, written =AVERAGE(), that finds the mean of the selected cells.",
-              "Data that can be grouped into categories, such as favourite colour.",
-              "One box in a spreadsheet grid, where a row and a column meet."
+              "Number of pets",
+              "Favourite colour",
+              "Temperature",
+              "Number of goals"
             ],
-            "answer": "The data found in one field of one record in a database.",
+            "answer": "Temperature",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Attribute means the data found in one field of one record in a database.."
+            "explanation": "Temperature is measured and can take any value, so it is continuous."
           },
           {
-            "prompt": "What does “cell” mean in computing?",
+            "prompt": "Every spreadsheet formula must begin with:",
             "choices": [
-              "One box in a spreadsheet grid, where a row and a column meet.",
-              "A cell's address, made of its column letter and row number, such as B3.",
-              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
-              "To work together with others on the same task."
+              "A colon",
+              "An equals sign",
+              "A bracket",
+              "A letter"
             ],
-            "answer": "One box in a spreadsheet grid, where a row and a column meet.",
+            "answer": "An equals sign",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Categorical data means data that can be grouped into categories, such as favourite colour."
           },
           {
-            "prompt": "Which computing word matches this meaning: To work together with others on the same task.?",
+            "prompt": "The AVERAGE function calculates the:",
             "choices": [
-              "collaborate",
-              "continuous data",
-              "criteria",
-              "database"
+              "Total",
+              "Largest value",
+              "Mean",
+              "Smallest value"
             ],
-            "answer": "collaborate",
+            "answer": "Mean",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Chart means a picture of data, such as a column chart or pie chart, that makes patterns easy to see."
           },
           {
-            "prompt": "Which computing word matches this meaning: An organised set of data, made up of records and fields.?",
+            "prompt": "An attribute is:",
             "choices": [
-              "database",
-              "data logger",
-              "data type",
-              "discrete data"
+              "A whole database",
+              "A category of data",
+              "The data in one field of one record",
+              "A chart title"
             ],
-            "answer": "database",
+            "answer": "The data in one field of one record",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Criteria means the requirements or conditions you search for to find matching data."
           }
@@ -1606,50 +1638,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “AVERAGE” mean in computing?",
+            "prompt": "A statistical investigation is:",
             "choices": [
-              "A function, written =AVERAGE(), that finds the mean of the selected cells.",
-              "Data that can be grouped into categories, such as favourite colour.",
-              "One box in a spreadsheet grid, where a row and a column meet.",
-              "A cell's address, made of its column letter and row number, such as B3."
+              "A type of chart",
+              "Collecting data to answer a question",
+              "A spreadsheet formula",
+              "A kind of database"
             ],
-            "answer": "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+            "answer": "Collecting data to answer a question",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Attribute means the data found in one field of one record in a database."
           },
           {
-            "prompt": "What does “cell reference” mean in computing?",
+            "prompt": "In a spreadsheet, the symbol for multiply is:",
             "choices": [
-              "A cell's address, made of its column letter and row number, such as B3.",
-              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
-              "To work together with others on the same task.",
-              "Numerical data that can take any value, including decimals, such as temperature."
+              "x",
+              "*",
+              "/",
+              "+"
             ],
-            "answer": "A cell's address, made of its column letter and row number, such as B3.",
+            "answer": "*",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Cell means one box in a spreadsheet grid, where a row and a column meet."
           },
           {
-            "prompt": "Which computing word matches this meaning: Numerical data that can take any value, including decimals, such as temperature.?",
+            "prompt": "In a database, a record is:",
             "choices": [
-              "continuous data",
-              "criteria",
-              "database",
-              "data logger"
+              "A single column",
+              "All the data about one thing",
+              "A type of chart",
+              "A formula"
             ],
-            "answer": "continuous data",
+            "answer": "All the data about one thing",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Collaborate means to work together with others on the same task."
           },
           {
-            "prompt": "Which computing word matches this meaning: A device that uses sensors to record data over time, often by itself.?",
+            "prompt": "Which data type suits a whole number like 2019?",
             "choices": [
-              "data logger",
-              "data type",
-              "discrete data",
-              "field"
+              "Text",
+              "Integer",
+              "Character",
+              "Currency"
             ],
-            "answer": "data logger",
+            "answer": "Integer",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Database means an organised set of data, made up of records and fields."
           }
@@ -1664,50 +1696,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “categorical data” mean in computing?",
+            "prompt": "A data logger is best for collecting:",
             "choices": [
-              "Data that can be grouped into categories, such as favourite colour.",
-              "One box in a spreadsheet grid, where a row and a column meet.",
-              "A cell's address, made of its column letter and row number, such as B3.",
-              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see."
+              "Opinions",
+              "Categories",
+              "Continuous data over time",
+              "Names"
             ],
-            "answer": "Data that can be grouped into categories, such as favourite colour.",
+            "answer": "Continuous data over time",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "AVERAGE means a function, written =AVERAGE(), that finds the mean of the selected cells."
           },
           {
-            "prompt": "What does “chart” mean in computing?",
+            "prompt": "Which formula correctly adds the values from B2 to B8?",
             "choices": [
-              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
-              "To work together with others on the same task.",
-              "Numerical data that can take any value, including decimals, such as temperature.",
-              "The requirements or conditions you search for to find matching data."
+              "=SUMB2:B8",
+              "SUM(B2:B8)",
+              "=SUM(B2:B8)",
+              "=SUM(B2-B8)"
             ],
-            "answer": "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+            "answer": "=SUM(B2:B8)",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Cell reference means a cell's address, made of its column letter and row number, such as B3."
           },
           {
-            "prompt": "Which computing word matches this meaning: The requirements or conditions you search for to find matching data.?",
+            "prompt": "In a database, a field is usually shown as a:",
             "choices": [
-              "criteria",
-              "database",
-              "data logger",
-              "data type"
+              "Row",
+              "Column",
+              "Chart",
+              "Formula"
             ],
-            "answer": "criteria",
+            "answer": "Column",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Continuous data means numerical data that can take any value, including decimals, such as temperature."
           },
           {
-            "prompt": "Which computing word matches this meaning: The form of the data, such as text, integer, date or currency.?",
+            "prompt": "Phrase searching means searching for:",
             "choices": [
-              "data type",
-              "discrete data",
-              "field",
-              "filter"
+              "A single letter",
+              "A whole series of words",
+              "Only numbers",
+              "A chart"
             ],
-            "answer": "data type",
+            "answer": "A whole series of words",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Data logger means a device that uses sensors to record data over time, often by itself."
           }
@@ -1722,52 +1754,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “cell” mean in computing?",
+            "prompt": "Every spreadsheet formula must begin with:",
             "choices": [
-              "One box in a spreadsheet grid, where a row and a column meet.",
-              "A cell's address, made of its column letter and row number, such as B3.",
-              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
-              "To work together with others on the same task."
+              "A colon",
+              "An equals sign",
+              "A bracket",
+              "A letter"
             ],
-            "answer": "One box in a spreadsheet grid, where a row and a column meet.",
+            "answer": "An equals sign",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Categorical data means data that can be grouped into categories, such as favourite colour."
           },
           {
-            "prompt": "Which computing word matches this meaning: To work together with others on the same task.?",
+            "prompt": "The AVERAGE function calculates the:",
             "choices": [
-              "collaborate",
-              "continuous data",
-              "criteria",
-              "database"
+              "Total",
+              "Largest value",
+              "Mean",
+              "Smallest value"
             ],
-            "answer": "collaborate",
+            "answer": "Mean",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Chart means a picture of data, such as a column chart or pie chart, that makes patterns easy to see."
           },
           {
-            "prompt": "Which computing word matches this meaning: An organised set of data, made up of records and fields.?",
+            "prompt": "An attribute is:",
             "choices": [
-              "database",
-              "data logger",
-              "data type",
-              "discrete data"
+              "A whole database",
+              "A category of data",
+              "The data in one field of one record",
+              "A chart title"
             ],
-            "answer": "database",
+            "answer": "The data in one field of one record",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Criteria means the requirements or conditions you search for to find matching data."
           },
           {
-            "prompt": "What does “attribute” mean in computing?",
+            "prompt": "Which of these is continuous data?",
             "choices": [
-              "The data found in one field of one record in a database.",
-              "A function, written =AVERAGE(), that finds the mean of the selected cells.",
-              "Data that can be grouped into categories, such as favourite colour.",
-              "One box in a spreadsheet grid, where a row and a column meet."
+              "Number of pets",
+              "Favourite colour",
+              "Temperature",
+              "Number of goals"
             ],
-            "answer": "The data found in one field of one record in a database.",
+            "answer": "Temperature",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Attribute means the data found in one field of one record in a database.."
+            "explanation": "Temperature is measured and can take any value, so it is continuous."
           }
         ]
       },
@@ -1780,50 +1812,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “cell reference” mean in computing?",
+            "prompt": "In a spreadsheet, the symbol for multiply is:",
             "choices": [
-              "A cell's address, made of its column letter and row number, such as B3.",
-              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
-              "To work together with others on the same task.",
-              "Numerical data that can take any value, including decimals, such as temperature."
+              "x",
+              "*",
+              "/",
+              "+"
             ],
-            "answer": "A cell's address, made of its column letter and row number, such as B3.",
+            "answer": "*",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Cell means one box in a spreadsheet grid, where a row and a column meet."
           },
           {
-            "prompt": "Which computing word matches this meaning: Numerical data that can take any value, including decimals, such as temperature.?",
+            "prompt": "In a database, a record is:",
             "choices": [
-              "continuous data",
-              "criteria",
-              "database",
-              "data logger"
+              "A single column",
+              "All the data about one thing",
+              "A type of chart",
+              "A formula"
             ],
-            "answer": "continuous data",
+            "answer": "All the data about one thing",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Collaborate means to work together with others on the same task."
           },
           {
-            "prompt": "Which computing word matches this meaning: A device that uses sensors to record data over time, often by itself.?",
+            "prompt": "Which data type suits a whole number like 2019?",
             "choices": [
-              "data logger",
-              "data type",
-              "discrete data",
-              "field"
+              "Text",
+              "Integer",
+              "Character",
+              "Currency"
             ],
-            "answer": "data logger",
+            "answer": "Integer",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Database means an organised set of data, made up of records and fields."
           },
           {
-            "prompt": "What does “AVERAGE” mean in computing?",
+            "prompt": "A statistical investigation is:",
             "choices": [
-              "A function, written =AVERAGE(), that finds the mean of the selected cells.",
-              "Data that can be grouped into categories, such as favourite colour.",
-              "One box in a spreadsheet grid, where a row and a column meet.",
-              "A cell's address, made of its column letter and row number, such as B3."
+              "A type of chart",
+              "Collecting data to answer a question",
+              "A spreadsheet formula",
+              "A kind of database"
             ],
-            "answer": "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+            "answer": "Collecting data to answer a question",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Attribute means the data found in one field of one record in a database."
           }
@@ -1838,50 +1870,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “chart” mean in computing?",
+            "prompt": "Which formula correctly adds the values from B2 to B8?",
             "choices": [
-              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
-              "To work together with others on the same task.",
-              "Numerical data that can take any value, including decimals, such as temperature.",
-              "The requirements or conditions you search for to find matching data."
+              "=SUMB2:B8",
+              "SUM(B2:B8)",
+              "=SUM(B2:B8)",
+              "=SUM(B2-B8)"
             ],
-            "answer": "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+            "answer": "=SUM(B2:B8)",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Cell reference means a cell's address, made of its column letter and row number, such as B3."
           },
           {
-            "prompt": "Which computing word matches this meaning: The requirements or conditions you search for to find matching data.?",
+            "prompt": "In a database, a field is usually shown as a:",
             "choices": [
-              "criteria",
-              "database",
-              "data logger",
-              "data type"
+              "Row",
+              "Column",
+              "Chart",
+              "Formula"
             ],
-            "answer": "criteria",
+            "answer": "Column",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Continuous data means numerical data that can take any value, including decimals, such as temperature."
           },
           {
-            "prompt": "Which computing word matches this meaning: The form of the data, such as text, integer, date or currency.?",
+            "prompt": "Phrase searching means searching for:",
             "choices": [
-              "data type",
-              "discrete data",
-              "field",
-              "filter"
+              "A single letter",
+              "A whole series of words",
+              "Only numbers",
+              "A chart"
             ],
-            "answer": "data type",
+            "answer": "A whole series of words",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Data logger means a device that uses sensors to record data over time, often by itself."
           },
           {
-            "prompt": "What does “categorical data” mean in computing?",
+            "prompt": "A data logger is best for collecting:",
             "choices": [
-              "Data that can be grouped into categories, such as favourite colour.",
-              "One box in a spreadsheet grid, where a row and a column meet.",
-              "A cell's address, made of its column letter and row number, such as B3.",
-              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see."
+              "Opinions",
+              "Categories",
+              "Continuous data over time",
+              "Names"
             ],
-            "answer": "Data that can be grouped into categories, such as favourite colour.",
+            "answer": "Continuous data over time",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "AVERAGE means a function, written =AVERAGE(), that finds the mean of the selected cells."
           }
@@ -1896,50 +1928,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: To work together with others on the same task.?",
+            "prompt": "The AVERAGE function calculates the:",
             "choices": [
-              "collaborate",
-              "continuous data",
-              "criteria",
-              "database"
+              "Total",
+              "Largest value",
+              "Mean",
+              "Smallest value"
             ],
-            "answer": "collaborate",
+            "answer": "Mean",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Chart means a picture of data, such as a column chart or pie chart, that makes patterns easy to see."
           },
           {
-            "prompt": "Which computing word matches this meaning: An organised set of data, made up of records and fields.?",
+            "prompt": "An attribute is:",
             "choices": [
-              "database",
-              "data logger",
-              "data type",
-              "discrete data"
+              "A whole database",
+              "A category of data",
+              "The data in one field of one record",
+              "A chart title"
             ],
-            "answer": "database",
+            "answer": "The data in one field of one record",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Criteria means the requirements or conditions you search for to find matching data."
           },
           {
-            "prompt": "What does “attribute” mean in computing?",
+            "prompt": "Which of these is continuous data?",
             "choices": [
-              "The data found in one field of one record in a database.",
-              "A function, written =AVERAGE(), that finds the mean of the selected cells.",
-              "Data that can be grouped into categories, such as favourite colour.",
-              "One box in a spreadsheet grid, where a row and a column meet."
+              "Number of pets",
+              "Favourite colour",
+              "Temperature",
+              "Number of goals"
             ],
-            "answer": "The data found in one field of one record in a database.",
+            "answer": "Temperature",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Attribute means the data found in one field of one record in a database.."
+            "explanation": "Temperature is measured and can take any value, so it is continuous."
           },
           {
-            "prompt": "What does “cell” mean in computing?",
+            "prompt": "Every spreadsheet formula must begin with:",
             "choices": [
-              "One box in a spreadsheet grid, where a row and a column meet.",
-              "A cell's address, made of its column letter and row number, such as B3.",
-              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
-              "To work together with others on the same task."
+              "A colon",
+              "An equals sign",
+              "A bracket",
+              "A letter"
             ],
-            "answer": "One box in a spreadsheet grid, where a row and a column meet.",
+            "answer": "An equals sign",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Categorical data means data that can be grouped into categories, such as favourite colour."
           }
@@ -1954,50 +1986,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: Numerical data that can take any value, including decimals, such as temperature.?",
+            "prompt": "In a database, a record is:",
             "choices": [
-              "continuous data",
-              "criteria",
-              "database",
-              "data logger"
+              "A single column",
+              "All the data about one thing",
+              "A type of chart",
+              "A formula"
             ],
-            "answer": "continuous data",
+            "answer": "All the data about one thing",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Collaborate means to work together with others on the same task."
           },
           {
-            "prompt": "Which computing word matches this meaning: A device that uses sensors to record data over time, often by itself.?",
+            "prompt": "Which data type suits a whole number like 2019?",
             "choices": [
-              "data logger",
-              "data type",
-              "discrete data",
-              "field"
+              "Text",
+              "Integer",
+              "Character",
+              "Currency"
             ],
-            "answer": "data logger",
+            "answer": "Integer",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Database means an organised set of data, made up of records and fields."
           },
           {
-            "prompt": "What does “AVERAGE” mean in computing?",
+            "prompt": "A statistical investigation is:",
             "choices": [
-              "A function, written =AVERAGE(), that finds the mean of the selected cells.",
-              "Data that can be grouped into categories, such as favourite colour.",
-              "One box in a spreadsheet grid, where a row and a column meet.",
-              "A cell's address, made of its column letter and row number, such as B3."
+              "A type of chart",
+              "Collecting data to answer a question",
+              "A spreadsheet formula",
+              "A kind of database"
             ],
-            "answer": "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+            "answer": "Collecting data to answer a question",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Attribute means the data found in one field of one record in a database."
           },
           {
-            "prompt": "What does “cell reference” mean in computing?",
+            "prompt": "In a spreadsheet, the symbol for multiply is:",
             "choices": [
-              "A cell's address, made of its column letter and row number, such as B3.",
-              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
-              "To work together with others on the same task.",
-              "Numerical data that can take any value, including decimals, such as temperature."
+              "x",
+              "*",
+              "/",
+              "+"
             ],
-            "answer": "A cell's address, made of its column letter and row number, such as B3.",
+            "answer": "*",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Cell means one box in a spreadsheet grid, where a row and a column meet."
           }
@@ -2012,50 +2044,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: The requirements or conditions you search for to find matching data.?",
+            "prompt": "In a database, a field is usually shown as a:",
             "choices": [
-              "criteria",
-              "database",
-              "data logger",
-              "data type"
+              "Row",
+              "Column",
+              "Chart",
+              "Formula"
             ],
-            "answer": "criteria",
+            "answer": "Column",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Continuous data means numerical data that can take any value, including decimals, such as temperature."
           },
           {
-            "prompt": "Which computing word matches this meaning: The form of the data, such as text, integer, date or currency.?",
+            "prompt": "Phrase searching means searching for:",
             "choices": [
-              "data type",
-              "discrete data",
-              "field",
-              "filter"
+              "A single letter",
+              "A whole series of words",
+              "Only numbers",
+              "A chart"
             ],
-            "answer": "data type",
+            "answer": "A whole series of words",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Data logger means a device that uses sensors to record data over time, often by itself."
           },
           {
-            "prompt": "What does “categorical data” mean in computing?",
+            "prompt": "A data logger is best for collecting:",
             "choices": [
-              "Data that can be grouped into categories, such as favourite colour.",
-              "One box in a spreadsheet grid, where a row and a column meet.",
-              "A cell's address, made of its column letter and row number, such as B3.",
-              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see."
+              "Opinions",
+              "Categories",
+              "Continuous data over time",
+              "Names"
             ],
-            "answer": "Data that can be grouped into categories, such as favourite colour.",
+            "answer": "Continuous data over time",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "AVERAGE means a function, written =AVERAGE(), that finds the mean of the selected cells."
           },
           {
-            "prompt": "What does “chart” mean in computing?",
+            "prompt": "Which formula correctly adds the values from B2 to B8?",
             "choices": [
-              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
-              "To work together with others on the same task.",
-              "Numerical data that can take any value, including decimals, such as temperature.",
-              "The requirements or conditions you search for to find matching data."
+              "=SUMB2:B8",
+              "SUM(B2:B8)",
+              "=SUM(B2:B8)",
+              "=SUM(B2-B8)"
             ],
-            "answer": "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+            "answer": "=SUM(B2:B8)",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Cell reference means a cell's address, made of its column letter and row number, such as B3."
           }
@@ -2070,50 +2102,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: An organised set of data, made up of records and fields.?",
+            "prompt": "An attribute is:",
             "choices": [
-              "database",
-              "data logger",
-              "data type",
-              "discrete data"
+              "A whole database",
+              "A category of data",
+              "The data in one field of one record",
+              "A chart title"
             ],
-            "answer": "database",
+            "answer": "The data in one field of one record",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Criteria means the requirements or conditions you search for to find matching data."
           },
           {
-            "prompt": "What does “attribute” mean in computing?",
+            "prompt": "Which of these is continuous data?",
             "choices": [
-              "The data found in one field of one record in a database.",
-              "A function, written =AVERAGE(), that finds the mean of the selected cells.",
-              "Data that can be grouped into categories, such as favourite colour.",
-              "One box in a spreadsheet grid, where a row and a column meet."
+              "Number of pets",
+              "Favourite colour",
+              "Temperature",
+              "Number of goals"
             ],
-            "answer": "The data found in one field of one record in a database.",
+            "answer": "Temperature",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Attribute means the data found in one field of one record in a database.."
+            "explanation": "Temperature is measured and can take any value, so it is continuous."
           },
           {
-            "prompt": "What does “cell” mean in computing?",
+            "prompt": "Every spreadsheet formula must begin with:",
             "choices": [
-              "One box in a spreadsheet grid, where a row and a column meet.",
-              "A cell's address, made of its column letter and row number, such as B3.",
-              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
-              "To work together with others on the same task."
+              "A colon",
+              "An equals sign",
+              "A bracket",
+              "A letter"
             ],
-            "answer": "One box in a spreadsheet grid, where a row and a column meet.",
+            "answer": "An equals sign",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Categorical data means data that can be grouped into categories, such as favourite colour."
           },
           {
-            "prompt": "Which computing word matches this meaning: To work together with others on the same task.?",
+            "prompt": "The AVERAGE function calculates the:",
             "choices": [
-              "collaborate",
-              "continuous data",
-              "criteria",
-              "database"
+              "Total",
+              "Largest value",
+              "Mean",
+              "Smallest value"
             ],
-            "answer": "collaborate",
+            "answer": "Mean",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Chart means a picture of data, such as a column chart or pie chart, that makes patterns easy to see."
           }
@@ -2128,50 +2160,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: A device that uses sensors to record data over time, often by itself.?",
+            "prompt": "Which data type suits a whole number like 2019?",
             "choices": [
-              "data logger",
-              "data type",
-              "discrete data",
-              "field"
+              "Text",
+              "Integer",
+              "Character",
+              "Currency"
             ],
-            "answer": "data logger",
+            "answer": "Integer",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Database means an organised set of data, made up of records and fields."
           },
           {
-            "prompt": "What does “AVERAGE” mean in computing?",
+            "prompt": "A statistical investigation is:",
             "choices": [
-              "A function, written =AVERAGE(), that finds the mean of the selected cells.",
-              "Data that can be grouped into categories, such as favourite colour.",
-              "One box in a spreadsheet grid, where a row and a column meet.",
-              "A cell's address, made of its column letter and row number, such as B3."
+              "A type of chart",
+              "Collecting data to answer a question",
+              "A spreadsheet formula",
+              "A kind of database"
             ],
-            "answer": "A function, written =AVERAGE(), that finds the mean of the selected cells.",
+            "answer": "Collecting data to answer a question",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Attribute means the data found in one field of one record in a database."
           },
           {
-            "prompt": "What does “cell reference” mean in computing?",
+            "prompt": "In a spreadsheet, the symbol for multiply is:",
             "choices": [
-              "A cell's address, made of its column letter and row number, such as B3.",
-              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
-              "To work together with others on the same task.",
-              "Numerical data that can take any value, including decimals, such as temperature."
+              "x",
+              "*",
+              "/",
+              "+"
             ],
-            "answer": "A cell's address, made of its column letter and row number, such as B3.",
+            "answer": "*",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Cell means one box in a spreadsheet grid, where a row and a column meet."
           },
           {
-            "prompt": "Which computing word matches this meaning: Numerical data that can take any value, including decimals, such as temperature.?",
+            "prompt": "In a database, a record is:",
             "choices": [
-              "continuous data",
-              "criteria",
-              "database",
-              "data logger"
+              "A single column",
+              "All the data about one thing",
+              "A type of chart",
+              "A formula"
             ],
-            "answer": "continuous data",
+            "answer": "All the data about one thing",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Collaborate means to work together with others on the same task."
           }
@@ -2186,50 +2218,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: The form of the data, such as text, integer, date or currency.?",
+            "prompt": "Phrase searching means searching for:",
             "choices": [
-              "data type",
-              "discrete data",
-              "field",
-              "filter"
+              "A single letter",
+              "A whole series of words",
+              "Only numbers",
+              "A chart"
             ],
-            "answer": "data type",
+            "answer": "A whole series of words",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Data logger means a device that uses sensors to record data over time, often by itself."
           },
           {
-            "prompt": "What does “categorical data” mean in computing?",
+            "prompt": "A data logger is best for collecting:",
             "choices": [
-              "Data that can be grouped into categories, such as favourite colour.",
-              "One box in a spreadsheet grid, where a row and a column meet.",
-              "A cell's address, made of its column letter and row number, such as B3.",
-              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see."
+              "Opinions",
+              "Categories",
+              "Continuous data over time",
+              "Names"
             ],
-            "answer": "Data that can be grouped into categories, such as favourite colour.",
+            "answer": "Continuous data over time",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "AVERAGE means a function, written =AVERAGE(), that finds the mean of the selected cells."
           },
           {
-            "prompt": "What does “chart” mean in computing?",
+            "prompt": "Which formula correctly adds the values from B2 to B8?",
             "choices": [
-              "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
-              "To work together with others on the same task.",
-              "Numerical data that can take any value, including decimals, such as temperature.",
-              "The requirements or conditions you search for to find matching data."
+              "=SUMB2:B8",
+              "SUM(B2:B8)",
+              "=SUM(B2:B8)",
+              "=SUM(B2-B8)"
             ],
-            "answer": "A picture of data, such as a column chart or pie chart, that makes patterns easy to see.",
+            "answer": "=SUM(B2:B8)",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Cell reference means a cell's address, made of its column letter and row number, such as B3."
           },
           {
-            "prompt": "Which computing word matches this meaning: The requirements or conditions you search for to find matching data.?",
+            "prompt": "In a database, a field is usually shown as a:",
             "choices": [
-              "criteria",
-              "database",
-              "data logger",
-              "data type"
+              "Row",
+              "Column",
+              "Chart",
+              "Formula"
             ],
-            "answer": "criteria",
+            "answer": "Column",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Continuous data means numerical data that can take any value, including decimals, such as temperature."
           }

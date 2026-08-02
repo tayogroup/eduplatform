@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-01T14:06:00.968Z",
+  "generatedAt": "2026-08-02T10:33:39.159Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -493,48 +493,80 @@
       "outcomeId": "lo01",
       "difficulty": "Basic",
       "title": "Worked example 1: Input and Output Devices",
-      "prompt": "Explain in your own words: Input and Output Devices.",
-      "solution": "Almost every computer needs input. Input is how a computer knows what is happening around it, so that it can make choices or carry out actions. This is very much like the way you use your eyes and ears to see and hear what is happening in the world. A device that provides input to a computer is called an input device.\n\nYou already know several input devices. A touchscreen is an input device — you find them on smartphones and tablets. A mouse is an input device: when you move the mouse, the movement is the input, and the cursor moves around the screen. A keyboard is an input device too: it lets you enter text, numbers and symbols to tell the computer what you want it to do. A microphone is an input device that takes in sound.\n\nSensors: giving a computer its senses\n\nA sensor is a special and very important type of input device. Sensors sense and measure changes in the world around them. If input devices are how a computer notices things, then sensors are the computer's senses. Here are two everyday examples:\n\nAn oven uses a temperature sensor to sense how hot it is inside. When the oven reaches the correct temperature, the heater is switched off.\n\nMany cars have a light sensor. When it senses that it is getting dark outside, the car's headlights come on automatically. When it is light again, they switch off.\n\nFor the smart garden, the team will use three sensors: a moisture sensor to sense how wet the soil is, a temperature sensor to sense how hot the air is, and a light sensor to sense how bright it is. Together, these sensors let the garden 'feel' its surroundings, just as you feel the sun and the rain.\n\nFor example: Input devices can be connected directly to a computer, sitting right next to it like a mouse or keyboard. But input devices can also be connected remotely. Remote means far away. A remote input device connects to a computer over the internet, so it does not have to be anywhere near the computer at all — it could be in another city or even another country."
+      "prompt": "Which of these is an input device? (a) a printer; (b) a speaker; (c) a keyboard; (d) a screen.",
+      "solution": "1 (c) a keyboard sends data into the computer, so it is an input device."
     },
     {
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Basic",
       "title": "Worked example 2: Remote input devices are useful in four main situations:",
-      "prompt": "Explain in your own words: Remote input devices are useful in four main situations:.",
-      "solution": "When we want to collect data over a long time — days, months or even years.\n\nWhen we want to collect input from a place that is a long way from our computer.\n\nWhen it is not safe for a human to use a device by hand.\n\nWhen collecting the data automatically makes life easier or more efficient.\n\nThink of a scientist studying how the climate is changing. They need to measure the temperature in many places around the world, every hour of every day, and compare them. One person could never do this alone. Instead they place a temperature sensor in each place and connect to them all remotely over the internet. In the same way, a power station uses sensors to measure temperature and how much electricity is being made, all the time and in many places at once.\n\nRemote input devices are also perfect for dangerous places. Scientists cannot get close to a volcano when it erupts, because of the hot lava and poisonous gas, so they use remote sensors and stay safely far away. Space scientists use remote sensors carried on telescopes, space stations, and robots like the Mars Rover, to collect data from millions of kilometres away and send it back to Earth. And rescue robots with cameras and sensors can search a collapsed building, so that people do not have to enter a dangerous place themselves.\n\nFor example: You may even have remote input devices at home. A smart plug can switch itself on and off, and smart lights can change when you tell them to. These 'smart' devices use sensors so that we can control them, sometimes from the other side of the room and sometimes from the other side of the city."
+      "prompt": "Which of these is an output device? (a) a mouse; (b) a microphone; (c) a temperature sensor; (d) a printer.",
+      "solution": "2 (d) a printer produces output (printed paper)."
     },
     {
       "id": "we03",
       "outcomeId": "lo03",
       "difficulty": "Basic",
       "title": "Worked example 3: Using more than one sensor to stay safe",
-      "prompt": "Explain in your own words: Using more than one sensor to stay safe.",
-      "solution": "Sometimes, using only one sensor is a risk — especially when the data is important for keeping people safe. What if the sensor breaks, or sends the wrong reading? Imagine you check one temperature sensor to decide whether to bring your coat to school. If it tells you the wrong temperature, you might leave your coat at home and then shiver all day.\n\nTo solve this problem, important systems use two or more sensors to measure the same thing. Suppose we use three temperature sensors. If one says it is hot but the other two say it is cold, the computer can work out that one sensor is probably broken, and that it is most likely cold outside because two sensors agree. The computer ignores the odd reading and trusts the others. Many important control systems work exactly this way, comparing several sensors so that a single mistake cannot cause a disaster.\n\nOnce a computer has taken in input and processed it, it produces an output. Output is any information or action based on the input. An output device is the hardware that produces that output. A screen shows pictures and words; a speaker makes sound; a printer prints onto paper; a lamp gives light; a buzzer makes a warning noise.\n\nInput and output work together. When you move the mouse (input), the cursor moves on the screen (output). When you touch a touchscreen (input), the screen shows where you touched (output). When a motion sensor on an automatic door detects someone (input), a motor turns and the door opens (output). Here are some everyday outputs in the world around you:\n\nFor example: A robot changing the way it moves."
+      "prompt": "Which storage device uses a laser? (a) magnetic; (b) optical; (c) solid state; (d) internal.",
+      "solution": "6 (b) optical storage uses a laser to mark a plastic disc."
     },
     {
       "id": "we04",
       "outcomeId": "lo04",
       "difficulty": "Intermediate",
       "title": "Worked example 4: Actuators",
-      "prompt": "Explain in your own words: Actuators.",
-      "solution": "An actuator is a special type of output device. While a screen or a speaker gives out information, an actuator gives out movement. Actuators are parts of a machine that open, close or move physical objects. A simple rule helps you spot them: if a device makes something move, it is probably an actuator.\n\nYou have seen actuators without realising it. At a supermarket checkout, the moving belt that carries the shopping towards the till is an actuator — it is a motor joined to a rubber belt. On an aeroplane, an actuator moves the flaps on the wings. In a hydroelectric dam, sensors detect how much electricity is needed, a computer works out how much water to let through, and an actuator opens the water gates. For the smart garden, the water pump is an actuator: when the computer decides the soil is too dry, the actuator switches the water on.\n\nFor example: Actuators can also make life easier for people. A voice-controlled door opener can help someone who finds it hard to move: they simply ask, and an actuator opens the door for them."
+      "prompt": "Which storage device has no moving parts and is the fastest? (a) magnetic; (b) optical; (c) solid state; (d) a DVD.",
+      "solution": "7 (c) solid state storage has no moving parts and is fastest."
     },
     {
       "id": "we05",
       "outcomeId": "lo05",
       "difficulty": "Intermediate",
       "title": "Worked example 5: Input devices and output devices side by side",
-      "prompt": "Explain in your own words: Input devices and output devices side by side.",
-      "solution": "It is easy to muddle up input and output, so keep this comparison in your mind. The big idea is the direction: input goes INTO the computer, output comes OUT of it.\n\nIt can take up to about 22 minutes for a radio signal to travel from Earth all the way to the Mars Rover. That means when scientists send the rover an instruction, they must wait — the rover cannot be steered second by second like a toy car. It has to be clever enough to do a lot on its own.\n\nInput devices — Output devices\n\nWhat they do — Send data INTO the computer · Send information or actions OUT of the computer\n\nDirection — Into the computer (the computer notices something) · Out of the computer (the computer does something)\n\nWhen they are used — First — the computer needs input to know what is happening · Last — after the computer has processed the input\n\nFor example: Everyday examples — Keyboard, mouse, touchscreen, microphone, sensor (temperature, light, motion) · Screen, speaker, printer, lamp, buzzer, actuator (a motor that moves something)"
+      "prompt": "How many digits does binary use? (a) 1; (b) 2; (c) 8; (d) 10.",
+      "solution": "9 (b) binary uses two digits, 1 and 0."
     },
     {
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
       "title": "Worked example 6: How Is Data Stored?",
-      "prompt": "Explain in your own words: How Is Data Stored.",
-      "solution": "A storage device lets a computer save data permanently. 'Permanently' means the data stays even when you switch the computer off, until you choose to delete it. This is how your photos, your schoolwork and your favourite songs are still there when you turn your device back on. There are many different types of storage device, and the smart garden will need one to keep all its daily readings.\n\nSome storage devices live inside a computer or other device — these are called internal storage devices. The storage inside a tablet, a smartphone or a desktop computer is internal. Other storage devices are external, meaning they live outside the main case in their own case. An external hard drive and a memory stick are examples of external storage.\n\nFor example: External storage devices have a hard outer case to protect the data inside, so that a memory stick is not damaged if you drop it. They are very useful for two reasons: they add extra space, and they let you move files from one computer to another. Laptops are made to be small and light, so there is not much room inside for storage — which is why people so often add external storage to a laptop."
+      "prompt": "How many bits are in a byte? (a) 2; (b) 4; (c) 8; (d) 1,000.",
+      "solution": "10 (c) 8 bits make a byte."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Worked example 7: The three types of storage device",
+      "prompt": "Which is the largest unit of storage listed here? (a) bit; (b) byte; (c) kilobyte; (d) gigabyte.",
+      "solution": "11 (d) the gigabyte is the largest here."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "Worked example 8: On/off switches become the binary digits 1 and 0",
+      "prompt": "In the input-process-output model, the process stage is where the computer: (a) senses the world; (b) shows the answer; (c) makes a decision; (d) prints on paper.",
+      "solution": "12 (c) the process stage is where the computer makes a decision."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo09",
+      "difficulty": "Challenge",
+      "title": "Worked example 9: Processing Data",
+      "prompt": "Artificial intelligence is a way to: (a) make a computer faster; (b) copy (simulate) human intelligence; (c) store more data; (d) print pictures.",
+      "solution": "13 (b) it copies (simulates) human intelligence."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo10",
+      "difficulty": "Challenge",
+      "title": "Worked example 10: Artificial Intelligence (AI)",
+      "prompt": "Why do computers need input devices?",
+      "solution": "1 So the computer knows what is happening around it and can make choices or carry out actions."
     }
   ],
   "practice": [
@@ -542,112 +574,112 @@
       "id": "p01",
       "level": "Warm-up",
       "prompt": "Which of these is an input device? (a) a printer; (b) a speaker; (c) a keyboard; (d) a screen.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "1 (c) a keyboard sends data into the computer, so it is an input device.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words."
     },
     {
       "id": "p02",
       "level": "Warm-up",
       "prompt": "Which of these is an output device? (a) a mouse; (b) a microphone; (c) a temperature sensor; (d) a printer.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "2 (d) a printer produces output (printed paper).",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words."
     },
     {
       "id": "p03",
       "level": "Warm-up",
       "prompt": "A device that senses and measures changes around it is a: (a) cursor; (b) sensor; (c) byte; (d) laser.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "3 (b) a sensor.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words."
     },
     {
       "id": "p04",
       "level": "Warm-up",
       "prompt": "An output device that opens, closes or moves objects is called a(n): (a) actuator; (b) sensor; (c) monitor; (d) keyboard.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "4 (a) an actuator.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words."
     },
     {
       "id": "p05",
       "level": "Warm-up",
       "prompt": "A remote input device connects to a computer using the: (a) internet; (b) printer; (c) speaker; (d) mouse.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "5 (a) the internet.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words."
     },
     {
       "id": "p06",
       "level": "Warm-up",
       "prompt": "Which storage device uses a laser? (a) magnetic; (b) optical; (c) solid state; (d) internal.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "6 (b) optical storage uses a laser to mark a plastic disc.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words."
     },
     {
       "id": "p07",
       "level": "Warm-up",
       "prompt": "Which storage device has no moving parts and is the fastest? (a) magnetic; (b) optical; (c) solid state; (d) a DVD.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "7 (c) solid state storage has no moving parts and is fastest.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words."
     },
     {
       "id": "p08",
       "level": "Warm-up",
       "prompt": "A storage device found outside the main case is: (a) internal; (b) external; (c) optical; (d) binary.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "8 (b) external.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words."
     },
     {
       "id": "p09",
       "level": "Warm-up",
       "prompt": "How many digits does binary use? (a) 1; (b) 2; (c) 8; (d) 10.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "9 (b) binary uses two digits, 1 and 0.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words."
     },
     {
       "id": "p10",
       "level": "Warm-up",
       "prompt": "How many bits are in a byte? (a) 2; (b) 4; (c) 8; (d) 1,000.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "10 (c) 8 bits make a byte.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words."
     },
     {
       "id": "p11",
       "level": "Warm-up",
       "prompt": "Which is the largest unit of storage listed here? (a) bit; (b) byte; (c) kilobyte; (d) gigabyte.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "11 (d) the gigabyte is the largest here.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words."
     },
     {
       "id": "p12",
       "level": "Warm-up",
       "prompt": "In the input-process-output model, the process stage is where the computer: (a) senses the world; (b) shows the answer; (c) makes a decision; (d) prints on paper.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "12 (c) the process stage is where the computer makes a decision.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words."
     },
     {
       "id": "p13",
       "level": "Warm-up",
       "prompt": "Artificial intelligence is a way to: (a) make a computer faster; (b) copy (simulate) human intelligence; (c) store more data; (d) print pictures.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "13 (b) it copies (simulates) human intelligence.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words."
     },
     {
       "id": "p14",
       "level": "Warm-up",
       "prompt": "When a computer learns and gets better over time, this is called: (a) machine learning; (b) binary; (c) an actuator; (d) cryptography.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "14 (a) machine learning.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words."
     },
     {
       "id": "p15",
       "level": "Warm-up",
       "prompt": "An AI that treats some people unfairly is said to be: (a) remote; (b) biased; (c) optical; (d) automatic.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "15 (b) biased.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words."
     },
     {
       "id": "p16",
       "level": "Core",
-      "prompt": "Answer in one or two sentences.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Why do computers need input devices?",
+      "answer": "1 So the computer knows what is happening around it and can make choices or carry out actions.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words."
     }
   ],
@@ -1080,108 +1112,108 @@
       "outcomeId": "lo01",
       "difficulty": "Round 1",
       "prompt": "Which of these is an input device? (a) a printer; (b) a speaker; (c) a keyboard; (d) a screen.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "1 (c) a keyboard sends data into the computer, so it is an input device.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "1 (c) a keyboard sends data into the computer, so it is an input device."
     },
     {
       "id": "fl02",
       "outcomeId": "lo02",
       "difficulty": "Round 1",
       "prompt": "Which of these is an output device? (a) a mouse; (b) a microphone; (c) a temperature sensor; (d) a printer.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "2 (d) a printer produces output (printed paper).",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "2 (d) a printer produces output (printed paper)."
     },
     {
       "id": "fl03",
       "outcomeId": "lo03",
       "difficulty": "Round 1",
       "prompt": "A device that senses and measures changes around it is a: (a) cursor; (b) sensor; (c) byte; (d) laser.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "3 (b) a sensor.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "3 (b) a sensor."
     },
     {
       "id": "fl04",
       "outcomeId": "lo04",
       "difficulty": "Round 1",
       "prompt": "An output device that opens, closes or moves objects is called a(n): (a) actuator; (b) sensor; (c) monitor; (d) keyboard.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "4 (a) an actuator.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "4 (a) an actuator."
     },
     {
       "id": "fl05",
       "outcomeId": "lo05",
       "difficulty": "Round 2",
       "prompt": "A remote input device connects to a computer using the: (a) internet; (b) printer; (c) speaker; (d) mouse.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "5 (a) the internet.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "5 (a) the internet."
     },
     {
       "id": "fl06",
       "outcomeId": "lo06",
       "difficulty": "Round 2",
       "prompt": "Which storage device uses a laser? (a) magnetic; (b) optical; (c) solid state; (d) internal.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "6 (b) optical storage uses a laser to mark a plastic disc.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "6 (b) optical storage uses a laser to mark a plastic disc."
     },
     {
       "id": "fl07",
       "outcomeId": "lo07",
       "difficulty": "Round 2",
       "prompt": "Which storage device has no moving parts and is the fastest? (a) magnetic; (b) optical; (c) solid state; (d) a DVD.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "7 (c) solid state storage has no moving parts and is fastest.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "7 (c) solid state storage has no moving parts and is fastest."
     },
     {
       "id": "fl08",
       "outcomeId": "lo08",
       "difficulty": "Round 2",
       "prompt": "A storage device found outside the main case is: (a) internal; (b) external; (c) optical; (d) binary.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "8 (b) external.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "8 (b) external."
     },
     {
       "id": "fl09",
       "outcomeId": "lo09",
       "difficulty": "Round 3",
       "prompt": "How many digits does binary use? (a) 1; (b) 2; (c) 8; (d) 10.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "9 (b) binary uses two digits, 1 and 0.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "9 (b) binary uses two digits, 1 and 0."
     },
     {
       "id": "fl10",
       "outcomeId": "lo10",
       "difficulty": "Round 3",
       "prompt": "How many bits are in a byte? (a) 2; (b) 4; (c) 8; (d) 1,000.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "10 (c) 8 bits make a byte.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "10 (c) 8 bits make a byte."
     },
     {
       "id": "fl11",
       "outcomeId": "lo01",
       "difficulty": "Round 3",
       "prompt": "Which is the largest unit of storage listed here? (a) bit; (b) byte; (c) kilobyte; (d) gigabyte.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "11 (d) the gigabyte is the largest here.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "11 (d) the gigabyte is the largest here."
     },
     {
       "id": "fl12",
       "outcomeId": "lo02",
       "difficulty": "Round 3",
       "prompt": "In the input-process-output model, the process stage is where the computer: (a) senses the world; (b) shows the answer; (c) makes a decision; (d) prints on paper.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "12 (c) the process stage is where the computer makes a decision.",
       "hint": "Look back at what input and input device mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "12 (c) the process stage is where the computer makes a decision."
     }
   ],
   "realProblems": [
@@ -1190,60 +1222,60 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Home",
-      "prompt": "Sort or match each set. Write your answers, then check the key.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Classify input or output: keyboard, screen, microphone, printer, motion sensor, speaker.",
+      "answer": "1 Input: keyboard, microphone, motion sensor. Output: screen, printer, speaker.",
       "hint": "Work out which idea this is about — input, input device, output — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: 1 Input: keyboard, microphone, motion sensor. Output: screen, printer, speaker."
     },
     {
       "id": "rp02",
       "outcomeId": "lo02",
       "difficulty": "Core",
       "context": "School",
-      "prompt": "Classify input or output: keyboard, screen, microphone, printer, motion sensor, speaker.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Classify the storage type (magnetic, optical or solid state): a DVD, a hard disk drive, a memory stick, a CD, an SSD.",
+      "answer": "2 Optical: a DVD, a CD. Magnetic: a hard disk drive. Solid state: a memory stick, an SSD.",
       "hint": "Work out which idea this is about — input, input device, output — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: 2 Optical: a DVD, a CD. Magnetic: a hard disk drive. Solid state: a memory stick, an SSD."
     },
     {
       "id": "rp03",
       "outcomeId": "lo03",
       "difficulty": "Core",
       "context": "Market",
-      "prompt": "Classify the storage type (magnetic, optical or solid state): a DVD, a hard disk drive, a memory stick, a CD, an SSD.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Classify internal or external: the drive built inside a phone, a USB memory stick, an external hard drive.",
+      "answer": "3 Internal: the drive built inside a phone. External: a USB memory stick, an external hard drive.",
       "hint": "Work out which idea this is about — input, input device, output — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: 3 Internal: the drive built inside a phone. External: a USB memory stick, an external hard drive."
     },
     {
       "id": "rp04",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "context": "Community",
-      "prompt": "Classify internal or external: the drive built inside a phone, a USB memory stick, an external hard drive.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Match the AI example to its description: (i) predictive text, (ii) speech to text, (iii) music suggestions, (iv) biased AI — descriptions: (A) turns your spoken words into writing, (B) suggests the next word as you type, (C) treats some people unfairly, (D) recommends songs you might like.",
+      "answer": "4 (i) predictive text = B; (ii) speech to text = A; (iii) music suggestions = D; (iv) biased AI = C.",
       "hint": "Work out which idea this is about — input, input device, output — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: 4 (i) predictive text = B; (ii) speech to text = A; (iii) music suggestions = D; (iv) biased AI = C."
     },
     {
       "id": "rp05",
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "context": "Travel",
-      "prompt": "Match the AI example to its description: (i) predictive text, (ii) speech to text, (iii) music suggestions, (iv) biased AI — descriptions: (A) turns your spoken words into writing, (B) suggests the next word as you type, (C) treats some people unfairly, (D) recommends songs you might like.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Match the stage to the smart garden: (i) input, (ii) process, (iii) output — garden parts: (A) the water pump switches on, (B) the moisture sensor reads the soil, (C) the computer decides the soil is too dry.",
+      "answer": "5 (i) input = B (the moisture sensor reads the soil); (ii) process = C (the computer decides it is too dry); (iii) output = A (the water pump switches on).",
       "hint": "Work out which idea this is about — input, input device, output — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: 5 (i) input = B (the moisture sensor reads the soil); (ii) process = C (the computer decides it is too dry); (iii) output = A (the water pump switches on)."
     },
     {
       "id": "rp06",
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "context": "Health",
-      "prompt": "Match the stage to the smart garden: (i) input, (ii) process, (iii) output — garden parts: (A) the water pump switches on, (B) the moisture sensor reads the soil, (C) the computer decides the soil is too dry.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "The smart garden. Name one input device and one output device the garden needs, and explain what each one does.",
+      "answer": "1 Any correct pair, e.g. input = a moisture sensor that senses how wet the soil is; output = a water pump (actuator) that waters the plants, or a screen that shows the readings.",
       "hint": "Work out which idea this is about — input, input device, output — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: 1 Any correct pair, e.g. input = a moisture sensor that senses how wet the soil is; output = a water pump (actuator) that waters the plants, or a screen that shows the readings."
     }
   ],
   "reasoningPrompts": [
@@ -1252,78 +1284,78 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Answer in one or two sentences.",
+      "prompt": "Why do computers need input devices?",
       "keyIdeas": [
         "input",
         "input device",
         "output"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "1 So the computer knows what is happening around it and can make choices or carry out actions."
     },
     {
       "id": "reason02",
       "outcomeId": "lo02",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Why do computers need input devices?",
+      "prompt": "Give one advantage of a remote input device.",
       "keyIdeas": [
         "input device",
         "output",
         "output device"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "2 It can collect data from far away or from a dangerous place, over a long time, without a human being there (any one)."
     },
     {
       "id": "reason03",
       "outcomeId": "lo03",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Give one advantage of a remote input device.",
+      "prompt": "What does an actuator do? Give one example.",
       "keyIdeas": [
         "output",
         "output device",
         "sensor"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "3 An actuator moves, opens or closes a physical object; for example, the motor and belt at a supermarket checkout, or a water pump."
     },
     {
       "id": "reason04",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "What does an actuator do? Give one example.",
+      "prompt": "Give two different types of storage device.",
       "keyIdeas": [
         "output device",
         "sensor",
         "actuator"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "4 Any two of: magnetic, optical, solid state (also accept internal / external)."
     },
     {
       "id": "reason05",
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "Give two different types of storage device.",
+      "prompt": "How is data recorded on a storage device (what number system is used)?",
       "keyIdeas": [
         "sensor",
         "actuator",
         "remote"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "5 In binary — as 1s and 0s."
     },
     {
       "id": "reason06",
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "How is data recorded on a storage device (what number system is used)?",
+      "prompt": "Why is data stored in binary?",
       "keyIdeas": [
         "actuator",
         "remote",
         "automatic"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "6 Because a computer's memory is made of switches that can only be on (1) or off (0), so binary matches the hardware perfectly."
     }
   ],
   "project": {

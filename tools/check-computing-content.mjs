@@ -185,6 +185,18 @@ for (const gradeDir of gradeDirs) {
       if (question.answer !== undefined && options.length && !options.includes(question.answer)) {
         fail(label, `question ${question.id} answer is not among its options`);
       }
+      // A vocabulary explanation names the word it defines. If that word is
+      // nowhere in the question, the answer or the options, the explanation
+      // belongs to a different question — the signature of a reviewed row that
+      // slid onto the wrong slot, or of a key run read off by one. The learner
+      // gets the right answer with the wrong reason.
+      const defines = /^([A-Za-z][A-Za-z0-9 .'’-]{1,30}?) means /.exec(String(question.explanation || "").trim());
+      if (defines) {
+        const about = `${question.question} ${question.answer} ${options.join(" ")}`.toLowerCase();
+        if (!about.includes(defines[1].toLowerCase())) {
+          fail(label, `question ${question.id} is explained by a definition of "${defines[1]}", which it does not ask about`);
+        }
+      }
     }
 
     for (const [mod, field] of VARIED_FIELDS) {

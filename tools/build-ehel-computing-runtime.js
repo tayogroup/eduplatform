@@ -93,7 +93,8 @@ const reviewPath = path.join(compRoot, "data", "script-review.json");
 const scriptReview = fs.existsSync(reviewPath)
   ? (JSON.parse(fs.readFileSync(reviewPath, "utf8")).overrides || {})
   : {};
-const reviewStats = { applied: 0, missed: [] };
+const reviewStats = { applied: 0, missed: [], rekeyed: [], stranded: [] };
+const practiceStats = { unaligned: [] };
 
 // Where each exported category's fields live inside a built unit. Returns the
 // object a field should be written to, or null when the item has gone from the
@@ -147,6 +148,15 @@ function reviewTarget(unit, category, itemId) {
 function applyReviewFields(unit, category, itemId, fields, label) {
   const target = reviewTarget(unit, category, itemId);
   if (!target) { reviewStats.missed.push(`${label} ${category}/${itemId} (item not found)`); return; }
+  // Review overrides are keyed by position (q01, q02, …), so a rebuild that
+  // changes how many questions a unit parses slides every later override onto a
+  // different question. On an MCQ that is silent and destructive: the old
+  // question's option list lands on a question whose answer is not in it, and a
+  // learner checking their work is marked wrong whatever they pick. Snapshot
+  // the shape, and roll the whole item back if the answer stops being offered.
+  const isMcq = Array.isArray(target.options) && typeof target.answer === "string";
+  const before = isMcq ? { options: [...target.options], answer: target.answer } : null;
+  const appliedBefore = reviewStats.applied;
   for (const [field, value] of Object.entries(fields)) {
     if (category === "Unit Overview") {
       target[field][field] = value;
@@ -171,12 +181,92 @@ function applyReviewFields(unit, category, itemId, fields, label) {
     }
     reviewStats.applied += 1;
   }
+  if (isMcq && !target.options.includes(target.answer)) {
+    target.options = before.options;
+    target.answer = before.answer;
+    reviewStats.applied = appliedBefore;
+    reviewStats.missed.push(`${label} ${category}/${itemId} (override drifted onto another question — answer not among its options)`);
+  }
+}
+
+// Which vocabulary word a generated quiz question is about, or "" if it is a
+// real question parsed out of the pack rather than one of the two padding
+// templates in assessmentData().
+function paddingTerm(question) {
+  const named = /^What does\s*[“"'](.+?)[”"'] mean in computing\?$/.exec(tidy(question.question || ""));
+  if (named) return named[1].toLowerCase();
+  if (/^Which computing word matches this meaning:/i.test(question.question || "")) {
+    return String(question.answer || "").toLowerCase();
+  }
+  return "";
+}
+
+// Overrides are keyed by position (q01, q02, …), so any rebuild that changes
+// how many real questions a unit parses slides every padding question — and
+// with it every reviewed explanation — onto a different word. The reviewer's
+// text says which word it is ("Server means a computer that…"), so it can be
+// put back where it belongs instead of being applied to the wrong question or
+// thrown away. Only an unambiguous match moves; anything else is left to the
+// answer-invariant guard in applyReviewFields.
+function rekeyPaddingOverrides(unit, byId) {
+  const questions = (unit.assessment || {}).questions || [];
+  const byTerm = new Map();
+  for (const question of questions) {
+    const term = paddingTerm(question);
+    if (!term) continue;
+    byTerm.set(term, byTerm.has(term) ? null : question.id); // null marks "ambiguous"
+  }
+
+  const moves = new Map();
+  for (const [itemId, fields] of Object.entries(byId)) {
+    const said = /^([A-Za-z][A-Za-z0-9 .'’-]{1,30}?) means /.exec(tidy(fields.explanation || ""));
+    const target = said ? byTerm.get(said[1].toLowerCase()) : undefined;
+    if (target && target !== itemId) moves.set(itemId, target);
+  }
+  // Two overrides naming the same word cannot both be right about which
+  // question they belong to, so neither moves.
+  const demand = new Map();
+  for (const target of moves.values()) demand.set(target, (demand.get(target) || 0) + 1);
+  for (const [itemId, target] of [...moves]) if (demand.get(target) > 1) moves.delete(itemId);
+
+  const rekeyed = {};
+  for (const [itemId, target] of moves) rekeyed[target] = byId[itemId];
+  for (const [itemId, fields] of Object.entries(byId)) {
+    // An override that moved vacates its slot; one whose slot was claimed by a
+    // move is displaced, and its own move (if any) already placed it.
+    if (moves.has(itemId) || rekeyed[itemId] !== undefined) continue;
+    rekeyed[itemId] = fields;
+  }
+  reviewStats.rekeyed.push(...[...moves].map(([from, to]) => `${from}→${to}`));
+
+  // What is left over names a word that has no question in this unit at all —
+  // the reviewed row belongs to a question the rebuild no longer produces.
+  // Applying it would define a word the learner was never asked about, and its
+  // option list would be that vanished question's. Drop both fields and let the
+  // builder's own explanation, which is derived from the question, stand.
+  const kept = {};
+  for (const [itemId, fields] of Object.entries(rekeyed)) {
+    const said = /^([A-Za-z][A-Za-z0-9 .'’-]{1,30}?) means /.exec(tidy(fields.explanation || ""));
+    const question = questions.find((entry) => entry.id === itemId);
+    const about = question
+      ? `${question.question} ${question.answer} ${(question.options || []).join(" ")}`.toLowerCase()
+      : "";
+    if (!said || !question || about.includes(said[1].toLowerCase())) {
+      kept[itemId] = fields;
+      continue;
+    }
+    const { explanation, options, ...rest } = fields;
+    reviewStats.stranded.push(`${itemId} (“${said[1]}”)`);
+    if (Object.keys(rest).length) kept[itemId] = rest;
+  }
+  return kept;
 }
 
 function applyScriptReview(unit, grade, unitNumber) {
   const items = ((scriptReview[`grade-${grade}`] || {})[`unit-${unitNumber}`]) || {};
   for (const [category, byId] of Object.entries(items)) {
-    for (const [itemId, fields] of Object.entries(byId)) {
+    const slots = category === "Assessment Question" ? rekeyPaddingOverrides(unit, byId) : byId;
+    for (const [itemId, fields] of Object.entries(slots)) {
       applyReviewFields(unit, category, itemId, fields, `grade ${grade} unit ${unitNumber}:`);
     }
   }
@@ -721,14 +811,43 @@ function buildGrade(grade) {
     const applyHint = words.length >= 2
       ? `Work out which idea this is about — ${words.join(", ")} — then explain your reasoning step by step.`
       : "Decide which idea from this unit the task is about, then explain your reasoning step by step.";
+    // Where the answer keys begin. Section names alone cannot tell a question
+    // from its answer: one layout repeats the very same heading ("Section A —
+    // Multiple Choice") over the key run, so the two are indistinguishable by
+    // name and only their position separates them.
+    // "Answer Key", "Answer Keys (with explanations)", "FULL ANSWER KEY" — the
+    // marker is worded differently in every pack, and missing it means every
+    // question in the unit falls back to "work through the task".
+    const KEY_MARKER = /^(full\s+|complete\s+)?answer\s*keys?\b/i;
+    const keyStart = practiceDoc.blocks.findIndex((block) =>
+      KEY_MARKER.test(tidy(block.text)) || KEY_MARKER.test(block.section || ""));
+    const beforeKeys = (block) => keyStart < 0 || practiceDoc.blocks.indexOf(block) < keyStart;
+    const afterKeys = (block) => keyStart >= 0 && practiceDoc.blocks.indexOf(block) > keyStart;
+
     for (const name of sections) {
       const letter = name.match(/^Section\s+([A-E])/i)[1].toUpperCase();
       const tasks = practiceDoc.blocks
-        .filter((block) => block.section === name && block.content_kind !== "Heading")
+        .filter((block) => block.section === name && block.content_kind !== "Heading" && beforeKeys(block))
         .map((block) => tidy(block.text))
-        .filter((text) => text.length > 12 && !/^(choose|circle|tick|answer each|write your|read each|use the|for each)/i.test(text));
-      const keySection = practiceDoc.blocks.filter((block) => new RegExp(`Answer Key\\s*[-–—]?\\s*Section\\s+${letter}\\b`, "i").test(block.section)
-        && block.content_kind !== "Heading");
+        // The line under a section heading is the rubric, not a question. Left
+        // in, it becomes task 0 and every answer after it is off by one — the
+        // TLD question answered with the padlock explanation.
+        .filter((text) => text.length > 12 && !/^(choose|circle|tick|answer (?:each|in|the)|write (?:your|down|the letter)|read each|use (?:the|what)|for each|sort or match|copy each|some of these)/i.test(text));
+      // The books head their answer keys two ways round — "Answer Key - Section
+      // A (Multiple Choice)" and "Section A: Answer Key" — so match a heading
+      // that names both, in either order. Matching only the first form left
+      // every question in those units with the fallback "work through the task"
+      // string instead of its answer, which is precisely what a learner with no
+      // teacher cannot do without.
+      const keySection = practiceDoc.blocks.filter((block) => {
+        const heading = block.section || "";
+        if (block.content_kind === "Heading") return false;
+        if (!new RegExp(`\\bSection\\s+${letter}\\b`, "i").test(heading)) return false;
+        // Either the heading says "Answer Key", or the block sits past the
+        // answer-key boundary — which is the only thing that separates the two
+        // runs in the layout that repeats the question heading over its key.
+        return /answer\s*key/i.test(heading) || afterKeys(block);
+      });
       const keys = keySection.map((block) => tidy(block.text)).filter((text) => text.length > 1);
       // Keys are numbered ("3. A condition is a question answered True or
       // False."), so match a task to its key by number rather than by index —
@@ -739,11 +858,19 @@ function buildGrade(grade) {
         const match = /^(\d{1,2})\s*[.):]\s*(.+)$/.exec(key);
         if (match) keyByNumber.set(Number(match[1]), tidy(match[2]));
       }
+      // Unnumbered keys can only be read positionally, and position is only
+      // trustworthy when the two runs are the same length. One stray line in
+      // either run shifts every answer after it onto the wrong question, which
+      // is worse for a learner checking their work than no answer at all.
+      const aligned = keys.length === tasks.length;
+      if (!aligned && !keyByNumber.size && keys.length) {
+        practiceStats.unaligned.push(`${practiceDoc.unit_label || ""} ${name}: ${tasks.length} questions vs ${keys.length} key lines`);
+      }
       tasks.forEach((prompt, index) => {
         const numbered = /^(\d{1,2})\s*[.):]\s*(.+)$/.exec(prompt);
         const number = numbered ? Number(numbered[1]) : index + 1;
         const stem = numbered ? tidy(numbered[2]) : prompt;
-        const answer = keyByNumber.get(number) || tidy(keys[index] || "");
+        const answer = keyByNumber.get(number) || (aligned ? tidy(keys[index] || "") : "");
         if (!stem || stem.length < 12) return;
         items.push({
           id: `p${String(items.length + 1).padStart(2, "0")}`,
@@ -761,7 +888,12 @@ function buildGrade(grade) {
           const letterMatch = /^\(?([a-d])\)?\b/i.exec(keyText);
           let answerText = letterMatch ? options["abcd".indexOf(letterMatch[1].toLowerCase())] : "";
           if (!answerText) answerText = options.find((option) => option.length > 3 && keyText.toLowerCase().includes(option.slice(0, 24).toLowerCase())) || "";
-          if (options.length >= 3 && answerText) {
+          // The answer must be one of the options offered, or the question is
+          // ungradeable and actively misleading — a learner checking their work
+          // is told they are wrong whatever they pick. When a parse cannot
+          // produce that, drop the question and let the vocabulary padding in
+          // assessmentData supply a self-consistent one instead.
+          if (options.length >= 3 && answerText && options.includes(answerText)) {
             mcqs.push({
               question,
               options,
@@ -819,35 +951,92 @@ function buildGrade(grade) {
       }
     }
 
+    // A third key shape: unnumbered prose, one line per question, after a
+    // "Practice answers (…):" marker. Some of those lines echo the question
+    // before answering it ("How many liked mango? 4."), which is the only
+    // reliable way to bind them; the rest are answers alone and can only be
+    // read positionally.
+    const proseAt = keyRun.findIndex((line) => /^practice\b[^?]*:$/i.test(line));
+    const proseRun = (proseAt >= 0 ? keyRun.slice(proseAt + 1) : [])
+      .filter((line) => line.length > 8 && !/^(?:Practice\s+)?\d{1,2}\s*[.):]/.test(line));
+    const STOPWORDS = new Set(["the", "a", "an", "of", "in", "is", "are", "to", "and", "did", "do", "does", "that", "this", "these", "your", "you", "it"]);
+    const tokens = (text) => tidy(text).toLowerCase().replace(/[^a-z0-9\s]/g, " ").split(/\s+/).filter(Boolean);
+    // A key line that restates its question splits into head (the restatement)
+    // and tail (the answer) at the question mark or the first colon.
+    const echoes = proseRun.map((line) => {
+      const split = /\?/.test(line) ? line.indexOf("?") : line.indexOf(":");
+      if (split <= 0 || split >= line.length - 2) return null;
+      const head = tokens(line.slice(0, split));
+      if (head.filter((word) => !STOPWORDS.has(word)).length < 2) return null;
+      return { head, answer: tidy(line.slice(split + 1)).replace(/^=\s*/, ""), line };
+    });
+    const echoUsed = new Set();
+
     const words = unitWords.filter(Boolean).slice(0, 3);
     const miniHint = words.length >= 2
       ? `Look back at what ${words.slice(0, 2).join(" and ")} mean in this unit, then say your answer in a full sentence.`
       : "Find the part of the lesson that explains this idea, then say your answer in a full sentence.";
+    // Sub-parts ("a) Which loop never stops?") and the code listing under a
+    // stem that ends in a colon belong to the numbered question above them.
+    // The key answers each numbered question once, covering all its parts, so
+    // splitting them apart left three items sharing one answer and three with
+    // none — and dropped the program a "predict the outcome" question is about.
+    const merged = [];
+    let openStem = false;
+    for (const line of taskRun) {
+      if (/^\d{1,2}\s*[.)]\s/.test(line)) {
+        merged.push(line);
+        openStem = /:$/.test(line);
+        continue;
+      }
+      const subPart = /^\(?[a-h]\)\s/.test(line);
+      if (merged.length && (subPart || openStem)) {
+        merged[merged.length - 1] += ` ${line}`;
+        openStem = openStem || subPart;
+        continue;
+      }
+      merged.push(line);
+    }
+
     let unnumbered = 0;
-    taskRun.forEach((task, index) => {
+    merged.forEach((task, index) => {
       // Some units number their questions, others write them as plain
       // sentences ending in an "Answer: ______" rule. Handle both.
+      // Three question shapes: numbered, a trailing "Answer: ______" rule, and
+      // one that writes its blanks inline ("(a) Traveller ______ (b) People
+      // ______"). Missing the third dropped a whole question, which then slid
+      // every later answer in the key onto the wrong one.
       const match = /^(\d{1,2})\s*[.)]\s*(.+)$/.exec(task)
-        || (/\bAnswer:\s*_+\s*$/.test(task) ? [null, String(++unnumbered), task.replace(/\s*Answer:\s*_+\s*$/, "")] : null);
+        || (/\bAnswer:\s*_+\s*$/.test(task) ? [null, String(++unnumbered), task.replace(/\s*Answer:\s*_+\s*$/, "")] : null)
+        || (/_{4,}/.test(task) && /\?|\bwrite\b|\bname\b|\bgive\b/i.test(task) ? [null, String(++unnumbered), task] : null);
       if (!match) return;
       const number = Number(match[1]);
       let prompt = tidy(match[2]).replace(/\s*_{4,}.*$/, "").replace(/\s*Answer:\s*$/i, "");
       // The answer options sit on the line below the question ("tablet ball
       // washing machine spoon", "YES NO"), so a learner reading only the
       // question would have nothing to choose between. Pull that line in.
-      const next = taskRun[index + 1] || "";
+      const next = merged[index + 1] || "";
       const optionsLine = next && !/^\d{1,2}\s*[.)]/.test(next) && !/^_+$/.test(next) && next.length < 90 ? next : "";
       const isTrueFalse = /True\s*\/\s*False|^\s*YES\s+NO\s*$/i.test(`${prompt} ${optionsLine}`);
       const asksToChoose = /circle one|circle the|tick one|choose one/i.test(prompt);
       prompt = tidy(prompt.replace(/\s*(?:Circle|Tick|Choose)\s+one\.?$/i, ""));
       if (prompt.length < 8) return;
       const fullPrompt = optionsLine && asksToChoose ? `${prompt} (${optionsLine})` : prompt;
-      const answer = keyByNumber.get(number) || keyOrdinal[items.length] || "";
+      // Every word of the key line's restatement has to appear in the question
+      // for it to be that question's answer — a looser test binds "How many
+      // liked apple?" to the mango question.
+      const promptWords = new Set(tokens(fullPrompt));
+      const echoIndex = echoes.findIndex((echo) => echo && echo.head.every((word) => promptWords.has(word)));
+      if (echoIndex >= 0) echoUsed.add(echoIndex);
+      const answer = keyByNumber.get(number)
+        || (echoIndex >= 0 ? echoes[echoIndex].answer : "")
+        || keyOrdinal[items.length]
+        || "";
       items.push({
         id: `p${String(items.length + 1).padStart(2, "0")}`,
         level: items.length < 2 ? "Warm-up" : items.length < 5 ? "Core" : "Challenge",
         prompt: fullPrompt,
-        answer: answer || "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+        answer,
         hint: miniHint,
       });
       if (!answer) return;
@@ -870,6 +1059,19 @@ function buildGrade(grade) {
       const chosen = options.find((option) => new RegExp(`\\b${option.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i").test(answer));
       if (chosen) mcqs.push({ question: prompt, options, answer: chosen, explanation: answer });
     });
+
+    // Answer-alone prose lines carry nothing that names their question, so the
+    // only safe binding is position — and position is only trustworthy when
+    // every line pairs with exactly one still-unanswered item. Anything else
+    // would be a guess, and a wrong answer key is worse than none.
+    const unanswered = items.filter((item) => !item.answer);
+    const spare = proseRun.filter((_, index) => !echoUsed.has(index));
+    if (unanswered.length && spare.length === unanswered.length) {
+      unanswered.forEach((item, index) => { item.answer = spare[index]; });
+    }
+    for (const item of items) {
+      if (!item.answer) item.answer = "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.";
+    }
     return { items, mcqs };
   }
 
@@ -1769,6 +1971,16 @@ if (allWarnings.length) {
 }
 if (reviewStats.applied || reviewStats.missed.length) {
   console.log(`\nScript review: ${reviewStats.applied} field(s) applied.`);
+}
+if (practiceStats.unaligned.length) {
+  console.log(`Practice sections whose key run does not line up with its questions (${practiceStats.unaligned.length}) — left unanswered rather than answered wrongly:`);
+  for (const note of practiceStats.unaligned) console.log(`  - ${note}`);
+}
+if (reviewStats.rekeyed.length) {
+  console.log(`Review entries re-keyed onto the word they name (${reviewStats.rekeyed.length}) — positional drift, corrected at build time.`);
+}
+if (reviewStats.stranded.length) {
+  console.log(`Review explanations dropped as stranded (${reviewStats.stranded.length}) — they define a word no question in their unit asks about; the built explanation stands.`);
 }
 if (reviewStats.missed.length) {
   // A review entry with nowhere to land means the source pack moved under the

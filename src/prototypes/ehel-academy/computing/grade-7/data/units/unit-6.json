@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-01T14:06:01.261Z",
+  "generatedAt": "2026-08-02T10:33:39.439Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -654,28 +654,28 @@
     {
       "id": "p13",
       "level": "Core",
-      "prompt": "Answer in one or two full sentences.",
+      "prompt": "Explain why the order of instructions matters in a light sequence. Give an example of what could go wrong.",
       "answer": "The computer runs instructions strictly top to bottom, so the order decides the output. Example: if you show the 'right column' image before the 'left column' image, the light appears to move right-to-left instead of left-to-right — a different message.",
       "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
     },
     {
       "id": "p14",
       "level": "Core",
-      "prompt": "Explain why the order of instructions matters in a light sequence. Give an example of what could go wrong.",
+      "prompt": "What is the difference between display.show() and display.scroll()?",
       "answer": "display.show() shows an image (or holds a single character) on the LEDs; display.scroll() slides text or numbers across the display from right to left.",
       "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
     },
     {
       "id": "p15",
       "level": "Core",
-      "prompt": "What is the difference between display.show() and display.scroll()?",
+      "prompt": "Explain the difference between a for loop and a while loop.",
       "answer": "A for loop repeats a fixed number of times (for example once per item in a list). A while loop repeats as long as its condition stays true; while True: repeats forever.",
       "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
     },
     {
       "id": "p16",
       "level": "Core",
-      "prompt": "Explain the difference between a for loop and a while loop.",
+      "prompt": "What is the purpose of a sleep() command between two images in a sequence?",
       "answer": "sleep() pauses the program so each image is visible long enough for the eye to see before the next one replaces it. Without it, images swap too fast to notice.",
       "hint": "Look back at what algorithm and arithmetic operator mean in this unit, then answer in your own words."
     }
@@ -1242,57 +1242,57 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Home",
-      "prompt": "Copy each program and write the missing part (shown as ___).",
-      "answer": "D1: from microbit import *",
+      "prompt": "D1 — complete the first line every program needs",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
       "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: D1: from microbit import *"
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
     },
     {
       "id": "rp02",
       "outcomeId": "lo02",
       "difficulty": "Core",
       "context": "School",
-      "prompt": "D1 — complete the first line every program needs",
-      "answer": "D2: sleep(500)",
+      "prompt": "___________________ display.show(Image.HAPPY)",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
       "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: D2: sleep(500)"
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
     },
     {
       "id": "rp03",
       "outcomeId": "lo03",
       "difficulty": "Core",
       "context": "Market",
-      "prompt": "___________________ display.show(Image.HAPPY)",
-      "answer": "D3: for frame in frames:",
+      "prompt": "D2 — wait half a second between the images",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
       "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: D3: for frame in frames:"
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
     },
     {
       "id": "rp04",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "context": "Community",
-      "prompt": "D2 — wait half a second between the images",
-      "answer": "D4: microphone.sound_level() — giving if microphone.sound_level() > 128:",
+      "prompt": "from microbit import * display.show(Image.SQUARE) ___________ display.show(Image.SQUARE_SMALL)",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
       "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: D4: microphone.sound_level() — giving if microphone.sound_level() > 128:"
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
     },
     {
       "id": "rp05",
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "context": "Travel",
-      "prompt": "from microbit import * display.show(Image.SQUARE) ___________ display.show(Image.SQUARE_SMALL)",
-      "answer": "D5: \"00900:00900:00900:00900:00900\" — a 9 in the centre position of every row lights the middle column.",
+      "prompt": "D3 — loop through the list of frames",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
       "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: D5: \"00900:00900:00900:00900:00900\" — a 9 in the centre position of every row lights the middle column."
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
     },
     {
       "id": "rp06",
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "context": "Health",
-      "prompt": "D3 — loop through the list of frames",
+      "prompt": "from microbit import * frames = [Image.HEART, Image.HEART_SMALL] ____________________ display.show(frame) sleep(300)",
       "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
       "hint": "Work out which idea this is about — algorithm, arithmetic operator, Boolean logic operations — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
@@ -1304,7 +1304,7 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Answer in one or two full sentences.",
+      "prompt": "Explain why the order of instructions matters in a light sequence. Give an example of what could go wrong.",
       "keyIdeas": [
         "algorithm",
         "arithmetic operator",
@@ -1317,7 +1317,7 @@
       "outcomeId": "lo02",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Explain why the order of instructions matters in a light sequence. Give an example of what could go wrong.",
+      "prompt": "What is the difference between display.show() and display.scroll()?",
       "keyIdeas": [
         "arithmetic operator",
         "Boolean logic operations",
@@ -1330,7 +1330,7 @@
       "outcomeId": "lo03",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "What is the difference between display.show() and display.scroll()?",
+      "prompt": "Explain the difference between a for loop and a while loop.",
       "keyIdeas": [
         "Boolean logic operations",
         "bug",
@@ -1343,7 +1343,7 @@
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "Explain the difference between a for loop and a while loop.",
+      "prompt": "What is the purpose of a sleep() command between two images in a sequence?",
       "keyIdeas": [
         "bug",
         "debug / debugging",
@@ -1356,7 +1356,7 @@
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "What is the purpose of a sleep() command between two images in a sequence?",
+      "prompt": "Describe the difference between evolutionary and throwaway prototyping.",
       "keyIdeas": [
         "debug / debugging",
         "flowchart",
@@ -1369,7 +1369,7 @@
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "Describe the difference between evolutionary and throwaway prototyping.",
+      "prompt": "Why is a test plan useful? What are its main columns?",
       "keyIdeas": [
         "flowchart",
         "full release",

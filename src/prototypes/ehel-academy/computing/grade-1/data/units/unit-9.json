@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-01T14:06:00.201Z",
+  "generatedAt": "2026-08-02T10:33:38.441Z",
   "stage": {
     "id": "s01",
     "label": "Stage 1"
@@ -323,24 +323,24 @@
       "id": "we04",
       "outcomeId": "lo04",
       "difficulty": "Intermediate",
-      "title": "Worked example 4: We are games developers! (unplugged)",
-      "prompt": "Explain in your own words: We are games developers! (unplugged).",
+      "title": "Worked example 4: Debug it: fix the mistake (ScratchJr)",
+      "prompt": "What should it be? Start on",
       "solution": "A games developer is a person who makes computer games. Today we become games developers. A game has a character (like a frog) and blocks that tell it what to do. Some games do something when you tap them.\n\nWho has played a game on a tablet or a phone? What did you do — did you tap the screen? Did you make something jump? The people who make those games have a special name. They are called games developers.\n\nFor example: And today — we are games developers! Start with games you already love."
     },
     {
       "id": "we05",
       "outcomeId": "lo05",
       "difficulty": "Intermediate",
-      "title": "Worked example 5: Make a tap game and test it (ScratchJr)",
-      "prompt": "Explain in your own words: Make a tap game and test it (ScratchJr).",
+      "title": "Worked example 5: We are games developers! (unplugged)",
+      "prompt": "Explain in your own words: We are games developers! (unplugged).",
       "solution": "Today we open ScratchJr and make the frog hop when we tap it. Then we test it — we try it to check that it works. The star word is testing: trying your program to see if it works. Teach the magic habit: make it, then try it.\n\nThe yellow block starts things. The blue block makes our frog hop.\n\nFor example: Show ScratchJr on a big screen so everyone can see. Open a new project, tap the picture button to choose a Background, then tap the blue plus to add a character — a frog."
     },
     {
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
-      "title": "Worked example 6: Find the error (ScratchJr and paper)",
-      "prompt": "Explain in your own words: Find the error (ScratchJr and paper).",
+      "title": "Worked example 6: Make a tap game and test it (ScratchJr)",
+      "prompt": "Explain in your own words: Make a tap game and test it (ScratchJr).",
       "solution": "Sometimes we test our game and it does the wrong thing. That is an error — a mistake. We find the error by looking at our plan, then at our blocks, and spotting where they do not match.\n\nMaya wanted her cat to move just 1 step. She tested it — but the cat zoomed 3 steps too far! Something is wrong.\n\nFor example: That is an error. Let us find it."
     }
   ],
@@ -378,6 +378,13 @@
       "level": "Core",
       "prompt": "You tapped the frog but nothing happened. Circle the wrong block. (Start on Green Flag)",
       "answer": "The wrong block is Start on Green Flag; it should be Start on Tap.",
+      "hint": "Look back at what games developer and character mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
+      "prompt": "What should it be? Start on",
+      "answer": "Trying your program to see if it works.",
       "hint": "Look back at what games developer and character mean in this unit, then say your answer in a full sentence."
     }
   ],
@@ -687,6 +694,15 @@
       "answer": "The wrong block is Start on Green Flag; it should be Start on Tap.",
       "hint": "Look back at what games developer and character mean in this unit, then say your answer in a full sentence.",
       "errorFeedback": "The wrong block is Start on Green Flag; it should be Start on Tap."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "What should it be? Start on",
+      "answer": "Trying your program to see if it works.",
+      "hint": "Look back at what games developer and character mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Trying your program to see if it works."
     }
   ],
   "realProblems": [
@@ -695,10 +711,10 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Home",
-      "prompt": "Put these blocks in order. Write 1, 2, 3 in the boxes.",
-      "answer": "Start on Tap = 1, Hop = 2, End =",
+      "prompt": "What should it be? Start on",
+      "answer": "Trying your program to see if it works.",
       "hint": "Look back at what games developer and character mean in this unit, then say your answer in a full sentence.",
-      "errorFeedback": "Check your reasoning against this: Start on Tap = 1, Hop = 2, End ="
+      "errorFeedback": "Check your reasoning against this: Trying your program to see if it works."
     },
     {
       "id": "rp02",
@@ -715,7 +731,7 @@
       "outcomeId": "lo03",
       "difficulty": "Core",
       "context": "Market",
-      "prompt": "What does testing mean? ([ ] Trying your program to see if it works)",
+      "prompt": "What should it be? Start on",
       "answer": "Trying your program to see if it works.",
       "hint": "Look back at what games developer and character mean in this unit, then say your answer in a full sentence.",
       "errorFeedback": "Check your reasoning against this: Trying your program to see if it works."
@@ -725,10 +741,10 @@
       "outcomeId": "lo04",
       "difficulty": "Core",
       "context": "Community",
-      "prompt": "A mistake, when the game does the wrong thing, is called an... ([ ] error)",
-      "answer": "error.",
+      "prompt": "What does testing mean? ([ ] Trying your program to see if it works)",
+      "answer": "Trying your program to see if it works.",
       "hint": "Look back at what games developer and character mean in this unit, then say your answer in a full sentence.",
-      "errorFeedback": "Check your reasoning against this: error."
+      "errorFeedback": "Check your reasoning against this: Trying your program to see if it works."
     }
   ],
   "reasoningPrompts": [

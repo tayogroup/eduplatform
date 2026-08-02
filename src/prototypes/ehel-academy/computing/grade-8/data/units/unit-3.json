@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-01T20:13:37.878Z",
+  "generatedAt": "2026-08-02T10:33:39.520Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -528,161 +528,193 @@
       "outcomeId": "lo01",
       "difficulty": "Basic",
       "title": "Worked example 1: Personal Area Network (PAN)",
-      "prompt": "Explain in your own words: Personal Area Network (PAN).",
-      "solution": "A personal area network (PAN) is the smallest type of network. It usually connects just a few devices that all belong to one person, and their purpose is to meet that person's personal needs. The devices are normally very close together, within a few metres. Importantly, in a PAN all the network hardware belongs to the user — the cables, the wireless links, everything.\n\nHere is an everyday example. Imani has a smartwatch that counts the steps she walks each day. She connects the smartwatch to her mobile phone so she can see the data on a bigger screen. The watch and the phone are right next to each other, they both belong to Imani, and they connect wirelessly using Bluetooth. That is a PAN.\n\nFor example: A PAN can also be wired. Leo connects his laptop to a printer in the Hargeisa office using a USB cable to print an invoice. The two devices are close together, they connect just to meet Leo's need to print, and Leo owns the cable. That is also a PAN. So a PAN can be wireless or wired — what makes it a PAN is that it is small, personal, close together, and owned by the user."
+      "prompt": "Which network connects a smartwatch to a phone that both belong to one person? A) WAN B) LAN C) PAN D) ISP",
+      "solution": "C — a PAN connects one person's own nearby devices."
     },
     {
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Basic",
       "title": "Worked example 2: Local Area Network (LAN)",
-      "prompt": "Explain in your own words: Local Area Network (LAN).",
-      "solution": "A local area network (LAN) is bigger than a PAN. It can connect many devices — from a handful to hundreds — but they are all located within one building or one small site, such as a school, an office or a home. The network hardware belongs to the organisation that owns the site.\n\nPicture the Horizon Distributors office in Hargeisa. There are several computers, a shared printer, and a switch and router in the corner. All the computers are connected to the switch using Ethernet cables, so staff can share files and use the one printer. Every device is inside the same building, and the cables and switch belong to the business. That is a LAN. A school computer lab is another classic example: twenty computers and a printer, all connected, all in one room.\n\nFor example: A LAN does not have to be fully wired. Many LANs also let devices join over Wi-Fi through a wireless access point. What makes it a LAN is not whether it uses cables or Wi-Fi — it is that the connected devices are all in one local place, owned by the same person or organisation."
+      "prompt": "In a LAN, where are the devices located? A) Across several countries B) Within one building or site C) Around one person D) Only underground",
+      "solution": "B — a LAN's devices are within one building or site."
     },
     {
       "id": "we03",
       "outcomeId": "lo03",
       "difficulty": "Basic",
       "title": "Worked example 3: Wide Area Network (WAN)",
-      "prompt": "Explain in your own words: Wide Area Network (WAN).",
-      "solution": "A wide area network (WAN) connects devices spread across a large geographic area. This could be across a town, across a whole country, or even across several countries. The devices can be very far apart. A WAN often uses a mixture of wired and wireless connections.\n\nHere is the key difference from a LAN: in a WAN, not all the hardware belongs to the user. Some belongs to other companies, especially an internet service provider (ISP). An ISP is a company that provides an internet connection to a home or business, and it owns the long-distance cables that run between towns and cities.\n\nNow think about Horizon Distributors again. When the Mogadishu branch opens, the Hargeisa LAN and the Mogadishu LAN will need to connect. They do this through the internet: each office's router connects to an ISP, and the ISPs are joined by long-distance cables and links that stretch between the two cities. The two local networks, joined across a huge distance, form a WAN. The offices own their own routers, but the ISP owns the cables in between.\n\nThe internet itself is the largest WAN of all. It connects billions of devices worldwide. A video-streaming service is another example: films are stored on servers in one place, and people all over the country watch them on devices connected across a WAN.\n\nHere is a picture of the WAN that links the two Horizon Distributors offices. Read it as a diagram in words — two local networks joined by ISPs across the internet:\n\nTwo LANs joined across the internet form a WAN\n\n+---------------------+ +---------------------+\n\n| PCs + printer | | PCs + printer |\n\n| switch + router | | switch + router |\n\n+----------+----------+ +----------+----------+\n\n[ ISP ] ======= the INTERNET ======= [ ISP ]\n\nThe internet began in the 1970s as a tiny experiment called ARPANET, which connected only a few computers in a handful of American cities. It slowly grew into the worldwide network we use today, now linking billions of devices. Every one of those devices is part of the biggest WAN on Earth.\n\nFor example: \"The internet and a WAN are exactly the same thing.\" Not quite. The internet IS a WAN - in fact the biggest one - but not every WAN is the internet. A large bank could build its own private WAN linking branches in different cities without letting the public onto it. So: the internet is a WAN, but a WAN is not always the internet."
+      "prompt": "Who usually owns the long-distance cables in a WAN? A) The user B) The school C) An internet service provider (ISP) D) Nobody",
+      "solution": "C — an ISP owns the long-distance cables in a WAN."
     },
     {
       "id": "we04",
       "outcomeId": "lo04",
       "difficulty": "Intermediate",
       "title": "Worked example 4: Network Topologies: The Shape of a Network",
-      "prompt": "Explain in your own words: Network Topologies: The Shape of a Network.",
-      "solution": "Once you have several devices in a LAN, you must decide how to arrange the connections between them. The layout, or shape, of a network is called its topology. Choosing a topology is a real decision when you design a network, so Horizon Distributors will need to pick one for its office. There are four common topologies to know: bus, star, ring and mesh.\n\nIn a bus topology, every device connects to a single central cable called the backbone. Data travels along this one cable, and each end of it has a terminator to stop signals bouncing back. A bus is cheap and uses little cable, but it has a big weakness: if the backbone cable breaks, the whole network fails. And if many devices send data at once, they collide and the network slows down.\n\nBus topology - all devices share one backbone cable\n\nIn a star topology, every device connects to a central device, usually a switch. This is the most common layout for LANs today, and it is what Horizon Distributors will most likely use. Its great strength is reliability: if one cable breaks, only that one device goes offline — the rest keep working. It is also easy to add a new device: just plug it into the switch. The trade-offs are that it uses more cable, and if the central switch itself fails, the whole network goes down.\n\nStar topology - every device connects to a central switch\n\nIn a ring topology, devices are connected in a loop, and data travels around the ring from one device to the next until it reaches its destination. Rings can be efficient, but if one device or connection in the loop breaks, it can stop data reaching the rest of the ring.\n\nRing topology - data travels around a loop\n\nIn a mesh topology, devices are connected to many other devices, so there are several possible paths for data. If one path is broken, data simply takes another route. This makes a mesh extremely reliable — there is no single point of failure. The downside is cost: a full mesh needs a huge amount of cabling. The internet is arranged rather like a giant mesh, which is one reason it keeps working even when parts of it fail.\n\nMesh topology - many paths between devices\n\nFor example: (every device linked to every other = many routes)"
+      "prompt": "In which topology does every device connect to a central switch? A) Bus B) Star C) Ring D) Mesh",
+      "solution": "B — in a star topology every device connects to a central switch."
     },
     {
       "id": "we05",
       "outcomeId": "lo05",
       "difficulty": "Intermediate",
       "title": "Worked example 5: Wired Connections: Copper vs Fibre Optic",
-      "prompt": "Explain in your own words: Wired Connections: Copper vs Fibre Optic.",
-      "solution": "When a network uses a wired connection, the wire is almost always one of two kinds: a copper cable or a fibre optic cable. They carry data in completely different ways, and each has its own strengths.\n\nCopper cables are made of thin strands of copper wire. They are the traditional cables that have been used in networks for decades. They carry data as electrical signals travelling down the metal. Copper is cheap to make and easy to install, partly because so many countries already have copper cabling in the ground from old telephone networks. Its data speed is modest — the basic cabling described here reaches around 200 Mbps. Copper has two weaknesses: it can suffer from electromagnetic interference (when nearby electrical signals disturb the signal in the cable), so it needs a thick outer case to protect it. Everyday copper cables include Ethernet cables, HDMI cables (which carry high-definition video and sound) and, most likely, your phone charger cable.\n\nFibre optic cables are made of many thin strands of glass. They are a more modern cable, and instead of electricity they carry data as pulses of light travelling down the glass. Fibre is extremely fast, reaching 10 Gbps or more — many times faster than copper. Because it uses light, not electricity, it is not affected by electromagnetic interference at all, and the cable can be thinner because it needs no thick protective case. The trade-offs are that fibre is more expensive to make and harder to install, since most places already have copper in place. Fibre is designed mainly for long distances, which is why countries are laying it underground between towns and cities and using more of it to carry the internet's traffic.\n\nFor example: Light travelling down a fibre optic cable can carry so much data that a single hair-thin strand of glass can handle thousands of phone calls and video streams at the same time. That is why the long-distance cables that connect cities - and even the cables that run under the sea between continents - are made of fibre, not copper."
+      "prompt": "What is the main weakness of a bus topology? A) It needs too many switches B) If the backbone cable breaks, the whole network fails C) It is too fast D) It cannot use cables",
+      "solution": "B — in a bus, if the backbone cable breaks the whole network fails."
     },
     {
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
       "title": "Worked example 6: Wired vs Wireless: Advantages and Disadvantages",
-      "prompt": "Explain in your own words: Wired vs Wireless: Advantages and Disadvantages.",
-      "solution": "Devices can join a network with a wired connection (a cable) or a wireless connection (such as Wi-Fi). You might wonder: if wireless is so convenient, why do wired connections still exist? The answer is that each has real advantages, and the best choice depends on the job. Here is how they compare across four important ideas.\n\nReliability. Wired connections are usually more reliable, because a cable does not suffer interference from walls or other radio waves. Wireless can be less reliable, as walls, distance and other signals can interrupt it.\n\nSecurity. Wired connections are usually more secure. To break in, a hacker would have to physically reach the network hardware and plug in. Wireless is easier to attack, because a hacker within range might guess or steal the password and connect without ever touching the hardware.\n\nSpeed. Wired connections normally have a faster data transmission speed than wireless connections.\n\nEase and cost. Wireless is easier and cheaper to set up and expand: to add a device you just enter the password, and you only need a wireless access point. Wired is more expensive and fiddly: you must buy cables, find space for them, and keep the wires tidy and safe — which gets harder as you add more devices.\n\nSo for Horizon Distributors, the confidential data about customers and money is a strong reason to use wired connections for the main office computers — they are faster and harder to hack. But staff phones and a visitor's laptop might join over Wi-Fi for convenience, protected by a strong password. Good network designers mix both, choosing each for the right reason.\n\n\"Wireless is always better because there are no annoying cables.\" Not true. Wireless is more convenient, but a wired connection is usually faster, more reliable and more secure. For private business data - or a hospital, or a bank - the security of a cable often matters more than the convenience of Wi-Fi.\n\nPart B — 3.2 Data Transmission and Security\n\nFor example: You now know the different types of network and how they are wired. In this part you will learn what actually happens when data travels across one — how it is broken up and addressed, how mistakes creep in and are caught, and how we keep the data secret and safe from people who should not see it. This is exactly what Horizon Distributors needs to protect its customers and its money."
+      "prompt": "Copper cables carry data as: A) Pulses of light B) Electrical signals C) Radio waves only D) Sound",
+      "solution": "B — copper carries data as electrical signals."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Worked example 7: Data Packets: Travelling in Small Pieces",
+      "prompt": "Which is an advantage of fibre optic over copper? A) Cheaper to make B) Not affected by electromagnetic interference C) Easier to install everywhere D) Thicker and stronger",
+      "solution": "B — fibre uses light, so it is not affected by electromagnetic interference."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "Worked example 8: Protocols: The Rules of Communication",
+      "prompt": "Which is normally true of a wired connection compared with wireless? A) Less secure B) Slower C) More secure and more reliable D) Cheaper to expand",
+      "solution": "C — wired is normally more secure and more reliable than wireless."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo09",
+      "difficulty": "Challenge",
+      "title": "Worked example 9: When Data Goes Wrong: Errors in Transmission",
+      "prompt": "Data sent across a network is broken into: A) Bytes only B) Data packets C) Cables D) Firewalls",
+      "solution": "B — data is broken into data packets to travel across a network."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo10",
+      "difficulty": "Challenge",
+      "title": "Worked example 10: Echo Check: Catching Errors",
+      "prompt": "What is a protocol? A) A type of cable B) An agreed set of rules for sending data C) A kind of virus D) A wireless access point",
+      "solution": "B — a protocol is an agreed set of rules for sending data."
     }
   ],
   "practice": [
     {
       "id": "p01",
       "level": "Warm-up",
-      "prompt": "Write the letter of the best answer for each question.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Which network connects a smartwatch to a phone that both belong to one person? A) WAN B) LAN C) PAN D) ISP",
+      "answer": "C — a PAN connects one person's own nearby devices.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
     },
     {
       "id": "p02",
       "level": "Warm-up",
-      "prompt": "Which network connects a smartwatch to a phone that both belong to one person? A) WAN B) LAN C) PAN D) ISP",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "In a LAN, where are the devices located? A) Across several countries B) Within one building or site C) Around one person D) Only underground",
+      "answer": "B — a LAN's devices are within one building or site.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
     },
     {
       "id": "p03",
       "level": "Warm-up",
-      "prompt": "In a LAN, where are the devices located? A) Across several countries B) Within one building or site C) Around one person D) Only underground",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Who usually owns the long-distance cables in a WAN? A) The user B) The school C) An internet service provider (ISP) D) Nobody",
+      "answer": "C — an ISP owns the long-distance cables in a WAN.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
     },
     {
       "id": "p04",
       "level": "Warm-up",
-      "prompt": "Who usually owns the long-distance cables in a WAN? A) The user B) The school C) An internet service provider (ISP) D) Nobody",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "In which topology does every device connect to a central switch? A) Bus B) Star C) Ring D) Mesh",
+      "answer": "B — in a star topology every device connects to a central switch.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
     },
     {
       "id": "p05",
       "level": "Warm-up",
-      "prompt": "In which topology does every device connect to a central switch? A) Bus B) Star C) Ring D) Mesh",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "What is the main weakness of a bus topology? A) It needs too many switches B) If the backbone cable breaks, the whole network fails C) It is too fast D) It cannot use cables",
+      "answer": "B — in a bus, if the backbone cable breaks the whole network fails.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
     },
     {
       "id": "p06",
       "level": "Warm-up",
-      "prompt": "What is the main weakness of a bus topology? A) It needs too many switches B) If the backbone cable breaks, the whole network fails C) It is too fast D) It cannot use cables",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Copper cables carry data as: A) Pulses of light B) Electrical signals C) Radio waves only D) Sound",
+      "answer": "B — copper carries data as electrical signals.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
     },
     {
       "id": "p07",
       "level": "Warm-up",
-      "prompt": "Copper cables carry data as: A) Pulses of light B) Electrical signals C) Radio waves only D) Sound",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Which is an advantage of fibre optic over copper? A) Cheaper to make B) Not affected by electromagnetic interference C) Easier to install everywhere D) Thicker and stronger",
+      "answer": "B — fibre uses light, so it is not affected by electromagnetic interference.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
     },
     {
       "id": "p08",
       "level": "Warm-up",
-      "prompt": "Which is an advantage of fibre optic over copper? A) Cheaper to make B) Not affected by electromagnetic interference C) Easier to install everywhere D) Thicker and stronger",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Which is normally true of a wired connection compared with wireless? A) Less secure B) Slower C) More secure and more reliable D) Cheaper to expand",
+      "answer": "C — wired is normally more secure and more reliable than wireless.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
     },
     {
       "id": "p09",
       "level": "Warm-up",
-      "prompt": "Which is normally true of a wired connection compared with wireless? A) Less secure B) Slower C) More secure and more reliable D) Cheaper to expand",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Data sent across a network is broken into: A) Bytes only B) Data packets C) Cables D) Firewalls",
+      "answer": "B — data is broken into data packets to travel across a network.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
     },
     {
       "id": "p10",
       "level": "Warm-up",
-      "prompt": "Data sent across a network is broken into: A) Bytes only B) Data packets C) Cables D) Firewalls",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "What is a protocol? A) A type of cable B) An agreed set of rules for sending data C) A kind of virus D) A wireless access point",
+      "answer": "B — a protocol is an agreed set of rules for sending data.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
     },
     {
       "id": "p11",
       "level": "Warm-up",
-      "prompt": "What is a protocol? A) A type of cable B) An agreed set of rules for sending data C) A kind of virus D) A wireless access point",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Which of these can cause an error in transmitted data? A) Electrical interference B) Crosstalk C) A power surge D) All of these",
+      "answer": "D — interference, crosstalk and power surges can all cause errors.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
     },
     {
       "id": "p12",
       "level": "Warm-up",
-      "prompt": "Which of these can cause an error in transmitted data? A) Electrical interference B) Crosstalk C) A power surge D) All of these",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "What does an echo check do? A) Encrypts data B) Compares sent data with a returned copy to detect errors C) Deletes viruses D) Speeds up the network",
+      "answer": "B — an echo check compares sent data with the returned copy to detect errors.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
     },
     {
       "id": "p13",
       "level": "Warm-up",
-      "prompt": "What does an echo check do? A) Encrypts data B) Compares sent data with a returned copy to detect errors C) Deletes viruses D) Speeds up the network",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "A message before it is encrypted is called: A) Cipher text B) Plaintext C) A packet D) A protocol",
+      "answer": "B — the message before encryption is plaintext.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
     },
     {
       "id": "p14",
       "level": "Warm-up",
-      "prompt": "A message before it is encrypted is called: A) Cipher text B) Plaintext C) A packet D) A protocol",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Using a Caesar cipher with a shift of 3 to the right, the letter A becomes: A) C B) D C) X D) Z",
+      "answer": "B — with a shift of 3 to the right, A becomes D.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
     },
     {
       "id": "p15",
       "level": "Warm-up",
-      "prompt": "Using a Caesar cipher with a shift of 3 to the right, the letter A becomes: A) C B) D C) X D) Z",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "What does a firewall do? A) Scans files for viruses B) Checks data against rules and blocks unsafe data C) Encrypts your password D) Speeds up downloads",
+      "answer": "B — a firewall checks data against rules and blocks unsafe data.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
     },
     {
       "id": "p16",
       "level": "Warm-up",
-      "prompt": "What does a firewall do? A) Scans files for viruses B) Checks data against rules and blocks unsafe data C) Encrypts your password D) Speeds up downloads",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "If antivirus software finds a virus, it may move it to a safe holding area called: A) A packet B) A protocol C) Quarantine D) A topology",
+      "answer": "C — a suspected virus can be moved to quarantine.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words."
     }
   ],
@@ -1075,109 +1107,109 @@
       "id": "fl01",
       "outcomeId": "lo01",
       "difficulty": "Round 1",
-      "prompt": "Write the letter of the best answer for each question.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Which network connects a smartwatch to a phone that both belong to one person? A) WAN B) LAN C) PAN D) ISP",
+      "answer": "C — a PAN connects one person's own nearby devices.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "C — a PAN connects one person's own nearby devices."
     },
     {
       "id": "fl02",
       "outcomeId": "lo02",
       "difficulty": "Round 1",
-      "prompt": "Which network connects a smartwatch to a phone that both belong to one person? A) WAN B) LAN C) PAN D) ISP",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "In a LAN, where are the devices located? A) Across several countries B) Within one building or site C) Around one person D) Only underground",
+      "answer": "B — a LAN's devices are within one building or site.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "B — a LAN's devices are within one building or site."
     },
     {
       "id": "fl03",
       "outcomeId": "lo03",
       "difficulty": "Round 1",
-      "prompt": "In a LAN, where are the devices located? A) Across several countries B) Within one building or site C) Around one person D) Only underground",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Who usually owns the long-distance cables in a WAN? A) The user B) The school C) An internet service provider (ISP) D) Nobody",
+      "answer": "C — an ISP owns the long-distance cables in a WAN.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "C — an ISP owns the long-distance cables in a WAN."
     },
     {
       "id": "fl04",
       "outcomeId": "lo04",
       "difficulty": "Round 1",
-      "prompt": "Who usually owns the long-distance cables in a WAN? A) The user B) The school C) An internet service provider (ISP) D) Nobody",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "In which topology does every device connect to a central switch? A) Bus B) Star C) Ring D) Mesh",
+      "answer": "B — in a star topology every device connects to a central switch.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "B — in a star topology every device connects to a central switch."
     },
     {
       "id": "fl05",
       "outcomeId": "lo05",
       "difficulty": "Round 2",
-      "prompt": "In which topology does every device connect to a central switch? A) Bus B) Star C) Ring D) Mesh",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "What is the main weakness of a bus topology? A) It needs too many switches B) If the backbone cable breaks, the whole network fails C) It is too fast D) It cannot use cables",
+      "answer": "B — in a bus, if the backbone cable breaks the whole network fails.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "B — in a bus, if the backbone cable breaks the whole network fails."
     },
     {
       "id": "fl06",
       "outcomeId": "lo06",
       "difficulty": "Round 2",
-      "prompt": "What is the main weakness of a bus topology? A) It needs too many switches B) If the backbone cable breaks, the whole network fails C) It is too fast D) It cannot use cables",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Copper cables carry data as: A) Pulses of light B) Electrical signals C) Radio waves only D) Sound",
+      "answer": "B — copper carries data as electrical signals.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "B — copper carries data as electrical signals."
     },
     {
       "id": "fl07",
       "outcomeId": "lo07",
       "difficulty": "Round 2",
-      "prompt": "Copper cables carry data as: A) Pulses of light B) Electrical signals C) Radio waves only D) Sound",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Which is an advantage of fibre optic over copper? A) Cheaper to make B) Not affected by electromagnetic interference C) Easier to install everywhere D) Thicker and stronger",
+      "answer": "B — fibre uses light, so it is not affected by electromagnetic interference.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "B — fibre uses light, so it is not affected by electromagnetic interference."
     },
     {
       "id": "fl08",
       "outcomeId": "lo08",
       "difficulty": "Round 2",
-      "prompt": "Which is an advantage of fibre optic over copper? A) Cheaper to make B) Not affected by electromagnetic interference C) Easier to install everywhere D) Thicker and stronger",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Which is normally true of a wired connection compared with wireless? A) Less secure B) Slower C) More secure and more reliable D) Cheaper to expand",
+      "answer": "C — wired is normally more secure and more reliable than wireless.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "C — wired is normally more secure and more reliable than wireless."
     },
     {
       "id": "fl09",
       "outcomeId": "lo09",
       "difficulty": "Round 3",
-      "prompt": "Which is normally true of a wired connection compared with wireless? A) Less secure B) Slower C) More secure and more reliable D) Cheaper to expand",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Data sent across a network is broken into: A) Bytes only B) Data packets C) Cables D) Firewalls",
+      "answer": "B — data is broken into data packets to travel across a network.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "B — data is broken into data packets to travel across a network."
     },
     {
       "id": "fl10",
       "outcomeId": "lo10",
       "difficulty": "Round 3",
-      "prompt": "Data sent across a network is broken into: A) Bytes only B) Data packets C) Cables D) Firewalls",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "What is a protocol? A) A type of cable B) An agreed set of rules for sending data C) A kind of virus D) A wireless access point",
+      "answer": "B — a protocol is an agreed set of rules for sending data.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "B — a protocol is an agreed set of rules for sending data."
     },
     {
       "id": "fl11",
       "outcomeId": "lo01",
       "difficulty": "Round 3",
-      "prompt": "What is a protocol? A) A type of cable B) An agreed set of rules for sending data C) A kind of virus D) A wireless access point",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Which of these can cause an error in transmitted data? A) Electrical interference B) Crosstalk C) A power surge D) All of these",
+      "answer": "D — interference, crosstalk and power surges can all cause errors.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "D — interference, crosstalk and power surges can all cause errors."
     },
     {
       "id": "fl12",
       "outcomeId": "lo02",
       "difficulty": "Round 3",
-      "prompt": "Which of these can cause an error in transmitted data? A) Electrical interference B) Crosstalk C) A power surge D) All of these",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "What does an echo check do? A) Encrypts data B) Compares sent data with a returned copy to detect errors C) Deletes viruses D) Speeds up the network",
+      "answer": "B — an echo check compares sent data with the returned copy to detect errors.",
       "hint": "Look back at what network and network hardware mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "B — an echo check compares sent data with the returned copy to detect errors."
     }
   ],
   "realProblems": [
@@ -1187,9 +1219,9 @@
       "difficulty": "Core",
       "context": "Home",
       "prompt": "Maya is designing the Hargeisa office network. She wants it to be reliable and easy to add computers to later. Which topology should she choose, and why? What is the one risk of that topology?",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "A star topology — if one cable fails only that computer is affected, and new computers are easy to add by plugging into the switch. The one risk: if the central switch fails, the whole office network goes down.",
       "hint": "Work out which idea this is about — network, network hardware, PAN — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: A star topology — if one cable fails only that computer is affected, and new computers are easy to add by plugging into the switch. The one risk: if the central switch fails, the whole office network goes down."
     },
     {
       "id": "rp02",
@@ -1197,9 +1229,9 @@
       "difficulty": "Core",
       "context": "School",
       "prompt": "The Hargeisa and Mogadishu offices will send private price lists to each other. Explain how encryption keeps these safe even if a hacker intercepts them.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "Encryption scrambles the price list into cipher text before it is sent. Even if a hacker intercepts it on the way, they cannot understand it without the key. Only the Mogadishu office, with the correct key, can decrypt it back to plaintext.",
       "hint": "Work out which idea this is about — network, network hardware, PAN — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: Encryption scrambles the price list into cipher text before it is sent. Even if a hacker intercepts it on the way, they cannot understand it without the key. Only the Mogadishu office, with the correct key, can decrypt it back to plaintext."
     },
     {
       "id": "rp03",
@@ -1207,9 +1239,9 @@
       "difficulty": "Core",
       "context": "Market",
       "prompt": "Karim downloads a supplier's catalogue that a friend emailed him. He trusts the friend, so he thinks he does not need to scan it. Explain why he should still scan it, and what could happen if he does not.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "A virus can hide in any file, and a friend may pass one on without knowing. If Karim does not scan it, a virus could corrupt or delete the business's data. Antivirus should scan every download, even from trusted people.",
       "hint": "Work out which idea this is about — network, network hardware, PAN — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: A virus can hide in any file, and a friend may pass one on without knowing. If Karim does not scan it, a virus could corrupt or delete the business's data. Antivirus should scan every download, even from trusted people."
     },
     {
       "id": "rp04",
@@ -1217,9 +1249,9 @@
       "difficulty": "Challenge",
       "context": "Community",
       "prompt": "A message of eight bits is sent from Hargeisa, but arrives with one bit flipped. Explain how an echo check would detect this and what happens next.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "The receiver echoes a copy of the eight bits back to the sender. The sender compares it with what it sent, sees that one bit is different, and knows an error occurred. It then sends the data again so the correct version arrives.",
       "hint": "Work out which idea this is about — network, network hardware, PAN — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: The receiver echoes a copy of the eight bits back to the sender. The sender compares it with what it sent, sees that one bit is different, and knows an error occurred. It then sends the data again so the correct version arrives."
     },
     {
       "id": "rp05",
@@ -1227,16 +1259,16 @@
       "difficulty": "Challenge",
       "context": "Travel",
       "prompt": "Leo sets up office Wi-Fi with no password to make it easier for staff. Explain why this is a security risk and what he should do instead.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "With no password, anyone in range can join the Wi-Fi and see or steal the office's data — a serious security risk. Leo should set a strong password (long, mixing letters, numbers and symbols) so only staff can connect.",
       "hint": "Work out which idea this is about — network, network hardware, PAN — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: With no password, anyone in range can join the Wi-Fi and see or steal the office's data — a serious security risk. Leo should set a strong password (long, mixing letters, numbers and symbols) so only staff can connect."
     },
     {
       "id": "rp06",
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "context": "Health",
-      "prompt": "A star topology — if one cable fails only that computer is affected, and new computers are easy to add by plugging into the switch. The one risk: if the central switch fails, the whole office network goes down.",
+      "prompt": "Encrypt the plaintext word DATA.",
       "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
       "hint": "Work out which idea this is about — network, network hardware, PAN — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
@@ -1248,78 +1280,78 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Answer in one or two full sentences.",
+      "prompt": "For a PAN, state how many devices it usually has, where they are located, and who owns the hardware.",
       "keyIdeas": [
         "network",
         "network hardware",
         "PAN"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "A PAN usually has just a few devices, located very close together around one person, and the user owns all the hardware."
     },
     {
       "id": "reason02",
       "outcomeId": "lo02",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "For a PAN, state how many devices it usually has, where they are located, and who owns the hardware.",
+      "prompt": "Give one similarity and one difference between a LAN and a WAN.",
       "keyIdeas": [
         "network hardware",
         "PAN",
         "LAN"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "Similarity: both connect several devices to share data. Difference: a LAN is in one building; a WAN spans a large area, and in a WAN some hardware belongs to an ISP."
     },
     {
       "id": "reason03",
       "outcomeId": "lo03",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Give one similarity and one difference between a LAN and a WAN.",
+      "prompt": "Name the four network topologies you have studied.",
       "keyIdeas": [
         "PAN",
         "LAN",
         "WAN"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "Bus, star, ring and mesh."
     },
     {
       "id": "reason04",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "Name the four network topologies you have studied.",
+      "prompt": "Give one advantage and one disadvantage of a star topology.",
       "keyIdeas": [
         "LAN",
         "WAN",
         "ISP"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "Advantage: if one cable breaks only that device is offline, and it is easy to add devices. Disadvantage: it uses more cable, and if the central switch fails the whole network goes down."
     },
     {
       "id": "reason05",
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "Give one advantage and one disadvantage of a star topology.",
+      "prompt": "State two differences between copper and fibre optic cables.",
       "keyIdeas": [
         "WAN",
         "ISP",
         "topology"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "Any two: copper uses electrical signals / fibre uses light; fibre is faster; fibre is immune to interference; copper is cheaper and easier to install; fibre is thinner."
     },
     {
       "id": "reason06",
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "State two differences between copper and fibre optic cables.",
+      "prompt": "Give one advantage of a wired connection and one advantage of a wireless connection.",
       "keyIdeas": [
         "ISP",
         "topology",
         "switch"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "Wired advantage: faster, more reliable and more secure. Wireless advantage: easier and cheaper to set up and to add new devices."
     }
   ],
   "project": {
@@ -1348,192 +1380,192 @@
         "type": "Concept",
         "outcomeId": "lo01",
         "difficulty": "Basic",
-        "question": "What does “network” mean in computing?",
+        "question": "Which network connects a smartwatch to a phone that both belong to one person?",
         "options": [
-          "A group of devices connected together so they can share data.",
-          "The physical parts needed to build a network, such as cables and routers.",
-          "Personal area network - a tiny network around one person's own devices.",
-          "Local area network - devices connected within one building or site."
+          "WAN",
+          "LAN",
+          "PAN",
+          "ISP"
         ],
-        "answer": "A group of devices connected together so they can share data.",
+        "answer": "PAN",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "Network means a group of devices connected together so they can share data.."
+        "explanation": "a PAN connects one person's own nearby devices."
       },
       {
         "id": "q02",
         "type": "Concept",
         "outcomeId": "lo02",
         "difficulty": "Basic",
-        "question": "What does “network hardware” mean in computing?",
+        "question": "In a LAN, where are the devices located?",
         "options": [
-          "The physical parts needed to build a network, such as cables and routers.",
-          "Personal area network - a tiny network around one person's own devices.",
-          "Local area network - devices connected within one building or site.",
-          "Wide area network - devices connected across a large area, even worldwide."
+          "Across several countries",
+          "Within one building or site",
+          "Around one person",
+          "Only underground"
         ],
-        "answer": "The physical parts needed to build a network, such as cables and routers.",
+        "answer": "Within one building or site",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "Network hardware means the physical parts needed to build a network, such as cables and routers.."
+        "explanation": "a LAN's devices are within one building or site."
       },
       {
         "id": "q03",
         "type": "Concept",
         "outcomeId": "lo03",
         "difficulty": "Basic",
-        "question": "What does “PAN” mean in computing?",
+        "question": "Who usually owns the long-distance cables in a WAN?",
         "options": [
-          "Personal area network - a tiny network around one person's own devices.",
-          "Local area network - devices connected within one building or site.",
-          "Wide area network - devices connected across a large area, even worldwide.",
-          "Internet service provider - a company that provides an internet connection."
+          "The user",
+          "The school",
+          "An internet service provider (ISP)",
+          "Nobody"
         ],
-        "answer": "Personal area network - a tiny network around one person's own devices.",
+        "answer": "An internet service provider (ISP)",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "PAN means personal area network - a tiny network around one person's own devices.."
+        "explanation": "an ISP owns the long-distance cables in a WAN."
       },
       {
         "id": "q04",
         "type": "Concept",
         "outcomeId": "lo04",
         "difficulty": "Basic",
-        "question": "What does “LAN” mean in computing?",
+        "question": "In which topology does every device connect to a central switch?",
         "options": [
-          "Local area network - devices connected within one building or site.",
-          "Wide area network - devices connected across a large area, even worldwide.",
-          "Internet service provider - a company that provides an internet connection.",
-          "The shape or layout in which the devices in a network are connected."
+          "Bus",
+          "Star",
+          "Ring",
+          "Mesh"
         ],
-        "answer": "Local area network - devices connected within one building or site.",
+        "answer": "Star",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "LAN means local area network - devices connected within one building or site.."
+        "explanation": "in a star topology every device connects to a central switch."
       },
       {
         "id": "q05",
         "type": "Application",
         "outcomeId": "lo05",
         "difficulty": "Core",
-        "question": "What does “WAN” mean in computing?",
+        "question": "What is the main weakness of a bus topology?",
         "options": [
-          "Wide area network - devices connected across a large area, even worldwide.",
-          "Internet service provider - a company that provides an internet connection.",
-          "The shape or layout in which the devices in a network are connected.",
-          "A device that connects devices in a LAN and directs data to the right one."
+          "It needs too many switches",
+          "If the backbone cable breaks, the whole network fails",
+          "It is too fast",
+          "It cannot use cables"
         ],
-        "answer": "Wide area network - devices connected across a large area, even worldwide.",
+        "answer": "If the backbone cable breaks, the whole network fails",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "WAN means wide area network - devices connected across a large area, even worldwide.."
+        "explanation": "in a bus, if the backbone cable breaks the whole network fails."
       },
       {
         "id": "q06",
         "type": "Application",
         "outcomeId": "lo06",
         "difficulty": "Core",
-        "question": "What does “ISP” mean in computing?",
+        "question": "Copper cables carry data as:",
         "options": [
-          "Internet service provider - a company that provides an internet connection.",
-          "The shape or layout in which the devices in a network are connected.",
-          "A device that connects devices in a LAN and directs data to the right one.",
-          "A device that connects a network to other networks, such as the internet."
+          "Pulses of light",
+          "Electrical signals",
+          "Radio waves only",
+          "Sound"
         ],
-        "answer": "Internet service provider - a company that provides an internet connection.",
+        "answer": "Electrical signals",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "ISP means internet service provider - a company that provides an internet connection.."
+        "explanation": "copper carries data as electrical signals."
       },
       {
         "id": "q07",
         "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
-        "question": "Which computing word matches this meaning: The shape or layout in which the devices in a network are connected.?",
+        "question": "Which is an advantage of fibre optic over copper?",
         "options": [
-          "topology",
-          "switch",
-          "router",
-          "copper cable"
+          "Cheaper to make",
+          "Not affected by electromagnetic interference",
+          "Easier to install everywhere",
+          "Thicker and stronger"
         ],
-        "answer": "topology",
+        "answer": "Not affected by electromagnetic interference",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "Topology means the shape or layout in which the devices in a network are connected.."
+        "explanation": "fibre uses light, so it is not affected by electromagnetic interference."
       },
       {
         "id": "q08",
         "type": "Application",
         "outcomeId": "lo08",
         "difficulty": "Core",
-        "question": "Which computing word matches this meaning: A device that connects devices in a LAN and directs data to the right one.?",
+        "question": "Which is normally true of a wired connection compared with wireless?",
         "options": [
-          "switch",
-          "router",
-          "copper cable",
-          "fibre optic cable"
+          "Less secure",
+          "Slower",
+          "More secure and more reliable",
+          "Cheaper to expand"
         ],
-        "answer": "switch",
+        "answer": "More secure and more reliable",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "Switch means a device that connects devices in a LAN and directs data to the right one.."
+        "explanation": "wired is normally more secure and more reliable than wireless."
       },
       {
         "id": "q09",
         "type": "Reasoning",
         "outcomeId": "lo09",
         "difficulty": "Core",
-        "question": "Which computing word matches this meaning: A device that connects a network to other networks, such as the internet.?",
+        "question": "Data sent across a network is broken into:",
         "options": [
-          "router",
-          "copper cable",
-          "fibre optic cable",
-          "interference"
+          "Bytes only",
+          "Data packets",
+          "Cables",
+          "Firewalls"
         ],
-        "answer": "router",
+        "answer": "Data packets",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "Router means a device that connects a network to other networks, such as the internet.."
+        "explanation": "data is broken into data packets to travel across a network."
       },
       {
         "id": "q10",
         "type": "Reasoning",
         "outcomeId": "lo10",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: A cable of copper wire that carries data as electrical signals.?",
+        "question": "What is a protocol?",
         "options": [
-          "copper cable",
-          "fibre optic cable",
-          "interference",
-          "crosstalk"
+          "A type of cable",
+          "An agreed set of rules for sending data",
+          "A kind of virus",
+          "A wireless access point"
         ],
-        "answer": "copper cable",
+        "answer": "An agreed set of rules for sending data",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "Copper cable means a cable of copper wire that carries data as electrical signals.."
+        "explanation": "a protocol is an agreed set of rules for sending data."
       },
       {
         "id": "q11",
         "type": "Reasoning",
         "outcomeId": "lo01",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: A cable of thin glass that carries data as pulses of light.?",
+        "question": "Which of these can cause an error in transmitted data?",
         "options": [
-          "fibre optic cable",
-          "interference",
-          "crosstalk",
-          "bandwidth"
+          "Electrical interference",
+          "Crosstalk",
+          "A power surge",
+          "All of these"
         ],
-        "answer": "fibre optic cable",
+        "answer": "All of these",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "Fibre optic cable means a cable of thin glass that carries data as pulses of light.."
+        "explanation": "interference, crosstalk and power surges can all cause errors."
       },
       {
         "id": "q12",
         "type": "Reasoning",
         "outcomeId": "lo02",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: Anything that disturbs a signal, such as walls or other electrical signals.?",
+        "question": "What does an echo check do?",
         "options": [
-          "interference",
-          "crosstalk",
-          "bandwidth",
-          "data packet"
+          "Encrypts data",
+          "Compares sent data with a returned copy to detect errors",
+          "Deletes viruses",
+          "Speeds up the network"
         ],
-        "answer": "interference",
+        "answer": "Compares sent data with a returned copy to detect errors",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "Interference means anything that disturbs a signal, such as walls or other electrical signals.."
+        "explanation": "an echo check compares sent data with the returned copy to detect errors."
       }
     ]
   },
@@ -1549,52 +1581,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “network” mean in computing?",
+            "prompt": "Which network connects a smartwatch to a phone that both belong to one person?",
             "choices": [
-              "A group of devices connected together so they can share data.",
-              "The physical parts needed to build a network, such as cables and routers.",
-              "Personal area network - a tiny network around one person's own devices.",
-              "Local area network - devices connected within one building or site."
+              "WAN",
+              "LAN",
+              "PAN",
+              "ISP"
             ],
-            "answer": "A group of devices connected together so they can share data.",
+            "answer": "PAN",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Network means a group of devices connected together so they can share data.."
+            "explanation": "a PAN connects one person's own nearby devices."
           },
           {
-            "prompt": "What does “LAN” mean in computing?",
+            "prompt": "In which topology does every device connect to a central switch?",
             "choices": [
-              "Local area network - devices connected within one building or site.",
-              "Wide area network - devices connected across a large area, even worldwide.",
-              "Internet service provider - a company that provides an internet connection.",
-              "The shape or layout in which the devices in a network are connected."
+              "Bus",
+              "Star",
+              "Ring",
+              "Mesh"
             ],
-            "answer": "Local area network - devices connected within one building or site.",
+            "answer": "Star",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "LAN means local area network - devices connected within one building or site.."
+            "explanation": "in a star topology every device connects to a central switch."
           },
           {
-            "prompt": "Which computing word matches this meaning: The shape or layout in which the devices in a network are connected.?",
+            "prompt": "Which is an advantage of fibre optic over copper?",
             "choices": [
-              "topology",
-              "switch",
-              "router",
-              "copper cable"
+              "Cheaper to make",
+              "Not affected by electromagnetic interference",
+              "Easier to install everywhere",
+              "Thicker and stronger"
             ],
-            "answer": "topology",
+            "answer": "Not affected by electromagnetic interference",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Topology means the shape or layout in which the devices in a network are connected.."
+            "explanation": "fibre uses light, so it is not affected by electromagnetic interference."
           },
           {
-            "prompt": "Which computing word matches this meaning: A cable of copper wire that carries data as electrical signals.?",
+            "prompt": "What is a protocol?",
             "choices": [
-              "copper cable",
-              "fibre optic cable",
-              "interference",
-              "crosstalk"
+              "A type of cable",
+              "An agreed set of rules for sending data",
+              "A kind of virus",
+              "A wireless access point"
             ],
-            "answer": "copper cable",
+            "answer": "An agreed set of rules for sending data",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Copper cable means a cable of copper wire that carries data as electrical signals.."
+            "explanation": "a protocol is an agreed set of rules for sending data."
           }
         ]
       },
@@ -1607,52 +1639,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “network hardware” mean in computing?",
+            "prompt": "In a LAN, where are the devices located?",
             "choices": [
-              "The physical parts needed to build a network, such as cables and routers.",
-              "Personal area network - a tiny network around one person's own devices.",
-              "Local area network - devices connected within one building or site.",
-              "Wide area network - devices connected across a large area, even worldwide."
+              "Across several countries",
+              "Within one building or site",
+              "Around one person",
+              "Only underground"
             ],
-            "answer": "The physical parts needed to build a network, such as cables and routers.",
+            "answer": "Within one building or site",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Network hardware means the physical parts needed to build a network, such as cables and routers.."
+            "explanation": "a LAN's devices are within one building or site."
           },
           {
-            "prompt": "What does “WAN” mean in computing?",
+            "prompt": "What is the main weakness of a bus topology?",
             "choices": [
-              "Wide area network - devices connected across a large area, even worldwide.",
-              "Internet service provider - a company that provides an internet connection.",
-              "The shape or layout in which the devices in a network are connected.",
-              "A device that connects devices in a LAN and directs data to the right one."
+              "It needs too many switches",
+              "If the backbone cable breaks, the whole network fails",
+              "It is too fast",
+              "It cannot use cables"
             ],
-            "answer": "Wide area network - devices connected across a large area, even worldwide.",
+            "answer": "If the backbone cable breaks, the whole network fails",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "WAN means wide area network - devices connected across a large area, even worldwide.."
+            "explanation": "in a bus, if the backbone cable breaks the whole network fails."
           },
           {
-            "prompt": "Which computing word matches this meaning: A device that connects devices in a LAN and directs data to the right one.?",
+            "prompt": "Which is normally true of a wired connection compared with wireless?",
             "choices": [
-              "switch",
-              "router",
-              "copper cable",
-              "fibre optic cable"
+              "Less secure",
+              "Slower",
+              "More secure and more reliable",
+              "Cheaper to expand"
             ],
-            "answer": "switch",
+            "answer": "More secure and more reliable",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Switch means a device that connects devices in a LAN and directs data to the right one.."
+            "explanation": "wired is normally more secure and more reliable than wireless."
           },
           {
-            "prompt": "Which computing word matches this meaning: A cable of thin glass that carries data as pulses of light.?",
+            "prompt": "Which of these can cause an error in transmitted data?",
             "choices": [
-              "fibre optic cable",
-              "interference",
-              "crosstalk",
-              "bandwidth"
+              "Electrical interference",
+              "Crosstalk",
+              "A power surge",
+              "All of these"
             ],
-            "answer": "fibre optic cable",
+            "answer": "All of these",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Fibre optic cable means a cable of thin glass that carries data as pulses of light.."
+            "explanation": "interference, crosstalk and power surges can all cause errors."
           }
         ]
       },
@@ -1665,52 +1697,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “PAN” mean in computing?",
+            "prompt": "Who usually owns the long-distance cables in a WAN?",
             "choices": [
-              "Personal area network - a tiny network around one person's own devices.",
-              "Local area network - devices connected within one building or site.",
-              "Wide area network - devices connected across a large area, even worldwide.",
-              "Internet service provider - a company that provides an internet connection."
+              "The user",
+              "The school",
+              "An internet service provider (ISP)",
+              "Nobody"
             ],
-            "answer": "Personal area network - a tiny network around one person's own devices.",
+            "answer": "An internet service provider (ISP)",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "PAN means personal area network - a tiny network around one person's own devices.."
+            "explanation": "an ISP owns the long-distance cables in a WAN."
           },
           {
-            "prompt": "What does “ISP” mean in computing?",
+            "prompt": "Copper cables carry data as:",
             "choices": [
-              "Internet service provider - a company that provides an internet connection.",
-              "The shape or layout in which the devices in a network are connected.",
-              "A device that connects devices in a LAN and directs data to the right one.",
-              "A device that connects a network to other networks, such as the internet."
+              "Pulses of light",
+              "Electrical signals",
+              "Radio waves only",
+              "Sound"
             ],
-            "answer": "Internet service provider - a company that provides an internet connection.",
+            "answer": "Electrical signals",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "ISP means internet service provider - a company that provides an internet connection.."
+            "explanation": "copper carries data as electrical signals."
           },
           {
-            "prompt": "Which computing word matches this meaning: A device that connects a network to other networks, such as the internet.?",
+            "prompt": "Data sent across a network is broken into:",
             "choices": [
-              "router",
-              "copper cable",
-              "fibre optic cable",
-              "interference"
+              "Bytes only",
+              "Data packets",
+              "Cables",
+              "Firewalls"
             ],
-            "answer": "router",
+            "answer": "Data packets",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Router means a device that connects a network to other networks, such as the internet.."
+            "explanation": "data is broken into data packets to travel across a network."
           },
           {
-            "prompt": "Which computing word matches this meaning: Anything that disturbs a signal, such as walls or other electrical signals.?",
+            "prompt": "What does an echo check do?",
             "choices": [
-              "interference",
-              "crosstalk",
-              "bandwidth",
-              "data packet"
+              "Encrypts data",
+              "Compares sent data with a returned copy to detect errors",
+              "Deletes viruses",
+              "Speeds up the network"
             ],
-            "answer": "interference",
+            "answer": "Compares sent data with a returned copy to detect errors",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Interference means anything that disturbs a signal, such as walls or other electrical signals.."
+            "explanation": "an echo check compares sent data with the returned copy to detect errors."
           }
         ]
       },
@@ -1723,52 +1755,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “LAN” mean in computing?",
+            "prompt": "In which topology does every device connect to a central switch?",
             "choices": [
-              "Local area network - devices connected within one building or site.",
-              "Wide area network - devices connected across a large area, even worldwide.",
-              "Internet service provider - a company that provides an internet connection.",
-              "The shape or layout in which the devices in a network are connected."
+              "Bus",
+              "Star",
+              "Ring",
+              "Mesh"
             ],
-            "answer": "Local area network - devices connected within one building or site.",
+            "answer": "Star",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "LAN means local area network - devices connected within one building or site.."
+            "explanation": "in a star topology every device connects to a central switch."
           },
           {
-            "prompt": "Which computing word matches this meaning: The shape or layout in which the devices in a network are connected.?",
+            "prompt": "Which is an advantage of fibre optic over copper?",
             "choices": [
-              "topology",
-              "switch",
-              "router",
-              "copper cable"
+              "Cheaper to make",
+              "Not affected by electromagnetic interference",
+              "Easier to install everywhere",
+              "Thicker and stronger"
             ],
-            "answer": "topology",
+            "answer": "Not affected by electromagnetic interference",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Topology means the shape or layout in which the devices in a network are connected.."
+            "explanation": "fibre uses light, so it is not affected by electromagnetic interference."
           },
           {
-            "prompt": "Which computing word matches this meaning: A cable of copper wire that carries data as electrical signals.?",
+            "prompt": "What is a protocol?",
             "choices": [
-              "copper cable",
-              "fibre optic cable",
-              "interference",
-              "crosstalk"
+              "A type of cable",
+              "An agreed set of rules for sending data",
+              "A kind of virus",
+              "A wireless access point"
             ],
-            "answer": "copper cable",
+            "answer": "An agreed set of rules for sending data",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Copper cable means a cable of copper wire that carries data as electrical signals.."
+            "explanation": "a protocol is an agreed set of rules for sending data."
           },
           {
-            "prompt": "What does “network” mean in computing?",
+            "prompt": "Which network connects a smartwatch to a phone that both belong to one person?",
             "choices": [
-              "A group of devices connected together so they can share data.",
-              "The physical parts needed to build a network, such as cables and routers.",
-              "Personal area network - a tiny network around one person's own devices.",
-              "Local area network - devices connected within one building or site."
+              "WAN",
+              "LAN",
+              "PAN",
+              "ISP"
             ],
-            "answer": "A group of devices connected together so they can share data.",
+            "answer": "PAN",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Network means a group of devices connected together so they can share data.."
+            "explanation": "a PAN connects one person's own nearby devices."
           }
         ]
       },
@@ -1781,52 +1813,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “WAN” mean in computing?",
+            "prompt": "What is the main weakness of a bus topology?",
             "choices": [
-              "Wide area network - devices connected across a large area, even worldwide.",
-              "Internet service provider - a company that provides an internet connection.",
-              "The shape or layout in which the devices in a network are connected.",
-              "A device that connects devices in a LAN and directs data to the right one."
+              "It needs too many switches",
+              "If the backbone cable breaks, the whole network fails",
+              "It is too fast",
+              "It cannot use cables"
             ],
-            "answer": "Wide area network - devices connected across a large area, even worldwide.",
+            "answer": "If the backbone cable breaks, the whole network fails",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "WAN means wide area network - devices connected across a large area, even worldwide.."
+            "explanation": "in a bus, if the backbone cable breaks the whole network fails."
           },
           {
-            "prompt": "Which computing word matches this meaning: A device that connects devices in a LAN and directs data to the right one.?",
+            "prompt": "Which is normally true of a wired connection compared with wireless?",
             "choices": [
-              "switch",
-              "router",
-              "copper cable",
-              "fibre optic cable"
+              "Less secure",
+              "Slower",
+              "More secure and more reliable",
+              "Cheaper to expand"
             ],
-            "answer": "switch",
+            "answer": "More secure and more reliable",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Switch means a device that connects devices in a LAN and directs data to the right one.."
+            "explanation": "wired is normally more secure and more reliable than wireless."
           },
           {
-            "prompt": "Which computing word matches this meaning: A cable of thin glass that carries data as pulses of light.?",
+            "prompt": "Which of these can cause an error in transmitted data?",
             "choices": [
-              "fibre optic cable",
-              "interference",
-              "crosstalk",
-              "bandwidth"
+              "Electrical interference",
+              "Crosstalk",
+              "A power surge",
+              "All of these"
             ],
-            "answer": "fibre optic cable",
+            "answer": "All of these",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Fibre optic cable means a cable of thin glass that carries data as pulses of light.."
+            "explanation": "interference, crosstalk and power surges can all cause errors."
           },
           {
-            "prompt": "What does “network hardware” mean in computing?",
+            "prompt": "In a LAN, where are the devices located?",
             "choices": [
-              "The physical parts needed to build a network, such as cables and routers.",
-              "Personal area network - a tiny network around one person's own devices.",
-              "Local area network - devices connected within one building or site.",
-              "Wide area network - devices connected across a large area, even worldwide."
+              "Across several countries",
+              "Within one building or site",
+              "Around one person",
+              "Only underground"
             ],
-            "answer": "The physical parts needed to build a network, such as cables and routers.",
+            "answer": "Within one building or site",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Network hardware means the physical parts needed to build a network, such as cables and routers.."
+            "explanation": "a LAN's devices are within one building or site."
           }
         ]
       },
@@ -1839,52 +1871,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “ISP” mean in computing?",
+            "prompt": "Copper cables carry data as:",
             "choices": [
-              "Internet service provider - a company that provides an internet connection.",
-              "The shape or layout in which the devices in a network are connected.",
-              "A device that connects devices in a LAN and directs data to the right one.",
-              "A device that connects a network to other networks, such as the internet."
+              "Pulses of light",
+              "Electrical signals",
+              "Radio waves only",
+              "Sound"
             ],
-            "answer": "Internet service provider - a company that provides an internet connection.",
+            "answer": "Electrical signals",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "ISP means internet service provider - a company that provides an internet connection.."
+            "explanation": "copper carries data as electrical signals."
           },
           {
-            "prompt": "Which computing word matches this meaning: A device that connects a network to other networks, such as the internet.?",
+            "prompt": "Data sent across a network is broken into:",
             "choices": [
-              "router",
-              "copper cable",
-              "fibre optic cable",
-              "interference"
+              "Bytes only",
+              "Data packets",
+              "Cables",
+              "Firewalls"
             ],
-            "answer": "router",
+            "answer": "Data packets",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Router means a device that connects a network to other networks, such as the internet.."
+            "explanation": "data is broken into data packets to travel across a network."
           },
           {
-            "prompt": "Which computing word matches this meaning: Anything that disturbs a signal, such as walls or other electrical signals.?",
+            "prompt": "What does an echo check do?",
             "choices": [
-              "interference",
-              "crosstalk",
-              "bandwidth",
-              "data packet"
+              "Encrypts data",
+              "Compares sent data with a returned copy to detect errors",
+              "Deletes viruses",
+              "Speeds up the network"
             ],
-            "answer": "interference",
+            "answer": "Compares sent data with a returned copy to detect errors",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Interference means anything that disturbs a signal, such as walls or other electrical signals.."
+            "explanation": "an echo check compares sent data with the returned copy to detect errors."
           },
           {
-            "prompt": "What does “PAN” mean in computing?",
+            "prompt": "Who usually owns the long-distance cables in a WAN?",
             "choices": [
-              "Personal area network - a tiny network around one person's own devices.",
-              "Local area network - devices connected within one building or site.",
-              "Wide area network - devices connected across a large area, even worldwide.",
-              "Internet service provider - a company that provides an internet connection."
+              "The user",
+              "The school",
+              "An internet service provider (ISP)",
+              "Nobody"
             ],
-            "answer": "Personal area network - a tiny network around one person's own devices.",
+            "answer": "An internet service provider (ISP)",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "PAN means personal area network - a tiny network around one person's own devices.."
+            "explanation": "an ISP owns the long-distance cables in a WAN."
           }
         ]
       },
@@ -1897,52 +1929,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: The shape or layout in which the devices in a network are connected.?",
+            "prompt": "Which is an advantage of fibre optic over copper?",
             "choices": [
-              "topology",
-              "switch",
-              "router",
-              "copper cable"
+              "Cheaper to make",
+              "Not affected by electromagnetic interference",
+              "Easier to install everywhere",
+              "Thicker and stronger"
             ],
-            "answer": "topology",
+            "answer": "Not affected by electromagnetic interference",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Topology means the shape or layout in which the devices in a network are connected.."
+            "explanation": "fibre uses light, so it is not affected by electromagnetic interference."
           },
           {
-            "prompt": "Which computing word matches this meaning: A cable of copper wire that carries data as electrical signals.?",
+            "prompt": "What is a protocol?",
             "choices": [
-              "copper cable",
-              "fibre optic cable",
-              "interference",
-              "crosstalk"
+              "A type of cable",
+              "An agreed set of rules for sending data",
+              "A kind of virus",
+              "A wireless access point"
             ],
-            "answer": "copper cable",
+            "answer": "An agreed set of rules for sending data",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Copper cable means a cable of copper wire that carries data as electrical signals.."
+            "explanation": "a protocol is an agreed set of rules for sending data."
           },
           {
-            "prompt": "What does “network” mean in computing?",
+            "prompt": "Which network connects a smartwatch to a phone that both belong to one person?",
             "choices": [
-              "A group of devices connected together so they can share data.",
-              "The physical parts needed to build a network, such as cables and routers.",
-              "Personal area network - a tiny network around one person's own devices.",
-              "Local area network - devices connected within one building or site."
+              "WAN",
+              "LAN",
+              "PAN",
+              "ISP"
             ],
-            "answer": "A group of devices connected together so they can share data.",
+            "answer": "PAN",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Network means a group of devices connected together so they can share data.."
+            "explanation": "a PAN connects one person's own nearby devices."
           },
           {
-            "prompt": "What does “LAN” mean in computing?",
+            "prompt": "In which topology does every device connect to a central switch?",
             "choices": [
-              "Local area network - devices connected within one building or site.",
-              "Wide area network - devices connected across a large area, even worldwide.",
-              "Internet service provider - a company that provides an internet connection.",
-              "The shape or layout in which the devices in a network are connected."
+              "Bus",
+              "Star",
+              "Ring",
+              "Mesh"
             ],
-            "answer": "Local area network - devices connected within one building or site.",
+            "answer": "Star",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "LAN means local area network - devices connected within one building or site.."
+            "explanation": "in a star topology every device connects to a central switch."
           }
         ]
       },
@@ -1955,52 +1987,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: A device that connects devices in a LAN and directs data to the right one.?",
+            "prompt": "Which is normally true of a wired connection compared with wireless?",
             "choices": [
-              "switch",
-              "router",
-              "copper cable",
-              "fibre optic cable"
+              "Less secure",
+              "Slower",
+              "More secure and more reliable",
+              "Cheaper to expand"
             ],
-            "answer": "switch",
+            "answer": "More secure and more reliable",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Switch means a device that connects devices in a LAN and directs data to the right one.."
+            "explanation": "wired is normally more secure and more reliable than wireless."
           },
           {
-            "prompt": "Which computing word matches this meaning: A cable of thin glass that carries data as pulses of light.?",
+            "prompt": "Which of these can cause an error in transmitted data?",
             "choices": [
-              "fibre optic cable",
-              "interference",
-              "crosstalk",
-              "bandwidth"
+              "Electrical interference",
+              "Crosstalk",
+              "A power surge",
+              "All of these"
             ],
-            "answer": "fibre optic cable",
+            "answer": "All of these",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Fibre optic cable means a cable of thin glass that carries data as pulses of light.."
+            "explanation": "interference, crosstalk and power surges can all cause errors."
           },
           {
-            "prompt": "What does “network hardware” mean in computing?",
+            "prompt": "In a LAN, where are the devices located?",
             "choices": [
-              "The physical parts needed to build a network, such as cables and routers.",
-              "Personal area network - a tiny network around one person's own devices.",
-              "Local area network - devices connected within one building or site.",
-              "Wide area network - devices connected across a large area, even worldwide."
+              "Across several countries",
+              "Within one building or site",
+              "Around one person",
+              "Only underground"
             ],
-            "answer": "The physical parts needed to build a network, such as cables and routers.",
+            "answer": "Within one building or site",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Network hardware means the physical parts needed to build a network, such as cables and routers.."
+            "explanation": "a LAN's devices are within one building or site."
           },
           {
-            "prompt": "What does “WAN” mean in computing?",
+            "prompt": "What is the main weakness of a bus topology?",
             "choices": [
-              "Wide area network - devices connected across a large area, even worldwide.",
-              "Internet service provider - a company that provides an internet connection.",
-              "The shape or layout in which the devices in a network are connected.",
-              "A device that connects devices in a LAN and directs data to the right one."
+              "It needs too many switches",
+              "If the backbone cable breaks, the whole network fails",
+              "It is too fast",
+              "It cannot use cables"
             ],
-            "answer": "Wide area network - devices connected across a large area, even worldwide.",
+            "answer": "If the backbone cable breaks, the whole network fails",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "WAN means wide area network - devices connected across a large area, even worldwide.."
+            "explanation": "in a bus, if the backbone cable breaks the whole network fails."
           }
         ]
       },
@@ -2013,52 +2045,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: A device that connects a network to other networks, such as the internet.?",
+            "prompt": "Data sent across a network is broken into:",
             "choices": [
-              "router",
-              "copper cable",
-              "fibre optic cable",
-              "interference"
+              "Bytes only",
+              "Data packets",
+              "Cables",
+              "Firewalls"
             ],
-            "answer": "router",
+            "answer": "Data packets",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Router means a device that connects a network to other networks, such as the internet.."
+            "explanation": "data is broken into data packets to travel across a network."
           },
           {
-            "prompt": "Which computing word matches this meaning: Anything that disturbs a signal, such as walls or other electrical signals.?",
+            "prompt": "What does an echo check do?",
             "choices": [
-              "interference",
-              "crosstalk",
-              "bandwidth",
-              "data packet"
+              "Encrypts data",
+              "Compares sent data with a returned copy to detect errors",
+              "Deletes viruses",
+              "Speeds up the network"
             ],
-            "answer": "interference",
+            "answer": "Compares sent data with a returned copy to detect errors",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Interference means anything that disturbs a signal, such as walls or other electrical signals.."
+            "explanation": "an echo check compares sent data with the returned copy to detect errors."
           },
           {
-            "prompt": "What does “PAN” mean in computing?",
+            "prompt": "Who usually owns the long-distance cables in a WAN?",
             "choices": [
-              "Personal area network - a tiny network around one person's own devices.",
-              "Local area network - devices connected within one building or site.",
-              "Wide area network - devices connected across a large area, even worldwide.",
-              "Internet service provider - a company that provides an internet connection."
+              "The user",
+              "The school",
+              "An internet service provider (ISP)",
+              "Nobody"
             ],
-            "answer": "Personal area network - a tiny network around one person's own devices.",
+            "answer": "An internet service provider (ISP)",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "PAN means personal area network - a tiny network around one person's own devices.."
+            "explanation": "an ISP owns the long-distance cables in a WAN."
           },
           {
-            "prompt": "What does “ISP” mean in computing?",
+            "prompt": "Copper cables carry data as:",
             "choices": [
-              "Internet service provider - a company that provides an internet connection.",
-              "The shape or layout in which the devices in a network are connected.",
-              "A device that connects devices in a LAN and directs data to the right one.",
-              "A device that connects a network to other networks, such as the internet."
+              "Pulses of light",
+              "Electrical signals",
+              "Radio waves only",
+              "Sound"
             ],
-            "answer": "Internet service provider - a company that provides an internet connection.",
+            "answer": "Electrical signals",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "ISP means internet service provider - a company that provides an internet connection.."
+            "explanation": "copper carries data as electrical signals."
           }
         ]
       },
@@ -2071,52 +2103,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: A cable of copper wire that carries data as electrical signals.?",
+            "prompt": "What is a protocol?",
             "choices": [
-              "copper cable",
-              "fibre optic cable",
-              "interference",
-              "crosstalk"
+              "A type of cable",
+              "An agreed set of rules for sending data",
+              "A kind of virus",
+              "A wireless access point"
             ],
-            "answer": "copper cable",
+            "answer": "An agreed set of rules for sending data",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Copper cable means a cable of copper wire that carries data as electrical signals.."
+            "explanation": "a protocol is an agreed set of rules for sending data."
           },
           {
-            "prompt": "What does “network” mean in computing?",
+            "prompt": "Which network connects a smartwatch to a phone that both belong to one person?",
             "choices": [
-              "A group of devices connected together so they can share data.",
-              "The physical parts needed to build a network, such as cables and routers.",
-              "Personal area network - a tiny network around one person's own devices.",
-              "Local area network - devices connected within one building or site."
+              "WAN",
+              "LAN",
+              "PAN",
+              "ISP"
             ],
-            "answer": "A group of devices connected together so they can share data.",
+            "answer": "PAN",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Network means a group of devices connected together so they can share data.."
+            "explanation": "a PAN connects one person's own nearby devices."
           },
           {
-            "prompt": "What does “LAN” mean in computing?",
+            "prompt": "In which topology does every device connect to a central switch?",
             "choices": [
-              "Local area network - devices connected within one building or site.",
-              "Wide area network - devices connected across a large area, even worldwide.",
-              "Internet service provider - a company that provides an internet connection.",
-              "The shape or layout in which the devices in a network are connected."
+              "Bus",
+              "Star",
+              "Ring",
+              "Mesh"
             ],
-            "answer": "Local area network - devices connected within one building or site.",
+            "answer": "Star",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "LAN means local area network - devices connected within one building or site.."
+            "explanation": "in a star topology every device connects to a central switch."
           },
           {
-            "prompt": "Which computing word matches this meaning: The shape or layout in which the devices in a network are connected.?",
+            "prompt": "Which is an advantage of fibre optic over copper?",
             "choices": [
-              "topology",
-              "switch",
-              "router",
-              "copper cable"
+              "Cheaper to make",
+              "Not affected by electromagnetic interference",
+              "Easier to install everywhere",
+              "Thicker and stronger"
             ],
-            "answer": "topology",
+            "answer": "Not affected by electromagnetic interference",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Topology means the shape or layout in which the devices in a network are connected.."
+            "explanation": "fibre uses light, so it is not affected by electromagnetic interference."
           }
         ]
       },
@@ -2129,52 +2161,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: A cable of thin glass that carries data as pulses of light.?",
+            "prompt": "Which of these can cause an error in transmitted data?",
             "choices": [
-              "fibre optic cable",
-              "interference",
-              "crosstalk",
-              "bandwidth"
+              "Electrical interference",
+              "Crosstalk",
+              "A power surge",
+              "All of these"
             ],
-            "answer": "fibre optic cable",
+            "answer": "All of these",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Fibre optic cable means a cable of thin glass that carries data as pulses of light.."
+            "explanation": "interference, crosstalk and power surges can all cause errors."
           },
           {
-            "prompt": "What does “network hardware” mean in computing?",
+            "prompt": "In a LAN, where are the devices located?",
             "choices": [
-              "The physical parts needed to build a network, such as cables and routers.",
-              "Personal area network - a tiny network around one person's own devices.",
-              "Local area network - devices connected within one building or site.",
-              "Wide area network - devices connected across a large area, even worldwide."
+              "Across several countries",
+              "Within one building or site",
+              "Around one person",
+              "Only underground"
             ],
-            "answer": "The physical parts needed to build a network, such as cables and routers.",
+            "answer": "Within one building or site",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Network hardware means the physical parts needed to build a network, such as cables and routers.."
+            "explanation": "a LAN's devices are within one building or site."
           },
           {
-            "prompt": "What does “WAN” mean in computing?",
+            "prompt": "What is the main weakness of a bus topology?",
             "choices": [
-              "Wide area network - devices connected across a large area, even worldwide.",
-              "Internet service provider - a company that provides an internet connection.",
-              "The shape or layout in which the devices in a network are connected.",
-              "A device that connects devices in a LAN and directs data to the right one."
+              "It needs too many switches",
+              "If the backbone cable breaks, the whole network fails",
+              "It is too fast",
+              "It cannot use cables"
             ],
-            "answer": "Wide area network - devices connected across a large area, even worldwide.",
+            "answer": "If the backbone cable breaks, the whole network fails",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "WAN means wide area network - devices connected across a large area, even worldwide.."
+            "explanation": "in a bus, if the backbone cable breaks the whole network fails."
           },
           {
-            "prompt": "Which computing word matches this meaning: A device that connects devices in a LAN and directs data to the right one.?",
+            "prompt": "Which is normally true of a wired connection compared with wireless?",
             "choices": [
-              "switch",
-              "router",
-              "copper cable",
-              "fibre optic cable"
+              "Less secure",
+              "Slower",
+              "More secure and more reliable",
+              "Cheaper to expand"
             ],
-            "answer": "switch",
+            "answer": "More secure and more reliable",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Switch means a device that connects devices in a LAN and directs data to the right one.."
+            "explanation": "wired is normally more secure and more reliable than wireless."
           }
         ]
       },
@@ -2187,52 +2219,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: Anything that disturbs a signal, such as walls or other electrical signals.?",
+            "prompt": "What does an echo check do?",
             "choices": [
-              "interference",
-              "crosstalk",
-              "bandwidth",
-              "data packet"
+              "Encrypts data",
+              "Compares sent data with a returned copy to detect errors",
+              "Deletes viruses",
+              "Speeds up the network"
             ],
-            "answer": "interference",
+            "answer": "Compares sent data with a returned copy to detect errors",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Interference means anything that disturbs a signal, such as walls or other electrical signals.."
+            "explanation": "an echo check compares sent data with the returned copy to detect errors."
           },
           {
-            "prompt": "What does “PAN” mean in computing?",
+            "prompt": "Who usually owns the long-distance cables in a WAN?",
             "choices": [
-              "Personal area network - a tiny network around one person's own devices.",
-              "Local area network - devices connected within one building or site.",
-              "Wide area network - devices connected across a large area, even worldwide.",
-              "Internet service provider - a company that provides an internet connection."
+              "The user",
+              "The school",
+              "An internet service provider (ISP)",
+              "Nobody"
             ],
-            "answer": "Personal area network - a tiny network around one person's own devices.",
+            "answer": "An internet service provider (ISP)",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "PAN means personal area network - a tiny network around one person's own devices.."
+            "explanation": "an ISP owns the long-distance cables in a WAN."
           },
           {
-            "prompt": "What does “ISP” mean in computing?",
+            "prompt": "Copper cables carry data as:",
             "choices": [
-              "Internet service provider - a company that provides an internet connection.",
-              "The shape or layout in which the devices in a network are connected.",
-              "A device that connects devices in a LAN and directs data to the right one.",
-              "A device that connects a network to other networks, such as the internet."
+              "Pulses of light",
+              "Electrical signals",
+              "Radio waves only",
+              "Sound"
             ],
-            "answer": "Internet service provider - a company that provides an internet connection.",
+            "answer": "Electrical signals",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "ISP means internet service provider - a company that provides an internet connection.."
+            "explanation": "copper carries data as electrical signals."
           },
           {
-            "prompt": "Which computing word matches this meaning: A device that connects a network to other networks, such as the internet.?",
+            "prompt": "Data sent across a network is broken into:",
             "choices": [
-              "router",
-              "copper cable",
-              "fibre optic cable",
-              "interference"
+              "Bytes only",
+              "Data packets",
+              "Cables",
+              "Firewalls"
             ],
-            "answer": "router",
+            "answer": "Data packets",
             "clue": "Use the Unit 3 Computing Words reference.",
-            "explanation": "Router means a device that connects a network to other networks, such as the internet.."
+            "explanation": "data is broken into data packets to travel across a network."
           }
         ]
       }

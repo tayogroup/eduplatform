@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-01T14:06:01.207Z",
+  "generatedAt": "2026-08-02T10:33:39.394Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -476,39 +476,39 @@
       "outcomeId": "lo01",
       "difficulty": "Basic",
       "title": "Worked example 1: Models and simulations",
-      "prompt": "Explain in your own words: Models and simulations.",
-      "solution": "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and interact with the situation. Training a pilot in a flight simulator is a good example: the trainee sits in a cockpit that looks and feels real and practises take-off and landing in different weather, with no danger to people or to an expensive aeroplane. Databases and spreadsheets build simpler models using words, numbers and formulae; simulations go further with complex graphics. Importantly, all the data behind a model or a simulation has to be stored somewhere — usually in a database.\n\nSimulations have advantages and disadvantages. They can prevent loss of life during training, allow many different situations to be tried, and are usually cheaper and safer than using real equipment. On the other hand, they can be expensive to produce, and no simulation can include every possible factor, so the results are never a perfect match for reality.\n\nFor example: Simulations have advantages and disadvantages. They can prevent loss of life during training, allow many different situations to be tried, and are usually cheaper and safer than using real equipment. On the other hand, they can be expensive to produce, and no simulation can include every possible factor, so the results are never a perfect match for reality."
+      "prompt": "A data model is best described as: (a) a photograph of a computer; (b) a computer representation of a real-life situation; (c) a type of keyboard; (d) a printed book.",
+      "solution": "1 (b) a computer representation of a real-life situation."
     },
     {
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Basic",
       "title": "Worked example 2: Where data models are used across industries",
-      "prompt": "Explain in your own words: Where data models are used across industries.",
-      "solution": "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:\n\nMedicine and healthcare: doctors collect data such as a patient's age, symptoms and medication, then use specialised databases to help diagnose illness and choose treatment quickly.\n\nTraining: pilots, drivers and surgeons practise in simulators that behave like the real thing, so mistakes cost nothing and no one is harmed.\n\nScientific experiments: scientists model dangerous or slow processes — such as how temperature changes affect a reaction — to make predictions without real risk.\n\nWeather and climate: forecasting models use data gathered from all over the world and from space, combined with complex formulae, to predict how weather patterns will change. This matters greatly for farmers in East Africa who plan around the Gu and Deyr rains.\n\nBusiness: shops study sales data collected over years to spot patterns and predict demand, so they order the right amount of stock. A shop knows to store more bottled water before the hot season.\n\nFor example: Databases are more common than you might realise. Every time you use a streaming service to watch a video, or the app that shows you which dukaan has an item in stock, you are quietly using a huge database that generates lists just for you."
+      "prompt": "Which application is a spreadsheet? (a) LibreOffice Base; (b) LibreOffice Writer; (c) LibreOffice Calc; (d) LibreOffice Impress.",
+      "solution": "2 (c) LibreOffice Calc is the spreadsheet; Base is the database."
     },
     {
       "id": "we03",
       "outcomeId": "lo03",
       "difficulty": "Basic",
       "title": "Worked example 3: Spreadsheets: Modelling with LibreOffice Calc",
-      "prompt": "Explain in your own words: Spreadsheets: Modelling with LibreOffice Calc.",
-      "solution": "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You will see a grid. This grid is a worksheet, and it is divided into rows (numbered 1, 2, 3 …) and columns (lettered A, B, C …)."
+      "prompt": "Every formula in LibreOffice Calc must start with: (a) a + sign; (b) an = sign; (c) a letter; (d) a full stop.",
+      "solution": "3 (b) an = sign begins every formula."
     },
     {
       "id": "we04",
       "outcomeId": "lo04",
       "difficulty": "Intermediate",
       "title": "Worked example 4: Cells and cell references",
-      "prompt": "Explain in your own words: Cells and cell references.",
-      "solution": "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number, called a cell reference. The cell where column B meets row 2 is cell B2. The cell where column D meets row 3 is cell D3. Click any cell and look at the Name Box on the left of the Formula Bar — it always shows the reference of the cell you have selected.\n\nYou can also select a group of cells called a cell range. A range is written as the first cell, a colon, then the last cell. So B2:B8 means every cell from B2 down to B8, and C2:E2 means C2, D2 and E2. The colon means 'through'. Ranges are how you tell a formula to work on many cells at once.\n\nFor example: You can also select a group of cells called a cell range. A range is written as the first cell, a colon, then the last cell. So B2:B8 means every cell from B2 down to B8, and C2:E2 means C2, D2 and E2. The colon means 'through'. Ranges are how you tell a formula to work on many cells at once."
+      "prompt": "The cell where column C meets row 4 is called: (a) 4C; (b) C4; (c) CR4; (d) R4C3.",
+      "solution": "4 (b) C4 — column letter then row number."
     },
     {
       "id": "we05",
       "outcomeId": "lo05",
       "difficulty": "Intermediate",
       "title": "Worked example 5: The Input Line and formulas",
-      "prompt": "Explain in your own words: The Input Line and formulas.",
+      "prompt": "Which is a cell range? (a) B2+B8; (b) B2:B8; (c) B2;B8; (d) B2-B8.",
       "solution": "Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a formula, click the cell where you want the answer to appear, type the formula, and press Enter.\n\nEvery formula must begin with an = sign. After the =, you can combine numbers, cell references and the arithmetic operators: + (add), — (subtract), * (multiply) and / (divide). For example, if B2 holds 10 and C2 holds 5, then typing =B2+C2 returns 15, and =B2*C2 returns 50. Using cell references instead of the raw numbers is powerful: if you later change B2, the answer updates by itself. That automatic updating is what turns a plain table into a living data model.\n\nFor example: Every formula must begin with an = sign. After the =, you can combine numbers, cell references and the arithmetic operators: + (add), — (subtract), * (multiply) and / (divide). For example, if B2 holds 10 and C2 holds 5, then typing =B2+C2 returns 15, and =B2*C2 returns 50. Using cell references instead of the raw numbers is powerful: if you later change B2, the answer updates by itself. That automatic updating is what turns a plain table into a living data model."
     },
     {
@@ -516,8 +516,40 @@
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
       "title": "Worked example 6: Worked Example 1 — SUM and AVERAGE (test scores)",
-      "prompt": "Explain in your own words: Worked Example 1 — SUM and AVERAGE (test scores).",
-      "solution": "A function is a ready-made shortcut for a common calculation. The two you will use most are SUM (adds numbers) and AVERAGE (finds the mean). Type this small table into a new sheet, starting in cell A1:\n\nNow click cell E2 and type =AVERAGE(B2:D2) then press Enter. Calc adds Nadia's three scores (8 + 7 + 9 = 24), divides by 3, and returns 8. Click E2 again, hover over the small square at the bottom-right corner (the fill handle), and drag down to E5 to copy the formula for every student. Sami's average becomes 7, Maya's becomes 9, and Leo's becomes 6.\n\nThere is more than one way to reach the same answer. Instead of the AVERAGE function you could type =(B2+C2+D2)/3, which also returns 8 for Nadia. The brackets matter: they make Calc add the three scores first and only then divide by 3. If you wanted the total instead of the average, you would use =SUM(B2:D2), which returns 24 for Nadia. Change the heading in E1 to 'Total' if you do this, so your labels always match your data.\n\nRow — A · B · C · D · E\n\n1 — Name · Test 1 · Test 2 · Test 3 · Average\n\n2 — Nadia · 8 · 7 · 9\n\n3 — Sami · 6 · 9 · 6\n\n4 — Maya · 10 · 8 · 9\n\nFor example: 5 — Leo · 5 · 7 · 6"
+      "prompt": "Which function finds the mean of a set of numbers? (a) SUM; (b) COUNT; (c) AVERAGE; (d) MAX.",
+      "solution": "6 (c) AVERAGE finds the mean."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Worked example 7: Worked Example 2",
+      "prompt": "An absolute cell reference looks like: (a) H1; (b) $H$1; (c) H:1; (d) (H1).",
+      "solution": "7 (b) $H$1 — dollar signs lock the reference."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "Worked example 8: Formatting",
+      "prompt": "In a database, a single row of data about one item is a: (a) field; (b) record; (c) query; (d) form.",
+      "solution": "8 (b) record — a row is one whole record."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo01",
+      "difficulty": "Challenge",
+      "title": "Worked example 9: Worked Example 3",
+      "prompt": "In a database, a single column is a: (a) field; (b) record; (c) key; (d) cell.",
+      "solution": "9 (a) field — a column is one field."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo02",
+      "difficulty": "Challenge",
+      "title": "Worked example 10: The fill handle",
+      "prompt": "A primary key must be: (a) a number only; (b) the first column; (c) unique for every record; (d) always text.",
+      "solution": "10 (c) unique for every record."
     }
   ],
   "practice": [
@@ -525,111 +557,111 @@
       "id": "p01",
       "level": "Warm-up",
       "prompt": "A data model is best described as: (a) a photograph of a computer; (b) a computer representation of a real-life situation; (c) a type of keyboard; (d) a printed book.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "1 (b) a computer representation of a real-life situation.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
     },
     {
       "id": "p02",
       "level": "Warm-up",
       "prompt": "Which application is a spreadsheet? (a) LibreOffice Base; (b) LibreOffice Writer; (c) LibreOffice Calc; (d) LibreOffice Impress.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "2 (c) LibreOffice Calc is the spreadsheet; Base is the database.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
     },
     {
       "id": "p03",
       "level": "Warm-up",
       "prompt": "Every formula in LibreOffice Calc must start with: (a) a + sign; (b) an = sign; (c) a letter; (d) a full stop.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "3 (b) an = sign begins every formula.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
     },
     {
       "id": "p04",
       "level": "Warm-up",
       "prompt": "The cell where column C meets row 4 is called: (a) 4C; (b) C4; (c) CR4; (d) R4C3.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "4 (b) C4 — column letter then row number.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
     },
     {
       "id": "p05",
       "level": "Warm-up",
       "prompt": "Which is a cell range? (a) B2+B8; (b) B2:B8; (c) B2;B8; (d) B2-B8.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "5 (b) B2:B8 — the colon means 'through'.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
     },
     {
       "id": "p06",
       "level": "Warm-up",
       "prompt": "Which function finds the mean of a set of numbers? (a) SUM; (b) COUNT; (c) AVERAGE; (d) MAX.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "6 (c) AVERAGE finds the mean.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
     },
     {
       "id": "p07",
       "level": "Warm-up",
       "prompt": "An absolute cell reference looks like: (a) H1; (b) $H$1; (c) H:1; (d) (H1).",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "7 (b) $H$1 — dollar signs lock the reference.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
     },
     {
       "id": "p08",
       "level": "Warm-up",
       "prompt": "In a database, a single row of data about one item is a: (a) field; (b) record; (c) query; (d) form.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "8 (b) record — a row is one whole record.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
     },
     {
       "id": "p09",
       "level": "Warm-up",
       "prompt": "In a database, a single column is a: (a) field; (b) record; (c) key; (d) cell.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "9 (a) field — a column is one field.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
     },
     {
       "id": "p10",
       "level": "Warm-up",
       "prompt": "A primary key must be: (a) a number only; (b) the first column; (c) unique for every record; (d) always text.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "10 (c) unique for every record.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
     },
     {
       "id": "p11",
       "level": "Warm-up",
       "prompt": "Which data type stores only Yes/No or True/False values? (a) Text; (b) Integer; (c) Date; (d) Yes/No [BOOLEAN].",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "11 (d) Yes/No [BOOLEAN].",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
     },
     {
       "id": "p12",
       "level": "Warm-up",
       "prompt": "A query searches a database using: (a) charts; (b) criteria; (c) fonts; (d) fill handles.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "12 (b) criteria.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
     },
     {
       "id": "p13",
       "level": "Warm-up",
       "prompt": "Which is a comparison operator? (a) &; (b) >; (c) #; (d) @.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "13 (b) > (greater than).",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
     },
     {
       "id": "p14",
       "level": "Warm-up",
       "prompt": "Conditional formatting is used to: (a) delete data; (b) highlight data that meets a rule; (c) print a page; (d) rename a file.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "14 (b) highlight data that meets a rule.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
     },
     {
       "id": "p15",
       "level": "Warm-up",
       "prompt": "For calculations with lots of money and numbers, the best tool is usually a: (a) database; (b) word processor; (c) spreadsheet; (d) web browser.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "15 (c) spreadsheet.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
     },
     {
       "id": "p16",
       "level": "Core",
-      "prompt": "Answer in one or two sentences.",
+      "prompt": "In your own words, what is a data model?",
       "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words."
     }
@@ -1042,108 +1074,108 @@
       "outcomeId": "lo01",
       "difficulty": "Round 1",
       "prompt": "A data model is best described as: (a) a photograph of a computer; (b) a computer representation of a real-life situation; (c) a type of keyboard; (d) a printed book.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "1 (b) a computer representation of a real-life situation.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "1 (b) a computer representation of a real-life situation."
     },
     {
       "id": "fl02",
       "outcomeId": "lo02",
       "difficulty": "Round 1",
       "prompt": "Which application is a spreadsheet? (a) LibreOffice Base; (b) LibreOffice Writer; (c) LibreOffice Calc; (d) LibreOffice Impress.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "2 (c) LibreOffice Calc is the spreadsheet; Base is the database.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "2 (c) LibreOffice Calc is the spreadsheet; Base is the database."
     },
     {
       "id": "fl03",
       "outcomeId": "lo03",
       "difficulty": "Round 1",
       "prompt": "Every formula in LibreOffice Calc must start with: (a) a + sign; (b) an = sign; (c) a letter; (d) a full stop.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "3 (b) an = sign begins every formula.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "3 (b) an = sign begins every formula."
     },
     {
       "id": "fl04",
       "outcomeId": "lo04",
       "difficulty": "Round 1",
       "prompt": "The cell where column C meets row 4 is called: (a) 4C; (b) C4; (c) CR4; (d) R4C3.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "4 (b) C4 — column letter then row number.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "4 (b) C4 — column letter then row number."
     },
     {
       "id": "fl05",
       "outcomeId": "lo05",
       "difficulty": "Round 2",
       "prompt": "Which is a cell range? (a) B2+B8; (b) B2:B8; (c) B2;B8; (d) B2-B8.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "5 (b) B2:B8 — the colon means 'through'.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "5 (b) B2:B8 — the colon means 'through'."
     },
     {
       "id": "fl06",
       "outcomeId": "lo06",
       "difficulty": "Round 2",
       "prompt": "Which function finds the mean of a set of numbers? (a) SUM; (b) COUNT; (c) AVERAGE; (d) MAX.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "6 (c) AVERAGE finds the mean.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "6 (c) AVERAGE finds the mean."
     },
     {
       "id": "fl07",
       "outcomeId": "lo07",
       "difficulty": "Round 2",
       "prompt": "An absolute cell reference looks like: (a) H1; (b) $H$1; (c) H:1; (d) (H1).",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "7 (b) $H$1 — dollar signs lock the reference.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "7 (b) $H$1 — dollar signs lock the reference."
     },
     {
       "id": "fl08",
       "outcomeId": "lo08",
       "difficulty": "Round 2",
       "prompt": "In a database, a single row of data about one item is a: (a) field; (b) record; (c) query; (d) form.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "8 (b) record — a row is one whole record.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "8 (b) record — a row is one whole record."
     },
     {
       "id": "fl09",
       "outcomeId": "lo01",
       "difficulty": "Round 3",
       "prompt": "In a database, a single column is a: (a) field; (b) record; (c) key; (d) cell.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "9 (a) field — a column is one field.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "9 (a) field — a column is one field."
     },
     {
       "id": "fl10",
       "outcomeId": "lo02",
       "difficulty": "Round 3",
       "prompt": "A primary key must be: (a) a number only; (b) the first column; (c) unique for every record; (d) always text.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "10 (c) unique for every record.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "10 (c) unique for every record."
     },
     {
       "id": "fl11",
       "outcomeId": "lo03",
       "difficulty": "Round 3",
       "prompt": "Which data type stores only Yes/No or True/False values? (a) Text; (b) Integer; (c) Date; (d) Yes/No [BOOLEAN].",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "11 (d) Yes/No [BOOLEAN].",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "11 (d) Yes/No [BOOLEAN]."
     },
     {
       "id": "fl12",
       "outcomeId": "lo04",
       "difficulty": "Round 3",
       "prompt": "A query searches a database using: (a) charts; (b) criteria; (c) fonts; (d) fill handles.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "12 (b) criteria.",
       "hint": "Look back at what data and analyse mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "12 (b) criteria."
     }
   ],
   "realProblems": [
@@ -1214,7 +1246,7 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Answer in one or two sentences.",
+      "prompt": "In your own words, what is a data model?",
       "keyIdeas": [
         "data",
         "analyse",
@@ -1227,7 +1259,7 @@
       "outcomeId": "lo02",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "In your own words, what is a data model?",
+      "prompt": "Give two real-life industries that use data models or simulations, and say what each one models.",
       "keyIdeas": [
         "analyse",
         "data model",
@@ -1240,7 +1272,7 @@
       "outcomeId": "lo03",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Give two real-life industries that use data models or simulations, and say what each one models.",
+      "prompt": "What is the difference between a field and a record in a database?",
       "keyIdeas": [
         "data model",
         "simulation",
@@ -1253,7 +1285,7 @@
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "What is the difference between a field and a record in a database?",
+      "prompt": "Why does a database table need a primary key?",
       "keyIdeas": [
         "simulation",
         "factors",
@@ -1266,7 +1298,7 @@
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "Why does a database table need a primary key?",
+      "prompt": "Explain the difference between a relative reference and an absolute reference.",
       "keyIdeas": [
         "factors",
         "spreadsheet",
@@ -1279,7 +1311,7 @@
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "Explain the difference between a relative reference and an absolute reference.",
+      "prompt": "Name two features of a well-designed, user-friendly data-capture form.",
       "keyIdeas": [
         "spreadsheet",
         "database",
@@ -1314,14 +1346,14 @@
         "type": "Concept",
         "outcomeId": "lo01",
         "difficulty": "Basic",
-        "question": "What does “data” mean in computing?",
+        "question": "A data model is best described as:",
         "options": [
-          "Raw facts and figures, for example a list of names or prices.",
-          "Examine something in detail so that you fully understand it.",
-          "A computer representation of a real-life situation, where data is changed to see what happens.",
-          "A more complex model that can predict the outcome of a real-world system, often using graphics."
+          "a photograph of a computer;",
+          "a computer representation of a real-life situation;",
+          "a type of keyboard;",
+          "a printed book."
         ],
-        "answer": "Raw facts and figures, for example a list of names or prices.",
+        "answer": "a computer representation of a real-life situation;",
         "hint": "Use the Unit 4 Computing Words reference.",
         "explanation": "Data means raw facts and figures, for example a list of names or prices."
       },
@@ -1330,32 +1362,32 @@
         "type": "Concept",
         "outcomeId": "lo02",
         "difficulty": "Basic",
-        "question": "What does “analyse” mean in computing?",
+        "question": "Which data type stores only Yes/No or True/False values?",
         "options": [
-          "Examine something in detail so that you fully understand it.",
-          "A computer representation of a real-life situation, where data is changed to see what happens.",
-          "A more complex model that can predict the outcome of a real-world system, often using graphics.",
-          "The key data items represented in a data model."
+          "Text;",
+          "Integer;",
+          "Date;",
+          "Yes/No [BOOLEAN]."
         ],
-        "answer": "Examine something in detail so that you fully understand it.",
+        "answer": "Yes/No [BOOLEAN].",
         "hint": "Use the Unit 4 Computing Words reference.",
-        "explanation": "Analyse means examine something in detail so that you fully understand it."
+        "explanation": "11 (d) Yes/No [BOOLEAN]."
       },
       {
         "id": "q03",
         "type": "Concept",
         "outcomeId": "lo03",
         "difficulty": "Basic",
-        "question": "What does “data model” mean in computing?",
+        "question": "Conditional formatting is used to:",
         "options": [
-          "A computer representation of a real-life situation, where data is changed to see what happens.",
-          "A more complex model that can predict the outcome of a real-world system, often using graphics.",
-          "The key data items represented in a data model.",
-          "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc)."
+          "delete data;",
+          "highlight data that meets a rule;",
+          "print a page;",
+          "rename a file."
         ],
-        "answer": "A computer representation of a real-life situation, where data is changed to see what happens.",
+        "answer": "highlight data that meets a rule;",
         "hint": "Use the Unit 4 Computing Words reference.",
-        "explanation": "Data model means a computer representation of a real-life situation, where data is changed to see what happens."
+        "explanation": "14 (b) highlight data that meets a rule."
       },
       {
         "id": "q04",
@@ -1515,14 +1547,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “data” mean in computing?",
+            "prompt": "A data model is best described as:",
             "choices": [
-              "Raw facts and figures, for example a list of names or prices.",
-              "Examine something in detail so that you fully understand it.",
-              "A computer representation of a real-life situation, where data is changed to see what happens.",
-              "A more complex model that can predict the outcome of a real-world system, often using graphics."
+              "a photograph of a computer;",
+              "a computer representation of a real-life situation;",
+              "a type of keyboard;",
+              "a printed book."
             ],
-            "answer": "Raw facts and figures, for example a list of names or prices.",
+            "answer": "a computer representation of a real-life situation;",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Data means raw facts and figures, for example a list of names or prices."
           },
@@ -1573,14 +1605,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “analyse” mean in computing?",
+            "prompt": "Which data type stores only Yes/No or True/False values?",
             "choices": [
-              "Examine something in detail so that you fully understand it.",
-              "A computer representation of a real-life situation, where data is changed to see what happens.",
-              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
-              "The key data items represented in a data model."
+              "Text;",
+              "Integer;",
+              "Date;",
+              "Yes/No [BOOLEAN]."
             ],
-            "answer": "Examine something in detail so that you fully understand it.",
+            "answer": "Yes/No [BOOLEAN].",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Analyse means examine something in detail so that you fully understand it."
           },
@@ -1631,14 +1663,14 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “data model” mean in computing?",
+            "prompt": "Conditional formatting is used to:",
             "choices": [
-              "A computer representation of a real-life situation, where data is changed to see what happens.",
-              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
-              "The key data items represented in a data model.",
-              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc)."
+              "delete data;",
+              "highlight data that meets a rule;",
+              "print a page;",
+              "rename a file."
             ],
-            "answer": "A computer representation of a real-life situation, where data is changed to see what happens.",
+            "answer": "highlight data that meets a rule;",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Data model means a computer representation of a real-life situation, where data is changed to see what happens."
           },
@@ -1725,14 +1757,14 @@
             "explanation": "Cell range means a group of cells named by the first and last cell, for example B2:B8."
           },
           {
-            "prompt": "What does “data” mean in computing?",
+            "prompt": "A data model is best described as:",
             "choices": [
-              "Raw facts and figures, for example a list of names or prices.",
-              "Examine something in detail so that you fully understand it.",
-              "A computer representation of a real-life situation, where data is changed to see what happens.",
-              "A more complex model that can predict the outcome of a real-world system, often using graphics."
+              "a photograph of a computer;",
+              "a computer representation of a real-life situation;",
+              "a type of keyboard;",
+              "a printed book."
             ],
-            "answer": "Raw facts and figures, for example a list of names or prices.",
+            "answer": "a computer representation of a real-life situation;",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Data means raw facts and figures, for example a list of names or prices."
           }
@@ -1783,14 +1815,14 @@
             "explanation": "Formula means a calculation you type into a cell; every formula begins with an = sign."
           },
           {
-            "prompt": "What does “analyse” mean in computing?",
+            "prompt": "Which data type stores only Yes/No or True/False values?",
             "choices": [
-              "Examine something in detail so that you fully understand it.",
-              "A computer representation of a real-life situation, where data is changed to see what happens.",
-              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
-              "The key data items represented in a data model."
+              "Text;",
+              "Integer;",
+              "Date;",
+              "Yes/No [BOOLEAN]."
             ],
-            "answer": "Examine something in detail so that you fully understand it.",
+            "answer": "Yes/No [BOOLEAN].",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Analyse means examine something in detail so that you fully understand it."
           }
@@ -1841,14 +1873,14 @@
             "explanation": "Function means a built-in shortcut for a common calculation, for example SUM or AVERAGE."
           },
           {
-            "prompt": "What does “data model” mean in computing?",
+            "prompt": "Conditional formatting is used to:",
             "choices": [
-              "A computer representation of a real-life situation, where data is changed to see what happens.",
-              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
-              "The key data items represented in a data model.",
-              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc)."
+              "delete data;",
+              "highlight data that meets a rule;",
+              "print a page;",
+              "rename a file."
             ],
-            "answer": "A computer representation of a real-life situation, where data is changed to see what happens.",
+            "answer": "highlight data that meets a rule;",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Data model means a computer representation of a real-life situation, where data is changed to see what happens."
           }
@@ -1887,14 +1919,14 @@
             "explanation": "Cell range means a group of cells named by the first and last cell, for example B2:B8."
           },
           {
-            "prompt": "What does “data” mean in computing?",
+            "prompt": "A data model is best described as:",
             "choices": [
-              "Raw facts and figures, for example a list of names or prices.",
-              "Examine something in detail so that you fully understand it.",
-              "A computer representation of a real-life situation, where data is changed to see what happens.",
-              "A more complex model that can predict the outcome of a real-world system, often using graphics."
+              "a photograph of a computer;",
+              "a computer representation of a real-life situation;",
+              "a type of keyboard;",
+              "a printed book."
             ],
-            "answer": "Raw facts and figures, for example a list of names or prices.",
+            "answer": "a computer representation of a real-life situation;",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Data means raw facts and figures, for example a list of names or prices."
           },
@@ -1945,14 +1977,14 @@
             "explanation": "Formula means a calculation you type into a cell; every formula begins with an = sign."
           },
           {
-            "prompt": "What does “analyse” mean in computing?",
+            "prompt": "Which data type stores only Yes/No or True/False values?",
             "choices": [
-              "Examine something in detail so that you fully understand it.",
-              "A computer representation of a real-life situation, where data is changed to see what happens.",
-              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
-              "The key data items represented in a data model."
+              "Text;",
+              "Integer;",
+              "Date;",
+              "Yes/No [BOOLEAN]."
             ],
-            "answer": "Examine something in detail so that you fully understand it.",
+            "answer": "Yes/No [BOOLEAN].",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Analyse means examine something in detail so that you fully understand it."
           },
@@ -2003,14 +2035,14 @@
             "explanation": "Function means a built-in shortcut for a common calculation, for example SUM or AVERAGE."
           },
           {
-            "prompt": "What does “data model” mean in computing?",
+            "prompt": "Conditional formatting is used to:",
             "choices": [
-              "A computer representation of a real-life situation, where data is changed to see what happens.",
-              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
-              "The key data items represented in a data model.",
-              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc)."
+              "delete data;",
+              "highlight data that meets a rule;",
+              "print a page;",
+              "rename a file."
             ],
-            "answer": "A computer representation of a real-life situation, where data is changed to see what happens.",
+            "answer": "highlight data that meets a rule;",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Data model means a computer representation of a real-life situation, where data is changed to see what happens."
           },
@@ -2049,14 +2081,14 @@
             "explanation": "Cell range means a group of cells named by the first and last cell, for example B2:B8."
           },
           {
-            "prompt": "What does “data” mean in computing?",
+            "prompt": "A data model is best described as:",
             "choices": [
-              "Raw facts and figures, for example a list of names or prices.",
-              "Examine something in detail so that you fully understand it.",
-              "A computer representation of a real-life situation, where data is changed to see what happens.",
-              "A more complex model that can predict the outcome of a real-world system, often using graphics."
+              "a photograph of a computer;",
+              "a computer representation of a real-life situation;",
+              "a type of keyboard;",
+              "a printed book."
             ],
-            "answer": "Raw facts and figures, for example a list of names or prices.",
+            "answer": "a computer representation of a real-life situation;",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Data means raw facts and figures, for example a list of names or prices."
           },
@@ -2107,14 +2139,14 @@
             "explanation": "Formula means a calculation you type into a cell; every formula begins with an = sign."
           },
           {
-            "prompt": "What does “analyse” mean in computing?",
+            "prompt": "Which data type stores only Yes/No or True/False values?",
             "choices": [
-              "Examine something in detail so that you fully understand it.",
-              "A computer representation of a real-life situation, where data is changed to see what happens.",
-              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
-              "The key data items represented in a data model."
+              "Text;",
+              "Integer;",
+              "Date;",
+              "Yes/No [BOOLEAN]."
             ],
-            "answer": "Examine something in detail so that you fully understand it.",
+            "answer": "Yes/No [BOOLEAN].",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Analyse means examine something in detail so that you fully understand it."
           },
@@ -2165,14 +2197,14 @@
             "explanation": "Function means a built-in shortcut for a common calculation, for example SUM or AVERAGE."
           },
           {
-            "prompt": "What does “data model” mean in computing?",
+            "prompt": "Conditional formatting is used to:",
             "choices": [
-              "A computer representation of a real-life situation, where data is changed to see what happens.",
-              "A more complex model that can predict the outcome of a real-world system, often using graphics.",
-              "The key data items represented in a data model.",
-              "An application that uses rows and columns to organise data and carry out calculations (LibreOffice Calc)."
+              "delete data;",
+              "highlight data that meets a rule;",
+              "print a page;",
+              "rename a file."
             ],
-            "answer": "A computer representation of a real-life situation, where data is changed to see what happens.",
+            "answer": "highlight data that meets a rule;",
             "clue": "Use the Unit 4 Computing Words reference.",
             "explanation": "Data model means a computer representation of a real-life situation, where data is changed to see what happens."
           },

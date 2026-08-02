@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-01T20:13:37.762Z",
+  "generatedAt": "2026-08-02T10:33:39.466Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -573,48 +573,80 @@
       "outcomeId": "lo01",
       "difficulty": "Basic",
       "title": "Worked example 1: Pseudocode",
-      "prompt": "Explain in your own words: Pseudocode.",
-      "solution": "Pseudocode is a tool used when *designing* a program, before you write the real code. The word is made of two parts: *pseudo* means 'not real', and *code* means programming statements. So pseudocode means 'not-real code'. It looks like a program, but it does not have to follow the strict rules of any one language. Think of it as a bridge: on one side is a flowchart or plain English, and on the other side is a high-level programming language like Python. Pseudocode sits halfway between them.\n\nWhy bother with something 'not real'? Because a plan lets you think clearly. When you write pseudocode you can work out what the program should do - the variables you need and the calculations you must perform - without worrying about getting every colon, bracket and spelling exactly right. It is like planning an essay: you jot down your main points first, and worry about perfect spelling and grammar later.\n\nPseudocode is also language independent. That means a programmer who uses Python, and another who uses a different language, can both read the same pseudocode and then build it in their own language. This matters because large programs are written by many people. A shared plan lets the whole team understand each other. There is no single fixed syntax for pseudocode - INPUT, Input and input could all be used - but you should stay consistent within one program, or it gets confusing.\n\nEvery program is built from three programming constructs, and pseudocode can show all three:\n\nSequence - the order that statements run in, from top to bottom.\n\nSelection - checking a condition and running different code depending on whether it is true or false (this is Subunit 1.2).\n\nIteration - repeating code in a loop (you will use this in later units).\n\nAn input statement tells the program that the user needs to enter a value, and it needs a variable to store that value in. We will use the keyword INPUT:\n\nPseudocode: three input statements\n\nAn output statement sends data out, usually to the screen. We will use the keyword OUTPUT. Any text you want to show exactly must go inside double quotation marks. Without the quotation marks, the word would be treated as a variable name instead:\n\nPseudocode: outputting a fixed message\n\nTo join pieces of text together we use concatenation. In this pseudocode we join with a comma, although a plus sign or an ampersand can also be used. Here the program greets the user by name:\n\nPseudocode: if the user enters Nadia, the output is 'Hello, Nadia'\n\nA variable is a named location in memory that stores one item of data, and that data can change as the program runs. Storing data in a variable is called assignment. In our pseudocode we use an arrow to mean 'assign', because the equals sign can be confused with the 'is equal to' test used in conditions. The left-hand side is the variable's identifier (its name), then the arrow, then the data to store:\n\nPseudocode: storing 'Red' in colour and 12 in age\n\nAn identifier must be one word with no spaces, must not start with a number or symbol, must not be a reserved keyword, and should be unique within the program. Reserved keywords are special words the language already uses. In Python 3 there are 35 reserved keywords, such as if, else, for, while, def, import, True and False. A helpful correction to a common mistake: in Python 3, print is not a keyword - it is a built-in function - so you technically could name a variable print, but you never should, because it would hide the useful function.\n\nArithmetic operators are symbols for calculations. In computing we write multiply as * and divide as / (not the maths signs). The four you need are + (add), - (subtract), * (multiply) and / (divide). Each operator needs a number (or a variable holding a number) on both sides, and the result should be stored or output. Here is a worked example that adds two numbers:\n\nPseudocode: stores 1 and 2, adds them, outputs 3\n\nYou can also output a calculation directly without storing it first:\n\nTo follow or trace an algorithm, start at the first line and do exactly what each line says, in order, one line at a time. Do not jump ahead. A useful trick is to cover the algorithm with a piece of paper and slide it down to reveal one line at a time. Write down the value held in each variable, and cross out the old value whenever it changes. Trace this shopping-total example, which Nadia could use at the family stall:\n\nPseudocode: adds three costs onto a running total\n\nWith the inputs 10, 20, 10 and 25 entered in order, total starts as 10, then becomes 30, then 40, then 65, so the output is 'The total cost is 65'. Notice how the same variable total is updated again and again - that is the point of a variable.\n\nFor example: Pseudocode has been used since the earliest days of computing to share program ideas between people who used completely different machines and languages. Because it belongs to no single language, it never goes out of date."
+      "prompt": "Pseudocode is best described as: (a) a finished program (b) a plan for a program, halfway between English and code (c) a type of computer (d) a programming language with strict rules",
+      "solution": "(b) A plan for a program, between English and code. Pseudocode has no strict fixed syntax."
     },
     {
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Basic",
       "title": "Worked example 2: Selection in Pseudocode",
-      "prompt": "Explain in your own words: Selection in Pseudocode.",
-      "solution": "Selection is how a program makes a decision. It checks a condition - a comparison that is either true or false - and runs different code depending on the answer. The comparison operators are:\n\nA conditional statement (often called an IF statement) has three parts: a condition that can be true or false, some statements that run when it is true, and (sometimes) some statements that run when it is false.\n\nFor example: The simplest form is IF THEN. Code between THEN and ENDIF runs only when the condition is true. The code inside is indented (moved to the right) so it is easy to see. If the condition is false, that code is skipped:"
+      "prompt": "In this unit's pseudocode, which symbol means 'assign a value to a variable'? (a) == (b) the arrow <- (c) ! (d) &",
+      "solution": "(b) The arrow. In this pseudocode the arrow means assignment; = is kept for comparison."
     },
     {
       "id": "we03",
       "outcomeId": "lo03",
       "difficulty": "Basic",
       "title": "Worked example 3: Pseudocode: ELSEIF chain with a final ELSE",
-      "prompt": "Explain in your own words: Pseudocode: ELSEIF chain with a final ELSE.",
-      "solution": "Important rule: once one condition is found to be true, its code runs and the rest of the chain is skipped. So if the user enters '1234', the first condition is false, the second is true, '1234 is not a strong password' is output, and nothing else in the chain is checked.\n\nBoolean operators: AND, OR, NOT\n\nBoolean operators let one condition combine or reverse others. *Boolean* means a value that can only be true or false. Their rules are:\n\nAND needs a condition on each side. The result is true only when both are true.\n\nOR needs a condition on each side. The result is true when at least one is true; it is false only when both are false.\n\nNOT takes one condition and reverses it: true becomes false, and false becomes true.\n\nFor example: To work out a combined condition, replace each simple condition with its result, then apply the operator. In this AND example, total is 97:"
+      "prompt": "Which is a valid pseudocode variable identifier? (a) 2names (b) my name (c) firstName (d) if",
+      "solution": "(c) firstName - one word, starts with a letter, not a keyword. '2names' starts with a number, 'my name' has a space, 'if' is a keyword."
     },
     {
       "id": "we04",
       "outcomeId": "lo04",
       "difficulty": "Intermediate",
       "title": "Worked example 4: Pseudocode: AND combines two conditions",
-      "prompt": "Explain in your own words: Pseudocode: AND combines two conditions.",
-      "solution": "Condition 1, 97 > 90, is true. Condition 2, 97 < 100, is true. True AND true is true, so 'Just in range' is output. If total were 100 instead, then 100 < 100 is false, and true AND false is false, so the ELSE would run and output 'Incorrect amount'.\n\nFor NOT, look at this example where quantity is 0:\n\nPseudocode: NOT reverses the condition\n\nThe condition quantity = 0 is true, and NOT true is false, so the ELSE runs: 'No items remaining'.\n\nFor example: When you mix Boolean operators, they run in a set order (their precedence), just like BIDMAS in maths. NOT runs first, then AND, then OR. Brackets change the order: whatever is inside brackets runs first. You will not have to read very complicated conditions, but you must understand that brackets group conditions together and make your meaning clear. When in doubt, add brackets."
+      "prompt": "In an ELSEIF chain, what happens after the first true condition is found? (a) all conditions still run (b) the program stops completely (c) its code runs and the rest of the chain is skipped (d) the ELSE always runs too",
+      "solution": "(c) Its code runs and the rest of the chain is skipped."
     },
     {
       "id": "we05",
       "outcomeId": "lo05",
       "difficulty": "Intermediate",
       "title": "Worked example 5: Searching Algorithms",
-      "prompt": "Explain in your own words: Searching Algorithms.",
-      "solution": "A searching algorithm is a set of steps for finding a particular item in a set of data. Computers search constantly. When you log in, the system searches a file of usernames to find yours and then checks the password. When you look for a lost file, the computer searches every file for a match. When you use a search engine, it searches web pages for your keywords. Searching well saves huge amounts of time.\n\nThere are many searching algorithms, and the best one depends on the situation. Some are faster when there is a very large amount of data; others only work when the data is already in order. There is no single algorithm that is always best. The simplest and most important one to learn first is the linear search.\n\n*Linear* means 'in a straight line'. A linear search looks at the first item, then the second, then the third, and so on, in order, until it either finds what it is looking for or reaches the end. Think of turning face-down cards one at a time, from left to right, checking each. The steps are:\n\nCompare it with the value you are searching for.\n\nIf it matches, stop - you have found it.\n\nIf it does not match, move to the next item.\n\nRepeat from step 2 until you find the value, or there are no items left.\n\nIf you run out of items, the value is not there.\n\nFor Ehel Academy's library book finder, imagine the titles are in this order: 'cat', 'rabbit', 'mouse', 'sheep', 'horse'. To find 'horse', a linear search checks 'cat' (no), 'rabbit' (no), 'mouse' (no), 'sheep' (no), 'horse' (yes - found at the fifth item). If you searched for 'lion', it would check all five, find no match, and report that 'lion' is not in the list.\n\nYou plan and trace searches on paper first, then you can build them in Python. Here a list holds the numbers, a while loop moves through them one at a time, and a flag called found records success. (Positions in a Python list start counting at 0.)\n\nPython: a linear search using a while loop and a found flag\n\nThis program checks 20, 1, 13, 66, 78, then reaches 33 at position 5, sets found to True, stops the loop, and outputs 'Found 33 at position 5'. If you change target to 99, the loop checks every number, never sets found, and outputs '99 is not in the list'. You will run and modify this in your Activities booklet.\n\nFor example: Search engines guard their searching algorithms like treasure. A search engine that finds the most useful results the fastest attracts the most users, so companies spend years improving how they search. When you research online, always use safe, trusted websites, and ask your teacher if you are unsure."
+      "prompt": "AND gives a true result when: (a) either condition is true (b) both conditions are true (c) neither is true (d) the first is false",
+      "solution": "(b) Both conditions are true."
     },
     {
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
       "title": "Worked example 6: Conditional Statements in Text-Based Programming (Python)",
-      "prompt": "Explain in your own words: Conditional Statements in Text-Based Programming (Python).",
-      "solution": "Now you turn your pseudocode into real Python and run it in Thonny. A conditional statement in Python is an if statement, and Python also has else and elif. They work just like IF, ELSE and ELSEIF in pseudocode, but the syntax is exact and you must get it right.\n\nThe if statement and indentation\n\nAn if statement is written with the lowercase word if, then the condition, then a colon :. The code that runs when the condition is true goes on the next line and must be indented (usually four spaces). Python has no ENDIF; instead, the indentation itself shows which lines are inside the if. When you type the colon and press Enter, Thonny usually indents for you.\n\nPython: prints the message only if the user types purple\n\ncolour = input(\"What colour is made when red and blue are mixed? \")\n\nNotice == with two equals signs. In Python, = means 'assign a value', while == means 'is equal to'. Mixing them up is one of the most common beginner errors. The comparison operators in Python are >, <, >=, <=, == (equal to) and != (not equal to).\n\nHere is a pass check. int() turns the typed text into a whole number so it can be compared:\n\nPython: prints 'You passed' when the score is 50 or more\n\nelse runs when the condition is false. It is written in lowercase, has no condition, and is followed by a colon. The if and the else line up at the same indentation:\n\ncolour = input(\"What colour is made when red and blue are mixed? \")\n\nFor more than two choices, use elif (short for 'else if'). Python checks each condition in order and runs the block for the first one that is true. Here is Ehel Academy's grade reporter as Python:\n\nPython: elif chain with a final else\n\nIf the user enters 72, then 72 >= 80 is false, 72 >= 60 is true, so 'Silver star' prints and the rest is skipped. The order matters: you test the highest boundary first.\n\nPython is case sensitive: the letter H is not the same as h. So if answer == \"yes\": is true for 'yes' but false for 'Yes' or 'YES'. Programmers handle this with the Boolean operators.\n\nBoolean operators in Python: and, or, not\n\nPython's Boolean operators are the lowercase words and, or and not. This example accepts the answer written in three different ways using or:\n\nFor example: Python: or accepts several spellings"
+      "prompt": "Which order do Boolean operators run in? (a) OR, AND, NOT (b) AND, OR, NOT (c) NOT, AND, OR (d) NOT, OR, AND",
+      "solution": "(c) NOT first, then AND, then OR."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Worked example 7: Data in Text-Based Programs",
+      "prompt": "A linear search works by: (a) jumping to the middle each time (b) checking each item in order until found or the end (c) guessing randomly (d) sorting the data first",
+      "solution": "(b) It checks each item in order until it finds the target or reaches the end."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "Worked example 8: Library Programs",
+      "prompt": "In Python, which operator means 'is equal to'? (a) = (b) == (c) => (d) <>",
+      "solution": "(b) == means 'is equal to'; a single = assigns a value."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo09",
+      "difficulty": "Challenge",
+      "title": "Worked example 9: Software Development",
+      "prompt": "What does bool(\"False\") return in Python? (a) False (b) True (c) an error (d) 0",
+      "solution": "(b) True - any non-empty string casts to True, even the word 'False'."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo10",
+      "difficulty": "Challenge",
+      "title": "Worked example 10: Physical Computing with the micro:bit",
+      "prompt": "math.floor(7.9) returns: (a) 7 (b) 8 (c) 7.9 (d) 79",
+      "solution": "(a) 7 - floor rounds down."
     }
   ],
   "practice": [
@@ -622,112 +654,112 @@
       "id": "p01",
       "level": "Warm-up",
       "prompt": "Pseudocode is best described as: (a) a finished program (b) a plan for a program, halfway between English and code (c) a type of computer (d) a programming language with strict rules",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) A plan for a program, between English and code. Pseudocode has no strict fixed syntax.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     },
     {
       "id": "p02",
       "level": "Warm-up",
       "prompt": "In this unit's pseudocode, which symbol means 'assign a value to a variable'? (a) == (b) the arrow <- (c) ! (d) &",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) The arrow. In this pseudocode the arrow means assignment; = is kept for comparison.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     },
     {
       "id": "p03",
       "level": "Warm-up",
       "prompt": "Which is a valid pseudocode variable identifier? (a) 2names (b) my name (c) firstName (d) if",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) firstName - one word, starts with a letter, not a keyword. '2names' starts with a number, 'my name' has a space, 'if' is a keyword.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     },
     {
       "id": "p04",
       "level": "Warm-up",
       "prompt": "In an ELSEIF chain, what happens after the first true condition is found? (a) all conditions still run (b) the program stops completely (c) its code runs and the rest of the chain is skipped (d) the ELSE always runs too",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) Its code runs and the rest of the chain is skipped.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     },
     {
       "id": "p05",
       "level": "Warm-up",
       "prompt": "AND gives a true result when: (a) either condition is true (b) both conditions are true (c) neither is true (d) the first is false",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) Both conditions are true.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     },
     {
       "id": "p06",
       "level": "Warm-up",
       "prompt": "Which order do Boolean operators run in? (a) OR, AND, NOT (b) AND, OR, NOT (c) NOT, AND, OR (d) NOT, OR, AND",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) NOT first, then AND, then OR.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     },
     {
       "id": "p07",
       "level": "Warm-up",
       "prompt": "A linear search works by: (a) jumping to the middle each time (b) checking each item in order until found or the end (c) guessing randomly (d) sorting the data first",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) It checks each item in order until it finds the target or reaches the end.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     },
     {
       "id": "p08",
       "level": "Warm-up",
       "prompt": "In Python, which operator means 'is equal to'? (a) = (b) == (c) => (d) <>",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) == means 'is equal to'; a single = assigns a value.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     },
     {
       "id": "p09",
       "level": "Warm-up",
       "prompt": "In Python, the command for 'else if' is: (a) elseif (b) else if (c) elif (d) elsif",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) elif.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     },
     {
       "id": "p10",
       "level": "Warm-up",
       "prompt": "The Boolean data type can hold: (a) any number (b) only True or False (c) only text (d) only 0 to 9",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) Only True or False.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     },
     {
       "id": "p11",
       "level": "Warm-up",
       "prompt": "What does bool(\"False\") return in Python? (a) False (b) True (c) an error (d) 0",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) True - any non-empty string casts to True, even the word 'False'.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     },
     {
       "id": "p12",
       "level": "Warm-up",
       "prompt": "Which Python code imports the random library? (a) include random (b) import random (c) library random (d) random.import()",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) import random.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     },
     {
       "id": "p13",
       "level": "Warm-up",
       "prompt": "math.floor(7.9) returns: (a) 7 (b) 8 (c) 7.9 (d) 79",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(a) 7 - floor rounds down.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     },
     {
       "id": "p14",
       "level": "Warm-up",
       "prompt": "random.randint(1, 5) could return: (a) 0 (b) 6 (c) 5 (d) 5.5",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) 5 - randint can return either end value; it cannot give 0, 6 or a decimal.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     },
     {
       "id": "p15",
       "level": "Warm-up",
       "prompt": "Data on the edge of what is allowed (like 16 for an 'under 16' rule) is called: (a) normal data (b) invalid data (c) boundary data (d) random data",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) Boundary data.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     },
     {
       "id": "p16",
       "level": "Warm-up",
       "prompt": "In MicroPython, which turns the radio on? (a) radio.start() (b) radio.on() (c) radio.begin() (d) radio.open()",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) radio.on().",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words."
     }
   ],
@@ -1190,108 +1222,108 @@
       "outcomeId": "lo01",
       "difficulty": "Round 1",
       "prompt": "Pseudocode is best described as: (a) a finished program (b) a plan for a program, halfway between English and code (c) a type of computer (d) a programming language with strict rules",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) A plan for a program, between English and code. Pseudocode has no strict fixed syntax.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) A plan for a program, between English and code. Pseudocode has no strict fixed syntax."
     },
     {
       "id": "fl02",
       "outcomeId": "lo02",
       "difficulty": "Round 1",
       "prompt": "In this unit's pseudocode, which symbol means 'assign a value to a variable'? (a) == (b) the arrow <- (c) ! (d) &",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) The arrow. In this pseudocode the arrow means assignment; = is kept for comparison.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) The arrow. In this pseudocode the arrow means assignment; = is kept for comparison."
     },
     {
       "id": "fl03",
       "outcomeId": "lo03",
       "difficulty": "Round 1",
       "prompt": "Which is a valid pseudocode variable identifier? (a) 2names (b) my name (c) firstName (d) if",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) firstName - one word, starts with a letter, not a keyword. '2names' starts with a number, 'my name' has a space, 'if' is a keyword.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(c) firstName - one word, starts with a letter, not a keyword. '2names' starts with a number, 'my name' has a space, 'if' is a keyword."
     },
     {
       "id": "fl04",
       "outcomeId": "lo04",
       "difficulty": "Round 1",
       "prompt": "In an ELSEIF chain, what happens after the first true condition is found? (a) all conditions still run (b) the program stops completely (c) its code runs and the rest of the chain is skipped (d) the ELSE always runs too",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) Its code runs and the rest of the chain is skipped.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(c) Its code runs and the rest of the chain is skipped."
     },
     {
       "id": "fl05",
       "outcomeId": "lo05",
       "difficulty": "Round 2",
       "prompt": "AND gives a true result when: (a) either condition is true (b) both conditions are true (c) neither is true (d) the first is false",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) Both conditions are true.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) Both conditions are true."
     },
     {
       "id": "fl06",
       "outcomeId": "lo06",
       "difficulty": "Round 2",
       "prompt": "Which order do Boolean operators run in? (a) OR, AND, NOT (b) AND, OR, NOT (c) NOT, AND, OR (d) NOT, OR, AND",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) NOT first, then AND, then OR.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(c) NOT first, then AND, then OR."
     },
     {
       "id": "fl07",
       "outcomeId": "lo07",
       "difficulty": "Round 2",
       "prompt": "A linear search works by: (a) jumping to the middle each time (b) checking each item in order until found or the end (c) guessing randomly (d) sorting the data first",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) It checks each item in order until it finds the target or reaches the end.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) It checks each item in order until it finds the target or reaches the end."
     },
     {
       "id": "fl08",
       "outcomeId": "lo08",
       "difficulty": "Round 2",
       "prompt": "In Python, which operator means 'is equal to'? (a) = (b) == (c) => (d) <>",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) == means 'is equal to'; a single = assigns a value.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) == means 'is equal to'; a single = assigns a value."
     },
     {
       "id": "fl09",
       "outcomeId": "lo09",
       "difficulty": "Round 3",
       "prompt": "In Python, the command for 'else if' is: (a) elseif (b) else if (c) elif (d) elsif",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) elif.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(c) elif."
     },
     {
       "id": "fl10",
       "outcomeId": "lo10",
       "difficulty": "Round 3",
       "prompt": "The Boolean data type can hold: (a) any number (b) only True or False (c) only text (d) only 0 to 9",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) Only True or False.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) Only True or False."
     },
     {
       "id": "fl11",
       "outcomeId": "lo01",
       "difficulty": "Round 3",
       "prompt": "What does bool(\"False\") return in Python? (a) False (b) True (c) an error (d) 0",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) True - any non-empty string casts to True, even the word 'False'.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) True - any non-empty string casts to True, even the word 'False'."
     },
     {
       "id": "fl12",
       "outcomeId": "lo02",
       "difficulty": "Round 3",
       "prompt": "Which Python code imports the random library? (a) include random (b) import random (c) library random (d) random.import()",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) import random.",
       "hint": "Look back at what Algorithm and Pseudocode mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) import random."
     }
   ],
   "realProblems": [
@@ -1362,78 +1394,78 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Answer in one or two sentences each.",
+      "prompt": "What is pseudocode used for, and why is it called 'language independent'?",
       "keyIdeas": [
         "Algorithm",
         "Pseudocode",
         "High-level language"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "It is used to plan and design a program before coding. It is language independent because any programmer, whatever language they use, can read it and build it in their own language."
     },
     {
       "id": "reason02",
       "outcomeId": "lo02",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "What is pseudocode used for, and why is it called 'language independent'?",
+      "prompt": "Name the three programming constructs.",
       "keyIdeas": [
         "Pseudocode",
         "High-level language",
         "Variable"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "Sequence, selection and iteration."
     },
     {
       "id": "reason03",
       "outcomeId": "lo03",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Name the three programming constructs.",
+      "prompt": "State the three parts of a conditional statement.",
       "keyIdeas": [
         "High-level language",
         "Variable",
         "Assignment"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "A condition that is true or false; statements that run when it is true; statements that run when it is false."
     },
     {
       "id": "reason04",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "State the three parts of a conditional statement.",
+      "prompt": "In Python, why must you use == and not = inside an if statement?",
       "keyIdeas": [
         "Variable",
         "Assignment",
         "Identifier"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "In Python a single = assigns a value to a variable, while == tests whether two values are equal. A condition needs the comparison ==."
     },
     {
       "id": "reason05",
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "In Python, why must you use == and not = inside an if statement?",
+      "prompt": "What is the difference between the data \"True\" and the data True in Python?",
       "keyIdeas": [
         "Assignment",
         "Identifier",
         "Selection"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "\"True\" (with quotation marks) is a string - the word. True (no quotation marks) is the Boolean value. They behave differently."
     },
     {
       "id": "reason06",
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "What is the difference between the data \"True\" and the data True in Python?",
+      "prompt": "What is a flag, and what data type is used for one?",
       "keyIdeas": [
         "Identifier",
         "Selection",
         "Condition"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "A flag is a variable that records whether something has happened. It uses the Boolean data type (True/False)."
     }
   ],
   "project": {
@@ -1462,192 +1494,192 @@
         "type": "Concept",
         "outcomeId": "lo01",
         "difficulty": "Basic",
-        "question": "What does “Algorithm” mean in computing?",
+        "question": "Pseudocode is best described as:",
         "options": [
-          "A set of ordered steps that are followed to solve a problem or complete a task.",
-          "A way of planning a program that is halfway between everyday English and real code; it has no fixed syntax.",
-          "A programming language, such as Python, designed to be easy for humans to read and write.",
-          "A named location in memory that stores one item of data, which can change while the program runs."
+          "a finished program",
+          "a plan for a program, halfway between English and code",
+          "a type of computer",
+          "a programming language with strict rules"
         ],
-        "answer": "A set of ordered steps that are followed to solve a problem or complete a task.",
+        "answer": "a plan for a program, halfway between English and code",
         "hint": "Use the Unit 1 Computing Words reference.",
-        "explanation": "Algorithm means a set of ordered steps that are followed to solve a problem or complete a task.."
+        "explanation": "A plan for a program, between English and code. Pseudocode has no strict fixed syntax."
       },
       {
         "id": "q02",
         "type": "Concept",
         "outcomeId": "lo02",
         "difficulty": "Basic",
-        "question": "What does “Pseudocode” mean in computing?",
+        "question": "In this unit's pseudocode, which symbol means 'assign a value to a variable'?",
         "options": [
-          "A way of planning a program that is halfway between everyday English and real code; it has no fixed syntax.",
-          "A programming language, such as Python, designed to be easy for humans to read and write.",
-          "A named location in memory that stores one item of data, which can change while the program runs.",
-          "Storing a value in a variable, shown by <- in pseudocode or = in Python."
+          "==",
+          "the arrow <-",
+          "!",
+          "&"
         ],
-        "answer": "A way of planning a program that is halfway between everyday English and real code; it has no fixed syntax.",
+        "answer": "the arrow <-",
         "hint": "Use the Unit 1 Computing Words reference.",
-        "explanation": "Pseudocode means a way of planning a program that is halfway between everyday English and real code; it has no fixed syntax.."
+        "explanation": "The arrow. In this pseudocode the arrow means assignment; = is kept for comparison."
       },
       {
         "id": "q03",
         "type": "Concept",
         "outcomeId": "lo03",
         "difficulty": "Basic",
-        "question": "What does “High-level language” mean in computing?",
+        "question": "Which is a valid pseudocode variable identifier?",
         "options": [
-          "A programming language, such as Python, designed to be easy for humans to read and write.",
-          "A named location in memory that stores one item of data, which can change while the program runs.",
-          "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
-          "The name given to a variable, constant or sub-routine."
+          "2names",
+          "my name",
+          "firstName",
+          "if"
         ],
-        "answer": "A programming language, such as Python, designed to be easy for humans to read and write.",
+        "answer": "firstName",
         "hint": "Use the Unit 1 Computing Words reference.",
-        "explanation": "High-level language means a programming language, such as Python, designed to be easy for humans to read and write.."
+        "explanation": "firstName - one word, starts with a letter, not a keyword. '2names' starts with a number, 'my name' has a space, 'if' is a keyword."
       },
       {
         "id": "q04",
         "type": "Concept",
         "outcomeId": "lo04",
         "difficulty": "Basic",
-        "question": "What does “Variable” mean in computing?",
+        "question": "In an ELSEIF chain, what happens after the first true condition is found?",
         "options": [
-          "A named location in memory that stores one item of data, which can change while the program runs.",
-          "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
-          "The name given to a variable, constant or sub-routine.",
-          "Choosing which code to run based on whether a condition is true or false."
+          "all conditions still run",
+          "the program stops completely",
+          "its code runs and the rest of the chain is skipped",
+          "the ELSE always runs too"
         ],
-        "answer": "A named location in memory that stores one item of data, which can change while the program runs.",
+        "answer": "its code runs and the rest of the chain is skipped",
         "hint": "Use the Unit 1 Computing Words reference.",
-        "explanation": "Variable means a named location in memory that stores one item of data, which can change while the program runs.."
+        "explanation": "Its code runs and the rest of the chain is skipped."
       },
       {
         "id": "q05",
         "type": "Application",
         "outcomeId": "lo05",
         "difficulty": "Core",
-        "question": "What does “Assignment” mean in computing?",
+        "question": "AND gives a true result when:",
         "options": [
-          "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
-          "The name given to a variable, constant or sub-routine.",
-          "Choosing which code to run based on whether a condition is true or false.",
-          "A comparison test that gives a result of either true or false."
+          "either condition is true",
+          "both conditions are true",
+          "neither is true",
+          "the first is false"
         ],
-        "answer": "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
+        "answer": "both conditions are true",
         "hint": "Use the Unit 1 Computing Words reference.",
-        "explanation": "Assignment means storing a value in a variable, shown by <- in pseudocode or = in Python.."
+        "explanation": "Both conditions are true."
       },
       {
         "id": "q06",
         "type": "Application",
         "outcomeId": "lo06",
         "difficulty": "Core",
-        "question": "What does “Identifier” mean in computing?",
+        "question": "Which order do Boolean operators run in?",
         "options": [
-          "The name given to a variable, constant or sub-routine.",
-          "Choosing which code to run based on whether a condition is true or false.",
-          "A comparison test that gives a result of either true or false.",
-          "Code that runs different actions depending on whether a condition is true or false (an IF statement)."
+          "OR, AND, NOT",
+          "AND, OR, NOT",
+          "NOT, AND, OR",
+          "NOT, OR, AND"
         ],
-        "answer": "The name given to a variable, constant or sub-routine.",
+        "answer": "NOT, AND, OR",
         "hint": "Use the Unit 1 Computing Words reference.",
-        "explanation": "Identifier means the name given to a variable, constant or sub-routine.."
+        "explanation": "NOT first, then AND, then OR."
       },
       {
         "id": "q07",
         "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
-        "question": "Which computing word matches this meaning: Choosing which code to run based on whether a condition is true or false.?",
+        "question": "A linear search works by:",
         "options": [
-          "Selection",
-          "Condition",
-          "Conditional statement",
-          "Boolean operator"
+          "jumping to the middle each time",
+          "checking each item in order until found or the end",
+          "guessing randomly",
+          "sorting the data first"
         ],
-        "answer": "Selection",
+        "answer": "checking each item in order until found or the end",
         "hint": "Use the Unit 1 Computing Words reference.",
-        "explanation": "Selection means choosing which code to run based on whether a condition is true or false.."
+        "explanation": "It checks each item in order until it finds the target or reaches the end."
       },
       {
         "id": "q08",
         "type": "Application",
         "outcomeId": "lo08",
         "difficulty": "Core",
-        "question": "Which computing word matches this meaning: A comparison test that gives a result of either true or false.?",
+        "question": "In Python, which operator means 'is equal to'?",
         "options": [
-          "Condition",
-          "Conditional statement",
-          "Boolean operator",
-          "Indentation"
+          "=",
+          "==",
+          "=>",
+          "<>"
         ],
-        "answer": "Condition",
+        "answer": "==",
         "hint": "Use the Unit 1 Computing Words reference.",
-        "explanation": "Condition means a comparison test that gives a result of either true or false.."
+        "explanation": "== means 'is equal to'; a single = assigns a value."
       },
       {
         "id": "q09",
         "type": "Reasoning",
         "outcomeId": "lo09",
         "difficulty": "Core",
-        "question": "Which computing word matches this meaning: Code that runs different actions depending on whether a condition is true or false (an IF statement).?",
+        "question": "In Python, the command for 'else if' is:",
         "options": [
-          "Conditional statement",
-          "Boolean operator",
-          "Indentation",
-          "Linear search"
+          "elseif",
+          "else if",
+          "elif",
+          "elsif"
         ],
-        "answer": "Conditional statement",
+        "answer": "elif",
         "hint": "Use the Unit 1 Computing Words reference.",
-        "explanation": "Conditional statement means code that runs different actions depending on whether a condition is true or false (an IF statement).."
+        "explanation": "elif."
       },
       {
         "id": "q10",
         "type": "Reasoning",
         "outcomeId": "lo10",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: AND, OR or NOT - used to combine or reverse conditions.?",
+        "question": "The Boolean data type can hold:",
         "options": [
-          "Boolean operator",
-          "Indentation",
-          "Linear search",
-          "Data type"
+          "any number",
+          "only True or False",
+          "only text",
+          "only 0 to 9"
         ],
-        "answer": "Boolean operator",
+        "answer": "only True or False",
         "hint": "Use the Unit 1 Computing Words reference.",
-        "explanation": "Boolean operator means aND, OR or NOT - used to combine or reverse conditions.."
+        "explanation": "Only True or False."
       },
       {
         "id": "q11",
         "type": "Reasoning",
         "outcomeId": "lo01",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: Spaces at the start of a line; in Python, indentation shows which code is inside a block.?",
+        "question": "What does bool(\"False\") return in Python?",
         "options": [
-          "Indentation",
-          "Linear search",
-          "Data type",
-          "Boolean data type"
+          "False",
+          "True",
+          "an error",
+          "0"
         ],
-        "answer": "Indentation",
+        "answer": "True",
         "hint": "Use the Unit 1 Computing Words reference.",
-        "explanation": "Indentation means spaces at the start of a line; in Python, indentation shows which code is inside a block.."
+        "explanation": "True - any non-empty string casts to True, even the word 'False'."
       },
       {
         "id": "q12",
         "type": "Reasoning",
         "outcomeId": "lo02",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: A searching algorithm that checks each item in order, one after another, until it finds the target.?",
+        "question": "Which Python code imports the random library?",
         "options": [
-          "Linear search",
-          "Data type",
-          "Boolean data type",
-          "Flag"
+          "include random",
+          "import random",
+          "library random",
+          "random.import()"
         ],
-        "answer": "Linear search",
+        "answer": "import random",
         "hint": "Use the Unit 1 Computing Words reference.",
-        "explanation": "Linear search means a searching algorithm that checks each item in order, one after another, until it finds the target.."
+        "explanation": "import random."
       }
     ]
   },
@@ -1663,52 +1695,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Algorithm” mean in computing?",
+            "prompt": "Pseudocode is best described as:",
             "choices": [
-              "A set of ordered steps that are followed to solve a problem or complete a task.",
-              "A way of planning a program that is halfway between everyday English and real code; it has no fixed syntax.",
-              "A programming language, such as Python, designed to be easy for humans to read and write.",
-              "A named location in memory that stores one item of data, which can change while the program runs."
+              "a finished program",
+              "a plan for a program, halfway between English and code",
+              "a type of computer",
+              "a programming language with strict rules"
             ],
-            "answer": "A set of ordered steps that are followed to solve a problem or complete a task.",
+            "answer": "a plan for a program, halfway between English and code",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Algorithm means a set of ordered steps that are followed to solve a problem or complete a task.."
+            "explanation": "A plan for a program, between English and code. Pseudocode has no strict fixed syntax."
           },
           {
-            "prompt": "What does “Variable” mean in computing?",
+            "prompt": "In an ELSEIF chain, what happens after the first true condition is found?",
             "choices": [
-              "A named location in memory that stores one item of data, which can change while the program runs.",
-              "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
-              "The name given to a variable, constant or sub-routine.",
-              "Choosing which code to run based on whether a condition is true or false."
+              "all conditions still run",
+              "the program stops completely",
+              "its code runs and the rest of the chain is skipped",
+              "the ELSE always runs too"
             ],
-            "answer": "A named location in memory that stores one item of data, which can change while the program runs.",
+            "answer": "its code runs and the rest of the chain is skipped",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Variable means a named location in memory that stores one item of data, which can change while the program runs.."
+            "explanation": "Its code runs and the rest of the chain is skipped."
           },
           {
-            "prompt": "Which computing word matches this meaning: Choosing which code to run based on whether a condition is true or false.?",
+            "prompt": "A linear search works by:",
             "choices": [
-              "Selection",
-              "Condition",
-              "Conditional statement",
-              "Boolean operator"
+              "jumping to the middle each time",
+              "checking each item in order until found or the end",
+              "guessing randomly",
+              "sorting the data first"
             ],
-            "answer": "Selection",
+            "answer": "checking each item in order until found or the end",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Selection means choosing which code to run based on whether a condition is true or false.."
+            "explanation": "It checks each item in order until it finds the target or reaches the end."
           },
           {
-            "prompt": "Which computing word matches this meaning: AND, OR or NOT - used to combine or reverse conditions.?",
+            "prompt": "The Boolean data type can hold:",
             "choices": [
-              "Boolean operator",
-              "Indentation",
-              "Linear search",
-              "Data type"
+              "any number",
+              "only True or False",
+              "only text",
+              "only 0 to 9"
             ],
-            "answer": "Boolean operator",
+            "answer": "only True or False",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Boolean operator means aND, OR or NOT - used to combine or reverse conditions.."
+            "explanation": "Only True or False."
           }
         ]
       },
@@ -1721,52 +1753,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Pseudocode” mean in computing?",
+            "prompt": "In this unit's pseudocode, which symbol means 'assign a value to a variable'?",
             "choices": [
-              "A way of planning a program that is halfway between everyday English and real code; it has no fixed syntax.",
-              "A programming language, such as Python, designed to be easy for humans to read and write.",
-              "A named location in memory that stores one item of data, which can change while the program runs.",
-              "Storing a value in a variable, shown by <- in pseudocode or = in Python."
+              "==",
+              "the arrow <-",
+              "!",
+              "&"
             ],
-            "answer": "A way of planning a program that is halfway between everyday English and real code; it has no fixed syntax.",
+            "answer": "the arrow <-",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Pseudocode means a way of planning a program that is halfway between everyday English and real code; it has no fixed syntax.."
+            "explanation": "The arrow. In this pseudocode the arrow means assignment; = is kept for comparison."
           },
           {
-            "prompt": "What does “Assignment” mean in computing?",
+            "prompt": "AND gives a true result when:",
             "choices": [
-              "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
-              "The name given to a variable, constant or sub-routine.",
-              "Choosing which code to run based on whether a condition is true or false.",
-              "A comparison test that gives a result of either true or false."
+              "either condition is true",
+              "both conditions are true",
+              "neither is true",
+              "the first is false"
             ],
-            "answer": "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
+            "answer": "both conditions are true",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Assignment means storing a value in a variable, shown by <- in pseudocode or = in Python.."
+            "explanation": "Both conditions are true."
           },
           {
-            "prompt": "Which computing word matches this meaning: A comparison test that gives a result of either true or false.?",
+            "prompt": "In Python, which operator means 'is equal to'?",
             "choices": [
-              "Condition",
-              "Conditional statement",
-              "Boolean operator",
-              "Indentation"
+              "=",
+              "==",
+              "=>",
+              "<>"
             ],
-            "answer": "Condition",
+            "answer": "==",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Condition means a comparison test that gives a result of either true or false.."
+            "explanation": "== means 'is equal to'; a single = assigns a value."
           },
           {
-            "prompt": "Which computing word matches this meaning: Spaces at the start of a line; in Python, indentation shows which code is inside a block.?",
+            "prompt": "What does bool(\"False\") return in Python?",
             "choices": [
-              "Indentation",
-              "Linear search",
-              "Data type",
-              "Boolean data type"
+              "False",
+              "True",
+              "an error",
+              "0"
             ],
-            "answer": "Indentation",
+            "answer": "True",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Indentation means spaces at the start of a line; in Python, indentation shows which code is inside a block.."
+            "explanation": "True - any non-empty string casts to True, even the word 'False'."
           }
         ]
       },
@@ -1779,52 +1811,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “High-level language” mean in computing?",
+            "prompt": "Which is a valid pseudocode variable identifier?",
             "choices": [
-              "A programming language, such as Python, designed to be easy for humans to read and write.",
-              "A named location in memory that stores one item of data, which can change while the program runs.",
-              "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
-              "The name given to a variable, constant or sub-routine."
+              "2names",
+              "my name",
+              "firstName",
+              "if"
             ],
-            "answer": "A programming language, such as Python, designed to be easy for humans to read and write.",
+            "answer": "firstName",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "High-level language means a programming language, such as Python, designed to be easy for humans to read and write.."
+            "explanation": "firstName - one word, starts with a letter, not a keyword. '2names' starts with a number, 'my name' has a space, 'if' is a keyword."
           },
           {
-            "prompt": "What does “Identifier” mean in computing?",
+            "prompt": "Which order do Boolean operators run in?",
             "choices": [
-              "The name given to a variable, constant or sub-routine.",
-              "Choosing which code to run based on whether a condition is true or false.",
-              "A comparison test that gives a result of either true or false.",
-              "Code that runs different actions depending on whether a condition is true or false (an IF statement)."
+              "OR, AND, NOT",
+              "AND, OR, NOT",
+              "NOT, AND, OR",
+              "NOT, OR, AND"
             ],
-            "answer": "The name given to a variable, constant or sub-routine.",
+            "answer": "NOT, AND, OR",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Identifier means the name given to a variable, constant or sub-routine.."
+            "explanation": "NOT first, then AND, then OR."
           },
           {
-            "prompt": "Which computing word matches this meaning: Code that runs different actions depending on whether a condition is true or false (an IF statement).?",
+            "prompt": "In Python, the command for 'else if' is:",
             "choices": [
-              "Conditional statement",
-              "Boolean operator",
-              "Indentation",
-              "Linear search"
+              "elseif",
+              "else if",
+              "elif",
+              "elsif"
             ],
-            "answer": "Conditional statement",
+            "answer": "elif",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Conditional statement means code that runs different actions depending on whether a condition is true or false (an IF statement).."
+            "explanation": "elif."
           },
           {
-            "prompt": "Which computing word matches this meaning: A searching algorithm that checks each item in order, one after another, until it finds the target.?",
+            "prompt": "Which Python code imports the random library?",
             "choices": [
-              "Linear search",
-              "Data type",
-              "Boolean data type",
-              "Flag"
+              "include random",
+              "import random",
+              "library random",
+              "random.import()"
             ],
-            "answer": "Linear search",
+            "answer": "import random",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Linear search means a searching algorithm that checks each item in order, one after another, until it finds the target.."
+            "explanation": "import random."
           }
         ]
       },
@@ -1837,52 +1869,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Variable” mean in computing?",
+            "prompt": "In an ELSEIF chain, what happens after the first true condition is found?",
             "choices": [
-              "A named location in memory that stores one item of data, which can change while the program runs.",
-              "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
-              "The name given to a variable, constant or sub-routine.",
-              "Choosing which code to run based on whether a condition is true or false."
+              "all conditions still run",
+              "the program stops completely",
+              "its code runs and the rest of the chain is skipped",
+              "the ELSE always runs too"
             ],
-            "answer": "A named location in memory that stores one item of data, which can change while the program runs.",
+            "answer": "its code runs and the rest of the chain is skipped",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Variable means a named location in memory that stores one item of data, which can change while the program runs.."
+            "explanation": "Its code runs and the rest of the chain is skipped."
           },
           {
-            "prompt": "Which computing word matches this meaning: Choosing which code to run based on whether a condition is true or false.?",
+            "prompt": "A linear search works by:",
             "choices": [
-              "Selection",
-              "Condition",
-              "Conditional statement",
-              "Boolean operator"
+              "jumping to the middle each time",
+              "checking each item in order until found or the end",
+              "guessing randomly",
+              "sorting the data first"
             ],
-            "answer": "Selection",
+            "answer": "checking each item in order until found or the end",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Selection means choosing which code to run based on whether a condition is true or false.."
+            "explanation": "It checks each item in order until it finds the target or reaches the end."
           },
           {
-            "prompt": "Which computing word matches this meaning: AND, OR or NOT - used to combine or reverse conditions.?",
+            "prompt": "The Boolean data type can hold:",
             "choices": [
-              "Boolean operator",
-              "Indentation",
-              "Linear search",
-              "Data type"
+              "any number",
+              "only True or False",
+              "only text",
+              "only 0 to 9"
             ],
-            "answer": "Boolean operator",
+            "answer": "only True or False",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Boolean operator means aND, OR or NOT - used to combine or reverse conditions.."
+            "explanation": "Only True or False."
           },
           {
-            "prompt": "What does “Algorithm” mean in computing?",
+            "prompt": "Pseudocode is best described as:",
             "choices": [
-              "A set of ordered steps that are followed to solve a problem or complete a task.",
-              "A way of planning a program that is halfway between everyday English and real code; it has no fixed syntax.",
-              "A programming language, such as Python, designed to be easy for humans to read and write.",
-              "A named location in memory that stores one item of data, which can change while the program runs."
+              "a finished program",
+              "a plan for a program, halfway between English and code",
+              "a type of computer",
+              "a programming language with strict rules"
             ],
-            "answer": "A set of ordered steps that are followed to solve a problem or complete a task.",
+            "answer": "a plan for a program, halfway between English and code",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Algorithm means a set of ordered steps that are followed to solve a problem or complete a task.."
+            "explanation": "A plan for a program, between English and code. Pseudocode has no strict fixed syntax."
           }
         ]
       },
@@ -1895,52 +1927,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Assignment” mean in computing?",
+            "prompt": "AND gives a true result when:",
             "choices": [
-              "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
-              "The name given to a variable, constant or sub-routine.",
-              "Choosing which code to run based on whether a condition is true or false.",
-              "A comparison test that gives a result of either true or false."
+              "either condition is true",
+              "both conditions are true",
+              "neither is true",
+              "the first is false"
             ],
-            "answer": "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
+            "answer": "both conditions are true",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Assignment means storing a value in a variable, shown by <- in pseudocode or = in Python.."
+            "explanation": "Both conditions are true."
           },
           {
-            "prompt": "Which computing word matches this meaning: A comparison test that gives a result of either true or false.?",
+            "prompt": "In Python, which operator means 'is equal to'?",
             "choices": [
-              "Condition",
-              "Conditional statement",
-              "Boolean operator",
-              "Indentation"
+              "=",
+              "==",
+              "=>",
+              "<>"
             ],
-            "answer": "Condition",
+            "answer": "==",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Condition means a comparison test that gives a result of either true or false.."
+            "explanation": "== means 'is equal to'; a single = assigns a value."
           },
           {
-            "prompt": "Which computing word matches this meaning: Spaces at the start of a line; in Python, indentation shows which code is inside a block.?",
+            "prompt": "What does bool(\"False\") return in Python?",
             "choices": [
-              "Indentation",
-              "Linear search",
-              "Data type",
-              "Boolean data type"
+              "False",
+              "True",
+              "an error",
+              "0"
             ],
-            "answer": "Indentation",
+            "answer": "True",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Indentation means spaces at the start of a line; in Python, indentation shows which code is inside a block.."
+            "explanation": "True - any non-empty string casts to True, even the word 'False'."
           },
           {
-            "prompt": "What does “Pseudocode” mean in computing?",
+            "prompt": "In this unit's pseudocode, which symbol means 'assign a value to a variable'?",
             "choices": [
-              "A way of planning a program that is halfway between everyday English and real code; it has no fixed syntax.",
-              "A programming language, such as Python, designed to be easy for humans to read and write.",
-              "A named location in memory that stores one item of data, which can change while the program runs.",
-              "Storing a value in a variable, shown by <- in pseudocode or = in Python."
+              "==",
+              "the arrow <-",
+              "!",
+              "&"
             ],
-            "answer": "A way of planning a program that is halfway between everyday English and real code; it has no fixed syntax.",
+            "answer": "the arrow <-",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Pseudocode means a way of planning a program that is halfway between everyday English and real code; it has no fixed syntax.."
+            "explanation": "The arrow. In this pseudocode the arrow means assignment; = is kept for comparison."
           }
         ]
       },
@@ -1953,52 +1985,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Identifier” mean in computing?",
+            "prompt": "Which order do Boolean operators run in?",
             "choices": [
-              "The name given to a variable, constant or sub-routine.",
-              "Choosing which code to run based on whether a condition is true or false.",
-              "A comparison test that gives a result of either true or false.",
-              "Code that runs different actions depending on whether a condition is true or false (an IF statement)."
+              "OR, AND, NOT",
+              "AND, OR, NOT",
+              "NOT, AND, OR",
+              "NOT, OR, AND"
             ],
-            "answer": "The name given to a variable, constant or sub-routine.",
+            "answer": "NOT, AND, OR",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Identifier means the name given to a variable, constant or sub-routine.."
+            "explanation": "NOT first, then AND, then OR."
           },
           {
-            "prompt": "Which computing word matches this meaning: Code that runs different actions depending on whether a condition is true or false (an IF statement).?",
+            "prompt": "In Python, the command for 'else if' is:",
             "choices": [
-              "Conditional statement",
-              "Boolean operator",
-              "Indentation",
-              "Linear search"
+              "elseif",
+              "else if",
+              "elif",
+              "elsif"
             ],
-            "answer": "Conditional statement",
+            "answer": "elif",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Conditional statement means code that runs different actions depending on whether a condition is true or false (an IF statement).."
+            "explanation": "elif."
           },
           {
-            "prompt": "Which computing word matches this meaning: A searching algorithm that checks each item in order, one after another, until it finds the target.?",
+            "prompt": "Which Python code imports the random library?",
             "choices": [
-              "Linear search",
-              "Data type",
-              "Boolean data type",
-              "Flag"
+              "include random",
+              "import random",
+              "library random",
+              "random.import()"
             ],
-            "answer": "Linear search",
+            "answer": "import random",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Linear search means a searching algorithm that checks each item in order, one after another, until it finds the target.."
+            "explanation": "import random."
           },
           {
-            "prompt": "What does “High-level language” mean in computing?",
+            "prompt": "Which is a valid pseudocode variable identifier?",
             "choices": [
-              "A programming language, such as Python, designed to be easy for humans to read and write.",
-              "A named location in memory that stores one item of data, which can change while the program runs.",
-              "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
-              "The name given to a variable, constant or sub-routine."
+              "2names",
+              "my name",
+              "firstName",
+              "if"
             ],
-            "answer": "A programming language, such as Python, designed to be easy for humans to read and write.",
+            "answer": "firstName",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "High-level language means a programming language, such as Python, designed to be easy for humans to read and write.."
+            "explanation": "firstName - one word, starts with a letter, not a keyword. '2names' starts with a number, 'my name' has a space, 'if' is a keyword."
           }
         ]
       },
@@ -2011,52 +2043,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: Choosing which code to run based on whether a condition is true or false.?",
+            "prompt": "A linear search works by:",
             "choices": [
-              "Selection",
-              "Condition",
-              "Conditional statement",
-              "Boolean operator"
+              "jumping to the middle each time",
+              "checking each item in order until found or the end",
+              "guessing randomly",
+              "sorting the data first"
             ],
-            "answer": "Selection",
+            "answer": "checking each item in order until found or the end",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Selection means choosing which code to run based on whether a condition is true or false.."
+            "explanation": "It checks each item in order until it finds the target or reaches the end."
           },
           {
-            "prompt": "Which computing word matches this meaning: AND, OR or NOT - used to combine or reverse conditions.?",
+            "prompt": "The Boolean data type can hold:",
             "choices": [
-              "Boolean operator",
-              "Indentation",
-              "Linear search",
-              "Data type"
+              "any number",
+              "only True or False",
+              "only text",
+              "only 0 to 9"
             ],
-            "answer": "Boolean operator",
+            "answer": "only True or False",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Boolean operator means aND, OR or NOT - used to combine or reverse conditions.."
+            "explanation": "Only True or False."
           },
           {
-            "prompt": "What does “Algorithm” mean in computing?",
+            "prompt": "Pseudocode is best described as:",
             "choices": [
-              "A set of ordered steps that are followed to solve a problem or complete a task.",
-              "A way of planning a program that is halfway between everyday English and real code; it has no fixed syntax.",
-              "A programming language, such as Python, designed to be easy for humans to read and write.",
-              "A named location in memory that stores one item of data, which can change while the program runs."
+              "a finished program",
+              "a plan for a program, halfway between English and code",
+              "a type of computer",
+              "a programming language with strict rules"
             ],
-            "answer": "A set of ordered steps that are followed to solve a problem or complete a task.",
+            "answer": "a plan for a program, halfway between English and code",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Algorithm means a set of ordered steps that are followed to solve a problem or complete a task.."
+            "explanation": "A plan for a program, between English and code. Pseudocode has no strict fixed syntax."
           },
           {
-            "prompt": "What does “Variable” mean in computing?",
+            "prompt": "In an ELSEIF chain, what happens after the first true condition is found?",
             "choices": [
-              "A named location in memory that stores one item of data, which can change while the program runs.",
-              "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
-              "The name given to a variable, constant or sub-routine.",
-              "Choosing which code to run based on whether a condition is true or false."
+              "all conditions still run",
+              "the program stops completely",
+              "its code runs and the rest of the chain is skipped",
+              "the ELSE always runs too"
             ],
-            "answer": "A named location in memory that stores one item of data, which can change while the program runs.",
+            "answer": "its code runs and the rest of the chain is skipped",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Variable means a named location in memory that stores one item of data, which can change while the program runs.."
+            "explanation": "Its code runs and the rest of the chain is skipped."
           }
         ]
       },
@@ -2069,52 +2101,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: A comparison test that gives a result of either true or false.?",
+            "prompt": "In Python, which operator means 'is equal to'?",
             "choices": [
-              "Condition",
-              "Conditional statement",
-              "Boolean operator",
-              "Indentation"
+              "=",
+              "==",
+              "=>",
+              "<>"
             ],
-            "answer": "Condition",
+            "answer": "==",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Condition means a comparison test that gives a result of either true or false.."
+            "explanation": "== means 'is equal to'; a single = assigns a value."
           },
           {
-            "prompt": "Which computing word matches this meaning: Spaces at the start of a line; in Python, indentation shows which code is inside a block.?",
+            "prompt": "What does bool(\"False\") return in Python?",
             "choices": [
-              "Indentation",
-              "Linear search",
-              "Data type",
-              "Boolean data type"
+              "False",
+              "True",
+              "an error",
+              "0"
             ],
-            "answer": "Indentation",
+            "answer": "True",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Indentation means spaces at the start of a line; in Python, indentation shows which code is inside a block.."
+            "explanation": "True - any non-empty string casts to True, even the word 'False'."
           },
           {
-            "prompt": "What does “Pseudocode” mean in computing?",
+            "prompt": "In this unit's pseudocode, which symbol means 'assign a value to a variable'?",
             "choices": [
-              "A way of planning a program that is halfway between everyday English and real code; it has no fixed syntax.",
-              "A programming language, such as Python, designed to be easy for humans to read and write.",
-              "A named location in memory that stores one item of data, which can change while the program runs.",
-              "Storing a value in a variable, shown by <- in pseudocode or = in Python."
+              "==",
+              "the arrow <-",
+              "!",
+              "&"
             ],
-            "answer": "A way of planning a program that is halfway between everyday English and real code; it has no fixed syntax.",
+            "answer": "the arrow <-",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Pseudocode means a way of planning a program that is halfway between everyday English and real code; it has no fixed syntax.."
+            "explanation": "The arrow. In this pseudocode the arrow means assignment; = is kept for comparison."
           },
           {
-            "prompt": "What does “Assignment” mean in computing?",
+            "prompt": "AND gives a true result when:",
             "choices": [
-              "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
-              "The name given to a variable, constant or sub-routine.",
-              "Choosing which code to run based on whether a condition is true or false.",
-              "A comparison test that gives a result of either true or false."
+              "either condition is true",
+              "both conditions are true",
+              "neither is true",
+              "the first is false"
             ],
-            "answer": "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
+            "answer": "both conditions are true",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Assignment means storing a value in a variable, shown by <- in pseudocode or = in Python.."
+            "explanation": "Both conditions are true."
           }
         ]
       },
@@ -2127,52 +2159,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: Code that runs different actions depending on whether a condition is true or false (an IF statement).?",
+            "prompt": "In Python, the command for 'else if' is:",
             "choices": [
-              "Conditional statement",
-              "Boolean operator",
-              "Indentation",
-              "Linear search"
+              "elseif",
+              "else if",
+              "elif",
+              "elsif"
             ],
-            "answer": "Conditional statement",
+            "answer": "elif",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Conditional statement means code that runs different actions depending on whether a condition is true or false (an IF statement).."
+            "explanation": "elif."
           },
           {
-            "prompt": "Which computing word matches this meaning: A searching algorithm that checks each item in order, one after another, until it finds the target.?",
+            "prompt": "Which Python code imports the random library?",
             "choices": [
-              "Linear search",
-              "Data type",
-              "Boolean data type",
-              "Flag"
+              "include random",
+              "import random",
+              "library random",
+              "random.import()"
             ],
-            "answer": "Linear search",
+            "answer": "import random",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Linear search means a searching algorithm that checks each item in order, one after another, until it finds the target.."
+            "explanation": "import random."
           },
           {
-            "prompt": "What does “High-level language” mean in computing?",
+            "prompt": "Which is a valid pseudocode variable identifier?",
             "choices": [
-              "A programming language, such as Python, designed to be easy for humans to read and write.",
-              "A named location in memory that stores one item of data, which can change while the program runs.",
-              "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
-              "The name given to a variable, constant or sub-routine."
+              "2names",
+              "my name",
+              "firstName",
+              "if"
             ],
-            "answer": "A programming language, such as Python, designed to be easy for humans to read and write.",
+            "answer": "firstName",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "High-level language means a programming language, such as Python, designed to be easy for humans to read and write.."
+            "explanation": "firstName - one word, starts with a letter, not a keyword. '2names' starts with a number, 'my name' has a space, 'if' is a keyword."
           },
           {
-            "prompt": "What does “Identifier” mean in computing?",
+            "prompt": "Which order do Boolean operators run in?",
             "choices": [
-              "The name given to a variable, constant or sub-routine.",
-              "Choosing which code to run based on whether a condition is true or false.",
-              "A comparison test that gives a result of either true or false.",
-              "Code that runs different actions depending on whether a condition is true or false (an IF statement)."
+              "OR, AND, NOT",
+              "AND, OR, NOT",
+              "NOT, AND, OR",
+              "NOT, OR, AND"
             ],
-            "answer": "The name given to a variable, constant or sub-routine.",
+            "answer": "NOT, AND, OR",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Identifier means the name given to a variable, constant or sub-routine.."
+            "explanation": "NOT first, then AND, then OR."
           }
         ]
       },
@@ -2185,52 +2217,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: AND, OR or NOT - used to combine or reverse conditions.?",
+            "prompt": "The Boolean data type can hold:",
             "choices": [
-              "Boolean operator",
-              "Indentation",
-              "Linear search",
-              "Data type"
+              "any number",
+              "only True or False",
+              "only text",
+              "only 0 to 9"
             ],
-            "answer": "Boolean operator",
+            "answer": "only True or False",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Boolean operator means aND, OR or NOT - used to combine or reverse conditions.."
+            "explanation": "Only True or False."
           },
           {
-            "prompt": "What does “Algorithm” mean in computing?",
+            "prompt": "Pseudocode is best described as:",
             "choices": [
-              "A set of ordered steps that are followed to solve a problem or complete a task.",
-              "A way of planning a program that is halfway between everyday English and real code; it has no fixed syntax.",
-              "A programming language, such as Python, designed to be easy for humans to read and write.",
-              "A named location in memory that stores one item of data, which can change while the program runs."
+              "a finished program",
+              "a plan for a program, halfway between English and code",
+              "a type of computer",
+              "a programming language with strict rules"
             ],
-            "answer": "A set of ordered steps that are followed to solve a problem or complete a task.",
+            "answer": "a plan for a program, halfway between English and code",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Algorithm means a set of ordered steps that are followed to solve a problem or complete a task.."
+            "explanation": "A plan for a program, between English and code. Pseudocode has no strict fixed syntax."
           },
           {
-            "prompt": "What does “Variable” mean in computing?",
+            "prompt": "In an ELSEIF chain, what happens after the first true condition is found?",
             "choices": [
-              "A named location in memory that stores one item of data, which can change while the program runs.",
-              "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
-              "The name given to a variable, constant or sub-routine.",
-              "Choosing which code to run based on whether a condition is true or false."
+              "all conditions still run",
+              "the program stops completely",
+              "its code runs and the rest of the chain is skipped",
+              "the ELSE always runs too"
             ],
-            "answer": "A named location in memory that stores one item of data, which can change while the program runs.",
+            "answer": "its code runs and the rest of the chain is skipped",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Variable means a named location in memory that stores one item of data, which can change while the program runs.."
+            "explanation": "Its code runs and the rest of the chain is skipped."
           },
           {
-            "prompt": "Which computing word matches this meaning: Choosing which code to run based on whether a condition is true or false.?",
+            "prompt": "A linear search works by:",
             "choices": [
-              "Selection",
-              "Condition",
-              "Conditional statement",
-              "Boolean operator"
+              "jumping to the middle each time",
+              "checking each item in order until found or the end",
+              "guessing randomly",
+              "sorting the data first"
             ],
-            "answer": "Selection",
+            "answer": "checking each item in order until found or the end",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Selection means choosing which code to run based on whether a condition is true or false.."
+            "explanation": "It checks each item in order until it finds the target or reaches the end."
           }
         ]
       },
@@ -2243,52 +2275,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: Spaces at the start of a line; in Python, indentation shows which code is inside a block.?",
+            "prompt": "What does bool(\"False\") return in Python?",
             "choices": [
-              "Indentation",
-              "Linear search",
-              "Data type",
-              "Boolean data type"
+              "False",
+              "True",
+              "an error",
+              "0"
             ],
-            "answer": "Indentation",
+            "answer": "True",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Indentation means spaces at the start of a line; in Python, indentation shows which code is inside a block.."
+            "explanation": "True - any non-empty string casts to True, even the word 'False'."
           },
           {
-            "prompt": "What does “Pseudocode” mean in computing?",
+            "prompt": "In this unit's pseudocode, which symbol means 'assign a value to a variable'?",
             "choices": [
-              "A way of planning a program that is halfway between everyday English and real code; it has no fixed syntax.",
-              "A programming language, such as Python, designed to be easy for humans to read and write.",
-              "A named location in memory that stores one item of data, which can change while the program runs.",
-              "Storing a value in a variable, shown by <- in pseudocode or = in Python."
+              "==",
+              "the arrow <-",
+              "!",
+              "&"
             ],
-            "answer": "A way of planning a program that is halfway between everyday English and real code; it has no fixed syntax.",
+            "answer": "the arrow <-",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Pseudocode means a way of planning a program that is halfway between everyday English and real code; it has no fixed syntax.."
+            "explanation": "The arrow. In this pseudocode the arrow means assignment; = is kept for comparison."
           },
           {
-            "prompt": "What does “Assignment” mean in computing?",
+            "prompt": "AND gives a true result when:",
             "choices": [
-              "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
-              "The name given to a variable, constant or sub-routine.",
-              "Choosing which code to run based on whether a condition is true or false.",
-              "A comparison test that gives a result of either true or false."
+              "either condition is true",
+              "both conditions are true",
+              "neither is true",
+              "the first is false"
             ],
-            "answer": "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
+            "answer": "both conditions are true",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Assignment means storing a value in a variable, shown by <- in pseudocode or = in Python.."
+            "explanation": "Both conditions are true."
           },
           {
-            "prompt": "Which computing word matches this meaning: A comparison test that gives a result of either true or false.?",
+            "prompt": "In Python, which operator means 'is equal to'?",
             "choices": [
-              "Condition",
-              "Conditional statement",
-              "Boolean operator",
-              "Indentation"
+              "=",
+              "==",
+              "=>",
+              "<>"
             ],
-            "answer": "Condition",
+            "answer": "==",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Condition means a comparison test that gives a result of either true or false.."
+            "explanation": "== means 'is equal to'; a single = assigns a value."
           }
         ]
       },
@@ -2301,52 +2333,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: A searching algorithm that checks each item in order, one after another, until it finds the target.?",
+            "prompt": "Which Python code imports the random library?",
             "choices": [
-              "Linear search",
-              "Data type",
-              "Boolean data type",
-              "Flag"
+              "include random",
+              "import random",
+              "library random",
+              "random.import()"
             ],
-            "answer": "Linear search",
+            "answer": "import random",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Linear search means a searching algorithm that checks each item in order, one after another, until it finds the target.."
+            "explanation": "import random."
           },
           {
-            "prompt": "What does “High-level language” mean in computing?",
+            "prompt": "Which is a valid pseudocode variable identifier?",
             "choices": [
-              "A programming language, such as Python, designed to be easy for humans to read and write.",
-              "A named location in memory that stores one item of data, which can change while the program runs.",
-              "Storing a value in a variable, shown by <- in pseudocode or = in Python.",
-              "The name given to a variable, constant or sub-routine."
+              "2names",
+              "my name",
+              "firstName",
+              "if"
             ],
-            "answer": "A programming language, such as Python, designed to be easy for humans to read and write.",
+            "answer": "firstName",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "High-level language means a programming language, such as Python, designed to be easy for humans to read and write.."
+            "explanation": "firstName - one word, starts with a letter, not a keyword. '2names' starts with a number, 'my name' has a space, 'if' is a keyword."
           },
           {
-            "prompt": "What does “Identifier” mean in computing?",
+            "prompt": "Which order do Boolean operators run in?",
             "choices": [
-              "The name given to a variable, constant or sub-routine.",
-              "Choosing which code to run based on whether a condition is true or false.",
-              "A comparison test that gives a result of either true or false.",
-              "Code that runs different actions depending on whether a condition is true or false (an IF statement)."
+              "OR, AND, NOT",
+              "AND, OR, NOT",
+              "NOT, AND, OR",
+              "NOT, OR, AND"
             ],
-            "answer": "The name given to a variable, constant or sub-routine.",
+            "answer": "NOT, AND, OR",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Identifier means the name given to a variable, constant or sub-routine.."
+            "explanation": "NOT first, then AND, then OR."
           },
           {
-            "prompt": "Which computing word matches this meaning: Code that runs different actions depending on whether a condition is true or false (an IF statement).?",
+            "prompt": "In Python, the command for 'else if' is:",
             "choices": [
-              "Conditional statement",
-              "Boolean operator",
-              "Indentation",
-              "Linear search"
+              "elseif",
+              "else if",
+              "elif",
+              "elsif"
             ],
-            "answer": "Conditional statement",
+            "answer": "elif",
             "clue": "Use the Unit 1 Computing Words reference.",
-            "explanation": "Conditional statement means code that runs different actions depending on whether a condition is true or false (an IF statement).."
+            "explanation": "elif."
           }
         ]
       }

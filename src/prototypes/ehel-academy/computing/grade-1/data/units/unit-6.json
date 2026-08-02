@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-01T14:06:00.156Z",
+  "generatedAt": "2026-08-02T10:33:38.391Z",
   "stage": {
     "id": "s01",
     "label": "Stage 1"
@@ -371,6 +371,13 @@
       "prompt": "The Moon should go up, but a step says down. What should the step say? Draw an arrow: which way?",
       "answer": "The step should say Move 2 steps up. The arrow points up.",
       "hint": "Look back at what step and order mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "Move 2 steps",
+      "answer": "Start on Green Flag.",
+      "hint": "Look back at what step and order mean in this unit, then say your answer in a full sentence."
     }
   ],
   "activities": [
@@ -665,6 +672,15 @@
       "answer": "The step should say Move 2 steps up. The arrow points up.",
       "hint": "Look back at what step and order mean in this unit, then say your answer in a full sentence.",
       "errorFeedback": "The step should say Move 2 steps up. The arrow points up."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Move 2 steps",
+      "answer": "Start on Green Flag.",
+      "hint": "Look back at what step and order mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Start on Green Flag."
     }
   ],
   "realProblems": [
@@ -683,7 +699,7 @@
       "outcomeId": "lo02",
       "difficulty": "Core",
       "context": "School",
-      "prompt": "Which block starts the program when you tap the green flag? ([ ] Start on Tap)",
+      "prompt": "Move 2 steps",
       "answer": "Start on Green Flag.",
       "hint": "Look back at what step and order mean in this unit, then say your answer in a full sentence.",
       "errorFeedback": "Check your reasoning against this: Start on Green Flag."
@@ -693,20 +709,20 @@
       "outcomeId": "lo03",
       "difficulty": "Core",
       "context": "Market",
-      "prompt": "A mistake in a program is called a... ([ ] bug)",
-      "answer": "bug.",
+      "prompt": "Which block starts the program when you tap the green flag? ([ ] Start on Tap)",
+      "answer": "Start on Green Flag.",
       "hint": "Look back at what step and order mean in this unit, then say your answer in a full sentence.",
-      "errorFeedback": "Check your reasoning against this: bug."
+      "errorFeedback": "Check your reasoning against this: Start on Green Flag."
     },
     {
       "id": "rp04",
       "outcomeId": "lo04",
       "difficulty": "Core",
       "context": "Community",
-      "prompt": "Put these steps in order. Write 1, 2, 3 in the boxes.",
-      "answer": "Mix = 1, Pour = 2, Cook =",
+      "prompt": "A mistake in a program is called a... ([ ] bug)",
+      "answer": "bug.",
       "hint": "Look back at what step and order mean in this unit, then say your answer in a full sentence.",
-      "errorFeedback": "Check your reasoning against this: Mix = 1, Pour = 2, Cook ="
+      "errorFeedback": "Check your reasoning against this: bug."
     }
   ],
   "reasoningPrompts": [
@@ -741,13 +757,13 @@
       "outcomeId": "lo03",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Explain the key idea in meet scratchjr: make a character walk, and give one example of your own.",
+      "prompt": "Move 2 steps",
       "keyIdeas": [
-        "step",
-        "order",
-        "algorithm"
+        "algorithm",
+        "error",
+        "bug"
       ],
-      "modelAnswer": "Today we open ScratchJr and make a character move. We drag picture blocks and join them together. The yellow Start on Green Flag block starts everything when we tap the green flag at the top.\n\nThe yellow block starts things. The blue arrow blocks make our character walk. Open a new project, tap the picture button to choose a Background, then tap the blue plus to add a character."
+      "modelAnswer": "Start on Green Flag."
     },
     {
       "id": "reason04",

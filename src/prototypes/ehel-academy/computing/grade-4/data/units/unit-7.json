@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-01T14:06:00.722Z",
+  "generatedAt": "2026-08-02T10:33:38.941Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -312,7 +312,7 @@
       "outcomeId": "lo01",
       "difficulty": "Basic",
       "title": "Worked example 1: Data, data tables, records and fields (unplugged)",
-      "prompt": "Explain in your own words: Data, data tables, records and fields (unplugged).",
+      "prompt": "What is a database, and what is a data table?",
       "solution": "A database is an organised collection of facts. We keep data organised so we can find it quickly. The tidiest way is a data table — a grid of rows and columns.\n\nCheck yourself: Can you count the fields and records correctly? Can you see that a record goes across (a row), not down? Can you point to a field, a record and a data item and use the right word for each?\n\nFor example: Teach the three parts using the register below: a field is a column (one kind of information, like Age); a record is a row (everything about one child); and a data item is one fact in one cell (like the 9 in Leila's Age cell). Also separate data (raw facts: “Leila”, \"9 “) from information (” Leila is 9 years old\")."
     },
     {
@@ -320,7 +320,7 @@
       "outcomeId": "lo02",
       "difficulty": "Basic",
       "title": "Worked example 2: Data types (unplugged)",
-      "prompt": "Explain in your own words: Data types (unplugged).",
+      "prompt": "Explain what a field, a record and a data item are.",
       "solution": "Every field has a data type — the kind of data it is allowed to hold. Teach the four main types: Text (letters and other characters), Number (only numbers, and you can do sums with them), Date/Time (a date or a time), and Yes/No (only one of two values).\n\nFor example: Then add Currency as the money type — a Number shown with a money sign like $3.00. The key rule: every cell in one field must use the same data type and format."
     },
     {
@@ -328,7 +328,7 @@
       "outcomeId": "lo03",
       "difficulty": "Basic",
       "title": "Worked example 3: Searching a data table to answer questions (unplugged)",
-      "prompt": "Explain in your own words: Searching a data table to answer questions (unplugged).",
+      "prompt": "Write the data type for each field in the trips table: (a) Traveller",
       "solution": "People keep data so they can answer questions with it. To search a data table, use two steps: Step 1 — choose the right field (which column has the answer?), then Step 2 — scan, count or match down that field. This “field first” habit is the thinking skill of the unit: decide where to look before you look.\n\nFor example: Find one real example of searching a data table to answer questions around you, or on a device you use. Say out loud what it is and why it fits."
     },
     {
@@ -336,16 +336,24 @@
       "outcomeId": "lo04",
       "difficulty": "Intermediate",
       "title": "Worked example 4: From paper to screen: a data table in LibreOffice Calc (on-screen)",
-      "prompt": "Explain in your own words: From paper to screen: a data table in LibreOffice Calc (on-screen).",
-      "solution": "The same data table works on a computer, where it is quicker to change and search. Five Friends. Teach that a spreadsheet is a giant grid: columns have letters (A, B, C.), rows have numbers (1, 2, 3.), and each box is a cell with an address like A1. The header row (row 1) holds the field names; each record goes on its own row underneath.\n\nThis is exactly the layout you build Model it on the projector, step by step, and have you copy each step.\n\nFor example: Find one real example of from paper to screen: a data table in LibreOffice Calc (on-screen) around you, or on a device you use. Say out loud what it is and why it fits."
+      "prompt": "Why is a contact number stored as Text and not Number?",
+      "solution": "Contact numbers (and a class like 4A) are stored as Text because they have hyphens or letters and we never do sums with them."
     },
     {
       "id": "we05",
       "outcomeId": "lo05",
       "difficulty": "Intermediate",
       "title": "Worked example 5: Be a data boss: your own class database (project)",
-      "prompt": "Explain in your own words: Be a data boss: your own class database (project).",
-      "solution": "A data boss can design a data table, choose the right data type for every field, enter records neatly, and then search their table to answer questions.\n\nBooks in our class corner. Then invent two records together so they see a record fill up across the row.\n\nFor example: Finally, write one search question the table can answer, such as “How many books have more than 100 pages?”, and show which field answers it. Write the data type next to each field before entering any data, so the plan comes first."
+      "prompt": "How many people are travelling to Mogadishu? Which field do you look in first?",
+      "solution": "1 (Zane's record shows People = 1). You look in the Destination field first, then read across to People."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo06",
+      "difficulty": "Intermediate",
+      "title": "Worked example 6: Data, data tables, records and fields (unplugged)",
+      "prompt": "Which trip was in May, and which destination costs $250.00?",
+      "solution": "the Nairobi trip (Zara, 20/05/2025). Which destination costs $250.00? = Jeddah."
     }
   ],
   "practice": [
@@ -353,35 +361,42 @@
       "id": "p01",
       "level": "Warm-up",
       "prompt": "What is a database, and what is a data table?",
-      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "answer": "A database is an organised collection of data. A data table stores that data in rows and columns.",
       "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence."
     },
     {
       "id": "p02",
       "level": "Warm-up",
       "prompt": "Explain what a field, a record and a data item are.",
-      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "answer": "Field = a column (one kind of information); record = a row (everything about one person or thing); data item = one fact in one cell.",
       "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence."
     },
     {
       "id": "p03",
       "level": "Core",
-      "prompt": "Why is a contact number stored as Text and not Number?",
-      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "prompt": "Write the data type for each field in the trips table: (a) Traveller",
+      "answer": "(a) Traveller = Text. (b) People = Number. (c) Flight Date = Date/Time. (d) Ticket Cost = Currency.",
       "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence."
     },
     {
       "id": "p04",
       "level": "Core",
-      "prompt": "How many people are travelling to Mogadishu? Which field do you look in first?",
-      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "prompt": "Why is a contact number stored as Text and not Number?",
+      "answer": "Contact numbers (and a class like 4A) are stored as Text because they have hyphens or letters and we never do sums with them.",
       "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence."
     },
     {
       "id": "p05",
       "level": "Core",
+      "prompt": "How many people are travelling to Mogadishu? Which field do you look in first?",
+      "answer": "1 (Zane's record shows People = 1). You look in the Destination field first, then read across to People.",
+      "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p06",
+      "level": "Challenge",
       "prompt": "Which trip was in May, and which destination costs $250.00?",
-      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "answer": "the Nairobi trip (Zara, 20/05/2025). Which destination costs $250.00? = Jeddah.",
       "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence."
     }
   ],
@@ -706,45 +721,54 @@
       "outcomeId": "lo01",
       "difficulty": "Round 1",
       "prompt": "What is a database, and what is a data table?",
-      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "answer": "A database is an organised collection of data. A data table stores that data in rows and columns.",
       "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence.",
-      "errorFeedback": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+      "errorFeedback": "A database is an organised collection of data. A data table stores that data in rows and columns."
     },
     {
       "id": "fl02",
       "outcomeId": "lo02",
       "difficulty": "Round 1",
       "prompt": "Explain what a field, a record and a data item are.",
-      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "answer": "Field = a column (one kind of information); record = a row (everything about one person or thing); data item = one fact in one cell.",
       "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence.",
-      "errorFeedback": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+      "errorFeedback": "Field = a column (one kind of information); record = a row (everything about one person or thing); data item = one fact in one cell."
     },
     {
       "id": "fl03",
       "outcomeId": "lo03",
       "difficulty": "Round 1",
-      "prompt": "Why is a contact number stored as Text and not Number?",
-      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "prompt": "Write the data type for each field in the trips table: (a) Traveller",
+      "answer": "(a) Traveller = Text. (b) People = Number. (c) Flight Date = Date/Time. (d) Ticket Cost = Currency.",
       "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence.",
-      "errorFeedback": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+      "errorFeedback": "(a) Traveller = Text. (b) People = Number. (c) Flight Date = Date/Time. (d) Ticket Cost = Currency."
     },
     {
       "id": "fl04",
       "outcomeId": "lo04",
       "difficulty": "Round 1",
-      "prompt": "How many people are travelling to Mogadishu? Which field do you look in first?",
-      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "prompt": "Why is a contact number stored as Text and not Number?",
+      "answer": "Contact numbers (and a class like 4A) are stored as Text because they have hyphens or letters and we never do sums with them.",
       "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence.",
-      "errorFeedback": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+      "errorFeedback": "Contact numbers (and a class like 4A) are stored as Text because they have hyphens or letters and we never do sums with them."
     },
     {
       "id": "fl05",
       "outcomeId": "lo05",
       "difficulty": "Round 2",
-      "prompt": "Which trip was in May, and which destination costs $250.00?",
-      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "prompt": "How many people are travelling to Mogadishu? Which field do you look in first?",
+      "answer": "1 (Zane's record shows People = 1). You look in the Destination field first, then read across to People.",
       "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence.",
-      "errorFeedback": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+      "errorFeedback": "1 (Zane's record shows People = 1). You look in the Destination field first, then read across to People."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Which trip was in May, and which destination costs $250.00?",
+      "answer": "the Nairobi trip (Zara, 20/05/2025). Which destination costs $250.00? = Jeddah.",
+      "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "the Nairobi trip (Zara, 20/05/2025). Which destination costs $250.00? = Jeddah."
     }
   ],
   "realProblems": [
@@ -753,40 +777,40 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Home",
-      "prompt": "How many people are travelling to Mogadishu? Which field do you look in first?",
-      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "prompt": "Which trip was in May, and which destination costs $250.00?",
+      "answer": "the Nairobi trip (Zara, 20/05/2025). Which destination costs $250.00? = Jeddah.",
       "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence.",
-      "errorFeedback": "Check your reasoning against this: Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+      "errorFeedback": "Check your reasoning against this: the Nairobi trip (Zara, 20/05/2025). Which destination costs $250.00? = Jeddah."
     },
     {
       "id": "rp02",
       "outcomeId": "lo02",
       "difficulty": "Core",
       "context": "School",
-      "prompt": "Which trip was in May, and which destination costs $250.00?",
-      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "prompt": "How many people are travelling to Mogadishu? Which field do you look in first?",
+      "answer": "1 (Zane's record shows People = 1). You look in the Destination field first, then read across to People.",
       "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence.",
-      "errorFeedback": "Check your reasoning against this: Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+      "errorFeedback": "Check your reasoning against this: 1 (Zane's record shows People = 1). You look in the Destination field first, then read across to People."
     },
     {
       "id": "rp03",
       "outcomeId": "lo03",
       "difficulty": "Core",
       "context": "Market",
-      "prompt": "What is a database, and what is a data table?",
-      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "prompt": "Which trip was in May, and which destination costs $250.00?",
+      "answer": "the Nairobi trip (Zara, 20/05/2025). Which destination costs $250.00? = Jeddah.",
       "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence.",
-      "errorFeedback": "Check your reasoning against this: Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+      "errorFeedback": "Check your reasoning against this: the Nairobi trip (Zara, 20/05/2025). Which destination costs $250.00? = Jeddah."
     },
     {
       "id": "rp04",
       "outcomeId": "lo04",
       "difficulty": "Core",
       "context": "Community",
-      "prompt": "Explain what a field, a record and a data item are.",
-      "answer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit.",
+      "prompt": "What is a database, and what is a data table?",
+      "answer": "A database is an organised collection of data. A data table stores that data in rows and columns.",
       "hint": "Look back at what database and data table mean in this unit, then say your answer in a full sentence.",
-      "errorFeedback": "Check your reasoning against this: Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+      "errorFeedback": "Check your reasoning against this: A database is an organised collection of data. A data table stores that data in rows and columns."
     }
   ],
   "reasoningPrompts": [
@@ -795,39 +819,39 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Why is a contact number stored as Text and not Number?",
+      "prompt": "Write the data type for each field in the trips table: (a) Traveller",
       "keyIdeas": [
         "database",
         "data table",
         "data"
       ],
-      "modelAnswer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+      "modelAnswer": "(a) Traveller = Text. (b) People = Number. (c) Flight Date = Date/Time. (d) Ticket Cost = Currency."
     },
     {
       "id": "reason02",
       "outcomeId": "lo02",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "How many people are travelling to Mogadishu? Which field do you look in first?",
+      "prompt": "Why is a contact number stored as Text and not Number?",
       "keyIdeas": [
         "data table",
         "data",
         "information"
       ],
-      "modelAnswer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+      "modelAnswer": "Contact numbers (and a class like 4A) are stored as Text because they have hyphens or letters and we never do sums with them."
     },
     {
       "id": "reason03",
       "outcomeId": "lo03",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Which trip was in May, and which destination costs $250.00?",
+      "prompt": "How many people are travelling to Mogadishu? Which field do you look in first?",
       "keyIdeas": [
         "data",
         "information",
         "field"
       ],
-      "modelAnswer": "Say your answer out loud in a full sentence, then check it against the concept explanations for this unit."
+      "modelAnswer": "1 (Zane's record shows People = 1). You look in the Destination field first, then read across to People."
     },
     {
       "id": "reason04",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-01T14:06:00.298Z",
+  "generatedAt": "2026-08-02T10:33:38.515Z",
   "stage": {
     "id": "s02",
     "label": "Stage 2"
@@ -294,39 +294,39 @@
       "outcomeId": "lo02",
       "difficulty": "Basic",
       "title": "Worked example 2: Counting data with a tally",
-      "prompt": "Circle the fruits. (mango goat dates camel banana)",
-      "solution": "Circle mango, dates and banana. (Goat and camel are animals.)"
+      "prompt": "Which pet is the most?",
+      "solution": "Most = fish (4). Least = bird (1)."
     },
     {
       "id": "we03",
       "outcomeId": "lo03",
       "difficulty": "Basic",
       "title": "Worked example 3: Showing data with pictures: pictograms",
-      "prompt": "Fill in the missing word. Choose from: pictogram, bar graph, backup.",
-      "solution": "(a) backup; (b) pictogram; (c) bar graph."
+      "prompt": "Circle the fruits. (mango goat dates camel banana)",
+      "solution": "Circle mango, dates and banana. (Goat and camel are animals.)"
     },
     {
       "id": "we04",
       "outcomeId": "lo04",
       "difficulty": "Intermediate",
       "title": "Worked example 4: Showing data with blocks: bar graphs (and a computer)",
-      "prompt": "Write two good things about storing data on a computer.",
-      "solution": "Accept any two: stores lots of data; finds data quickly; shows data as charts; shares data with other computers; changes data easily; copies data / keeps a backup."
+      "prompt": "Fill in the missing word. Choose from: pictogram, bar graph, backup.",
+      "solution": "(a) backup; (b) pictogram; (c) bar graph."
     },
     {
       "id": "we05",
       "outcomeId": "lo05",
       "difficulty": "Intermediate",
-      "title": "Worked example 5: What is data? Sorting into groups",
-      "prompt": "Explain in your own words: What is data? Sorting into groups.",
+      "title": "Worked example 5: Why computers store data, and collecting data for a reason",
+      "prompt": "Write two good things about storing data on a computer.",
       "solution": "Data is just the facts we collect. Data can be numbers, but it can also be words — like the colour of our eyes or our favourite fruit. When we are data analysts, the first thing we do is sort the data into groups. Things that belong together make a group, which we can also call a category.\n\nLook at all these things mixed up. Let us be tidy and put them into groups. All the fruit can go here.\n\nFor example: All the animals can go there. As they do, keep naming it: “Nadia is sorting the data into two groups — fruit and animals.”"
     },
     {
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
-      "title": "Worked example 6: Counting data with a tally",
-      "prompt": "Explain in your own words: Counting data with a tally.",
+      "title": "Worked example 6: What is data? Sorting into groups",
+      "prompt": "Explain in your own words: What is data? Sorting into groups.",
       "solution": "Once our data is in groups, we want to know how many are in each group. We count. A tally is a little mark we make — one mark for each thing — so we do not lose our place while counting. At the end we count the marks and write the total in a table.\n\nLet us find out our favourite fruit. When I point to you, tell me: mango, banana or dates. Now we count the marks.\n\nFor example: Do a real class tally. Show the marks growing."
     }
   ],
@@ -355,28 +355,35 @@
     {
       "id": "p04",
       "level": "Core",
-      "prompt": "Circle the fruits. (mango goat dates camel banana)",
-      "answer": "Circle mango, dates and banana. (Goat and camel are animals.)",
+      "prompt": "Which pet is the most?",
+      "answer": "Most = fish (4). Least = bird (1).",
       "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence."
     },
     {
       "id": "p05",
       "level": "Core",
-      "prompt": "Fill in the missing word. Choose from: pictogram, bar graph, backup.",
-      "answer": "(a) backup; (b) pictogram; (c) bar graph.",
+      "prompt": "Circle the fruits. (mango goat dates camel banana)",
+      "answer": "Circle mango, dates and banana. (Goat and camel are animals.)",
       "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence."
     },
     {
       "id": "p06",
       "level": "Challenge",
-      "prompt": "Write two good things about storing data on a computer.",
-      "answer": "Accept any two: stores lots of data; finds data quickly; shows data as charts; shares data with other computers; changes data easily; copies data / keeps a backup.",
+      "prompt": "Fill in the missing word. Choose from: pictogram, bar graph, backup.",
+      "answer": "(a) backup; (b) pictogram; (c) bar graph.",
       "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence."
     },
     {
       "id": "p07",
       "level": "Challenge",
       "prompt": "Which chart shows data with pictures — a pictogram or a bar graph?",
+      "answer": "Accept any two: stores lots of data; finds data quickly; shows data as charts; shares data with other computers; changes data easily; copies data / keeps a backup.",
+      "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence."
+    },
+    {
+      "id": "p08",
+      "level": "Challenge",
+      "prompt": "Which chart shows data with pictures - a pictogram or a bar graph?",
       "answer": "A pictogram.",
       "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence."
     }
@@ -680,14 +687,23 @@
       "id": "fl04",
       "outcomeId": "lo04",
       "difficulty": "Round 1",
+      "prompt": "Which pet is the most?",
+      "answer": "Most = fish (4). Least = bird (1).",
+      "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence.",
+      "errorFeedback": "Most = fish (4). Least = bird (1)."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
       "prompt": "Circle the fruits. (mango goat dates camel banana)",
       "answer": "Circle mango, dates and banana. (Goat and camel are animals.)",
       "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence.",
       "errorFeedback": "Circle mango, dates and banana. (Goat and camel are animals.)"
     },
     {
-      "id": "fl05",
-      "outcomeId": "lo05",
+      "id": "fl06",
+      "outcomeId": "lo06",
       "difficulty": "Round 2",
       "prompt": "Fill in the missing word. Choose from: pictogram, bar graph, backup.",
       "answer": "(a) backup; (b) pictogram; (c) bar graph.",
@@ -695,19 +711,19 @@
       "errorFeedback": "(a) backup; (b) pictogram; (c) bar graph."
     },
     {
-      "id": "fl06",
-      "outcomeId": "lo06",
+      "id": "fl07",
+      "outcomeId": "lo07",
       "difficulty": "Round 2",
-      "prompt": "Write two good things about storing data on a computer.",
+      "prompt": "Which chart shows data with pictures — a pictogram or a bar graph?",
       "answer": "Accept any two: stores lots of data; finds data quickly; shows data as charts; shares data with other computers; changes data easily; copies data / keeps a backup.",
       "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence.",
       "errorFeedback": "Accept any two: stores lots of data; finds data quickly; shows data as charts; shares data with other computers; changes data easily; copies data / keeps a backup."
     },
     {
-      "id": "fl07",
-      "outcomeId": "lo07",
+      "id": "fl08",
+      "outcomeId": "lo01",
       "difficulty": "Round 2",
-      "prompt": "Which chart shows data with pictures — a pictogram or a bar graph?",
+      "prompt": "Which chart shows data with pictures - a pictogram or a bar graph?",
       "answer": "A pictogram.",
       "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence.",
       "errorFeedback": "A pictogram."
@@ -719,10 +735,10 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Home",
-      "prompt": "Write two good things about storing data on a computer.",
-      "answer": "Accept any two: stores lots of data; finds data quickly; shows data as charts; shares data with other computers; changes data easily; copies data / keeps a backup.",
+      "prompt": "Fill in the missing word. Choose from: pictogram, bar graph, backup.",
+      "answer": "(a) backup; (b) pictogram; (c) bar graph.",
       "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence.",
-      "errorFeedback": "Check your reasoning against this: Accept any two: stores lots of data; finds data quickly; shows data as charts; shares data with other computers; changes data easily; copies data / keeps a backup."
+      "errorFeedback": "Check your reasoning against this: (a) backup; (b) pictogram; (c) bar graph."
     },
     {
       "id": "rp02",
@@ -730,19 +746,19 @@
       "difficulty": "Core",
       "context": "School",
       "prompt": "Which chart shows data with pictures — a pictogram or a bar graph?",
-      "answer": "A pictogram.",
+      "answer": "Accept any two: stores lots of data; finds data quickly; shows data as charts; shares data with other computers; changes data easily; copies data / keeps a backup.",
       "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence.",
-      "errorFeedback": "Check your reasoning against this: A pictogram."
+      "errorFeedback": "Check your reasoning against this: Accept any two: stores lots of data; finds data quickly; shows data as charts; shares data with other computers; changes data easily; copies data / keeps a backup."
     },
     {
       "id": "rp03",
       "outcomeId": "lo03",
       "difficulty": "Core",
       "context": "Market",
-      "prompt": "Write two good things about storing data on a computer.",
-      "answer": "Accept any two: stores lots of data; finds data quickly; shows data as charts; shares data with other computers; changes data easily; copies data / keeps a backup.",
+      "prompt": "Which chart shows data with pictures - a pictogram or a bar graph?",
+      "answer": "A pictogram.",
       "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence.",
-      "errorFeedback": "Check your reasoning against this: Accept any two: stores lots of data; finds data quickly; shows data as charts; shares data with other computers; changes data easily; copies data / keeps a backup."
+      "errorFeedback": "Check your reasoning against this: A pictogram."
     },
     {
       "id": "rp04",
@@ -750,9 +766,9 @@
       "difficulty": "Core",
       "context": "Community",
       "prompt": "Which chart shows data with pictures — a pictogram or a bar graph?",
-      "answer": "A pictogram.",
+      "answer": "Accept any two: stores lots of data; finds data quickly; shows data as charts; shares data with other computers; changes data easily; copies data / keeps a backup.",
       "hint": "Look back at what data and sort mean in this unit, then say your answer in a full sentence.",
-      "errorFeedback": "Check your reasoning against this: A pictogram."
+      "errorFeedback": "Check your reasoning against this: Accept any two: stores lots of data; finds data quickly; shows data as charts; shares data with other computers; changes data easily; copies data / keeps a backup."
     }
   ],
   "reasoningPrompts": [
@@ -774,26 +790,26 @@
       "outcomeId": "lo02",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Circle the fruits. (mango goat dates camel banana)",
+      "prompt": "Which pet is the most?",
       "keyIdeas": [
         "sort",
         "group (category)",
         "tally"
       ],
-      "modelAnswer": "Circle mango, dates and banana. (Goat and camel are animals.)"
+      "modelAnswer": "Most = fish (4). Least = bird (1)."
     },
     {
       "id": "reason03",
       "outcomeId": "lo03",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Fill in the missing word. Choose from: pictogram, bar graph, backup.",
+      "prompt": "Circle the fruits. (mango goat dates camel banana)",
       "keyIdeas": [
         "group (category)",
         "tally",
         "pictogram"
       ],
-      "modelAnswer": "(a) backup; (b) pictogram; (c) bar graph."
+      "modelAnswer": "Circle mango, dates and banana. (Goat and camel are animals.)"
     },
     {
       "id": "reason04",
@@ -875,7 +891,7 @@
         ],
         "answer": "Things that go together.",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Sort means to put things into groups."
+        "explanation": "Group (category) means things that go together.."
       },
       {
         "id": "q04",
@@ -891,7 +907,7 @@
         ],
         "answer": "A little mark to help us count.",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Group (category) means things that go together."
+        "explanation": "Tally means a little mark to help us count."
       },
       {
         "id": "q05",
@@ -907,7 +923,7 @@
         ],
         "answer": "A chart that shows data with pictures.",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Tally means a little mark to help us count."
+        "explanation": "Pictogram means a chart that shows data with pictures."
       },
       {
         "id": "q06",
@@ -923,7 +939,7 @@
         ],
         "answer": "A chart that shows data with bars or blocks.",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Pictogram means a chart that shows data with pictures."
+        "explanation": "Bar graph means a chart that shows data with bars or blocks."
       },
       {
         "id": "q07",
@@ -939,7 +955,7 @@
         ],
         "answer": "present",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Bar graph means a chart that shows data with bars or blocks."
+        "explanation": "Present means to show."
       },
       {
         "id": "q08",
@@ -955,7 +971,7 @@
         ],
         "answer": "store",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Present means to show."
+        "explanation": "Store means to keep data safe."
       },
       {
         "id": "q09",
@@ -971,7 +987,7 @@
         ],
         "answer": "backup",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Store means to keep data safe."
+        "explanation": "Backup means a spare copy of data, kept safe."
       },
       {
         "id": "q10",
@@ -987,7 +1003,7 @@
         ],
         "answer": "barcode",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Backup means a spare copy of data, kept safe."
+        "explanation": "Barcode means black lines that hold data about a thing."
       },
       {
         "id": "q11",
@@ -1003,7 +1019,7 @@
         ],
         "answer": "data",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Barcode means black lines that hold data about a thing."
+        "explanation": "Data means facts we collect.."
       },
       {
         "id": "q12",

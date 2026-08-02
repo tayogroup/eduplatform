@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-01T14:06:01.181Z",
+  "generatedAt": "2026-08-02T10:33:39.370Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -437,161 +437,193 @@
       "outcomeId": "lo01",
       "difficulty": "Basic",
       "title": "Worked example 1: Getting Online: How Devices Connect Without Wires",
-      "prompt": "Explain in your own words: Getting Online: How Devices Connect Without Wires.",
-      "solution": "There are many ways to get online — at home, at school, or outside. The most convenient way is usually wirelessly, because there are no cables to plug in and your device stays portable (easy to carry around). Phones, tablets, laptops and PCs all connect this way. Even some washing machines, fridges and watches can now connect to the internet!\n\nSo how does data travel through the air with no wires? The answer is radio waves. Your device turns your data into binary (a stream of 0s and 1s) and sends it as invisible radio waves to another device or to a mast. The other device catches those waves and turns them back into data. The three most popular wireless methods are Wi-Fi, Bluetooth and cellular data. Each one is good at different jobs.\n\nThe four things that make each method different\n\nWhenever you compare wireless methods, engineers look at four characteristics. These four ideas are the key to the whole topic, so learn them well:\n\nBandwidth — how much data can be sent in a certain time. High bandwidth is needed for big jobs like streaming video. When a video keeps stopping to load (you see the spinning 'buffering' circle), it usually means there is not enough bandwidth for all that data.\n\nTransmission distance — how far the signal can reach. You have probably walked too far from a Wi-Fi router and watched your connection drop. That is transmission distance in action.\n\nSecurity — how easy it is for a hacker to break in. Some methods are much easier to attack than others, so security matters a lot when the data is private.\n\nInterference — anything that interrupts the signal. This could be a wall, or another electronic device. A microwave oven, for example, gives off radio waves that can knock a laptop off its Wi-Fi.\n\nWe measure the amount of data sent in bits per second (bps). Because modern connections are fast, we use bigger units: kilobits (Kbps) are thousands of bits, megabits (Mbps) are millions, and gigabits (Gbps) are billions of bits per second. Every year, new versions of these technologies get faster and reach further.\n\nBefore 3G, 4G and 5G existed, the fastest mobile connection was only about 114 Kbps. At that speed, downloading one HD film would have taken more than five days! Today, 5G can do the same job in seconds.\n\nComparing Wi-Fi, Bluetooth and cellular data\n\nHere is how the three methods compare. Notice how each one is a trade-off — none is 'best' at everything. Choosing the right one depends on the job:\n\nWi-Fi is fast (up to about 9.6 Gbps) but only reaches around 50 metres indoors — enough for one home, school or office. Its security is fairly weak: anyone in range can see the network, and passwords can be attacked. Walls, microwaves and TVs can interfere with it. Wi-Fi is perfect for connecting laptops and phones inside a building.\n\nBluetooth is much slower (Bluetooth 5 reaches about 2 Mbps) and only reaches around 40 metres, working best when the two devices can 'see' each other with nothing in between. Its security is also weak. Bluetooth is ideal for connecting nearby devices that do not need much data — wireless headphones, a keyboard, a mouse, or sharing a photo between two phones.\n\nFor example: Cellular data comes from phone masts and lets you connect almost anywhere outdoors. 4G averages 8–10 Mbps and can reach up to 16 kilometres from a mast. 5G is much faster (around 100 Mbps) but reaches a shorter distance (about 500 metres), so cities need many more 5G masts. Security for both 4G and 5G is excellent. When Nora checks the news on her phone while walking through Kismayo, she is using cellular data."
+      "prompt": "Which wireless method is best for connecting a keyboard and mouse to a nearby PC? A) Cellular data B) Bluetooth C) A fibre cable D) Higher-level DNS",
+      "solution": "B — Bluetooth is designed for short-range, low-bandwidth links between nearby devices."
     },
     {
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Basic",
       "title": "Worked example 2: Where Websites Live: Servers",
-      "prompt": "Explain in your own words: Where Websites Live: Servers.",
-      "solution": "When you open a website, watch a video, or read a message, you are actually opening files that are stored on a server. A server is a powerful computer that stores files and shares them with other devices. It works just like the files on your own phone — except a server's files can be reached over the internet by people all around the world.\n\nServers are built for speed and storage, and they are usually stacked together in racks. Hundreds or even thousands of servers may sit together in one building called a server farm. A server that stores web pages is called a web server. To put a website online, a person called an administrator saves the website's files onto the web server. After that, anyone can view the site by typing its address into a web browser.\n\nFor example: Tim Berners-Lee invented the World Wide Web in 1989. The internet was first created so that scientists at different universities could share their research automatically. It grew into the web we all use today."
+      "prompt": "What does 'bandwidth' mean? A) How far a signal travels B) How secure a network is C) How much data can be sent in a certain time D) The name of a website",
+      "solution": "C — Bandwidth is the amount of data sent in a given time."
     },
     {
       "id": "we03",
       "outcomeId": "lo03",
       "difficulty": "Basic",
       "title": "Worked example 3: IP Addresses: Every Device Has an Address",
-      "prompt": "Explain in your own words: IP Addresses: Every Device Has an Address.",
-      "solution": "Imagine sending a letter with no address on the envelope — it would never arrive. Devices on a network have the same problem, so every device is given an IP address. IP stands for Internet Protocol. An IP address is a unique number that identifies one device on a network, so other devices know exactly where to send data. Think of it as the device's 'home address'.\n\nA common type of IP address is made of four numbers separated by full stops, and each number is between 0 and 255. For example:\n\nOn a home network, every device gets its own unique IP address. In many homes the addresses start with 192.168.1. — for example, the laptop might be 192.168.1.2, the phone 192.168.1.3, and a smart lightbulb 192.168.1.5. If a device wants to send data to the lightbulb, it uses the number 192.168.1.5, not the name 'lightbulb' — because two devices could share the same name, but IP addresses are unique, so there is never any confusion.\n\nServers work exactly the same way. Every web server on the internet has its own IP address so it can be found. When you understand IP addresses, you understand how one device out of billions can be located precisely.\n\nFor example: \"An IP address like 256.1.1.1 is fine.\" It is not! Each number must be between 0 and 255. So 256 is too big, and an address is invalid. An address also needs exactly four numbers — 69.171.224 is invalid because it only has three. You will practise spotting invalid addresses in your Activities."
+      "prompt": "An IP address is made of four numbers. Each number must be between: A) 0 and 9 B) 1 and 100 C) 0 and 255 D) 0 and 1000",
+      "solution": "C — Each of the four numbers in an IP address is between 0 and 255."
     },
     {
       "id": "we04",
       "outcomeId": "lo04",
       "difficulty": "Intermediate",
       "title": "Worked example 4: URLs: Names Are Easier Than Numbers",
-      "prompt": "Explain in your own words: URLs: Names Are Easier Than Numbers.",
-      "solution": "Could you remember the IP address of 20 different websites? Probably not — numbers like 172.217.169.78 are hard to recall. That is why we use URLs. A URL (Uniform Resource Locator) is the web address you type into your browser, and it is far easier to remember than a string of numbers.\n\nA URL is written in a set way, and each part has a job. Look at this example and the labels below it:\n\nhttps — the protocol, the set of rules for sending the data. The 's' means it is the secure version (more on that soon).\n\nwww — tells the browser you want the World Wide Web part of the site.\n\nafricanews.com — the domain name, the easy-to-remember name of the website. This is the part that changes for each different site.\n\n.com — the top-level domain (TLD), the ending of the domain name.\n\nFor example: There are over 1000 TLDs you can buy, but the most common is .com (for commercial businesses). Others include .org (organisations), .net (networks), and country endings like .ng (Nigeria), .eg (Egypt), .ae (United Arab Emirates), .in (India) and .au (Australia). When you see a TLD, you can often guess something about the website just from its ending."
+      "prompt": "What does DNS do? A) Encrypts your password B) Translates a URL into an IP address C) Stores your photos D) Blocks all hackers",
+      "solution": "B — DNS translates a URL (a name) into an IP address (a number)."
     },
     {
       "id": "we05",
       "outcomeId": "lo05",
       "difficulty": "Intermediate",
       "title": "Worked example 5: DNS: The Internet's Phone Book",
-      "prompt": "Explain in your own words: DNS: The Internet's Phone Book.",
-      "solution": "Here is the clever bit. You type a URL (a name), but devices find each other using IP addresses (numbers). So how does the name get turned into the number? The answer is DNS, the Domain Name System.\n\nDNS is like the contacts list in a phone. When you want to call your friend Talia, you do not remember her phone number — you just tap her name, and the phone looks up the number for you. DNS does the same for websites: it stores a giant database that matches every URL to its IP address. A small part of such a list might look like this: google.com is 209.85.231.104, and micropython.org is 176.58.119.26.\n\nWhat happens when you type a URL — step by step\n\nImagine Sami types www.africanews.com into his browser in Mogadishu. Picture the journey of his request like this. (Try to 'see' each arrow in your mind — this is the diagram in words.)\n\nSami types the URL www.africanews.com into his web browser and presses Enter.\n\nThe browser sends the name to a DNS server and asks: \"What is the IP address for this website?\"\n\nThe DNS server looks in its database, finds the match (for example, 81.92.228.150), and sends that IP address back to Sami's computer.\n\nIf the DNS server cannot find the name, it passes the question up to a higher-level DNS — a bigger DNS with an even larger list.\n\nIf no DNS anywhere can find the name, the browser shows a 'server not found' error message, and the page does not load.\n\nOnce the browser has the IP address, it sends a request to that web server. The web server sends the web page back, and it appears on Sami's screen.\n\nAll of this normally happens in the blink of an eye. That entire lookup usually takes only 20 to 120 milliseconds — far faster than you can click your fingers.\n\nFor example: A 404 error is the most famous error on the web. It means the web server was reached, but the exact page could not be found — often because of a typing mistake in the address, or because the page was moved or deleted. If the website name itself does not exist, you get a different 'server not found' message instead."
+      "prompt": "In the URL https://www.africanews.com, which part is the TLD? A) https B) www C) africanews D) .com",
+      "solution": "D — .com is the top-level domain (TLD), the ending of the address."
     },
     {
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
       "title": "Worked example 6: Data Packets: How Data Travels in Small Pieces",
-      "prompt": "Explain in your own words: Data Packets: How Data Travels in Small Pieces.",
-      "solution": "When you send a photo or open a web page, the data does not travel as one big lump. Instead, the network breaks it into many small pieces called data packets. This is one of the most important ideas about how the internet works.\n\nThink of it like this. Imagine Leila wants to send her friend a long handwritten story, but she can only use small envelopes. She tears the story into pages, puts each page in its own envelope, and writes on every envelope: the destination address, her own return address, and a page number so the pages can be put back in order. Data packets work exactly the same way.\n\nA large piece of data is split into many small packets.\n\nEach packet carries a piece of the data, the sender's IP address, the destination IP address, and a sequence number (its 'page number').\n\nThe packets travel across the network, and they may even take different routes to reach the same place.\n\nAt the destination, the device uses the sequence numbers to reassemble the packets back into the original data, in the correct order.\n\nIf a packet gets lost or damaged on the way, the receiver notices a piece is missing and asks for that packet to be sent again.\n\nFor example: Breaking data into packets is smart because it means many people can share the same network at once, and a single damaged packet does not ruin the whole message — only that one small piece needs re-sending. This links directly to the next big idea: how errors happen and how we check that a message arrived correctly."
+      "prompt": "The padlock icon in the address bar tells you that: A) The website is owned by the government B) The connection is encrypted (HTTPS) C) The website can never be hacked D) The page has no images",
+      "solution": "B — The padlock means the connection is encrypted (HTTPS). It does not promise the site is trustworthy."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Worked example 7: Web Browsers: Your Window to the Web",
+      "prompt": "What is 'plaintext'? A) A scrambled message B) A message that can be read easily C) A type of virus D) A web server",
+      "solution": "B — Plaintext is a readable, un-encrypted message."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "Worked example 8: Encryption: Turning Messages Into Secret Code",
+      "prompt": "Which of these could cause an error in data transmission? A) A power surge B) A damaged cable C) Electrical interference D) All of these",
+      "solution": "D — Power surges, damaged cables and interference can all cause errors."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo09",
+      "difficulty": "Challenge",
+      "title": "Worked example 9: When Data Goes Wrong: Errors in Transmission",
+      "prompt": "What does a search engine mainly use to find results from a phrase? A) The full sentence B) Keywords C) Your password D) The IP address only",
+      "solution": "B — Search engines pick out keywords from a phrase."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo10",
+      "difficulty": "Challenge",
+      "title": "Worked example 10: Search Engines and Artificial Intelligence",
+      "prompt": "A web browser is an example of: A) Systems software B) A server C) Application software D) A neural network",
+      "solution": "C — A browser does one specific job (browsing the web), so it is application software."
     }
   ],
   "practice": [
     {
       "id": "p01",
       "level": "Warm-up",
-      "prompt": "Write the letter of the best answer for each question.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Which wireless method is best for connecting a keyboard and mouse to a nearby PC? A) Cellular data B) Bluetooth C) A fibre cable D) Higher-level DNS",
+      "answer": "B — Bluetooth is designed for short-range, low-bandwidth links between nearby devices.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words."
     },
     {
       "id": "p02",
       "level": "Warm-up",
-      "prompt": "Which wireless method is best for connecting a keyboard and mouse to a nearby PC? A) Cellular data B) Bluetooth C) A fibre cable D) Higher-level DNS",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "What does 'bandwidth' mean? A) How far a signal travels B) How secure a network is C) How much data can be sent in a certain time D) The name of a website",
+      "answer": "C — Bandwidth is the amount of data sent in a given time.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words."
     },
     {
       "id": "p03",
       "level": "Warm-up",
-      "prompt": "What does 'bandwidth' mean? A) How far a signal travels B) How secure a network is C) How much data can be sent in a certain time D) The name of a website",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "An IP address is made of four numbers. Each number must be between: A) 0 and 9 B) 1 and 100 C) 0 and 255 D) 0 and 1000",
+      "answer": "C — Each of the four numbers in an IP address is between 0 and 255.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words."
     },
     {
       "id": "p04",
       "level": "Warm-up",
-      "prompt": "An IP address is made of four numbers. Each number must be between: A) 0 and 9 B) 1 and 100 C) 0 and 255 D) 0 and 1000",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "What does DNS do? A) Encrypts your password B) Translates a URL into an IP address C) Stores your photos D) Blocks all hackers",
+      "answer": "B — DNS translates a URL (a name) into an IP address (a number).",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words."
     },
     {
       "id": "p05",
       "level": "Warm-up",
-      "prompt": "What does DNS do? A) Encrypts your password B) Translates a URL into an IP address C) Stores your photos D) Blocks all hackers",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "In the URL https://www.africanews.com, which part is the TLD? A) https B) www C) africanews D) .com",
+      "answer": "D — .com is the top-level domain (TLD), the ending of the address.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words."
     },
     {
       "id": "p06",
       "level": "Warm-up",
-      "prompt": "In the URL https://www.africanews.com, which part is the TLD? A) https B) www C) africanews D) .com",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "The padlock icon in the address bar tells you that: A) The website is owned by the government B) The connection is encrypted (HTTPS) C) The website can never be hacked D) The page has no images",
+      "answer": "B — The padlock means the connection is encrypted (HTTPS). It does not promise the site is trustworthy.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words."
     },
     {
       "id": "p07",
       "level": "Warm-up",
-      "prompt": "The padlock icon in the address bar tells you that: A) The website is owned by the government B) The connection is encrypted (HTTPS) C) The website can never be hacked D) The page has no images",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "What is 'plaintext'? A) A scrambled message B) A message that can be read easily C) A type of virus D) A web server",
+      "answer": "B — Plaintext is a readable, un-encrypted message.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words."
     },
     {
       "id": "p08",
       "level": "Warm-up",
-      "prompt": "What is 'plaintext'? A) A scrambled message B) A message that can be read easily C) A type of virus D) A web server",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "A byte is made of how many bits? A) 2 B) 4 C) 8 D) 255",
+      "answer": "C — A byte is 8 bits.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words."
     },
     {
       "id": "p09",
       "level": "Warm-up",
-      "prompt": "A byte is made of how many bits? A) 2 B) 4 C) 8 D) 255",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Which of these could cause an error in data transmission? A) A power surge B) A damaged cable C) Electrical interference D) All of these",
+      "answer": "D — Power surges, damaged cables and interference can all cause errors.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words."
     },
     {
       "id": "p10",
       "level": "Warm-up",
-      "prompt": "Which of these could cause an error in data transmission? A) A power surge B) A damaged cable C) Electrical interference D) All of these",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "What does a search engine mainly use to find results from a phrase? A) The full sentence B) Keywords C) Your password D) The IP address only",
+      "answer": "B — Search engines pick out keywords from a phrase.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words."
     },
     {
       "id": "p11",
       "level": "Warm-up",
-      "prompt": "What does a search engine mainly use to find results from a phrase? A) The full sentence B) Keywords C) Your password D) The IP address only",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "A web browser is an example of: A) Systems software B) A server C) Application software D) A neural network",
+      "answer": "C — A browser does one specific job (browsing the web), so it is application software.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words."
     },
     {
       "id": "p12",
       "level": "Warm-up",
-      "prompt": "A web browser is an example of: A) Systems software B) A server C) Application software D) A neural network",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Which method gives the longest transmission distance? A) Bluetooth B) Wi-Fi C) 4G cellular data D) A USB stick",
+      "answer": "C — 4G can reach up to about 16 km, far further than Wi-Fi or Bluetooth.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words."
     },
     {
       "id": "p13",
       "level": "Warm-up",
-      "prompt": "Which method gives the longest transmission distance? A) Bluetooth B) Wi-Fi C) 4G cellular data D) A USB stick",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Reverse image search relies mostly on: A) Image recognition B) Bigger passwords C) Faster cables D) 404 errors",
+      "answer": "A — Reverse image search uses image recognition.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words."
     },
     {
       "id": "p14",
       "level": "Warm-up",
-      "prompt": "Reverse image search relies mostly on: A) Image recognition B) Bigger passwords C) Faster cables D) 404 errors",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "What is a 404 error? A) A secure certificate B) A message shown when a page cannot be found C) A type of Wi-Fi D) A strong password",
+      "answer": "B — A 404 error means a page could not be found.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words."
     },
     {
       "id": "p15",
       "level": "Warm-up",
-      "prompt": "What is a 404 error? A) A secure certificate B) A message shown when a page cannot be found C) A type of Wi-Fi D) A strong password",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Encryption keeps data safe by: A) Deleting it B) Making it travel faster C) Scrambling it so only the right device can read it D) Storing it on your phone",
+      "answer": "C — Encryption scrambles data so only the right device (with the key) can read it.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words."
     },
     {
       "id": "p16",
       "level": "Warm-up",
-      "prompt": "Encryption keeps data safe by: A) Deleting it B) Making it travel faster C) Scrambling it so only the right device can read it D) Storing it on your phone",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "A neural network is a type of: A) Cable B) Machine learning that mimics the human brain C) TLD D) Web browser",
+      "answer": "B — A neural network is machine learning that mimics the human brain.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words."
     }
   ],
@@ -1001,109 +1033,109 @@
       "id": "fl01",
       "outcomeId": "lo01",
       "difficulty": "Round 1",
-      "prompt": "Write the letter of the best answer for each question.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Which wireless method is best for connecting a keyboard and mouse to a nearby PC? A) Cellular data B) Bluetooth C) A fibre cable D) Higher-level DNS",
+      "answer": "B — Bluetooth is designed for short-range, low-bandwidth links between nearby devices.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "B — Bluetooth is designed for short-range, low-bandwidth links between nearby devices."
     },
     {
       "id": "fl02",
       "outcomeId": "lo02",
       "difficulty": "Round 1",
-      "prompt": "Which wireless method is best for connecting a keyboard and mouse to a nearby PC? A) Cellular data B) Bluetooth C) A fibre cable D) Higher-level DNS",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "What does 'bandwidth' mean? A) How far a signal travels B) How secure a network is C) How much data can be sent in a certain time D) The name of a website",
+      "answer": "C — Bandwidth is the amount of data sent in a given time.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "C — Bandwidth is the amount of data sent in a given time."
     },
     {
       "id": "fl03",
       "outcomeId": "lo03",
       "difficulty": "Round 1",
-      "prompt": "What does 'bandwidth' mean? A) How far a signal travels B) How secure a network is C) How much data can be sent in a certain time D) The name of a website",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "An IP address is made of four numbers. Each number must be between: A) 0 and 9 B) 1 and 100 C) 0 and 255 D) 0 and 1000",
+      "answer": "C — Each of the four numbers in an IP address is between 0 and 255.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "C — Each of the four numbers in an IP address is between 0 and 255."
     },
     {
       "id": "fl04",
       "outcomeId": "lo04",
       "difficulty": "Round 1",
-      "prompt": "An IP address is made of four numbers. Each number must be between: A) 0 and 9 B) 1 and 100 C) 0 and 255 D) 0 and 1000",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "What does DNS do? A) Encrypts your password B) Translates a URL into an IP address C) Stores your photos D) Blocks all hackers",
+      "answer": "B — DNS translates a URL (a name) into an IP address (a number).",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "B — DNS translates a URL (a name) into an IP address (a number)."
     },
     {
       "id": "fl05",
       "outcomeId": "lo05",
       "difficulty": "Round 2",
-      "prompt": "What does DNS do? A) Encrypts your password B) Translates a URL into an IP address C) Stores your photos D) Blocks all hackers",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "In the URL https://www.africanews.com, which part is the TLD? A) https B) www C) africanews D) .com",
+      "answer": "D — .com is the top-level domain (TLD), the ending of the address.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "D — .com is the top-level domain (TLD), the ending of the address."
     },
     {
       "id": "fl06",
       "outcomeId": "lo06",
       "difficulty": "Round 2",
-      "prompt": "In the URL https://www.africanews.com, which part is the TLD? A) https B) www C) africanews D) .com",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "The padlock icon in the address bar tells you that: A) The website is owned by the government B) The connection is encrypted (HTTPS) C) The website can never be hacked D) The page has no images",
+      "answer": "B — The padlock means the connection is encrypted (HTTPS). It does not promise the site is trustworthy.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "B — The padlock means the connection is encrypted (HTTPS). It does not promise the site is trustworthy."
     },
     {
       "id": "fl07",
       "outcomeId": "lo07",
       "difficulty": "Round 2",
-      "prompt": "The padlock icon in the address bar tells you that: A) The website is owned by the government B) The connection is encrypted (HTTPS) C) The website can never be hacked D) The page has no images",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "What is 'plaintext'? A) A scrambled message B) A message that can be read easily C) A type of virus D) A web server",
+      "answer": "B — Plaintext is a readable, un-encrypted message.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "B — Plaintext is a readable, un-encrypted message."
     },
     {
       "id": "fl08",
       "outcomeId": "lo08",
       "difficulty": "Round 2",
-      "prompt": "What is 'plaintext'? A) A scrambled message B) A message that can be read easily C) A type of virus D) A web server",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "A byte is made of how many bits? A) 2 B) 4 C) 8 D) 255",
+      "answer": "C — A byte is 8 bits.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "C — A byte is 8 bits."
     },
     {
       "id": "fl09",
       "outcomeId": "lo09",
       "difficulty": "Round 3",
-      "prompt": "A byte is made of how many bits? A) 2 B) 4 C) 8 D) 255",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Which of these could cause an error in data transmission? A) A power surge B) A damaged cable C) Electrical interference D) All of these",
+      "answer": "D — Power surges, damaged cables and interference can all cause errors.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "D — Power surges, damaged cables and interference can all cause errors."
     },
     {
       "id": "fl10",
       "outcomeId": "lo10",
       "difficulty": "Round 3",
-      "prompt": "Which of these could cause an error in data transmission? A) A power surge B) A damaged cable C) Electrical interference D) All of these",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "What does a search engine mainly use to find results from a phrase? A) The full sentence B) Keywords C) Your password D) The IP address only",
+      "answer": "B — Search engines pick out keywords from a phrase.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "B — Search engines pick out keywords from a phrase."
     },
     {
       "id": "fl11",
       "outcomeId": "lo01",
       "difficulty": "Round 3",
-      "prompt": "What does a search engine mainly use to find results from a phrase? A) The full sentence B) Keywords C) Your password D) The IP address only",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "A web browser is an example of: A) Systems software B) A server C) Application software D) A neural network",
+      "answer": "C — A browser does one specific job (browsing the web), so it is application software.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "C — A browser does one specific job (browsing the web), so it is application software."
     },
     {
       "id": "fl12",
       "outcomeId": "lo02",
       "difficulty": "Round 3",
-      "prompt": "A web browser is an example of: A) Systems software B) A server C) Application software D) A neural network",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Which method gives the longest transmission distance? A) Bluetooth B) Wi-Fi C) 4G cellular data D) A USB stick",
+      "answer": "C — 4G can reach up to about 16 km, far further than Wi-Fi or Bluetooth.",
       "hint": "Look back at what connectivity and network mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "C — 4G can reach up to about 16 km, far further than Wi-Fi or Bluetooth."
     }
   ],
   "realProblems": [
@@ -1113,9 +1145,9 @@
       "difficulty": "Core",
       "context": "Home",
       "prompt": "Leo wants to buy a football shirt from an online shop. Before he types his family's payment details, what two clues should he check in the address bar, and why? Should he trust the site just because it has a padlock? Explain.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "Leo should check for the padlock icon and that the address starts with https — both show the connection is encrypted, so his payment details cannot be read as they travel. But he should not trust the site on the padlock alone: the padlock only protects the connection, not the honesty of the site's owner. He should also make sure it is a shop he and his family know and trust.",
       "hint": "Work out which idea this is about — connectivity, network, the internet — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: Leo should check for the padlock icon and that the address starts with https — both show the connection is encrypted, so his payment details cannot be read as they travel. But he should not trust the site on the padlock alone: the padlock only protects the connection, not the honesty of the site's owner. He should also make sure it is a shop he and his family know and trust."
     },
     {
       "id": "rp02",
@@ -1123,9 +1155,9 @@
       "difficulty": "Core",
       "context": "School",
       "prompt": "Leila is setting up Wi-Fi at home. Her neighbour says, \"Don't bother with a password, it's easier.\" Explain why Leila should use a strong password, using the idea of security.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "Without a password, anyone within range can join Leila's network and see the data on it — a serious security risk. A strong password stops strangers connecting and helps protect the family's private information from being stolen or misused.",
       "hint": "Work out which idea this is about — connectivity, network, the internet — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: Without a password, anyone within range can join Leila's network and see the data on it — a serious security risk. A strong password stops strangers connecting and helps protect the family's private information from being stolen or misused."
     },
     {
       "id": "rp03",
@@ -1133,9 +1165,9 @@
       "difficulty": "Core",
       "context": "Market",
       "prompt": "Nora in Mogadishu sends a message to Talia in Nairobi. The message passes through the network as data packets, and one packet arrives with a flipped bit. Explain what happens next and why the message can still arrive correctly.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "The network notices the packet arrived with an error (a flipped bit). Because each packet is checked and numbered, only that one faulty packet is re-sent, not the whole message. Once the correct packet arrives, all packets are reassembled in order, so Talia receives the message correctly.",
       "hint": "Work out which idea this is about — connectivity, network, the internet — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: The network notices the packet arrived with an error (a flipped bit). Because each packet is checked and numbered, only that one faulty packet is re-sent, not the whole message. Once the correct packet arrives, all packets are reassembled in order, so Talia receives the message correctly."
     },
     {
       "id": "rp04",
@@ -1143,9 +1175,9 @@
       "difficulty": "Challenge",
       "context": "Community",
       "prompt": "Karim searches 'What are the best free coding websites I can use to learn Python?' Which keywords will the search engine most likely focus on, and why does knowing this help Karim search better?",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "The engine will focus on keywords like free coding websites and Python (or 'learn Python'), ignoring words like 'what are the best'. Knowing this helps Karim choose clear keywords, so he gets better results faster.",
       "hint": "Work out which idea this is about — connectivity, network, the internet — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: The engine will focus on keywords like free coding websites and Python (or 'learn Python'), ignoring words like 'what are the best'. Knowing this helps Karim choose clear keywords, so he gets better results faster."
     },
     {
       "id": "rp05",
@@ -1153,16 +1185,16 @@
       "difficulty": "Challenge",
       "context": "Travel",
       "prompt": "A website's address starts with http (no 's') and has no padlock, but it asks for your password. What should you do, and why?",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "Do not enter your password. No padlock and http (no 's') means the data is not encrypted, so anyone could read what you type. Leave the site, and only enter passwords on secure (https) sites you trust.",
       "hint": "Work out which idea this is about — connectivity, network, the internet — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: Do not enter your password. No padlock and http (no 's') means the data is not encrypted, so anyone could read what you type. Leave the site, and only enter passwords on secure (https) sites you trust."
     },
     {
       "id": "rp06",
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "context": "Health",
-      "prompt": "Leo should check for the padlock icon and that the address starts with https — both show the connection is encrypted, so his payment details cannot be read as they travel. But he should not trust the site on the padlock alone: the padlock only protects the connection, not the honesty of the site's owner. He should also make sure it is a shop he and his family know and trust.",
+      "prompt": "Encrypt the plaintext word NETWORK.",
       "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
       "hint": "Work out which idea this is about — connectivity, network, the internet — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
@@ -1174,78 +1206,78 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Answer in one or two full sentences.",
+      "prompt": "Name the four characteristics used to compare wireless transmission methods.",
       "keyIdeas": [
         "connectivity",
         "network",
         "the internet"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "Bandwidth, transmission distance, security, and interference."
     },
     {
       "id": "reason02",
       "outcomeId": "lo02",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Name the four characteristics used to compare wireless transmission methods.",
+      "prompt": "Give one advantage and one disadvantage of Wi-Fi.",
       "keyIdeas": [
         "network",
         "the internet",
         "Wi-Fi"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "Advantage: fast (up to about 9.6 Gbps) and convenient with no wires. Disadvantage: weak security and short range (about 50 m), affected by walls."
     },
     {
       "id": "reason03",
       "outcomeId": "lo03",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Give one advantage and one disadvantage of Wi-Fi.",
+      "prompt": "Why is 5G useful in a busy city even though its signal does not travel as far as 4G?",
       "keyIdeas": [
         "the internet",
         "Wi-Fi",
         "Bluetooth"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "A city has many masts, so 5G's short range is covered — and in return users get much higher bandwidth (about 100 Mbps) for streaming and fast browsing."
     },
     {
       "id": "reason04",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "Why is 5G useful in a busy city even though its signal does not travel as far as 4G?",
+      "prompt": "What is a server, and what is a web server?",
       "keyIdeas": [
         "Wi-Fi",
         "Bluetooth",
         "cellular data"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "A server is a powerful computer that stores and manages files and services for a network. A web server is a server that specifically stores web pages so people can view them online."
     },
     {
       "id": "reason05",
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "What is a server, and what is a web server?",
+      "prompt": "Explain why every device on a network needs a unique IP address.",
       "keyIdeas": [
         "Bluetooth",
         "cellular data",
         "bandwidth"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "So that data is sent to exactly the right device. If two devices shared an address, the network could not tell them apart."
     },
     {
       "id": "reason06",
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "Explain why every device on a network needs a unique IP address.",
+      "prompt": "Why do we use URLs instead of IP addresses?",
       "keyIdeas": [
         "cellular data",
         "bandwidth",
         "transmission distance"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "Because names (URLs) are far easier for people to remember than long strings of numbers (IP addresses)."
     }
   ],
   "project": {
@@ -1274,30 +1306,30 @@
         "type": "Concept",
         "outcomeId": "lo01",
         "difficulty": "Basic",
-        "question": "What does “connectivity” mean in computing?",
+        "question": "Which wireless method is best for connecting a keyboard and mouse to a nearby PC?",
         "options": [
-          "The way devices connect to each other to form a network.",
-          "A group of computers and devices connected so they can share data.",
-          "The huge global network that connects billions of devices worldwide.",
-          "A wireless method of connecting devices using radio waves, over a short range."
+          "Cellular data",
+          "Bluetooth",
+          "A fibre cable",
+          "Higher-level DNS"
         ],
-        "answer": "The way devices connect to each other to form a network.",
+        "answer": "Bluetooth",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "Connectivity means the way devices connect to each other to form a network."
+        "explanation": "Bluetooth is designed for short-range, low-bandwidth links between nearby devices."
       },
       {
         "id": "q02",
         "type": "Concept",
         "outcomeId": "lo02",
         "difficulty": "Basic",
-        "question": "What does “network” mean in computing?",
+        "question": "What does 'bandwidth' mean?",
         "options": [
-          "A group of computers and devices connected so they can share data.",
-          "The huge global network that connects billions of devices worldwide.",
-          "A wireless method of connecting devices using radio waves, over a short range.",
-          "A wireless method for connecting nearby devices using radio waves."
+          "How far a signal travels",
+          "How secure a network is",
+          "How much data can be sent in a certain time",
+          "The name of a website"
         ],
-        "answer": "A group of computers and devices connected so they can share data.",
+        "answer": "How much data can be sent in a certain time",
         "hint": "Use the Unit 3 Computing Words reference.",
         "explanation": "Network means a group of computers and devices connected so they can share data."
       },
@@ -1306,110 +1338,110 @@
         "type": "Concept",
         "outcomeId": "lo03",
         "difficulty": "Basic",
-        "question": "What does “the internet” mean in computing?",
+        "question": "An IP address is made of four numbers. Each number must be between:",
         "options": [
-          "The huge global network that connects billions of devices worldwide.",
-          "A wireless method of connecting devices using radio waves, over a short range.",
-          "A wireless method for connecting nearby devices using radio waves.",
-          "Mobile internet from phone masts, such as 4G and 5G."
+          "0 and 9",
+          "1 and 100",
+          "0 and 255",
+          "0 and 1000"
         ],
-        "answer": "The huge global network that connects billions of devices worldwide.",
+        "answer": "0 and 255",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "The internet means the huge global network that connects billions of devices worldwide."
+        "explanation": "Each of the four numbers in an IP address is between 0 and 255."
       },
       {
         "id": "q04",
         "type": "Concept",
         "outcomeId": "lo04",
         "difficulty": "Basic",
-        "question": "What does “Wi-Fi” mean in computing?",
+        "question": "What does DNS do?",
         "options": [
-          "A wireless method of connecting devices using radio waves, over a short range.",
-          "A wireless method for connecting nearby devices using radio waves.",
-          "Mobile internet from phone masts, such as 4G and 5G.",
-          "The amount of data that can be sent in a certain amount of time."
+          "Encrypts your password",
+          "Translates a URL into an IP address",
+          "Stores your photos",
+          "Blocks all hackers"
         ],
-        "answer": "A wireless method of connecting devices using radio waves, over a short range.",
+        "answer": "Translates a URL into an IP address",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "Wi-Fi means a wireless method of connecting devices using radio waves, over a short range."
+        "explanation": "DNS translates a URL (a name) into an IP address (a number)."
       },
       {
         "id": "q05",
         "type": "Application",
         "outcomeId": "lo05",
         "difficulty": "Core",
-        "question": "What does “Bluetooth” mean in computing?",
+        "question": "In the URL https://www.africanews.com, which part is the TLD?",
         "options": [
-          "A wireless method for connecting nearby devices using radio waves.",
-          "Mobile internet from phone masts, such as 4G and 5G.",
-          "The amount of data that can be sent in a certain amount of time.",
-          "How far a signal can travel using a transmission method."
+          "https",
+          "www",
+          "africanews",
+          ".com"
         ],
-        "answer": "A wireless method for connecting nearby devices using radio waves.",
+        "answer": ".com",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "Bluetooth means a wireless method for connecting nearby devices using radio waves."
+        "explanation": ".com is the top-level domain (TLD), the ending of the address."
       },
       {
         "id": "q06",
         "type": "Application",
         "outcomeId": "lo06",
         "difficulty": "Core",
-        "question": "What does “cellular data” mean in computing?",
+        "question": "The padlock icon in the address bar tells you that:",
         "options": [
-          "Mobile internet from phone masts, such as 4G and 5G.",
-          "The amount of data that can be sent in a certain amount of time.",
-          "How far a signal can travel using a transmission method.",
-          "Anything that interrupts a signal, such as walls or other devices."
+          "The website is owned by the government",
+          "The connection is encrypted (HTTPS)",
+          "The website can never be hacked",
+          "The page has no images"
         ],
-        "answer": "Mobile internet from phone masts, such as 4G and 5G.",
+        "answer": "The connection is encrypted (HTTPS)",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "Cellular data means mobile internet from phone masts, such as 4G and 5G."
+        "explanation": "The padlock means the connection is encrypted (HTTPS). It does not promise the site is trustworthy."
       },
       {
         "id": "q07",
         "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
-        "question": "Which computing word matches this meaning: The amount of data that can be sent in a certain amount of time.?",
+        "question": "What is 'plaintext'?",
         "options": [
-          "bandwidth",
-          "transmission distance",
-          "interference",
-          "server"
+          "A scrambled message",
+          "A message that can be read easily",
+          "A type of virus",
+          "A web server"
         ],
-        "answer": "bandwidth",
+        "answer": "A message that can be read easily",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "Bandwidth means the amount of data that can be sent in a certain amount of time."
+        "explanation": "Plaintext is a readable, un-encrypted message."
       },
       {
         "id": "q08",
         "type": "Application",
         "outcomeId": "lo08",
         "difficulty": "Core",
-        "question": "Which computing word matches this meaning: How far a signal can travel using a transmission method.?",
+        "question": "A byte is made of how many bits?",
         "options": [
-          "transmission distance",
-          "interference",
-          "server",
-          "web server"
+          "2",
+          "4",
+          "8",
+          "255"
         ],
-        "answer": "transmission distance",
+        "answer": "8",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "Transmission distance means how far a signal can travel using a transmission method."
+        "explanation": "A byte is 8 bits."
       },
       {
         "id": "q09",
         "type": "Reasoning",
         "outcomeId": "lo09",
         "difficulty": "Core",
-        "question": "Which computing word matches this meaning: Anything that interrupts a signal, such as walls or other devices.?",
+        "question": "Which of these could cause an error in data transmission?",
         "options": [
-          "interference",
-          "server",
-          "web server",
-          "IP address"
+          "A power surge",
+          "A damaged cable",
+          "Electrical interference",
+          "All of these"
         ],
-        "answer": "interference",
+        "answer": "All of these",
         "hint": "Use the Unit 3 Computing Words reference.",
         "explanation": "Interference means anything that interrupts a signal, such as walls or other devices."
       },
@@ -1418,48 +1450,48 @@
         "type": "Reasoning",
         "outcomeId": "lo10",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: A powerful computer that stores and manages files and services for a network.?",
+        "question": "What does a search engine mainly use to find results from a phrase?",
         "options": [
-          "server",
-          "web server",
-          "IP address",
-          "URL"
+          "The full sentence",
+          "Keywords",
+          "Your password",
+          "The IP address only"
         ],
-        "answer": "server",
+        "answer": "Keywords",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "Server means a powerful computer that stores and manages files and services for a network."
+        "explanation": "Search engines pick out keywords from a phrase."
       },
       {
         "id": "q11",
         "type": "Reasoning",
         "outcomeId": "lo01",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: A server that stores web pages so people can view them online.?",
+        "question": "A web browser is an example of:",
         "options": [
-          "web server",
-          "IP address",
-          "URL",
-          "domain name"
+          "Systems software",
+          "A server",
+          "Application software",
+          "A neural network"
         ],
-        "answer": "web server",
+        "answer": "Application software",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "Web server means a server that stores web pages so people can view them online."
+        "explanation": "A browser does one specific job (browsing the web), so it is application software."
       },
       {
         "id": "q12",
         "type": "Reasoning",
         "outcomeId": "lo02",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: A unique number that identifies a device on a network, e.g. 192.168.1.4.?",
+        "question": "Which method gives the longest transmission distance?",
         "options": [
-          "IP address",
-          "URL",
-          "domain name",
-          "DNS"
+          "Bluetooth",
+          "Wi-Fi",
+          "4G cellular data",
+          "A USB stick"
         ],
-        "answer": "IP address",
+        "answer": "4G cellular data",
         "hint": "Use the Unit 3 Computing Words reference.",
-        "explanation": "IP address means a unique number that identifies a device on a network, e.g. 192.168.1.4."
+        "explanation": "4G can reach up to about 16 km, far further than Wi-Fi or Bluetooth."
       }
     ]
   },
@@ -1475,50 +1507,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “connectivity” mean in computing?",
+            "prompt": "Which wireless method is best for connecting a keyboard and mouse to a nearby PC?",
             "choices": [
-              "The way devices connect to each other to form a network.",
-              "A group of computers and devices connected so they can share data.",
-              "The huge global network that connects billions of devices worldwide.",
-              "A wireless method of connecting devices using radio waves, over a short range."
+              "Cellular data",
+              "Bluetooth",
+              "A fibre cable",
+              "Higher-level DNS"
             ],
-            "answer": "The way devices connect to each other to form a network.",
+            "answer": "Bluetooth",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Connectivity means the way devices connect to each other to form a network."
           },
           {
-            "prompt": "What does “Wi-Fi” mean in computing?",
+            "prompt": "What does DNS do?",
             "choices": [
-              "A wireless method of connecting devices using radio waves, over a short range.",
-              "A wireless method for connecting nearby devices using radio waves.",
-              "Mobile internet from phone masts, such as 4G and 5G.",
-              "The amount of data that can be sent in a certain amount of time."
+              "Encrypts your password",
+              "Translates a URL into an IP address",
+              "Stores your photos",
+              "Blocks all hackers"
             ],
-            "answer": "A wireless method of connecting devices using radio waves, over a short range.",
+            "answer": "Translates a URL into an IP address",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Wi-Fi means a wireless method of connecting devices using radio waves, over a short range."
           },
           {
-            "prompt": "Which computing word matches this meaning: The amount of data that can be sent in a certain amount of time.?",
+            "prompt": "What is 'plaintext'?",
             "choices": [
-              "bandwidth",
-              "transmission distance",
-              "interference",
-              "server"
+              "A scrambled message",
+              "A message that can be read easily",
+              "A type of virus",
+              "A web server"
             ],
-            "answer": "bandwidth",
+            "answer": "A message that can be read easily",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Bandwidth means the amount of data that can be sent in a certain amount of time."
           },
           {
-            "prompt": "Which computing word matches this meaning: A powerful computer that stores and manages files and services for a network.?",
+            "prompt": "What does a search engine mainly use to find results from a phrase?",
             "choices": [
-              "server",
-              "web server",
-              "IP address",
-              "URL"
+              "The full sentence",
+              "Keywords",
+              "Your password",
+              "The IP address only"
             ],
-            "answer": "server",
+            "answer": "Keywords",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Server means a powerful computer that stores and manages files and services for a network."
           }
@@ -1533,50 +1565,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “network” mean in computing?",
+            "prompt": "What does 'bandwidth' mean?",
             "choices": [
-              "A group of computers and devices connected so they can share data.",
-              "The huge global network that connects billions of devices worldwide.",
-              "A wireless method of connecting devices using radio waves, over a short range.",
-              "A wireless method for connecting nearby devices using radio waves."
+              "How far a signal travels",
+              "How secure a network is",
+              "How much data can be sent in a certain time",
+              "The name of a website"
             ],
-            "answer": "A group of computers and devices connected so they can share data.",
+            "answer": "How much data can be sent in a certain time",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Network means a group of computers and devices connected so they can share data."
           },
           {
-            "prompt": "What does “Bluetooth” mean in computing?",
+            "prompt": "In the URL https://www.africanews.com, which part is the TLD?",
             "choices": [
-              "A wireless method for connecting nearby devices using radio waves.",
-              "Mobile internet from phone masts, such as 4G and 5G.",
-              "The amount of data that can be sent in a certain amount of time.",
-              "How far a signal can travel using a transmission method."
+              "https",
+              "www",
+              "africanews",
+              ".com"
             ],
-            "answer": "A wireless method for connecting nearby devices using radio waves.",
+            "answer": ".com",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Bluetooth means a wireless method for connecting nearby devices using radio waves."
           },
           {
-            "prompt": "Which computing word matches this meaning: How far a signal can travel using a transmission method.?",
+            "prompt": "A byte is made of how many bits?",
             "choices": [
-              "transmission distance",
-              "interference",
-              "server",
-              "web server"
+              "2",
+              "4",
+              "8",
+              "255"
             ],
-            "answer": "transmission distance",
+            "answer": "8",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Transmission distance means how far a signal can travel using a transmission method."
           },
           {
-            "prompt": "Which computing word matches this meaning: A server that stores web pages so people can view them online.?",
+            "prompt": "A web browser is an example of:",
             "choices": [
-              "web server",
-              "IP address",
-              "URL",
-              "domain name"
+              "Systems software",
+              "A server",
+              "Application software",
+              "A neural network"
             ],
-            "answer": "web server",
+            "answer": "Application software",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Web server means a server that stores web pages so people can view them online."
           }
@@ -1591,50 +1623,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “the internet” mean in computing?",
+            "prompt": "An IP address is made of four numbers. Each number must be between:",
             "choices": [
-              "The huge global network that connects billions of devices worldwide.",
-              "A wireless method of connecting devices using radio waves, over a short range.",
-              "A wireless method for connecting nearby devices using radio waves.",
-              "Mobile internet from phone masts, such as 4G and 5G."
+              "0 and 9",
+              "1 and 100",
+              "0 and 255",
+              "0 and 1000"
             ],
-            "answer": "The huge global network that connects billions of devices worldwide.",
+            "answer": "0 and 255",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "The internet means the huge global network that connects billions of devices worldwide."
           },
           {
-            "prompt": "What does “cellular data” mean in computing?",
+            "prompt": "The padlock icon in the address bar tells you that:",
             "choices": [
-              "Mobile internet from phone masts, such as 4G and 5G.",
-              "The amount of data that can be sent in a certain amount of time.",
-              "How far a signal can travel using a transmission method.",
-              "Anything that interrupts a signal, such as walls or other devices."
+              "The website is owned by the government",
+              "The connection is encrypted (HTTPS)",
+              "The website can never be hacked",
+              "The page has no images"
             ],
-            "answer": "Mobile internet from phone masts, such as 4G and 5G.",
+            "answer": "The connection is encrypted (HTTPS)",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Cellular data means mobile internet from phone masts, such as 4G and 5G."
           },
           {
-            "prompt": "Which computing word matches this meaning: Anything that interrupts a signal, such as walls or other devices.?",
+            "prompt": "Which of these could cause an error in data transmission?",
             "choices": [
-              "interference",
-              "server",
-              "web server",
-              "IP address"
+              "A power surge",
+              "A damaged cable",
+              "Electrical interference",
+              "All of these"
             ],
-            "answer": "interference",
+            "answer": "All of these",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Interference means anything that interrupts a signal, such as walls or other devices."
           },
           {
-            "prompt": "Which computing word matches this meaning: A unique number that identifies a device on a network, e.g. 192.168.1.4.?",
+            "prompt": "Which method gives the longest transmission distance?",
             "choices": [
-              "IP address",
-              "URL",
-              "domain name",
-              "DNS"
+              "Bluetooth",
+              "Wi-Fi",
+              "4G cellular data",
+              "A USB stick"
             ],
-            "answer": "IP address",
+            "answer": "4G cellular data",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "IP address means a unique number that identifies a device on a network, e.g. 192.168.1.4."
           }
@@ -1649,50 +1681,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Wi-Fi” mean in computing?",
+            "prompt": "What does DNS do?",
             "choices": [
-              "A wireless method of connecting devices using radio waves, over a short range.",
-              "A wireless method for connecting nearby devices using radio waves.",
-              "Mobile internet from phone masts, such as 4G and 5G.",
-              "The amount of data that can be sent in a certain amount of time."
+              "Encrypts your password",
+              "Translates a URL into an IP address",
+              "Stores your photos",
+              "Blocks all hackers"
             ],
-            "answer": "A wireless method of connecting devices using radio waves, over a short range.",
+            "answer": "Translates a URL into an IP address",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Wi-Fi means a wireless method of connecting devices using radio waves, over a short range."
           },
           {
-            "prompt": "Which computing word matches this meaning: The amount of data that can be sent in a certain amount of time.?",
+            "prompt": "What is 'plaintext'?",
             "choices": [
-              "bandwidth",
-              "transmission distance",
-              "interference",
-              "server"
+              "A scrambled message",
+              "A message that can be read easily",
+              "A type of virus",
+              "A web server"
             ],
-            "answer": "bandwidth",
+            "answer": "A message that can be read easily",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Bandwidth means the amount of data that can be sent in a certain amount of time."
           },
           {
-            "prompt": "Which computing word matches this meaning: A powerful computer that stores and manages files and services for a network.?",
+            "prompt": "What does a search engine mainly use to find results from a phrase?",
             "choices": [
-              "server",
-              "web server",
-              "IP address",
-              "URL"
+              "The full sentence",
+              "Keywords",
+              "Your password",
+              "The IP address only"
             ],
-            "answer": "server",
+            "answer": "Keywords",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Server means a powerful computer that stores and manages files and services for a network."
           },
           {
-            "prompt": "What does “connectivity” mean in computing?",
+            "prompt": "Which wireless method is best for connecting a keyboard and mouse to a nearby PC?",
             "choices": [
-              "The way devices connect to each other to form a network.",
-              "A group of computers and devices connected so they can share data.",
-              "The huge global network that connects billions of devices worldwide.",
-              "A wireless method of connecting devices using radio waves, over a short range."
+              "Cellular data",
+              "Bluetooth",
+              "A fibre cable",
+              "Higher-level DNS"
             ],
-            "answer": "The way devices connect to each other to form a network.",
+            "answer": "Bluetooth",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Connectivity means the way devices connect to each other to form a network."
           }
@@ -1707,50 +1739,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “Bluetooth” mean in computing?",
+            "prompt": "In the URL https://www.africanews.com, which part is the TLD?",
             "choices": [
-              "A wireless method for connecting nearby devices using radio waves.",
-              "Mobile internet from phone masts, such as 4G and 5G.",
-              "The amount of data that can be sent in a certain amount of time.",
-              "How far a signal can travel using a transmission method."
+              "https",
+              "www",
+              "africanews",
+              ".com"
             ],
-            "answer": "A wireless method for connecting nearby devices using radio waves.",
+            "answer": ".com",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Bluetooth means a wireless method for connecting nearby devices using radio waves."
           },
           {
-            "prompt": "Which computing word matches this meaning: How far a signal can travel using a transmission method.?",
+            "prompt": "A byte is made of how many bits?",
             "choices": [
-              "transmission distance",
-              "interference",
-              "server",
-              "web server"
+              "2",
+              "4",
+              "8",
+              "255"
             ],
-            "answer": "transmission distance",
+            "answer": "8",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Transmission distance means how far a signal can travel using a transmission method."
           },
           {
-            "prompt": "Which computing word matches this meaning: A server that stores web pages so people can view them online.?",
+            "prompt": "A web browser is an example of:",
             "choices": [
-              "web server",
-              "IP address",
-              "URL",
-              "domain name"
+              "Systems software",
+              "A server",
+              "Application software",
+              "A neural network"
             ],
-            "answer": "web server",
+            "answer": "Application software",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Web server means a server that stores web pages so people can view them online."
           },
           {
-            "prompt": "What does “network” mean in computing?",
+            "prompt": "What does 'bandwidth' mean?",
             "choices": [
-              "A group of computers and devices connected so they can share data.",
-              "The huge global network that connects billions of devices worldwide.",
-              "A wireless method of connecting devices using radio waves, over a short range.",
-              "A wireless method for connecting nearby devices using radio waves."
+              "How far a signal travels",
+              "How secure a network is",
+              "How much data can be sent in a certain time",
+              "The name of a website"
             ],
-            "answer": "A group of computers and devices connected so they can share data.",
+            "answer": "How much data can be sent in a certain time",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Network means a group of computers and devices connected so they can share data."
           }
@@ -1765,50 +1797,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “cellular data” mean in computing?",
+            "prompt": "The padlock icon in the address bar tells you that:",
             "choices": [
-              "Mobile internet from phone masts, such as 4G and 5G.",
-              "The amount of data that can be sent in a certain amount of time.",
-              "How far a signal can travel using a transmission method.",
-              "Anything that interrupts a signal, such as walls or other devices."
+              "The website is owned by the government",
+              "The connection is encrypted (HTTPS)",
+              "The website can never be hacked",
+              "The page has no images"
             ],
-            "answer": "Mobile internet from phone masts, such as 4G and 5G.",
+            "answer": "The connection is encrypted (HTTPS)",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Cellular data means mobile internet from phone masts, such as 4G and 5G."
           },
           {
-            "prompt": "Which computing word matches this meaning: Anything that interrupts a signal, such as walls or other devices.?",
+            "prompt": "Which of these could cause an error in data transmission?",
             "choices": [
-              "interference",
-              "server",
-              "web server",
-              "IP address"
+              "A power surge",
+              "A damaged cable",
+              "Electrical interference",
+              "All of these"
             ],
-            "answer": "interference",
+            "answer": "All of these",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Interference means anything that interrupts a signal, such as walls or other devices."
           },
           {
-            "prompt": "Which computing word matches this meaning: A unique number that identifies a device on a network, e.g. 192.168.1.4.?",
+            "prompt": "Which method gives the longest transmission distance?",
             "choices": [
-              "IP address",
-              "URL",
-              "domain name",
-              "DNS"
+              "Bluetooth",
+              "Wi-Fi",
+              "4G cellular data",
+              "A USB stick"
             ],
-            "answer": "IP address",
+            "answer": "4G cellular data",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "IP address means a unique number that identifies a device on a network, e.g. 192.168.1.4."
           },
           {
-            "prompt": "What does “the internet” mean in computing?",
+            "prompt": "An IP address is made of four numbers. Each number must be between:",
             "choices": [
-              "The huge global network that connects billions of devices worldwide.",
-              "A wireless method of connecting devices using radio waves, over a short range.",
-              "A wireless method for connecting nearby devices using radio waves.",
-              "Mobile internet from phone masts, such as 4G and 5G."
+              "0 and 9",
+              "1 and 100",
+              "0 and 255",
+              "0 and 1000"
             ],
-            "answer": "The huge global network that connects billions of devices worldwide.",
+            "answer": "0 and 255",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "The internet means the huge global network that connects billions of devices worldwide."
           }
@@ -1823,50 +1855,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: The amount of data that can be sent in a certain amount of time.?",
+            "prompt": "What is 'plaintext'?",
             "choices": [
-              "bandwidth",
-              "transmission distance",
-              "interference",
-              "server"
+              "A scrambled message",
+              "A message that can be read easily",
+              "A type of virus",
+              "A web server"
             ],
-            "answer": "bandwidth",
+            "answer": "A message that can be read easily",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Bandwidth means the amount of data that can be sent in a certain amount of time."
           },
           {
-            "prompt": "Which computing word matches this meaning: A powerful computer that stores and manages files and services for a network.?",
+            "prompt": "What does a search engine mainly use to find results from a phrase?",
             "choices": [
-              "server",
-              "web server",
-              "IP address",
-              "URL"
+              "The full sentence",
+              "Keywords",
+              "Your password",
+              "The IP address only"
             ],
-            "answer": "server",
+            "answer": "Keywords",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Server means a powerful computer that stores and manages files and services for a network."
           },
           {
-            "prompt": "What does “connectivity” mean in computing?",
+            "prompt": "Which wireless method is best for connecting a keyboard and mouse to a nearby PC?",
             "choices": [
-              "The way devices connect to each other to form a network.",
-              "A group of computers and devices connected so they can share data.",
-              "The huge global network that connects billions of devices worldwide.",
-              "A wireless method of connecting devices using radio waves, over a short range."
+              "Cellular data",
+              "Bluetooth",
+              "A fibre cable",
+              "Higher-level DNS"
             ],
-            "answer": "The way devices connect to each other to form a network.",
+            "answer": "Bluetooth",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Connectivity means the way devices connect to each other to form a network."
           },
           {
-            "prompt": "What does “Wi-Fi” mean in computing?",
+            "prompt": "What does DNS do?",
             "choices": [
-              "A wireless method of connecting devices using radio waves, over a short range.",
-              "A wireless method for connecting nearby devices using radio waves.",
-              "Mobile internet from phone masts, such as 4G and 5G.",
-              "The amount of data that can be sent in a certain amount of time."
+              "Encrypts your password",
+              "Translates a URL into an IP address",
+              "Stores your photos",
+              "Blocks all hackers"
             ],
-            "answer": "A wireless method of connecting devices using radio waves, over a short range.",
+            "answer": "Translates a URL into an IP address",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Wi-Fi means a wireless method of connecting devices using radio waves, over a short range."
           }
@@ -1881,50 +1913,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: How far a signal can travel using a transmission method.?",
+            "prompt": "A byte is made of how many bits?",
             "choices": [
-              "transmission distance",
-              "interference",
-              "server",
-              "web server"
+              "2",
+              "4",
+              "8",
+              "255"
             ],
-            "answer": "transmission distance",
+            "answer": "8",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Transmission distance means how far a signal can travel using a transmission method."
           },
           {
-            "prompt": "Which computing word matches this meaning: A server that stores web pages so people can view them online.?",
+            "prompt": "A web browser is an example of:",
             "choices": [
-              "web server",
-              "IP address",
-              "URL",
-              "domain name"
+              "Systems software",
+              "A server",
+              "Application software",
+              "A neural network"
             ],
-            "answer": "web server",
+            "answer": "Application software",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Web server means a server that stores web pages so people can view them online."
           },
           {
-            "prompt": "What does “network” mean in computing?",
+            "prompt": "What does 'bandwidth' mean?",
             "choices": [
-              "A group of computers and devices connected so they can share data.",
-              "The huge global network that connects billions of devices worldwide.",
-              "A wireless method of connecting devices using radio waves, over a short range.",
-              "A wireless method for connecting nearby devices using radio waves."
+              "How far a signal travels",
+              "How secure a network is",
+              "How much data can be sent in a certain time",
+              "The name of a website"
             ],
-            "answer": "A group of computers and devices connected so they can share data.",
+            "answer": "How much data can be sent in a certain time",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Network means a group of computers and devices connected so they can share data."
           },
           {
-            "prompt": "What does “Bluetooth” mean in computing?",
+            "prompt": "In the URL https://www.africanews.com, which part is the TLD?",
             "choices": [
-              "A wireless method for connecting nearby devices using radio waves.",
-              "Mobile internet from phone masts, such as 4G and 5G.",
-              "The amount of data that can be sent in a certain amount of time.",
-              "How far a signal can travel using a transmission method."
+              "https",
+              "www",
+              "africanews",
+              ".com"
             ],
-            "answer": "A wireless method for connecting nearby devices using radio waves.",
+            "answer": ".com",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Bluetooth means a wireless method for connecting nearby devices using radio waves."
           }
@@ -1939,50 +1971,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: Anything that interrupts a signal, such as walls or other devices.?",
+            "prompt": "Which of these could cause an error in data transmission?",
             "choices": [
-              "interference",
-              "server",
-              "web server",
-              "IP address"
+              "A power surge",
+              "A damaged cable",
+              "Electrical interference",
+              "All of these"
             ],
-            "answer": "interference",
+            "answer": "All of these",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Interference means anything that interrupts a signal, such as walls or other devices."
           },
           {
-            "prompt": "Which computing word matches this meaning: A unique number that identifies a device on a network, e.g. 192.168.1.4.?",
+            "prompt": "Which method gives the longest transmission distance?",
             "choices": [
-              "IP address",
-              "URL",
-              "domain name",
-              "DNS"
+              "Bluetooth",
+              "Wi-Fi",
+              "4G cellular data",
+              "A USB stick"
             ],
-            "answer": "IP address",
+            "answer": "4G cellular data",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "IP address means a unique number that identifies a device on a network, e.g. 192.168.1.4."
           },
           {
-            "prompt": "What does “the internet” mean in computing?",
+            "prompt": "An IP address is made of four numbers. Each number must be between:",
             "choices": [
-              "The huge global network that connects billions of devices worldwide.",
-              "A wireless method of connecting devices using radio waves, over a short range.",
-              "A wireless method for connecting nearby devices using radio waves.",
-              "Mobile internet from phone masts, such as 4G and 5G."
+              "0 and 9",
+              "1 and 100",
+              "0 and 255",
+              "0 and 1000"
             ],
-            "answer": "The huge global network that connects billions of devices worldwide.",
+            "answer": "0 and 255",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "The internet means the huge global network that connects billions of devices worldwide."
           },
           {
-            "prompt": "What does “cellular data” mean in computing?",
+            "prompt": "The padlock icon in the address bar tells you that:",
             "choices": [
-              "Mobile internet from phone masts, such as 4G and 5G.",
-              "The amount of data that can be sent in a certain amount of time.",
-              "How far a signal can travel using a transmission method.",
-              "Anything that interrupts a signal, such as walls or other devices."
+              "The website is owned by the government",
+              "The connection is encrypted (HTTPS)",
+              "The website can never be hacked",
+              "The page has no images"
             ],
-            "answer": "Mobile internet from phone masts, such as 4G and 5G.",
+            "answer": "The connection is encrypted (HTTPS)",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Cellular data means mobile internet from phone masts, such as 4G and 5G."
           }
@@ -1997,50 +2029,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: A powerful computer that stores and manages files and services for a network.?",
+            "prompt": "What does a search engine mainly use to find results from a phrase?",
             "choices": [
-              "server",
-              "web server",
-              "IP address",
-              "URL"
+              "The full sentence",
+              "Keywords",
+              "Your password",
+              "The IP address only"
             ],
-            "answer": "server",
+            "answer": "Keywords",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Server means a powerful computer that stores and manages files and services for a network."
           },
           {
-            "prompt": "What does “connectivity” mean in computing?",
+            "prompt": "Which wireless method is best for connecting a keyboard and mouse to a nearby PC?",
             "choices": [
-              "The way devices connect to each other to form a network.",
-              "A group of computers and devices connected so they can share data.",
-              "The huge global network that connects billions of devices worldwide.",
-              "A wireless method of connecting devices using radio waves, over a short range."
+              "Cellular data",
+              "Bluetooth",
+              "A fibre cable",
+              "Higher-level DNS"
             ],
-            "answer": "The way devices connect to each other to form a network.",
+            "answer": "Bluetooth",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Connectivity means the way devices connect to each other to form a network."
           },
           {
-            "prompt": "What does “Wi-Fi” mean in computing?",
+            "prompt": "What does DNS do?",
             "choices": [
-              "A wireless method of connecting devices using radio waves, over a short range.",
-              "A wireless method for connecting nearby devices using radio waves.",
-              "Mobile internet from phone masts, such as 4G and 5G.",
-              "The amount of data that can be sent in a certain amount of time."
+              "Encrypts your password",
+              "Translates a URL into an IP address",
+              "Stores your photos",
+              "Blocks all hackers"
             ],
-            "answer": "A wireless method of connecting devices using radio waves, over a short range.",
+            "answer": "Translates a URL into an IP address",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Wi-Fi means a wireless method of connecting devices using radio waves, over a short range."
           },
           {
-            "prompt": "Which computing word matches this meaning: The amount of data that can be sent in a certain amount of time.?",
+            "prompt": "What is 'plaintext'?",
             "choices": [
-              "bandwidth",
-              "transmission distance",
-              "interference",
-              "server"
+              "A scrambled message",
+              "A message that can be read easily",
+              "A type of virus",
+              "A web server"
             ],
-            "answer": "bandwidth",
+            "answer": "A message that can be read easily",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Bandwidth means the amount of data that can be sent in a certain amount of time."
           }
@@ -2055,50 +2087,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: A server that stores web pages so people can view them online.?",
+            "prompt": "A web browser is an example of:",
             "choices": [
-              "web server",
-              "IP address",
-              "URL",
-              "domain name"
+              "Systems software",
+              "A server",
+              "Application software",
+              "A neural network"
             ],
-            "answer": "web server",
+            "answer": "Application software",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Web server means a server that stores web pages so people can view them online."
           },
           {
-            "prompt": "What does “network” mean in computing?",
+            "prompt": "What does 'bandwidth' mean?",
             "choices": [
-              "A group of computers and devices connected so they can share data.",
-              "The huge global network that connects billions of devices worldwide.",
-              "A wireless method of connecting devices using radio waves, over a short range.",
-              "A wireless method for connecting nearby devices using radio waves."
+              "How far a signal travels",
+              "How secure a network is",
+              "How much data can be sent in a certain time",
+              "The name of a website"
             ],
-            "answer": "A group of computers and devices connected so they can share data.",
+            "answer": "How much data can be sent in a certain time",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Network means a group of computers and devices connected so they can share data."
           },
           {
-            "prompt": "What does “Bluetooth” mean in computing?",
+            "prompt": "In the URL https://www.africanews.com, which part is the TLD?",
             "choices": [
-              "A wireless method for connecting nearby devices using radio waves.",
-              "Mobile internet from phone masts, such as 4G and 5G.",
-              "The amount of data that can be sent in a certain amount of time.",
-              "How far a signal can travel using a transmission method."
+              "https",
+              "www",
+              "africanews",
+              ".com"
             ],
-            "answer": "A wireless method for connecting nearby devices using radio waves.",
+            "answer": ".com",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Bluetooth means a wireless method for connecting nearby devices using radio waves."
           },
           {
-            "prompt": "Which computing word matches this meaning: How far a signal can travel using a transmission method.?",
+            "prompt": "A byte is made of how many bits?",
             "choices": [
-              "transmission distance",
-              "interference",
-              "server",
-              "web server"
+              "2",
+              "4",
+              "8",
+              "255"
             ],
-            "answer": "transmission distance",
+            "answer": "8",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Transmission distance means how far a signal can travel using a transmission method."
           }
@@ -2113,50 +2145,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: A unique number that identifies a device on a network, e.g. 192.168.1.4.?",
+            "prompt": "Which method gives the longest transmission distance?",
             "choices": [
-              "IP address",
-              "URL",
-              "domain name",
-              "DNS"
+              "Bluetooth",
+              "Wi-Fi",
+              "4G cellular data",
+              "A USB stick"
             ],
-            "answer": "IP address",
+            "answer": "4G cellular data",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "IP address means a unique number that identifies a device on a network, e.g. 192.168.1.4."
           },
           {
-            "prompt": "What does “the internet” mean in computing?",
+            "prompt": "An IP address is made of four numbers. Each number must be between:",
             "choices": [
-              "The huge global network that connects billions of devices worldwide.",
-              "A wireless method of connecting devices using radio waves, over a short range.",
-              "A wireless method for connecting nearby devices using radio waves.",
-              "Mobile internet from phone masts, such as 4G and 5G."
+              "0 and 9",
+              "1 and 100",
+              "0 and 255",
+              "0 and 1000"
             ],
-            "answer": "The huge global network that connects billions of devices worldwide.",
+            "answer": "0 and 255",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "The internet means the huge global network that connects billions of devices worldwide."
           },
           {
-            "prompt": "What does “cellular data” mean in computing?",
+            "prompt": "The padlock icon in the address bar tells you that:",
             "choices": [
-              "Mobile internet from phone masts, such as 4G and 5G.",
-              "The amount of data that can be sent in a certain amount of time.",
-              "How far a signal can travel using a transmission method.",
-              "Anything that interrupts a signal, such as walls or other devices."
+              "The website is owned by the government",
+              "The connection is encrypted (HTTPS)",
+              "The website can never be hacked",
+              "The page has no images"
             ],
-            "answer": "Mobile internet from phone masts, such as 4G and 5G.",
+            "answer": "The connection is encrypted (HTTPS)",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Cellular data means mobile internet from phone masts, such as 4G and 5G."
           },
           {
-            "prompt": "Which computing word matches this meaning: Anything that interrupts a signal, such as walls or other devices.?",
+            "prompt": "Which of these could cause an error in data transmission?",
             "choices": [
-              "interference",
-              "server",
-              "web server",
-              "IP address"
+              "A power surge",
+              "A damaged cable",
+              "Electrical interference",
+              "All of these"
             ],
-            "answer": "interference",
+            "answer": "All of these",
             "clue": "Use the Unit 3 Computing Words reference.",
             "explanation": "Interference means anything that interrupts a signal, such as walls or other devices."
           }

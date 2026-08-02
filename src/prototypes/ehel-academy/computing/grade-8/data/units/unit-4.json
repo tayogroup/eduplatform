@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-01T20:13:37.917Z",
+  "generatedAt": "2026-08-02T10:33:39.551Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -637,7 +637,7 @@
     {
       "id": "p16",
       "level": "Core",
-      "prompt": "Answer in one or two full sentences.",
+      "prompt": "Give one similarity and one difference between RAM and ROM.",
       "answer": "Similarity: both are primary memory the CPU can access directly (both are hardware that stores data). Difference: RAM is volatile and temporary; ROM is non-volatile and permanent.",
       "hint": "Look back at what ALU (arithmetic logic unit) and application software mean in this unit, then answer in your own words."
     }
@@ -1156,7 +1156,7 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Home",
-      "prompt": "Copy each table and fill in the missing output values.",
+      "prompt": "D1 - NOT gate",
       "answer": "D1 - NOT gate: input 0 gives output 1; input 1 gives output 0.",
       "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: D1 - NOT gate: input 0 gives output 1; input 1 gives output 0."
@@ -1166,7 +1166,7 @@
       "outcomeId": "lo02",
       "difficulty": "Core",
       "context": "School",
-      "prompt": "D1 - NOT gate",
+      "prompt": "D2 - AND gate",
       "answer": "D2 - AND gate outputs (top to bottom): 0, 0, 0, 1. Only 1-and-1 gives 1.",
       "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: D2 - AND gate outputs (top to bottom): 0, 0, 0, 1. Only 1-and-1 gives 1."
@@ -1176,7 +1176,7 @@
       "outcomeId": "lo03",
       "difficulty": "Core",
       "context": "Market",
-      "prompt": "D2 - AND gate",
+      "prompt": "D4 - Name the gate",
       "answer": "D3 - OR gate outputs (top to bottom): 0, 1, 1, 1. Only 0-and-0 gives 0.",
       "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: D3 - OR gate outputs (top to bottom): 0, 1, 1, 1. Only 0-and-0 gives 0."
@@ -1186,7 +1186,7 @@
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "context": "Community",
-      "prompt": "D4 - Name the gate",
+      "prompt": "Look at this completed truth table and name the logic gate it describes.",
       "answer": "D4 - Name the gate: the output is 1 whenever at least one input is 1, and 0 only when both are 0, so it is an OR gate.",
       "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: D4 - Name the gate: the output is 1 whenever at least one input is 1, and 0 only when both are 0, so it is an OR gate."
@@ -1196,7 +1196,7 @@
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "context": "Travel",
-      "prompt": "Look at this completed truth table and name the logic gate it describes.",
+      "prompt": "E1 - The lost homework",
       "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
       "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step.",
       "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
@@ -1206,10 +1206,10 @@
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "context": "Health",
-      "prompt": "E1 - The lost homework",
-      "answer": "E1: His essay was held in RAM while he typed, and RAM is volatile, so it needs power to keep its contents. When the power cut out, everything in RAM was lost. He should have saved it to secondary storage (which is non-volatile), so it would survive a power cut.",
+      "prompt": "Sami spends an hour typing an essay but does not save it. The power cuts out and his work is gone. Using the words RAM, volatile and secondary storage, explain exactly why his work disappeared and what he should have done.",
+      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
       "hint": "Work out which idea this is about — ALU (arithmetic logic unit), application software, ASCII — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: E1: His essay was held in RAM while he typed, and RAM is volatile, so it needs power to keep its contents. When the power cut out, everything in RAM was lost. He should have saved it to secondary storage (which is non-volatile), so it would survive a power cut."
+      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
     }
   ],
   "reasoningPrompts": [
@@ -1218,7 +1218,7 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Answer in one or two full sentences.",
+      "prompt": "Give one similarity and one difference between RAM and ROM.",
       "keyIdeas": [
         "ALU (arithmetic logic unit)",
         "application software",
@@ -1231,7 +1231,7 @@
       "outcomeId": "lo02",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Give one similarity and one difference between RAM and ROM.",
+      "prompt": "Name the three main parts of the CPU and say what each one does.",
       "keyIdeas": [
         "application software",
         "ASCII",
@@ -1244,7 +1244,7 @@
       "outcomeId": "lo03",
       "difficulty": "Core",
       "responseMode": "text",
-      "prompt": "Name the three main parts of the CPU and say what each one does.",
+      "prompt": "Describe the three steps of the fetch-decode-execute cycle.",
       "keyIdeas": [
         "ASCII",
         "augmented",
@@ -1257,7 +1257,7 @@
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "Describe the three steps of the fetch-decode-execute cycle.",
+      "prompt": "Explain the difference between application software and system software, with an example of each.",
       "keyIdeas": [
         "augmented",
         "augmented reality (AR)",
@@ -1270,7 +1270,7 @@
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "Explain the difference between application software and system software, with an example of each.",
+      "prompt": "List three tasks that an operating system carries out.",
       "keyIdeas": [
         "augmented reality (AR)",
         "autonomous programming",
@@ -1283,7 +1283,7 @@
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "responseMode": "text",
-      "prompt": "List three tasks that an operating system carries out.",
+      "prompt": "What is utility software? Describe what defragmenting does.",
       "keyIdeas": [
         "autonomous programming",
         "binary",

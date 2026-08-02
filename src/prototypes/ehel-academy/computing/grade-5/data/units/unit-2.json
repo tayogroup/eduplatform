@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-01T14:06:00.887Z",
+  "generatedAt": "2026-08-02T10:33:39.084Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -514,15 +514,15 @@
       "outcomeId": "lo01",
       "difficulty": "Basic",
       "title": "Worked example 1: Collecting and Storing Data",
-      "prompt": "Explain in your own words: Collecting and Storing Data.",
-      "solution": "Before you can manage data, you have to collect it. And before you collect it, you have to plan. Good data managers never just grab numbers randomly; they think carefully about what they want to find out and how they will find it out. This careful, planned way of collecting data is called a statistical investigation.\n\nWhat is a statistical investigation?\n\nA statistical investigation is when we collect data to answer a question. The data we collect is called statistics. For example, an ice-cream shop owner might ask, 'Which flavour of ice cream is the most popular?' To find out, she counts how many scoops of each flavour she sells, and then she analyses that data. To analyse data means to look closely at it, find patterns in it, and think carefully about what it means. This is useful, because once she knows the most popular flavour she can buy more of it and never run out.\n\nFor example: In our scenario, Leila is doing a statistical investigation. Her question is, 'What is the favourite fruit of the learners in my class?' She will collect data from her classmates, store it neatly, and then analyse it to find the answer."
+      "prompt": "Which of these is continuous data? (a) Favourite fruit (b) Number of pets (c) Temperature (d) Number of goals",
+      "solution": "(c) Temperature is measured and can take any value, so it is continuous."
     },
     {
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Basic",
       "title": "Worked example 2: Data and information are not the same",
-      "prompt": "Explain in your own words: Data and information are not the same.",
+      "prompt": "A statistical investigation is: (a) A type of chart (b) Collecting data to answer a question (c) A spreadsheet formula (d) A kind of cell",
       "solution": "Here is an idea that many people get muddled, so read it slowly. Data is meaningless facts or figures on their own, like the number 7 or the word green. By itself, green does not tell you anything useful. Information is data that has been given meaning. When we say 'green is the most popular colour in the class', that is information, because now the fact means something. Managing data well is really the art of turning plain data into useful information.\n\nHere is the key difference to remember. Discrete data is counted and is always a whole value — you cannot have half a pet or three-and-a-bit customers. Continuous data is measured and can be any value at all, like a temperature of 24.5 degrees or a height of 1.42 metres. In Leila's fruit investigation, the type of fruit ('mango', 'banana') is categorical, and the number of learners who chose each fruit is discrete. In Zane's temperature investigation, each reading is continuous.\n\nBefore you collect a single number, ask yourself four planning questions. Answering them first saves you a lot of trouble later.\n\nWhat data do I want to collect? For example, 'the favourite fruit of each learner in my class'.\n\nHow will I collect the data? With a form, a data logger, a survey, or a spreadsheet.\n\nHow will I organise the data? Usually by putting it into a spreadsheet in a sensible order.\n\nFor example: How will I use the data to get information? Perhaps by counting, calculating, and drawing a chart to make the pattern clear."
     },
     {
@@ -530,7 +530,7 @@
       "outcomeId": "lo03",
       "difficulty": "Basic",
       "title": "Worked example 3: The tools we use to collect and store data",
-      "prompt": "Explain in your own words: The tools we use to collect and store data.",
+      "prompt": "Which is an example of information, not just data? (a) The number 7 (b) The word 'green' (c) 'Green is the most popular colour' (d) The letter B",
       "solution": "Humans are not very good at collecting and organising lots of data by hand — we forget things, make mistakes, and it takes ages. Computers are far better: they do not forget, and they measure and calculate very quickly. Here are the most useful computing tools for a statistical investigation.\n\nData loggers — a data logger is a device that reads and records data from the world automatically (by itself, with no human help) and continuously (carrying on until you tell it to stop). It uses sensors. For example, a data logger could record the temperature of a fish tank every five minutes, all day and night. Data loggers are excellent for collecting continuous data like temperature, light level or a person's pulse.\n\nSpreadsheets — such as LibreOffice Calc. A spreadsheet stores data in a neat grid of cells, and it can add up columns, do other calculations, and draw charts in an instant. It is designed to make working with numbers easy.\n\nDatabases — a database stores related data of many types (not just numbers) in an organised way. It can be paper-based, like a diary or calendar, or digital. Databases make it easy to find, sort and analyse data, and they can hold enormous amounts — far more than a spreadsheet.\n\nForms — a form is a list of questions with spaces for people to mark or write their answers. A good form makes people enter their data in the same way, so it is easy to organise. Forms can be on paper or on a screen.\n\nDocument production tools — word processors and presentation programs let you put text and pictures together to make a report or a presentation, which is a good way to share the results of your investigation.\n\nA data logger works day and night without ever getting tired or bored.\n\nScientists put data loggers in places no human could stay, like the top of a mountain or the bottom of the sea, and leave them for months to record the temperature or the weather all by themselves.\n\nSome hotels use data loggers in a control system: when the temperature reaches 23 degrees a cooling system switches on by itself, and if it falls to 18 degrees the heating turns on.\n\nLet us help Leila. Her question is, 'What is the favourite fruit in my class?' She designs a simple form with one clear question — 'What is your favourite fruit?' — and a list of choices to tick: Mango, Banana, Orange, Watermelon, Dates, and a space for 'other'. Giving people a list of choices is clever, because it stops one person writing 'mango', another writing 'Mangoes' and another writing 'MANGO' — which would be three different answers to the computer, even though they mean the same fruit.\n\nAfter every classmate has filled in the form, Leila counts up the answers and stores them in a LibreOffice Calc spreadsheet. She organises the data in two columns — the fruit, and the number of learners who chose it — and sorts it from most popular to least popular:\n\nFor example: Now the data has become information. Leila can see straight away that mango is the favourite fruit in her class, chosen by 9 learners, and that dates were chosen by the fewest. The type of fruit is categorical data, and the number of learners who chose each fruit is discrete data. If Leila adds up the numbers 9 + 6 + 4 + 4 + 2, she finds that 25 learners answered her form altogether."
     },
     {
@@ -538,15 +538,15 @@
       "outcomeId": "lo04",
       "difficulty": "Intermediate",
       "title": "Worked example 4: A free, open",
-      "prompt": "Explain in your own words: A free, open.",
-      "solution": "Some online form tools need an account and are not free or open-source. You do not need them! You can build a tidy digital data-entry form right inside LibreOffice Calc, using its validation rules. A validation rule is like a helpful gatekeeper: it only lets good data in. Here is how Leila makes the fruit column accept only the fruits on her list:\n\nType the heading Fruit in cell A1.\n\nSelect the cells where people will enter data, for example A2:A26.\n\nOn the Criteria tab, set Allow to List.\n\nIn the Entries box, type the choices, one per line: Mango, Banana, Orange, Watermelon, Dates.\n\nClick OK. Now every one of those cells shows a little drop-down arrow, and nobody can type a fruit that is not on the list or misspell one by accident.\n\nFor example: This is exactly how the online form's drop-down list works, but it is free and open-source and needs no account at all."
+      "prompt": "A data logger is best for collecting: (a) Opinions (b) Names (c) Continuous data over time (d) Book titles",
+      "solution": "(c) A data logger records continuous data over time, all by itself."
     },
     {
       "id": "we05",
       "outcomeId": "lo05",
       "difficulty": "Intermediate",
       "title": "Worked example 5: Restricting cells",
-      "prompt": "Explain in your own words: Restricting cells.",
+      "prompt": "Every spreadsheet formula must begin with: (a) A colon (b) An equals sign (c) A bracket (d) A letter",
       "solution": "It is very easy to enter data incorrectly. If Zara typed a birthday as 3112 instead of 31/12, she would never find that birthday again when she searched. If Karim typed ouzzle instead of puzzle, the spreadsheet would treat it as a different word. Validation rules limit the kind of data a cell will accept, and this stops many of these mistakes before they happen. In LibreOffice Calc you set them with Data > Validity. A cell can be made to accept:\n\nonly decimal numbers, for example a temperature;\n\nonly text from a list you provide, like a drop-down of Yes and No;\n\nonly numbers between two limits, for example a score from 1 to 5 (so the cell would refuse a 6).\n\nImagine Zane is scoring the school lunch out of 5. He selects the score column, opens Data > Validity, sets Allow to Whole Numbers, the condition to between, Minimum 1 and Maximum 5. On the Error Alert tab he chooses the Stop action. Now the cell politely refuses any score below 1 or above 5, and even refuses a word — so his data stays clean and correct.\n\nType of data — What it is · Examples · Row · A · B\n\nCategorical — Data that can be grouped into categories. It is often made of words. · Favourite colour, type of pet, book titles, people's names. · 1 · Fruit · Number of learners\n\nDiscrete — Numerical data that can only be certain values, usually whole numbers you count. · Number of learners, number of customer reviews, number of pets. · 2 · Mango · 9\n\nFor example: Continuous — Numerical data that can take ANY value in a range, usually measured, not counted. · Temperature, weight, height, length, the time taken to do something. · 3 · Banana · 6"
     },
     {
@@ -554,8 +554,40 @@
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
       "title": "Worked example 6: Representing Data",
-      "prompt": "Explain in your own words: Representing Data.",
+      "prompt": "In a spreadsheet, the symbol for multiply is: (a) x (b) * (c) / (d) +",
       "solution": "Once you have collected some data, you can represent it — that is, show it — in different ways. A good representation makes the meaning of the data leap out at you. In this subunit you will learn to represent data in tables, bar charts and line graphs, and you will learn to calculate with formulas and functions in LibreOffice Calc.\n\nThe simplest way to represent data is in a table of rows and columns, exactly like a spreadsheet. A table makes it easy to see which pieces of data go together. Here is a table Leila made about how the 24 learners in her class travel to school:\n\nBy reading the table we get information: most learners walk to school, and very few come by car. If we add up the numbers 12 + 9 + 3 we get 24, the whole class. Because 12 is half of 24, we can even say that half the class walks to school. A table like this is much easier to read than the same facts written out in a long sentence.\n\nBut a table is not always enough. Imagine a table showing the eye colour of everyone in a big city, with numbers like 252780, 344700 and 574500. Those numbers are so big that it is hard to get a clear picture of which is largest. This is exactly when a chart becomes useful.\n\nFor example: A chart (or graph) is like a picture of your data. Charts make it much quicker and easier to see patterns and to summarise information. There are several kinds, and a good data manager chooses the kind that best suits the data. The two you will use most are the bar chart and the line graph."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo07",
+      "difficulty": "Intermediate",
+      "title": "Worked example 7: Bar charts",
+      "prompt": "Which formula correctly adds the values from B2 to B6? (a) =SUMB2:B6 (b) SUM(B2:B6) (c) =SUM(B2:B6) (d) =SUM(B2-B6)",
+      "solution": "(c) =SUM(B2:B6) has the equals sign, the function name, brackets and a colon."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo08",
+      "difficulty": "Challenge",
+      "title": "Worked example 8: The parts of a chart",
+      "prompt": "The AVERAGE function calculates the: (a) Total (b) Largest value (c) Mean (d) Smallest value",
+      "solution": "(c) AVERAGE finds the mean: add the values and divide by how many there are."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo09",
+      "difficulty": "Challenge",
+      "title": "Worked example 9: A formula that uses cell references",
+      "prompt": "Which chart is best for categorical data like favourite fruit? (a) Line graph (b) Bar chart (c) A single number (d) A formula",
+      "solution": "(b) A bar chart is best for categorical (and discrete) data."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo10",
+      "difficulty": "Challenge",
+      "title": "Worked example 10: Worked example: Ehel Academy test scores",
+      "prompt": "Which chart is best for showing temperature changing over a day? (a) Bar chart (b) Line graph (c) Table only (d) Pie of names",
+      "solution": "(b) A line graph shows continuous data changing over time."
     }
   ],
   "practice": [
@@ -563,112 +595,112 @@
       "id": "p01",
       "level": "Warm-up",
       "prompt": "Which of these is continuous data? (a) Favourite fruit (b) Number of pets (c) Temperature (d) Number of goals",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) Temperature is measured and can take any value, so it is continuous.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
     },
     {
       "id": "p02",
       "level": "Warm-up",
       "prompt": "A statistical investigation is: (a) A type of chart (b) Collecting data to answer a question (c) A spreadsheet formula (d) A kind of cell",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) A statistical investigation collects data to answer a question.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
     },
     {
       "id": "p03",
       "level": "Warm-up",
       "prompt": "Which is an example of information, not just data? (a) The number 7 (b) The word 'green' (c) 'Green is the most popular colour' (d) The letter B",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) 'Green is the most popular colour' is data with meaning, which is information.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
     },
     {
       "id": "p04",
       "level": "Warm-up",
       "prompt": "A data logger is best for collecting: (a) Opinions (b) Names (c) Continuous data over time (d) Book titles",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) A data logger records continuous data over time, all by itself.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
     },
     {
       "id": "p05",
       "level": "Warm-up",
       "prompt": "Every spreadsheet formula must begin with: (a) A colon (b) An equals sign (c) A bracket (d) A letter",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) Every formula begins with an equals sign so the software knows to calculate.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
     },
     {
       "id": "p06",
       "level": "Warm-up",
       "prompt": "In a spreadsheet, the symbol for multiply is: (a) x (b) * (c) / (d) +",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) The asterisk * means multiply; the slash / means divide.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
     },
     {
       "id": "p07",
       "level": "Warm-up",
       "prompt": "Which formula correctly adds the values from B2 to B6? (a) =SUMB2:B6 (b) SUM(B2:B6) (c) =SUM(B2:B6) (d) =SUM(B2-B6)",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) =SUM(B2:B6) has the equals sign, the function name, brackets and a colon.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
     },
     {
       "id": "p08",
       "level": "Warm-up",
       "prompt": "The AVERAGE function calculates the: (a) Total (b) Largest value (c) Mean (d) Smallest value",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) AVERAGE finds the mean: add the values and divide by how many there are.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
     },
     {
       "id": "p09",
       "level": "Warm-up",
       "prompt": "Which chart is best for categorical data like favourite fruit? (a) Line graph (b) Bar chart (c) A single number (d) A formula",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) A bar chart is best for categorical (and discrete) data.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
     },
     {
       "id": "p10",
       "level": "Warm-up",
       "prompt": "Which chart is best for showing temperature changing over a day? (a) Bar chart (b) Line graph (c) Table only (d) Pie of names",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) A line graph shows continuous data changing over time.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
     },
     {
       "id": "p11",
       "level": "Warm-up",
       "prompt": "The key on a chart that shows what each colour means is called the: (a) Axis (b) Legend (c) Cell (d) Range",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) The legend is the key that shows what each colour means.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
     },
     {
       "id": "p12",
       "level": "Warm-up",
       "prompt": "The y axis on a chart is: (a) Horizontal (b) Vertical (c) A colour (d) A title",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) The y axis is vertical; the x axis is horizontal.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
     },
     {
       "id": "p13",
       "level": "Warm-up",
       "prompt": "In =SUM(B2:B8), the part B2:B8 is called a: (a) Legend (b) Range (c) Formula (d) Chart",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) B2:B8 is a range - all the cells from B2 to B8.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
     },
     {
       "id": "p14",
       "level": "Warm-up",
       "prompt": "When you change a number that a formula uses, the formula's answer: (a) Stays the same (b) Must be redone by hand (c) Updates by itself (d) Turns into text",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) A formula updates its answer by itself when the data changes.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
     },
     {
       "id": "p15",
       "level": "Warm-up",
       "prompt": "To find a word quickly in a big spreadsheet you use: (a) A chart (b) The Find tool (c) The AVERAGE function (d) A legend",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) The Find tool (Ctrl+F) searches for your criteria in the spreadsheet.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
     },
     {
       "id": "p16",
       "level": "Core",
       "prompt": "In your own words, what is the difference between data and information? Give an example of each.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "Data is meaningless facts or figures on their own, like '7' or 'green'. Information is data with meaning, like 'green is the most popular colour in the class'.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words."
     }
   ],
@@ -1125,108 +1157,108 @@
       "outcomeId": "lo01",
       "difficulty": "Round 1",
       "prompt": "Which of these is continuous data? (a) Favourite fruit (b) Number of pets (c) Temperature (d) Number of goals",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) Temperature is measured and can take any value, so it is continuous.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(c) Temperature is measured and can take any value, so it is continuous."
     },
     {
       "id": "fl02",
       "outcomeId": "lo02",
       "difficulty": "Round 1",
       "prompt": "A statistical investigation is: (a) A type of chart (b) Collecting data to answer a question (c) A spreadsheet formula (d) A kind of cell",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) A statistical investigation collects data to answer a question.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) A statistical investigation collects data to answer a question."
     },
     {
       "id": "fl03",
       "outcomeId": "lo03",
       "difficulty": "Round 1",
       "prompt": "Which is an example of information, not just data? (a) The number 7 (b) The word 'green' (c) 'Green is the most popular colour' (d) The letter B",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) 'Green is the most popular colour' is data with meaning, which is information.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(c) 'Green is the most popular colour' is data with meaning, which is information."
     },
     {
       "id": "fl04",
       "outcomeId": "lo04",
       "difficulty": "Round 1",
       "prompt": "A data logger is best for collecting: (a) Opinions (b) Names (c) Continuous data over time (d) Book titles",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) A data logger records continuous data over time, all by itself.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(c) A data logger records continuous data over time, all by itself."
     },
     {
       "id": "fl05",
       "outcomeId": "lo05",
       "difficulty": "Round 2",
       "prompt": "Every spreadsheet formula must begin with: (a) A colon (b) An equals sign (c) A bracket (d) A letter",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) Every formula begins with an equals sign so the software knows to calculate.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) Every formula begins with an equals sign so the software knows to calculate."
     },
     {
       "id": "fl06",
       "outcomeId": "lo06",
       "difficulty": "Round 2",
       "prompt": "In a spreadsheet, the symbol for multiply is: (a) x (b) * (c) / (d) +",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) The asterisk * means multiply; the slash / means divide.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) The asterisk * means multiply; the slash / means divide."
     },
     {
       "id": "fl07",
       "outcomeId": "lo07",
       "difficulty": "Round 2",
       "prompt": "Which formula correctly adds the values from B2 to B6? (a) =SUMB2:B6 (b) SUM(B2:B6) (c) =SUM(B2:B6) (d) =SUM(B2-B6)",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) =SUM(B2:B6) has the equals sign, the function name, brackets and a colon.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(c) =SUM(B2:B6) has the equals sign, the function name, brackets and a colon."
     },
     {
       "id": "fl08",
       "outcomeId": "lo08",
       "difficulty": "Round 2",
       "prompt": "The AVERAGE function calculates the: (a) Total (b) Largest value (c) Mean (d) Smallest value",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(c) AVERAGE finds the mean: add the values and divide by how many there are.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(c) AVERAGE finds the mean: add the values and divide by how many there are."
     },
     {
       "id": "fl09",
       "outcomeId": "lo09",
       "difficulty": "Round 3",
       "prompt": "Which chart is best for categorical data like favourite fruit? (a) Line graph (b) Bar chart (c) A single number (d) A formula",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) A bar chart is best for categorical (and discrete) data.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) A bar chart is best for categorical (and discrete) data."
     },
     {
       "id": "fl10",
       "outcomeId": "lo10",
       "difficulty": "Round 3",
       "prompt": "Which chart is best for showing temperature changing over a day? (a) Bar chart (b) Line graph (c) Table only (d) Pie of names",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) A line graph shows continuous data changing over time.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) A line graph shows continuous data changing over time."
     },
     {
       "id": "fl11",
       "outcomeId": "lo01",
       "difficulty": "Round 3",
       "prompt": "The key on a chart that shows what each colour means is called the: (a) Axis (b) Legend (c) Cell (d) Range",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) The legend is the key that shows what each colour means.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) The legend is the key that shows what each colour means."
     },
     {
       "id": "fl12",
       "outcomeId": "lo02",
       "difficulty": "Round 3",
       "prompt": "The y axis on a chart is: (a) Horizontal (b) Vertical (c) A colour (d) A title",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "answer": "(b) The y axis is vertical; the x axis is horizontal.",
       "hint": "Look back at what analyse and automatically mean in this unit, then answer in your own words.",
-      "errorFeedback": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "(b) The y axis is vertical; the x axis is horizontal."
     }
   ],
   "realProblems": [
@@ -1235,60 +1267,60 @@
       "outcomeId": "lo01",
       "difficulty": "Core",
       "context": "Home",
-      "prompt": "Some of these formulas are written incorrectly. For each one, say whether it is correct or incorrect. If it is incorrect, write it out correctly.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "AVERAGE(B2:B6)",
+      "answer": "Incorrect - missing brackets. Correct: =SUM(B2:B6).",
       "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: Incorrect - missing brackets. Correct: =SUM(B2:B6)."
     },
     {
       "id": "rp02",
       "outcomeId": "lo02",
       "difficulty": "Core",
       "context": "School",
-      "prompt": "AVERAGE(B2:B6)",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "=AVERAGE(B2-B6)",
+      "answer": "Incorrect - a range on its own is not a calculation; there is no function or operator. Correct (for a total): =SUM(B2:B6).",
       "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: Incorrect - a range on its own is not a calculation; there is no function or operator. Correct (for a total): =SUM(B2:B6)."
     },
     {
       "id": "rp03",
       "outcomeId": "lo03",
       "difficulty": "Core",
       "context": "Market",
-      "prompt": "=AVERAGE(B2-B6)",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "=AVERAGE(B2B6)",
+      "answer": "Correct.",
       "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: Correct."
     },
     {
       "id": "rp04",
       "outcomeId": "lo04",
       "difficulty": "Challenge",
       "context": "Community",
-      "prompt": "=AVERAGE(B2B6)",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Leila made a bar chart of the favourite fruit in her class. The bars had these heights: Mango 9, Banana 6, Orange 4, Watermelon 4, Dates 2. Answer the questions using those values.",
+      "answer": "13:00 (1 o'clock), at 32 degrees.",
       "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: 13:00 (1 o'clock), at 32 degrees."
     },
     {
       "id": "rp05",
       "outcomeId": "lo05",
       "difficulty": "Challenge",
       "context": "Travel",
-      "prompt": "Leila made a bar chart of the favourite fruit in her class. The bars had these heights: Mango 9, Banana 6, Orange 4, Watermelon 4, Dates 2. Answer the questions using those values.",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Which fruit is the most popular?",
+      "answer": "27 degrees.",
       "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: 27 degrees."
     },
     {
       "id": "rp06",
       "outcomeId": "lo06",
       "difficulty": "Challenge",
       "context": "Health",
-      "prompt": "Which fruit is the most popular?",
-      "answer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
+      "prompt": "Which fruit is the least popular?",
+      "answer": "Between 13:00 and 14:00 - it peaked at 13:00 and then fell.",
       "hint": "Work out which idea this is about — analyse, automatically, average — then explain your reasoning step by step.",
-      "errorFeedback": "Check your reasoning against this: Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "errorFeedback": "Check your reasoning against this: Between 13:00 and 14:00 - it peaked at 13:00 and then fell."
     }
   ],
   "reasoningPrompts": [
@@ -1303,7 +1335,7 @@
         "automatically",
         "average"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "Data is meaningless facts or figures on their own, like '7' or 'green'. Information is data with meaning, like 'green is the most popular colour in the class'."
     },
     {
       "id": "reason02",
@@ -1316,7 +1348,7 @@
         "average",
         "axis"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "Discrete data is counted and is a whole value (for example, the number of learners). Continuous data is measured and can be any value, including decimals (for example, a temperature of 24.5 degrees)."
     },
     {
       "id": "reason03",
@@ -1329,7 +1361,7 @@
         "axis",
         "bar chart"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "Any three of: a data logger, a spreadsheet (LibreOffice Calc), a database, a form or questionnaire, or document production tools."
     },
     {
       "id": "reason04",
@@ -1342,7 +1374,7 @@
         "bar chart",
         "categorical data"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "A validation rule limits what a cell will accept (for example, only whole numbers 1 to 5, or only items from a list). It is useful because it stops many mistakes before they happen."
     },
     {
       "id": "reason05",
@@ -1355,7 +1387,7 @@
         "categorical data",
         "cell"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "A cell reference is a cell's address, made of its column letter and row number, for example B3."
     },
     {
       "id": "reason06",
@@ -1368,7 +1400,7 @@
         "cell",
         "cell reference"
       ],
-      "modelAnswer": "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card."
+      "modelAnswer": "The equals sign tells the spreadsheet that this is a calculation, not ordinary text."
     }
   ],
   "project": {
@@ -1397,158 +1429,158 @@
         "type": "Concept",
         "outcomeId": "lo01",
         "difficulty": "Basic",
-        "question": "What does “analyse” mean in computing?",
+        "question": "Which of these is continuous data?",
         "options": [
-          "To look closely at data, find patterns, and think about what it means.",
-          "Done by itself, with no human help (as a data logger records readings).",
-          "A middle value; add all the values and divide by how many there are. Also called the mean.",
-          "A line on a chart. The x axis is horizontal; the y axis is vertical."
+          "Favourite fruit",
+          "Number of pets",
+          "Temperature",
+          "Number of goals"
         ],
-        "answer": "To look closely at data, find patterns, and think about what it means.",
+        "answer": "Temperature",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Analyse means to look closely at data, find patterns, and think about what it means.."
+        "explanation": "Temperature is measured and can take any value, so it is continuous."
       },
       {
         "id": "q02",
         "type": "Concept",
         "outcomeId": "lo02",
         "difficulty": "Basic",
-        "question": "What does “automatically” mean in computing?",
+        "question": "A statistical investigation is:",
         "options": [
-          "Done by itself, with no human help (as a data logger records readings).",
-          "A middle value; add all the values and divide by how many there are. Also called the mean.",
-          "A line on a chart. The x axis is horizontal; the y axis is vertical.",
-          "A chart with a bar for each category; the longer the bar, the greater the value."
+          "A type of chart",
+          "Collecting data to answer a question",
+          "A spreadsheet formula",
+          "A kind of cell"
         ],
-        "answer": "Done by itself, with no human help (as a data logger records readings).",
+        "answer": "Collecting data to answer a question",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Analyse means to look closely at data, find patterns, and think about what it means."
+        "explanation": "A statistical investigation collects data to answer a question."
       },
       {
         "id": "q03",
         "type": "Concept",
         "outcomeId": "lo03",
         "difficulty": "Basic",
-        "question": "What does “average” mean in computing?",
+        "question": "Which is an example of information, not just data?",
         "options": [
-          "A middle value; add all the values and divide by how many there are. Also called the mean.",
-          "A line on a chart. The x axis is horizontal; the y axis is vertical.",
-          "A chart with a bar for each category; the longer the bar, the greater the value.",
-          "Data grouped into categories, often words, such as favourite fruit."
+          "The number 7",
+          "The word 'green'",
+          "'Green is the most popular colour'",
+          "The letter B"
         ],
-        "answer": "A middle value; add all the values and divide by how many there are. Also called the mean.",
+        "answer": "'Green is the most popular colour'",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Automatically means done by itself, with no human help (as a data logger records readings)."
+        "explanation": "'Green is the most popular colour' is data with meaning, which is information."
       },
       {
         "id": "q04",
         "type": "Concept",
         "outcomeId": "lo04",
         "difficulty": "Basic",
-        "question": "What does “axis” mean in computing?",
+        "question": "A data logger is best for collecting:",
         "options": [
-          "A line on a chart. The x axis is horizontal; the y axis is vertical.",
-          "A chart with a bar for each category; the longer the bar, the greater the value.",
-          "Data grouped into categories, often words, such as favourite fruit.",
-          "One box in a spreadsheet grid, where a row and a column meet."
+          "Opinions",
+          "Names",
+          "Continuous data over time",
+          "Book titles"
         ],
-        "answer": "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+        "answer": "Continuous data over time",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Average means a middle value; add all the values and divide by how many there are. Also called the mean."
+        "explanation": "A data logger records continuous data over time, all by itself."
       },
       {
         "id": "q05",
         "type": "Application",
         "outcomeId": "lo05",
         "difficulty": "Core",
-        "question": "What does “bar chart” mean in computing?",
+        "question": "Every spreadsheet formula must begin with:",
         "options": [
-          "A chart with a bar for each category; the longer the bar, the greater the value.",
-          "Data grouped into categories, often words, such as favourite fruit.",
-          "One box in a spreadsheet grid, where a row and a column meet.",
-          "A cell's address, made of its column letter and row number, such as B3."
+          "A colon",
+          "An equals sign",
+          "A bracket",
+          "A letter"
         ],
-        "answer": "A chart with a bar for each category; the longer the bar, the greater the value.",
+        "answer": "An equals sign",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Axis means a line on a chart. The x axis is horizontal; the y axis is vertical."
+        "explanation": "Every formula begins with an equals sign so the software knows to calculate."
       },
       {
         "id": "q06",
         "type": "Application",
         "outcomeId": "lo06",
         "difficulty": "Core",
-        "question": "What does “categorical data” mean in computing?",
+        "question": "In a spreadsheet, the symbol for multiply is:",
         "options": [
-          "Data grouped into categories, often words, such as favourite fruit.",
-          "One box in a spreadsheet grid, where a row and a column meet.",
-          "A cell's address, made of its column letter and row number, such as B3.",
-          "A picture of data that makes patterns easy to see."
+          "x",
+          "*",
+          "/",
+          "+"
         ],
-        "answer": "Data grouped into categories, often words, such as favourite fruit.",
+        "answer": "*",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Bar chart means a chart with a bar for each category; the longer the bar, the greater the value."
+        "explanation": "The asterisk * means multiply; the slash / means divide."
       },
       {
         "id": "q07",
         "type": "Application",
         "outcomeId": "lo07",
         "difficulty": "Core",
-        "question": "Which computing word matches this meaning: One box in a spreadsheet grid, where a row and a column meet.?",
+        "question": "Which formula correctly adds the values from B2 to B6?",
         "options": [
-          "cell",
-          "cell reference",
-          "chart",
-          "continuous data"
+          "=SUMB2:B6",
+          "SUM(B2:B6)",
+          "=SUM(B2:B6)",
+          "=SUM(B2-B6)"
         ],
-        "answer": "cell",
+        "answer": "=SUM(B2:B6)",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Categorical data means data grouped into categories, often words, such as favourite fruit."
+        "explanation": "=SUM(B2:B6) has the equals sign, the function name, brackets and a colon."
       },
       {
         "id": "q08",
         "type": "Application",
         "outcomeId": "lo08",
         "difficulty": "Core",
-        "question": "Which computing word matches this meaning: A cell's address, made of its column letter and row number, such as B3.?",
+        "question": "The AVERAGE function calculates the:",
         "options": [
-          "cell reference",
-          "chart",
-          "continuous data",
-          "continuously"
+          "Total",
+          "Largest value",
+          "Mean",
+          "Smallest value"
         ],
-        "answer": "cell reference",
+        "answer": "Mean",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Cell means one box in a spreadsheet grid, where a row and a column meet."
+        "explanation": "AVERAGE finds the mean: add the values and divide by how many there are."
       },
       {
         "id": "q09",
         "type": "Reasoning",
         "outcomeId": "lo09",
         "difficulty": "Core",
-        "question": "Which computing word matches this meaning: A picture of data that makes patterns easy to see.?",
+        "question": "Which chart is best for categorical data like favourite fruit?",
         "options": [
-          "chart",
-          "continuous data",
-          "continuously",
-          "data"
+          "Line graph",
+          "Bar chart",
+          "A single number",
+          "A formula"
         ],
-        "answer": "chart",
+        "answer": "Bar chart",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Cell reference means a cell's address, made of its column letter and row number, such as B3."
+        "explanation": "A bar chart is best for categorical (and discrete) data."
       },
       {
         "id": "q10",
         "type": "Reasoning",
         "outcomeId": "lo10",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: Numerical data that can take any value in a range, such as temperature.?",
+        "question": "Which chart is best for showing temperature changing over a day?",
         "options": [
-          "continuous data",
-          "continuously",
-          "data",
-          "data logger"
+          "Bar chart",
+          "Line graph",
+          "Table only",
+          "Pie of names"
         ],
-        "answer": "continuous data",
+        "answer": "Line graph",
         "hint": "Use the Unit 2 Computing Words reference.",
         "explanation": "Chart means a picture of data that makes patterns easy to see."
       },
@@ -1557,32 +1589,32 @@
         "type": "Reasoning",
         "outcomeId": "lo01",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: Carrying on without stopping until told to stop.?",
+        "question": "The key on a chart that shows what each colour means is called the:",
         "options": [
-          "continuously",
-          "data",
-          "data logger",
-          "database"
+          "Axis",
+          "Legend",
+          "Cell",
+          "Range"
         ],
-        "answer": "continuously",
+        "answer": "Legend",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Continuous data means numerical data that can take any value in a range, such as temperature."
+        "explanation": "The legend is the key that shows what each colour means."
       },
       {
         "id": "q12",
         "type": "Reasoning",
         "outcomeId": "lo02",
         "difficulty": "Challenge",
-        "question": "Which computing word matches this meaning: Meaningless facts or figures on their own, such as '7' or 'green'.?",
+        "question": "The y axis on a chart is:",
         "options": [
-          "data",
-          "data logger",
-          "database",
-          "discrete data"
+          "Horizontal",
+          "Vertical",
+          "A colour",
+          "A title"
         ],
-        "answer": "data",
+        "answer": "Vertical",
         "hint": "Use the Unit 2 Computing Words reference.",
-        "explanation": "Continuously means carrying on without stopping until told to stop."
+        "explanation": "The y axis is vertical; the x axis is horizontal."
       }
     ]
   },
@@ -1598,50 +1630,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “analyse” mean in computing?",
+            "prompt": "Which of these is continuous data?",
             "choices": [
-              "To look closely at data, find patterns, and think about what it means.",
-              "Done by itself, with no human help (as a data logger records readings).",
-              "A middle value; add all the values and divide by how many there are. Also called the mean.",
-              "A line on a chart. The x axis is horizontal; the y axis is vertical."
+              "Favourite fruit",
+              "Number of pets",
+              "Temperature",
+              "Number of goals"
             ],
-            "answer": "To look closely at data, find patterns, and think about what it means.",
+            "answer": "Temperature",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Analyse means to look closely at data, find patterns, and think about what it means.."
+            "explanation": "Temperature is measured and can take any value, so it is continuous."
           },
           {
-            "prompt": "What does “axis” mean in computing?",
+            "prompt": "A data logger is best for collecting:",
             "choices": [
-              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
-              "A chart with a bar for each category; the longer the bar, the greater the value.",
-              "Data grouped into categories, often words, such as favourite fruit.",
-              "One box in a spreadsheet grid, where a row and a column meet."
+              "Opinions",
+              "Names",
+              "Continuous data over time",
+              "Book titles"
             ],
-            "answer": "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+            "answer": "Continuous data over time",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Average means a middle value; add all the values and divide by how many there are. Also called the mean."
           },
           {
-            "prompt": "Which computing word matches this meaning: One box in a spreadsheet grid, where a row and a column meet.?",
+            "prompt": "Which formula correctly adds the values from B2 to B6?",
             "choices": [
-              "cell",
-              "cell reference",
-              "chart",
-              "continuous data"
+              "=SUMB2:B6",
+              "SUM(B2:B6)",
+              "=SUM(B2:B6)",
+              "=SUM(B2-B6)"
             ],
-            "answer": "cell",
+            "answer": "=SUM(B2:B6)",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Categorical data means data grouped into categories, often words, such as favourite fruit."
           },
           {
-            "prompt": "Which computing word matches this meaning: Numerical data that can take any value in a range, such as temperature.?",
+            "prompt": "Which chart is best for showing temperature changing over a day?",
             "choices": [
-              "continuous data",
-              "continuously",
-              "data",
-              "data logger"
+              "Bar chart",
+              "Line graph",
+              "Table only",
+              "Pie of names"
             ],
-            "answer": "continuous data",
+            "answer": "Line graph",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Chart means a picture of data that makes patterns easy to see."
           }
@@ -1656,50 +1688,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “automatically” mean in computing?",
+            "prompt": "A statistical investigation is:",
             "choices": [
-              "Done by itself, with no human help (as a data logger records readings).",
-              "A middle value; add all the values and divide by how many there are. Also called the mean.",
-              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
-              "A chart with a bar for each category; the longer the bar, the greater the value."
+              "A type of chart",
+              "Collecting data to answer a question",
+              "A spreadsheet formula",
+              "A kind of cell"
             ],
-            "answer": "Done by itself, with no human help (as a data logger records readings).",
+            "answer": "Collecting data to answer a question",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Analyse means to look closely at data, find patterns, and think about what it means."
           },
           {
-            "prompt": "What does “bar chart” mean in computing?",
+            "prompt": "Every spreadsheet formula must begin with:",
             "choices": [
-              "A chart with a bar for each category; the longer the bar, the greater the value.",
-              "Data grouped into categories, often words, such as favourite fruit.",
-              "One box in a spreadsheet grid, where a row and a column meet.",
-              "A cell's address, made of its column letter and row number, such as B3."
+              "A colon",
+              "An equals sign",
+              "A bracket",
+              "A letter"
             ],
-            "answer": "A chart with a bar for each category; the longer the bar, the greater the value.",
+            "answer": "An equals sign",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Axis means a line on a chart. The x axis is horizontal; the y axis is vertical."
           },
           {
-            "prompt": "Which computing word matches this meaning: A cell's address, made of its column letter and row number, such as B3.?",
+            "prompt": "The AVERAGE function calculates the:",
             "choices": [
-              "cell reference",
-              "chart",
-              "continuous data",
-              "continuously"
+              "Total",
+              "Largest value",
+              "Mean",
+              "Smallest value"
             ],
-            "answer": "cell reference",
+            "answer": "Mean",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Cell means one box in a spreadsheet grid, where a row and a column meet."
           },
           {
-            "prompt": "Which computing word matches this meaning: Carrying on without stopping until told to stop.?",
+            "prompt": "The key on a chart that shows what each colour means is called the:",
             "choices": [
-              "continuously",
-              "data",
-              "data logger",
-              "database"
+              "Axis",
+              "Legend",
+              "Cell",
+              "Range"
             ],
-            "answer": "continuously",
+            "answer": "Legend",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Continuous data means numerical data that can take any value in a range, such as temperature."
           }
@@ -1714,50 +1746,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “average” mean in computing?",
+            "prompt": "Which is an example of information, not just data?",
             "choices": [
-              "A middle value; add all the values and divide by how many there are. Also called the mean.",
-              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
-              "A chart with a bar for each category; the longer the bar, the greater the value.",
-              "Data grouped into categories, often words, such as favourite fruit."
+              "The number 7",
+              "The word 'green'",
+              "'Green is the most popular colour'",
+              "The letter B"
             ],
-            "answer": "A middle value; add all the values and divide by how many there are. Also called the mean.",
+            "answer": "'Green is the most popular colour'",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Automatically means done by itself, with no human help (as a data logger records readings)."
           },
           {
-            "prompt": "What does “categorical data” mean in computing?",
+            "prompt": "In a spreadsheet, the symbol for multiply is:",
             "choices": [
-              "Data grouped into categories, often words, such as favourite fruit.",
-              "One box in a spreadsheet grid, where a row and a column meet.",
-              "A cell's address, made of its column letter and row number, such as B3.",
-              "A picture of data that makes patterns easy to see."
+              "x",
+              "*",
+              "/",
+              "+"
             ],
-            "answer": "Data grouped into categories, often words, such as favourite fruit.",
+            "answer": "*",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Bar chart means a chart with a bar for each category; the longer the bar, the greater the value."
           },
           {
-            "prompt": "Which computing word matches this meaning: A picture of data that makes patterns easy to see.?",
+            "prompt": "Which chart is best for categorical data like favourite fruit?",
             "choices": [
-              "chart",
-              "continuous data",
-              "continuously",
-              "data"
+              "Line graph",
+              "Bar chart",
+              "A single number",
+              "A formula"
             ],
-            "answer": "chart",
+            "answer": "Bar chart",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Cell reference means a cell's address, made of its column letter and row number, such as B3."
           },
           {
-            "prompt": "Which computing word matches this meaning: Meaningless facts or figures on their own, such as '7' or 'green'.?",
+            "prompt": "The y axis on a chart is:",
             "choices": [
-              "data",
-              "data logger",
-              "database",
-              "discrete data"
+              "Horizontal",
+              "Vertical",
+              "A colour",
+              "A title"
             ],
-            "answer": "data",
+            "answer": "Vertical",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Continuously means carrying on without stopping until told to stop."
           }
@@ -1772,52 +1804,52 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “axis” mean in computing?",
+            "prompt": "A data logger is best for collecting:",
             "choices": [
-              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
-              "A chart with a bar for each category; the longer the bar, the greater the value.",
-              "Data grouped into categories, often words, such as favourite fruit.",
-              "One box in a spreadsheet grid, where a row and a column meet."
+              "Opinions",
+              "Names",
+              "Continuous data over time",
+              "Book titles"
             ],
-            "answer": "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+            "answer": "Continuous data over time",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Average means a middle value; add all the values and divide by how many there are. Also called the mean."
           },
           {
-            "prompt": "Which computing word matches this meaning: One box in a spreadsheet grid, where a row and a column meet.?",
+            "prompt": "Which formula correctly adds the values from B2 to B6?",
             "choices": [
-              "cell",
-              "cell reference",
-              "chart",
-              "continuous data"
+              "=SUMB2:B6",
+              "SUM(B2:B6)",
+              "=SUM(B2:B6)",
+              "=SUM(B2-B6)"
             ],
-            "answer": "cell",
+            "answer": "=SUM(B2:B6)",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Categorical data means data grouped into categories, often words, such as favourite fruit."
           },
           {
-            "prompt": "Which computing word matches this meaning: Numerical data that can take any value in a range, such as temperature.?",
+            "prompt": "Which chart is best for showing temperature changing over a day?",
             "choices": [
-              "continuous data",
-              "continuously",
-              "data",
-              "data logger"
+              "Bar chart",
+              "Line graph",
+              "Table only",
+              "Pie of names"
             ],
-            "answer": "continuous data",
+            "answer": "Line graph",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Chart means a picture of data that makes patterns easy to see."
           },
           {
-            "prompt": "What does “analyse” mean in computing?",
+            "prompt": "Which of these is continuous data?",
             "choices": [
-              "To look closely at data, find patterns, and think about what it means.",
-              "Done by itself, with no human help (as a data logger records readings).",
-              "A middle value; add all the values and divide by how many there are. Also called the mean.",
-              "A line on a chart. The x axis is horizontal; the y axis is vertical."
+              "Favourite fruit",
+              "Number of pets",
+              "Temperature",
+              "Number of goals"
             ],
-            "answer": "To look closely at data, find patterns, and think about what it means.",
+            "answer": "Temperature",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Analyse means to look closely at data, find patterns, and think about what it means.."
+            "explanation": "Temperature is measured and can take any value, so it is continuous."
           }
         ]
       },
@@ -1830,50 +1862,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “bar chart” mean in computing?",
+            "prompt": "Every spreadsheet formula must begin with:",
             "choices": [
-              "A chart with a bar for each category; the longer the bar, the greater the value.",
-              "Data grouped into categories, often words, such as favourite fruit.",
-              "One box in a spreadsheet grid, where a row and a column meet.",
-              "A cell's address, made of its column letter and row number, such as B3."
+              "A colon",
+              "An equals sign",
+              "A bracket",
+              "A letter"
             ],
-            "answer": "A chart with a bar for each category; the longer the bar, the greater the value.",
+            "answer": "An equals sign",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Axis means a line on a chart. The x axis is horizontal; the y axis is vertical."
           },
           {
-            "prompt": "Which computing word matches this meaning: A cell's address, made of its column letter and row number, such as B3.?",
+            "prompt": "The AVERAGE function calculates the:",
             "choices": [
-              "cell reference",
-              "chart",
-              "continuous data",
-              "continuously"
+              "Total",
+              "Largest value",
+              "Mean",
+              "Smallest value"
             ],
-            "answer": "cell reference",
+            "answer": "Mean",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Cell means one box in a spreadsheet grid, where a row and a column meet."
           },
           {
-            "prompt": "Which computing word matches this meaning: Carrying on without stopping until told to stop.?",
+            "prompt": "The key on a chart that shows what each colour means is called the:",
             "choices": [
-              "continuously",
-              "data",
-              "data logger",
-              "database"
+              "Axis",
+              "Legend",
+              "Cell",
+              "Range"
             ],
-            "answer": "continuously",
+            "answer": "Legend",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Continuous data means numerical data that can take any value in a range, such as temperature."
           },
           {
-            "prompt": "What does “automatically” mean in computing?",
+            "prompt": "A statistical investigation is:",
             "choices": [
-              "Done by itself, with no human help (as a data logger records readings).",
-              "A middle value; add all the values and divide by how many there are. Also called the mean.",
-              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
-              "A chart with a bar for each category; the longer the bar, the greater the value."
+              "A type of chart",
+              "Collecting data to answer a question",
+              "A spreadsheet formula",
+              "A kind of cell"
             ],
-            "answer": "Done by itself, with no human help (as a data logger records readings).",
+            "answer": "Collecting data to answer a question",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Analyse means to look closely at data, find patterns, and think about what it means."
           }
@@ -1888,50 +1920,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "What does “categorical data” mean in computing?",
+            "prompt": "In a spreadsheet, the symbol for multiply is:",
             "choices": [
-              "Data grouped into categories, often words, such as favourite fruit.",
-              "One box in a spreadsheet grid, where a row and a column meet.",
-              "A cell's address, made of its column letter and row number, such as B3.",
-              "A picture of data that makes patterns easy to see."
+              "x",
+              "*",
+              "/",
+              "+"
             ],
-            "answer": "Data grouped into categories, often words, such as favourite fruit.",
+            "answer": "*",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Bar chart means a chart with a bar for each category; the longer the bar, the greater the value."
           },
           {
-            "prompt": "Which computing word matches this meaning: A picture of data that makes patterns easy to see.?",
+            "prompt": "Which chart is best for categorical data like favourite fruit?",
             "choices": [
-              "chart",
-              "continuous data",
-              "continuously",
-              "data"
+              "Line graph",
+              "Bar chart",
+              "A single number",
+              "A formula"
             ],
-            "answer": "chart",
+            "answer": "Bar chart",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Cell reference means a cell's address, made of its column letter and row number, such as B3."
           },
           {
-            "prompt": "Which computing word matches this meaning: Meaningless facts or figures on their own, such as '7' or 'green'.?",
+            "prompt": "The y axis on a chart is:",
             "choices": [
-              "data",
-              "data logger",
-              "database",
-              "discrete data"
+              "Horizontal",
+              "Vertical",
+              "A colour",
+              "A title"
             ],
-            "answer": "data",
+            "answer": "Vertical",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Continuously means carrying on without stopping until told to stop."
           },
           {
-            "prompt": "What does “average” mean in computing?",
+            "prompt": "Which is an example of information, not just data?",
             "choices": [
-              "A middle value; add all the values and divide by how many there are. Also called the mean.",
-              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
-              "A chart with a bar for each category; the longer the bar, the greater the value.",
-              "Data grouped into categories, often words, such as favourite fruit."
+              "The number 7",
+              "The word 'green'",
+              "'Green is the most popular colour'",
+              "The letter B"
             ],
-            "answer": "A middle value; add all the values and divide by how many there are. Also called the mean.",
+            "answer": "'Green is the most popular colour'",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Automatically means done by itself, with no human help (as a data logger records readings)."
           }
@@ -1946,50 +1978,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: One box in a spreadsheet grid, where a row and a column meet.?",
+            "prompt": "Which formula correctly adds the values from B2 to B6?",
             "choices": [
-              "cell",
-              "cell reference",
-              "chart",
-              "continuous data"
+              "=SUMB2:B6",
+              "SUM(B2:B6)",
+              "=SUM(B2:B6)",
+              "=SUM(B2-B6)"
             ],
-            "answer": "cell",
+            "answer": "=SUM(B2:B6)",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Categorical data means data grouped into categories, often words, such as favourite fruit."
           },
           {
-            "prompt": "Which computing word matches this meaning: Numerical data that can take any value in a range, such as temperature.?",
+            "prompt": "Which chart is best for showing temperature changing over a day?",
             "choices": [
-              "continuous data",
-              "continuously",
-              "data",
-              "data logger"
+              "Bar chart",
+              "Line graph",
+              "Table only",
+              "Pie of names"
             ],
-            "answer": "continuous data",
+            "answer": "Line graph",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Chart means a picture of data that makes patterns easy to see."
           },
           {
-            "prompt": "What does “analyse” mean in computing?",
+            "prompt": "Which of these is continuous data?",
             "choices": [
-              "To look closely at data, find patterns, and think about what it means.",
-              "Done by itself, with no human help (as a data logger records readings).",
-              "A middle value; add all the values and divide by how many there are. Also called the mean.",
-              "A line on a chart. The x axis is horizontal; the y axis is vertical."
+              "Favourite fruit",
+              "Number of pets",
+              "Temperature",
+              "Number of goals"
             ],
-            "answer": "To look closely at data, find patterns, and think about what it means.",
+            "answer": "Temperature",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Analyse means to look closely at data, find patterns, and think about what it means.."
+            "explanation": "Temperature is measured and can take any value, so it is continuous."
           },
           {
-            "prompt": "What does “axis” mean in computing?",
+            "prompt": "A data logger is best for collecting:",
             "choices": [
-              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
-              "A chart with a bar for each category; the longer the bar, the greater the value.",
-              "Data grouped into categories, often words, such as favourite fruit.",
-              "One box in a spreadsheet grid, where a row and a column meet."
+              "Opinions",
+              "Names",
+              "Continuous data over time",
+              "Book titles"
             ],
-            "answer": "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+            "answer": "Continuous data over time",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Average means a middle value; add all the values and divide by how many there are. Also called the mean."
           }
@@ -2004,50 +2036,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: A cell's address, made of its column letter and row number, such as B3.?",
+            "prompt": "The AVERAGE function calculates the:",
             "choices": [
-              "cell reference",
-              "chart",
-              "continuous data",
-              "continuously"
+              "Total",
+              "Largest value",
+              "Mean",
+              "Smallest value"
             ],
-            "answer": "cell reference",
+            "answer": "Mean",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Cell means one box in a spreadsheet grid, where a row and a column meet."
           },
           {
-            "prompt": "Which computing word matches this meaning: Carrying on without stopping until told to stop.?",
+            "prompt": "The key on a chart that shows what each colour means is called the:",
             "choices": [
-              "continuously",
-              "data",
-              "data logger",
-              "database"
+              "Axis",
+              "Legend",
+              "Cell",
+              "Range"
             ],
-            "answer": "continuously",
+            "answer": "Legend",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Continuous data means numerical data that can take any value in a range, such as temperature."
           },
           {
-            "prompt": "What does “automatically” mean in computing?",
+            "prompt": "A statistical investigation is:",
             "choices": [
-              "Done by itself, with no human help (as a data logger records readings).",
-              "A middle value; add all the values and divide by how many there are. Also called the mean.",
-              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
-              "A chart with a bar for each category; the longer the bar, the greater the value."
+              "A type of chart",
+              "Collecting data to answer a question",
+              "A spreadsheet formula",
+              "A kind of cell"
             ],
-            "answer": "Done by itself, with no human help (as a data logger records readings).",
+            "answer": "Collecting data to answer a question",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Analyse means to look closely at data, find patterns, and think about what it means."
           },
           {
-            "prompt": "What does “bar chart” mean in computing?",
+            "prompt": "Every spreadsheet formula must begin with:",
             "choices": [
-              "A chart with a bar for each category; the longer the bar, the greater the value.",
-              "Data grouped into categories, often words, such as favourite fruit.",
-              "One box in a spreadsheet grid, where a row and a column meet.",
-              "A cell's address, made of its column letter and row number, such as B3."
+              "A colon",
+              "An equals sign",
+              "A bracket",
+              "A letter"
             ],
-            "answer": "A chart with a bar for each category; the longer the bar, the greater the value.",
+            "answer": "An equals sign",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Axis means a line on a chart. The x axis is horizontal; the y axis is vertical."
           }
@@ -2062,50 +2094,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: A picture of data that makes patterns easy to see.?",
+            "prompt": "Which chart is best for categorical data like favourite fruit?",
             "choices": [
-              "chart",
-              "continuous data",
-              "continuously",
-              "data"
+              "Line graph",
+              "Bar chart",
+              "A single number",
+              "A formula"
             ],
-            "answer": "chart",
+            "answer": "Bar chart",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Cell reference means a cell's address, made of its column letter and row number, such as B3."
           },
           {
-            "prompt": "Which computing word matches this meaning: Meaningless facts or figures on their own, such as '7' or 'green'.?",
+            "prompt": "The y axis on a chart is:",
             "choices": [
-              "data",
-              "data logger",
-              "database",
-              "discrete data"
+              "Horizontal",
+              "Vertical",
+              "A colour",
+              "A title"
             ],
-            "answer": "data",
+            "answer": "Vertical",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Continuously means carrying on without stopping until told to stop."
           },
           {
-            "prompt": "What does “average” mean in computing?",
+            "prompt": "Which is an example of information, not just data?",
             "choices": [
-              "A middle value; add all the values and divide by how many there are. Also called the mean.",
-              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
-              "A chart with a bar for each category; the longer the bar, the greater the value.",
-              "Data grouped into categories, often words, such as favourite fruit."
+              "The number 7",
+              "The word 'green'",
+              "'Green is the most popular colour'",
+              "The letter B"
             ],
-            "answer": "A middle value; add all the values and divide by how many there are. Also called the mean.",
+            "answer": "'Green is the most popular colour'",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Automatically means done by itself, with no human help (as a data logger records readings)."
           },
           {
-            "prompt": "What does “categorical data” mean in computing?",
+            "prompt": "In a spreadsheet, the symbol for multiply is:",
             "choices": [
-              "Data grouped into categories, often words, such as favourite fruit.",
-              "One box in a spreadsheet grid, where a row and a column meet.",
-              "A cell's address, made of its column letter and row number, such as B3.",
-              "A picture of data that makes patterns easy to see."
+              "x",
+              "*",
+              "/",
+              "+"
             ],
-            "answer": "Data grouped into categories, often words, such as favourite fruit.",
+            "answer": "*",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Bar chart means a chart with a bar for each category; the longer the bar, the greater the value."
           }
@@ -2120,50 +2152,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: Numerical data that can take any value in a range, such as temperature.?",
+            "prompt": "Which chart is best for showing temperature changing over a day?",
             "choices": [
-              "continuous data",
-              "continuously",
-              "data",
-              "data logger"
+              "Bar chart",
+              "Line graph",
+              "Table only",
+              "Pie of names"
             ],
-            "answer": "continuous data",
+            "answer": "Line graph",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Chart means a picture of data that makes patterns easy to see."
           },
           {
-            "prompt": "What does “analyse” mean in computing?",
+            "prompt": "Which of these is continuous data?",
             "choices": [
-              "To look closely at data, find patterns, and think about what it means.",
-              "Done by itself, with no human help (as a data logger records readings).",
-              "A middle value; add all the values and divide by how many there are. Also called the mean.",
-              "A line on a chart. The x axis is horizontal; the y axis is vertical."
+              "Favourite fruit",
+              "Number of pets",
+              "Temperature",
+              "Number of goals"
             ],
-            "answer": "To look closely at data, find patterns, and think about what it means.",
+            "answer": "Temperature",
             "clue": "Use the Unit 2 Computing Words reference.",
-            "explanation": "Analyse means to look closely at data, find patterns, and think about what it means.."
+            "explanation": "Temperature is measured and can take any value, so it is continuous."
           },
           {
-            "prompt": "What does “axis” mean in computing?",
+            "prompt": "A data logger is best for collecting:",
             "choices": [
-              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
-              "A chart with a bar for each category; the longer the bar, the greater the value.",
-              "Data grouped into categories, often words, such as favourite fruit.",
-              "One box in a spreadsheet grid, where a row and a column meet."
+              "Opinions",
+              "Names",
+              "Continuous data over time",
+              "Book titles"
             ],
-            "answer": "A line on a chart. The x axis is horizontal; the y axis is vertical.",
+            "answer": "Continuous data over time",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Average means a middle value; add all the values and divide by how many there are. Also called the mean."
           },
           {
-            "prompt": "Which computing word matches this meaning: One box in a spreadsheet grid, where a row and a column meet.?",
+            "prompt": "Which formula correctly adds the values from B2 to B6?",
             "choices": [
-              "cell",
-              "cell reference",
-              "chart",
-              "continuous data"
+              "=SUMB2:B6",
+              "SUM(B2:B6)",
+              "=SUM(B2:B6)",
+              "=SUM(B2-B6)"
             ],
-            "answer": "cell",
+            "answer": "=SUM(B2:B6)",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Categorical data means data grouped into categories, often words, such as favourite fruit."
           }
@@ -2178,50 +2210,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: Carrying on without stopping until told to stop.?",
+            "prompt": "The key on a chart that shows what each colour means is called the:",
             "choices": [
-              "continuously",
-              "data",
-              "data logger",
-              "database"
+              "Axis",
+              "Legend",
+              "Cell",
+              "Range"
             ],
-            "answer": "continuously",
+            "answer": "Legend",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Continuous data means numerical data that can take any value in a range, such as temperature."
           },
           {
-            "prompt": "What does “automatically” mean in computing?",
+            "prompt": "A statistical investigation is:",
             "choices": [
-              "Done by itself, with no human help (as a data logger records readings).",
-              "A middle value; add all the values and divide by how many there are. Also called the mean.",
-              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
-              "A chart with a bar for each category; the longer the bar, the greater the value."
+              "A type of chart",
+              "Collecting data to answer a question",
+              "A spreadsheet formula",
+              "A kind of cell"
             ],
-            "answer": "Done by itself, with no human help (as a data logger records readings).",
+            "answer": "Collecting data to answer a question",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Analyse means to look closely at data, find patterns, and think about what it means."
           },
           {
-            "prompt": "What does “bar chart” mean in computing?",
+            "prompt": "Every spreadsheet formula must begin with:",
             "choices": [
-              "A chart with a bar for each category; the longer the bar, the greater the value.",
-              "Data grouped into categories, often words, such as favourite fruit.",
-              "One box in a spreadsheet grid, where a row and a column meet.",
-              "A cell's address, made of its column letter and row number, such as B3."
+              "A colon",
+              "An equals sign",
+              "A bracket",
+              "A letter"
             ],
-            "answer": "A chart with a bar for each category; the longer the bar, the greater the value.",
+            "answer": "An equals sign",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Axis means a line on a chart. The x axis is horizontal; the y axis is vertical."
           },
           {
-            "prompt": "Which computing word matches this meaning: A cell's address, made of its column letter and row number, such as B3.?",
+            "prompt": "The AVERAGE function calculates the:",
             "choices": [
-              "cell reference",
-              "chart",
-              "continuous data",
-              "continuously"
+              "Total",
+              "Largest value",
+              "Mean",
+              "Smallest value"
             ],
-            "answer": "cell reference",
+            "answer": "Mean",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Cell means one box in a spreadsheet grid, where a row and a column meet."
           }
@@ -2236,50 +2268,50 @@
         "type": "choice",
         "rounds": [
           {
-            "prompt": "Which computing word matches this meaning: Meaningless facts or figures on their own, such as '7' or 'green'.?",
+            "prompt": "The y axis on a chart is:",
             "choices": [
-              "data",
-              "data logger",
-              "database",
-              "discrete data"
+              "Horizontal",
+              "Vertical",
+              "A colour",
+              "A title"
             ],
-            "answer": "data",
+            "answer": "Vertical",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Continuously means carrying on without stopping until told to stop."
           },
           {
-            "prompt": "What does “average” mean in computing?",
+            "prompt": "Which is an example of information, not just data?",
             "choices": [
-              "A middle value; add all the values and divide by how many there are. Also called the mean.",
-              "A line on a chart. The x axis is horizontal; the y axis is vertical.",
-              "A chart with a bar for each category; the longer the bar, the greater the value.",
-              "Data grouped into categories, often words, such as favourite fruit."
+              "The number 7",
+              "The word 'green'",
+              "'Green is the most popular colour'",
+              "The letter B"
             ],
-            "answer": "A middle value; add all the values and divide by how many there are. Also called the mean.",
+            "answer": "'Green is the most popular colour'",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Automatically means done by itself, with no human help (as a data logger records readings)."
           },
           {
-            "prompt": "What does “categorical data” mean in computing?",
+            "prompt": "In a spreadsheet, the symbol for multiply is:",
             "choices": [
-              "Data grouped into categories, often words, such as favourite fruit.",
-              "One box in a spreadsheet grid, where a row and a column meet.",
-              "A cell's address, made of its column letter and row number, such as B3.",
-              "A picture of data that makes patterns easy to see."
+              "x",
+              "*",
+              "/",
+              "+"
             ],
-            "answer": "Data grouped into categories, often words, such as favourite fruit.",
+            "answer": "*",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Bar chart means a chart with a bar for each category; the longer the bar, the greater the value."
           },
           {
-            "prompt": "Which computing word matches this meaning: A picture of data that makes patterns easy to see.?",
+            "prompt": "Which chart is best for categorical data like favourite fruit?",
             "choices": [
-              "chart",
-              "continuous data",
-              "continuously",
-              "data"
+              "Line graph",
+              "Bar chart",
+              "A single number",
+              "A formula"
             ],
-            "answer": "chart",
+            "answer": "Bar chart",
             "clue": "Use the Unit 2 Computing Words reference.",
             "explanation": "Cell reference means a cell's address, made of its column letter and row number, such as B3."
           }

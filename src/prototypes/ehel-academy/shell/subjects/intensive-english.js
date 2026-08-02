@@ -24,10 +24,27 @@ import { mountWehelChat, outlineFromManifest, unitFetcher } from "../wehel.js?v=
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
+// Level 1 opens on the readiness unit (0); every other level opens on unit 1.
+// course-plan.json also carries this per level (as level.defaultUnit, copied
+// into course-manifest.json), but nothing reads it there — the manifest isn't
+// fetched until load(), after this module has already needed a unit number for
+// the initial route and the progress storage key below. That ordering is a
+// real constraint, not an oversight: making the shell wait on a fetch before it
+// knows which unit to ask for is a bigger change than this rule warrants while
+// Levels 3-5 don't define a defaultUnit at all yet (course-plan.json has none
+// authored for them). So the rule stays hardcoded, but as ONE function instead
+// of three separate copies of the same ternary — one below, one in the
+// config.defaultUnit callback the shared shell calls, one in levelLocation's
+// query-string builder — so it cannot drift the way English's stage/grade
+// derivation did when only one of its two copies learned a new precedence rule.
+function defaultUnitForLevel(level) {
+  return Number(level) === 1 ? 0 : 1;
+}
+
 const routeParams = new URLSearchParams(location.search);
 const requestedLevel = Number(routeParams.get("level") || document.documentElement.dataset.level || 1);
 const levelNumber = requestedLevel >= 1 && requestedLevel <= 5 ? requestedLevel : 1;
-const defaultUnit = levelNumber === 1 ? 0 : 1;
+const defaultUnit = defaultUnitForLevel(levelNumber);
 const requestedUnit = Number(routeParams.get("unit") ?? defaultUnit);
 const unitNumber = Number.isFinite(requestedUnit) && requestedUnit >= 0 ? requestedUnit : defaultUnit;
 
@@ -80,7 +97,7 @@ const cefrChip = (band) => `<span class="cefr-chip ${String(band || "").toLowerC
 function levelLocation(next) {
   const url = new URL(location.href);
   url.searchParams.set("level", next);
-  url.searchParams.set("unit", Number(next) === 1 ? 0 : 1);
+  url.searchParams.set("unit", defaultUnitForLevel(next));
   url.hash = "overview";
   return url.href;
 }
@@ -552,7 +569,7 @@ const config = {
   mediaSubject: "intensive-english",
   ttsPurpose: "ehel_english",
   stageDir: (level) => `level-${level}`,
-  defaultUnit: (level) => (Number(level) === 1 ? 0 : 1),
+  defaultUnit: defaultUnitForLevel,
   sections,
   nonCountable: ["overview", "answers"],
   gradeSections: [],

@@ -193,6 +193,42 @@ const q = (question, options, answer, explanation) => ({ question, options, answ
 // from learning objectives. Titles are in curriculum order and align to each
 // unit's objective-derived concept explanations. Applied over the derived
 // titles in buildUnit; extra titles beyond a unit's concept count are ignored.
+// Titles for the "Key ideas" revision cards whose source pack carries no
+// heading of its own (2026-08). Keyed grade-unit, in the order the placeholder
+// cards appear in that unit. Each was written from the card's own text — the
+// source has nothing to extract, so numbering them was the only alternative.
+const RULE_TITLE_OVERRIDES = {
+  "2-1": ["What Living Things Need", "Staying Safe in Extreme Weather"],
+  "2-3": ["Heating Expands, Cooling Contracts", "Melting, Freezing and Boiling"],
+  "2-6": ["Why We Have Day and Night"],
+  "3-1": ["The Seven Life Processes", "Living, Dead or Never Alive",
+    "How Plants Make Food", "The Photosynthesis Recipe"],
+  "3-2": ["Filter, Then Boil"],
+  "4-2": ["What Energy Is", "Energy Is Never Lost", "Speed and Kinetic Energy",
+    "Energy: The Big Picture"],
+  "4-3": ["Particles Decide the State"],
+  "4-4": ["Plates of the Earth's Crust"],
+  "4-5": ["Shadows Prove Light Travels Straight", "Why Some Surfaces Make Images"],
+  "5-2": ["From Flower to Seed to New Plant"],
+  // Slot 1 is titled again by the review overlay, which runs after this and
+  // would otherwise consume the only entry here and leave slot 2 numbered.
+  "5-4": ["Protect Your Eyes", "Light Words to Know"],
+  "5-5": ["Reading the Sun's Shadows"],
+  "6-1": ["Caring for Your Body"],
+  "6-4": ["Mass and Weight Are Different", "Balanced and Unbalanced Forces"],
+  "7-1": ["Life Is Built From Cells"],
+  "7-3": ["Mass in Kilograms, Weight in Newtons", "Energy Transfers and Wasted Heat"],
+  "7-5": ["Properties, Metals and pH"],
+  "7-6": ["Sound Needs Vibration and a Medium", "Three Plate Movements, Three Results"],
+  "7-7": ["Not Every Decomposer Is a Microbe"],
+  "8-3": ["Density and Speed Formulas"],
+  "8-5": ["Filtration Does Not Make Water Safe", "Mixtures and How to Separate Them"],
+  "8-6": ["Always Measure From the Normal", "Protect Your Eyes From the Sun"],
+  "8-8": ["The Three Rock Families", "How the Rock Cycle Works"],
+  "8-9": ["Ammeters in Series, Voltmeters Across", "Electrical Safety Rules",
+    "A Way to Remember the Meters", "Current, Voltage and Resistance"],
+};
+
 const CONCEPT_TITLE_OVERRIDES = {
   "2-1": ["What Animals Need to Live", "What Plants Need to Live", "Different Environments", "Protecting the Environment", "Weather and Seasons", "Science Words for Living Things"],
   "2-3": ["Heating Melts Solids", "Cooling Freezes Liquids", "Melting and Freezing", "Reversible and Irreversible Changes", "Dissolving in Water", "Mixing Materials"],
@@ -1253,6 +1289,20 @@ function buildGrade(grade) {
         const firstSentence = (opening.match(/^.*?[.!?](?=\s|$)/) || [opening])[0];
         return { title: concept.title, text: tidy(firstSentence) };
       }).filter((rule) => rule.text.length > 20).slice(0, 6);
+    }
+    // Where the source has no heading for a key-idea card, the extractor can
+    // only number it ("Key idea 1"), which tells a learner nothing about what
+    // the card says. These titles were written from each card's own text.
+    // Applied in order to the cards still carrying the placeholder, so a unit
+    // that later gains a real heading from the source keeps it.
+    const authoredTitles = RULE_TITLE_OVERRIDES[`${grade}-${unitNo}`];
+    if (authoredTitles) {
+      let next = 0;
+      for (const rule of reference.rules) {
+        if (!/^Key idea \d+$/.test(rule.title || "")) continue;
+        if (next < authoredTitles.length) rule.title = authoredTitles[next];
+        next += 1;
+      }
     }
     let outcomes = (override && override.outcomes) ? override.outcomes.slice() : outcomeList(lesson);
     if (!outcomes.length) outcomes = concepts.map((concept) => `Explore and talk about ${concept.title.toLowerCase()}.`).slice(0, 6);

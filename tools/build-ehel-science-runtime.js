@@ -53,6 +53,49 @@ const paragraphs = (values = []) => values
 
 const EMPTY_DOC = { blocks: [], source_file: "(not provided)" };
 
+// A sub-heading inside a section is its own block in the source ("Safety First",
+// "The Recipe", "Sorting Made Simple"). Joining blocks with a plain space ran it
+// straight into the sentence after it — "Safety First Use ONLY a 1.5 V battery"
+// — which the bracketed icon tag used to disguise. Punctuate the seam instead.
+//
+// Only a Title Case fragment of a few words with no closing punctuation counts,
+// so an ordinary short sentence ("Look at the cup") is left alone.
+const HEADING_BLOCK = /^(?:[A-Z][\w’'-]*)(?:\s+(?:[A-Z][\w’'-]*|a|an|the|of|and|to|for|in|on))*$/;
+function looksLikeHeading(text) {
+  const value = String(text || "").trim();
+  if (!value || value.length > 40) return false;
+  if (/[.!?:;]$/.test(value)) return false;
+  const words = value.split(/\s+/);
+  if (words.length > 5) return false;
+  const capitalised = words.filter((w) => /^[A-Z]/.test(w)).length;
+  return capitalised >= Math.max(2, words.length - 1) && HEADING_BLOCK.test(value);
+}
+// The same seam, but inside a single source block: the heading and its
+// explanation were one run, so there is no join to punctuate. "The Recipe Water
+// + Carbon dioxide…" and "Big Idea Everything is made of tiny particles" read
+// as one sentence until the colon goes back in.
+const LEAD_HEADING = /^((?:[A-Z][\w’'-]*)(?:\s+(?:[A-Z][\w’'-]*|of|the|and|a|an|to|for|in|on)){1,4})\s+(?=[A-Z0-9])/;
+function punctuateLeadHeading(text) {
+  const value = String(text || "").trim();
+  const match = value.match(LEAD_HEADING);
+  if (!match) return value;
+  const head = match[1];
+  const words = head.split(/\s+/);
+  if (words.filter((w) => /^[A-Z]/.test(w)).length < Math.max(2, words.length - 1)) return value;
+  const rest = value.slice(match[0].length);
+  return rest.length < 20 ? value : `${head}: ${rest}`;
+}
+
+function joinBlocks(parts, separator = " ") {
+  const out = [];
+  parts.forEach((part, index) => {
+    out.push(part);
+    const next = parts[index + 1];
+    out.push(next && looksLikeHeading(part) ? ": " : separator);
+  });
+  return out.slice(0, -1).join("").trim();
+}
+
 // Reference "key idea" cards are lifted from lesson lines that open "Remember…".
 // Deleting just the word left whatever followed it as the whole card, so a
 // learner met a rule starting mid-clause: "that the Earth's crust is not one
@@ -205,8 +248,9 @@ const RULE_TITLE_OVERRIDES = {
   "2-1": ["What Living Things Need", "Staying Safe in Extreme Weather"],
   "2-3": ["Heating Expands, Cooling Contracts", "Melting, Freezing and Boiling"],
   "2-6": ["Why We Have Day and Night"],
+  // "How Plants Make Food" is gone with the heading-only card it named.
   "3-1": ["The Seven Life Processes", "Living, Dead or Never Alive",
-    "How Plants Make Food", "The Photosynthesis Recipe"],
+    "The Photosynthesis Recipe"],
   "3-2": ["Filter, Then Boil"],
   "4-2": ["What Energy Is", "Energy Is Never Lost", "Speed and Kinetic Energy",
     "Energy: The Big Picture"],
@@ -1046,8 +1090,8 @@ function buildGrade(grade) {
       const learnerFacing = (values) => values.filter((text) => !ADULT_ADDRESSED.test(text));
       return {
         title: tidy(block.text).replace(/^(Experiment|Investigation)\s+\d+\s*[—:\-]\s*/i, ""),
-        aim: tidy(learnerFacing(grab(/^Aim\b/i)).join(" ")),
-        hypothesis: tidy(learnerFacing(grab(/^(Make a Hypothesis|Hypothesis)\b/i)).join(" ")),
+        aim: tidy(joinBlocks(learnerFacing(grab(/^Aim\b/i)))),
+        hypothesis: tidy(joinBlocks(learnerFacing(grab(/^(Make a Hypothesis|Hypothesis)\b/i)))),
         materials: tidy(grab(/^Materials\b/i).join("; ")) || "Safe everyday materials from home",
         steps: learnerFacing(grab(/^Method\b/i)).slice(0, 6),
         analysis: learnerFacing(grab(/^Analysis Questions?\b/i)).slice(0, 4),
@@ -1301,6 +1345,16 @@ function buildGrade(grade) {
         return { title: concept.title, text: tidy(firstSentence) };
       }).filter((rule) => rule.text.length > 20).slice(0, 6);
     }
+    // A card whose body is only a heading teaches nothing — "How Plants Make
+    // Food (Photosynthesis)" with no sentence under it. The source ran the
+    // heading and its explanation as separate blocks and only the heading was
+    // captured, so drop the card rather than show a learner an empty one.
+    reference.rules = reference.rules
+      .map((rule) => ({ ...rule, text: punctuateLeadHeading(rule.text) }))
+      .filter((rule) => {
+        const text = String(rule.text || "").trim();
+        return /[.!?]/.test(text) || text.length > 90;
+      });
     // Where the source has no heading for a key-idea card, the extractor can
     // only number it ("Key idea 1"), which tells a learner nothing about what
     // the card says. These titles were written from each card's own text.

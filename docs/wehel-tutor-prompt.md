@@ -397,6 +397,22 @@ wording is load-bearing**: edit it in `wehel_prompt.json` and its clip is
 orphaned until the generator re-runs. English's AI panel has its own audio
 engine with no static lookup, so it canonicalises but has no clips yet.
 
+## Voice replies — browser TTS (added 2026-08-02)
+
+Wehel Tutor speaks its replies with the **browser's own speech engine**
+(`speechSynthesis`), not ElevenLabs: a chat reply is written at request time,
+so no pre-recorded clip can exist for it, and runtime ElevenLabs would bill
+every spoken sentence per learner per message. Browser TTS is free, instant,
+offline-capable, and needs no key. Lesson narration keeps the recorded Ehel
+voice; the split is deliberate — recorded voice for authored content, browser
+voice for conversation. The engine lives in `shell/wehel.js` (`speakBrowser`,
+`stopBrowserSpeech`, `speechRateForGrade`): replies auto-speak while the
+panel's persisted 🔊 toggle is on, every bubble has Listen/Stop, rate slows
+for lower grades (0.85 ≤ G2, 0.92 ≤ G5), emoji are stripped before speaking,
+long replies are chunked sentence-by-sentence (Chrome truncates ~15s
+utterances), and hash-route changes cancel speech. English's bespoke panel
+uses the same engine for its chat bubbles and auto-speak.
+
 ## Design decisions worth reviewing
 
 1. **One template, not 48 prompts.** Subject × grade behaviour comes from

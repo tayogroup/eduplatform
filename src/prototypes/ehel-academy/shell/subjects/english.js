@@ -9,7 +9,7 @@
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as sharedPageHeader } from "../../shared/course-shell.js?v=20260721a";
 import { grammarDiagram, phonicsDiagram } from "../../english/shared/grammar-visuals.js?v=english-20260723a";
 import { createCourseApp } from "../course-app.js?v=t2";
-import { askWehel, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
+import { askWehel, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech } from "../wehel.js?v=wehel-1";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -1173,26 +1173,27 @@ function mountReadingAudioPlayer(reading) {
   });
 }
 
+// Chat replies speak with the browser voice, not ElevenLabs: a reply is
+// written at request time, so no recorded clip can exist and every play would
+// be a paid TTS call. Lesson narration elsewhere keeps the recorded Ehel voice.
+let speakingAIIndex = null;
 async function playAIMessage(index, button) {
   const message = aiState.messages[index];
   if (!message) return;
   if (!audioEnabled) return toast("Sound is muted. Use the sound button in the header to turn it on.");
+  if (!browserSpeechSupported) return toast("This browser has no voice to read with.");
+  if (speakingAIIndex === index) { stopBrowserSpeech(); speakingAIIndex = null; return; }
+  speakingAIIndex = index;
   const original = button.innerHTML;
-  button.disabled = true;
-  button.innerHTML = `${icon("loader-circle")} Preparing voice`;
   button.classList.add("loading");
+  await speakBrowser(message.text, {
+    rate: speechRateForGrade(gradeNumber),
+    onStart: () => { button.innerHTML = `${icon("square")} Stop`; icons(); },
+  });
+  if (speakingAIIndex === index) speakingAIIndex = null;
+  button.innerHTML = original;
+  button.classList.remove("loading");
   icons();
-  try {
-    const source = await aiVoiceUrl(message.text);
-    playAudio(source, { rate: AI_NARRATION_RATE, button });
-  } catch (error) {
-    toast("ElevenLabs voice is unavailable. Please try again.");
-  } finally {
-    button.innerHTML = original;
-    button.disabled = false;
-    button.classList.remove("loading");
-    icons();
-  }
 }
 
 $("#word-audio").addEventListener("timeupdate", (event) => {
@@ -2124,6 +2125,10 @@ async function submitAIMessage(message) {
   if (aiState.interactions >= 3 && !progress.completed.includes("ai")) complete("ai");
   renderAIEnglish();
   icons();
+  // Read the reply aloud with the browser voice while sound is on.
+  if (audioEnabled && browserSpeechSupported) {
+    speakBrowser(pending.text, { rate: speechRateForGrade(gradeNumber) });
+  }
 }
 
 function ebookAsset(book, filename) {

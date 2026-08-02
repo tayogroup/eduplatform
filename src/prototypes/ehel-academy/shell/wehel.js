@@ -106,6 +106,135 @@ async function handleGetCourseOutline(meta, input) {
   return `${ref.subject} grade ${ref.grade} units:\n${outlineFromManifest(manifest)}`.slice(0, 6000);
 }
 
+// --- browser speech synthesis ------------------------------------------------
+// Wehel speaks its replies with the browser's own voice. A chat reply does not
+// exist until the model writes it, so a pre-generated clip can never cover one
+// — every spoken sentence would otherwise be a paid ElevenLabs request, per
+// learner, per message. speechSynthesis is free, needs no key and no network,
+// and starts instantly. Lesson narration keeps the recorded Ehel voice; this is
+// only for the conversation.
+
+export const browserSpeechSupported = typeof window !== "undefined"
+  && "speechSynthesis" in window && typeof SpeechSynthesisUtterance === "function";
+
+// Chrome fills the voice list asynchronously — getVoices() is empty on the
+// first call after load and only populates when voiceschanged fires. Some
+// browsers never fire it at all, so the wait is also capped.
+let voicesPromise = null;
+function loadVoices() {
+  if (!browserSpeechSupported) return Promise.resolve([]);
+  if (voicesPromise) return voicesPromise;
+  voicesPromise = new Promise((resolve) => {
+    const ready = speechSynthesis.getVoices();
+    if (ready.length) return resolve(ready);
+    let settled = false;
+    const finish = () => { if (!settled) { settled = true; resolve(speechSynthesis.getVoices()); } };
+    speechSynthesis.addEventListener("voiceschanged", finish, { once: true });
+    setTimeout(finish, 1500);
+  });
+  return voicesPromise;
+}
+
+// Prefer a natural-sounding English voice. Names differ per platform, so this
+// is a preference order rather than a lookup: known-good voices first, then any
+// en-GB/en-US, then any English at all, then whatever the browser defaults to.
+const PREFERRED_VOICES = [
+  "Google UK English Female", "Microsoft Libby Online (Natural) - English (United Kingdom)",
+  "Microsoft Sonia Online (Natural) - English (United Kingdom)", "Google US English",
+  "Microsoft Aria Online (Natural) - English (United States)", "Samantha", "Karen", "Daniel",
+];
+function pickVoice(voices) {
+  for (const name of PREFERRED_VOICES) {
+    const match = voices.find((voice) => voice.name === name);
+    if (match) return match;
+  }
+  return voices.find((v) => /^en[-_](GB|US)/i.test(v.lang))
+    || voices.find((v) => /^en\b/i.test(v.lang))
+    || null;
+}
+
+// Younger learners need it slower. Matches the prompt's own age bands.
+export function speechRateForGrade(grade) {
+  const n = Number(grade);
+  if (n <= 2) return 0.85;
+  if (n <= 5) return 0.92;
+  return 1;
+}
+
+// Emoji and stray symbols are read aloud literally by several engines ("smiling
+// face with smiling eyes"), so strip them before speaking. The visible bubble
+// keeps them.
+function speakableText(text) {
+  return String(text || "")
+    .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{20E3}]/gu, " ")
+    .replace(/[*_`#]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+// Chrome silently truncates a single utterance after roughly fifteen seconds,
+// so speak sentence by sentence and let the queue carry the reply. Splitting
+// also gives the pauses a listener expects between sentences.
+function speechChunks(text, maximum = 180) {
+  const sentences = text.split(/(?<=[.!?…])\s+/);
+  const chunks = [];
+  let current = "";
+  for (const sentence of sentences) {
+    if (!current) current = sentence;
+    else if (`${current} ${sentence}`.length <= maximum) current = `${current} ${sentence}`;
+    else { chunks.push(current); current = sentence; }
+  }
+  if (current) chunks.push(current);
+  // A sentence longer than the cap on its own still has to be broken up.
+  return chunks.flatMap((chunk) => {
+    if (chunk.length <= maximum * 2) return [chunk];
+    const pieces = [];
+    for (let at = 0; at < chunk.length; at += maximum) pieces.push(chunk.slice(at, at + maximum));
+    return pieces;
+  });
+}
+
+let speechToken = 0;
+export function stopBrowserSpeech() {
+  speechToken += 1;
+  if (browserSpeechSupported) speechSynthesis.cancel();
+}
+// Route changes are hash-based in the shell — leaving the tutor page must not
+// leave the voice talking over the next section.
+if (browserSpeechSupported) window.addEventListener("hashchange", stopBrowserSpeech);
+
+/** Speak text with the browser voice. Resolves when the whole reply finishes. */
+export async function speakBrowser(text, { rate = 0.95, onStart, onEnd } = {}) {
+  if (!browserSpeechSupported) return false;
+  const clean = speakableText(text);
+  if (!clean) return false;
+  stopBrowserSpeech();
+  const token = speechToken;
+  const voices = await loadVoices();
+  if (token !== speechToken) return false;
+  const voice = pickVoice(voices);
+  if (onStart) onStart();
+  try {
+    for (const chunk of speechChunks(clean)) {
+      if (token !== speechToken) return false;
+      await new Promise((resolve) => {
+        const utterance = new SpeechSynthesisUtterance(chunk);
+        if (voice) utterance.voice = voice;
+        utterance.lang = voice?.lang || "en-GB";
+        utterance.rate = rate;
+        utterance.pitch = 1;
+        utterance.onend = resolve;
+        // Never hang the queue on an engine error — move to the next chunk.
+        utterance.onerror = resolve;
+        speechSynthesis.speak(utterance);
+      });
+    }
+  } finally {
+    if (token === speechToken && onEnd) onEnd();
+  }
+  return true;
+}
+
 export async function askWehel({ meta, messages, channel = "text", mode = "", fetchUnit = null }) {
   const wstoken = new URLSearchParams(location.search).get("wstoken") || undefined;
   const post = async (conversation) => {
@@ -212,16 +341,37 @@ export function mountWehelChat(options) {
   let recorder = null;
   let recordedChunks = [];
 
-  const bubble = (item) => {
-    const speak = ui.voiceButton ? ui.voiceButton(item.text, item.role === "user" ? "Listen again" : `Listen to ${tutorLabel}`) : "";
+  // Speech is the browser's, not ElevenLabs': a reply is written at request
+  // time, so no recorded clip can exist for it. One engine for the whole
+  // conversation also means the learner hears one voice rather than two.
+  const speechKey = `wehel-speech-${meta.subject}`;
+  const speechRate = speechRateForGrade(meta.grade);
+  let speakReplies = browserSpeechSupported && localStorage.getItem(speechKey) !== "off";
+  let speakingIndex = null;
+
+  const bubble = (item, index) => {
     const label = item.role === "user" ? "You" : (item.offline ? `${tutorLabel} (offline hint)` : tutorLabel);
+    const playing = speakingIndex === index;
+    const speak = item.role === "assistant" && browserSpeechSupported
+      ? `<button class="button secondary voice-button${playing ? " is-playing" : ""}" data-wehel-speak="${index}" type="button" aria-label="${playing ? "Stop" : `Listen to ${escapeHtml(tutorLabel)}`}">${playing ? "⏹ Stop" : "🔊 Listen"}</button>`
+      : "";
     return `<article class="ai-message ${item.role}"><strong>${escapeHtml(label)}</strong>${escapeHtml(item.text)}${speak}</article>`;
   };
 
+  // Speak one stored reply aloud; index -1 marks the greeting bubble.
+  function speakReply(index, text) {
+    speakBrowser(text, {
+      rate: speechRate,
+      onStart: () => { speakingIndex = index; render(); },
+      onEnd: () => { speakingIndex = null; render(); },
+    });
+  }
+
   function render() {
     container.innerHTML = `
+      ${browserSpeechSupported ? `<div class="ai-voice-row"><button class="button secondary" id="wehel-voice-toggle" type="button" aria-pressed="${speakReplies}" title="${speakReplies ? `${escapeHtml(tutorLabel)} reads replies aloud` : "Replies are silent"}">${speakReplies ? "🔊 Voice on" : "🔇 Voice off"}</button></div>` : ""}
       <div class="ai-conversation" id="wehel-conversation" aria-live="polite">
-        ${messages.length ? messages.map(bubble).join("") : bubble({ role: "assistant", text: greeting })}
+        ${messages.length ? messages.map(bubble).join("") : bubble({ role: "assistant", text: greeting }, -1)}
         ${busy ? `<article class="ai-message assistant is-thinking"><strong>${escapeHtml(tutorLabel)}</strong><em>is thinking…</em></article>` : ""}
       </div>
       <div class="ai-prompts">${(options.quickPrompts || []).map((prompt) => `<button data-wehel-prompt="${escapeHtml(prompt.message)}" type="button" ${busy ? "disabled" : ""}>${escapeHtml(prompt.label)}</button>`).join("")}</div>
@@ -232,6 +382,19 @@ export function mountWehelChat(options) {
         <button class="button primary" type="submit" ${busy ? "disabled" : ""}>Send</button>
       </form>`;
     if (ui.bindVoiceControls) ui.bindVoiceControls();
+    const voiceToggle = container.querySelector("#wehel-voice-toggle");
+    if (voiceToggle) voiceToggle.addEventListener("click", () => {
+      speakReplies = !speakReplies;
+      localStorage.setItem(speechKey, speakReplies ? "on" : "off");
+      if (!speakReplies) { stopBrowserSpeech(); speakingIndex = null; }
+      render();
+      if (ui.toast) ui.toast(speakReplies ? `${tutorLabel} will read replies aloud.` : `${tutorLabel} is quiet now.`);
+    });
+    container.querySelectorAll("[data-wehel-speak]").forEach((button) => button.addEventListener("click", () => {
+      const index = Number(button.dataset.wehelSpeak);
+      if (speakingIndex === index) { stopBrowserSpeech(); speakingIndex = null; render(); return; }
+      speakReply(index, index === -1 ? greeting : messages[index]?.text || "");
+    }));
     container.querySelectorAll("[data-wehel-prompt]").forEach((button) => button.addEventListener("click", () => submit(button.dataset.wehelPrompt, "text")));
     container.querySelector("#wehel-form").addEventListener("submit", (event) => {
       event.preventDefault();
@@ -252,6 +415,8 @@ export function mountWehelChat(options) {
 
   async function submit(text, channel) {
     if (busy) return;
+    stopBrowserSpeech();
+    speakingIndex = null;
     append({ role: "user", text });
     busy = true;
     render();
@@ -271,12 +436,10 @@ export function mountWehelChat(options) {
     render();
     const exchanges = messages.filter((item) => item.role === "assistant" && !item.offline).length;
     if (!offline && options.onExchange) options.onExchange(exchanges);
-    // A voice question gets a voice answer: press the reply's own Listen button
-    // so playback goes through the caller's voice engine (static clip or TTS).
-    if (channel === "voice" && !offline && ui.voiceButton) {
-      const buttons = container.querySelectorAll(".ai-message.assistant .voice-button");
-      const last = buttons[buttons.length - 1];
-      if (last && !last.disabled) last.click();
+    // Speak the reply with the browser voice — always after a spoken question,
+    // and after typed ones too while the voice toggle is on.
+    if (browserSpeechSupported && (channel === "voice" || speakReplies)) {
+      speakReply(messages.length - 1, reply);
     }
   }
 

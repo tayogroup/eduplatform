@@ -1,24 +1,42 @@
 /* Global Perspectives skin.
    The design system is the English course's stylesheet, which every Ehel
-   subject imports; only the palette and the few GP-specific blocks live here. */
+   subject imports; only the palette and the few GP-specific blocks live here.
+
+   WHY A DATED FILENAME: the Bunny pull zone ignores query strings, and this
+   file is served `max-age=2592000` — so `?v=` never busted it and a re-upload
+   to the same path would keep serving the old CSS for thirty days. index.html
+   is `max-age=300`, so pointing it at a NEW filename is what actually ships a
+   style change. Mint the next one as ...-20260803a.css and repoint index.html;
+   the superseded file can be dropped locally once no release references it. */
 @import url("../../english/shared/course-ui-20260723e.css");
 
+/* The subject's accent.
+
+   These override the DESIGN SYSTEM's tokens rather than adding new ones. The
+   shared stylesheet paints the primary buttons, the section eyebrows, links and
+   focus rings from --teal, so a skin that recoloured only .brand-mark produced
+   a purple logo sitting above teal buttons — half-applied, and reading as
+   unfinished rather than distinctive. Overriding the token is what makes every
+   component follow.
+
+   Science and Computing take the other road and keep the platform teal, which
+   is equally coherent; what does not work is doing half of one. White on
+   #6d4aff measures 5.2:1, so it clears AA for normal text. */
 :root {
-  --gp: #6d4aff;
-  --gp-dark: #452c9e;
-  --gp-soft: #f1edff;
+  --teal: #6d4aff;
+  --teal-dark: #452c9e;
+  --teal-soft: #f1edff;
+  /* Kept as aliases so the GP-specific rules below read in the subject's own
+     terms rather than borrowing a colour name this course does not use. */
+  --gp: var(--teal);
+  --gp-dark: var(--teal-dark);
+  --gp-soft: var(--teal-soft);
   --gp-amber: #f6a609;
 }
 
-.brand-mark { background: var(--gp); }
-.approval-banner { border-left: 5px solid var(--gp); background: var(--gp-soft); }
-
-.unit-banner.gp-banner { min-height: 320px; background: linear-gradient(125deg, #171436 0%, #452c9e 55%, #2d6cdf 100%); }
-.unit-banner.gp-banner::after { background: linear-gradient(90deg, rgba(16,14,42,.92), rgba(16,14,42,.12)); }
-
 /* The six transferable skills. A unit is one skill end to end, so the skill is
    shown as a chip everywhere the unit is named. */
-.skill-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; border-radius: 999px; background: var(--gp-soft); color: var(--gp-dark); font: 800 12px/1.4 Arial, sans-serif; letter-spacing: .02em; }
+.skill-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; border-radius: 999px; background: var(--gp-soft); color: var(--gp-dark); font-size: 12px; font-weight: 800; letter-spacing: .02em; }
 .skill-chip.is-research { background: #e7f1ff; color: #14458c; }
 .skill-chip.is-analysis { background: #eaf7ee; color: #17603a; }
 .skill-chip.is-evaluation { background: #fff3e0; color: #8a4b06; }
@@ -26,16 +44,19 @@
 .skill-chip.is-collaboration { background: #fdeef4; color: #8d2b52; }
 .skill-chip.is-communication { background: #e6f7f6; color: #0f5f5c; }
 
-.concept-grid, .task-grid, .reference-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; }
+.reference-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; }
 .concept-card { border-top: 5px solid var(--gp); }
 .concept-body > p { margin: 0 0 12px; line-height: 1.65; }
 .concept-body > p:last-child { margin-bottom: 0; }
 
 /* Callout boxes carried over from the source books. Each marker has a fixed
    job, so each gets a fixed colour — a learner should recognise "this is the
-   tutor talking" without reading the label. */
+   tutor talking" without reading the label.
+   No font-family here: these inherit the design system's Inter stack. An
+   earlier version set Arial on the heading, which put Arial and Inter inside
+   the same box, one line apart. */
 .gp-box { margin: 14px 0; padding: 14px 16px; border-radius: 10px; border-left: 5px solid var(--gp); background: #fbfaff; }
-.gp-box h4 { margin: 0 0 8px; font: 800 15px/1.4 Arial, sans-serif; color: var(--gp-dark); display: flex; align-items: center; gap: 8px; }
+.gp-box h4 { margin: 0 0 8px; font-size: 15px; font-weight: 800; line-height: 1.4; color: var(--gp-dark); display: flex; align-items: center; gap: 8px; }
 .gp-box ul { margin: 0; padding-left: 18px; }
 .gp-box li { margin: 0 0 6px; line-height: 1.6; }
 .gp-box li:last-child { margin-bottom: 0; }
@@ -71,12 +92,12 @@
    learner, so it is visually separated rather than sitting in the same voice as
    the lesson around it. */
 .grownup-guide { border: 2px dashed #c9c2e8; border-radius: 12px; padding: 16px 18px; background: #fcfbff; }
-.grownup-guide .grownup-flag { display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; border-radius: 999px; background: var(--gp-dark); color: #fff; font: 800 12px/1.4 Arial, sans-serif; }
+.grownup-guide .grownup-flag { display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; border-radius: 999px; background: var(--gp-dark); color: #fff; font-size: 12px; font-weight: 800; line-height: 1.4; }
 
+.project-steps { counter-reset: gpstep; }
 .project-step { counter-increment: gpstep; }
 .project-step h3::before { content: counter(gpstep) ". "; color: var(--gp); font-weight: 800; }
-.project-steps { counter-reset: gpstep; }
 
 @media (max-width: 900px) {
-  .concept-grid, .task-grid, .reference-grid, .goal-columns { grid-template-columns: 1fr; }
+  .reference-grid, .goal-columns { grid-template-columns: 1fr; }
 }

@@ -679,7 +679,16 @@ const GUIDED_SKILL_HEADING = /skill|grow|will learn|will build|will practise/i;
 const GUIDED_SKILL_MAP = [
   [/talking and listening|listening and sharing|listening to others|speaking and listening|communication|showing and telling|sharing a clear message|sharing kind ideas/i,
     ["Mi", "Ml"], "tells others about the topic and listens to them"],
-  [/working together|collaboration|sharing and caring|sharing the jobs|taking turns/i,
+  // Presenting the finished piece is the Communicating information objective,
+  // and several units only ever say it as a project step ("Show your model to
+  // everyone", "Share what you found") rather than in the guide's summary.
+  [/\bshow (?:it|your \w+) to everyone\b|\bshare what you found\b|\bshow and tell\b|\bpresent your\b|\btell others about\b/i,
+    ["Mi"], "presents the finished work to other people"],
+  // "Sharing and caring - taking turns, helping at home, and being kind" is
+  // family kindness, not collaboration, and on its own it gave Year 1 Unit 1 a
+  // Cooperation claim for a unit whose project is an individual poster. The
+  // collaboration evidence now has to come from the task language below.
+  [/\bcollaboration\b|working together as a team/i,
     ["Cc", "Ct"], "works with others towards a shared outcome"],
   [/thinking about our learning|reflection|reflecting|thinking back/i,
     ["Fv", "Fl"], "looks back at what was learned and what helped"],
@@ -710,6 +719,29 @@ const GUIDED_SKILL_MAP = [
   // second skill is deciding whether a rule is fair.
   [/saying what i think|\bopinion\b|giving reasons|choosing and saying why|\bfair\b|\bfairness\b/i,
     ["Ea"], "states an opinion and gives a reason for it"],
+  // The four rules below read the unit's TASKS, not the guide's summary. The
+  // guide says what the unit is for; the mini-project and the look-back grid
+  // say what the learner actually does, and they routinely evidence objectives
+  // the summary never mentions. Reading the summary alone left Personal
+  // contribution and Teamwork unclaimed by all 13 units, while nine of them run
+  // a team project and five ask outright what idea somebody else contributed.
+  [/shared an idea|everyone in our team|i had a job|our team had a job|how i helped|how we helped/i,
+    ["Fc"], "identifies the idea or action it contributed to a shared outcome"],
+  // "someone else" alone matched "really listening to someone else", which is
+  // listening, not identifying what they contributed. It needs the
+  // contribution to be the thing named.
+  [/good idea (?:my friend|others)|good ideas others|someone else (?:contributed|had|shared|did)|helped each other|working together/i,
+    ["Ft"], "identifies what someone else contributed to the shared outcome"],
+  [/which source|how can i find out|who will you ask|where can i look|choose (?:your |a )?sources?/i,
+    ["Es"], "chooses a source and says why it suits the question"],
+  [/look back|the best thing was|what did you enjoy|liked best|most proud|feel proud|i now know/i,
+    ["Fv", "Fl"], "looks back at what was learned and what was enjoyed"],
+  // \bour\b throughout: without it, "our poster" matched inside "y-our poster"
+  // and "our team" inside "y-our team", which handed Cooperation and Teamwork
+  // objectives to two units whose project is an individual piece of work. Same
+  // class of bug as `causes?` matching inside "because".
+  [/\bour team\b|\bteam jobs\b|\btook turns\b|\bshared the jobs\b|\bour (?:display|poster|leaflet|model|welcome|stall)\b/i,
+    ["Cc", "Ct"], "works with a team towards one shared piece of work"],
 ];
 
 /** The skill bullets a Stage 1-3 guide opens with, or [] if it prints none. */
@@ -726,20 +758,49 @@ function guidedSkillBullets(unit) {
   return [];
 }
 
+/** Everything a Stage 1-3 unit says about itself that can evidence an objective.
+ *
+ * The guide's skill list states the unit's purpose; the Activity Sheet headings
+ * and the Mini-Project's steps and look-back grid state what the learner is
+ * actually asked to do. Both are evidence, and the second is the more literal
+ * of the two — "Which source helps us?" and "A good idea my friend had was ..."
+ * are objectives in plain sight that no summary mentions.
+ */
+function guidedEvidence(unit) {
+  const out = [];
+  for (const bullet of guidedSkillBullets(unit)) out.push({ text: bullet, from: "the guide's own skill list" });
+  for (const doc of unit.documents) {
+    if (doc.voice === "adult") continue;
+    for (const block of doc.blocks) {
+      if (block.type === "heading") out.push({ text: tidy(block.text), from: `the ${doc.role} headings` });
+      else if (block.type === "table") {
+        for (const row of block.rows) if (row[0]) out.push({ text: tidy(row[0]), from: `the ${doc.role} look-back` });
+      } else if (block.type === "list" && doc.role === "Practice") {
+        // The Mini-Project's look-back asks its questions as list items, not
+        // headings — "What did you enjoy most about making your letter?" is the
+        // Personal learning objective stated outright, and reading only the
+        // headings missed it.
+        for (const item of block.items) out.push({ text: tidy(item), from: "the Mini-Project look-back" });
+      }
+    }
+  }
+  return out.filter((item) => item.text);
+}
+
 function objectivesFromGuide(unit, stage, framework) {
-  const bullets = guidedSkillBullets(unit);
-  if (!bullets.length) return [];
+  const evidence = guidedEvidence(unit);
+  if (!evidence.length) return [];
   const stageObjectives = framework.objectivesByStage[String(stage)] || [];
   const byCode = new Map(stageObjectives.map((o) => [o.code, o]));
-  const found = new Map(); // code → {objective, evidence[]}
-  for (const bullet of bullets) {
+  const found = new Map(); // code → {objective, evidence[], from, why}
+  for (const item of evidence) {
     for (const [pattern, subs, why] of GUIDED_SKILL_MAP) {
-      if (!pattern.test(bullet)) continue;
+      if (!pattern.test(item.text)) continue;
       for (const sub of subs) {
         const objective = byCode.get(`${stage}${sub}.01`);
         if (!objective) continue;
-        const entry = found.get(objective.code) || { objective, evidence: [], why };
-        const phrase = tidy(bullet.split(/\s[-–—]\s|\.\s/)[0]).slice(0, 70);
+        const entry = found.get(objective.code) || { objective, evidence: [], from: item.from, why };
+        const phrase = tidy(item.text.split(/\s[-–—]\s|\.\s/)[0]).slice(0, 70);
         if (!entry.evidence.includes(phrase)) entry.evidence.push(phrase);
         found.set(objective.code, entry);
       }
@@ -748,13 +809,13 @@ function objectivesFromGuide(unit, stage, framework) {
   const order = ["Rq", "Ri", "Rc", "Rf", "Ap", "Ad", "Ac", "As", "Es", "Ea", "Fc", "Ft", "Fv", "Fl", "Cc", "Ct", "Mi", "Ml"];
   return [...found.values()]
     .sort((a, b) => order.indexOf(a.objective.subStrandCode) - order.indexOf(b.objective.subStrandCode))
-    .map(({ objective, evidence, why }) => ({
+    .map(({ objective, evidence, from, why }) => ({
       code: objective.code,
       strand: objective.strand,
       subStrand: objective.subStrand,
       text: objective.text,
       learnerText: "",
-      evidence: `the guide's own skill list: "${evidence.join('"; "')}" — ${why}`,
+      evidence: `${from}: "${evidence.slice(0, 3).join('"; "')}" — ${why}`,
     }));
 }
 
@@ -865,8 +926,16 @@ function buildOutcomes(goals, objectives, explainers) {
       text: capitalise(text.replace(/^i (?:am|can)\s+/i, "")),
     }));
   }
-  if (objectives.length) {
-    return objectives.map((objective, index) => ({ id: `lo${pad2(index + 1)}`, text: objective.learnerText || objective.text }));
+  // Objectives are usable as outcomes ONLY where the pack printed a learner
+  // wording for them ("Ask clear, focused questions that are worth
+  // researching"). Cambridge's own text is curriculum prose written for adults
+  // — "Begin to participate in simple investigations and ask basic questions to
+  // find information and opinions" — and falling back to it put that in front
+  // of a five-year-old as their goals and their self-assessment, once the
+  // Stage 1-3 units gained objectives at all.
+  const learnerFacing = objectives.filter((objective) => objective.learnerText);
+  if (learnerFacing.length) {
+    return learnerFacing.map((objective, index) => ({ id: `lo${pad2(index + 1)}`, text: objective.learnerText }));
   }
   return explainers.filter((e) => !e.isFrontMatter).slice(0, 8).map((e, index) => ({ id: `lo${pad2(index + 1)}`, text: e.title }));
 }

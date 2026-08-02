@@ -10,7 +10,7 @@
  * answer key on every exercise, and both need to be visually distinct. The carousel styles
  * (.gc-*) come from the base sheet, so importing it gets them for free.
  */
-@import url("../../english/shared/course-ui-20260723e.css");
+@import url("../../english/shared/course-ui.css");
 
 /* --- identity ------------------------------------------------------------ */
 .brand-mark { background: var(--blue); }
@@ -21,7 +21,7 @@
 /* --- CEFR ---------------------------------------------------------------- */
 /* The band the learner is working at, shown wherever a claim is made about
    what they can do, so the level is never implied and never overstated. */
-.cefr-chip { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px; background: var(--blue-soft); color: #1d4ea8; font: 800 11px/1.6 Inter, sans-serif; letter-spacing: .04em; }
+.cefr-chip { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px; background: var(--blue-soft); color: #1d4ea8; font: var(--weight-medium) 14px/1.6 var(--font-sans); letter-spacing: .04em; }
 .cefr-chip.a1 { background: #e7f3ea; color: #1d6b3f; }
 .cefr-chip.a2 { background: var(--teal-soft); color: var(--teal-dark); }
 .cefr-chip.b1 { background: var(--blue-soft); color: #1d4ea8; }
@@ -30,7 +30,7 @@
 .cando { margin: 0; padding-left: 0; list-style: none; }
 .cando li { position: relative; padding: 9px 0 9px 30px; border-bottom: 1px dashed var(--line); }
 .cando li:last-child { border-bottom: 0; }
-.cando li::before { content: "✓"; position: absolute; left: 4px; top: 9px; color: var(--green); font-weight: 900; }
+.cando li::before { content: "✓"; position: absolute; left: 4px; top: 9px; color: var(--green); font-weight: var(--weight-bold); }
 .cando small { display: block; margin-top: 3px; color: var(--muted); }
 
 /* --- self-teaching ------------------------------------------------------- */
@@ -38,11 +38,11 @@
    and it has to look different from both or a learner skims past it. */
 .worked { margin: 14px 0; padding: 14px 16px; border-left: 4px solid var(--gold); border-radius: 0 10px 10px 0; background: #ffffff1f; font-size: 14.5px; line-height: 1.75; }
 .gc-slide .worked { background: #00000024; }
-.worked-label { display: block; margin-bottom: 6px; font: 800 11px/1.6 Inter, sans-serif; letter-spacing: .08em; text-transform: uppercase; opacity: .85; }
+.worked-label { display: block; margin-bottom: 6px; font: var(--weight-medium) 13px/1.6 var(--font-sans); letter-spacing: .08em; text-transform: uppercase; opacity: .85; }
 
 .answer-entry { padding: 9px 0; border-bottom: 1px dashed var(--line); }
 .answer-entry:last-child { border-bottom: 0; }
-.answer-entry summary { cursor: pointer; font-weight: 700; }
+.answer-entry summary { cursor: pointer; font-weight: var(--weight-bold); }
 .answer-entry summary:hover { color: var(--blue); }
 
 /* --- pronunciation ------------------------------------------------------- */
@@ -51,20 +51,20 @@
 .pair-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 11px; }
 .pair { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 11px 14px; border: 1px solid var(--line); border-radius: 11px; background: var(--paper); }
 .pair strong { font-size: 19px; }
-.pair span { color: var(--muted); font-size: 12px; }
+.pair span { color: var(--muted); font-size: 14px; }
 
-.sound-tag { display: inline-grid; place-items: center; min-width: 34px; height: 26px; padding: 0 8px; border-radius: 7px; background: var(--ink); color: #fff; font: 800 13px/1 "SF Mono", Menlo, monospace; }
+.sound-tag { display: inline-grid; place-items: center; min-width: 34px; height: 26px; padding: 0 8px; border-radius: 7px; background: var(--ink); color: #fff; font: var(--weight-medium) 14px/1 "SF Mono", Menlo, monospace; }
 
 /* --- real-world documents ------------------------------------------------ */
 /* A form has to look like a form. Rendered as prose it stops being the thing
    the learner is being taught to read. */
-.document { margin: 0; padding: 22px 24px; border: 1px solid #c9d6e0; border-radius: 6px; background: #fdfdfb; box-shadow: 0 2px 0 #e6edf2 inset; font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 13.5px; line-height: 1.85; white-space: pre-wrap; overflow-x: auto; }
-.document-label { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 9px; padding: 3px 9px; border-radius: 999px; background: var(--gold-soft); color: #7a5a05; font: 800 11px/1.6 Inter, sans-serif; }
+.document { margin: 0; padding: 22px 24px; border: 1px solid #c9d6e0; border-radius: 6px; background: #fdfdfb; box-shadow: 0 2px 0 #e6edf2 inset; font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 14px; line-height: 1.85; white-space: pre-wrap; overflow-x: auto; }
+.document-label { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 9px; padding: 3px 9px; border-radius: 999px; background: var(--gold-soft); color: #7a5a05; font: var(--weight-medium) 14px/1.6 var(--font-sans); }
 
 @media (max-width: 900px) {
   .pair-grid { grid-template-columns: minmax(0, 1fr); }
 }
 /* Inline labels ("Hint:", "Meaning:") name a field; they are not emphasis. */
-.field-label { font-weight: 400; }
+.field-label { font-weight: var(--weight-normal); }
 /* Status lines and correctness feedback: colour carries the meaning, not weight. */
-.status-note { font-weight: 400; }
+.status-note { font-weight: var(--weight-normal); }

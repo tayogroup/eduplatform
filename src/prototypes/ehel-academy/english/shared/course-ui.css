@@ -126,14 +126,14 @@ body.focus-mode .focus-exit:hover { background: #1d4360; }
 .gc-inner { position: relative; z-index: 1; width: 100%; max-width: 600px; text-align: center; display: grid; gap: 15px; justify-items: center; background: #fff; border-radius: 22px; padding: 28px 26px; box-shadow: 0 12px 30px #0000002e; }
 .gc-eyebrow { text-transform: uppercase; letter-spacing: .12em; font-weight: 800; font-size: 12px; color: #2a6cb0; }
 .gc-pattern { font: 900 46px/1.1 inherit; color: #12263a; letter-spacing: .5px; }
-.gc-lead { margin: 0; font-size: 19px; line-height: 1.5; color: #33465e; font-weight: 700; }
+.gc-lead { margin: 0; font-size: 19px; line-height: 1.5; color: #33465e; font-weight: 400; }
 .gc-emoji { font-size: 26px; line-height: 1; }
 .gc-title { margin: 0; font-size: 21px; color: #12263a; }
 .gc-inner .grammar-visual { margin: 0; max-width: 460px; }
 .gc-source { color: #8595a6; font-size: 12px; }
 .gc-note { margin: 0; font-size: 15px; line-height: 1.5; color: #52627a; max-width: 520px; }
 .gc-mistake { color: #b3392c; }
-.gc-try { background: #e8f1fa; color: #17324d; padding: 10px 14px; border-radius: 10px; font-weight: 700; margin-top: 8px; }
+.gc-try { background: #e8f1fa; color: #17324d; padding: 10px 14px; border-radius: 10px; font-weight: 400; margin-top: 8px; }
 .gc-practice { max-width: 520px; }
 .gc-practice summary { cursor: pointer; font-weight: 800; color: #2a6cb0; font-size: 14px; }
 .gc-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
@@ -403,7 +403,7 @@ body.focus-mode.gc-full .gc-dots { position: fixed; left: 0; right: 0; bottom: 1
 .course-ebook-credit a { color: var(--teal-dark); font-weight: 800; }
 .question-list { display: grid; gap: 12px; }
 .question { padding: 16px; border: 1px solid var(--line); border-radius: 7px; }
-.question label { display: block; font-weight: 750; line-height: 1.45; }
+.question label { display: block; font-weight: 400; line-height: 1.45; }
 .question textarea { width: 100%; min-height: 80px; margin-top: 10px; resize: vertical; border: 1px solid var(--line); border-radius: 6px; padding: 10px; }
 .grammar-grid, .task-grid, .live-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .grammar-card h3, .task-card h3 { font-size: 19px; }
@@ -590,7 +590,7 @@ body.focus-mode.gc-full .gc-dots { position: fixed; left: 0; right: 0; bottom: 1
 .ai-speaking-head select { min-height: 34px; padding: 4px 26px 4px 8px; border: 1px solid var(--line); border-radius: 5px; background: white; }
 .speaking-target { margin: 14px 0; padding: 13px; border-left: 4px solid var(--gold); background: white; }
 .speaking-target > span { color: var(--coral); font-size: 11px; font-weight: 850; text-transform: uppercase; }
-.speaking-target p { margin: 5px 0 10px; font-size: 17px; font-weight: 750; line-height: 1.5; }
+.speaking-target p { margin: 5px 0 10px; font-size: 17px; font-weight: 400; line-height: 1.5; }
 .speaking-flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; margin-bottom: 12px; }
 .flow-step { min-height: 34px; padding: 5px; display: flex; align-items: center; gap: 5px; border-bottom: 3px solid var(--line); color: var(--muted); font-size: 11px; font-weight: 800; }
 .flow-step strong { width: 20px; height: 20px; display: grid; place-items: center; border-radius: 50%; color: white; background: #94a3b8; }

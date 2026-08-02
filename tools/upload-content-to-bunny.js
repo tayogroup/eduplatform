@@ -20,11 +20,25 @@ const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
 const ZONE = "ehelacademy";
 const ROOT_FOLDER = "Ehel Primary";
 const STORAGE = "https://storage.bunnycdn.com";
-const KEY = process.env.BUNNY_KEY;
 const MANIFEST = path.join(ROOT, ".bunny-content-manifest.json");
 const CONCURRENCY = 12;
 
-if (!KEY) { console.error("BUNNY_KEY not set"); process.exit(1); }
+// Read .env the way the generators and upload-media-to-bunny.js do, so the key
+// never has to be typed onto a command line — where it would sit in the process
+// list for anyone on the machine to read. Must run before KEY is read, or a key
+// that lives only in .env looks unset.
+function loadDotEnv() {
+  const file = path.join(ROOT, ".env");
+  if (!fs.existsSync(file)) return;
+  for (const line of fs.readFileSync(file, "utf8").split(/\r?\n/)) {
+    const m = line.trim().match(/^([A-Za-z_][A-Za-z0-9_]*)=(.*)$/);
+    if (m && !process.env[m[1]]) process.env[m[1]] = m[2].replace(/^['"]|['"]$/g, "");
+  }
+}
+loadDotEnv();
+const KEY = process.env.BUNNY_KEY;
+
+if (!KEY) { console.error("BUNNY_KEY not set (checked the environment and .env)"); process.exit(1); }
 const SUBJECTS = ["english", "mathematics", "science", "computing", "global-perspectives",
   "intensive-english"];
 

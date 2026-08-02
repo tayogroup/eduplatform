@@ -86,6 +86,41 @@ function pqh_wehel_valid_ws_token(string $token): bool {
     }
 }
 
+// Global + subject stock phrases, in prompt order.
+function pqh_wehel_phrases(array $promptdata, string $subject): array {
+    $bank = $promptdata['phraseBank'] ?? [];
+    return array_merge((array)($bank['global'] ?? []), (array)(($bank['subjects'] ?? [])[$subject] ?? []));
+}
+
+// Sentence-matching key — mirror of normalisePhrase in
+// tools/lib/ehel-wehel-phrases.js. Keep the two byte-for-byte equivalent:
+// lowercase, curly quotes straightened, everything but letters/digits/spaces
+// dropped, whitespace collapsed.
+function pqh_wehel_normalise(string $text): string {
+    $text = core_text::strtolower($text);
+    $text = str_replace(["\u{2018}", "\u{2019}", "\u{02BC}"], "'", $text);
+    $text = str_replace(["\u{201C}", "\u{201D}"], '"', $text);
+    $text = preg_replace('/[^a-z0-9\s]/u', '', $text);
+    return trim(preg_replace('/\s+/u', ' ', $text));
+}
+
+// Snap reply sentences that nearly match a stock phrase back to its canonical
+// text, so the on-screen sentence and the pre-recorded clip share one hash.
+function pqh_wehel_canonicalise(string $reply, array $phrases): string {
+    $canon = [];
+    foreach ($phrases as $phrase) {
+        $canon[pqh_wehel_normalise((string)$phrase)] = (string)$phrase;
+    }
+    $sentences = preg_split('/(?<=[.!?…])\s+/u', $reply) ?: [$reply];
+    foreach ($sentences as $index => $sentence) {
+        $key = pqh_wehel_normalise($sentence);
+        if ($key !== '' && isset($canon[$key])) {
+            $sentences[$index] = $canon[$key];
+        }
+    }
+    return implode(' ', $sentences);
+}
+
 pqh_wehel_send_cors();
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -247,6 +282,7 @@ $system = strtr($system, [
     '{{UNIT_TITLE}}' => $unittitle !== '' ? $unittitle : 'this unit',
     '{{CHANNEL}}' => $channel,
     '{{SUBJECT_NOTES}}' => $subjectnotes,
+    '{{STOCK_PHRASES}}' => implode("\n", array_map(static fn($phrase) => '- ' . $phrase, pqh_wehel_phrases($promptdata, $subject))),
     '{{OTHER_UNITS_NOTE}}' => (string)(($promptdata['otherUnitsNotes'] ?? [])[$usetool ? 'withTool' : 'withoutTool'] ?? ''),
     '{{COURSE_OUTLINE}}' => $courseoutline,
     '{{UNIT_CONTENT}}' => $unitcontent,
@@ -323,5 +359,6 @@ $reply = trim($reply);
 if ($reply === '') {
     pqh_wehel_json(502, ['ok' => false, 'message' => 'Wehel could not answer just now. Please try again.']);
 }
+$reply = pqh_wehel_canonicalise($reply, pqh_wehel_phrases($promptdata, $subject));
 
 pqh_wehel_json(200, ['ok' => true, 'reply' => $reply, 'model' => $model]);

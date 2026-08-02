@@ -79,6 +79,9 @@ function hashesForGrade(subjectRoot, grade, categories = CATEGORIES) {
     const text = clean(raw);
     if (text.length >= MIN_CHARS) keys.add(cyrb53(text));
   };
+  // Wehel's stock phrases are spoken on every grade's tutor panel, so every
+  // grade claims them (tools/lib/ehel-wehel-phrases.js is the definition).
+  require("./ehel-wehel-phrases").phrasesForSubject("computing").forEach(add);
   const unitDir = path.join(subjectRoot, `grade-${grade}`, "data", "units");
   if (fs.existsSync(unitDir)) {
     for (const file of fs.readdirSync(unitDir).filter((f) => f.endsWith(".json"))) {

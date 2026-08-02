@@ -47,7 +47,11 @@ export function createCourseApp(config) {
   const keys = config.keys(stageNumber, unitNumber);
   const STORAGE_KEY = keys.progress;
   const STAGE_STORAGE_KEY = keys.grade;
-  const ELEVENLABS_ENDPOINT = IS_LOCAL_DEV && location.port === "4287" ? "/api/elevenlabs-tts" : "/local/hubredirect/quiz_tts.php";
+  // serve-src-preview.js hosts /api/elevenlabs-tts and defaults to port 4287,
+  // but autoPort can move it — treat every localhost port as dev except the
+  // two servers with no API routes (vite 5173, bunny dist preview 4173) and
+  // bare 80/443, which would be a local Moodle. Mirrors shell/wehel.js.
+  const ELEVENLABS_ENDPOINT = IS_LOCAL_DEV && !["", "80", "443", "5173", "4173"].includes(location.port) ? "/api/elevenlabs-tts" : "/local/hubredirect/quiz_tts.php";
   const ELEVENLABS_VOICE_ID = "XfNU2rGpBa01ckF309OY";
 
   const sections = config.sections;
@@ -235,11 +239,30 @@ export function createCourseApp(config) {
       const staticUrl = await staticVoiceUrl(text);
       if (staticUrl) { if (requestId !== voiceRequestId) return; await playVoiceSource(staticUrl, requestId); }
       else {
-        const chunks = narrationChunks(text);
+        // Sentence-level mix: a text with no clip of its own may still contain
+        // pre-recorded sentences — Wehel's stock phrases, or a quoted practice
+        // question that lesson narration already paid for. Resolve each
+        // sentence separately and buy TTS only for the gaps. Capped at 12
+        // sentences so a whole-page narration doesn't fire dozens of HEAD
+        // probes; chat replies are far below the cap.
+        let chunks = null;
+        const sentences = String(text || "").split(/(?<=[.!?…])\s+/).map((part) => part.trim()).filter(Boolean);
+        if (sentences.length > 1 && sentences.length <= 12) {
+          const urls = await Promise.all(sentences.map((sentence) => staticVoiceUrl(sentence)));
+          if (requestId !== voiceRequestId) return;
+          if (urls.some(Boolean)) {
+            chunks = [];
+            let gap = [];
+            const flush = () => { if (gap.length) { chunks.push(...narrationChunks(gap.join(" "))); gap = []; } };
+            sentences.forEach((sentence, index) => { if (urls[index]) { flush(); chunks.push({ url: urls[index] }); } else gap.push(sentence); });
+            flush();
+          }
+        }
+        if (!chunks) chunks = narrationChunks(text);
         for (let index = 0; index < chunks.length; index += 1) {
           if (requestId !== voiceRequestId) return;
           button.title = `ElevenLabs narration ${index + 1} of ${chunks.length}`;
-          const source = await elevenLabsAudioUrl(chunks[index].text, chunks[index].speed);
+          const source = chunks[index].url || await elevenLabsAudioUrl(chunks[index].text, chunks[index].speed);
           await playVoiceSource(source, requestId);
         }
       }

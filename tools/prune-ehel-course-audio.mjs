@@ -32,34 +32,18 @@ if (!subject) {
 }
 const SUBJECT_ROOT = path.join(ROOT, "src", "prototypes", "ehel-academy", subject);
 const TTS = path.join(SUBJECT_ROOT, "media", "audio", "tts");
-const { CATEGORIES, textsForUnit, textsForCapstone, cyrb53, clean, MIN_CHARS } =
+const narration =
   createRequire(import.meta.url)(`./lib/ehel-${subject === "mathematics" ? "math" : subject}-narration.js`);
 
 const remove = process.argv.includes("--delete");
 const force = process.argv.includes("--force");
 
-const reachable = new Set();
-for (const entry of fs.readdirSync(SUBJECT_ROOT)) {
-  const match = entry.match(/^grade-(\d+)$/);
-  if (!match) continue;
-  const data = path.join(SUBJECT_ROOT, entry, "data");
-  const unitDir = path.join(data, "units");
-  const add = (raw) => {
-    const text = clean(raw);
-    if (text.length >= MIN_CHARS) reachable.add(cyrb53(text));
-  };
-  if (fs.existsSync(unitDir)) {
-    for (const file of fs.readdirSync(unitDir).filter((f) => f.endsWith(".json"))) {
-      const unit = JSON.parse(fs.readFileSync(path.join(unitDir, file), "utf8"));
-      for (const category of CATEGORIES) textsForUnit(unit, category).forEach(add);
-    }
-  }
-  const capstoneFile = path.join(data, "grade-capstone.json");
-  if (fs.existsSync(capstoneFile)) {
-    const capstone = JSON.parse(fs.readFileSync(capstoneFile, "utf8"));
-    for (const category of CATEGORIES) textsForCapstone(capstone, category).forEach(add);
-  }
-}
+// The narration lib's own claim map is the reachable set — the same one the
+// uploader fans out and the generator fills. This file used to rebuild the
+// walk by hand from textsForUnit, which meant a claim added to the lib (the
+// Wehel stock phrases) counted as orphaned here: a drifting second copy of
+// the rules, in the one tool whose job is deleting things.
+const reachable = new Set(narration.hashGradeMap(SUBJECT_ROOT).keys());
 
 // A subject whose narration has not been generated yet has no cache directory
 // at all. That is the normal first state for a newly added course, so it

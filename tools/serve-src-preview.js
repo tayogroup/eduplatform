@@ -129,6 +129,15 @@ async function handleElevenLabs(req, res) {
 // The prompt is the shared single source in src/moodle/local_hubredirect/
 // wehel_prompt.json; change wording there, never here.
 const wehelPromptFile = path.join(projectRoot, 'src', 'moodle', 'local_hubredirect', 'wehel_prompt.json');
+const { phrasesForSubject, normalisePhrase } = require(path.join(__dirname, 'lib', 'ehel-wehel-phrases.js'));
+
+// Snap reply sentences that nearly match a stock phrase back to its canonical
+// text, so the on-screen sentence and the pre-recorded clip share one hash.
+// Mirrored in wehel_chat.php — keep the two in step.
+function canonicaliseWehelReply(reply, phrases) {
+  const canon = new Map(phrases.map((phrase) => [normalisePhrase(phrase), phrase]));
+  return String(reply).split(/(?<=[.!?…])\s+/).map((sentence) => canon.get(normalisePhrase(sentence)) || sentence).join(' ');
+}
 
 async function handleWehelChat(req, res) {
   let body = '';
@@ -188,6 +197,7 @@ async function handleWehelChat(req, res) {
     '{{UNIT_TITLE}}': clean(payload.unitTitle, 160) || 'this unit',
     '{{CHANNEL}}': channel,
     '{{SUBJECT_NOTES}}': promptData.subjectNotes[subject].join('\n'),
+    '{{STOCK_PHRASES}}': phrasesForSubject(subject, promptData.phraseBank).map((phrase) => `- ${phrase}`).join('\n'),
     '{{OTHER_UNITS_NOTE}}': (promptData.otherUnitsNotes || {})[useUnitTool ? 'withTool' : 'withoutTool'] || '',
     '{{COURSE_OUTLINE}}': String(payload.courseOutline || '').replace(/[^\S\n]+/g, ' ').trim().slice(0, 4000)
       || '(The course outline was not provided; you know only the current unit.)',
@@ -226,8 +236,9 @@ async function handleWehelChat(req, res) {
   }
   const reply = (result.content || []).filter((block) => block.type === 'text').map((block) => block.text).join('').trim();
   if (!reply) throw new Error('Wehel could not answer just now.');
+  const canonical = canonicaliseWehelReply(reply, phrasesForSubject(subject, promptData.phraseBank));
   res.writeHead(200, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' });
-  res.end(JSON.stringify({ ok: true, reply, model }));
+  res.end(JSON.stringify({ ok: true, reply: canonical, model }));
 }
 
 // Local twin of local_hubredirect/quiz_stt.php so Wehel's mic works in dev.

@@ -72,6 +72,12 @@ function hashesForLevel(courseRoot, level, categories = CATEGORIES) {
   const unitDir = path.join(courseRoot, `level-${level}`, "data", "units");
   const out = new Set();
   if (!fs.existsSync(unitDir)) return out;
+  // Wehel's stock phrases are spoken on every level's tutor panel, so every
+  // level claims them (tools/lib/ehel-wehel-phrases.js is the definition).
+  for (const raw of require("./ehel-wehel-phrases").phrasesForSubject("intensive-english")) {
+    const text = clean(raw);
+    if (text.length >= MIN_CHARS) out.add(cyrb53(text));
+  }
   for (const file of fs.readdirSync(unitDir)) {
     if (!/^unit-\d+\.json$/.test(file)) continue;
     const unit = JSON.parse(fs.readFileSync(path.join(unitDir, file), "utf8"));

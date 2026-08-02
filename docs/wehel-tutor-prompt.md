@@ -366,6 +366,37 @@ not adult political conflicts.
 
 ---
 
+## Stock-phrase audio (added 2026-08-02)
+
+Wehel replies in text, but the recurring *scaffolding* of tutoring — praise,
+transitions, quiz frames, hint offers, refusals — is a fixed phrase bank
+(`phraseBank` in `wehel_prompt.json`: 72 global + ~5 per subject, 97 unique
+speakable phrases) with pre-recorded clips, so the most-heard audio is free and
+instant while only genuinely unique sentences buy runtime TTS. Three mechanisms
+make it hold:
+
+1. **Prompt** — `{{STOCK_PHRASES}}` injects global + the subject's phrases with
+   an instruction to use them verbatim.
+2. **Canonicalisation** — both endpoints snap near-miss reply sentences
+   (normalised match: lowercase, straightened quotes, punctuation stripped)
+   back to the canonical text before returning, so screen text and clip share
+   one hash. `normalisePhrase` lives in `tools/lib/ehel-wehel-phrases.js`;
+   `wehel_chat.php` mirrors it.
+3. **Sentence-level playback** — when a whole text has no clip, the shell's
+   `speakText` (course-app.js) resolves each sentence separately (≤12
+   sentences) and buys TTS only for the gaps. This also reuses existing lesson
+   narration clips whenever Wehel quotes a practice question verbatim.
+
+Tooling follows the house pattern: `tools/generate-ehel-wehel-audio.js`
+(`--dry` first; a global phrase is paid once and copied to every subject),
+claims added to every subject narration lib's grade sets so
+`upload-media-to-bunny.js` fans clips out per grade, the pruner now reads the
+libs' own `hashGradeMap` (it had a drifting hand-rolled copy), and
+`npm run check:wehel` gates bank/splitter/canonicaliser drift. **A phrase's
+wording is load-bearing**: edit it in `wehel_prompt.json` and its clip is
+orphaned until the generator re-runs. English's AI panel has its own audio
+engine with no static lookup, so it canonicalises but has no clips yet.
+
 ## Design decisions worth reviewing
 
 1. **One template, not 48 prompts.** Subject × grade behaviour comes from

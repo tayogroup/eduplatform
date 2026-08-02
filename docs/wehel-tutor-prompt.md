@@ -35,12 +35,23 @@ architecture — the lesson loads it into the browser — so the client sends it
 with each request and the endpoint stays stateless. The secret being protected
 server-side is the API key, not the answer keys.
 
-Grounding has two scopes: the **open unit travels in full**, and since
-2026-08-02 the request also carries a **course outline** — one line per unit of
-the loaded manifest (`outlineFromManifest` in `shell/wehel.js`, `{{COURSE_OUTLINE}}`
-in the template) — so Wehel knows where the unit sits in the year and can point
-back or ahead. The prompt tells it plainly that other units' exact material is
-not in front of it.
+Grounding has three scopes: the **open unit travels in full**; the request also
+carries a **course outline** — one line per unit of the loaded manifest
+(`outlineFromManifest` in `shell/wehel.js`, `{{COURSE_OUTLINE}}` in the
+template) — so Wehel knows where the unit sits in the year; and Wehel can pull
+**any other listed unit's full content on demand** through the `get_unit` tool.
+
+The tool loop is client-side by design: the endpoint defines `get_unit` (schema
+in `wehel_prompt.json` under `tools`) and, when Claude calls it, returns
+`{toolUse, assistantContent}` instead of a reply. The **browser** then fetches
+`units/unit-N.json` from the same tree the lesson loads its own data from
+(`unitFetcher`, gated on the manifest so only listed units resolve), appends the
+`tool_result`, and re-posts — up to two fetches per question. That keeps the
+endpoint stateless and off the CDN. The tool exchange lives only inside the one
+`askWehel` call; the stored transcript stays plain text. Which of the two
+`otherUnitsNotes` variants lands in `{{OTHER_UNITS_NOTE}}` depends on whether
+the client advertised the tool, so a client that cannot fetch units gets a
+prompt that never promises it.
 
 One master prompt serves every subject and grade. The app fills the `{{...}}` variables at
 runtime from data it already has (catalog.json, the unit's data JSON, learner profile), so

@@ -134,7 +134,7 @@ async function handleWehelChat(req, res) {
   let body = '';
   for await (const chunk of req) {
     body += chunk;
-    if (body.length > 400 * 1024) throw new Error('The request is too large.');
+    if (body.length > 600 * 1024) throw new Error('The request is too large.');
   }
   const payload = JSON.parse(body || '{}');
   const promptData = JSON.parse(fs.readFileSync(wehelPromptFile, 'utf8'));
@@ -145,12 +145,21 @@ async function handleWehelChat(req, res) {
   if (!Number.isInteger(grade) || grade < 1 || grade > 9) throw new Error('Unknown grade.');
   const channel = payload.channel === 'voice' ? 'voice' : 'text';
   const clean = (value, max) => String(value ?? '').replace(/\s+/g, ' ').trim().slice(0, max);
+  const useUnitTool = Array.isArray(payload.tools) && payload.tools.includes('get_unit') && promptData.tools?.get_unit;
 
-  const messages = Array.isArray(payload.messages) ? payload.messages.slice(-24) : [];
-  const conversation = messages.map((message) => ({
-    role: message.role === 'assistant' ? 'assistant' : 'user',
-    content: String(message.content ?? message.text ?? '').trim().slice(0, 4000)
-  })).filter((message) => message.content);
+  const messages = Array.isArray(payload.messages) ? payload.messages.slice(-30) : [];
+  // Content is either a plain string or an array of API content blocks — the
+  // client's tool loop sends tool_use/tool_result turns as block arrays.
+  const conversation = messages.map((message) => {
+    const role = message.role === 'assistant' ? 'assistant' : 'user';
+    const content = message.content ?? message.text ?? '';
+    if (Array.isArray(content)) {
+      if (JSON.stringify(content).length > 200000) throw new Error('A chat message is too large.');
+      return { role, content };
+    }
+    const text = String(content).trim().slice(0, 4000);
+    return text ? { role, content: text } : null;
+  }).filter(Boolean);
   if (!conversation.length || conversation[conversation.length - 1].role !== 'user') {
     throw new Error('The last message must be from the learner.');
   }
@@ -174,6 +183,7 @@ async function handleWehelChat(req, res) {
     '{{UNIT_TITLE}}': clean(payload.unitTitle, 160) || 'this unit',
     '{{CHANNEL}}': channel,
     '{{SUBJECT_NOTES}}': promptData.subjectNotes[subject].join('\n'),
+    '{{OTHER_UNITS_NOTE}}': (promptData.otherUnitsNotes || {})[useUnitTool ? 'withTool' : 'withoutTool'] || '',
     '{{COURSE_OUTLINE}}': String(payload.courseOutline || '').replace(/[^\S\n]+/g, ' ').trim().slice(0, 4000)
       || '(The course outline was not provided; you know only the current unit.)',
     '{{UNIT_CONTENT}}': unitContent
@@ -195,11 +205,20 @@ async function handleWehelChat(req, res) {
       model,
       max_tokens: Math.max(200, Math.min(2000, Number(promptData.maxTokens) || 700)),
       system,
+      ...(useUnitTool ? { tools: [{ name: 'get_unit', ...promptData.tools.get_unit }] } : {}),
       messages: conversation
     })
   });
   if (!response.ok) throw new Error(`Anthropic ${response.status}: ${(await response.text()).slice(0, 240)}`);
   const result = await response.json();
+  // A tool call goes back to the client, which holds the course data and will
+  // re-post with the tool_result appended.
+  const toolUse = (result.content || []).find((block) => block.type === 'tool_use');
+  if (toolUse) {
+    res.writeHead(200, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' });
+    res.end(JSON.stringify({ ok: true, toolUse: { id: toolUse.id, name: toolUse.name, input: toolUse.input }, assistantContent: result.content, model }));
+    return;
+  }
   const reply = (result.content || []).filter((block) => block.type === 'text').map((block) => block.text).join('').trim();
   if (!reply) throw new Error('Wehel could not answer just now.');
   res.writeHead(200, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' });

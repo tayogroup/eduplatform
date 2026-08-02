@@ -17,18 +17,18 @@
 // that skill as a chip. `pageHeader` is therefore deliberately absent from the
 // bind list below.
 import { createCourseApp } from "../course-app.js";
-import { mountWehelChat, outlineFromManifest } from "../wehel.js?v=wehel-1";
+import { mountWehelChat, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
 
 // Shell-provided bindings (populated by bind(ctx)).
 let $, $$, escapeHtml, icon, voiceButton, toast;
 let complete, saveProgress, navigate, emitProgress;
 let bindVoiceControls, updateVoiceUI, renderNav, unitSectionIds, stageNumber;
-let course, progress, manifest;
+let course, progress, manifest, dataRootUrl;
 function bind(ctx) {
   ({ $, $$, escapeHtml, icon, voiceButton, toast, complete, saveProgress, navigate,
      emitProgress, bindVoiceControls, updateVoiceUI, renderNav, unitSectionIds,
      stageNumber } = ctx);
-  course = ctx.course; progress = ctx.progress; manifest = ctx.manifest;
+  course = ctx.course; progress = ctx.progress; manifest = ctx.manifest; dataRootUrl = ctx.dataRootUrl;
 }
 
 // The unit actually loaded, which is not always the one asked for: a stage may
@@ -421,6 +421,7 @@ function renderTutor() {
     ],
     fallbackReply: () => `I cannot connect right now. While you wait, try one of the conversation starters above out loud — or re-read the Big Ideas for Unit ${course.unit.unitNo} and tell me later what you found.`,
     onExchange: (count) => { if (count >= 2 && !progress.completed.includes("tutor")) complete("tutor", "Tutor conversation counted toward this unit."); },
+    fetchUnit: unitFetcher(manifest, dataRootUrl),
     onSaved: saveProgress,
   });
 }

@@ -8,7 +8,7 @@ import { initGeometryWebGL } from "../../mathematics/shared/geometry-webgl.js?v=
 import { initMathWebGL } from "../../mathematics/shared/math-webgl.js?v=math-20260801a";
 import { unitTopic, mathDiagram } from "../../mathematics/shared/math-visuals.js?v=math-20260801a";
 import { createCourseApp } from "../course-app.js?v=t2";
-import { mountWehelChat, outlineFromManifest } from "../wehel.js?v=wehel-1";
+import { mountWehelChat, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
 
 const pad2 = (n) => String(n).padStart(2, "0");
 
@@ -16,13 +16,13 @@ const pad2 = (n) => String(n).padStart(2, "0");
 let $, $$, escapeHtml, icon, voiceButton, pageHeader, toast;
 let complete, completeGradeSection, saveProgress, saveGradeProgress, navigate, emitProgress;
 let bindVoiceControls, updateVoiceUI, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY;
-let course, progress, gradeProgress, manifest, gradeCapstone;
+let course, progress, gradeProgress, manifest, gradeCapstone, dataRootUrl;
 function bind(ctx) {
   ({ $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, complete, completeGradeSection,
      saveProgress, saveGradeProgress, navigate, emitProgress, bindVoiceControls, updateVoiceUI,
      renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY } = ctx);
   course = ctx.course; progress = ctx.progress; gradeProgress = ctx.gradeProgress;
-  manifest = ctx.manifest; gradeCapstone = ctx.gradeCapstone;
+  manifest = ctx.manifest; gradeCapstone = ctx.gradeCapstone; dataRootUrl = ctx.dataRootUrl;
 }
 
 // Subject config (were module-scope in the original).
@@ -677,6 +677,7 @@ function renderAI() {
     ],
     fallbackReply: buildTutorReply,
     onExchange: (count) => { if (count >= 2) complete("ai"); },
+    fetchUnit: unitFetcher(manifest, dataRootUrl),
     onSaved: saveProgress,
   });
 }

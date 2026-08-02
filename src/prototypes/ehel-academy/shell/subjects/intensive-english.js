@@ -19,7 +19,7 @@
 // shown wherever a claim is made about what the learner can do.
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon } from "../../shared/course-shell.js?v=20260721a";
 import { createCourseApp } from "../course-app.js?v=t2";
-import { mountWehelChat, outlineFromManifest } from "../wehel.js?v=wehel-1";
+import { mountWehelChat, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -128,6 +128,7 @@ function renderTutor() {
     ],
     fallbackReply: () => `I cannot connect right now. Please try again soon. While you wait, practise the words in this unit and make one sentence with each.`,
     onExchange: (count) => { if (count >= 2 && !progress.completed.includes("tutor")) complete("tutor", "Tutor conversation complete."); },
+    fetchUnit: unitFetcher(manifest, shellCtx.dataRootUrl),
     onSaved: saveProgress,
   });
 }

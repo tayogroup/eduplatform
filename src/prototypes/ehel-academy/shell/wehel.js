@@ -42,31 +42,74 @@ function apiMessages(stored) {
   return merged;
 }
 
-export async function askWehel({ meta, messages, channel = "text", mode = "" }) {
+// Fetches a sibling unit's JSON from the same tree the lesson loads its own
+// data from, gated on the manifest so Wehel can only ask for units that exist.
+export function unitFetcher(manifest, dataRootUrl) {
+  return async (unitNo) => {
+    const units = Array.isArray(manifest?.units) ? manifest.units : [];
+    if (!units.some((unit) => Number(unit.number) === Number(unitNo))) return null;
+    const response = await fetch(new URL(`units/unit-${Number(unitNo)}.json`, dataRootUrl));
+    if (!response.ok) throw new Error(`Unit ${unitNo} could not be loaded (${response.status}).`);
+    return response.json();
+  };
+}
+
+export async function askWehel({ meta, messages, channel = "text", mode = "", fetchUnit = null }) {
   const wstoken = new URLSearchParams(location.search).get("wstoken") || undefined;
-  const response = await fetch(WEHEL_CHAT_ENDPOINT, {
-    method: "POST",
-    credentials: DEV_API ? "same-origin" : "include",
-    headers: { Accept: "application/json", "Content-Type": "application/json" },
-    body: JSON.stringify({
-      subject: meta.subject,
-      subjectLabel: meta.subjectLabel,
-      grade: meta.grade,
-      cambridgeCode: meta.cambridgeCode || "",
-      unitNo: meta.unitNo,
-      unitTitle: meta.unitTitle,
-      learnerName: meta.learnerName || "",
-      courseOutline: meta.courseOutline || "",
-      unit: meta.unit,
-      channel,
-      mode: mode || undefined,
-      wstoken,
-      messages: apiMessages(messages),
-    }),
-  });
-  const result = await response.json().catch(() => ({}));
-  if (!response.ok || !result.ok || !result.reply) throw new Error(result.message || `Wehel is unavailable (${response.status}).`);
-  return String(result.reply);
+  const post = async (conversation) => {
+    const response = await fetch(WEHEL_CHAT_ENDPOINT, {
+      method: "POST",
+      credentials: DEV_API ? "same-origin" : "include",
+      headers: { Accept: "application/json", "Content-Type": "application/json" },
+      body: JSON.stringify({
+        subject: meta.subject,
+        subjectLabel: meta.subjectLabel,
+        grade: meta.grade,
+        cambridgeCode: meta.cambridgeCode || "",
+        unitNo: meta.unitNo,
+        unitTitle: meta.unitTitle,
+        learnerName: meta.learnerName || "",
+        courseOutline: meta.courseOutline || "",
+        unit: meta.unit,
+        channel,
+        mode: mode || undefined,
+        wstoken,
+        tools: fetchUnit ? ["get_unit"] : [],
+        messages: conversation,
+      }),
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || !result.ok) throw new Error(result.message || `Wehel is unavailable (${response.status}).`);
+    return result;
+  };
+
+  // Tool loop: when the model asks for another unit, fetch it HERE — the
+  // browser already has same-origin access to the course data tree, so the
+  // endpoint stays stateless and never has to reach into the CDN. The tool
+  // exchange lives only in this call; the stored transcript keeps plain text.
+  const conversation = apiMessages(messages);
+  for (let round = 0; round < 3; round += 1) {
+    const result = await post(conversation);
+    if (result.reply) return String(result.reply);
+    if (!result.toolUse || !fetchUnit) break;
+    const { id, name, input } = result.toolUse;
+    let content;
+    if (name !== "get_unit") {
+      content = `Unknown tool ${name}.`;
+    } else {
+      try {
+        const unit = await fetchUnit(Number(input?.unitNo));
+        content = unit
+          ? JSON.stringify(unit).slice(0, 120000)
+          : `Unit ${input?.unitNo} does not exist in this course — only the units in the year outline.`;
+      } catch (error) {
+        content = `Unit ${input?.unitNo} could not be loaded right now.`;
+      }
+    }
+    conversation.push({ role: "assistant", content: result.assistantContent });
+    conversation.push({ role: "user", content: [{ type: "tool_result", tool_use_id: id, content }] });
+  }
+  throw new Error("Wehel could not answer just now.");
 }
 
 export async function transcribeForWehel(blob) {
@@ -105,6 +148,7 @@ export async function transcribeForWehel(blob) {
 //   placeholder    — input placeholder
 //   quickPrompts   — [{ label, message }]
 //   mode           — optional mode hint forwarded to the server
+//   fetchUnit      — optional (unitNo) => unit JSON, enables the get_unit tool
 //   fallbackReply  — (message) => canned text when Wehel is unreachable
 //   onExchange     — (exchangeCount) => void, for section completion
 //   onSaved        — persist the store (called after every append)
@@ -167,7 +211,7 @@ export function mountWehelChat(options) {
     let reply;
     let offline = false;
     try {
-      reply = await askWehel({ meta, messages, channel, mode: options.mode });
+      reply = await askWehel({ meta, messages, channel, mode: options.mode, fetchUnit: options.fetchUnit || null });
     } catch (error) {
       offline = true;
       reply = options.fallbackReply

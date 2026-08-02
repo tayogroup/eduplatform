@@ -8,7 +8,7 @@
 import { initComputingWebGL } from "../../computing/shared/computing-webgl.js";
 import { unitTopic, computingDiagram } from "../../computing/shared/computing-visuals.js";
 import { createCourseApp } from "../course-app.js";
-import { mountWehelChat, outlineFromManifest } from "../wehel.js?v=wehel-1";
+import { mountWehelChat, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
 
 const pad2 = (n) => String(n).padStart(2, "0");
 
@@ -16,13 +16,13 @@ const pad2 = (n) => String(n).padStart(2, "0");
 let $, $$, escapeHtml, icon, voiceButton, pageHeader, toast;
 let complete, completeGradeSection, saveProgress, saveGradeProgress, navigate, emitProgress;
 let bindVoiceControls, updateVoiceUI, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, speakText;
-let course, progress, gradeProgress, manifest, gradeCapstone;
+let course, progress, gradeProgress, manifest, gradeCapstone, dataRootUrl;
 function bind(ctx) {
   ({ $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, complete, completeGradeSection,
      saveProgress, saveGradeProgress, navigate, emitProgress, bindVoiceControls, updateVoiceUI,
      renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, speakText } = ctx);
   course = ctx.course; progress = ctx.progress; gradeProgress = ctx.gradeProgress;
-  manifest = ctx.manifest; gradeCapstone = ctx.gradeCapstone;
+  manifest = ctx.manifest; gradeCapstone = ctx.gradeCapstone; dataRootUrl = ctx.dataRootUrl;
 }
 
 // How many stages have a content package. The picker must not offer a stage
@@ -832,6 +832,7 @@ function renderAI() {
     ],
     fallbackReply: buildTutorReply,
     onExchange: (count) => { if (count >= 2) complete("ai"); },
+    fetchUnit: unitFetcher(manifest, dataRootUrl),
     onSaved: saveProgress,
   });
 }

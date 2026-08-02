@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $raw = file_get_contents('php://input');
-if ($raw === false || strlen($raw) > 400 * 1024) {
+if ($raw === false || strlen($raw) > 600 * 1024) {
     pqh_wehel_json(400, ['ok' => false, 'message' => 'The request is too large.']);
 }
 $payload = json_decode($raw ?: '', true);
@@ -152,9 +152,13 @@ if ($courseoutline === '') {
     $courseoutline = '(The course outline was not provided; you know only the current unit.)';
 }
 
+$requestedtools = $payload['tools'] ?? [];
+$usetool = is_array($requestedtools) && in_array('get_unit', $requestedtools, true)
+    && isset($promptdata['tools']['get_unit']) && is_array($promptdata['tools']['get_unit']);
+
 $messages = $payload['messages'] ?? null;
-if (!is_array($messages) || !count($messages) || count($messages) > 24) {
-    pqh_wehel_json(400, ['ok' => false, 'message' => 'Send between 1 and 24 chat messages.']);
+if (!is_array($messages) || !count($messages) || count($messages) > 30) {
+    pqh_wehel_json(400, ['ok' => false, 'message' => 'Send between 1 and 30 chat messages.']);
 }
 $conversation = [];
 foreach ($messages as $message) {
@@ -162,8 +166,22 @@ foreach ($messages as $message) {
         pqh_wehel_json(400, ['ok' => false, 'message' => 'Malformed chat message.']);
     }
     $role = (string)($message['role'] ?? '');
-    $content = trim((string)($message['content'] ?? $message['text'] ?? ''));
-    if (!in_array($role, ['user', 'assistant'], true) || $content === '') {
+    if (!in_array($role, ['user', 'assistant'], true)) {
+        pqh_wehel_json(400, ['ok' => false, 'message' => 'Malformed chat message.']);
+    }
+    $content = $message['content'] ?? $message['text'] ?? '';
+    // Content is either a plain string or an array of API content blocks — the
+    // client's get_unit tool loop sends tool_use/tool_result turns as blocks.
+    if (is_array($content)) {
+        $encoded = json_encode($content, JSON_UNESCAPED_UNICODE);
+        if (!is_string($encoded) || strlen($encoded) > 200000) {
+            pqh_wehel_json(400, ['ok' => false, 'message' => 'A chat message is too large.']);
+        }
+        $conversation[] = ['role' => $role, 'content' => $content];
+        continue;
+    }
+    $content = trim((string)$content);
+    if ($content === '') {
         pqh_wehel_json(400, ['ok' => false, 'message' => 'Malformed chat message.']);
     }
     $conversation[] = ['role' => $role, 'content' => core_text::substr($content, 0, 4000)];
@@ -220,6 +238,7 @@ $system = strtr($system, [
     '{{UNIT_TITLE}}' => $unittitle !== '' ? $unittitle : 'this unit',
     '{{CHANNEL}}' => $channel,
     '{{SUBJECT_NOTES}}' => $subjectnotes,
+    '{{OTHER_UNITS_NOTE}}' => (string)(($promptdata['otherUnitsNotes'] ?? [])[$usetool ? 'withTool' : 'withoutTool'] ?? ''),
     '{{COURSE_OUTLINE}}' => $courseoutline,
     '{{UNIT_CONTENT}}' => $unitcontent,
 ]);
@@ -237,12 +256,16 @@ if ($apikey === '') {
 $model = pqh_wehel_config('wehel_model', 'local_prequran_wehel_model', 'WEHEL_MODEL', (string)($promptdata['model'] ?? 'claude-sonnet-5'));
 $maxtokens = max(200, min(2000, (int)($promptdata['maxTokens'] ?? 700)));
 
-$body = json_encode([
+$request = [
     'model' => $model,
     'max_tokens' => $maxtokens,
     'system' => $system,
     'messages' => $conversation,
-], JSON_UNESCAPED_UNICODE);
+];
+if ($usetool) {
+    $request['tools'] = [array_merge(['name' => 'get_unit'], $promptdata['tools']['get_unit'])];
+}
+$body = json_encode($request, JSON_UNESCAPED_UNICODE);
 
 $curl = curl_init('https://api.anthropic.com/v1/messages');
 if ($curl === false) {
@@ -269,6 +292,18 @@ if ($response === false || $status < 200 || $status >= 300) {
     pqh_wehel_json(502, ['ok' => false, 'message' => 'Wehel could not answer just now. Please try again.']);
 }
 $result = json_decode((string)$response, true);
+// A tool call goes back to the client, which holds the course data and will
+// re-post with the tool_result appended.
+foreach ((array)($result['content'] ?? []) as $block) {
+    if (is_array($block) && ($block['type'] ?? '') === 'tool_use') {
+        pqh_wehel_json(200, [
+            'ok' => true,
+            'toolUse' => ['id' => $block['id'] ?? '', 'name' => $block['name'] ?? '', 'input' => $block['input'] ?? new stdClass()],
+            'assistantContent' => $result['content'],
+            'model' => $model,
+        ]);
+    }
+}
 $reply = '';
 foreach ((array)($result['content'] ?? []) as $block) {
     if (is_array($block) && ($block['type'] ?? '') === 'text') {

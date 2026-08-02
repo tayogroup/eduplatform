@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T14:52:04.647Z",
+  "generatedAt": "2026-08-02T16:36:49.578Z",
   "stage": {
     "id": "s03",
     "label": "Stage 3"
@@ -14,7 +14,7 @@
     "unitId": "comp-g03-u09",
     "unitNo": 9,
     "unitTitle": "Sending Secret Messages",
-    "unitOverview": "Welcome to Unit 9 of Year 3 Computing at Ehel Academy. This unit is all about secret messages — how we can hide the meaning of a message so that only the right person can read it. The big idea is the cipher: a set of rules for turning a normal message into a secret one, and back again.\n\nThere are two important new words. Plain text is the normal, easy-to-read message, like hello. Ciphertext is the secret, scrambled version that only makes sense if you know the cipher. A cipher is the rule that turns one into the other, and both friends know the rule; anyone else just sees a jumble. We say we encode a message to make it secret, and decode it to read it again.",
+    "unitOverview": "Welcome to Unit 9 of Year 3 Computing at Ehel Academy. This unit is all about secret messages — how we can hide the meaning of a message so that only the right person can read it. The big idea is the cipher: a set of rules for turning a normal message into a secret one, and back again. There are two important new words. Plain text is the normal, easy-to-read message, like hello. Ciphertext is the secret, scrambled version that only makes sense if you know the cipher. A cipher is the rule that turns one into the other, and both friends know the rule; anyone else just sees a jumble. We say we encode a message to make it secret, and decode it to read it again.",
     "learningPath": [
       "Preview the goals, key words and the tools you will use",
       "Read the concept explainers and study the code examples",
@@ -74,21 +74,21 @@
     {
       "id": "concept-1-what-is-a-cipher-plain-text-and-ciphertext",
       "title": "What is a cipher? Plain text and ciphertext",
-      "explanation": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it — but nobody else can.\n\nHave you ever wanted to tell your best friend something so that nobody else understands? Today we learn how to send secret messages — like a real spy or a code-breaker! before the vowel sound in a word, so. It does not have to be perfect — it is just to show that a secret language follows a rule.",
+      "explanation": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it — but nobody else can. Have you ever wanted to tell your best friend something so that nobody else understands? Today we learn how to send secret messages — like a real spy or a code-breaker! before the vowel sound in a word, so. It does not have to be perfect — it is just to show that a secret language follows a rule.",
       "example": "Answer this in your own words, out loud or on paper: What is a cipher? Plain text and ciphertext? Then check your answer against the explanation above.",
       "checkYourself": "Can you point to where the cipher (the rule) does its work? Do not expect you to encode anything yet — that starts next session."
     },
     {
       "id": "concept-2-the-flip-text-cipher",
       "title": "The flip-text cipher",
-      "explanation": "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first code because there is no chart to remember — the rule *is* the code.\n\nwrite the letters in the opposite order: smeg. Same letters — just backwards. Now it is secret!",
+      "explanation": "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first code because there is no chart to remember — the rule *is* the code. write the letters in the opposite order: smeg. Same letters — just backwards. Now it is secret!",
       "example": "Find one real example of the flip-text cipher around you, or on a device you use. Say out loud what it is and why it fits.",
       "checkYourself": "Can you check your work by flipping back? Neat, careful letter-by-letter work matters more than speed here. Do you keep every letter (none dropped, none added) when you flip?"
     },
     {
       "id": "concept-3-picture-codes-swapping-letters-for-symbols",
       "title": "Picture codes: swapping letters for symbols",
-      "explanation": "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each letter becomes. As long as both friends have the same key, they can read each other's secret pictures.\n\nEncode meet together, drawing square, triangle, triangle, diamond. Then ask a child to be the decoder and read the pictures back using the key.",
+      "explanation": "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each letter becomes. As long as both friends have the same key, they can read each other's secret pictures. Encode meet together, drawing square, triangle, triangle, diamond. Then ask a child to be the decoder and read the pictures back using the key.",
       "example": "Find one real example of picture codes: swapping letters for symbols around you, or on a device you use. Say out loud what it is and why it fits.",
       "checkYourself": "Can you keep the shapes in the correct order (left to right), just like letters in a word? Do you use the key carefully, matching each picture to the right letter? Praise neat, in-order drawing."
     },
@@ -102,7 +102,7 @@
     {
       "id": "concept-5-the-reverse-alphabet-code-and-being-a-code-breaker",
       "title": "The reverse-alphabet code, and being a code-breaker",
-      "explanation": "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters code. The best surprise: the same rule hides *and* reveals, so encoding and decoding are the same action.\n\nThese two are partners. Then, to show the magic, encode svool again — it turns back into hello.",
+      "explanation": "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters code. The best surprise: the same rule hides *and* reveals, so encoding and decoding are the same action. These two are partners. Then, to show the magic, encode svool again — it turns back into hello.",
       "example": "You can gasp; it feels like real code-breaking. Write the alphabet forwards, then underneath write it backwards, so the pairs line up.",
       "checkYourself": "Can you notice that the same rule decodes and encodes? In Task 8, Can you describe the pattern (front letter pairs with back letter) in your own words? Can you use the paired chart both ways?"
     }
@@ -113,10 +113,10 @@
       "id": "explore-1",
       "outcomeId": "lo01",
       "difficulty": "Discover",
-      "title": "Secret Language Warm-Up",
+      "title": "Try it: Secret Language Warm-Up",
       "context": "work through the steps below and see what happens. This is what is a cipher? plain text and ciphertext in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Add the sound \"ub “before the vowel in a word. So hello becomes” hub-ello “and Ivy becomes” ub-Ivy\". Play a talking game with a partner. Try saying these to your partner.",
-      "answer": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it - but nobody else can. Check what you noticed against that, and write down anything that differed.",
+      "answer": "Your name. hello. friend. This is just for fun — there is no wrong answer. Giggle and enjoy your secret language!",
       "modelType": "model-1",
       "hint": "Start here: Your name.",
       "explanation": "What is a cipher? Plain text and ciphertext: A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it — but nobody else can."
@@ -125,7 +125,7 @@
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
-      "title": "Plain Text or Ciphertext?",
+      "title": "Try it: Plain Text or Ciphertext?",
       "context": "work through the steps below and see what happens. This is the flip-text cipher in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "One message is plain text (easy to read). One is ciphertext (secret). Write the right label under each one.",
       "answer": "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first code because there is no chart to remember - the rule *is* the code. Check what you noticed against that, and write down anything that differed.",
@@ -137,7 +137,7 @@
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
-      "title": "The Flip Code",
+      "title": "Try it: The Flip Code",
       "context": "work through the steps below and see what happens. This is picture codes: swapping letters for symbols in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "The flip code writes a message backwards. To read it, flip it back! Work slowly from the last letter.",
       "answer": "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each letter becomes. As long as both friends have the same key, they can read each other's secret pictures. Check what you noticed against that, and write down anything that differed.",
@@ -149,31 +149,31 @@
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
-      "title": "The Picture Code",
+      "title": "Try it: The Picture Code",
       "context": "work through the steps below and see what happens. This is the letters-to-numbers code in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "This code swaps each letter for a picture. Use the key to read and write secret words.",
       "answer": "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the message tidy. This is the letters-to-numbers code. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
       "hint": "Start here: a) Decode this secret word. Write the letters under the pictures.",
-      "explanation": "The letters-to-numbers code: We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the message tidy. This is the letters-to-numbers code."
+      "explanation": "The letters-to-numbers code: Find one real example of the letters-to-numbers code around you, or on a device you use. Say out loud what it is and why it fits."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
-      "title": "Decode the Number Message",
+      "title": "Try it: Decode the Number Message",
       "context": "work through the steps below and see what happens. This is the reverse-alphabet code, and being a code-breaker in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Leo sent you a message in the letters-to-numbers code. Use the chart to read it. Read the digits two at a time.",
       "answer": "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters code. The best surprise: the same rule hides *and* reveals, so encoding and decoding are the same action. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: Code chart",
-      "explanation": "The reverse-alphabet code, and being a code-breaker: In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters code. The best surprise: the same rule hides *and* reveals, so encoding and decoding are the same action."
+      "explanation": "The reverse-alphabet code, and being a code-breaker: You can gasp; it feels like real code-breaking. Write the alphabet forwards, then underneath write it backwards, so the pairs line up."
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
-      "title": "Send a Number Message",
+      "title": "Try it: Send a Number Message",
       "context": "work through the steps below and see what happens. This is what is a cipher? plain text and ciphertext in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Remember: two digits for every letter (like 05, not 5). Use the same chart to encode a message.",
       "answer": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it - but nobody else can. Check what you noticed against that, and write down anything that differed.",
@@ -322,7 +322,7 @@
       "difficulty": "Intermediate",
       "title": "Worked example 4: What is a cipher? Plain text and ciphertext",
       "prompt": "Explain in your own words: What is a cipher? Plain text and ciphertext.",
-      "solution": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it — but nobody else can.\n\nHave you ever wanted to tell your best friend something so that nobody else understands? Today we learn how to send secret messages — like a real spy or a code-breaker! before the vowel sound in a word, so. It does not have to be perfect — it is just to show that a secret language follows a rule.\n\nFor example: Answer this in your own words, out loud or on paper: What is a cipher? Plain text and ciphertext? Then check your answer against the explanation above."
+      "solution": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it — but nobody else can. Have you ever wanted to tell your best friend something so that nobody else understands? Today we learn how to send secret messages — like a real spy or a code-breaker! before the vowel sound in a word, so. It does not have to be perfect — it is just to show that a secret language follows a rule. For example: Answer this in your own words, out loud or on paper: What is a cipher? Plain text and ciphertext? Then check your answer against the explanation above."
     },
     {
       "id": "we05",
@@ -330,7 +330,7 @@
       "difficulty": "Intermediate",
       "title": "Worked example 5: The flip-text cipher",
       "prompt": "Explain in your own words: The flip-text cipher.",
-      "solution": "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first code because there is no chart to remember — the rule *is* the code.\n\nwrite the letters in the opposite order: smeg. Same letters — just backwards. Now it is secret!\n\nFor example: Find one real example of the flip-text cipher around you, or on a device you use. Say out loud what it is and why it fits."
+      "solution": "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first code because there is no chart to remember — the rule *is* the code. write the letters in the opposite order: smeg. Same letters — just backwards. Now it is secret! For example: Find one real example of the flip-text cipher around you, or on a device you use. Say out loud what it is and why it fits."
     },
     {
       "id": "we06",
@@ -338,7 +338,7 @@
       "difficulty": "Intermediate",
       "title": "Worked example 6: Picture codes: swapping letters for symbols",
       "prompt": "Explain in your own words: Picture codes: swapping letters for symbols.",
-      "solution": "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each letter becomes. As long as both friends have the same key, they can read each other's secret pictures.\n\nEncode meet together, drawing square, triangle, triangle, diamond. Then ask a child to be the decoder and read the pictures back using the key.\n\nFor example: Find one real example of picture codes: swapping letters for symbols around you, or on a device you use. Say out loud what it is and why it fits."
+      "solution": "A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each letter becomes. As long as both friends have the same key, they can read each other's secret pictures. Encode meet together, drawing square, triangle, triangle, diamond. Then ask a child to be the decoder and read the pictures back using the key. For example: Find one real example of picture codes: swapping letters for symbols around you, or on a device you use. Say out loud what it is and why it fits."
     }
   ],
   "practice": [
@@ -388,7 +388,7 @@
   "activities": [
     {
       "title": "Secret Language Warm-Up",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A computer or tablet with Scratch, plus paper and a pencil for planning",
       "steps": [
         "Add the sound \"ub “before the vowel in a word. So hello becomes” hub-ello “and Ivy becomes” ub-Ivy\". Play a talking game with a partner. Try saying these to your partner.",
         "Your name.",
@@ -399,7 +399,7 @@
     },
     {
       "title": "Plain Text or Ciphertext?",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A computer or tablet with Scratch, plus paper and a pencil for planning",
       "steps": [
         "One message is plain text (easy to read). One is ciphertext (secret). Write the right label under each one.",
         "Message A: hello",
@@ -411,7 +411,7 @@
     },
     {
       "title": "The Flip Code",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A computer or tablet with Scratch, plus paper and a pencil for planning",
       "steps": [
         "The flip code writes a message backwards. To read it, flip it back! Work slowly from the last letter.",
         "a) Layla sent this flipped name. Flip it back to read it",
@@ -422,7 +422,7 @@
     },
     {
       "title": "The Picture Code",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A computer or tablet with Scratch, plus paper and a pencil for planning",
       "steps": [
         "This code swaps each letter for a picture. Use the key to read and write secret words.",
         "a) Decode this secret word. Write the letters under the pictures.",
@@ -434,7 +434,7 @@
     },
     {
       "title": "Decode the Number Message",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A computer or tablet with Scratch, plus paper and a pencil for planning",
       "steps": [
         "Leo sent you a message in the letters-to-numbers code. Use the chart to read it. Read the digits two at a time.",
         "Code chart",
@@ -446,7 +446,7 @@
     },
     {
       "title": "Send a Number Message",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A computer or tablet with Scratch, plus paper and a pencil for planning",
       "steps": [
         "Remember: two digits for every letter (like 05, not 5). Use the same chart to encode a message.",
         "a) Write the word smile in the number code",
@@ -457,7 +457,7 @@
     },
     {
       "title": "The Backwards-Alphabet Code",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A computer or tablet with Scratch, plus paper and a pencil for planning",
       "steps": [
         "In this code, a swaps with z, b with y, and so on. The same rule works both ways — it hides AND reveals!",
         "Code chart",
@@ -469,7 +469,7 @@
     },
     {
       "title": "Make Your Own Code!",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A computer or tablet with Scratch, plus paper and a pencil for planning",
       "steps": [
         "You are the code-maker now. Choose your own secret rule — maybe letters become shapes, or each letter moves one step along the alphabet.",
         "My secret rule is: ________________________________________________",
@@ -483,32 +483,32 @@
   "debugging": [
     {
       "symptom": "A cipher is the secret message.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Sending Secret Messages”.",
       "fix": "No — the cipher is the *rule*. The secret message it makes is the ciphertext. Point to the rule and the result separately."
     },
     {
       "symptom": "Plain text and ciphertext are different words for the same thing.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Sending Secret Messages”.",
       "fix": "Same message, two forms. Show both together: hello is plain text, svool is ciphertext."
     },
     {
       "symptom": "You need a computer to use a cipher.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Sending Secret Messages”.",
       "fix": "Not at all — people used codes long before computers. Everything in this unit is done with a pencil."
     },
     {
       "symptom": "05 and 5 are the same in the number code.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Sending Secret Messages”.",
       "fix": "In this code every letter uses two digits, so it must be 05. A single digit breaks the message when a friend reads it back."
     },
     {
       "symptom": "Only some of the word gets flipped.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Sending Secret Messages”.",
       "fix": "In flip-text the *whole* message reverses, every letter. Count the letters to check none went missing."
     },
     {
       "symptom": "A secret code can never be worked out by anyone else.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Sending Secret Messages”.",
       "fix": "Simple codes can be guessed, especially very short ones. That is exactly why the Mini-Project asks you to make a *new* code when the first is discovered — a real idea in keeping messages safe. Confusing the letter O and the number 0, or the letter I and the number 1. This causes real decoding bugs."
     }
   ],

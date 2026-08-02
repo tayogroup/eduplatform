@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T14:52:05.246Z",
+  "generatedAt": "2026-08-02T16:36:50.199Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -106,7 +106,7 @@
       "id": "concept-3-spreadsheets-modelling-with-libreoffice-calc",
       "title": "Spreadsheets: Modelling with LibreOffice Calc",
       "explanation": "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You will see a grid. This grid is a worksheet, and it is divided into rows (numbered 1, 2, 3 …) and columns (lettered A, B, C …).",
-      "example": ""
+      "example": "This grid is a worksheet, and it is divided into rows (numbered 1, 2, 3 …) and columns (lettered A, B, C …)."
     },
     {
       "id": "concept-4-cells-and-cell-references",
@@ -117,7 +117,7 @@
     {
       "id": "concept-5-the-input-line-and-formulas",
       "title": "The Input Line and formulas",
-      "explanation": "Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a formula, click the cell where you want the answer to appear, type the formula, and press Enter.\n\nEvery formula must begin with an = sign. After the =, you can combine numbers, cell references and the arithmetic operators: + (add), — (subtract), * (multiply) and / (divide). For example, if B2 holds 10 and C2 holds 5, then typing =B2+C2 returns 15, and =B2*C2 returns 50. Using cell references instead of the raw numbers is powerful: if you later change B2, the answer updates by itself. That automatic updating is what turns a plain table into a living data model.",
+      "explanation": "Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a formula, click the cell where you want the answer to appear, type the formula, and press Enter. Every formula must begin with an = sign. After the =, you can combine numbers, cell references and the arithmetic operators: + (add), — (subtract), * (multiply) and / (divide). For example, if B2 holds 10 and C2 holds 5, then typing =B2+C2 returns 15, and =B2*C2 returns 50. Using cell references instead of the raw numbers is powerful: if you later change B2, the answer updates by itself. That automatic updating is what turns a plain table into a living data model.",
       "example": "Every formula must begin with an = sign. After the =, you can combine numbers, cell references and the arithmetic operators: + (add), — (subtract), * (multiply) and / (divide). For example, if B2 holds 10 and C2 holds 5, then typing =B2+C2 returns 15, and =B2*C2 returns 50. Using cell references instead of the raw numbers is powerful: if you later change B2, the answer updates by itself. That automatic updating is what turns a plain table into a living data model."
     },
     {
@@ -136,19 +136,19 @@
       "id": "concept-8-formatting",
       "title": "Formatting",
       "explanation": "A clear model separates the labels (headings) from the data. To make your headings stand out, select cells A1:C1, then press Ctrl+B or click the Bold button (the letter B) on the toolbar. To show money properly, select the sales figures, press Ctrl+1 to open Format Cells, choose the Numbers tab, then the Currency category, and pick a format. If Somali shillings is not in the list, choose the Number category with a thousands separator and keep the word 'shillings' in your column heading — the calculations work exactly the same either way.",
-      "example": ""
+      "example": "To make your headings stand out, select cells A1:C1, then press Ctrl+B or click the Bold button (the letter B) on the toolbar."
     },
     {
       "id": "concept-9-worked-example-3",
       "title": "Worked Example 3",
-      "explanation": "This is the most important idea in the whole spreadsheet section, so read it slowly. Your class is saving up for a trip to the ancient rock-art caves at Laas Geel. The trip costs a fixed 90,000 shillings per student. Each student pays over three months. Enter this table starting at A1, and type 90000 into cell H1 on its own:\n\nFirst work out Total Paid. In cell E2 type =SUM(B2:D2) and press Enter; it returns 90000 for Nadia. Drag the fill handle from E2 down to E4. Because these are ordinary references, Calc helpfully changes them as it copies: E3 becomes =SUM(B3:D3) (returns 70000) and E4 becomes =SUM(B4:D4) (returns 70000). A reference that changes when copied is called a relative reference, and here it is exactly what we want.\n\nNow the Balance, which is Trip Cost minus Total Paid. It is tempting to click cell F2 and type =H1-E2. For Nadia this returns 0 (90000 — 90000), which looks correct. But watch what happens when you drag the fill handle down: cell F3 becomes =H2-E3. There is nothing in H2, so Calc treats it as 0 and returns -70000 — a wrong, negative balance! The relative reference moved H1 down to H2, away from our trip cost.\n\nThe fix is an absolute reference. Change F2 to read =$H$1-E2. The dollar signs lock the reference to cell H1 so it can never move. Now drag the fill handle down again: F3 becomes =$H$1-E3 (returns 20000) and F4 becomes =$H$1-E4 (returns 20000). The H1 part stayed fixed while the E part moved, and every balance is correct. Remember the rule: use a relative reference when you want it to move, and an absolute reference (with $ signs) when it must always point to the same cell.\n\nRow — A · B · C · D · E · F\n\n1 — Name · May · June · July · Total Paid · Balance\n\n2 — Nadia · 30000 · 30000 · 30000\n\n3 — Sami · 30000 · 20000 · 20000",
+      "explanation": "This is the most important idea in the whole spreadsheet section, so read it slowly. Your class is saving up for a trip to the ancient rock-art caves at Laas Geel. The trip costs a fixed 90,000 shillings per student. Each student pays over three months. Enter this table starting at A1, and type 90000 into cell H1 on its own: First work out Total Paid. In cell E2 type =SUM(B2:D2) and press Enter; it returns 90000 for Nadia. Drag the fill handle from E2 down to E4. Because these are ordinary references, Calc helpfully changes them as it copies: E3 becomes =SUM(B3:D3) (returns 70000) and E4 becomes =SUM(B4:D4) (returns 70000). A reference that changes when copied is called a relative reference, and here it is exactly what we want. Now the Balance, which is Trip Cost minus Total Paid. It is tempting to click cell F2 and type =H1-E2. For Nadia this returns 0 (90000 — 90000), which looks correct. But watch what happens when you drag the fill handle down: cell F3 becomes =H2-E3. There is nothing in H2, so Calc treats it as 0 and returns -70000 — a wrong, negative balance! The relative reference moved H1 down to H2, away from our trip cost. The fix is an absolute reference. Change F2 to read =$H$1-E2. The dollar signs lock the reference to cell H1 so it can never move. Now drag the fill handle down again: F3 becomes =$H$1-E3 (returns 20000) and F4 becomes =$H$1-E4 (returns 20000). The H1 part stayed fixed while the E part moved, and every balance is correct. Remember the rule: use a relative reference when you want it to move, and an absolute reference (with $ signs) when it must always point to the same cell. Row — A · B · C · D · E · F 1 — Name · May · June · July · Total Paid · Balance 2 — Nadia · 30000 · 30000 · 30000 3 — Sami · 30000 · 20000 · 20000",
       "example": "4 — Maya · 40000 · 30000 · 0"
     },
     {
       "id": "concept-10-the-fill-handle",
       "title": "The fill handle",
       "explanation": "The fill handle is the small square at the bottom-right corner of a selected cell. When you hover over it the pointer becomes a thin cross; hold the mouse button and drag to copy a formula into neighbouring cells. A quicker way to copy a formula downward is to select the cell and the cells below it, then press Ctrl+D (Fill Down). This saves you from typing the same formula many times and is safe to use because relative references adjust automatically.",
-      "example": ""
+      "example": "This saves you from typing the same formula many times and is safe to use because relative references adjust automatically."
     },
     {
       "id": "concept-11-conditional-formatting",
@@ -160,19 +160,19 @@
       "id": "concept-12-charts",
       "title": "Charts",
       "explanation": "A chart turns numbers into a picture so patterns jump out. Suppose you have the approximate monthly rainfall for Mogadishu in one column of months and one column of millimetres. Select both columns including the headings, then choose Insert > Chart. The Chart Wizard opens. Choose Column as the chart type, click Next through the steps to add a title such as 'Mogadishu Rainfall (mm)', then click Finish and click outside the chart. You will clearly see the two rainy seasons — the Gu rains around April to June and the Deyr rains around October to December — far faster than by reading the raw numbers.",
-      "example": ""
+      "example": "Suppose you have the approximate monthly rainfall for Mogadishu in one column of months and one column of millimetres."
     },
     {
       "id": "concept-13-what-if-and-goal-seek-analysis",
       "title": "What-If and Goal Seek analysis",
       "explanation": "Because a model recalculates automatically, you can ask What-If questions simply by changing an input and watching the results. Change the trip cost in H1 and every balance updates at once. LibreOffice can also save different sets of inputs using Tools > Scenarios. A related tool works backwards: Goal Seek (under Tools > Goal Seek). You tell it the formula cell, the target value you want, and which input cell it may change, and Calc finds the input that reaches your goal. For the fair, Teacher Elena could use Goal Seek to answer 'what price must a T-shirt be so that total funds reach exactly 500,000 shillings?'",
-      "example": ""
+      "example": "Change the trip cost in H1 and every balance updates at once."
     },
     {
       "id": "concept-14-databases-modelling-with-libreoffice-base",
       "title": "Databases: Modelling with LibreOffice Base",
       "explanation": "A database is best when your model is mostly about storing, organising and searching lists of things — like the competitors at the fair. Open LibreOffice Base. The Database Wizard appears. Choose Create a new database, keep the default embedded database, click Next, then Finish, and save the file with a name such as Fair.odb. You now have an empty database ready for tables.",
-      "example": ""
+      "example": "Choose Create a new database, keep the default embedded database, click Next, then Finish, and save the file with a name such as Fair.odb."
     }
   ],
   "codeExamples": [],
@@ -181,73 +181,73 @@
       "id": "explore-1",
       "outcomeId": "lo01",
       "difficulty": "Discover",
-      "title": "Explain the ideas",
+      "title": "Try it: Explain the ideas",
       "context": "work through the steps below and see what happens. This is models and simulations in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Write a short paragraph explaining what a data model is, including its key features and one advantage and one disadvantage.",
       "answer": "A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and interact with the situation. Training a pilot in a flight simulator is a good example: the trainee sits in a… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
       "hint": "Start here: Use one real-life example from this unit (medicine, aviation, weather or business) to show how a data model helps people make decisions.",
-      "explanation": "Models and simulations: A simulation is a more advanced kind of model. Simulations use a very large amount of data and often add realistic graphics so a person can see and interact with the situation. Training a pilot in a flight simulator is a good example: the trainee sits in a cockpit that looks and feels real and…"
+      "explanation": "Models and simulations: Simulations have advantages and disadvantages. They can prevent loss of life during training, allow many different situations to be tried, and are usually cheaper and safer than using real equipment. On the other hand, they can be expensive to produce, and no simulation can include every possible…"
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
-      "title": "Database task (LibreOffice Base)",
+      "title": "Try it: Database task (LibreOffice Base)",
       "context": "work through the steps below and see what happens. This is where data models are used across industries in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Make sure the Competitors table has correct data types, a primary key on CompetitorID, and sensible field lengths.",
       "answer": "Data models and simulations appear in almost every industry. Here are the ones you should be able to describe: Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: Design a data-capture form that a new competitor could use to register. Include a title, clear instructions, and multiple-choice options for Level.",
-      "explanation": "Where data models are used across industries: Data models and simulations appear in almost every industry. Here are the ones you should be able to describe:"
+      "explanation": "Where data models are used across industries: Databases are more common than you might realise. Every time you use a streaming service to watch a video, or the app that shows you which dukaan has an item in stock, you are quietly using a huge database that generates lists just for you."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
-      "title": "Spreadsheet task (LibreOffice Calc)",
+      "title": "Try it: Spreadsheet task (LibreOffice Calc)",
       "context": "work through the steps below and see what happens. This is spreadsheets: modelling with libreoffice calc in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Explain in one sentence why a spreadsheet is the right tool for tracking money at the fair.",
       "answer": "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You will see a grid. This grid is a worksheet, and it is divided into rows (numbered 1, 2, 3 …) and columns… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
       "hint": "Start here: Build a funds model with the stalls, using =B2*C2 for revenue and =SUM(.) for totals.",
-      "explanation": "Spreadsheets: Modelling with LibreOffice Calc: Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You will see a grid. This grid is a worksheet, and it is divided into rows (numbered 1, 2, 3 …) and columns (lettered A, B, C …)."
+      "explanation": "Spreadsheets: Modelling with LibreOffice Calc: This grid is a worksheet, and it is divided into rows (numbered 1, 2, 3 …) and columns (lettered A, B, C …)."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
-      "title": "Getting Started with LibreOffice Calc and Base",
+      "title": "Try it: Getting Started with LibreOffice Calc and Base",
       "context": "work through the steps below and see what happens. This is cells and cell references in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "In a web browser, go to libreoffice.org and open the Download page. Download LibreOffice for your operating system (Windows, macOS or Linux). It is completely free and open-source.",
       "answer": "Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number, called a cell reference. The cell where column B meets row 2 is cell B2. The cell where column D meets row 3 is… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
       "hint": "Start here: Run the installer and accept the standard options. When it finishes, open the LibreOffice Start Centre.",
-      "explanation": "Cells and cell references: Each box in the grid is a cell. A cell can hold text, a number or a formula. Every cell has an address made from its column letter and row number, called a cell reference. The cell where column B meets row 2 is cell B2. The cell where column D meets row 3 is cell D3. Click any cell and look at the…"
+      "explanation": "Cells and cell references: You can also select a group of cells called a cell range. A range is written as the first cell, a colon, then the last cell. So B2:B8 means every cell from B2 down to B8, and C2:E2 means C2, D2 and E2. The colon means 'through'. Ranges are how you tell a formula to work on many cells at once."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
-      "title": "If You Cannot Install Software",
+      "title": "Try it: If You Cannot Install Software",
       "context": "work through the steps below and see what happens. This is the input line and formulas in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "If you cannot install LibreOffice on your device yet, you can still learn by planning everything on paper: draw the grids, write the formulas, and design the tables and forms. When you do get access, type them in. Ask your teacher whether a school device is available during the twice-weekly sessions.",
       "answer": "Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a formula, click the cell where you want the answer to appear, type the formula, and press Enter. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: Activity 1 (Practise) — SUM and AVERAGE with test scores",
-      "explanation": "The Input Line and formulas: Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a formula, click the cell where you want the answer to appear, type the formula, and press Enter."
+      "explanation": "The Input Line and formulas: Every formula must begin with an = sign. After the =, you can combine numbers, cell references and the arithmetic operators: + (add), - (subtract), * (multiply) and / (divide). For example, if B2 holds 10 and C2 holds 5, then typing =B2+C2 returns 15, and =B2*C2 returns 50. Using cell references…"
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
-      "title": "Expected Result",
+      "title": "Try it: Expected Result",
       "context": "work through the steps below and see what happens. This is worked example 1 — sum and average (test scores) in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "With AVERAGE, column E shows 8, 7, 9, 6. With SUM, column E shows 24, 21, 27, 18. Nadia's total of 24 divided by 3 equals her average of 8, which is a good check that both formulas agree.",
       "answer": "A function is a ready-made shortcut for a common calculation. The two you will use most are SUM (adds numbers) and AVERAGE (finds the mean). Type this small table into a new sheet, starting in cell A1: Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: Ask Your AI Tutor",
-      "explanation": "Worked Example 1 — SUM and AVERAGE (test scores): A function is a ready-made shortcut for a common calculation. The two you will use most are SUM (adds numbers) and AVERAGE (finds the mean). Type this small table into a new sheet, starting in cell A1:"
+      "explanation": "Worked Example 1 — SUM and AVERAGE (test scores): 5 — Leo · 5 · 7 · 6"
     }
   ],
   "visualModels": [
@@ -396,7 +396,7 @@
       "outcomeId": "lo03",
       "difficulty": "Core",
       "title": "How to work with spreadsheets: modelling with libreoffice calc",
-      "example": "Open LibreOffice Calc now. From the LibreOffice Start Centre, click Calc Spreadsheet, or open LibreOffice and choose File > New > Spreadsheet. You will see a grid. This grid is a worksheet, and it is divided into rows (numbered 1, 2, 3 …) and columns…",
+      "example": "This grid is a worksheet, and it is divided into rows (numbered 1, 2, 3 …) and columns (lettered A, B, C …).",
       "steps": [
         "Read the concept card for spreadsheets: modelling with libreoffice calc and say the main idea in your own words.",
         "Look at the worked example and copy it exactly, one step at a time.",
@@ -461,7 +461,7 @@
       "outcomeId": "lo08",
       "difficulty": "Challenge",
       "title": "How to work with formatting",
-      "example": "A clear model separates the labels (headings) from the data. To make your headings stand out, select cells A1:C1, then press Ctrl+B or click the Bold button (the letter B) on the toolbar. To show money properly, select the sales figures, press Ctrl+1 to open…",
+      "example": "To make your headings stand out, select cells A1:C1, then press Ctrl+B or click the Bold button (the letter B) on the toolbar.",
       "steps": [
         "Read the concept card for formatting and say the main idea in your own words.",
         "Look at the worked example and copy it exactly, one step at a time.",
@@ -509,7 +509,7 @@
       "difficulty": "Intermediate",
       "title": "Worked example 5: The Input Line and formulas",
       "prompt": "Which is a cell range? (a) B2+B8; (b) B2:B8; (c) B2;B8; (d) B2-B8.",
-      "solution": "Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a formula, click the cell where you want the answer to appear, type the formula, and press Enter.\n\nEvery formula must begin with an = sign. After the =, you can combine numbers, cell references and the arithmetic operators: + (add), — (subtract), * (multiply) and / (divide). For example, if B2 holds 10 and C2 holds 5, then typing =B2+C2 returns 15, and =B2*C2 returns 50. Using cell references instead of the raw numbers is powerful: if you later change B2, the answer updates by itself. That automatic updating is what turns a plain table into a living data model.\n\nFor example: Every formula must begin with an = sign. After the =, you can combine numbers, cell references and the arithmetic operators: + (add), — (subtract), * (multiply) and / (divide). For example, if B2 holds 10 and C2 holds 5, then typing =B2+C2 returns 15, and =B2*C2 returns 50. Using cell references instead of the raw numbers is powerful: if you later change B2, the answer updates by itself. That automatic updating is what turns a plain table into a living data model."
+      "solution": "Along the top of the window is the Formula Bar. The long white box in it is called the Input Line — this is where you type formulas. To enter a formula, click the cell where you want the answer to appear, type the formula, and press Enter. Every formula must begin with an = sign. After the =, you can combine numbers, cell references and the arithmetic operators: + (add), — (subtract), * (multiply) and / (divide). For example, if B2 holds 10 and C2 holds 5, then typing =B2+C2 returns 15, and =B2*C2 returns 50. Using cell references instead of the raw numbers is powerful: if you later change B2, the answer updates by itself. That automatic updating is what turns a plain table into a living data model. For example: Every formula must begin with an = sign. After the =, you can combine numbers, cell references and the arithmetic operators: + (add), — (subtract), * (multiply) and / (divide). For example, if B2 holds 10 and C2 holds 5, then typing =B2+C2 returns 15, and =B2*C2 returns 50. Using cell references instead of the raw numbers is powerful: if you later change B2, the answer updates by itself. That automatic updating is what turns a plain table into a living data model."
     },
     {
       "id": "we06",
@@ -669,7 +669,7 @@
   "activities": [
     {
       "title": "Explain the ideas",
-      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "materials": "LibreOffice Calc, and LibreOffice Base, plus paper and a pencil for planning",
       "steps": [
         "Write a short paragraph explaining what a data model is, including its key features and one advantage and one disadvantage.",
         "Use one real-life example from this unit (medicine, aviation, weather or business) to show how a data model helps people make decisions.",
@@ -678,7 +678,7 @@
     },
     {
       "title": "Database task (LibreOffice Base)",
-      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "materials": "LibreOffice Calc, and LibreOffice Base, plus paper and a pencil for planning",
       "steps": [
         "Make sure the Competitors table has correct data types, a primary key on CompetitorID, and sensible field lengths.",
         "Design a data-capture form that a new competitor could use to register. Include a title, clear instructions, and multiple-choice options for Level.",
@@ -688,7 +688,7 @@
     },
     {
       "title": "Spreadsheet task (LibreOffice Calc)",
-      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "materials": "LibreOffice Calc, and LibreOffice Base, plus paper and a pencil for planning",
       "steps": [
         "Explain in one sentence why a spreadsheet is the right tool for tracking money at the fair.",
         "Build a funds model with the stalls, using =B2*C2 for revenue and =SUM(.) for totals.",

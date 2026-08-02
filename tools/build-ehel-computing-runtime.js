@@ -39,7 +39,7 @@ const SOURCE_MARKER = /\[(?:TIP|FREE|AI|CT|!|\?|x|\*|>|Star|Note|Warning|Key|Saf
 // 1-4. Only the vocabulary is subject-specific, so it is passed in here; the
 // grammar is shared. Widening these lists changes what this build produces, so
 // they are the Computing words and nothing else.
-const { createLearnerVoice, repairAgreement } = require("./lib/ehel-learner-voice.js");
+const { createLearnerVoice, repairSoloVoice } = require("./lib/ehel-learner-voice.js");
 const VOICE = createLearnerVoice({
   sourceMarker: SOURCE_MARKER,
   learnerVerbs: ["tap", "taps", "drag", "drags", "code", "codes", "program", "programs",
@@ -167,13 +167,19 @@ function applyReviewFields(unit, category, itemId, fields, label) {
   // pairing straight back over the corrected build. Snapshot the steps and
   // refuse any override that reintroduces the shape.
   const stepsBefore = Array.isArray(target.steps) ? [...target.steps] : null;
+  // A concept card has to carry enough to teach the idea with nobody to ask —
+  // check-computing-content.mjs puts that at 240 characters. A reviewed row
+  // exported from an earlier build can be shorter than what the builder now
+  // produces, and replacing the richer text with it makes the card fail the
+  // very thing it exists to do.
+  const explanationBefore = typeof target.explanation === "string" ? target.explanation : null;
   const appliedBefore = reviewStats.applied;
   for (const [rawField, rawValue] of Object.entries(fields)) {
     const field = rawField;
     // Reviewed text goes through the same mechanical agreement repair the
     // converter uses. The reviewer was asked for wording, not grammar, so six
     // strings came back still reading "Does you plan before building?".
-    const value = typeof rawValue === "string" ? repairAgreement(rawValue) : rawValue;
+    const value = typeof rawValue === "string" ? repairSoloVoice(rawValue) : rawValue;
     if (category === "Unit Overview") {
       target[field][field] = value;
     } else if (category === "Game Round") {
@@ -214,6 +220,11 @@ function applyReviewFields(unit, category, itemId, fields, label) {
     for (const field of Object.keys(fields)) target[field] = before[field];
     reviewStats.applied = appliedBefore;
     reviewStats.missed.push(`${label} ${category}/${itemId} (override drifted onto another question — ${selfAnswering ? "the question spells out its own answer" : "answer not among its options"})`);
+  }
+  if (category === "Concept" && explanationBefore !== null
+    && String(target.explanation).length < 240 && explanationBefore.length >= 240) {
+    target.explanation = explanationBefore;
+    reviewStats.refusedSteps.push(`${label} ${category}/${itemId} (reviewed explanation is too thin to teach unaided)`);
   }
   if (stepsBefore && target.steps.some((step) => /^Match: .+ → /.test(String(step)))) {
     target.steps = stepsBefore;
@@ -506,7 +517,7 @@ function applyCapstoneReview(capstone, grade) {
     const appliedBefore = reviewStats.applied;
     for (const [rawField, rawValue] of Object.entries(fields)) {
       const field = rawField;
-      const value = typeof rawValue === "string" ? repairAgreement(rawValue) : rawValue;
+      const value = typeof rawValue === "string" ? repairSoloVoice(rawValue) : rawValue;
       if (itemId === "capstone-overview") target[field][field] = value;
       else if (field === "evidence" && target.list) target.list[target.index] = value;
       else target[field] = value;
@@ -714,10 +725,26 @@ function buildGrade(grade) {
       const look = labelled("What to look for");
       // "What to teach" is already declarative and safe to show a learner; the
       // rest is recovered through learnerVoice.
+      // The guides carry a localised story for most sessions — Nadia video-
+      // calling her grandmother in Hargeisa — written entirely inside a quote
+      // because the adult is meant to read it aloud. It is the most concrete
+      // learner-facing prose in the pack, and it was dropped on the floor:
+      // concepts took only the two labelled blocks, and this one is unlabelled
+      // and opens with "Tell", so the directive filter would have cut the frame
+      // anyway. learnerVoice keeps the quote and discards the frame.
+      const story = body
+        .filter((text) => /^(?:tell|share|read)\b[^"“]{0,40}\bstory\b/i.test(text))
+        .map((text) => learnerVoice(text, { guide: true }))
+        .filter((text) => text && text.length > 40);
+      // repairSoloVoice on every branch, not just the rewritten one: "What to
+      // teach" is passed through with allowRewrite off, so the call-and-response
+      // filler in it never met the strip and came back in whenever a thin
+      // reviewed explanation was rolled back to the builder's own text.
       const parts = [
         ...teach.map((text) => learnerVoice(text, { allowRewrite: false, guide: true }) || text),
         ...explain.map((text) => learnerVoice(text, { guide: true })),
-      ].filter((text) => text && text.length > 25);
+        ...story,
+      ].map((text) => (text ? repairSoloVoice(text) : text)).filter((text) => text && text.length > 25);
       // Teacher Tips are advice about running the session ("Expect to help
       // lots of little hands"), so they are kept out of the example entirely
       // and only join the explainer when they survive the residue filters.
@@ -1135,7 +1162,7 @@ function buildGrade(grade) {
         items.push({
           id: `p${String(items.length + 1).padStart(2, "0")}`,
           level: levelFor[letter] || "Core",
-          prompt: stem,
+          prompt: repairSoloVoice(stem),
           answer: answer || "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.",
           hint: letter === "A" || letter === "B" ? recallHint : applyHint,
         });
@@ -1308,7 +1335,7 @@ function buildGrade(grade) {
       items.push({
         id: `p${String(items.length + 1).padStart(2, "0")}`,
         level: items.length < 2 ? "Warm-up" : items.length < 5 ? "Core" : "Challenge",
-        prompt: fullPrompt,
+        prompt: repairSoloVoice(fullPrompt),
         answer,
         hint: miniHint,
       });
@@ -1494,8 +1521,29 @@ function buildGrade(grade) {
         example: concept.example,
       }));
     }
-    // Never ship a concept card that teaches nothing.
-    const substantial = concepts.filter((concept) => concept.explanation.length >= 200);
+    // The concept card prints "Example:" unconditionally and the Listen button
+    // reads it out, so an empty one renders a bare label and buys a clip ending
+    // ". Example: " — a paid file whose last word is a colon. Where the pack
+    // gives no separate example, take the sentence in the explanation that is
+    // already doing that job: the one that names a case, a number or a step.
+    const CONCRETE = /\b(for example|such as|suppose|imagine|say you|like this|e\.g\.)\b|\b[A-Z]\d{1,3}\b|\b\d+\s*(?:%|kg|km|cm|ml|minutes?|seconds?)\b/i;
+    for (const concept of concepts) {
+      if (String(concept.example || "").trim()) continue;
+      const sentences = String(concept.explanation).split(/(?<=[.!?])\s+/).map(tidy).filter((s) => s.length > 30);
+      // Skip the opening sentence: the Discovery card already uses it as its
+      // model answer, so taking it here printed the same line twice on one
+      // card. Anything after it is new to the learner.
+      const later = sentences.slice(1);
+      const concrete = later.find((s) => CONCRETE.test(s));
+      concept.example = sentence(concrete || later[later.length - 1] || sentences[0] || concept.title, 220);
+    }
+
+    // Never ship a concept card that teaches nothing. 240 is the same figure
+    // check-computing-content.mjs enforces (MIN_EXPLANATION); at 200 the
+    // builder could emit a card the gate would then reject, which is how a
+    // 220-character concept shipped — it cleared 200 only because of the
+    // call-and-response filler that the solo-voice repair now strips.
+    const substantial = concepts.filter((concept) => concept.explanation.length >= 240);
     if (substantial.length >= 3) concepts = substantial;
     // Two concepts with the same title on one screen read as a duplicated
     // module; the cap is generous because the Stage 5-7 units genuinely run to
@@ -1618,9 +1666,16 @@ function buildGrade(grade) {
         .filter(Boolean);
     }
     if (!debugging.length) {
+      // These cards come from the pack's misconception table, which gives the
+      // wrong belief and the correction but never says why the belief arises —
+      // so one sentence stood as the cause on 262 of 347 cards across the
+      // subject. The pack cannot supply a real cause, but the card can at least
+      // name what the mix-up is about instead of saying nothing 262 times.
       debugging = commonMistakes.map(([wrong, right]) => ({
         symptom: tidy(wrong),
-        cause: "A common misunderstanding about this idea.",
+        // Quoted, not folded into the sentence: unit titles are imperatives
+        // ("Be an Artist"), and "learning be an artist" is not English.
+        cause: `A common mix-up in this unit, “${title}”.`,
         fix: tidy(right),
       }));
     }
@@ -1776,11 +1831,32 @@ function buildGrade(grade) {
         `Right, in the wrong order: ${right.join("; ")}`,
       ];
     };
+    // Materials were picked by source-document type alone, so every guide-stage
+    // activity in the subject asked for "a pencil and colours" — including the
+    // ScratchJr tablet tasks — and two strings covered all 512 activity cards.
+    // The packs name what they use in their own prose, so read it from there.
+    const TOOLKIT = [
+      [/\bScratchJr\b/i, "a tablet with ScratchJr"],
+      [/\bScratch\b(?!\s*Jr)/i, "a computer or tablet with Scratch"],
+      [/\bmicro:?bit\b/i, "a micro:bit, or the online simulator"],
+      [/\bLibreOffice Calc\b/i, "LibreOffice Calc"],
+      [/\bLibreOffice Base\b/i, "LibreOffice Base"],
+      [/\bLibreOffice Writer\b/i, "LibreOffice Writer"],
+      [/\b(?:Python|Thonny)\b/i, "Python, in Thonny or an online editor"],
+    ];
+    const namedKit = [];
+    for (const [pattern, kit] of TOOLKIT) {
+      if (namedKit.length >= 2) break;
+      if (pattern.test(allText)) namedKit.push(kit);
+    }
+    const materials = namedKit.length
+      ? `${capitalise(namedKit.join(", and "))}, plus paper and a pencil for planning`
+      : isGuide
+        ? "A sheet of paper and a pencil — no computer needed for this one"
+        : "A computer or tablet with a web browser, plus paper and a pencil for planning";
     let activities = [...tasks, ...projectParts].map((task) => ({
       title: task.title,
-      materials: isGuide
-        ? "The printed activity page (or a sheet of paper), a pencil and colours"
-        : "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      materials,
       steps: [
         ...task.steps,
         ...matchingSteps(task.pairs),
@@ -1972,7 +2048,11 @@ function buildGrade(grade) {
         id: `explore-${index + 1}`,
         outcomeId: outcomeId(index),
         difficulty: index < 3 ? "Discover" : "Explore",
-        title: activity.title,
+        // Named for what the card asks of the learner, not copied from the
+        // activity. All 384 Discovery cards carried their activity's title, so
+        // two of the fourteen sections read as duplicates of each other in the
+        // contents list before you opened either.
+        title: `Try it: ${activity.title}`,
         // Saying "What you need: …" here repeated the same kit line on three
         // quarters of the cards in the whole subject. Say what this particular
         // activity is for instead; the kit is on the activity card already.
@@ -1991,7 +2071,12 @@ function buildGrade(grade) {
           : "Compare what you built with the worked example, and write down anything that differed.",
         modelType: `model-${index + 1}`,
         hint: activity.steps[1] ? `Start here: ${sentence(activity.steps[1], 150)}` : "Do one step at a time, and check the result before you move on.",
-        explanation: concept?.title ? `${concept.title}: ${sentence(opening, 300)}` : sentence(opening, 320),
+        // The concept's example, not its opening — the opening is already this
+        // card's model answer, so printing it here too said the same thing
+        // twice on one card, and a third time on the concept card itself.
+        explanation: concept?.example
+          ? `${concept.title}: ${sentence(concept.example, 300)}`
+          : sentence(opening, 320),
       };
     });
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T14:52:05.326Z",
+  "generatedAt": "2026-08-02T16:36:50.276Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -311,73 +311,73 @@
       "id": "explore-1",
       "outcomeId": "lo01",
       "difficulty": "Discover",
-      "title": "Plan (decomposition and pseudocode)",
-      "context": "Plan (decomposition and pseudocode): work through the steps below and see what happens. This is pseudocode in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "title": "Try it: Plan (decomposition and pseudocode)",
+      "context": "Plan (decomposition and pseudocode): work through the steps below and see what happens. This is pseudocode in practice — you need a computer or tablet with Scratch, and a micro:bit, or the online simulator, plus paper and a pencil for planning.",
       "prompt": "Write one or two sentences describing what your program does and who at Ehel Academy it helps.",
       "answer": "Pseudocode is a tool used when *designing* a program, before you write the real code. The word is made of two parts: *pseudo* means 'not real', and *code* means programming statements. So pseudocode means 'not-real code'. It looks like a program, but it does… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
       "hint": "Start here: Decompose it into 3 to 5 sub-problems.",
-      "explanation": "Pseudocode: Pseudocode is a tool used when *designing* a program, before you write the real code. The word is made of two parts: *pseudo* means 'not real', and *code* means programming statements. So pseudocode means 'not-real code'. It looks like a program, but it does not have to follow the strict rules of…"
+      "explanation": "Pseudocode: Pseudocode has been used since the earliest days of computing to share program ideas between people who used completely different machines and languages. Because it belongs to no single language, it never goes out of date."
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
-      "title": "Build (Python in Thonny, iterative development)",
-      "context": "Build (Python in Thonny, iterative development): work through the steps below and see what happens. This is selection in pseudocode in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "title": "Try it: Build (Python in Thonny, iterative development)",
+      "context": "Build (Python in Thonny, iterative development): work through the steps below and see what happens. This is selection in pseudocode in practice — you need a computer or tablet with Scratch, and a micro:bit, or the online simulator, plus paper and a pencil for planning.",
       "prompt": "Build your program one sub-problem at a time, running it after each part (this is iterative development).",
       "answer": "Selection is how a program makes a decision. It checks a condition - a comparison that is either true or false - and runs different code depending on the answer. The comparison operators are: Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: Use selection (if / elif / else) correctly, with proper indentation.",
-      "explanation": "Selection in Pseudocode: Selection is how a program makes a decision. It checks a condition - a comparison that is either true or false - and runs different code depending on the answer. The comparison operators are:"
+      "explanation": "Selection in Pseudocode: The simplest form is IF THEN. Code between THEN and ENDIF runs only when the condition is true. The code inside is indented (moved to the right) so it is easy to see. If the condition is false, that code is skipped:"
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
-      "title": "Test (test plan)",
-      "context": "Test (test plan): work through the steps below and see what happens. This is pseudocode: elseif chain with a final else in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "title": "Try it: Test (test plan)",
+      "context": "Test (test plan): work through the steps below and see what happens. This is pseudocode: elseif chain with a final else in practice — you need a computer or tablet with Scratch, and a micro:bit, or the online simulator, plus paper and a pencil for planning.",
       "prompt": "Write a test plan table with columns for type, description, example input, expected output and actual output.",
       "answer": "Important rule: once one condition is found to be true, its code runs and the rest of the chain is skipped. So if the user enters '1234', the first condition is false, the second is true, '1234 is not a strong password' is output, and nothing else in the… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
       "hint": "Start here: Include normal, invalid and boundary test data.",
-      "explanation": "Pseudocode: ELSEIF chain with a final ELSE: Important rule: once one condition is found to be true, its code runs and the rest of the chain is skipped. So if the user enters '1234', the first condition is false, the second is true, '1234 is not a strong password' is output, and nothing else in the chain is checked."
+      "explanation": "Pseudocode: ELSEIF chain with a final ELSE: To work out a combined condition, replace each simple condition with its result, then apply the operator. In this AND example, total is 97:"
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
-      "title": "Reflect",
-      "context": "Reflect: work through the steps below and see what happens. This is pseudocode: and combines two conditions in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
+      "title": "Try it: Reflect",
+      "context": "Reflect: work through the steps below and see what happens. This is pseudocode: and combines two conditions in practice — you need a computer or tablet with Scratch, and a micro:bit, or the online simulator, plus paper and a pencil for planning.",
       "prompt": "Write two sentences on what worked well and what you would improve.",
       "answer": "Condition 1, 97 > 90, is true. Condition 2, 97 < 100, is true. True AND true is true, so 'Just in range' is output. If total were 100 instead, then 100 < 100 is false, and true AND false is false, so the ELSE would run and output 'Incorrect amount'. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
       "hint": "Start here: Write one sentence on how your program could genuinely help people, and how you kept it honest and correct.",
-      "explanation": "Pseudocode: AND combines two conditions: Condition 1, 97 > 90, is true. Condition 2, 97 < 100, is true. True AND true is true, so 'Just in range' is output. If total were 100 instead, then 100 < 100 is false, and true AND false is false, so the ELSE would run and output 'Incorrect amount'."
+      "explanation": "Pseudocode: AND combines two conditions: When you mix Boolean operators, they run in a set order (their precedence), just like BIDMAS in maths. NOT runs first, then AND, then OR. Brackets change the order: whatever is inside brackets runs first. You will not have to read very complicated conditions, but you must understand that brackets…"
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
-      "title": "Computational Thinking and Programming",
+      "title": "Try it: Computational Thinking and Programming",
       "context": "Computational Thinking and Programming: work through the steps below and see what happens. This is searching algorithms in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Year 8 - Unit 1 - Activities & Projects",
       "answer": "A searching algorithm is a set of steps for finding a particular item in a set of data. Computers search constantly. When you log in, the system searches a file of usernames to find yours and then checks the password. When you look for a lost file, the… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: How to Use This Booklet",
-      "explanation": "Searching Algorithms: A searching algorithm is a set of steps for finding a particular item in a set of data. Computers search constantly. When you log in, the system searches a file of usernames to find yours and then checks the password. When you look for a lost file, the computer searches every file for a match. When…"
+      "explanation": "Searching Algorithms: Search engines guard their searching algorithms like treasure. A search engine that finds the most useful results the fastest attracts the most users, so companies spend years improving how they search. When you research online, always use safe, trusted websites, and ask your teacher if you are…"
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
-      "title": "Year 8 - Unit 1 - Activities & Projects",
+      "title": "Try it: Year 8 - Unit 1 - Activities & Projects",
       "context": "Year 8 - Unit 1 - Activities & Projects: work through the steps below and see what happens. This is conditional statements in text-based programming (python) in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "How to Use This Booklet",
       "answer": "Now you turn your pseudocode into real Python and run it in Thonny. A conditional statement in Python is an if statement, and Python also has else and elif. They work just like IF, ELSE and ELSEIF in pseudocode, but the syntax is exact and you must get it… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: These activities let you practise every subunit with your hands on the keyboard. Each activity has a clear task, the exact code to type or the…",
-      "explanation": "Conditional Statements in Text-Based Programming (Python): Now you turn your pseudocode into real Python and run it in Thonny. A conditional statement in Python is an if statement, and Python also has else and elif. They work just like IF, ELSE and ELSEIF in pseudocode, but the syntax is exact and you must get it right."
+      "explanation": "Conditional Statements in Text-Based Programming (Python): Python: or accepts several spellings"
     }
   ],
   "visualModels": [
@@ -766,7 +766,7 @@
   "activities": [
     {
       "title": "Plan (decomposition and pseudocode)",
-      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "materials": "A computer or tablet with Scratch, and a micro:bit, or the online simulator, plus paper and a pencil for planning",
       "steps": [
         "Write one or two sentences describing what your program does and who at Ehel Academy it helps.",
         "Decompose it into 3 to 5 sub-problems.",
@@ -775,7 +775,7 @@
     },
     {
       "title": "Build (Python in Thonny, iterative development)",
-      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "materials": "A computer or tablet with Scratch, and a micro:bit, or the online simulator, plus paper and a pencil for planning",
       "steps": [
         "Build your program one sub-problem at a time, running it after each part (this is iterative development).",
         "Use selection (if / elif / else) correctly, with proper indentation.",
@@ -785,7 +785,7 @@
     },
     {
       "title": "Test (test plan)",
-      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "materials": "A computer or tablet with Scratch, and a micro:bit, or the online simulator, plus paper and a pencil for planning",
       "steps": [
         "Write a test plan table with columns for type, description, example input, expected output and actual output.",
         "Include normal, invalid and boundary test data.",
@@ -794,7 +794,7 @@
     },
     {
       "title": "Reflect",
-      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "materials": "A computer or tablet with Scratch, and a micro:bit, or the online simulator, plus paper and a pencil for planning",
       "steps": [
         "Write two sentences on what worked well and what you would improve.",
         "Write one sentence on how your program could genuinely help people, and how you kept it honest and correct.",

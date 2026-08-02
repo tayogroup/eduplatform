@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T14:52:05.297Z",
+  "generatedAt": "2026-08-02T16:36:50.248Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -198,73 +198,73 @@
       "id": "explore-1",
       "outcomeId": "lo01",
       "difficulty": "Discover",
-      "title": "Explain the idea",
+      "title": "Try it: Explain the idea",
       "context": "work through the steps below and see what happens. This is sequencing — order is everything in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Write a short paragraph explaining, in your own words, the meaning and purpose of a prototype and why building one before the final product is a good idea.",
       "answer": "A sequence is a set of instructions carried out in a fixed order, one after another, from top to bottom. When your program runs, the micro:bit reads the first line, does it, then reads the second line, does it, and so on. It never skips ahead and never… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
       "hint": "Do one step at a time, and check the result before you move on.",
-      "explanation": "Sequencing — Order Is Everything: A sequence is a set of instructions carried out in a fixed order, one after another, from top to bottom. When your program runs, the micro:bit reads the first line, does it, then reads the second line, does it, and so on. It never skips ahead and never guesses what you meant. This makes the order…"
+      "explanation": "Sequencing — Order Is Everything: What the simulator does: the digit 1 scrolls across the LEDs from right to left, then the device waits one second, then 2 scrolls, waits one second, then 3 scrolls. Now imagine you accidentally put the scroll(3) line first. The output would be 3, 2, 1 — the same instructions, but a completely…"
     },
     {
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
-      "title": "Plan it",
+      "title": "Try it: Plan it",
       "context": "work through the steps below and see what happens. This is the led display and single lights in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Draw a flowchart showing the input (the sound sensor) and the light sequence as a sub-routine.",
       "answer": "The front of the micro:bit is a 5 by 5 grid of 25 red LEDs. You can think of it like a tiny piece of squared paper where each square is a light. To talk about one particular light, you give its column number (x) and its row number (y). Both start counting… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: For each image in your sequence, draw a 5x5 grid and mark the brightness numbers (0 for off, up to 9 for full).",
-      "explanation": "The LED Display and Single Lights: The front of the micro:bit is a 5 by 5 grid of 25 red LEDs. You can think of it like a tiny piece of squared paper where each square is a light. To talk about one particular light, you give its column number (x) and its row number (y). Both start counting from 0, not 1, and the top-left light is at…"
+      "explanation": "The LED Display and Single Lights: The numbers 1 to 8 in between give dimmer levels of red light, so 4 is roughly half brightness."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
-      "title": "Build it",
+      "title": "Try it: Build it",
       "context": "work through the steps below and see what happens. This is showing built in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Type your program in python.microbit.org. Here is a solid starting point you can edit and improve. It uses a sub-routine, a while loop, selection and the sound sensor — everything from the unit.",
       "answer": "Turning on lights one at a time works, but the micro:bit also comes with many ready-made pictures called images. You show one with display.show(). This program displays a heart: Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
       "hint": "Start here: from microbit import * def visual_alarm(): for i in range(3): display.show(Image( “99999:99999:99999:99999:99999” )) sleep(300) display.clear()…",
-      "explanation": "Showing Built: Turning on lights one at a time works, but the micro:bit also comes with many ready-made pictures called images. You show one with display.show(). This program displays a heart:"
+      "explanation": "Showing Built: This is a good moment to notice a pattern. When you moved from block-based MakeCode to text-based MicroPython, the block that shows a heart and the line display.show(Image.HEART) both contain the same key words: show and heart. Spotting that similarity helps you translate what you already know into…"
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
-      "title": "Consider your design choices",
+      "title": "Try it: Consider your design choices",
       "context": "work through the steps below and see what happens. This is building your own light patterns in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "How will the program be activated (how does it represent the school's buzzer)?",
       "answer": "The real power comes when you design your own patterns. You do this by describing all 25 lights at once using the Image() command with a text string. Inside the quotation marks you write five groups of five digits, one group for each row, separated by colons.… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
       "hint": "Start here: What light sequence and brightness will the alarm display — a word, an image, or both?",
-      "explanation": "Building Your Own Light Patterns: The real power comes when you design your own patterns. You do this by describing all 25 lights at once using the Image() command with a text string. Inside the quotation marks you write five groups of five digits, one group for each row, separated by colons. Each digit sets the brightness of one…"
+      "explanation": "Building Your Own Light Patterns: What the simulator does: the outer edge of the grid lights up as a hollow square, with the centre nine lights left dark. (In the code above the string is split over several lines only to make the square easy to see; MicroPython joins the pieces back into one string.)"
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
-      "title": "Hands-on Coding, a Final Visual-Alarm Prototype, and Evaluation",
+      "title": "Try it: Hands-on Coding, a Final Visual-Alarm Prototype, and Evaluation",
       "context": "Hands-on Coding, a Final Visual-Alarm Prototype, and Evaluation: work through the steps below and see what happens. This is controlling brightness in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Getting Started with python.microbit.org and the Simulator",
       "answer": "So far you have used only 0 and 9 — fully off or fully on. But the numbers 1 to 8 give you every level in between, from very dim to nearly full. This lets you make an image fade in or fade out, which is a lovely effect for an alarm because a pulsing light… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: You will do all of these activities in the free online editor. No micro:bit and no installation are needed — the built-in simulator runs everything…",
-      "explanation": "Controlling Brightness: So far you have used only 0 and 9 — fully off or fully on. But the numbers 1 to 8 give you every level in between, from very dim to nearly full. This lets you make an image fade in or fade out, which is a lovely effect for an alarm because a pulsing light naturally draws the eye."
+      "explanation": "Controlling Brightness: What the simulator does: a faint plus sign appears (brightness 4), holds for half a second, then jumps to a strong bright plus (brightness 9) for half a second, then the screen clears. The last all-zero image is important: it is how you deliberately clear the display at the end of a sequence, so no…"
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
-      "title": "Getting Started with python.microbit.org and the Simulator",
+      "title": "Try it: Getting Started with python.microbit.org and the Simulator",
       "context": "work through the steps below and see what happens. This is making the lights move — a light sequence in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "You will do all of these activities in the free online editor. No micro:bit and no installation are needed — the built-in simulator runs everything on your screen.",
       "answer": "A single picture is a still image. If you show one picture, wait, then show a different picture, your eyes see movement. That is exactly how every animation and every cartoon works, and it is how you create a light sequence on the micro:bit. The recipe is… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: Open your browser and go to python.microbit.org.",
-      "explanation": "Making the Lights Move — A Light Sequence: A single picture is a still image. If you show one picture, wait, then show a different picture, your eyes see movement. That is exactly how every animation and every cartoon works, and it is how you create a light sequence on the micro:bit. The recipe is always the same: show an image, sleep, show…"
+      "explanation": "Making the Lights Move — A Light Sequence: What the simulator does: a vertical line glows on the far left for half a second, switches off, and a vertical line glows on the far right for half a second, then the screen clears. Because the two images appear quickly one after another, your brain reads it as a line moving across the display. The…"
     }
   ],
   "visualModels": [
@@ -683,14 +683,14 @@
   "activities": [
     {
       "title": "Explain the idea",
-      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "materials": "A micro:bit, or the online simulator, and Python, in Thonny or an online editor, plus paper and a pencil for planning",
       "steps": [
         "Write a short paragraph explaining, in your own words, the meaning and purpose of a prototype and why building one before the final product is a good idea."
       ]
     },
     {
       "title": "Plan it",
-      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "materials": "A micro:bit, or the online simulator, and Python, in Thonny or an online editor, plus paper and a pencil for planning",
       "steps": [
         "Draw a flowchart showing the input (the sound sensor) and the light sequence as a sub-routine.",
         "For each image in your sequence, draw a 5x5 grid and mark the brightness numbers (0 for off, up to 9 for full).",
@@ -699,7 +699,7 @@
     },
     {
       "title": "Build it",
-      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "materials": "A micro:bit, or the online simulator, and Python, in Thonny or an online editor, plus paper and a pencil for planning",
       "steps": [
         "Type your program in python.microbit.org. Here is a solid starting point you can edit and improve. It uses a sub-routine, a while loop, selection and the sound sensor — everything from the unit.",
         "from microbit import * def visual_alarm(): for i in range(3): display.show(Image( “99999:99999:99999:99999:99999” )) sleep(300) display.clear() sleep(300) display.scroll( “BREAK” ) while True: if microphone.sound_level() > 128: visual_alarm() else: display.clear().",
@@ -708,7 +708,7 @@
     },
     {
       "title": "Consider your design choices",
-      "materials": "A computer or tablet with a web browser, plus paper and a pencil for planning",
+      "materials": "A micro:bit, or the online simulator, and Python, in Thonny or an online editor, plus paper and a pencil for planning",
       "steps": [
         "How will the program be activated (how does it represent the school's buzzer)?",
         "What light sequence and brightness will the alarm display — a word, an image, or both?",

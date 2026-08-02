@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T14:52:04.844Z",
+  "generatedAt": "2026-08-02T16:36:49.784Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -14,7 +14,7 @@
     "unitId": "comp-g04-u11",
     "unitNo": 11,
     "unitTitle": "Be a Robot Controller",
-    "unitOverview": "Welcome to Unit 11 of Year 4 Computing at Ehel Academy. This unit is all about control systems — and the friendly way we meet them is through robots. The big idea is simple and powerful: a control system, and a robot, always works in three steps. It takes in input (it senses the world), it processes that information (its brain decides what to do), and it makes an output (it acts). We say a robot can sense, think and act.\n\nYou meet sensors — special input devices that detect changes in the world, such as distance, light, motion, temperature and infrared sensors. You meet the data logger, a device left alone to sense and store data over time. You learn about output devices — screens, printers, lights, sounds and movement (a robot's motors and arm). And you learn the difference between application software (programs that do a job for you) and system software (like the operating system, that runs the machine itself), and that different files need different amounts of storage.",
+    "unitOverview": "Welcome to Unit 11 of Year 4 Computing at Ehel Academy. This unit is all about control systems — and the friendly way we meet them is through robots. The big idea is simple and powerful: a control system, and a robot, always works in three steps. It takes in input (it senses the world), it processes that information (its brain decides what to do), and it makes an output (it acts). We say a robot can sense, think and act. You meet sensors — special input devices that detect changes in the world, such as distance, light, motion, temperature and infrared sensors. You meet the data logger, a device left alone to sense and store data over time. You learn about output devices — screens, printers, lights, sounds and movement (a robot's motors and arm). And you learn the difference between application software (programs that do a job for you) and system software (like the operating system, that runs the machine itself), and that different files need different amounts of storage.",
     "learningPath": [
       "Preview the goals, key words and the tools you will use",
       "Read the concept explainers and study the code examples",
@@ -89,35 +89,35 @@
     {
       "id": "concept-1-sense-think-act-what-a-control-system-is",
       "title": "Sense, think, act: what a control system is",
-      "explanation": "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor, decides what to do), and it makes an output (it acts — it moves, lights up, or makes a sound). A robot is a control system that we build to do a job for us. The short way to remember it is sense — think — act.\n\nAct it out first — it teaches the whole idea in five happy minutes. Child A calls out what they see ( “a wall in front!” ) — that is input. Child B decides the rule ( “if there is a wall, stop and turn” ) — that is process.",
+      "explanation": "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor, decides what to do), and it makes an output (it acts — it moves, lights up, or makes a sound). A robot is a control system that we build to do a job for us. The short way to remember it is sense — think — act. Act it out first — it teaches the whole idea in five happy minutes. Child A calls out what they see ( “a wall in front!” ) — that is input. Child B decides the rule ( “if there is a wall, stop and turn” ) — that is process.",
       "example": "Child C acts it out — that is output. Together, you three are a robot — you sense, you think, and you act.",
       "checkYourself": "Can you name the three steps — sense (input), think (process), act (output) — and point to you in a simple machine like a rice cooker? Listen for the sense-think-act phrase."
     },
     {
       "id": "concept-2-sensing-the-world-sensors-and-data-loggers",
       "title": "Sensing the world: sensors and data loggers",
-      "explanation": "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor. Different sensors sense different things: distance (how close something is), light (bright or dark), motion (movement), temperature (heat and cold), and infrared (the invisible signal from a remote). A data logger contains a sensor, a processor and storage, and is left alone to gather data over time.\n\nLight sensor: cup your hands over a torch — “A streetlight senses the dark and switches itself on.” Temperature sensor: the rice cooker from the source senses the heat of the rice and turns down when it is cooked. Distance sensor: hold a hand near a wall — “A robot senses when a wall is close and stops before it bumps.” Infrared sensor: point a TV remote and press a button — “The remote sends an invisible signal the TV senses.” Motion sensor: walk towards an imaginary door — “It senses you move, and the light comes on.”",
+      "explanation": "The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor. Different sensors sense different things: distance (how close something is), light (bright or dark), motion (movement), temperature (heat and cold), and infrared (the invisible signal from a remote). A data logger contains a sensor, a processor and storage, and is left alone to gather data over time. Light sensor: cup your hands over a torch — “A streetlight senses the dark and switches itself on.” Temperature sensor: the rice cooker from the source senses the heat of the rice and turns down when it is cooked. Distance sensor: hold a hand near a wall — “A robot senses when a wall is close and stops before it bumps.” Infrared sensor: point a TV remote and press a button — “The remote sends an invisible signal the TV senses.” Motion sensor: walk towards an imaginary door — “It senses you move, and the light comes on.”",
       "example": "Find one real example of sensing the world: sensors and data loggers around you, or on a device you use. Say out loud what it is and why it fits.",
       "checkYourself": "Can you match a sensor to a sensible job (light sensor to the streetlight, temperature sensor to the rice cooker)?"
     },
     {
       "id": "concept-3-acting-on-the-world-outputs-and-guiding-the-robot",
       "title": "Acting on the world: outputs, and guiding the robot",
-      "explanation": "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures, video), a printer, lights (a bulb or lamp), sound (a buzzer, speaker or bell) and movement (a motor turning wheels, or a robotic arm that lifts things). A robot's wheels and arm are outputs. When the processor decides to move, it sends commands to the motors — so guiding a robot across the floor is really the output stage in action.\n\nSort outputs by the sense they use. “Which do we see?” — a screen, a printed page, a lamp. “Which do we hear?” — a buzzer, a speaker, a bell.",
+      "explanation": "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures, video), a printer, lights (a bulb or lamp), sound (a buzzer, speaker or bell) and movement (a motor turning wheels, or a robotic arm that lifts things). A robot's wheels and arm are outputs. When the processor decides to move, it sends commands to the motors — so guiding a robot across the floor is really the output stage in action. Sort outputs by the sense they use. “Which do we see?” — a screen, a printed page, a lamp. “Which do we hear?” — a buzzer, a speaker, a bell.",
       "example": "“Which move?” — a motor spinning a wheel, a robotic arm on a date farm lifting a box. Link each output back to a sensor: a smoke alarm senses smoke (input) and sounds a buzzer (output); a robot senses a wall (input) and its motors stop (output).",
       "checkYourself": "Can you trace a command list on the grid accurately, one square at a time, and land on the right square? Can you understand that the robot only follows the commands we give it? Can you name outputs and sort you by see/hear/feel?"
     },
     {
       "id": "concept-4-the-software-that-runs-a-robot",
       "title": "The software that runs a robot",
-      "explanation": "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a word processor, a spreadsheet, a browser, a music player, a game — and a robot's own task program. System software runs the machine itself: it manages files and memory, keeps the machine safe, decides which task runs first, and controls the input and output devices. The most important piece is the operating system, which oversees everything quietly in the background.\n\nApplication software is like a cook who makes one dish — the writing dish, the game dish. System software is the kitchen manager, the operating system, who keeps the kitchen running and makes sure the taps and cookers work. You notice the cook's dish; you rarely notice the manager — but nothing works without them. the operating system. a web browser. virus protection. a music app. the program that manages the files.",
+      "explanation": "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a word processor, a spreadsheet, a browser, a music player, a game — and a robot's own task program. System software runs the machine itself: it manages files and memory, keeps the machine safe, decides which task runs first, and controls the input and output devices. The most important piece is the operating system, which oversees everything quietly in the background. Application software is like a cook who makes one dish — the writing dish, the game dish. System software is the kitchen manager, the operating system, who keeps the kitchen running and makes sure the taps and cookers work. You notice the cook's dish; you rarely notice the manager — but nothing works without them. the operating system. a web browser. virus protection. a music app. the program that manages the files.",
       "example": "Find one real example of the software that runs a robot around you, or on a device you use. Say out loud what it is and why it fits.",
       "checkYourself": "does a job for me. runs the machine. Can you sort common programs into application (does a job for me) and system (runs the machine), and say the operating system is system software?"
     },
     {
       "id": "concept-5-a-robot-s-memory-file-sizes-and-be-a-robot-controller",
       "title": "A robot's memory: file sizes, and be a robot controller",
-      "explanation": "A robot or computer stores its work as files, and different files need different amounts of storage. From smallest to biggest: a text file (a note) is tiny; an audio file (a song) is bigger; an image file (a photo) bigger still; a video file (a film) is the biggest of all. Games vary, depending on how many pictures, sounds and videos they hold. Then we bring the unit together: a robot senses (input), thinks (process), acts (output), runs on software, and stores files.\n\nImagine packing each file into a suitcase. A text note is one folded shirt — it barely fills the case. A song needs a bigger case.",
+      "explanation": "A robot or computer stores its work as files, and different files need different amounts of storage. From smallest to biggest: a text file (a note) is tiny; an audio file (a song) is bigger; an image file (a photo) bigger still; a video file (a film) is the biggest of all. Games vary, depending on how many pictures, sounds and videos they hold. Then we bring the unit together: a robot senses (input), thinks (process), acts (output), runs on software, and stores files. Imagine packing each file into a suitcase. A text note is one folded shirt — it barely fills the case. A song needs a bigger case.",
       "example": "A photo needs more again. A film needs the biggest of all, because a video is really thousands of photos shown quickly, with sound too.",
       "checkYourself": "Can you order text, audio, image and video from smallest to biggest storage, and retell the whole sense-think-act picture with software and files added?"
     }
@@ -152,7 +152,7 @@
       "id": "explore-1",
       "outcomeId": "lo01",
       "difficulty": "Discover",
-      "title": "Sense, Think, Act",
+      "title": "Try it: Sense, Think, Act",
       "context": "work through the steps below and see what happens. This is sense, think, act: what a control system is in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Every robot works in three steps. Fill in the missing words: input, process, output.",
       "answer": "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor, decides what to do), and it makes an output (it acts - it moves, lights up, or makes a sound). A robot is a… Check what you noticed against that, and write down anything that differed.",
@@ -164,7 +164,7 @@
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
-      "title": "Input, Process or Output?",
+      "title": "Try it: Input, Process or Output?",
       "context": "work through the steps below and see what happens. This is sensing the world: sensors and data loggers in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Write I for input, P for process, or O for output next to each one.",
       "answer": "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor. Different sensors sense different things: distance (how close something is), light (bright or dark), motion… Check what you noticed against that, and write down anything that differed.",
@@ -176,19 +176,19 @@
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
-      "title": "Match the Sensor to Its Job",
+      "title": "Try it: Match the Sensor to Its Job",
       "context": "work through the steps below and see what happens. This is acting on the world: outputs, and guiding the robot in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "A sensor senses a change in the world. Draw a line from each sensor to its job.",
       "answer": "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures, video), a printer, lights (a bulb or lamp), sound (a buzzer, speaker or bell) and movement (a motor turning… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
       "hint": "Start here: Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
-      "explanation": "Acting on the world: outputs, and guiding the robot: The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures, video), a printer, lights (a bulb or lamp), sound (a buzzer, speaker or bell) and movement (a motor turning wheels, or a robotic arm that lifts things).…"
+      "explanation": "Acting on the world: outputs, and guiding the robot: “Which move?” - a motor spinning a wheel, a robotic arm on a date farm lifting a box. Link each output back to a sensor: a smoke alarm senses smoke (input) and sounds a buzzer (output); a robot senses a wall (input) and its motors stop (output)."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
-      "title": "Sensors and Data Loggers",
+      "title": "Try it: Sensors and Data Loggers",
       "context": "work through the steps below and see what happens. This is the software that runs a robot in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Answer in your own words.",
       "answer": "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a word processor, a spreadsheet, a browser, a music player, a game - and a robot's own task program. System… Check what you noticed against that, and write down anything that differed.",
@@ -200,19 +200,19 @@
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
-      "title": "Guide the Robot to the Well",
+      "title": "Try it: Guide the Robot to the Well",
       "context": "work through the steps below and see what happens. This is a robot's memory: file sizes, and be a robot controller in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "The robot R starts in the bottom-left, facing up (the arrow). The well is W. Follow the commands on the grid.",
       "answer": "A robot or computer stores its work as files, and different files need different amounts of storage. From smallest to biggest: a text file (a note) is tiny; an audio file (a song) is bigger; an image file (a photo) bigger still; a video file (a film) is the… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: +----+----+----+----+----+",
-      "explanation": "A robot's memory: file sizes, and be a robot controller: A robot or computer stores its work as files, and different files need different amounts of storage. From smallest to biggest: a text file (a note) is tiny; an audio file (a song) is bigger; an image file (a photo) bigger still; a video file (a film) is the biggest of all. Games vary, depending on…"
+      "explanation": "A robot's memory: file sizes, and be a robot controller: A photo needs more again. A film needs the biggest of all, because a video is really thousands of photos shown quickly, with sound too."
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
-      "title": "Fix the Robot's Commands",
+      "title": "Try it: Fix the Robot's Commands",
       "context": "work through the steps below and see what happens. This is sense, think, act: what a control system is in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Sami wanted his robot to reach the well on the same grid. But this command list has one mistake — the robot turns the wrong way and drives off the grid! Find it and fix it.",
       "answer": "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor, decides what to do), and it makes an output (it acts - it moves, lights up, or makes a sound). A robot is a… Check what you noticed against that, and write down anything that differed.",
@@ -427,7 +427,7 @@
   "activities": [
     {
       "title": "Sense, Think, Act",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A computer or tablet with Scratch, plus paper and a pencil for planning",
       "steps": [
         "Every robot works in three steps. Fill in the missing words: input, process, output.",
         "a) The robot's sensors sense the world. This is the ______________.",
@@ -439,7 +439,7 @@
     },
     {
       "title": "Input, Process or Output?",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A computer or tablet with Scratch, plus paper and a pencil for planning",
       "steps": [
         "Write I for input, P for process, or O for output next to each one.",
         "a) A distance sensor __________",
@@ -451,7 +451,7 @@
     },
     {
       "title": "Match the Sensor to Its Job",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A computer or tablet with Scratch, plus paper and a pencil for planning",
       "steps": [
         "A sensor senses a change in the world. Draw a line from each sensor to its job.",
         "Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
@@ -461,7 +461,7 @@
     },
     {
       "title": "Sensors and Data Loggers",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A computer or tablet with Scratch, plus paper and a pencil for planning",
       "steps": [
         "Answer in your own words.",
         "a) What is a sensor? ____________________________________________",
@@ -473,7 +473,7 @@
     },
     {
       "title": "Guide the Robot to the Well",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A computer or tablet with Scratch, plus paper and a pencil for planning",
       "steps": [
         "The robot R starts in the bottom-left, facing up (the arrow). The well is W. Follow the commands on the grid.",
         "+----+----+----+----+----+",
@@ -485,7 +485,7 @@
     },
     {
       "title": "Fix the Robot's Commands",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A computer or tablet with Scratch, plus paper and a pencil for planning",
       "steps": [
         "Sami wanted his robot to reach the well on the same grid. But this command list has one mistake — the robot turns the wrong way and drives off the grid! Find it and fix it.",
         "Forward",
@@ -497,7 +497,7 @@
     },
     {
       "title": "Application or System Software?",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A computer or tablet with Scratch, plus paper and a pencil for planning",
       "steps": [
         "Application software does a job for you (like a game). System software runs the computer itself (like the operating system). Write A or S next to each one.",
         "a) A game you play __________",
@@ -509,7 +509,7 @@
     },
     {
       "title": "Order the Files, and Fill in the Words",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A computer or tablet with Scratch, plus paper and a pencil for planning",
       "steps": [
         "Different files need different amounts of storage. Number these from 1 (smallest) to 4 (biggest)",
         "[ ] a film (video)",
@@ -523,32 +523,32 @@
   "debugging": [
     {
       "symptom": "Robots think and feel for themselves, like people.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Be a Robot Controller”.",
       "fix": "This is the big one. A robot only follows the program a person wrote for it. Its processor"
     },
     {
       "symptom": "A sensor is an output.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Be a Robot Controller”.",
       "fix": "A sensor is an input — it senses the world and sends information in. The action that comes out (a light, a sound, a movement) is the output."
     },
     {
       "symptom": "Any input device is a sensor.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Be a Robot Controller”.",
       "fix": "A mouse and a keyboard are input devices, but they are not sensors. A sensor is a special input that senses a change in the world, like light, heat or distance — without anyone pressing it."
     },
     {
       "symptom": "A screen or a printer is an input.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Be a Robot Controller”.",
       "fix": "A screen and a printer are outputs — they show or make something after the processing is done."
     },
     {
       "symptom": "Software and hardware are the same thing.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Be a Robot Controller”.",
       "fix": "Software is the programs (the instructions); hardware is the physical parts you can touch. The robot's body is hardware; its programs are software."
     },
     {
       "symptom": "The operating system is an app you open like a game.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Be a Robot Controller”.",
       "fix": "The operating system is system software that runs quietly in the background, managing everything. You do not usually open it the way you open a game."
     }
   ],
@@ -970,7 +970,7 @@
         "robot",
         "input"
       ],
-      "modelAnswer": "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a word processor, a spreadsheet, a browser, a music player, a game — and a robot's own task program. System software runs the machine itself: it manages files and memory, keeps the machine safe, decides which task runs first, and controls the input and output devices. The most important piece is the operating system, which oversees everything quietly in the background.\n\nApplication software is like a cook who makes one dish — the writing dish, the game dish. System software is the kitchen manager, the operating system, who keeps the kitchen running and makes sure the taps and cookers work. You notice the cook's dish; you rarely notice the manager — but nothing works without them. the operating system. a web browser. virus protection. a music app. the program that manages the files."
+      "modelAnswer": "A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a word processor, a spreadsheet, a browser, a music player, a game — and a robot's own task program. System software runs the machine itself: it manages files and memory, keeps the machine safe, decides which task runs first, and controls the input and output devices. The most important piece is the operating system, which oversees everything quietly in the background. Application software is like a cook who makes one dish — the writing dish, the game dish. System software is the kitchen manager, the operating system, who keeps the kitchen running and makes sure the taps and cookers work. You notice the cook's dish; you rarely notice the manager — but nothing works without them. the operating system. a web browser. virus protection. a music app. the program that manages the files."
     }
   ],
   "project": {

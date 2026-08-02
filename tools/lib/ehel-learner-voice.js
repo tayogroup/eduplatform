@@ -194,7 +194,7 @@ function createLearnerVoice(options = {}) {
       .replace(/\byou's\b/gi, "your")
       .replace(/\s+/g, " ")
       .trim();
-    return repairAgreement(swapped);
+    return repairSoloVoice(swapped);
   }
 
   // In the adult-led guides "they/them/their" usually means the child being
@@ -334,9 +334,29 @@ function repairAgreement(value = "") {
     .replace(/\bmeans more you\b/gi, "means more");
 }
 
+// Everything a line needs before a learner meets it alone, in one place so it
+// can be applied to text the converter never sees: practice prompts are lifted
+// from the pack by tidy() rather than by learnerVoice(), and reviewed rows come
+// back from a workbook. Both carried directives the conversion would have
+// stripped, which is why "Tell your teacher." reached five sections of one unit.
+function repairSoloVoice(value = "") {
+  return repairAgreement(value)
+    // A directive tacked onto the end of a question, so sentence-level
+    // directive filtering never sees it on its own. The question stands
+    // perfectly well alone, and there is no teacher to tell.
+    .replace(/[\s—–-]*\bTell (?:your|the) teacher\b[.!]?/gi, "")
+    // Call-and-response with nothing to point at. In the guide an adult is
+    // holding up a phone; on the page "What is this? Yes!" refers to nothing
+    // the learner can see.
+    .replace(/\b(?:What is (?:this|that)\?|Can you see (?:it|this|that)\?)\s*(?:Yes!?\s*)?/gi, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
 module.exports = {
   createLearnerVoice,
   repairAgreement,
+  repairSoloVoice,
   DIRECTIVE_START,
   ADULT_SUBJECT,
   ADULT_ADDRESSED,

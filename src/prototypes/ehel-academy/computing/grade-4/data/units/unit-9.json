@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T14:52:04.815Z",
+  "generatedAt": "2026-08-02T16:36:49.753Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -14,7 +14,7 @@
     "unitId": "comp-g04-u09",
     "unitNo": 9,
     "unitTitle": "Be a Code Cracker",
-    "unitOverview": "Welcome to Unit 9 of Year 4 Computing at Ehel Academy. This unit is called “Be a Code Cracker”, and it is all about keeping information safe. It is one of the most exciting units of the year, and — happily — it needs no computers at all. Everything is done with a pencil, paper and a bit of clever thinking.\n\nThere are three big ideas, and they fit together like a story. First, why do we need secrets? Because so much information now travels over networks and the internet — and when a network breaks (a network failure), or a bad person tries to steal information, that information is in danger. Second, the way we protect it is encryption: we disguise a message so only a person with the secret key can understand it.\n\nThe word cipher simply means a secret way of writing: to encrypt is to turn a normal message (plain text) into a scrambled one (ciphertext), and to decrypt is to turn it back. These are not made-up school codes — the Caesar cipher is over two thousand years old, used by the Roman leader Julius Caesar, and the Pigpen cipher has been used since the 1500s.",
+    "unitOverview": "Welcome to Unit 9 of Year 4 Computing at Ehel Academy. This unit is called “Be a Code Cracker”, and it is all about keeping information safe. It is one of the most exciting units of the year, and — happily — it needs no computers at all. Everything is done with a pencil, paper and a bit of clever thinking. There are three big ideas, and they fit together like a story. First, why do we need secrets? Because so much information now travels over networks and the internet — and when a network breaks (a network failure), or a bad person tries to steal information, that information is in danger. Second, the way we protect it is encryption: we disguise a message so only a person with the secret key can understand it. The word cipher simply means a secret way of writing: to encrypt is to turn a normal message (plain text) into a scrambled one (ciphertext), and to decrypt is to turn it back. These are not made-up school codes — the Caesar cipher is over two thousand years old, used by the Roman leader Julius Caesar, and the Pigpen cipher has been used since the 1500s.",
     "learningPath": [
       "Preview the goals, key words and the tools you will use",
       "Read the concept explainers and study the code examples",
@@ -65,14 +65,14 @@
     {
       "id": "concept-1-networks-and-what-happens-when-they-fail",
       "title": "Networks, and what happens when they fail",
-      "explanation": "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a fault in the hardware (the machines or cables) or the software (the programs) stops the network working properly. When the network is down, people cannot share files, send emails, reach the internet, or get to the information stored on the network.\n\nStart with a hook that shows why secrets matter.",
+      "explanation": "A network is a set of computers and devices joined together so they can share things — files, messages and the internet. A network failure is when a fault in the hardware (the machines or cables) or the software (the programs) stops the network working properly. When the network is down, people cannot share files, send emails, reach the internet, or get to the information stored on the network. Start with a hook that shows why secrets matter.",
       "example": "Find one real example of networks, and what happens when they fail around you, or on a device you use. Say out loud what it is and why it fits.",
       "checkYourself": "Can you crack a simple number code using the A=1 rule?"
     },
     {
       "id": "concept-2-what-is-encryption-and-why-do-we-use-it",
       "title": "What is encryption, and why do we use it?",
-      "explanation": "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has been disguised. The normal message is called plain text; the disguised message is called ciphertext. A very important idea: encryption does not stop someone seeing the letters of a message — it stops them understanding it.\n\nEven if someone snatches it, they just see “KHOOR” and cannot understand it. Only Leo, who has the same key, can decrypt it back to “HELLO”.",
+      "explanation": "Encryption means disguising a message so that only certain people can understand it. It uses a key — the secret that explains how the message has been disguised. The normal message is called plain text; the disguised message is called ciphertext. A very important idea: encryption does not stop someone seeing the letters of a message — it stops them understanding it. Even if someone snatches it, they just see “KHOOR” and cannot understand it. Only Leo, who has the same key, can decrypt it back to “HELLO”.",
       "example": "Answer this in your own words, out loud or on paper: What is encryption, and why do we use it? Then check your answer against the explanation above.",
       "checkYourself": "Can you use “plain text”, “ciphertext” and “key” correctly? Can you give one reason encryption is important?"
     },
@@ -86,7 +86,7 @@
     {
       "id": "concept-4-cracking-the-caesar-cipher-decrypting",
       "title": "Cracking the Caesar cipher: decrypting",
-      "explanation": "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each letter 3 places back. On the alphabet strip, find the letter on the bottom row and read off the normal letter above it.\n\nWith a key of 3, decrypt KHOOR back to HELLO (K to H, H to E, O to L, O to L, R to O). Then try a whole sentence from the textbook, corrected here so it is exactly right: decrypt VHH BRX WRQLJKW with a key of 3 to reveal SEE YOU TONIGHT. Cracking a real sentence together is a thrilling moment — you can shout out the words as they appear.",
+      "explanation": "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each letter 3 places back. On the alphabet strip, find the letter on the bottom row and read off the normal letter above it. With a key of 3, decrypt KHOOR back to HELLO (K to H, H to E, O to L, O to L, R to O). Then try a whole sentence from the textbook, corrected here so it is exactly right: decrypt VHH BRX WRQLJKW with a key of 3 to reveal SEE YOU TONIGHT. Cracking a real sentence together is a thrilling moment — you can shout out the words as they appear.",
       "example": "Find one real example of cracking the Caesar cipher: decrypting around you, or on a device you use. Say out loud what it is and why it fits.",
       "checkYourself": "Can you understand that decrypting shifts the opposite way to encrypting? Can you check your answer makes a real word or sentence? Can you decrypt a Caesar message with a given key?"
     },
@@ -104,7 +104,7 @@
       "id": "explore-1",
       "outcomeId": "lo01",
       "difficulty": "Discover",
-      "title": "Crack the Number Code",
+      "title": "Try it: Crack the Number Code",
       "context": "work through the steps below and see what happens. This is networks, and what happens when they fail in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Here is a secret code. Each number stands for a letter: A = 1, B = 2, C = 3, all the way to Z = 26. Work out the hidden word!",
       "answer": "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a fault in the hardware (the machines or cables) or the software (the programs) stops the network working… Check what you noticed against that, and write down anything that differed.",
@@ -116,7 +116,7 @@
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
-      "title": "When the Network Fails",
+      "title": "Try it: When the Network Fails",
       "context": "work through the steps below and see what happens. This is what is encryption, and why do we use it? in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "A network joins computers together so they can share. A network failure is when it stops working. Answer these",
       "answer": "Encryption means disguising a message so that only certain people can understand it. It uses a key - the secret that explains how the message has been disguised. The normal message is called plain text; the disguised message is called ciphertext. A very… Check what you noticed against that, and write down anything that differed.",
@@ -128,43 +128,43 @@
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
-      "title": "Match the Secret Words",
+      "title": "Try it: Match the Secret Words",
       "context": "work through the steps below and see what happens. This is the caesar cipher: writing secret messages in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Draw a line from each word to its meaning.",
       "answer": "The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the key. Julius Caesar himself often used a key of 3. Because you swap each letter for another letter, it is called… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
       "hint": "Start here: Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
-      "explanation": "The Caesar cipher: writing secret messages: The Caesar cipher is one of the oldest ways to encrypt. You shift every letter along the alphabet by the same number of places. That number is the key. Julius Caesar himself often used a key of 3. Because you swap each letter for another letter, it is called a substitution cipher."
+      "explanation": "The Caesar cipher: writing secret messages: Find one real example of the Caesar cipher: writing secret messages around you, or on a device you use. Say out loud what it is and why it fits."
     },
     {
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
-      "title": "True or False: Encryption",
+      "title": "Try it: True or False: Encryption",
       "context": "work through the steps below and see what happens. This is cracking the caesar cipher: decrypting in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Circle True or False for each one.",
       "answer": "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each letter 3 places back. On the alphabet strip, find the letter on the bottom row and read off the normal letter… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
       "hint": "Start here: a) Encrypted data is called plain text. True / False",
-      "explanation": "Cracking the Caesar cipher: decrypting: To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each letter 3 places back. On the alphabet strip, find the letter on the bottom row and read off the normal letter above it."
+      "explanation": "Cracking the Caesar cipher: decrypting: Find one real example of cracking the Caesar cipher: decrypting around you, or on a device you use. Say out loud what it is and why it fits."
     },
     {
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
-      "title": "Write in the Caesar Cipher (Key = 3)",
+      "title": "Try it: Write in the Caesar Cipher (Key = 3)",
       "context": "work through the steps below and see what happens. This is the pigpen cipher, and invent your own in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Julius Caesar hid messages by shifting every letter along the alphabet. Use this strip: find your letter on the top row, then write the letter underneath it.",
       "answer": "The Pigpen cipher is another substitution cipher, but instead of swapping a letter for a letter, it swaps each letter for a symbol. The alphabet is written into two grids and two crosses, and each letter's symbol is the shape around it. It has been used since… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: Normal: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z",
-      "explanation": "The Pigpen cipher, and invent your own: The Pigpen cipher is another substitution cipher, but instead of swapping a letter for a letter, it swaps each letter for a symbol. The alphabet is written into two grids and two crosses, and each letter's symbol is the shape around it. It has been used since the 1500s."
+      "explanation": "The Pigpen cipher, and invent your own: Find one real example of the Pigpen cipher, and invent your own around you, or on a device you use. Say out loud what it is and why it fits."
     },
     {
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
-      "title": "Change the Key (Key = 5)",
+      "title": "Try it: Change the Key (Key = 5)",
       "context": "work through the steps below and see what happens. This is networks, and what happens when they fail in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "A different key makes a different code! This strip is shifted by 5.",
       "answer": "A network is a set of computers and devices joined together so they can share things - files, messages and the internet. A network failure is when a fault in the hardware (the machines or cables) or the software (the programs) stops the network working… Check what you noticed against that, and write down anything that differed.",
@@ -394,7 +394,7 @@
   "activities": [
     {
       "title": "Crack the Number Code",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A sheet of paper and a pencil — no computer needed for this one",
       "steps": [
         "Here is a secret code. Each number stands for a letter: A = 1, B = 2, C = 3, all the way to Z = 26. Work out the hidden word!",
         "5 14 3 18 25 16 20 9 15 14",
@@ -406,7 +406,7 @@
     },
     {
       "title": "When the Network Fails",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A sheet of paper and a pencil — no computer needed for this one",
       "steps": [
         "A network joins computers together so they can share. A network failure is when it stops working. Answer these",
         "True or false?",
@@ -418,7 +418,7 @@
     },
     {
       "title": "Match the Secret Words",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A sheet of paper and a pencil — no computer needed for this one",
       "steps": [
         "Draw a line from each word to its meaning.",
         "Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
@@ -428,7 +428,7 @@
     },
     {
       "title": "True or False: Encryption",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A sheet of paper and a pencil — no computer needed for this one",
       "steps": [
         "Circle True or False for each one.",
         "a) Encrypted data is called plain text. True / False",
@@ -440,7 +440,7 @@
     },
     {
       "title": "Write in the Caesar Cipher (Key = 3)",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A sheet of paper and a pencil — no computer needed for this one",
       "steps": [
         "Julius Caesar hid messages by shifting every letter along the alphabet. Use this strip: find your letter on the top row, then write the letter underneath it.",
         "Normal: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z",
@@ -452,7 +452,7 @@
     },
     {
       "title": "Change the Key (Key = 5)",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A sheet of paper and a pencil — no computer needed for this one",
       "steps": [
         "A different key makes a different code! This strip is shifted by 5.",
         "Normal: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z",
@@ -463,7 +463,7 @@
     },
     {
       "title": "Crack the Code! (Decrypt, Key = 3)",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A sheet of paper and a pencil — no computer needed for this one",
       "steps": [
         "To crack a Caesar code, shift each letter backwards. Find the secret letter on the bottom row of the key-3 strip, then read the normal letter above it.",
         "a) KHOOR = __________________",
@@ -473,7 +473,7 @@
     },
     {
       "title": "The Pigpen Cipher",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A sheet of paper and a pencil — no computer needed for this one",
       "steps": [
         "The Pigpen cipher swaps each letter for the shape around it in these grids. The second grid and second cross add a dot.",
         "GRID 1 (no dot) GRID 2 (add a dot)",
@@ -487,32 +487,32 @@
   "debugging": [
     {
       "symptom": "Encryption hides the message so no one can see it.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Be a Code Cracker”.",
       "fix": "No. A thief can still see and even copy the ciphertext — encryption stops them understanding it, not seeing it."
     },
     {
       "symptom": "Encrypt and decrypt are the same thing.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Be a Code Cracker”.",
       "fix": "They are opposites. Encrypt turns plain text into ciphertext; decrypt turns ciphertext back into plain text."
     },
     {
       "symptom": "Plain text means text with no colour or style.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Be a Code Cracker”.",
       "fix": "In this unit, plain text means the normal, un-scrambled message — nothing to do with fonts."
     },
     {
       "symptom": "With a Caesar key of 3, you always turn A into 3.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Be a Code Cracker”.",
       "fix": "No — a Caesar cipher swaps a letter for a letter. A key of 3 turns A into D (three places along), not into the number 3."
     },
     {
       "symptom": "When you reach Z you just stop.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Be a Code Cracker”.",
       "fix": "No — you wrap around to the beginning. With a key of 3, X to A, Y to B, Z to C."
     },
     {
       "symptom": "To decrypt you shift the same way as encrypting.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Be a Code Cracker”.",
       "fix": "No — you shift the opposite way. If encrypting moved letters forward, decrypting moves them back."
     }
   ],
@@ -877,7 +877,7 @@
         "network failure",
         "encryption"
       ],
-      "modelAnswer": "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each letter 3 places back. On the alphabet strip, find the letter on the bottom row and read off the normal letter above it.\n\nWith a key of 3, decrypt KHOOR back to HELLO (K to H, H to E, O to L, O to L, R to O). Then try a whole sentence from the textbook, corrected here so it is exactly right: decrypt VHH BRX WRQLJKW with a key of 3 to reveal SEE YOU TONIGHT. Cracking a real sentence together is a thrilling moment — you can shout out the words as they appear."
+      "modelAnswer": "To decrypt a Caesar message you do the opposite of encrypting: shift each letter the same number of places backwards. If the key was 3, move each letter 3 places back. On the alphabet strip, find the letter on the bottom row and read off the normal letter above it. With a key of 3, decrypt KHOOR back to HELLO (K to H, H to E, O to L, O to L, R to O). Then try a whole sentence from the textbook, corrected here so it is exactly right: decrypt VHH BRX WRQLJKW with a key of 3 to reveal SEE YOU TONIGHT. Cracking a real sentence together is a thrilling moment — you can shout out the words as they appear."
     }
   ],
   "project": {

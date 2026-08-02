@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T14:52:04.729Z",
+  "generatedAt": "2026-08-02T16:36:49.671Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -14,7 +14,7 @@
     "unitId": "comp-g04-u03",
     "unitNo": 3,
     "unitTitle": "Be a Network Designer",
-    "unitOverview": "Welcome to Unit 3 of Year 4 Computing at Ehel Academy. This unit is all about networks. A network is a group of computers and devices joined together so they can share — share files, share a printer, and send each other messages. You already live inside networks every day: the computers at Ehel Academy that reach the same printer, the Wi-Fi the family's phones join at home, and the internet that carries a message from Hargeisa to Mogadishu are all networks at work.\n\nFirst, a network has two kinds of computer: a server, which gives out services (it stores, finds and sends files, and lets computers share and talk), and a client, which asks the server for what it needs. You meet the file, web, print and mail servers, and see a client send a request and the server send back a response. Second, the difference between the internet (all the world's networks joined together) and the World Wide Web (one service on it: the web pages we open in a browser). Third, that networks can be wired (ethernet cables) or wireless (Wi-Fi, using radio waves), and when each is better.",
+    "unitOverview": "Welcome to Unit 3 of Year 4 Computing at Ehel Academy. This unit is all about networks. A network is a group of computers and devices joined together so they can share — share files, share a printer, and send each other messages. You already live inside networks every day: the computers at Ehel Academy that reach the same printer, the Wi-Fi the family's phones join at home, and the internet that carries a message from Hargeisa to Mogadishu are all networks at work. First, a network has two kinds of computer: a server, which gives out services (it stores, finds and sends files, and lets computers share and talk), and a client, which asks the server for what it needs. You meet the file, web, print and mail servers, and see a client send a request and the server send back a response. Second, the difference between the internet (all the world's networks joined together) and the World Wide Web (one service on it: the web pages we open in a browser). Third, that networks can be wired (ethernet cables) or wireless (Wi-Fi, using radio waves), and when each is better.",
     "learningPath": [
       "Preview the goals, key words and the tools you will use",
       "Read the concept explainers and study the code examples",
@@ -65,35 +65,35 @@
     {
       "id": "concept-1-what-is-a-network-servers-and-clients",
       "title": "What is a network? Servers and clients",
-      "explanation": "A network is computers and devices joined together so they can share — files, a printer, messages. It has two kinds of computer. A server gives out services: it stores, finds and sends files, and lets the other computers share things and talk to one another. A client is a computer that asks the server for what it needs, like a file or a web page.\n\nOne child is the waiter; the others are customers. Each customer asks for something; the waiter finds it and brings it back. Afterwards ask: what was the waiter's job? (To serve.) The customer's? (To ask.) Then reveal the secret: “On a network the waiter is the server and the customers are the clients — the customer asks, and the server serves.”",
+      "explanation": "A network is computers and devices joined together so they can share — files, a printer, messages. It has two kinds of computer. A server gives out services: it stores, finds and sends files, and lets the other computers share things and talk to one another. A client is a computer that asks the server for what it needs, like a file or a web page. One child is the waiter; the others are customers. Each customer asks for something; the waiter finds it and brings it back. Afterwards ask: what was the waiter's job? (To serve.) The customer's? (To ask.) Then reveal the secret: “On a network the waiter is the server and the customers are the clients — the customer asks, and the server serves.”",
       "example": "Answer this in your own words, out loud or on paper: What is a network? Servers and clients? Then check your answer against the explanation above.",
       "checkYourself": "Listen for you using the waiter-and-customer picture to explain it."
     },
     {
       "id": "concept-2-meet-the-servers-and-how-a-request-travels",
       "title": "Meet the servers, and how a request travels",
-      "explanation": "A network can have more than one server, each with its own job. A file server stores files for everyone. A web server holds and sends web pages. A print server sends documents to a printer. A mail server passes emails between people. (Others exist too, like an application server for running programs, but these four are the main ones.) Whatever the server, the pattern is the same: the client sends a request, and the server sends back a response.\n\nA big restaurant might have one waiter just for drinks, one just for meals, and one just for desserts — each does its own job. A network is the same: different servers for different jobs.",
+      "explanation": "A network can have more than one server, each with its own job. A file server stores files for everyone. A web server holds and sends web pages. A print server sends documents to a printer. A mail server passes emails between people. (Others exist too, like an application server for running programs, but these four are the main ones.) Whatever the server, the pattern is the same: the client sends a request, and the server sends back a response. A big restaurant might have one waiter just for drinks, one just for meals, and one just for desserts — each does its own job. A network is the same: different servers for different jobs.",
       "example": "Do it yourself: meet the servers, and how a request travels. Work through it slowly, then check what you did against the explanation above.",
       "checkYourself": "Can you see that the client always asks first and the server answers, and that the journey goes there (request) and back (response)? Can you match a job to the right server (email to the mail server, printing to the print server)?"
     },
     {
       "id": "concept-3-the-internet-and-the-world-wide-web",
       "title": "The internet and the World Wide Web",
-      "explanation": "The internet is a worldwide network of networks — all the world's networks joined together, linking millions of computers, phones and tablets. The World Wide Web is not the same: the Web is just one service on the internet — a huge collection of web pages we open with a browser. Email, video calls and messaging also run on the internet, but are not the Web. A hyperlink jumps you from one web page to another; a group of linked pages is a website.\n\nThis is the trickiest idea of the unit, so use a picture. The internet is like a huge country with roads joining every town.",
+      "explanation": "The internet is a worldwide network of networks — all the world's networks joined together, linking millions of computers, phones and tablets. The World Wide Web is not the same: the Web is just one service on the internet — a huge collection of web pages we open with a browser. Email, video calls and messaging also run on the internet, but are not the Web. A hyperlink jumps you from one web page to another; a group of linked pages is a website. This is the trickiest idea of the unit, so use a picture. The internet is like a huge country with roads joining every town.",
       "example": "The World Wide Web is like all the libraries in that country — wonderful to visit, but only one of the things the roads reach. Email vans and video-call vans use the same roads, but they are not libraries.",
       "checkYourself": "Can you give an example of something on the internet that is not the Web (email, a video call)? Do not worry if this takes time — even adults mix these up."
     },
     {
       "id": "concept-4-wired-and-wireless-ethernet-and-wi-fi",
       "title": "Wired and wireless: ethernet and Wi-Fi",
-      "explanation": "A network can be wired or wireless. A wired network joins its devices with cables — the cables are called ethernet. A wireless network joins its devices through the air using invisible radio waves, and the set of rules the devices use to do this is called Wi-Fi. Each kind is better for different jobs.\n\nA wired network is like being joined by a rope — strong, fast and steady, but you cannot walk away. A wireless network is like calling across a room — free to move, but weaker the further you go, and others might overhear. Wired is faster and more secure; wireless lets you move.",
+      "explanation": "A network can be wired or wireless. A wired network joins its devices with cables — the cables are called ethernet. A wireless network joins its devices through the air using invisible radio waves, and the set of rules the devices use to do this is called Wi-Fi. Each kind is better for different jobs. A wired network is like being joined by a rope — strong, fast and steady, but you cannot walk away. A wireless network is like calling across a room — free to move, but weaker the further you go, and others might overhear. Wired is faster and more secure; wireless lets you move.",
       "example": "Find one real example of wired and wireless: ethernet and Wi-Fi around you, or on a device you use. Say out loud what it is and why it fits.",
       "checkYourself": "Watch for the slip of thinking wireless is simply better; nudge you to weigh speed and safety too."
     },
     {
       "id": "concept-5-be-a-network-designer-and-keep-it-safe",
       "title": "Be a network designer, and keep it safe",
-      "explanation": "A good designer asks: what do we want to share? which computer is the server? which are the clients? and should each device be wired or wireless? At the same time, we keep the network — and ourselves — safe, because a network (especially wireless) can be reached by outsiders if we are not careful.\n\nNadia learnt about networks at Ehel Academy, and wants to help her family join their computer, phones and tablets into one network to share photos and reach the printer. But her family ask: what is a network? who is the server? cables or Wi-Fi?",
+      "explanation": "A good designer asks: what do we want to share? which computer is the server? which are the clients? and should each device be wired or wireless? At the same time, we keep the network — and ourselves — safe, because a network (especially wireless) can be reached by outsiders if we are not careful. Nadia learnt about networks at Ehel Academy, and wants to help her family join their computer, phones and tablets into one network to share photos and reach the printer. But her family ask: what is a network? who is the server? cables or Wi-Fi?",
       "example": "Do it yourself: be a network designer, and keep it safe. Work through it slowly, then check what you did against the explanation above.",
       "checkYourself": "Can you make a design choice and give a reason, pick the safe options, and explain why a network needs a password?"
     }
@@ -104,7 +104,7 @@
       "id": "explore-1",
       "outcomeId": "lo01",
       "difficulty": "Discover",
-      "title": "Label the Network",
+      "title": "Try it: Label the Network",
       "context": "work through the steps below and see what happens. This is what is a network? servers and clients in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "This is the network at Ehel Academy. One computer stores files for everyone. The others use it.",
       "answer": "A network is computers and devices joined together so they can share - files, a printer, messages. It has two kinds of computer. A server gives out services: it stores, finds and sends files, and lets the other computers share things and talk to one another.… Check what you noticed against that, and write down anything that differed.",
@@ -116,19 +116,19 @@
       "id": "explore-2",
       "outcomeId": "lo02",
       "difficulty": "Discover",
-      "title": "Match the Server to Its Job",
+      "title": "Try it: Match the Server to Its Job",
       "context": "work through the steps below and see what happens. This is meet the servers, and how a request travels in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "There are different servers for different jobs. Draw a line from each server to its job.",
       "answer": "A network can have more than one server, each with its own job. A file server stores files for everyone. A web server holds and sends web pages. A print server sends documents to a printer. A mail server passes emails between people. (Others exist too, like… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
-      "explanation": "Meet the servers, and how a request travels: A network can have more than one server, each with its own job. A file server stores files for everyone. A web server holds and sends web pages. A print server sends documents to a printer. A mail server passes emails between people. (Others exist too, like an application server for running…"
+      "explanation": "Meet the servers, and how a request travels: Do it yourself: meet the servers, and how a request travels. Work through it slowly, then check what you did against the explanation above."
     },
     {
       "id": "explore-3",
       "outcomeId": "lo03",
       "difficulty": "Discover",
-      "title": "Server or Client?",
+      "title": "Try it: Server or Client?",
       "context": "work through the steps below and see what happens. This is the internet and the world wide web in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "A server gives services. A client asks for them. Write S for server or C for client next to each one.",
       "answer": "The internet is a worldwide network of networks - all the world's networks joined together, linking millions of computers, phones and tablets. The World Wide Web is not the same: the Web is just one service on the internet - a huge collection of web pages we… Check what you noticed against that, and write down anything that differed.",
@@ -140,7 +140,7 @@
       "id": "explore-4",
       "outcomeId": "lo04",
       "difficulty": "Explore",
-      "title": "Put the Journey in Order",
+      "title": "Try it: Put the Journey in Order",
       "context": "work through the steps below and see what happens. This is wired and wireless: ethernet and wi-fi in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Maya wants to open a web page. Her computer is the client. Put the steps in the right order. Write 1, 2, 3, 4, 5 in the boxes.",
       "answer": "A network can be wired or wireless. A wired network joins its devices with cables - the cables are called ethernet. A wireless network joins its devices through the air using invisible radio waves, and the set of rules the devices use to do this is called… Check what you noticed against that, and write down anything that differed.",
@@ -152,7 +152,7 @@
       "id": "explore-5",
       "outcomeId": "lo05",
       "difficulty": "Explore",
-      "title": "Internet or World Wide Web?",
+      "title": "Try it: Internet or World Wide Web?",
       "context": "work through the steps below and see what happens. This is be a network designer, and keep it safe in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "The internet is all the world's networks joined together. The World Wide Web is one service on it: the web pages you open in a browser. Write I for internet or W for World Wide Web.",
       "answer": "A good designer asks: what do we want to share? which computer is the server? which are the clients? and should each device be wired or wireless? At the same time, we keep the network - and ourselves - safe, because a network (especially wireless) can be… Check what you noticed against that, and write down anything that differed.",
@@ -164,7 +164,7 @@
       "id": "explore-6",
       "outcomeId": "lo06",
       "difficulty": "Explore",
-      "title": "Wired or Wireless?",
+      "title": "Try it: Wired or Wireless?",
       "context": "work through the steps below and see what happens. This is what is a network? servers and clients in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "A wired network uses cables (ethernet). A wireless network uses Wi-Fi through the air. For each one, circle the better choice. Then, if you can, write why.",
       "answer": "A network is computers and devices joined together so they can share - files, a printer, messages. It has two kinds of computer. A server gives out services: it stores, finds and sends files, and lets the other computers share things and talk to one another.… Check what you noticed against that, and write down anything that differed.",
@@ -379,7 +379,7 @@
   "activities": [
     {
       "title": "Label the Network",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A sheet of paper and a pencil — no computer needed for this one",
       "steps": [
         "This is the network at Ehel Academy. One computer stores files for everyone. The others use it.",
         "[ stores files for everyone ]",
@@ -391,7 +391,7 @@
     },
     {
       "title": "Match the Server to Its Job",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A sheet of paper and a pencil — no computer needed for this one",
       "steps": [
         "There are different servers for different jobs. Draw a line from each server to its job.",
         "Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
@@ -401,7 +401,7 @@
     },
     {
       "title": "Server or Client?",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A sheet of paper and a pencil — no computer needed for this one",
       "steps": [
         "A server gives services. A client asks for them. Write S for server or C for client next to each one.",
         "a) The computer that stores everyone's files __________",
@@ -413,7 +413,7 @@
     },
     {
       "title": "Put the Journey in Order",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A sheet of paper and a pencil — no computer needed for this one",
       "steps": [
         "Maya wants to open a web page. Her computer is the client. Put the steps in the right order. Write 1, 2, 3, 4, 5 in the boxes.",
         "[ ] The web server sends the page back across the network.",
@@ -425,7 +425,7 @@
     },
     {
       "title": "Internet or World Wide Web?",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A sheet of paper and a pencil — no computer needed for this one",
       "steps": [
         "The internet is all the world's networks joined together. The World Wide Web is one service on it: the web pages you open in a browser. Write I for internet or W for World Wide Web.",
         "a) All the networks in the world joined together __________",
@@ -437,7 +437,7 @@
     },
     {
       "title": "Wired or Wireless?",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A sheet of paper and a pencil — no computer needed for this one",
       "steps": [
         "A wired network uses cables (ethernet). A wireless network uses Wi-Fi through the air. For each one, circle the better choice. Then, if you can, write why.",
         "a) A desktop computer that never moves and needs to be fast and safe: wired / wireless",
@@ -449,7 +449,7 @@
     },
     {
       "title": "Keep Our Network Safe",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A sheet of paper and a pencil — no computer needed for this one",
       "steps": [
         "Leo's family have just set up their home Wi-Fi. Tick the things that keep them safe. Put a cross next to the things that are NOT safe.",
         "[ ] Use a strong password on the Wi-Fi, so only the family can use it.",
@@ -461,7 +461,7 @@
     },
     {
       "title": "Fill in the Words",
-      "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
+      "materials": "A sheet of paper and a pencil — no computer needed for this one",
       "steps": [
         "Use these words: network, server, client, internet, browser, ethernet, Wi-Fi.",
         "a) A ______________ joins computers so they can share.",
@@ -475,32 +475,32 @@
   "debugging": [
     {
       "symptom": "The internet and the World Wide Web are the same thing.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Be a Network Designer”.",
       "fix": "The internet is all the networks joined together; the Web is just one service on it (the web pages). Email and video calls use the internet but are not the Web. Use the roads-and-libraries picture."
     },
     {
       "symptom": "Wi-Fi is the same as the internet.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Be a Network Designer”.",
       "fix": "Wi-Fi is only a way to join a network without wires. You can have Wi-Fi with no internet (the box is on but the line is down), and internet with no Wi-Fi (using cables)."
     },
     {
       "symptom": "A server is a special giant machine, or only big companies have one.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Be a Network Designer”.",
       "fix": "A server is any computer doing the job of serving others. It is the job that makes it a server, not its size — though servers are often more powerful because they serve many clients."
     },
     {
       "symptom": "Wireless is always better because there are no wires.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Be a Network Designer”.",
       "fix": "Wireless is easier to move, but a wired (ethernet) connection is usually faster, steadier and more secure. Each is best for different jobs."
     },
     {
       "symptom": "Ethernet is wireless.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Be a Network Designer”.",
       "fix": "Ethernet is the cable — it is the wired way. Wi-Fi is the wireless way. Point at a real cable to fix this."
     },
     {
       "symptom": "A web page and a website are the same.",
-      "cause": "A common misunderstanding about this idea.",
+      "cause": "A common mix-up in this unit, “Be a Network Designer”.",
       "fix": "A web page is one page; a website is a group of linked pages that belong together."
     }
   ],
@@ -916,7 +916,7 @@
         "server",
         "client"
       ],
-      "modelAnswer": "A network can be wired or wireless. A wired network joins its devices with cables — the cables are called ethernet. A wireless network joins its devices through the air using invisible radio waves, and the set of rules the devices use to do this is called Wi-Fi. Each kind is better for different jobs.\n\nA wired network is like being joined by a rope — strong, fast and steady, but you cannot walk away. A wireless network is like calling across a room — free to move, but weaker the further you go, and others might overhear. Wired is faster and more secure; wireless lets you move."
+      "modelAnswer": "A network can be wired or wireless. A wired network joins its devices with cables — the cables are called ethernet. A wireless network joins its devices through the air using invisible radio waves, and the set of rules the devices use to do this is called Wi-Fi. Each kind is better for different jobs. A wired network is like being joined by a rope — strong, fast and steady, but you cannot walk away. A wireless network is like calling across a room — free to move, but weaker the further you go, and others might overhear. Wired is faster and more secure; wireless lets you move."
     }
   ],
   "project": {

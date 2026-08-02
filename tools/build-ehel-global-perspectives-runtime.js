@@ -730,7 +730,11 @@ const GUIDED_SKILL_MAP = [
   // "someone else" alone matched "really listening to someone else", which is
   // listening, not identifying what they contributed. It needs the
   // contribution to be the thing named.
-  [/good idea (?:my friend|others)|good ideas others|someone else (?:contributed|had|shared|did)|helped each other|working together/i,
+  // The objective is identifying what working together CONTRIBUTED, so a bare
+  // "working together" is not enough — "Did you make your project with other
+  // people?" asks whether, not how it helped, and gave A Fair Life! a Teamwork
+  // claim for an individual letter.
+  [/good idea (?:my friend|others)|good ideas others|someone else (?:contributed|had|shared|did)|helped each other|working together (?:improved|helped|made)|how (?:we|our team) helped/i,
     ["Ft"], "identifies what someone else contributed to the shared outcome"],
   [/which source|how can i find out|who will you ask|where can i look|choose (?:your |a )?sources?/i,
     ["Es"], "chooses a source and says why it suits the question"],
@@ -771,10 +775,25 @@ function guidedEvidence(unit) {
   for (const bullet of guidedSkillBullets(unit)) out.push({ text: bullet, from: "the guide's own skill list" });
   for (const doc of unit.documents) {
     if (doc.voice === "adult") continue;
-    for (const block of doc.blocks) {
-      if (block.type === "heading") out.push({ text: tidy(block.text), from: `the ${doc.role} headings` });
-      else if (block.type === "table") {
+    // stripTitleLines first: every Mini-Project document is titled "… -
+    // Mini-Project & Reflection", and that word alone was granting the
+    // Reflection objectives. Year 1 Unit 4 claimed them on the strength of its
+    // own filename, with "Year 1" recorded as the evidence.
+    // Prose is only read inside the look-back section. Reading every Practice
+    // paragraph pulled in the project's own instructions and produced three
+    // false claims off single words: "draw it on your poster" became
+    // Interpreting data, and "it feels fair" became Express an opinion about
+    // another person's viewpoint. Headings and lists are specific enough to
+    // read anywhere; free prose is not.
+    let inLookBack = false;
+    for (const block of stripTitleLines(doc).blocks) {
+      if (block.type === "heading") {
+        inLookBack = LOOKBACK_HEADING.test(tidy(block.text));
+        out.push({ text: tidy(block.text), from: `the ${doc.role} headings` });
+      } else if (block.type === "table") {
         for (const row of block.rows) if (row[0]) out.push({ text: tidy(row[0]), from: `the ${doc.role} look-back` });
+      } else if (block.type === "paragraph" && doc.role === "Practice" && inLookBack) {
+        out.push({ text: tidy(block.text), from: "the Mini-Project look-back" });
       } else if (block.type === "list" && doc.role === "Practice") {
         // The Mini-Project's look-back asks its questions as list items, not
         // headings — "What did you enjoy most about making your letter?" is the
@@ -800,7 +819,11 @@ function objectivesFromGuide(unit, stage, framework) {
         const objective = byCode.get(`${stage}${sub}.01`);
         if (!objective) continue;
         const entry = found.get(objective.code) || { objective, evidence: [], from: item.from, why };
-        const phrase = tidy(item.text.split(/\s[-–—]\s|\.\s/)[0]).slice(0, 70);
+        // Split on the dash only. Splitting on ". " as well was meant to trim a
+        // guide bullet's explanation, but the Activity Sheet numbers its
+        // headings — "6. Which source helps us?" was recorded as the evidence
+        // "6", which is useless to the reviewer this field exists for.
+        const phrase = tidy(item.text.split(/\s[-–—]\s/)[0]).slice(0, 70);
         if (!entry.evidence.includes(phrase)) entry.evidence.push(phrase);
         found.set(objective.code, entry);
       }

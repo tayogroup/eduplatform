@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T11:52:21.806Z",
+  "generatedAt": "2026-08-02T13:39:22.837Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -154,7 +154,7 @@
       "title": "Inputs and Outputs",
       "context": "work through the steps below and see what happens. This is our canvas of light (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "An input is information going IN. An output is information coming OUT. Write each thing below under the right heading.",
-      "answer": "Things: pressing Button A — a heart lighting up — touching the gold logo — a twinkle sound — shaking the micro:bit — a square lighting up Inputs (going in): ________________________________________________________ Outputs (coming out): _____________________________________________________",
+      "answer": "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and outputs (ways for information to come out). Its main output is the LED display: 25 little red lights, called… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
       "hint": "Start here: Things: pressing Button A — a heart lighting up — touching the gold logo — a twinkle sound — shaking the micro:bit — a square lighting up",
       "explanation": "Our canvas of light (unplugged): A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and outputs (ways for information to come out). Its main output is the LED display: 25 little red lights, called LEDs, in a 5-by-5 grid. That grid is our…"
@@ -166,7 +166,7 @@
       "title": "Colour the Canvas",
       "context": "work through the steps below and see what happens. This is painting shapes with light (outputs) in makecode in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "a) Colour some squares in this grid to draw a shape you like — a heart, a star, or the first letter of your name.",
-      "answer": "b) Now make a pattern that is the same on the left and the right, like the beautiful tiles in a mosaic. Colour it carefully so it is balanced.",
+      "answer": "Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds (a grid we colour in ourselves to draw our own art), clear screen (turn all the lights off) and pause (ms)… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: b) Now make a pattern that is the same on the left and the right, like the beautiful tiles in a mosaic. Colour it carefully so it is balanced.",
       "explanation": "Painting shapes with light (outputs) in MakeCode: Today we open MakeCode and make our first outputs. We meet four Basic blocks: show icon (a ready-made picture, like a heart or a diamond), show leds (a grid we colour in ourselves to draw our own art), clear screen (turn all the lights off) and pause (ms) (wait for a moment). We also meet show…"
@@ -178,9 +178,9 @@
       "title": "Match the Block to the Picture",
       "context": "work through the steps below and see what happens. This is different outputs from different inputs in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Draw a line from each block to what it shows on the micro:bit.",
-      "answer": "Match: Block → What it shows Match: show icon [heart] → an arrow pointing up Match: show icon [small square] → a heart Match: show arrow [North] → all lights off (blank) Match: clear screen → a small square",
+      "answer": "This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed, on button B pressed, on logo pressed (the gold touch logo) and on shake. Whatever blocks we put inside an… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
-      "hint": "Start here: Match: Block → What it shows",
+      "hint": "Start here: Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
       "explanation": "Different outputs from different inputs: This is the heart of the unit. We use input blocks so that different inputs make different outputs. From the Input group we meet on button A pressed, on button B pressed, on logo pressed (the gold touch logo) and on shake. Whatever blocks we put inside an input block only run when that input…"
     },
     {
@@ -190,9 +190,9 @@
       "title": "Write the Algorithm",
       "context": "work through the steps below and see what happens. This is count-controlled loops: flash it a set number of times in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Leila is planning her art. An algorithm is a plan you write BEFORE you code. Fill in the outputs: choose a shape or a sound for each input.",
-      "answer": "Match: Input (what happens) → Output (what it paints) Match: When Button A is pressed → show ____________________ Match: When Button B is pressed → show ____________________ Match: When the logo is touched → play ____________________",
+      "answer": "Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
-      "hint": "Start here: Match: Input (what happens) → Output (what it paints)",
+      "hint": "Start here: Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
       "explanation": "Count-controlled loops: flash it a set number of times: Now we make our art repeat. The repeat ( ) block is a count-controlled loop: it repeats the blocks inside it a set number of times and then stops."
     },
     {
@@ -202,7 +202,7 @@
       "title": "Predict the Program",
       "context": "work through the steps below and see what happens. This is be an artist: forever loops and the light-art show in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Be a code detective! Do not build it yet — predict what it does.",
-      "answer": "on button A pressed on button B pressed a) What happens when you press Button A? _______________________________ b) What happens when you press Button B? _______________________________ c) What happens before you press any button? ___________________________",
+      "answer": "The second loop is forever: it repeats over and over and never stops on its own. It is perfect for art that twinkles or animates. We also compare the two loops - when do we want to stop after a set number (count-controlled), and when do we want it to keep… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: on button A pressed",
       "explanation": "Be an artist: forever loops and the light-art show: The second loop is forever: it repeats over and over and never stops on its own. It is perfect for art that twinkles or animates. We also compare the two loops — when do we want to stop after a set number (count-controlled), and when do we want it to keep going (forever)?"
@@ -214,7 +214,7 @@
       "title": "Try it in MakeCode! Flash a Light",
       "context": "work through the steps below and see what happens. This is our canvas of light (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Now build a blinking light with a count-controlled loop.",
-      "answer": "Go to makecode.microbit.org and click New Project. You will see an on-screen micro:bit — that is the simulator. You do not need a real one! From Loops, drag a repeat (4) block into on start. Inside the loop, build a blink: show leds (turn on the middle light), then pause (1000), then clear screen, then pause (1000). It should look like this on start .....",
+      "answer": "A micro:bit is a physical computing device - a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and outputs (ways for information to come out). Its main output is the LED display: 25 little red lights, called… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: Go to makecode.microbit.org and click New Project. You will see an on-screen micro:bit — that is the simulator. You do not need a real one!",
       "explanation": "Our canvas of light (unplugged): A micro:bit is a physical computing device — a tiny computer that senses the world and acts on it. It has inputs (ways for information to go in) and outputs (ways for information to come out). Its main output is the LED display: 25 little red lights, called LEDs, in a 5-by-5 grid. That grid is our…"
@@ -447,11 +447,9 @@
       "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
       "steps": [
         "Draw a line from each block to what it shows on the micro:bit.",
-        "Match: Block → What it shows",
-        "Match: show icon [heart] → an arrow pointing up",
-        "Match: show icon [small square] → a heart",
-        "Match: show arrow [North] → all lights off (blank)",
-        "Match: clear screen → a small square"
+        "Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
+        "Left: Block; show icon [heart]; show icon [small square]; show arrow [North]; clear screen",
+        "Right, in the wrong order: What it shows; an arrow pointing up; a heart; all lights off (blank); a small square"
       ]
     },
     {
@@ -459,10 +457,9 @@
       "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
       "steps": [
         "Leila is planning her art. An algorithm is a plan you write BEFORE you code. Fill in the outputs: choose a shape or a sound for each input.",
-        "Match: Input (what happens) → Output (what it paints)",
-        "Match: When Button A is pressed → show ____________________",
-        "Match: When Button B is pressed → show ____________________",
-        "Match: When the logo is touched → play ____________________"
+        "Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
+        "Left: Input (what happens); When Button A is pressed; When Button B is pressed; When the logo is touched",
+        "Right, in the wrong order: Output (what it paints); show ____________________; show ____________________; play ____________________"
       ]
     },
     {

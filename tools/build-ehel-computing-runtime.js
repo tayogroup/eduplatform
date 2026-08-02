@@ -93,7 +93,7 @@ const reviewPath = path.join(compRoot, "data", "script-review.json");
 const scriptReview = fs.existsSync(reviewPath)
   ? (JSON.parse(fs.readFileSync(reviewPath, "utf8")).overrides || {})
   : {};
-const reviewStats = { applied: 0, missed: [], rekeyed: [], stranded: [] };
+const reviewStats = { applied: 0, missed: [], rekeyed: [], stranded: [], refusedSteps: [] };
 const practiceStats = { unaligned: [] };
 
 // Where each exported category's fields live inside a built unit. Returns the
@@ -156,6 +156,13 @@ function applyReviewFields(unit, category, itemId, fields, label) {
   // the shape, and roll the whole item back if the answer stops being offered.
   const isMcq = Array.isArray(target.options) && typeof target.answer === "string";
   const before = isMcq ? { options: [...target.options], answer: target.answer } : null;
+  // A review row is authority over WORDING, never over a structural invariant.
+  // The workbook was exported while activities still rendered a shuffled
+  // matching table as assertions, so the reviewer signed off "You press the
+  // space key → The cat meows" as prose — and replaying it puts the false
+  // pairing straight back over the corrected build. Snapshot the steps and
+  // refuse any override that reintroduces the shape.
+  const stepsBefore = Array.isArray(target.steps) ? [...target.steps] : null;
   const appliedBefore = reviewStats.applied;
   for (const [field, value] of Object.entries(fields)) {
     if (category === "Unit Overview") {
@@ -186,6 +193,11 @@ function applyReviewFields(unit, category, itemId, fields, label) {
     target.answer = before.answer;
     reviewStats.applied = appliedBefore;
     reviewStats.missed.push(`${label} ${category}/${itemId} (override drifted onto another question — answer not among its options)`);
+  }
+  if (stepsBefore && target.steps.some((step) => /^Match: .+ → /.test(String(step)))) {
+    target.steps = stepsBefore;
+    reviewStats.applied = appliedBefore;
+    reviewStats.refusedSteps.push(`${label} ${category}/${itemId}`);
   }
 }
 
@@ -262,19 +274,83 @@ function rekeyPaddingOverrides(unit, byId) {
   return kept;
 }
 
+const PRACTICE_PLACEHOLDER = "Work through the task, then check it against this unit's concept explanations and the Computing Words reference card.";
+
+// One key line answers one question. Where two items hold the same answer they
+// are not both right, and practice is scored by matching the learner's response
+// against this field — so the wrong one tells a correct answer it is wrong.
+// Keep it on the item that actually asks something (a fragment picked up from a
+// code listing or a matching row scores lowest) and leave the other unanswered.
+// Run on both sides of the review: the builder can bind twice, and so can a
+// reviewed row exported before the binding was fixed.
+function oneAnswerPerQuestion(items = []) {
+  const asksSomething = (item) => (/\?/.test(item.prompt) ? 2 : 0) + (item.prompt.length > 40 ? 1 : 0);
+  const byAnswer = new Map();
+  for (const item of items) {
+    const answer = String(item.answer || "").trim();
+    if (answer.length < 12 || answer === PRACTICE_PLACEHOLDER || /^(Work through the task|Say your answer)/.test(answer)) continue;
+    if (!byAnswer.has(answer)) byAnswer.set(answer, []);
+    byAnswer.get(answer).push(item);
+  }
+  let repaired = 0;
+  for (const holders of byAnswer.values()) {
+    if (holders.length < 2) continue;
+    const keep = holders.reduce((best, item) => (asksSomething(item) > asksSomething(best) ? item : best), holders[0]);
+    for (const item of holders) {
+      if (item === keep) continue;
+      item.answer = PRACTICE_PLACEHOLDER;
+      repaired += 1;
+    }
+  }
+  return repaired;
+}
+
 function applyScriptReview(unit, grade, unitNumber) {
   const items = ((scriptReview[`grade-${grade}`] || {})[`unit-${unitNumber}`]) || {};
+  // The builder's own answers, so an override that breaks an invariant can be
+  // rolled back to something known-good rather than merely refused.
+  const built = new Map((unit.explorations || []).map((entry) => [entry.id, entry.answer]));
   for (const [category, byId] of Object.entries(items)) {
     const slots = category === "Assessment Question" ? rekeyPaddingOverrides(unit, byId) : byId;
     for (const [itemId, fields] of Object.entries(slots)) {
       applyReviewFields(unit, category, itemId, fields, `grade ${grade} unit ${unitNumber}:`);
     }
   }
+  // A Discovery card grades a typed response against explorations[].answer. The
+  // workbook was exported while that field was still the activity's own
+  // instruction list, so replaying a reviewed row puts the instructions back —
+  // and with them every distractor on the worksheet counted as a right answer.
+  for (const exploration of unit.explorations || []) {
+    const activity = (unit.activities || []).find((entry) => entry.title === exploration.title);
+    const instructions = activity ? (activity.steps || []).slice(1).join(" ").trim() : "";
+    if (!instructions || String(exploration.answer || "").trim() !== instructions) continue;
+    exploration.answer = built.get(exploration.id);
+    reviewStats.refusedSteps.push(`grade ${grade} unit ${unitNumber}: Exploration/${exploration.id} (answer is the instruction list)`);
+  }
+  const rebound = oneAnswerPerQuestion(unit.practice);
+  if (rebound) reviewStats.refusedSteps.push(`grade ${grade} unit ${unitNumber}: ${rebound} practice answer(s) bound to a second question`);
 }
 
 function applyCapstoneReview(capstone, grade) {
-  const items = ((scriptReview[`grade-${grade}`] || {}).capstone || {}).Capstone || {};
+  const raw = ((scriptReview[`grade-${grade}`] || {}).capstone || {}).Capstone || {};
   const project = capstone.project || {};
+
+  // Quiz overrides drift the same way a unit's do, and for the same reason:
+  // they are keyed by position. Put them through the same re-key/strand pass,
+  // translating the "capstone-" prefix off and back on so the shared logic sees
+  // the ids it expects.
+  const questions = (capstone.quiz || {}).questions || [];
+  const quizIds = new Set(questions.map((q) => `capstone-${q.id}`));
+  const quizSlots = {};
+  const others = {};
+  for (const [itemId, fields] of Object.entries(raw)) {
+    if (quizIds.has(itemId)) quizSlots[itemId.slice("capstone-".length)] = fields;
+    else others[itemId] = fields;
+  }
+  const settled = rekeyPaddingOverrides({ assessment: { questions } }, quizSlots);
+  const items = { ...others };
+  for (const [qid, fields] of Object.entries(settled)) items[`capstone-${qid}`] = fields;
+
   for (const [itemId, fields] of Object.entries(items)) {
     let target = null;
     if (itemId === "capstone-overview") target = { overview: capstone, drivingQuestion: project, finalProduct: project };
@@ -287,11 +363,26 @@ function applyCapstoneReview(capstone, grade) {
       reviewStats.missed.push(`grade ${grade} capstone: ${itemId} (item not found)`);
       continue;
     }
+    // The same rollback the unit path gets. A reviewer who rewrites an option
+    // list without restating the answer leaves the answer outside its own
+    // options, and the capstone renderer marks the correct option by comparing
+    // it to answer — so every choice is wrong and none is ever revealed as
+    // right. That is a dead end, and a capstone is the last thing a learner
+    // meets in a stage.
+    const isMcq = Array.isArray(target.options) && typeof target.answer === "string";
+    const before = isMcq ? { options: [...target.options], answer: target.answer } : null;
+    const appliedBefore = reviewStats.applied;
     for (const [field, value] of Object.entries(fields)) {
       if (itemId === "capstone-overview") target[field][field] = value;
       else if (field === "evidence" && target.list) target.list[target.index] = value;
       else target[field] = value;
       reviewStats.applied += 1;
+    }
+    if (isMcq && !target.options.includes(target.answer)) {
+      target.options = before.options;
+      target.answer = before.answer;
+      reviewStats.applied = appliedBefore;
+      reviewStats.missed.push(`grade ${grade} capstone: ${itemId} (override drifted onto another question — answer not among its options)`);
     }
   }
 }
@@ -1034,6 +1125,7 @@ function buildGrade(grade) {
     }
 
     let unnumbered = 0;
+    const keyNumbersUsed = new Set();
     merged.forEach((task, index) => {
       // Some units number their questions, others write them as plain
       // sentences ending in an "Answer: ______" rule. Handle both.
@@ -1041,10 +1133,18 @@ function buildGrade(grade) {
       // one that writes its blanks inline ("(a) Traveller ______ (b) People
       // ______"). Missing the third dropped a whole question, which then slid
       // every later answer in the key onto the wrong one.
-      const match = /^(\d{1,2})\s*[.)]\s*(.+)$/.exec(task)
+      const sourceNumbered = /^(\d{1,2})\s*[.)]\s*(.+)$/.exec(task);
+      const match = sourceNumbered
         || (/\bAnswer:\s*_+\s*$/.test(task) ? [null, String(++unnumbered), task.replace(/\s*Answer:\s*_+\s*$/, "")] : null)
         || (/_{4,}/.test(task) && /\?|\bwrite\b|\bname\b|\bgive\b/i.test(task) ? [null, String(++unnumbered), task] : null);
       if (!match) return;
+      // A synthetic number counts unnumbered questions from 1, which is the
+      // same namespace the source's own numbering uses. Looking a synthetic
+      // number up in the key map handed question 4 the answer to question 1:
+      // "How many like banana?" answered "Finds things out and writes them
+      // down." Since practice is scored by matching the learner's response
+      // against this field, a correct answer was scored wrong.
+      const synthetic = !sourceNumbered;
       const number = Number(match[1]);
       let prompt = tidy(match[2]).replace(/\s*_{4,}.*$/, "").replace(/\s*Answer:\s*$/i, "");
       // The answer options sit on the line below the question ("tablet ball
@@ -1063,7 +1163,11 @@ function buildGrade(grade) {
       const promptWords = new Set(tokens(fullPrompt));
       const echoIndex = echoes.findIndex((echo) => echo && echo.head.every((word) => promptWords.has(word)));
       if (echoIndex >= 0) echoUsed.add(echoIndex);
-      const answer = keyByNumber.get(number)
+      // A key line belongs to one question. Handing the same line to two items
+      // is the signature of a numbering collision, so take it once.
+      const byNumber = !synthetic && !keyNumbersUsed.has(number) ? keyByNumber.get(number) : undefined;
+      if (byNumber) keyNumbersUsed.add(number);
+      const answer = byNumber
         || (echoIndex >= 0 ? echoes[echoIndex].answer : "")
         || keyOrdinal[items.length]
         || "";
@@ -1509,12 +1613,35 @@ function buildGrade(grade) {
         hint: "This is an end-of-unit question: bring together more than one idea from the unit in your answer.",
       });
     }
-    practice = uniqueBy(practice, (item) => item.prompt.toLowerCase())
-      .map((item, index) => ({ ...item, id: `p${String(index + 1).padStart(2, "0")}` }));
+    practice = uniqueBy(practice, (item) => item.prompt.toLowerCase());
+
+    oneAnswerPerQuestion(practice);
+
+    practice = practice.map((item, index) => ({ ...item, id: `p${String(index + 1).padStart(2, "0")}` }));
 
     // ---- activities ------------------------------------------------------
     const tasks = taskList(activitiesDoc, isGuide);
     const projectParts = taskList(practiceDoc, isGuide);
+    // A matching worksheet shuffles its right-hand column on purpose — working
+    // out the pairing IS the exercise. Zipping the two columns row-wise turned
+    // that shuffle into an assertion, so the course stated as fact that a
+    // desktop is a "tablet" and that a mouse "types letters". And because a
+    // Discovery card reveals these same lines, a learner working alone was
+    // confirmed in the error. Present the columns as the worksheet does:
+    // unpaired, and said to be out of order.
+    const matchingSteps = (pairs) => {
+      // A row is a header when ANY cell is one: "This computer… | Its name"
+      // fails an every-cell test, which is how the heading shipped as a step.
+      const rows = pairs.filter((row) => !row.some((value) => HEADER_ROW.test(value)));
+      const left = rows.map((row) => row[0]).filter(Boolean);
+      const right = rows.map((row) => row.slice(1).join(" / ")).filter(Boolean);
+      if (left.length < 2 || right.length < 2) return [];
+      return [
+        "Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
+        `Left: ${left.join("; ")}`,
+        `Right, in the wrong order: ${right.join("; ")}`,
+      ];
+    };
     let activities = [...tasks, ...projectParts].map((task) => ({
       title: task.title,
       materials: isGuide
@@ -1522,7 +1649,7 @@ function buildGrade(grade) {
         : "A computer or tablet with a web browser, plus paper and a pencil for planning",
       steps: [
         ...task.steps,
-        ...task.pairs.map((pair) => `Match: ${pair[0]} → ${pair.slice(1).join(" / ")}`),
+        ...matchingSteps(task.pairs),
       ].filter(Boolean).slice(0, 6),
     })).filter((activity) => activity.steps.length);
 
@@ -1717,7 +1844,17 @@ function buildGrade(grade) {
         // activity is for instead; the kit is on the activity card already.
         context: `${activity.title}: work through the steps below and see what happens. This is ${concept?.title ? concept.title.toLowerCase() : title.toLowerCase()} in practice — you need ${activity.materials.charAt(0).toLowerCase()}${activity.materials.slice(1)}.`,
         prompt: activity.steps[0] || `Try ${activity.title.toLowerCase()} and record what happens.`,
-        answer: activity.steps.slice(1).join(" ") || "Compare what you built with the worked example, and note any difference.",
+        // NOT the remaining instruction steps. Those are what the learner is
+        // told to DO, never what a right answer looks like — and the card grades
+        // a typed response against this field, so a Stage 1 worksheet listing
+        // "a tablet a chair a laptop a banana a smartphone" as its items meant a
+        // child answering "a banana" to "Circle the ones that are computers"
+        // was told "Exactly!". With no teacher in the room, nothing corrects it.
+        // Until the Activity Sheets' own keys are parsed, the model answer is
+        // what the unit teaches about this idea, which is at least true.
+        answer: concept?.title
+          ? `${sentence(opening, 260)} Check what you noticed against that, and write down anything that differed.`
+          : "Compare what you built with the worked example, and write down anything that differed.",
         modelType: `model-${index + 1}`,
         hint: activity.steps[1] ? `Start here: ${sentence(activity.steps[1], 150)}` : "Do one step at a time, and check the result before you move on.",
         explanation: concept?.title ? `${concept.title}: ${sentence(opening, 300)}` : sentence(opening, 320),
@@ -2013,6 +2150,9 @@ if (practiceStats.unaligned.length) {
 }
 if (reviewStats.rekeyed.length) {
   console.log(`Review entries re-keyed onto the word they name (${reviewStats.rekeyed.length}) — positional drift, corrected at build time.`);
+}
+if (reviewStats.refusedSteps.length) {
+  console.log(`Review step overrides refused (${reviewStats.refusedSteps.length}) — they were reviewed before the underlying defect was fixed and would put it back. Re-export to pick up the corrected wording.`);
 }
 if (reviewStats.stranded.length) {
   console.log(`Review explanations dropped as stranded (${reviewStats.stranded.length}) — they define a word no question in their unit asks about; the built explanation stands.`);

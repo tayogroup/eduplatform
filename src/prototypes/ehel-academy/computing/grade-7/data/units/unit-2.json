@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T11:52:22.098Z",
+  "generatedAt": "2026-08-02T13:39:23.164Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -325,7 +325,7 @@
       "title": "Activities & Projects",
       "context": "work through the steps below and see what happens. This is smart devices and sensors in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Year 7 — Unit 2 — Decomposing Problems: Creating a Smart Solution",
-      "answer": "How to Use This Document This is your hands-on workbook. Each activity gives you a task, the code to type, the expected behaviour on the simulator, and an AI-tutor prompt in case you get stuck. Type every program yourself in python.microbit.org, run it on the simulator, and only move on when it behaves as described. Work in order — each activity builds on the one before, exactly like decomposition. Getting Started with python.microbit.org and the Simulator Open a web browser and go to python.microbit.org. The editor opens with starter code. You will type your own code on the right-hand side.",
+      "answer": "A smart device has a program that tells it how to behave, and it uses sensors to gather data about the world. A sensor is simply a part that can detect something - light, heat, movement, sound or touch - and turn it into data (a number) that the program can… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
       "hint": "Start here: How to Use This Document",
       "explanation": "Smart Devices and Sensors: A smart device has a program that tells it how to behave, and it uses sensors to gather data about the world. A sensor is simply a part that can detect something — light, heat, movement, sound or touch — and turn it into data (a number) that the program can use."
@@ -337,7 +337,7 @@
       "title": "Getting Started with python.microbit.org and the Simulator",
       "context": "work through the steps below and see what happens. This is hardware, software and simulators in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Open a web browser and go to python.microbit.org.",
-      "answer": "The editor opens with starter code. You will type your own code on the right-hand side. The Simulator (a picture of a micro:bit) is on the left. Click the play button (the triangle icon) under it to run your code. Use the sensor controls under the micro:bit picture: click buttons A and B, drag the temperature, light and sound sliders, choose a gesture from the accelerometer menu, and click the logo to touch it. Click Save to download your work, and Open to load it again later. If you have a real micro:bit",
+      "answer": "The easiest way to remember the difference between hardware and software is this: you can touch hardware, but you cannot touch software. The micro:bit itself, its buttons and its LED lights are hardware. The MicroPython program you write is software. A… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: The editor opens with starter code. You will type your own code on the right-hand side.",
       "explanation": "Hardware, Software and Simulators: The easiest way to remember the difference between hardware and software is this: you can touch hardware, but you cannot touch software. The micro:bit itself, its buttons and its LED lights are hardware. The MicroPython program you write is software. A computing device needs both to do anything…"
@@ -349,7 +349,7 @@
       "title": "If you have a real micro:bit",
       "context": "work through the steps below and see what happens. This is meet the micro:bit in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "You can also run your programs on a physical micro:bit.",
-      "answer": "Connect it to your computer with a USB cable, click Connect, then click Flash to download (flash) your program onto the device. If you do not have one, the simulator does everything you need for this whole unit. Before you code, think like a detective. In pairs or on your own, list three devices you use that contain sensors (for example a phone, an automatic light, a smart watch). For each one, write down what the sensor detects and what the device does with that data. Bring your list to your next teacher session. Activity 1 — Your name and a picture (sequence output) Task: make the display scroll your name and then show a picture you like. This practises the two output commands and the idea of a sequence — one step after another.",
+      "answer": "The BBC micro:bit is a pocket-sized computer built to teach you how hardware and software work together. Despite its size, it is packed with inputs and outputs. An input is data coming IN to the device; an output is something the device sends OUT to you. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
       "hint": "Start here: Connect it to your computer with a USB cable, click Connect, then click Flash to download (flash) your program onto the device.",
       "explanation": "Meet the micro:bit: The BBC micro:bit is a pocket-sized computer built to teach you how hardware and software work together. Despite its size, it is packed with inputs and outputs. An input is data coming IN to the device; an output is something the device sends OUT to you."
@@ -361,7 +361,7 @@
       "title": "Warm Up",
       "context": "work through the steps below and see what happens. This is decomposition — breaking the problem down in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Before you code, think like a detective. In pairs or on your own, list three devices you use that contain sensors (for example a phone, an automatic light, a smart watch). For each one, write down what the sensor detects and what the device does with that data. Bring your list to your next teacher session.",
-      "answer": "Activity 1 — Your name and a picture (sequence output) Task: make the display scroll your name and then show a picture you like. This practises the two output commands and the idea of a sequence — one step after another. MicroPython code",
+      "answer": "Decomposition means breaking a big problem into smaller parts. It is the skill professional programmers use every single day, because small parts are easy to understand, easy to solve, and easy to test. When you put all the small solutions together, you have… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
       "hint": "Start here: Activity 1 — Your name and a picture (sequence output)",
       "explanation": "Decomposition — Breaking the Problem Down: Decomposition means breaking a big problem into smaller parts. It is the skill professional programmers use every single day, because small parts are easy to understand, easy to solve, and easy to test. When you put all the small solutions together, you have solved the big problem."
@@ -373,7 +373,7 @@
       "title": "Practise",
       "context": "work through the steps below and see what happens. This is your first micropython program in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Activity 1 — Your name and a picture (sequence output)",
-      "answer": "Task: make the display scroll your name and then show a picture you like. This practises the two output commands and the idea of a sequence — one step after another. MicroPython code Expected behaviour: 'Leo' scrolls across the LEDs, then a duck picture appears and stays. Try other images such as Image.HEART, Image.HOUSE or Image.GIRAFFE. Ask Your AI Tutor",
+      "answer": "Every micro:bit program must begin by importing the micro:bit library. A library is a ready-made list of all the commands you are allowed to use. The very first line is always the same: Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: Task: make the display scroll your name and then show a picture you like. This practises the two output commands and the idea of a sequence — one…",
       "explanation": "Your First MicroPython Program: Every micro:bit program must begin by importing the micro:bit library. A library is a ready-made list of all the commands you are allowed to use. The very first line is always the same:"
@@ -385,7 +385,7 @@
       "title": "MicroPython code",
       "context": "work through the steps below and see what happens. This is inputs and the 'while true' loop in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Expected behaviour: 'Leo' scrolls across the LEDs, then a duck picture appears and stays. Try other images such as Image.HEART, Image.HOUSE or Image.GIRAFFE.",
-      "answer": "Ask Your AI Tutor Give me a list of five fun Image names I can try, and tell me what each one looks like. Activity 2 — Button A input (input and output) Task: show a happy face only when button A is pressed. This adds your first input and the while True loop.",
+      "answer": "So far the program ran once and stopped. A smart device must keep watching for input forever. To do that we wrap our code in a while True loop. Everything indented underneath it repeats again and again, for as long as the device is on. This is how the… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: Ask Your AI Tutor",
       "explanation": "Inputs and the 'while True' Loop: So far the program ran once and stopped. A smart device must keep watching for input forever. To do that we wrap our code in a while True loop. Everything indented underneath it repeats again and again, for as long as the device is on. This is how the micro:bit 'constantly checks' its sensors."

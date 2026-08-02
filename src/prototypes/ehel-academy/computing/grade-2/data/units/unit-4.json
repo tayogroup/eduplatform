@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T11:52:21.406Z",
+  "generatedAt": "2026-08-02T13:39:22.410Z",
   "stage": {
     "id": "s02",
     "label": "Stage 2"
@@ -162,7 +162,7 @@
       "title": "Put the Steps in Order",
       "context": "work through the steps below and see what happens. This is steps in the right order (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "These steps to wash your hands are all muddled up! Write 1, 2, 3, 4 in the boxes to put them in the right order.",
-      "answer": "[ ] Rub your hands together [ ] Turn on the tap [ ] Rinse and turn off the tap [ ] Put soap on your hands",
+      "answer": "An algorithm is a set of steps to do a job, and the steps must be in the right order. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
       "hint": "Start here: [ ] Rub your hands together",
       "explanation": "Steps in the right order (unplugged): An algorithm is a set of steps to do a job, and the steps must be in the right order."
@@ -174,7 +174,7 @@
       "title": "Find the Bug",
       "context": "work through the steps below and see what happens. This is find the bug and fix it (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Leila wrote the steps to get ready to go outside. There is a bug — two steps are in the wrong order! Circle the two steps that should swap.",
-      "answer": "Step 1 Put on your shoes Step 2 Put on your socks Step 3 Go outside Which should you do first — socks or shoes? Talk about it with a friend.",
+      "answer": "Sometimes an algorithm has a mistake. A mistake in the steps is called a bug. We meet two kinds of bug: steps in the wrong order, and a step that is not needed. We fix them by swapping the steps into the right order, or by taking out the step we do not need. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: Step 1 Put on your shoes",
       "explanation": "Find the bug and fix it (unplugged): Sometimes an algorithm has a mistake. A mistake in the steps is called a bug. We meet two kinds of bug: steps in the wrong order, and a step that is not needed. We fix them by swapping the steps into the right order, or by taking out the step we do not need."
@@ -186,7 +186,7 @@
       "title": "Cross Out the Step Not Needed",
       "context": "work through the steps below and see what happens. This is meet scratchjr: make a character move (scratchjr) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Leo is making a jam sandwich. One step does not belong. Draw a line to cross it out.",
-      "answer": "Step 1 Take two slices of bread Step 2 Put jam on the bread Step 3 Put on your shoes Step 4 Put the slices together",
+      "answer": "The same idea works on a tablet. In ScratchJr we drag picture-blocks to give a character its steps. Today we make a character move - and that is a little animation! Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
       "hint": "Start here: Step 1 Take two slices of bread",
       "explanation": "Meet ScratchJr: make a character move (ScratchJr): The same idea works on a tablet. In ScratchJr we drag picture-blocks to give a character its steps. Today we make a character move — and that is a little animation!"
@@ -198,9 +198,9 @@
       "title": "Match the Blocks",
       "context": "work through the steps below and see what happens. This is the repeat block (scratchjr) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "These are ScratchJr blocks. Draw a line from each block to what it does.",
-      "answer": "Match: Block → What it does Match: Green Flag → does the steps again and again Match: Move Right → makes the character jump up and down Match: Hop → starts the program (you tap the flag) Match: Repeat → moves the character to the right",
+      "answer": "When the same step happens again and again, we do not drag it many times. We put it inside a Repeat block and write how many times. The orange Repeat block wraps around a step and does it again and again. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
-      "hint": "Start here: Match: Block → What it does",
+      "hint": "Start here: Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
       "explanation": "The Repeat block (ScratchJr): When the same step happens again and again, we do not drag it many times. We put it inside a Repeat block and write how many times. The orange Repeat block wraps around a step and does it again and again."
     },
     {
@@ -210,7 +210,7 @@
       "title": "Try it in ScratchJr: Make it Move!",
       "context": "work through the steps below and see what happens. This is animate across the screen (scratchjr) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Make a character slide across the screen.",
-      "answer": "Open ScratchJr and start a new project. Tap the plus button to add a character. Choose any one you like! Tap the background picture at the top and choose a background. Drag these blocks and join them together Tap the green flag at the top. Watch your character slide across!",
+      "answer": "Put it all together - make a character move all the way across the screen using the Repeat block, run it, and fix it if it has a bug. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: Open ScratchJr and start a new project.",
       "explanation": "Animate across the screen (ScratchJr): Put it all together — make a character move all the way across the screen using the Repeat block, run it, and fix it if it has a bug."
@@ -222,7 +222,7 @@
       "title": "Use the Repeat Block",
       "context": "work through the steps below and see what happens. This is steps in the right order (unplugged) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Now make your character hop again and again with one Repeat block.",
-      "answer": "Drag the orange Repeat block. Put a Hop block inside it (in the mouth of the C). Change the number to 3. Your blocks look like this Hop (2) Tap the green flag. Your character hops 3 times!",
+      "answer": "An algorithm is a set of steps to do a job, and the steps must be in the right order. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: Drag the orange Repeat block.",
       "explanation": "Steps in the right order (unplugged): An algorithm is a set of steps to do a job, and the steps must be in the right order."
@@ -470,11 +470,9 @@
       "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
       "steps": [
         "These are ScratchJr blocks. Draw a line from each block to what it does.",
-        "Match: Block → What it does",
-        "Match: Green Flag → does the steps again and again",
-        "Match: Move Right → makes the character jump up and down",
-        "Match: Hop → starts the program (you tap the flag)",
-        "Match: Repeat → moves the character to the right"
+        "Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
+        "Left: Block; Green Flag; Move Right; Hop; Repeat",
+        "Right, in the wrong order: What it does; does the steps again and again; makes the character jump up and down; starts the program (you tap the flag); moves the character to the right"
       ]
     },
     {

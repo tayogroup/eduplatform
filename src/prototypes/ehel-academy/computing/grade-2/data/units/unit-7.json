@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T11:52:21.443Z",
+  "generatedAt": "2026-08-02T13:39:22.452Z",
   "stage": {
     "id": "s02",
     "label": "Stage 2"
@@ -118,9 +118,9 @@
       "title": "One Answer or Many Answers?",
       "context": "work through the steps below and see what happens. This is questions: one answer or many answers? in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Some questions have only one answer. Some have many answers. A many-answer question is called a statistical question. A one-answer question is called a non-statistical question. Tick the right box for each question.",
-      "answer": "Match: Question → One answer / Many answers",
+      "answer": "Questions come in two kinds. A statistical question has more than one answer - the answers can be different for different people. A non-statistical question has only one answer. Being a data scientist starts with knowing which kind of question we are asking. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
-      "hint": "Start here: Match: Question → One answer / Many answers",
+      "hint": "Do one step at a time, and check the result before you move on.",
       "explanation": "Questions: one answer or many answers?: Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical question has only one answer. Being a data scientist starts with knowing which kind of question we are asking."
     },
     {
@@ -130,9 +130,9 @@
       "title": "Numbers or Groups?",
       "context": "work through the steps below and see what happens. This is two kinds of data: numbers and groups in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Numerical data is numbers — we count or measure them. Categorical data is groups — like colours or names. Tick the right box for each one.",
-      "answer": "Match: Data → Numerical (numbers) / Categorical (groups)",
+      "answer": "When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers - things we can count or measure, like height, test scores or how many pets. Categorical data is groups - words that sort things into… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
-      "hint": "Start here: Match: Data → Numerical (numbers) / Categorical (groups)",
+      "hint": "Do one step at a time, and check the result before you move on.",
       "explanation": "Two kinds of data: numbers and groups: When we ask a many-answer (statistical) question, we collect data. That data comes in two kinds. Numerical data is numbers — things we can count or measure, like height, test scores or how many pets. Categorical data is groups — words that sort things into kinds, like eye colour, favourite fruit or…"
     },
     {
@@ -142,7 +142,7 @@
       "title": "Circle the Numbers",
       "context": "work through the steps below and see what happens. This is data on a form (computing devices) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Circle the data that is numerical (numbers we count or measure). Leave the groups alone.",
-      "answer": "Rainfall: 2mm, 1mm, 3mm Feelings: happy, sad Number of you: 25, 30, 15. Favourite colour: red, blue",
+      "answer": "Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you type or pick a number; for categorical data you pick a category from a list (you tap your choice). This is how… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
       "hint": "Start here: Rainfall: 2mm, 1mm, 3mm",
       "explanation": "Data on a form (computing devices): Computing devices collect data on electronic forms. A form is just a set of questions. A form can collect both kinds of data: for numerical data you type or pick a number; for categorical data you pick a category from a list (you tap your choice). This is how a phone, tablet or computer gathers…"
@@ -166,9 +166,9 @@
       "title": "Data Helps Us!",
       "context": "work through the steps below and see what happens. This is be a data scientist: the mini-project in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Data helps us solve problems. Draw a line from each problem to the data that helps.",
-      "answer": "Match: Problem → Data that helps Match: How many beans are left in the shop? → the rain and wind data Match: Will it rain tomorrow? → the children's test scores Match: Which child needs help in maths? → the shop's sales data",
+      "answer": "Working in small groups, they collect real data (each person's height and eye colour), sort each piece of data into numerical or categorical, decide which questions are statistical or non-statistical, and then use the data to answer a question. This session… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
-      "hint": "Start here: Match: Problem → Data that helps",
+      "hint": "Start here: Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
       "explanation": "Be a data scientist: the Mini-Project: Working in small groups, they collect real data (each person's height and eye colour), sort each piece of data into numerical or categorical, decide which questions are statistical or non-statistical, and then use the data to answer a question. This session and the Mini-Project go hand in hand."
     },
     {
@@ -178,7 +178,7 @@
       "title": "True or False?",
       "context": "work through the steps below and see what happens. This is questions: one answer or many answers? in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Circle True or False for each one.",
-      "answer": "a. A question with many answers is a statistical question. True / False b. Numerical data is words, like eye colour. True / False c. Data can help us solve problems. True / False Did You Know? Data scientists use data to solve very big, tricky problems — like keeping people healthy!",
+      "answer": "Questions come in two kinds. A statistical question has more than one answer - the answers can be different for different people. A non-statistical question has only one answer. Being a data scientist starts with knowing which kind of question we are asking. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: a. A question with many answers is a statistical question. True / False",
       "explanation": "Questions: one answer or many answers?: Questions come in two kinds. A statistical question has more than one answer — the answers can be different for different people. A non-statistical question has only one answer. Being a data scientist starts with knowing which kind of question we are asking."
@@ -392,16 +392,14 @@
       "title": "One Answer or Many Answers?",
       "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
       "steps": [
-        "Some questions have only one answer. Some have many answers. A many-answer question is called a statistical question. A one-answer question is called a non-statistical question. Tick the right box for each question.",
-        "Match: Question → One answer / Many answers"
+        "Some questions have only one answer. Some have many answers. A many-answer question is called a statistical question. A one-answer question is called a non-statistical question. Tick the right box for each question."
       ]
     },
     {
       "title": "Numbers or Groups?",
       "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
       "steps": [
-        "Numerical data is numbers — we count or measure them. Categorical data is groups — like colours or names. Tick the right box for each one.",
-        "Match: Data → Numerical (numbers) / Categorical (groups)"
+        "Numerical data is numbers - we count or measure them. Categorical data is groups - like colours or names. Tick the right box for each one."
       ]
     },
     {
@@ -420,11 +418,10 @@
       "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
       "steps": [
         "A form is a set of questions on a screen or on paper. Look at the form. Does each question want a number or a group? Tick the right box.",
-        "Ehel Academy — Class Form",
+        "Ehel Academy - Class Form",
         "1. How many brothers and sisters",
         "2. How do you get to school?",
-        "( ) walk ( ) car ( ) bus",
-        "Match: Form question → Numerical (number) / Categorical (group)"
+        "( ) walk ( ) car ( ) bus"
       ]
     },
     {
@@ -432,10 +429,9 @@
       "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
       "steps": [
         "Data helps us solve problems. Draw a line from each problem to the data that helps.",
-        "Match: Problem → Data that helps",
-        "Match: How many beans are left in the shop? → the rain and wind data",
-        "Match: Will it rain tomorrow? → the children's test scores",
-        "Match: Which child needs help in maths? → the shop's sales data"
+        "Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
+        "Left: Problem; How many beans are left in the shop?; Will it rain tomorrow?; Which child needs help in maths?",
+        "Right, in the wrong order: Data that helps; the rain and wind data; the children's test scores; the shop's sales data"
       ]
     },
     {
@@ -455,8 +451,7 @@
       "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
       "steps": [
         "In your group, find each person's height and eye colour. Write one person on each row.",
-        "Tip: use a tape measure for the heights. Look closely for the eye colours!",
-        "Match: Name → Height (cm) / Eye colour"
+        "Tip: use a tape measure for the heights. Look closely for the eye colours!"
       ]
     },
     {

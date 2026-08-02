@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T11:52:21.792Z",
+  "generatedAt": "2026-08-02T13:39:22.823Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -155,7 +155,7 @@
       "title": "Sense, Think, Act",
       "context": "work through the steps below and see what happens. This is sense, think, act: what a control system is in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Every robot works in three steps. Fill in the missing words: input, process, output.",
-      "answer": "a) The robot's sensors sense the world. This is the ______________. b) The robot's processor (its brain) decides what to do. This is the ______________. c) The robot's motors and lights make something happen. This is the ______________. Leila's helper robot follows these rules (this is its program) Rule 1: if the distance sensor senses a wall in front -> motors STOP and turn",
+      "answer": "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor, decides what to do), and it makes an output (it acts - it moves, lights up, or makes a sound). A robot is a… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
       "hint": "Start here: a) The robot's sensors sense the world. This is the ______________.",
       "explanation": "Sense, think, act: what a control system is: A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor, decides what to do), and it makes an output (it acts — it moves, lights up, or makes a sound). A robot is a control system that we build to do a job for…"
@@ -167,7 +167,7 @@
       "title": "Input, Process or Output?",
       "context": "work through the steps below and see what happens. This is sensing the world: sensors and data loggers in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Write I for input, P for process, or O for output next to each one.",
-      "answer": "a) A distance sensor __________ b) A motor turning a wheel __________ c) The processor deciding to stop __________ d) A screen showing a picture __________ e) A light sensor __________",
+      "answer": "The input usually comes from a sensor - a special input device that detects a change in the world and sends that information to the processor. Different sensors sense different things: distance (how close something is), light (bright or dark), motion… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: a) A distance sensor __________",
       "explanation": "Sensing the world: sensors and data loggers: The input usually comes from a sensor — a special input device that detects a change in the world and sends that information to the processor. Different sensors sense different things: distance (how close something is), light (bright or dark), motion (movement), temperature (heat and cold), and…"
@@ -179,9 +179,9 @@
       "title": "Match the Sensor to Its Job",
       "context": "work through the steps below and see what happens. This is acting on the world: outputs, and guiding the robot in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "A sensor senses a change in the world. Draw a line from each sensor to its job.",
-      "answer": "Match: Sensor → Its job Match: distance sensor → turns a streetlight on when it gets dark Match: light sensor → senses how close a car is to the one in front Match: motion sensor → senses the signal from a TV remote Match: temperature sensor → switches a light on when someone walks up",
+      "answer": "The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures, video), a printer, lights (a bulb or lamp), sound (a buzzer, speaker or bell) and movement (a motor turning… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
-      "hint": "Start here: Match: Sensor → Its job",
+      "hint": "Start here: Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
       "explanation": "Acting on the world: outputs, and guiding the robot: The output takes what the processor decided and makes something happen we can see, hear or feel. Output devices include a screen (text, pictures, video), a printer, lights (a bulb or lamp), sound (a buzzer, speaker or bell) and movement (a motor turning wheels, or a robotic arm that lifts things).…"
     },
     {
@@ -191,7 +191,7 @@
       "title": "Sensors and Data Loggers",
       "context": "work through the steps below and see what happens. This is the software that runs a robot in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Answer in your own words.",
-      "answer": "a) What is a sensor? ____________________________________________ b) A data logger is left alone to sense and store data over time. Name one place you might use one ____________________________________________________________ c) A weather-station data logger records the weather. Write two things it could record. ____________________________________ and ____________________________________",
+      "answer": "A robot or computer needs software - the programs that tell it what to do - and there are two kinds. Application software does a job for the user: a word processor, a spreadsheet, a browser, a music player, a game - and a robot's own task program. System… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
       "hint": "Start here: a) What is a sensor? ____________________________________________",
       "explanation": "The software that runs a robot: A robot or computer needs software — the programs that tell it what to do — and there are two kinds. Application software does a job for the user: a word processor, a spreadsheet, a browser, a music player, a game — and a robot's own task program. System software runs the machine itself: it manages…"
@@ -203,7 +203,7 @@
       "title": "Guide the Robot to the Well",
       "context": "work through the steps below and see what happens. This is a robot's memory: file sizes, and be a robot controller in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "The robot R starts in the bottom-left, facing up (the arrow). The well is W. Follow the commands on the grid.",
-      "answer": "+----+----+----+----+----+ 5 | | | | | | +----+----+----+----+----+ 4 | | | W | | | +----+----+----+----+----+",
+      "answer": "A robot or computer stores its work as files, and different files need different amounts of storage. From smallest to biggest: a text file (a note) is tiny; an audio file (a song) is bigger; an image file (a photo) bigger still; a video file (a film) is the… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: +----+----+----+----+----+",
       "explanation": "A robot's memory: file sizes, and be a robot controller: A robot or computer stores its work as files, and different files need different amounts of storage. From smallest to biggest: a text file (a note) is tiny; an audio file (a song) is bigger; an image file (a photo) bigger still; a video file (a film) is the biggest of all. Games vary, depending on…"
@@ -215,7 +215,7 @@
       "title": "Fix the Robot's Commands",
       "context": "work through the steps below and see what happens. This is sense, think, act: what a control system is in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Sami wanted his robot to reach the well on the same grid. But this command list has one mistake — the robot turns the wrong way and drives off the grid! Find it and fix it.",
-      "answer": "Forward Forward Turn left Forward Forward",
+      "answer": "A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor, decides what to do), and it makes an output (it acts - it moves, lights up, or makes a sound). A robot is a… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: Forward",
       "explanation": "Sense, think, act: what a control system is: A control system is a machine that works in three steps. It takes input (it senses the world), it processes the input (its brain, the processor, decides what to do), and it makes an output (it acts — it moves, lights up, or makes a sound). A robot is a control system that we build to do a job for…"
@@ -454,11 +454,9 @@
       "materials": "The printed activity page (or a sheet of paper), a pencil and colours",
       "steps": [
         "A sensor senses a change in the world. Draw a line from each sensor to its job.",
-        "Match: Sensor → Its job",
-        "Match: distance sensor → turns a streetlight on when it gets dark",
-        "Match: light sensor → senses how close a car is to the one in front",
-        "Match: motion sensor → senses the signal from a TV remote",
-        "Match: temperature sensor → switches a light on when someone walks up"
+        "Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
+        "Left: distance sensor; light sensor; motion sensor; temperature sensor; infrared sensor",
+        "Right, in the wrong order: turns a streetlight on when it gets dark; senses how close a car is to the one in front; senses the signal from a TV remote; switches a light on when someone walks up; senses the heat inside a rice cooker"
       ]
     },
     {

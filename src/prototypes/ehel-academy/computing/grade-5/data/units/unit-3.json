@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T11:52:21.910Z",
+  "generatedAt": "2026-08-02T13:39:22.948Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -184,7 +184,7 @@
       "title": "Design and label the network (Part 3.1)",
       "context": "work through the steps below and see what happens. This is network hardware: the machines that connect us in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Draw Ehel Academy's network. Put the router where it connects to the internet.",
-      "answer": "Label every device, and use solid lines for wired connections and dotted lines for wireless connections. Write one sentence next to each of the switch, router and wireless access point explaining its job.",
+      "answer": "Computers can only share files, printers and software if they are joined together into a network. Think of a network like a group of friends who can all talk to each other. On its own, one computer is like a person standing alone in a room. Connect it to a… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
       "hint": "Start here: Label every device, and use solid lines for wired connections and dotted lines for wireless connections.",
       "explanation": "Network Hardware: The Machines That Connect Us: Computers can only share files, printers and software if they are joined together into a network. Think of a network like a group of friends who can all talk to each other. On its own, one computer is like a person standing alone in a room. Connect it to a network and suddenly it can talk to every…"
@@ -196,7 +196,7 @@
       "title": "Trace a message's journey (Part 3.2)",
       "context": "work through the steps below and see what happens. This is how data travels through networks in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "A student at Ehel Academy sends the message HELLO FROM HARGEISA to a cousin in Mogadishu. Show how the message is split into packets.",
-      "answer": "Draw one packet in detail, showing its packet number, 'sent from' and 'sent to' IP addresses (make up valid ones), and its piece of data. Explain in a few sentences how the packets travel by different routes and are put back in the correct order when they arrive. Add a note explaining what happens if one packet gets lost on the way.",
+      "answer": "You now know the hardware that joins devices together. But how does a message actually travel from your device, across the world, and arrive at exactly the right computer? That is the amazing journey you will follow in this part. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: Draw one packet in detail, showing its packet number, 'sent from' and 'sent to' IP addresses (make up valid ones), and its piece of data.",
       "explanation": "How Data Travels Through Networks: You now know the hardware that joins devices together. But how does a message actually travel from your device, across the world, and arrive at exactly the right computer? That is the amazing journey you will follow in this part."
@@ -208,7 +208,7 @@
       "title": "A network-failure resilience plan (Part 3.3)",
       "context": "work through the steps below and see what happens. This is comparing the three ways to connect in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "'Resilience' means being able to keep going even when something goes wrong. Write a short plan to help Ehel Academy's network stay reliable.",
-      "answer": "List three things that could cause the school's connection to break. For each one, suggest what could be done to reduce the problem or recover from it (think about backups, spare connections, and saving work often). Explain why having a backup server or a second connection helps — use the idea of data taking a 'different route'. Finish with one sentence of advice for students about saving their work, so nothing important is lost or corrupted during a failure. Here is my plan for Ehel Academy's network. Can you check that Task 1 has a router, switch and wireless access point in the right places, that Task 2 correctly describes packets and reassembly, and that Task 3 uses the idea of backups and different routes? Suggest one improvement.",
+      "answer": "You have now met three ways for a device to connect: Wi-Fi, a wired Ethernet cable, and a cellular network (mobile data). Each one suits a different job. You would not want your phone tied to a wire while you walked around a city - and you would not use a… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
       "hint": "Start here: List three things that could cause the school's connection to break.",
       "explanation": "Comparing the three ways to connect: You have now met three ways for a device to connect: Wi-Fi, a wired Ethernet cable, and a cellular network (mobile data). Each one suits a different job. You would not want your phone tied to a wire while you walked around a city — and you would not use a slow, faraway cell tower to connect a…"
@@ -220,7 +220,7 @@
       "title": "Warm Up - Your Connection Diary",
       "context": "work through the steps below and see what happens. This is how packets travel and are put back together in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Over one day, keep a simple diary of everything you do online.",
-      "answer": "List each device you use to go online (phone, tablet, laptop, PC, smart TV...). For each device, write how it connected: Wi-Fi, cellular data (mobile signal), or an Ethernet cable. For one activity, write what you were doing and whether it needed high bandwidth (like streaming a video) or low bandwidth (like sending a short message). Part 3.1 Activities — Network Hardware Activity 1 — Which device does which job?",
+      "answer": "When Nadia's packets set off across the internet, something interesting happens: they may take different routes to reach Sami. Just like cars driving from one city to another can take different roads, packets can travel by different paths. Some routes are… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
       "hint": "Start here: List each device you use to go online (phone, tablet, laptop, PC, smart TV...).",
       "explanation": "How packets travel and are put back together: When Nadia's packets set off across the internet, something interesting happens: they may take different routes to reach Sami. Just like cars driving from one city to another can take different roads, packets can travel by different paths. Some routes are quicker than others, so the packets often…"
@@ -232,7 +232,7 @@
       "title": "Ask Your AI Tutor",
       "context": "work through the steps below and see what happens. This is split the send the packets cross put the packets in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "\"I have drawn a network with a switch, a router and a wireless access point. I will describe where I placed each one. Can you check that the router is the part reaching the internet, and that my wired and wireless devices are on the right connections?\"",
-      "answer": "Part 3.2 Activities — How Data Travels Activity 3 — Valid or invalid IP address? Remember the rule: a common IP address has exactly four numbers, separated by full stops, and each number is between 0 and 255. For each address below, write valid or invalid. If it is invalid, explain why. IP address to check",
+      "answer": "message ---> packets to --> the internet --> back in order to Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: Part 3.2 Activities — How Data Travels",
       "explanation": "Split the Send the Packets cross Put the packets: message ---> packets to --> the internet --> back in order to"
@@ -244,7 +244,7 @@
       "title": "URL",
       "context": "work through the steps below and see what happens. This is advantages and disadvantages of packets in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Investigate 1 — Explore a real website safely (browser task)",
-      "answer": "This is a hands-on task. With a trusted adult's permission, open a free web browser such as Firefox. You are only looking — do NOT type any personal information into any website. Type a safe, well-known web address into the address bar (your teacher can suggest one, for example a national broadcaster or an encyclopaedia for children). Look at the address bar. Write down the full URL you can see.",
+      "answer": "Splitting data into packets is a clever idea, and it brings real benefits - but it also has a few costs. It is important to understand both sides. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: This is a hands-on task. With a trusted adult's permission, open a free web browser such as Firefox. You are only looking — do NOT type any personal…",
       "explanation": "Advantages and disadvantages of packets: Splitting data into packets is a clever idea, and it brings real benefits — but it also has a few costs. It is important to understand both sides."

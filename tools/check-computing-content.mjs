@@ -175,6 +175,42 @@ for (const gradeDir of gradeDirs) {
       }
     }
 
+    // A matching worksheet shuffles its right-hand column on purpose, so a
+    // row-wise "left → right" step asserts a pairing the source never made.
+    for (const activity of unit.activities || []) {
+      for (const step of activity.steps || []) {
+        if (/^Match: .+ → /.test(String(step))) {
+          fail(label, `activity "${activity.title}" asserts a matching pair the worksheet deliberately shuffled: "${String(step).slice(0, 60)}"`);
+        }
+      }
+    }
+
+    // A Discovery card grades a typed response against explorations[].answer.
+    // If that field is the activity's own instruction list, the learner is
+    // graded against what they were told to do — and every distractor on the
+    // worksheet counts as correct.
+    for (const exploration of unit.explorations || []) {
+      const activity = (unit.activities || []).find((entry) => entry.title === exploration.title);
+      if (!activity) continue;
+      const instructions = (activity.steps || []).slice(1).join(" ").trim();
+      if (instructions && String(exploration.answer || "").trim() === instructions) {
+        fail(label, `exploration ${exploration.id} is graded against its own instruction steps, so any item named in them scores as correct`);
+      }
+    }
+
+    // Two practice items sharing an answer while asking different things means
+    // one key line was consumed twice — the numbering-collision signature.
+    const answerOwner = new Map();
+    for (const item of unit.practice || []) {
+      const answer = String(item.answer || "").trim();
+      if (answer.length < 12 || /^(Work through the task|Say your answer)/.test(answer)) continue;
+      const prior = answerOwner.get(answer);
+      if (prior && prior.prompt.trim().toLowerCase() !== String(item.prompt).trim().toLowerCase()) {
+        fail(label, `practice ${prior.id} and ${item.id} ask different questions but share one answer — a key line bound twice`);
+      }
+      if (!prior) answerOwner.set(answer, { id: item.id, prompt: String(item.prompt) });
+    }
+
     const questions = unit.assessment?.questions || [];
     if (questions.length < 8) fail(label, `assessment has only ${questions.length} questions`);
     for (const question of questions) {
@@ -237,6 +273,36 @@ for (const gradeDir of gradeDirs) {
   }
 }
 
+// The capstone was never opened by this gate — it globs grade-N/data/units
+// only. That is how a stage's final assessment shipped with an answer absent
+// from its own options: every choice marked wrong, none ever revealed as
+// right, and a learner with no teacher left at a dead end on the last thing
+// they meet in the stage.
+let capstoneQuestionCount = 0;
+for (const gradeDir of gradeDirs) {
+  const file = path.join(computingRoot, gradeDir, "data", "grade-capstone.json");
+  if (!fs.existsSync(file)) continue;
+  const label = `${gradeDir}/grade-capstone.json`;
+  const capstone = JSON.parse(fs.readFileSync(file, "utf8"));
+  const questions = capstone.quiz?.questions || [];
+  if (!questions.length) fail(label, "capstone has no quiz questions");
+  for (const question of questions) {
+    capstoneQuestionCount += 1;
+    const options = question.options || [];
+    if (new Set(options).size !== options.length) fail(label, `question ${question.id} has duplicate options`);
+    if (question.answer !== undefined && options.length && !options.includes(question.answer)) {
+      fail(label, `question ${question.id} answer is not among its options`);
+    }
+    const defines = /^([A-Za-z][A-Za-z0-9 .'’-]{1,30}?) means /.exec(String(question.explanation || "").trim());
+    if (defines) {
+      const about = `${question.question} ${question.answer} ${options.join(" ")}`.toLowerCase();
+      if (!about.includes(defines[1].toLowerCase())) {
+        fail(label, `question ${question.id} is explained by a definition of "${defines[1]}", which it does not ask about`);
+      }
+    }
+  }
+}
+
 for (const [key, seen] of repeats) {
   const total = [...seen.values()].reduce((a, b) => a + b, 0);
   const [value, n] = [...seen.entries()].sort((x, y) => y[1] - x[1])[0];
@@ -245,7 +311,7 @@ for (const [key, seen] of repeats) {
   }
 }
 
-console.log(`computing content: ${unitCount} units, ${conceptCount} concepts, ${questionCount} quiz questions, ${codeLineCount} code lines, ${teachingChars.toLocaleString()} chars of teaching text`);
+console.log(`computing content: ${unitCount} units, ${conceptCount} concepts, ${questionCount} quiz questions (+${capstoneQuestionCount} capstone), ${codeLineCount} code lines, ${teachingChars.toLocaleString()} chars of teaching text`);
 if (warnings.length) {
   console.log(`\n${warnings.length} warning(s):`);
   for (const message of warnings.slice(0, 15)) console.log(`   ${message}`);

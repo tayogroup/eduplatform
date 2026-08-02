@@ -20,7 +20,20 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const UI = path.join(ROOT, "src", "prototypes", "ehel-academy", "computing", "shared", "course-ui.js");
+// The Listen buttons moved out of computing/shared/course-ui.js when every
+// course was put on one shell core. Both are read, so this gate keeps working
+// whichever file a subject's buttons live in — and so it fails loudly if they
+// move again rather than reporting a course with no buttons at all as clean.
+const UI_SOURCES = [
+  path.join(ROOT, "src", "prototypes", "ehel-academy", "shell", "subjects", "computing.js"),
+  path.join(ROOT, "src", "prototypes", "ehel-academy", "shell", "course-app.js"),
+  path.join(ROOT, "src", "prototypes", "ehel-academy", "computing", "shared", "course-ui.js"),
+].filter((file) => fs.existsSync(file));
+if (!UI_SOURCES.length) {
+  console.error("✗ computing audio coverage: no UI source found — the Listen buttons have moved again.");
+  process.exit(1);
+}
+const UI = UI_SOURCES[0];
 const GEN = path.join(ROOT, "tools", "generate-ehel-computing-audio.js");
 // The button texts and the hash moved into shared narration libraries, so the
 // generator no longer holds either. Read them where they now live, or this
@@ -81,7 +94,9 @@ function callArguments(source, name) {
   return out;
 }
 
-const ui = fs.readFileSync(UI, "utf8");
+// Concatenated, not just the first: a subject's buttons can be split between
+// its own module and the shared shell core.
+const ui = UI_SOURCES.map((file) => fs.readFileSync(file, "utf8")).join("\n");
 const gen = fs.readFileSync(GEN, "utf8")
   + (fs.existsSync(NARRATION) ? fs.readFileSync(NARRATION, "utf8") : "")
   + (fs.existsSync(HASH_LIB) ? fs.readFileSync(HASH_LIB, "utf8") : "");
@@ -161,15 +176,29 @@ for (const [argument, category] of EXPECTED) {
 }
 
 // Both files carry their own copy of cyrb53; they must agree exactly.
+// Brace-balanced, not "up to the next line-initial }". The shell core closes
+// cyrb53 on the same line it returns, so the old pattern ran past it and
+// compared 17,308 characters of unrelated code against 474 — a guaranteed
+// mismatch that says the hashes differ when they are identical. A check that
+// cries wolf gets switched off, and this one guards real money.
 const hashOf = (source, label) => {
-  const body = source.match(/function cyrb53\([\s\S]*?\n\}/);
-  if (!body) { fail(`${label}: no cyrb53 found`); return null; }
-  return body[0].replace(/\s+/g, " ");
+  const start = source.indexOf("function cyrb53(");
+  if (start < 0) { fail(`${label}: no cyrb53 found`); return null; }
+  let depth = 0;
+  for (let i = source.indexOf("{", start); i < source.length; i += 1) {
+    if (source[i] === "{") depth += 1;
+    else if (source[i] === "}") {
+      depth -= 1;
+      if (depth === 0) return source.slice(start, i + 1).replace(/\s+/g, " ");
+    }
+  }
+  fail(`${label}: cyrb53 is not brace-balanced`);
+  return null;
 };
-const uiHash = hashOf(ui, "course-ui.js");
+const uiHash = hashOf(ui, "the course UI");
 const genHash = hashOf(gen, "tools/lib/ehel-narration-hash.js");
 if (uiHash && genHash && uiHash !== genHash) {
-  fail("cyrb53 differs between course-ui.js and tools/lib/ehel-narration-hash.js — "
+  fail("cyrb53 differs between the course UI and tools/lib/ehel-narration-hash.js — "
      + "every pre-generated clip would be looked up under the wrong name.");
 }
 

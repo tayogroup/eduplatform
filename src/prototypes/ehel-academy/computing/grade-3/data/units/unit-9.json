@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T11:52:21.610Z",
+  "generatedAt": "2026-08-02T13:39:22.633Z",
   "stage": {
     "id": "s03",
     "label": "Stage 3"
@@ -116,7 +116,7 @@
       "title": "Secret Language Warm-Up",
       "context": "work through the steps below and see what happens. This is what is a cipher? plain text and ciphertext in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Add the sound \"ub “before the vowel in a word. So hello becomes” hub-ello “and Ivy becomes” ub-Ivy\". Play a talking game with a partner. Try saying these to your partner.",
-      "answer": "Your name. hello. friend. This is just for fun — there is no wrong answer. Giggle and enjoy your secret language!",
+      "answer": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it - but nobody else can. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
       "hint": "Start here: Your name.",
       "explanation": "What is a cipher? Plain text and ciphertext: A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it — but nobody else can."
@@ -128,7 +128,7 @@
       "title": "Plain Text or Ciphertext?",
       "context": "work through the steps below and see what happens. This is the flip-text cipher in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "One message is plain text (easy to read). One is ciphertext (secret). Write the right label under each one.",
-      "answer": "Message A: hello Message B: olleh Message A is ________________________ Message B is ________________________ The secret rule here was: write the word ________________________.",
+      "answer": "Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first code because there is no chart to remember - the rule *is* the code. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: Message A: hello",
       "explanation": "The flip-text cipher: Our first real cipher is the flip-text cipher. The rule is simple: write the whole message backwards; to read it, flip it back. It is a great first code because there is no chart to remember — the rule *is* the code."
@@ -140,7 +140,7 @@
       "title": "The Flip Code",
       "context": "work through the steps below and see what happens. This is picture codes: swapping letters for symbols in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "The flip code writes a message backwards. To read it, flip it back! Work slowly from the last letter.",
-      "answer": "a) Layla sent this flipped name. Flip it back to read it oel -> ______________ b) Now YOU flip Max's name to make it secret max -> ______________",
+      "answer": "A code can swap each letter for something else - not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each letter becomes. As long as both friends have the same key, they can read each other's secret pictures. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
       "hint": "Start here: a) Layla sent this flipped name. Flip it back to read it",
       "explanation": "Picture codes: swapping letters for symbols: A code can swap each letter for something else — not just another letter, but a little picture or symbol. We use a key (a chart) that shows what each letter becomes. As long as both friends have the same key, they can read each other's secret pictures."
@@ -152,7 +152,7 @@
       "title": "The Picture Code",
       "context": "work through the steps below and see what happens. This is the letters-to-numbers code in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "This code swaps each letter for a picture. Use the key to read and write secret words.",
-      "answer": "a) Decode this secret word. Write the letters under the pictures. square triangle triangle diamond -> ______________ b) Now draw the pictures to encode the word yes Match: Letter → Picture Match: a → star",
+      "answer": "We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the message tidy. This is the letters-to-numbers code. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
       "hint": "Start here: a) Decode this secret word. Write the letters under the pictures.",
       "explanation": "The letters-to-numbers code: We can swap each letter for a number. The rule is: a = 01, b = 02, c = 03, all the way to z = 26. We always use two digits (so 05, not 5) to keep the message tidy. This is the letters-to-numbers code."
@@ -164,7 +164,7 @@
       "title": "Decode the Number Message",
       "context": "work through the steps below and see what happens. This is the reverse-alphabet code, and being a code-breaker in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Leo sent you a message in the letters-to-numbers code. Use the chart to read it. Read the digits two at a time.",
-      "answer": "Code chart a = 01 b = 02 c = 03 d = 04 e = 05 f = 06 g = 07 h = 08 i = 09 j = 10 k = 11 l = 12 m = 13 n = 14 o = 15 p = 16 q = 17 r = 18 s = 19 t = 20 u = 21 v = 22 w = 23 x = 24 y = 25 z = 26",
+      "answer": "In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters code. The best surprise: the same rule hides *and* reveals, so encoding and decoding are the same action. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: Code chart",
       "explanation": "The reverse-alphabet code, and being a code-breaker: In this code each letter is matched with the letter from the other end of the alphabet: a = z, b = y, c = x, and so on. It is the letters-to-letters code. The best surprise: the same rule hides *and* reveals, so encoding and decoding are the same action."
@@ -176,7 +176,7 @@
       "title": "Send a Number Message",
       "context": "work through the steps below and see what happens. This is what is a cipher? plain text and ciphertext in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Remember: two digits for every letter (like 05, not 5). Use the same chart to encode a message.",
-      "answer": "a) Write the word smile in the number code smile -> ________________________ b) Now write YOUR name in the number code ________ -> ________________________",
+      "answer": "A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it - but nobody else can. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: a) Write the word smile in the number code",
       "explanation": "What is a cipher? Plain text and ciphertext: A cipher is a set of rules that turns a normal message into a secret one. The normal message is called plain text. The secret, scrambled message is called ciphertext. Both friends know the rule, so both can read it — but nobody else can."
@@ -428,8 +428,8 @@
         "a) Decode this secret word. Write the letters under the pictures.",
         "square triangle triangle diamond -> ______________",
         "b) Now draw the pictures to encode the word yes",
-        "Match: Letter → Picture",
-        "Match: a → star"
+        "Match each one on the left to the right. The right-hand list is in a different order on purpose — work out which goes with which.",
+        "Left: Letter; e; m; o; s; t; w; y"
       ]
     },
     {

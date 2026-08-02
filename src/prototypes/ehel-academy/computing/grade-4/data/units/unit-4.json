@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T11:52:21.696Z",
+  "generatedAt": "2026-08-02T13:39:22.724Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -213,7 +213,7 @@
       "title": "A Story That Repeats",
       "context": "work through the steps below and see what happens. This is stories that repeat: loops and iterations in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Here is a story about Nora sharing dates with her neighbours. The four story cards are out of order. Write 1, 2, 3, 4 to put them in the right order.",
-      "answer": "[ ] She knocks on the door and says “Hello”. [ ] Nora fills her basket with dates. [ ] She gives you some dates. [ ] She walks to a neighbour's door. Nora does the same thing at three houses. Answer these",
+      "answer": "A loop is a set of instructions that is repeated. When we go through those instructions one time, that is one iteration. If the loop runs several times, there are several iterations. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
       "hint": "Start here: [ ] She knocks on the door and says “Hello”.",
       "explanation": "Stories that repeat: loops and iterations: A loop is a set of instructions that is repeated. When we go through those instructions one time, that is one iteration. If the loop runs several times, there are several iterations."
@@ -225,7 +225,7 @@
       "title": "One Iteration",
       "context": "work through the steps below and see what happens. This is the counter and the count-controlled loop in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Here are the steps Nora repeats at each house. Doing all four steps one time is called one iteration.",
-      "answer": "Step 1 Walk to a house Step 2 Knock on the door Step 4 Give you some dates Nora does these steps at 3 houses. Fill in the blanks One trip through steps 1 to 4 is one _______________________.",
+      "answer": "A counter keeps track of how many times a loop has run. When we know the exact number of times to repeat, we can write the loop in a short way and say “repeat these steps N times”. A loop that repeats a set, known number of times is called a count-controlled… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: Step 1 Walk to a house",
       "explanation": "The counter and the count-controlled loop: A counter keeps track of how many times a loop has run. When we know the exact number of times to repeat, we can write the loop in a short way and say “repeat these steps N times”. A loop that repeats a set, known number of times is called a count-controlled loop. This makes a long algorithm much…"
@@ -237,7 +237,7 @@
       "title": "Make it Shorter",
       "context": "work through the steps below and see what happens. This is into scratch: the repeat block in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Karim is running a four-lap race on sports day. His algorithm is very long! First, circle the two steps that keep coming back.",
-      "answer": "Step 1 Start running Step 2 Run down the track Step 3 Cheer with the crowd Step 4 Run down the track Step 5 Cheer with the crowd",
+      "answer": "The same idea works on the computer. In Scratch, the Repeat block is a count-controlled loop. It is a C-shaped block from the Control group: you drop the steps you want to repeat inside its mouth, and you type the counter number at the top. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
       "hint": "Start here: Step 1 Start running",
       "explanation": "Into Scratch: the Repeat block: The same idea works on the computer. In Scratch, the Repeat block is a count-controlled loop. It is a C-shaped block from the Control group: you drop the steps you want to repeat inside its mouth, and you type the counter number at the top."
@@ -249,7 +249,7 @@
       "title": "Count the Iterations",
       "context": "work through the steps below and see what happens. This is a loop that draws: the square in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "The counter is the number that says how many times to repeat. For each loop, write how many iterations there are.",
-      "answer": "a) Repeat steps 2 and 3, four times. Iterations = _______ Counter = _______ b) Nora shares dates at three houses. Iterations = _______ Counter = _______ c) A square has four sides (move and turn). Iterations = _______ Counter = _______",
+      "answer": "A count-controlled loop can draw a shape. To draw a square you do the same two steps four times: move forward, then turn a right-angle (90 degrees). This is a perfect four-iteration count-controlled loop, and it makes a lovely picture for a story scene (a… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
       "hint": "Start here: a) Repeat steps 2 and 3, four times. Iterations = _______ Counter = _______",
       "explanation": "A loop that draws: the square: A count-controlled loop can draw a shape. To draw a square you do the same two steps four times: move forward, then turn a right-angle (90 degrees). This is a perfect four-iteration count-controlled loop, and it makes a lovely picture for a story scene (a window, a picture frame, a floor tile)."
@@ -261,7 +261,7 @@
       "title": "Try it in Scratch: The Repeat Block",
       "context": "work through the steps below and see what happens. This is tell your repeating story (put it together) in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "Make a cat walk across the screen and say hello — using a Repeat block!",
-      "answer": "Go to scratch.mit.edu and click Create. Click Choose a Backdrop (bottom right) and pick Blue Sky. From the orange Control group, drag out repeat (10) and change the 10 to 4. Drag these blocks and put the middle three INSIDE the repeat block (the block hugs them) when green flag clicked",
+      "answer": "You build a short Scratch story where a count-controlled loop does the repeating part. Changing the counter number changes how many times the repeat happens - so the storyteller is in control. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: Go to scratch.mit.edu and click Create.",
       "explanation": "Tell your repeating story (put it together): You build a short Scratch story where a count-controlled loop does the repeating part. Changing the counter number changes how many times the repeat happens — so the storyteller is in control."
@@ -273,7 +273,7 @@
       "title": "Try it in Scratch: Draw a Square",
       "context": "work through the steps below and see what happens. This is stories that repeat: loops and iterations in practice — you need the printed activity page (or a sheet of paper), a pencil and colours.",
       "prompt": "A count-controlled loop can draw! Make a square for your story scene (a window or a floor tile).",
-      "answer": "Click Add Extension (bottom left) and choose Pen. Build this program. Put the move and turn blocks INSIDE the repeat block. when green flag clicked erase all go to x: (0) y: (0)",
+      "answer": "A loop is a set of instructions that is repeated. When we go through those instructions one time, that is one iteration. If the loop runs several times, there are several iterations. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: Click Add Extension (bottom left) and choose Pen.",
       "explanation": "Stories that repeat: loops and iterations: A loop is a set of instructions that is repeated. When we go through those instructions one time, that is one iteration. If the loop runs several times, there are several iterations."

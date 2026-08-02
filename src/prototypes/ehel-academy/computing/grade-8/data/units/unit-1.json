@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T11:52:22.231Z",
+  "generatedAt": "2026-08-02T13:39:23.286Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -314,7 +314,7 @@
       "title": "Plan (decomposition and pseudocode)",
       "context": "Plan (decomposition and pseudocode): work through the steps below and see what happens. This is pseudocode in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Write one or two sentences describing what your program does and who at Ehel Academy it helps.",
-      "answer": "Decompose it into 3 to 5 sub-problems. Write pseudocode for the whole program, using INPUT, OUTPUT, variables and at least one IF statement.",
+      "answer": "Pseudocode is a tool used when *designing* a program, before you write the real code. The word is made of two parts: *pseudo* means 'not real', and *code* means programming statements. So pseudocode means 'not-real code'. It looks like a program, but it does… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
       "hint": "Start here: Decompose it into 3 to 5 sub-problems.",
       "explanation": "Pseudocode: Pseudocode is a tool used when *designing* a program, before you write the real code. The word is made of two parts: *pseudo* means 'not real', and *code* means programming statements. So pseudocode means 'not-real code'. It looks like a program, but it does not have to follow the strict rules of…"
@@ -326,7 +326,7 @@
       "title": "Build (Python in Thonny, iterative development)",
       "context": "Build (Python in Thonny, iterative development): work through the steps below and see what happens. This is selection in pseudocode in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Build your program one sub-problem at a time, running it after each part (this is iterative development).",
-      "answer": "Use selection (if / elif / else) correctly, with proper indentation. Use at least one appropriate data type feature: a Boolean flag, a constant, or casting with int(), float() or bool(). Import and use at least one library function (for example random.randint or math.floor).",
+      "answer": "Selection is how a program makes a decision. It checks a condition - a comparison that is either true or false - and runs different code depending on the answer. The comparison operators are: Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: Use selection (if / elif / else) correctly, with proper indentation.",
       "explanation": "Selection in Pseudocode: Selection is how a program makes a decision. It checks a condition - a comparison that is either true or false - and runs different code depending on the answer. The comparison operators are:"
@@ -338,7 +338,7 @@
       "title": "Test (test plan)",
       "context": "Test (test plan): work through the steps below and see what happens. This is pseudocode: elseif chain with a final else in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Write a test plan table with columns for type, description, example input, expected output and actual output.",
-      "answer": "Include normal, invalid and boundary test data. Run every test, fill in the actual output, and fix any part that does not match.",
+      "answer": "Important rule: once one condition is found to be true, its code runs and the rest of the chain is skipped. So if the user enters '1234', the first condition is false, the second is true, '1234 is not a strong password' is output, and nothing else in the… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
       "hint": "Start here: Include normal, invalid and boundary test data.",
       "explanation": "Pseudocode: ELSEIF chain with a final ELSE: Important rule: once one condition is found to be true, its code runs and the rest of the chain is skipped. So if the user enters '1234', the first condition is false, the second is true, '1234 is not a strong password' is output, and nothing else in the chain is checked."
@@ -350,7 +350,7 @@
       "title": "Reflect",
       "context": "Reflect: work through the steps below and see what happens. This is pseudocode: and combines two conditions in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Write two sentences on what worked well and what you would improve.",
-      "answer": "Write one sentence on how your program could genuinely help people, and how you kept it honest and correct. Evaluation Review your Final Project, then ask a partner or your AI tutor to review it too. Check that your project. clearly states what it does and who it helps includes pseudocode and a sensible decomposition",
+      "answer": "Condition 1, 97 > 90, is true. Condition 2, 97 < 100, is true. True AND true is true, so 'Just in range' is output. If total were 100 instead, then 100 < 100 is false, and true AND false is false, so the ELSE would run and output 'Incorrect amount'. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
       "hint": "Start here: Write one sentence on how your program could genuinely help people, and how you kept it honest and correct.",
       "explanation": "Pseudocode: AND combines two conditions: Condition 1, 97 > 90, is true. Condition 2, 97 < 100, is true. True AND true is true, so 'Just in range' is output. If total were 100 instead, then 100 < 100 is false, and true AND false is false, so the ELSE would run and output 'Incorrect amount'."
@@ -362,7 +362,7 @@
       "title": "Computational Thinking and Programming",
       "context": "Computational Thinking and Programming: work through the steps below and see what happens. This is searching algorithms in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Year 8 - Unit 1 - Activities & Projects",
-      "answer": "How to Use This Booklet These activities let you practise every subunit with your hands on the keyboard. Each activity has a clear task, the exact code to type or the pseudocode to write, the expected output, and a prompt for your AI tutor. Do the subunits in order. Type the code yourself rather than copying and pasting - your fingers learn too. When something does not work, that is normal: read the error, check the common mistakes, and ask your AI tutor for a hint. Setup Guide: Thonny and the micro:bit Simulator In a web browser, go to thonny.org. Click the download link for your system (Windows, macOS or Linux). Thonny is free and open-source, and it already includes Python, so you do not need to install Python separately.",
+      "answer": "A searching algorithm is a set of steps for finding a particular item in a set of data. Computers search constantly. When you log in, the system searches a file of usernames to find yours and then checks the password. When you look for a lost file, the… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: How to Use This Booklet",
       "explanation": "Searching Algorithms: A searching algorithm is a set of steps for finding a particular item in a set of data. Computers search constantly. When you log in, the system searches a file of usernames to find yours and then checks the password. When you look for a lost file, the computer searches every file for a match. When…"
@@ -374,7 +374,7 @@
       "title": "Year 8 - Unit 1 - Activities & Projects",
       "context": "Year 8 - Unit 1 - Activities & Projects: work through the steps below and see what happens. This is conditional statements in text-based programming (python) in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "How to Use This Booklet",
-      "answer": "These activities let you practise every subunit with your hands on the keyboard. Each activity has a clear task, the exact code to type or the pseudocode to write, the expected output, and a prompt for your AI tutor. Do the subunits in order. Type the code yourself rather than copying and pasting - your fingers learn too. When something does not work, that is normal: read the error, check the common mistakes, and ask your AI tutor for a hint. Setup Guide: Thonny and the micro:bit Simulator In a web browser, go to thonny.org. Click the download link for your system (Windows, macOS or Linux). Thonny is free and open-source, and it already includes Python, so you do not need to install Python separately. Open the downloaded file and follow the simple installer steps.",
+      "answer": "Now you turn your pseudocode into real Python and run it in Thonny. A conditional statement in Python is an if statement, and Python also has else and elif. They work just like IF, ELSE and ELSEIF in pseudocode, but the syntax is exact and you must get it… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: These activities let you practise every subunit with your hands on the keyboard. Each activity has a clear task, the exact code to type or the…",
       "explanation": "Conditional Statements in Text-Based Programming (Python): Now you turn your pseudocode into real Python and run it in Thonny. A conditional statement in Python is an if statement, and Python also has else and elif. They work just like IF, ELSE and ELSEIF in pseudocode, but the syntax is exact and you must get it right."

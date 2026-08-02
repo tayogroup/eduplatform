@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Computing Runtime v1.0",
-  "generatedAt": "2026-08-02T11:52:21.975Z",
+  "generatedAt": "2026-08-02T13:39:23.019Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -358,7 +358,7 @@
       "title": "Welcome, computer choice, user choice",
       "context": "work through the steps below and see what happens. This is planning flowcharts in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "when green flag clicked",
-      "answer": "set [score v] to 0 Rock, paper, scissors!] for 2 seconds set [computerChoice v] to (pick random 1 to 3) if <(computerChoice) = 1> then set [computerWord v] to [rock]",
+      "answer": "Before a programmer writes any code, they usually make a plan. One of the best ways to plan is to draw a flowchart. A flowchart is a diagram that shows every step of an algorithm. An algorithm is just a set of step-by-step instructions - like a recipe, or the… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-1",
       "hint": "Start here: set [score v] to 0",
       "explanation": "Planning Flowcharts: Before a programmer writes any code, they usually make a plan. One of the best ways to plan is to draw a flowchart. A flowchart is a diagram that shows every step of an algorithm. An algorithm is just a set of step-by-step instructions — like a recipe, or the directions from your home to school."
@@ -370,7 +370,7 @@
       "title": "All nine winner conditionals",
       "context": "work through the steps below and see what happens. This is programming constructs in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "if <(userWord) = [rock]> then",
-      "answer": "if <(computerWord) = [rock]> then Say [Draw!] for 2 seconds. if <(computerWord) = [scissors]> then Rock beats scissors.] for 2 seconds if <(computerWord) = [paper]> then",
+      "answer": "A programming construct is a programming idea you use to build programs. There are three big ones, and almost every program ever written uses them: sequence, selection and iteration. Think of them as the three main tools in your toolbox. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-2",
       "hint": "Start here: if <(computerWord) = [rock]> then",
       "explanation": "Programming Constructs: A programming construct is a programming idea you use to build programs. There are three big ones, and almost every program ever written uses them: sequence, selection and iteration. Think of them as the three main tools in your toolbox."
@@ -382,7 +382,7 @@
       "title": "Activities and Projects",
       "context": "work through the steps below and see what happens. This is scratch in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Year 6 — Unit 1 — Computational Thinking and Programming",
-      "answer": "How to Use This Booklet Each activity below tells you the task, gives you the exact code or flowchart to build, tells you the expected result so you can check your work, and gives you an AI-tutor prompt to try. Do them in order, and take your time. All the software is free. Open a web browser and go to scratch.mit.edu. Click Create at the top. The Scratch editor opens — no download or account needed. On the left are the coloured blocks. In the middle you drag blocks to build code. On the top-right is the stage where your sprite lives.",
+      "answer": "Trace the result. If the user types 5, the condition answer < 10 is true, so Scratch runs the first branch and says 'You picked a one-digit number'. If the user types 15, the condition is false, so Scratch runs the ELSE branch and says 'You picked a two-digit… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-3",
       "hint": "Start here: How to Use This Booklet",
       "explanation": "Scratch: Trace the result. If the user types 5, the condition answer < 10 is true, so Scratch runs the first branch and says 'You picked a one-digit number'. If the user types 15, the condition is false, so Scratch runs the ELSE branch and says 'You picked a two-digit number'. The clever part is that the…"
@@ -394,7 +394,7 @@
       "title": "Scratch",
       "context": "work through the steps below and see what happens. This is data types in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Open a web browser and go to scratch.mit.edu.",
-      "answer": "Click Create at the top. The Scratch editor opens — no download or account needed. On the left are the coloured blocks. In the middle you drag blocks to build code. On the top-right is the stage where your sprite lives. To add the Text to Speech blocks, click the Add Extension button at the bottom-left, then choose Text to Speech. Click the green flag to run your program, and the red stop sign to stop it. For blocks, go to makecode.microbit.org and click New Project. For Python, go to python.microbit.org.",
+      "answer": "Computers organise data into data types. You need three of them in this unit. Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-4",
       "hint": "Start here: Click Create at the top. The Scratch editor opens — no download or account needed.",
       "explanation": "Data types: Computers organise data into data types. You need three of them in this unit."
@@ -406,7 +406,7 @@
       "title": "Flowchart tool",
       "context": "work through the steps below and see what happens. This is scratch chatbot using string and integer data in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Go to app.diagrams.net (also called draw.io). Choose to save to your device.",
-      "answer": "Drag shapes from the left: use the oval for Start/End, the rectangle for a process, the diamond for a decision, and the parallelogram for input/output. Join shapes with arrows to show the order. Paper and a pencil are perfectly fine too. 1.1 Flowchart Activities Activity 1.1a — Draw a 'making tea' flowchart Task: Draw a flowchart for making a cup of tea. It must include one decision. Use the correct shapes: oval for Start/End, rectangle for a process, diamond for a decision.",
+      "answer": "say (join [You are about ] (join ((current [year v]) - (birthYear)) [ years old!])) for 3 seconds Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-5",
       "hint": "Start here: Drag shapes from the left: use the oval for Start/End, the rectangle for a process, the diamond for a decision, and the parallelogram for…",
       "explanation": "Scratch chatbot using string and integer data: say (join [You are about ] (join ((current [year v]) — (birthYear)) [ years old!])) for 3 seconds"
@@ -418,7 +418,7 @@
       "title": "Wait",
       "context": "work through the steps below and see what happens. This is sub in practice — you need a computer or tablet with a web browser, plus paper and a pencil for planning.",
       "prompt": "Has the kettle boiled? --- No ---> (go back to Wait)",
-      "answer": "Pour the water onto the tea Add one spoonful of sugar",
+      "answer": "A sub-routine is a section of code, separate from the main code, that does one specific job. The clever thing is that you can use it again and again. Programmers use sub-routines to make code easier to read and to avoid writing the same instructions many… Check what you noticed against that, and write down anything that differed.",
       "modelType": "model-6",
       "hint": "Start here: Pour the water onto the tea",
       "explanation": "Sub: A sub-routine is a section of code, separate from the main code, that does one specific job. The clever thing is that you can use it again and again. Programmers use sub-routines to make code easier to read and to avoid writing the same instructions many times."

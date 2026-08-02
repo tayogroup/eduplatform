@@ -144,6 +144,14 @@ $unitno = $clean($payload['unitNo'] ?? '', 8);
 $cambridgecode = $clean($payload['cambridgeCode'] ?? '', 60);
 $modehint = trim((string)($payload['mode'] ?? ''));
 
+// The course outline is multi-line by design (one unit per line), so it gets
+// its own sanitiser: keep the newlines, collapse other whitespace, cap it.
+$courseoutline = preg_replace('/[^\S\n]+/', ' ', trim((string)($payload['courseOutline'] ?? '')));
+$courseoutline = core_text::substr($courseoutline, 0, 4000);
+if ($courseoutline === '') {
+    $courseoutline = '(The course outline was not provided; you know only the current unit.)';
+}
+
 $messages = $payload['messages'] ?? null;
 if (!is_array($messages) || !count($messages) || count($messages) > 24) {
     pqh_wehel_json(400, ['ok' => false, 'message' => 'Send between 1 and 24 chat messages.']);
@@ -212,6 +220,7 @@ $system = strtr($system, [
     '{{UNIT_TITLE}}' => $unittitle !== '' ? $unittitle : 'this unit',
     '{{CHANNEL}}' => $channel,
     '{{SUBJECT_NOTES}}' => $subjectnotes,
+    '{{COURSE_OUTLINE}}' => $courseoutline,
     '{{UNIT_CONTENT}}' => $unitcontent,
 ]);
 $modehints = (array)($promptdata['modeHints'] ?? []);

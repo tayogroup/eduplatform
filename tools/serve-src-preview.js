@@ -174,6 +174,8 @@ async function handleWehelChat(req, res) {
     '{{UNIT_TITLE}}': clean(payload.unitTitle, 160) || 'this unit',
     '{{CHANNEL}}': channel,
     '{{SUBJECT_NOTES}}': promptData.subjectNotes[subject].join('\n'),
+    '{{COURSE_OUTLINE}}': String(payload.courseOutline || '').replace(/[^\S\n]+/g, ' ').trim().slice(0, 4000)
+      || '(The course outline was not provided; you know only the current unit.)',
     '{{UNIT_CONTENT}}': unitContent
   };
   let system = promptData.template.join('\n').replace(/\{\{[A-Z_]+\}\}/g, (token) => replacements[token] ?? token);

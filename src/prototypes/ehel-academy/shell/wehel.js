@@ -16,6 +16,16 @@ export const WEHEL_STT_ENDPOINT = DEV_API ? "/api/elevenlabs-stt" : "/local/hubr
 
 const HISTORY_LIMIT = 12;
 
+// One line per unit of the loaded course manifest, so Wehel knows where the
+// open unit sits in the year and can point ahead or back. Titles only — the
+// full content still travels for the current unit alone.
+export function outlineFromManifest(manifest) {
+  const units = Array.isArray(manifest?.units) ? manifest.units : [];
+  return units
+    .map((unit) => `Unit ${unit.number}: ${unit.title}${unit.skill ? ` (skill: ${unit.skill})` : ""}`)
+    .join("\n");
+}
+
 // Merge consecutive same-role turns: the Anthropic API requires strict
 // user/assistant alternation, and a failed exchange can leave two learner
 // messages in a row in the stored transcript.
@@ -46,6 +56,7 @@ export async function askWehel({ meta, messages, channel = "text", mode = "" }) 
       unitNo: meta.unitNo,
       unitTitle: meta.unitTitle,
       learnerName: meta.learnerName || "",
+      courseOutline: meta.courseOutline || "",
       unit: meta.unit,
       channel,
       mode: mode || undefined,

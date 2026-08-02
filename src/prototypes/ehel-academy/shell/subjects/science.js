@@ -6,7 +6,7 @@
 import { initScienceWebGL } from "../../science/shared/science-webgl.js?v=science-20260801a";
 import { unitTopic, scienceDiagram } from "../../science/shared/science-visuals.js?v=science-20260801a";
 import { createCourseApp } from "../course-app.js?v=t2";
-import { mountWehelChat } from "../wehel.js?v=wehel-1";
+import { mountWehelChat, outlineFromManifest } from "../wehel.js?v=wehel-1";
 
 const pad2 = (n) => String(n).padStart(2, "0");
 
@@ -664,7 +664,7 @@ function renderAI() {
     <div class="overview-grid"><section class="panel" id="wehel-chat"></section><aside class="section-stack"><section class="panel"><h3>What Wehel can do</h3><ul class="checklist"><li>Explain this unit more simply — or go deeper</li><li>Quiz you and check your thinking</li><li>Role play and learning games</li><li>Help with homework without doing it for you</li></ul></section><section class="panel"><h3>Learning boundaries</h3><ul class="checklist"><li>Hints before answers</li><li>Unit content first</li><li>Easier questions when needed</li><li>Checkpoint choices stay yours</li></ul></section></aside></div>`;
   mountWehelChat({
     container: $("#wehel-chat"),
-    meta: { subject: "science", subjectLabel: "Science", grade: stageNumber, cambridgeCode: `${fw.level} ${fw.code}`, unitNo: course.unit.unitNo, unitTitle: course.unit.unitTitle, unit: course },
+    meta: { subject: "science", subjectLabel: "Science", grade: stageNumber, cambridgeCode: `${fw.level} ${fw.code}`, unitNo: course.unit.unitNo, unitTitle: course.unit.unitTitle, courseOutline: outlineFromManifest(manifest), unit: course },
     store: progress,
     ui: { escapeHtml, toast, voiceButton, bindVoiceControls },
     tutorLabel: "Wehel",

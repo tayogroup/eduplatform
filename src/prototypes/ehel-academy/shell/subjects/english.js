@@ -9,7 +9,7 @@
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as sharedPageHeader } from "../../shared/course-shell.js?v=20260721a";
 import { grammarDiagram, phonicsDiagram } from "../../english/shared/grammar-visuals.js?v=english-20260723a";
 import { createCourseApp } from "../course-app.js?v=t2";
-import { askWehel } from "../wehel.js?v=wehel-1";
+import { askWehel, outlineFromManifest } from "../wehel.js?v=wehel-1";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -2097,7 +2097,8 @@ async function submitAIMessage(message) {
       meta: {
         subject: "english", subjectLabel: "English", grade: gradeNumber,
         cambridgeCode: cambridgeLabel(gradeNumber),
-        unitNo: course.unit.unitNo, unitTitle: course.unit.unitTitle, unit: course,
+        unitNo: course.unit.unitNo, unitTitle: course.unit.unitTitle,
+        courseOutline: outlineFromManifest(manifest), unit: course,
       },
       messages: aiState.messages.filter((item) => item !== pending),
       mode: aiState.mode,

@@ -17,7 +17,7 @@
 // that skill as a chip. `pageHeader` is therefore deliberately absent from the
 // bind list below.
 import { createCourseApp } from "../course-app.js";
-import { mountWehelChat } from "../wehel.js?v=wehel-1";
+import { mountWehelChat, outlineFromManifest } from "../wehel.js?v=wehel-1";
 
 // Shell-provided bindings (populated by bind(ctx)).
 let $, $$, escapeHtml, icon, voiceButton, toast;
@@ -405,7 +405,8 @@ function renderTutor() {
     meta: {
       subject: "global-perspectives", subjectLabel: "Global Perspectives", grade: stageNumber,
       cambridgeCode: `${course.cambridge?.level || "Cambridge Global Perspectives"} ${course.cambridge?.code || ""}`.trim(),
-      unitNo: course.unit.unitNo, unitTitle: course.unit.unitTitle, unit: course,
+      unitNo: course.unit.unitNo, unitTitle: course.unit.unitTitle,
+      courseOutline: outlineFromManifest(manifest), unit: course,
     },
     store: progress,
     ui: { escapeHtml, toast, voiceButton, bindVoiceControls },

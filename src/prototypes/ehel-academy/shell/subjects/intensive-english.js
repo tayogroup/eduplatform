@@ -19,7 +19,7 @@
 // shown wherever a claim is made about what the learner can do.
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon } from "../../shared/course-shell.js?v=20260721a";
 import { createCourseApp } from "../course-app.js?v=t2";
-import { mountWehelChat } from "../wehel.js?v=wehel-1";
+import { mountWehelChat, outlineFromManifest } from "../wehel.js?v=wehel-1";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -112,7 +112,8 @@ function renderTutor() {
     meta: {
       subject: "intensive-english", subjectLabel: "English", grade: levelNumber,
       cambridgeCode: `CEFR ${course.unit.cefr?.band || `Level ${levelNumber}`}`,
-      unitNo: course.unit.unitNo, unitTitle: course.unit.unitTitle, unit: course,
+      unitNo: course.unit.unitNo, unitTitle: course.unit.unitTitle,
+      courseOutline: outlineFromManifest(manifest), unit: course,
     },
     store: progress,
     ui: { escapeHtml, toast, voiceButton, bindVoiceControls: () => shellCtx.bindVoiceControls() },

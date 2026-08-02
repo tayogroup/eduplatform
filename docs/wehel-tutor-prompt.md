@@ -35,6 +35,13 @@ architecture — the lesson loads it into the browser — so the client sends it
 with each request and the endpoint stays stateless. The secret being protected
 server-side is the API key, not the answer keys.
 
+Grounding has two scopes: the **open unit travels in full**, and since
+2026-08-02 the request also carries a **course outline** — one line per unit of
+the loaded manifest (`outlineFromManifest` in `shell/wehel.js`, `{{COURSE_OUTLINE}}`
+in the template) — so Wehel knows where the unit sits in the year and can point
+back or ahead. The prompt tells it plainly that other units' exact material is
+not in front of it.
+
 One master prompt serves every subject and grade. The app fills the `{{...}}` variables at
 runtime from data it already has (catalog.json, the unit's data JSON, learner profile), so
 Wehel is always grounded in the exact unit the learner has open. Nothing in the prompt is

@@ -34,7 +34,7 @@ const CSS = `
   animation:lgTileIn .5s cubic-bezier(.2,.9,.3,1.3) backwards}
 .lg-gate-mark{display:grid;place-items:center;width:88px;height:88px;border-radius:26px;
   font-size:48px;font-weight:900;box-shadow:0 14px 34px #0b1c2c66}
-.lg-gate h1{margin:4px 0 0;font-size:clamp(28px,5vw,44px);font-weight:900;line-height:1.1}
+.lg-gate h2{margin:4px 0 0;font-size:clamp(28px,5vw,44px);font-weight:900;line-height:1.1}
 .lg-gate p{margin:0;font-size:15.5px;color:#cfe0f0}
 .lg-gate-btn{margin-top:8px;display:inline-flex;align-items:center;gap:9px;border-radius:999px;
   padding:14px 34px;background:#f2c14e;color:#17324d;font-size:19px;font-weight:900;
@@ -151,9 +151,13 @@ export function mountLessonGate(opts = {}) {
     gate.setAttribute("aria-label", `Start ${title}`);
     const mark = `<span class="lg-gate-mark" style="background:${subject.tint}" aria-hidden="true">${subject.mark}</span>`;
     gate.innerHTML = `<div class="lg-gate-inner">${mark}`
-      + `<h1></h1><p>Tap to begin — the lesson fills the whole screen.</p>`
+      + `<h2></h2><p>Tap to begin — the lesson fills the whole screen.</p>`
       + `<span class="lg-gate-btn">▶ Start</span></div>`;
-    gate.querySelector("h1").textContent = title; // never inject the title as HTML
+    // h2, not h1: the page behind the gate already carries the unit's h1, and
+    // both are exposed at once while the gate is up — two h1s on one page. The
+    // gate is role="button" with aria-label="Start <title>", so this heading is
+    // only a visual echo of a name the control already announces.
+    gate.querySelector("h2").textContent = title; // never inject the title as HTML
 
     const open = () => {
       setDismissed();

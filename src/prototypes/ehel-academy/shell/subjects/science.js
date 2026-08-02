@@ -12,12 +12,12 @@ const pad2 = (n) => String(n).padStart(2, "0");
 // Shell-provided bindings (populated by bind(ctx)).
 let $, $$, escapeHtml, icon, voiceButton, pageHeader, toast;
 let complete, completeGradeSection, saveProgress, saveGradeProgress, navigate, emitProgress;
-let bindVoiceControls, updateVoiceUI, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY;
+let bindVoiceControls, updateVoiceUI, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, speakText;
 let course, progress, gradeProgress, manifest, gradeCapstone;
 function bind(ctx) {
   ({ $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, complete, completeGradeSection,
      saveProgress, saveGradeProgress, navigate, emitProgress, bindVoiceControls, updateVoiceUI,
-     renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY } = ctx);
+     renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, speakText } = ctx);
   course = ctx.course; progress = ctx.progress; gradeProgress = ctx.gradeProgress;
   manifest = ctx.manifest; gradeCapstone = ctx.gradeCapstone;
 }

@@ -356,7 +356,12 @@ export function createCourseApp(config) {
   const ctx = {
     $, $$, escapeHtml, icon, voiceButton, pageHeader, toast,
     complete, completeGradeSection, saveProgress, saveGradeProgress,
-    navigate, emitProgress, bindVoiceControls, updateVoiceUI, renderNav, renderRoute,
+    // speakText: a word card's ♪ button narrates on demand rather than through
+    // a voiceButton, so the renderer calls this directly. It was missing here,
+    // which made science's Science Words listen button a ReferenceError in
+    // every shell release since v110 — it worked in the standalone copy only
+    // because speakText was a module-scope function there.
+    navigate, emitProgress, bindVoiceControls, updateVoiceUI, renderNav, renderRoute, speakText,
     unitSectionIds, updateProgress, stageNumber, unitNumber, params, dataRootUrl,
     STORAGE_KEY, STAGE_STORAGE_KEY, PROGRESS_UNIT,
     progress, gradeProgress,

@@ -57,6 +57,59 @@ const walk = (value, visit) => {
   else if (value && typeof value === "object") Object.values(value).forEach((item) => walk(item, visit));
 };
 
+// Cambridge alignment. tools/validate-unit.mjs is the deep unit gate, but its
+// structural checks are English's schema (readings, grammar, speaking), so
+// pointing it at science reports a wall of sections science does not have. The
+// part that does apply — is the declared syllabus coherent, and is the
+// alignment evidenced — belongs here, in science's own gate.
+//
+// Primary Science is 0846 (Stages 1-6); Lower Secondary is 0893 (Stages 7-9).
+const frameworkCache = new Map();
+function frameworkFor(code) {
+  if (!frameworkCache.has(code)) {
+    const file = path.join(here, "..", "src", "curriculum", `cambridge-science-${code}.json`);
+    let parsed = null;
+    if (fs.existsSync(file)) { try { parsed = JSON.parse(fs.readFileSync(file, "utf8")); } catch { parsed = "unparseable"; } }
+    frameworkCache.set(code, parsed);
+  }
+  return frameworkCache.get(code);
+}
+let unmappedUnits = 0;
+function checkCambridge(label, gradeDir, unit) {
+  const camb = unit.cambridge;
+  if (!camb || !camb.code) { fail(label, "no cambridge block — the unit declares no syllabus"); return; }
+  const grade = Number(gradeDir.split("-")[1]);
+  const expected = grade <= 6 ? "0846" : "0893";
+  if (String(camb.code) !== expected) fail(label, `declares code ${camb.code} but Stage ${grade} belongs to ${expected}`);
+  if (Number(camb.stage) !== grade) fail(label, `declares Stage ${camb.stage} but sits in ${gradeDir}`);
+
+  const fw = frameworkFor(String(camb.code));
+  if (fw === "unparseable") { fail(label, `cambridge-science-${camb.code}.json is present but will not parse`); return; }
+  if (!fw) { fail(label, `no framework file for code ${camb.code} — alignment cannot be checked`); return; }
+  const stageObjectives = (fw.objectivesByStage || {})[String(camb.stage)] || [];
+  if (!stageObjectives.length) { fail(label, `framework ${camb.code} carries no objectives for Stage ${camb.stage}`); return; }
+
+  // Every objective code the unit claims must exist in its own stage.
+  const known = new Set(stageObjectives.map((o) => o.code));
+  // Key-aware traversal: the shared walk() yields values only, and an objective
+  // code is only meaningful when it sits under an objectives key.
+  const claimed = [];
+  const collect = (node, underObjectives) => {
+    if (typeof node === "string") { if (underObjectives) claimed.push(node.trim()); return; }
+    if (Array.isArray(node)) { node.forEach((item) => collect(item, underObjectives)); return; }
+    if (node && typeof node === "object") {
+      for (const [key, value] of Object.entries(node)) {
+        collect(value, underObjectives || /cambridgeObjectives?|objectiveCodes?/i.test(key));
+      }
+    }
+  };
+  collect(unit, false);
+  for (const code of claimed) {
+    if (!known.has(code)) fail(label, `claims objective ${code}, which is not in ${camb.code} Stage ${camb.stage}`);
+  }
+  if (!claimed.length) unmappedUnits += 1;
+}
+
 const gradeDirs = fs.readdirSync(scienceRoot).filter((name) => /^grade-\d+$/.test(name)).sort();
 let unitCount = 0, conceptCount = 0, questionCount = 0, teachingChars = 0;
 
@@ -68,6 +121,7 @@ for (const gradeDir of gradeDirs) {
     const label = `${gradeDir}/${file}`;
     const unit = JSON.parse(fs.readFileSync(path.join(unitsDir, file), "utf8"));
     unitCount += 1;
+    checkCambridge(label, gradeDir, unit);
 
     const concepts = unit.concepts || [];
     if (concepts.length < 3) fail(label, `only ${concepts.length} concepts`);
@@ -148,6 +202,13 @@ for (const [key, seen] of repeats) {
 }
 
 console.log(`science content: ${unitCount} units, ${conceptCount} concepts, ${questionCount} quiz questions, ${teachingChars.toLocaleString()} chars of teaching text`);
+if (unmappedUnits) {
+  // Not a failure: mapping every outcome to a syllabus code is authoring work,
+  // not a build defect. But it is stated plainly, because until it is done the
+  // course's Cambridge alignment is a claim rather than something checked.
+  console.log(`\ncambridge: ${unmappedUnits} of ${unitCount} units map no objective codes — alignment is declared, not evidenced.`);
+  console.log("   The syllabus and stage of every unit were checked against src/curriculum/cambridge-science-08*.json.");
+}
 if (warnings.length) {
   console.log(`\n${warnings.length} warning(s):`);
   for (const message of warnings.slice(0, 15)) console.log(`   ${message}`);

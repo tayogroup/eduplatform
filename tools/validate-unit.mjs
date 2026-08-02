@@ -479,7 +479,13 @@ function validate(file) {
   for (const [pth, s] of allStrings(d)) {
     if (/cambridgeObjectives?|objectiveCodes?|learningObjectiveCodes?/i.test(pth) && CODE_RE.test(s.trim())) claimed.push([pth, s.trim()]);
   }
-  const fwPath = path.join(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1")), "..", "src", "curriculum", `cambridge-english-${camb.code}.json`);
+  // The framework file is named for the subject, not for English. Hard-coding
+  // "cambridge-english-" meant any other subject reported "no framework file"
+  // and skipped objective validation silently — a note where a subject that
+  // ships its own framework should have been checked against it.
+  const subject = /ehel-academy[\\/]([a-z-]+)[\\/]/.exec(file)?.[1] || "english";
+  const fwName = `cambridge-${subject}-${camb.code}.json`;
+  const fwPath = path.join(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1")), "..", "src", "curriculum", fwName);
   let fw = null, fwError = null;
   // A framework that is PRESENT but unreadable is a different situation from one
   // that was never shipped: swallowing the parse error made a corrupt file look
@@ -487,9 +493,9 @@ function validate(file) {
   if (fs.existsSync(fwPath)) { try { fw = JSON.parse(fs.readFileSync(fwPath, "utf8")); } catch (e) { fwError = e.message; } }
 
   if (fwError) {
-    F(false, "cambridge: framework file present but unparseable", `src/curriculum/cambridge-english-${camb.code}.json — ${fwError}`);
+    F(false, "cambridge: framework file present but unparseable", `src/curriculum/${fwName} — ${fwError}`);
   } else if (!fw) {
-    N(`cambridge note: no framework file for code ${camb.code} (expected src/curriculum/cambridge-english-${camb.code}.json) — objective validation skipped`);
+    N(`cambridge note: no framework file for code ${camb.code} (expected src/curriculum/${fwName}) — objective validation skipped`);
     if (claimed.length) N(`cambridge note: ${claimed.length} objective code(s) claimed but not verifiable without the framework`);
   } else {
     const stageKey = String(camb.stage);

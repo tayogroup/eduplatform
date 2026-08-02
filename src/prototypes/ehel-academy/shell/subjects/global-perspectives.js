@@ -50,7 +50,7 @@ const SECTIONS = [
   ["challenge", "flag", "My Challenge", (c) => c.challenge?.intro || c.challenge?.topics?.length],
   ["activities", "blocks", "Activities", (c) => c.activities?.length],
   ["project", "hammer", "Mini-Project", (c) => c.project?.steps?.length],
-  ["tutor", "sparkles", "Ask Your AI Tutor", (c) => c.tutorPrompts?.length],
+  ["tutor", "sparkles", "Wehel Tutor", () => true],
   ["practice", "list-checks", "Practice", (c) => c.practice?.length],
   ["quiz", "circle-help", "Unit Quiz", (c) => c.assessment?.questions?.length],
   ["reflect", "messages-square", "Reflection", (c) => c.reflection?.length || c.selfAssessment?.length],
@@ -394,8 +394,8 @@ function renderProgressPage() {
 // expert) mounts beneath them once the HTML is in place.
 function renderTutor() {
   paint("tutor", () => `
-    ${pageHeader("Ask Your AI Tutor", "Wehel — Global Perspectives", "Wehel is your discussion partner. Say your ideas out loud, debate both sides, and let it push your thinking further.")}
-    <section class="panel">${(course.tutorPrompts || []).map((item) => box(item, "tutor")).join("")}</section>
+    ${pageHeader("Your AI subject expert", "Wehel Tutor — Global Perspectives", "Wehel Tutor is your discussion partner. Say your ideas out loud, debate both sides, and let it push your thinking further.")}
+    ${(course.tutorPrompts || []).length ? `<section class="panel">${course.tutorPrompts.map((item) => box(item, "tutor")).join("")}</section>` : ""}
     <section class="panel" id="wehel-chat" style="margin-top:18px"></section>
     ${doneButton("tutor")}`)();
   const mountEl = $("#wehel-chat");
@@ -410,9 +410,9 @@ function renderTutor() {
     },
     store: progress,
     ui: { escapeHtml, toast, voiceButton, bindVoiceControls },
-    tutorLabel: "Wehel",
-    greeting: `Hi! I am Wehel, your Global Perspectives partner. This unit is all about the skill of ${course.unit.skill || course.unit.unitTitle}. Try one of the conversation starters above, or just tell me what you think!`,
-    placeholder: `Talk with Wehel about ${course.unit.skill || course.unit.unitTitle}…`,
+    tutorLabel: "Wehel Tutor",
+    greeting: `Hi! I am Wehel Tutor, your Global Perspectives partner. This unit is all about the skill of ${course.unit.skill || course.unit.unitTitle}. Try one of the conversation starters above, or just tell me what you think!`,
+    placeholder: `Talk with Wehel Tutor about ${course.unit.skill || course.unit.unitTitle}…`,
     quickPrompts: [
       { label: "Explain this skill", message: "Can you explain this unit's skill in a simple way, with an example from daily life?" },
       { label: "Debate with me", message: "Let's have a friendly debate. Pick a fun topic from this unit and take the other side." },

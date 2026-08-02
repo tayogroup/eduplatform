@@ -56,7 +56,7 @@ let capstoneQuizIndex = 0, capstoneQuizScore = 0, capstoneQuizLocked = false;
 const sections = [
   ["overview", "layout-dashboard", "Unit Overview"],
   ["lesson", "book-open", "Teacher Lesson"],
-  ["ai", "sparkles", "AI Science Tutor"],
+  ["ai", "sparkles", "Wehel Tutor"],
   ["words", "braces", "Science Words"],
   ["explore", "scan-search", "Explore the Concept"],
   ["visuals", "shapes", "Visual Models"],
@@ -660,14 +660,14 @@ function buildTutorReply(message) {
 
 function renderAI() {
   const fw = cambridgeFramework(stageNumber);
-  $("#app").innerHTML = `${pageHeader("Your AI subject expert", "Wehel — Science", "Ask questions, go deeper, get quizzed, role-play a scientist or get homework help — by text or voice.", "Wehel · Ehel Academy AI")}
-    <div class="overview-grid"><section class="panel" id="wehel-chat"></section><aside class="section-stack"><section class="panel"><h3>What Wehel can do</h3><ul class="checklist"><li>Explain this unit more simply — or go deeper</li><li>Quiz you and check your thinking</li><li>Role play and learning games</li><li>Help with homework without doing it for you</li></ul></section><section class="panel"><h3>Learning boundaries</h3><ul class="checklist"><li>Hints before answers</li><li>Unit content first</li><li>Easier questions when needed</li><li>Checkpoint choices stay yours</li></ul></section></aside></div>`;
+  $("#app").innerHTML = `${pageHeader("Your AI subject expert", "Wehel Tutor — Science", "Ask questions, go deeper, get quizzed, role-play a scientist or get homework help — by text or voice.", "Wehel Tutor · Ehel Academy AI")}
+    <div class="overview-grid"><section class="panel" id="wehel-chat"></section><aside class="section-stack"><section class="panel"><h3>What Wehel Tutor can do</h3><ul class="checklist"><li>Explain this unit more simply — or go deeper</li><li>Quiz you and check your thinking</li><li>Role play and learning games</li><li>Help with homework without doing it for you</li></ul></section><section class="panel"><h3>Learning boundaries</h3><ul class="checklist"><li>Hints before answers</li><li>Unit content first</li><li>Easier questions when needed</li><li>Checkpoint choices stay yours</li></ul></section></aside></div>`;
   mountWehelChat({
     container: $("#wehel-chat"),
     meta: { subject: "science", subjectLabel: "Science", grade: stageNumber, cambridgeCode: `${fw.level} ${fw.code}`, unitNo: course.unit.unitNo, unitTitle: course.unit.unitTitle, courseOutline: outlineFromManifest(manifest), unit: course },
     store: progress,
     ui: { escapeHtml, toast, voiceButton, bindVoiceControls },
-    tutorLabel: "Wehel",
+    tutorLabel: "Wehel Tutor",
     placeholder: `Ask about ${course.unit.unitTitle}…`,
     quickPrompts: [
       { label: "Explain more simply", message: "Can you explain the first concept in this unit in a simpler way?" },

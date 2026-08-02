@@ -203,7 +203,7 @@ export function mountWehelChat(options) {
   const { container, meta, store, ui } = options;
   const key = options.key || "aiMessages";
   const escapeHtml = ui.escapeHtml;
-  const tutorLabel = options.tutorLabel || "Wehel";
+  const tutorLabel = options.tutorLabel || "Wehel Tutor";
   const greeting = options.greeting || `Hi! I am ${tutorLabel}, your ${meta.subjectLabel} companion. What would you like to do with Unit ${meta.unitNo}: ${meta.unitTitle}?`;
   if (!Array.isArray(store[key])) store[key] = [];
   const messages = store[key];

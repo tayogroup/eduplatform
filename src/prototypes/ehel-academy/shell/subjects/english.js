@@ -90,7 +90,7 @@ function bind(ctx) {
 const sections = [
   ["overview", "layout-dashboard", "Overview"],
   ["lecture", "play-square", "Teacher lecture"],
-  ["ai", "sparkles", "AI English"],
+  ["ai", "sparkles", "Wehel Tutor"],
   ["dictionary", "book-a", "Vocabulary"],
   ["reading", "book-open", "Reading & story"],
   ["comprehension", "list-checks", "Comprehension"],
@@ -2032,7 +2032,7 @@ async function submitSpeakingRecording(recordingId, target, button, { feedbackSe
 }
 
 function renderAIEnglish() {
-  if (!aiState.messages.length) aiState.messages.push({ role: "assistant", text: `Hello! I am Wehel, your AI English teacher and tutor for Unit ${course.unit.unitNo}. Choose Teach me for a lesson or Help me when you are stuck.` });
+  if (!aiState.messages.length) aiState.messages.push({ role: "assistant", text: `Hello! I am Wehel Tutor, your AI English teacher and tutor for Unit ${course.unit.unitNo}. Choose Teach me for a lesson or Help me when you are stuck.` });
   const prompts = aiQuickPrompts(aiState.mode);
   const speakingTask = currentSpeakingTask();
   const speakingTarget = speakingModelText(speakingTask);
@@ -2047,11 +2047,11 @@ function renderAIEnglish() {
     <button class="button primary ai-speaking-submit" id="ai-speaking-submit" type="button" ${speakingReview?.listened ? "" : "disabled"}>${icon("send")} Submit for pronunciation check</button>
     <div id="ai-speaking-feedback" role="status" aria-live="polite" aria-atomic="true">${pronunciationFeedbackHtml(speakingReview?.feedback)}</div>
   </section>` : "";
-  $("#app").innerHTML = `${pageHeader("Your AI subject expert", "Wehel — English", `Teacher and tutor support for Unit ${course.unit.unitNo}: ${escapeHtml(course.unit.unitTitle)}.`, "Wehel · Ehel Academy AI")}
+  $("#app").innerHTML = `${pageHeader("Your AI subject expert", "Wehel Tutor — English", `Teacher and tutor support for Unit ${course.unit.unitNo}: ${escapeHtml(course.unit.unitTitle)}.`, "Wehel Tutor · Ehel Academy AI")}
     <div class="ai-layout">
       <section class="ai-main panel">
         <div class="ai-modes" role="tablist" aria-label="Choose AI English mode">${aiModes.map(([id, modeIcon, label]) => `<button class="ai-mode ${aiState.mode === id ? "active" : ""}" data-ai-mode="${id}" type="button" role="tab" aria-selected="${aiState.mode === id}">${icon(modeIcon)}<span>${label}</span></button>`).join("")}</div>
-        <div class="ai-conversation" id="ai-conversation" aria-live="polite">${aiState.messages.map((item, index) => `<article class="ai-message ${item.role}"><span>${item.role === "assistant" ? (item.offline ? "Wehel (offline hint)" : "Wehel") : "You"}</span><p>${escapeHtml(item.text)}</p><div class="ai-message-tools"><button data-ai-listen="${index}" type="button" aria-label="Listen to ${item.role === "assistant" ? "Wehel's answer" : "your question"} with ElevenLabs">${icon("volume-2")} Listen</button>${item.role === "assistant" ? `<small>${icon("book-check")} ${gradeLabel} Unit ${course.unit.unitNo}</small>` : ""}</div></article>`).join("")}</div>
+        <div class="ai-conversation" id="ai-conversation" aria-live="polite">${aiState.messages.map((item, index) => `<article class="ai-message ${item.role}"><span>${item.role === "assistant" ? (item.offline ? "Wehel Tutor (offline hint)" : "Wehel Tutor") : "You"}</span><p>${escapeHtml(item.text)}</p><div class="ai-message-tools"><button data-ai-listen="${index}" type="button" aria-label="Listen to ${item.role === "assistant" ? "Wehel Tutor's answer" : "your question"} with ElevenLabs">${icon("volume-2")} Listen</button>${item.role === "assistant" ? `<small>${icon("book-check")} ${gradeLabel} Unit ${course.unit.unitNo}</small>` : ""}</div></article>`).join("")}</div>
         <div class="ai-prompts">${prompts.map((prompt) => `<button data-ai-prompt="${escapeHtml(prompt)}" type="button">${escapeHtml(prompt)}</button>`).join("")}</div>
         ${speakingTools}
         <form class="ai-compose" id="ai-form"><label class="sr-only" for="ai-input">Ask AI English</label><textarea id="ai-input" rows="2" maxlength="500" placeholder="Type your question or your sentence..."></textarea><button class="button primary" type="submit">${icon("send")} Send</button></form>

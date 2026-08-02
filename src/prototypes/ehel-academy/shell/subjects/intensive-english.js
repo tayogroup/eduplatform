@@ -61,7 +61,7 @@ const sections = [
   ["speaking", "mic-2", "Speaking"],
   ["writing", "pencil-line", "Writing"],
   ["activities", "shapes", "Practice"],
-  ["tutor", "sparkles", "Wehel tutor"],
+  ["tutor", "sparkles", "Wehel Tutor"],
   ["quiz", "badge-check", "Quiz"],
   ["answers", "list-checks", "Answers"],
   ["reflect", "trending-up", "My progress"],
@@ -122,7 +122,7 @@ function visibleSections() {
 // Wehel — the live AI tutor. The audience correction for this course (adult
 // beginner, CEFR level rather than school grade) lives in wehel_prompt.json.
 function renderTutor() {
-  $("#app").innerHTML = `${pageHeader("Your AI English tutor", "Wehel", "Talk with Wehel in simple English. Ask about words, patterns, or practise a real conversation — by text or voice.", "Wehel · Ehel Academy AI")}
+  $("#app").innerHTML = `${pageHeader("Your AI English tutor", "Wehel Tutor", "Talk with Wehel Tutor in simple English. Ask about words, patterns, or practise a real conversation — by text or voice.", "Wehel Tutor · Ehel Academy AI")}
     <section class="panel" id="wehel-chat"></section>`;
   mountWehelChat({
     container: $("#wehel-chat"),
@@ -134,9 +134,9 @@ function renderTutor() {
     },
     store: progress,
     ui: { escapeHtml, toast, voiceButton, bindVoiceControls: () => shellCtx.bindVoiceControls() },
-    tutorLabel: "Wehel",
-    greeting: `Hello! I am Wehel, your English tutor. We can talk, practise words, or do a role play. What would you like to do?`,
-    placeholder: "Write to Wehel in English…",
+    tutorLabel: "Wehel Tutor",
+    greeting: `Hello! I am Wehel Tutor, your English tutor. We can talk, practise words, or do a role play. What would you like to do?`,
+    placeholder: "Write to Wehel Tutor in English…",
     quickPrompts: [
       { label: "Let's talk", message: "Let's have a simple conversation in English." },
       { label: "Teach me words", message: "Teach me three useful words from this unit." },

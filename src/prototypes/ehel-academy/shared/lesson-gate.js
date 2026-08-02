@@ -188,15 +188,23 @@ export function mountLessonGate(opts = {}) {
 
 // --- self-mount ------------------------------------------------------------
 // Importing this module is enough (mirrors seb-session.js). Subject and stage
-// are derived from the URL — /app/{subject}/ and ?grade= / ?stage= — so the
-// gate does not depend on any caller passing config. mountLessonGate() stays
-// exported for explicit use; the dismissed/style guards make a second call a
-// no-op.
+// are derived from the URL — /app/{subject}/ deployed, /ehel-academy/{subject}/
+// in local dev — so the gate does not depend on any caller passing config.
+// mountLessonGate() stays exported for explicit use; the dismissed/style
+// guards make a second call a no-op.
+//
+// Self-mount runs at import time, BEFORE the shell's own explicit
+// mountLessonGate(config) call — and a mounted gate makes that later call a
+// no-op. So when the URL does not resolve to a subject this function must
+// mount nothing at all: guessing (the old English fallback) planted a
+// wrong-subject gate that the correctly-configured call could never replace.
+// That is exactly how local dev pages — whose paths had no /app/ segment to
+// match — showed an English tile on every course.
 function selfMount() {
   // [a-z-] not [a-z]: global-perspectives and intensive-english are hyphenated
-  // slugs, and a class without the hyphen fails to match them at all, leaving
-  // seg empty and the gate silently defaulting to English (see SUBJECTS above).
-  const seg = (location.pathname.match(/\/app\/([a-z-]+)\//i) || [])[1] || "";
+  // slugs, and a class without the hyphen fails to match them at all.
+  const seg = (location.pathname.match(/\/(?:app|ehel-academy)\/([a-z-]+)\//i) || [])[1] || "";
+  if (!SUBJECTS[seg.toLowerCase()]) return; // unknown subject: leave it to the shell's explicit call
   const p = new URLSearchParams(location.search);
   const stage = Number(p.get("grade") || p.get("stage") || 0);
   mountLessonGate({ subjectKey: seg, stage });

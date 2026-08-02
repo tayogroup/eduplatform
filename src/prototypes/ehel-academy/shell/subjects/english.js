@@ -9,7 +9,7 @@
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon, pageHeader as sharedPageHeader } from "../../shared/course-shell.js?v=20260721a";
 import { grammarDiagram, phonicsDiagram } from "../../english/shared/grammar-visuals.js?v=english-20260723a";
 import { createCourseApp } from "../course-app.js?v=t2";
-import { askWehel, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech } from "../wehel.js?v=wehel-1";
+import { askWehel, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon } from "../wehel.js?v=wehel-1";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -2055,7 +2055,7 @@ function renderAIEnglish() {
         <div class="ai-conversation" id="ai-conversation" aria-live="polite">${aiState.messages.map((item, index) => `<article class="ai-message ${item.role}"><span>${item.role === "assistant" ? (item.offline ? "Wehel Tutor (offline hint)" : "Wehel Tutor") : "You"}</span><p>${escapeHtml(item.text)}</p><div class="ai-message-tools"><button data-ai-listen="${index}" type="button" aria-label="Listen to ${item.role === "assistant" ? "Wehel Tutor's answer" : "your question"} with ElevenLabs">${icon("volume-2")} Listen</button>${item.role === "assistant" ? `<small>${icon("book-check")} ${gradeLabel} Unit ${course.unit.unitNo}</small>` : ""}</div></article>`).join("")}</div>
         <div class="ai-prompts">${prompts.map((prompt) => `<button data-ai-prompt="${escapeHtml(prompt)}" type="button">${escapeHtml(prompt)}</button>`).join("")}</div>
         ${speakingTools}
-        <form class="ai-compose" id="ai-form"><label class="sr-only" for="ai-input">Ask Wehel Tutor</label><textarea id="ai-input" rows="2" maxlength="500" placeholder="Type your question or your sentence..."></textarea>${speechRecognitionCtor() ? `<button class="button secondary" id="ai-mic" type="button" aria-label="Ask by voice" title="Ask by voice">${icon("mic")}</button>` : ""}<button class="button primary" type="submit">${icon("send")} Send</button></form>
+        <form class="ai-compose" id="ai-form"><label class="sr-only" for="ai-input">Ask Wehel Tutor</label><textarea id="ai-input" rows="2" maxlength="500" placeholder="Type your question or your sentence..."></textarea>${speechRecognitionCtor() ? `<button class="button secondary" id="ai-mic" type="button" aria-label="Ask by voice" title="Ask by voice">${wehelIcon("mic")}</button>` : ""}<button class="button primary" type="submit">${icon("send")} Send</button></form>
       </section>
       <aside class="ai-side section-stack">
         <section class="panel ai-focus"><span class="eyebrow">Today’s focus</span><h2>${escapeHtml(course.outcomes[0]?.learningOutcome || course.unit.unitTitle)}</h2><p><strong>${course.dictionaryLinks.length}</strong> unit words · <strong>${course.readings.length}</strong> texts · <strong>${course.grammar.length}</strong> grammar practices</p></section>

@@ -19,7 +19,7 @@
 // shown wherever a claim is made about what the learner can do.
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon } from "../../shared/course-shell.js?v=20260721a";
 import { createCourseApp } from "../course-app.js?v=t2";
-import { createPlacementUnit, PREREQ_UNIT } from "../placement.js?v=placement-1";
+import { createPlacementUnit, placementCallout, PREREQ_UNIT } from "../placement.js?v=placement-1";
 import { mountWehelChat, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -224,6 +224,7 @@ function renderOverview() {
         <section class="panel"><h3>This unit at a glance</h3><div class="stat-row"><div class="stat"><strong>${course.dictionaryLinks.length}</strong><small>words</small></div><div class="stat"><strong>${course.grammar.length}</strong><small>patterns</small></div><div class="stat"><strong>${course.quizzes.length}</strong><small>quiz items</small></div></div></section>
         <section class="panel"><h3>How to work through it</h3><ol class="path-list">${path.map((item) => `<li>${icon("circle-check-big")}<span>${escapeHtml(item)}</span></li>`).join("")}</ol></section>
         <section class="panel"><h3>Keep going</h3><p>${progress.completed.length ? `You have finished ${progress.completed.length} sections.` : "Your progress saves on this device."}</p><button class="button primary" data-go="${progress.completed.includes("lecture") ? "dictionary" : "lecture"}" type="button">Continue ${icon("arrow-right")}</button></section>
+        ${levelNumber >= 2 ? placementCallout({ escapeHtml, storageKey: `ehel-intensive-l${levelNumber}-placement-exam-v1`, stageLabel: `Level ${levelNumber}`, href: `?level=${levelNumber}&unit=-1#placement`, unitNo: course.unit.unitNo }) : ""}
       </div>
     </div>`;
   $$("[data-go]").forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));

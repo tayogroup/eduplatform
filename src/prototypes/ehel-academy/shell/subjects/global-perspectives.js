@@ -17,7 +17,7 @@
 // that skill as a chip. `pageHeader` is therefore deliberately absent from the
 // bind list below.
 import { createCourseApp } from "../course-app.js";
-import { createPlacementUnit, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
+import { createPlacementUnit, placementCallout, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
 import { mountWehelChat, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
 
 // Prerequisite unit (unit -1): a placement exam over the previous stages,
@@ -173,6 +173,7 @@ function renderOverview() {
       rows: objectives.map((o) => [o.code, o.subStrand, o.learnerText || o.text]),
     })}
   </section>` : ""}
+  ${placementCallout({ escapeHtml, storageKey: `ehel-gp-s${stageNumber}-placement-exam-v1`, stageLabel: `Stage ${stageNumber}`, href: `?stage=${stageNumber}&unit=-1#placement`, unitNo: unit.unitNo })}
   ${doneButton("overview", "I have read the overview")}`;
 }
 

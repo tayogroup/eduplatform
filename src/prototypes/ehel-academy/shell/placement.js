@@ -240,6 +240,16 @@ export function createPlacementUnit(options) {
   return { store, results, renderOverview, renderExam, renderTeacher };
 }
 
+// A callout for the first regular unit's overview page. The Prerequisite's
+// picker entry alone is easy to miss — English proved the pattern with its
+// gold panel — so every subject advertises the exam where a new learner
+// lands, until that learner has completed it on this device.
+export function placementCallout({ escapeHtml, storageKey, stageLabel, href, unitNo, firstUnitNo = 1 }) {
+  if (Number(unitNo) !== Number(firstUnitNo)) return "";
+  if (loadPlacementStore(storageKey).completed) return "";
+  return `<section class="panel final-quiz-callout"><span class="eyebrow">New to ${escapeHtml(stageLabel)}?</span><h3>Prerequisite: placement exam</h3><p>A short exam over your earlier learning finds your perfect starting point and suggests review lessons if you need them.</p><a class="button gold" href="${href}">Take the placement exam →</a></section>`;
+}
+
 // The synthetic course object a prereq-mode load() returns: just enough for
 // the shared chrome (labels, screen-reader announcements, teacher banner).
 export function placementCourseShell(manifest, exam, termLabel = "Before you begin") {

@@ -8,7 +8,7 @@
 import { initComputingWebGL } from "../../computing/shared/computing-webgl.js";
 import { unitTopic, computingDiagram } from "../../computing/shared/computing-visuals.js";
 import { createCourseApp } from "../course-app.js";
-import { createPlacementUnit, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
+import { createPlacementUnit, placementCallout, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
 import { mountWehelChat, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
 
 const pad2 = (n) => String(n).padStart(2, "0");
@@ -152,6 +152,7 @@ function renderOverview() {
         <section class="panel"><h3>Your unit at a glance</h3><div class="stat-row"><div class="stat"><strong>${course.concepts.length}</strong><small>concepts</small></div><div class="stat"><strong>${course.practice.length}</strong><small>practice items</small></div><div class="stat"><strong>${course.activities.length}</strong><small>activities</small></div><div class="stat"><strong>${(course.codeExamples || []).length}</strong><small>code examples</small></div></div></section>
         <section class="panel"><h3>Recommended path</h3><ol class="path-list"><li><span>1</span><span>Discover and model the concept.</span></li><li><span>2</span><span>Learn the method and study examples.</span></li><li><span>3</span><span>Practise with hints, games and fluency.</span></li><li><span>4</span><span>Solve real problems and explain your reasoning.</span></li><li><span>5</span><span>Complete the Unit Challenge and reflect.</span></li></ol></section>
         <section class="panel"><h3>Keep going</h3><p>${progress.completed.length ? `You have completed ${progress.completed.length} learning steps on this device.` : "Your progress will save on this device as you learn."}</p><button class="button primary" data-go="${progress.completed.includes("lesson") ? "ai" : "lesson"}" type="button">Continue →</button></section>
+        ${placementCallout({ escapeHtml, storageKey: `ehel-comp-s${stageNumber}-placement-exam-v1`, stageLabel: `Stage ${stageNumber}`, href: `?stage=${stageNumber}&unit=-1#placement`, unitNo: course.unit.unitNo })}
       </div>
     </div>`;
   $$('[data-go]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));

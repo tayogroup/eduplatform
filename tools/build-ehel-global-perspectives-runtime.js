@@ -1341,6 +1341,15 @@ function main() {
     });
     fs.writeFileSync(path.join(gradeDir, "index.html"), gradeIndexHtml(grade.year), "utf8");
 
+    // Prerequisite unit: the placement exam is hand-authored, not generated,
+    // so it lives outside the build-owned tree (global-perspectives/data/
+    // placement/) and the build carries a copy into grade-N/data — same
+    // pattern as the script-review overrides.
+    const placementSource = path.join(COURSE_DIR, "data", "placement", `grade-${grade.year}.json`);
+    if (fs.existsSync(placementSource)) {
+      fs.copyFileSync(placementSource, path.join(gradeDir, "data", "placement-exam.json"));
+    }
+
     console.log(`grade ${grade.year}: ${manifestUnits.length} units, manifest, index written.`);
   }
 

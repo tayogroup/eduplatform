@@ -2346,6 +2346,15 @@ function buildGrade(grade) {
   };
   fs.writeFileSync(path.join(gradeDir, "data", "course-manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
 
+  // Prerequisite unit: the placement exam is hand-authored, not generated, so
+  // it lives outside the build-owned tree (computing/data/placement/) and the
+  // build carries a copy into grade-N/data — same pattern as script-review
+  // overrides.
+  const placementSource = path.join(compRoot, "data", "placement", `grade-${grade}.json`);
+  if (fs.existsSync(placementSource)) {
+    fs.copyFileSync(placementSource, path.join(gradeDir, "data", "placement-exam.json"));
+  }
+
   const termUnits = (term) => manifest.units.filter((unit) => unit.termId === `t0${term}`).map((unit) => unit.number);
   const allUnitNumbers = manifest.units.map((unit) => unit.number);
   const orAll = (list) => (list.length ? list : allUnitNumbers);

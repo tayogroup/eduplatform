@@ -1803,6 +1803,16 @@ function buildGrade(grade) {
   applyCapstoneReview(gradeCapstone, grade);
   fs.writeFileSync(path.join(gradeDir, "data", "grade-capstone.json"), `${JSON.stringify(gradeCapstone, null, 2)}\n`, "utf8");
 
+  // Prerequisite unit: the placement exam is hand-authored, not generated, so
+  // it lives outside the build-owned tree (science/data/placement/) and the
+  // build carries a copy into grade-N/data — same pattern as script-review
+  // overrides. Without this copy, the exam a rebuild found on disk would be
+  // whatever the last build left there, and a cleaned tree would ship none.
+  const placementSource = path.join(sciRoot, "data", "placement", `grade-${grade}.json`);
+  if (fs.existsSync(placementSource)) {
+    fs.copyFileSync(placementSource, path.join(gradeDir, "data", "placement-exam.json"));
+  }
+
   const indexHtml = `<!doctype html>
 <html lang="en" data-stage="${grade}">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Opening ${stageLabel} Science</title></head>

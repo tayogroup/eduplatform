@@ -6,9 +6,22 @@
 import { initScienceWebGL } from "../../science/shared/science-webgl.js?v=science-20260801a";
 import { unitTopic, scienceDiagram } from "../../science/shared/science-visuals.js?v=science-20260801a";
 import { createCourseApp } from "../course-app.js?v=t2";
+import { createPlacementUnit, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
 import { mountWehelChat, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
 
 const pad2 = (n) => String(n).padStart(2, "0");
+
+// Prerequisite unit (unit -1): a placement exam over the previous stages,
+// rendered by the shared shell/placement.js from placement-exam.json.
+const prereqParams = new URLSearchParams(location.search);
+const isPrereqUnit = Number(prereqParams.get("unit")) === PREREQ_UNIT;
+const prereqStage = (() => {
+  const requested = Number(prereqParams.get("stage") || prereqParams.get("grade")
+    || document.documentElement.dataset.stage || document.documentElement.dataset.grade || 2);
+  return requested >= 1 && requested <= 8 ? requested : 2;
+})();
+let placementExam;
+let placement;
 
 // Shell-provided bindings (populated by bind(ctx)).
 let $, $$, escapeHtml, icon, voiceButton, pageHeader, toast;
@@ -21,6 +34,19 @@ function bind(ctx) {
      renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, speakText } = ctx);
   course = ctx.course; progress = ctx.progress; gradeProgress = ctx.gradeProgress;
   manifest = ctx.manifest; gradeCapstone = ctx.gradeCapstone; dataRootUrl = ctx.dataRootUrl;
+  if (isPrereqUnit) {
+    placement = createPlacementUnit({
+      storageKey: `ehel-sci-s${prereqStage}-placement-exam-v1`,
+      stageLabel: `Stage ${prereqStage}`,
+      stageWord: "Stage",
+      frameworkLabel: cambridgeLabel(prereqStage),
+      deps: () => ({ $, $$, escapeHtml, icon, pageHeader, toast, navigate, complete, emitProgress }),
+      exam: () => placementExam,
+      hrefForUnit: (stage, unit, route = "overview") => `?stage=${stage ?? prereqStage}&unit=${unit ?? 1}#${route}`,
+      defaultUnitHref: (route = "overview") => `?stage=${prereqStage}&unit=1#${route}`,
+      tutorHref: () => `?stage=${prereqStage}&unit=1#ai`,
+    });
+  }
 }
 
 // Concept explanations and worked solutions carry the full source prose, with
@@ -725,17 +751,33 @@ const config = {
   }),
   courseKey: (s) => `ehel-sci-g${pad2(s)}`,
   extendSummary: (progress, base) => ({ ...base, knownWords: progress.knownWords ? [...progress.knownWords] : undefined }),
+  visibleSections: () => (isPrereqUnit
+    ? [["overview", "layout-dashboard", "Unit Overview"], ["placement", "clipboard-check", "Placement exam"]]
+    : sections),
   renderers: {
-    overview: renderOverview, lesson: renderLesson, ai: renderAI, words: renderScienceWords,
+    overview: () => (isPrereqUnit ? placement.renderOverview() : renderOverview()),
+    placement: () => (isPrereqUnit ? placement.renderExam() : navigate("overview")),
+    lesson: renderLesson, ai: renderAI, words: renderScienceWords,
     explore: renderExploreConcept, visuals: renderVisualModels, method: renderLearnMethod,
     examples: renderExamples, guided: renderPractice, reference: renderReference, activities: renderActivities,
     games: renderGames, fluency: renderFluency, problems: renderRealProblems, explain: renderExplainThinking,
     challenge: renderAssessment, capstone: renderGradeCapstone, capstonequiz: renderCapstoneQuiz,
-    live: renderLiveClass, progress: renderReflect, teacher: renderTeacher,
+    live: renderLiveClass, progress: renderReflect,
+    teacher: () => (isPrereqUnit ? placement.renderTeacher() : renderTeacher()),
   },
   bind,
   async load(ctx) {
     const s = ctx.stageNumber, u = ctx.unitNumber;
+    if (isPrereqUnit) {
+      const [m, p] = await Promise.all([
+        fetch(new URL("course-manifest.json", ctx.dataRootUrl)),
+        fetch(new URL("placement-exam.json", ctx.dataRootUrl)),
+      ]);
+      if (!m.ok || !p.ok) throw new Error("The Science placement exam could not be loaded.");
+      const [prereqManifest, exam] = await Promise.all([m.json(), p.json()]);
+      placementExam = exam;
+      return { manifest: prereqManifest, course: placementCourseShell(prereqManifest, exam) };
+    }
     if (s < 1 || s > 8 || u < 1) throw new Error(`The requested Stage ${s} Science unit is unavailable.`);
     const [m, c, cap] = await Promise.all([
       fetch(new URL("course-manifest.json", ctx.dataRootUrl)),
@@ -749,12 +791,17 @@ const config = {
   async onReady(ctx) {
     const course = ctx.course, manifest = ctx.manifest, esc = ctx.escapeHtml, s = ctx.stageNumber, u = ctx.unitNumber;
     const stage = course.stage || course.grade;
+    if (isPrereqUnit && !["overview", "placement", "teacher"].includes(location.hash.slice(1))) location.hash = "overview";
+    if (!isPrereqUnit && location.hash.slice(1) === "placement") location.hash = "overview";
     document.title = `${stage.label} Science | Unit ${course.unit.unitNo}: ${course.unit.unitTitle}`;
     ctx.$("#course-label").textContent = `${stage.label} · ${course.subject} · ${course.term.label}`;
     ctx.$("#unit-title").textContent = course.unit.unitTitle;
     ctx.$("#stage-select").innerHTML = Array.from({ length: 8 }, (_, i) => i + 1).map((n) => `<option value="${n}" ${n === s ? "selected" : ""}>Stage ${n}</option>`).join("");
     ctx.$("#stage-select").addEventListener("change", () => { location.href = `?stage=${Number(ctx.$("#stage-select").value)}&unit=1#overview`; });
-    const unitOptions = manifest.units.map((unit) => `<option value="${unit.number}" ${unit.number === u ? "selected" : ""}>Unit ${unit.number}: ${esc(unit.title)}</option>`).join("");
+    const unitOptions = [
+      `<option value="${PREREQ_UNIT}" ${isPrereqUnit ? "selected" : ""}>Prerequisite: Placement exam</option>`,
+      ...manifest.units.map((unit) => `<option value="${unit.number}" ${unit.number === u ? "selected" : ""}>Unit ${unit.number}: ${esc(unit.title)}</option>`),
+    ].join("");
     for (const picker of [ctx.$("#unit-select"), ctx.$("#top-unit-select")]) picker.innerHTML = unitOptions;
     for (const picker of [ctx.$("#unit-select"), ctx.$("#top-unit-select")]) picker.addEventListener("change", () => { location.href = `?stage=${s}&unit=${Number(picker.value)}#overview`; });
   },

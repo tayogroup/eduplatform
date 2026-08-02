@@ -17,7 +17,23 @@
 // that skill as a chip. `pageHeader` is therefore deliberately absent from the
 // bind list below.
 import { createCourseApp } from "../course-app.js";
+import { createPlacementUnit, placementCourseShell, PREREQ_UNIT } from "../placement.js?v=placement-1";
 import { mountWehelChat, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
+
+// Prerequisite unit (unit -1): a placement exam over the previous stages,
+// rendered by the shared shell/placement.js from placement-exam.json.
+const prereqParams = new URLSearchParams(location.search);
+const isPrereqUnit = Number(prereqParams.get("unit")) === PREREQ_UNIT;
+const prereqStage = (() => {
+  const requested = Number(prereqParams.get("stage") || prereqParams.get("grade")
+    || document.documentElement.dataset.stage || document.documentElement.dataset.grade || 1);
+  return requested >= 1 && requested <= 8 ? requested : 1;
+})();
+const gpFrameworkLabel = (stage) => (Number(stage) <= 6
+  ? `Cambridge Primary Global Perspectives 0838 — Stage ${stage}`
+  : `Cambridge Lower Secondary Global Perspectives 1129 — Stage ${stage}`);
+let placementExam;
+let placement;
 
 // Shell-provided bindings (populated by bind(ctx)).
 let $, $$, escapeHtml, icon, voiceButton, toast;
@@ -29,6 +45,19 @@ function bind(ctx) {
      emitProgress, bindVoiceControls, updateVoiceUI, renderNav, unitSectionIds,
      stageNumber } = ctx);
   course = ctx.course; progress = ctx.progress; manifest = ctx.manifest; dataRootUrl = ctx.dataRootUrl;
+  if (isPrereqUnit) {
+    placement = createPlacementUnit({
+      storageKey: `ehel-gp-s${prereqStage}-placement-exam-v1`,
+      stageLabel: `Stage ${prereqStage}`,
+      stageWord: "Stage",
+      frameworkLabel: gpFrameworkLabel(prereqStage),
+      deps: () => ({ $, $$, escapeHtml, icon, pageHeader, toast, navigate, complete, emitProgress }),
+      exam: () => placementExam,
+      hrefForUnit: (stage, unit, route = "overview") => `?stage=${stage ?? prereqStage}&unit=${unit ?? 1}#${route}`,
+      defaultUnitHref: (route = "overview") => `?stage=${prereqStage}&unit=1#${route}`,
+      tutorHref: () => `?stage=${prereqStage}&unit=1#tutor`,
+    });
+  }
 }
 
 // The unit actually loaded, which is not always the one asked for: a stage may
@@ -478,16 +507,20 @@ const config = {
   // other course. Omitting it keeps the request byte-equivalent to today's.
   sections: SECTIONS,
   // Two pack shapes, one page: a section appears only where the unit carries
-  // data for it.
-  visibleSections: availableSections,
+  // data for it. The Prerequisite unit shows only its own two pages.
+  visibleSections: () => (isPrereqUnit
+    ? [["overview", "layout-dashboard", "Unit Overview"], ["placement", "clipboard-check", "Placement exam"]]
+    : availableSections()),
   // Everything available counts toward the bar except the progress page itself
-  // — including the overview, which the other subjects exclude.
-  nonCountable: ["progress"],
+  // — including the overview, which the other subjects exclude. In prereq mode
+  // only the exam counts, so finishing it reads as a complete unit.
+  nonCountable: isPrereqUnit ? ["overview"] : ["progress"],
   progressDefaults: { completed: [], answersSeen: [], reflection: {}, quiz: {}, aiMessages: [] },
   keys: (s, u) => ({ progress: `ehel-gp-s${s}-u${u}-progress-v1` }),
   courseKey: (s) => `ehel-gp-g${String(s).padStart(2, "0")}`,
   renderers: {
-    overview: paint("overview", renderOverview),
+    overview: isPrereqUnit ? () => placement.renderOverview() : paint("overview", renderOverview),
+    placement: isPrereqUnit ? () => placement.renderExam() : paint("overview", renderOverview),
     lesson: paint("lesson", renderLesson),
     bigideas: paint("bigideas", () => renderBoxes("bigideas", "bigIdea", course.bigIdeas, "Big Ideas", "Ideas to hold on to", "The few things worth remembering from this unit.")),
     models: paint("models", () => renderBoxes("models", "model", course.models, "Worked Examples", "See the skill in action", "Follow someone else doing it, then do the same with your own topic.")),
@@ -507,6 +540,17 @@ const config = {
   },
   bind,
   async load(ctx) {
+    if (isPrereqUnit) {
+      const [m, p] = await Promise.all([
+        fetch(new URL("course-manifest.json", ctx.dataRootUrl)),
+        fetch(new URL("placement-exam.json", ctx.dataRootUrl)),
+      ]);
+      if (!m.ok || !p.ok) throw new Error("The Global Perspectives placement exam could not be loaded.");
+      const [prereqManifest, exam] = await Promise.all([m.json(), p.json()]);
+      placementExam = exam;
+      resolvedUnitNo = PREREQ_UNIT;
+      return { manifest: prereqManifest, course: placementCourseShell(prereqManifest, exam) };
+    }
     const manifest = await (await fetch(new URL("course-manifest.json", ctx.dataRootUrl))).json();
     const entry = manifest.units.find((unit) => unit.number === ctx.unitNumber) || manifest.units[0];
     resolvedUnitNo = entry.number;
@@ -515,6 +559,8 @@ const config = {
   },
   async onReady(ctx) {
     const course = ctx.course, manifest = ctx.manifest, esc = ctx.escapeHtml, s = ctx.stageNumber;
+    if (isPrereqUnit && !["overview", "placement"].includes(location.hash.slice(1))) location.hash = "overview";
+    if (!isPrereqUnit && location.hash.slice(1) === "placement") location.hash = "overview";
     document.title = `${course.unit.unitTitle} · Ehel Academy Global Perspectives`;
     const label = ctx.$("#course-label");
     if (label) label.textContent = `${course.stage.label} · Global Perspectives`;
@@ -522,9 +568,11 @@ const config = {
     if (title) title.textContent = course.unit.unitTitle;
     for (const select of [ctx.$("#unit-select"), ctx.$("#top-unit-select")]) {
       if (!select) continue;
-      select.innerHTML = manifest.units
-        .map((unit) => `<option value="${unit.number}" ${unit.number === resolvedUnitNo ? "selected" : ""}>Unit ${unit.number} — ${esc(unit.title)}</option>`)
-        .join("");
+      select.innerHTML = [
+        `<option value="${PREREQ_UNIT}" ${isPrereqUnit ? "selected" : ""}>Prerequisite — Placement exam</option>`,
+        ...manifest.units
+          .map((unit) => `<option value="${unit.number}" ${!isPrereqUnit && unit.number === resolvedUnitNo ? "selected" : ""}>Unit ${unit.number} — ${esc(unit.title)}</option>`),
+      ].join("");
       select.onchange = () => {
         const url = new URL(location.href);
         url.searchParams.set("unit", select.value);

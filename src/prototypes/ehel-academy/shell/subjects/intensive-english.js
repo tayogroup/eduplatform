@@ -19,6 +19,7 @@
 // shown wherever a claim is made about what the learner can do.
 import { escapeHtml as sharedEscapeHtml, icon as sharedIcon } from "../../shared/course-shell.js?v=20260721a";
 import { createCourseApp } from "../course-app.js?v=t2";
+import { createPlacementUnit, PREREQ_UNIT } from "../placement.js?v=placement-1";
 import { mountWehelChat, outlineFromManifest, unitFetcher } from "../wehel.js?v=wehel-1";
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -46,7 +47,12 @@ const requestedLevel = Number(routeParams.get("level") || document.documentEleme
 const levelNumber = requestedLevel >= 1 && requestedLevel <= 5 ? requestedLevel : 1;
 const defaultUnit = defaultUnitForLevel(levelNumber);
 const requestedUnit = Number(routeParams.get("unit") ?? defaultUnit);
-const unitNumber = Number.isFinite(requestedUnit) && requestedUnit >= 0 ? requestedUnit : defaultUnit;
+// Unit -1 is the Prerequisite unit (levels 2+ only): a placement exam over the
+// previous level, rendered by the shared shell/placement.js.
+const isPrereqUnit = requestedUnit === PREREQ_UNIT && levelNumber >= 2;
+const unitNumber = isPrereqUnit ? PREREQ_UNIT : (Number.isFinite(requestedUnit) && requestedUnit >= 0 ? requestedUnit : defaultUnit);
+let placementExam;
+let placement;
 
 const STORAGE_KEY = `ehel-intensive-l${levelNumber}-u${unitNumber}-progress-v1`;
 const NARRATION_RATE = 0.9;
@@ -85,6 +91,37 @@ function bind(ctx) {
   ({ complete, saveProgress, navigate, renderNav, emitProgress, voiceButton, toast, pageHeader, PROGRESS_UNIT } = ctx);
   progress = ctx.progress;
   shellCtx = ctx;
+  if (isPrereqUnit) {
+    placement = createPlacementUnit({
+      storageKey: `ehel-intensive-l${levelNumber}-placement-exam-v1`,
+      stageLabel: `Level ${levelNumber}`,
+      stageWord: "Level",
+      frameworkLabel: `Intensive English Level ${levelNumber}`,
+      deps: () => ({ $, $$, escapeHtml, icon, pageHeader, toast, navigate, complete, emitProgress: ctx.emitProgress }),
+      exam: () => placementExam,
+      hrefForUnit: (level, unit, route = "overview") => {
+        const url = new URL(location.href);
+        url.searchParams.set("level", level ?? levelNumber);
+        url.searchParams.set("unit", unit ?? defaultUnitForLevel(level ?? levelNumber));
+        url.hash = route;
+        return url.href;
+      },
+      defaultUnitHref: (route = "overview") => {
+        const url = new URL(location.href);
+        url.searchParams.set("level", levelNumber);
+        url.searchParams.set("unit", defaultUnitForLevel(levelNumber));
+        url.hash = route;
+        return url.href;
+      },
+      tutorHref: () => {
+        const url = new URL(location.href);
+        url.searchParams.set("level", levelNumber);
+        url.searchParams.set("unit", defaultUnitForLevel(levelNumber));
+        url.hash = "tutor";
+        return url.href;
+      },
+    });
+  }
 }
 
 const escapeHtml = (value = "") => sharedEscapeHtml(value);
@@ -110,6 +147,12 @@ function unitLocation(next) {
 }
 
 function visibleSections() {
+  if (isPrereqUnit) {
+    return [
+      ["overview", "layout-dashboard", "Overview"],
+      ["placement", "clipboard-check", "Placement exam"],
+    ];
+  }
   return sections.filter(([id]) => {
     if (id === "reading") return Boolean(course?.readings?.length);
     if (id === "comprehension") return Boolean(course?.comprehension?.length);
@@ -583,7 +626,8 @@ const config = {
   onAfterRender: () => { $("#app").setAttribute("aria-busy", "false"); icons(); },
   onNavRendered: () => icons(),
   renderers: {
-    overview: () => renderOverview(),
+    overview: () => (isPrereqUnit ? placement.renderOverview() : renderOverview()),
+    placement: () => (isPrereqUnit ? placement.renderExam() : navigate("overview")),
     lecture: () => renderLecture(),
     dictionary: () => renderDictionary(),
     grammar: () => renderGrammar(),
@@ -596,10 +640,27 @@ const config = {
     quiz: () => renderQuiz(),
     answers: () => renderAnswers(),
     reflect: () => renderReflect(),
-    teacher: () => renderTeacher(),
+    teacher: () => (isPrereqUnit ? placement.renderTeacher() : renderTeacher()),
   },
   bind,
   async load(ctx) {
+    if (isPrereqUnit) {
+      const [manifestResponse, placementResponse] = await Promise.all([
+        fetch(new URL("course-manifest.json", ctx.dataRootUrl)),
+        fetch(new URL("placement-exam.json", ctx.dataRootUrl)),
+      ]);
+      const failed = [manifestResponse, placementResponse].find((response) => !response.ok);
+      if (failed) throw new Error(`Course data could not be loaded (${failed.status} ${failed.url}).`);
+      let exam;
+      [manifest, exam] = await Promise.all([manifestResponse.json(), placementResponse.json()]);
+      placementExam = exam;
+      const levelMeta = (manifest.levels || []).find((level) => level.number === levelNumber);
+      course = {
+        level: { label: levelMeta?.label || `Level ${levelNumber}` },
+        unit: { unitNo: "P", unitTitle: exam.shortTitle || "Prerequisite", cefr: { band: (levelMeta?.cefr || []).join("+") } },
+      };
+      return { manifest, course };
+    }
     const [manifestResponse, courseResponse, dictionaryResponse] = await Promise.all([
       fetch(new URL("course-manifest.json", ctx.dataRootUrl)),
       fetch(new URL(`units/unit-${unitNumber}.json`, ctx.dataRootUrl)),
@@ -611,6 +672,8 @@ const config = {
     return { manifest, course };
   },
   async onReady() {
+    if (isPrereqUnit && !["overview", "placement", "teacher"].includes(location.hash.slice(1))) location.hash = "overview";
+    if (!isPrereqUnit && location.hash.slice(1) === "placement") location.hash = "overview";
     document.title = `${course.level.label} | Unit ${course.unit.unitNo}: ${course.unit.unitTitle}`;
     $("#course-label").innerHTML = `${escapeHtml(course.level.label)} ${cefrChip(course.unit.cefr.band)}`;
     $("#unit-title").textContent = course.unit.unitTitle;
@@ -624,10 +687,13 @@ const config = {
 
     // A planned-but-unauthored unit is shown and disabled rather than hidden, so
     // the shape of the course is visible without pretending the content exists.
-    const options = manifest.units.map((unit) => {
-      const authored = !String(unit.status).startsWith("Planned");
-      return `<option value="${unit.number}" ${unit.number === unitNumber ? "selected" : ""} ${authored ? "" : "disabled"}>Unit ${unit.number}: ${escapeHtml(unit.title)}${authored ? "" : " — not yet written"}</option>`;
-    }).join("");
+    const options = [
+      ...(levelNumber >= 2 ? [`<option value="${PREREQ_UNIT}" ${isPrereqUnit ? "selected" : ""}>Prerequisite: Placement exam</option>`] : []),
+      ...manifest.units.map((unit) => {
+        const authored = !String(unit.status).startsWith("Planned");
+        return `<option value="${unit.number}" ${unit.number === unitNumber ? "selected" : ""} ${authored ? "" : "disabled"}>Unit ${unit.number}: ${escapeHtml(unit.title)}${authored ? "" : " — not yet written"}</option>`;
+      }),
+    ].join("");
     for (const picker of [$("#unit-select"), $("#top-unit-select")]) {
       picker.innerHTML = options;
       picker.addEventListener("change", (event) => { location.href = unitLocation(event.target.value); });

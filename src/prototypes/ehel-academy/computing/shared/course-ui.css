@@ -314,3 +314,7 @@
 /* Diagram variants the computing art needs on top of the shared palette. */
 .cmp-diagram .cmp-wire.thick { stroke-width: 5; }
 .cmp-diagram text.cmp-tiny.light { fill: #ffffff; }
+/* Inline labels ("Hint:", "Meaning:") name a field; they are not emphasis. */
+.field-label { font-weight: 400; }
+/* Status lines and correctness feedback: colour carries the meaning, not weight. */
+.status-note { font-weight: 400; }

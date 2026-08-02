@@ -281,3 +281,7 @@
 .connection strong { display: block; color: var(--teal-dark); margin-bottom: 4px; font-size: 13.5px; }
 .connection span { color: #40616f; font-size: 13px; line-height: 1.5; }
 @media (max-width: 720px) { .misconception, .connection-list { grid-template-columns: 1fr; } }
+/* Inline labels ("Hint:", "Meaning:") name a field; they are not emphasis. */
+.field-label { font-weight: 400; }
+/* Status lines and correctness feedback: colour carries the meaning, not weight. */
+.status-note { font-weight: 400; }

@@ -64,3 +64,7 @@
 @media (max-width: 900px) {
   .pair-grid { grid-template-columns: minmax(0, 1fr); }
 }
+/* Inline labels ("Hint:", "Meaning:") name a field; they are not emphasis. */
+.field-label { font-weight: 400; }
+/* Status lines and correctness feedback: colour carries the meaning, not weight. */
+.status-note { font-weight: 400; }

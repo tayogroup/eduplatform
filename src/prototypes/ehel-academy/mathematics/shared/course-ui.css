@@ -260,3 +260,7 @@
 .model-tabs .subtab { flex: 0 0 auto; min-width: auto; max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 #app { max-width: 100%; overflow-x: hidden; }
 @media (max-width: 720px) { .math-visual .geometry-labels { gap: 5px; } }
+/* Inline labels ("Hint:", "Meaning:") name a field; they are not emphasis. */
+.field-label { font-weight: 400; }
+/* Status lines and correctness feedback: colour carries the meaning, not weight. */
+.status-note { font-weight: 400; }

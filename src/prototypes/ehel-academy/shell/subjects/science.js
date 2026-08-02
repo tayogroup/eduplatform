@@ -118,7 +118,7 @@ function renderScienceWords() {
         </section>
         <section class="panel word-card" id="word-card">
           <div class="word-card-head"><div><span class="word-type">Science word</span><h2>${escapeHtml(current.term)}</h2></div><button class="icon-button" id="listen-word" type="button" title="Listen" aria-label="Listen to ${escapeHtml(current.term)}">♪</button></div>
-          <p class="meaning"><strong>Meaning:</strong> ${escapeHtml(current.meaning)}</p>
+          <p class="meaning"><span class="field-label">Meaning:</span> ${escapeHtml(current.meaning)}</p>
           ${current.example ? `<div class="sentence-card"><small>Used in the lesson</small><p>“${escapeHtml(current.example)}”</p>${voiceButton(current.example, "Hear the example")}</div>` : ""}
           <div class="practice-box"><input id="word-sentence" maxlength="180" placeholder="Write your own sentence using ${escapeHtml(current.term.toLowerCase())}…" aria-label="Write your own sentence"><button class="button primary" id="check-word-sentence" type="button">Check sentence</button></div>
           <div id="word-feedback"></div>
@@ -134,7 +134,7 @@ function renderScienceWords() {
       const written = $("#word-sentence").value.trim().toLowerCase();
       const head = current.term.toLowerCase().split(/[\/,]/)[0].trim();
       const ok = written.length > 10 && written.includes(head.split(" ")[0]);
-      $("#word-feedback").innerHTML = `<p class="feedback ${ok ? "good" : "try"}"><strong>${ok ? "Great sentence!" : "Try again."}</strong> ${ok ? "You used the word in a full idea." : `Write a full sentence that uses “${escapeHtml(current.term)}”.`}</p>`;
+      $("#word-feedback").innerHTML = `<p class="feedback ${ok ? "good" : "try"}"><span class="status-note">${ok ? "Great sentence!" : "Try again."}</span> ${ok ? "You used the word in a full idea." : `Write a full sentence that uses “${escapeHtml(current.term)}”.`}</p>`;
     });
     $("#know-word").addEventListener("click", () => {
       const id = idFor(activeIndex);
@@ -158,12 +158,12 @@ function renderExploreConcept() {
       <div class="story-layout"><section class="panel story-scene"><span class="eyebrow">Discovery ${active+1} · ${escapeHtml(item.difficulty)}</span><h2>${escapeHtml(item.title)}</h2>${scienceDiagram(courseTopic(), active)}<p>${escapeHtml(item.context)}</p>${voiceButton(`${item.title}. ${item.context}. ${item.explanation}`, "Listen to discovery")}<div class="discovery-model ${escapeHtml(item.modelType)}"><strong>${escapeHtml(item.modelType.replaceAll('-',' '))}</strong><span>${escapeHtml(item.explanation)}</span></div></section><aside class="section-stack"><section class="panel"><h3>Discovery question</h3><p>${escapeHtml(item.prompt)}</p>${voiceButton(item.prompt, "Listen to question")}<input id="discovery-answer" class="math-input" aria-label="Discovery answer"><div class="question-actions"><button class="button primary" id="check-discovery" type="button">Check my idea</button><button class="button secondary" id="hint-discovery" type="button">Hint</button></div><div id="discovery-feedback"></div></section><section class="panel"><h3>Progress</h3><p><strong>${completed.size} of ${course.explorations.length}</strong> discoveries complete.</p><div class="progress-track"><span style="width:${completed.size/course.explorations.length*100}%"></span></div></section></aside></div>`;
     initScienceWebGL($("#app"));
     $$('[data-exploration]').forEach(button=>button.addEventListener("click",()=>{active=Number(button.dataset.exploration);draw();}));
-    $("#hint-discovery").addEventListener("click",()=>{$("#discovery-feedback").innerHTML=`<p class="feedback try"><strong>Hint:</strong> ${escapeHtml(item.hint)}</p>`;});
+    $("#hint-discovery").addEventListener("click",()=>{$("#discovery-feedback").innerHTML=`<p class="feedback try"><span class="field-label">Hint:</span> ${escapeHtml(item.hint)}</p>`;});
     $("#check-discovery").addEventListener("click",()=>{
       const response=$("#discovery-answer").value.trim().toLowerCase().replace(/\s+/g," ");
       const answer=item.answer.toLowerCase();
       const correct=response && (response===answer || answer.includes(response) || response.includes(answer));
-      $("#discovery-feedback").innerHTML=`<p class="feedback ${correct?'good':'try'}"><strong>${correct?'Exactly!':'Look again.'}</strong> ${escapeHtml(correct?item.explanation:item.hint)}</p>`;
+      $("#discovery-feedback").innerHTML=`<p class="feedback ${correct?'good':'try'}"><span class="status-note">${correct?'Exactly!':'Look again.'}</span> ${escapeHtml(correct?item.explanation:item.hint)}</p>`;
       if(correct){completed.add(item.id);progress.explorations=[...completed];saveProgress();if(completed.size===course.explorations.length)complete("explore","All six concept discoveries complete.");}
     });
   };
@@ -201,7 +201,7 @@ const courseTopic = () => unitTopic(course.unit.unitTitle, course.concepts);
 
 function renderLesson() {
   const topic = courseTopic();
-  const concepts = course.concepts.map((concept, index) => `<article class="panel concept-card"><span class="eyebrow">Concept ${index + 1}</span><h2>${escapeHtml(concept.title)}</h2>${scienceDiagram(topic, index)}<div class="concept-body">${richText(concept.explanation)}</div><p class="example"><strong>Example:</strong> ${escapeHtml(concept.example)}</p>${voiceButton(`${concept.title}. ${spokenText(concept.explanation)}. Example: ${concept.example}`, "Listen to concept")}</article>`).join("");
+  const concepts = course.concepts.map((concept, index) => `<article class="panel concept-card"><span class="eyebrow">Concept ${index + 1}</span><h2>${escapeHtml(concept.title)}</h2>${scienceDiagram(topic, index)}<div class="concept-body">${richText(concept.explanation)}</div><p class="example"><span class="field-label">Example:</span> ${escapeHtml(concept.example)}</p>${voiceButton(`${concept.title}. ${spokenText(concept.explanation)}. Example: ${concept.example}`, "Listen to concept")}</article>`).join("");
   $("#app").innerHTML = `${pageHeader("Teacher lesson", course.unit.unitTitle, "Read the source-grounded concepts with a labelled diagram for each, and follow the complete ElevenLabs narration.")}
     <div class="concept-grid">${concepts}</div>
     <p><button class="button primary" id="lesson-done" type="button">I studied the concepts ✓</button></p>`;
@@ -234,7 +234,7 @@ function renderPractice() {
     const response = $(`#answer-${item.id}`).value.trim().toLowerCase().replace(/\s+/g," ");
     const expected = item.answer.toLowerCase();
     const correct = response && (expected.includes(response) || response.includes(expected));
-    $(`#feedback-${item.id}`).innerHTML = `<p class="feedback ${correct ? "good" : "try"}"><strong>${correct ? "Correct reasoning!" : "Not yet."}</strong> ${correct ? escapeHtml(item.answer) : `Your response does not match the reviewed guidance yet. ${escapeHtml(item.hint)} Try representing the idea in a simpler way first.`}</p>`;
+    $(`#feedback-${item.id}`).innerHTML = `<p class="feedback ${correct ? "good" : "try"}"><span class="status-note">${correct ? "Correct reasoning!" : "Not yet."}</span> ${correct ? escapeHtml(item.answer) : `Your response does not match the reviewed guidance yet. ${escapeHtml(item.hint)} Try representing the idea in a simpler way first.`}</p>`;
     if (correct && !progress.practiceOpened.includes(item.id)) { progress.practiceOpened.push(item.id); saveProgress(); }
     if (progress.practiceOpened.length === course.practice.length) complete("guided", "Guided Practice complete.");
   }));
@@ -243,18 +243,18 @@ function renderPractice() {
     const used = Number(button.dataset.used || 0) + 1;
     button.dataset.used = String(used);
     const hints = [item.hint, `Use a diagram, familiar object, table, number line or other model that fits ${course.unit.unitTitle}.`, `The reviewed guidance is ${item.answer}. Explain why it fits before moving on.`];
-    $(`#feedback-${item.id}`).innerHTML = `<p class="feedback try"><strong>Hint ${Math.min(used,3)}:</strong> ${escapeHtml(hints[Math.min(used-1,2)])}</p>`;
+    $(`#feedback-${item.id}`).innerHTML = `<p class="feedback try"><span class="field-label">Hint ${Math.min(used,3)}:</span> ${escapeHtml(hints[Math.min(used-1,2)])}</p>`;
   }));
   $$('[data-answer]').forEach((button) => button.addEventListener("click", () => {
     const item = course.practice.find((candidate) => candidate.id === button.dataset.answer);
-    $(`#feedback-${item.id}`).innerHTML = `<p class="feedback try"><strong>Next step:</strong> ${escapeHtml(item.hint)} Do that step, then check your answer again.</p>`;
+    $(`#feedback-${item.id}`).innerHTML = `<p class="feedback try"><span class="field-label">Next step:</span> ${escapeHtml(item.hint)} Do that step, then check your answer again.</p>`;
   }));
 }
 
 function renderActivities() {
   const topic = courseTopic();
   $("#app").innerHTML = `${pageHeader("Learn by doing", "Experiments", `Complete practical ${escapeHtml(course.unit.unitTitle)} investigations using familiar materials.`)}
-    <div class="task-grid">${course.activities.map((activity, index) => `<article class="panel task-card"><span class="eyebrow">Investigation ${index + 1} · Hands-on</span><h2>${escapeHtml(activity.title)}</h2>${scienceDiagram(topic, index)}<p class="rule-box"><strong>You need:</strong> ${escapeHtml(activity.materials)}</p><ol class="agenda">${activity.steps.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol><textarea class="activity-response" rows="4" placeholder="Record your answer or what you noticed…" aria-label="Notes for ${escapeHtml(activity.title)}"></textarea><button class="button secondary" data-activity-done="${index}" type="button">✓ Mark complete</button></article>`).join("")}</div>
+    <div class="task-grid">${course.activities.map((activity, index) => `<article class="panel task-card"><span class="eyebrow">Investigation ${index + 1} · Hands-on</span><h2>${escapeHtml(activity.title)}</h2>${scienceDiagram(topic, index)}<p class="rule-box"><span class="field-label">You need:</span> ${escapeHtml(activity.materials)}</p><ol class="agenda">${activity.steps.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol><textarea class="activity-response" rows="4" placeholder="Record your answer or what you noticed…" aria-label="Notes for ${escapeHtml(activity.title)}"></textarea><button class="button secondary" data-activity-done="${index}" type="button">✓ Mark complete</button></article>`).join("")}</div>
     <p><button class="button primary" id="activities-done" type="button">Finish activities ✓</button></p>`;
   initScienceWebGL($("#app"));
   $$('[data-activity-done]').forEach((button) => button.addEventListener("click", () => { button.disabled = true; button.textContent = "✓ Complete"; }));
@@ -459,7 +459,7 @@ function completeMathGameRound(correct, explanation) {
   if (gameLocked) return;
   gameLocked = true;
   if (correct) gameScore += 1;
-  $("#game-feedback").innerHTML = `<div class="game-round-feedback ${correct?'good':'try'}"><span>${correct?'★':'💡'}</span><div><strong>${correct?'Star earned!':'Good try!'}</strong><p>${escapeHtml(explanation)}</p></div></div><button class="button primary" id="game-next" type="button">${gameRoundIndex+1===currentMathGame().rounds.length?'See my result':'Next challenge'} →</button>`;
+  $("#game-feedback").innerHTML = `<div class="game-round-feedback ${correct?'good':'try'}"><span>${correct?'★':'💡'}</span><div><span class="status-note">${correct?'Star earned!':'Good try!'}</span><p>${escapeHtml(explanation)}</p></div></div><button class="button primary" id="game-next" type="button">${gameRoundIndex+1===currentMathGame().rounds.length?'See my result':'Next challenge'} →</button>`;
   $("#game-next").addEventListener("click", () => { gameRoundIndex+=1; renderActiveMathGame(); });
 }
 
@@ -491,7 +491,7 @@ function renderFluency() {
     const correct = response && (response===expected || expected.includes(response) || response.includes(expected));
     if (correct) score += 1;
     $("#fluency-score").textContent=score;
-    $("#fluency-feedback").innerHTML=`<p class="feedback ${correct?'good':'try'}"><strong>${correct?'Correct!':'Review:'}</strong> ${escapeHtml(correct?items[index].answer:items[index].hint)}</p>`;
+    $("#fluency-feedback").innerHTML=`<p class="feedback ${correct?'good':'try'}"><span class="status-note">${correct?'Correct!':'Review:'}</span> ${escapeHtml(correct?items[index].answer:items[index].hint)}</p>`;
     index += 1;
     if (index >= items.length) {
       const seconds=Math.max(1,Math.round((Date.now()-startedAt)/1000));
@@ -509,14 +509,14 @@ function renderRealProblems() {
   const problems = course.realProblems;
   $("#app").innerHTML = `${pageHeader("Science in daily life", "Solve Real Problems", `Apply ${escapeHtml(course.unit.unitTitle)} to home, school, markets, travel and the wider community.`)}
     <div class="problem-grid">${problems.map((item,index)=>`<article class="panel real-problem"><div class="problem-icon">${["⌂","◫","🚌","▦","◇","✦"][index]||"#"}</div><span class="eyebrow">${escapeHtml(item.context)} · ${escapeHtml(item.difficulty)}</span><h2>${escapeHtml(item.prompt)}</h2>${voiceButton(item.prompt, "Listen to problem")}<textarea id="problem-${item.id}" placeholder="Show your calculation and answer…"></textarea><div class="question-actions"><button class="button primary" data-check-problem="${item.id}" type="button">Check answer</button><button class="button secondary" data-problem-hint="${item.id}" type="button">Hint</button></div><div id="problem-feedback-${item.id}"></div></article>`).join("")}</div>`;
-  $$('[data-check-problem]').forEach(button=>button.addEventListener("click",()=>{const item=problems.find(candidate=>candidate.id===button.dataset.checkProblem);const response=$(`#problem-${item.id}`).value.trim().toLowerCase();const expected=item.answer.toLowerCase();const correct=response&&(response===expected||expected.includes(response)||response.includes(expected));$(`#problem-feedback-${item.id}`).innerHTML=`<p class="feedback ${correct?'good':'try'}"><strong>${correct?'Applied correctly!':'Check the situation.'}</strong> ${escapeHtml(correct?item.answer:item.hint)}</p>`;if(correct)button.disabled=true;if($$('[data-check-problem]').every(itemButton=>itemButton.disabled))complete("problems","Real-world problems complete.");}));
-  $$('[data-problem-hint]').forEach(button=>button.addEventListener("click",()=>{const item=problems.find(candidate=>candidate.id===button.dataset.problemHint);$(`#problem-feedback-${item.id}`).innerHTML=`<p class="feedback try"><strong>Hint:</strong> ${escapeHtml(item.hint)}</p>`;}));
+  $$('[data-check-problem]').forEach(button=>button.addEventListener("click",()=>{const item=problems.find(candidate=>candidate.id===button.dataset.checkProblem);const response=$(`#problem-${item.id}`).value.trim().toLowerCase();const expected=item.answer.toLowerCase();const correct=response&&(response===expected||expected.includes(response)||response.includes(expected));$(`#problem-feedback-${item.id}`).innerHTML=`<p class="feedback ${correct?'good':'try'}"><span class="status-note">${correct?'Applied correctly!':'Check the situation.'}</span> ${escapeHtml(correct?item.answer:item.hint)}</p>`;if(correct)button.disabled=true;if($$('[data-check-problem]').every(itemButton=>itemButton.disabled))complete("problems","Real-world problems complete.");}));
+  $$('[data-problem-hint]').forEach(button=>button.addEventListener("click",()=>{const item=problems.find(candidate=>candidate.id===button.dataset.problemHint);$(`#problem-feedback-${item.id}`).innerHTML=`<p class="feedback try"><span class="field-label">Hint:</span> ${escapeHtml(item.hint)}</p>`;}));
 }
 
 function renderExplainThinking() {
   let active=0;
   const completed=new Set(progress.reasoning||[]);
-  const draw=()=>{const item=course.reasoningPrompts[active];$("#app").innerHTML=`${pageHeader("Reasoning matters", "Explain Your Thinking", `Explain the ideas in ${escapeHtml(course.unit.unitTitle)} using scientific evidence, not only a final answer.`)}<div class="reasoning-tabs">${course.reasoningPrompts.map((entry,index)=>`<button class="${index===active?'active':''} ${completed.has(entry.id)?'done':''}" data-reasoning-index="${index}" type="button"><span>${index+1}</span>${escapeHtml(entry.difficulty)}</button>`).join('')}</div><div class="explain-layout"><section class="panel"><span class="eyebrow">Reasoning prompt</span><h2>${escapeHtml(item.prompt)}</h2>${voiceButton(item.prompt,"Listen to prompt")}<textarea id="reasoning-text" rows="9" placeholder="Explain what you know, what rule you used and why your conclusion makes sense…"></textarea><button class="button primary" id="check-reasoning-text" type="button">Check scientific ideas</button><div id="reasoning-text-feedback"></div></section><section class="panel"><h3>Key ideas</h3><ul class="checklist">${item.keyIdeas.map((idea)=>`<li>${escapeHtml(idea)}</li>`).join('')}</ul><details><summary>Show model explanation</summary><p>${escapeHtml(item.modelAnswer)}</p>${voiceButton(item.modelAnswer,"Listen to model answer")}</details></section></div>`;$$('[data-reasoning-index]').forEach((button)=>button.addEventListener('click',()=>{active=Number(button.dataset.reasoningIndex);draw();}));$("#check-reasoning-text").addEventListener('click',()=>{const text=$("#reasoning-text").value.toLowerCase();const hits=item.keyIdeas.filter((idea)=>idea.toLowerCase().split(/\s+/).some((word)=>word.length>2&&text.includes(word))).length;const secure=text.length>30&&(hits>0||item.keyIdeas.length===0);$("#reasoning-text-feedback").innerHTML=`<p class="feedback ${secure?'good':'try'}"><strong>${secure?'Your explanation includes scientific evidence.':'Add more scientific evidence.'}</strong> ${secure?escapeHtml(item.modelAnswer):`Use these ideas: ${escapeHtml(item.keyIdeas.join(', '))}.`}</p>`;if(secure){completed.add(item.id);progress.reasoning=[...completed];saveProgress();if(completed.size===course.reasoningPrompts.length)complete('explain','Reasoning explanations complete.');}});};
+  const draw=()=>{const item=course.reasoningPrompts[active];$("#app").innerHTML=`${pageHeader("Reasoning matters", "Explain Your Thinking", `Explain the ideas in ${escapeHtml(course.unit.unitTitle)} using scientific evidence, not only a final answer.`)}<div class="reasoning-tabs">${course.reasoningPrompts.map((entry,index)=>`<button class="${index===active?'active':''} ${completed.has(entry.id)?'done':''}" data-reasoning-index="${index}" type="button"><span>${index+1}</span>${escapeHtml(entry.difficulty)}</button>`).join('')}</div><div class="explain-layout"><section class="panel"><span class="eyebrow">Reasoning prompt</span><h2>${escapeHtml(item.prompt)}</h2>${voiceButton(item.prompt,"Listen to prompt")}<textarea id="reasoning-text" rows="9" placeholder="Explain what you know, what rule you used and why your conclusion makes sense…"></textarea><button class="button primary" id="check-reasoning-text" type="button">Check scientific ideas</button><div id="reasoning-text-feedback"></div></section><section class="panel"><h3>Key ideas</h3><ul class="checklist">${item.keyIdeas.map((idea)=>`<li>${escapeHtml(idea)}</li>`).join('')}</ul><details><summary>Show model explanation</summary><p>${escapeHtml(item.modelAnswer)}</p>${voiceButton(item.modelAnswer,"Listen to model answer")}</details></section></div>`;$$('[data-reasoning-index]').forEach((button)=>button.addEventListener('click',()=>{active=Number(button.dataset.reasoningIndex);draw();}));$("#check-reasoning-text").addEventListener('click',()=>{const text=$("#reasoning-text").value.toLowerCase();const hits=item.keyIdeas.filter((idea)=>idea.toLowerCase().split(/\s+/).some((word)=>word.length>2&&text.includes(word))).length;const secure=text.length>30&&(hits>0||item.keyIdeas.length===0);$("#reasoning-text-feedback").innerHTML=`<p class="feedback ${secure?'good':'try'}"><span class="status-note">${secure?'Your explanation includes scientific evidence.':'Add more scientific evidence.'}</span> ${secure?escapeHtml(item.modelAnswer):`Use these ideas: ${escapeHtml(item.keyIdeas.join(', '))}.`}</p>`;if(secure){completed.add(item.id);progress.reasoning=[...completed];saveProgress();if(completed.size===course.reasoningPrompts.length)complete('explain','Reasoning explanations complete.');}});};
   draw();
 }
 
@@ -556,7 +556,7 @@ function drawAssessmentQuestion() {
     if (correct) assessmentScore += 1;
     $$('[data-option]').forEach((candidate) => { candidate.disabled = true; if (candidate.dataset.option === item.answer) candidate.classList.add("correct"); });
     button.classList.add(correct ? "correct" : "incorrect");
-    $("#quiz-feedback").innerHTML = `<p class="feedback ${correct ? "good" : "try"}"><strong>${correct ? "Correct!" : "Not quite."}</strong> ${escapeHtml(item.explanation)}</p>`;
+    $("#quiz-feedback").innerHTML = `<p class="feedback ${correct ? "good" : "try"}"><span class="status-note">${correct ? "Correct!" : "Not quite."}</span> ${escapeHtml(item.explanation)}</p>`;
     $("#next-question").hidden = false;
     $("#next-question").addEventListener("click", () => { assessmentIndex += 1; drawAssessmentQuestion(); });
   }));
@@ -568,7 +568,7 @@ function renderGradeCapstone() {
   const savedEvidence = Object.values(gradeProgress.capstoneEvidence).filter(Boolean).length;
   $("#app").innerHTML = `${pageHeader(`All ${manifest.units.length} units · authentic application`, `${course.stage.label} Science Capstone`, gradeCapstone.overview)}
     <section class="capstone-hero"><div><span class="eyebrow">Driving question</span><h2>${escapeHtml(project.drivingQuestion)}</h2><p>${escapeHtml(project.finalProduct)}</p>${voiceButton(`${project.drivingQuestion} ${project.finalProduct}`, "Listen to the capstone")}</div><div class="capstone-score"><strong>${savedStages}/${project.stages.length}</strong><span>stages documented</span><small>${savedEvidence}/${project.evidenceChecklist.length} evidence items ready</small></div></section>
-    <div class="capstone-stage-grid">${project.stages.map((stage) => `<article class="panel capstone-stage ${gradeProgress.capstoneResponses[stage.id]?.trim().length >= 20 ? "complete" : ""}"><span class="eyebrow">Units ${stage.units.join(", ")}</span><h2>${escapeHtml(stage.title)}</h2><p>${escapeHtml(stage.prompt)}</p>${voiceButton(stage.prompt, `Listen to ${stage.title}`)}<label for="capstone-${stage.id}">Record your plan or evidence</label><textarea id="capstone-${stage.id}" data-capstone-response="${stage.id}" rows="5" placeholder="Write what you made, calculated or discovered…">${escapeHtml(gradeProgress.capstoneResponses[stage.id] || "")}</textarea><small><strong>Evidence:</strong> ${escapeHtml(stage.evidence)}</small></article>`).join("")}</div>
+    <div class="capstone-stage-grid">${project.stages.map((stage) => `<article class="panel capstone-stage ${gradeProgress.capstoneResponses[stage.id]?.trim().length >= 20 ? "complete" : ""}"><span class="eyebrow">Units ${stage.units.join(", ")}</span><h2>${escapeHtml(stage.title)}</h2><p>${escapeHtml(stage.prompt)}</p>${voiceButton(stage.prompt, `Listen to ${stage.title}`)}<label for="capstone-${stage.id}">Record your plan or evidence</label><textarea id="capstone-${stage.id}" data-capstone-response="${stage.id}" rows="5" placeholder="Write what you made, calculated or discovered…">${escapeHtml(gradeProgress.capstoneResponses[stage.id] || "")}</textarea><small><span class="field-label">Evidence:</span> ${escapeHtml(stage.evidence)}</small></article>`).join("")}</div>
     <div class="capstone-review-grid"><section class="panel"><h2>Evidence checklist</h2><div class="capstone-checklist">${project.evidenceChecklist.map((item, index) => `<label><input type="checkbox" data-capstone-evidence="${index}" ${gradeProgress.capstoneEvidence[index] ? "checked" : ""}> <span>${escapeHtml(item)}</span></label>`).join("")}</div><button class="button primary" id="save-capstone" type="button">Save capstone progress</button></section><section class="panel"><h2>Success rubric</h2><div class="rubric-list">${project.rubric.map((item) => `<article><strong>${escapeHtml(item.criterion)}</strong><p>${escapeHtml(item.secure)}</p></article>`).join("")}</div></section></div>`;
   $("#save-capstone").addEventListener("click", () => {
     $$('[data-capstone-response]').forEach((field) => { gradeProgress.capstoneResponses[field.dataset.capstoneResponse] = field.value.trim(); });
@@ -620,7 +620,7 @@ function drawCapstoneQuizQuestion() {
     if (correct) capstoneQuizScore += 1;
     $$('[data-capstone-option]').forEach((candidate) => { candidate.disabled = true; if (candidate.dataset.capstoneOption === item.answer) candidate.classList.add("correct"); });
     button.classList.add(correct ? "correct" : "incorrect");
-    $("#capstone-quiz-feedback").innerHTML = `<p class="feedback ${correct ? "good" : "try"}"><strong>${correct ? "Correct!" : "Not quite."}</strong> ${escapeHtml(item.explanation)}</p>`;
+    $("#capstone-quiz-feedback").innerHTML = `<p class="feedback ${correct ? "good" : "try"}"><span class="status-note">${correct ? "Correct!" : "Not quite."}</span> ${escapeHtml(item.explanation)}</p>`;
     $("#next-capstone-question").hidden = false;
     $("#next-capstone-question").addEventListener("click", () => { capstoneQuizIndex += 1; drawCapstoneQuizQuestion(); });
   }));
@@ -692,7 +692,7 @@ function renderTeacher() {
       <section class="panel"><h2>Workbook provenance</h2><table class="term-table"><tbody><tr><th>Framework</th><td>${escapeHtml(course.provenance.framework || cambridgeLabel(stageNumber))}</td></tr><tr><th>Package</th><td>${escapeHtml(course.provenance.contentPackage)}</td></tr><tr><th>Archive</th><td>${escapeHtml(course.provenance.sourceArchive)}</td></tr><tr><th>Documents</th><td>${course.provenance.sourceDocuments.map(escapeHtml).join("; ")}</td></tr><tr><th>Imported blocks</th><td>${course.provenance.sourceBlockCount}</td></tr><tr><th>Transformation</th><td>${escapeHtml(course.provenance.transformation)}</td></tr></tbody></table></section>
       <section class="panel"><h2>Coverage</h2><div class="stat-row"><div class="stat"><strong>${course.outcomes.length}</strong><small>outcomes</small></div><div class="stat"><strong>${course.workedExamples.length}</strong><small>worked examples</small></div><div class="stat"><strong>${course.assessment.questions.length}</strong><small>checkpoint items</small></div></div></section>
       <section class="panel"><h2>Suggested teaching resources</h2><div class="reference-grid"><div><h3>Manipulatives</h3><p>${escapeHtml(course.activities.map((item)=>item.materials).slice(0,3).join('; '))}.</p></div><div><h3>Evidence to collect</h3><p>Model-building accuracy, Guided Practice responses, activity notes, game mastery, real-problem calculations and reasoning explanations.</p></div></div></section>
-      <section class="panel"><h2>Lesson delivery</h2><p><strong>ElevenLabs narration is active.</strong> Learners can listen to the complete structured concept lesson or read it independently.</p></section>
+      <section class="panel"><h2>Lesson delivery</h2><p><span class="status-note">ElevenLabs narration is active.</span> Learners can listen to the complete structured concept lesson or read it independently.</p></section>
     </div>`;
 }
 // ===================== config + boot =====================

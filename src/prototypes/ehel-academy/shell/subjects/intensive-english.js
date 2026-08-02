@@ -178,8 +178,8 @@ function renderDictionary() {
         <div><span class="word-type">${escapeHtml(item.partOfSpeech)}</span><h2>${escapeHtml(item.displayWord)}</h2></div>
         <div class="audio-actions">${voiceButton(item.displayWord, `Listen to ${item.displayWord}`)}</div>
       </div>
-      <p class="meaning"><strong>Meaning:</strong> ${escapeHtml(item.childMeaning)}</p>
-      <p><strong>Spelling:</strong> ${escapeHtml(item.spellingPractice)}</p>
+      <p class="meaning"><span class="field-label">Meaning:</span> ${escapeHtml(item.childMeaning)}</p>
+      <p><span class="field-label">Spelling:</span> ${escapeHtml(item.spellingPractice)}</p>
       <div class="sentence-card">
         <small>In a sentence · ${activeSentence + 1} of ${sentences.length}</small>
         <p>${escapeHtml(sentences[activeSentence])}</p>
@@ -233,7 +233,7 @@ function renderGrammar() {
       ${lesson.ruleAndExamples ? `<div class="gc-pattern">${escapeHtml(lesson.ruleAndExamples).replace(/\n/g, "<br>")}</div>` : ""}
       <div class="gc-actions">${voiceButton(`${lesson.title}. ${lesson.explanation}`, "Hear it")}</div>
       ${lesson.commonMistake ? `<p class="gc-note gc-mistake">${escapeHtml(lesson.commonMistake)}</p>` : ""}
-      ${lesson.memoryTip ? `<p class="gc-note"><strong>Remember:</strong> ${escapeHtml(lesson.memoryTip)}</p>` : ""}
+      ${lesson.memoryTip ? `<p class="gc-note"><span class="field-label">Remember:</span> ${escapeHtml(lesson.memoryTip)}</p>` : ""}
       ${lesson.workedExample ? `<div class="worked"><span class="worked-label">Worked example</span>${escapeHtml(lesson.workedExample).replace(/\n/g, "<br>")}</div>` : ""}
       ${lesson.practice ? `<details class="gc-practice"><summary>Now you try</summary><p class="gc-note gc-try">${escapeHtml(lesson.practice).replace(/\n/g, "<br>")}</p>${lesson.answerKey ? `<details><summary>Check yourself</summary><p class="gc-note">${escapeHtml(lesson.answerKey).replace(/\n/g, "<br>")}</p></details>` : ""}</details>` : ""}
       ${index === lessons.length - 1 ? `<button class="gc-btn done" id="grammar-done" type="button">${icon("check")} I practised every pattern</button>` : ""}
@@ -329,7 +329,7 @@ function renderComprehension() {
       const value = $(`#answer-${CSS.escape(question.questionId)}`).value.trim();
       $(`#feedback-${CSS.escape(question.questionId)}`).innerHTML = value.length < 3
         ? `<p class="feedback try">Write your own answer first.</p>`
-        : `<p class="feedback good"><strong>Answer:</strong> ${escapeHtml(question.correctAnswer)}<br><small>${escapeHtml(question.explanation)}</small></p>`;
+        : `<p class="feedback good"><span class="field-label">Answer:</span> ${escapeHtml(question.correctAnswer)}<br><small>${escapeHtml(question.explanation)}</small></p>`;
     }));
     $("#comprehension-done").addEventListener("click", () => complete("comprehension", "Comprehension complete."));
     icons();
@@ -394,7 +394,7 @@ function renderWriting() {
     $("#app").innerHTML = `${pageHeader("Writing", "Write it down", "Your draft saves on this device as you type.")}
       <div class="subtabs">${course.writing.map((item) => `<button class="subtab ${active === item.writingId ? "active" : ""}" data-writing="${escapeHtml(item.writingId)}" type="button">${item.sequence}</button>`).join("")}</div>
       <div class="task-grid">
-        <section class="panel"><h2>${escapeHtml(task.title)}</h2><p class="rule-box">${escapeHtml(task.promptAndInstructions).replace(/\n/g, "<br>")}</p><details><summary>See a model</summary><pre class="document">${escapeHtml(task.modelText)}</pre></details><p><strong>Expected:</strong> ${escapeHtml(task.expectedLength)}</p><textarea id="writing-draft" placeholder="${escapeHtml(task.sentenceStarter || "")}">${escapeHtml(saved)}</textarea><p id="save-status"><small>${saved ? "Draft restored" : "Start when you are ready"}</small></p></section>
+        <section class="panel"><h2>${escapeHtml(task.title)}</h2><p class="rule-box">${escapeHtml(task.promptAndInstructions).replace(/\n/g, "<br>")}</p><details><summary>See a model</summary><pre class="document">${escapeHtml(task.modelText)}</pre></details><p><span class="field-label">Expected:</span> ${escapeHtml(task.expectedLength)}</p><textarea id="writing-draft" placeholder="${escapeHtml(task.sentenceStarter || "")}">${escapeHtml(saved)}</textarea><p id="save-status"><small>${saved ? "Draft restored" : "Start when you are ready"}</small></p></section>
         <aside class="panel"><h3>Check your work</h3><ul class="checklist">${String(task.successCriteria).split(";").map((criterion, index) => `<li><label><input type="checkbox" data-check="${index}"><span>${escapeHtml(criterion.trim())}</span></label></li>`).join("")}</ul><h3>If you are stuck</h3><p>${escapeHtml(task.support)}</p><h3>Go further</h3><p>${escapeHtml(task.extension)}</p><button class="button primary" id="writing-done" type="button">Submit ${icon("send")}</button></aside>
       </div>`;
     $$("[data-writing]").forEach((button) => button.addEventListener("click", () => { active = button.dataset.writing; draw(); }));
@@ -456,7 +456,7 @@ function drawQuizQuestion() {
     if (correct) quizScore += 1;
     button.classList.add(correct ? "correct" : "wrong");
     if (!correct) $$("[data-option]").find((option) => option.dataset.option === String(question.correctAnswer))?.classList.add("correct");
-    $("#quiz-feedback").innerHTML = `<p class="feedback ${correct ? "good" : "try"}"><strong>${correct ? "Correct." : "Not quite."}</strong> ${escapeHtml(question.explanation)}</p>`;
+    $("#quiz-feedback").innerHTML = `<p class="feedback ${correct ? "good" : "try"}"><span class="status-note">${correct ? "Correct." : "Not quite."}</span> ${escapeHtml(question.explanation)}</p>`;
     $("#next-quiz").hidden = false;
     $("#next-quiz").addEventListener("click", () => { quizIndex += 1; drawQuizQuestion(); });
   }));
@@ -479,7 +479,7 @@ function renderAnswers() {
   ].filter(([, items]) => items.length);
 
   $("#app").innerHTML = `${pageHeader("Answers", "Every answer, explained", "Nothing here is hidden from you. Try the exercise first — then open the section and check, and read why.")}
-    <section class="panel"><p>${icon("lightbulb")} <strong>Use this after you try, not instead of trying.</strong> An answer you read before attempting teaches you nothing, and there is nobody else here to tell the difference.</p></section>
+    <section class="panel"><p>${icon("lightbulb")} <span class="status-note">Use this after you try, not instead of trying.</span> An answer you read before attempting teaches you nothing, and there is nobody else here to tell the difference.</p></section>
     <div class="section-stack">${groups.map(([label, items]) => `
       <section class="panel">
         <h2>${escapeHtml(label)}</h2>

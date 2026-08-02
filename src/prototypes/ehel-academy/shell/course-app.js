@@ -408,7 +408,7 @@ export function createCourseApp(config) {
       console.error(error);
       const target = $("#loading") || $("#app");
       target.hidden = false;
-      target.innerHTML = `<p><strong>We could not prepare the lesson.</strong><br>${escapeHtml(error.message)}</p>`;
+      target.innerHTML = `<p><span class="status-note">We could not prepare the lesson.</span><br>${escapeHtml(error.message)}</p>`;
     }
   }
 

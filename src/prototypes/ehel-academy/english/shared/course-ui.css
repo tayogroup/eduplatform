@@ -767,3 +767,7 @@ body.focus-mode.gc-full .gc-dots { position: fixed; left: 0; right: 0; bottom: 1
 #writing-draft:focus { outline: 3px solid rgba(45,108,223,.18); border-color: #2f6cdf; background-color: #fdfeff; }
 #writing-draft::placeholder { color: #93a7b8; font-style: italic; }
 @media (max-width: 720px) { #writing-draft { min-height: 260px; } }
+/* Inline labels ("Hint:", "Meaning:") name a field; they are not emphasis. */
+.field-label { font-weight: 400; }
+/* Status lines and correctness feedback: colour carries the meaning, not weight. */
+.status-note { font-weight: 400; }

@@ -18,13 +18,17 @@ const grades = process.argv.slice(2).length ? process.argv.slice(2).map(Number) 
 // into an icon ("[Star] Big Idea…", "[!] Did You Know?"). Those tags are
 // layout instructions, not words for the learner, so strip them here rather
 // than letting 91 of them show up mid-sentence on screen.
-// Named tags are listed one by one on purpose. Stripping every bracketed word
-// looks tidier but breaks the experiment splitter in grab(): it stops a section
-// at /^safety\b/, so removing "[SAFE]" turns "[SAFE] Safety First — use ONLY a
-// 1.5 V battery…" into a section boundary and the safety guidance behind it is
-// dropped from the unit altogether. Add tags here only after checking they do
-// not begin a line the splitter treats as a heading.
-const SOURCE_MARKER = /\[(?:Star|Tip|Fact|Look|Safety|Note|Warning|Key|Sort|Recipe|!)\]\s*/gi;
+// The typesetter marks callouts with a bracketed tag that became an icon in
+// print ("[Star] Big Idea…", "[SAFE] Safety First…"). They are layout, not
+// words for the learner, so every short bracketed tag is stripped rather than a
+// hand-kept list — the list went stale each time a new tag appeared, and "[Sort]"
+// and "[Recipe]" reached learners mid-sentence.
+//
+// This is only safe because grab() no longer decides a section boundary from
+// tag-stripped text alone: it also requires the line to be heading-length.
+// Without that, removing "[SAFE]" turned a paragraph of electrical safety
+// guidance into a boundary and dropped it from the unit.
+const SOURCE_MARKER = /\[(?:[A-Za-z]{1,12}|!)\]\s*/g;
 const tidy = (value = "") => String(value)
   .replace(/�/g, "–")
   .replace(SOURCE_MARKER, "")
@@ -1021,10 +1025,17 @@ function buildGrade(grade) {
         const at = body.findIndex((item) => marker.test(tidy(item.text)));
         if (at < 0) return [];
         const stopMarkers = /^(aim|make a hypothesis|hypothesis|materials|method|recording sheet|analysis questions?|what to observe|safety|conclusion|going further)\b/i;
+        // A section heading is a short label. Prose that merely opens with one
+        // of these words is not a boundary: "Safety First — use ONLY a 1.5 V
+        // battery, never the mains…" is a paragraph of the aim, and treating it
+        // as a heading dropped that guidance from the unit entirely. The tag
+        // that used to shield it ("[SAFE]") is stripped for display, so length
+        // is what separates a label from a sentence.
+        const HEADING_MAX = 60;
         const out = [];
         for (let cursor = at + 1; cursor < body.length; cursor += 1) {
           const text = tidy(body[cursor].text);
-          if (stopMarkers.test(text)) break;
+          if (stopMarkers.test(text) && text.length <= HEADING_MAX) break;
           if (text.length > 3) out.push(text);
         }
         return out;

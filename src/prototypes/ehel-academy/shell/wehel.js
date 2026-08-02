@@ -235,6 +235,50 @@ export async function speakBrowser(text, { rate = 0.95, onStart, onEnd } = {}) {
   return true;
 }
 
+// --- browser speech recognition ---------------------------------------------
+// Voice input mirrors voice output: the browser's own engine first. It is
+// free, starts instantly, and streams interim text while the learner is still
+// talking. The MediaRecorder → ElevenLabs STT path stays as the fallback for
+// browsers without SpeechRecognition. Looked up at call time, not import time,
+// so a test can stub it and so a browser that gains support mid-session wins.
+export function speechRecognitionCtor() {
+  return (typeof window !== "undefined" && (window.SpeechRecognition || window.webkitSpeechRecognition)) || null;
+}
+
+/** Listen once and resolve the transcript ("" when nothing was heard).
+ * Rejects only when recognition cannot run at all (blocked mic, no engine). */
+export function recognizeSpeech({ lang = "en-GB", onInterim } = {}) {
+  const Recognition = speechRecognitionCtor();
+  if (!Recognition) return Promise.reject(new Error("unsupported"));
+  return new Promise((resolve, reject) => {
+    const recognition = new Recognition();
+    recognition.lang = lang;
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.maxAlternatives = 1;
+    let finalText = "";
+    let failure = null;
+    recognition.onresult = (event) => {
+      let interim = "";
+      for (let index = event.resultIndex; index < event.results.length; index += 1) {
+        const piece = event.results[index][0].transcript;
+        if (event.results[index].isFinal) finalText += piece;
+        else interim += piece;
+      }
+      if (onInterim) onInterim((finalText + interim).trim());
+    };
+    recognition.onerror = (event) => { failure = event.error || "error"; };
+    // Recognition ends itself after a pause in speech; silence and an aborted
+    // session both resolve to "" so the caller shows a gentle retry message.
+    recognition.onend = () => {
+      if (finalText.trim()) resolve(finalText.trim());
+      else if (failure && failure !== "no-speech" && failure !== "aborted") reject(new Error(failure));
+      else resolve("");
+    };
+    try { recognition.start(); } catch (error) { reject(error); }
+  });
+}
+
 export async function askWehel({ meta, messages, channel = "text", mode = "", fetchUnit = null }) {
   const wstoken = new URLSearchParams(location.search).get("wstoken") || undefined;
   const post = async (conversation) => {
@@ -336,8 +380,10 @@ export function mountWehelChat(options) {
   const greeting = options.greeting || `Hi! I am ${tutorLabel}, your ${meta.subjectLabel} companion. What would you like to do with Unit ${meta.unitNo}: ${meta.unitTitle}?`;
   if (!Array.isArray(store[key])) store[key] = [];
   const messages = store[key];
-  const micSupported = Boolean(navigator.mediaDevices?.getUserMedia && typeof MediaRecorder === "function");
+  const micSupported = Boolean(speechRecognitionCtor())
+    || Boolean(navigator.mediaDevices?.getUserMedia && typeof MediaRecorder === "function");
   let busy = false;
+  let listening = false;
   let recorder = null;
   let recordedChunks = [];
 
@@ -444,6 +490,33 @@ export function mountWehelChat(options) {
   }
 
   async function toggleMic(button) {
+    // Browser speech recognition first: free, instant, and the learner sees
+    // their words appear in the input box while they are still talking.
+    if (speechRecognitionCtor()) {
+      if (listening) return; // recognition stops itself after a pause
+      stopBrowserSpeech();   // never transcribe the tutor's own voice
+      speakingIndex = null;
+      listening = true;
+      const input = container.querySelector("#wehel-input");
+      button.classList.add("is-recording");
+      button.textContent = "🎙️";
+      if (ui.toast) ui.toast("Listening — speak now.");
+      try {
+        const text = await recognizeSpeech({ onInterim: (interim) => { if (input) input.value = interim; } });
+        if (text) { if (input) input.value = ""; submit(text, "voice"); }
+        else if (ui.toast) ui.toast("I didn't hear anything — try again.");
+      } catch (error) {
+        if (ui.toast) ui.toast(error.message === "not-allowed"
+          ? "The microphone is blocked for this page."
+          : "Voice input is unavailable right now — you can type instead.");
+      } finally {
+        listening = false;
+        button.classList.remove("is-recording");
+        button.textContent = "🎤";
+      }
+      return;
+    }
+    // Fallback: record locally, transcribe server-side (ElevenLabs STT).
     if (recorder && recorder.state === "recording") { recorder.stop(); return; }
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });

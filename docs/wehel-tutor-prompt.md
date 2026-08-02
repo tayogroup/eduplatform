@@ -413,6 +413,16 @@ long replies are chunked sentence-by-sentence (Chrome truncates ~15s
 utterances), and hash-route changes cancel speech. English's bespoke panel
 uses the same engine for its chat bubbles and auto-speak.
 
+**Voice input** mirrors it (also 2026-08-02): the mic button uses the browser's
+`SpeechRecognition` first — free, instant, interim words stream into the input
+box while the learner talks, and the final transcript submits as a
+`channel: "voice"` question (so the reply speaks back). The
+MediaRecorder → ElevenLabs STT upload remains the fallback for browsers without
+the engine. English's bespoke panel gained a chat mic for the first time, using
+the same shared `recognizeSpeech`. Note `SpeechRecognition` is Chrome/Edge
+territory (Chrome sends audio to Google's recogniser; no key or cost to us) —
+Firefox falls back to the STT upload path automatically.
+
 ## Design decisions worth reviewing
 
 1. **One template, not 48 prompts.** Subject × grade behaviour comes from

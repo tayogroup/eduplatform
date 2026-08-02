@@ -2051,7 +2051,7 @@ function renderAIEnglish() {
     <div class="ai-layout">
       <section class="ai-main panel">
         <div class="ai-modes" role="tablist" aria-label="Choose AI English mode">${aiModes.map(([id, modeIcon, label]) => `<button class="ai-mode ${aiState.mode === id ? "active" : ""}" data-ai-mode="${id}" type="button" role="tab" aria-selected="${aiState.mode === id}">${icon(modeIcon)}<span>${label}</span></button>`).join("")}</div>
-        <div class="ai-conversation" id="ai-conversation" aria-live="polite">${aiState.messages.map((item, index) => `<article class="ai-message ${item.role}"><span>${item.role === "assistant" ? "Wehel" : "You"}</span><p>${escapeHtml(item.text)}</p><div class="ai-message-tools"><button data-ai-listen="${index}" type="button" aria-label="Listen to ${item.role === "assistant" ? "Wehel's answer" : "your question"} with ElevenLabs">${icon("volume-2")} Listen</button>${item.role === "assistant" ? `<small>${icon("book-check")} ${gradeLabel} Unit ${course.unit.unitNo}</small>` : ""}</div></article>`).join("")}</div>
+        <div class="ai-conversation" id="ai-conversation" aria-live="polite">${aiState.messages.map((item, index) => `<article class="ai-message ${item.role}"><span>${item.role === "assistant" ? (item.offline ? "Wehel (offline hint)" : "Wehel") : "You"}</span><p>${escapeHtml(item.text)}</p><div class="ai-message-tools"><button data-ai-listen="${index}" type="button" aria-label="Listen to ${item.role === "assistant" ? "Wehel's answer" : "your question"} with ElevenLabs">${icon("volume-2")} Listen</button>${item.role === "assistant" ? `<small>${icon("book-check")} ${gradeLabel} Unit ${course.unit.unitNo}</small>` : ""}</div></article>`).join("")}</div>
         <div class="ai-prompts">${prompts.map((prompt) => `<button data-ai-prompt="${escapeHtml(prompt)}" type="button">${escapeHtml(prompt)}</button>`).join("")}</div>
         ${speakingTools}
         <form class="ai-compose" id="ai-form"><label class="sr-only" for="ai-input">Ask AI English</label><textarea id="ai-input" rows="2" maxlength="500" placeholder="Type your question or your sentence..."></textarea><button class="button primary" type="submit">${icon("send")} Send</button></form>
@@ -2114,8 +2114,11 @@ async function submitAIMessage(message) {
       fetchUnit: unitFetcher(manifest, dataRootUrl),
     });
   } catch (error) {
-    // Offline or unconfigured: fall back to the built-in unit guidance.
+    // Offline or unconfigured: fall back to the built-in unit guidance — and
+    // say so. An unlabelled canned reply reads as a very bad AI answer.
     pending.text = buildAIReply(message, aiState.mode);
+    pending.offline = true;
+    toast("Wehel is offline right now — showing built-in unit guidance instead.");
   }
   saveAIState();
   if (aiState.interactions >= 3 && !progress.completed.includes("ai")) complete("ai");

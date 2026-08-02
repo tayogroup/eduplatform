@@ -32,10 +32,23 @@ const STORAGE = "https://storage.bunnycdn.com";
 const KEY = process.env.BUNNY_KEY;
 const MANIFEST = path.join(ROOT, ".bunny-appver-manifest.json");
 const CONCURRENCY = 10;
-const ALL_SUBJECTS = ["english", "mathematics", "science", "computing"];
+// Every course ships through this tool. global-perspectives and intensive-english
+// were absent, which is why they grew their own cache-busting: GP minted dated
+// filenames (course-ui-20260802a.css) and intensive-english relied on ?v=, which
+// does nothing — the pull zone serves a never-before-seen query string as
+// `CDN-Cache: HIT` off the same entry as the bare URL. Both now use the version
+// path like every other subject.
+const ALL_SUBJECTS = ["english", "mathematics", "science", "computing", "global-perspectives", "intensive-english"];
+// Subjects whose runtime is a standalone shared/course-ui.js rather than a
+// shell/subjects/ module. A --shell release must not name them.
+const NON_SHELL_SUBJECTS = ["computing", "global-perspectives"];
 
-if (!KEY) { console.error("BUNNY_KEY not set"); process.exit(1); }
 const argv = process.argv.slice(2);
+// --dry prints the exact remote paths a release would write and exits without
+// uploading. Worth having: this tool's whole job is which path a file lands on,
+// and until now the only way to see that was to run a real deploy.
+const DRY = argv.includes("--dry");
+if (!KEY && !DRY) { console.error("BUNNY_KEY not set (use --dry to preview without uploading)"); process.exit(1); }
 const TAG = (argv.find((a) => /^v\d+$/.test(a))) || "v1";
 // Optional subject filter: name one or more subjects to release only those. The
 // release pointer is already per-subject (app/{subject}/index.html + current.json),
@@ -58,6 +71,15 @@ const PARTIAL = picked.length > 0;
 // module), course-app.js (the shell core), the subject's visual modules, and
 // course-ui.css — with import paths rewritten for the deployed layout.
 const SHELL = process.argv.slice(2).includes("--shell");
+// computing and global-perspectives have no shell/subjects/ module — a --shell
+// release naming them would fail on a missing file part-way through, after some
+// items had already uploaded. Refuse up front instead.
+const shellless = SHELL ? SUBJECTS.filter((s) => NON_SHELL_SUBJECTS.includes(s)) : [];
+if (shellless.length) {
+  console.error(`--shell was given but ${shellless.join(", ")} run a standalone shared/course-ui.js.\n` +
+    `Release them without --shell: node tools/deploy-app-version.js ${TAG} ${shellless.join(" ")}`);
+  process.exit(1);
+}
 
 const sha1 = (buf) => crypto.createHash("sha1").update(buf).digest("hex");
 const CT = {
@@ -69,11 +91,52 @@ const ctFor = (name) => CT[path.extname(name).toLowerCase()] || "application/oct
 // index.html transform: point the CSS link + JS loader at v{TAG}/ instead of the
 // dev-time ./shared/…?v=… reference. Robust to both loader shapes (bare <script>
 // and the inline courseScript block).
-function versionIndexHtml(html) {
-  return html
+function versionIndexHtml(html, subject) {
+  const out = html
     .replace(/\.\/shared\/course-ui\.css(?:\?v=[^"']*)?/g, `${TAG}/course-ui.css`)
-    .replace(/\.\/shared\/course-ui\.js(?:\?v=[^"']*)?/g, `${TAG}/course-ui.js`);
+    .replace(/\.\/shared\/course-ui\.js(?:\?v=[^"']*)?/g, `${TAG}/course-ui.js`)
+    // brand-fx.js is loaded straight from app/shared/ by computing's entry. That
+    // path is max-age=2592000 and unversioned, so it outlives the release that
+    // introduced it; pull it into v{TAG}/ with everything else.
+    .replace(/\.\.\/shared\/brand-fx\.js(?:\?v=[^"']*)?/g, `${TAG}/brand-fx.js`);
+
+  // Fail rather than ship an unversioned pointer. Before this guard, a subject
+  // whose entry did not match these patterns — GP's dated course-ui-20260802a.js
+  // was exactly that — deployed an index.html still pointing at ./shared/, so the
+  // release uploaded a v{TAG}/ bundle nothing ever loaded and the course kept
+  // serving the thirty-day-cached copy.
+  if (!out.includes(`${TAG}/course-ui.css`) || !out.includes(`${TAG}/course-ui.js`)) {
+    throw new Error(
+      `${subject}/index.html does not reference ./shared/course-ui.css and ./shared/course-ui.js — ` +
+      `nothing was version-pinned. Point the entry at those two stable names.`);
+  }
+  return out;
 }
+
+// --- keeping v{TAG}/ self-contained -----------------------------------------
+// The version path only busts the cache for what is INSIDE it. Anything a bundle
+// reaches out to still comes from an unversioned, thirty-day-cached path — so a
+// release that imports app/shared/ or app/english/shared/ is only partly pinned.
+// That was live: mathematics and science on v110 both opened course-ui.css with
+//   @import url("../../english/shared/course-ui-20260723e.css")
+// which resolves to app/english/shared/ and carries the 67 KB design system —
+// most of the CSS in the release. Dating that filename by hand was the workaround
+// this replaces.
+// NOTE: brand-fx.js is NOT tracked in git (nor is shared/ehel-academy-logo.png),
+// though computing/index.html loads it and it now ships inside every version
+// bundle. It resolves from the working tree today, but a fresh clone would not
+// have it — so a missing module is reported and skipped rather than throwing
+// part-way through a release. Committing it is the real fix.
+const SHARED_MODULES = ["course-shell.js", "progress-client.js", "seb-session.js", "lesson-gate.js", "brand-fx.js"];
+const sharedModuleItems = (subject) => SHARED_MODULES.flatMap((name) => {
+  const src = path.join(EHEL, "shared", name);
+  if (!fs.existsSync(src)) { console.log(`  (skip ${name}: not in the working tree)`); return []; }
+  return [{ remote: `app/${subject}/${TAG}/${name}`, buf: fs.readFileSync(src) }];
+});
+const selfContainJs = (src) => src.replace(
+  /\.\.\/\.\.\/shared\/(course-shell|progress-client|seb-session|lesson-gate|brand-fx)\.js(\?v=[^"']*)?/g, "./$1.js");
+const selfContainCss = (src) => src.replace(
+  /@import url\(["']\.\.\/\.\.\/english\/shared\/course-ui\.css["']\);/, '@import url("./design-system.css");');
 
 // Import rewrites for the deployed shell layout. Modules resolve imports against
 // their own URL (app/{subject}/v{TAG}/…), so:
@@ -87,7 +150,7 @@ function versionIndexHtml(html) {
 // a stale cached shared file.
 function shellSubjectModule(subject) {
   return fs.readFileSync(path.join(EHEL, "shell", "subjects", `${subject}.js`), "utf8")
-    .replace(/\.\.\/\.\.\/(?:english|mathematics|science|computing)\/shared\/([A-Za-z0-9_-]+\.js)(\?v=[^"']*)?/g, "./$1")
+    .replace(/\.\.\/\.\.\/(?:english|mathematics|science|computing|global-perspectives|intensive-english)\/shared\/([A-Za-z0-9_-]+\.js)(\?v=[^"']*)?/g, "./$1")
     .replace(/\.\.\/\.\.\/shared\/(course-shell|progress-client)\.js(\?v=[^"']*)?/g, "./$1.js")
     .replace(/\.\.\/course-app\.js(\?v=[^"']*)?/g, "./course-app.js");
 }
@@ -111,20 +174,34 @@ function buildItems() {
       } else if (SHELL) {
         // shell mode: vN gets the subject's visuals/css; course-ui.js is replaced
         // by the shell subject module below.
-        if (name !== "course-ui.js") items.push({ remote: `app/${subject}/${TAG}/${name}`, buf });
+        if (name !== "course-ui.js") {
+          items.push({ remote: `app/${subject}/${TAG}/${name}`, buf: name.endsWith(".css") ? Buffer.from(selfContainCss(buf.toString("utf8"))) : buf });
+        }
       } else {
-        items.push({ remote: `app/${subject}/${TAG}/${name}`, buf }); // immutable code
+        // Standalone subject: its own course-ui.js reaches into app/shared/ for
+        // course-shell/progress-client, so rewrite those the same way shell mode
+        // does and copy the modules in below.
+        const text = /\.(js|css)$/.test(name) ? buf.toString("utf8") : null;
+        const fixed = name.endsWith(".css") ? selfContainCss(text) : selfContainJs(text);
+        items.push({ remote: `app/${subject}/${TAG}/${name}`, buf: Buffer.from(fixed) }); // immutable code
       }
+    }
+    // The design system lives in the English tree and every other subject
+    // @imports it. Carry a copy into this subject's version path so the import
+    // resolves inside v{TAG}/ instead of the unversioned app/english/shared/.
+    if (subject !== "english") {
+      items.push({
+        remote: `app/${subject}/${TAG}/design-system.css`,
+        buf: fs.readFileSync(path.join(EHEL, "english", "shared", "course-ui.css")),
+      });
     }
     if (SHELL) {
       items.push({ remote: `app/${subject}/${TAG}/course-ui.js`, buf: Buffer.from(shellSubjectModule(subject)) });
       items.push({ remote: `app/${subject}/${TAG}/course-app.js`, buf: Buffer.from(shellCore()) });
-      for (const name of ["course-shell.js", "progress-client.js", "seb-session.js", "lesson-gate.js"]) {
-        items.push({ remote: `app/${subject}/${TAG}/${name}`, buf: fs.readFileSync(path.join(EHEL, "shared", name)) });
-      }
     }
+    items.push(...sharedModuleItems(subject));
     // Rewritten entry + release pointer (always upload — they carry the version).
-    const html = versionIndexHtml(fs.readFileSync(path.join(EHEL, subject, "index.html"), "utf8"));
+    const html = versionIndexHtml(fs.readFileSync(path.join(EHEL, subject, "index.html"), "utf8"), subject);
     items.push({ remote: `app/${subject}/index.html`, buf: Buffer.from(html), always: true });
     const current = { version: TAG, shell: SHELL, builtFrom: SHELL ? "src/prototypes/ehel-academy/shell" : `src/prototypes/ehel-academy/${subject}`, contract: "1.0" };
     items.push({ remote: `app/${subject}/current.json`, buf: Buffer.from(JSON.stringify(current, null, 2) + "\n"), always: true });
@@ -155,10 +232,31 @@ async function put(remote, buf) {
 
 (async () => {
   const manifest = fs.existsSync(MANIFEST) ? JSON.parse(fs.readFileSync(MANIFEST, "utf8")) : {};
-  const all = buildItems();
+  let all;
+  // A contract failure is a configuration mistake, not a crash — report it as
+  // one line rather than a stack trace, and before anything has been uploaded.
+  try { all = buildItems(); }
+  catch (e) { console.error(e.message); process.exit(1); }
   const todo = all.filter((x) => x.always || manifest[x.remote] !== sha1(x.buf));
   console.log(`tag: ${TAG} | subjects: ${SUBJECTS.join(",")}${PARTIAL ? ` (partial release — ${ALL_SUBJECTS.filter((s) => !SUBJECTS.includes(s)).join(",")} left on their current version)` : " (all)"}${SHELL ? " | shell" : ""}`);
   console.log(`items: ${all.length} | to upload: ${todo.length} (${todo.filter((x) => x.always).length} pointer files always sent)`);
+  if (DRY) {
+    for (const item of all) console.log(`  ${String(item.buf.length).padStart(7)}B  ${item.remote}${item.always ? "  (pointer)" : ""}`);
+    // app/shared/fonts/ is exempt. A woff2 is immutable under its own name — the
+    // filename carries family, style and weight range — so it is already
+    // content-versioned and a change means a new file, not a new byte stream at
+    // the same path. Copying 115 KB of it into every subject's every release
+    // would cost real bandwidth to pin something that cannot go stale.
+    const escapes = all.filter((x) => /\/v\d+\//.test(x.remote) && /\.(js|css)$/.test(x.remote))
+      .flatMap((x) => (x.buf.toString("utf8").match(/\.\.\/\.\.\/(?:shared|english)\/[^"')?\s]+/g) || [])
+        .filter((ref) => !ref.startsWith("../../shared/fonts/"))
+        .map((ref) => `  ${x.remote} → ${ref}`));
+    console.log(escapes.length
+      ? `\nWARNING — ${escapes.length} reference(s) escape the version path to an unversioned, 30-day-cached location:\n${escapes.join("\n")}`
+      : `\nAll ${TAG} bundles are self-contained: no reference reaches outside the version path.`);
+    console.log("\n(dry run — nothing uploaded)");
+    return;
+  }
   let done = 0, failed = 0;
   const save = () => fs.writeFileSync(MANIFEST, JSON.stringify(manifest, null, 0));
   let idx = 0;

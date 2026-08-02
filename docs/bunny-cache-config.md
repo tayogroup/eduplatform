@@ -40,6 +40,34 @@ Add these in order — Edge Rules match **top to bottom**, so the immutable
 Media + versioned code are ~99% of bytes and requests, so keeping them at 1 year
 holds the cache-hit ratio high while pointers and content stay fresh within 5 min.
 
+### What is actually configured (measured 2026-08-02)
+
+Rules 1 and the `index.html` half of rule 4 are live. Rule 4's general `*/app/*`
+pattern is **not** — everything under `app/` that is not `index.html` still falls
+through to the 30-day default:
+
+| path | Cache-Control | as designed? |
+|---|---|---|
+| `app/{subject}/v{N}/…` | `max-age=31536000` | ✅ 1 year |
+| `app/{subject}/index.html` | `max-age=300` | ✅ 5 min |
+| `app/{subject}/current.json` | `max-age=2592000` | ❌ documented as a pointer that flips |
+| `app/{subject}/shared/…` | `max-age=2592000` | ❌ |
+| `app/shared/…` | `max-age=2592000` | ❌ |
+
+The two tiers the release mechanism actually depends on — immutable `v{N}/` and a
+short-cached `index.html` — are both correct, so deploys work. The rest matters
+in two places:
+
+- **`current.json` reports the live version and is cached for 30 days**, so it can
+  name a release that was superseded weeks ago. Trust `index.html` (which is what
+  browsers load) when the two disagree.
+- **`app/{subject}/shared/grade-redirect.js`** is a stable path by design, so an
+  edit to it is stuck behind the 30-day TTL. It is six lines and has not changed;
+  if it ever needs to, purge that path.
+
+Adding the general `*/app/*` rule would fix both. Until then, nothing else should
+be served from a stable path under `app/`.
+
 ## 3. Path versioning — app deploys are now purge-free ✅
 
 App code ships as immutable, version-pinned bundles: `tools/deploy-app-version.js`
@@ -51,8 +79,52 @@ the rules above:
   immutable path — instant cache miss, no purge) and re-uploads the short-cached
   `index.html` pointer, which flips to `v2/` within the 5-minute TTL. **No purge.**
 - **Rollback** = re-deploy the previous `index.html` (old `vN/` is still on storage).
-- The `?v=…` query strings still inside the modules are now vestigial (harmless);
-  the path is the cache key.
+- The `?v=…` query strings have been removed from the six `index.html` entries.
+  They were not merely vestigial — they read as a working cache-bust and were
+  repeatedly relied on. Verify for yourself that they do nothing:
+
+  ```bash
+  curl -sD - -o /dev/null "https://ehelacademy.b-cdn.net/Ehel%20Primary/app/english/shared/course-ui.css?probe=$RANDOM" | grep -i "cdn-cache\|cachedat"
+  ```
+
+  A never-before-seen query string returns `CDN-Cache: HIT` with the same
+  `CDN-CachedAt` as the bare URL. The path is the cache key; the query is not
+  part of it.
+
+### The invariant: a version bundle must be self-contained
+
+Path versioning only busts the cache for what is **inside** `v{N}/`. Anything a
+bundle reaches out to still comes from an unversioned, 30-day-cached path, so the
+release is only partly pinned. This was live and unnoticed: `mathematics` and
+`science` on v110 both opened `v110/course-ui.css` with
+
+```css
+@import url("../../english/shared/course-ui-20260723e.css");
+```
+
+which resolves to `app/english/shared/` and carries the 67 KB design system —
+most of the CSS in the release. Dating that filename by hand (`-20260723e`) was
+the workaround; minting a new alias and repointing five importers was a manual
+ritual nobody could be expected to get right every time.
+
+`deploy-app-version.js` now copies the design system in as `v{N}/design-system.css`
+and rewrites the `@import`, and does the same for the `app/shared/` modules a
+standalone subject imports. `--dry` prints the release and fails loudly if any
+reference still escapes:
+
+```bash
+node tools/deploy-app-version.js v114 --dry --shell english
+```
+
+The one deliberate exception is `app/shared/fonts/*.woff2`: a woff2 is immutable
+under its own name, so it is already content-versioned.
+
+Two guards back this up. `versionIndexHtml()` refuses to deploy a subject whose
+`index.html` does not reference `./shared/course-ui.css` and `./shared/course-ui.js`
+— that silently shipped a bundle nothing loaded. And `upload-app-to-bunny.js` no
+longer uploads `index.html`/`current.json` for a subject: it was overwriting the
+rewritten pointer with the source copy, which is how `english` ended up live on
+`./shared/…` while its intact `v113/` bundle sat unused.
 
 Until the app-tier Edge Rule (#4) is set, a first cutover to a new `vN` still needs
 one purge (the old `index.html` is 30-day cached). After it's set, deploys are

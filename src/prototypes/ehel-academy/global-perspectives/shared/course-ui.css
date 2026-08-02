@@ -2,13 +2,15 @@
    The design system is the English course's stylesheet, which every Ehel
    subject imports; only the palette and the few GP-specific blocks live here.
 
-   WHY A DATED FILENAME: the Bunny pull zone ignores query strings, and this
-   file is served `max-age=2592000` — so `?v=` never busted it and a re-upload
-   to the same path would keep serving the old CSS for thirty days. index.html
-   is `max-age=300`, so pointing it at a NEW filename is what actually ships a
-   style change. Mint the next one as ...-20260803a.css and repoint index.html;
-   the superseded file can be dropped locally once no release references it. */
-@import url("../../english/shared/course-ui-20260723e.css");
+   This file used to be called course-ui-20260802a.css. The pull zone really
+   does ignore query strings — a never-before-seen `?probe=` returns
+   `CDN-Cache: HIT` on the same cache entry as the bare URL — so `?v=` busting
+   never worked and a dated filename was the workaround. It is no longer
+   needed: tools/deploy-app-version.js uploads this course to the immutable
+   path app/global-perspectives/v{TAG}/, and index.html (max-age=300) is the
+   pointer that swaps versions. A new TAG is a new path, so the cache is
+   bypassed by construction and filenames can stay stable. */
+@import url("../../english/shared/course-ui.css");
 
 /* The subject's accent.
 

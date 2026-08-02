@@ -26,7 +26,9 @@ const KEY = process.env.BUNNY_KEY;
 const MANIFEST = path.join(ROOT, ".bunny-app-manifest.json");
 const CONCURRENCY = 12;
 
-if (!KEY) { console.error("BUNNY_KEY not set"); process.exit(1); }
+// --dry lists what a run would upload and exits, without contacting Bunny.
+const DRY = process.argv.slice(2).includes("--dry");
+if (!KEY && !DRY) { console.error("BUNNY_KEY not set (use --dry to preview without uploading)"); process.exit(1); }
 
 // Each entry: local source dir → remote path under app/. Subjects exclude their
 // top-level media/ dir (remapped audio); vocabulary/shared are uploaded whole.
@@ -115,11 +117,28 @@ function walk(root, rel = "", skipTop = []) {
 
 const sha1 = (buf) => crypto.createHash("sha1").update(buf).digest("hex");
 
+// A subject's index.html and current.json are the RELEASE POINTER, and they
+// belong to tools/deploy-app-version.js — it uploads an index.html rewritten to
+// reference the immutable v{TAG}/ bundle. The copy in the source tree still says
+// ./shared/…, so shipping it here silently un-versions whatever is live.
+//
+// That is not hypothetical. English was released as v113 and app/english/v113/
+// is on the CDN intact, but the live app/english/index.html points back at
+// ./shared/course-ui.css — a later run of this tool overwrote the pointer, and
+// because app/{subject}/shared/ is served max-age=2592000 the course has been
+// serving month-old assets from a bundle the release had already replaced.
+const POINTER_FILES = new Set(["index.html", "current.json"]);
+const isSubjectTree = (t) => t.dest.startsWith("app/") && t.name !== "shared" && t.name !== "shell";
+
 function buildList() {
   const list = [];
   for (const t of trees) {
     if (!fs.existsSync(t.src)) { console.log(`  (skip ${t.name}: ${t.src} missing)`); continue; }
     for (const rel of walk(t.src, "", t.excludeTop)) {
+      if (isSubjectTree(t) && POINTER_FILES.has(rel)) {
+        console.log(`  (skip ${t.name}/${rel}: release pointer, owned by deploy-app-version.js)`);
+        continue;
+      }
       const local = path.join(t.src, rel);
       list.push({ local, remote: `${t.dest}/${rel}`, hash: sha1(fs.readFileSync(local)) });
     }
@@ -146,6 +165,15 @@ async function put(remote, buf, ct) {
   const todo = all.filter((x) => manifest[x.remote] !== x.hash);
   const bytes = todo.reduce((s, x) => s + fs.statSync(x.local).size, 0);
   console.log(`trees: ${trees.map((t) => t.name).join(",")} | total: ${all.length} | unchanged: ${all.length - todo.length} | to upload: ${todo.length} (${(bytes / 1048576).toFixed(0)} MB)`);
+  if (DRY) {
+    for (const item of todo) console.log(`  ${item.remote}`);
+    const stray = all.filter((x) => /^app\/[a-z-]+\/(index\.html|current\.json)$/.test(x.remote));
+    console.log(stray.length
+      ? `\nWARNING — ${stray.length} release pointer(s) would be overwritten: ${stray.map((x) => x.remote).join(", ")}`
+      : `\nNo release pointer is touched — index.html/current.json stay owned by deploy-app-version.js.`);
+    console.log("\n(dry run — nothing uploaded)");
+    return;
+  }
   let done = 0, failed = 0, since = 0, idx = 0;
   const save = () => fs.writeFileSync(MANIFEST, JSON.stringify(manifest, null, 0));
   async function worker() {

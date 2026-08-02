@@ -135,6 +135,11 @@ The generator **rejects an unrecognised argument** rather than ignoring it: a ty
 
 Clips are committed (as Science's are, unlike Computing's and Mathematics'), so an orphan is free to delete while git still holds it. Grade 1 is generated: 59 clips, 11,419 characters. Guided grades produce no `words` clips — those packs carry no glossary.
 
+#### Deploying Global Perspectives — two traps verified on the live CDN (2026-08-02)
+
+- **The undated `app/global-perspectives/shared/course-ui.css` / `.js` on the CDN are the day-one versions**, served `max-age=2592000` with query strings ignored. The live release points at the dated `course-ui-20260802a.*` files instead. If a release repoints `index.html` at plain `./shared/…` paths and ships through the plain uploader, learners get the month-old skin and runtime for up to 30 days. GP's next release goes through the versioned flow (`deploy-app-version.js`, `v{TAG}/` bundle), never a bare `upload-app-to-bunny.js global-perspectives` from a tree whose `index.html` references undated names.
+- **The CDN copy of `app/english/shared/course-ui-20260723e.css` is the 1.3 KB local alias, not the full snapshot the convention promises.** It `@import`s the live `app/english/shared/course-ui.css`, so the dated name is not immutable on the CDN: edits to the live English stylesheet propagate into every subject that imports the dated alias — GP included — on the shared file's own cache schedule. Don't rely on snapshot immutability until a full snapshot is re-uploaded to the dated path (or subjects move to versioned bundles).
+
 ### Reviewed Science scripts
 
 Narration scripts are reviewed in a workbook, not in the repo: `export-ehel-science-scripts.py` flattens every learner-facing line into one sheet per grade, and the reviewed file comes back from OneDrive. Those corrections cannot be hand-applied to `science/grade-*/data/` (generated), so they live in `science/data/script-review.json` and the builder lays them over every rebuild:

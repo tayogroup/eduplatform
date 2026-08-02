@@ -380,7 +380,7 @@ function buildRegularUnit(unitNo, dictionaryEntries) {
     schemaVersion: "Ehel English Runtime v1.2", templateVersion: "Ehel English Content Template v1.2", dictionaryVersion: "Ehel Master Dictionary v1.2", generatedAt: GENERATED_AT,
     grade: { id: "g08", label: "Grade 8" }, subject: "English", term,
     unit: { gradeId: "g08", subject: "English", termId: term.id, unitId: id, unitNo, unitTitle: title, unitOverview: overview, learningPath, origin: "Authored Grade 8 source + curriculum review", reviewStatus: "Approved v1.2", sourceFile: sourcePath(unitNo, "Lesson") },
-    visual: { image: `../../vocabulary/assets/${visualMap[unitNo][0]}`, alt: visualMap[unitNo][1], lectureMode: "guided-launch" },
+    visual: { image: `../assets/${visualMap[unitNo][0]}`, alt: visualMap[unitNo][1], lectureMode: "guided-launch" },
     vocabularyGroups, dictionaryLinks, rubrics: baseRubrics.map((rubric) => ({ ...rubric, origin: "Ehel Grade 8 approved rubric v1.2" })), outcomes, readings, comprehension, grammar, speaking, writing, activities,
     assignments: [{ assignmentId: `${id}-assignment01`, unitId: id, title: `${title} evidence portfolio`, instructions: `Submit ${writing[0].title}, an annotated source comparison and a recording of ${speaking[0].title}. Improve all pieces using the Grade 8 rubrics.`, submissionType: "Writing + source annotation + audio", marks: 40, outcomeIds: `${outcomes[0].outcomeId} | ${outcomes[Math.min(1, outcomes.length - 1)].outcomeId}`, rubricIds: "rub-writing-v1 | rub-speaking-v1", origin: "Curriculum-reviewed unit portfolio", reviewStatus: "Approved v1.2", sourceFile: "Derived from unit writing and speaking tasks" }],
     quizzes, liveSessions,

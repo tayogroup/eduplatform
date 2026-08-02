@@ -11,7 +11,7 @@ from docx import Document
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SOURCE = ROOT / "tmp" / "year2-curriculum" / "Year 2"
-DEFAULT_VOCABULARY = ROOT / "src" / "prototypes" / "ehel-academy" / "vocabulary" / "grade2-vocabulary.json"
+DEFAULT_VOCABULARY = ROOT / "src" / "prototypes" / "ehel-academy" / "english" / "grade-2" / "source" / "grade2-vocabulary.json"
 DEFAULT_OUTPUT = ROOT / "tmp" / "ehel-template-v1" / "grade2-content-model.json"
 
 

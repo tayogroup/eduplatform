@@ -10,8 +10,10 @@ const defaultVoiceId = 'XfNU2rGpBa01ckF309OY';
 const defaultModelId = 'eleven_multilingual_v2';
 const ffmpegExecutable = String.raw`C:\ffmpeg\bin\ffmpeg.exe`;
 
-const prototype = path.join(root, 'src', 'prototypes', 'ehel-academy', 'vocabulary');
-const lessonAudioDirectory = path.join(prototype, 'audio');
+// The standalone WordQuest prototype was retired; its audio now lives inside
+// the English course.
+const prototype = path.join(root, 'src', 'prototypes', 'ehel-academy', 'english', 'grade-2');
+const lessonAudioDirectory = path.join(prototype, 'vocabulary-audio');
 const lectureAudioDirectory = path.join(root, 'tmp', 'ehel-vocabulary-lecture', 'audio');
 
 const vocabulary = [
@@ -245,8 +247,8 @@ async function main() {
     lessonClips: scope === 'lecture' ? 0 : vocabulary.length * 6,
     lectureClips: scope === 'lesson' ? 0 : lectureNarrations.length,
   };
-  fs.writeFileSync(path.join(prototype, 'elevenlabs-voice.json'), `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
-  console.log(`Wrote ${path.relative(root, path.join(prototype, 'elevenlabs-voice.json'))}`);
+  fs.writeFileSync(path.join(prototype, 'source', 'elevenlabs-voice.json'), `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+  console.log(`Wrote ${path.relative(root, path.join(prototype, 'source', 'elevenlabs-voice.json'))}`);
 }
 
 main().catch((error) => {

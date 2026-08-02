@@ -18,7 +18,7 @@
 //   (the word alone), which is what the vocabulary page's Listen button plays.
 //   Also rewrites each entry's audio.normal to the resolver-compatible
 //   media/audio/grade-N/dictionary/ path; the authored ./media/dictionary/ and
-//   ../../vocabulary/audio/grade2-bundles/ paths resolved to nothing on disk.
+//   ./vocabulary-audio/ paths resolved to nothing on disk.
 //   e.g. node tools/generate-ehel-english-audio.js readings 1
 //        node tools/generate-ehel-english-audio.js readings 1 2 3 --limit 5
 //        node tools/generate-ehel-english-audio.js readings --dry   (estimate only)

@@ -9,11 +9,14 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PROTOTYPE = ROOT / "src" / "prototypes" / "ehel-academy" / "vocabulary"
-MEDIA = PROTOTYPE / "media"
+# The standalone WordQuest prototype was retired; its content now lives inside
+# the English course, which is where the Grade 2 vocabulary always belonged.
+ENGLISH = ROOT / "src" / "prototypes" / "ehel-academy" / "english"
+ASSETS = ENGLISH / "assets"
+MEDIA = ENGLISH / "lecture-media"
 TMP = ROOT / "tmp" / "ehel-grade2-vocabulary-media"
 AUDIO = TMP / "lecture-audio"
-CURRICULUM = PROTOTYPE / "grade2-vocabulary.json"
+CURRICULUM = ENGLISH / "grade-2" / "source" / "grade2-vocabulary.json"
 NARRATIONS = TMP / "lecture-narrations.json"
 FFMPEG = Path(r"C:\ffmpeg\bin\ffmpeg.exe")
 FFPROBE = Path(r"C:\ffmpeg\bin\ffprobe.exe")
@@ -61,7 +64,7 @@ def wrap(draw: ImageDraw.ImageDraw, text: str, face: ImageFont.ImageFont, width:
 def render_poster(unit: dict) -> Image.Image:
     canvas = Image.new("RGB", (W, H), "#f4f8f7")
     draw = ImageDraw.Draw(canvas)
-    visual_path = PROTOTYPE / unit["visual"]["image"].removeprefix("./")
+    visual_path = ENGLISH / unit["visual"]["image"].removeprefix("./")
     visual = fit_cover(visual_path, (690, H - 76))
     canvas.paste(visual, (590, 76))
     draw.rectangle((0, 0, W, 76), fill="#ffffff")
@@ -86,7 +89,7 @@ def render_poster(unit: dict) -> Image.Image:
         group_lines = wrap(draw, group["title"], F_GROUP, 430)
         draw.text((104, y + 13), group_lines[0], font=F_GROUP, fill="#17324d")
         y += 64
-    teacher = Image.open(PROTOTYPE / "assets" / "teacher-nuur.png").convert("RGB")
+    teacher = Image.open(ASSETS / "teacher-nuur.png").convert("RGB")
     teacher.thumbnail((170, 130), Image.Resampling.LANCZOS)
     canvas.paste(teacher, (W - teacher.width - 22, H - teacher.height - 20))
     return canvas

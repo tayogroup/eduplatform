@@ -7,8 +7,11 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PROTOTYPE = ROOT / "src" / "prototypes" / "ehel-academy" / "vocabulary"
-MEDIA = PROTOTYPE / "media"
+# The standalone WordQuest prototype was retired; its art and lecture videos now
+# live inside the English course.
+ENGLISH = ROOT / "src" / "prototypes" / "ehel-academy" / "english"
+ASSETS = ENGLISH / "assets"
+MEDIA = ENGLISH / "lecture-media"
 TMP = ROOT / "tmp" / "ehel-vocabulary-lecture"
 AUDIO = TMP / "audio"
 SLIDES_DIR = TMP / "slides"
@@ -98,7 +101,7 @@ def draw_header(draw: ImageDraw.ImageDraw, index: int):
 
 
 def draw_teacher_scene(canvas: Image.Image, draw: ImageDraw.ImageDraw, slide: dict):
-    teacher = contain_image(PROTOTYPE / "assets" / "teacher-nuur.png", (650, 76, W, H))
+    teacher = contain_image(ASSETS / "teacher-nuur.png", (650, 76, W, H))
     canvas.paste(teacher, (650, 76))
     draw.rounded_rectangle((45, 118, 718, 624), radius=18, fill="#ffffff", outline="#dfe7ec", width=2)
     draw.text((82, 158), slide["kicker"].upper(), font=F_KICKER, fill="#0f766e")
@@ -131,7 +134,7 @@ def draw_type_scene(draw: ImageDraw.ImageDraw, slide: dict):
 
 
 def draw_vocabulary_scene(canvas: Image.Image, draw: ImageDraw.ImageDraw, slide: dict):
-    scene = contain_image(PROTOTYPE / "assets" / slide["image"], (48, 118, 496, 646))
+    scene = contain_image(ASSETS / slide["image"], (48, 118, 496, 646))
     canvas.paste(scene, (48, 118))
     rounded(draw, (470, 118, 1232, 646), 18, "#ffffff", "#dfe7ec", 2)
     draw.text((510, 148), slide["kicker"].upper(), font=F_KICKER, fill="#f26b5e")

@@ -145,8 +145,8 @@ function buildDictionary(unitVocabulary, audioCues) {
           canonicalMeaning: word.meaning,
           pronunciationText: word.pronunciation,
           audio: {
-            normal: `../../../vocabulary/audio/grade2-bundles/${word.id}.mp3`,
-            slow: `../../../vocabulary/audio/grade2-bundles/${word.id}.mp3`,
+            normal: `../vocabulary-audio/${word.id}.mp3`,
+            slow: `../vocabulary-audio/${word.id}.mp3`,
             cueStart: audioCues[word.id]?.word?.start ?? 0,
             cueEnd: audioCues[word.id]?.word?.end ?? null,
             slowPlaybackRate: 0.72,
@@ -183,7 +183,7 @@ function buildDictionary(unitVocabulary, audioCues) {
         exampleSentence: word.example,
         practiceSentences: word.sentences,
         sentenceAudio: (audioCues[word.id]?.sentences || []).map((cue) => ({
-          source: `../../../vocabulary/audio/grade2-bundles/${word.id}.mp3`,
+          source: `../vocabulary-audio/${word.id}.mp3`,
           cueStart: cue.start,
           cueEnd: cue.end,
           provider: "ElevenLabs",
@@ -280,11 +280,11 @@ function main() {
     term: { id: "t01", label: "Term 1" },
     unit,
     visual: {
-      image: "../../../vocabulary/assets/unit-1-welcome-calendar.png",
+      image: "../../assets/unit-1-welcome-calendar.png",
       alt: unitVocabulary.visual.alt,
-      lectureVideo: "../../../vocabulary/media/unit-1-vocabulary-lecture.mp4",
-      lecturePoster: "../../../vocabulary/media/unit-1-lecture-poster.jpg",
-      lectureCaptions: "../../../vocabulary/media/unit-1-vocabulary-lecture.vtt",
+      lectureVideo: "../../lecture-media/unit-1-vocabulary-lecture.mp4",
+      lecturePoster: "../../lecture-media/unit-1-lecture-poster.jpg",
+      lectureCaptions: "../../lecture-media/unit-1-vocabulary-lecture.vtt",
     },
     vocabularyGroups: unitVocabulary.groups.map((group) => ({
       id: group.id,

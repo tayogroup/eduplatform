@@ -285,7 +285,7 @@ function buildRegularUnit(unitNo, dictionaryEntries) {
     schemaVersion: "Ehel English Runtime v1.1", templateVersion: "Ehel English Content Template v1.1", dictionaryVersion: "Ehel Master Dictionary v1.1", generatedAt: GENERATED_AT,
     grade: { id: "g03", label: "Grade 3" }, subject: "English", term,
     unit: { gradeId: "g03", subject: "English", termId: term.id, unitId: id, unitNo, unitTitle: title, unitOverview: overview, learningPath, origin: "Authored Grade 3 source + curriculum review", reviewStatus: "Approved v1.1", sourceFile: sourcePath(unitNo, "Lesson") },
-    visual: { image: `../../vocabulary/assets/${visualMap[unitNo][0]}`, alt: visualMap[unitNo][1], lectureMode: "guided-launch" },
+    visual: { image: `../assets/${visualMap[unitNo][0]}`, alt: visualMap[unitNo][1], lectureMode: "guided-launch" },
     vocabularyGroups, dictionaryLinks, rubrics: baseRubrics.map((rubric) => ({ ...rubric, origin: "Ehel Grade 3 approved rubric v1.1" })), outcomes, readings, comprehension, grammar, speaking, writing, activities,
     assignments: [{ assignmentId: `${id}-assignment01`, unitId: id, title: `${title} learning portfolio`, instructions: `Submit ${writing[0].title} and a recording of ${speaking[0].title}. Improve both pieces using the Grade 3 rubrics.`, submissionType: "Writing + audio", marks: 32, outcomeIds: `${outcomes[0].outcomeId} | ${outcomes[Math.min(1, outcomes.length - 1)].outcomeId}`, rubricIds: "rub-writing-v1 | rub-speaking-v1", origin: "Curriculum-reviewed unit portfolio", reviewStatus: "Approved v1.1", sourceFile: "Derived from unit writing and speaking tasks" }],
     quizzes, liveSessions,

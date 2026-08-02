@@ -7,10 +7,13 @@ const root = process.cwd();
 const apiBase = 'https://api.elevenlabs.io/v1';
 const defaultVoiceId = 'XfNU2rGpBa01ckF309OY';
 const defaultModelId = 'eleven_multilingual_v2';
-const prototype = path.join(root, 'src', 'prototypes', 'ehel-academy', 'vocabulary');
-const curriculumPath = path.join(prototype, 'grade2-vocabulary.json');
-const bundleDirectory = path.join(prototype, 'audio', 'grade2-bundles');
-const cuesPath = path.join(prototype, 'audio', 'grade2-audio-cues.json');
+// The standalone WordQuest prototype was retired; its content now lives inside
+// the English course, which is where the Grade 2 vocabulary always belonged.
+const english = path.join(root, 'src', 'prototypes', 'ehel-academy', 'english');
+const grade2 = path.join(english, 'grade-2');
+const curriculumPath = path.join(grade2, 'source', 'grade2-vocabulary.json');
+const bundleDirectory = path.join(grade2, 'vocabulary-audio');
+const cuesPath = path.join(grade2, 'source', 'grade2-audio-cues.json');
 const lectureDirectory = path.join(root, 'tmp', 'ehel-grade2-vocabulary-media', 'lecture-audio');
 const lectureNarrationsPath = path.join(root, 'tmp', 'ehel-grade2-vocabulary-media', 'lecture-narrations.json');
 

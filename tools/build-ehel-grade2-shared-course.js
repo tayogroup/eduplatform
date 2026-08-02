@@ -6,8 +6,10 @@ const GRADE_DIR = path.join(ROOT, "src", "prototypes", "ehel-academy", "english"
 const DATA_DIR = path.join(GRADE_DIR, "data");
 const UNIT_DATA_DIR = path.join(DATA_DIR, "units");
 const INSPECT_FILE = path.join(ROOT, "outputs", "019f5d39-7fcd-7f23-a425-201fe8206eef", "Ehel-English-Content-Template-v1.1-Grade-2-Units-1-2-Reference.xlsx.inspect.ndjson");
-const VOCABULARY_FILE = path.join(ROOT, "src", "prototypes", "ehel-academy", "vocabulary", "grade2-vocabulary.json");
-const AUDIO_CUES_FILE = path.join(ROOT, "src", "prototypes", "ehel-academy", "vocabulary", "audio", "grade2-audio-cues.json");
+// The standalone WordQuest prototype was retired; these inputs now live with
+// the Grade 2 course they build.
+const VOCABULARY_FILE = path.join(GRADE_DIR, "source", "grade2-vocabulary.json");
+const AUDIO_CUES_FILE = path.join(GRADE_DIR, "source", "grade2-audio-cues.json");
 const VOICE_ID = "XfNU2rGpBa01ckF309OY";
 const UNIT_MINIMUMS = { grammar: 6, speaking: 6, writing: 6, activities: 6, quizzes: 10, liveSessions: 6 };
 
@@ -196,8 +198,8 @@ function buildDictionary(vocabulary, cues) {
           canonicalMeaning: word.meaning,
           pronunciationText: word.pronunciation,
           audio: {
-            normal: `../../vocabulary/audio/grade2-bundles/${word.id}.mp3`,
-            slow: `../../vocabulary/audio/grade2-bundles/${word.id}.mp3`,
+            normal: `./vocabulary-audio/${word.id}.mp3`,
+            slow: `./vocabulary-audio/${word.id}.mp3`,
             cueStart: cues[word.id]?.word?.start ?? 0,
             cueEnd: cues[word.id]?.word?.end ?? null,
             slowPlaybackRate: 0.72,
@@ -220,7 +222,7 @@ function buildDictionary(vocabulary, cues) {
           exampleSentence: word.example,
           practiceSentences: word.sentences,
           sentenceAudio: (cues[word.id]?.sentences || []).map((cue) => ({
-            source: `../../vocabulary/audio/grade2-bundles/${word.id}.mp3`,
+            source: `./vocabulary-audio/${word.id}.mp3`,
             cueStart: cue.start,
             cueEnd: cue.end,
             provider: "ElevenLabs",
@@ -806,11 +808,11 @@ function main() {
           "Finish the ten-question quiz and student self-assessment.",
         ].join("\n") },
         visual: {
-          image: vocabUnit.visual.image.replace("./assets", "../../vocabulary/assets"),
+          image: vocabUnit.visual.image.replace("./assets", "../assets"),
           alt: vocabUnit.visual.alt,
-          lectureVideo: `../../vocabulary/media/unit-${unitNo}-vocabulary-lecture.mp4`,
-          lecturePoster: `../../vocabulary/media/unit-${unitNo}-lecture-poster.jpg`,
-          lectureCaptions: `../../vocabulary/media/unit-${unitNo}-vocabulary-lecture.vtt`,
+          lectureVideo: `../lecture-media/unit-${unitNo}-vocabulary-lecture.mp4`,
+          lecturePoster: `../lecture-media/unit-${unitNo}-lecture-poster.jpg`,
+          lectureCaptions: `../lecture-media/unit-${unitNo}-vocabulary-lecture.vtt`,
         },
         vocabularyGroups: vocabUnit.groups.map((group) => ({ id: group.id, number: group.number, title: group.title, vocabularyIds: group.words.map((word) => word.id) })),
         dictionaryLinks: links,

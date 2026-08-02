@@ -521,6 +521,30 @@ const QUESTIONS = [
     answer: "a) The sample is tiny, and people outside the factory are likely to be staff or their families, so they are biased towards the product. b) A large sample chosen at random from ordinary shoppers, with the size and method stated in the advert.",
     hint: "Ask two things of any statistic: how many people were asked, and who was asked. A claim can be perfectly true of its sample and still tell you nothing.",
   },
+  // A second pass over cards kept during the first: not wrong, but each asked
+  // something narrower than the concept it sits under, so the card never tested
+  // its own point.
+  {
+    grade: 3, unit: "unit-5", id: "explore-4", teaches: "Times Tables – The 2s, 5s and 10s",
+    replaces: "Find each quotient: a) 12 ÷ 2 b) 20 ÷ 5 c) 60 ÷ 10.",
+    prompt: "Answer from memory: a) 6 × 2 b) 7 × 5 c) 9 × 10. Then use the 2s to work out 12 ÷ 2.",
+    answer: "a) 12, b) 35, c) 90. And 12 ÷ 2 = 6, because 6 × 2 = 12.",
+    hint: "The 2s, 5s and 10s are the tables worth knowing by heart. Once a fact is in memory the matching division comes free, because both belong to the same family.",
+  },
+  {
+    grade: 4, unit: "unit-13", id: "explore-4", teaches: "Choosing an Efficient Method",
+    replaces: "Estimate by rounding to the nearest hundred: a) 347 + 258 b) 725 − 368.",
+    prompt: "Say which method is most efficient for each — mental, estimate, or written column — and why: a) 300 + 400 b) 4,782 + 2,619 c) checking whether 347 + 258 is about right.",
+    answer: "a) Mental — both are round hundreds. b) Written column — four digits with carrying is too much to hold in your head. c) An estimate — 300 + 300 = 600 is enough to judge whether an answer is sensible.",
+    hint: "Ask what the question actually needs. An exact four-digit total needs columns; a quick sanity check needs only an estimate.",
+  },
+  {
+    grade: 6, unit: "unit-16", id: "explore-6", teaches: "Using the Laws Together to Simplify",
+    replaces: "Evaluate: a) 15 − 6 ÷ 2 b) 3 + 4 × 5 − 2 c) 24 ÷ 6 × 2.",
+    prompt: "Use the laws to make each easier before you calculate, and name the law you used: a) 4 × 17 × 25 b) 8 × 99 c) 37 + 48 + 63.",
+    answer: "a) 1,700 — commutative and associative: (4 × 25) × 17 = 100 × 17. b) 792 — distributive: 8 × (100 − 1) = 800 − 8. c) 148 — commutative: (37 + 63) + 48 = 100 + 48.",
+    hint: "Look for pairs that make a round number, and for a number just short of a hundred. Reordering and regrouping are allowed for addition and multiplication.",
+  },
 ];
 
 const norm = (s) => String(s || "").replace(/\s+/g, " ").trim();
